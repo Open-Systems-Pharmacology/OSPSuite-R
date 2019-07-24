@@ -1,0 +1,3 @@
+library(ospsuite)
+
+ospsuite::initPackage()
