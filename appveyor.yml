@@ -3,9 +3,9 @@
 # Download script file from GitHub
 init:
   ps: |
-        $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-        Import-Module '..\appveyor-tool.ps1'
+    $ErrorActionPreference = "Stop"
+    Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+    Import-Module '..\appveyor-tool.ps1'
 
 install:
   ps: Bootstrap
@@ -19,6 +19,7 @@ environment:
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # USE_RTOOLS: true
   # R_REMOTES_STANDALONE: true
+  R_ARCH: x64
 
 # Adapt as necessary starting from here
 
@@ -50,3 +51,25 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
+
+platform: x64
+
+skip_commits:
+  files:
+    - "*.md"
+
+skip_branch_with_pr: true
+
+skip_tags: true
+
+branches:
+  only:
+    - develop
+
+pull_requests:
+  do_not_increment_build_number: true
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: 4MH9Em6TtrKalq6808dhPOqypTfYBJvVlqPaa9akNyFEAs8X080yIO8g1FLt3tNfBN4OpeBnkgrXzf7AqNKV5561x7Coux3ByGrHmsL1sCo=
