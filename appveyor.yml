@@ -24,6 +24,7 @@ environment:
 # Adapt as necessary starting from here
 
 build_script:
+  - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
 
 test_script:

@@ -2,4 +2,4 @@
 ^\.Rproj\.user$
 ^appveyor\.yml$
 ^README\.md$
-^tests/dev/*\.R$
+^vignettes/dev

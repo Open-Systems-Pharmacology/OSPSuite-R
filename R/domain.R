@@ -7,7 +7,7 @@
 #' \describe{
 #' \item{wrapProperties Simple way to wrap a get;set; .NET property
 #' }
-#'
+#' @importFrom R6 R6Class
 #' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
