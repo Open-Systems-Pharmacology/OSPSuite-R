@@ -3,4 +3,5 @@
 ^appveyor\.yml$
 ^README\.md$
 ^tests/dev
+^tests/data
 ^tools
