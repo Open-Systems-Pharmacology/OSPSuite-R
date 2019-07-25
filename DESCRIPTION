@@ -1,3 +1,15 @@
+BinaryFiles:
+    inst/lib/Castle.Core.dll, 
+    inst/lib/Castle.Windsor.dll,
+    inst/lib/Microsoft.Extensions.Logging.Abstractions.dll,
+    inst/lib/OSPSuite.Assets.dll, 
+    inst/lib/OSPSuite.Core.dll,
+    inst/lib/OSPSuite.FuncParser.dll,
+    inst/lib/OSPSuite.FuncParserNative.dll,
+    inst/lib/OSPSuite.Infrastructure.dll, 
+    inst/lib/OSPSuite.R.dll,
+    inst/lib/OSPSuite.Serializer.dll, 
+    inst/lib/OSPSuite.Utility.dll
 Package: ospsuite
 Type: Package
 Title: R package to manipulate OSPSuite Models
@@ -18,3 +30,6 @@ LazyData: true
 Suggests: 
     testthat
 RoxygenNote: 6.1.1
+Imports: 
+    rClr (>= 0.8.3),
+    R6

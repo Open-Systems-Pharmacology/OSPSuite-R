@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 ^appveyor\.yml$
 ^README\.md$
+^tests/dev
+^tools
