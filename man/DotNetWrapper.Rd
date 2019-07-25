@@ -17,4 +17,12 @@ Wrapper class for .net Object
 \item{\code{ref}}{The actual .NET object instanced being wrapped}
 }}
 
+\section{Methods}{
+
+\describe{
+  \item{wrapProperties}{Simple way to wrap a get;set; .NET property}
+  \item{wrapReadOnlyProperties}{Simple way to wrap a get; .NET readonly property}
+  }
+}
+
 \keyword{datasets}

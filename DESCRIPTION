@@ -28,7 +28,7 @@ Depends:
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    testthat
+    testthat (>= 2.1.0)
 RoxygenNote: 6.1.1
 Imports: 
     rClr (>= 0.8.3),
