@@ -17,9 +17,8 @@ test_that("It can load a valid pkml simulation file", {
   expect_true(!is.null(sim))
 })
 
-test_that("It throws an exception of the pkml loaded is not a valid simulation file", {
+test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
   simFile <- file.path(dataPath, "molecules.pkml", fsep = .Platform$file.sep)
 
-  expect_that( loadSimulation(simFile), throws_error("Could not load simulation"))
+  expect_that(loadSimulation(simFile), throws_error("Could not load simulation"))
 })
-
