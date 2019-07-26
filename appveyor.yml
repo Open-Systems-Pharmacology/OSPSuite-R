@@ -34,7 +34,7 @@ build_script:
 
 
 on_success:
-  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::codecov(token=Sys.getenv(CODECOV_TOKEN))'
 
 test_script:
   - travis-tool.sh run_tests
