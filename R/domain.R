@@ -10,7 +10,6 @@
 #'   }
 #'
 #' @importFrom R6 R6Class
-#' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
   public = list(
@@ -38,8 +37,6 @@ DotNetWrapper <- R6::R6Class(
 #' @title ApiConfig
 #' @docType class
 #' @description  Global configuration for the OSPSuite .NET API
-#'
-#' @export
 ApiConfig <- R6::R6Class(
   "ApiConfig",
   inherit = DotNetWrapper,
@@ -59,8 +56,6 @@ ApiConfig <- R6::R6Class(
 #'
 #' @field id The id of the .NET wrapped object. (read-only)
 #' @field name The name of the object
-#'
-#' @export
 ObjectBase <- R6Class("ObjectBase",
   inherit = DotNetWrapper,
   active = list(
@@ -78,8 +73,6 @@ ObjectBase <- R6Class("ObjectBase",
 #' @description  Abstract wrapper for an OSPSuite.Core Entity class
 #'
 #' @field path The path of the entity in the container hiearchy. (read-only)
-#'
-#' @export
 Entity <- R6Class("Entity",
   inherit = ObjectBase,
   active = list(
@@ -98,8 +91,6 @@ Entity <- R6Class("Entity",
 #' @description  A model parameter with a value
 #'
 #' @field value The value of the parameter
-#'
-#' @export
 Parameter <- R6Class(
   "Parameter",
   inherit = Entity,
@@ -121,8 +112,6 @@ Parameter <- R6Class(
 #' @description  Contains other entities such as Parameter or containers
 #'
 #' @field path The path of the entity in the container hiearchy. (read-only)
-#'
-#' @export
 Container <- R6Class("Container",
   inherit = Entity,
 )
@@ -133,8 +122,6 @@ Container <- R6Class("Container",
 #' @description  An OSPSuite simulation
 #'
 #' @field root The rot container of the simulation (read-only)
-#'
-#' @export
 Simulation <- R6Class(
   "Simulation",
   inherit = Entity,

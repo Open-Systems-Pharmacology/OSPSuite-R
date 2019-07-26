@@ -18,7 +18,8 @@ getParameter(path, container)
 Retrieve a single parameter by path in the given container
 }
 \examples{
-\dontrun{
-getParameter(c("Organism", "Liver", "Volume"), sim))
-}
+
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+sim <- loadSimulation(simPath)
+param <- getParameter(c("Organism", "Liver", "Volume"), sim)
 }
