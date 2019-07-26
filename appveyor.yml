@@ -28,7 +28,7 @@ build_script:
   - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('covr')"
+  - Rscript -e "install.packages('covr', repos = NULL)"
 
 
 on_success:
