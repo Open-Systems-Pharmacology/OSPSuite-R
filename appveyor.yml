@@ -26,6 +26,11 @@ environment:
 build_script:
   - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
+  - travis-tool.sh github_package jimhester/covr
+
+
+on_success:
+  - Rscript -e 'covr::codecov()'
 
 test_script:
   - travis-tool.sh run_tests
