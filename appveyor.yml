@@ -21,7 +21,7 @@ environment:
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # R_REMOTES_STANDALONE: true
   R_ARCH: x64
-  R_VERSION: "3.5.2"
+  R_VERSION: "3.5.3"
 
 # Adapt as necessary starting from here
 
