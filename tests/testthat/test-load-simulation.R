@@ -1,9 +1,6 @@
 
 context("loadSimulation")
 
-# TODO. Not sure why this is required
-library(rClr)
-
 initPackage()
 dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
 

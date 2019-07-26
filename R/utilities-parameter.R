@@ -4,12 +4,18 @@
 #' @param path A vector of string relative to the container
 #' @param container A Container or Simulation used to find the parameters
 #'
-#' @return List[Parameter] a list of parameters matching the path criteria
+#' @return A list of parameters matching the path criteria
 #' @examples
-#'\dontrun{
-#' getParameters(c("Organism", "*", "Volume"), sim)) will return all `Volume` parameters define in a all direct container of the organism
-#' getParameters(c("Organism", "**", "Volume"), sim)) will return all `Volume` parameters defined in `Organism` and all its subcontainers
-#' }
+#'
+#' initPackage()
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' #Return all `Volume` parameters define in a all direct container of the organism
+#' params <- getParameters(c("Organism", "*", "Volume"), sim)
+#'
+#' #Returns all `Volume` parameters defined in `Organism` and all its subcontainers
+#' params <- getParameters(c("Organism", "**", "Volume"), sim)
 #' @export
 getParameters <- function(path, container) {
   containerTask <- rClr::clrCallStatic("OSPSuite.R.Api", "GetContainerTask")

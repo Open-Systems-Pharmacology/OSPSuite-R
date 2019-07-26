@@ -12,14 +12,20 @@ getParameters(path, container)
 \item{container}{A Container or Simulation used to find the parameters}
 }
 \value{
-List[Parameter] a list of parameters matching the path criteria
+A list of parameters matching the path criteria
 }
 \description{
 Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 }
 \examples{
-\dontrun{
-getParameters(c("Organism", "*", "Volume"), sim)) will return all `Volume` parameters define in a all direct container of the organism
-getParameters(c("Organism", "**", "Volume"), sim)) will return all `Volume` parameters defined in `Organism` and all its subcontainers
-}
+
+initPackage()
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+sim <- loadSimulation(simPath)
+
+#Return all `Volume` parameters define in a all direct container of the organism
+params <- getParameters(c("Organism", "*", "Volume"), sim)
+
+#Returns all `Volume` parameters defined in `Organism` and all its subcontainers
+params <- getParameters(c("Organism", "**", "Volume"), sim)
 }
