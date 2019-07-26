@@ -5,8 +5,10 @@
 #'
 #' @section Methods:
 #' \describe{
-#' \item{wrapProperties Simple way to wrap a get;set; .NET property
-#' }
+#'   \item{wrapProperties}{Simple way to wrap a get;set; .NET property}
+#'   \item{wrapReadOnlyProperties}{Simple way to wrap a get; .NET readonly property}
+#'   }
+#'
 #' @importFrom R6 R6Class
 #' @export
 DotNetWrapper <- R6::R6Class(
@@ -23,7 +25,6 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, name, value)
       }
     },
-
     wrapReadOnlyProperties = function(name, value) {
       if (missing(value)) {
         rClr::clrGet(self$ref, name)
@@ -31,7 +32,7 @@ DotNetWrapper <- R6::R6Class(
         stop(paste0("Property ", "'$", name, "' is readonly"), call. = FALSE)
       }
     }
-  ),
+  )
 )
 
 #' @title ApiConfig
