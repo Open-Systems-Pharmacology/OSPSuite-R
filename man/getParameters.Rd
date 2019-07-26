@@ -19,7 +19,6 @@ Retrieve all parameters of a container (simulation or container instance) matchi
 }
 \examples{
 
-initPackage()
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 

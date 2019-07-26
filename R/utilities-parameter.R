@@ -7,7 +7,6 @@
 #' @return A list of parameters matching the path criteria
 #' @examples
 #'
-#' initPackage()
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -30,9 +29,10 @@ getParameters <- function(path, container) {
 #'
 #' @return [Parameter] The parameter with the given path or null if not found
 #' @examples
-#'\dontrun{
-#' getParameter(c("Organism", "Liver", "Volume"), sim))
-#' }
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
 #' @export
 getParameter <- function(path, container) {
   parameters <- getParameters(path, container)

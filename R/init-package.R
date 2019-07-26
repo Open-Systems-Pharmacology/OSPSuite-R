@@ -1,6 +1,7 @@
 #' Load the OSPSuite R to .NET Binding
 #'
-#' @export
+#' This will be called once when the package is loaded
+#'
 initPackage <- function() {
   filePathFor <- function(name) {
     system.file("lib", name, package = "ospsuite")
