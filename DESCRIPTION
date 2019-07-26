@@ -12,7 +12,6 @@ License: GPL-2 | file LICENSE
 URL: https://github.com/open-systems-pharmacology/ospsuite-r
 BugReports: https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
-    rClr (>= 0.8.3),
     R (>= 3.5)
 Encoding: UTF-8
 LazyData: true
@@ -20,4 +19,5 @@ Suggests:
     testthat (>= 2.1.0)
 RoxygenNote: 6.1.1
 Imports: 
+    rClr (>= 0.8.3),
     R6
