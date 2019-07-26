@@ -21,8 +21,6 @@ environment:
   # USE_RTOOLS: true
   # R_REMOTES_STANDALONE: true
   R_ARCH: x64
-  CODECOV_TOKEN:
-    secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
 
 # Adapt as necessary starting from here
 
@@ -30,7 +28,7 @@ build_script:
   - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - travis-tool.sh github_package jimhester/covr
+  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
 
 
 on_success:
