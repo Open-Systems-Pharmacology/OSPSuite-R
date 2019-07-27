@@ -1,5 +1,3 @@
-
-
 #' @title ApiConfig
 #' @docType class
 #' @description  Global configuration for the OSPSuite .NET API

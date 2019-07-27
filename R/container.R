@@ -1,4 +1,3 @@
-
 #' @title Container
 #' @docType class
 #' @description  Contains other entities such as Parameter or containers
