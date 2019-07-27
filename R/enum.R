@@ -1,12 +1,12 @@
 
-#' Make Enum
+#' Create an enumeration to be used instead of arbitraty values in code.
 #'
 #' @param inputList
 #'
-#' @return
+#' @return the Enum created
 #' @export
 #'
-makeEnum <- function(inputList) {
+enum <- function(inputList) {
   myEnum <- as.list(inputList)
   enumNames <- names(myEnum)
   if (is.null(enumNames)) {
@@ -17,8 +17,7 @@ makeEnum <- function(inputList) {
   return(myEnum)
 }
 
-
-ContainerType <- makeEnum(c(
+ContainerType <- enum(c(
   Other = 0,
   Simulation = 1,
   Model = 2,

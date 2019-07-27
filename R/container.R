@@ -12,7 +12,8 @@ Container <- R6Class("Container",
   active = list(
     containerType = function(value) {
       type <- self$wrapReadOnlyProperties("ContainerType", value)
-      ContainerType[type]
+      ContainerType[which(ContainerType == type)]
     }
   )
 )
+
