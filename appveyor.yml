@@ -21,11 +21,12 @@ environment:
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # R_REMOTES_STANDALONE: true
   R_ARCH: x64
-  R_VERSION: "3.5.3"
+  R_VERSION: "3.5.2"
 
 # Adapt as necessary starting from here
 
 build_script:
+  - Rscript -e "update.packages(ask = FALSE, checkBuilt = TRUE)"
   - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
