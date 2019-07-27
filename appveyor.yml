@@ -26,7 +26,7 @@ environment:
 # Adapt as necessary starting from here
 
 build_script:
-  - Rscript -e "update.packages(ask = FALSE, checkBuilt = TRUE)"
+  - Rscript -e "update.packages(ask = FALSE, checkBuilt = TRUE,  repos = 'http://cran.us.r-project.org')"
   - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
