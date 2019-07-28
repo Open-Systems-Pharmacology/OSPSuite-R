@@ -4,7 +4,13 @@
 \alias{enum}
 \title{Create an enumeration to be used instead of arbitraty values in code.}
 \usage{
-enum(enumValues)
+# Without predefined values
+Color <- enum(c("Red", "Blue", "Green"))
+myColor <- Color$Red
+
+# With predefined values
+Symbol <- enum(c(Diamond=1, Triangle=2, Circle=2))
+mySymbol <- Symbol$Diamond
 }
 \arguments{
 \item{enumValues}{}
@@ -14,14 +20,4 @@ the Enum created
 }
 \description{
 Create an enumeration to be used instead of arbitraty values in code.
-}
-\examples{
-
-# Without predefined values
-Color <- enum(c("Red", "Blue", "Green"))
-myColor <- Color$Red
-
-# With predefined values
-Symbol <- enum(c(Diamond=1, Triangle=2, Circle=2))
-mySymbole <- Symbol$Diamond
 }

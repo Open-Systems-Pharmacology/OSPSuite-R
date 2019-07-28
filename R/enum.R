@@ -4,7 +4,7 @@
 #' @param enumValues
 #'
 #' @return the Enum created
-#' @examples
+#' @usage
 #'
 #' # Without predefined values
 #' Color <- enum(c("Red", "Blue", "Green"))
@@ -12,7 +12,7 @@
 #'
 #' # With predefined values
 #' Symbol <- enum(c(Diamond=1, Triangle=2, Circle=2))
-#' mySymbole <- Symbol$Diamond
+#' mySymbol <- Symbol$Diamond
 enum <- function(enumValues) {
   myEnum <- as.list(enumValues)
   enumNames <- names(myEnum)
