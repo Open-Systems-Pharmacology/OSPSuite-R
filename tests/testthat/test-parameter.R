@@ -6,11 +6,14 @@ sim <- loadSimulation(simFile)
 liverPath <- c("Organism", "Liver")
 volumePath <- c(liverPath, "Volume")
 
-test_that("It can retrieve and update the name of a parameter", {
+test_that("It can retrieve name of a parameter", {
   par <- getParameter(c(liverPath, "Blood flow rate"), sim)
   expect_equal(par$name, "Blood flow rate")
-  par$name <- "Test"
-  expect_equal(par$name, "Test")
+})
+
+test_that("It throwns an error when trying to set the name of a parameter", {
+  par <- getParameter(volumePath, sim)
+  expect_that(par$name <- "TOTO", throws_error())
 })
 
 test_that("It can retrieve the id of a parameter", {
