@@ -1,7 +1,3 @@
-
-
-
-
 #' @title Simulation
 #' @docType class
 #' @description  An OSPSuite simulation
