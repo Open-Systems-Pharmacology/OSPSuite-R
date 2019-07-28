@@ -16,7 +16,9 @@ DotNetWrapper <- R6::R6Class(
     ref = NULL,
     initialize = function(ref) {
       self$ref <- ref
-    },
+    }
+  ),
+  private = list(
     wrapProperties = function(name, value) {
       if (missing(value)) {
         rClr::clrGet(self$ref, name)

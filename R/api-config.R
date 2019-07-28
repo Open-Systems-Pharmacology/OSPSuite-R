@@ -6,10 +6,10 @@ ApiConfig <- R6::R6Class(
   inherit = DotNetWrapper,
   active = list(
     pkParametersFilePath = function(value) {
-      self$wrapProperties("PKParametersFilePath", value)
+      private$wrapProperties("PKParametersFilePath", value)
     },
     dimensionFilePath = function(value) {
-      self$wrapProperties("DimensionFilePath", value)
+      private$wrapProperties("DimensionFilePath", value)
     }
   ),
 )

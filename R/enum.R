@@ -1,35 +1,25 @@
 
 #' Create an enumeration to be used instead of arbitraty values in code.
 #'
-#' @param inputList
+#' @param enumValues
 #'
 #' @return the Enum created
-#' @export
+#' @examples
 #'
-enum <- function(inputList) {
-  myEnum <- as.list(inputList)
+#' # Without predefined values
+#' Color <- enum(c("Red", "Blue", "Green"))
+#' myColor <- Color$Red
+#'
+#' # With predefined values
+#' Symbol <- enum(c(Diamond=1, Triangle=2, Circle=2))
+#' mySymbole <- Symbol$Diamond
+enum <- function(enumValues) {
+  myEnum <- as.list(enumValues)
   enumNames <- names(myEnum)
   if (is.null(enumNames)) {
     names(myEnum) <- myEnum
   } else if ("" %in% enumNames) {
-    stop("The inputList has some but not all names assigned. They must be all assigned or none assigned")
+    stop("The enumValues has some but not all names assigned. They must be all assigned or none assigned")
   }
   return(myEnum)
 }
-
-ContainerType <- enum(c(
-  Other = 0,
-  Simulation = 1,
-  Model = 2,
-  Organism = 3,
-  Organ = 4,
-  Compartment = 5,
-  Application = 6,
-  Event = 7,
-  EventGroup = 8,
-  Neighborhood = 9,
-  Molecule = 10,
-  Reaction = 11,
-  Formulation = 12,
-  Transport = 13
-))

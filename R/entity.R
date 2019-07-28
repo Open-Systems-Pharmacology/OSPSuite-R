@@ -9,10 +9,10 @@ ObjectBase <- R6Class("ObjectBase",
   inherit = DotNetWrapper,
   active = list(
     name = function(value) {
-      self$wrapProperties("Name", value)
+      private$wrapProperties("Name", value)
     },
     id = function(value) {
-      self$wrapReadOnlyProperties("Id", value)
+      private$wrapReadOnlyProperties("Id", value)
     }
   )
 )

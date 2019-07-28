@@ -8,7 +8,7 @@ Parameter <- R6Class(
   inherit = Entity,
   active = list(
     value = function(value) {
-      self$wrapProperties("Value", value)
+      private$wrapProperties("Value", value)
     }
   ),
   public = list(
