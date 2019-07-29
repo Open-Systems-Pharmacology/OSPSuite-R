@@ -21,6 +21,7 @@ environment:
   # USE_RTOOLS: true
   # R_REMOTES_STANDALONE: true
   R_ARCH: x64
+  COVERALLS_TOKEN: 1c296ffd-b625-46f6-97fc-a9754d33c953
 
 # Adapt as necessary starting from here
 
@@ -32,7 +33,7 @@ build_script:
 
 
 on_success:
-  - Rscript -e 'covr::codecov()'
+  - Rscript -e "covr::codecov(token='1c296ffd-b625-46f6-97fc-a9754d33c953')"
 
 test_script:
   - travis-tool.sh run_tests
