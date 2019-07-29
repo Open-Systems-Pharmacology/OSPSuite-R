@@ -33,7 +33,7 @@ build_script:
 
 
 on_success:
-  - Rscript -e "covr::codecov(token='1c296ffd-b625-46f6-97fc-a9754d33c953')"
+  - Rscript -e "covr::codecov()"
 
 test_script:
   - travis-tool.sh run_tests
