@@ -11,12 +11,12 @@
 #' sim <- loadSimulation(simPath)
 #'
 #' # Return all `Intracellular` containers define in a all direct containers of the organism
-#' containers <- getContainers(c("Organism", "*", "Intracellular"), sim)
+#' containers <- getAllContainersMatching(c("Organism", "*", "Intracellular"), sim)
 #'
 #' # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
-#' containers <- getParameters(c("Organism", "**", "Intracellular"), sim)
+#' containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
 #' @export
-getContainers <- function(path, container) {
+getAllContainersMatching <- function(path, container) {
   containerTask <- rClr::clrCallStatic("OSPSuite.R.Api", "GetContainerTask")
 
   toContainers(rClr::clrCall(containerTask, "AllContainersMatching", container$ref, path))
@@ -35,7 +35,7 @@ getContainers <- function(path, container) {
 #' param <- getContainer(c("Organism", "Liver"), sim)
 #' @export
 getContainer <- function(path, container) {
-  containers <- getContainers(path, container)
+  containers <- getAllContainersMatching(path, container)
   stopifnot(length(containers) <= 1)
   if (length(containers) == 0) {
     return(NULL)

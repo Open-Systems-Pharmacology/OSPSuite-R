@@ -10,8 +10,7 @@ Container <- R6Class("Container",
   inherit = Entity,
   active = list(
     containerType = function(value) {
-      type <- private$wrapReadOnlyProperties("ContainerType", value)
-      ContainerType[[which(ContainerType == type)]]
+      private$wrapReadOnlyProperties("ContainerType", value)
     }
   )
 )

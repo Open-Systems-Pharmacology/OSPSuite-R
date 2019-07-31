@@ -11,12 +11,12 @@
 #' sim <- loadSimulation(simPath)
 #'
 #' # Return all `Volume` parameters define in a all direct containers of the organism
-#' params <- getParameters(c("Organism", "*", "Volume"), sim)
+#' params <- getAllParametersMatching(c("Organism", "*", "Volume"), sim)
 #'
 #' # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
-#' params <- getParameters(c("Organism", "**", "Volume"), sim)
+#' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
 #' @export
-getParameters <- function(path, container) {
+getAllParametersMatching <- function(path, container) {
   containerTask <- rClr::clrCallStatic("OSPSuite.R.Api", "GetContainerTask")
 
   toParameters(rClr::clrCall(containerTask, "AllParametersMatching", container$ref, path))
@@ -35,7 +35,7 @@ getParameters <- function(path, container) {
 #' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
 #' @export
 getParameter <- function(path, container) {
-  parameters <- getParameters(path, container)
+  parameters <- getAllParametersMatching(path, container)
   stopifnot(length(parameters) <= 1)
   if (length(parameters) == 0) {
     return(NULL)
