@@ -1,9 +1,7 @@
 
 context("loadSimulation")
 
-initPackage()
 dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-
 
 test_that("It can load a valid pkml simulation file", {
   simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)

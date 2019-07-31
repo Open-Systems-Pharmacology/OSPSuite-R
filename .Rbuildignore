@@ -4,3 +4,4 @@
 ^README\.md$
 ^tests/dev
 ^tools
+^\.covrignore$

@@ -12,7 +12,7 @@ getParameter(path, container)
 \item{container}{The container used to find the parameter}
 }
 \value{
-[Parameter] The parameter with the given path or null if not found
+The [Parameter] with the given path or null if not found
 }
 \description{
 Retrieve a single parameter by path in the given container
