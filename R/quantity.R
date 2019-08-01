@@ -10,17 +10,11 @@ Quantity <- R6Class(
     value = function(value) {
       private$wrapProperties("Value", value)
     },
-    displayUnit = function(value) {
-      private$wrapExtensionMethod("OSPSuite.Core.Domain.WithDisplayUnitExtensions", "DisplayUnitName", "displayUnit")
-    },
     unit = function(value) {
       private$wrapExtensionMethod("OSPSuite.Core.Domain.WithDimensionExtensions", "BaseUnitName", "baseUnit")
     },
     dimension = function(value) {
       private$wrapExtensionMethod("OSPSuite.Core.Domain.WithDimensionExtensions", "DimensionName", "dimension")
-    },
-    valueInDisplayUnit = function(value) {
-      private$wrapProperties("ValueInDisplayUnit", value)
     }
   ),
   private = list(

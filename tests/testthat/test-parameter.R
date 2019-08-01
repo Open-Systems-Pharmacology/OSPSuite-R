@@ -4,7 +4,6 @@ dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
 simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFile)
 liverPath <- c("Organism", "Liver")
-heightPath <- c("Organism", "Height")
 volumePath <- c(liverPath, "Volume")
 
 test_that("It can retrieve name of a parameter", {
@@ -53,14 +52,4 @@ test_that("It can retrieve the dimension of a parameter", {
 test_that("It can retrieve the unit of a parameter", {
   par <- getParameter(volumePath, sim)
   expect_equal(par$unit, "l")
-})
-
-test_that("It can retrieve the display unit of a parameter", {
-  par <- getParameter(heightPath, sim)
-  expect_equal(par$displayUnit, "cm")
-  expect_equal(par$unit, "dm")
-})
-
-test_that("It can print a parameter", {
-  par <- getParameter(heightPath, sim)
 })
