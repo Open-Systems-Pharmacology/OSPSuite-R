@@ -34,7 +34,7 @@ build_script:
 
 
 on_success:
-  - Rscript -e "covr::codecov(function_exclusions = c('print\\.', '\\.onLoad'))"
+  - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
 
 test_script:
   - travis-tool.sh run_tests
