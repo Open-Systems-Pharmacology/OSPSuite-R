@@ -9,7 +9,7 @@
   # Should only be called once
   initPackage()
 
-  ContainerType <- containerType();
+  ContainerType <- containerType()
 
   # Ensures that the variable ContainerType is available in the package as ospsuite::ContainerType
   assign("ContainerType", ContainerType, envir = parent.env(environment()))

@@ -21,9 +21,9 @@ test_that("It can retrieve all containers matching a given criteria with wild ca
   expect_equal(length(containers), 5) # 4 sub compartments in liver pericentral + drug
 })
 
-test_that("It can retrieve all parameters matching a given criteria with generic path entry", {
+test_that("It can retrieve all containers matching a given criteria with generic path entry", {
   containers <- getAllContainersMatching(c("Organism", "**", "Interstitial"), sim)
-  expect_equal(length(containers), 30)
+  expect_equal(length(containers), 28)
 })
 
 context("getContainer")

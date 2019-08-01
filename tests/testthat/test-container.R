@@ -41,4 +41,3 @@ test_that("It throwns an error when trying to set the name of a container", {
   container <- getContainer(liverPath, sim)
   expect_that(container$name <- "name", throws_error())
 })
-

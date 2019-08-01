@@ -19,19 +19,31 @@ DotNetWrapper <- R6::R6Class(
     }
   ),
   private = list(
-    wrapProperties = function(name, value) {
+    wrapProperties = function(propertyName, value) {
       if (missing(value)) {
-        rClr::clrGet(self$ref, name)
+        rClr::clrGet(self$ref, propertyName)
       } else {
-        rClr::clrSet(self$ref, name, value)
+        rClr::clrSet(self$ref, propertyName, value)
       }
     },
-    wrapReadOnlyProperties = function(name, value) {
+    wrapReadOnlyProperties = function(propertyName, value) {
       if (missing(value)) {
-        rClr::clrGet(self$ref, name)
+        rClr::clrGet(self$ref, propertyName)
       } else {
-        stop(paste0("Property ", "'$", name, "' is readonly"), call. = FALSE)
+        private$throwPropertyIsReadonly(propertyName)
       }
+    },
+
+    wrapExtensionMethod = function(typename, methodName, propertyName, value) {
+      if (missing(value)) {
+        rClr::clrCallStatic(typename, methodName, self$ref)
+      } else {
+        private$throwPropertyIsReadonly(propertyName)
+      }
+    },
+
+    throwPropertyIsReadonly = function(propertyName) {
+      stop(paste0("Property ", "'$", propertyName, "' is readonly"), call. = FALSE)
     }
   )
 )

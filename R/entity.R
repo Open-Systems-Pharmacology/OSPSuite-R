@@ -14,6 +14,16 @@ ObjectBase <- R6Class("ObjectBase",
     id = function(value) {
       private$wrapReadOnlyProperties("Id", value)
     }
+  ),
+  private = list(
+    printLine = function(entry, value) {
+      cat("  ", entry, ": ", value, "\n", sep = "")
+      invisible(self)
+    },
+
+    printClass = function() {
+      cat(class(self)[1], ": \n")
+    }
   )
 )
 
@@ -27,11 +37,7 @@ Entity <- R6Class("Entity",
   inherit = ObjectBase,
   active = list(
     path = function(value) {
-      if (missing(value)) {
-        rClr::clrCallStatic(typename = "OSPSuite.Core.Domain.EntityExtensions", methodName = "EntityPath", self$ref)
-      } else {
-        stop("Property '$path' is readonly", call. = FALSE)
-      }
+      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "EntityPath", "path", value)
     }
   )
 )
