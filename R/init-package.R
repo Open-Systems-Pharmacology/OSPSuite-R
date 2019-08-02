@@ -16,4 +16,7 @@ initPackage <- function() {
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
+
+  # initialize global variables (mostly usef for performance optimization)
+  ospsuiteEnv$containerTask <- rClr::clrCallStatic("OSPSuite.R.Api", "GetContainerTask")
 }

@@ -4,7 +4,7 @@
 #' @param enumValues
 #'
 #' @return the Enum created
-#' @usage
+#' @example
 #'
 #' # Without predefined values
 #' Color <- enum(c("Red", "Blue", "Green"))
