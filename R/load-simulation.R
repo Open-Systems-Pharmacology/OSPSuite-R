@@ -4,7 +4,8 @@
 #'
 #' @export
 loadSimulation <- function(pkmlSimulationFile) {
-  simulationLoader <- rClr::clrNew("OSPSuite.R.Services.SimulationLoader")
+  rClr::clrGetStaticMethods("OSPSuite.R.Api")
+  simulationLoader <- rClr::clrCallStatic("OSPSuite.R.Api", "GetSimulationLoader")
   netSim <- rClr::clrCall(simulationLoader, "LoadSimulation", pkmlSimulationFile)
   Simulation$new(netSim)
 }

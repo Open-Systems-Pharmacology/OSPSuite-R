@@ -2,8 +2,9 @@
 
 #' All possible container types as defined in OSPSuite
 #'
+#' @include enum.R
 #' @export
-ContainerType <- list(
+ContainerType <- enum(list(
   Other = 0,
   Simulation = 1,
   Model = 2,
@@ -18,4 +19,4 @@ ContainerType <- list(
   Reaction = 11,
   Formulation = 12,
   Transport = 13
-)
+))

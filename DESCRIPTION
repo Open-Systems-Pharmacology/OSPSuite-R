@@ -21,3 +21,20 @@ Suggests:
 RoxygenNote: 6.1.1
 Imports: 
     R6
+Collate: 
+    'api-config.R'
+    'enum.R'
+    'container-type.R'
+    'container.R'
+    'dot-net-wrapper.R'
+    'entity.R'
+    'init-package.R'
+    'load-simulation.R'
+    'ospsuite-env.R'
+    'parameter.R'
+    'quantity.R'
+    'run-simulation.R'
+    'simulation.R'
+    'utilities-container.R'
+    'utilities-parameter.R'
+    'zzz.R'
