@@ -4,6 +4,7 @@
 #'
 #' @return An instance of the Task
 #'
+#' @import rClr
 #' @examples
 #'
 #' simulationLoader <- getNetTask("SimulationLoader")
