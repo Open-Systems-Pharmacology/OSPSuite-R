@@ -11,7 +11,7 @@
 #' results <- runSimulation(sim)
 #' @export
 runSimulation <- function(simulation) {
-  simulationRunner <- rClr::clrCallStatic("OSPSuite.R.Api", "GetSimulationRunner")
+  simulationRunner <- getNetTask("SimulationRunner")
   results <- rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref)
   return(rClr::clrCall(results, "IndividualResultsAsArray"))
 }
