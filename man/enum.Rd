@@ -7,7 +7,7 @@
 enum(enumValues)
 }
 \arguments{
-\item{enumValues}{}
+\item{enumValues}{Values to use for the enum}
 }
 \value{
 the Enum created

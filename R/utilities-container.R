@@ -17,7 +17,7 @@
 #' containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
 #' @export
 getAllContainersMatching <- function(path, container) {
-  toContainers(rClr::clrCall(ospsuiteEnv$containerTask, "AllContainersMatching", container$ref, path))
+  toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
 }
 
 #' Retrieve a single container by path under the given container

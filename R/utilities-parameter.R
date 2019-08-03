@@ -17,7 +17,7 @@
 #' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
 #' @export
 getAllParametersMatching <- function(path, container) {
-  toParameters(rClr::clrCall(ospsuiteEnv$containerTask, "AllParametersMatching", container$ref, path))
+  toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
 }
 
 #' Retrieve a single parameter by path in the given container

@@ -15,7 +15,6 @@ An instance of the Task
 \description{
 Returns an instace of the specified .NET Task
 }
-\examples{
-
+\details{
 simulationLoader <- getNetTask("SimulationLoader")
 }

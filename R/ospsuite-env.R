@@ -4,4 +4,4 @@ ospsuiteEnv <- new.env(parent = emptyenv())
 
 
 # Reference to container task for optimization purposes only
-ospsuiteEnv$containerTask <- NULL
+ospsuiteEnv$ContainerTask <- NULL
