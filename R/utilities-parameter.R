@@ -64,6 +64,24 @@ toParameters <- function(netParams) {
     Parameter$new(p))
 }
 
+#' Set values of parameters
+#'
+#' @param parameters A single object of type 'Parameter' or a list of such objects
+#' The objects are created by calling 'getParameter' or 'getAllParametersMatching'
+#'
+#' @param values A numeric value that should be assigned to the parameter or a vector
+#' of numeric values, if the value of more than one parameter should be changed. Must have the same
+#' length as 'parameters'
+#'
+#' @examples
+#'
+#' #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
+#' setParametersValues(param, 1)
+#' params <- getAllParametersMatching(c("Organism", "Liver", "*", "Volume"), sim)
+#' setParametersValues(params, c(1:6))
+#'
 #' @export
 setParametersValues <- function(parameters, values){
   singleParameter <- FALSE

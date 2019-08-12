@@ -46,7 +46,7 @@ getAllContainersMatching <- function(path, container) {
 #' @export
 getContainer <- function(path, container) {
   containers <- getAllContainersMatching(path, container)
-  if (length(parameters) > 1){
+  if (length(containers) > 1){
     stop(paste0("getContainer: the path ", path, " located under container ", container,
                 " leads to more then one container! Use 'getAllContainersMatching'
                 to get the list of containers matching the path"))
