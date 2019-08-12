@@ -17,6 +17,18 @@
 #' containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
 #' @export
 getAllContainersMatching <- function(path, container) {
+  #Test if container is a valid R6 object
+  if (!inherits(container, c("Simulation", "Container"))){
+    stop(paste0("getAllContainersMatching: argument 'container' is not valid!
+                Use 'loadSimulation()' or 'getContainer()' to create container objects."))
+  }
+
+  #Test if the path is a characted
+  if (!is.character(path)){
+    stop(paste0("getAllContainersMatching: argument 'path' is not valid! Must be
+                a string or a vector of strings."))
+  }
+
   toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
 }
 
@@ -34,7 +46,12 @@ getAllContainersMatching <- function(path, container) {
 #' @export
 getContainer <- function(path, container) {
   containers <- getAllContainersMatching(path, container)
-  stopifnot(length(containers) <= 1)
+  if (length(parameters) > 1){
+    stop(paste0("getContainer: the path ", path, " located under container ", container,
+                " leads to more then one container! Use 'getAllContainersMatching'
+                to get the list of containers matching the path"))
+  }
+
   if (length(containers) == 0) {
     return(NULL)
   }

@@ -17,6 +17,18 @@
 #' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
 #' @export
 getAllParametersMatching <- function(path, container) {
+  #Test if container is a valid R6 object
+  if (!inherits(container, c("Simulation", "Container"))){
+    stop(paste0("getAllParametersMatching: argument 'container' is not valid!
+                Use 'loadSimulation()' or 'getContainer()' to create container objects."))
+  }
+
+  #Test if the path is a characted
+  if (!is.character(path)){
+    stop(paste0("getAllParametersMatching: argument 'path' is not valid! Must be
+                a string or a vector of strings."))
+  }
+
   toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
 }
 
@@ -34,7 +46,12 @@ getAllParametersMatching <- function(path, container) {
 #' @export
 getParameter <- function(path, container) {
   parameters <- getAllParametersMatching(path, container)
-  stopifnot(length(parameters) <= 1)
+  if (length(parameters) > 1){
+    stop(paste0("getParameter: the path ", path, " located under container ", container,
+                " leads to more then one parameter! Use 'getAllParametersMatching'
+                to get the list of parameters matching the path"))
+  }
+
   if (length(parameters) == 0) {
     return(NULL)
   }
