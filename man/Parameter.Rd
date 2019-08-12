@@ -4,17 +4,13 @@
 \name{Parameter}
 \alias{Parameter}
 \title{Parameter}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 Parameter
 }
 \description{
-A model parameter with a value
+A model parameter
 }
-\section{Fields}{
-
-\describe{
-\item{\code{value}}{The value of the parameter}
-}}
-
-\keyword{datasets}
+\details{
+Derived from \link{Quantity}, please see base class documentation.
+}
+\keyword{Parameter}

@@ -1,8 +1,14 @@
 #' @title Parameter
-#' @docType class
-#' @description  A model parameter with a value
 #'
-#' @field value The value of the parameter
+#' @description A model parameter
+#'
+#' @details  Derived from \link{Quantity}, please see base class documentation.
+#'
+#' @docType class
+#' @name Parameter
+#'
+#' @keywords Parameter
+#' @format NULL
 Parameter <- R6Class(
   "Parameter",
   inherit = Quantity,

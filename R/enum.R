@@ -1,18 +1,19 @@
 
 #' Create an enumeration to be used instead of arbitraty values in code.
 #'
-#' @param enumValues
+#' @param enumValues Values to use for the enum
 #'
 #' @return the Enum created
-#' @example
+#' @examples
 #'
 #' # Without predefined values
 #' Color <- enum(c("Red", "Blue", "Green"))
 #' myColor <- Color$Red
 #'
 #' # With predefined values
-#' Symbol <- enum(c(Diamond=1, Triangle=2, Circle=2))
+#' Symbol <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
 #' mySymbol <- Symbol$Diamond
+#' @export
 enum <- function(enumValues) {
   myEnum <- as.list(enumValues)
   enumNames <- names(myEnum)

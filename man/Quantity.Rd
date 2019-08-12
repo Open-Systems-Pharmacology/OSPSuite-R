@@ -4,7 +4,6 @@
 \name{Quantity}
 \alias{Quantity}
 \title{Quantity}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 Quantity
 }
@@ -14,7 +13,13 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \section{Fields}{
 
 \describe{
-\item{\code{value}}{The value of the quantity}
+\item{\code{value}}{The value of the quantity in unit}
+
+\item{\code{unit}}{The base unit in which the quantity is defined (Read-Only)}
+
+\item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
+
+\item{\code{persitable}}{A boolean indicating whether a value will be defined in the simulated results for this quantity}
 }}
 
 \keyword{datasets}
