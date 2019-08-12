@@ -4,7 +4,7 @@
 #' @field value The value of the quantity in unit
 #' @field unit The base unit in which the quantity is defined (Read-Only)
 #' @field dimension The dimension in which the quantity is defined  (Read-Only)
-#' @field persitable A boolean indicating whether a value will be defined in the simulated results for this quantity
+#' @field persitable A boolean indicating whether some output values will be available in simulated results for this quantity
 #' @format NULL
 Quantity <- R6Class(
   "Quantity",
