@@ -18,7 +18,7 @@
 #' @export
 getAllContainersMatching <- function(path, container) {
   #Test if container is a valid R6 object
-  if (!inherits(container, c("Simulation", "Container"))){
+  if (!inherits(container, c("Simulation", "Container")) && !inherits(container, "ObjectBase")){
     stop(paste0("getAllContainersMatching: argument 'container' is not valid!
                 Use 'loadSimulation()' or 'getContainer()' to create container objects."))
   }

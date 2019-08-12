@@ -18,7 +18,7 @@
 #' @export
 getAllParametersMatching <- function(path, container) {
   #Test if container is a valid R6 object
-  if (!inherits(container, c("Simulation", "Container"))){
+  if (!inherits(container, c("Simulation", "Container")) && !inherits(container, "ObjectBase")){
     stop(paste0("getAllParametersMatching: argument 'container' is not valid!
                 Use 'loadSimulation()' or 'getContainer()' to create container objects."))
   }
@@ -62,4 +62,49 @@ getParameter <- function(path, container) {
 toParameters <- function(netParams) {
   sapply(netParams, function(p)
     Parameter$new(p))
+}
+
+#' @export
+setParametersValues <- function(parameters, values){
+  singleParameter <- FALSE
+
+  #Test if 'parameter' is an instance of the Parameter-class.
+  if (inherits(parameters, "Parameter") && inherits(parameters, "ObjectBase")){
+    singleParameter <- TRUE
+
+    #Test if parameters and values are of same length
+    if (length(values) != 1){
+      stop(paste0("setParametersValues: 'parameters' and 'Values' must be of the same length!"))
+    }
+  }
+  else{
+    #Test if all parameters are valid R6 objects
+    if (!all(
+      sapply(parameters,
+             fun <- function(x){c(inherits(x, "Parameter"), inherits(x, "ObjectBase"))}))){
+      stop(paste0("setParametersValues: argument 'parameters' is not valid!
+                  Use 'getParameter()' or 'getAllParametersMatching()' to create parameter objects."))
+    }
+
+    #Test if parameters and values are of same length
+    if (length(parameters) != length(values)){
+      stop(paste0("setParametersValues: 'parameters' and 'Values' must be of the same length!"))
+    }
+  }
+
+  #Test if all values are numeric
+  if (!is.numeric(values)){
+    stop(paste0("setParametersValues: argument 'values' is not valid!
+                Must be a vector of numeric entries"))
+  }
+
+  if (singleParameter){
+    parameters$value <- values
+  }
+  else{
+    for (i in seq_along(parameters)){
+      param <- parameters[[i]]
+      param$value <- values[[i]]
+    }
+  }
 }

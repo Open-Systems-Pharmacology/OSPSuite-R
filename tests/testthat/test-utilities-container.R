@@ -26,6 +26,14 @@ test_that("It can retrieve all containers matching a given criteria with generic
   expect_equal(length(containers), 28)
 })
 
+test_that("It throws an error when no valid container is provided", {
+  expect_that(containers <- getAllContainersMatching(c("Organism", "**", "Interstitial"), NULL), throws_error())
+})
+
+test_that("It throws an error when no valid path is provided", {
+  expect_that(containers <- getAllContainersMatching(NULL, sim), throws_error())
+})
+
 context("getContainer")
 
 test_that("It can retrieve a single container by path if it exists", {
@@ -38,6 +46,6 @@ test_that("It returns null if the  container by path does not exist", {
   expect_null(container)
 })
 
-test_that("It throwns an error when trying to retrieve a container by path that would result in multiple containers", {
+test_that("It throws an error when trying to retrieve a container by path that would result in multiple containers", {
   expect_that(getContainer(c("Organism", "*"), sim), throws_error())
 })
