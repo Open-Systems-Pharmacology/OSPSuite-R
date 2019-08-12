@@ -26,6 +26,15 @@ test_that("It can retrieve all parameters matching a given criteria with generic
   expect_equal(length(parameters), 5) # 4 compartments + own volume
 })
 
+test_that("It throws an error when no valid container is provided", {
+  expect_that(parameters <- getAllParametersMatching(c("Organism", "Liver", "Intracellular", "Volume"), NULL), throws_error())
+})
+
+test_that("It throws an error when no valid path is provided", {
+  expect_that(parameters <- getAllParametersMatching(NULL, sim), throws_error())
+})
+
+
 
 context("getParameter")
 
@@ -39,6 +48,6 @@ test_that("It returns null if the  parameter by path does not exist", {
   expect_null(parameter)
 })
 
-test_that("It throwns an error when trying to retrieve a parameter by path that would result in multiple parameters", {
+test_that("It throws an error when trying to retrieve a parameter by path that would result in multiple parameters", {
   expect_that(getParameter(c("Organism", "Liver", "*"), sim), throws_error())
 })
