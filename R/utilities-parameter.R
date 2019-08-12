@@ -75,7 +75,7 @@ toParameters <- function(netParams) {
 #'
 #' @examples
 #'
-#' #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
 #' setParametersValues(param, 1)
