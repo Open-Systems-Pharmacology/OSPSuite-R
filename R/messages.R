@@ -46,8 +46,10 @@ errorDifferentLength <- function(..., optionalMessage = NULL) {
   argnames <- sys.call()
   arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
 
-  message <- paste0(callingFunction, ": Arguments '", arguments,
-                    "' must have the same length, but they don't!", optionalMessage)
+  message <- paste0(
+    callingFunction, ": Arguments '", arguments,
+    "' must have the same length, but they don't!", optionalMessage
+  )
 
   return(message)
 }

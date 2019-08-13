@@ -8,16 +8,15 @@
 #'
 #'
 isOfType <- function(object, type) {
-  if (is.null(object)){
+  if (is.null(object)) {
     return(FALSE)
   }
 
   object <- c(object)
   isSameType <- all(sapply(
-      object,
-      function(x) inherits(x, type)
-    )
-  )
+    object,
+    function(x) inherits(x, type)
+  ))
 
   return(isSameType)
 }
