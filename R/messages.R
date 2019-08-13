@@ -24,13 +24,12 @@ errorWrongType <- function(object, optionalMessage = NULL) {
 #' @return A string representation of the error message
 errorGetEntityMultipleOutputs <- function(path, container, optionalMessage = NULL) {
   # Name of the calling function
-  callingFunction <- sys.call(-2)[[1]]
-
-
+  callingFunctions <- sys.calls()
+  callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
   message <- paste0(
     callingFunction, ": the path '", toString(path), "' located under container '",
-    getContainerPath(path),
+    container$path,
     "' leads to more than one entity! Use 'getAllXXXMatching'",
     "to get the list of all entities matching the path, where XXX stands for the entity type", optionalMessage
   )
@@ -51,12 +50,4 @@ errorDifferentLength <- function(..., optionalMessage = NULL) {
                     "' must have the same length, but they don't!", optionalMessage)
 
   return(message)
-}
-
-getContainerPath <- function(container) {
-  # Need to check if container is of type Container and Simulation
-  if (isOfType(container, "Simulation")) {
-    return(container$root$path)
-  }
-  return(container$path)
 }

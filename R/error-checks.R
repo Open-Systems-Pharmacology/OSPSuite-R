@@ -9,19 +9,18 @@
 #'
 isOfType <- function(object, type) {
   object <- c(object)
-
-  return(all(
-    sapply(
+  isSameType <- all(sapply(
       object,
       function(x) inherits(x, type)
     )
-  ))
+  )
+
+  return(isSameType)
 }
 
 isSameLength <- function(...) {
   args <- list(...)
-  return(length(
-    unique(lengths(args))
-  )
-  == 1)
+  nrOfLengths <- unique(lengths(args))
+
+  return(nrOfLengths == 1)
 }
