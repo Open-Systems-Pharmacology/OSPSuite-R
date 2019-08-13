@@ -15,6 +15,13 @@ Simulation <- R6Class(
       } else {
         stop("Property '$root' is readonly", call. = FALSE)
       }
+    },
+    path = function(value) {
+      if (missing(value)) {
+        return(self$root$path)
+      } else {
+        stop("Property '$path' is readonly", call. = FALSE)
+      }
     }
   )
 )

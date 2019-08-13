@@ -8,20 +8,23 @@
 #'
 #'
 isOfType <- function(object, type) {
-  object <- c(object)
+  if (is.null(object)){
+    return(FALSE)
+  }
 
-  return(all(
-    sapply(
+  object <- c(object)
+  isSameType <- all(sapply(
       object,
       function(x) inherits(x, type)
     )
-  ))
+  )
+
+  return(isSameType)
 }
 
 isSameLength <- function(...) {
   args <- list(...)
-  return(length(
-    unique(lengths(args))
-  )
-  == 1)
+  nrOfLengths <- length(unique(lengths(args)))
+
+  return(nrOfLengths == 1)
 }

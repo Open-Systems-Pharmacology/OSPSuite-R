@@ -2,7 +2,7 @@
 % Please edit documentation in R/messages.R
 \name{errorGetEntityMultipleOutputs}
 \alias{errorGetEntityMultipleOutputs}
-\title{Error message when single output is expected but multiple eis produced.}
+\title{Error message when single output is expected but multiple entities produced.}
 \usage{
 errorGetEntityMultipleOutputs(path, container, optionalMessage = NULL)
 }
@@ -13,6 +13,9 @@ errorGetEntityMultipleOutputs(path, container, optionalMessage = NULL)
 
 \item{optionalMessage}{A string that will be appended to the end of the message}
 }
+\value{
+A string representation of the error message
+}
 \description{
-Error message when single output is expected but multiple eis produced.
+Error message when single output is expected but multiple entities produced.
 }
