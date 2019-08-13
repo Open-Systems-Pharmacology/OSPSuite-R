@@ -7,9 +7,9 @@
 getContainer(path, container)
 }
 \arguments{
-\item{path}{Path of the container}
+\item{path}{A vector of strings relative to the \code{container}}
 
-\item{container}{The parent container used to find the container}
+\item{container}{A Container or Simulation used to find the containers}
 }
 \value{
 The [Container] with the given path or null if not found
@@ -22,4 +22,7 @@ Retrieve a single container by path under the given container
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 param <- getContainer(c("Organism", "Liver"), sim)
+}
+\seealso{
+\code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation
 }

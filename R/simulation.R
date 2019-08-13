@@ -5,7 +5,7 @@
 #' @field root The rot container of the simulation (read-only)
 Simulation <- R6Class(
   "Simulation",
-  inherit = Entity,
+  inherit = ObjectBase,
   active = list(
     root = function(value) {
       if (missing(value)) {

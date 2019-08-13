@@ -19,5 +19,5 @@ initPackage <- function() {
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 
   # initialize global variables (mostly usef for performance optimization)
-#  ospsuiteEnv$containerTask <- getNetTask("ContainerTask")
+  #  ospsuiteEnv$containerTask <- getNetTask("ContainerTask")
 }

@@ -1,10 +1,11 @@
 
 #' Retrieve all sub containers of a parent container (simulation or container instance) matching the given path criteria
 #'
-#' @param path A vector of string relative to the container
-#' @param container A Container or Simulation used to find the sub containers
+#' @param path A vector of strings relative to the \code{container}
+#' @param container A Container or Simulation used to find the containers
+#' @seealso \code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation
 #'
-#' @return A list of containers matching the path criteria
+#' @return A list of containers matching the path criteria. The list is empty if no containers matching were found.
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -17,13 +18,20 @@
 #' containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
 #' @export
 getAllContainersMatching <- function(path, container) {
+  # Test for correct inputs
+  if (!isOfType(container, c("Simulation", "Container"))) {
+    stop(errorWrongType(container))
+  }
+  if (!is.character(path)) {
+    stop(errorWrongType(path))
+  }
+
   toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
 }
 
 #' Retrieve a single container by path under the given container
 #'
-#' @param path Path of the container
-#' @param container The parent container used to find the container
+#' @inherit getAllContainersMatching
 #'
 #' @return The [Container] with the given path or null if not found
 #' @examples
@@ -34,7 +42,10 @@ getAllContainersMatching <- function(path, container) {
 #' @export
 getContainer <- function(path, container) {
   containers <- getAllContainersMatching(path, container)
-  stopifnot(length(containers) <= 1)
+  if (length(containers) > 1) {
+    stop(errorGetEntityMultipleOutputs(path, container))
+  }
+
   if (length(containers) == 0) {
     return(NULL)
   }
