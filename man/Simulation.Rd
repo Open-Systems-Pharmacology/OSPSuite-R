@@ -14,7 +14,7 @@ An OSPSuite simulation
 \section{Fields}{
 
 \describe{
-\item{\code{root}}{The rot container of the simulation (read-only)}
+\item{\code{root}}{The root container of the simulation (read-only)}
 }}
 
 \keyword{datasets}

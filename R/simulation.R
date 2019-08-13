@@ -2,7 +2,7 @@
 #' @docType class
 #' @description  An OSPSuite simulation
 #'
-#' @field root The rot container of the simulation (read-only)
+#' @field root The root container of the simulation (read-only)
 Simulation <- R6Class(
   "Simulation",
   inherit = ObjectBase,

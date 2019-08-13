@@ -3,7 +3,7 @@ context("Container")
 dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
 simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFile)
-liverPath <- c("Organism", "Liver")
+liverPath <- toPathString(c("Organism", "Liver"))
 
 test_that("It can retrieve the name of a container", {
   container <- getContainer(liverPath, sim)
@@ -22,7 +22,7 @@ test_that("It can retrieve the type of a container", {
 
 test_that("It can retrieve the path of a parameter", {
   container <- getContainer(liverPath, sim)
-  expect_equal(container$path, paste("S1", paste(liverPath, collapse = "|"), sep = "|"))
+  expect_equal(container$path, paste("S1", liverPath, sep = "|"))
 })
 
 test_that("It throwns an error when trying to set the path of a container", {

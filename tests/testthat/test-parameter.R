@@ -3,11 +3,12 @@ context("Parameter")
 dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
 simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFile)
-liverPath <- c("Organism", "Liver")
-volumePath <- c(liverPath, "Volume")
+liverPathArray <- c("Organism", "Liver")
+liverPath <- toPathString(liverPathArray)
+volumePath <- toPathString(c(liverPathArray, "Volume"))
 
 test_that("It can retrieve name of a parameter", {
-  par <- getParameter(c(liverPath, "Blood flow rate"), sim)
+  par <- getParameter(toPathString(c(liverPathArray, "Blood flow rate")), sim)
   expect_equal(par$name, "Blood flow rate")
 })
 
