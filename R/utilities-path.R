@@ -12,7 +12,7 @@ toPathArray <- function(path) {
   if (!is.character(path)) {
     stop(errorWrongType(path))
   }
-  unlist(strsplit(path, "\\|"))
+  unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)))
 }
 
 #' Convert a path array as string to a path array
@@ -28,5 +28,5 @@ toPathString <- function(pathArray) {
   if (!is.character(pathArray)) {
     stop(errorWrongType(pathArray))
   }
-  paste(pathArray, collapse = "|")
+  paste(pathArray, collapse = ospsuiteEnv$pathSeparator)
 }
