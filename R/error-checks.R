@@ -8,7 +8,7 @@
 #'
 #'
 isOfType <- function(object, type) {
-  object <- unlist(list(object))
+  object <- c(object)
 
   return(all(
     sapply(

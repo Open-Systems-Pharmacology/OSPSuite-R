@@ -15,13 +15,13 @@ errorWrongType <- function(object, optionalMessage = NULL) {
   return(message)
 }
 
-#' Error message when single output is expected but multiple eis produced.
+#' Error message when single output is expected but multiple entities produced.
 #'
 #' @param path A vector of strings relative to the \code{container}
 #' @param container A Container or Simulation used to find the entities
 #' @param optionalMessage A string that will be appended to the end of the message
 #'
-#' @return
+#' @return A string representation of the error message
 errorGetEntityMultipleOutputs <- function(path, container, optionalMessage = NULL) {
   # Name of the calling function
   callingFunction <- sys.call(-2)[[1]]

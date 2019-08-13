@@ -49,3 +49,7 @@ test_that("It returns null if the  container by path does not exist", {
 test_that("It throws an error when trying to retrieve a container by path that would result in multiple containers", {
   expect_that(getContainer(c("Organism", "*"), sim), throws_error())
 })
+
+test_that("It throws an error when no valid container is provided", {
+  expect_that(getContainer(c("Organism", "*"), "sim"), throws_error())
+})

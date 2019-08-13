@@ -79,7 +79,7 @@ toParameters <- function(netParams) {
 setParametersValues <- function(parameters, values) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
-  parameters <- unlist(list(parameters))
+  parameters <- c(parameters)
 
   # Test for correct inputs
   if (!isOfType(parameters, "Parameter")) {
