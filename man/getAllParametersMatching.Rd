@@ -7,12 +7,12 @@
 getAllParametersMatching(path, container)
 }
 \arguments{
-\item{path}{A vector of string relative to the container}
+\item{path}{A vector of strings relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the parameters}
 }
 \value{
-A list of parameters matching the path criteria
+A list of parameters matching the path criteria. The list is empty if no parameters matching were found.
 }
 \description{
 Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
@@ -27,4 +27,7 @@ params <- getAllParametersMatching(c("Organism", "*", "Volume"), sim)
 
 # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
 params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+}
+\seealso{
+\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 }

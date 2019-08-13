@@ -7,12 +7,12 @@
 getAllContainersMatching(path, container)
 }
 \arguments{
-\item{path}{A vector of string relative to the container}
+\item{path}{A vector of strings relative to the \code{container}}
 
-\item{container}{A Container or Simulation used to find the sub containers}
+\item{container}{A Container or Simulation used to find the containers}
 }
 \value{
-A list of containers matching the path criteria
+A list of containers matching the path criteria. The list is empty if no containers matching were found.
 }
 \description{
 Retrieve all sub containers of a parent container (simulation or container instance) matching the given path criteria
@@ -27,4 +27,7 @@ containers <- getAllContainersMatching(c("Organism", "*", "Intracellular"), sim)
 
 # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
 containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
+}
+\seealso{
+\code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation
 }

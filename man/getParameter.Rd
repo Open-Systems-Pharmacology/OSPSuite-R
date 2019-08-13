@@ -7,12 +7,12 @@
 getParameter(path, container)
 }
 \arguments{
-\item{path}{Path of the parameter}
+\item{path}{A vector of strings relative to the \code{container}}
 
-\item{container}{The container used to find the parameter}
+\item{container}{A Container or Simulation used to find the parameters}
 }
 \value{
-The [Parameter] with the given path or null if not found
+The \code{Parameter} with the given path or \code{NULL} if not found
 }
 \description{
 Retrieve a single parameter by path in the given container
@@ -22,4 +22,7 @@ Retrieve a single parameter by path in the given container
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 param <- getParameter(c("Organism", "Liver", "Volume"), sim)
+}
+\seealso{
+\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 }

@@ -7,8 +7,7 @@
 setParametersValues(parameters, values)
 }
 \arguments{
-\item{parameters}{A single object of type 'Parameter' or a list of such objects
-The objects are created by calling 'getParameter' or 'getAllParametersMatching'}
+\item{parameters}{A single object of type 'Parameter' or a list of such objects}
 
 \item{values}{A numeric value that should be assigned to the parameter or a vector
 of numeric values, if the value of more than one parameter should be changed. Must have the same
@@ -19,11 +18,13 @@ Set values of parameters
 }
 \examples{
 
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 param <- getParameter(c("Organism", "Liver", "Volume"), sim)
 setParametersValues(param, 1)
-params <- getAllParametersMatching(c("Organism", "Liver", "*", "Volume"), sim)
-setParametersValues(params, c(1:6))
-
+params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+setParametersValues(params, c(2, 3))
+}
+\seealso{
+\code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
 }

@@ -1,10 +1,11 @@
 
 #' Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param path A vector of string relative to the container
+#' @param path A vector of strings relative to the \code{container}
 #' @param container A Container or Simulation used to find the parameters
+#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 #'
-#' @return A list of parameters matching the path criteria
+#' @return A list of parameters matching the path criteria. The list is empty if no parameters matching were found.
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -17,16 +18,12 @@
 #' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
 #' @export
 getAllParametersMatching <- function(path, container) {
-  #Test if container is a valid R6 object
-  if (!inherits(container, c("Simulation", "Container")) && !inherits(container, "ObjectBase")){
-    stop(paste0("getAllParametersMatching: argument 'container' is not valid!
-                Use 'loadSimulation()' or 'getContainer()' to create container objects."))
+  # Test for correct inputs
+  if (!isOfType(container, c("Simulation", "Container"))) {
+    stop(errorWrongType(container))
   }
-
-  #Test if the path is a characted
-  if (!is.character(path)){
-    stop(paste0("getAllParametersMatching: argument 'path' is not valid! Must be
-                a string or a vector of strings."))
+  if (!is.character(path)) {
+    stop(errorWrongType(path))
   }
 
   toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
@@ -34,10 +31,9 @@ getAllParametersMatching <- function(path, container) {
 
 #' Retrieve a single parameter by path in the given container
 #'
-#' @param path Path of the parameter
-#' @param container The container used to find the parameter
+#' @inherit getAllParametersMatching
 #'
-#' @return The [Parameter] with the given path or null if not found
+#' @return The \code{Parameter} with the given path or \code{NULL} if not found
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -46,17 +42,15 @@ getAllParametersMatching <- function(path, container) {
 #' @export
 getParameter <- function(path, container) {
   parameters <- getAllParametersMatching(path, container)
-  if (length(parameters) > 1){
-    stop(paste0("getParameter: the path ", path, " located under container ", container,
-                " leads to more then one parameter! Use 'getAllParametersMatching'
-                to get the list of parameters matching the path"))
+  if (length(parameters) > 1) {
+    stop(errorGetEntityMultipleOutputs(path, container))
   }
 
   if (length(parameters) == 0) {
     return(NULL)
   }
 
-  parameters[[1]]
+  return(parameters[[1]])
 }
 
 toParameters <- function(netParams) {
@@ -67,7 +61,7 @@ toParameters <- function(netParams) {
 #' Set values of parameters
 #'
 #' @param parameters A single object of type 'Parameter' or a list of such objects
-#' The objects are created by calling 'getParameter' or 'getAllParametersMatching'
+#' @seealso \code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
 #'
 #' @param values A numeric value that should be assigned to the parameter or a vector
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
@@ -79,50 +73,27 @@ toParameters <- function(netParams) {
 #' sim <- loadSimulation(simPath)
 #' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
 #' setParametersValues(param, 1)
-#' params <- getAllParametersMatching(c("Organism", "Liver", "*", "Volume"), sim)
-#' setParametersValues(params, c(1:6))
-#'
+#' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+#' setParametersValues(params, c(2, 3))
 #' @export
-setParametersValues <- function(parameters, values){
-  singleParameter <- FALSE
+setParametersValues <- function(parameters, values) {
+  # Must turn the input into a list so we can iterate through even when only
+  # one parameter is passed
+  parameters <- unlist(list(parameters))
 
-  #Test if 'parameter' is an instance of the Parameter-class.
-  if (inherits(parameters, "Parameter") && inherits(parameters, "ObjectBase")){
-    singleParameter <- TRUE
-
-    #Test if parameters and values are of same length
-    if (length(values) != 1){
-      stop(paste0("setParametersValues: 'parameters' and 'Values' must be of the same length!"))
-    }
+  # Test for correct inputs
+  if (!isOfType(parameters, "Parameter")) {
+    stop(errorWrongType(parameters))
   }
-  else{
-    #Test if all parameters are valid R6 objects
-    if (!all(
-      sapply(parameters,
-             fun <- function(x){c(inherits(x, "Parameter"), inherits(x, "ObjectBase"))}))){
-      stop(paste0("setParametersValues: argument 'parameters' is not valid!
-                  Use 'getParameter()' or 'getAllParametersMatching()' to create parameter objects."))
-    }
-
-    #Test if parameters and values are of same length
-    if (length(parameters) != length(values)){
-      stop(paste0("setParametersValues: 'parameters' and 'Values' must be of the same length!"))
-    }
+  if (!is.numeric(values)) {
+    stop(errorWrongType(values))
+  }
+  if (!isSameLength(parameters, values)) {
+    stop(errorDifferentLength(parameters, values))
   }
 
-  #Test if all values are numeric
-  if (!is.numeric(values)){
-    stop(paste0("setParametersValues: argument 'values' is not valid!
-                Must be a vector of numeric entries"))
-  }
-
-  if (singleParameter){
-    parameters$value <- values
-  }
-  else{
-    for (i in seq_along(parameters)){
-      param <- parameters[[i]]
-      param$value <- values[[i]]
-    }
+  for (i in seq_along(parameters)) {
+    param <- parameters[[i]]
+    param$value <- values[[i]]
   }
 }

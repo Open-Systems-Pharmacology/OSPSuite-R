@@ -34,8 +34,6 @@ test_that("It throws an error when no valid path is provided", {
   expect_that(parameters <- getAllParametersMatching(NULL, sim), throws_error())
 })
 
-
-
 context("getParameter")
 
 test_that("It can retrieve a single parameter by path if it exists", {
@@ -56,6 +54,8 @@ context("setParametersValues")
 
 test_that("It throws an error when no valid parameter objects are provided", {
   expect_that(setParametersValues("parameter", 1), throws_error())
+  parameters <- c(getAllParametersMatching(c("Organism", "Liver", "*", "Volume"), sim), "1")
+  expect_that(setParametersValues(parameters, 1), throws_error())
 })
 
 test_that("It throws an error when no valid values are provided", {
@@ -79,6 +79,8 @@ test_that("It can set the value of a single parameter", {
 test_that("It can set the values of multiple parameters", {
   parameters <- getAllParametersMatching(c("Organism", "Liver", "*", "Volume"), sim)
   setParametersValues(parameters, c(1:6))
-  newVals <- sapply(parameters, fun <- function(x){x$value})
+  newVals <- sapply(parameters, fun <- function(x) {
+    x$value
+  })
   expect_equal(newVals, c(1:6))
 })
