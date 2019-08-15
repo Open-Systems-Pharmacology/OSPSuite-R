@@ -13,14 +13,14 @@ Simulation <- R6Class(
         root <- rClr::clrGet(model, "Root")
         Container$new(root)
       } else {
-        stop("Property '$root' is readonly", call. = FALSE)
+        stop(messages$errorPropertyReadOnly("root"), call. = FALSE)
       }
     },
     path = function(value) {
       if (missing(value)) {
         return(self$root$path)
       } else {
-        stop("Property '$path' is readonly", call. = FALSE)
+        stop(messages$errorPropertyReadOnly("path"), call. = FALSE)
       }
     }
   )

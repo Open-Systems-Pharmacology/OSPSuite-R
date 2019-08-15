@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-path.R
 \name{toPathString}
 \alias{toPathString}
-\title{Convert a path array as string to a path array}
+\title{Convert a path array to a path as string with entries separated by '|'}
 \usage{
 toPathString(pathArray)
 }
@@ -13,7 +13,7 @@ toPathString(pathArray)
 A string built using each entry of the pathArray
 }
 \description{
-Convert a path array as string to a path array
+Convert a path array to a path as string with entries separated by '|'
 }
 \examples{
 

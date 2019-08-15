@@ -27,7 +27,7 @@ test_that("It can retrieve all parameters matching a given criteria with generic
 })
 
 test_that("It throws an error when no valid container is provided", {
-  expect_that(parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume"), NULL)), throws_error())
+  expect_that(parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), NULL), throws_error())
 })
 
 test_that("It throws an error when no valid path is provided", {

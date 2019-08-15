@@ -20,7 +20,7 @@ enum <- function(enumValues) {
   if (is.null(enumNames)) {
     names(myEnum) <- myEnum
   } else if ("" %in% enumNames) {
-    stop("The enumValues has some but not all names assigned. They must be all assigned or none assigned")
+    stop(messages$errorEnumNotAllNames)
   }
   return(myEnum)
 }

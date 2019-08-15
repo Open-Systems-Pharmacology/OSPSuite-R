@@ -19,12 +19,8 @@
 #' @export
 getAllParametersMatching <- function(path, container) {
   # Test for correct inputs
-  if (!isOfType(container, c("Simulation", "Container"))) {
-    stop(errorWrongType(container))
-  }
-  if (!is.character(path)) {
-    stop(errorWrongType(path))
-  }
+  validateIsOfType(container, c("Simulation", "Container"))
+  validateIsOfType(path, "character")
 
   toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
 }
@@ -43,7 +39,7 @@ getAllParametersMatching <- function(path, container) {
 getParameter <- function(path, container) {
   parameters <- getAllParametersMatching(path, container)
   if (length(parameters) > 1) {
-    stop(errorGetEntityMultipleOutputs(path, container))
+    stop(messages$errorGetEntityMultipleOutputs(path, container))
   }
 
   if (length(parameters) == 0) {
@@ -82,15 +78,9 @@ setParametersValues <- function(parameters, values) {
   parameters <- c(parameters)
 
   # Test for correct inputs
-  if (!isOfType(parameters, "Parameter")) {
-    stop(errorWrongType(parameters))
-  }
-  if (!is.numeric(values)) {
-    stop(errorWrongType(values))
-  }
-  if (!isSameLength(parameters, values)) {
-    stop(errorDifferentLength(parameters, values))
-  }
+  validateIsOfType(parameters, "Parameter")
+  validateIsOfType(values, c("numeric", "integer"))
+  validateIsSameLength(parameters, values)
 
   for (i in seq_along(parameters)) {
     param <- parameters[[i]]
