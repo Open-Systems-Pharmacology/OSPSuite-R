@@ -1,7 +1,8 @@
 
 #' Convert a path defined as string to a path array
 #'
-#' @param path A string representation of a path
+#' @param path A string representation of a path, with path entries separated
+#' by '|'
 #'
 #' @return An array containing one element for each path entry
 #' @examples
@@ -15,7 +16,7 @@ toPathArray <- function(path) {
   unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)))
 }
 
-#' Convert a path array as string to a path array
+#' Convert a path array to a path as string with entries separated by '|'
 #'
 #' @param pathArray An array of path entries
 #'

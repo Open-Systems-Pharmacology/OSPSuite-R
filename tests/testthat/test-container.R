@@ -25,19 +25,19 @@ test_that("It can retrieve the path of a parameter", {
   expect_equal(container$path, paste("S1", liverPath, sep = "|"))
 })
 
-test_that("It throwns an error when trying to set the path of a container", {
+test_that("It throws an error when trying to set the path of a container", {
   container <- getContainer(liverPath, sim)
   expect_that(container$path <- "TOTO", throws_error())
 })
 
 
-test_that("It throwns an error when trying to set the id of a container", {
+test_that("It throws an error when trying to set the id of a container", {
   container <- getContainer(liverPath, sim)
   expect_that(container$id <- "id", throws_error())
 })
 
 
-test_that("It throwns an error when trying to set the name of a container", {
+test_that("It throws an error when trying to set the name of a container", {
   container <- getContainer(liverPath, sim)
   expect_that(container$name <- "name", throws_error())
 })
