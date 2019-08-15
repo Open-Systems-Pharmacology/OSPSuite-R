@@ -12,7 +12,7 @@ Container <- R6Class("Container",
     containerTypeInt = function(value) {
       private$wrapReadOnlyProperties("ContainerType", value)
     },
-    containerTypeStr = function(value){
+    containerTypeStr = function(value) {
       names(which(ContainerType == self$containerTypeInt))
     }
   ),

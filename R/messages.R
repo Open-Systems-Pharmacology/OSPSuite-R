@@ -50,6 +50,6 @@ messages <- list(
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned"
 )
 
-formatNumerics <- function(numerics, digits = 5, nsmall = 2){
+formatNumerics <- function(numerics, digits = 5, nsmall = 2) {
   format(numerics, digits = digits, nsmall = nsmall)
 }
