@@ -79,7 +79,7 @@ setParametersValues <- function(parameters, values) {
 
   # Test for correct inputs
   validateIsOfType(parameters, "Parameter")
-  validateIsOfType(values, "numeric")
+  validateIsOfType(values, c("numeric", "integer"))
   validateIsSameLength(parameters, values)
 
   for (i in seq_along(parameters)) {

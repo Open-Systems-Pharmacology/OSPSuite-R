@@ -1,64 +1,51 @@
 messages <- list(
+  errorWrongType = function(objectName, optionalMessage = NULL) {
+    # Name of the calling function
+    callingFunctions <- sys.calls()
+    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
-errorWrongType = function(objectName, optionalMessage = NULL) {
-  # Name of the calling function
-  callingFunctions <- sys.calls()
-  callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+    message <- paste0(
+      callingFunction, ": argument '", objectName,
+      "' is of wrong type! Type in '?", callingFunction,
+      "' for information on required types", optionalMessage
+    )
 
-  message <- paste0(
-    callingFunction, ": argument '", objectName,
-    "' is of wrong type! Type in '?", callingFunction,
-    "' for information on required types", optionalMessage
-  )
+    return(message)
+  },
 
-  return(message)
-},
+  errorGetEntityMultipleOutputs = function(path, container, optionalMessage = NULL) {
+    # Name of the calling function
+    callingFunctions <- sys.calls()
+    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
-#' Error message when single output is expected but multiple entities produced.
-#'
-#' @param path A vector of strings relative to the \code{container}
-#' @param container A Container or Simulation used to find the entities
-#' @param optionalMessage A string that will be appended to the end of the message
-#'
-#' @return A string representation of the error message
-errorGetEntityMultipleOutputs = function(path, container, optionalMessage = NULL) {
-  # Name of the calling function
-  callingFunctions <- sys.calls()
-  callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+    message <- paste0(
+      callingFunction, ": the path '", toString(path), "' located under container '",
+      container$path,
+      "' leads to more than one entity! Use 'getAllXXXMatching'",
+      "to get the list of all entities matching the path, where XXX stands for the entity type", optionalMessage
+    )
 
-  message <- paste0(
-    callingFunction, ": the path '", toString(path), "' located under container '",
-    container$path,
-    "' leads to more than one entity! Use 'getAllXXXMatching'",
-    "to get the list of all entities matching the path, where XXX stands for the entity type", optionalMessage
-  )
+    return(message)
+  },
 
-  return(message)
-},
+  errorDifferentLength = function(objectNames, optionalMessage = NULL) {
+    # Name of the calling function
+    callingFunctions <- sys.calls()
+    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
-errorDifferentLength = function(..., optionalMessage = NULL) {
-  # Name of the calling function
-  callingFunctions <- sys.calls()
-  callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+    message <- paste0(
+      callingFunction, ": Arguments '", objectNames,
+      "' must have the same length, but they don't!", optionalMessage
+    )
 
-  # Name of the arguments
-  argnames <- sys.call()
-  arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
+    return(message)
+  },
 
+  errorPropertyReadOnly = function(propertyName, optionalMessage = NULL) {
+    message <- paste0("Property '$", propertyName, "' is readonly")
 
-  message <- paste0(
-    callingFunction, ": Arguments '", arguments,
-    "' must have the same length, but they don't!", optionalMessage
-  )
+    return(message)
+  },
 
-  return(message)
-},
-
-errorPropertyReadOnly = function(propertyName, optionalMessage = NULL){
-  message <- paste0("Property '$", propertyName, "' is readonly")
-
-  return(message)
-},
-
-errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned"
+  errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned"
 )

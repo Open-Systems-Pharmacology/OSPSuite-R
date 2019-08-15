@@ -19,7 +19,7 @@
 #' @export
 getAllContainersMatching <- function(path, container) {
   # Test for correct inputs
-  vvalidateIsOfType(container, c("Simulation", "Container"))
+  validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
   toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
