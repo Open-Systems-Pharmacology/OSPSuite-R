@@ -7,7 +7,8 @@
 toPathArray(path)
 }
 \arguments{
-\item{path}{A string representation of a path}
+\item{path}{A string representation of a path, with path entries separated
+by '|'}
 }
 \value{
 An array containing one element for each path entry

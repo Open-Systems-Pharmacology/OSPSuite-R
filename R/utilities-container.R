@@ -19,12 +19,8 @@
 #' @export
 getAllContainersMatching <- function(path, container) {
   # Test for correct inputs
-  if (!isOfType(container, c("Simulation", "Container"))) {
-    stop(errorWrongType(container))
-  }
-  if (!is.character(path)) {
-    stop(errorWrongType(path))
-  }
+  vvalidateIsOfType(container, c("Simulation", "Container"))
+  validateIsOfType(path, "character")
 
   toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
 }
@@ -43,7 +39,7 @@ getAllContainersMatching <- function(path, container) {
 getContainer <- function(path, container) {
   containers <- getAllContainersMatching(path, container)
   if (length(containers) > 1) {
-    stop(errorGetEntityMultipleOutputs(path, container))
+    stop(messages$errorGetEntityMultipleOutputs(path, container))
   }
 
   if (length(containers) == 0) {

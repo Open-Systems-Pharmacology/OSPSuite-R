@@ -27,3 +27,19 @@ isSameLength <- function(...) {
 
   return(nrOfLengths == 1)
 }
+
+
+validateIsOfType <- function(object, type){
+  if (!isOfType(object, type)){
+    # Name of the variable in the calling function
+    objectName <- deparse(substitute(object))
+
+    stop(messages$errorWrongType(objectName))
+  }
+}
+
+validateIsSameLength <- function(...){
+  if (!isSameLength(list(...))){
+    stop(messages$errorDifferentLength(list(...)))
+  }
+}

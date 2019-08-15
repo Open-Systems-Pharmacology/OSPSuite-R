@@ -1,10 +1,9 @@
-errorWrongType <- function(object, optionalMessage = NULL) {
+messages <- list(
+
+errorWrongType = function(objectName, optionalMessage = NULL) {
   # Name of the calling function
   callingFunctions <- sys.calls()
   callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
-
-  # Name of the variable in the calling function
-  objectName <- deparse(substitute(object))
 
   message <- paste0(
     callingFunction, ": argument '", objectName,
@@ -13,7 +12,7 @@ errorWrongType <- function(object, optionalMessage = NULL) {
   )
 
   return(message)
-}
+},
 
 #' Error message when single output is expected but multiple entities produced.
 #'
@@ -22,7 +21,7 @@ errorWrongType <- function(object, optionalMessage = NULL) {
 #' @param optionalMessage A string that will be appended to the end of the message
 #'
 #' @return A string representation of the error message
-errorGetEntityMultipleOutputs <- function(path, container, optionalMessage = NULL) {
+errorGetEntityMultipleOutputs = function(path, container, optionalMessage = NULL) {
   # Name of the calling function
   callingFunctions <- sys.calls()
   callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
@@ -35,9 +34,9 @@ errorGetEntityMultipleOutputs <- function(path, container, optionalMessage = NUL
   )
 
   return(message)
-}
+},
 
-errorDifferentLength <- function(..., optionalMessage = NULL) {
+errorDifferentLength = function(..., optionalMessage = NULL) {
   # Name of the calling function
   callingFunctions <- sys.calls()
   callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
@@ -46,10 +45,20 @@ errorDifferentLength <- function(..., optionalMessage = NULL) {
   argnames <- sys.call()
   arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
 
+
   message <- paste0(
     callingFunction, ": Arguments '", arguments,
     "' must have the same length, but they don't!", optionalMessage
   )
 
   return(message)
-}
+},
+
+errorPropertyReadOnly = function(propertyName, optionalMessage = NULL){
+  message <- paste0("Property '$", propertyName, "' is readonly")
+
+  return(message)
+},
+
+errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned"
+)

@@ -10,9 +10,7 @@
 #' array <- toPathArray("Organism|Organ|Liver")
 #' @export
 toPathArray <- function(path) {
-  if (!is.character(path)) {
-    stop(errorWrongType(path))
-  }
+  validateIsOfType(path, "character")
   unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)))
 }
 
@@ -26,8 +24,6 @@ toPathArray <- function(path) {
 #' path <- toPathString(c("Organism", "Organ", "Liver"))
 #' @export
 toPathString <- function(pathArray) {
-  if (!is.character(pathArray)) {
-    stop(errorWrongType(pathArray))
-  }
+  validateIsOfType(pathArray, "character")
   paste(pathArray, collapse = ospsuiteEnv$pathSeparator)
 }

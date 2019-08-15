@@ -43,7 +43,7 @@ DotNetWrapper <- R6::R6Class(
     },
 
     throwPropertyIsReadonly = function(propertyName) {
-      stop(paste0("Property ", "'$", propertyName, "' is readonly"), call. = FALSE)
+      stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     }
   )
 )
