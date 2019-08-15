@@ -12,10 +12,10 @@
 #' sim <- loadSimulation(simPath)
 #'
 #' # Return all `Volume` parameters define in a all direct containers of the organism
-#' params <- getAllParametersMatching(c("Organism", "*", "Volume"), sim)
+#' params <- getAllParametersMatching("Organism|*|Volume", sim)
 #'
 #' # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
-#' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+#' params <- getAllParametersMatching("Organism|**|Volume", sim)
 #' @export
 getAllParametersMatching <- function(path, container) {
   # Test for correct inputs
@@ -38,7 +38,7 @@ getAllParametersMatching <- function(path, container) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
+#' param <- getParameter("Organism|Liver|Volume", sim)
 #' @export
 getParameter <- function(path, container) {
   parameters <- getAllParametersMatching(path, container)
@@ -71,9 +71,9 @@ toParameters <- function(netParams) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' param <- getParameter(c("Organism", "Liver", "Volume"), sim)
+#' param <- getParameter("Organism|Liver|Volume", sim)
 #' setParametersValues(param, 1)
-#' params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+#' params <- getAllParametersMatching("Organism|**|Volume", sim)
 #' setParametersValues(params, c(2, 3))
 #' @export
 setParametersValues <- function(parameters, values) {

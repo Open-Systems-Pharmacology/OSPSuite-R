@@ -23,10 +23,10 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 # Return all `Intracellular` containers define in a all direct containers of the organism
-containers <- getAllContainersMatching(c("Organism", "*", "Intracellular"), sim)
+containers <- getAllContainersMatching("Organism|*|Intracellular", sim)
 
 # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
-containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
+containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 }
 \seealso{
 \code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation

@@ -12,10 +12,10 @@
 #' sim <- loadSimulation(simPath)
 #'
 #' # Return all `Intracellular` containers define in a all direct containers of the organism
-#' containers <- getAllContainersMatching(c("Organism", "*", "Intracellular"), sim)
+#' containers <- getAllContainersMatching("Organism|*|Intracellular", sim)
 #'
 #' # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
-#' containers <- getAllContainersMatching(c("Organism", "**", "Intracellular"), sim)
+#' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 #' @export
 getAllContainersMatching <- function(path, container) {
   # Test for correct inputs
@@ -38,7 +38,7 @@ getAllContainersMatching <- function(path, container) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' param <- getContainer(c("Organism", "Liver"), sim)
+#' param <- getContainer("Organism|Liver", sim)
 #' @export
 getContainer <- function(path, container) {
   containers <- getAllContainersMatching(path, container)

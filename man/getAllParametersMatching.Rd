@@ -23,10 +23,10 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 # Return all `Volume` parameters define in a all direct containers of the organism
-params <- getAllParametersMatching(c("Organism", "*", "Volume"), sim)
+params <- getAllParametersMatching("Organism|*|Volume", sim)
 
 # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
-params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+params <- getAllParametersMatching("Organism|**|Volume", sim)
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation

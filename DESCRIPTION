@@ -40,4 +40,5 @@ Collate:
     'simulation.R'
     'utilities-container.R'
     'utilities-parameter.R'
+    'utilities-path.R'
     'zzz.R'

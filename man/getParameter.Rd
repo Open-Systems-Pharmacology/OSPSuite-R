@@ -21,7 +21,7 @@ Retrieve a single parameter by path in the given container
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-param <- getParameter(c("Organism", "Liver", "Volume"), sim)
+param <- getParameter("Organism|Liver|Volume", sim)
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation

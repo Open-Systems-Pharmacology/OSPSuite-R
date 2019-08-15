@@ -1,0 +1,20 @@
+context("toPathArray")
+
+test_that("It should convert a valid path to array", {
+  expect_identical(toPathArray("Organism|Liver"), c("Organism", "Liver"))
+})
+
+test_that("It should throw an error if the argument is not a string ", {
+  expect_that(toPathArray(function() {}), throws_error())
+})
+
+
+context("toPathString")
+
+test_that("It should convert a valid path array to string", {
+  expect_identical(toPathString(c("Organism", "Liver")), "Organism|Liver")
+})
+
+test_that("It should throw an error if the argument is not a string ", {
+  expect_that(toPathString(function() {}), throws_error())
+})

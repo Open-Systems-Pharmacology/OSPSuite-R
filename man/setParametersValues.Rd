@@ -20,9 +20,9 @@ Set values of parameters
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-param <- getParameter(c("Organism", "Liver", "Volume"), sim)
+param <- getParameter("Organism|Liver|Volume", sim)
 setParametersValues(param, 1)
-params <- getAllParametersMatching(c("Organism", "**", "Volume"), sim)
+params <- getAllParametersMatching("Organism|**|Volume", sim)
 setParametersValues(params, c(2, 3))
 }
 \seealso{
