@@ -9,8 +9,8 @@ Simulation <- R6Class(
   active = list(
     root = function(value) {
       if (missing(value)) {
-        model <- rClr::clrGet(self$ref, "Model")
-        root <- rClr::clrGet(model, "Root")
+        model <- clrGet(self$ref, "Model")
+        root <- clrGet(model, "Root")
         Container$new(root)
       } else {
         stop(messages$errorPropertyReadOnly("root"), call. = FALSE)

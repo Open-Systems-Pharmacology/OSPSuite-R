@@ -10,7 +10,7 @@
 #'   }
 #'
 #' @importFrom R6 R6Class
-DotNetWrapper <- R6::R6Class(
+DotNetWrapper <- R6Class(
   "DotNetWrapper",
   public = list(
     ref = NULL,
@@ -21,14 +21,14 @@ DotNetWrapper <- R6::R6Class(
   private = list(
     wrapProperties = function(propertyName, value) {
       if (missing(value)) {
-        rClr::clrGet(self$ref, propertyName)
+        clrGet(self$ref, propertyName)
       } else {
-        rClr::clrSet(self$ref, propertyName, value)
+        clrSet(self$ref, propertyName, value)
       }
     },
     wrapReadOnlyProperties = function(propertyName, value) {
       if (missing(value)) {
-        rClr::clrGet(self$ref, propertyName)
+        clrGet(self$ref, propertyName)
       } else {
         private$throwPropertyIsReadonly(propertyName)
       }
@@ -36,7 +36,7 @@ DotNetWrapper <- R6::R6Class(
 
     wrapExtensionMethod = function(typename, methodName, propertyName, value) {
       if (missing(value)) {
-        rClr::clrCallStatic(typename, methodName, self$ref)
+        clrCallStatic(typename, methodName, self$ref)
       } else {
         private$throwPropertyIsReadonly(propertyName)
       }
