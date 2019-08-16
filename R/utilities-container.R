@@ -22,7 +22,7 @@ getAllContainersMatching <- function(path, container) {
   validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
-  toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
+  toContainers(clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
 }
 
 #' Retrieve a single container by path under the given container

@@ -22,7 +22,7 @@ getAllParametersMatching <- function(path, container) {
   validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
-  toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
+  toParameters(clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
 }
 
 #' Retrieve a single parameter by path in the given container

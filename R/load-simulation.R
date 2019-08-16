@@ -5,6 +5,6 @@
 #' @export
 loadSimulation <- function(pkmlSimulationFile) {
   simulationLoader <- getNetTask("SimulationLoader")
-  netSim <- rClr::clrCall(simulationLoader, "LoadSimulation", pkmlSimulationFile)
+  netSim <- clrCall(simulationLoader, "LoadSimulation", pkmlSimulationFile)
   Simulation$new(netSim)
 }
