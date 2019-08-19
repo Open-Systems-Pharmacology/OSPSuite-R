@@ -26,18 +26,21 @@ getAllContainersMatching <- function(path, container) {
   validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
-  #Every set of containers created by a distinct path string is stored in its own list
-  containers <- lapply(path, function(singlePath){
-    toContainers(clrCall(getContainerTask(), "AllContainersMatching",
-                        container$ref, singlePath))})
+  # Every set of containers created by a distinct path string is stored in its own list
+  containers <- lapply(path, function(singlePath) {
+    toContainers(clrCall(
+      getContainerTask(), "AllContainersMatching",
+      container$ref, singlePath
+    ))
+  })
 
   nrOfContainerSets <- length(containers)
   containers <- unlist(containers)
 
-  #If the search results in multiple container lists (== path is a list of strings),
-  #The results have to be checked for duplicates
-  if (nrOfContainerSets > 1){
-    if (!length(containers) == 0){
+  # If the search results in multiple container lists (== path is a list of strings),
+  # The results have to be checked for duplicates
+  if (nrOfContainerSets > 1) {
+    if (!length(containers) == 0) {
       containers <- uniqueEntity(containers)
     }
   }

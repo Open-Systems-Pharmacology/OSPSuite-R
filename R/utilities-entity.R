@@ -12,28 +12,29 @@
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#'  parameters <- c(getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
-#'  getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
-#'  getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim))
+#' parameters <- c(
+#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
+#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
+#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
+#' )
 #'
-#'  # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
-#'  uniqueEntity(parameters, compareBy = "id")
-
-uniqueEntity <- function(entities, compareBy = "id"){
-  if(is.null(entities)){
+#' # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
+#' uniqueEntity(parameters, compareBy = "id")
+uniqueEntity <- function(entities, compareBy = "id") {
+  if (is.null(entities)) {
     return(NULL)
   }
 
   validateIsOfType(entities, "Entity")
-  if (!compareBy %in% c("id", "name", "path")){
+  if (!compareBy %in% c("id", "name", "path")) {
     stop(messages$errorUniqueEntityWrongCompareBy)
   }
 
   uniqueEntities <- new.env(parent = emptyenv())
 
-  for (i in seq_along(entities)){
+  for (i in seq_along(entities)) {
     propertyToCompare <- entities[[i]][[compareBy]]
-    if (!exists(propertyToCompare, where = uniqueEntities)){
+    if (!exists(propertyToCompare, where = uniqueEntities)) {
       uniqueEntities[[propertyToCompare]] <- entities[[i]]
     }
   }

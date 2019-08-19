@@ -26,18 +26,21 @@ getAllParametersMatching <- function(path, container) {
   validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
-  #Every set of parameters created by a distinct path string is stored in its own list
-  parameters <- lapply(path, function(singlePath){
-    toParameters(clrCall(getContainerTask(), "AllParametersMatching",
-                          container$ref, singlePath))})
+  # Every set of parameters created by a distinct path string is stored in its own list
+  parameters <- lapply(path, function(singlePath) {
+    toParameters(clrCall(
+      getContainerTask(), "AllParametersMatching",
+      container$ref, singlePath
+    ))
+  })
 
   nrOfParameterSets <- length(parameters)
   parameters <- unlist(parameters)
 
-  #If the search results in multiple parameter lists (== path is a list of strings),
-  #The results have to be checked for duplicates
-  if (nrOfParameterSets > 1){
-    if (!length(parameters) == 0){
+  # If the search results in multiple parameter lists (== path is a list of strings),
+  # The results have to be checked for duplicates
+  if (nrOfParameterSets > 1) {
+    if (!length(parameters) == 0) {
       parameters <- uniqueEntity(parameters)
     }
   }

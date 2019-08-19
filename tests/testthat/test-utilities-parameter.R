@@ -27,17 +27,21 @@ test_that("It can retrieve all parameters matching a given criteria with generic
 })
 
 test_that("It can retrieve parameters from multiple paths", {
-  parameters <- getAllParametersMatching(c(toPathString(c("Organism", "Muscle", "**", "Volume")),
-                                           toPathString(c("Organism", "Muscle", "Intracellular", "Volume")),
-                                           toPathString(c("Organism", "Bone", "Intracellular", "Volume"))), sim)
+  parameters <- getAllParametersMatching(c(
+    toPathString(c("Organism", "Muscle", "**", "Volume")),
+    toPathString(c("Organism", "Muscle", "Intracellular", "Volume")),
+    toPathString(c("Organism", "Bone", "Intracellular", "Volume"))
+  ), sim)
   expect_equal(length(parameters), 6) # 4 compartments + own volume + volume of bone intracellular
 })
 
 test_that("It returns an empty list when no parameter was found", {
   parameters <- getAllParametersMatching(c(toPathString(c("Organism", "Muscles", "**", "Volume"))), sim)
   expect_equal(length(parameters), 0)
-  parameters <- getAllParametersMatching(c(toPathString(c("Organism", "Muscles", "**", "Volume")),
-                                                        toPathString(c("Organism", "Muscles", "Intracellular", "Volume"))), sim)
+  parameters <- getAllParametersMatching(c(
+    toPathString(c("Organism", "Muscles", "**", "Volume")),
+    toPathString(c("Organism", "Muscles", "Intracellular", "Volume"))
+  ), sim)
   expect_equal(length(parameters), 0)
 })
 
