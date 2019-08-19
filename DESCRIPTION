@@ -39,6 +39,7 @@ Collate:
     'run-simulation.R'
     'simulation.R'
     'utilities-container.R'
+    'utilities-entity.R'
     'utilities-parameter.R'
     'utilities-path.R'
     'zzz.R'

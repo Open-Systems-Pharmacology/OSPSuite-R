@@ -26,6 +26,21 @@ test_that("It can retrieve all containers matching a given criteria with generic
   expect_equal(length(containers), 28)
 })
 
+test_that("It can retrieve containers from multiple paths", {
+  containers <- getAllContainersMatching(c(toPathString(c("Organism", "**", "Interstitial")),
+                                           toPathString(c("Organism", "Muscle", "Interstitial")),
+                                           toPathString(c("Organism", "Bone", "Intracellular"))), sim)
+  expect_equal(length(containers), 29)
+})
+
+test_that("It returns an empty list when no container was found", {
+  containers <- getAllContainersMatching(c(toPathString(c("Organisms", "**", "Interstitial"))), sim)
+  expect_equal(length(containers), 0)
+  containers <- getAllContainersMatching(c(toPathString(c("Organisms", "**", "Interstitial")),
+                                         toPathString(c("Organisms", "Muscle", "Interstitial"))), sim)
+  expect_equal(length(containers), 0)
+})
+
 test_that("It throws an error when no valid container is provided", {
   expect_that(containers <- getAllContainersMatching(toPathString(c("Organism", "**", "Interstitial")), NULL), throws_error())
 })
