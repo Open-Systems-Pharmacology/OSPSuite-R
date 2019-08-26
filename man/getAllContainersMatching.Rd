@@ -4,10 +4,10 @@
 \alias{getAllContainersMatching}
 \title{Retrieve all sub containers of a parent container (simulation or container instance) matching the given path criteria}
 \usage{
-getAllContainersMatching(path, container)
+getAllContainersMatching(paths, container)
 }
 \arguments{
-\item{path}{A vector of strings relative to the \code{container}}
+\item{paths}{A vector of strings relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the containers}
 }

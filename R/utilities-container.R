@@ -1,7 +1,7 @@
 
 #' Retrieve all sub containers of a parent container (simulation or container instance) matching the given path criteria
 #'
-#' @param path A vector of strings relative to the \code{container}
+#' @param paths A vector of strings relative to the \code{container}
 #' @param container A Container or Simulation used to find the containers
 #' @seealso \code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation
 #'
@@ -21,31 +21,16 @@
 #' # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
 #' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 #' @export
-getAllContainersMatching <- function(path, container) {
+getAllContainersMatching <- function(paths, container) {
   # Test for correct inputs
   validateIsOfType(container, c("Simulation", "Container"))
-  validateIsOfType(path, "character")
+  validateIsOfType(paths, "character")
 
-  # Every set of containers created by a distinct path string is stored in its own list
-  containers <- lapply(path, function(singlePath) {
-    toContainers(clrCall(
-      getContainerTask(), "AllContainersMatching",
-      container$ref, singlePath
-    ))
-  })
-
-  nrOfContainerSets <- length(containers)
-  containers <- unlist(containers)
-
-  # If the search results in multiple container lists (== path is a list of strings),
-  # The results have to be checked for duplicates
-  if (nrOfContainerSets > 1) {
-    if (!length(containers) == 0) {
-      containers <- uniqueEntity(containers)
-    }
+  findContainersByPath <- function(path) {
+    toContainers(clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
   }
 
-  return(containers)
+  return(unify(findContainersByPath, paths))
 }
 
 #' Retrieve a single container by path under the given container

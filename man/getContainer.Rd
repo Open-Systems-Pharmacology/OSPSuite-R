@@ -7,8 +7,6 @@
 getContainer(path, container)
 }
 \arguments{
-\item{path}{A vector of strings relative to the \code{container}}
-
 \item{container}{A Container or Simulation used to find the containers}
 }
 \value{
