@@ -1,7 +1,7 @@
 
 #' Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param path A vector of strings relative to the \code{container}
+#' @param paths A vector of strings relative to the \code{container}
 #' @param container A Container or Simulation used to find the parameters
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 #'
