@@ -1,0 +1,45 @@
+#' Extract Unique Elements of type 'Entity'
+#'
+#' @param entities List of objects of type 'Entity'
+#' @param compareBy A string defining the property that is compared by.
+#' Can take values 'id', 'name', and 'path'. Default is 'id'.
+#'
+#' @return List of entities that are unique for the property defined by the
+#' argument 'compareBy'
+#' @export
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' parameters <- c(
+#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
+#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
+#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
+#' )
+#'
+#' # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
+#' uniqueEntity(parameters, compareBy = "id")
+uniqueEntity <- function(entities, compareBy = "id") {
+  if (is.null(entities)) {
+    return(NULL)
+  }
+
+  validateIsOfType(entities, "Entity")
+  if (!compareBy %in% c("id", "name", "path")) {
+    stop(messages$errorUniqueEntityWrongCompareBy)
+  }
+
+  uniqueEntities <- new.env(parent = emptyenv())
+
+  for (i in seq_along(entities)) {
+    propertyToCompare <- entities[[i]][[compareBy]]
+    if (!exists(propertyToCompare, where = uniqueEntities)) {
+      uniqueEntities[[propertyToCompare]] <- entities[[i]]
+    }
+  }
+  uniqueEntities <- mget(x = names(uniqueEntities), uniqueEntities)
+  uniqueEntities <- unname(uniqueEntities)
+
+  return(uniqueEntities)
+}

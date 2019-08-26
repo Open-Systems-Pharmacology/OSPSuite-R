@@ -11,8 +11,12 @@
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' # Return all `Volume` parameters define in a all direct containers of the organism
+#' # Return all `Volume` parameters defined in all direct containers of the organism
 #' params <- getAllParametersMatching("Organism|*|Volume", sim)
+#'
+#' # Return all `Volume` parameters defined in all direct containers of the organism
+#' # and the parameter 'Weight (tissue)' of the container 'Liver'
+#' params <- getAllParametersMatching(c("Organism|*|Volume", "Organism|Liver|Weight (tissue)"), sim)
 #'
 #' # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
@@ -22,7 +26,26 @@ getAllParametersMatching <- function(path, container) {
   validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
-  toParameters(clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
+  # Every set of parameters created by a distinct path string is stored in its own list
+  parameters <- lapply(path, function(singlePath) {
+    toParameters(clrCall(
+      getContainerTask(), "AllParametersMatching",
+      container$ref, singlePath
+    ))
+  })
+
+  nrOfParameterSets <- length(parameters)
+  parameters <- unlist(parameters)
+
+  # If the search results in multiple parameter lists (== path is a list of strings),
+  # The results have to be checked for duplicates
+  if (nrOfParameterSets > 1) {
+    if (!length(parameters) == 0) {
+      parameters <- uniqueEntity(parameters)
+    }
+  }
+
+  return(parameters)
 }
 
 #' Retrieve a single parameter by path in the given container

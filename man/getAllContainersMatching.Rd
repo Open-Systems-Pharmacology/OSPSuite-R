@@ -22,8 +22,12 @@ Retrieve all sub containers of a parent container (simulation or container insta
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-# Return all `Intracellular` containers define in a all direct containers of the organism
+# Return all `Intracellular` containers defined in all direct containers of the organism
 containers <- getAllContainersMatching("Organism|*|Intracellular", sim)
+
+# Return all `Intracellular` containers defined in all direct containers of the organism
+# and the container "Interstitial" under 'Organism|Brain'
+containers <- getAllContainersMatching(c("Organism|*|Intracellular", "Organism|Brain|Interstitial"), sim)
 
 # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
 containers <- getAllContainersMatching("Organism|**|Intracellular", sim)

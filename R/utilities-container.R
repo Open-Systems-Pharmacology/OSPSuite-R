@@ -11,8 +11,12 @@
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' # Return all `Intracellular` containers define in a all direct containers of the organism
+#' # Return all `Intracellular` containers defined in all direct containers of the organism
 #' containers <- getAllContainersMatching("Organism|*|Intracellular", sim)
+#'
+#' # Return all `Intracellular` containers defined in all direct containers of the organism
+#' # and the container "Interstitial" under 'Organism|Brain'
+#' containers <- getAllContainersMatching(c("Organism|*|Intracellular", "Organism|Brain|Interstitial"), sim)
 #'
 #' # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
 #' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
@@ -22,7 +26,26 @@ getAllContainersMatching <- function(path, container) {
   validateIsOfType(container, c("Simulation", "Container"))
   validateIsOfType(path, "character")
 
-  toContainers(clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
+  # Every set of containers created by a distinct path string is stored in its own list
+  containers <- lapply(path, function(singlePath) {
+    toContainers(clrCall(
+      getContainerTask(), "AllContainersMatching",
+      container$ref, singlePath
+    ))
+  })
+
+  nrOfContainerSets <- length(containers)
+  containers <- unlist(containers)
+
+  # If the search results in multiple container lists (== path is a list of strings),
+  # The results have to be checked for duplicates
+  if (nrOfContainerSets > 1) {
+    if (!length(containers) == 0) {
+      containers <- uniqueEntity(containers)
+    }
+  }
+
+  return(containers)
 }
 
 #' Retrieve a single container by path under the given container

@@ -47,5 +47,7 @@ messages <- list(
     return(message)
   },
 
-  errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned"
+  errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
+
+  errorUniqueEntityWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'"
 )

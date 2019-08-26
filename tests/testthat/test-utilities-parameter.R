@@ -26,6 +26,25 @@ test_that("It can retrieve all parameters matching a given criteria with generic
   expect_equal(length(parameters), 5) # 4 compartments + own volume
 })
 
+test_that("It can retrieve parameters from multiple paths", {
+  parameters <- getAllParametersMatching(c(
+    toPathString(c("Organism", "Muscle", "**", "Volume")),
+    toPathString(c("Organism", "Muscle", "Intracellular", "Volume")),
+    toPathString(c("Organism", "Bone", "Intracellular", "Volume"))
+  ), sim)
+  expect_equal(length(parameters), 6) # 4 compartments + own volume + volume of bone intracellular
+})
+
+test_that("It returns an empty list when no parameter was found", {
+  parameters <- getAllParametersMatching(c(toPathString(c("Organism", "Muscles", "**", "Volume"))), sim)
+  expect_equal(length(parameters), 0)
+  parameters <- getAllParametersMatching(c(
+    toPathString(c("Organism", "Muscles", "**", "Volume")),
+    toPathString(c("Organism", "Muscles", "Intracellular", "Volume"))
+  ), sim)
+  expect_equal(length(parameters), 0)
+})
+
 test_that("It throws an error when no valid container is provided", {
   expect_that(parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), NULL), throws_error())
 })

@@ -22,8 +22,12 @@ Retrieve all parameters of a container (simulation or container instance) matchi
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-# Return all `Volume` parameters define in a all direct containers of the organism
+# Return all `Volume` parameters defined in all direct containers of the organism
 params <- getAllParametersMatching("Organism|*|Volume", sim)
+
+# Return all `Volume` parameters defined in all direct containers of the organism
+# and the parameter 'Weight (tissue)' of the container 'Liver'
+params <- getAllParametersMatching(c("Organism|*|Volume", "Organism|Liver|Weight (tissue)"), sim)
 
 # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
 params <- getAllParametersMatching("Organism|**|Volume", sim)
