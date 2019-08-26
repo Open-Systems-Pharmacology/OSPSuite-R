@@ -48,7 +48,16 @@ unify <- function(groupEntitiesByPathFunc, paths) {
   # Every set of entities created by a distinct path string is stored in its own list
   listOfEntitiesByPath <- lapply(paths, groupEntitiesByPathFunc)
 
+  numberOfEntitiesSet <- length(listOfEntitiesByPath)
   listOfEntitiesByPath <- unlist(listOfEntitiesByPath)
 
-  return(uniqueEntities(listOfEntitiesByPath))
+  # If the search results in multiple parameter lists (== path is a list of strings),
+  # The results have to be checked for duplicates
+  if (numberOfEntitiesSet > 1) {
+    if (!length(listOfEntitiesByPath) == 0) {
+      listOfEntitiesByPath <- uniqueEntities(listOfEntitiesByPath)
+    }
+  }
+
+  return(listOfEntitiesByPath)
 }
