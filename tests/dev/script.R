@@ -7,8 +7,6 @@ sim <- loadSimulation("C:/projects/rDotNet_feasibility/lib/S1.pkml")
 parameter <- getParameter("Organism|Liver|Volume", sim)
 print(parameter)
 
-parameters <- getAllParametersMatching("**", sim)
-
 results <- runSimulation(sim)
 
 individualResults <- results[[1]]
