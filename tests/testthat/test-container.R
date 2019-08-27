@@ -17,12 +17,13 @@ test_that("It can retrieve the id of a container", {
 
 test_that("It can retrieve the type of a container as int", {
   container <- getContainer(liverPath, sim)
-  expect_equal(container$containerTypeInt, ContainerType$Organ)
+  expect_equal(container$containerType, ContainerType$Organ)
 })
 
 test_that("It can retrieve the type of a container as a string", {
   container <- getContainer(liverPath, sim)
-  expect_equal(container$containerTypeStr, "Organ")
+  containerTypeInt <- container$containerType
+  expect_equal(getEnumKey(ContainerType, containerTypeInt), "Organ")
 })
 
 test_that("It can retrieve the path of a parameter", {
