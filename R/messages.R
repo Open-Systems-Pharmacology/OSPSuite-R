@@ -6,7 +6,7 @@ messages <- list(
 
     message <- paste0(
       callingFunction, ": argument '", objectName,
-      "' is of wrong type! Type in '?", callingFunction,
+      "' is of wrong type ", typeof(objectName), "! Type in '?", callingFunction,
       "' for information on required types", optionalMessage
     )
 
