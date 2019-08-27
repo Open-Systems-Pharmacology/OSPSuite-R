@@ -5,7 +5,7 @@
 #' @field unit The base unit in which the quantity is defined (Read-Only)
 #' @field dimension The dimension in which the quantity is defined  (Read-Only)
 #' @format NULL
-Quantity <- R6Class(
+Quantity <- R6::R6Class(
   "Quantity",
   inherit = Entity,
   active = list(

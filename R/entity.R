@@ -5,7 +5,8 @@
 #'
 #' @field id The id of the .NET wrapped object. (read-only)
 #' @field name The name of the object
-ObjectBase <- R6Class("ObjectBase",
+ObjectBase <- R6::R6Class(
+  "ObjectBase",
   inherit = DotNetWrapper,
   active = list(
     name = function(value) {
@@ -23,7 +24,8 @@ ObjectBase <- R6Class("ObjectBase",
 #' @description  Abstract wrapper for an OSPSuite.Core Entity class
 #'
 #' @field path The path of the entity in the container hiearchy. (read-only)
-Entity <- R6Class("Entity",
+Entity <- R6::R6Class(
+  "Entity",
   inherit = ObjectBase,
   active = list(
     path = function(value) {

@@ -5,14 +5,14 @@
 #' @field root Root container of the simulation (read-only)
 #' @field path Path of the root container of the simulation (read-only)
 #' @field settings SImulationSettings object for the simulation (read-only)
-Simulation <- R6Class(
+Simulation <- R6::R6Class(
   "Simulation",
   inherit = ObjectBase,
   active = list(
     root = function(value) {
       if (missing(value)) {
-        model <- clrGet(self$ref, "Model")
-        root <- clrGet(model, "Root")
+        model <- rClr::clrGet(self$ref, "Model")
+        root <- rClr::clrGet(model, "Root")
         Container$new(root)
       } else {
         stop(messages$errorPropertyReadOnly("root"), call. = FALSE)

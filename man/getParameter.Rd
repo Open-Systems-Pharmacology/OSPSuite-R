@@ -7,7 +7,7 @@
 getParameter(path, container)
 }
 \arguments{
-\item{path}{An absolute path relative to the \code{container}}
+\item{path}{A string representing the path relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the parameters}
 }
