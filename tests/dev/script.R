@@ -4,8 +4,10 @@ library(ospsuite)
 
 sim <- loadSimulation("C:/projects/rDotNet_feasibility/lib/S1.pkml")
 
-parameter <- getParameter(c("Organism", "Liver", "Volume"), sim)
+parameter <- getParameter("Organism|Liver|Volume", sim)
 print(parameter)
+
+parameters <- getAllParametersMatching("**", sim)
 
 results <- runSimulation(sim)
 

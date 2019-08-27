@@ -1,5 +1,5 @@
 
-context("uniqueEntity")
+context("uniqueEntities")
 
 dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
 simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
@@ -7,13 +7,13 @@ sim <- loadSimulation(simFile)
 
 
 test_that("It throws an error when no valid entities are provided", {
-  expect_that(uniqueEntity("String"), throws_error())
+  expect_that(uniqueEntities("String"), throws_error())
 })
 
 test_that("It throws an error when no valid 'compareBy' is provided", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim)
-  expect_that(uniqueEntity(parameter, compareBy = 2), throws_error())
-  expect_that(uniqueEntity(parameter, compareBy = "2"), throws_error())
+  expect_that(uniqueEntities(parameter, compareBy = 2), throws_error())
+  expect_that(uniqueEntities(parameter, compareBy = "2"), throws_error())
 })
 
 test_that("It can filter by id", {
@@ -22,7 +22,7 @@ test_that("It can filter by id", {
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
   )
-  expect_equal(length(uniqueEntity(parameters)), 2)
+  expect_equal(length(uniqueEntities(parameters)), 2)
 })
 
 test_that("It can filter by name", {
@@ -31,7 +31,7 @@ test_that("It can filter by name", {
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
   )
-  expect_equal(length(uniqueEntity(parameters, compareBy = "name")), 2)
+  expect_equal(length(uniqueEntities(parameters, compareBy = "name")), 2)
 })
 
 test_that("It can filter by path", {
@@ -40,5 +40,5 @@ test_that("It can filter by path", {
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
   )
-  expect_equal(length(uniqueEntity(parameters, compareBy = "path")), 2)
+  expect_equal(length(uniqueEntities(parameters, compareBy = "path")), 2)
 })

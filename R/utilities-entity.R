@@ -19,8 +19,8 @@
 #' )
 #'
 #' # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
-#' uniqueEntity(parameters, compareBy = "id")
-uniqueEntity <- function(entities, compareBy = "id") {
+#' uniqueEntities(parameters, compareBy = "id")
+uniqueEntities <- function(entities, compareBy = "id") {
   if (is.null(entities)) {
     return(NULL)
   }
@@ -42,4 +42,22 @@ uniqueEntity <- function(entities, compareBy = "id") {
   uniqueEntities <- unname(uniqueEntities)
 
   return(uniqueEntities)
+}
+
+unify <- function(groupEntitiesByPathFunc, paths) {
+  # Every set of entities created by a distinct path string is stored in its own list
+  listOfEntitiesByPath <- lapply(paths, groupEntitiesByPathFunc)
+
+  numberOfEntitiesSet <- length(listOfEntitiesByPath)
+  listOfEntitiesByPath <- unlist(listOfEntitiesByPath)
+
+  # If the search results in multiple entities lists (== paths is a list of strings),
+  # The results have to be checked for duplicates
+  if (numberOfEntitiesSet > 1) {
+    if (!length(listOfEntitiesByPath) == 0) {
+      listOfEntitiesByPath <- uniqueEntities(listOfEntitiesByPath)
+    }
+  }
+
+  return(listOfEntitiesByPath)
 }

@@ -1,7 +1,7 @@
 
 #' Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param path A vector of strings relative to the \code{container}
+#' @param paths A vector of strings relative to the \code{container}
 #' @param container A Container or Simulation used to find the parameters
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 #'
@@ -21,31 +21,16 @@
 #' # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
 #' @export
-getAllParametersMatching <- function(path, container) {
+getAllParametersMatching <- function(paths, container) {
   # Test for correct inputs
   validateIsOfType(container, c("Simulation", "Container"))
-  validateIsOfType(path, "character")
+  validateIsOfType(paths, "character")
 
-  # Every set of parameters created by a distinct path string is stored in its own list
-  parameters <- lapply(path, function(singlePath) {
-    toParameters(clrCall(
-      getContainerTask(), "AllParametersMatching",
-      container$ref, singlePath
-    ))
-  })
-
-  nrOfParameterSets <- length(parameters)
-  parameters <- unlist(parameters)
-
-  # If the search results in multiple parameter lists (== path is a list of strings),
-  # The results have to be checked for duplicates
-  if (nrOfParameterSets > 1) {
-    if (!length(parameters) == 0) {
-      parameters <- uniqueEntity(parameters)
-    }
+  findParametersByPath <- function(path) {
+    toParameters(clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
   }
 
-  return(parameters)
+  return(unify(findParametersByPath, paths))
 }
 
 #' Retrieve a single parameter by path in the given container
