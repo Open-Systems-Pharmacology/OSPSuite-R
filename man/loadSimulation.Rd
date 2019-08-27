@@ -4,14 +4,43 @@
 \alias{loadSimulation}
 \title{Loads a simulation from a pkml file and returns the simulation}
 \usage{
-loadSimulation(pkmlSimulationFile)
+loadSimulation(pkmlSimulationFile, loadFromCache = TRUE)
 }
 \arguments{
 \item{pkmlSimulationFile}{Full path of pkml simulation file to load.}
+
+\item{loadFromCache}{If TRUE, an already loaded pkml file will not be loaded
+again, but the simulation object will be retrieved from cache. This is the
+default behavior. If FALSE, new object will be created.}
 }
 \value{
 The \code{Simulation}individual results (one entry per Individual)
 }
 \description{
 Loads a simulation from a pkml file and returns the simulation
+}
+\examples{
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+
+# Load sim1 for the first time
+sim1 <- loadSimulation(simPath)
+
+# sim2 will be loaded from cache and will represent the same object as sim1
+sim2 <- loadSimulation(simPath)
+
+parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim1)
+parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim2)
+
+# parameter1 and parameter2 belong to the same simulation object, so changing
+# one of the them will also change another
+setParametersValues(parameters = parameter2, values = 0)
+parameter1$value == parameter2$value #TRUE
+
+# sim3 will be loaded from not from cache
+sim3 <- loadSimulation(simPath, loadFromCache = FALSE)
+# parameter3 belong to different simulation object than parameter1 and parameter2
+parameter3 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim3)
+setParametersValues(parameters = parameter3, values = 1)
+parameter2$value == parameter3$value #FALSE#'
+
 }

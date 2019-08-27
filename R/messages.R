@@ -6,7 +6,7 @@ messages <- list(
 
     message <- paste0(
       callingFunction, ": argument '", objectName,
-      "' is of wrong type ", typeof(objectName), "! Type in '?", callingFunction,
+      "' is of wrong type '", typeof(objectName), "'! Type in '?", callingFunction,
       "' for information on required types", optionalMessage
     )
 
@@ -49,7 +49,7 @@ messages <- list(
 
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
-  errorUniqueEntityWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'"
+  errorUniqueEntitiesWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'"
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,

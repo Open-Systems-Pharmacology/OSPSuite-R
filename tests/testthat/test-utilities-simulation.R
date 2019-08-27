@@ -1,26 +1,71 @@
 
-sim <- loadTestSimulation("S1")
-outputSelections <- sim$settings$outputSelections
-
 context("loadSimulation")
 
-test_that("It can load a valid pkml simulation file", {
+test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {
+  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+
+  sim <- loadTestSimulation("S1",  loadFromCache = TRUE)
   expect_true(!is.null(sim))
 })
 
+test_that("It can load a valid pkml simulation file with 'loadFromCache = FALSE' without previously loaded sim", {
+  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+
+  sim <- loadTestSimulation("S1",  loadFromCache = FALSE)
+  expect_true(!is.null(sim))
+})
+
+test_that("It can load a simulation from cache", {
+  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+
+  sim1 <- loadTestSimulation("S1")
+  sim2 <- loadTestSimulation("S1")
+
+  parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
+  parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
+
+  setParametersValues(parameters = parameter1, values = 0)
+  expect_equal(parameter1$value, parameter2$value)
+})
+
+test_that("It can load two simulations not from cache", {
+  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+
+  sim1 <- loadTestSimulation("S1",  loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1",  loadFromCache = FALSE)
+
+  parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
+  parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
+
+  setParametersValues(parameters = parameter1, values = 0)
+  expect_false(isTRUE(identical(parameter1$value, parameter2$value)))
+})
+
+test_that("Two sims not from cache and third from cache", {
+  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+
+  sim1 <- loadTestSimulation("S1")
+  sim2 <- loadTestSimulation("S1",  loadFromCache = FALSE)
+  sim3 <- loadTestSimulation("S1")
+
+  parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
+  parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
+  parameter3 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim3)
+
+  setParametersValues(parameters = parameter1, values = 1)
+
+  expect_false(isTRUE(identical(parameter1$value, parameter3$value)))
+  expect_equal(parameter2$value, parameter3$value)
+})
+
 test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
-  expect_that(loadTestSimulation("molecules"), throws_error("Could not load simulation"))
+  simFile <- file.path(dataPath, "molecules.pkml", fsep = .Platform$file.sep)
+
+  expect_that(loadSimulation(simFile), throws_error("Could not load simulation"))
 })
 
-context("saveSimulation")
-
-test_that("It can save a valid simulation to file", {
-  executeWithTestFile(function(exportFile) {
-    saveSimulation(sim, exportFile)
-    expect_true(file.exists(exportFile))
-  })
-})
-
+sim <- loadTestSimulation("S1")
+outputSelections <- sim$settings$outputSelections
 
 context("addOutputs")
 
