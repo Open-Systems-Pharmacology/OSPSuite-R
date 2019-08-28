@@ -4,10 +4,10 @@
 \alias{getAllParametersMatching}
 \title{Retrieve all parameters of a container (simulation or container instance) matching the given path criteria}
 \usage{
-getAllParametersMatching(path, container)
+getAllParametersMatching(paths, container)
 }
 \arguments{
-\item{path}{A vector of strings relative to the \code{container}}
+\item{paths}{A vector of strings relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the parameters}
 }
@@ -27,7 +27,8 @@ params <- getAllParametersMatching("Organism|*|Volume", sim)
 
 # Return all `Volume` parameters defined in all direct containers of the organism
 # and the parameter 'Weight (tissue)' of the container 'Liver'
-params <- getAllParametersMatching(c("Organism|*|Volume", "Organism|Liver|Weight (tissue)"), sim)
+paths <- c("Organism|*|Volume", "Organism|Liver|Weight (tissue)")
+params <- getAllParametersMatching(paths, sim)
 
 # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
 params <- getAllParametersMatching("Organism|**|Volume", sim)

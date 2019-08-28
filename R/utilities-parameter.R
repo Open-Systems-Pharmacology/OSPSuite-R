@@ -16,7 +16,8 @@
 #'
 #' # Return all `Volume` parameters defined in all direct containers of the organism
 #' # and the parameter 'Weight (tissue)' of the container 'Liver'
-#' params <- getAllParametersMatching(c("Organism|*|Volume", "Organism|Liver|Weight (tissue)"), sim)
+#' paths <- c("Organism|*|Volume", "Organism|Liver|Weight (tissue)")
+#' params <- getAllParametersMatching(paths, sim)
 #'
 #' # Returns all `Volume` parameters defined in `Organism` and all its subcontainers
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
@@ -36,6 +37,8 @@ getAllParametersMatching <- function(paths, container) {
 #' Retrieve a single parameter by path in the given container
 #'
 #' @inherit getAllParametersMatching
+#'
+#' @param path An absolute path relative to the \code{container}
 #'
 #' @return The \code{Parameter} with the given path or \code{NULL} if not found
 #' @examples

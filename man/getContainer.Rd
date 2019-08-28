@@ -7,10 +7,12 @@
 getContainer(path, container)
 }
 \arguments{
+\item{path}{An absolute path relative to the \code{container}}
+
 \item{container}{A Container or Simulation used to find the containers}
 }
 \value{
-The [Container] with the given path or null if not found
+The \code{Container} with the given path or null if not found
 }
 \description{
 Retrieve a single container by path under the given container

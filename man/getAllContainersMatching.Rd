@@ -27,7 +27,8 @@ containers <- getAllContainersMatching("Organism|*|Intracellular", sim)
 
 # Return all `Intracellular` containers defined in all direct containers of the organism
 # and the container "Interstitial" under 'Organism|Brain'
-containers <- getAllContainersMatching(c("Organism|*|Intracellular", "Organism|Brain|Interstitial"), sim)
+paths <- c("Organism|*|Intracellular", "Organism|Brain|Interstitial")
+containers <- getAllContainersMatching(paths, sim)
 
 # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
 containers <- getAllContainersMatching("Organism|**|Intracellular", sim)

@@ -16,7 +16,8 @@
 #'
 #' # Return all `Intracellular` containers defined in all direct containers of the organism
 #' # and the container "Interstitial" under 'Organism|Brain'
-#' containers <- getAllContainersMatching(c("Organism|*|Intracellular", "Organism|Brain|Interstitial"), sim)
+#' paths <- c("Organism|*|Intracellular", "Organism|Brain|Interstitial")
+#' containers <- getAllContainersMatching(paths, sim)
 #'
 #' # Returns all `Intracellular` containers defined in `Organism` and all its subcontainers
 #' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
@@ -37,7 +38,9 @@ getAllContainersMatching <- function(paths, container) {
 #'
 #' @inherit getAllContainersMatching
 #'
-#' @return The [Container] with the given path or null if not found
+#' @param path An absolute path relative to the \code{container}
+
+#' @return The \code{Container} with the given path or null if not found
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
