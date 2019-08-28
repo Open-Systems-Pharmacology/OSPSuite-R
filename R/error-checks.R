@@ -30,23 +30,25 @@ isSameLength <- function(...) {
 
 
 validateIsOfType <- function(object, type) {
-  if (!isOfType(object, type)) {
-    # Name of the variable in the calling function
-    objectName <- deparse(substitute(object))
-
-    stop(messages$errorWrongType(objectName))
+  if (isOfType(object, type)) {
+    return();
   }
+  # Name of the variable in the calling function
+  objectName <- deparse(substitute(object))
+
+  stop(messages$errorWrongType(objectName))
 }
 
 validateIsSameLength <- function(...) {
-  if (!isSameLength(...)) {
-    # Name of the variable in the calling function
-    objectName <- deparse(substitute(list(...)))
-
-    # Name of the arguments
-    argnames <- sys.call()
-    arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
-
-    stop(messages$errorDifferentLength(arguments))
+  if (isSameLength(...)) {
+    return()
   }
+  # Name of the variable in the calling function
+  objectName <- deparse(substitute(list(...)))
+
+  # Name of the arguments
+  argnames <- sys.call()
+  arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
+
+  stop(messages$errorDifferentLength(arguments))
 }
