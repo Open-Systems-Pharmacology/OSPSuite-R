@@ -12,7 +12,7 @@
 #' @export
 runSimulation <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
-  simulationRunner <- getNetTask("SimulationRunner")
+  simulationRunner <-  getNetTask("SimulationRunner")
   results <- clrCall(simulationRunner, "RunSimulation", simulation$ref)
   return(clrCall(results, "IndividualResultsAsArray"))
 }
