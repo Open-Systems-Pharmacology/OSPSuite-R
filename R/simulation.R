@@ -23,5 +23,12 @@ Simulation <- R6Class(
         stop(messages$errorPropertyReadOnly("path"), call. = FALSE)
       }
     }
+  ),
+  public = list(
+    print = function(...) {
+      private$printClass()
+      private$printLine("Name", self$name)
+      invisible(self)
+    }
   )
 )

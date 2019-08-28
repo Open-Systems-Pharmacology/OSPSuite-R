@@ -8,3 +8,7 @@ ospsuiteEnv$containerTask <- NULL
 
 # Separator defined in OSPSuite.Core.
 ospsuiteEnv$pathSeparator <- "|"
+
+# Default values for the formatNumerics() helper function
+ospsuiteEnv$formatNumericsDigits <- 5
+ospsuiteEnv$formatNumericsSmall <- 2

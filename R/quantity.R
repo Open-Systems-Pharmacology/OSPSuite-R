@@ -27,7 +27,7 @@ Quantity <- R6Class(
     printQuantity = function() {
       private$printClass()
       private$printLine("Path", self$path)
-      private$printLine("Value", paste0(format(self$value, digits = 5, nsmall = 2), " [", self$unit, "]"))
+      private$printLine("Value", paste0(formatNumerics(self$value), " [", self$unit, "]"))
       invisible(self)
     }
   )

@@ -51,3 +51,8 @@ messages <- list(
 
   errorUniqueEntityWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'"
 )
+
+formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,
+                           nsmall = ospsuiteEnv$formatNumericsSmall) {
+  format(numerics, digits = digits, nsmall = nsmall)
+}

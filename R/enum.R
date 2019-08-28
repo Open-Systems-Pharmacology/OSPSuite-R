@@ -24,3 +24,7 @@ enum <- function(enumValues) {
   }
   return(myEnum)
 }
+
+getEnumKey <- function(enum, value) {
+  names(which(enum == value))
+}

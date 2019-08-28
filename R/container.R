@@ -12,5 +12,13 @@ Container <- R6Class("Container",
     containerType = function(value) {
       private$wrapReadOnlyProperties("ContainerType", value)
     }
+  ),
+  public = list(
+    print = function(...) {
+      private$printClass()
+      private$printLine("Container type", getEnumKey(ContainerType, self$containerType))
+      private$printLine("Path", self$path)
+      invisible(self)
+    }
   )
 )
