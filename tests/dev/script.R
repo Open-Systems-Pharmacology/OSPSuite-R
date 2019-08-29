@@ -22,3 +22,5 @@ firstOutput <- allValues[[1]]
 path <- rClr::clrGet(firstOutput, "QuantityPath")
 values <- rClr::clrGet(firstOutput, "Values")
 
+
+saveSimulation(sim, "c:/temp/toto.xml")

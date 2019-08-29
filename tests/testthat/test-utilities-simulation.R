@@ -5,9 +5,7 @@ dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
 
 test_that("It can load a valid pkml simulation file", {
   simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-
   sim <- loadSimulation(simFile)
-
 
   expect_true(!is.null(sim))
 })
@@ -16,4 +14,15 @@ test_that("It throws an exception if the pkml loaded is not a valid simulation f
   simFile <- file.path(dataPath, "molecules.pkml", fsep = .Platform$file.sep)
 
   expect_that(loadSimulation(simFile), throws_error("Could not load simulation"))
+})
+
+context("saveSimulation")
+
+test_that("It can save a valid simulation to file", {
+  simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
+  sim <- loadSimulation(simFile)
+  exportFile <- tempfile();
+  saveSimulation(sim, exportFile);
+  expect_true(file.exists(exportFile))
+  file.remove(exportFile)
 })
