@@ -31,7 +31,7 @@ isSameLength <- function(...) {
 
 validateIsOfType <- function(object, type) {
   if (isOfType(object, type)) {
-    return();
+    return()
   }
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))

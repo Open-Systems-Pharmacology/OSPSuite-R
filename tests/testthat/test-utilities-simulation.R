@@ -21,8 +21,8 @@ context("saveSimulation")
 test_that("It can save a valid simulation to file", {
   simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
   sim <- loadSimulation(simFile)
-  exportFile <- tempfile();
-  saveSimulation(sim, exportFile);
+  exportFile <- tempfile()
+  saveSimulation(sim, exportFile)
   expect_true(file.exists(exportFile))
   file.remove(exportFile)
 })

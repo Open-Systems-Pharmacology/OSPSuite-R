@@ -1,11 +1,7 @@
 library(ospsuite)
 
-
-
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 
-# This is only required until SimModel fixes problem with CVODES
-setwd("C:/projects/OSPSuite-R/inst/lib")
 
 parameter <- getParameter("Organism|Liver|Volume", sim)
 print(parameter)
@@ -24,3 +20,4 @@ values <- rClr::clrGet(firstOutput, "Values")
 
 
 saveSimulation(sim, "c:/temp/toto.xml")
+
