@@ -14,16 +14,6 @@ ObjectBase <- R6Class("ObjectBase",
     id = function(value) {
       private$wrapReadOnlyProperties("Id", value)
     }
-  ),
-  private = list(
-    printLine = function(entry, value) {
-      cat("  ", entry, ": ", value, "\n", sep = "")
-      invisible(self)
-    },
-
-    printClass = function() {
-      cat(class(self)[1], ": \n")
-    }
   )
 )
 

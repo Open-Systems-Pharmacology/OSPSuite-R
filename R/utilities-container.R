@@ -61,6 +61,5 @@ getContainer <- function(path, container) {
 }
 
 toContainers <- function(netContainers) {
-  sapply(netContainers, function(c)
-    Container$new(c))
+  toObjectType(netContainers, Container)
 }

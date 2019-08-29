@@ -14,7 +14,11 @@ An OSPSuite simulation
 \section{Fields}{
 
 \describe{
-\item{\code{root}}{The root container of the simulation (read-only)}
+\item{\code{root}}{Root container of the simulation (read-only)}
+
+\item{\code{path}}{Path of the root container of the simulation (read-only)}
+
+\item{\code{settings}}{SImulationSettings object for the simulation (read-only)}
 }}
 
 \keyword{datasets}

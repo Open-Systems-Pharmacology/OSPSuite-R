@@ -2,7 +2,9 @@
 #' @docType class
 #' @description  An OSPSuite simulation
 #'
-#' @field root The root container of the simulation (read-only)
+#' @field root Root container of the simulation (read-only)
+#' @field path Path of the root container of the simulation (read-only)
+#' @field settings SImulationSettings object for the simulation (read-only)
 Simulation <- R6Class(
   "Simulation",
   inherit = ObjectBase,
@@ -18,9 +20,18 @@ Simulation <- R6Class(
     },
     path = function(value) {
       if (missing(value)) {
-        return(self$root$path)
+        self$root$path
       } else {
         stop(messages$errorPropertyReadOnly("path"), call. = FALSE)
+      }
+    },
+    settings = function(value) {
+      if (missing(value)) {
+        buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
+        settings <- rClr::clrGet(buildConfiguration, "SimulationSettings")
+        SimulationSettings$new(settings)
+      } else {
+        stop(messages$errorPropertyReadOnly("settings"), call. = FALSE)
       }
     }
   ),

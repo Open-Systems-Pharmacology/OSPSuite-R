@@ -43,3 +43,38 @@ runSimulation <- function(simulation) {
   results <- clrCall(simulationRunner, "RunSimulation", simulation$ref)
   return(clrCall(results, "IndividualResultsAsArray"))
 }
+
+
+#' Adds the quantities as output into the  \code{simulation}. The quantiites can either be specified using explicit instances or using paths.
+#'
+#' @param quantities Instance of quantities to add (typically retrieved using \code{getAllQuantitiesMatching})
+#' @param paths List of quantity path to add
+#' @param simulation Instance of a simulation for which output selection should be updated.
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' outputs <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
+#' addOutputs(paths=outputs, sim)
+#'
+#' @export
+addOutputs <- function(quantities = NULL, paths=NULL, simulation){
+  quantities <- c(quantities)
+  paths <- c(paths)
+
+  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(quantities, "Quantity", nullAllowed = TRUE)
+  validateIsOfType(paths, "character", nullAllowed = TRUE)
+  validateNotAllNull(quantities, paths)
+
+  quantities <- uniqueEntities(c(quantities, getAllQuantitiesMatching(paths, simulation)), compareBy = "path")
+
+  outputSelections <- simulation$settings$outputSelections
+
+  for (quantity in quantities) {
+    outputSelections$addQuantity(quantity)
+  }
+
+  return(quantities)
+}

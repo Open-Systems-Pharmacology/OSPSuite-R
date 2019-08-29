@@ -21,6 +21,9 @@ Quantity <- R6Class(
     },
     persistable = function(value) {
       private$wrapProperties("Persistable", value)
+    },
+    quantityType = function(value) {
+      private$wrapReadOnlyProperties("QuantityType", value)
     }
   ),
   private = list(
@@ -29,6 +32,12 @@ Quantity <- R6Class(
       private$printLine("Path", self$path)
       private$printLine("Value", paste0(formatNumerics(self$value), " [", self$unit, "]"))
       invisible(self)
+    }
+  ),
+  public = list(
+    print = function(...) {
+      private$printQuantity()
+      private$printLine("Quantity Type", getEnumKey(QuantityType, self$quantityType))
     }
   )
 )
