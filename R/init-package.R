@@ -8,6 +8,8 @@ initPackage <- function() {
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
 
+  addPackageLibToPath()
+
   clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
 
 
@@ -18,7 +20,6 @@ initPackage <- function() {
 
   clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 
-  addPackageLibToPath()
 }
 
 
