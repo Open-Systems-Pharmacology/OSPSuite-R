@@ -5,8 +5,10 @@
 #' @import rClr
 initPackage <- function() {
   filePathFor <- function(name) {
-    system.file("lib", name, package = "ospsuite")
+    system.file("lib", name, package = ospsuiteEnv$packageName)
   }
+
+  addPackageLibToPath()
 
   clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
 
@@ -18,6 +20,13 @@ initPackage <- function() {
 
   clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 
-  # initialize global variables (mostly usef for performance optimization)
-  #  ospsuiteEnv$containerTask <- getNetTask("ContainerTask")
+}
+
+
+addPackageLibToPath <- function() {
+  libPath <- system.file("lib", package = ospsuiteEnv$packageName)
+
+  if (file.exists(libPath)) {
+    Sys.setenv(path = paste(libPath, Sys.getenv("path"), sep = ";"))
+  }
 }
