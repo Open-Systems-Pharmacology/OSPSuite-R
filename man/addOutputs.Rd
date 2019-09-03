@@ -2,25 +2,29 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{addOutputs}
 \alias{addOutputs}
-\title{Adds the quantities as output into the  \code{simulation}. The quantiites can either be specified using explicit instances or using paths.}
+\title{Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.}
 \usage{
-addOutputs(quantities = NULL, paths = NULL, simulation)
+addOutputs(quantitiesOrPaths, simulation)
 }
 \arguments{
-\item{quantities}{Instance of quantities to add (typically retrieved using \code{getAllQuantitiesMatching})}
-
-\item{paths}{List of quantity path to add}
+\item{quantitiesOrPaths}{Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.}
 
 \item{simulation}{Instance of a simulation for which output selection should be updated.}
 }
+\value{
+A list of quantities added as output (Especially useful when a wildcard was used to verify)
+}
 \description{
-Adds the quantities as output into the  \code{simulation}. The quantiites can either be specified using explicit instances or using paths.
+Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.
 }
 \examples{
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-outputs <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
-addOutputs(paths=outputs, sim)
 
+paths <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
+addOutputs(paths, sim)
+
+parameter <- getParameter("Organism|Liver|Volume")
+addOutputs(parameter, sim)
 }

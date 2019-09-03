@@ -1,19 +1,28 @@
 library(ospsuite)
 
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
-
-
 settings <- sim$settings
 outputSelections <- settings$outputSelections
 print(outputSelections)
+parameter <- getParameter("Organism|Liver|Volume", sim)
 
-quantities <- addOutputs(paths = "Organism|VenousBlood|Plasma|*", simulation = sim)
+
+vec <- c(parameter, parameter)
+
+addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
+addOutputs(parameter, simulation = sim)
+
 print(outputSelections)
 
 # parameter <- getParameter("Organism|Liver|Volume", sim)
 # print(parameter)
 
-# results <- runSimulation(sim)
+# results <- runSimulation(sim, population)
+
+
+# getPkAnalysis(results, sim)
+# getPkAnalysis(results)
+
 
 # individualResults <- results[[1]]
 #
@@ -27,5 +36,3 @@ print(outputSelections)
 
 
 # saveSimulation(sim, "c:/temp/toto.xml")
-
-

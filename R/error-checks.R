@@ -30,7 +30,7 @@ isSameLength <- function(...) {
 
 
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
-  if(nullAllowed && is.null(object)){
+  if (nullAllowed && is.null(object)) {
     return()
   }
 
@@ -55,8 +55,4 @@ validateIsSameLength <- function(...) {
   arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
 
   stop(messages$errorDifferentLength(arguments))
-}
-
-validateNotAllNull <- function(...){
-
 }

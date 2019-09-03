@@ -45,36 +45,41 @@ runSimulation <- function(simulation) {
 }
 
 
-#' Adds the quantities as output into the  \code{simulation}. The quantiites can either be specified using explicit instances or using paths.
+#' Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.
 #'
-#' @param quantities Instance of quantities to add (typically retrieved using \code{getAllQuantitiesMatching})
-#' @param paths List of quantity path to add
+#' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.
 #' @param simulation Instance of a simulation for which output selection should be updated.
+#'
+#' @return A list of quantities added as output (Especially useful when a wildcard was used to verify)
 #'
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' outputs <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
-#' addOutputs(paths=outputs, sim)
 #'
+#' paths <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
+#' addOutputs(paths, sim)
+#'
+#' parameter <- getParameter("Organism|Liver|Volume")
+#' addOutputs(parameter, sim)
 #' @export
-addOutputs <- function(quantities = NULL, paths=NULL, simulation){
-  quantities <- c(quantities)
-  paths <- c(paths)
+addOutputs <- function(quantitiesOrPaths, simulation) {
+  quantitiesOrPaths <- c(quantitiesOrPaths)
 
+  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"))
   validateIsOfType(simulation, "Simulation")
-  validateIsOfType(quantities, "Quantity", nullAllowed = TRUE)
-  validateIsOfType(paths, "character", nullAllowed = TRUE)
-  validateNotAllNull(quantities, paths)
+  quantities <- quantitiesOrPaths
 
-  quantities <- uniqueEntities(c(quantities, getAllQuantitiesMatching(paths, simulation)), compareBy = "path")
+  if (isOfType(quantitiesOrPaths, "character")) {
+    quantities <- getAllQuantitiesMatching(quantitiesOrPaths, simulation)
+  }
 
+  quantities <- uniqueEntities(quantities, compareBy = "path")
   outputSelections <- simulation$settings$outputSelections
 
   for (quantity in quantities) {
     outputSelections$addQuantity(quantity)
   }
 
-  return(quantities)
+  invisible(quantities)
 }
