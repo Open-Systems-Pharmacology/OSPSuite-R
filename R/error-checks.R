@@ -29,7 +29,11 @@ isSameLength <- function(...) {
 }
 
 
-validateIsOfType <- function(object, type) {
+validateIsOfType <- function(object, type, nullAllowed = FALSE) {
+  if (nullAllowed && is.null(object)) {
+    return()
+  }
+
   if (isOfType(object, type)) {
     return()
   }

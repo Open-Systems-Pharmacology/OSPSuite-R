@@ -19,7 +19,6 @@ initPackage <- function() {
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
 
   clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
-
 }
 
 

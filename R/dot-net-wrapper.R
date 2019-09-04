@@ -44,6 +44,15 @@ DotNetWrapper <- R6Class(
 
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
+    },
+
+    printLine = function(entry, value) {
+      cat("  ", entry, ": ", value, "\n", sep = "")
+      invisible(self)
+    },
+
+    printClass = function() {
+      cat(class(self)[1], ": \n")
     }
   )
 )
