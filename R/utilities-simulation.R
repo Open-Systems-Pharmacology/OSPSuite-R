@@ -60,7 +60,7 @@ runSimulation <- function(simulation) {
 #' paths <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
 #' addOutputs(paths, sim)
 #'
-#' parameter <- getParameter("Organism|Liver|Volume")
+#' parameter <- getParameter("Organism|Liver|Volume", sim)
 #' addOutputs(parameter, sim)
 #' @export
 addOutputs <- function(quantitiesOrPaths, simulation) {
