@@ -18,8 +18,6 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item{\code{unit}}{The base unit in which the quantity is defined (Read-Only)}
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
-
-\item{\code{persitable}}{A boolean indicating whether some output values will be available in simulated results for this quantity}
 }}
 
 \keyword{datasets}

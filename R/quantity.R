@@ -4,7 +4,6 @@
 #' @field value The value of the quantity in unit
 #' @field unit The base unit in which the quantity is defined (Read-Only)
 #' @field dimension The dimension in which the quantity is defined  (Read-Only)
-#' @field persitable A boolean indicating whether some output values will be available in simulated results for this quantity
 #' @format NULL
 Quantity <- R6Class(
   "Quantity",
@@ -18,9 +17,6 @@ Quantity <- R6Class(
     },
     dimension = function(value) {
       private$wrapExtensionMethod("OSPSuite.Core.Domain.WithDimensionExtensions", "DimensionName", "dimension")
-    },
-    persistable = function(value) {
-      private$wrapProperties("Persistable", value)
     },
     quantityType = function(value) {
       private$wrapReadOnlyProperties("QuantityType", value)

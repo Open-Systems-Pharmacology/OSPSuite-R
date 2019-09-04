@@ -27,15 +27,6 @@ test_that("It can retrieve the path of a parameter", {
   expect_equal(par$path, paste("S1", paste(volumePath, collapse = "|"), sep = "|"))
 })
 
-test_that("It can update the persistable state of a parameter", {
-  par <- getParameter(volumePath, sim)
-  par$persistable <- TRUE
-  expect_true(par$persistable)
-  par$persistable <- FALSE
-  expect_false(par$persistable)
-})
-
-
 test_that("It throwns an error when trying to set the path of a parameter", {
   par <- getParameter(volumePath, sim)
   expect_that(par$path <- "TOTO", throws_error())
