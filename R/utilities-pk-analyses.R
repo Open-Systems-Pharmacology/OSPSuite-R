@@ -12,9 +12,9 @@
 #'
 #' addOutputs("Organism|VenousBlood|*|Caffeine", sim)
 #' results <- runSimulation(sim)
-#' pkAnalyses <- getPKAnalyses(results, sim)
+#' pkAnalyses <- calculatePKAnalyses(results, sim)
 #' @export
-getPKAnalyses <- function(results, simulation) {
+calculatePKAnalyses <- function(results, simulation) {
   pkAnalysesTask <- getNetTask("PKAnalysesTask")
   pkAnalyses <- clrCall(pkAnalysesTask, "CalculateFor", simulation$ref,  as.integer(1),  results$ref)
   SimulationPKAnalyses$new(pkAnalyses)

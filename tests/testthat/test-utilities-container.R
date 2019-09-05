@@ -1,10 +1,7 @@
 
 context("getAllContainersMatching")
 
-dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFile)
-
+sim <- loadTestSimulation("S1")
 
 test_that("It can retrieve containers with absolute path", {
   containers <- getAllContainersMatching(toPathString(c("Organism", "Liver", "Intracellular")), sim)

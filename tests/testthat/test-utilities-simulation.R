@@ -1,28 +1,24 @@
 
-dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-
-simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFile)
+sim <- loadTestSimulation("S1")
 outputSelections <- sim$settings$outputSelections
-context("loadSimulation")
 
+context("loadSimulation")
 
 test_that("It can load a valid pkml simulation file", {
   expect_true(!is.null(sim))
 })
 
 test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
-  simFile <- file.path(dataPath, "molecules.pkml", fsep = .Platform$file.sep)
-  expect_that(loadSimulation(simFile), throws_error("Could not load simulation"))
+  expect_that(loadTestSimulation("molecules"), throws_error("Could not load simulation"))
 })
 
 context("saveSimulation")
 
 test_that("It can save a valid simulation to file", {
-  exportFile <- tempfile()
-  saveSimulation(sim, exportFile)
-  expect_true(file.exists(exportFile))
-  file.remove(exportFile)
+  executeWithTestFile(function(exportFile){
+    saveSimulation(sim, exportFile)
+    expect_true(file.exists(exportFile))
+  })
 })
 
 
@@ -69,4 +65,14 @@ test_that("It throws an exception if the parameters do not have the expect type"
   expect_that(addOutputs(parameter, container), throws_error())
   expect_that(addOutputs(parameter, null), throws_error())
   expect_that(addOutputs(null, sim), throws_error())
+})
+
+
+context("clearOutputs")
+
+test_that("It can clear all outputs of a given simulation", {
+  addOutputs(c("Organism|Liver|Volume"), sim)
+  expect_gt(length(outputSelections$allOutputs), 0)
+  clearOutputs(sim)
+  expect_equal(length(outputSelections$allOutputs), 0)
 })

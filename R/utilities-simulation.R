@@ -83,3 +83,21 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 
   invisible(quantities)
 }
+
+#' Removes all selected output from the given \code{simulation}
+#'
+#' @param simulation Instance of a simulation for which output selection should be cleared.
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' clearOutputs(sim)
+#'
+#' @export
+clearOutputs <- function(simulation) {
+  validateIsOfType(simulation, "Simulation")
+  simulation$settings$outputSelections$clear();
+  invisible(simulation)
+}

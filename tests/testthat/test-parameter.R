@@ -1,8 +1,7 @@
 context("Parameter")
 
-dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFile)
+sim <- loadTestSimulation("S1")
+
 liverPathArray <- c("Organism", "Liver")
 liverPath <- toPathString(liverPathArray)
 volumePath <- toPathString(c(liverPathArray, "Volume"))

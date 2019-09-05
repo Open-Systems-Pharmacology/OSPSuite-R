@@ -4,8 +4,6 @@ sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 parameter <- getParameter("Organism|Liver|Volume", sim)
 
 
-vec <- c(parameter, parameter)
-
 addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
 addOutputs(parameter, simulation = sim)
 
@@ -17,7 +15,7 @@ addOutputs(parameter, simulation = sim)
 results <- runSimulation(sim)
 exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
 
-pkAnalyses <- getPKAnalyses(results, sim)
+pkAnalyses <- calculatePKAnalyses(results, sim)
 
 exportPKAnalysesToCSV(pkAnalyses, sim, "C:/temp/export/pk.csv")
 

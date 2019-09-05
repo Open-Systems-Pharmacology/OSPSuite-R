@@ -1,10 +1,7 @@
 
 context("getAllParametersMatching")
 
-dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFile)
-
+sim <- loadTestSimulation("S1")
 
 test_that("It can retrieve parameters with absolute path", {
   parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
