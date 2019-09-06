@@ -8,7 +8,7 @@
 exportResultsToCSV <- function(results, simulation, filename){
   validateIsOfType(results, "SimulationResults")
   validateIsOfType(simulation, "Simulation")
-  validateIsOfType(filename, "character")
+  validateIsString(filename)
   simulationExporter <- getNetTask("SimulationExporter")
   rClr::clrCall(simulationExporter, "ExportResultsToCSV", results$ref, simulation$ref, filename)
   invisible()
@@ -24,7 +24,7 @@ exportResultsToCSV <- function(results, simulation, filename){
 exportPKAnalysesToCSV <- function(pkAnalyses, simulation, filename){
   validateIsOfType(results, "SimulationPKAnalyses")
   validateIsOfType(simulation, "Simulation")
-  validateIsOfType(filename, "character")
+  validateIsString(filename)
   simulationExporter <- getNetTask("SimulationExporter")
   rClr::clrCall(simulationExporter, "ExportPKAnalysesToCSV", pkAnalyses$ref, simulation$ref, filename)
   invisible()

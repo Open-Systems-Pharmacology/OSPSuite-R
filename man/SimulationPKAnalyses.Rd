@@ -11,4 +11,12 @@ SimulationPKAnalyses
 \description{
 PKAnalyses of a simulation (either individual or population simulation)
 }
+\section{Methods}{
+
+\describe{
+  \item{allPKParametersFor(quantityPath)}{All pK Parameters defined for a given path}
+  \item{pKParameterFor(quantityPath, pkParameter)}{The pK Parameter defined for the given path and name}
+  }
+}
+
 \keyword{datasets}
