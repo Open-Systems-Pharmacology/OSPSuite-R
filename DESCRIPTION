@@ -1,26 +1,30 @@
-Package: ospsuite
 Type: Package
+Package: ospsuite
 Title: R package to manipulate OSPSuite Models
 Version: 0.1.0
-Authors@R: c(
-    person("Open-Systems-Pharmacology Community", role = "cph"),
-    person("Michael", "Sevestre", email = "michael@design2code.ca", role = c("aut", "cre"))
-    )
+Authors@R: 
+    c(person(given = "Open-Systems-Pharmacology Community",
+             role = "cph"),
+      person(given = "Michael",
+             family = "Sevestre",
+             role = c("aut", "cre"),
+             email = "michael@design2code.ca"))
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: GPL-2 | file LICENSE
 URL: https://github.com/open-systems-pharmacology/ospsuite-r
-BugReports: https://github.com/open-systems-pharmacology/ospsuite-r/issues
+BugReports: 
+    https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
-    rClr (>= 0.8.3),
-    R (>= 3.5)
-Encoding: UTF-8
-LazyData: true
-Suggests: 
-    testthat (>= 2.1.0)
-RoxygenNote: 6.1.1
+    R (>= 3.5),
+    rClr (>= 0.8.3)
 Imports: 
     R6
+Suggests: 
+    testthat (>= 2.1.0)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
 Collate: 
     'api-config.R'
     'enum.R'
@@ -35,15 +39,20 @@ Collate:
     'ospsuite-env.R'
     'output-selections.R'
     'parameter.R'
+    'pk-parameter.R'
     'quantity-selection.R'
     'quantity-type.R'
     'quantity.R'
+    'simulation-pk-analyses.R'
+    'simulation-results.R'
     'simulation-settings.R'
     'simulation.R'
     'utilities-container.R'
     'utilities-entity.R'
+    'utilities-export.R'
     'utilities-parameter.R'
     'utilities-path.R'
+    'utilities-pk-analyses.R'
     'utilities-quantity.R'
     'utilities-simulation.R'
     'utilities.R'

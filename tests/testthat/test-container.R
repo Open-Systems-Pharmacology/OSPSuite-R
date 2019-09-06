@@ -1,8 +1,6 @@
 context("Container")
 
-dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFile)
+sim <- loadTestSimulation("S1")
 liverPath <- toPathString(c("Organism", "Liver"))
 
 test_that("It can retrieve the name of a container", {

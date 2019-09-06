@@ -1,10 +1,7 @@
 
 context("uniqueEntities")
 
-dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
-simFile <- file.path(dataPath, "S1.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFile)
-
+sim <- loadTestSimulation("S1")
 
 test_that("It throws an error when no valid entities are provided", {
   expect_that(uniqueEntities("String"), throws_error())

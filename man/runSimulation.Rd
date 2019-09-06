@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulation}
 \alias{runSimulation}
-\title{Runs a simulation and returns a list of \code{IndividualResults}}
+\title{Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation}
 \usage{
 runSimulation(simulation)
 }
@@ -10,10 +10,10 @@ runSimulation(simulation)
 \item{simulation}{Instance of a simulation to simulate.}
 }
 \value{
-List of individual results (one entry per Individual)
+SimulationResults (one entry per Individual)
 }
 \description{
-Runs a simulation and returns a list of \code{IndividualResults}
+Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation
 }
 \examples{
 

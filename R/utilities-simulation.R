@@ -25,11 +25,11 @@ saveSimulation <- function(simulation, pkmlSimulationFile) {
   invisible()
 }
 
-#' Runs a simulation and returns a list of \code{IndividualResults}
+#' Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation
 #'
 #' @param simulation Instance of a simulation to simulate.
 #'
-#' @return List of individual results (one entry per Individual)
+#' @return SimulationResults (one entry per Individual)
 #'
 #' @examples
 #'
@@ -41,7 +41,7 @@ runSimulation <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
   simulationRunner <- getNetTask("SimulationRunner")
   results <- clrCall(simulationRunner, "RunSimulation", simulation$ref)
-  return(clrCall(results, "IndividualResultsAsArray"))
+  SimulationResults$new(results)
 }
 
 
@@ -82,4 +82,21 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
   }
 
   invisible(quantities)
+}
+
+#' Removes all selected output from the given \code{simulation}
+#'
+#' @param simulation Instance of a simulation for which output selection should be cleared.
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' clearOutputs(sim)
+#' @export
+clearOutputs <- function(simulation) {
+  validateIsOfType(simulation, "Simulation")
+  simulation$settings$outputSelections$clear()
+  invisible(simulation)
 }

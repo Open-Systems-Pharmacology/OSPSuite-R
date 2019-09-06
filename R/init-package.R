@@ -17,6 +17,7 @@ initPackage <- function() {
   apiConfigNet <- clrNew("OSPSuite.R.ApiConfig")
   apiConfig <- ApiConfig$new(apiConfigNet)
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
+  apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
   clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 }
