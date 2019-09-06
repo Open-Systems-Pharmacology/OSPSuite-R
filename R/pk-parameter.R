@@ -2,7 +2,7 @@
 #' @title PKParameter
 #' @docType class
 #' @description  Results of a simulation run (either individual or population simulation)
-PKParameter <- R6Class("PKParameter",
+PKParameter <- R6::R6Class("PKParameter",
   inherit = DotNetWrapper,
   active = list(
     values = function(value) {

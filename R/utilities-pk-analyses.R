@@ -16,7 +16,8 @@
 #' @export
 calculatePKAnalyses <- function(results, simulation) {
   pkAnalysesTask <- getNetTask("PKAnalysesTask")
-  pkAnalyses <- clrCall(pkAnalysesTask, "CalculateFor", simulation$ref,  as.integer(1),  results$ref)
+  #TODO: The one is because we only have one element in the simulation. This will have to be updated when we are dealing with population simulations
+  pkAnalyses <- rClr::clrCall(pkAnalysesTask, "CalculateFor", simulation$ref,  as.integer(1),  results$ref)
   SimulationPKAnalyses$new(pkAnalyses)
 }
 
