@@ -18,8 +18,8 @@ test_that("It can load a valid pkml simulation file with 'loadFromCache = FALSE'
 test_that("It can load a simulation from cache", {
   ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
 
-  sim1 <- loadTestSimulation("S1")
-  sim2 <- loadTestSimulation("S1")
+  sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = TRUE)
 
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
   parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
@@ -44,9 +44,9 @@ test_that("It can load two simulations not from cache", {
 test_that("Two sims not from cache and third from cache", {
   ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
 
-  sim1 <- loadTestSimulation("S1")
+  sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
   sim2 <- loadTestSimulation("S1",  loadFromCache = FALSE)
-  sim3 <- loadTestSimulation("S1")
+  sim3 <- loadTestSimulation("S1", loadFromCache = TRUE)
 
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
   parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
@@ -59,9 +59,7 @@ test_that("Two sims not from cache and third from cache", {
 })
 
 test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
-  simFile <- file.path(dataPath, "molecules.pkml", fsep = .Platform$file.sep)
-
-  expect_that(loadSimulation(simFile), throws_error("Could not load simulation"))
+  expect_that(loadTestSimulation("molecules"), throws_error("Could not load simulation"))
 })
 
 sim <- loadTestSimulation("S1")

@@ -1,8 +1,9 @@
 context("exportResultsToCSV")
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("S1", loadFromCache = FALSE)
 results <- runSimulation(sim)
 pkAnalyses <- calculatePKAnalyses(results, sim)
+
 test_that("It can export valid simulation results to CSV", {
   executeWithTestFile(function(csvFile) {
     results <- runSimulation(sim)
