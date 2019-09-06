@@ -10,6 +10,8 @@ getParameter(path, container)
 \item{path}{A string representing the path relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the parameters}
+
+\item{path}{An absolute path relative to the \code{container}}
 }
 \value{
 The \code{Parameter} with the given path or \code{NULL} if not found

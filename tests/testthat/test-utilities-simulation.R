@@ -4,14 +4,14 @@ context("loadSimulation")
 test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {
   ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
 
-  sim <- loadTestSimulation("S1",  loadFromCache = TRUE)
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   expect_true(!is.null(sim))
 })
 
 test_that("It can load a valid pkml simulation file with 'loadFromCache = FALSE' without previously loaded sim", {
   ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
 
-  sim <- loadTestSimulation("S1",  loadFromCache = FALSE)
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   expect_true(!is.null(sim))
 })
 
@@ -31,8 +31,8 @@ test_that("It can load a simulation from cache", {
 test_that("It can load two simulations not from cache", {
   ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
 
-  sim1 <- loadTestSimulation("S1",  loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1",  loadFromCache = FALSE)
+  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
 
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
   parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
@@ -45,7 +45,7 @@ test_that("Two sims not from cache and third from cache", {
   ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
 
   sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
-  sim2 <- loadTestSimulation("S1",  loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim3 <- loadTestSimulation("S1", loadFromCache = TRUE)
 
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
