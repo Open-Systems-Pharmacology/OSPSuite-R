@@ -94,10 +94,9 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 #' sim <- loadSimulation(simPath)
 #'
 #' clearOutputs(sim)
-#'
 #' @export
 clearOutputs <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
-  simulation$settings$outputSelections$clear();
+  simulation$settings$outputSelections$clear()
   invisible(simulation)
 }

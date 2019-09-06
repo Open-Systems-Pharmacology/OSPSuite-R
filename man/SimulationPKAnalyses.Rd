@@ -9,7 +9,7 @@
 SimulationPKAnalyses
 }
 \description{
-PKAnalyses of a simulation (either individual or population simulation)
+PKAnalyses of a simulation (either individual or population simulation).
 }
 \section{Methods}{
 

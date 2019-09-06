@@ -6,8 +6,8 @@
 #'
 #' @return The wrapped object (single or list)
 toObjectType <- function(netObject, class) {
-  if(!is.list(netObject)) {
-    return(if(is.null(netObject)) NULL else class$new(netObject))
+  if (!is.list(netObject)) {
+    return(if (is.null(netObject)) NULL else class$new(netObject))
   }
   sapply(c(netObject), function(x)
     class$new(x))

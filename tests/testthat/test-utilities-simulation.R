@@ -15,7 +15,7 @@ test_that("It throws an exception if the pkml loaded is not a valid simulation f
 context("saveSimulation")
 
 test_that("It can save a valid simulation to file", {
-  executeWithTestFile(function(exportFile){
+  executeWithTestFile(function(exportFile) {
     saveSimulation(sim, exportFile)
     expect_true(file.exists(exportFile))
   })

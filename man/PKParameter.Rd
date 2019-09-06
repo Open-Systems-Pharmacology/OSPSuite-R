@@ -9,6 +9,16 @@
 PKParameter
 }
 \description{
-Results of a simulation run (either individual or population simulation)
+pK-Parameter values for all indiviudals of a simulation (1 or more) calculated for \code{quantityPath}
 }
+\section{Fields}{
+
+\describe{
+\item{\code{values}}{All values for \code{quantityPath} and \code{name}}
+
+\item{\code{name}}{The name of the pK-Parameter (AUC, Cmax, Tmax etc...)}
+
+\item{\code{quantityPath}}{The path of the quantity for which the values were calculated}
+}}
+
 \keyword{datasets}

@@ -7,7 +7,7 @@ parameter <- getParameter("Organism|Liver|Volume", sim)
 addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
 addOutputs(parameter, simulation = sim)
 
-#print(outputSelections)
+# print(outputSelections)
 
 # parameter <- getParameter("Organism|Liver|Volume", sim)
 # print(parameter)
@@ -19,7 +19,7 @@ pkAnalyses <- calculatePKAnalyses(results, sim)
 
 exportPKAnalysesToCSV(pkAnalyses, sim, "C:/temp/export/pk.csv")
 
-pkParameters<- pkAnalyses$allPKParametersFor("Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)")
+pkParameters <- pkAnalyses$allPKParametersFor("Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)")
 
 for (pkParameter in pkParameters) {
   print(pkParameter)

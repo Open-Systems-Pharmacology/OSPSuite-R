@@ -5,7 +5,7 @@
 #' @param filename Full path of where the results will be saved.
 #'
 #' @export
-exportResultsToCSV <- function(results, simulation, filename){
+exportResultsToCSV <- function(results, simulation, filename) {
   validateIsOfType(results, "SimulationResults")
   validateIsOfType(simulation, "Simulation")
   validateIsString(filename)
@@ -21,8 +21,8 @@ exportResultsToCSV <- function(results, simulation, filename){
 #' @param filename Full path of where the pK-Analyses will be saved.
 #'
 #' @export
-exportPKAnalysesToCSV <- function(pkAnalyses, simulation, filename){
-  validateIsOfType(results, "SimulationPKAnalyses")
+exportPKAnalysesToCSV <- function(pkAnalyses, simulation, filename) {
+  validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   validateIsOfType(simulation, "Simulation")
   validateIsString(filename)
   simulationExporter <- getNetTask("SimulationExporter")
