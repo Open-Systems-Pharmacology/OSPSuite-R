@@ -12,23 +12,27 @@ addOutputs(parameter, simulation = sim)
 # parameter <- getParameter("Organism|Liver|Volume", sim)
 # print(parameter)
 
-results <- runSimulation(sim)
-exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
 
-pkAnalyses <- calculatePKAnalyses(results, sim)
+population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv", sim)
+print(population)
 
-exportPKAnalysesToCSV(pkAnalyses, sim, "C:/temp/export/pk.csv")
-
-pkParameters <- pkAnalyses$allPKParametersFor("Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)")
-
-for (pkParameter in pkParameters) {
-  print(pkParameter)
-}
-
-
-pkParam <- pkParameters[[2]]
-
-val <- pkParam$values
+# results <- runSimulation(sim)
+# exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
+#
+# pkAnalyses <- calculatePKAnalyses(results, sim)
+#
+# exportPKAnalysesToCSV(pkAnalyses, sim, "C:/temp/export/pk.csv")
+#
+# pkParameters <- pkAnalyses$allPKParametersFor("Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)")
+#
+# for (pkParameter in pkParameters) {
+#   print(pkParameter)
+# }
+#
+#
+# pkParam <- pkParameters[[2]]
+#
+# val <- pkParam$values
 # getPkAnalysis(results)
 
 
