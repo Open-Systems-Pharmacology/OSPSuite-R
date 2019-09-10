@@ -7,7 +7,7 @@
 getAllParametersMatching(paths, container)
 }
 \arguments{
-\item{paths}{A vector of strings relative to the \code{container}}
+\item{paths}{A vector of strings representing the paths relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the parameters}
 }

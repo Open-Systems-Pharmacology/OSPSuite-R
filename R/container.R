@@ -6,7 +6,8 @@
 #'   \item{containerType}{Type of container}
 #'   }
 #'
-Container <- R6Class("Container",
+Container <- R6::R6Class(
+  "Container",
   inherit = Entity,
   active = list(
     containerType = function(value) {

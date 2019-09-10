@@ -1,7 +1,7 @@
 
 #' Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param paths A vector of strings relative to the \code{container}
+#' @param paths A vector of strings representing the paths relative to the \code{container}
 #' @param container A Container or Simulation used to find the parameters
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 #'
@@ -28,7 +28,7 @@ getAllParametersMatching <- function(paths, container) {
   validateIsOfType(paths, "character")
 
   findParametersByPath <- function(path) {
-    toParameters(clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
+    toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
   }
 
   return(unify(findParametersByPath, paths))
@@ -37,8 +37,7 @@ getAllParametersMatching <- function(paths, container) {
 #' Retrieve a single parameter by path in the given container
 #'
 #' @inherit getAllParametersMatching
-#'
-#' @param path An absolute path relative to the \code{container}
+#' @param path A string representing the path relative to the \code{container}
 #'
 #' @return The \code{Parameter} with the given path or \code{NULL} if not found
 #' @examples

@@ -27,7 +27,7 @@ uniqueEntities <- function(entities, compareBy = "id") {
 
   validateIsOfType(entities, "Entity")
   if (!compareBy %in% c("id", "name", "path")) {
-    stop(messages$errorUniqueEntityWrongCompareBy)
+    stop(messages$errorUniqueEntitiesWrongCompareBy)
   }
 
   uniqueEntities <- new.env(parent = emptyenv())

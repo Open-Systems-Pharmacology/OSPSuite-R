@@ -9,7 +9,7 @@
 #'
 #' @keywords Parameter
 #' @format NULL
-Parameter <- R6Class(
+Parameter <- R6::R6Class(
   "Parameter",
   inherit = Quantity,
   public = list(

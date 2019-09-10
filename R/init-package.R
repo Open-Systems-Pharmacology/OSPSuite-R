@@ -10,18 +10,16 @@ initPackage <- function() {
 
   addPackageLibToPath()
 
-  clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
-
+  rClr::clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
 
   # Initialize once
-  apiConfigNet <- clrNew("OSPSuite.R.ApiConfig")
+  apiConfigNet <- rClr::clrNew("OSPSuite.R.ApiConfig")
   apiConfig <- ApiConfig$new(apiConfigNet)
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
-  clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
+  rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 }
-
 
 addPackageLibToPath <- function() {
   libPath <- system.file("lib", package = ospsuiteEnv$packageName)
