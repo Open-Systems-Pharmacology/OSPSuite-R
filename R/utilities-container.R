@@ -38,8 +38,6 @@ getAllContainersMatching <- function(paths, container) {
 #'
 #' @inherit getAllContainersMatching
 #' @param path A string representing the path relative to the \code{container}
-#'
-#' @param path An absolute path relative to the \code{container}
 
 #' @return The \code{Container} with the given path or null if not found
 #' @examples

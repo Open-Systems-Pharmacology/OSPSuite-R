@@ -27,6 +27,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Collate: 
     'api-config.R'
+    'cache-structure.R'
     'enum.R'
     'container-type.R'
     'container.R'

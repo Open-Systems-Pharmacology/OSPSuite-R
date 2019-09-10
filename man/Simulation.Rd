@@ -18,7 +18,9 @@ An OSPSuite simulation
 
 \item{\code{path}}{Path of the root container of the simulation (read-only)}
 
-\item{\code{settings}}{SImulationSettings object for the simulation (read-only)}
+\item{\code{settings}}{SimulationSettings object for the simulation (read-only)}
+
+\item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
 }}
 
 \keyword{datasets}

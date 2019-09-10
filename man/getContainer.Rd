@@ -10,8 +10,6 @@ getContainer(path, container)
 \item{path}{A string representing the path relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the containers}
-
-\item{path}{An absolute path relative to the \code{container}}
 }
 \value{
 The \code{Container} with the given path or null if not found

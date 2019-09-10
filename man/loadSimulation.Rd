@@ -2,9 +2,12 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{loadSimulation}
 \alias{loadSimulation}
-\title{Load a simulation from a pkml file and returns the simulation}
+\title{Load a simulation from a pkml file and returns the simulation. If the passed simulation file
+has been loaded before, the simulation is not loaded again but a cached object is returned.
+This behavior can be overriden.}
 \usage{
-loadSimulation(pkmlSimulationFile, loadFromCache = TRUE)
+loadSimulation(pkmlSimulationFile, loadFromCache = TRUE,
+  addToCache = TRUE)
 }
 \arguments{
 \item{pkmlSimulationFile}{Full path of pkml simulation file to load.}
@@ -12,9 +15,14 @@ loadSimulation(pkmlSimulationFile, loadFromCache = TRUE)
 \item{loadFromCache}{If TRUE, an already loaded pkml file will not be loaded
 again, but the simulation object will be retrieved from cache. This is the
 default behavior. If FALSE, new object will be created.}
+
+\item{addToCache}{If TRUE, the loaded simulation is added to cache. If false,
+the returned simulation only exists locally. Default is TRUE.}
 }
 \description{
-Load a simulation from a pkml file and returns the simulation
+Load a simulation from a pkml file and returns the simulation. If the passed simulation file
+has been loaded before, the simulation is not loaded again but a cached object is returned.
+This behavior can be overriden.
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

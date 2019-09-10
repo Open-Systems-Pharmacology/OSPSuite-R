@@ -2,21 +2,21 @@
 context("loadSimulation")
 
 test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {
-  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+  resetSimulationCache()
 
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   expect_true(!is.null(sim))
 })
 
 test_that("It can load a valid pkml simulation file with 'loadFromCache = FALSE' without previously loaded sim", {
-  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+  resetSimulationCache()
 
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   expect_true(!is.null(sim))
 })
 
 test_that("It can load a simulation from cache", {
-  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+  resetSimulationCache()
 
   sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
   sim2 <- loadTestSimulation("S1", loadFromCache = TRUE)
@@ -29,7 +29,7 @@ test_that("It can load a simulation from cache", {
 })
 
 test_that("It can load two simulations not from cache", {
-  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+  resetSimulationCache()
 
   sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
@@ -42,7 +42,7 @@ test_that("It can load two simulations not from cache", {
 })
 
 test_that("Two sims not from cache and third from cache", {
-  ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+  resetSimulationCache()
 
   sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
@@ -60,6 +60,21 @@ test_that("Two sims not from cache and third from cache", {
 
 test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
   expect_that(loadTestSimulation("molecules"), throws_error("Could not load simulation"))
+})
+
+test_that("It can remove simulation from cache", {
+  resetSimulationCache()
+  sim1 <- loadTestSimulation("S1")
+
+  expect_true(removeSimulationFromCache(sim1))
+})
+
+test_that("It returns false when attempting to remove a simulation from cache that is not cached", {
+  resetSimulationCache()
+  sim1 <- loadTestSimulation("S1")
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE, addToCache = FALSE)
+
+  expect_false(removeSimulationFromCache(sim2))
 })
 
 sim <- loadTestSimulation("S1")

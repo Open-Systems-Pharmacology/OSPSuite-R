@@ -28,7 +28,7 @@ getAllQuantitiesMatching <- function(paths, container) {
   validateIsOfType(paths, "character")
 
   findQuantitiesByPath <- function(path) {
-    toQuantities(clrCall(getContainerTask(), "AllQuantitiesMatching", container$ref, path))
+    toQuantities(rClr::clrCall(getContainerTask(), "AllQuantitiesMatching", container$ref, path))
   }
 
   return(unify(findQuantitiesByPath, paths))

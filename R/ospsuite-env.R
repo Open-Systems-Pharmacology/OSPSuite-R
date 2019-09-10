@@ -16,4 +16,4 @@ ospsuiteEnv$formatNumericsDigits <- 5
 ospsuiteEnv$formatNumericsSmall <- 2
 
 # Cache of the so far loaded simulations. The keys are the paths to the pkml file.
-ospsuiteEnv$loadedSimulations <- new.env(parent = emptyenv())
+ospsuiteEnv$loadedSimulationsCache <- Cache$new("Simulation")

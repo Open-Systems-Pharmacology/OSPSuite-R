@@ -1,9 +1,13 @@
-#' Load a simulation from a pkml file and returns the simulation
+#' Load a simulation from a pkml file and returns the simulation. If the passed simulation file
+#' has been loaded before, the simulation is not loaded again but a cached object is returned.
+#' This behavior can be overriden.
 #'
 #' @param pkmlSimulationFile Full path of pkml simulation file to load.
 #' @param loadFromCache If TRUE, an already loaded pkml file will not be loaded
 #' again, but the simulation object will be retrieved from cache. This is the
 #' default behavior. If FALSE, new object will be created.
+#' @param addToCache If TRUE, the loaded simulation is added to cache. If false,
+#' the returned simulation only exists locally. Default is TRUE.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -29,13 +33,13 @@
 #' setParametersValues(parameters = parameter3, values = 1)
 #' parameter2$value == parameter3$value # FALSE#'
 #' @export
-loadSimulation <- function(pkmlSimulationFile, loadFromCache = TRUE) {
-  validateIsOfType(loadFromCache, "logical")
+loadSimulation <- function(pkmlSimulationFile, loadFromCache = TRUE, addToCache = TRUE) {
+  validateIsOfType(c(loadFromCache, addToCache), "logical")
 
   if (loadFromCache) {
     # If the file has already been loaded, return the last loaded object
-    if (exists(pkmlSimulationFile, where = ospsuiteEnv$loadedSimulations)) {
-      return(ospsuiteEnv$loadedSimulations[[pkmlSimulationFile]])
+    if (ospsuiteEnv$loadedSimulationsCache$hasKey(pkmlSimulationFile)) {
+      return(ospsuiteEnv$loadedSimulationsCache$get(pkmlSimulationFile))
     }
   }
 
@@ -43,10 +47,12 @@ loadSimulation <- function(pkmlSimulationFile, loadFromCache = TRUE) {
   # new simulation object will be created
   simulationPersister <- getNetTask("SimulationPersister")
   netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", pkmlSimulationFile)
-  simulation <- Simulation$new(netSim)
+  simulation <- Simulation$new(netSim, pkmlSimulationFile)
 
   # Add the simulation to the cache of loaded simulations
-  ospsuiteEnv$loadedSimulations[[pkmlSimulationFile]] <- simulation
+  if (addToCache) {
+    ospsuiteEnv$loadedSimulationsCache$set(pkmlSimulationFile, simulation)
+  }
 
   return(simulation)
 }
@@ -60,7 +66,7 @@ loadSimulation <- function(pkmlSimulationFile, loadFromCache = TRUE) {
 saveSimulation <- function(simulation, pkmlSimulationFile) {
   validateIsOfType(simulation, "Simulation")
   simulationPersister <- getNetTask("SimulationPersister")
-  clrCall(simulationPersister, "SaveSimulation", simulation$ref, pkmlSimulationFile)
+  rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, pkmlSimulationFile)
   invisible()
 }
 
@@ -79,7 +85,7 @@ saveSimulation <- function(simulation, pkmlSimulationFile) {
 runSimulation <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
   simulationRunner <- getNetTask("SimulationRunner")
-  results <- clrCall(simulationRunner, "RunSimulation", simulation$ref)
+  results <- rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref)
   SimulationResults$new(results)
 }
 
@@ -138,4 +144,47 @@ clearOutputs <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
   simulation$settings$outputSelections$clear()
   invisible(simulation)
+}
+
+#' Clears cache of loaded simulations
+#' @export
+resetSimulationCache <- function() {
+  ospsuiteEnv$loadedSimulationsCache$reset()
+}
+
+#' Removes a simulation from simulations cache.
+#'
+#' @param simulation Simulation to  be removed from the cache
+#'
+#' @return TRUE if the simulation was cached and could be removed from cache.
+#' FALSE otherwise, usually indicating that the specific simulation was not cached.
+#' @export
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim1 <- loadSimulation(simPath)
+#' sim2 <- loadSimulation(simPath, loadFromCache = FALSE, addToCache = FALSE)
+#'
+#' removeSimulationFromCache(sim1) # returns TRUE
+#' removeSimulationFromCache(sim2) # returns FALSE
+removeSimulationFromCache <- function(simulation) {
+  validateIsOfType(simulation, "Simulation")
+
+  simulationFilePath <- simulation$sourceFile
+
+  # Can not remove simulation from cache if no simultion with the corresponding
+  # file path has been cached.
+  if (!ospsuiteEnv$loadedSimulationsCache$hasKey(simulationFilePath)) {
+    return(FALSE)
+  }
+
+  cachedSim <- ospsuiteEnv$loadedSimulationsCache$get(simulationFilePath)
+
+  if (!identical(cachedSim, simulation)) {
+    return(FALSE)
+  }
+
+  ospsuiteEnv$loadedSimulationsCache$dropKey(simulationFilePath)
+
+  return(TRUE)
 }

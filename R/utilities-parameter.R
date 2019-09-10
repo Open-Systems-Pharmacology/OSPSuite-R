@@ -39,8 +39,6 @@ getAllParametersMatching <- function(paths, container) {
 #' @inherit getAllParametersMatching
 #' @param path A string representing the path relative to the \code{container}
 #'
-#' @param path An absolute path relative to the \code{container}
-#'
 #' @return The \code{Parameter} with the given path or \code{NULL} if not found
 #' @examples
 #'
