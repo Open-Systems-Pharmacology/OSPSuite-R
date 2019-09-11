@@ -44,7 +44,7 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))
 
-  stop(messages$errorWrongType(objectName))
+  stop(messages$errorWrongType(objectName, type))
 }
 
 validateIsSameLength <- function(...) {

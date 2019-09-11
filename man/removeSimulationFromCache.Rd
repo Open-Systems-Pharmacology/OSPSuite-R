@@ -21,6 +21,6 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim1 <- loadSimulation(simPath)
 sim2 <- loadSimulation(simPath, loadFromCache = FALSE, addToCache = FALSE)
 
-removeSimulationFromCache(sim1) #returns TRUE
-removeSimulationFromCache(sim2) #returns FALSE
+removeSimulationFromCache(sim1) # returns TRUE
+removeSimulationFromCache(sim2) # returns FALSE
 }
