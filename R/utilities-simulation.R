@@ -1,4 +1,4 @@
-#' Load a simulation from a pkml file and returns the simulation. If the passed simulation file
+#' Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 #' has been loaded before, the simulation is not loaded again but a cached object is returned.
 #' This behavior can be overriden.
 #'

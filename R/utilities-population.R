@@ -1,8 +1,15 @@
+#' Loads a population from a csv file and returns the population.
+#'
+#' @param csvPopulationFile Full path of csv population file to load.
+#'
+#' @examples
+#' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#'
+#' population <- loadPopulation(csvPath)
 #' @export
-loadPopulation <- function(fileName, simulation) {
-  validateIsOfType(simulation, "Simulation")
-  validateIsString(fileName)
+loadPopulation <- function(csvPopulationFile) {
+  validateIsString(csvPopulationFile)
   populationImporter <- getNetTask("PopulationImporter")
-  population <- rClr::clrCall(populationImporter, "ImportPopulation", fileName, simulation$ref)
+  population <- rClr::clrCall(populationImporter, "ImportPopulation", csvPopulationFile)
   Population$new(population)
 }

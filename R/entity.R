@@ -5,6 +5,7 @@
 #'
 #' @field id The id of the .NET wrapped object. (read-only)
 #' @field name The name of the object
+#' @format NULL
 ObjectBase <- R6::R6Class(
   "ObjectBase",
   inherit = DotNetWrapper,

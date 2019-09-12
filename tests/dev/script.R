@@ -13,7 +13,7 @@ addOutputs(parameter, simulation = sim)
 # print(parameter)
 
 
-population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv", sim)
+population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
 print(population)
 
 # results <- runSimulation(sim)

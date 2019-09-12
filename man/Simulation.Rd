@@ -4,7 +4,6 @@
 \name{Simulation}
 \alias{Simulation}
 \title{Simulation}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 Simulation
 }

@@ -4,7 +4,6 @@
 \name{Population}
 \alias{Population}
 \title{Population}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 Population
 }
@@ -20,7 +19,9 @@ List of individuals used in a population simulation
 \section{Methods}{
 
 \describe{
-  \count{containerType}{Type of container}
+  \item{has(parameterPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterPath} otherwise \code{FALSE}}
+  \item{setValues(parameterPath, values)}{Adds or update the \code{values} for \code{parameterPath}}
+  \item{getValues(parameterPath)}{Returns the variability values defined in the population for \code{parameterPath}}
   }
 }
 
