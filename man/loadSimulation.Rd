@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{loadSimulation}
 \alias{loadSimulation}
-\title{Load a simulation from a pkml file and returns the simulation. If the passed simulation file
+\title{Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 has been loaded before, the simulation is not loaded again but a cached object is returned.
 This behavior can be overriden.}
 \usage{
@@ -20,7 +20,7 @@ default behavior. If FALSE, new object will be created.}
 the returned simulation only exists locally. Default is TRUE.}
 }
 \description{
-Load a simulation from a pkml file and returns the simulation. If the passed simulation file
+Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 has been loaded before, the simulation is not loaded again but a cached object is returned.
 This behavior can be overriden.
 }

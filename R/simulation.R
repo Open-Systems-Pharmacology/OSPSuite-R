@@ -1,11 +1,11 @@
 #' @title Simulation
 #' @docType class
 #' @description  An OSPSuite simulation
-#'
 #' @field root Root container of the simulation (read-only)
 #' @field path Path of the root container of the simulation (read-only)
 #' @field settings SimulationSettings object for the simulation (read-only)
 #' @field sourceFile Path to the file the simulation was loaded from (read-only)
+#' @format NULL
 Simulation <- R6::R6Class(
   "Simulation",
   inherit = ObjectBase,

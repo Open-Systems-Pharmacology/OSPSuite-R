@@ -33,6 +33,14 @@ validateIsString <- function(object) {
   validateIsOfType(object, "character")
 }
 
+validateIsNumeric <- function(object) {
+  validateIsOfType(object, "numeric")
+}
+
+validateIsLogical <- function(object) {
+  validateIsOfType(object, "logical")
+}
+
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   if (nullAllowed && is.null(object)) {
     return()
