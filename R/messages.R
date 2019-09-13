@@ -4,12 +4,7 @@ messages <- list(
     callingFunctions <- sys.calls()
     callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
-    expectedTypeMsg <- expectedType[1]
-    if (length(expectedType) > 1) {
-      for (i in 2:length(expectedType)) {
-        expectedTypeMsg <- paste0(expectedTypeMsg, ", or ", expectedType[i])
-      }
-    }
+    expectedTypeMsg <- paste0(expectedType, collapse = ", or ")
 
     message <- paste0(
       callingFunction, ": argument '", objectName,
