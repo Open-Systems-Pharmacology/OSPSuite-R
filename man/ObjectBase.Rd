@@ -4,7 +4,6 @@
 \name{ObjectBase}
 \alias{ObjectBase}
 \title{ObjectBase}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 ObjectBase
 }
