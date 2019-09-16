@@ -4,6 +4,7 @@
 #' @field root Root container of the simulation (read-only)
 #' @field path Path of the root container of the simulation (read-only)
 #' @field settings SimulationSettings object for the simulation (read-only)
+#' @field solver SimulationSolver object for the simulation (read-only)
 #' @field sourceFile Path to the file the simulation was loaded from (read-only)
 #' @format NULL
 Simulation <- R6::R6Class(
@@ -31,6 +32,13 @@ Simulation <- R6::R6Class(
         buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
         settings <- rClr::clrGet(buildConfiguration, "SimulationSettings")
         SimulationSettings$new(settings)
+      } else {
+        stop(messages$errorPropertyReadOnly("settings"), call. = FALSE)
+      }
+    },
+    solver = function(value) {
+      if (missing(value)) {
+        self$settings$solver
       } else {
         stop(messages$errorPropertyReadOnly("settings"), call. = FALSE)
       }
