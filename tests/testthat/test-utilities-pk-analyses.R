@@ -33,3 +33,12 @@ test_that("It should an empty list of parameters for an output that is not part 
   pkAnalysesForOutput <- pkAnalyses$allPKParametersFor("Another output that does not exist")
   expect_equal(length(pkAnalysesForOutput), 0)
 })
+
+context("exportPKAnalysesToCSV")
+
+test_that("It can export valid pk-analyses results to CSV", {
+  executeWithTestFile(function(csvFile) {
+    exportPKAnalysesToCSV(pkAnalyses, sim, csvFile)
+    expect_true(file.exists(csvFile))
+  })
+})

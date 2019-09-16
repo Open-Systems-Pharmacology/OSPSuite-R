@@ -45,5 +45,5 @@ test_that("It can add user defined variability using an existing parameter path 
 test_that("It throws an exception when adding values that have the wrong dimension", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"
-  expect_that(population$setValues(parameterPath, c(1:5)*2.5), throws_error())
+  expect_that(population$setValues(parameterPath, c(1:5) * 2.5), throws_error())
 })

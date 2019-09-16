@@ -4,11 +4,16 @@
 \name{SimulationResults}
 \alias{SimulationResults}
 \title{SimulationResults}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 SimulationResults
 }
 \description{
 Results of a simulation run (either individual or population simulation)
 }
+\section{Fields}{
+
+\describe{
+\item{\code{count}}{the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results)}
+}}
+
 \keyword{datasets}

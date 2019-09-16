@@ -27,3 +27,20 @@ calculatePKAnalyses <- function(results, simulation) {
 toPKParameter <- function(netPKParameters) {
   toObjectType(netPKParameters, PKParameter)
 }
+
+
+#' Saves the pK-analyses  to csv file
+#'
+#' @param pkAnalyses pK-Analyses to exporte (typically calculated using \code{calculatePKAnalyses} or imported from file)
+#' @param simulation Instance of a simulation used to calculate the pK-Analyses
+#' @param filename Full path of where the pK-Analyses will be saved.
+#'
+#' @export
+exportPKAnalysesToCSV <- function(pkAnalyses, simulation, filename) {
+  validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
+  validateIsOfType(simulation, "Simulation")
+  validateIsString(filename)
+  simulationExporter <- getNetTask("SimulationExporter")
+  rClr::clrCall(simulationExporter, "ExportPKAnalysesToCSV", pkAnalyses$ref, simulation$ref, filename)
+  invisible()
+}

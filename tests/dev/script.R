@@ -16,8 +16,10 @@ addOutputs(parameter, simulation = sim)
 population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
 print(population)
 
+
+results <- load
 # results <- runSimulation(sim)
-# exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
+exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
 #
 # pkAnalyses <- calculatePKAnalyses(results, sim)
 #
