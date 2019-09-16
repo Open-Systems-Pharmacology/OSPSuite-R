@@ -1,6 +1,6 @@
 context("exportResultsToCSV")
 
-sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+sim <- loadTestSimulation("S1")
 results <- runSimulation(sim)
 
 test_that("It can export valid simulation results to CSV", {
@@ -28,4 +28,10 @@ test_that("It can import valid simulation results from multiple CSV files", {
 test_that("It throws an exception if the file imported are not valid results file", {
   junkFile <- getTestDataFilePath("pop_10.csv")
   expect_that(importResultsFromCSV(sim, junkFile), throws_error())
+})
+
+test_that("It throws an exception when importing a valid result file that does not match the simulation", {
+  otherSim <- loadTestSimulation("simple")
+  resFile <- getTestDataFilePath("res_10.csv")
+  expect_that(importResultsFromCSV(otherSim, resFile), throws_error())
 })
