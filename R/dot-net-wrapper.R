@@ -60,7 +60,7 @@ DotNetWrapper <- R6::R6Class(
     },
 
     printClass = function() {
-      cat(class(self)[1], ": \n")
+      cat(class(self)[1], ": \n", sep = "")
     }
   )
 )

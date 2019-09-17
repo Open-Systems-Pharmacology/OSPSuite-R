@@ -9,6 +9,13 @@ print(solver)
 addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
 addOutputs(parameter, simulation = sim)
 
+
+schema <- sim$outputSchema
+print(schema)
+
+schema$addTimePoints(c(10,20))
+print(schema)
+
 # print(outputSelections)
 
 # parameter <- getParameter("Organism|Liver|Volume", sim)

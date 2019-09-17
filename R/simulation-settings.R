@@ -13,7 +13,7 @@ SimulationSettings <- R6::R6Class(
         solver <- rClr::clrGet(self$ref, "Solver")
         SolverSettings$new(solver)
       } else {
-        stop(messages$errorPropertyReadOnly("solver"), call. = FALSE)
+        private$throwPropertyIsReadonly("solver")
       }
     },
     outputSelections = function(value) {
@@ -21,7 +21,15 @@ SimulationSettings <- R6::R6Class(
         outputSelections <- rClr::clrGet(self$ref, "OutputSelections")
         OutputSelections$new(outputSelections)
       } else {
-        stop(messages$errorPropertyReadOnly("outputSelections"), call. = FALSE)
+        private$throwPropertyIsReadonly("outputSelections")
+      }
+    },
+    outputSchema = function(value) {
+      if (missing(value)) {
+        outputSchema <- rClr::clrGet(self$ref, "OutputSchema")
+        OutputSchema$new(outputSchema)
+      } else {
+        private$throwPropertyIsReadonly("outputSchema")
       }
     }
   ),

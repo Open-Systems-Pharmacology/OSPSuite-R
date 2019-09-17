@@ -2,8 +2,10 @@
 
 export(ContainerType)
 export(QuantityType)
+export(addInterval)
 export(addOutputs)
 export(calculatePKAnalyses)
+export(clearIntervals)
 export(clearOutputs)
 export(enum)
 export(exportPKAnalysesToCSV)
