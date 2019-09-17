@@ -11,7 +11,7 @@ Container <- R6::R6Class(
   inherit = Entity,
   active = list(
     containerType = function(value) {
-      private$wrapReadOnlyProperties("ContainerType", value)
+      private$wrapReadOnlyProperty("ContainerType", value)
     }
   ),
   public = list(

@@ -1,8 +1,8 @@
-#' Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
+#' @title Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 #' has been loaded before, the simulation is not loaded again but a cached object is returned.
 #' This behavior can be overriden.
 #'
-#' @param pkmlSimulationFile Full path of pkml simulation file to load.
+#' @param filePath Full path of pkml simulation file to load.
 #' @param loadFromCache If TRUE, an already loaded pkml file will not be loaded
 #' again, but the simulation object will be retrieved from cache. This is the
 #' default behavior. If FALSE, new object will be created.
@@ -33,25 +33,25 @@
 #' setParametersValues(parameters = parameter3, values = 1)
 #' parameter2$value == parameter3$value # FALSE#'
 #' @export
-loadSimulation <- function(pkmlSimulationFile, loadFromCache = TRUE, addToCache = TRUE) {
+loadSimulation <- function(filePath, loadFromCache = TRUE, addToCache = TRUE) {
   validateIsOfType(c(loadFromCache, addToCache), "logical")
 
   if (loadFromCache) {
     # If the file has already been loaded, return the last loaded object
-    if (ospsuiteEnv$loadedSimulationsCache$hasKey(pkmlSimulationFile)) {
-      return(ospsuiteEnv$loadedSimulationsCache$get(pkmlSimulationFile))
+    if (ospsuiteEnv$loadedSimulationsCache$hasKey(filePath)) {
+      return(ospsuiteEnv$loadedSimulationsCache$get(filePath))
     }
   }
 
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
   simulationPersister <- getNetTask("SimulationPersister")
-  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", pkmlSimulationFile)
-  simulation <- Simulation$new(netSim, pkmlSimulationFile)
+  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", filePath)
+  simulation <- Simulation$new(netSim, filePath)
 
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {
-    ospsuiteEnv$loadedSimulationsCache$set(pkmlSimulationFile, simulation)
+    ospsuiteEnv$loadedSimulationsCache$set(filePath, simulation)
   }
 
   return(simulation)
@@ -60,17 +60,17 @@ loadSimulation <- function(pkmlSimulationFile, loadFromCache = TRUE, addToCache 
 #' Saves a simulation to pkml file
 #'
 #' @param simulation Instance of a simulation to save.
-#' @param pkmlSimulationFile Full path of where the simulation will be saved.
+#' @param filePath Full path of where the simulation will be saved.
 #'
 #' @export
-saveSimulation <- function(simulation, pkmlSimulationFile) {
+saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, "Simulation")
   simulationPersister <- getNetTask("SimulationPersister")
-  rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, pkmlSimulationFile)
+  rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
   invisible()
 }
 
-#' Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation
+#' @title  Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation
 #'
 #' @param simulation Instance of a simulation to simulate.
 #'
@@ -86,11 +86,11 @@ runSimulation <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
   simulationRunner <- getNetTask("SimulationRunner")
   results <- rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref)
-  SimulationResults$new(results)
+  SimulationResults$new(results, simulation)
 }
 
 
-#' Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.
+#' @title  Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.
 #'
 #' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.
 #' @param simulation Instance of a simulation for which output selection should be updated.
@@ -129,7 +129,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
   invisible(quantities)
 }
 
-#' Removes all selected output from the given \code{simulation}
+#' @title  Removes all selected output from the given \code{simulation}
 #'
 #' @param simulation Instance of a simulation for which output selection should be cleared.
 #'
@@ -152,7 +152,7 @@ resetSimulationCache <- function() {
   ospsuiteEnv$loadedSimulationsCache$reset()
 }
 
-#' Removes a simulation from simulations cache.
+#' @title  Removes a simulation from simulations cache.
 #'
 #' @param simulation Simulation to  be removed from the cache
 #'

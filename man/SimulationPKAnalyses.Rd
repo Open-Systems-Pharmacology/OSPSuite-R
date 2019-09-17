@@ -9,8 +9,14 @@
 SimulationPKAnalyses
 }
 \description{
-PKAnalyses of a simulation (either individual or population simulation).
+pK-Analyses of a simulation (either individual or population simulation).
 }
+\section{Fields}{
+
+\describe{
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)}
+}}
+
 \section{Methods}{
 
 \describe{

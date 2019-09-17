@@ -7,11 +7,11 @@ QuantitySelection <- R6::R6Class(
   inherit = DotNetWrapper,
   active = list(
     path = function(value) {
-      private$wrapReadOnlyProperties("Path", value)
+      private$wrapReadOnlyProperty("Path", value)
     },
 
     quantityType = function(value) {
-      private$wrapReadOnlyProperties("QuantityType", value)
+      private$wrapReadOnlyProperty("QuantityType", value)
     }
   ),
   public = list(

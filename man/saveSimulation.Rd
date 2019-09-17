@@ -4,12 +4,12 @@
 \alias{saveSimulation}
 \title{Saves a simulation to pkml file}
 \usage{
-saveSimulation(simulation, pkmlSimulationFile)
+saveSimulation(simulation, filePath)
 }
 \arguments{
 \item{simulation}{Instance of a simulation to save.}
 
-\item{pkmlSimulationFile}{Full path of where the simulation will be saved.}
+\item{filePath}{Full path of where the simulation will be saved.}
 }
 \description{
 Saves a simulation to pkml file

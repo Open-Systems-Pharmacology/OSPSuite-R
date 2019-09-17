@@ -14,21 +14,21 @@ Population <- R6::R6Class(
   inherit = DotNetWrapper,
   active = list(
     count = function(value) {
-      private$wrapReadOnlyProperties("Count", value)
+      private$wrapReadOnlyProperty("Count", value)
     }
   ),
   public = list(
-    has = function(parameterPath){
+    has = function(parameterPath) {
       validateIsString(parameterPath)
       rClr::clrCall(self$ref, "Has", parameterPath)
     },
-    setValues = function(parameterPath, values){
+    setValues = function(parameterPath, values) {
       validateIsString(parameterPath)
       validateIsNumeric(values)
-      rClr::clrCall(self$ref, "SetValues", parameterPath,  values)
+      rClr::clrCall(self$ref, "SetValues", parameterPath, values)
       invisible(self)
     },
-    getValues = function(parameterPath){
+    getValues = function(parameterPath) {
       validateIsString(parameterPath)
       rClr::clrCall(self$ref, "GetValues", parameterPath)
     },

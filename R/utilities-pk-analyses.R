@@ -1,4 +1,4 @@
-#' Calculates the pkAnalyses for all output values available in \code{results}.
+#' @title Calculates the pkAnalyses for all output values available in \code{results}.
 #'
 #' @param results Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}
 #' @param simulation Instance of a simulation for which pk-analyses should be calculated
@@ -20,10 +20,25 @@ calculatePKAnalyses <- function(results, simulation) {
   pkAnalysesTask <- getNetTask("PKAnalysesTask")
   # TODO: The one is because we only have one element in the simulation. This will have to be updated when we are dealing with population simulations
   pkAnalyses <- rClr::clrCall(pkAnalysesTask, "CalculateFor", simulation$ref, as.integer(1), results$ref)
-  SimulationPKAnalyses$new(pkAnalyses)
+  SimulationPKAnalyses$new(pkAnalyses, simulation)
 }
 
 
 toPKParameter <- function(netPKParameters) {
   toObjectType(netPKParameters, PKParameter)
+}
+
+
+#' @title Saves the pK-analyses  to csv file
+#'
+#' @param pkAnalyses pK-Analyses to exporte (typically calculated using \code{calculatePKAnalyses} or imported from file)
+#' @param filePath Full path where the pK-Analyses will be saved.
+#'
+#' @export
+exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
+  validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
+  validateIsString(filePath)
+  simulationExporter <- getNetTask("SimulationExporter")
+  rClr::clrCall(simulationExporter, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
+  invisible()
 }

@@ -6,11 +6,10 @@
 has been loaded before, the simulation is not loaded again but a cached object is returned.
 This behavior can be overriden.}
 \usage{
-loadSimulation(pkmlSimulationFile, loadFromCache = TRUE,
-  addToCache = TRUE)
+loadSimulation(filePath, loadFromCache = TRUE, addToCache = TRUE)
 }
 \arguments{
-\item{pkmlSimulationFile}{Full path of pkml simulation file to load.}
+\item{filePath}{Full path of pkml simulation file to load.}
 
 \item{loadFromCache}{If TRUE, an already loaded pkml file will not be loaded
 again, but the simulation object will be retrieved from cache. This is the
