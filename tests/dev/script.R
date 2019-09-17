@@ -19,7 +19,9 @@ addOutputs(parameter, simulation = sim)
 # print(population)
 
 
-# results <- runSimulation(sim)
+results <- runSimulation(sim)
+paths <- results$allQuantityPaths
+
 #exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
 #
 # pkAnalyses <- calculatePKAnalyses(results, sim)

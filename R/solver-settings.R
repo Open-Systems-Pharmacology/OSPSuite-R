@@ -14,19 +14,19 @@ SolverSettings <- R6::R6Class(
   inherit = DotNetWrapper,
   active = list(
     useJacobian = function(value) {
-      private$wrapProperties("UseJacobian", value)
+      private$wrapProperty("UseJacobian", value)
     },
 
     h0 = function(value) {
-      private$wrapProperties("H0", value)
+      private$wrapProperty("H0", value)
     },
 
     hMin = function(value) {
-      private$wrapProperties("HMin", value)
+      private$wrapProperty("HMin", value)
     },
 
     hMax = function(value) {
-      private$wrapProperties("HMax", value)
+      private$wrapProperty("HMax", value)
     },
 
     mxStep = function(value) {
@@ -39,11 +39,11 @@ SolverSettings <- R6::R6Class(
     },
 
     relTol = function(value) {
-      private$wrapProperties("RelTol", value)
+      private$wrapProperty("RelTol", value)
     },
 
     absTol = function(value) {
-      private$wrapProperties("AbsTol", value)
+      private$wrapProperty("AbsTol", value)
     }
   ),
   public = list(

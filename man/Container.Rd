@@ -4,18 +4,16 @@
 \name{Container}
 \alias{Container}
 \title{Container}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 Container
 }
 \description{
 Contains other entities such as Parameter or containers
 }
-\section{Methods}{
+\section{Fields}{
 
 \describe{
-  \item{containerType}{Type of container}
-  }
-}
+\item{\code{containerType}}{Type of container}
+}}
 
 \keyword{datasets}
