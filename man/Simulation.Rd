@@ -19,6 +19,8 @@ An OSPSuite simulation
 
 \item{\code{settings}}{SimulationSettings object for the simulation (read-only)}
 
+\item{\code{solver}}{SimulationSolver object for the simulation (read-only)}
+
 \item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
 }}
 

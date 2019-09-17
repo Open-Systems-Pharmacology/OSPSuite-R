@@ -3,6 +3,8 @@ library(ospsuite)
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 parameter <- getParameter("Organism|Liver|Volume", sim)
 
+solver <- sim$settings$solver
+print(solver)
 
 addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
 addOutputs(parameter, simulation = sim)
@@ -13,13 +15,14 @@ addOutputs(parameter, simulation = sim)
 # print(parameter)
 
 
-population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
-print(population)
+# population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+# print(population)
 
 
-results <- load
-# results <- runSimulation(sim)
-exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
+results <- runSimulation(sim)
+paths <- results$allQuantityPaths
+
+#exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
 #
 # pkAnalyses <- calculatePKAnalyses(results, sim)
 #

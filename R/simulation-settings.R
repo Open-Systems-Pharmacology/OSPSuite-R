@@ -11,7 +11,7 @@ SimulationSettings <- R6::R6Class(
     solver = function(value) {
       if (missing(value)) {
         solver <- rClr::clrGet(self$ref, "Solver")
-        Container$new(solver)
+        SolverSettings$new(solver)
       } else {
         stop(messages$errorPropertyReadOnly("solver"), call. = FALSE)
       }

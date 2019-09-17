@@ -1,11 +1,8 @@
 #' @title Container
 #' @docType class
 #' @description  Contains other entities such as Parameter or containers
-#' @section Methods:
-#' \describe{
-#'   \item{containerType}{Type of container}
-#'   }
-#'
+#' @field containerType Type of container
+#' @format NULL
 Container <- R6::R6Class(
   "Container",
   inherit = Entity,
