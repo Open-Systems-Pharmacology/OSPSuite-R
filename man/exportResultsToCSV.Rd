@@ -4,14 +4,12 @@
 \alias{exportResultsToCSV}
 \title{Saves the simulation results to csv file}
 \usage{
-exportResultsToCSV(results, simulation, fileName)
+exportResultsToCSV(results, filePath)
 }
 \arguments{
 \item{results}{Results to export (typically calculated using \code{runSimulation} or imported from file)}
 
-\item{simulation}{Instance of a simulation used to calculate the results}
-
-\item{fileName}{Full path where the results will be saved.}
+\item{filePath}{Full path where the results will be saved.}
 }
 \description{
 Saves the simulation results to csv file
@@ -29,5 +27,5 @@ addOutputs("Organism|**|*", sim)
 results <- runSimulation(sim)
 
 # Export the results to csv file
-exportResultsToCSV(results, sim, tempfile())
+exportResultsToCSV(results, tempfile())
 }

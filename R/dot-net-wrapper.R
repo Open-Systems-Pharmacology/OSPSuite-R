@@ -5,8 +5,8 @@
 #'
 #' @section Methods:
 #' \describe{
-#'   \item{wrapProperties}{Simple way to wrap a get;set; .NET property}
-#'   \item{wrapReadOnlyProperties}{Simple way to wrap a get; .NET readonly property}
+#'   \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
+#'   \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
 #'   }
 #'
 #' @importFrom R6 R6Class
@@ -19,14 +19,14 @@ DotNetWrapper <- R6::R6Class(
     }
   ),
   private = list(
-    wrapProperties = function(propertyName, value) {
+    wrapProperty = function(propertyName, value) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
       } else {
         rClr::clrSet(self$ref, propertyName, value)
       }
     },
-    wrapReadOnlyProperties = function(propertyName, value) {
+    wrapReadOnlyProperty = function(propertyName, value) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
       } else {
@@ -37,6 +37,14 @@ DotNetWrapper <- R6::R6Class(
     wrapExtensionMethod = function(typename, methodName, propertyName, value) {
       if (missing(value)) {
         rClr::clrCallStatic(typename, methodName, self$ref)
+      } else {
+        private$throwPropertyIsReadonly(propertyName)
+      }
+    },
+
+    readOnlyProperty = function(propertyName, value, returnValue) {
+      if (missing(value)) {
+        returnValue
       } else {
         private$throwPropertyIsReadonly(propertyName)
       }

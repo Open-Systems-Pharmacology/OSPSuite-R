@@ -9,13 +9,13 @@ PKParameter <- R6::R6Class("PKParameter",
   inherit = DotNetWrapper,
   active = list(
     values = function(value) {
-      private$wrapReadOnlyProperties("Values", value)
+      private$wrapReadOnlyProperty("Values", value)
     },
     quantityPath = function(value) {
-      private$wrapReadOnlyProperties("QuantityPath", value)
+      private$wrapReadOnlyProperty("QuantityPath", value)
     },
     name = function(value) {
-      private$wrapReadOnlyProperties("Name", value)
+      private$wrapReadOnlyProperty("Name", value)
     }
   ),
   public = list(

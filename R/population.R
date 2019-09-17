@@ -14,7 +14,7 @@ Population <- R6::R6Class(
   inherit = DotNetWrapper,
   active = list(
     count = function(value) {
-      private$wrapReadOnlyProperties("Count", value)
+      private$wrapReadOnlyProperty("Count", value)
     }
   ),
   public = list(

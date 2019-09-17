@@ -1,8 +1,7 @@
 #' Saves the simulation results to csv file
 #'
 #' @param results Results to export (typically calculated using \code{runSimulation} or imported from file)
-#' @param simulation Instance of a simulation used to calculate the results
-#' @param fileName Full path where the results will be saved.
+#' @param filePath Full path where the results will be saved.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -17,14 +16,13 @@
 #' results <- runSimulation(sim)
 #'
 #' # Export the results to csv file
-#' exportResultsToCSV(results, sim, tempfile())
+#' exportResultsToCSV(results, tempfile())
 #' @export
-exportResultsToCSV <- function(results, simulation, fileName) {
+exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SimulationResults")
-  validateIsOfType(simulation, "Simulation")
-  validateIsString(fileName)
+  validateIsString(filePath)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, simulation$ref, fileName)
+  rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
 
@@ -33,7 +31,7 @@ exportResultsToCSV <- function(results, simulation, fileName) {
 #' Imports the simulation results from one or more csv files
 #'
 #' @param simulation Instance of a simulation used to calculate the results
-#' @param fileNames Full path of result files to import. Typically only one
+#' @param filePaths Full path of result files to import. Typically only one
 #' file is provided but a list of files is sometimes available when the simulation
 #' was parallelized and computed on different machines
 #'
@@ -46,12 +44,11 @@ exportResultsToCSV <- function(results, simulation, fileName) {
 #'
 #' # Run the simulation
 #' results <- importResultsFromCSV(sim, resultPath)
-#'
 #' @export
-importResultsFromCSV <- function(simulation, fileNames) {
+importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
-  validateIsString(fileNames)
+  validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, fileNames)
-  SimulationResults$new(results)
+  results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
+  SimulationResults$new(results, simulation)
 }

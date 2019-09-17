@@ -5,7 +5,7 @@ results <- runSimulation(sim)
 
 test_that("It can export valid simulation results to CSV", {
   executeWithTestFile(function(csvFile) {
-    exportResultsToCSV(results, sim, csvFile)
+    exportResultsToCSV(results, csvFile)
     expect_true(file.exists(csvFile))
   })
 })
@@ -16,6 +16,12 @@ test_that("It can import valid simulation results from one CSV file", {
   resFile <- getTestDataFilePath("res_10.csv")
   results <- importResultsFromCSV(sim, resFile)
   expect_equal(results$count, 10)
+})
+
+test_that("It save the reference to the original simulation", {
+  resFile <- getTestDataFilePath("res_10.csv")
+  results <- importResultsFromCSV(sim, resFile)
+  expect_equal(results$simulation, sim)
 })
 
 test_that("It can import valid simulation results from multiple CSV files", {

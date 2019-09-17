@@ -4,12 +4,12 @@
 \alias{importResultsFromCSV}
 \title{Imports the simulation results from one or more csv files}
 \usage{
-importResultsFromCSV(simulation, fileNames)
+importResultsFromCSV(simulation, filePaths)
 }
 \arguments{
 \item{simulation}{Instance of a simulation used to calculate the results}
 
-\item{fileNames}{Full path of result files to import. Typically only one
+\item{filePaths}{Full path of result files to import. Typically only one
 file is provided but a list of files is sometimes available when the simulation
 was parallelized and computed on different machines}
 }
@@ -25,5 +25,4 @@ sim <- loadSimulation(simPath)
 
 # Run the simulation
 results <- importResultsFromCSV(sim, resultPath)
-
 }

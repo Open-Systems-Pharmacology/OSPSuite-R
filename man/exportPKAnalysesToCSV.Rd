@@ -4,14 +4,12 @@
 \alias{exportPKAnalysesToCSV}
 \title{Saves the pK-analyses  to csv file}
 \usage{
-exportPKAnalysesToCSV(pkAnalyses, simulation, filename)
+exportPKAnalysesToCSV(pkAnalyses, filePath)
 }
 \arguments{
 \item{pkAnalyses}{pK-Analyses to exporte (typically calculated using \code{calculatePKAnalyses} or imported from file)}
 
-\item{simulation}{Instance of a simulation used to calculate the pK-Analyses}
-
-\item{filename}{Full path of where the pK-Analyses will be saved.}
+\item{filePath}{Full path where the pK-Analyses will be saved.}
 }
 \description{
 Saves the pK-analyses  to csv file

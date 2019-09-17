@@ -38,7 +38,7 @@ context("exportPKAnalysesToCSV")
 
 test_that("It can export valid pk-analyses results to CSV", {
   executeWithTestFile(function(csvFile) {
-    exportPKAnalysesToCSV(pkAnalyses, sim, csvFile)
+    exportPKAnalysesToCSV(pkAnalyses, csvFile)
     expect_true(file.exists(csvFile))
   })
 })

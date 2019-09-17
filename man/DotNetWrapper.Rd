@@ -20,8 +20,8 @@ Wrapper class for .net Object
 \section{Methods}{
 
 \describe{
-  \item{wrapProperties}{Simple way to wrap a get;set; .NET property}
-  \item{wrapReadOnlyProperties}{Simple way to wrap a get; .NET readonly property}
+  \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
+  \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
   }
 }
 

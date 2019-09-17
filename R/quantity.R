@@ -10,7 +10,7 @@ Quantity <- R6::R6Class(
   inherit = Entity,
   active = list(
     value = function(value) {
-      private$wrapProperties("Value", value)
+      private$wrapProperty("Value", value)
     },
     unit = function(value) {
       private$wrapExtensionMethod("OSPSuite.Core.Domain.WithDimensionExtensions", "BaseUnitName", "baseUnit")
@@ -19,7 +19,7 @@ Quantity <- R6::R6Class(
       private$wrapExtensionMethod("OSPSuite.Core.Domain.WithDimensionExtensions", "DimensionName", "dimension")
     },
     quantityType = function(value) {
-      private$wrapReadOnlyProperties("QuantityType", value)
+      private$wrapReadOnlyProperty("QuantityType", value)
     }
   ),
   private = list(
