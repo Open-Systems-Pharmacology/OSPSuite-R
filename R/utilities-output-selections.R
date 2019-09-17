@@ -45,7 +45,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simPath)
+#' sim <- loadSimulation(simPath, )
 #'
 #' clearOutputs(sim)
 #' @export

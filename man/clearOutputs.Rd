@@ -15,7 +15,7 @@ Removes all selected output from the given \code{simulation}
 \examples{
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-sim <- loadSimulation(simPath)
+sim <- loadSimulation(simPath, )
 
 clearOutputs(sim)
 }

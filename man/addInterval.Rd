@@ -2,12 +2,14 @@
 % Please edit documentation in R/utilities-output-schema.R
 \name{addInterval}
 \alias{addInterval}
-\title{Adds an interval to the output schema}
+\title{Adds an interval to the output schema of the simulation}
 \usage{
 addInterval(simulation, startTime, endTime, resolution = 4/60,
   intervalName = NULL)
 }
 \arguments{
+\item{simulation}{Simulation for which a new interval should be created}
+
 \item{startTime}{Start time of the interval in min}
 
 \item{endTime}{End time of the interval in min}
@@ -15,17 +17,18 @@ addInterval(simulation, startTime, endTime, resolution = 4/60,
 \item{resolution}{Optional resolution in points/min (Default is 4 pts/hr)}
 
 \item{intervalName}{Optional Name of interval. If not specified, a unique name wil be assigned.}
-
-\item{outputSchema}{Schema where the newly created interval will be added}
+}
+\value{
+Returns the interval created.
 }
 \description{
-Adds an interval to the output schema
+Adds an interval to the output schema of the simulation
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 
 # Load the simulation
-sim <- loadSimulation(simPath)
+sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
 
 # clears the previous output schema
 clearIntervals(sim)
@@ -33,6 +36,7 @@ clearIntervals(sim)
 # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
 addInterval(sim, 1 * 60, 10 * 60, 1 / 6)
 
-# Adds another interval starting at 10h and ending at 17h with a default resolution and a specified name
+# Adds another interval starting at 10h and ending at 17h with a
+# default resolution and a specified name
 addInterval(sim, 10 * 60, 17 * 60, intervalName = "Second Interval")
 }

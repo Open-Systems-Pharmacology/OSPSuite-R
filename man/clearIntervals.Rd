@@ -15,7 +15,9 @@ Removes all intervals from the output schema defined in \code{simulation}
 \examples{
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-sim <- loadSimulation(simPath)
+
+#Make sure we create a new simulation so that we do not impact other examples
+sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
 
 clearIntervals(sim)
 }
