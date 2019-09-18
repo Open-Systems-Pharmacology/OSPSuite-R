@@ -86,7 +86,7 @@ getPopulationResultsValues <- function(simulationResults, quantitiesOrPaths, ind
 
   # If no specific individual ids are passed, iterate through all individuals
   if (is.null(individualIds)) {
-    individualIds <- simulationResults$allIndividualId
+    individualIds <- simulationResults$allIndividualIds
   }
   else {
     individualIds <- unique(individualIds)

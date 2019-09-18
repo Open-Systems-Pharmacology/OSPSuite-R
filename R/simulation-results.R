@@ -7,7 +7,7 @@
 #' @field simulation Reference to the \code{Simulation} used to calculate or import the results (Read-Only).
 #' @field timeValues Vector of simulated time output values
 #' @field allQuantityPaths List of all paths for which results are defined.
-#' @field allIndividualId List of Ids of all individuals that have been simulated
+#' @field allIndividualIds List of Ids of all individuals that have been simulated
 #' @format NULL
 SimulationResults <- R6::R6Class("SimulationResults",
   inherit = DotNetWrapper,
@@ -75,11 +75,11 @@ SimulationResults <- R6::R6Class("SimulationResults",
         private$throwPropertyIsReadonly("allQuantityPaths")
       }
     },
-    allIndividualId = function(value) {
+    allIndividualIds = function(value) {
       if (missing(value)) {
-        rClr::clrCall(self$ref, "AllIndividualId")
+        rClr::clrCall(self$ref, "AllIndividualIds")
       } else {
-        private$throwPropertyIsReadonly("allIndividualId")
+        private$throwPropertyIsReadonly("allIndividualIds")
       }
     }
   )

@@ -62,9 +62,9 @@ test_that("It throws an error when trying to set the paths of all outputs", {
 })
 
 test_that("It can retrieve the list of all individual ids", {
-  expect_equal(simResults$allIndividualId, 0)
+  expect_equal(simResults$allIndividualIds, 0)
 })
 
 test_that("It throws an error when trying to set individual ids", {
-  expect_error(simResults$allIndividualId <- c(0, 1, 2))
+  expect_error(simResults$allIndividualIds <- c(0, 1, 2))
 })
