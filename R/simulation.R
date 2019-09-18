@@ -17,14 +17,14 @@ Simulation <- R6::R6Class(
         root <- rClr::clrGet(model, "Root")
         Container$new(root)
       } else {
-        stop(messages$errorPropertyReadOnly("root"), call. = FALSE)
+        private$throwPropertyIsReadonly("root")
       }
     },
     path = function(value) {
       if (missing(value)) {
         self$root$path
       } else {
-        stop(messages$errorPropertyReadOnly("path"), call. = FALSE)
+        private$throwPropertyIsReadonly("path")
       }
     },
     settings = function(value) {
@@ -33,14 +33,21 @@ Simulation <- R6::R6Class(
         settings <- rClr::clrGet(buildConfiguration, "SimulationSettings")
         SimulationSettings$new(settings)
       } else {
-        stop(messages$errorPropertyReadOnly("settings"), call. = FALSE)
+        private$throwPropertyIsReadonly("settings")
       }
     },
     solver = function(value) {
       if (missing(value)) {
         self$settings$solver
       } else {
-        stop(messages$errorPropertyReadOnly("settings"), call. = FALSE)
+        private$throwPropertyIsReadonly("solver")
+      }
+    },
+    outputSchema = function(value) {
+      if (missing(value)) {
+        self$settings$outputSchema
+      } else {
+        private$throwPropertyIsReadonly("outputSchema")
       }
     },
     sourceFile = function(value) {
