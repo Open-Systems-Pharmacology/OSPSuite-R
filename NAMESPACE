@@ -2,7 +2,7 @@
 
 export(ContainerType)
 export(QuantityType)
-export(addInterval)
+export(addOutputInterval)
 export(addOutputs)
 export(calculatePKAnalyses)
 export(clearIntervals)

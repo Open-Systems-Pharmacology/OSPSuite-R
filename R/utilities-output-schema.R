@@ -3,7 +3,7 @@
 #' @param simulation Simulation for which a new interval should be created
 #' @param startTime Start time of the interval in min
 #' @param endTime End time of the interval in min
-#' @param resolution Optional resolution in points/min (Default is 4 pts/hr)
+#' @param resolution resolution in points/min
 #' @param intervalName Optional Name of interval. If not specified, a unique name wil be assigned.
 #'
 #' @return Returns the interval created.
@@ -18,13 +18,13 @@
 #' clearIntervals(sim)
 #'
 #' # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
-#' addInterval(sim, 1 * 60, 10 * 60, 1 / 6)
+#' addOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
 #'
-#' # Adds another interval starting at 10h and ending at 17h with a
-#' # default resolution and a specified name
-#' addInterval(sim, 10 * 60, 17 * 60, intervalName = "Second Interval")
+#' # Adds another interval starting at 10h and ending at 17h with a resolution of 4 points per hour
+#' # and a specified name
+#' addOutputInterval(sim, 10 * 60, 17 * 60, 4/60,  intervalName = "Second Interval")
 #' @export
-addInterval <- function(simulation, startTime, endTime, resolution = 4 / 60, intervalName = NULL) {
+addOutputInterval <- function(simulation, startTime, endTime, resolution, intervalName = NULL) {
   validateIsOfType(simulation, "Simulation")
   validateIsNumeric(c(startTime, endTime, resolution))
   schema <- simulation$outputSchema
