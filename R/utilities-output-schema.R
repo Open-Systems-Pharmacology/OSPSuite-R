@@ -15,7 +15,7 @@
 #' sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
 #'
 #' # clears the previous output schema
-#' clearIntervals(sim)
+#' clearOutputIntervals(sim)
 #'
 #' # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
 #' addOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
@@ -37,7 +37,25 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
   invisible(interval)
 }
 
-
+#' Clears the output interval from the simulation and adds a new one.
+#'
+#' @inherit addOutputInterval
+#'
+#' @note This is essentialy a shortcut for \code{clearOutputIntervals} followed by \code{addOutputInterval}
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#'
+#' # Load the simulation
+#' sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
+#'
+#' # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
+#' setOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
+#' @export
+setOutputInterval <-function(simulation, startTime, endTime, resolution, intervalName = NULL) {
+  clearOutputIntervals(simulation)
+  addOutputInterval(simulation, startTime, endTime, resolution, intervalName)
+}
 
 #' @title  Removes all intervals from the output schema defined in \code{simulation}
 #'
@@ -50,9 +68,9 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
 #' #Make sure we create a new simulation so that we do not impact other examples
 #' sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
 #'
-#' clearIntervals(sim)
+#' clearOutputIntervals(sim)
 #' @export
-clearIntervals <- function(simulation) {
+clearOutputIntervals <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
   simulation$outputSchema$clear()
   invisible(simulation)
