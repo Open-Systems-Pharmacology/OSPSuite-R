@@ -76,4 +76,3 @@ test_that("It returns false when attempting to remove a simulation from cache th
 
   expect_false(removeSimulationFromCache(sim2))
 })
-

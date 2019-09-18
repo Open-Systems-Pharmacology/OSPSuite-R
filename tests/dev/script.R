@@ -13,7 +13,7 @@ addOutputs(parameter, simulation = sim)
 schema <- sim$outputSchema
 print(schema)
 
-schema$addTimePoints(c(10,20))
+schema$addTimePoints(c(10, 20))
 print(schema)
 
 # print(outputSelections)
@@ -29,7 +29,7 @@ print(schema)
 results <- runSimulation(sim)
 paths <- results$allQuantityPaths
 
-#exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
+# exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
 #
 # pkAnalyses <- calculatePKAnalyses(results, sim)
 #

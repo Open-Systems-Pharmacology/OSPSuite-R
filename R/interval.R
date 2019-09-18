@@ -19,7 +19,7 @@ Interval <- R6::R6Class(
     resolution = function(value) {
       private$readOnlyParameterProperty("Resolution", value)
     },
-    name = function(value){
+    name = function(value) {
       private$wrapProperty("Name", value)
     }
   ),
@@ -34,7 +34,7 @@ Interval <- R6::R6Class(
     }
   ),
   private = list(
-    readOnlyParameterProperty = function(parameterName, value){
+    readOnlyParameterProperty = function(parameterName, value) {
       if (missing(value)) {
         toParameters(rClr::clrGet(self$ref, parameterName))
       } else {
@@ -42,5 +42,4 @@ Interval <- R6::R6Class(
       }
     }
   )
-
 )

@@ -38,5 +38,5 @@ addOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
 
 # Adds another interval starting at 10h and ending at 17h with a resolution of 4 points per hour
 # and a specified name
-addOutputInterval(sim, 10 * 60, 17 * 60, 4/60,  intervalName = "Second Interval")
+addOutputInterval(sim, 10 * 60, 17 * 60, 4 / 60, intervalName = "Second Interval")
 }

@@ -1,5 +1,5 @@
 messages <- list(
-  errorWrongType = function(objectName, expectedType, optionalMessage = NULL) {
+  errorWrongType = function(objectName, type, expectedType, optionalMessage = NULL) {
     # Name of the calling function
     callingFunctions <- sys.calls()
     callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
@@ -8,7 +8,7 @@ messages <- list(
 
     message <- paste0(
       callingFunction, ": argument '", objectName,
-      "' is of type '", typeof(objectName), "', but expected '", expectedTypeMsg, "'!", optionalMessage
+      "' is of type '", type, "', but expected '", expectedTypeMsg, "'!", optionalMessage
     )
 
     return(message)
