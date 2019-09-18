@@ -31,7 +31,7 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
 
 # clears the previous output schema
-clearIntervals(sim)
+clearOutputIntervals(sim)
 
 # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
 addOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
