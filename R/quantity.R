@@ -36,7 +36,7 @@ Quantity <- R6::R6Class(
       private$printLine("Quantity Type", getEnumKey(QuantityType, self$quantityType))
     },
     printValue = function() {
-      private$printLine(self$name, paste0(formatNumerics(self$value), " [", self$unit, "]"))
+      private$printQuantityValue(self$name)
     },
     printQuantityValue = function(caption) {
       private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
