@@ -11,7 +11,7 @@ toBaseUnit(quantity, value, unit)
 
 \item{value}{Value in unit.}
 
-\item{targetUnit}{Unit of value}
+\item{unit}{Unit of value}
 }
 \description{
 Converts a value given in a specified unit into the base unit of a quantity
