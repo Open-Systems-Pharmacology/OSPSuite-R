@@ -53,3 +53,18 @@ test_that("It can retrieve the unit of a parameter", {
   par <- getParameter(volumePath, sim)
   expect_equal(par$unit, "l")
 })
+
+test_that("It can set a value in another unit and the value will be updated as expected", {
+  par <- getParameter(volumePath, sim)
+  par$setValue(1, "l")
+  expect_equal(par$value, 1)
+
+  par$setValue(10, "ml")
+  expect_equal(par$value, 0.01)
+})
+
+test_that("It throws an exception when setting a value in a unit that does not exists", {
+  par <- getParameter(volumePath, sim)
+  par$setValue(1, "kg")
+  expect_that(par$setValue(1, "kg"), throws_error())
+})
