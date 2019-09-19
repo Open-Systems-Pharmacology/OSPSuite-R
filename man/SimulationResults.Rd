@@ -17,7 +17,11 @@ Results of a simulation run (either individual or population simulation)
 
 \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the results (Read-Only).}
 
+\item{\code{timeValues}}{Vector of simulated time output values}
+
 \item{\code{allQuantityPaths}}{List of all paths for which results are defined.}
+
+\item{\code{allIndividualId}}{List of Ids of all individuals that have been simulated}
 }}
 
 \keyword{datasets}

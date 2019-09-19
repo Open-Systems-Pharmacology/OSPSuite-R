@@ -25,7 +25,7 @@
 getAllContainersMatching <- function(paths, container) {
   # Test for correct inputs
   validateIsOfType(container, c("Simulation", "Container"))
-  validateIsOfType(paths, "character")
+  validateIsString(paths)
 
   findContainersByPath <- function(path) {
     toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))

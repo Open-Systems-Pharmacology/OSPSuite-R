@@ -29,16 +29,16 @@ isSameLength <- function(...) {
 }
 
 
-validateIsString <- function(object) {
-  validateIsOfType(object, "character")
+validateIsString <- function(object, nullAllowed = FALSE) {
+  validateIsOfType(object, "character", nullAllowed)
 }
 
-validateIsNumeric <- function(object) {
-  validateIsOfType(object, "numeric")
+validateIsNumeric <- function(object, nullAllowed = FALSE) {
+  validateIsOfType(object, c("numeric", "integer"), nullAllowed)
 }
 
-validateIsLogical <- function(object) {
-  validateIsOfType(object, "logical")
+validateIsLogical <- function(object, nullAllowed = FALSE) {
+  validateIsOfType(object, "logical", nullAllowed)
 }
 
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
@@ -52,7 +52,7 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))
 
-  stop(messages$errorWrongType(objectName, type))
+  stop(messages$errorWrongType(objectName, class(object)[1], type))
 }
 
 validateIsSameLength <- function(...) {

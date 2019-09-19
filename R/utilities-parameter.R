@@ -25,7 +25,7 @@
 getAllParametersMatching <- function(paths, container) {
   # Test for correct inputs
   validateIsOfType(container, c("Simulation", "Container"))
-  validateIsOfType(paths, "character")
+  validateIsString(paths)
 
   findParametersByPath <- function(path) {
     toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
@@ -88,7 +88,7 @@ setParametersValues <- function(parameters, values) {
 
   # Test for correct inputs
   validateIsOfType(parameters, "Parameter")
-  validateIsOfType(values, c("numeric", "integer"))
+  validateIsNumeric(values)
   validateIsSameLength(parameters, values)
 
   for (i in seq_along(parameters)) {

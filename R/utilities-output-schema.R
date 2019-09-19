@@ -22,7 +22,7 @@
 #'
 #' # Adds another interval starting at 10h and ending at 17h with a resolution of 4 points per hour
 #' # and a specified name
-#' addOutputInterval(sim, 10 * 60, 17 * 60, 4/60,  intervalName = "Second Interval")
+#' addOutputInterval(sim, 10 * 60, 17 * 60, 4 / 60, intervalName = "Second Interval")
 #' @export
 addOutputInterval <- function(simulation, startTime, endTime, resolution, intervalName = NULL) {
   validateIsOfType(simulation, "Simulation")
@@ -52,7 +52,7 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
 #' # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
 #' setOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
 #' @export
-setOutputInterval <-function(simulation, startTime, endTime, resolution, intervalName = NULL) {
+setOutputInterval <- function(simulation, startTime, endTime, resolution, intervalName = NULL) {
   clearOutputIntervals(simulation)
   addOutputInterval(simulation, startTime, endTime, resolution, intervalName)
 }
@@ -65,7 +65,7 @@ setOutputInterval <-function(simulation, startTime, endTime, resolution, interva
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #'
-#' #Make sure we create a new simulation so that we do not impact other examples
+#' # Make sure we create a new simulation so that we do not impact other examples
 #' sim <- loadSimulation(simPath, addToCache = FALSE, loadFromCache = FALSE)
 #'
 #' clearOutputIntervals(sim)
