@@ -9,7 +9,7 @@ withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' par <- getParameter(sim, "Organism|Liver|Volume")
+#' par <- getParameter("Organism|Liver|Volume", sim)
 #'
 #' # Converts the value in unit (1000 ml) to the base unit (l) => 1
 #' valueInBaseUnit <- toBaseUnit(par, 1000, "ml")
@@ -31,7 +31,7 @@ toBaseUnit <- function(quantity, value, unit) {
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' par <- getParameter(sim, "Organism|Liver|Volume")
+#' par <- getParameter("Organism|Liver|Volume", sim)
 #'
 #' # Converts the value in base unit (1L) to ml => 1000
 #' valueInMl <- toUnit(par, 1, "ml")

@@ -19,7 +19,7 @@ Converts a value given in a specified unit into the base unit of a quantity
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-par <- getParameter(sim, "Organism|Liver|Volume")
+par <- getParameter("Organism|Liver|Volume", sim)
 
 # Converts the value in unit (1000 ml) to the base unit (l) => 1
 valueInBaseUnit <- toBaseUnit(par, 1000, "ml")
