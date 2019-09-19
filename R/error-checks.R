@@ -55,6 +55,15 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   stop(messages$errorWrongType(objectName, class(object)[1], type))
 }
 
+validateHasUnit <- function(quantity, unit) {
+  validateIsOfType(quantity, "Quantity")
+  validateIsString(unit)
+  if (quantity$hasUnit(unit)) {
+    return()
+  }
+  stop(messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
+}
+
 validateIsSameLength <- function(...) {
   if (isSameLength(...)) {
     return()

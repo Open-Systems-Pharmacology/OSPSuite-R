@@ -64,5 +64,6 @@ Collate:
     'utilities-results.R'
     'utilities-simulation-results.R'
     'utilities-simulation.R'
+    'utilities-units.R'
     'utilities.R'
     'zzz.R'

@@ -20,4 +20,11 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 }}
 
+\section{Methods}{
+
+\describe{
+  \item{setValue(value, unit)}{Convert value from unit to the base unit and sets the value in base unit}
+  }
+}
+
 \keyword{datasets}

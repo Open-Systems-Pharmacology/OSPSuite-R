@@ -1,4 +1,5 @@
 withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+
 #' @title Quantity
 #' @docType class
 #' @description  A quantity of the model (with unit, value) such as a Parameter or an Amount
@@ -48,9 +49,7 @@ Quantity <- R6::R6Class(
     },
     setValue = function(value, unit) {
       validateIsNumeric(value)
-      if (!self$hasUnit(unit)) {
-        stop(messages$errorUnitNotDefined(self$name, self$dimension, unit))
-      }
+      validateHasUnit(self, unit)
       self$value <- rClr::clrCallStatic(withDimensionExtensions, "ConvertToBaseUnit", self$ref, value, unit)
     },
     hasUnit = function(unit) {

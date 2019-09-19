@@ -65,6 +65,5 @@ test_that("It can set a value in another unit and the value will be updated as e
 
 test_that("It throws an exception when setting a value in a unit that does not exists", {
   par <- getParameter(volumePath, sim)
-  par$setValue(1, "kg")
   expect_that(par$setValue(1, "kg"), throws_error())
 })
