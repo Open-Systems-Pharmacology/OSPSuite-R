@@ -4,12 +4,12 @@
 \alias{toBaseUnit}
 \title{Converts a value given in a specified unit into the base unit of a quantity}
 \usage{
-toBaseUnit(quantity, value, unit)
+toBaseUnit(quantity, values, unit)
 }
 \arguments{
 \item{quantity}{Instance of a quantity from which the base unit will be retrieved}
 
-\item{value}{Value in unit.}
+\item{values}{Value in unit (single or vector)}
 
 \item{unit}{Unit of value}
 }
@@ -23,4 +23,6 @@ par <- getParameter("Organism|Liver|Volume", sim)
 
 # Converts the value in unit (1000 ml) to the base unit (l) => 1
 valueInBaseUnit <- toBaseUnit(par, 1000, "ml")
+
+valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 }

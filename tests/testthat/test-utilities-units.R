@@ -9,6 +9,10 @@ test_that("It can convert from a value in base unit to a target unit", {
   expect_equal(toUnit(par, 1, "l"), 1)
 })
 
+test_that("It can convert from an array of values in base unit to a target unit", {
+  expect_equal(toUnit(par, c(1, 2, 3), "ml"), c(1000, 2000, 3000))
+})
+
 test_that("It throws an exception when converting to a unit that is not suppored", {
   expect_that(toUnit(par, 1000, "kg"), throws_error())
 })
@@ -24,6 +28,10 @@ context("toBaseUnit")
 test_that("It can convert from one given value in a unit to a base unit", {
   expect_equal(toBaseUnit(par, 1000, "ml"), 1)
   expect_equal(toBaseUnit(par, 100, "l"), 100)
+})
+
+test_that("It can convert from an array of values in a unit to base unit", {
+  expect_equal(toBaseUnit(par, c(1000, 2000, 3000), "ml"), c(1, 2, 3))
 })
 
 test_that("It throws an exception when converting to a unit that is not suppored", {
