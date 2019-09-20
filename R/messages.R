@@ -6,12 +6,10 @@ messages <- list(
 
     expectedTypeMsg <- paste0(expectedType, collapse = ", or ")
 
-    message <- paste0(
+    paste0(
       callingFunction, ": argument '", objectName,
       "' is of type '", type, "', but expected '", expectedTypeMsg, "'!", optionalMessage
     )
-
-    return(message)
   },
 
   errorGetEntityMultipleOutputs = function(path, container, optionalMessage = NULL) {
@@ -19,14 +17,12 @@ messages <- list(
     callingFunctions <- sys.calls()
     callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
-    message <- paste0(
+    paste0(
       callingFunction, ": the path '", toString(path), "' located under container '",
       container$path,
       "' leads to more than one entity! Use 'getAllXXXMatching'",
       "to get the list of all entities matching the path, where XXX stands for the entity type", optionalMessage
     )
-
-    return(message)
   },
 
   errorDifferentLength = function(objectNames, optionalMessage = NULL) {
@@ -34,23 +30,23 @@ messages <- list(
     callingFunctions <- sys.calls()
     callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
-    message <- paste0(
+    paste0(
       callingFunction, ": Arguments '", objectNames,
       "' must have the same length, but they don't!", optionalMessage
     )
-
-    return(message)
   },
 
   errorPropertyReadOnly = function(propertyName, optionalMessage = NULL) {
-    message <- paste0("Property '$", propertyName, "' is readonly")
-
-    return(message)
+    paste0("Property '$", propertyName, "' is readonly")
   },
 
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
-  errorUniqueEntitiesWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'"
+  errorUniqueEntitiesWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'",
+
+  errorUnitNotDefined = function(quantityName, dimension, unit) {
+    paste0("Unit '", unit, "' is not defined in  dimension '", dimension, "' used by '", quantityName, "'.")
+  }
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,

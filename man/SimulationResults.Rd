@@ -21,7 +21,7 @@ Results of a simulation run (either individual or population simulation)
 
 \item{\code{allQuantityPaths}}{List of all paths for which results are defined.}
 
-\item{\code{allIndividualId}}{List of Ids of all individuals that have been simulated}
+\item{\code{allIndividualIds}}{List of Ids of all individuals that have been simulated}
 }}
 
 \keyword{datasets}
