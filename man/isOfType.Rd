@@ -9,7 +9,7 @@ isOfType(object, type)
 \arguments{
 \item{object}{An object or a list of objects}
 
-\item{type}{String representation of the type that should be checked for}
+\item{type}{String  representation or Class of the type that should be checked for}
 }
 \value{
 TRUE if the object or all objects inside the list are of the given type.

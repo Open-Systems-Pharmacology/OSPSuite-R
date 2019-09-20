@@ -34,7 +34,7 @@
 #' parameter2$value == parameter3$value # FALSE#'
 #' @export
 loadSimulation <- function(filePath, loadFromCache = TRUE, addToCache = TRUE) {
-  validateIsOfType(c(loadFromCache, addToCache), "logical")
+  validateIsLogical(c(loadFromCache, addToCache))
 
   if (loadFromCache) {
     # If the file has already been loaded, return the last loaded object
@@ -64,7 +64,7 @@ loadSimulation <- function(filePath, loadFromCache = TRUE, addToCache = TRUE) {
 #'
 #' @export
 saveSimulation <- function(simulation, filePath) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
   simulationPersister <- getNetTask("SimulationPersister")
   rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
   invisible()
@@ -83,7 +83,7 @@ saveSimulation <- function(simulation, filePath) {
 #' results <- runSimulation(sim)
 #' @export
 runSimulation <- function(simulation) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
   simulationRunner <- getNetTask("SimulationRunner")
   results <- rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref)
   SimulationResults$new(results, simulation)
@@ -112,7 +112,7 @@ resetSimulationCache <- function() {
 #' removeSimulationFromCache(sim1) # returns TRUE
 #' removeSimulationFromCache(sim2) # returns FALSE
 removeSimulationFromCache <- function(simulation) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
 
   simulationFilePath <- simulation$sourceFile
 
