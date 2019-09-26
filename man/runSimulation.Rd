@@ -29,7 +29,6 @@ results <- runSimulation(sim)
 
 # Running a population simulation
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
-population <- loadPopulation(csvPath)
+population <- loadPopulation(popPath)
 results <- runSimulation(sim, population)
-
 }

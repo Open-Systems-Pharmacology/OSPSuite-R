@@ -87,7 +87,7 @@ saveSimulation <- function(simulation, filePath) {
 #'
 #' # Running a population simulation
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
-#' population <- loadPopulation(csvPath)
+#' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population)
 #' @export
 runSimulation <- function(simulation, population = NULL, simulationRunOptions = NULL) {
