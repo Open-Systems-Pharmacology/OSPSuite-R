@@ -1,4 +1,5 @@
-WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+quantityExtensions <- "OSPSuite.Core.Domain.QuantityExtensions"
 
 #' @title Quantity
 #' @docType class
@@ -16,6 +17,7 @@ WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 Quantity <- R6::R6Class(
   "Quantity",
   inherit = Entity,
+
   active = list(
     value = function(value) {
       private$wrapProperty("Value", value)
@@ -28,17 +30,40 @@ Quantity <- R6::R6Class(
     },
     quantityType = function(value) {
       private$wrapReadOnlyProperty("QuantityType", value)
+    },
+    formula = function(value) {
+      private$readOnlyProperty("formula", value, private$.formula)
+    },
+    isTable = function(value) {
+      private$readOnlyProperty("isTable", value, self$formula$isTable)
+    },
+    isConstant = function(value) {
+      private$readOnlyProperty("isConstant", value, self$formula$isConstant)
+    },
+    isFormula = function(value) {
+      private$readOnlyProperty("isFormula", value, self$formula$isExplicit)
+    },
+    formulaString = function(value) {
+      private$readOnlyProperty("formulaString", value, self$formula$formulaString)
     }
   ),
   private = list(
+    .formula = NULL,
     printQuantity = function() {
       private$printClass()
       private$printLine("Path", self$path)
       self$printQuantityValue("Value")
+      self$formula$printFormula()
       invisible(self)
     }
   ),
   public = list(
+    initialize = function(ref) {
+      super$initialize(ref)
+      # Cannot use property Formula directly from the quantity because of new override in Distributed Parameter
+      formula <-  private$wrapExtensionMethod(quantityExtensions, "GetFormula")
+      private$.formula <- Formula$new(formula)
+    },
     print = function(...) {
       private$printQuantity()
       private$printLine("Quantity Type", getEnumKey(QuantityType, self$quantityType))

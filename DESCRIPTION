@@ -34,6 +34,7 @@ Collate:
     'dot-net-wrapper.R'
     'entity.R'
     'error-checks.R'
+    'formula.R'
     'get-net-task.R'
     'init-package.R'
     'interval.R'

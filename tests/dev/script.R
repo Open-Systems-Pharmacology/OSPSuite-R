@@ -1,16 +1,25 @@
 library(ospsuite)
 
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
-parameter <- getParameter("Organism|Liver|Volume", sim)
 
-solver <- sim$settings$solver
-print(solver)
+distributedParameter <- getParameter("Organism|Liver|Volume", sim)
+formulaParameter <- getParameter("Organism|Weight", sim)
+constantParameter <- getParameter("Organism|Age", sim)
 
-addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
-addOutputs(parameter, simulation = sim)
+print(distributedParameter)
+print(formulaParameter)
+print(constantParameter)
 
-
-schema <- sim$outputSchema
+# print(distributedParameter)
+#
+# solver <- sim$settings$solver
+# print(solver)
+#
+# addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)
+# addOutputs(parameter, simulation = sim)
+#
+#
+# schema <- sim$outputSchema
 # print(schema)
 
 # schema$addTimePoints(c(10, 20))
@@ -22,20 +31,20 @@ schema <- sim$outputSchema
 # print(parameter)
 
 
-population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+# population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
 # print(population)
-
-simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE)
-
-individualResults <- runSimulation(sim)
-paths <- individualResults$allQuantityPaths
-individualPkkAnalyses <- calculatePKAnalyses(individualResults)
-
-
-populationResults <- runSimulation(sim, population, simRunOptions)
-populationPkAnalyses <- calculatePKAnalyses(populationResults)
-
-exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
+#
+# simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE)
+#
+# individualResults <- runSimulation(sim)
+# paths <- individualResults$allQuantityPaths
+# individualPkkAnalyses <- calculatePKAnalyses(individualResults)
+#
+#
+# populationResults <- runSimulation(sim, population, simRunOptions)
+# populationPkAnalyses <- calculatePKAnalyses(populationResults)
+#
+# exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
 #
 #
 # exportPKAnalysesToCSV(pkAnalyses, sim, "C:/temp/export/pk.csv")
@@ -64,4 +73,4 @@ exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
 # values <- rClr::clrGet(firstOutput, "Values")
 
 
-saveSimulation(sim, "c:/temp/export/toto.xml")
+# saveSimulation(sim, "c:/temp/export/toto.xml")

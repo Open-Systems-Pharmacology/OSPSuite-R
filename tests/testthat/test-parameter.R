@@ -6,61 +6,79 @@ liverPathArray <- c("Organism", "Liver")
 liverPath <- toPathString(liverPathArray)
 volumePath <- toPathString(c(liverPathArray, "Volume"))
 
+volumeParameter <- getParameter(volumePath, sim)
+formulaParameter <- getParameter("Organism|Weight", sim)
+constantParameter <- getParameter("Organism|Age", sim)
+
 test_that("It can retrieve name of a parameter", {
   par <- getParameter(toPathString(c(liverPathArray, "Blood flow rate")), sim)
   expect_equal(par$name, "Blood flow rate")
 })
 
+test_that("It can display whether a parameter is a constant parameter", {
+  expect_false(volumeParameter$isConstant)
+  expect_false(formulaParameter$isConstant)
+  expect_true(constantParameter$isConstant)
+})
+
+test_that("It can display whether a parameter is a formula parameter", {
+  expect_false(volumeParameter$isFormula)
+  expect_true(formulaParameter$isFormula)
+  expect_false(constantParameter$isFormula)
+})
+
+test_that("It can display the formula string of formula parameter or null otherwise", {
+  expect_null(volumeParameter$formulaString)
+  expect_false(is.null(formulaParameter$formulaString))
+  expect_null(constantParameter$formulaString)
+})
+
+test_that("It can display whether a parameter is a table parameter", {
+  expect_false(volumeParameter$isTable)
+  expect_false(formulaParameter$isTable)
+  expect_false(constantParameter$isTable)
+})
+
 test_that("It throws an error when trying to set the name of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_that(par$name <- "TOTO", throws_error())
+  expect_that(volumeParameter$name <- "TOTO", throws_error())
 })
 
 test_that("It can retrieve the id of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_false(is.null(par$id))
+  expect_false(is.null(volumeParameter$id))
 })
 
 test_that("It can retrieve the path of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_equal(par$path, paste("S1", paste(volumePath, collapse = "|"), sep = "|"))
+  expect_equal(volumeParameter$path, paste("S1", paste(volumePath, collapse = "|"), sep = "|"))
 })
 
 test_that("It throws an error when trying to set the path of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_that(par$path <- "TOTO", throws_error())
+  expect_that(volumeParameter$path <- "TOTO", throws_error())
 })
 
-
 test_that("It throws an error when trying to set the id of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_that(par$id <- "id", throws_error())
+  expect_that(volumeParameter$id <- "id", throws_error())
 })
 
 test_that("It can retrieve a value and update a value of a parameter", {
-  par <- getParameter(volumePath, sim)
-  val <- par$value
-  par$value <- val * 2
-  expect_equal(par$value, val * 2)
+  val <- volumeParameter$value
+  volumeParameter$value <- val * 2
+  expect_equal(volumeParameter$value, val * 2)
 })
 
 test_that("It can retrieve the dimension of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_equal(par$dimension, "Volume")
+  expect_equal(volumeParameter$dimension, "Volume")
 })
 
 test_that("It can retrieve the unit of a parameter", {
-  par <- getParameter(volumePath, sim)
-  expect_equal(par$unit, "l")
+  expect_equal(volumeParameter$unit, "l")
 })
 
 test_that("It can set a value in another unit and the value will be updated as expected", {
-  par <- getParameter(volumePath, sim)
-  par$setValue(1, "l")
-  expect_equal(par$value, 1)
+  volumeParameter$setValue(1, "l")
+  expect_equal(volumeParameter$value, 1)
 
-  par$setValue(10, "ml")
-  expect_equal(par$value, 0.01)
+  volumeParameter$setValue(10, "ml")
+  expect_equal(volumeParameter$value, 0.01)
 })
 
 test_that("It can set a value without the unit specified, thus using the default unit", {
@@ -73,8 +91,7 @@ test_that("It can set a value without the unit specified, thus using the default
 })
 
 test_that("It throws an exception when setting a value in a unit that does not exists", {
-  par <- getParameter(volumePath, sim)
-  expect_that(par$setValue(1, "kg"), throws_error())
+  expect_that(volumeParameter$setValue(1, "kg"), throws_error())
 })
 
 
