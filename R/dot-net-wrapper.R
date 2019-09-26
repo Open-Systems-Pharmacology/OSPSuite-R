@@ -33,7 +33,6 @@ DotNetWrapper <- R6::R6Class(
         private$throwPropertyIsReadonly(propertyName)
       }
     },
-
     wrapExtensionMethod = function(typename, methodName, propertyName, value) {
       if (missing(value)) {
         rClr::clrCallStatic(typename, methodName, self$ref)
@@ -50,6 +49,14 @@ DotNetWrapper <- R6::R6Class(
       }
     },
 
+    wrapIntegerProperty = function(propertyName, value) {
+      # Special method needed because of double to int conversion issues between R and .NET
+      if (missing(value)) {
+        rClr::clrGet(self$ref, propertyName)
+      } else {
+        rClr::clrSet(self$ref, propertyName, as.integer(value))
+      }
+    },
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     },

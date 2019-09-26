@@ -6,7 +6,7 @@ clearOutputs(sim)
 outputs <- "Organism|VenousBlood|*|Caffeine"
 addOutputs(outputs, sim)
 results <- runSimulation(sim)
-pkAnalyses <- calculatePKAnalyses(results, sim)
+pkAnalyses <- calculatePKAnalyses(results)
 
 test_that("It should be able to calculate the PK-Analyses each output of a simulation", {
   pkAnalysesForOutput <- pkAnalyses$allPKParametersFor("Organism|VenousBlood|Plasma|Caffeine")
@@ -28,7 +28,7 @@ test_that("It should an empty list of parameters for an output that is not part 
   clearOutputs(sim)
   addOutputs(outputs, sim)
   results <- runSimulation(sim)
-  pkAnalyses <- calculatePKAnalyses(results, sim)
+  pkAnalyses <- calculatePKAnalyses(results)
 
   pkAnalysesForOutput <- pkAnalyses$allPKParametersFor("Another output that does not exist")
   expect_equal(length(pkAnalysesForOutput), 0)

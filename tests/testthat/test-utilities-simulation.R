@@ -76,3 +76,27 @@ test_that("It returns false when attempting to remove a simulation from cache th
 
   expect_false(removeSimulationFromCache(sim2))
 })
+
+
+context("runSimulation")
+test_that("It can run a valid individual simulation and returns results", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  results <- runSimulation(sim)
+  expect_equal(results$count, 1)
+})
+
+test_that("It can run a valid population simulation and returns results", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  results <- runSimulation(sim, population)
+  expect_equal(results$count, population$count)
+})
+
+test_that("It throws an exception when runninga population simulation with the wrong argumetns", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  expect_that(runSimulation(population, simulation), throws_error())
+})
+

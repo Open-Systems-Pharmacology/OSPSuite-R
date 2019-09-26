@@ -12,3 +12,28 @@ toObjectType <- function(netObject, class) {
   sapply(c(netObject), function(x)
     class$new(x))
 }
+
+
+
+`%||%` <- function(lhs, rhs) {
+  if (!is.null(lhs)) {
+    lhs
+  } else {
+    rhs
+  }
+}
+
+
+#' Mimic the ternary operator  \code{a ? x : y} behavior in other languages
+#' If \code{condition} is not null, returns \code{outputIfNotNull} otherwise \code{outputIfNull}
+#'
+#' @param condition The .NET object instances (single or list) to wrapp
+#' @param outputIfNotNull The class definition that will be used to convert the parameter
+#' @param outputIfNull The class definition that will be used to convert the parameter
+ifNotNull <- function(condition, outputIfNotNull, outputIfNull) {
+  if (!is.null(condition)) {
+    outputIfNotNull
+  } else {
+    outputIfNull
+  }
+}

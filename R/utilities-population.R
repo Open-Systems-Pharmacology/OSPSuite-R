@@ -9,7 +9,7 @@
 #' @export
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
-  populationImporter <- getNetTask("PopulationImporter")
+  populationImporter <- getNetTask("PopulationTask")
   population <- rClr::clrCall(populationImporter, "ImportPopulation", csvPopulationFile)
   Population$new(population)
 }

@@ -11,10 +11,10 @@ addOutputs(parameter, simulation = sim)
 
 
 schema <- sim$outputSchema
-print(schema)
+#print(schema)
 
-schema$addTimePoints(c(10, 20))
-print(schema)
+#schema$addTimePoints(c(10, 20))
+#print(schema)
 
 # print(outputSelections)
 
@@ -22,16 +22,21 @@ print(schema)
 # print(parameter)
 
 
-# population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
 # print(population)
 
+simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE)
 
-results <- runSimulation(sim)
-paths <- results$allQuantityPaths
+individualResults <- runSimulation(sim)
+paths <- individualResults$allQuantityPaths
+individualPkkAnalyses <- calculatePKAnalyses(individualResults)
 
-# exportResultsToCSV(results, sim, "C:/temp/export/results.csv")
+
+populationResults <- runSimulation(sim, population, simRunOptions)
+populationPkAnalyses <- calculatePKAnalyses(populationResults)
+
+exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
 #
-# pkAnalyses <- calculatePKAnalyses(results, sim)
 #
 # exportPKAnalysesToCSV(pkAnalyses, sim, "C:/temp/export/pk.csv")
 #
