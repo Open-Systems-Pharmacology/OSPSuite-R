@@ -11,10 +11,10 @@ addOutputs(parameter, simulation = sim)
 
 
 schema <- sim$outputSchema
-#print(schema)
+# print(schema)
 
-#schema$addTimePoints(c(10, 20))
-#print(schema)
+# schema$addTimePoints(c(10, 20))
+# print(schema)
 
 # print(outputSelections)
 

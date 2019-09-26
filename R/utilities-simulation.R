@@ -89,7 +89,6 @@ saveSimulation <- function(simulation, filePath) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(csvPath)
 #' results <- runSimulation(sim, population)
-#'
 #' @export
 runSimulation <- function(simulation, population = NULL, simulationRunOptions = NULL) {
   validateIsOfType(simulation, Simulation)
@@ -98,9 +97,11 @@ runSimulation <- function(simulation, population = NULL, simulationRunOptions = 
   options <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner <- getNetTask("SimulationRunner")
 
-  results <- ifNotNull(population,
-                       rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, population$ref, options$ref),
-                       rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, options$ref))
+  results <- ifNotNull(
+    population,
+    rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, population$ref, options$ref),
+    rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, options$ref)
+  )
 
   SimulationResults$new(results, simulation)
 }

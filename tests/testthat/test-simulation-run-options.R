@@ -11,5 +11,5 @@ test_that("It can set the basic options parameters", {
   expect_false(runOptions$checkForNegativeValues)
 
   runOptions$numberOfCoresToUse <- 5
-  expect_equal(runOptions$numberOfCoresToUse,5)
+  expect_equal(runOptions$numberOfCoresToUse, 5)
 })

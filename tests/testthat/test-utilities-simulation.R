@@ -99,4 +99,3 @@ test_that("It throws an exception when runninga population simulation with the w
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   expect_that(runSimulation(population, simulation), throws_error())
 })
-
