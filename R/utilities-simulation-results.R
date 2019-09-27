@@ -96,20 +96,20 @@ getPopulationResultsValues <- function(simulationResults, quantitiesOrPaths, ind
   output <- vector("list", length(paths))
   names(output) <- paths
   # All time values are equal
-  timeVals <- simulationResults$timeValues
+  timeValues <- simulationResults$timeValues
 
   for (path in paths) {
     # Pre-allocate the output matrix. The number of rows equals the number of simulated time points.
     # The number of columns is the number of possible individuals.
-    outputValues <- matrix(nrow = length(timeVals), ncol = max(length(individualIds), simulationResults$count), dimnames = NULL)
+    outputValues <- matrix(nrow = length(timeValues), ncol = max(length(individualIds), simulationResults$count), dimnames = NULL)
 
-    for (individualIdx in seq_along(individualIds)) {
-      individualId <- individualIds[individualIdx]
+    for (individualIndexx in seq_along(individualIds)) {
+      individualId <- individualIds[individualIndexx]
       vals <- simulationResults$getValuesForIndividual(resultPath = path, individualId = individualId)
       if (is.null(vals)) {
         next
       }
-      outputValues[, individualIdx] <- vals
+      outputValues[, individualIndexx] <- vals
     }
     # Remove all NAs, i.e. columns for individuals that are not present in the
     # results. Solution from https://github.com/sfirke/janitor
@@ -118,7 +118,7 @@ getPopulationResultsValues <- function(simulationResults, quantitiesOrPaths, ind
 
     # Only fill the entry if at least one individual has the output
     if (!(length(outputValues) == 0)) {
-      output[[path]][["x"]] <- timeVals
+      output[[path]][["x"]] <- timeValues
       output[[path]][["y"]] <- outputValues
     }
   }
