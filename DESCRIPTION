@@ -62,7 +62,6 @@ Collate:
     'utilities-pk-analyses.R'
     'utilities-population.R'
     'utilities-quantity.R'
-    'utilities-results.R'
     'utilities-simulation-results.R'
     'utilities-simulation.R'
     'utilities-units.R'
