@@ -34,12 +34,12 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   }
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))
-  objectTypes <- typeNamesFrom(type);
+  objectTypes <- typeNamesFrom(type)
 
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
-typeNamesFrom <- function(type){
+typeNamesFrom <- function(type) {
   if (is.character(type)) {
     return(type)
   }

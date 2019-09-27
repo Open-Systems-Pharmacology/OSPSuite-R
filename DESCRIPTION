@@ -49,6 +49,7 @@ Collate:
     'quantity.R'
     'simulation-pk-analyses.R'
     'simulation-results.R'
+    'simulation-run-options.R'
     'simulation-settings.R'
     'simulation.R'
     'solver-settings.R'

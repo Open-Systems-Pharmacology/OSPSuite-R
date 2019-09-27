@@ -4,12 +4,10 @@
 \alias{calculatePKAnalyses}
 \title{Calculates the pkAnalyses for all output values available in \code{results}.}
 \usage{
-calculatePKAnalyses(results, simulation)
+calculatePKAnalyses(results)
 }
 \arguments{
 \item{results}{Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}}
-
-\item{simulation}{Instance of a simulation for which pk-analyses should be calculated}
 }
 \value{
 A list of QuantityPKParameter (one object for each output-pk parameter combination)
@@ -24,5 +22,5 @@ sim <- loadSimulation(simPath)
 
 addOutputs("Organism|VenousBlood|*|Caffeine", sim)
 results <- runSimulation(sim)
-pkAnalyses <- calculatePKAnalyses(results, sim)
+pkAnalyses <- calculatePKAnalyses(results)
 }

@@ -2,22 +2,33 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulation}
 \alias{runSimulation}
-\title{Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation}
+\title{Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation}
 \usage{
-runSimulation(simulation)
+runSimulation(simulation, population = NULL,
+  simulationRunOptions = NULL)
 }
 \arguments{
-\item{simulation}{Instance of a simulation to simulate.}
+\item{simulation}{Instance of a \code{Simulation} to simulate.}
+
+\item{population}{Optional instance of a \code{Population} to use for the simulation}
+
+\item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}
 }
 \value{
 SimulationResults (one entry per Individual)
 }
 \description{
-Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation
+Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
 }
 \examples{
-
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
+
+# Running an individual simulation
 results <- runSimulation(sim)
+
+# Running a population simulation
+popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+population <- loadPopulation(popPath)
+results <- runSimulation(sim, population)
 }

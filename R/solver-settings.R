@@ -30,12 +30,7 @@ SolverSettings <- R6::R6Class(
     },
 
     mxStep = function(value) {
-      # cannot use base property because of cast to integer
-      if (missing(value)) {
-        rClr::clrGet(self$ref, "MxStep")
-      } else {
-        rClr::clrSet(self$ref, "MxStep", as.integer(value))
-      }
+      private$wrapIntegerProperty("MxStep", value)
     },
 
     relTol = function(value) {

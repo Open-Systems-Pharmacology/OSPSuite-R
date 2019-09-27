@@ -70,22 +70,39 @@ saveSimulation <- function(simulation, filePath) {
   invisible()
 }
 
-#' @title  Runs a simulation and returns a \code{SimulationResults} object containing all results of the simulation
+#' @title  Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
 #'
-#' @param simulation Instance of a simulation to simulate.
+#' @param simulation Instance of a \code{Simulation} to simulate.
+#' @param population Optional instance of a \code{Population} to use for the simulation
+#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
 #'
 #' @return SimulationResults (one entry per Individual)
 #'
 #' @examples
-#'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
+#'
+#' # Running an individual simulation
 #' results <- runSimulation(sim)
+#'
+#' # Running a population simulation
+#' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#' population <- loadPopulation(popPath)
+#' results <- runSimulation(sim, population)
 #' @export
-runSimulation <- function(simulation) {
+runSimulation <- function(simulation, population = NULL, simulationRunOptions = NULL) {
   validateIsOfType(simulation, Simulation)
+  validateIsOfType(population, Population, nullAllowed = TRUE)
+  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
+  options <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner <- getNetTask("SimulationRunner")
-  results <- rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref)
+
+  results <- ifNotNull(
+    population,
+    rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, population$ref, options$ref),
+    rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, options$ref)
+  )
+
   SimulationResults$new(results, simulation)
 }
 
