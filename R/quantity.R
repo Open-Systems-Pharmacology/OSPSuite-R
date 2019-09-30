@@ -1,4 +1,4 @@
-withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 
 #' @title Quantity
 #' @docType class
@@ -19,10 +19,10 @@ Quantity <- R6::R6Class(
       private$wrapProperty("Value", value)
     },
     unit = function(value) {
-      private$wrapExtensionMethod(withDimensionExtensions, "BaseUnitName", "baseUnit")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "baseUnit")
     },
     dimension = function(value) {
-      private$wrapExtensionMethod(withDimensionExtensions, "DimensionName", "dimension")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
     },
     quantityType = function(value) {
       private$wrapReadOnlyProperty("QuantityType", value)
@@ -50,11 +50,11 @@ Quantity <- R6::R6Class(
     setValue = function(value, unit) {
       validateIsNumeric(value)
       validateHasUnit(self, unit)
-      self$value <- rClr::clrCallStatic(withDimensionExtensions, "ConvertToBaseUnit", self$ref, value, unit)
+      self$value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
     },
     hasUnit = function(unit) {
       validateIsString(unit)
-      rClr::clrCallStatic(withDimensionExtensions, "HasUnit", self$ref, unit)
+      rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "HasUnit", self$ref, unit)
     }
   )
 )
