@@ -9,6 +9,8 @@ WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #' @section Methods:
 #' \describe{
 #'   \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
+#'   \item{hasUnit(unit)}{Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}. For the list of supported units, use \code{allUnits}}
+#'   \item{allUnits()}{Returns the list of all supported units}
 #'   }
 #' @format NULL
 Quantity <- R6::R6Class(
