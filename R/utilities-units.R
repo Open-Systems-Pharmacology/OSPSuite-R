@@ -17,6 +17,7 @@ WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
 toBaseUnit <- function(quantity, values, unit) {
+  validateIsOfType(quantity, Quantity)
   validateIsNumeric(values)
   validateHasUnit(quantity, unit)
 
@@ -44,6 +45,7 @@ toBaseUnit <- function(quantity, values, unit) {
 #' valuesInMl <- toUnit(par, c(1, 5, 5), "ml")
 #' @export
 toUnit <- function(quantity, values, targetUnit) {
+  validateIsOfType(quantity, Quantity)
   validateIsNumeric(values)
   validateHasUnit(quantity, targetUnit)
   values <- c(values)
