@@ -1,4 +1,4 @@
-withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 
 #' @title Quantity
 #' @docType class
@@ -8,7 +8,9 @@ withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #' @field dimension The dimension in which the quantity is defined  (Read-Only)
 #' @section Methods:
 #' \describe{
-#'   \item{setValue(value, unit)}{Convert value from unit to the base unit and sets the value in base unit}
+#'   \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
+#'   \item{hasUnit(unit)}{Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}. For the list of supported units, use \code{allUnits}}
+#'   \item{allUnits()}{Returns the list of all supported units}
 #'   }
 #' @format NULL
 Quantity <- R6::R6Class(
@@ -19,10 +21,10 @@ Quantity <- R6::R6Class(
       private$wrapProperty("Value", value)
     },
     unit = function(value) {
-      private$wrapExtensionMethod(withDimensionExtensions, "BaseUnitName", "baseUnit")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "baseUnit")
     },
     dimension = function(value) {
-      private$wrapExtensionMethod(withDimensionExtensions, "DimensionName", "dimension")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
     },
     quantityType = function(value) {
       private$wrapReadOnlyProperty("QuantityType", value)
@@ -47,14 +49,20 @@ Quantity <- R6::R6Class(
     printQuantityValue = function(caption) {
       private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
     },
-    setValue = function(value, unit) {
+    setValue = function(value, unit = NULL) {
       validateIsNumeric(value)
-      validateHasUnit(self, unit)
-      self$value <- rClr::clrCallStatic(withDimensionExtensions, "ConvertToBaseUnit", self$ref, value, unit)
+      if (!is.null(unit)){
+        validateHasUnit(self, unit)
+        value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
+      }
+      self$value <- value
     },
     hasUnit = function(unit) {
       validateIsString(unit)
-      rClr::clrCallStatic(withDimensionExtensions, "HasUnit", self$ref, unit)
+      rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "HasUnit", self$ref, unit)
+    },
+    allUnits = function() {
+      rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "AllUnitNames", self$ref)
     }
   )
 )

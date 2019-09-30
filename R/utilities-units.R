@@ -1,4 +1,4 @@
-withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 
 #' Converts a value given in a specified unit into the base unit of a quantity
 #'
@@ -17,12 +17,13 @@ withDimensionExtensions <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
 toBaseUnit <- function(quantity, values, unit) {
+  validateIsOfType(quantity, Quantity)
   validateIsNumeric(values)
   validateHasUnit(quantity, unit)
 
   values <- c(values)
   sapply(values, function(value) {
-    rClr::clrCallStatic(withDimensionExtensions, "ConvertToBaseUnit", quantity$ref, value, unit)
+    rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", quantity$ref, value, unit)
   })
 }
 
@@ -44,10 +45,11 @@ toBaseUnit <- function(quantity, values, unit) {
 #' valuesInMl <- toUnit(par, c(1, 5, 5), "ml")
 #' @export
 toUnit <- function(quantity, values, targetUnit) {
+  validateIsOfType(quantity, Quantity)
   validateIsNumeric(values)
   validateHasUnit(quantity, targetUnit)
   values <- c(values)
   sapply(values, function(value) {
-    rClr::clrCallStatic(withDimensionExtensions, "ConvertToUnit", quantity$ref, value, targetUnit)
+    rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToUnit", quantity$ref, value, targetUnit)
   })
 }
