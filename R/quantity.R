@@ -8,7 +8,7 @@ WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #' @field dimension The dimension in which the quantity is defined  (Read-Only)
 #' @section Methods:
 #' \describe{
-#'   \item{setValue(value, unit)}{Convert value from unit to the base unit and sets the value in base unit}
+#'   \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
 #'   }
 #' @format NULL
 Quantity <- R6::R6Class(
@@ -47,14 +47,20 @@ Quantity <- R6::R6Class(
     printQuantityValue = function(caption) {
       private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
     },
-    setValue = function(value, unit) {
+    setValue = function(value, unit = NULL) {
       validateIsNumeric(value)
-      validateHasUnit(self, unit)
-      self$value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
+      if (!is.null(unit)){
+        validateHasUnit(self, unit)
+        value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
+      }
+      self$value <- value
     },
     hasUnit = function(unit) {
       validateIsString(unit)
       rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "HasUnit", self$ref, unit)
+    },
+    allUnits = function() {
+      rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "AllUnitNames", self$ref)
     }
   )
 )

@@ -63,7 +63,22 @@ test_that("It can set a value in another unit and the value will be updated as e
   expect_equal(par$value, 0.01)
 })
 
+test_that("It can set a value without the unit specified, thus using the default unit", {
+  par <- getParameter(volumePath, sim)
+  par$setValue(1, "l")
+  expect_equal(par$value, 1)
+
+  par$setValue(10)
+  expect_equal(par$value, 10)
+})
+
 test_that("It throws an exception when setting a value in a unit that does not exists", {
   par <- getParameter(volumePath, sim)
   expect_that(par$setValue(1, "kg"), throws_error())
+})
+
+
+test_that("it can retrieve all units defined for a quantity", {
+  par <- getParameter(volumePath, sim)
+  expect_identical(par$allUnits(), c("l", "ml"))
 })
