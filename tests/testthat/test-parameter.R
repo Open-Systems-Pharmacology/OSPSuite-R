@@ -39,6 +39,13 @@ test_that("It can display whether a parameter is a table parameter", {
   expect_false(constantParameter$isTable)
 })
 
+test_that("It can override a formula with a value", {
+  formulaParameter$value <- 111
+  expect_true(formulaParameter$isFixedValue)
+  formulaParameter$reset();
+  expect_false(formulaParameter$isFixedValue)
+})
+
 test_that("It throws an error when trying to set the name of a parameter", {
   expect_that(volumeParameter$name <- "TOTO", throws_error())
 })

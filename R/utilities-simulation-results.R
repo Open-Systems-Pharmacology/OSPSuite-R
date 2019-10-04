@@ -137,4 +137,3 @@ importResultsFromCSV <- function(simulation, filePaths) {
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)
 }
-

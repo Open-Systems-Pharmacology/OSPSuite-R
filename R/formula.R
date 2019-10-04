@@ -24,8 +24,8 @@ Formula <- R6::R6Class(
     },
     formulaString = function(value) {
       if (missing(value)) {
-        if(self$isExplicit){
-          return( rClr::clrGet(self$ref, "FormulaString"))
+        if (self$isExplicit) {
+          return(rClr::clrGet(self$ref, "FormulaString"))
         }
         return(NULL)
       } else {
@@ -39,17 +39,17 @@ Formula <- R6::R6Class(
       self$printFormula()
     },
     printFormula = function() {
-      if(self$isConstant){
+      if (self$isConstant) {
         private$printLine("isConstant", TRUE)
       }
-      else if(self$isExplicit){
+      else if (self$isExplicit) {
         private$printLine("isFormula", TRUE)
         private$printLine("formula", self$formulaString)
       }
-      else if(self$isTable){
+      else if (self$isTable) {
         private$printLine("isTable", TRUE)
       }
-      else if(self$isDistributed){
+      else if (self$isDistributed) {
         private$printLine("isDistributed", TRUE)
       }
       invisible(self)
