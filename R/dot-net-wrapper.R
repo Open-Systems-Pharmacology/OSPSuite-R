@@ -9,7 +9,6 @@
 #'   \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
 #'   }
 #'
-#' @importFrom R6 R6Class
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
   public = list(
