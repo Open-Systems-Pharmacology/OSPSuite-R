@@ -85,4 +85,3 @@ test_that("It throws an exception when importing a valid result file that does n
   resFile <- getTestDataFilePath("res_10.csv")
   expect_that(importResultsFromCSV(otherSim, resFile), throws_error())
 })
-

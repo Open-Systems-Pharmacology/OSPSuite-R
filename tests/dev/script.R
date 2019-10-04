@@ -6,9 +6,19 @@ distributedParameter <- getParameter("Organism|Liver|Volume", sim)
 formulaParameter <- getParameter("Organism|Weight", sim)
 constantParameter <- getParameter("Organism|Age", sim)
 
+sim2 <- loadSimulation("C:/projects/OSPSuite-R/tests/data/simple.pkml")
+tableParameter <- getParameter("Organism|TableParameter", sim2)
+
 print(distributedParameter)
 print(formulaParameter)
 print(constantParameter)
+print(tableParameter)
+
+tableParameter$value = 5;
+print(tableParameter)
+
+tableParameter$reset()
+print(tableParameter)
 
 # print(distributedParameter)
 #

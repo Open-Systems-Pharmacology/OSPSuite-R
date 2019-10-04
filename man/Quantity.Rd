@@ -18,6 +18,22 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item{\code{unit}}{The base unit in which the quantity is defined (Read-Only)}
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
+
+\item{\code{quantityType}}{The type of the quantity (Read-Only)}
+
+\item{\code{formula}}{An instance of a \code{Formula} object used by this quantity (Read-Only)}
+
+\item{\code{isTable}}{Returns \code{TRUE} if the formula used by this quantity is a table formula otherwise \code{FALSE}}
+
+\item{\code{isConstant}}{Returns \code{TRUE} if the formula used by this quantity is a constant formula otherwise \code{FALSE}}
+
+\item{\code{isFormula}}{Returns \code{TRUE} if the formula used by this quantity is an explicit formula (e.g an equation) otherwise \code{FALSE}}
+
+\item{\code{isDistributed}}{Returns \code{TRUE} if the quantity represents a quantity with an underlying distribution otherwise \code{FALSE}}
+
+\item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
+
+\item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}}
 }}
 
 \section{Methods}{
@@ -26,6 +42,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
   \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
   \item{hasUnit(unit)}{Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}. For the list of supported units, use \code{allUnits}}
   \item{allUnits()}{Returns the list of all supported units}
+  \item{reset()}{Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}. }
   }
 }
 
