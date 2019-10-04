@@ -32,9 +32,9 @@ test_that("It can display whether a parameter is a formula parameter", {
 })
 
 test_that("It can display whether a parameter is a table parameter", {
-  expect_false(volumeParameter$isFormula)
-  expect_true(formulaParameter$isFormula)
-  expect_false(constantParameter$isFormula)
+  expect_false(volumeParameter$isTable)
+  expect_false(formulaParameter$isTable)
+  expect_false(constantParameter$isTable)
   expect_true(tableParameter$isTable)
 })
 
