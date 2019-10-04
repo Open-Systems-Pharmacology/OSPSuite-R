@@ -46,8 +46,6 @@ messages <- list(
     paste0("Value '", value, "' is not in defined enumeration values: '", paste0(enum, collapse = ", "), "'.")
   },
 
-  errorUniqueEntitiesWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'",
-
   errorUnitNotDefined = function(quantityName, dimension, unit) {
     paste0("Unit '", unit, "' is not defined in dimension '", dimension, "' used by '", quantityName, "'.")
   }
