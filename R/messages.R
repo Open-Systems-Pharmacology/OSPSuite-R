@@ -42,10 +42,14 @@ messages <- list(
 
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
+  errorValueNotInEnum = function(enum, value) {
+    paste0("Value '", value, "' is not in defined enumeration values: '", paste0(enum, collapse = ", "), "'.")
+  },
+
   errorUniqueEntitiesWrongCompareBy = "Wrong value for 'compareBy', must be 'id', 'name', or 'path'",
 
   errorUnitNotDefined = function(quantityName, dimension, unit) {
-    paste0("Unit '", unit, "' is not defined in  dimension '", dimension, "' used by '", quantityName, "'.")
+    paste0("Unit '", unit, "' is not defined in dimension '", dimension, "' used by '", quantityName, "'.")
   }
 )
 

@@ -14,7 +14,7 @@ print(formulaParameter)
 print(constantParameter)
 print(tableParameter)
 
-tableParameter$value = 5;
+tableParameter$value <- 5
 print(tableParameter)
 
 tableParameter$reset()
