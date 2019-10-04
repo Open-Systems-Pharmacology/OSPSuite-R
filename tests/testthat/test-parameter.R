@@ -1,6 +1,7 @@
 context("Parameter")
 
 sim <- loadTestSimulation("S1")
+simple <- loadTestSimulation("simple")
 
 liverPathArray <- c("Organism", "Liver")
 liverPath <- toPathString(liverPathArray)
@@ -9,6 +10,7 @@ volumePath <- toPathString(c(liverPathArray, "Volume"))
 volumeParameter <- getParameter(volumePath, sim)
 formulaParameter <- getParameter("Organism|Weight", sim)
 constantParameter <- getParameter("Organism|Age", sim)
+tableParameter <- getParameter("Organism|TableParameter", simple)
 
 test_that("It can retrieve name of a parameter", {
   par <- getParameter(toPathString(c(liverPathArray, "Blood flow rate")), sim)
@@ -19,12 +21,21 @@ test_that("It can display whether a parameter is a constant parameter", {
   expect_false(volumeParameter$isConstant)
   expect_false(formulaParameter$isConstant)
   expect_true(constantParameter$isConstant)
+  expect_false(tableParameter$isConstant)
 })
 
 test_that("It can display whether a parameter is a formula parameter", {
   expect_false(volumeParameter$isFormula)
   expect_true(formulaParameter$isFormula)
   expect_false(constantParameter$isFormula)
+  expect_false(tableParameter$isFormula)
+})
+
+test_that("It can display whether a parameter is a table parameter", {
+  expect_false(volumeParameter$isFormula)
+  expect_true(formulaParameter$isFormula)
+  expect_false(constantParameter$isFormula)
+  expect_true(tableParameter$isTable)
 })
 
 test_that("It can display the formula string of formula parameter or null otherwise", {
