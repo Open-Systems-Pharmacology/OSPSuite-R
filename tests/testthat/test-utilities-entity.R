@@ -28,7 +28,7 @@ test_that("It can filter by name", {
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
   )
-  expect_equal(length(uniqueEntities(parameters, compareBy = "name")), 2)
+  expect_equal(length(uniqueEntities(parameters, CompareBy$name)), 2)
 })
 
 test_that("It can filter by path", {
@@ -37,5 +37,14 @@ test_that("It can filter by path", {
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
   )
-  expect_equal(length(uniqueEntities(parameters, compareBy = "path")), 2)
+  expect_equal(length(uniqueEntities(parameters, CompareBy$path)), 2)
+})
+
+test_that("It throws an exception if comparing by a value that is not defined", {
+  parameters <- c(
+    getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
+    getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
+    getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
+  )
+  expect_that(uniqueEntities(parameters, "toto"), throws_error())
 })

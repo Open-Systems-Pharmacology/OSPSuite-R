@@ -53,7 +53,7 @@ test_that("It can display whether a parameter is a table parameter", {
 test_that("It can override a formula with a value", {
   formulaParameter$value <- 111
   expect_true(formulaParameter$isFixedValue)
-  formulaParameter$reset();
+  formulaParameter$reset()
   expect_false(formulaParameter$isFixedValue)
 })
 

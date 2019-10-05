@@ -1,3 +1,14 @@
+#' How should comparison of entities be performed
+#'
+#' @include enum.R
+#' @export
+CompareBy <- enum(c(
+  "id",
+  "name",
+  "path"
+))
+
+
 #' Extract Unique Elements of type 'Entity'
 #'
 #' @param entities List of objects of type 'Entity'
@@ -19,16 +30,14 @@
 #' )
 #'
 #' # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
-#' uniqueEntities(parameters, compareBy = "id")
-uniqueEntities <- function(entities, compareBy = "id") {
+#' uniqueEntities(parameters, compareBy$id)
+uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   if (is.null(entities)) {
     return(NULL)
   }
 
   validateIsOfType(entities, "Entity")
-  if (!compareBy %in% c("id", "name", "path")) {
-    stop(messages$errorUniqueEntitiesWrongCompareBy)
-  }
+  validateEnumValue(CompareBy, compareBy)
 
   uniqueEntities <- new.env(parent = emptyenv())
 

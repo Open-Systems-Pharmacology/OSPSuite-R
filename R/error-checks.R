@@ -39,6 +39,14 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
+validateEnumValue <- function(enum, value) {
+  if (value %in% names(enum)) {
+    return()
+  }
+
+  stop(messages$errorValueNotInEnum(enum, value))
+}
+
 typeNamesFrom <- function(type) {
   if (is.character(type)) {
     return(type)
