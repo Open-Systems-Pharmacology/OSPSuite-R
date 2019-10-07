@@ -10,6 +10,7 @@ test_that("It can retrieve all points defined in the table formula", {
 })
 
 test_that("It can retrieve the xDimension of the formula", {
+  expect_equal(tableFormula$dimension, "Inversed time")
   expect_equal(tableFormula$xDimension, "Time")
 })
 
