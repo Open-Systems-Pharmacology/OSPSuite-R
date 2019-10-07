@@ -61,13 +61,13 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
     # The number of columns is the number of possible individuals.
     outputValues <- matrix(nrow = length(timeValues), ncol = max(length(individualIds), simulationResults$count), dimnames = NULL)
 
-    for (individualIndexx in seq_along(individualIds)) {
-      individualId <- individualIds[individualIndexx]
+    for (individualIndex in seq_along(individualIds)) {
+      individualId <- individualIds[individualIndex]
       vals <- simulationResults$getValuesForIndividual(resultPath = path, individualId = individualId)
       if (is.null(vals)) {
         next
       }
-      outputValues[, individualIndexx] <- vals
+      outputValues[, individualIndex] <- vals
     }
     # Remove all NAs, i.e. columns for individuals that are not present in the
     # results. Solution from https://github.com/sfirke/janitor
@@ -110,7 +110,6 @@ exportResultsToCSV <- function(results, filePath) {
   rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
-
 
 
 #' Imports the simulation results from one or more csv files

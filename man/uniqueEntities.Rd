@@ -4,7 +4,7 @@
 \alias{uniqueEntities}
 \title{Extract Unique Elements of type 'Entity'}
 \usage{
-uniqueEntities(entities, compareBy = "id")
+uniqueEntities(entities, compareBy = CompareBy$id)
 }
 \arguments{
 \item{entities}{List of objects of type 'Entity'}
@@ -30,5 +30,5 @@ parameters <- c(
 )
 
 # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
-uniqueEntities(parameters, compareBy = "id")
+uniqueEntities(parameters, compareBy$id)
 }
