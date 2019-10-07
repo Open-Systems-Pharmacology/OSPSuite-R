@@ -47,3 +47,9 @@ test_that("It can update the restart solver flag of a given point", {
   point$restartSolver <- FALSE
   expect_false(point$restartSolver)
 })
+
+test_that("It can clear all points from the table", {
+  tableFormula$clearPoints()
+  points <- tableFormula$allPoints
+  expect_equal(length(points), 0)
+})

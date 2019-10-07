@@ -9,6 +9,7 @@
 #' \describe{
 #'   \item{ addPoint(x, y)}{Adds a point to the table, with x value in base unit for XDimension and y value in base unit for Dimension}
 #'   \item{ removePoint(x, y)}{ Remove the point having the same x and y from the table}
+#'   \item{ clearPoints()}{ Remove all points from the table}
 #'   }
 #' @format NULL
 TableFormula <- R6::R6Class(
@@ -37,6 +38,10 @@ TableFormula <- R6::R6Class(
     },
     removePoint = function(x, y) {
       rClr::clrCall(self$ref, "RemovePoint", x, y)
+      invisible(self)
+    },
+    clearPoints = function(){
+      rClr::clrCall(self$ref, "ClearPoints")
       invisible(self)
     },
     print = function(...) {
