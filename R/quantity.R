@@ -81,6 +81,9 @@ Quantity <- R6::R6Class(
       # Cannot use property Formula directly from the quantity because of new override in Distributed Parameter
       formula <- private$wrapExtensionMethod(QUANTITY_EXTENSIONS, "GetFormula")
       private$.formula <- Formula$new(formula)
+      if (self$isTable) {
+        private$.formula <- TableFormula$new(formula)
+      }
     },
     print = function(...) {
       private$printQuantity()

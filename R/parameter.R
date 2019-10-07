@@ -18,3 +18,7 @@ Parameter <- R6::R6Class(
     }
   )
 )
+
+toParameters <- function(netParams) {
+  toObjectType(netParams, Parameter)
+}
