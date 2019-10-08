@@ -25,8 +25,9 @@ print(tableParameter)
 points <- tableFormula$allPoints
 points[[3]]$restartSolver <- TRUE
 
-
-points
+print(constantParameter)
+scaleParameterValues(constantParameter, 1.5)
+print(constantParameter)
 
 # tableParameter$value <- 5
 # print(tableParameter)

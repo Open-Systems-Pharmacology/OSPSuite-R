@@ -44,6 +44,7 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \describe{
   \item{ addPoint(x, y)}{Adds a point to the table, with x value in base unit for XDimension and y value in base unit for Dimension}
   \item{ removePoint(x, y)}{ Remove the point having the same x and y from the table}
+  \item{ clearPoints()}{ Remove all points from the table}
   }
 }
 
