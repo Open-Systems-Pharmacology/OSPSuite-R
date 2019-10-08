@@ -59,9 +59,6 @@ getParameter <- function(path, container) {
   return(parameters[[1]])
 }
 
-toParameters <- function(netParams) {
-  toObjectType(netParams, Parameter)
-}
 
 #' Set values of parameters
 #'

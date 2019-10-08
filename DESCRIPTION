@@ -54,6 +54,7 @@ Collate:
     'simulation-settings.R'
     'simulation.R'
     'solver-settings.R'
+    'table-formula.R'
     'utilities-container.R'
     'utilities-entity.R'
     'utilities-output-schema.R'
@@ -67,4 +68,5 @@ Collate:
     'utilities-simulation.R'
     'utilities-units.R'
     'utilities.R'
+    'value-point.R'
     'zzz.R'

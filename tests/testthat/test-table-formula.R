@@ -1,0 +1,55 @@
+context("TableFormula")
+
+simple <- loadTestSimulation("simple")
+tableParameter <- getParameter("Organism|TableParameter", simple)
+tableFormula <- tableParameter$formula
+
+test_that("It can retrieve all points defined in the table formula", {
+  points <- tableFormula$allPoints
+  expect_equal(length(points), 4)
+})
+
+test_that("It can retrieve the xDimension of the formula", {
+  expect_equal(tableFormula$dimension, "Inversed time")
+  expect_equal(tableFormula$xDimension, "Time")
+})
+
+test_that("It can set and retrieve the use derivative flag", {
+  tableFormula$useDerivedValues <- FALSE
+  expect_false(tableFormula$useDerivedValues)
+
+  tableFormula$useDerivedValues <- TRUE
+  expect_true(tableFormula$useDerivedValues)
+})
+
+test_that("It can add a point to the table at the correct index", {
+  tableFormula$addPoint(20, 30)
+  points <- tableFormula$allPoints
+  expect_equal(length(points), 5)
+  expect_equal(points[[3]]$x, 20)
+})
+
+test_that("It can remove a point from the table defined with existing x and y", {
+  tableFormula$removePoint(20, 30)
+  points <- tableFormula$allPoints
+  expect_equal(length(points), 4)
+})
+
+test_that("It throws an exception when trying to add a point at an existing x with a different y", {
+  tableFormula$addPoint(20, 30)
+  expect_that(tableFormula$add(20, 40), throws_error())
+})
+
+test_that("It can update the restart solver flag of a given point", {
+  point <- tableFormula$allPoints[[2]]
+  point$restartSolver <- TRUE
+  expect_true(point$restartSolver)
+  point$restartSolver <- FALSE
+  expect_false(point$restartSolver)
+})
+
+test_that("It can clear all points from the table", {
+  tableFormula$clearPoints()
+  points <- tableFormula$allPoints
+  expect_equal(length(points), 0)
+})

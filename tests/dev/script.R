@@ -2,18 +2,32 @@ library(ospsuite)
 
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 
-# distributedParameter <- getParameter("Organism|Liver|Volume", sim)
-# formulaParameter <- getParameter("Organism|Weight", sim)
-# constantParameter <- getParameter("Organism|Age", sim)
+distributedParameter <- getParameter("Organism|Liver|Volume", sim)
+formulaParameter <- getParameter("Organism|Weight", sim)
+constantParameter <- getParameter("Organism|Age", sim)
+
+sim2 <- loadSimulation("C:/projects/OSPSuite-R/tests/data/simple.pkml")
+tableParameter <- getParameter("Organism|TableParameter", sim2)
 #
-# sim2 <- loadSimulation("C:/projects/OSPSuite-R/tests/data/simple.pkml")
-# tableParameter <- getParameter("Organism|TableParameter", sim2)
-#
-# print(distributedParameter)
-# print(formulaParameter)
-# print(constantParameter)
-# print(tableParameter)
-#
+print(distributedParameter)
+print(formulaParameter)
+print(constantParameter)
+print(tableParameter)
+
+tableFormula <- tableParameter$formula
+tableFormula$addPoint(50, 5)
+
+print(tableParameter)
+
+tableFormula$removePoint(30, 3)
+print(tableParameter)
+
+points <- tableFormula$allPoints
+points[[3]]$restartSolver <- TRUE
+
+
+points
+
 # tableParameter$value <- 5
 # print(tableParameter)
 #
@@ -41,21 +55,21 @@ sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 # print(parameter)
 
 
-population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+# population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
 # print(population)
 #
-simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE)
+# simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = FALSE)
 #
 # individualResults <- runSimulation(sim)
 # paths <- individualResults$allQuantityPaths
 # individualPkkAnalyses <- calculatePKAnalyses(individualResults)
 #
 #
-populationResults <- runSimulation(sim, population, simRunOptions)
-populationPkAnalyses <- calculatePKAnalyses(populationResults)
+# populationResults <- runSimulation(sim, population, simRunOptions)
+# populationPkAnalyses <- calculatePKAnalyses(populationResults)
 
 
-outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )
+# outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )
 #
 # exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
 #

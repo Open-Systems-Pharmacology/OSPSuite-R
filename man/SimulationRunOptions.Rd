@@ -16,6 +16,8 @@ Options to be passed to the simulation engine
 \item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used (1 per default). This is only relevant when simulating a population simulation}
 
 \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
+
+\item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{TRUE}}
 }}
 
 \keyword{datasets}
