@@ -62,7 +62,7 @@ getParameter <- function(path, container) {
 
 #' Set values of parameters
 #'
-#' @param parameters A single object of type 'Parameter' or a list of such objects
+#' @param parameters A single or a list of \code{Parameter}
 #' @seealso \code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
 #'
 #' @param values A numeric value that should be assigned to the parameter or a vector
@@ -84,7 +84,7 @@ setParametersValues <- function(parameters, values) {
   parameters <- c(parameters)
 
   # Test for correct inputs
-  validateIsOfType(parameters, "Parameter")
+  validateIsOfType(parameters, Parameter)
   validateIsNumeric(values)
   validateIsSameLength(parameters, values)
 
@@ -93,3 +93,32 @@ setParametersValues <- function(parameters, values) {
     param$value <- values[[i]]
   }
 }
+
+#' Scale current values of parameters using a factor
+#'
+#' @param parameters A single or a list of \code{Parameter}
+#' @seealso \code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
+#'
+#' @param factor A numeric value that will be used to scale all parameters
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' param <- getParameter("Organism|Liver|Volume", sim)
+#' scaleParameterValues(param, 1)
+#' params <- getAllParametersMatching("Organism|**|Volume", sim)
+#' scaleParameterValues(params, 1.5)
+#' @export
+scaleParameterValues <- function(parameters, factor) {
+  parameters <- c(parameters)
+
+  # Test for correct inputs
+  validateIsOfType(parameters, Parameter)
+  validateIsNumeric(factor)
+
+  lapply(parameters, function(p) p$value <- p$value * factor)
+  invisible()
+}
+
+

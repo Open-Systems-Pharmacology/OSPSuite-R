@@ -95,8 +95,26 @@ test_that("It can set the value of a single parameter", {
 test_that("It can set the values of multiple parameters", {
   parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
   setParametersValues(parameters, c(1:6))
-  newVals <- sapply(parameters, fun <- function(x) {
+  newVals <- sapply(parameters, function(x) {
     x$value
   })
   expect_equal(newVals, c(1:6))
+})
+
+
+context("scaleParameterValues")
+
+test_that("It can scale a single parameter with a given factor", {
+  parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
+  originalValue <- parameter$value
+  scaleParameterValues(parameter, 1.5)
+  expect_equal(parameter$value, originalValue*1.5)
+})
+
+test_that("It can scale mulstiple parameters with a given factor", {
+  parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
+  originalValues <- sapply(parameters, function(x) x$value)
+  scaleParameterValues(parameters, 1.5)
+  scaledValues <- sapply(parameters, function(x) x$value)
+  expect_equal(scaledValues, originalValues*1.5)
 })
