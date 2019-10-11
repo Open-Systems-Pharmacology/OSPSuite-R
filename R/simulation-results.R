@@ -35,17 +35,17 @@ SimulationResults <- R6::R6Class("SimulationResults",
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
-    getValuesForIndividual = function(resultPath, individualId) {
+    getValuesForIndividual = function(path, individualId) {
       if (!self$hasResultsForIndividual(individualId)) {
         return(NULL)
       }
 
 
       individualResult <- private$getResultsForIndividual(individualId)
-      if (!rClr::clrCall(individualResult, "HasValuesFor", resultPath)) {
+      if (!rClr::clrCall(individualResult, "HasValuesFor", path)) {
         return(NULL)
       }
-      quantityValues <- rClr::clrCall(individualResult, "ValuesFor", resultPath)
+      quantityValues <- rClr::clrCall(individualResult, "ValuesFor", path)
       rClr::clrGet(quantityValues, "Values")
     },
     print = function(...) {

@@ -63,7 +63,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 
     for (individualIndex in seq_along(individualIds)) {
       individualId <- individualIds[individualIndex]
-      vals <- simulationResults$getValuesForIndividual(resultPath = path, individualId = individualId)
+      vals <- simulationResults$getValuesForIndividual(path = path, individualId = individualId)
       if (is.null(vals)) {
         next
       }
@@ -80,6 +80,42 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
       output[[path]][["y"]] <- outputValues
     }
   }
+  return(output)
+}
+
+#' @export
+getOutputValuesTLF <- function(simulationResults, quantitiesOrPaths, individualIds = NULL) {
+  validateIsOfType(simulationResults, SimulationResults)
+  quantitiesOrPaths <- c(quantitiesOrPaths)
+  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"))
+  validateIsNumeric(individualIds, nullAllowed = TRUE)
+
+  # If quantities are passed, get their paths.
+  paths <- quantitiesOrPaths
+  if (isOfType(quantitiesOrPaths, Quantity)) {
+    paths <- unlist(lapply(quantitiesOrPaths, function(x) x$consolidatePath))
+  }
+  paths <- unique(paths)
+
+  # If no specific individual ids are passed, iterate through all individuals
+  individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
+
+  # All time values are equal
+  timeValues <- simulationResults$timeValues
+
+  output <- NULL;
+
+  for (individualIndex in seq_along(individualIds)) {
+    individualId <- individualIds[individualIndex]
+    individualIdColumn <- rep(individualId, length(timeValues))
+    for (path in paths) {
+      pathColumn  <- rep(path, length(timeValues))
+      values <- simulationResults$getValuesForIndividual(path, individualId)
+      individualData <- data.frame("individualId" = individualIdColumn, "time" = timeValues, "path" = pathColumn, "value" = values)
+      output <- rbind(output, individualData)
+    }
+  }
+
   return(output)
 }
 
