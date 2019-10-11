@@ -105,8 +105,7 @@ getOutputValuesTLF <- function(simulationResults, quantitiesOrPaths, individualI
 
   output <- NULL;
 
-  for (individualIndex in seq_along(individualIds)) {
-    individualId <- individualIds[individualIndex]
+  for (individualId in individualIds) {
     individualIdColumn <- rep(individualId, length(timeValues))
     for (path in paths) {
       pathColumn  <- rep(path, length(timeValues))
