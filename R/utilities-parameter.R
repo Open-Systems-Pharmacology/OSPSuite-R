@@ -24,7 +24,7 @@
 #' @export
 getAllParametersMatching <- function(paths, container) {
   # Test for correct inputs
-  validateIsOfType(container, c("Simulation", "Container"))
+  validateIsOfType(container, c(Simulation, Container))
   validateIsString(paths)
 
   findParametersByPath <- function(path) {

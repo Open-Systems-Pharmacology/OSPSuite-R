@@ -39,12 +39,12 @@ OutputSchema <- R6::R6Class(
       invisible(self)
     },
     addInterval = function(interval) {
-      validateIsOfType(interval, "Interval")
+      validateIsOfType(interval, Interval)
       rClr::clrCall(self$ref, "AddInterval", interval$ref)
       invisible(self)
     },
     removeInterval = function(interval) {
-      validateIsOfType(interval, "Interval")
+      validateIsOfType(interval, Interval)
       rClr::clrCall(self$ref, "RemoveInterval", interval$ref)
       invisible(self)
     },

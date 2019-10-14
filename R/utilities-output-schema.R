@@ -25,7 +25,7 @@
 #' addOutputInterval(sim, 10 * 60, 17 * 60, 4 / 60, intervalName = "Second Interval")
 #' @export
 addOutputInterval <- function(simulation, startTime, endTime, resolution, intervalName = NULL) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
   validateIsNumeric(c(startTime, endTime, resolution))
   schema <- simulation$outputSchema
   outputIntervalFactory <- getNetTask("OutputIntervalFactory")
@@ -71,7 +71,7 @@ setOutputInterval <- function(simulation, startTime, endTime, resolution, interv
 #' clearOutputIntervals(sim)
 #' @export
 clearOutputIntervals <- function(simulation) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
   simulation$outputSchema$clear()
   invisible(simulation)
 }

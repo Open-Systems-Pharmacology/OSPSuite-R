@@ -30,14 +30,14 @@
 #' resultsValues <- getOutputValues(simResults, paths)
 #' plot(resultsValues[[paths]])
 getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds = NULL) {
-  validateIsOfType(simulationResults, "SimulationResults")
+  validateIsOfType(simulationResults, SimulationResults)
   quantitiesOrPaths <- c(quantitiesOrPaths)
-  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"))
+  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
   validateIsNumeric(individualIds, nullAllowed = TRUE)
 
   # If quantities are passed, get their paths.
   paths <- quantitiesOrPaths
-  if (isOfType(quantitiesOrPaths, "Quantity")) {
+  if (isOfType(quantitiesOrPaths, Quantity)) {
     paths <- unlist(lapply(quantitiesOrPaths, function(x) x$consolidatePath))
   }
   paths <- unique(paths)
@@ -104,7 +104,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 #' exportResultsToCSV(results, tempfile())
 #' @export
 exportResultsToCSV <- function(results, filePath) {
-  validateIsOfType(results, "SimulationResults")
+  validateIsOfType(results, SimulationResults)
   validateIsString(filePath)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
   rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
@@ -130,7 +130,7 @@ exportResultsToCSV <- function(results, filePath) {
 #' results <- importResultsFromCSV(sim, resultPath)
 #' @export
 importResultsFromCSV <- function(simulation, filePaths) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
