@@ -24,7 +24,7 @@
 #' @export
 getAllContainersMatching <- function(paths, container) {
   # Test for correct inputs
-  validateIsOfType(container, c("Simulation", "Container"))
+  validateIsOfType(container, c(Simulation, Container))
   validateIsString(paths)
 
   findContainersByPath <- function(path) {

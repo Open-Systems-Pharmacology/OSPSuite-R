@@ -17,11 +17,15 @@ isOfType <- function(object, type) {
     return(FALSE)
   }
 
-  object <- c(object)
   type <- typeNamesFrom(type)
+  inheritType <-  function(x) inherits(x, type);
 
-  paste(type)
-  all(sapply(object, function(x) inherits(x, type)))
+  if(inheritType(object)){
+    return(TRUE)
+  }
+
+  object <- c(object)
+  all(sapply(object, inheritType))
 }
 
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
@@ -48,11 +52,13 @@ validateEnumValue <- function(enum, value) {
 }
 
 typeNamesFrom <- function(type) {
-  if (is.character(type)) {
-    return(type)
-  }
   type <- c(type)
-  sapply(type, function(t) t$classname)
+  sapply(type, function(t){
+    if (is.character(t)){
+      return(t)
+    }
+    t$classname
+  })
 }
 
 validateIsString <- function(object, nullAllowed = FALSE) {

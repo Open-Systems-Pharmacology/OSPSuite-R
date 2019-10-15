@@ -19,11 +19,11 @@ OutputSelections <- R6::R6Class(
       rClr::clrCall(self$ref, "Clear")
     },
     addQuantity = function(quantity) {
-      validateIsOfType(quantity, "Quantity")
+      validateIsOfType(quantity, Quantity)
       rClr::clrCall(self$ref, "AddQuantity", quantity$ref)
     },
     removeQuantity = function(value) {
-      validateIsOfType(quantity, "Quantity")
+      validateIsOfType(quantity, Quantity)
       rClr::clrCall(self$ref, "RemoveQuantity", quantity$ref)
     },
     print = function(...) {

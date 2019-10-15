@@ -20,8 +20,8 @@
 addOutputs <- function(quantitiesOrPaths, simulation) {
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
-  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"))
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
+  validateIsOfType(simulation, Simulation)
   quantities <- quantitiesOrPaths
 
   if (isOfType(quantitiesOrPaths, "character")) {
@@ -50,7 +50,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 #' clearOutputs(sim)
 #' @export
 clearOutputs <- function(simulation) {
-  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(simulation, Simulation)
   simulation$settings$outputSelections$clear()
   invisible(simulation)
 }

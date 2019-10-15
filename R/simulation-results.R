@@ -27,7 +27,7 @@ SimulationResults <- R6::R6Class("SimulationResults",
   ),
   public = list(
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, "Simulation")
+      validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
       super$initialize(ref)
     },
