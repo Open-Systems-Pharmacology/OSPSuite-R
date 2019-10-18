@@ -38,7 +38,7 @@ Population <- R6::R6Class(
       rClr::clrCall(self$ref, "GetValues", parameterPath)
     },
     covariatesAt = function(individualId) {
-      Covariates$new(rClr::clrCall(self$ref, "CovariatesAt", individualId))
+      Covariates$new(rClr::clrCall(self$ref, "CovariatesAt", as.integer(individualId)))
     },
     print = function(...) {
       private$printClass()

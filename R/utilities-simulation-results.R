@@ -83,20 +83,25 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
   return(output)
 }
 
+#' Export values that can be plugged directly into the TLF lib (TODO)
+#'
 #' @export
-getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths, individualIds = NULL) {
+getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population)
-  quantitiesOrPaths <- c(quantitiesOrPaths)
-  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"))
   validateIsNumeric(individualIds, nullAllowed = TRUE)
+  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"), nullAllowed = TRUE)
+
+  quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
+  quantitiesOrPaths <- c(quantitiesOrPaths)
 
   # If quantities are passed, get their paths.
   paths <- quantitiesOrPaths
-  if (isOfType(quantitiesOrPaths, Quantity)) {
-    paths <- unlist(lapply(quantitiesOrPaths, function(x) x$consolidatePath))
+  if (isOfType(paths, Quantity)) {
+    paths <- unlist(lapply(paths, function(x) x$consolidatePath))
   }
   paths <- unique(paths)
+
   result <- list()
 
   if (length(paths) == 0) {
@@ -108,7 +113,6 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths,
 
   # All time values are equal
   timeValues <- simulationResults$timeValues
-  simulation <- simulationResults$simulation
   valueLength <- length(timeValues)
   covariateNames <- population$allCovariateNames
 
@@ -116,30 +120,32 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths,
     Time = list(unit = "min", dimension = "Time")
   )
 
-  covariatesCache <- Cache$new()
-  # create a cache of all covariates so that we do not have to loop over all paths again
+  individualPropertiesCache <- Cache$new()
+  # create a cache of all indivdual values that are constant independent from the path
   for (individualId in individualIds) {
     covariates <- population$covariatesAt(individualId)
-    individualIdColumn <- rep(individualId, valueLength)
-    covariateColumns <- sapply(covariateNames, function(name) {
-      rep(covariates$valueFor(name), valueLength)
-    })
+    individualProperties <- list(IndividualId = rep(individualId, valueLength), Time = timeValues)
 
-    covariatesCache$set(toString(individualId),  covariateColumns);
+    for (covariateName in covariateNames) {
+      individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
+    }
+
+    individualPropertiesCache$set(toString(individualId), individualProperties)
   }
 
   for (path in paths) {
-    quantity <- getQuantity(path, simulation)
+    quantity <- getQuantity(path, simulationResults$simulation)
     data <- NULL
     metaData$Value <- list(unit = quantity$unit, dimension = quantity$dimension)
     pathColumn <- rep(path, valueLength)
 
     for (individualId in individualIds) {
-      covariateColumns <- covariatesCache$get(toString(individualId))
+      individualProperties <- individualPropertiesCache$get(toString(individualId))
       values <- simulationResults$getValuesForIndividual(path, individualId)
-      individualData <- data.frame(IndividualId = individualIdColumn, Time = timeValues, Path = pathColumn, Value = values, covariateColumns)
+      individualData <- data.frame(individualProperties, Path = pathColumn, Value = values)
       data <- rbind(data, individualData)
     }
+
     result[[path]] <- list(data = data, metaData = metaData)
   }
 

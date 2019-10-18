@@ -1,7 +1,10 @@
 sim <- loadTestSimulation("S1")
-simResults <- runSimulation(sim)
+individualResults <- runSimulation(sim)
+resultsPaths <- individualResults$allQuantityPaths
 
-resultsPaths <- simResults$allQuantityPaths
+population <- loadPopulation(getTestDataFilePath("pop_10.csv"))
+populationResults <- runSimulation(sim, population)
+
 
 context("getOutputValues")
 
@@ -10,46 +13,93 @@ test_that("It throws an error when no valid simulation results are provided", {
 })
 
 test_that("It throws an error when no valid paths or quantities are provided", {
-  expect_error(getOutputValues(simResults, 1))
+  expect_error(getOutputValues(individualResults, 1))
 })
 
 test_that("It throws an error when no valid individual ids are provided", {
-  expect_error(getOutputValues(simResults, resultsPaths, "one"))
+  expect_error(getOutputValues(individualResults, resultsPaths, "one"))
 })
 
 test_that("It can retrieve results by paths", {
-  results <- getOutputValues(simResults, resultsPaths)
+  results <- getOutputValues(individualResults, resultsPaths)
   expect_equal(length(results), length(resultsPaths))
 })
 
 test_that("It can retrieve results by quantities", {
-  results <- getOutputValues(simResults, getAllQuantitiesMatching(resultsPaths, sim))
+  results <- getOutputValues(individualResults, getAllQuantitiesMatching(resultsPaths, sim))
   expect_equal(length(results), length(resultsPaths))
 })
 
 test_that("It can retrieve results with provided individual id", {
-  results <- getOutputValues(simResults, resultsPaths, individualIds = c(0, 0, 1))
+  results <- getOutputValues(individualResults, resultsPaths, individualIds = c(0, 0, 1))
   expect_equal(length(results), length(resultsPaths))
   expect_false(is.null(results[[1]]))
 })
 
 test_that("It returns NULL for results if no individual id was simulated", {
-  results <- getOutputValues(simResults, resultsPaths, individualIds = 1)
+  results <- getOutputValues(individualResults, resultsPaths, individualIds = 1)
   expect_equal(length(results), length(resultsPaths))
   expect_null(results[[1]])
 })
 
 test_that("It returns NULL for paths that were not simulated", {
-  results <- getOutputValues(simResults, "testPath")
+  results <- getOutputValues(individualResults, "testPath")
   expect_equal(length(results), 1)
   expect_null(results$"testPath")
 })
+
+
+context("getOutputValuesTLF")
+
+test_that("It throws an error when no valid simulation results are provided", {
+  expect_error(getOutputValuesTLF(sim, resultsPaths))
+})
+
+test_that("It throws an error when no valid paths or quantities are provided", {
+  expect_error(getOutputValuesTLF(populationResults, population, 1))
+})
+
+test_that("It throws an error when no valid population is provided ids are provided", {
+  expect_error(getOutputValuesTLF(populationResults, resultsPaths, 1))
+})
+
+test_that("It can retrieve results by paths", {
+  results <- getOutputValuesTLF(populationResults, population)
+  expect_equal(length(results), length(resultsPaths))
+})
+
+test_that("It can retrieve results by quantities", {
+  results <- getOutputValuesTLF(populationResults, population, getAllQuantitiesMatching(resultsPaths, sim))
+  expect_equal(length(results), length(resultsPaths))
+})
+
+test_that("It should return a data and meta data data frame per output paths", {
+  path <- resultsPaths[[1]]
+  results <- getOutputValuesTLF(populationResults, population, path, individualIds = c(0, 1))
+  expect_equal(length(results), 1)
+  data <- results[[path]]$data
+  metaData <- results[[path]]$metaData
+  expect_false(is.null(data))
+  expect_false(is.null(metaData))
+  expect_null(results[[resultsPaths[[2]]]])
+})
+
+test_that("It can retrieve results with provided individual id", {
+  results <- getOutputValuesTLF(populationResults, population, individualIds = c(1, 3, 5))
+  expect_equal(length(results), length(resultsPaths))
+  for (path in resultsPaths) {
+    data <- results[[path]]$data
+    indInd <- unique(data$IndividualId)
+    expect_identical(indInd, c(1,3, 5))
+  }
+})
+
 
 context("exportResultsToCSV")
 
 test_that("It can export valid simulation results to CSV", {
   executeWithTestFile(function(csvFile) {
-    exportResultsToCSV(simResults, csvFile)
+    exportResultsToCSV(individualResults, csvFile)
     expect_true(file.exists(csvFile))
   })
 })
@@ -58,8 +108,8 @@ context("importResultsFromCSV")
 
 test_that("It can import valid simulation results from one CSV file", {
   resFile <- getTestDataFilePath("res_10.csv")
-  simResults <- importResultsFromCSV(sim, resFile)
-  expect_equal(simResults$count, 10)
+  individualResults <- importResultsFromCSV(sim, resFile)
+  expect_equal(individualResults$count, 10)
 })
 
 test_that("It save the reference to the original simulation", {
@@ -71,8 +121,8 @@ test_that("It save the reference to the original simulation", {
 test_that("It can import valid simulation results from multiple CSV files", {
   res1_10File <- getTestDataFilePath("res_10.csv")
   res11_20File <- getTestDataFilePath("res_11-20.csv")
-  simResults <- importResultsFromCSV(sim, c(res1_10File, res11_20File))
-  expect_equal(simResults$count, 20)
+  individualResults <- importResultsFromCSV(sim, c(res1_10File, res11_20File))
+  expect_equal(individualResults$count, 20)
 })
 
 test_that("It throws an exception if the file imported are not valid results file", {
