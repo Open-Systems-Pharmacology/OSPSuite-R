@@ -31,6 +31,7 @@ Collate:
     'enum.R'
     'container-type.R'
     'container.R'
+    'covariates.R'
     'dot-net-wrapper.R'
     'entity.R'
     'error-checks.R'

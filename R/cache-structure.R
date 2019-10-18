@@ -8,7 +8,7 @@ Cache <- R6::R6Class(
   "Cache",
   public = list(
     type = NULL,
-    initialize = function(type) {
+    initialize = function(type=NULL) {
       self$type <- type
     },
 
@@ -19,23 +19,27 @@ Cache <- R6::R6Class(
 
     # Store the given value in cache with the given key
     set = function(key, value) {
+      validateIsString(key)
       private$validateObjectType(value)
       assign(key, value, envir = private$cachedObjects)
     },
 
     # Check if an entry with the given key exists in cache
     hasKey = function(key) {
-      return(exists(key, envir = private$cachedObjects, inherits = FALSE))
+      validateIsString(key)
+      exists(key, envir = private$cachedObjects, inherits = FALSE)
     },
 
     # Get cached object by key
     get = function(key) {
+      validateIsString(key)
       base::get(key, envir = private$cachedObjects, inherits = FALSE)
     },
 
     # Remove the value associated with the key from cache. If the key is not found,
     # nothing happens.
     dropKey = function(key) {
+      validateIsString(key)
       if (self$hasKey(key)) {
         rm(list = key, envir = private$cachedObjects, inherits = FALSE)
       }
@@ -68,11 +72,15 @@ Cache <- R6::R6Class(
 
     # All objects within a cache environment should be of the same type.
     validateObjectType = function(object) {
-      if (!isOfType(object, self$type)) {
-        # Name of the variable in the calling function
-        objectName <- deparse(substitute(object))
-        stop(messages$errorWrongCacheType(objectName, self$type))
+      if(is.null( self$type)){
+        return()
       }
+      if (isOfType(object, self$type)) {
+        return()
+      }
+      # Name of the variable in the calling function
+      objectName <- deparse(substitute(object))
+      stop(messages$errorWrongCacheType(objectName, self$type))
     }
   )
 )

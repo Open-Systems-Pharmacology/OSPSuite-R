@@ -57,6 +57,8 @@ constantParameter <- getParameter("Organism|Age", sim)
 
 
 population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+allCovariates <- population$allCovariateNames;
+
 # print(population)
 #
 simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = FALSE)
@@ -70,7 +72,7 @@ populationResults <- runSimulation(sim, population, simRunOptions)
 # populationPkAnalyses <- calculatePKAnalyses(populationResults)
 
 
-outputValues <- getOutputValuesTLF(populationResults, populationResults$allQuantityPaths )
+outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths )
 
 
 # outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )
