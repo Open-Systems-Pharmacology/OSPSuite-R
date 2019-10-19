@@ -120,9 +120,10 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
     Time = list(unit = "min", dimension = "Time")
   )
 
-  individualPropertiesCache <- Cache$new()
+  individualPropertiesCache  <- vector("list", length(individualIds))
   # create a cache of all indivdual values that are constant independent from the path
-  for (individualId in individualIds) {
+  for (individualIndex in seq_along(individualIds)) {
+    individualId <- individualIds[individualIndex]
     covariates <- population$covariatesAt(individualId)
     individualProperties <- list(IndividualId = rep(individualId, valueLength), Time = timeValues)
 
@@ -130,22 +131,23 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
       individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
     }
 
-    individualPropertiesCache$set(toString(individualId), individualProperties)
+    individualPropertiesCache[[individualIndex]] <-individualProperties;
   }
 
   for (path in paths) {
     quantity <- getQuantity(path, simulationResults$simulation)
-    data <- NULL
+    resultsForPath <- vector("list", length(individualIds))
     metaData$Value <- list(unit = quantity$unit, dimension = quantity$dimension)
     pathColumn <- rep(path, valueLength)
 
-    for (individualId in individualIds) {
-      individualProperties <- individualPropertiesCache$get(toString(individualId))
+    for (individualIndex in seq_along(individualIds)) {
+      individualId <- individualIds[individualIndex]
+      individualProperties <- individualPropertiesCache[[individualIndex]]
       values <- simulationResults$getValuesForIndividual(path, individualId)
-      individualData <- data.frame(individualProperties, Path = pathColumn, Value = values)
-      data <- rbind(data, individualData)
+      resultsForPath[[individualIndex]] <- data.frame(individualProperties, Path = pathColumn, Value = values)
     }
 
+    data <- do.call(rbind, resultsForPath)
     result[[path]] <- list(data = data, metaData = metaData)
   }
 
