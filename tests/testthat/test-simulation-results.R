@@ -18,15 +18,15 @@ test_that("It can return values for a specific path for an individual", {
   expect_gt(length(values), 0)
 })
 
-test_that("It returns NULL if specific result for specific individual is not found", {
+test_that("It returns an array of NA if specific result for specific individual is not found", {
   values <- simResults$getValuesForIndividual(resultsPath, 1)
-  expect_null(values)
+  expect_true(is.na(values))
 
   values <- simResults$getValuesForIndividual("blabla", 0)
-  expect_null(values)
+  expect_true(is.na(values))
 
   values <- simResults$getValuesForIndividual("blabla", 1)
-  expect_null(values)
+  expect_true(is.na(values))
 })
 
 test_that("It can retrieve the number of individuals", {

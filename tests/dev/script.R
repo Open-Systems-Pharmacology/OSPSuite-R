@@ -69,15 +69,14 @@ simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegati
 #
 #
 # populationResults <- runSimulation(sim, population, simRunOptions)
-populationResults <- importResultsFromCSV(sim,  "C:/temp/export/results.csv")
+populationResults <- importResultsFromCSV(sim, "C:/temp/export/results.csv")
 # populationPkAnalyses <- calculatePKAnalyses(populationResults)
 #
-profvis({
-outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
-}, prof_output="C:/temp/export/prof.html")
+# profvis({
+# outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
+# }, prof_output="C:/temp/export/prof.html")
 
-
-# outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1:10))
+outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1, 3, 5))
 
 # outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )
 #

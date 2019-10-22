@@ -46,10 +46,10 @@ test_that("It returns NULL for paths that were not simulated", {
   results <- getOutputValues(individualResults, "testPath")
   expect_equal(length(results), 1)
   expect_null(results$"testPath")
-})
+ })
 
 
-context("getOutputValuesTLF")
+ context("getOutputValuesTLF")
 
 test_that("It throws an error when no valid simulation results are provided", {
   expect_error(getOutputValuesTLF(sim, resultsPaths))
@@ -72,10 +72,10 @@ test_that("It can retrieve results by quantities", {
   results <- getOutputValuesTLF(populationResults, population, getAllQuantitiesMatching(resultsPaths, sim))
   expect_equal(length(results), length(resultsPaths))
 })
-
+#
 test_that("It should return a data and meta data data frame per output paths", {
   path <- resultsPaths[[1]]
-  results <- getOutputValuesTLF(populationResults, population, path, individualIds = c(0, 1))
+  results <- getOutputValuesTLF(populationResults, population, path, individualIds= c(0, 1))
   expect_equal(length(results), 1)
   data <- results[[path]]$data
   metaData <- results[[path]]$metaData
@@ -90,7 +90,7 @@ test_that("It can retrieve results with provided individual id", {
   for (path in resultsPaths) {
     data <- results[[path]]$data
     indInd <- unique(data$IndividualId)
-    expect_identical(indInd, c(1,3, 5))
+    expect_identical(indInd, c(1, 3, 5))
   }
 })
 

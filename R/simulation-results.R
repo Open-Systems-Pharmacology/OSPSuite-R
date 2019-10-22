@@ -40,7 +40,7 @@ SimulationResults <- R6::R6Class("SimulationResults",
     },
 
     getValuesForIndividual = function(path, individualId) {
-    individualResult <- NULL
+      individualResult <- NULL
       if (!private$.individualResultsCache$hasKey(individualId)) {
         individualResult <- private$getResultsForIndividual(individualId)
         private$.individualResultsCache$set(individualId, individualResult)
@@ -50,10 +50,10 @@ SimulationResults <- R6::R6Class("SimulationResults",
       }
 
       if (is.null(individualResult)) {
-        return(NULL)
+        return(rep(NA, self$count))
       }
 
-      rClr::clrCall(individualResult, "ValuesFor", path)
+      rClr::clrCall(individualResult, "ValuesFor", path) %||% rep(NA, self$count)
     },
 
     print = function(...) {

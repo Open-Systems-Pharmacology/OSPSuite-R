@@ -18,8 +18,8 @@ Population <- R6::R6Class(
     count = function(value) {
       private$wrapReadOnlyProperty("Count", value)
     },
-    allCovariateNames = function(value){
-      private$readOnlyProperty("allCovariateNames", value,  rClr::clrCall(self$ref, "AllCovariatesNames"))
+    allCovariateNames = function(value) {
+      private$readOnlyProperty("allCovariateNames", value, rClr::clrCall(self$ref, "AllCovariatesNames"))
     }
   ),
   public = list(

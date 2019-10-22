@@ -18,9 +18,9 @@ isOfType <- function(object, type) {
   }
 
   type <- typeNamesFrom(type)
-  inheritType <-  function(x) inherits(x, type);
+  inheritType <- function(x) inherits(x, type)
 
-  if(inheritType(object)){
+  if (inheritType(object)) {
     return(TRUE)
   }
 
@@ -53,8 +53,8 @@ validateEnumValue <- function(enum, value) {
 
 typeNamesFrom <- function(type) {
   type <- c(type)
-  sapply(type, function(t){
-    if (is.character(t)){
+  sapply(type, function(t) {
+    if (is.character(t)) {
       return(t)
     }
     t$classname

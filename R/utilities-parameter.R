@@ -120,5 +120,3 @@ scaleParameterValues <- function(parameters, factor) {
   lapply(parameters, function(p) p$value <- p$value * factor)
   invisible()
 }
-
-
