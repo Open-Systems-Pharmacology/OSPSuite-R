@@ -131,8 +131,12 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
       individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
     }
 
-    individualPropertiesCache[[individualIndex]] <-individualProperties;
+    #Save one data frame with all individual properties per individual so that we can easily concatenate them
+    individualPropertiesCache[[individualIndex]] <- data.frame(individualProperties);
   }
+
+  #Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
+  individualProperties <- do.call(rbind, individualPropertiesCache)
 
   for (path in paths) {
     quantity <- getQuantity(path, simulationResults$simulation)
@@ -142,12 +146,14 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
 
     for (individualIndex in seq_along(individualIds)) {
       individualId <- individualIds[individualIndex]
-      individualProperties <- individualPropertiesCache[[individualIndex]]
       values <- simulationResults$getValuesForIndividual(path, individualId)
-      resultsForPath[[individualIndex]] <- data.frame(individualProperties, Path = pathColumn, Value = values)
+      resultsForPath[[individualIndex]] <- data.frame(Path = pathColumn, Value = values)
     }
 
     data <- do.call(rbind, resultsForPath)
+
+    # add all static properties of all individuals
+    data <- cbind(data, individualProperties)
     result[[path]] <- list(data = data, metaData = metaData)
   }
 

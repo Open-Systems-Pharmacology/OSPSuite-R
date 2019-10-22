@@ -13,6 +13,7 @@ SimulationResults <- R6::R6Class("SimulationResults",
   inherit = DotNetWrapper,
   private = list(
     .simulation = NULL,
+    .individualResultsCache = NULL,
     getResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "ResultsFor", as.integer(individualId))
@@ -29,25 +30,32 @@ SimulationResults <- R6::R6Class("SimulationResults",
     initialize = function(ref, simulation) {
       validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
+      private$.individualResultsCache <- Cache$new()
       super$initialize(ref)
     },
+
     hasResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
+
     getValuesForIndividual = function(path, individualId) {
-      if (!self$hasResultsForIndividual(individualId)) {
+    individualResult <- NULL
+      if (!private$.individualResultsCache$hasKey(individualId)) {
+        individualResult <- private$getResultsForIndividual(individualId)
+        private$.individualResultsCache$set(individualId, individualResult)
+      }
+      else {
+        individualResult <- private$.individualResultsCache$get(individualId)
+      }
+
+      if (is.null(individualResult)) {
         return(NULL)
       }
 
-
-      individualResult <- private$getResultsForIndividual(individualId)
-      if (!rClr::clrCall(individualResult, "HasValuesFor", path)) {
-        return(NULL)
-      }
-      quantityValues <- rClr::clrCall(individualResult, "ValuesFor", path)
-      rClr::clrGet(quantityValues, "Values")
+      rClr::clrCall(individualResult, "ValuesFor", path)
     },
+
     print = function(...) {
       private$printClass()
       private$printLine("Number of individuals", self$count)

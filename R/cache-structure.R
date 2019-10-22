@@ -19,27 +19,27 @@ Cache <- R6::R6Class(
 
     # Store the given value in cache with the given key
     set = function(key, value) {
-      validateIsString(key)
+      key<- toString(key)
       private$validateObjectType(value)
       assign(key, value, envir = private$cachedObjects)
     },
 
     # Check if an entry with the given key exists in cache
     hasKey = function(key) {
-      validateIsString(key)
+      key<- toString(key)
       exists(key, envir = private$cachedObjects, inherits = FALSE)
     },
 
     # Get cached object by key
     get = function(key) {
-      validateIsString(key)
+      key<- toString(key)
       base::get(key, envir = private$cachedObjects, inherits = FALSE)
     },
 
     # Remove the value associated with the key from cache. If the key is not found,
     # nothing happens.
     dropKey = function(key) {
-      validateIsString(key)
+      key<- toString(key)
       if (self$hasKey(key)) {
         rm(list = key, envir = private$cachedObjects, inherits = FALSE)
       }

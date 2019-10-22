@@ -1,5 +1,5 @@
 library(ospsuite)
-
+library(profvis)
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 
 distributedParameter <- getParameter("Organism|Liver|Volume", sim)
@@ -59,8 +59,6 @@ constantParameter <- getParameter("Organism|Age", sim)
 # population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
 population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")
 
-allCovariates <- population$allCovariateNames;
-
 # print(population)
 #
 simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
@@ -73,9 +71,13 @@ simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegati
 # populationResults <- runSimulation(sim, population, simRunOptions)
 populationResults <- importResultsFromCSV(sim,  "C:/temp/export/results.csv")
 # populationPkAnalyses <- calculatePKAnalyses(populationResults)
+#
+profvis({
+outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
+}, prof_output="C:/temp/export/prof.html")
 
-outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1:1000) )
 
+# outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1:10))
 
 # outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )
 #
