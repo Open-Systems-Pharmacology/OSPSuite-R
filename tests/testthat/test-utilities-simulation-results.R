@@ -5,7 +5,7 @@ resultsPaths <- individualResults$allQuantityPaths
 population <- loadPopulation(getTestDataFilePath("pop_10.csv"))
 populationResults <- runSimulation(sim, population)
 
-NUMBER_OF_STATIC_COLUMNS <-5
+NUMBER_OF_STATIC_COLUMNS <- 5
 
 context("getOutputValues")
 
@@ -47,10 +47,10 @@ test_that("It returns NULL for paths that were not simulated", {
   results <- getOutputValues(individualResults, "testPath")
   expect_equal(length(results), 1)
   expect_null(results$"testPath")
- })
+})
 
 
- context("getOutputValuesTLF")
+context("getOutputValuesTLF")
 
 test_that("It throws an error when no valid simulation results are provided", {
   expect_error(getOutputValuesTLF(sim, resultsPaths))
@@ -66,35 +66,35 @@ test_that("It throws an error when no valid population is provided ids are provi
 
 test_that("It can retrieve results by paths", {
   res <- getOutputValuesTLF(populationResults, population)
-  data <-res$data
+  data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_STATIC_COLUMNS)
 })
 
 test_that("It can retrieve results by quantities", {
   res <- getOutputValuesTLF(populationResults, population, getAllQuantitiesMatching(resultsPaths, sim))
-  data <-res$data
-  expect_equal(length(data), length(resultsPaths)  + NUMBER_OF_STATIC_COLUMNS)
+  data <- res$data
+  expect_equal(length(data), length(resultsPaths) + NUMBER_OF_STATIC_COLUMNS)
 })
 
 test_that("It should return a data and meta data data frame per output paths", {
   path <- resultsPaths[[1]]
-  res <- getOutputValuesTLF(populationResults, population, path, individualIds= c(0, 1))
-  data <-res$data
+  res <- getOutputValuesTLF(populationResults, population, path, individualIds = c(0, 1))
+  data <- res$data
   metaData <- res$metaData
-  expect_equal(length(data), 1  + NUMBER_OF_STATIC_COLUMNS)
+  expect_equal(length(data), 1 + NUMBER_OF_STATIC_COLUMNS)
   expect_false(is.null(data))
   expect_false(is.null(metaData))
   expect_null(data[[resultsPaths[[2]]]])
 })
 
 test_that("It can retrieve results with provided individual id", {
-  res <-getOutputValuesTLF(populationResults, population, individualIds = c(1, 3, 5))
-  data <-res$data
+  res <- getOutputValuesTLF(populationResults, population, individualIds = c(1, 3, 5))
+  data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_STATIC_COLUMNS)
   indInd <- unique(data$IndividualId)
   expect_identical(indInd, c(1, 3, 5))
   for (path in resultsPaths) {
-    dataForPath <-data[[path]]
+    dataForPath <- data[[path]]
     expect_false(is.null(dataForPath))
   }
 })

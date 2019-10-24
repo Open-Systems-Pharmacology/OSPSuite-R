@@ -76,7 +76,7 @@ profvis({
   outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
 }, prof_output = "C:/temp/export/prof.html")
 
-outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1, 3, 5))
+outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1))
 # outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
 
 # outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )

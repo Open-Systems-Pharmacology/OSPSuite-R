@@ -138,7 +138,7 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   }
 
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
-  allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE, check.names = FALSE))
+  allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
 
   for (path in paths) {
