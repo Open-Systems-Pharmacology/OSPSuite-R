@@ -13,5 +13,4 @@ resultsPaths <- individualResults$allQuantityPaths
 results <- getOutputValues(individualResults, resultsPaths, individualIds = 1)
 
 path <- resultsPaths[[1]]
-results <- getOutputValuesTLF(populationResults, population, path, individualIds= c(0, 1))
-
+results <- getOutputValuesTLF(populationResults, population, path, individualIds = c(0, 1))

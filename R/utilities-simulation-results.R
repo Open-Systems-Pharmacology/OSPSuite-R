@@ -86,7 +86,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 #' Export values that can be plugged directly into the TLF lib (TODO)
 #'
 #' @export
-getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL) {
+getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL, addCovariates = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
@@ -124,20 +124,21 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   # create a cache of all indivdual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
     individualId <- individualIds[individualIndex]
-    covariates <- population$covariatesAt(individualId)
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
-    for (covariateName in covariateNames) {
-      individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
+    if (addCovariates) {
+      covariates <- population$covariatesAt(individualId)
+      for (covariateName in covariateNames) {
+        individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
+      }
     }
-
     individualProperties$Time <- timeValues
     # Save one data frame with all individual properties per individual so that we can easily concatenate them
-    individualPropertiesCache[[individualIndex]] <- data.frame(individualProperties, stringsAsFactors = FALSE)
+    individualPropertiesCache[[individualIndex]] <- individualProperties
   }
 
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
-  individualProperties <- do.call(rbind, c(individualPropertiesCache, stringsAsFactors = FALSE))
+  allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE, check.names = FALSE))
 
 
   for (path in paths) {
@@ -146,10 +147,8 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
     values[[path]] <- simulationResults$getValuesByPath(path, individualIds)
   }
 
-  data <- data.frame(individualProperties, values, stringsAsFactors = FALSE)
-  colNames <- c(names(individualProperties), paths)
-  names(data) <- colNames
-  return(list(data=data, metaData = metaData))
+  data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
+  return(list(data = data, metaData = metaData))
 }
 
 #' Saves the simulation results to csv file

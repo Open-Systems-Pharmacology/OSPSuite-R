@@ -41,8 +41,8 @@ SimulationResults <- R6::R6Class("SimulationResults",
 
     getValuesByPath = function(path, individualIds) {
       validateIsNumeric(individualIds)
-      individualIds <- c(individualIds);
-      values <- rClr::clrCall(self$ref, "AllValuesFor", path,  as.integer(individualIds))
+      individualIds <- c(individualIds)
+      values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
       # TODO Discuss. NaN or NA?
       values[is.nan(values)] <- NA
       return(values)
