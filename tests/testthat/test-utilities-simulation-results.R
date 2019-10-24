@@ -5,6 +5,7 @@ resultsPaths <- individualResults$allQuantityPaths
 population <- loadPopulation(getTestDataFilePath("pop_10.csv"))
 populationResults <- runSimulation(sim, population)
 
+NUMBER_OF_STATIC_COLUMNS <-5
 
 context("getOutputValues")
 
@@ -36,7 +37,7 @@ test_that("It can retrieve results with provided individual id", {
   expect_false(is.null(results[[1]]))
 })
 
-test_that("It returns NULL for results if no individual id was simulated", {
+test_that("It returns NA for results if no individual id was simulated", {
   results <- getOutputValues(individualResults, resultsPaths, individualIds = 1)
   expect_equal(length(results), length(resultsPaths))
   expect_null(results[[1]])
@@ -64,33 +65,37 @@ test_that("It throws an error when no valid population is provided ids are provi
 })
 
 test_that("It can retrieve results by paths", {
-  results <- getOutputValuesTLF(populationResults, population)
-  expect_equal(length(results), length(resultsPaths))
+  res <- getOutputValuesTLF(populationResults, population)
+  data <-res$data
+  expect_equal(length(data), length(resultsPaths) + NUMBER_OF_STATIC_COLUMNS)
 })
 
 test_that("It can retrieve results by quantities", {
-  results <- getOutputValuesTLF(populationResults, population, getAllQuantitiesMatching(resultsPaths, sim))
-  expect_equal(length(results), length(resultsPaths))
+  res <- getOutputValuesTLF(populationResults, population, getAllQuantitiesMatching(resultsPaths, sim))
+  data <-res$data
+  expect_equal(length(data), length(resultsPaths)  + NUMBER_OF_STATIC_COLUMNS)
 })
-#
+
 test_that("It should return a data and meta data data frame per output paths", {
   path <- resultsPaths[[1]]
-  results <- getOutputValuesTLF(populationResults, population, path, individualIds= c(0, 1))
-  expect_equal(length(results), 1)
-  data <- results[[path]]$data
-  metaData <- results[[path]]$metaData
+  res <- getOutputValuesTLF(populationResults, population, path, individualIds= c(0, 1))
+  data <-res$data
+  metaData <- res$metaData
+  expect_equal(length(data), 1  + NUMBER_OF_STATIC_COLUMNS)
   expect_false(is.null(data))
   expect_false(is.null(metaData))
-  expect_null(results[[resultsPaths[[2]]]])
+  expect_null(data[[resultsPaths[[2]]]])
 })
 
 test_that("It can retrieve results with provided individual id", {
-  results <- getOutputValuesTLF(populationResults, population, individualIds = c(1, 3, 5))
-  expect_equal(length(results), length(resultsPaths))
+  res <-getOutputValuesTLF(populationResults, population, individualIds = c(1, 3, 5))
+  data <-res$data
+  expect_equal(length(data), length(resultsPaths) + NUMBER_OF_STATIC_COLUMNS)
+  indInd <- unique(data$IndividualId)
+  expect_identical(indInd, c(1, 3, 5))
   for (path in resultsPaths) {
-    data <- results[[path]]$data
-    indInd <- unique(data$IndividualId)
-    expect_identical(indInd, c(1, 3, 5))
+    dataForPath <-data[[path]]
+    expect_false(is.null(dataForPath))
   }
 })
 

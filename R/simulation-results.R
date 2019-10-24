@@ -39,21 +39,23 @@ SimulationResults <- R6::R6Class("SimulationResults",
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
 
-    getValuesForIndividual = function(path, individualId) {
-      individualResult <- NULL
+    getValuesByPath = function(path, individualIds) {
+      validateIsNumeric(individualIds)
+      individualIds <- c(individualIds);
+      values <- rClr::clrCall(self$ref, "AllValuesFor", path,  as.integer(individualIds))
+      # TODO Discuss. NaN or NA?
+      values[is.nan(values)] <- NA
+      return(values)
+    },
+
+    resultsForIndividual = function(individualId) {
+      validateIsNumeric(individualId)
       if (!private$.individualResultsCache$hasKey(individualId)) {
         individualResult <- private$getResultsForIndividual(individualId)
         private$.individualResultsCache$set(individualId, individualResult)
       }
-      else {
-        individualResult <- private$.individualResultsCache$get(individualId)
-      }
 
-      if (is.null(individualResult)) {
-        return(rep(NA, self$count))
-      }
-
-      rClr::clrCall(individualResult, "ValuesFor", path) %||% rep(NA, self$count)
+      private$.individualResultsCache$get(individualId)
     },
 
     print = function(...) {

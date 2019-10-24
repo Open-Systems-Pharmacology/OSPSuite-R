@@ -63,7 +63,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 
     for (individualIndex in seq_along(individualIds)) {
       individualId <- individualIds[individualIndex]
-      vals <- simulationResults$getValuesForIndividual(path = path, individualId = individualId)
+      vals <- simulationResults$getValuesByPath(path = path, individualIds = individualId)
       if (is.null(vals)) {
         next
       }
@@ -102,10 +102,8 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   }
   paths <- unique(paths)
 
-  result <- list()
-
   if (length(paths) == 0) {
-    return(result)
+    return(list(data = NULL, metaData = NULL))
   }
 
   # If no specific individual ids are passed, iterate through all individuals
@@ -117,6 +115,7 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   valueLength <- length(timeValues)
   covariateNames <- population$allCovariateNames
 
+  values <- list()
   metaData <- list(
     Time = list(unit = "min", dimension = "Time")
   )
@@ -126,12 +125,13 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   for (individualIndex in seq_along(individualIds)) {
     individualId <- individualIds[individualIndex]
     covariates <- population$covariatesAt(individualId)
-    individualProperties <- list(IndividualId = rep(individualId, valueLength), Time = timeValues)
+    individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
     for (covariateName in covariateNames) {
       individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
     }
 
+    individualProperties$Time <- timeValues
     # Save one data frame with all individual properties per individual so that we can easily concatenate them
     individualPropertiesCache[[individualIndex]] <- data.frame(individualProperties, stringsAsFactors = FALSE)
   }
@@ -139,25 +139,17 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
   individualProperties <- do.call(rbind, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
+
   for (path in paths) {
     quantity <- getQuantity(path, simulationResults$simulation)
-    resultsForPathCache <- vector("list", length(individualIds))
-    metaData$Value <- list(unit = quantity$unit, dimension = quantity$dimension)
-    pathColumn <- rep(path, valueLength)
-
-    for (individualIndex in seq_along(individualIds)) {
-      individualId <- individualIds[individualIndex]
-      values <- simulationResults$getValuesForIndividual(path, individualId)
-      resultsForPathCache[[individualIndex]] <- data.frame(Path = pathColumn, Value = values, stringsAsFactors = FALSE)
-    }
-
-    resultsForPath <- do.call(rbind, resultsForPathCache)
-
-    # add all static properties of all individuals
-    result[[path]] <- list(data = cbind(resultsForPath, individualProperties), metaData = metaData)
+    metaData[[path]] <- list(unit = quantity$unit, dimension = quantity$dimension)
+    values[[path]] <- simulationResults$getValuesByPath(path, individualIds)
   }
 
-  return(result)
+  data <- data.frame(individualProperties, values, stringsAsFactors = FALSE)
+  colNames <- c(names(individualProperties), paths)
+  names(data) <- colNames
+  return(list(data=data, metaData = metaData))
 }
 
 #' Saves the simulation results to csv file
