@@ -108,7 +108,7 @@ test_that("It can scale a single parameter with a given factor", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
   originalValue <- parameter$value
   scaleParameterValues(parameter, 1.5)
-  expect_equal(parameter$value, originalValue*1.5)
+  expect_equal(parameter$value, originalValue * 1.5)
 })
 
 test_that("It can scale mulstiple parameters with a given factor", {
@@ -116,5 +116,5 @@ test_that("It can scale mulstiple parameters with a given factor", {
   originalValues <- sapply(parameters, function(x) x$value)
   scaleParameterValues(parameters, 1.5)
   scaledValues <- sapply(parameters, function(x) x$value)
-  expect_equal(scaledValues, originalValues*1.5)
+  expect_equal(scaledValues, originalValues * 1.5)
 })

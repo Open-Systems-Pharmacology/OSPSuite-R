@@ -34,6 +34,31 @@ getAllQuantitiesMatching <- function(paths, container) {
   return(unify(findQuantitiesByPath, paths))
 }
 
+#' Retrieve a single quantty by path in the given container
+#'
+#' @inherit getAllQuantitiesMatching
+#' @param path A string representing the path relative to the \code{container}
+#'
+#' @return The \code{Quantity} with the given path or \code{NULL} if not found
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' quantity <- getQuantity("Organism|Liver|Volume", sim)
+#' @export
+getQuantity <- function(path, container) {
+  quantities <- getAllQuantitiesMatching(path, container)
+  if (length(quantities) > 1) {
+    stop(messages$errorGetEntityMultipleOutputs(path, container))
+  }
+
+  if (length(quantities) == 0) {
+    return(NULL)
+  }
+
+  return(quantities[[1]])
+}
+
 toQuantities <- function(netQuantities) {
   toObjectType(netQuantities, Quantity)
 }

@@ -63,7 +63,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 
     for (individualIndex in seq_along(individualIds)) {
       individualId <- individualIds[individualIndex]
-      vals <- simulationResults$getValuesForIndividual(resultPath = path, individualId = individualId)
+      vals <- simulationResults$getValuesByPath(path = path, individualIds = individualId)
       if (is.null(vals)) {
         next
       }
@@ -81,6 +81,74 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
     }
   }
   return(output)
+}
+
+#' Export values that can be plugged directly into the TLF lib (TODO)
+#'
+#' @export
+getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL, addCovariates = TRUE) {
+  validateIsOfType(simulationResults, SimulationResults)
+  validateIsOfType(population, Population)
+  validateIsNumeric(individualIds, nullAllowed = TRUE)
+  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"), nullAllowed = TRUE)
+
+  quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
+  quantitiesOrPaths <- c(quantitiesOrPaths)
+
+  # If quantities are passed, get their paths.
+  paths <- quantitiesOrPaths
+  if (isOfType(paths, Quantity)) {
+    paths <- unlist(lapply(paths, function(x) x$consolidatePath))
+  }
+  paths <- unique(paths)
+
+  if (length(paths) == 0) {
+    return(list(data = NULL, metaData = NULL))
+  }
+
+  # If no specific individual ids are passed, iterate through all individuals
+  individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
+
+  paste(individualIds)
+  # All time values are equal
+  timeValues <- simulationResults$timeValues
+  valueLength <- length(timeValues)
+  covariateNames <- population$allCovariateNames
+
+  values <- list()
+  metaData <- list(
+    Time = list(unit = "min", dimension = "Time")
+  )
+
+  individualPropertiesCache <- vector("list", length(individualIds))
+  # create a cache of all indivdual values that are constant independent from the path
+  for (individualIndex in seq_along(individualIds)) {
+    individualId <- individualIds[individualIndex]
+    individualProperties <- list(IndividualId = rep(individualId, valueLength))
+
+    if (addCovariates) {
+      covariates <- population$covariatesAt(individualId)
+      for (covariateName in covariateNames) {
+        individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
+      }
+    }
+    individualProperties$Time <- timeValues
+    # Save one data frame with all individual properties per individual so that we can easily concatenate them
+    individualPropertiesCache[[individualIndex]] <- individualProperties
+  }
+
+  # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
+  allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
+
+
+  for (path in paths) {
+    quantity <- getQuantity(path, simulationResults$simulation)
+    metaData[[path]] <- list(unit = quantity$unit, dimension = quantity$dimension)
+    values[[path]] <- simulationResults$getValuesByPath(path, individualIds)
+  }
+
+  data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
+  return(list(data = data, metaData = metaData))
 }
 
 #' Saves the simulation results to csv file

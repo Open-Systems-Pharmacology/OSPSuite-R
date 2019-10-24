@@ -10,7 +10,7 @@ SimulationRunOptions <- R6::R6Class(
   "SimulationRunOptions",
   inherit = DotNetWrapper,
   public = list(
-    initialize = function(numberOfCoresToUse = 1, checkForNegativeValues = TRUE, showProgress = TRUE) {
+    initialize = function(numberOfCoresToUse = 1, checkForNegativeValues = TRUE, showProgress = FALSE) {
       ref <- rClr::clrNew("OSPSuite.R.SimulationRunOptions")
       super$initialize(ref)
       self$numberOfCoresToUse <- numberOfCoresToUse

@@ -13,6 +13,7 @@ SimulationResults <- R6::R6Class("SimulationResults",
   inherit = DotNetWrapper,
   private = list(
     .simulation = NULL,
+    .individualResultsCache = NULL,
     getResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "ResultsFor", as.integer(individualId))
@@ -29,25 +30,34 @@ SimulationResults <- R6::R6Class("SimulationResults",
     initialize = function(ref, simulation) {
       validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
+      private$.individualResultsCache <- Cache$new()
       super$initialize(ref)
     },
+
     hasResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
-    getValuesForIndividual = function(resultPath, individualId) {
-      if (!self$hasResultsForIndividual(individualId)) {
-        return(NULL)
-      }
 
-
-      individualResult <- private$getResultsForIndividual(individualId)
-      if (!rClr::clrCall(individualResult, "HasValuesFor", resultPath)) {
-        return(NULL)
-      }
-      quantityValues <- rClr::clrCall(individualResult, "ValuesFor", resultPath)
-      rClr::clrGet(quantityValues, "Values")
+    getValuesByPath = function(path, individualIds) {
+      validateIsNumeric(individualIds)
+      individualIds <- c(individualIds)
+      values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
+      # TODO Discuss. NaN or NA?
+      values[is.nan(values)] <- NA
+      return(values)
     },
+
+    resultsForIndividual = function(individualId) {
+      validateIsNumeric(individualId)
+      if (!private$.individualResultsCache$hasKey(individualId)) {
+        individualResult <- private$getResultsForIndividual(individualId)
+        private$.individualResultsCache$set(individualId, individualResult)
+      }
+
+      private$.individualResultsCache$get(individualId)
+    },
+
     print = function(...) {
       private$printClass()
       private$printLine("Number of individuals", self$count)

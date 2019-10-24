@@ -40,7 +40,7 @@ TableFormula <- R6::R6Class(
       rClr::clrCall(self$ref, "RemovePoint", x, y)
       invisible(self)
     },
-    clearPoints = function(){
+    clearPoints = function() {
       rClr::clrCall(self$ref, "ClearPoints")
       invisible(self)
     },
