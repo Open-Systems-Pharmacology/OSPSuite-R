@@ -29,7 +29,7 @@ test_that("It returns an array of NA if specific result for specific individual 
   expect_true(all(is.na(values)))
 })
 
-test_that("It can retrieve the number of individuals", {
+test_that("It can retrieve the number of individunscrials", {
   expect_equal(simResults$count, 1)
 })
 

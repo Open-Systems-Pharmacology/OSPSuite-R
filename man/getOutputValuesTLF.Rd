@@ -5,7 +5,8 @@
 \title{Export values that can be plugged directly into the TLF lib (TODO)}
 \usage{
 getOutputValuesTLF(simulationResults, population,
-  quantitiesOrPaths = NULL, individualIds = NULL)
+  quantitiesOrPaths = NULL, individualIds = NULL,
+  addCovariates = TRUE)
 }
 \description{
 Export values that can be plugged directly into the TLF lib (TODO)

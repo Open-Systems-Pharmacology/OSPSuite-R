@@ -1,5 +1,6 @@
 library(ospsuite)
-library(profvis)
+
+#library(profvis)
 sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
 
 distributedParameter <- getParameter("Organism|Liver|Volume", sim)
