@@ -8,6 +8,21 @@ getOutputValuesTLF(simulationResults, population,
   quantitiesOrPaths = NULL, individualIds = NULL,
   addCovariates = TRUE)
 }
+\arguments{
+\item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}
+on a \code{Simulation} object.}
+
+\item{population}{population used to calculate the simulationResults}
+
+\item{quantitiesOrPaths}{Quantity instances (element or vector) (typically retrieved using
+\code{getAllQuantitiesMatching}) or quantity path (element or vector of strings) for which the results are to be returned.
+When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible)}
+
+\item{individualIds}{\code{numeric} IDs of individiuals for which the results should be extracted.
+By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored}
+
+\item{addCovariates}{If set to \code{TRUE} (default), covariates parameter are added to the output}
+}
 \description{
 Export values that can be plugged directly into the TLF lib (TODO)
 }

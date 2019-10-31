@@ -5,7 +5,7 @@
 #'
 #' @return the Enum created
 #' @examples
-#'
+#'\dontrun{
 #' # Without predefined values
 #' Color <- enum(c("Red", "Blue", "Green"))
 #' myColor <- Color$Red
@@ -13,7 +13,7 @@
 #' # With predefined values
 #' Symbol <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
 #' mySymbol <- Symbol$Diamond
-#' @export
+#'}
 enum <- function(enumValues) {
   myEnum <- as.list(enumValues)
   enumNames <- names(myEnum)
