@@ -85,6 +85,19 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 
 #' Export values that can be plugged directly into the TLF lib (TODO)
 #'
+#' @param simulationResults Object of type \code{SimulationResults} produced by calling \code{runSimulation}
+#' on a \code{Simulation} object.
+#'
+#' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using
+#' \code{getAllQuantitiesMatching}) or quantity path (element or vector of strings) for which the results are to be returned.
+#' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible)
+#'
+#' @param individualIds \code{numeric} IDs of individiuals for which the results should be extracted.
+#' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored
+#'
+#' @param population population used to calculate the simulationResults
+#'
+#' @param addCovariates If set to \code{TRUE} (default), covariates parameter are added to the output
 #' @export
 getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL, addCovariates = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
