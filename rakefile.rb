@@ -54,7 +54,7 @@ def inst_dir
 end
 
 def lib_dir
-  File.join(inst_dir,'lib2')
+  File.join(inst_dir,'lib')
 end
 
 def packages_dir
