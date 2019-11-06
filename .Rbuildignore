@@ -7,6 +7,8 @@
 ^packages
 ^packages\.config$
 ^scripts
-^modules
-^rakefile
+^dimensions
+^pkparameters
+^rakefile\.rb
+^postclean\.bat
 ^\.covrignore$
