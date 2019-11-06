@@ -5,4 +5,8 @@
 ^tests/dev
 ^tools
 ^packages
+^packages\.config$
+^scripts
+^modules
+^rakefile
 ^\.covrignore$

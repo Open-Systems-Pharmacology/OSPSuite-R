@@ -10,7 +10,8 @@ init:
     Import-Module '..\appveyor-tool.ps1'
 
 install:
-  ps: Bootstrap
+  - ps: Bootstrap
+  - git submodule update --init --recursive
 
 cache:
   - C:\RLibrary
