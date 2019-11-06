@@ -140,9 +140,9 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
     if (addCovariates) {
-      covariates <- population$covariatesAt(individualId)
       for (covariateName in covariateNames) {
-        individualProperties[[covariateName]] <- rep(covariates$valueFor(covariateName), valueLength)
+        covariateValue <- population$getCovariateValue(covariateName, individualId)
+        individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
       }
     }
     individualProperties$Time <- timeValues

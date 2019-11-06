@@ -4,4 +4,11 @@
 ^README\.md$
 ^tests/dev
 ^tools
+^packages
+^packages\.config$
+^scripts
+^dimensions
+^pkparameters
+^rakefile\.rb
+^postclean\.bat
 ^\.covrignore$

@@ -8,7 +8,8 @@
 #'   \item{has(parameterPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterPath} otherwise \code{FALSE}}
 #'   \item{setValues(parameterPath, values)}{Adds or update the \code{values} for \code{parameterPath}}
 #'   \item{getValues(parameterPath)}{Returns the variability values defined in the population for \code{parameterPath}}
-#'   \item{covariatesAt(individualId)}{Returns the \code{Covariates} defined for the individual with id \code{individualId}}
+#'   \item{getCovariateValues(covariateName)}{Returns the values defined in the population for \code{covariateName}}
+#'   \item{getCovariateValue(covariateName, individualId)}{Returns the covariate value defined in the population for the covariate \code{covariateName} and individual with id\code{individualId}}
 #'   }
 #' @format NULL
 Population <- R6::R6Class(
@@ -37,8 +38,11 @@ Population <- R6::R6Class(
       validateIsString(parameterPath)
       rClr::clrCall(self$ref, "GetValues", parameterPath)
     },
-    covariatesAt = function(individualId) {
-      Covariates$new(rClr::clrCall(self$ref, "CovariatesAt", as.integer(individualId)))
+    getCovariateValues = function(covariateName) {
+      rClr::clrCall(self$ref, "GetCovariateValues", covariateName)
+    },
+    getCovariateValue = function(covariateName, individualId) {
+      rClr::clrCall(self$ref, "CovariateValueFor", covariateName, as.integer(individualId))
     },
     print = function(...) {
       private$printClass()

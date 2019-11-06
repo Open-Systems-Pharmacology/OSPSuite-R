@@ -2,6 +2,10 @@
 .Rhistory
 .Rapp.history
 
+packages/
+
+inst/lib/
+
 # Session Data files
 .RData
 

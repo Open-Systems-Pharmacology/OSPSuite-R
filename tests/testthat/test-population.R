@@ -47,3 +47,23 @@ test_that("It throws an exception when adding values that have the wrong dimensi
   parameterPath <- "Organism|MyParameter"
   expect_that(population$setValues(parameterPath, c(1:5) * 2.5), throws_error())
 })
+
+context("Covariates")
+population <- loadPopulation(populationFileName)
+
+
+test_that("It can retrieve the covariates names defined in a population", {
+  allCovariateNames <- population$allCovariateNames
+  expect_equal(length(allCovariateNames), 3)
+})
+
+test_that("It can retrieve the covariate values for given individual", {
+  gender <- population$getCovariateValues("Gender")[7]
+  expect_equal(gender, "2")
+})
+
+test_that("It retrieve an empty string for an non existant covariate", {
+  covariates <- population$getCovariateValues("Does not exist")
+  expect_null(covariates)
+})
+

@@ -9,6 +9,12 @@
 
 # Development tasks
 
+## update packages
+
+- `git submodule update --init --recursive` to install all submodules
+- Make sure you have ruby install and that it is available in your path
+- Run `rake postclean` or simply double click on `postclean.bat`. This will update all nuget packages and copy the dependencies in the package `inst/lib` folder.
+
 ## dev_mode
 
 `devtools::dev_mode` function switches your version of R into "development mode". This is useful to avoid clobbering the existing versions of CRAN packages that you need for other tasks. Calling dev_mode() again will turn development mode off, and return you to your default library setup.
@@ -27,8 +33,6 @@ devtools::load_all()
 or `Ctrl + Shift + L`
 
 ## Add or update script files
-
-TODO: Is this the right way? Maybe use vignette for that?
 
 `.R` files defined in `tests\dev\` will be removed from the package and can be used to simulate interaction with the package. See [scripts.R](tests/dev/scripts.R)
 

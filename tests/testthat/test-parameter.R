@@ -115,5 +115,5 @@ test_that("It throws an exception when setting a value in a unit that does not e
 
 test_that("it can retrieve all units defined for a quantity", {
   par <- getParameter(volumePath, sim)
-  expect_identical(par$allUnits(), c("l", "ml"))
+  expect_identical(par$allUnits(), c("l", "ml", "µl"))
 })
