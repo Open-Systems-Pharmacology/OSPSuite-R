@@ -24,7 +24,8 @@ List of individuals used in a population simulation
   \item{has(parameterPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterPath} otherwise \code{FALSE}}
   \item{setValues(parameterPath, values)}{Adds or update the \code{values} for \code{parameterPath}}
   \item{getValues(parameterPath)}{Returns the variability values defined in the population for \code{parameterPath}}
-  \item{covariatesAt(individualId)}{Returns the \code{Covariates} defined for the individual with id \code{individualId}}
+  \item{getCovariateValues(covariateName)}{Returns the values defined in the population for \code{covariateName}}
+  \item{getCovariateValue(covariateName, individualId)}{Returns the covariate value defined in the population for the covariate \code{covariateName} and individual with id\code{individualId}}
   }
 }
 

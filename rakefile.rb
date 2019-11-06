@@ -4,22 +4,29 @@ require_relative 'scripts/utils'
 task :prepare_for_build,[:product_version] do |t, args|
   product_version = sanitized_version(args.product_version)
  
- # Rake::Task['postclean'].invoke
+  copy_files_to_lib_folder
 
   update_package_version(product_version)
 end
 
 task :postclean do 
-  clear_lib_folder
-  copy_packages_files
-  copy_modules_files
+  clear_folders
+  nuget_restore
+  copy_files_to_lib_folder
 end
 
 private
 
-def clear_lib_folder
+def copy_files_to_lib_folder
+  copy_packages_files
+  copy_modules_files
+end
+
+def clear_folders
   FileUtils.rm_rf  lib_dir
+  FileUtils.rm_rf  packages_dir
   FileUtils.mkdir_p lib_dir
+  FileUtils.mkdir_p packages_dir
 end
 
 def copy_packages_files
@@ -29,6 +36,9 @@ def copy_packages_files
     copy_files '*/**/netstandard*', 'dll'
     # Copy all x64 release dll from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", 'dll'
+
+    # Not sure why this does not work at the moment with .net standard. Needs to investigate
+    copy_files "Castle.*/**/net45", 'dll'
   end
 
 end
@@ -47,11 +57,17 @@ def sanitized_version(version)
 end
 
 def update_package_version(version) 
+  #Replace token Version: x.y.z with the version from appveyor
   replacement = {
-    'Version: 0.1.0' => version
+    /Version: \d\.\d\.\d/ => "Version: #{version}"
   }
 
   Utils.replace_tokens(replacement, description_file)
+end
+
+def nuget_restore
+  command_line = %W[install packages.config -OutputDirectory packages]
+  Utils.run_cmd('nuget', command_line)
 end
 
 def solution_dir
