@@ -3,6 +3,7 @@
 export(CompareBy)
 export(ContainerType)
 export(QuantityType)
+export(SimulationRunOptions)
 export(addOutputInterval)
 export(addOutputs)
 export(calculatePKAnalyses)
