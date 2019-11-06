@@ -1,11 +1,12 @@
 require_relative 'scripts/copy-dependencies'
+require_relative 'scripts/utils'
 
 task :prepare_for_build,[:product_version] do |t, args|
-  @product_version = sanitized_version(args.product_version)
-  release_version_split= @product_version.split('.')
-  @product_release_version = "#{release_version_split[0]}.#{release_version_split[1]}"
+  product_version = sanitized_version(args.product_version)
  
-  Rake::Task['postclean'].invoke
+ # Rake::Task['postclean'].invoke
+
+  update_package_version(product_version)
 end
 
 task :postclean do 
@@ -45,6 +46,14 @@ def sanitized_version(version)
   version.slice(0, pull_request_index)
 end
 
+def update_package_version(version) 
+  replacement = {
+    'Version: 0.1.0' => version
+  }
+
+  Utils.replace_tokens(replacement, description_file)
+end
+
 def solution_dir
   File.dirname(__FILE__)
 end
@@ -64,3 +73,7 @@ end
 def modules_dir
   File.join(solution_dir,'modules')
 end
+
+def description_file
+  File.join(solution_dir,'DESCRIPTION')
+end 
