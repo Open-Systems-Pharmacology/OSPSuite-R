@@ -28,12 +28,20 @@ environment:
 
 # Adapt as necessary starting from here
 
+before_build:
+  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
+  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
+  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
+  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
+  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
+  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
+  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
+
 build_script:
   - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
-
 
 on_success:
   - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"

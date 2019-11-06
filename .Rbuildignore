@@ -4,4 +4,5 @@
 ^README\.md$
 ^tests/dev
 ^tools
+^packages
 ^\.covrignore$
