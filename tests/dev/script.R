@@ -63,7 +63,7 @@ population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")
 # print(population)
 #
 simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
-si#
+#
 # individualResults <- runSimulation(sim)
 # paths <- individualResults$allQuantityPaths
 # individualPkkAnalyses <- calculatePKAnalyses(individualResults)
