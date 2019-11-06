@@ -24,13 +24,13 @@ CompareBy <- enum(c(
 #' sim <- loadSimulation(simPath)
 #'
 #' parameters <- c(
-#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
-#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
-#'   getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
+#'   getParameter(toPathString(c("Organism", "Liver", "Volume")), sim),
+#'   getParameter(toPathString(c("Organism", "Liver", "Volume")), sim),
+#'   getParameter(toPathString(c("Organism", "TableParameter")), sim)
 #' )
 #'
 #' # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
-#' uniqueEntities(parameters, compareBy$id)
+#' uniqueEntities(parameters, CompareBy$id)
 uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   if (is.null(entities)) {
     return(NULL)

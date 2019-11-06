@@ -20,8 +20,12 @@ test_that("It can retrieve a single quantity by path if it exists", {
   expect_equal(quantity$name, "Volume")
 })
 
-test_that("It returns null if the quantity by path does not exist", {
-  quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim)
+test_that("It throws an error if the quantity by path does not exist", {
+  expect_error((quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim)))
+})
+
+test_that("It returns null if the quantity by path does not exist and stopIfNotFound == FALSE", {
+  quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim, stopIfNotFound = FALSE)
   expect_null(quantity)
 })
 

@@ -39,10 +39,15 @@ SimulationResults <- R6::R6Class("SimulationResults",
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
 
-    getValuesByPath = function(path, individualIds) {
+    getValuesByPath = function(path, individualIds, stopIfNotFound = TRUE) {
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
       values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
+
+      if (unique(is.nan(values)) && stopIfNotFound) {
+        stop(messages$errorResultNotFound(path, individualIds))
+      }
+
       # TODO Discuss. NaN or NA?
       values[is.nan(values)] <- NA
       return(values)

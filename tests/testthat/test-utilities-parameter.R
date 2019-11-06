@@ -57,9 +57,13 @@ test_that("It can retrieve a single parameter by path if it exists", {
   expect_equal(parameter$name, "Volume")
 })
 
-test_that("It returns null if the  parameter by path does not exist", {
-  parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim)
+test_that("It returns null if the  parameter by path does not exist and stopIfNotFound == FALSE", {
+  parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim, stopIfNotFound = FALSE)
   expect_null(parameter)
+})
+
+test_that("It throws an error if the parameter by path does not exist", {
+  expect_error((parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim)))
 })
 
 test_that("It throws an error when trying to retrieve a parameter by path that would result in multiple parameters", {

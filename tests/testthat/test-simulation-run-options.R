@@ -3,7 +3,7 @@ context("SimulationRunOptions")
 runOptions <- SimulationRunOptions$new()
 test_that("It has the expected default value", {
   expect_true(runOptions$checkForNegativeValues)
-  expect_equal(runOptions$numberOfCoresToUse, 1)
+  expect_equal(runOptions$numberOfCoresToUse, (parallel::detectCores() - 1))
 })
 
 test_that("It can set the basic options parameters", {

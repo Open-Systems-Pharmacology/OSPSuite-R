@@ -4,15 +4,20 @@
 \alias{getQuantity}
 \title{Retrieve a single quantty by path in the given container}
 \usage{
-getQuantity(path, container)
+getQuantity(path, container, stopIfNotFound = TRUE)
 }
 \arguments{
 \item{path}{A string representing the path relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the parameters}
+
+\item{stopIfNotFound}{Boolean. If TRUE and no quantity exist for the given path,
+an error is thrown. Default is TRUE.}
 }
 \value{
-The \code{Quantity} with the given path or \code{NULL} if not found
+The \code{Quantity} with the given path. If the quantity for the path
+does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+otherwise \code{NULL}
 }
 \description{
 Retrieve a single quantty by path in the given container

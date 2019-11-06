@@ -57,9 +57,13 @@ test_that("It can retrieve a single container by path if it exists", {
   expect_equal(container$name, "Intracellular")
 })
 
-test_that("It returns null if the  container by path does not exist", {
-  container <- getContainer(toPathString(c("Organism", "Liver", "TOTO", "Length")), sim)
+test_that("It returns null if the  container by path does not exist and stopIfNotFound == FALSE", {
+  container <- getContainer(toPathString(c("Organism", "Liver", "TOTO", "Length")), sim, stopIfNotFound = FALSE)
   expect_null(container)
+})
+
+test_that("It throws an error if the container by path does not exist", {
+  expect_error((container <- getContainer(toPathString(c("Organism", "Liver", "TOTO", "Length")), sim)))
 })
 
 test_that("It throws an error when trying to retrieve a container by path that would result in multiple containers", {

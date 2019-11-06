@@ -6,7 +6,7 @@
 \usage{
 getOutputValuesTLF(simulationResults, population,
   quantitiesOrPaths = NULL, individualIds = NULL,
-  addCovariates = TRUE)
+  addCovariates = TRUE, stopIfNotFound = TRUE)
 }
 \arguments{
 \item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}
@@ -22,6 +22,9 @@ When providing the paths, only absolute full paths are supported (i.e., no match
 By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored}
 
 \item{addCovariates}{If set to \code{TRUE} (default), covariates parameter are added to the output}
+
+\item{stopIfNotFound}{Boolean. If TRUE and no result exist for the given path,
+an error is thrown. Default is TRUE.}
 }
 \description{
 Export values that can be plugged directly into the TLF lib (TODO)

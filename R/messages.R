@@ -25,6 +25,29 @@ messages <- list(
     )
   },
 
+  errorEntityNotFound = function(path, container, optionalMessage = NULL) {
+    # Name of the calling function
+    callingFunctions <- sys.calls()
+    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+
+    paste0(
+      callingFunction, ": No entity exists for the path '", toString(path), "' located under container '",
+      container$path,
+      "'!", optionalMessage
+    )
+  },
+
+  errorResultNotFound = function(path, individualId, optionalMessage = NULL) {
+    # Name of the calling function
+    callingFunctions <- sys.calls()
+    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+
+    paste0(
+      callingFunction, ": No results exists for the path '", toString(path), "' for individual IDs ",
+      "'", individualId, "'!", optionalMessage
+    )
+  },
+
   errorDifferentLength = function(objectNames, optionalMessage = NULL) {
     # Name of the calling function
     callingFunctions <- sys.calls()

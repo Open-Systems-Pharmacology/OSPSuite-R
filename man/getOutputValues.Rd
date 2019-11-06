@@ -5,7 +5,7 @@
 \title{Get simulated values of selected outputs (e.g molecules or parameters)}
 \usage{
 getOutputValues(simulationResults, quantitiesOrPaths,
-  individualIds = NULL)
+  individualIds = NULL, stopIfNotFound = TRUE)
 }
 \arguments{
 \item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}
@@ -17,11 +17,15 @@ When providing the paths, only absolute full paths are supported (i.e., no match
 
 \item{individualIds}{\code{numeric} IDs of individiuals for which the results should be extracted.
 By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored}
+
+\item{stopIfNotFound}{Boolean. If TRUE and no result exist for the given path,
+an error is thrown. Default is TRUE.}
 }
 \value{
 A list of results, each entry having the name of a quantity path and consisting of the element \code{x} being the time values (in minutes)
 and the element \code{y} a \code{NxM} matrix of simulated values, with \code{N} the number of entries (equals the number of output time steps)
-and \code{M} the number of individuals. If no individual contains the results for a given path, the value of the element is \code{NULL}
+and \code{M} the number of individuals. If no individual contains the results for a given path, the value of the element is \code{NULL} if
+\code{stopIfNotFound} is set to \code{FALSE}, otherwise an error is thrown.
 }
 \description{
 Return values for given entities generated in a population simulation.

@@ -38,21 +38,28 @@ getAllContainersMatching <- function(paths, container) {
 #'
 #' @inherit getAllContainersMatching
 #' @param path A string representing the path relative to the \code{container}
+#' @param stopIfNotFound Boolean. If TRUE and no container exist for the given path,
+#' an error is thrown. Default is TRUE.
 
-#' @return The \code{Container} with the given path or null if not found
+#' @return The \code{Container} with the given path. If the container for the path
+#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+#' otherwise \code{NULL}
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #' param <- getContainer("Organism|Liver", sim)
 #' @export
-getContainer <- function(path, container) {
+getContainer <- function(path, container, stopIfNotFound = TRUE) {
   containers <- getAllContainersMatching(path, container)
   if (length(containers) > 1) {
     stop(messages$errorGetEntityMultipleOutputs(path, container))
   }
 
   if (length(containers) == 0) {
+    if (stopIfNotFound) {
+      stop(messages$errorEntityNotFound(path, container))
+    }
     return(NULL)
   }
 
