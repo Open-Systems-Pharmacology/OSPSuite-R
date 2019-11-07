@@ -23,15 +23,7 @@
 #' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 #' @export
 getAllContainersMatching <- function(paths, container) {
-  # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container))
-  validateIsString(paths)
-
-  findContainersByPath <- function(path) {
-    toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
-  }
-
-  return(unify(findContainersByPath, paths))
+  getAllEntitiesMatching(paths, container, Container)
 }
 
 #' Retrieve a single container by path under the given container
@@ -48,24 +40,8 @@ getAllContainersMatching <- function(paths, container) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' param <- getContainer("Organism|Liver", sim)
+#' container <- getContainer("Organism|Liver", sim)
 #' @export
 getContainer <- function(path, container, stopIfNotFound = TRUE) {
-  containers <- getAllContainersMatching(path, container)
-  if (length(containers) > 1) {
-    stop(messages$errorGetEntityMultipleOutputs(path, container))
-  }
-
-  if (length(containers) == 0) {
-    if (stopIfNotFound) {
-      stop(messages$errorEntityNotFound(path, container))
-    }
-    return(NULL)
-  }
-
-  containers[[1]]
-}
-
-toContainers <- function(netContainers) {
-  toObjectType(netContainers, Container)
+  getEntity(path, container, Container, stopIfNotFound)
 }

@@ -23,15 +23,7 @@
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
 #' @export
 getAllParametersMatching <- function(paths, container) {
-  # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container))
-  validateIsString(paths)
-
-  findParametersByPath <- function(path) {
-    toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
-  }
-
-  return(unify(findParametersByPath, paths))
+  getAllEntitiesMatching(paths, container, Parameter)
 }
 
 #' Retrieve a single parameter by path in the given container
@@ -51,19 +43,7 @@ getAllParametersMatching <- function(paths, container) {
 #' param <- getParameter("Organism|Liver|Volume", sim)
 #' @export
 getParameter <- function(path, container, stopIfNotFound = TRUE) {
-  parameters <- getAllParametersMatching(path, container)
-  if (length(parameters) > 1) {
-    stop(messages$errorGetEntityMultipleOutputs(path, container))
-  }
-
-  if (length(parameters) == 0) {
-    if (stopIfNotFound) {
-      stop(messages$errorEntityNotFound(path, container))
-    }
-    return(NULL)
-  }
-
-  return(parameters[[1]])
+  getEntity(path, container, Parameter, stopIfNotFound)
 }
 
 

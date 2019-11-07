@@ -23,15 +23,7 @@
 #' quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
 #' @export
 getAllQuantitiesMatching <- function(paths, container) {
-  # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container))
-  validateIsString(paths)
-
-  findQuantitiesByPath <- function(path) {
-    toQuantities(rClr::clrCall(getContainerTask(), "AllQuantitiesMatching", container$ref, path))
-  }
-
-  return(unify(findQuantitiesByPath, paths))
+  getAllEntitiesMatching(paths, container, Quantity)
 }
 
 #' Retrieve a single quantty by path in the given container
@@ -51,21 +43,5 @@ getAllQuantitiesMatching <- function(paths, container) {
 #' quantity <- getQuantity("Organism|Liver|Volume", sim)
 #' @export
 getQuantity <- function(path, container, stopIfNotFound = TRUE) {
-  quantities <- getAllQuantitiesMatching(path, container)
-  if (length(quantities) > 1) {
-    stop(messages$errorGetEntityMultipleOutputs(path, container))
-  }
-
-  if (length(quantities) == 0) {
-    if (stopIfNotFound) {
-      stop(messages$errorEntityNotFound(path, container))
-    }
-    return(NULL)
-  }
-
-  return(quantities[[1]])
-}
-
-toQuantities <- function(netQuantities) {
-  toObjectType(netQuantities, Quantity)
+  getEntity(path, container, Quantity, stopIfNotFound)
 }
