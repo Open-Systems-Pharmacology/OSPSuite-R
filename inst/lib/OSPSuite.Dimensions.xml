@@ -1,0 +1,889 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DimensionFactory>
+  <Dimensions>
+    <Dimension name="Abundance per mass protein" baseUnit="µmol/kg mic. protein" defaultUnit="pmol/mg mic. protein">
+      <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="pmol/mg mic. protein" factor="1" />
+        <Unit name="nmol/mg mic. protein" factor="1e3" />
+        <Unit name="µmol/mg mic. protein" factor="1e6" />
+        <Unit name="µmol/kg mic. protein" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Abundance per tissue" baseUnit="µmol/kg tissue" defaultUnit="pmol/g tissue">
+      <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="pmol/g tissue" factor="1e-3" />
+        <Unit name="nmol/g tissue" factor="1" />
+        <Unit name="µmol/g tissue" factor="1000" />
+        <Unit name="µmol/kg tissue" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Age in years" baseUnit="year(s)">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="year(s)" factor="1" />
+        <Unit name="month(s)" factor="1/12" />
+        <Unit name="week(s)" factor="7/365.25" />
+        <Unit name="day(s)" factor="1/365.25" />
+      </Units>
+    </Dimension>
+    <Dimension name="Age in weeks" baseUnit="week(s)">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="week(s)" factor="1" />
+        <Unit name="year(s)" factor="365.25/7" />
+        <Unit name="month(s)" factor="365.25/12/7" />
+        <Unit name="day(s)" factor="1/7" />
+      </Units>
+    </Dimension>
+    <Dimension name="Amount" baseUnit="µmol">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mol" factor="1E6" />
+        <Unit name="mmol" factor="1000" />
+        <Unit name="µmol" factor="1" />
+        <Unit name="nmol" factor="0.001" />
+        <Unit name="pmol" factor="1E-06" />
+      </Units>
+    </Dimension>
+    <Dimension name="Amount per time" baseUnit="µmol/min">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mmol/s" factor="1E3*60" />
+        <Unit name="mmol/min" factor="1E3" />
+        <Unit name="mmol/h" factor="1E3/60" />
+        <Unit name="mmol/day(s)" factor="1E3/(24*60)" />
+        <Unit name="µmol/s" factor="60" />
+        <Unit name="µmol/min" factor="1" />
+        <Unit name="µmol/h" factor="1/60" />
+        <Unit name="µmol/day(s)" factor="1/(24*60)" />
+        <Unit name="nmol/s" factor="1E-3*60" />
+        <Unit name="nmol/min" factor="1E-3" />
+        <Unit name="nmol/h" factor="1E-3/60" />
+        <Unit name="nmol/day(s)" factor="1E-3/(24*60)" />
+        <Unit name="pmol/s" factor="1E-6*60" />
+        <Unit name="pmol/min" factor="1E-6" />
+        <Unit name="pmol/h" factor="1E-6/60" />
+        <Unit name="pmol/day(s)" factor="1E-6/(24*60)" />
+      </Units>
+    </Dimension>
+    <Dimension name="Area" baseUnit="dm²" defaultUnit="cm²">
+      <BaseRepresentation lengthExponent="2" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="dm²" factor="1" />
+        <Unit name="cm²" factor="1e-2" />
+        <Unit name="m²" factor="100" />
+      </Units>
+    </Dimension>
+    <Dimension name="AUC (mass)" baseUnit="kg*min/l" defaultUnit="µg*min/l">
+      <BaseRepresentation lengthExponent="-3" massExponent="1" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mg*h/ml" factor="60*1E-3" />
+        <Unit name="µg*h/ml" factor="60*1E-6" />
+        <Unit name="ng*h/ml" factor="60*1E-9" />
+        <Unit name="pg*h/ml" factor="60*1E-12" />
+        <Unit name="mg*h/l" factor="60*1E-6" />
+        <Unit name="µg*h/l" factor="60*1E-9" />
+        <Unit name="ng*h/l" factor="60*1E-12" />
+        <Unit name="pg*h/l" factor="60*1E-15" />
+        <Unit name="mg*min/ml" factor="1E-3" />
+        <Unit name="µg*min/ml" factor="1E-6" />
+        <Unit name="ng*min/ml" factor="1E-9" />
+        <Unit name="pg*min/ml" factor="1E-12" />
+        <Unit name="mg*min/l" factor="1E-6" />
+        <Unit name="µg*min/l" factor="1E-9" />
+        <Unit name="ng*min/l" factor="1E-12" />
+        <Unit name="pg*min/l" factor="1E-15" />
+        <Unit name="kg*min/l" factor="1" />
+        <Unit name="kg*h/l" factor="60" />
+        <Unit name="kg*h/ml" factor="60*1E3" />
+        <Unit name="kg*min/ml" factor="1E3" />
+      </Units>
+    </Dimension>
+    <Dimension name="AUC (molar)" baseUnit="µmol*min/l">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mmol*h/ml" factor="6E7" />
+        <Unit name="µmol*h/ml" factor="6E4" />
+        <Unit name="nmol*h/ml" factor="6E1" />
+        <Unit name="pmol*h/ml" factor="6E-2" />
+        <Unit name="mmol*h/l" factor="6E4" />
+        <Unit name="µmol*h/l" factor="6E1" />
+        <Unit name="nmol*h/l" factor="6E-2" />
+        <Unit name="pmol*h/l" factor="6E-5" />
+        <Unit name="mmol*min/ml" factor="1E6" />
+        <Unit name="µmol*min/ml" factor="1E3" />
+        <Unit name="nmol*min/ml" factor="1" />
+        <Unit name="pmol*min/ml" factor="1E-3" />
+        <Unit name="µmol*min/l" factor="1" />
+        <Unit name="mmol*min/l" factor="1E3" />
+        <Unit name="nmol*min/l" factor="1E-3" />
+        <Unit name="pmol*min/l" factor="1E-6" />
+      </Units>
+    </Dimension>
+    <Dimension name="BMI" baseUnit="kg/dm²" defaultUnit="kg/m²">
+      <BaseRepresentation lengthExponent="-2" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kg/m²" factor="1e-2" />
+        <Unit name="kg/dm²" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="CL per mass protein" baseUnit="l/min/kg mic. protein" defaultUnit="µl/min/mg mic. protein">
+      <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="pl/min/mg mic. protein" factor="1e-6" />
+        <Unit name="nl/min/mg mic. protein" factor="1e-3" />
+        <Unit name="µl/min/mg mic. protein" factor="1" />
+        <Unit name="l/min/kg mic. protein" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="CL per recombinant enzyme" baseUnit="l/min/µmol rec. enzyme" defaultUnit="µl/min/pmol rec. enzyme">
+      <BaseRepresentation lengthExponent="3" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µl/min/pmol rec. enzyme" factor="1" />
+        <Unit name="ml/min/pmol rec. enzyme" factor="1E3" />
+        <Unit name="l/min/µmol rec. enzyme" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Concentration (mass)" baseUnit="kg/l" defaultUnit="mg/l">
+      <BaseRepresentation lengthExponent="-3" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mg/l" factor="1E-6" />
+        <Unit name="µg/l" factor="1E-9" />
+        <Unit name="ng/l" factor="1E-12" />
+        <Unit name="pg/l" factor="1E-15" />
+        <Unit name="mg/dl" factor="1E-5" />
+        <Unit name="mg/ml" factor="1E-3" />
+        <Unit name="µg/ml" factor="1E-6" />
+        <Unit name="ng/ml" factor="1E-9" />
+        <Unit name="pg/ml" factor="1E-12" />
+        <Unit name="kg/l" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Concentration (molar)" baseUnit="µmol/l">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mol/l" factor="1E6" />
+        <Unit name="mmol/l" factor="1E3" />
+        <Unit name="µmol/l" factor="1" />
+        <Unit name="nmol/l" factor="1E-3" />
+        <Unit name="pmol/l" factor="1E-6" />
+        <Unit name="fmol/l" factor="1E-9" />
+        <Unit name="M" factor="1E6" />
+        <Unit name="mM" factor="1E3" />
+        <Unit name="µM" factor="1" />
+        <Unit name="nM" factor="1E-3" />
+        <Unit name="pM" factor="1E-6" />
+        <Unit name="fM" factor="1E-9" />
+        <Unit name="mol/ml" factor="1E9" />
+        <Unit name="mmol/ml" factor="1E6" />
+        <Unit name="µmol/ml" factor="1E3" />
+        <Unit name="nmol/ml" factor="1" />
+        <Unit name="pmol/ml" factor="1E-3" />
+        <Unit name="fmol/ml" factor="1E-6" />
+      </Units>
+    </Dimension>
+    <Dimension name="Inversed concentration (molar)" baseUnit="l/µmol">
+      <BaseRepresentation lengthExponent="3" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/mol" factor="1E-6" />
+        <Unit name="l/mmol" factor="1E-3" />
+        <Unit name="l/µmol" factor="1" />
+        <Unit name="l/nmol" factor="1E3" />
+        <Unit name="l/pmol" factor="1E6" />
+        <Unit name="l/fmol" factor="1E9" />
+        <Unit name="1/M" factor="1E-6" />
+        <Unit name="1/mM" factor="1E-3" />
+        <Unit name="1/µM" factor="1" />
+        <Unit name="1/nM" factor="1E3" />
+        <Unit name="1/pM" factor="1E6" />
+        <Unit name="1/fM" factor="1E9" />
+        <Unit name="ml/mol" factor="1E-9" />
+        <Unit name="ml/mmol" factor="1E-6" />
+        <Unit name="ml/µmol" factor="1E-3" />
+        <Unit name="ml/nmol" factor="1" />
+        <Unit name="ml/pmol" factor="1E3" />
+        <Unit name="ml/fmol" factor="1E6" />
+      </Units>
+    </Dimension>
+    <Dimension name="Concentration (molar) per time" baseUnit="µmol/l/min">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µmol/l/min" factor="1" />
+        <Unit name="mol/l/s" factor="6E7" />
+        <Unit name="mmol/l/s" factor="6E4" />
+        <Unit name="µmol/l/s" factor="6E1" />
+        <Unit name="nmol/l/s" factor="6E-2" />
+        <Unit name="pmol/l/s" factor="6E-5" />
+        <Unit name="µmol/ml/min" factor="1E3" />
+        <Unit name="nmol/ml/min" factor="1" />
+        <Unit name="pmol/ml/min" factor="1E-3" />
+      </Units>
+    </Dimension>
+    <Dimension name="Compliance" baseUnit="l/(kg/(dm*min²))" defaultUnit="ml/mmHg">
+      <BaseRepresentation lengthExponent="4" massExponent="-1" timeExponent="2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="ml/mmHg" factor="1E-2/(133.3223684*60*60)" />
+        <Unit name="ml/Pa" factor="1E-2/(60*60)" />
+        <Unit name="ml/(N/m²)" factor="1E-2/(60*60)" />
+        <Unit name="ml/(dyn/cm²)" factor="1E-1/(60*60)" />
+        <Unit name="ml/(kg/(m*s²))" factor="1E-2/(60*60)" />
+        <Unit name="l/(kg/(dm*min²))" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Compliance (Area)" baseUnit="dm²/(kg/(dm*min²))" defaultUnit="cm²/mmHg">
+      <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="cm²/mmHg" factor="1E-1/(133.3223684*60*60)" />
+        <Unit name="cm²/Pa" factor="1E-1/(60*60)" />
+        <Unit name="cm²/(N/m²)" factor="1E-1/(60*60)" />
+        <Unit name="cm²/(dyn/cm²)" factor="1/(60*60)" />
+        <Unit name="cm²/(kg/(m*s²))" factor="1E-1/(60*60)" />
+        <Unit name="dm²/(kg/(dm*min²))" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Count" baseUnit="x10^6" defaultUnit="x10^6">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="#" factor="1E-6" />
+        <Unit name="x10^6" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Count per mass" baseUnit="x10^6/kg" defaultUnit="x10^6/g">
+      <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="x10^6/g" factor="1E3" />
+        <Unit name="x10^6/kg" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Count per volume" baseUnit="x10^6/l" defaultUnit="x10^6/ml">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="x10^6/ml" factor="1E3" />
+        <Unit name="1/nl" factor="1E3" />
+        <Unit name="x10^6/l" factor="1" />
+        <Unit name="1/µl" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="CV Viscosity" baseUnit="kg/(dm*min)" defaultUnit="s*mmHg">
+      <BaseRepresentation lengthExponent="-1" massExponent="1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kg/(dm*min)" factor="1" visible="0" />
+        <Unit name="s*mmHg" factor="(133.3223684*60)/10" />
+      </Units>
+    </Dimension>
+    <Dimension name="CV Viscosity per Volume" baseUnit="(kg/(dm*min))/l" defaultUnit="s*mmHg/ml">
+      <BaseRepresentation lengthExponent="-4" massExponent="1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="(kg/(dm*min))/l" factor="1" visible="0" />
+        <Unit name="s*mmHg/ml" factor="(133.3223684*60)/100" />
+      </Units>
+    </Dimension>
+    <Dimension name="CV mmHg*s²/ml" baseUnit="(kg/dm)/l" defaultUnit="mmHg*s²/ml">
+      <BaseRepresentation lengthExponent="-4" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="(kg/dm)/l" factor="1" visible="0" />
+        <Unit name="mmHg*s²/ml" factor="133.3223684*100" />
+      </Units>
+    </Dimension>
+    <Dimension name="Density" baseUnit="kg/dm³" defaultUnit="g/cm³">
+      <BaseRepresentation lengthExponent="-3" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="g/cm³" factor="1" />
+        <Unit name="kg/m³" factor="1E-3" />
+        <Unit name="kg/dm³" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Diffusion coefficient" baseUnit="dm²/min" defaultUnit="cm²/min">
+      <BaseRepresentation lengthExponent="2" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="cm²/min" factor="1E-2" />
+        <Unit name="cm²/s" factor="60*1E-2" />
+        <Unit name="dm²/min" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Dose per body weight" baseUnit="kg/kg" defaultUnit="mg/kg">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mg/kg" factor="1E-6" />
+        <Unit name="kg/kg" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Dose per body surface area" baseUnit="kg/dm²" defaultUnit="mg/m²">
+      <BaseRepresentation lengthExponent="-2" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mg/m²" factor="1E-8" />
+        <Unit name="kg/dm²" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Elastance" baseUnit="(kg/(dm*min²))/l" defaultUnit="mmHg/ml">
+      <BaseRepresentation lengthExponent="-4" massExponent="1" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mmHg/ml" factor="(133.3223684*60*60)/1E-2" />
+        <Unit name="(kg/(dm*min²))/l" factor="1" visible="0" />
+        <Unit name="Pa/ml" factor="(60*60)/1E-2" />
+        <Unit name="(N/m²)/ml" factor="(60*60)/1E-2" />
+        <Unit name="(dyn/cm²)/ml" factor="(60*60)/1E-1" />
+        <Unit name="(kg/(m*s²))/ml" factor="(60*60)/1E-2" />
+      </Units>
+    </Dimension>
+    <Dimension name="Energy" baseUnit="kg*dm²/min²" defaultUnit="kcal">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kcal" factor="4184*10*10*60*60" />
+        <Unit name="cal" factor="4184*10*10*60*60*1E-3" />
+        <Unit name="kg*dm²/min²" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Flow" baseUnit="l/min">
+      <BaseRepresentation lengthExponent="3" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/h" factor="1/60" />
+        <Unit name="l/min" factor="1" />
+        <Unit name="l/s" factor="60" />
+        <Unit name="ml/h" factor="1/60000" />
+        <Unit name="ml/min" factor="1E-3" />
+        <Unit name="ml/s" factor="6E-2" />
+      </Units>
+    </Dimension>
+    <Dimension name="Flow per weight organ" baseUnit="l/min/kg organ" defaultUnit="ml/min/100g organ">
+      <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="ml/min/100g organ" factor="0.01" />
+        <Unit name="ml/min/g organ" factor="1" />
+        <Unit name="ml/min/kg organ" factor="0.001" />
+        <Unit name="l/h/100g organ" factor="10/60" />
+        <Unit name="l/h/g organ" factor="1000/60" />
+        <Unit name="l/h/kg organ" factor="1/60" />
+        <Unit name="l/min/kg organ" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Flow per weight" baseUnit="l/min/kg" defaultUnit="ml/min/kg">
+      <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/min/kg" factor="1" />
+        <Unit name="l/h/kg" factor="1/60" />
+        <Unit name="ml/min/kg" factor="0.001" />
+        <Unit name="ml/h/kg" factor="1/60000" />
+      </Units>
+    </Dimension>
+    <Dimension name="Flow²" baseUnit="(l/min)²">
+      <BaseRepresentation lengthExponent="6" massExponent="0" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="(l/min)²" factor="1" />
+        <Unit name="(ml/min)²" factor="1E-06" />
+        <Unit name="(l/h)²" factor="1/60^2" />
+        <Unit name="(ml/h)²" factor="1/60000^2" />
+      </Units>
+    </Dimension>
+    <Dimension name="Fraction" baseUnit="">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="" factor="1" />
+        <Unit name="%" factor="0.01" />
+      </Units>
+    </Dimension>
+    <Dimension name="Hydraulic conductivity" baseUnit="l/min/(kg*dm/min²)" defaultUnit="ml/min/N">
+      <BaseRepresentation lengthExponent="2" massExponent="-1" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/min/(kg*dm/min²)" factor="1" />
+        <Unit name="ml/min/N" factor="1E-3/(10*60*60)" />
+      </Units>
+    </Dimension>
+    <Dimension name="Inversed length" baseUnit="1/dm" defaultUnit="1/cm">
+      <BaseRepresentation lengthExponent="-1" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="1/cm" factor="1E1" />
+        <Unit name="1/dm" factor="1" />
+        <Unit name="1/m" factor="1E-1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Inversed mol" baseUnit="1/µmol" defaultUnit="1/mol">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="1/µmol" factor="1" />
+        <Unit name="1/mol" factor="1E-6" />
+      </Units>
+    </Dimension>
+    <Dimension name="Inversed time" baseUnit="1/min">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="1/min" factor="1" />
+        <Unit name="1/h" factor="1/60" />
+        <Unit name="1/s" factor="60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Inversed volume" baseUnit="1/l">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="1/l" factor="1" />
+        <Unit name="1/ml" factor="1E3" />
+        <Unit name="1/µl" factor="1E6" />
+      </Units>
+    </Dimension>
+    <Dimension name="Length" baseUnit="dm" defaultUnit="cm">
+      <BaseRepresentation lengthExponent="1" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="m" factor="1E1" />
+        <Unit name="dm" factor="1" />
+        <Unit name="cm" factor="1E-1" />
+        <Unit name="mm" factor="1E-2" />
+        <Unit name="µm" factor="1E-5" />
+        <Unit name="nm" factor="1E-8" />
+        <Unit name="pm" factor="1E-11" />
+      </Units>
+    </Dimension>
+    <Dimension name="Log Units" baseUnit="Log Units">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Log Units" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Mass" baseUnit="kg">
+      <BaseRepresentation lengthExponent="0" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kg" factor="1" />
+        <Unit name="g" factor="1E-3" />
+        <Unit name="mg" factor="1E-6" />
+        <Unit name="µg" factor="1E-9" />
+        <Unit name="ng" factor="1E-12" />
+        <Unit name="pg" factor="1E-15" />
+      </Units>
+    </Dimension>
+    <Dimension name="Mass per area" baseUnit="kg/dm²" defaultUnit="µg/cm²">
+      <BaseRepresentation lengthExponent="-2" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µg/cm²" factor="1E-7" />
+        <Unit name="mg/cm²" factor="1E-4" />
+        <Unit name="mg/m²" factor="1E-8" />
+        <Unit name="kg/dm²" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Mass per time" baseUnit="kg/min">
+      <BaseRepresentation lengthExponent="0" massExponent="1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kg/min" factor="1" />
+        <Unit name="g/min" factor="1E-3" />
+        <Unit name="mg/min" factor="1E-6" />
+        <Unit name="µg/min" factor="1E-9" />
+        <Unit name="ng/min" factor="1E-12" />
+        <Unit name="pg/min" factor="1E-15" />
+        <Unit name="kg/s" factor="1*60" />
+        <Unit name="g/s" factor="1E-3*60" />
+        <Unit name="mg/s" factor="1E-6*60" />
+        <Unit name="µg/s" factor="1E-9*60" />
+        <Unit name="ng/s" factor="1E-12*60" />
+        <Unit name="pg/s" factor="1E-15*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Mass per area per time" baseUnit="kg/dm²/min" defaultUnit="µg/cm²/h">
+      <BaseRepresentation lengthExponent="-2" massExponent="1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µg/cm²/h" factor="1E-7/60" />
+        <Unit name="mg/cm²/h" factor="1E-4/60" />
+        <Unit name="mg/m²/h" factor="1E-8/60" />
+        <Unit name="kg/dm²/min" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Mass per tissue" baseUnit="kg/kg" defaultUnit="mg/g">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mg/g" factor="1E-3" />
+        <Unit name="kg/kg" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Molecular weight" baseUnit="kg/µmol" defaultUnit="g/mol">
+      <BaseRepresentation lengthExponent="0" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kg/µmol" factor="1" />
+        <Unit name="kg/mol" factor="1E-6" />
+        <Unit name="kDa" factor="1E-6" />
+        <Unit name="g/mol" factor="1E-9" />
+      </Units>
+    </Dimension>
+    <Dimension name="Pressure" baseUnit="kg/(dm*min²)" defaultUnit="mmHg">
+      <BaseRepresentation lengthExponent="-1" massExponent="1" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mmHg" factor="1E-1*60*60*133.3223684" />
+        <Unit name="Pa" factor="1E-1*60*60" />
+        <Unit name="N/m²" factor="1E-1*60*60" />
+        <Unit name="dyn/cm²" factor="1E-2*60*60" />
+        <Unit name="kg/(m*s²)" factor="1E-1*60*60" />
+        <Unit name="kg/(dm*min²)" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Resistance" baseUnit="kg/(dm*min²)*min/l" defaultUnit="mmHg*s/ml">
+      <BaseRepresentation lengthExponent="-4" massExponent="1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mmHg*s/ml" factor="1E2*60*133.3223684" />
+        <Unit name="Pa*s/ml" factor="1E2*60" />
+        <Unit name="N/m²*s/ml" factor="1E2*60" />
+        <Unit name="dyn/cm²*s/ml" factor="1E1*60" />
+        <Unit name="kg/(m*s²)*s/ml" factor="1E2*60" />
+        <Unit name="W" factor="1E2*8*60" />
+        <Unit name="HRU" factor="1E2*8*60" />
+        <Unit name="MPa*s/m³" factor="1E2*60" />
+        <Unit name="Pa*s/m³" factor="1E-4*60" />
+        <Unit name="kg/(dm*min²)*s/m³" factor="1E-3/60" />
+        <Unit name="dyn*s*cm−5" factor="1E1*60" />
+        <Unit name="kg/(dm*min²)*min/l" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Resolution" baseUnit="pts/min" defaultUnit="pts/h">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="pts/s" factor="60" />
+        <Unit name="pts/min" factor="1" />
+        <Unit name="pts/h" factor="1/60" />
+        <Unit name="pts/day" factor="1/(60*24)" />
+      </Units>
+    </Dimension>
+    <Dimension name="RT" baseUnit="(kg*dm/min²)*dm/µmol" defaultUnit="N*cm/mol">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="N*cm/mol" factor="10*60*60*1E-1*1E-6" />
+        <Unit name="(kg*dm/min²)*dm/µmol" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Second order rate constant" baseUnit="l/µmol/min">
+      <BaseRepresentation lengthExponent="3" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/mol/h" factor="1/60*1E-6" />
+        <Unit name="l/mmol/h" factor="1/60*1E-3" />
+        <Unit name="l/µmol/h" factor="1/60" />
+        <Unit name="l/nmol/h" factor="1/60*1E3" />
+        <Unit name="l/pmol/h" factor="1/60*1E6" />
+        <Unit name="l/mol/min" factor="1E-6" />
+        <Unit name="l/mmol/min" factor="1E-3" />
+        <Unit name="l/µmol/min" factor="1" />
+        <Unit name="l/nmol/min" factor="1E3" />
+        <Unit name="l/pmol/min" factor="1E6" />
+        <Unit name="l/mol/s" factor="60*1E-6" />
+        <Unit name="l/mmol/s" factor="60*1E-3" />
+        <Unit name="l/µmol/s" factor="60" />
+        <Unit name="l/nmol/s" factor="60*1E3" />
+        <Unit name="l/pmol/s" factor="60*1E6" />
+      </Units>
+    </Dimension>
+    <Dimension name="Slope" baseUnit="l/(kg/(dm*min²))/dm²" defaultUnit="ml/mmHg/m²">
+      <BaseRepresentation lengthExponent="2" massExponent="-1" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="ml/mmHg/m²" factor="1E-4/60/60/133.3223684" />
+        <Unit name="ml/(kg/(dm*min²))/m²" factor="1E-5" />
+        <Unit name="l/(kg/(dm*min²))/dm²" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Time" baseUnit="min" defaultUnit="h">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="s" factor="1/60" />
+        <Unit name="min" factor="1" />
+        <Unit name="h" factor="60" />
+        <Unit name="day(s)" factor="60*24" />
+        <Unit name="week(s)" factor="60*24*7" />
+        <Unit name="month(s)" factor="60*24*365.25/12" />
+        <Unit name="year(s)" factor="60*24*365.25" />
+        <Unit name="ks" factor="1E3/60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Time²" baseUnit="min²" defaultUnit="s²">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="s²" factor="1/(60*60)" />
+        <Unit name="min²" factor="1" />
+        <Unit name="h²" factor="60*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Velocity" baseUnit="dm/min" defaultUnit="cm/min">
+      <BaseRepresentation lengthExponent="1" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="cm/min" factor="1E-1" />
+        <Unit name="cm/s" factor="60*1E-1" />
+        <Unit name="dm/min" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Viscosity" baseUnit="min/l" defaultUnit="s/ml">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="s/ml" factor="1E3/60" />
+        <Unit name="min/ml" factor="1E3" />
+        <Unit name="min/l" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Vmax per mass protein" baseUnit="µmol/min/kg mic. protein" defaultUnit="pmol/min/mg mic. protein">
+      <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="pmol/min/mg mic. protein" factor="1" />
+        <Unit name="nmol/min/mg mic. protein" factor="1E3" />
+        <Unit name="µmol/min/mg mic. protein" factor="1E6" />
+        <Unit name="µmol/min/kg mic. protein" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Vmax per weight organ tissue" baseUnit="µmol/min/kg tissue">
+      <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µmol/min/kg tissue" factor="1" />
+        <Unit name="µmol/min/g tissue" factor="1E3" />
+        <Unit name="nmol/min/g tissue" factor="1" />
+        <Unit name="pmol/min/g tissue" factor="1E-3" />
+      </Units>
+    </Dimension>
+    <Dimension name="Vmax per recombinant enzyme" baseUnit="µmol/min/µmol rec. enzyme" defaultUnit="nmol/min/pmol rec. enzyme">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="nmol/min/pmol rec. enzyme" factor="1E3" />
+        <Unit name="pmol/min/pmol rec. enzyme" factor="1" />
+        <Unit name="µmol/min/µmol rec. enzyme" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Vmax per transporter" baseUnit="µmol/min/µmol transporter" defaultUnit="nmol/min/pmol transporter">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="nmol/min/pmol transporter" factor="1E3" />
+        <Unit name="pmol/min/pmol transporter" factor="1" />
+        <Unit name="µmol/min/µmol transporter" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Volume" baseUnit="l">
+      <BaseRepresentation lengthExponent="3" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l" factor="1" />
+        <Unit name="ml" factor="1E-3" />
+        <Unit name="µl" factor="1E-6" />
+      </Units>
+    </Dimension>
+    <Dimension name="Volume per body weight" baseUnit="l/kg" defaultUnit="ml/kg">
+      <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/kg" factor="1" />
+        <Unit name="ml/kg" factor="0.001" />
+      </Units>
+    </Dimension>
+    <Dimension name="Ampere" baseUnit="A">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="1" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="A" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Becquerel" baseUnit="1/min" defaultUnit="Bq">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Bq" factor="60" />
+        <Unit name="1/min" factor="1" />
+        <Unit name="1/h" factor="1/60" />
+        <Unit name="1/s" factor="60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Candela" baseUnit="cd">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="1" />
+      <Units>
+        <Unit name="cd" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Coulomb" baseUnit="A*min" defaultUnit="C">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="1" electricCurrentExponent="1" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="C" factor="1/60" />
+        <Unit name="A*min" factor="1" />
+        <Unit name="A*s" factor="1/60" />
+        <Unit name="A*h" factor="60" />
+      </Units>
+    </Dimension>
+
+    <Dimension name="Farad" baseUnit="F">
+      <BaseRepresentation lengthExponent="-2" massExponent="-1" timeExponent="4" electricCurrentExponent="2" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="F" factor="1" />
+        <Unit name="s/Ohm" factor="1/60" />
+        <Unit name="min/Ohm" factor="1" />
+        <Unit name="(A²*s^4)/(kg*m²)" factor="1/(60*60*60*60)*1E2" />
+        <Unit name="(A²*min^4)/(kg*dm²)" factor="1" />
+
+      </Units>
+    </Dimension>
+    <Dimension name="Gray" baseUnit="Gy">
+      <BaseRepresentation lengthExponent="2" massExponent="0" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Gy" factor="1" />
+        <Unit name="J/kg" factor="1" />
+        <Unit name="m²/s²" factor="1E2*60*60" />
+        <Unit name="dm²/min²" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Henry" baseUnit="H">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-2" electricCurrentExponent="-2" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="H" factor="1" />
+        <Unit name="Wb/A" factor="1" />
+        <Unit name="Ohm*s" factor="1/60" />
+        <Unit name="Ohm*min" factor="1" />
+        <Unit name="(kg*m²)/(A²*s²)" factor="1E2*60*60" />
+        <Unit name="(kg*dm²)/(A²*min²)" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Hertz" baseUnit="1/min" defaultUnit="Hz">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Hz" factor="60" />
+        <Unit name="1/min" factor="1" />
+        <Unit name="1/s" factor="60" />
+        <Unit name="1/h" factor="1/60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Joule" baseUnit="J">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="J" factor="1" />
+        <Unit name="N*m" factor="1E1" />
+        <Unit name="N*dm" factor="1" />
+        <Unit name="V*A*s" factor="1/60" />
+        <Unit name="V*A*min" factor="1" />
+        <Unit name="C*V" factor="1" />
+        <Unit name="W*s" factor="1/60" />
+        <Unit name="W*min" factor="1" />
+        <Unit name="(kg*m²)/s²" factor="1E2*60*60" />
+        <Unit name="(kg*dm²)/min²" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Katal" baseUnit="µmol/min" defaultUnit="kat">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="kat" factor="1E6*60" />
+        <Unit name="mol/min" factor="1E6" />
+        <Unit name="mol/s" factor="1E6*60" />
+        <Unit name="mol/h" factor="1E6/60" />
+        <Unit name="µmol/min" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Temperature" baseUnit="K" defaultUnit="°C">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="1" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="°C" factor="1" offset="273.15" />
+        <Unit name="°F" factor="5/9" offset="255.37" />
+        <Unit name="K" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Kelvin" baseUnit="K">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="1" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="K" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Lumen" baseUnit="lm" defaultUnit="cd*sr">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="1" />
+      <Units>
+        <Unit name="lm" factor="1" />
+        <Unit name="cd*sr" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Lux" baseUnit="lx">
+      <BaseRepresentation lengthExponent="-2" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="1" />
+      <Units>
+        <Unit name="lx" factor="1" />
+        <Unit name="lm/m²" factor="1E-2" />
+        <Unit name="lm/dm²" factor="1" />
+        <Unit name="(cd*sr)/m²" factor="1E-2" />
+        <Unit name="(cd*sr)/dm²" factor="1" />
+        <Unit name="(cd*sr)/cm²" factor="1E2" />
+      </Units>
+    </Dimension>
+    <Dimension name="Newton" baseUnit="(kg*dm)/min²" defaultUnit="N">
+      <BaseRepresentation lengthExponent="1" massExponent="1" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="(kg*dm)/min²" factor="1" />
+        <Unit name="N" factor="1E1*60*60" />
+        <Unit name="(kg*cm)/s²" factor="1E-1*60*60" />
+        <Unit name="(g*cm)/s²" factor="1E-4*60*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Ohm" baseUnit="Ohm">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-3" electricCurrentExponent="-2" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Ohm" factor="1" />
+        <Unit name="V/A" factor="1" />
+        <Unit name="(kg*m²)/(A²*s³)" factor="1E2*60*60*60" />
+        <Unit name="(kg*dm²)/(A²*min³)" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Radian" baseUnit="rad">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="rad" factor="1" />
+        <Unit name="dm/dm" factor="1" />
+        <Unit name="m/m" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Siemens" baseUnit="S">
+      <BaseRepresentation lengthExponent="-2" massExponent="-1" timeExponent="3" electricCurrentExponent="2" temperatureExponent="3" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="S" factor="1" />
+        <Unit name="A/V" factor="1" />
+        <Unit name="(A²*s³)/(kg*m²)" factor="1/(6060*60)*1E-2" />
+        <Unit name="(A²*min³)/(kg*dm²)" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Sievert" baseUnit="Sv">
+      <BaseRepresentation lengthExponent="2" massExponent="0" timeExponent="-2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Sv" factor="1" />
+        <Unit name="J/kg" factor="1" />
+        <Unit name="dm²/min²" factor="1" />
+        <Unit name="m²/s²" factor="1E2*60*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Steradian" baseUnit="sr">
+      <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="sr" factor="1" />
+        <Unit name="dm²/dm²" factor="1" />
+        <Unit name="m²/m²" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Tesla" baseUnit="T">
+      <BaseRepresentation lengthExponent="0" massExponent="1" timeExponent="-2" electricCurrentExponent="-1" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="T" factor="1" />
+        <Unit name="(V*s)/m²" factor="1/60*1E-2" />
+        <Unit name="(V*min)/dm²" factor="1" />
+        <Unit name="kg/(A*min²)" factor="1" />
+        <Unit name="kg/(A*s²)" factor="60*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Volt" baseUnit="V">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-3" electricCurrentExponent="-1" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="V" factor="1" />
+        <Unit name="W/A" factor="1" />
+        <Unit name="J/C" factor="1" />
+        <Unit name="(N*m)/(A*s)" factor="1E1*60" />
+        <Unit name="(N*dm)/(A*min)" factor="1" />
+        <Unit name="(kg*m²)/(A*s³)" factor="1E2*60*60*60" />
+        <Unit name="(kg*dm²)/(A*min³)" factor="1" />
+      </Units>
+    </Dimension>
+    <Dimension name="Watt" baseUnit="W">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-3" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="W" factor="1" />
+        <Unit name="J/s" factor="60" />
+        <Unit name="J/min" factor="1" />
+        <Unit name="V*A" factor="1" />
+        <Unit name="(kg*dm²)/min³" factor="1" />
+        <Unit name="(kg*m²)/s³" factor="1E2*60*60*60" />
+        <Unit name="(g*cm²)/s³" factor="1e-7*60*60*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Weber" baseUnit="Wb">
+      <BaseRepresentation lengthExponent="2" massExponent="1" timeExponent="-2" electricCurrentExponent="-1" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="Wb" factor="1" />
+        <Unit name="V*s" factor="1/60" />
+        <Unit name="V*min" factor="1" />
+        <Unit name="(kg*dm²)/(A*min²)" factor="1" />
+        <Unit name="(kg*m²)/(A*s²)" factor="1E2*60*60" />
+      </Units>
+    </Dimension>
+  </Dimensions>
+</DimensionFactory>
