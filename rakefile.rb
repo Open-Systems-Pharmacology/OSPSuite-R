@@ -36,9 +36,6 @@ def copy_packages_files
     copy_files '*/**/netstandard*', 'dll'
     # Copy all x64 release dll from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", 'dll'
-
-    # Not sure why this does not work at the moment with .net standard. Needs to investigate
-    copy_files "Castle.*/**/net45", 'dll'
   end
 
 end

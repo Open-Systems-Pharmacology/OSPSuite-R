@@ -4,8 +4,6 @@
 
 packages/
 
-inst/lib/
-
 # Session Data files
 .RData
 

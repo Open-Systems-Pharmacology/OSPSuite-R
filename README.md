@@ -9,8 +9,7 @@
 
 # Development tasks
 
-## update packages
-
+## How to update dependencies from nuget?
 - `git submodule update --init --recursive` to install all submodules
 - Make sure you have ruby install and that it is available in your path
 - Run `rake postclean` or simply double click on `postclean.bat`. This will update all nuget packages and copy the dependencies in the package `inst/lib` folder.
