@@ -23,42 +23,25 @@
 #' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 #' @export
 getAllContainersMatching <- function(paths, container) {
-  # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container))
-  validateIsString(paths)
-
-  findContainersByPath <- function(path) {
-    toContainers(rClr::clrCall(getContainerTask(), "AllContainersMatching", container$ref, path))
-  }
-
-  return(unify(findContainersByPath, paths))
+  getAllEntitiesMatching(paths, container, Container)
 }
 
 #' Retrieve a single container by path under the given container
 #'
 #' @inherit getAllContainersMatching
 #' @param path A string representing the path relative to the \code{container}
+#' @param stopIfNotFound Boolean. If TRUE and no container exist for the given path,
+#' an error is thrown. Default is TRUE.
 
-#' @return The \code{Container} with the given path or null if not found
+#' @return The \code{Container} with the given path. If the container for the path
+#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+#' otherwise \code{NULL}
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' param <- getContainer("Organism|Liver", sim)
+#' container <- getContainer("Organism|Liver", sim)
 #' @export
-getContainer <- function(path, container) {
-  containers <- getAllContainersMatching(path, container)
-  if (length(containers) > 1) {
-    stop(messages$errorGetEntityMultipleOutputs(path, container))
-  }
-
-  if (length(containers) == 0) {
-    return(NULL)
-  }
-
-  containers[[1]]
-}
-
-toContainers <- function(netContainers) {
-  toObjectType(netContainers, Container)
+getContainer <- function(path, container, stopIfNotFound = TRUE) {
+  getEntity(path, container, Container, stopIfNotFound)
 }

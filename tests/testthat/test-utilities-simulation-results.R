@@ -32,21 +32,25 @@ test_that("It can retrieve results by quantities", {
 })
 
 test_that("It can retrieve results with provided individual id", {
-  results <- getOutputValues(individualResults, resultsPaths, individualIds = c(0, 0, 1))
+  results <- getOutputValues(individualResults, resultsPaths, individualIds = c(0, 0, 1), stopIfNotFound = FALSE)
   expect_equal(length(results), length(resultsPaths))
   expect_false(is.null(results[[1]]))
 })
 
-test_that("It returns NA for results if no individual id was simulated", {
-  results <- getOutputValues(individualResults, resultsPaths, individualIds = 1)
+test_that("It returns NA for results if no individual id was simulated and stopIfNotFound = FALSE", {
+  results <- getOutputValues(individualResults, resultsPaths, individualIds = 1, stopIfNotFound = FALSE)
   expect_equal(length(results), length(resultsPaths))
   expect_null(results[[1]])
 })
 
-test_that("It returns NULL for paths that were not simulated", {
-  results <- getOutputValues(individualResults, "testPath")
+test_that("It returns NULL for paths that were not simulated if stopIfNotFound = FALSE", {
+  results <- getOutputValues(individualResults, "testPath", stopIfNotFound = FALSE)
   expect_equal(length(results), 1)
   expect_null(results$"testPath")
+})
+
+test_that("It throws an error for paths that were not simulated", {
+  expect_error(getOutputValues(individualResults, "testPath"))
 })
 
 

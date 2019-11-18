@@ -13,10 +13,13 @@
 #' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible)
 #' @param individualIds \code{numeric} IDs of individiuals for which the results should be extracted.
 #' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored
+#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path,
+#' an error is thrown. Default is TRUE.
 #'
 #' @return A list of results, each entry having the name of a quantity path and consisting of the element \code{x} being the time values (in minutes)
 #' and the element \code{y} a \code{NxM} matrix of simulated values, with \code{N} the number of entries (equals the number of output time steps)
-#' and \code{M} the number of individuals. If no individual contains the results for a given path, the value of the element is \code{NULL}
+#' and \code{M} the number of individuals. If no individual contains the results for a given path, the value of the element is \code{NULL} if
+#' \code{stopIfNotFound} is set to \code{FALSE}, otherwise an error is thrown.
 #'
 #' @export
 #'
@@ -29,7 +32,7 @@
 #'
 #' resultsValues <- getOutputValues(simResults, paths)
 #' plot(resultsValues[[paths]])
-getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds = NULL) {
+getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds = NULL, stopIfNotFound = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   quantitiesOrPaths <- c(quantitiesOrPaths)
   validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
@@ -63,10 +66,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 
     for (individualIndex in seq_along(individualIds)) {
       individualId <- individualIds[individualIndex]
-      vals <- simulationResults$getValuesByPath(path = path, individualIds = individualId)
-      if (is.null(vals)) {
-        next
-      }
+      vals <- simulationResults$getValuesByPath(path = path, individualIds = individualId, stopIfNotFound)
       outputValues[, individualIndex] <- vals
     }
     # Remove all NAs, i.e. columns for individuals that are not present in the
@@ -98,8 +98,12 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 #' @param population population used to calculate the simulationResults
 #'
 #' @param addCovariates If set to \code{TRUE} (default), covariates parameter are added to the output
+#'
+#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path,
+#' an error is thrown. Default is TRUE.
 #' @export
-getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL, addCovariates = TRUE) {
+getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL, addCovariates = TRUE,
+                               stopIfNotFound = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
@@ -157,7 +161,7 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   for (path in paths) {
     quantity <- getQuantity(path, simulationResults$simulation)
     metaData[[path]] <- list(unit = quantity$unit, dimension = quantity$dimension)
-    values[[path]] <- simulationResults$getValuesByPath(path, individualIds)
+    values[[path]] <- simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
   }
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)

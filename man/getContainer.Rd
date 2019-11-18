@@ -4,15 +4,20 @@
 \alias{getContainer}
 \title{Retrieve a single container by path under the given container}
 \usage{
-getContainer(path, container)
+getContainer(path, container, stopIfNotFound = TRUE)
 }
 \arguments{
 \item{path}{A string representing the path relative to the \code{container}}
 
 \item{container}{A Container or Simulation used to find the containers}
+
+\item{stopIfNotFound}{Boolean. If TRUE and no container exist for the given path,
+an error is thrown. Default is TRUE.}
 }
 \value{
-The \code{Container} with the given path or null if not found
+The \code{Container} with the given path. If the container for the path
+does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+otherwise \code{NULL}
 }
 \description{
 Retrieve a single container by path under the given container
@@ -21,7 +26,7 @@ Retrieve a single container by path under the given container
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-param <- getContainer("Organism|Liver", sim)
+container <- getContainer("Organism|Liver", sim)
 }
 \seealso{
 \code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation

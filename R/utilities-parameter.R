@@ -23,40 +23,27 @@
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
 #' @export
 getAllParametersMatching <- function(paths, container) {
-  # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container))
-  validateIsString(paths)
-
-  findParametersByPath <- function(path) {
-    toParameters(rClr::clrCall(getContainerTask(), "AllParametersMatching", container$ref, path))
-  }
-
-  return(unify(findParametersByPath, paths))
+  getAllEntitiesMatching(paths, container, Parameter)
 }
 
 #' Retrieve a single parameter by path in the given container
 #'
 #' @inherit getAllParametersMatching
 #' @param path A string representing the path relative to the \code{container}
+#' @param stopIfNotFound Boolean. If TRUE and no parameter exist for the given path,
+#' an error is thrown. Default is TRUE.
 #'
-#' @return The \code{Parameter} with the given path or \code{NULL} if not found
+#' @return The \code{Parameter} with the given path. If the parameter for the path
+#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+#' otherwise \code{NULL}
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #' param <- getParameter("Organism|Liver|Volume", sim)
 #' @export
-getParameter <- function(path, container) {
-  parameters <- getAllParametersMatching(path, container)
-  if (length(parameters) > 1) {
-    stop(messages$errorGetEntityMultipleOutputs(path, container))
-  }
-
-  if (length(parameters) == 0) {
-    return(NULL)
-  }
-
-  return(parameters[[1]])
+getParameter <- function(path, container, stopIfNotFound = TRUE) {
+  getEntity(path, container, Parameter, stopIfNotFound)
 }
 
 

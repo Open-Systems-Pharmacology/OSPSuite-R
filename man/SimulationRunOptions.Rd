@@ -13,7 +13,8 @@ Options to be passed to the simulation engine
 \section{Fields}{
 
 \describe{
-\item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used (1 per default). This is only relevant when simulating a population simulation}
+\item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
+Per default the total number of cores availble to the system minus 1 is taken.}
 
 \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
 

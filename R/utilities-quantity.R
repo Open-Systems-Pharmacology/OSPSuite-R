@@ -23,42 +23,25 @@
 #' quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
 #' @export
 getAllQuantitiesMatching <- function(paths, container) {
-  # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container))
-  validateIsString(paths)
-
-  findQuantitiesByPath <- function(path) {
-    toQuantities(rClr::clrCall(getContainerTask(), "AllQuantitiesMatching", container$ref, path))
-  }
-
-  return(unify(findQuantitiesByPath, paths))
+  getAllEntitiesMatching(paths, container, Quantity)
 }
 
 #' Retrieve a single quantty by path in the given container
 #'
 #' @inherit getAllQuantitiesMatching
 #' @param path A string representing the path relative to the \code{container}
+#' @param stopIfNotFound Boolean. If TRUE and no quantity exist for the given path,
+#' an error is thrown. Default is TRUE.
 #'
-#' @return The \code{Quantity} with the given path or \code{NULL} if not found
+#' @return The \code{Quantity} with the given path. If the quantity for the path
+#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+#' otherwise \code{NULL}
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #' quantity <- getQuantity("Organism|Liver|Volume", sim)
 #' @export
-getQuantity <- function(path, container) {
-  quantities <- getAllQuantitiesMatching(path, container)
-  if (length(quantities) > 1) {
-    stop(messages$errorGetEntityMultipleOutputs(path, container))
-  }
-
-  if (length(quantities) == 0) {
-    return(NULL)
-  }
-
-  return(quantities[[1]])
-}
-
-toQuantities <- function(netQuantities) {
-  toObjectType(netQuantities, Quantity)
+getQuantity <- function(path, container, stopIfNotFound = TRUE) {
+  getEntity(path, container, Quantity, stopIfNotFound)
 }
