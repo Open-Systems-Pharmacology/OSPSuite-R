@@ -14,3 +14,12 @@ QuantityType <- enum(list(
   Parameter = bitwShiftL(2, 8),
   Time = bitwShiftL(2, 9)
 ))
+
+getQuantityTypesStringFromInt <- function(quantityInt){
+  quantityTypes <- intToBits(quantityInt)
+  quantityTypes <- which(as.logical(quantityTypes))
+  quantityTypes <- bitwShiftL(2, quantityTypes-2)
+  quantityTypes <- lapply(quantityTypes, getEnumKey, QuantityType)
+
+  return(quantityTypes)
+}
