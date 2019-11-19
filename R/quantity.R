@@ -87,7 +87,7 @@ Quantity <- R6::R6Class(
     },
     print = function(...) {
       private$printQuantity()
-      private$printLine("Quantity Type", paste(getQuantityTypesStringFromInt(self$quantityType), collapse = ", "))
+      private$printLine("Quantity Type", getQuantityTypesStringFromInt(self$quantityType))
     },
     printValue = function() {
       self$printQuantityValue(self$name)
