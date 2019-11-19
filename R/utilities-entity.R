@@ -14,7 +14,8 @@ CompareBy <- enum(c(
 ContainerTasks <- enum(c(
   Container = "AllContainersMatching",
   Quantity = "AllQuantitiesMatching",
-  Parameter = "AllParametersMatching"))
+  Parameter = "AllParametersMatching"
+))
 
 #' Extract Unique Elements of type 'Entity'
 #'
@@ -109,7 +110,7 @@ getAllEntitiesMatching <- function(paths, container, entityType) {
   validateIsString(paths)
 
   className <- entityType$classname
-  if(length(which(names(ContainerTasks) == className)) == 0){
+  if (length(which(names(ContainerTasks) == className)) == 0) {
     stop(messages$errorWrongType("entityType", className, names(ContainerTasks)))
   }
 

@@ -66,4 +66,3 @@ test_that("It retrieve an empty string for an non existant covariate", {
   covariates <- population$getCovariateValues("Does not exist")
   expect_null(covariates)
 })
-
