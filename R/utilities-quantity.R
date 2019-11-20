@@ -45,3 +45,45 @@ getAllQuantitiesMatching <- function(paths, container) {
 getQuantity <- function(path, container, stopIfNotFound = TRUE) {
   getEntity(path, container, Quantity, stopIfNotFound)
 }
+
+
+#' Set values of quantity
+#'
+#' @param quantities A single or a list of \code{Quantity}
+#'
+#' @param values A numeric value that should be assigned to the quantity or a vector
+#' of numeric values, if the value of more than one quantity should be changed. Must have the same
+#' length as 'quantities'
+#'
+setQuantityValues <- function(quantities, values) {
+  # Must turn the input into a list so we can iterate through even when only
+  # one parameter is passed
+  quantities <- c(quantities)
+
+  # Test for correct inputs
+  validateIsOfType(quantities, Quantity)
+  validateIsNumeric(values)
+  validateIsSameLength(quantities, values)
+
+  for (i in seq_along(quantities)) {
+    quantity <- quantities[[i]]
+    quantity$value <- values[[i]]
+  }
+}
+
+#' Scale current values of quantities using a factor
+#'
+#' @param quantities A single or a list of \code{Quantity}
+#'
+#' @param factor A numeric value that will be used to scale all quantities
+#'
+scaleQuantityValues <- function(quantities, factor) {
+  quantities <- c(quantities)
+
+  # Test for correct inputs
+  validateIsOfType(quantities, Quantity)
+  validateIsNumeric(factor)
+
+  lapply(quantities, function(q) q$value <- q$value * factor)
+  invisible()
+}

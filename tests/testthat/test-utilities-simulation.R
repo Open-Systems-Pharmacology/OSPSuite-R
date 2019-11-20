@@ -24,7 +24,7 @@ test_that("It can load a simulation from cache", {
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
   parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
 
-  setParametersValues(parameters = parameter1, values = 0)
+  setParameterValues(parameters = parameter1, values = 0)
   expect_equal(parameter1$value, parameter2$value)
 })
 
@@ -37,7 +37,7 @@ test_that("It can load two simulations not from cache", {
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim1)
   parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
 
-  setParametersValues(parameters = parameter1, values = 0)
+  setParameterValues(parameters = parameter1, values = 0)
   expect_false(isTRUE(identical(parameter1$value, parameter2$value)))
 })
 
@@ -52,7 +52,7 @@ test_that("Two sims not from cache and third from cache", {
   parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim2)
   parameter3 <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim3)
 
-  setParametersValues(parameters = parameter1, values = 1)
+  setParameterValues(parameters = parameter1, values = 1)
 
   expect_false(isTRUE(identical(parameter1$value, parameter3$value)))
   expect_equal(parameter2$value, parameter3$value)

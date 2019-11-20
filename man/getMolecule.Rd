@@ -26,7 +26,7 @@ Retrieve a single molecule by path in the given container
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-param <- getMolecule("Organism|Liver|Volume", sim)
+molecule <- getMolecule("Organism|Liver|A", sim)
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation

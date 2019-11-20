@@ -22,16 +22,16 @@ Retrieve all molecules of a container (simulation or container instance) matchin
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-# Return all `Drug` molecules defined in all direct containers of the organism
-params <- getAllMoleculesMatching("Organism|*|Volume", sim)
+# Return all `A` molecules defined in all direct containers of the organism
+molecules <- getAllMoleculesMatching("Organism|*|A", sim)
 
-# Return all `Drug` molecules defined in all direct containers of the organism
-# and the parameter 'Weight (tissue)' of the container 'Liver'
-paths <- c("Organism|*|Volume", "Organism|Liver|Weight (tissue)")
-params <- getAllMoleculesMatching(paths, sim)
+# Return all `A` molecules defined in all direct containers of the organism
+# and the molecule `B`` of the container 'Liver'
+paths <- c("Organism|*|A", "Organism|Liver|B")
+molecules <- getAllMoleculesMatching(paths, sim)
 
-# Returns all `Drug` molecules defined in `Organism` and all its subcontainers
-params <- getAllMoleculesMatching("Organism|**|Volume", sim)
+# Returns all `A` molecules defined in `Organism` and all its subcontainers
+molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation

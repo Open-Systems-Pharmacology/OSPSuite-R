@@ -37,13 +37,13 @@ parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim2)
 
 # parameter1 and parameter2 belong to the same simulation object, so changing
 # one of the them will also change another
-setParametersValues(parameters = parameter2, values = 0)
+setParameterValues(parameters = parameter2, values = 0)
 parameter1$value == parameter2$value # TRUE
 
 # sim3 will be loaded from not from cache
 sim3 <- loadSimulation(simPath, loadFromCache = FALSE)
 # parameter3 belong to different simulation object than parameter1 and parameter2
 parameter3 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim3)
-setParametersValues(parameters = parameter3, values = 1)
+setParameterValues(parameters = parameter3, values = 1)
 parameter2$value == parameter3$value # FALSE#'
 }

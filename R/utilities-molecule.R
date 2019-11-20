@@ -12,16 +12,16 @@
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' # Return all `Drug` molecules defined in all direct containers of the organism
-#' params <- getAllMoleculesMatching("Organism|*|Volume", sim)
+#' # Return all `A` molecules defined in all direct containers of the organism
+#' molecules <- getAllMoleculesMatching("Organism|*|A", sim)
 #'
-#' # Return all `Drug` molecules defined in all direct containers of the organism
-#' # and the parameter 'Weight (tissue)' of the container 'Liver'
-#' paths <- c("Organism|*|Volume", "Organism|Liver|Weight (tissue)")
-#' params <- getAllMoleculesMatching(paths, sim)
+#' # Return all `A` molecules defined in all direct containers of the organism
+#' # and the molecule `B`` of the container 'Liver'
+#' paths <- c("Organism|*|A", "Organism|Liver|B")
+#' molecules <- getAllMoleculesMatching(paths, sim)
 #'
-#' # Returns all `Drug` molecules defined in `Organism` and all its subcontainers
-#' params <- getAllMoleculesMatching("Organism|**|Volume", sim)
+#' # Returns all `A` molecules defined in `Organism` and all its subcontainers
+#' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 #' @export
 getAllMoleculesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Molecule)
@@ -41,7 +41,7 @@ getAllMoleculesMatching <- function(paths, container) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' param <- getMolecule("Organism|Liver|Volume", sim)
+#' molecule <- getMolecule("Organism|Liver|A", sim)
 #' @export
 getMolecule <- function(path, container, stopIfNotFound = TRUE) {
   getEntity(path, container, Molecule, stopIfNotFound)
@@ -60,23 +60,12 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' molecule <- getMolecule("Organism|Liver|Intracellular|Drug", sim)
-#' setMoleculeStartValues(molecule, 1)
-#' molecules <- getAllMoleculesMatching("Organism|Liver|Intracellular|Drug", sim)
-#' setMoleculeStartValues(molecules, c(2, 3))
+#' molecule <- getMolecule("Organism|Liver|A", sim)
+#' setMoleculeInitialValues(molecule, 1)
+#' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
+#' setMoleculeInitialValues(molecules, c(2, 3))
 #' @export
-setMoleculeStartValues <- function(molecules, values) {
-  # Must turn the input into a list so we can iterate through even when only
-  # one parameter is passed
-  molecules <- c(molecules)
-
-  # Test for correct inputs
+setMoleculeInitialValues <- function(molecules, values) {
   validateIsOfType(molecules, Molecule)
-  validateIsNumeric(values)
-  validateIsSameLength(molecules, values)
-
-  for (i in seq_along(molecules)) {
-    molecule <- molecules[[i]]
-    molecule$value <- values[[i]]
-  }
+  setQuantityValues(molecules, values)
 }
