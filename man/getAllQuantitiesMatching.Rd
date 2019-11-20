@@ -34,5 +34,5 @@ quantities <- getAllQuantitiesMatching(paths, sim)
 quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
 }
 \seealso{
-\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
 }

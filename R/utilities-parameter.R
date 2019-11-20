@@ -3,7 +3,7 @@
 #'
 #' @param paths A vector of strings representing the paths relative to the \code{container}
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
 #'
 #' @return A list of parameters matching the path criteria. The list is empty if no parameters matching were found.
 #' @examples
