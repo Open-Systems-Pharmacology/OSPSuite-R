@@ -15,12 +15,12 @@ toObjectType <- function(netObject, class) {
 }
 
 
-#' Convenience function to avoid testing for null. It returns the first object if it is not null otherwise the second object
-#'
-#' @param lhs Object that will be returned if not NULL
-#' @param rhs Object that will be returned if \code{lhs} is NULL. It maybe well be NULL
-#'
-#' @return The first parameter if it is not NULL otherwise the second parameter
+# Convenience function to avoid testing for null. It returns the first object if it is not null otherwise the second object
+#
+# @param lhs Object that will be returned if not NULL
+# @param rhs Object that will be returned if \code{lhs} is NULL. It maybe well be NULL
+#
+# @return The first parameter if it is not NULL otherwise the second parameter
 `%||%` <- function(lhs, rhs) {
   if (!is.null(lhs)) {
     lhs

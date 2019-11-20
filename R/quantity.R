@@ -64,10 +64,10 @@ Quantity <- R6::R6Class(
   ),
   private = list(
     .formula = NULL,
-    printQuantity = function() {
+    printQuantity = function(valueCaption = "Value") {
       private$printClass()
       private$printLine("Path", self$path)
-      self$printQuantityValue("Value")
+      self$printQuantityValue(valueCaption)
       self$formula$printFormula()
       if (!self$isConstant && !self$isDistributed) {
         private$printLine("Value overrides formula", self$isFixedValue)

@@ -25,7 +25,7 @@ QuantityType <- enum(list(
 #'
 #' @return String representation of the quantity type
 #' @export
-getQuantityTypeAsString <- function(quantityInt){
+getQuantityTypeAsString <- function(quantityInt) {
   # quantityInt encodes for a quantity type or a combination of quantity types.
   # Every bit in a 32-bit representation of quantityInt represents a certain
   # quantity type, as defined in the enum QuantityType
@@ -35,9 +35,8 @@ getQuantityTypeAsString <- function(quantityInt){
   quantityTypes <- which(as.logical(quantityTypes))
   # Convert to integer to get values from the QuantityType-enum.
   # -2 because QuantityType starts at 2 and not 0
-  quantityTypes <- bitwShiftL(2, quantityTypes-2)
+  quantityTypes <- bitwShiftL(2, quantityTypes - 2)
 
   quantityTypes <- lapply(quantityTypes, getEnumKey, QuantityType)
-  #Collapse the separate entries to a string separated by a comma
   paste(quantityTypes, collapse = ", ")
 }

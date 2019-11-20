@@ -3,7 +3,7 @@
 #'
 #' @param paths A vector of strings representing the paths relative to the \code{container}
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
 #'
 #' @return A list of parameters matching the path criteria. The list is empty if no parameters matching were found.
 #' @examples
@@ -61,24 +61,13 @@ getParameter <- function(path, container, stopIfNotFound = TRUE) {
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #' param <- getParameter("Organism|Liver|Volume", sim)
-#' setParametersValues(param, 1)
+#' setParameterValues(param, 1)
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
-#' setParametersValues(params, c(2, 3))
+#' setParameterValues(params, c(2, 3))
 #' @export
-setParametersValues <- function(parameters, values) {
-  # Must turn the input into a list so we can iterate through even when only
-  # one parameter is passed
-  parameters <- c(parameters)
-
-  # Test for correct inputs
+setParameterValues <- function(parameters, values) {
   validateIsOfType(parameters, Parameter)
-  validateIsNumeric(values)
-  validateIsSameLength(parameters, values)
-
-  for (i in seq_along(parameters)) {
-    param <- parameters[[i]]
-    param$value <- values[[i]]
-  }
+  setQuantityValues(parameters, values)
 }
 
 #' Scale current values of parameters using a factor
@@ -98,12 +87,6 @@ setParametersValues <- function(parameters, values) {
 #' scaleParameterValues(params, 1.5)
 #' @export
 scaleParameterValues <- function(parameters, factor) {
-  parameters <- c(parameters)
-
-  # Test for correct inputs
   validateIsOfType(parameters, Parameter)
-  validateIsNumeric(factor)
-
-  lapply(parameters, function(p) p$value <- p$value * factor)
-  invisible()
+  scaleQuantityValues(parameters, factor)
 }

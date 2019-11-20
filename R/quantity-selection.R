@@ -16,7 +16,7 @@ QuantitySelection <- R6::R6Class(
   ),
   public = list(
     print = function(...) {
-      private$printLine(self$path,getQuantityTypesStringFromInt(self$quantityType))
+      private$printLine(self$path, getQuantityTypesStringFromInt(self$quantityType))
       invisible(self)
     }
   )
