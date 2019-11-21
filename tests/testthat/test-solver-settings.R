@@ -33,3 +33,9 @@ test_that("It can set the basic solver parameters", {
   solver$absTol <- 1e-10
   expect_equal(solver$absTol, 1e-10)
 })
+
+context("SolverSettings$print")
+
+test_that("It can print solver settings", {
+  expect_error(solver$print(), NA)
+})
