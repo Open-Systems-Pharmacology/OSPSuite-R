@@ -27,3 +27,7 @@ test_that("it can remove interval references", {
   outputSchema$removeInterval(int)
   expect_equal(length(outputSchema$intervals), count - 1)
 })
+
+test_that("It can print output schema", {
+  expect_error(outputSchema$print(), NA)
+})

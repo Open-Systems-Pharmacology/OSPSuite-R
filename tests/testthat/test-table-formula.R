@@ -53,3 +53,9 @@ test_that("It can clear all points from the table", {
   points <- tableFormula$allPoints
   expect_equal(length(points), 0)
 })
+
+context("TableFormula$print")
+
+test_that("It can print the table", {
+  expect_error(tableFormula$print(), NA)
+})

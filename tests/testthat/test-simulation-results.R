@@ -68,3 +68,7 @@ test_that("It can retrieve the list of all individual ids", {
 test_that("It throws an error when trying to set individual ids", {
   expect_error(simResults$allIndividualIds <- c(0, 1, 2))
 })
+
+test_that("It can print simulation results", {
+  expect_error(simResults$print(), NA)
+})
