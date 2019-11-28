@@ -21,11 +21,7 @@ Simulation <- R6::R6Class(
       }
     },
     path = function(value) {
-      if (missing(value)) {
-        self$root$path
-      } else {
-        private$throwPropertyIsReadonly("path")
-      }
+      private$readOnlyProperty("path", value, self$root$path)
     },
     settings = function(value) {
       if (missing(value)) {
@@ -37,31 +33,22 @@ Simulation <- R6::R6Class(
       }
     },
     solver = function(value) {
-      if (missing(value)) {
-        self$settings$solver
-      } else {
-        private$throwPropertyIsReadonly("solver")
-      }
+      private$readOnlyProperty("solver", value, self$settings$solver)
     },
     outputSchema = function(value) {
-      if (missing(value)) {
-        self$settings$outputSchema
-      } else {
-        private$throwPropertyIsReadonly("outputSchema")
-      }
+      private$readOnlyProperty("outputSchema", value, self$settings$outputSchema)
+    },
+    outputSelections = function(value) {
+      private$readOnlyProperty("outputSelections", value, self$settings$outputSelections)
     },
     sourceFile = function(value) {
-      if (missing(value)) {
-        private$sourceFileValue
-      } else {
-        stop(messages$errorPropertyReadOnly("sourceFile"), call. = FALSE)
-      }
+      private$readOnlyProperty("sourceFile", value, private$.sourceFile)
     }
   ),
   public = list(
     initialize = function(ref, sourceFile = NULL) {
       super$initialize(ref)
-      private$sourceFileValue <- sourceFile
+      private$.sourceFile <- sourceFile
     },
     print = function(...) {
       private$printClass()
@@ -71,6 +58,6 @@ Simulation <- R6::R6Class(
     }
   ),
   private = list(
-    sourceFileValue = NULL
+    .sourceFile = NULL
   )
 )

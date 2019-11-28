@@ -18,7 +18,7 @@ Per default the total number of cores availble to the system minus 1 is taken.}
 
 \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
 
-\item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{TRUE}}
+\item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{FALSE}}
 }}
 
 \keyword{datasets}

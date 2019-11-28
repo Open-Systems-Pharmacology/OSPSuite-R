@@ -17,3 +17,9 @@ ospsuiteEnv$formatNumericsSmall <- 2
 
 # Cache of the so far loaded simulations. The keys are the paths to the pkml file.
 ospsuiteEnv$loadedSimulationsCache <- Cache$new("Simulation")
+
+# Default value for sensitivity Analysis variation
+ospsuiteEnv$sensitivityAnalysis  <- new.env(parent = emptyenv())
+ospsuiteEnv$sensitivityAnalysis$defaultNumberOfSteps <- 4
+ospsuiteEnv$sensitivityAnalysis$defaultVariationRange <- 0.1
+

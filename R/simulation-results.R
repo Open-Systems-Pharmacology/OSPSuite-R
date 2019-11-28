@@ -48,7 +48,6 @@ SimulationResults <- R6::R6Class("SimulationResults",
         stop(messages$errorResultNotFound(path, individualIds))
       }
 
-      # TODO Discuss. NaN or NA?
       values[is.nan(values)] <- NA
       return(values)
     },

@@ -99,8 +99,8 @@ runSimulation <- function(simulation, population = NULL, simulationRunOptions = 
 
   results <- ifNotNull(
     population,
-    rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, population$ref, options$ref),
-    rClr::clrCall(simulationRunner, "RunSimulation", simulation$ref, options$ref)
+    rClr::clrCall(simulationRunner, "Run", simulation$ref, population$ref, options$ref),
+    rClr::clrCall(simulationRunner, "Run", simulation$ref, options$ref)
   )
 
   SimulationResults$new(results, simulation)
