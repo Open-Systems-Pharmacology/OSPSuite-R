@@ -8,16 +8,18 @@
 PKParameterSensitivity
 }
 \description{
-Sensitivity of a pK Parameter for one output for a given parameter
+Sensitivity of a PK Parameter for one output for a given parameter
 }
 \section{Fields}{
 
 \describe{
 \item{\code{parameterPath}}{Unique name of parameter in sensitivity analysis}
 
-\item{\code{pKParameterName}}{Name of PK Output (Cmax, Tmax etc...)}
+\item{\code{pkParameterName}}{Name of PK Output (Cmax, Tmax etc...)}
 
 \item{\code{outputPath}}{Path of underlying quantity for which pk-analyses were performed}
+
+\item{\code{value}}{Value of sensitivity}
 }}
 
 \keyword{datasets}

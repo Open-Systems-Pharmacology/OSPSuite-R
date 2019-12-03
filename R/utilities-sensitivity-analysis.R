@@ -14,7 +14,6 @@
 #'
 #' # Runs the sensitivity analysis
 #' results <- runSensitivityAnalysis(sensitivity)
-#'
 #' @export
 runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOptions = NULL) {
   validateIsOfType(sensitivityAnalysis, SensitivityAnalysis)

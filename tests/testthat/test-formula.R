@@ -14,4 +14,5 @@ test_that("It can print a constant formula", {
 })
 
 test_that("It can print a distributed formula", {
-  distributedFormula})
+  expect_error(distributedFormula$print(), NA)
+})

@@ -31,7 +31,3 @@ ValuePoint <- R6::R6Class(
     }
   )
 )
-
-toValuePoints <- function(netValuePoints) {
-  toObjectType(netValuePoints, ValuePoint)
-}

@@ -13,9 +13,9 @@ Options to be passed to the sensitivity analysis engine
 \section{Fields}{
 
 \describe{
-\item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used. Per default the total number of cores availble to the system minus 1 is taken.}
+\item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used. Per default set to \code{ospsuiteEnv$numberOfCoresToUse}.}
 
-\item{\code{showProgress}}{Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{FALSE}}
+\item{\code{showProgress}}{Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{ospsuiteEnv$showProgress}.}
 }}
 
 \keyword{datasets}

@@ -36,7 +36,7 @@ Interval <- R6::R6Class(
   private = list(
     readOnlyParameterProperty = function(parameterName, value) {
       if (missing(value)) {
-        toParameters(rClr::clrGet(self$ref, parameterName))
+        toObjectType(rClr::clrGet(self$ref, parameterName), Parameter)
       } else {
         private$throwPropertyIsReadonly(parameterName)
       }

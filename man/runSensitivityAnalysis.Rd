@@ -22,11 +22,10 @@ Runs a sensitivity analaysis
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-# Running an individual simulation
-results <- runSimulation(sim)
+# Create a new sensitivity object for the simulation
+sensitivity <- SensitivityAnalysis$new(sim)
 
-# Running a population simulation
-popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
-population <- loadPopulation(popPath)
-results <- runSimulation(sim, population)
+# Runs the sensitivity analysis
+results <- runSensitivityAnalysis(sensitivity)
+
 }

@@ -15,11 +15,24 @@ ospsuiteEnv$pathSeparator <- "|"
 ospsuiteEnv$formatNumericsDigits <- 5
 ospsuiteEnv$formatNumericsSmall <- 2
 
+# Number of cores to use for simualtions and sensitivity. Default to number of cores on the machine - 1
+ospsuiteEnv$numberOfCoresToUse <- parallel::detectCores() - 1
+
+# Specificies the default behavior fo progress visualization. By default FALSE
+ospsuiteEnv$showProgress <- FALSE
+
 # Cache of the so far loaded simulations. The keys are the paths to the pkml file.
 ospsuiteEnv$loadedSimulationsCache <- Cache$new("Simulation")
 
-# Default value for sensitivity Analysis variation
-ospsuiteEnv$sensitivityAnalysis  <- new.env(parent = emptyenv())
-ospsuiteEnv$sensitivityAnalysis$defaultNumberOfSteps <- 4
-ospsuiteEnv$sensitivityAnalysis$defaultVariationRange <- 0.1
+# Default value for sensitivity Analysis calculations
+ospsuiteEnv$sensitivityAnalysis <- new.env(parent = emptyenv())
 
+# Default number of steps a new SA instance
+ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps <- 2
+
+# Default variation range for a new SA instance
+ospsuiteEnv$sensitivityAnalysisConfig$variationRange <- 0.1
+
+# Represents the threshold of sensitivity that we want to achieve.
+# A value of 0.9 will select all parameters contributing to 90% total sensitivity
+ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9

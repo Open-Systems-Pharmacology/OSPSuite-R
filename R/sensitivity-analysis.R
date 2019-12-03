@@ -1,15 +1,13 @@
 #' @title SensitivityAnalysis
 #' @docType class
-#' @description Supports Sensitivity Analysis workflow to know which input parameters have most impact on the simulation output
+#' @description Supports Sensitivity Analysis workflow to assess the impact of input parameters on the simulation outputs
 #'
 #' @field simulation Simulation for which the sensitivity analysis should be performed
-#' @field parameters list of parameters to use for sensitivity calculation (optional)
-#' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default is 4)
-#' @field variationRange Variation applied to the parameter (optionak, default is 0.1)
-#' @section Methods:
-#' \describe{
-#'   \item{has(parameterPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterPath} otherwise \code{FALSE}}
-#'   }
+#' @field parameters List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
+#' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+#' with a value that was overriden by the user
+#' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+#' @field variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
 #' @export
 #' @format NULL
 SensitivityAnalysis <- R6::R6Class(
@@ -18,8 +16,8 @@ SensitivityAnalysis <- R6::R6Class(
   public = list(
     initialize = function(simulation,
                               parameters = NULL,
-                              numberOfSteps = ospsuiteEnv$sensitivityAnalysis$defaultNumberOfSteps,
-                              variationRange = ospsuiteEnv$sensitivityAnalysis$defaultVariationRange) {
+                              numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
+                              variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
       super$initialize(ref)
       self$numberOfSteps <- numberOfSteps

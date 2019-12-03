@@ -8,25 +8,20 @@
 SensitivityAnalysis
 }
 \description{
-Supports Sensitivity Analysis workflow to know which input parameters have most impact on the simulation output
+Supports Sensitivity Analysis workflow to assess the impact of input parameters on the simulation outputs
 }
 \section{Fields}{
 
 \describe{
 \item{\code{simulation}}{Simulation for which the sensitivity analysis should be performed}
 
-\item{\code{parameters}}{list of parameters to use for sensitivity calculation (optional)}
+\item{\code{parameters}}{List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
+on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+with a value that was overriden by the user}
 
-\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default is 4)}
+\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 
-\item{\code{variationRange}}{Variation applied to the parameter (optionak, default is 0.1)}
+\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 }}
-
-\section{Methods}{
-
-\describe{
-  \item{has(parameterPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterPath} otherwise \code{FALSE}}
-  }
-}
 
 \keyword{datasets}

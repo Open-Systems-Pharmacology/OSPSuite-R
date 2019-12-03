@@ -29,7 +29,8 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
   validateIsNumeric(c(startTime, endTime, resolution))
   schema <- simulation$outputSchema
   outputIntervalFactory <- getNetTask("OutputIntervalFactory")
-  interval <- toIntervals(rClr::clrCall(outputIntervalFactory, "CreateFor", schema$ref, startTime, endTime, resolution))
+  netIntervals <- rClr::clrCall(outputIntervalFactory, "CreateFor", schema$ref, startTime, endTime, resolution)
+  interval <- toObjectType(netIntervals, Interval)
   if (!is.null(intervalName)) {
     interval$name <- intervalName
   }
@@ -74,9 +75,4 @@ clearOutputIntervals <- function(simulation) {
   validateIsOfType(simulation, Simulation)
   simulation$outputSchema$clear()
   invisible(simulation)
-}
-
-
-toIntervals <- function(netIntervals) {
-  toObjectType(netIntervals, Interval)
 }

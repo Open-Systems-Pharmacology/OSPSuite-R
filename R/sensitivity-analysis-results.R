@@ -6,7 +6,7 @@
 #' \describe{
 #'   \item{allPKParameterSensitivitiesFor(pkParameterName, outputPath, totalSensitivityThreshold)}
 #'   {Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to totalSensitivityThreshold}
-#'   }
+#' }
 #' @format NULL
 SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
   inherit = DotNetWrapper,
@@ -16,7 +16,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       validateIsString(outputPath)
       validateIsNumeric(totalSensitivityThreshold)
       pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
-      toPKParameterSensitivity(pkParameterSentitivities)
+      toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
 
     print = function(...) {

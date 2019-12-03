@@ -2,18 +2,18 @@
 #' @docType class
 #' @description  Options to be passed to the simulation engine
 #' @field numberOfCoresToUse (Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
-#' Per default the total number of cores availble to the system minus 1 is taken.
+#' Default is \code{ospsuiteEnv$numberOfCoresToUse}.
 #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is \code{TRUE}
-#' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is \code{FALSE}
+#' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is \code{ospsuiteEnv$showProgress}
 #' @export
 #' @format NULL
 SimulationRunOptions <- R6::R6Class(
   "SimulationRunOptions",
   inherit = DotNetWrapper,
   public = list(
-    initialize = function(numberOfCoresToUse = (parallel::detectCores() - 1),
+    initialize = function(numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
                               checkForNegativeValues = TRUE,
-                              showProgress = FALSE) {
+                              showProgress = ospsuiteEnv$showProgress) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationRunOptions")
       super$initialize(ref)
       self$numberOfCoresToUse <- numberOfCoresToUse
