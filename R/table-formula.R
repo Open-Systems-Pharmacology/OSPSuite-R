@@ -18,7 +18,7 @@ TableFormula <- R6::R6Class(
   active = list(
     allPoints = function(value) {
       if (missing(value)) {
-        return(toValuePoints(rClr::clrCall(self$ref, "AllPointsAsArray")))
+        toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
       } else {
         private$throwPropertyIsReadonly("allPoints")
       }

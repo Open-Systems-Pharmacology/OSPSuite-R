@@ -12,7 +12,10 @@
 SimulationPKAnalyses <- R6::R6Class("SimulationPKAnalyses",
   inherit = DotNetWrapper,
   private = list(
-    .simulation = NULL
+    .simulation = NULL,
+    toPKParameter = function(netPKParameters) {
+      toObjectType(netPKParameters, PKParameter)
+    }
   ),
   public = list(
     initialize = function(ref, simulation) {
@@ -22,12 +25,12 @@ SimulationPKAnalyses <- R6::R6Class("SimulationPKAnalyses",
     },
     allPKParametersFor = function(quantityPath) {
       validateIsString(quantityPath)
-      toPKParameter(rClr::clrCall(self$ref, "AllPKParametersFor", quantityPath))
+      private$toPKParameter(rClr::clrCall(self$ref, "AllPKParametersFor", quantityPath))
     },
     pKParameterFor = function(quantityPath, pkParameter) {
       validateIsString(quantityPath)
       validateIsString(pkParameter)
-      toPKParameter(rClr::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
+      private$toPKParameter(rClr::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
     }
   ),
   active = list(

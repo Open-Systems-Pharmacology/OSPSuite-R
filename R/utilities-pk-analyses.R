@@ -21,11 +21,6 @@ calculatePKAnalyses <- function(results) {
 }
 
 
-toPKParameter <- function(netPKParameters) {
-  toObjectType(netPKParameters, PKParameter)
-}
-
-
 #' @title Saves the pK-analyses  to csv file
 #'
 #' @param pkAnalyses pK-Analyses to exporte (typically calculated using \code{calculatePKAnalyses} or imported from file)
