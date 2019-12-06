@@ -31,7 +31,7 @@ paths <- c("Organism|*|A", "Organism|Liver|B")
 molecules <- getAllMoleculesMatching(paths, sim)
 
 # Returns all `A` molecules defined in `Organism` and all its subcontainers
-molecules <- getAllMoleculesMatching("Organism|Liv*|**|A", sim)
+molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
