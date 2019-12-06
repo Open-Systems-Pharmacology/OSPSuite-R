@@ -21,7 +21,7 @@
 #' molecules <- getAllMoleculesMatching(paths, sim)
 #'
 #' # Returns all `A` molecules defined in `Organism` and all its subcontainers
-#' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
+#' molecules <- getAllMoleculesMatching("Organism|Liv*|**|A", sim)
 #' @export
 getAllMoleculesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Molecule)
@@ -41,7 +41,7 @@ getAllMoleculesMatching <- function(paths, container) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' molecule <- getMolecule("Organism|Liver|A", sim)
+#' molecule <- getMolecule("**|Intrcelulalr|A", sim)
 #' @export
 getMolecule <- function(path, container, stopIfNotFound = TRUE) {
   getEntity(path, container, Molecule, stopIfNotFound)
@@ -49,7 +49,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 
 #' Set molecule start values
 #'
-#' @param molecules A single or a list of \code{Molecule}
+#' @param molecules A single or a list of \code{Molecule}nuti
 #' @seealso \code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
 #'
 #' @param values A numeric value that should be assigned to the molecule start value or a vector

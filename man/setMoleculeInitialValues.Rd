@@ -7,7 +7,7 @@
 setMoleculeInitialValues(molecules, values)
 }
 \arguments{
-\item{molecules}{A single or a list of \code{Molecule}}
+\item{molecules}{A single or a list of \code{Molecule}nuti}
 
 \item{values}{A numeric value that should be assigned to the molecule start value or a vector
 of numeric values, if the start value of more than one molecule should be changed. Must have the same

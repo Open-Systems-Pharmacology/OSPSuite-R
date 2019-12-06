@@ -91,6 +91,11 @@ test_that("It can retrieve the unit of a parameter", {
   expect_equal(volumeParameter$unit, "l")
 })
 
+test_that("It can retrieve the display unit of a parameter", {
+  expect_equal(volumeParameter$displayUnit, "l")
+})
+
+
 test_that("It can set a value in another unit and the value will be updated as expected", {
   volumeParameter$setValue(1, "l")
   expect_equal(volumeParameter$value, 1)

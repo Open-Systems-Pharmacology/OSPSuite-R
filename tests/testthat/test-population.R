@@ -1,5 +1,7 @@
 context("Population")
 populationFileName <- getTestDataFilePath("pop_10.csv")
+simuation <- loadTestSimulation("S1")
+venousBloodVolume <- getParameter("Organism|VenousBlood|Volume", simuation)
 values <- c(1:10) * 2.5
 
 
@@ -12,6 +14,7 @@ test_that("It returns whether variability is defined for a parameter path", {
   population <- loadPopulation(populationFileName)
   expect_true(population$has("Organism|VenousBlood|Volume [l]"))
   expect_true(population$has("Organism|VenousBlood|Volume"))
+  expect_true(population$has(venousBloodVolume))
   expect_false(population$has("NOPE"))
 })
 
@@ -40,6 +43,14 @@ test_that("It can add user defined variability using an existing parameter path 
   population$setValues(parameterPath, values)
   expect_true(population$has(parameterPath))
   expect_identical(population$getValues(parameterPath), values)
+})
+
+test_that("It can add user defined variability using an existing parameter", {
+  population <- loadPopulation(populationFileName)
+  expect_true(population$has(venousBloodVolume))
+  population$setValues(venousBloodVolume, values)
+  expect_true(population$has(venousBloodVolume))
+  expect_identical(population$getValues(venousBloodVolume), values)
 })
 
 test_that("It throws an exception when adding values that have the wrong dimension", {

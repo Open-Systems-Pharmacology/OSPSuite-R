@@ -1,11 +1,13 @@
 WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions"
 QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 
 #' @title Quantity
 #' @docType class
 #' @description  A quantity of the model (with unit, value) such as a Parameter or an Amount
 #' @field value The value of the quantity in unit
-#' @field unit The base unit in which the quantity is defined (Read-Only)
+#' @field unit The base unit in which the quantity value is defined (Read-Only)
+#' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
 #' @field dimension The dimension in which the quantity is defined  (Read-Only)
 #' @field quantityType The type of the quantity (Read-Only)
 #' @field formula An instance of a \code{Formula} object used by this quantity (Read-Only)
@@ -32,7 +34,10 @@ Quantity <- R6::R6Class(
       private$wrapProperty("Value", value)
     },
     unit = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "baseUnit")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit")
+    },
+    displayUnit = function(value) {
+      private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit")
     },
     dimension = function(value) {
       private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
