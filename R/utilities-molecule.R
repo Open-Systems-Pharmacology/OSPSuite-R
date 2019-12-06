@@ -21,7 +21,7 @@
 #' molecules <- getAllMoleculesMatching(paths, sim)
 #'
 #' # Returns all `A` molecules defined in `Organism` and all its subcontainers
-#' molecules <- getAllMoleculesMatching("Organism|Liv*|**|A", sim)
+#' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 #' @export
 getAllMoleculesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Molecule)
@@ -41,7 +41,7 @@ getAllMoleculesMatching <- function(paths, container) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' molecule <- getMolecule("**|Intrcelulalr|A", sim)
+#' molecule <- getMolecule("Organism|Liver|A", sim)
 #' @export
 getMolecule <- function(path, container, stopIfNotFound = TRUE) {
   getEntity(path, container, Molecule, stopIfNotFound)
