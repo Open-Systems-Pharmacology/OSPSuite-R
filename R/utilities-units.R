@@ -65,7 +65,7 @@ toUnit <- function(quantity, values, targetUnit) {
 #' par <- getParameter("Organism|Liver|Volume", sim)
 #'
 #' # Converts the value in base unit (1L) to display unit
-#' valueInMl <- toDisplayUnit(par, 1, "ml")
+#' valueInMl <- toDisplayUnit(par, 1)
 #'
 #' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
 #' @export
