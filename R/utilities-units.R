@@ -53,3 +53,23 @@ toUnit <- function(quantity, values, targetUnit) {
     rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToUnit", quantity$ref, value, targetUnit)
   })
 }
+
+#' Converts a value given in base unit of a quantity into the display unit of a quantity
+#'
+#' @param quantity Instance of a quantity from which the base unit will be retrieved
+#' @param values Value in base unit (single or vector)
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' par <- getParameter("Organism|Liver|Volume", sim)
+#'
+#' # Converts the value in base unit (1L) to display unit
+#' valueInMl <- toDisplayUnit(par, 1)
+#'
+#' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
+#' @export
+toDisplayUnit <- function(quantity, values) {
+  validateIsOfType(quantity, Quantity)
+  toUnit(quantity, values, quantity$displayUnit)
+}

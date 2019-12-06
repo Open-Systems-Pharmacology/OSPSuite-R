@@ -9,6 +9,11 @@ test_that("It can convert from a value in base unit to a target unit", {
   expect_equal(toUnit(par, 1, "l"), 1)
 })
 
+test_that("It can convert from a value in base unit to display unit", {
+  expect_equal(toDisplayUnit(par, 1), 1)
+})
+
+
 test_that("It can convert from an array of values in base unit to a target unit", {
   expect_equal(toUnit(par, c(1, 2, 3), "ml"), c(1000, 2000, 3000))
 })

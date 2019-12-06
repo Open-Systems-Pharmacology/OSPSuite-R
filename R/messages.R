@@ -31,7 +31,7 @@ messages <- list(
     callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
     paste0(
-      callingFunction, ": No entity exists for the path '", toString(path), "' located under container '",
+      callingFunction, ": No entity exists for path '", toString(path), "' located under container '",
       container$path,
       "'!", optionalMessage
     )
@@ -43,7 +43,7 @@ messages <- list(
     callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
 
     paste0(
-      callingFunction, ": No results exists for the path '", toString(path), "' for individual IDs ",
+      callingFunction, ": No results exists for path '", toString(path), "' for individual IDs ",
       "'", individualId, "'!", optionalMessage
     )
   },

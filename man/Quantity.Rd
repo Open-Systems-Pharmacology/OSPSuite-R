@@ -15,7 +15,9 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \describe{
 \item{\code{value}}{The value of the quantity in unit}
 
-\item{\code{unit}}{The base unit in which the quantity is defined (Read-Only)}
+\item{\code{unit}}{The base unit in which the quantity value is defined (Read-Only)}
+
+\item{\code{displayUnit}}{The unit in which the quantity value is usually displayed (Read-Only)}
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 

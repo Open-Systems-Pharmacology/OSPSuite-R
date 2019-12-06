@@ -95,17 +95,17 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 #' @param individualIds \code{numeric} IDs of individiuals for which the results should be extracted.
 #' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored
 #'
-#' @param population population used to calculate the simulationResults
+#' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.
 #'
-#' @param addCovariates If set to \code{TRUE} (default), covariates parameter are added to the output
-#'
-#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path,
-#' an error is thrown. Default is TRUE.
+#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
 #' @export
-getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths = NULL, individualIds = NULL, addCovariates = TRUE,
+getOutputValuesTLF <- function(simulationResults,
+                               quantitiesOrPaths = NULL,
+                               population = NULL,
+                               individualIds = NULL,
                                stopIfNotFound = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
-  validateIsOfType(population, Population)
+  validateIsOfType(population, Population, nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
   validateIsOfType(quantitiesOrPaths, c(Quantity, "character"), nullAllowed = TRUE)
 
@@ -126,11 +126,10 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
 
-  paste(individualIds)
   # All time values are equal
   timeValues <- simulationResults$timeValues
   valueLength <- length(timeValues)
-  covariateNames <- population$allCovariateNames
+  covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
 
   values <- list()
   metaData <- list(
@@ -143,12 +142,11 @@ getOutputValuesTLF <- function(simulationResults, population, quantitiesOrPaths 
     individualId <- individualIds[individualIndex]
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
-    if (addCovariates) {
-      for (covariateName in covariateNames) {
-        covariateValue <- population$getCovariateValue(covariateName, individualId)
-        individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
-      }
+    for (covariateName in covariateNames) {
+      covariateValue <- population$getCovariateValue(covariateName, individualId)
+      individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
     }
+
     individualProperties$Time <- timeValues
     # Save one data frame with all individual properties per individual so that we can easily concatenate them
     individualPropertiesCache[[individualIndex]] <- individualProperties

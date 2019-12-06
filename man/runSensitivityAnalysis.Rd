@@ -27,5 +27,4 @@ sensitivity <- SensitivityAnalysis$new(sim)
 
 # Runs the sensitivity analysis
 results <- runSensitivityAnalysis(sensitivity)
-
 }

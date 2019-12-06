@@ -49,7 +49,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 
 #' Set molecule start values
 #'
-#' @param molecules A single or a list of \code{Molecule}
+#' @param molecules A single or a list of \code{Molecule}nuti
 #' @seealso \code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
 #'
 #' @param values A numeric value that should be assigned to the molecule start value or a vector

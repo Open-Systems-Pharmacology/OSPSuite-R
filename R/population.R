@@ -5,9 +5,9 @@
 #' @field allCovariateNames the names of all covariates defined in the population
 #' @section Methods:
 #' \describe{
-#'   \item{has(parameterPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterPath} otherwise \code{FALSE}}
-#'   \item{setValues(parameterPath, values)}{Adds or update the \code{values} for \code{parameterPath}}
-#'   \item{getValues(parameterPath)}{Returns the variability values defined in the population for \code{parameterPath}}
+#'   \item{has(parameterOrPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}}
+#'   \item{setValues(parameterOrPath, values)}{Adds or update the \code{values} for \code{parameterOrPath}}
+#'   \item{getValues(parameterOrPath)}{Returns the variability values defined in the population for \code{parameterOrPath}}
 #'   \item{getCovariateValues(covariateName)}{Returns the values defined in the population for \code{covariateName}}
 #'   \item{getCovariateValue(covariateName, individualId)}{Returns the covariate value defined in the population for the covariate \code{covariateName} and individual with id\code{individualId}}
 #'   }
@@ -24,18 +24,18 @@ Population <- R6::R6Class(
     }
   ),
   public = list(
-    has = function(parameterPath) {
-      validateIsString(parameterPath)
+    has = function(parameterOrPath) {
+      parameterPath <- private$getPathFrom(parameterOrPath)
       rClr::clrCall(self$ref, "Has", parameterPath)
     },
-    setValues = function(parameterPath, values) {
-      validateIsString(parameterPath)
+    setValues = function(parameterOrPath, values) {
+      parameterPath <- private$getPathFrom(parameterOrPath)
       validateIsNumeric(values)
       rClr::clrCall(self$ref, "SetValues", parameterPath, values)
       invisible(self)
     },
-    getValues = function(parameterPath) {
-      validateIsString(parameterPath)
+    getValues = function(parameterOrPath) {
+      parameterPath <- private$getPathFrom(parameterOrPath)
       rClr::clrCall(self$ref, "GetValues", parameterPath)
     },
     getCovariateValues = function(covariateName) {
@@ -48,6 +48,15 @@ Population <- R6::R6Class(
       private$printClass()
       private$printLine("Number of Individuals", self$count)
       invisible(self)
+    }
+  ),
+  private = list(
+    getPathFrom = function(parameterOrPath) {
+      validateIsOfType(parameterOrPath, c("character", Parameter))
+      if (isOfType(parameterOrPath, Parameter)) {
+        return(parameterOrPath$consolidatePath)
+      }
+      parameterOrPath
     }
   )
 )
