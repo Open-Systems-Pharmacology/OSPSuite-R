@@ -32,8 +32,8 @@ StandardPath <- enum(c(
 #' @export
 MoleculeParameter <- enum(c(
   ReferenceConcentration = "Reference concentration",
-  tHalfLiver = "t1/2 (liver)",
-  tHalfIntestine = "t1/2 (intestine)",
+  THalfLiver = "t1/2 (liver)",
+  THalfIntestine = "t1/2 (intestine)",
   OntogenyFactor = "Ontogeny factor",
   OntogenyFactorGI = "Ontogeny factor GI"
 ))
