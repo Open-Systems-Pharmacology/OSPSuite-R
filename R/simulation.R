@@ -25,21 +25,19 @@ Simulation <- R6::R6Class(
     },
     settings = function(value) {
       if (missing(value)) {
-        buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
-        settings <- rClr::clrGet(buildConfiguration, "SimulationSettings")
-        SimulationSettings$new(settings)
+        private$.settings
       } else {
         private$throwPropertyIsReadonly("settings")
       }
     },
     solver = function(value) {
-      private$readOnlyProperty("solver", value, self$settings$solver)
+      private$readOnlyProperty("solver", value, private$.settings$solver)
     },
     outputSchema = function(value) {
-      private$readOnlyProperty("outputSchema", value, self$settings$outputSchema)
+      private$readOnlyProperty("outputSchema", value, private$.settings$outputSchema)
     },
     outputSelections = function(value) {
-      private$readOnlyProperty("outputSelections", value, self$settings$outputSelections)
+      private$readOnlyProperty("outputSelections", value, private$.settings$outputSelections)
     },
     sourceFile = function(value) {
       private$readOnlyProperty("sourceFile", value, private$.sourceFile)
@@ -49,6 +47,11 @@ Simulation <- R6::R6Class(
     initialize = function(ref, sourceFile = NULL) {
       super$initialize(ref)
       private$.sourceFile <- sourceFile
+      private$.buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
+      private$.settings <-  SimulationSettings$new(rClr::clrGet(private$.buildConfiguration, "SimulationSettings"))
+    },
+    allProteinNames = function() {
+      rClr::clrCall(private$.buildConfiguration, "AllPresentEndogenousStationaryMoleculeNames")
     },
     print = function(...) {
       private$printClass()
@@ -58,6 +61,8 @@ Simulation <- R6::R6Class(
     }
   ),
   private = list(
-    .sourceFile = NULL
+    .sourceFile = NULL,
+    .buildConfiguration = NULL,
+    .settings = NULL
   )
 )

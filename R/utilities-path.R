@@ -23,7 +23,8 @@ toPathArray <- function(path) {
 #'
 #' path <- toPathString(c("Organism", "Organ", "Liver"))
 #' @export
-toPathString <- function(pathArray) {
-  validateIsString(pathArray)
-  paste(pathArray, collapse = ospsuiteEnv$pathSeparator)
+toPathString <- function(...) {
+  pathStrings <- c(...)
+  validateIsString(pathStrings)
+  paste(pathStrings, collapse = ospsuiteEnv$pathSeparator)
 }

@@ -99,3 +99,18 @@ test_that("It throws an exception when runninga population simulation with the w
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   expect_that(runSimulation(population, simulation), throws_error())
 })
+
+context("getAllMoleculeParameters")
+test_that("It returns all molecule parameters for an existing molecule in a simulation", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameters <- getAllMoleculeParameters("CYP3A4", sim)
+  expect_equal(length(parameters), length(MoleculeParameter))
+})
+
+test_that("It returns an emptylist of parameters for a molecule that does not exist", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameters <- getAllMoleculeParameters("NOPE", sim)
+  expect_equal(length(parameters), 0)
+})
+
+

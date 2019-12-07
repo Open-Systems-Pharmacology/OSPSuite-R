@@ -8,7 +8,7 @@ test_that("It can retrieve the basic solver parameters", {
   expect_equal(solver$hMin, 0)
   expect_equal(solver$hMax, 60)
   expect_equal(solver$mxStep, 100000)
-  expect_equal(solver$relTol, 1e-5)
+  expect_equal(solver$relTol, 1e-4)
   expect_equal(solver$absTol, 1e-8)
 })
 
@@ -27,8 +27,8 @@ test_that("It can set the basic solver parameters", {
   solver$mxStep <- 5000
   expect_equal(solver$mxStep, 5000)
 
-  solver$relTol <- 1e-4
-  expect_equal(solver$relTol, 1e-4)
+  solver$relTol <- 1e-5
+  expect_equal(solver$relTol, 1e-5)
 
   solver$absTol <- 1e-10
   expect_equal(solver$absTol, 1e-10)
