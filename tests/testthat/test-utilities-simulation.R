@@ -112,5 +112,3 @@ test_that("It returns an emptylist of parameters for a molecule that does not ex
   parameters <- getAllMoleculeParameters("NOPE", sim)
   expect_equal(length(parameters), 0)
 })
-
-

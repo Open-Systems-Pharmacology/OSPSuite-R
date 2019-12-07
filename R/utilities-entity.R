@@ -101,10 +101,10 @@ getAllEntitiesMatching <- function(paths, container, entityType) {
   }
 
   task <- getContainerTask()
-  method <-  ContainerTasks[[className]]
+  method <- ContainerTasks[[className]]
 
   findEntitiesByPath <- function(path) {
-    toObjectType(rClr::clrCall(task,method, container$ref, path), entityType)
+    toObjectType(rClr::clrCall(task, method, container$ref, path), entityType)
   }
 
   return(unify(findEntitiesByPath, paths))

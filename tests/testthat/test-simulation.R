@@ -16,8 +16,7 @@ test_that("It can print the simulation", {
 })
 
 
-test_that("It can retrieve the name of all proteins used in the model", {
-  proteins <- sim$allProteinNames()
-  expect_equal(proteins, c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1"))
+test_that("It can retrieve the name of all molecules used in the model", {
+  molecules <- sim$allMoleculeNames()
+  expect_equal(molecules, c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1"))
 })
-

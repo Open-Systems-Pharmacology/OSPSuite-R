@@ -48,9 +48,9 @@ Simulation <- R6::R6Class(
       super$initialize(ref)
       private$.sourceFile <- sourceFile
       private$.buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
-      private$.settings <-  SimulationSettings$new(rClr::clrGet(private$.buildConfiguration, "SimulationSettings"))
+      private$.settings <- SimulationSettings$new(rClr::clrGet(private$.buildConfiguration, "SimulationSettings"))
     },
-    allProteinNames = function() {
+    allMoleculeNames = function() {
       rClr::clrCall(private$.buildConfiguration, "AllPresentEndogenousStationaryMoleculeNames")
     },
     print = function(...) {
