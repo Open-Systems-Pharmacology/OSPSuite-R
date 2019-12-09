@@ -149,3 +149,26 @@ removeSimulationFromCache <- function(simulation) {
 
   return(TRUE)
 }
+
+#' @title  Returns a list containing all global parameters defined in a \code{simulation} for given \code{moleculeName}.
+#' These parameters are typically located directly under the container named after the \code{moleculeName}
+#'
+#' @param simulation Simulation to query for molecule parameters
+#' @param moleculeName Name of molecule (Enzyme, Transporter etc..) for which global parameters should be returned
+#'
+#' @return A list of global parameters defined for \code{moleculeName} if the molecule exists in the \code{simulation}.
+#' Otherwise an empty list is returned
+#'
+#' @export
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim1 <- loadSimulation(simPath)
+#'
+#' parameters <- getAllMoleculeParameters("CYP3A4", sim1)
+getAllMoleculeParameters <- function(moleculeName, simulation) {
+  validateIsOfType(simulation, Simulation)
+  validateIsString(moleculeName)
+  paths <- sapply(MoleculeParameter, function(p) toPathString(moleculeName, p))
+  getAllParametersMatching(paths = paths, container = simulation)
+}

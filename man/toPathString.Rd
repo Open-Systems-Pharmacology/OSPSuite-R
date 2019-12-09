@@ -4,7 +4,7 @@
 \alias{toPathString}
 \title{Convert a path array to a path as string with entries separated by '|'}
 \usage{
-toPathString(pathArray)
+toPathString(...)
 }
 \arguments{
 \item{pathArray}{An array of path entries}
