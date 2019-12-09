@@ -65,8 +65,12 @@ test_that("It can retrieve the id of a parameter", {
   expect_false(is.null(volumeParameter$id))
 })
 
+test_that("It can retrieve the full path of a parameter", {
+  expect_equal(volumeParameter$fullPath, paste("S1", volumePath, sep = "|"))
+})
+
 test_that("It can retrieve the path of a parameter", {
-  expect_equal(volumeParameter$path, paste("S1", paste(volumePath, collapse = "|"), sep = "|"))
+  expect_equal(volumeParameter$path, volumePath)
 })
 
 test_that("It throws an error when trying to set the path of a parameter", {

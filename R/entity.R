@@ -24,17 +24,17 @@ ObjectBase <- R6::R6Class(
 #' @docType class
 #' @description  Abstract wrapper for an OSPSuite.Core Entity class
 #'
-#' @field path The path of the entity in the container hiearchy. (read-only)
-#' @field consolidatePath Same as \code{path}, but without the preceding simulation name. (read-only)
+#' @field path The path of the entity in the container hiearchy without the simulation name. (read-only)
+#' @field fullPath Same as \code{path}, but with the simulation name. (read-only)
 Entity <- R6::R6Class(
   "Entity",
   inherit = ObjectBase,
   active = list(
     path = function(value) {
-      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "EntityPath", "path", value)
+      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "ConsolidatedPath", "path", value)
     },
-    consolidatePath = function(value) {
-      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "ConsolidatedPath", "consolidatePath", value)
+    fullPath = function(value) {
+      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "EntityPath", "fullPath", value)
     }
   )
 )
