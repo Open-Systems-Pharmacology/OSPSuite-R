@@ -7,7 +7,7 @@
 toPathString(...)
 }
 \arguments{
-\item{pathArray}{An array of path entries}
+\item{...}{Path entries to concatenate into a path string}
 }
 \value{
 A string built using each entry of the pathArray
