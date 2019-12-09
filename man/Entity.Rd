@@ -14,9 +14,9 @@ Abstract wrapper for an OSPSuite.Core Entity class
 \section{Fields}{
 
 \describe{
-\item{\code{path}}{The path of the entity in the container hiearchy. (read-only)}
+\item{\code{path}}{The path of the entity in the container hiearchy without the simulation name. (read-only)}
 
-\item{\code{consolidatePath}}{Same as \code{path}, but without the preceding simulation name. (read-only)}
+\item{\code{fullPath}}{Same as \code{path}, but with the simulation name. (read-only)}
 }}
 
 \keyword{datasets}

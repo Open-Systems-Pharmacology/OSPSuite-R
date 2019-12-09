@@ -24,9 +24,14 @@ test_that("It can retrieve the type of a container as a string", {
   expect_equal(getEnumKey(ContainerType, containerTypeInt), "Organ")
 })
 
-test_that("It can retrieve the path of a parameter", {
+test_that("It can retrieve the path of a container", {
   container <- getContainer(liverPath, sim)
-  expect_equal(container$path, paste("S1", liverPath, sep = "|"))
+  expect_equal(container$path, liverPath)
+})
+
+test_that("It can retrieve the fullPath of a container", {
+  container <- getContainer(liverPath, sim)
+  expect_equal(container$fullPath, paste("S1", liverPath, sep = "|"))
 })
 
 test_that("It throws an error when trying to set the path of a container", {

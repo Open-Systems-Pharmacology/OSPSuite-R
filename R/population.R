@@ -54,7 +54,7 @@ Population <- R6::R6Class(
     getPathFrom = function(parameterOrPath) {
       validateIsOfType(parameterOrPath, c("character", Parameter))
       if (isOfType(parameterOrPath, Parameter)) {
-        return(parameterOrPath$consolidatePath)
+        return(parameterOrPath$path)
       }
       parameterOrPath
     }

@@ -16,7 +16,7 @@ toPathArray <- function(path) {
 
 #' Convert a path array to a path as string with entries separated by '|'
 #'
-#' @param pathArray An array of path entries
+#' @param ... Path entries to concatenate into a path string
 #'
 #' @return A string built using each entry of the pathArray
 #' @examples

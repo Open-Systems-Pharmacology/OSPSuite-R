@@ -41,7 +41,7 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
   # If quantities are passed, get their paths.
   paths <- quantitiesOrPaths
   if (isOfType(quantitiesOrPaths, Quantity)) {
-    paths <- unlist(lapply(quantitiesOrPaths, function(x) x$consolidatePath))
+    paths <- unlist(lapply(quantitiesOrPaths, function(x) x$path))
   }
   paths <- unique(paths)
 
@@ -115,7 +115,7 @@ getOutputValuesTLF <- function(simulationResults,
   # If quantities are passed, get their paths.
   paths <- quantitiesOrPaths
   if (isOfType(paths, Quantity)) {
-    paths <- unlist(lapply(paths, function(x) x$consolidatePath))
+    paths <- unlist(lapply(paths, function(x) x$path))
   }
   paths <- unique(paths)
 
