@@ -71,6 +71,10 @@ messages <- list(
 
   errorUnitNotDefined = function(quantityName, dimension, unit) {
     paste0("Unit '", unit, "' is not defined in dimension '", dimension, "' used by '", quantityName, "'.")
+  },
+
+  pkSimRPathInvalid = function (pksimPath) {
+    paste0("Path to PKSim.R.dll '", pksimPath, "' is invalid.")
   }
 )
 

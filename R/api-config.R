@@ -12,4 +12,10 @@ ApiConfig <- R6::R6Class(
       private$wrapProperty("DimensionFilePath", value)
     }
   ),
+  public = list(
+    initialize = function(){
+      ref <- rClr::clrNew("OSPSuite.R.ApiConfig")
+      super$initialize(ref)
+    }
+  )
 )

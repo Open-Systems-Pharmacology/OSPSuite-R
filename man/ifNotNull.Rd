@@ -5,7 +5,7 @@
 \title{Mimic the ternary operator  \code{a ? x : y} behavior in other languages
 If \code{condition} is not null, returns \code{outputIfNotNull} otherwise \code{outputIfNull}}
 \usage{
-ifNotNull(condition, outputIfNotNull, outputIfNull)
+ifNotNull(condition, outputIfNotNull, outputIfNull = NULL)
 }
 \arguments{
 \item{condition}{The .NET object instances (single or list) to wrapp}
