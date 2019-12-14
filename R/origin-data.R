@@ -1,10 +1,14 @@
 #' @title OriginData
 #' @docType class
-#' @description  Simulation Interval (typically associated with an instace of \code{OutputSchema})
+#' @description  Characteristics of an individual describing its origin
 #'
-#' @field startTime Start time of interval (instance of \code{Parameter})
-#' @field endTime End time of interval (instance of \code{Parameter})
-#' @field resolution Resolution of interval in pts/min (instance of \code{Parameter})
+#' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})
+#' @field population For a Human species, the population of intereset. It should be a population available in PK-Sim (see \code{HumanPopulation})
+#' @field gender Gender of the individual. It should be defined for the species in PK-Sim  (see \code{Gender})
+#' @field age Age of the individual as in instance of a \code{SnapshotParameter} (optional)
+#' @field gestationalAge Gestational Age of the individual as in instance of a \code{SnapshotParameter} (optional)
+#' @field weight Weight of the individual as in instance of a \code{SnapshotParameter} (optional)
+#' @field height Height of the individual as in instance of a \code{SnapshotParameter} (optional)
 #' @format NULL
 #' @export
 OriginData <- R6::R6Class(
@@ -67,6 +71,14 @@ OriginData <- R6::R6Class(
   )
 )
 
+#' @title SnapshotParameter
+#' @docType class
+#' @description  A parameter typically used in the definition of \code{OriginData} covariates (Height, Weight etc...)
+#'
+#' @field value Parameter value
+#' @field unit Unit in which the value is defined
+#' @format NULL
+#' @export
 SnapshotParameter<- R6::R6Class(
   "SnapshotParameter",
   inherit = DotNetWrapper,

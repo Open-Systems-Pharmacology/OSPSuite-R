@@ -1,6 +1,8 @@
 #' Creates an individual using the PKSim Database.
 #'
-#' @param path A string representation of a path, with path entries separated
+#' @param originData Characteristics of the individual to create as an instance of \code{OriginData}
+#' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
+#' that are actually
 #'
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
 #' @examples
