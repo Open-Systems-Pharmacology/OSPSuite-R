@@ -26,7 +26,7 @@ HumanPopulation <- enum(c(
   "MexicanAmericanWhite_NHANES_1997",
   "Pregnant",
   "Preterm",
-  "WhiteAmerican_NHANES_1997",
+  "WhiteAmerican_NHANES_1997"
 ))
 
 #' Default genders  defined in PK-Sim

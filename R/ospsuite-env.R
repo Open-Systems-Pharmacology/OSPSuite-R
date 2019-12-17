@@ -5,6 +5,10 @@ ospsuiteEnv <- new.env(parent = emptyenv())
 # name of the package. This will be used to retrieve information on the package at run time
 ospsuiteEnv$packageName <- "ospsuite"
 
+ospsuiteEnv$suiteName <- "Open Systems Pharmacology"
+
+ospsuiteEnv$packageVersion <- "9.0"
+
 # Reference to container task for optimization purposes only
 ospsuiteEnv$containerTask <- NULL
 
@@ -36,3 +40,7 @@ ospsuiteEnv$sensitivityAnalysisConfig$variationRange <- 0.1
 # Represents the threshold of sensitivity that we want to achieve.
 # A value of 0.9 will select all parameters contributing to 90% total sensitivity
 ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
+
+# Indicates whether PK-Sim was loaded already. This will prevent unrequired initialization of the pksim assemblies
+ospsuiteEnv$isPKSimLoaded <- FALSE
+

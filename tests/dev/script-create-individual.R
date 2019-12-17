@@ -4,27 +4,29 @@
 initPKSim("C:/projects/PK-Sim/src/PKSim.R/bin/Debug/net472")
 
 
-originData <- OriginData$new()
-originData$species <- Species$Human
-originData$population <- HumanPopulation$European_ICRP_2002
-originData$gender <- Gender$Female
+individualCharacteristics <- IndividualCharacteristics$new()
+individualCharacteristics$species <- Species$Human
+individualCharacteristics$population <- HumanPopulation$European_ICRP_2002
+individualCharacteristics$gender <- Gender$Female
 
-print(originData)
+print(individualCharacteristics)
 
-originData <- createOriginData(
+moleculeOntogeny <- MoleculeOntogeny$new()
+moleculeOntogeny$molecule <- "CYP3A4"
+moleculeOntogeny$ontogeny <- "CYP3A4"
+
+individualCharacteristics <- createIndividualCharacteristics(
   species =  Species$Human,
   population =  HumanPopulation$European_ICRP_2002,
   gender = Gender$Female,
   age = 10,
   height = 175,
-  weight = 60
+  weight = 60,
+  moleculeOntogenies = moleculeOntogeny
 )
 
-print(originData)
+print(individualCharacteristics)
 
-moleculeOntogeny <- MoleculeOntogeny$new()
-moleculeOntogeny$molecule <- "CYP3A4"
-moleculeOntogeny$ontogeny <- "CYP3A4"
-parameterValues <- createIndividual(originData = originData, moleculeOntogenies =  c(moleculeOntogeny))
-distributedValues <- createIndividual(originData = originData, useDistribution = TRUE, moleculeOntogenies =  c(moleculeOntogeny))
+parameterValues <- createIndividual(individualCharacteristics = individualCharacteristics)
+distributedValues <- createIndividual(individualCharacteristics = individualCharacteristics, useDistribution = TRUE)
 

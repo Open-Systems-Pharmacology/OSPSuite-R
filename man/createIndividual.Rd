@@ -4,11 +4,13 @@
 \alias{createIndividual}
 \title{Creates an individual using the PKSim Database.}
 \usage{
-createIndividual(originData, useDistribution = FALSE,
-  moleculeOntogenies = NULL)
+createIndividual(individualCharacteristics, useDistribution = FALSE)
 }
 \arguments{
-\item{path}{A string representation of a path, with path entries separated}
+\item{useDistribution}{Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
+that are actually}
+
+\item{originData}{Characteristics of the individual to create as an instance of \code{OriginData}}
 }
 \value{
 An array of \code{ParameterValue} containing the value of each individual parameter

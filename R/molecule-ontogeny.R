@@ -7,7 +7,7 @@
 #' @field ontogeny Name of the ontogeny to use for the molecule
 #' @format NULL
 #' @export
-MoleculeOntogeny<- R6::R6Class(
+MoleculeOntogeny <- R6::R6Class(
   "MoleculeOntogeny",
   inherit = DotNetWrapper,
   active = list(
@@ -19,15 +19,18 @@ MoleculeOntogeny<- R6::R6Class(
     }
   ),
   public = list(
-    initialize = function() {
-      ref <- rClr::clrNew("PKSim.R.Domain.MoleculeOntogeny")
+    initialize = function(ref = NULL) {
+      ref <- ref %||% rClr::clrNew("PKSim.R.Domain.MoleculeOntogeny")
       super$initialize(ref)
     },
     print = function(...) {
       private$printClass()
       private$printLine("Molecule", self$molecule)
-      private$printLine("Ontogeny", self$ontogeny)
+      private$printLine("Ontogeny", self$molecule)
       invisible(self)
+    },
+    printMoleculeOntogeny = function() {
+      private$printLine(paste("Molecule", self$molecule, "with ontogeny", self$ontogeny))
     }
   )
 )

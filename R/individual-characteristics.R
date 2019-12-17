@@ -1,4 +1,4 @@
-#' @title OriginData
+#' @title IndividualCharacteristics
 #' @docType class
 #' @description  Characteristics of an individual describing its origin
 #'
@@ -11,8 +11,8 @@
 #' @field height Height of the individual as in instance of a \code{SnapshotParameter} (optional)
 #' @format NULL
 #' @export
-OriginData <- R6::R6Class(
-  "OriginData",
+IndividualCharacteristics <- R6::R6Class(
+  "IndividualCharacteristics",
   inherit = DotNetWrapper,
   active = list(
     species = function(value) {
@@ -54,7 +54,7 @@ OriginData <- R6::R6Class(
   ),
   public = list(
     initialize = function() {
-      ref <- rClr::clrNew("PKSim.Core.Snapshots.OriginData")
+      ref <- rClr::clrNew("PKSim.R.Domain.IndividualCharacteristics")
       super$initialize(ref)
     },
     print = function(...) {
@@ -66,7 +66,16 @@ OriginData <- R6::R6Class(
       private$printParam("GestationalAge", self$gestationalAge)
       private$printParam("Weight", self$weight)
       private$printParam("Height", self$height)
+      for(moleculeOntogeny in self$allMoleculeOntogenies()){
+        moleculeOntogeny$printMoleculeOntogeny()
+      }
       invisible(self)
+    },
+    addMoleculeOntogeny = function(moleculeOntogeny) {
+      rClr::clrCall(self$ref, "AddMoleculeOntogeny", moleculeOntogeny$ref);
+    },
+    allMoleculeOntogenies = function() {
+      toObjectType(rClr::clrGet(self$ref, "MoleculeOntogeniesAsArray"), MoleculeOntogeny)
     }
   )
 )

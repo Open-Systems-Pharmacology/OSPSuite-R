@@ -60,8 +60,14 @@ DotNetWrapper <- R6::R6Class(
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     },
 
-    printLine = function(entry, value) {
-      cat("  ", entry, ": ", value, "\n", sep = "")
+    printLine = function(entry, value = NULL) {
+      entries<-c("  ", entry)
+      if(!is.null(value))
+        entries <-c(entries, ": ", value)
+
+      entries<-c(entries, "\n")
+      cat(entries, sep = "")
+
       invisible(self)
     },
 
