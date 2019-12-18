@@ -79,9 +79,9 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' If more than one matching path is found a warning is produced.
 #'
 #' @examples
-#' path <- .getpathToPKSimInstallDirFromFileSystem("7.4")
-#' path2 <- .getpathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
-.getpathToPKSimInstallDirFromFileSystem <- function(pksim.version,
+#' path <- .getPathToPKSimInstallDirFromFileSystem("7.4")
+#' path2 <- .getPathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
+.getPathToPKSimInstallDirFromFileSystem <- function(pksim.version,
                                       base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.version <- trimws(pksim.version)
   base.search.folder <- trimws(base.search.folder)
