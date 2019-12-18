@@ -19,10 +19,10 @@ IndividualCharacteristics <- R6::R6Class(
       private$wrapProperty("Species", value)
     },
     population = function(value) {
-      private$wrapProperty("Population", value)
+      private$wrapProperty("Population", value, shouldSetNull = FALSE)
     },
     gender = function(value) {
-      private$wrapProperty("Gender", value)
+      private$wrapProperty("Gender", value, shouldSetNull = FALSE)
     },
     age = function(value) {
       private$parameterProperty("Age", value)
@@ -50,6 +50,9 @@ IndividualCharacteristics <- R6::R6Class(
       if (missing(value)) {
         SnapshotParameter$new(ref = rClr::clrGet(self$ref, parameterName))
       } else {
+        if(is.null(value)){
+          return()
+        }
         rClr::clrSet(self$ref, name = parameterName, value = value$ref)
       }
     }

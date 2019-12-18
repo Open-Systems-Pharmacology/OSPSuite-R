@@ -46,12 +46,22 @@ createIndividual <- function(individualCharacteristics, useDistribution = FALSE)
 
 #' Creates an individual using the PKSim Database.
 #'
-#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
+#' @param species Species of the individual as defined in PK-Sim (see Species enum)
+#' @param population Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)
+#' @param gender Gender to use to create the individual. (See Gender enum)
+#' @param weight Weight of the created individual
+#' @param weightUnit Unit in which the weight value is defined. Default is kg
+#' @param height Height of the created individual (for human species only)
+#' @param heightUnit Unit in which the height value is defined. Default is cm
+#' @param age Age of the created individual (for human species only)
+#' @param ageUnit Unit in which the age value is defined. Default is year(s)
+#' @param gestationalAge Gestational age of the created individual (for human species only using the Preterm population). Default is 40 Weeks
+#' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is week(s)
+#' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
 #' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
 #' that are actually
 #'
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
-#' @examples
 #'
 #' @export
 createIndividualCharacteristics <- function(

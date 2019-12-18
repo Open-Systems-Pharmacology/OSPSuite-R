@@ -15,9 +15,16 @@ moleculeOntogeny <- MoleculeOntogeny$new()
 moleculeOntogeny$molecule <- "CYP3A4"
 moleculeOntogeny$ontogeny <- "CYP3A4"
 
-individualCharacteristics <- createIndividualCharacteristics(
+dog <- createIndividualCharacteristics(
+  species = Species$Dog,
+  weight = 10
+)
+
+dogValues <- createIndividual(individualCharacteristics = dog)
+
+human <- createIndividualCharacteristics(
   species =  Species$Human,
-  population =  HumanPopulation$European_ICRP_2002,
+  population = "toto",
   gender = Gender$Female,
   age = 10,
   height = 175,
@@ -25,13 +32,8 @@ individualCharacteristics <- createIndividualCharacteristics(
   moleculeOntogenies =  moleculeOntogeny
   )
 
-print(individualCharacteristics)
+print(human)
 
-parameterValues <- createIndividual(individualCharacteristics = individualCharacteristics)
-distributedValues <- createIndividual(individualCharacteristics = individualCharacteristics, useDistribution = TRUE)
-
-
-parameters <- getAllParametersMatching(parameterValues$paths, sim)
-
-setParameterValues(parameterValues$paths, parameterValues$values, sim)
+parameterValues <- createIndividual(individualCharacteristics = human)
+distributedValues <- createIndividual(individualCharacteristics = human, useDistribution = TRUE)
 

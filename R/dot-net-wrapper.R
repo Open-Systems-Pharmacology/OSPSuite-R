@@ -19,10 +19,14 @@ DotNetWrapper <- R6::R6Class(
     }
   ),
   private = list(
-    wrapProperty = function(propertyName, value) {
+    wrapProperty = function(propertyName, value, shouldSetNull = TRUE) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
       } else {
+        # Problem converting reference object to NULL.
+        if(is.null(value) && !shouldSetNull){
+          return();
+        }
         rClr::clrSet(self$ref, propertyName, value)
       }
     },

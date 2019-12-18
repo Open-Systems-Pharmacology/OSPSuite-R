@@ -11,7 +11,29 @@ createIndividualCharacteristics(species, population = NULL,
   moleculeOntogenies = NULL)
 }
 \arguments{
-\item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{OriginData}}
+\item{species}{Species of the individual as defined in PK-Sim (see Species enum)}
+
+\item{population}{Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)}
+
+\item{gender}{Gender to use to create the individual. (See Gender enum)}
+
+\item{weight}{Weight of the created individual}
+
+\item{weightUnit}{Unit in which the weight value is defined. Default is kg}
+
+\item{height}{Height of the created individual (for human species only)}
+
+\item{heightUnit}{Unit in which the height value is defined. Default is cm}
+
+\item{age}{Age of the created individual (for human species only)}
+
+\item{ageUnit}{Unit in which the age value is defined. Default is year(s)}
+
+\item{gestationalAge}{Gestational age of the created individual (for human species only using the Preterm population). Default is 40 Weeks}
+
+\item{gestationalAgeUnit}{Unit in which the gestational age value is defined. Default is week(s)}
+
+\item{moleculeOntogenies}{Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.}
 
 \item{useDistribution}{Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
 that are actually}
@@ -21,7 +43,4 @@ An array of \code{ParameterValue} containing the value of each individual parame
 }
 \description{
 Creates an individual using the PKSim Database.
-}
-\examples{
-
 }
