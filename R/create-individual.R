@@ -44,6 +44,16 @@ createIndividual <- function(individualCharacteristics, useDistribution = FALSE)
   return(SnapshotParameter$new(value = value, unit = unit))
 }
 
+#' Creates an individual using the PKSim Database.
+#'
+#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
+#' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
+#' that are actually
+#'
+#' @return An array of \code{ParameterValue} containing the value of each individual parameter
+#' @examples
+#'
+#' @export
 createIndividualCharacteristics <- function(
                              species,
                              population = NULL,

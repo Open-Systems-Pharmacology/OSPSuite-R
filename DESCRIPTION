@@ -51,6 +51,7 @@ Collate:
     'pk-parameter.R'
     'pk-sim.R'
     'population.R'
+    'printable.R'
     'quantity-selection.R'
     'quantity-type.R'
     'quantity.R'

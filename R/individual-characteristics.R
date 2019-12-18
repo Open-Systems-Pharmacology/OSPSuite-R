@@ -38,8 +38,10 @@ IndividualCharacteristics <- R6::R6Class(
     }
   ),
   private = list(
-    printParam = function(caption, param){
-      if(is.null(param)){
+    .moleculeOntogenies = NULL,
+
+    printParam = function(caption, param) {
+      if (is.null(param)) {
         return()
       }
       param$printValue(caption)
@@ -48,7 +50,7 @@ IndividualCharacteristics <- R6::R6Class(
       if (missing(value)) {
         SnapshotParameter$new(ref = rClr::clrGet(self$ref, parameterName))
       } else {
-        rClr::clrSet(self$ref, name=parameterName, value = value$ref)
+        rClr::clrSet(self$ref, name = parameterName, value = value$ref)
       }
     }
   ),
@@ -66,16 +68,21 @@ IndividualCharacteristics <- R6::R6Class(
       private$printParam("GestationalAge", self$gestationalAge)
       private$printParam("Weight", self$weight)
       private$printParam("Height", self$height)
-      for(moleculeOntogeny in self$allMoleculeOntogenies()){
+      for (moleculeOntogeny in self$allMoleculeOntogenies()) {
         moleculeOntogeny$printMoleculeOntogeny()
       }
       invisible(self)
     },
     addMoleculeOntogeny = function(moleculeOntogeny) {
-      rClr::clrCall(self$ref, "AddMoleculeOntogeny", moleculeOntogeny$ref);
+      validateIsOfType(moleculeOntogeny, MoleculeOntogeny)
+      private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
+      netMoleculeOntogeny <- rClr::clrNew("PKSim.R.Domain.MoleculeOntogeny")
+      rClr::clrSet(netMoleculeOntogeny, "Molecule", moleculeOntogeny$molecule)
+      rClr::clrSet(netMoleculeOntogeny, "Ontogeny", moleculeOntogeny$ontogeny)
+      rClr::clrCall(self$ref, "AddMoleculeOntogeny", netMoleculeOntogeny)
     },
     allMoleculeOntogenies = function() {
-      toObjectType(rClr::clrGet(self$ref, "MoleculeOntogeniesAsArray"), MoleculeOntogeny)
+      private$.moleculeOntogenies
     }
   )
 )
@@ -88,7 +95,7 @@ IndividualCharacteristics <- R6::R6Class(
 #' @field unit Unit in which the value is defined
 #' @format NULL
 #' @export
-SnapshotParameter<- R6::R6Class(
+SnapshotParameter <- R6::R6Class(
   "SnapshotParameter",
   inherit = DotNetWrapper,
   active = list(
@@ -106,10 +113,10 @@ SnapshotParameter<- R6::R6Class(
       ref <- ref %||% rClr::clrNew("PKSim.Core.Snapshots.Parameter")
       super$initialize(ref)
       # Because of weird issue with nullable value in rClr
-      if(!is.null(value)){
+      if (!is.null(value)) {
         self$value <- value
       }
-      if(!is.null(unit)){
+      if (!is.null(unit)) {
         self$unit <- unit
       }
     },

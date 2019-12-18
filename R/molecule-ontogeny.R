@@ -9,24 +9,18 @@
 #' @export
 MoleculeOntogeny <- R6::R6Class(
   "MoleculeOntogeny",
-  inherit = DotNetWrapper,
-  active = list(
-    molecule = function(value) {
-      private$wrapProperty("Molecule", value)
-    },
-    ontogeny = function(value) {
-      private$wrapProperty("Ontogeny", value)
-    }
-  ),
+  inherit = Printable,
   public = list(
-    initialize = function(ref = NULL) {
-      ref <- ref %||% rClr::clrNew("PKSim.R.Domain.MoleculeOntogeny")
-      super$initialize(ref)
+    molecule = NULL,
+    ontogeny = NULL,
+    initialize = function(molecule=NULL, ontogeny = NULL) {
+      self$molecule <- molecule
+      self$ontogeny <- ontogeny
     },
     print = function(...) {
       private$printClass()
       private$printLine("Molecule", self$molecule)
-      private$printLine("Ontogeny", self$molecule)
+      private$printLine("Ontogeny", self$ontogeny)
       invisible(self)
     },
     printMoleculeOntogeny = function() {

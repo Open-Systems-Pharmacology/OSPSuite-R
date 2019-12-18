@@ -2,22 +2,16 @@
 % Please edit documentation in R/utilities-pksim.R
 \name{.getPathToPKSimInstallDir}
 \alias{.getPathToPKSimInstallDir}
-\title{Tries to find the installation path for a specific version of PK-Sim via the filesystem.
+\title{Tries to find the installation path for a specific version of PK-Sim.
 Searching is done in the following order:
-1. Search via filesystem in a guessed installation folder from the base.search.folder
-3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)}
+1. Search via Windows registry entry
+2. Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
+3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)}
 \usage{
-.getPathToPKSimInstallDir(pksim.version = ospsuiteEnv$packageVersion,
-  base.search.folder = Sys.getenv("ProgramW6432"))
-
 .getPathToPKSimInstallDir(pksim.version = ospsuiteEnv$packageVersion,
   base.search.folder = Sys.getenv("ProgramW6432"))
 }
 \arguments{
-\item{pksim.version}{The version number of Pk-Sim as a string.}
-
-\item{base.search.folder}{The base folder for filesystem-lookup fallback (default: 64-bit program folder)}
-
 \item{pksim.version}{The version number of Pk-Sim as a string.}
 
 \item{base.search.folder}{The base folder for filesystem-lookup fallback (default: 64-bit program folder)}
@@ -26,17 +20,8 @@ Searching is done in the following order:
 The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
 The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
 If more than one matching path is found a warning is produced.
-
-The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
-If more than one matching path is found a warning is produced.
 }
 \description{
-Tries to find the installation path for a specific version of PK-Sim via the filesystem.
-Searching is done in the following order:
-1. Search via filesystem in a guessed installation folder from the base.search.folder
-3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
-
 Tries to find the installation path for a specific version of PK-Sim.
 Searching is done in the following order:
 1. Search via Windows registry entry
@@ -44,8 +29,6 @@ Searching is done in the following order:
 3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
 }
 \examples{
-path <- .getPathToPKSimInstallDir("7.4")
-path2 <- .getPathToPKSimInstallDir("7.5", "C:/MyOSPFolder/")
 path <- .getPathToPKSimInstallDir("7.4")
 path2 <- .getPathToPKSimInstallDir("7.5", "C:/MyOSPFolder/")
 }
