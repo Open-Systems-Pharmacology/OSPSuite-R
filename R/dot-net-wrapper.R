@@ -11,6 +11,7 @@
 #'
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
+  inherit = Printable,
   public = list(
     ref = NULL,
     initialize = function(ref) {
@@ -18,10 +19,14 @@ DotNetWrapper <- R6::R6Class(
     }
   ),
   private = list(
-    wrapProperty = function(propertyName, value) {
+    wrapProperty = function(propertyName, value, shouldSetNull = TRUE) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
       } else {
+        # Problem converting reference object to NULL.
+        if(is.null(value) && !shouldSetNull){
+          return();
+        }
         rClr::clrSet(self$ref, propertyName, value)
       }
     },
@@ -58,15 +63,6 @@ DotNetWrapper <- R6::R6Class(
     },
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
-    },
-
-    printLine = function(entry, value) {
-      cat("  ", entry, ": ", value, "\n", sep = "")
-      invisible(self)
-    },
-
-    printClass = function() {
-      cat(class(self)[1], ": \n", sep = "")
     }
   )
 )

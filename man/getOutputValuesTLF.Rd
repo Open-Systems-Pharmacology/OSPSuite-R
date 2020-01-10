@@ -11,9 +11,10 @@ getOutputValuesTLF(simulationResults, quantitiesOrPaths = NULL,
 \item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}
 on a \code{Simulation} object.}
 
-\item{quantitiesOrPaths}{Quantity instances (element or vector) (typically retrieved using
-\code{getAllQuantitiesMatching}) or quantity path (element or vector of strings) for which the results are to be returned.
-When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible)}
+\item{quantitiesOrPaths}{Quantity instances (element or vector) typically retrieved using
+\code{getAllQuantitiesMatching} or quantity path (element or vector of strings) for which the results are to be returned. (optional)
+When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
+If quantitiesOrPaths is \code{NULL} (default value), returns the results for all output defined in the results.}
 
 \item{population}{population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.}
 

@@ -7,10 +7,10 @@
 #' @return The wrapped object (single or list)
 toObjectType <- function(netObject, class) {
   if (!is.list(netObject)) {
-    return(if (is.null(netObject)) NULL else class$new(netObject))
+    return(ifNotNull(netObject, class$new(ref = netObject)))
   }
   sapply(c(netObject), function(x) {
-    class$new(x)
+    class$new(ref = x)
   })
 }
 
@@ -36,7 +36,7 @@ toObjectType <- function(netObject, class) {
 #' @param condition The .NET object instances (single or list) to wrapp
 #' @param outputIfNotNull The class definition that will be used to convert the parameter
 #' @param outputIfNull The class definition that will be used to convert the parameter
-ifNotNull <- function(condition, outputIfNotNull, outputIfNull) {
+ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
   if (!is.null(condition)) {
     outputIfNotNull
   } else {

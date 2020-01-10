@@ -8,23 +8,14 @@ initPackage <- function() {
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
 
-  addPackageLibToPath()
+  .addPackageLibToPath()
 
   rClr::clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
 
   # Initialize once
-  apiConfigNet <- rClr::clrNew("OSPSuite.R.ApiConfig")
-  apiConfig <- ApiConfig$new(apiConfigNet)
+  apiConfig <- ApiConfig$new()
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
-}
-
-addPackageLibToPath <- function() {
-  libPath <- system.file("lib", package = ospsuiteEnv$packageName)
-
-  if (file.exists(libPath)) {
-    Sys.setenv(path = paste(libPath, Sys.getenv("path"), sep = ";"))
-  }
 }
