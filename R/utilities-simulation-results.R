@@ -88,9 +88,10 @@ getOutputValues <- function(simulationResults, quantitiesOrPaths, individualIds 
 #' @param simulationResults Object of type \code{SimulationResults} produced by calling \code{runSimulation}
 #' on a \code{Simulation} object.
 #'
-#' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using
-#' \code{getAllQuantitiesMatching}) or quantity path (element or vector of strings) for which the results are to be returned.
-#' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible)
+#' @param quantitiesOrPaths Quantity instances (element or vector) typically retrieved using
+#' \code{getAllQuantitiesMatching} or quantity path (element or vector of strings) for which the results are to be returned. (optional)
+#' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
+#' If quantitiesOrPaths is \code{NULL} (default value), returns the results for all output defined in the results.
 #'
 #' @param individualIds \code{numeric} IDs of individiuals for which the results should be extracted.
 #' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored

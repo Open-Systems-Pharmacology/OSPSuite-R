@@ -35,6 +35,8 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
 #' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
 #'
+#' @importFrom  utils readRegistry
+#'
 #' @examples
 #' path <- .getPathToPKSimInstallDirFromRegistry("7.4")
 .getPathToPKSimInstallDirFromRegistry <- function(pksim.version) {
