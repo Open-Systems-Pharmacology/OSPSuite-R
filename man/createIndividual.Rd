@@ -10,14 +10,11 @@ createIndividual(individualCharacteristics, useDistribution = FALSE)
 \item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{OriginData}}
 
 \item{useDistribution}{Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
-that are actually}
+that are actually distributed parameters}
 }
 \value{
 An array of \code{ParameterValue} containing the value of each individual parameter
 }
 \description{
 Creates an individual using the PKSim Database.
-}
-\examples{
-
 }

@@ -27,6 +27,8 @@ Searching is done in the following order:
 3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
 }
 \examples{
+\dontrun{
 path <- .getPathToPKSimInstallDirFromFileSystem("7.4")
 path2 <- .getPathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
+}
 }

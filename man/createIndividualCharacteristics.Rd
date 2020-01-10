@@ -34,9 +34,6 @@ createIndividualCharacteristics(species, population = NULL,
 \item{gestationalAgeUnit}{Unit in which the gestational age value is defined. Default is week(s)}
 
 \item{moleculeOntogenies}{Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.}
-
-\item{useDistribution}{Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
-that are actually}
 }
 \value{
 An array of \code{ParameterValue} containing the value of each individual parameter

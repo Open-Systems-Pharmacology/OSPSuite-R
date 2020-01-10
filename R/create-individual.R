@@ -2,10 +2,9 @@
 #'
 #' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
 #' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
-#' that are actually
+#' that are actually distributed parameters
 #'
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
-#' @examples
 #'
 #' @export
 createIndividual <- function(individualCharacteristics, useDistribution = FALSE) {
@@ -58,8 +57,6 @@ createIndividual <- function(individualCharacteristics, useDistribution = FALSE)
 #' @param gestationalAge Gestational age of the created individual (for human species only using the Preterm population). Default is 40 Weeks
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is week(s)
 #' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
-#' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
-#' that are actually
 #'
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
 #'

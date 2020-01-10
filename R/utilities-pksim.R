@@ -8,7 +8,7 @@
 #' @import rClr
 #' @export
 initPKSim <- function(pksimFolderPath = NULL) {
-  if(ospsuiteEnv$isPKSimLoaded){
+  if (ospsuiteEnv$isPKSimLoaded) {
     return()
   }
 
@@ -38,7 +38,10 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' @importFrom  utils readRegistry
 #'
 #' @examples
+#'
+#' \dontrun{
 #' path <- .getPathToPKSimInstallDirFromRegistry("7.4")
+#' }
 .getPathToPKSimInstallDirFromRegistry <- function(pksim.version) {
   pksimVersion <- trimws(pksim.version)
 
@@ -81,10 +84,12 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' If more than one matching path is found a warning is produced.
 #'
 #' @examples
+#' \dontrun{
 #' path <- .getPathToPKSimInstallDirFromFileSystem("7.4")
 #' path2 <- .getPathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
+#' }
 .getPathToPKSimInstallDirFromFileSystem <- function(pksim.version,
-                                      base.search.folder = Sys.getenv("ProgramW6432")) {
+                                                    base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.version <- trimws(pksim.version)
   base.search.folder <- trimws(base.search.folder)
   base.search.folder <- normalizePath(base.search.folder)
@@ -145,8 +150,10 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' If more than one matching path is found a warning is produced.
 #'
 #' @examples
+#' \dontrun{
 #' path <- .getPathToPKSimInstallDir("7.4")
 #' path2 <- .getPathToPKSimInstallDir("7.5", "C:/MyOSPFolder/")
+#' }
 .getPathToPKSimInstallDir <- function(pksim.version = ospsuiteEnv$packageVersion,
                                       base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.path <- .getPathToPKSimInstallDirFromRegistry(pksim.version)
