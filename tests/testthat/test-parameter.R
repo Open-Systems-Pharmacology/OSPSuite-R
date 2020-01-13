@@ -128,5 +128,5 @@ test_that("it can retrieve all units defined for a quantity", {
 })
 
 test_that("It can print parameter", {
-  expect_error(volumeParameter$print(), NA)
+  expect_error(capture.output(volumeParameter$print()), NA)
 })

@@ -62,22 +62,22 @@ createIndividual <- function(individualCharacteristics, useDistribution = FALSE)
 #'
 #' @export
 createIndividualCharacteristics <- function(
-                             species,
-                             population = NULL,
-                             gender = NULL,
-                             weight,
-                             weightUnit = "kg",
-                             height = NULL,
-                             heightUnit = "cm",
-                             age = NULL,
-                             ageUnit = "year(s)",
-                             gestationalAge = 40,
-                             gestationalAgeUnit = "week(s)",
-                             moleculeOntogenies = NULL) {
+                                            species,
+                                            population = NULL,
+                                            gender = NULL,
+                                            weight,
+                                            weightUnit = "kg",
+                                            height = NULL,
+                                            heightUnit = "cm",
+                                            age = NULL,
+                                            ageUnit = "year(s)",
+                                            gestationalAge = 40,
+                                            gestationalAgeUnit = "week(s)",
+                                            moleculeOntogenies = NULL) {
 
   # Assuming that if this function is called directly, PKSim was either initialized already
   # or should be initialized automatically
-  initPKSim();
+  initPKSim()
 
   validateIsString(species)
   validateIsString(population, nullAllowed = TRUE)

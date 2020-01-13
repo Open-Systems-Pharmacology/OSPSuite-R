@@ -13,7 +13,7 @@ ApiConfig <- R6::R6Class(
     }
   ),
   public = list(
-    initialize = function(){
+    initialize = function() {
       ref <- rClr::clrNew("OSPSuite.R.ApiConfig")
       super$initialize(ref)
     }

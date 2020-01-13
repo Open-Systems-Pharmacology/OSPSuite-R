@@ -53,5 +53,5 @@ test_that("It throws an error when trying to set the name of a container", {
 
 test_that("It can print container", {
   container <- getContainer(liverPath, sim)
-  expect_error(container$print(), NA)
+  expect_error(capture.output(container$print()), NA)
 })

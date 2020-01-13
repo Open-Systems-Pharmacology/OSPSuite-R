@@ -24,8 +24,8 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrGet(self$ref, propertyName)
       } else {
         # Problem converting reference object to NULL.
-        if(is.null(value) && !shouldSetNull){
-          return();
+        if (is.null(value) && !shouldSetNull) {
+          return()
         }
         rClr::clrSet(self$ref, propertyName, value)
       }

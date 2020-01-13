@@ -29,5 +29,5 @@ test_that("it can remove interval references", {
 })
 
 test_that("It can print output schema", {
-  expect_error(outputSchema$print(), NA)
+  expect_error(capture.output(outputSchema$print()), NA)
 })

@@ -50,7 +50,7 @@ IndividualCharacteristics <- R6::R6Class(
       if (missing(value)) {
         SnapshotParameter$new(ref = rClr::clrGet(self$ref, parameterName))
       } else {
-        if(is.null(value)){
+        if (is.null(value)) {
           return()
         }
         rClr::clrSet(self$ref, name = parameterName, value = value$ref)

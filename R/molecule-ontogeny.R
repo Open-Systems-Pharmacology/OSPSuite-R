@@ -13,7 +13,7 @@ MoleculeOntogeny <- R6::R6Class(
   public = list(
     molecule = NULL,
     ontogeny = NULL,
-    initialize = function(molecule=NULL, ontogeny = NULL) {
+    initialize = function(molecule = NULL, ontogeny = NULL) {
       self$molecule <- molecule
       self$ontogeny <- ontogeny
     },

@@ -1,5 +1,5 @@
-#Create Individual example.
-#Assuming PKSim installed
+# Create Individual example.
+# Assuming PKSim installed
 
 initPKSim("C:/projects/PK-Sim/src/PKSim.R/bin/Debug/net472")
 
@@ -23,17 +23,16 @@ dog <- createIndividualCharacteristics(
 dogValues <- createIndividual(individualCharacteristics = dog)
 
 human <- createIndividualCharacteristics(
-  species =  Species$Human,
+  species = Species$Human,
   population = "toto",
   gender = Gender$Female,
   age = 10,
   height = 175,
   weight = 60,
-  moleculeOntogenies =  moleculeOntogeny
-  )
+  moleculeOntogenies = moleculeOntogeny
+)
 
 print(human)
 
 parameterValues <- createIndividual(individualCharacteristics = human)
 distributedValues <- createIndividual(individualCharacteristics = human, useDistribution = TRUE)
-

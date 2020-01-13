@@ -14,5 +14,5 @@ test_that("Setting the value of a molecule in concentration mode should not over
 
 test_that("It can print molecule", {
   molecule <- getMolecule("Organism|M", sim_conc_based)
-  expect_error(molecule$print(), NA)
+  expect_error(capture.output(molecule$print()), NA)
 })
