@@ -43,4 +43,3 @@ ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 
 # Indicates whether PK-Sim was loaded already. This will prevent unrequired initialization of the pksim assemblies
 ospsuiteEnv$isPKSimLoaded <- FALSE
-

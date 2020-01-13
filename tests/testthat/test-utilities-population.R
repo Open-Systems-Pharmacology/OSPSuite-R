@@ -16,5 +16,5 @@ context("splitPopulationFile")
 test_that("It can split a valid csv file to split files", {
   populationFileName <- getTestDataFilePath("pop_10.csv")
   splitFiles <- splitPopulationFile(populationFileName, 3, tempdir(), "SplitFile")
-  expect_equal(length(splitFiles), 3 )
+  expect_equal(length(splitFiles), 3)
 })
