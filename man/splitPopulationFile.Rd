@@ -24,3 +24,9 @@ A tring vector containing the full path of the population files created. Note th
 Loads a population from the \code{csvPopulationFile} and split the loaded population according to
 \code{numberOfCores}.
 }
+\examples{
+csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+
+# Split the population in up to 3 files, saved in the temp folder
+splitFiles <- splitPopulationFile(csvPath, 3, tempdir(), "PopFile")
+}

@@ -27,7 +27,6 @@ loadPopulation <- function(csvPopulationFile) {
 #'
 #' # Split the population in up to 3 files, saved in the temp folder
 #' splitFiles <- splitPopulationFile(csvPath, 3, tempdir(), "PopFile")
-#'
 #' @export
 splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, outputFileName) {
   validateIsString(csvPopulationFile)

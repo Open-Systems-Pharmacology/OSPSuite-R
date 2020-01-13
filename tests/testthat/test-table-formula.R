@@ -57,5 +57,5 @@ test_that("It can clear all points from the table", {
 context("TableFormula$print")
 
 test_that("It can print the table", {
-  expect_error(tableFormula$print(), NA)
+  expect_error(capture.output(tableFormula$print()), NA)
 })

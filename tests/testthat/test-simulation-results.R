@@ -70,5 +70,5 @@ test_that("It throws an error when trying to set individual ids", {
 })
 
 test_that("It can print simulation results", {
-  expect_error(simResults$print(), NA)
+  expect_error(capture.output(simResults$print()), NA)
 })

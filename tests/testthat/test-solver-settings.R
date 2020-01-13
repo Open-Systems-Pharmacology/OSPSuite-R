@@ -37,5 +37,5 @@ test_that("It can set the basic solver parameters", {
 context("SolverSettings$print")
 
 test_that("It can print solver settings", {
-  expect_error(solver$print(), NA)
+  expect_error(capture.output(solver$print()), NA)
 })

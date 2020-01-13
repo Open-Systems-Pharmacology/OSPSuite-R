@@ -10,5 +10,5 @@ pkAnalyses <- calculatePKAnalyses(results)
 pkParameter <- pkAnalyses$allPKParametersFor(quantityPath = "Organism|VenousBlood|Plasma|Caffeine")[[1]]
 
 test_that("It can print PK-parameter", {
-  expect_error(pkParameter$print(), NA)
+  expect_error(capture.output(pkParameter$print()), NA)
 })

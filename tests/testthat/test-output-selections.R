@@ -12,5 +12,5 @@ test_that("It remove all outputs when outputs are cleared", {
 })
 
 test_that("It can print the output selections", {
-  expect_error(outputSelections$print(), NA)
+  expect_error(capture.output(outputSelections$print()), NA)
 })
