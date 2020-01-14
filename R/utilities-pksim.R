@@ -35,8 +35,6 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
 #' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
 #'
-#' @importFrom  utils readRegistry
-#'
 #' @examples
 #'
 #' \dontrun{
@@ -59,7 +57,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
   )
 
   reg.entry <- NA
-  try(reg.entry <- readRegistry(reg.path, hive = "HLM", maxdepth = 1, view = "64-bit"),
+  try(reg.entry <- utils::readRegistry(reg.path, hive = "HLM", maxdepth = 1, view = "64-bit"),
     silent = TRUE
   )
 
