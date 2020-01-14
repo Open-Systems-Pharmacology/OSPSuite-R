@@ -10,9 +10,10 @@ task :prepare_for_build,[:product_version] do |t, args|
 end
 
 task :postclean do 
+  os = 'win'
   clear_folders
-  nuget_restore 'win'
-  copy_files_to_lib_folder
+  nuget_restore os
+  copy_files_to_lib_folder 
 end
 
 private
@@ -34,8 +35,9 @@ def copy_packages_files
   copy_depdencies packages_dir, lib_dir do
     # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
     copy_files '*/**/netstandard*', 'dll'
-    # Copy all x64 release dll from OSPSuite
-    copy_files "OSPSuite.*#{native_folder}", 'dll'
+
+    # Copy all x64 release dll and so from OSPSuite
+    copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
   end
 
 end
