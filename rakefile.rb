@@ -11,7 +11,7 @@ end
 
 task :postclean do 
   clear_folders
-  nuget_restore
+  nuget_restore 'win'
   copy_files_to_lib_folder
 end
 
@@ -62,8 +62,11 @@ def update_package_version(version)
   Utils.replace_tokens(replacement, description_file)
 end
 
-def nuget_restore
+def nuget_restore(os)
   command_line = %W[install packages.config -OutputDirectory packages]
+  Utils.run_cmd('nuget', command_line)
+
+  command_line = %W[install packages.#{os}.config -OutputDirectory packages]
   Utils.run_cmd('nuget', command_line)
 end
 
