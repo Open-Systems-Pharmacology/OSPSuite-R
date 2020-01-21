@@ -20,10 +20,10 @@
 #' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
 #' @export
 getOutputValues <- function(simulationResults,
-                               quantitiesOrPaths = NULL,
-                               population = NULL,
-                               individualIds = NULL,
-                               stopIfNotFound = TRUE) {
+                            quantitiesOrPaths = NULL,
+                            population = NULL,
+                            individualIds = NULL,
+                            stopIfNotFound = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population, nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)

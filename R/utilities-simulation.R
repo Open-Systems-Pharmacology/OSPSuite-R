@@ -3,11 +3,13 @@
 #' This behavior can be overriden.
 #'
 #' @param filePath Full path of pkml simulation file to load.
-#' @param loadFromCache If TRUE, an already loaded pkml file will not be loaded
+#'
+#' @param loadFromCache If \code{TRUE}, an already loaded pkml file will not be loaded
 #' again, but the simulation object will be retrieved from cache. This is the
-#' default behavior. If FALSE, new object will be created.
-#' @param addToCache If TRUE, the loaded simulation is added to cache. If false,
-#' the returned simulation only exists locally. Default is TRUE.
+#' default behavior. If \code{FALSE}, new object will be created. Default value is \code{FALSE}
+#'
+#' @param addToCache If \code{TRUE}, the loaded simulation is added to cache. If \code{FALSE},
+#' the returned simulation only exists locally. Default is \code{TRUE}
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -16,7 +18,7 @@
 #' sim1 <- loadSimulation(simPath)
 #'
 #' # sim2 will be loaded from cache and will represent the same object as sim1
-#' sim2 <- loadSimulation(simPath)
+#' sim2 <- loadSimulation(simPath, loadFromCache = TRUE)
 #'
 #' parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim1)
 #' parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim2)
@@ -26,14 +28,14 @@
 #' setParameterValues(parameters = parameter2, values = 0)
 #' parameter1$value == parameter2$value # TRUE
 #'
-#' # sim3 will be loaded from not from cache
+#' # sim3 will not be loaded from cache
 #' sim3 <- loadSimulation(simPath, loadFromCache = FALSE)
 #' # parameter3 belong to different simulation object than parameter1 and parameter2
 #' parameter3 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim3)
 #' setParameterValues(parameters = parameter3, values = 1)
 #' parameter2$value == parameter3$value # FALSE#'
 #' @export
-loadSimulation <- function(filePath, loadFromCache = TRUE, addToCache = TRUE) {
+loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
   validateIsLogical(c(loadFromCache, addToCache))
 
   if (loadFromCache) {
