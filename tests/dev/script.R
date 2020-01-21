@@ -74,15 +74,13 @@ populationResults <- importResultsFromCSV(sim, "C:/temp/export/results.csv")
 # populationPkAnalyses <- calculatePKAnalyses(populationResults)
 #
 profvis({
-  outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
+  outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths)
 },
 prof_output = "C:/temp/export/prof.html"
 )
 
-outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths, c(1))
-# outputValues <- getOutputValuesTLF(populationResults, population, populationResults$allQuantityPaths)
-
-# outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths )
+outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths, c(1))
+# outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths)
 #
 # exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
 #

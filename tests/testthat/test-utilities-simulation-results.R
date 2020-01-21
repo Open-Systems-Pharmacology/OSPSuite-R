@@ -16,78 +16,31 @@ test_that("It throws an error when no valid simulation results are provided", {
   expect_error(getOutputValues(sim, resultsPaths))
 })
 
-test_that("It throws an error when no valid paths or quantities are provided", {
-  expect_error(getOutputValues(individualResults, 1))
-})
-
-test_that("It throws an error when no valid individual ids are provided", {
-  expect_error(getOutputValues(individualResults, resultsPaths, "one"))
-})
-
-test_that("It can retrieve results by paths", {
-  results <- getOutputValues(individualResults, resultsPaths)
-  expect_equal(length(results), length(resultsPaths))
-})
-
-test_that("It can retrieve results by quantities", {
-  results <- getOutputValues(individualResults, getAllQuantitiesMatching(resultsPaths, sim))
-  expect_equal(length(results), length(resultsPaths))
-})
-
-test_that("It can retrieve results with provided individual id", {
-  results <- getOutputValues(individualResults, resultsPaths, individualIds = c(0, 0, 1), stopIfNotFound = FALSE)
-  expect_equal(length(results), length(resultsPaths))
-  expect_false(is.null(results[[1]]))
-})
-
-test_that("It returns NA for results if no individual id was simulated and stopIfNotFound = FALSE", {
-  results <- getOutputValues(individualResults, resultsPaths, individualIds = 1, stopIfNotFound = FALSE)
-  expect_equal(length(results), length(resultsPaths))
-  expect_null(results[[1]])
-})
-
-test_that("It returns NULL for paths that were not simulated if stopIfNotFound = FALSE", {
-  results <- getOutputValues(individualResults, "testPath", stopIfNotFound = FALSE)
-  expect_equal(length(results), 1)
-  expect_null(results$"testPath")
-})
-
-test_that("It throws an error for paths that were not simulated", {
-  expect_error(getOutputValues(individualResults, "testPath"))
-})
-
-
-context("getOutputValuesTLF")
-
-test_that("It throws an error when no valid simulation results are provided", {
-  expect_error(getOutputValuesTLF(sim, resultsPaths))
-})
-
 test_that("It can retrieve values without a population specified", {
-  res <- getOutputValuesTLF(populationResults)
+  res <- getOutputValues(populationResults)
   data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_STATIC_COLUMNS)
 })
 
 test_that("It throws an error when no valid paths or quantities are provided", {
-  expect_error(getOutputValuesTLF(populationResults, population = population, 1))
+  expect_error(getOutputValues(populationResults, population = population, 1))
 })
 
 test_that("It can retrieve results by paths", {
-  res <- getOutputValuesTLF(populationResults, population = population)
+  res <- getOutputValues(populationResults, population = population)
   data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_EXTRA_COLUMNS)
 })
 
 test_that("It can retrieve results by quantities", {
-  res <- getOutputValuesTLF(populationResults, population = population, getAllQuantitiesMatching(resultsPaths, sim))
+  res <- getOutputValues(populationResults, population = population, getAllQuantitiesMatching(resultsPaths, sim))
   data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_EXTRA_COLUMNS)
 })
 
 test_that("It should return a data and meta data data frame per output paths", {
   path <- resultsPaths[[1]]
-  res <- getOutputValuesTLF(populationResults, population = population, path, individualIds = c(0, 1))
+  res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1))
   data <- res$data
   metaData <- res$metaData
   expect_equal(length(data), 1 + NUMBER_OF_EXTRA_COLUMNS)
@@ -97,7 +50,7 @@ test_that("It should return a data and meta data data frame per output paths", {
 })
 
 test_that("It can retrieve results with provided individual id", {
-  res <- getOutputValuesTLF(populationResults, population = population, individualIds = c(1, 3, 5))
+  res <- getOutputValues(populationResults, population = population, individualIds = c(1, 3, 5))
   data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_EXTRA_COLUMNS)
   indInd <- unique(data$IndividualId)
