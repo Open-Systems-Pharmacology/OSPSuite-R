@@ -6,17 +6,17 @@
 has been loaded before, the simulation is not loaded again but a cached object is returned.
 This behavior can be overriden.}
 \usage{
-loadSimulation(filePath, loadFromCache = TRUE, addToCache = TRUE)
+loadSimulation(filePath, loadFromCache = FALSE, addToCache = TRUE)
 }
 \arguments{
 \item{filePath}{Full path of pkml simulation file to load.}
 
-\item{loadFromCache}{If TRUE, an already loaded pkml file will not be loaded
+\item{loadFromCache}{If \code{TRUE}, an already loaded pkml file will not be loaded
 again, but the simulation object will be retrieved from cache. This is the
-default behavior. If FALSE, new object will be created.}
+default behavior. If \code{FALSE}, new object will be created. Default value is \code{FALSE}}
 
-\item{addToCache}{If TRUE, the loaded simulation is added to cache. If false,
-the returned simulation only exists locally. Default is TRUE.}
+\item{addToCache}{If \code{TRUE}, the loaded simulation is added to cache. If \code{FALSE},
+the returned simulation only exists locally. Default is \code{TRUE}}
 }
 \description{
 Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
@@ -30,7 +30,7 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim1 <- loadSimulation(simPath)
 
 # sim2 will be loaded from cache and will represent the same object as sim1
-sim2 <- loadSimulation(simPath)
+sim2 <- loadSimulation(simPath, loadFromCache = TRUE)
 
 parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim1)
 parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim2)
@@ -40,7 +40,7 @@ parameter2 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim2)
 setParameterValues(parameters = parameter2, values = 0)
 parameter1$value == parameter2$value # TRUE
 
-# sim3 will be loaded from not from cache
+# sim3 will not be loaded from cache
 sim3 <- loadSimulation(simPath, loadFromCache = FALSE)
 # parameter3 belong to different simulation object than parameter1 and parameter2
 parameter3 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim3)
