@@ -5,18 +5,32 @@
 \alias{Formula}
 \alias{TableFormula}
 \title{Formula}
-\usage{
-Formula
-
-TableFormula
-}
 \description{
 A formula of the model (Typically related to a \code{Quantity} such as a parameter)
 
 A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
 }
-\section{Fields}{
+\section{Methods}{
 
+\describe{
+  \item{ addPoint(x, y)}{Adds a point to the table, with x value in base unit for XDimension and y value in base unit for Dimension}
+  \item{ removePoint(x, y)}{ Remove the point having the same x and y from the table}
+  \item{ clearPoints()}{ Remove all points from the table}
+  }
+}
+
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Formula}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 
@@ -31,21 +45,143 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \item{\code{formulaString}}{Returns the formula as a string for an \code{ExplicitFormula} or \code{NULL} otherwise (Read-Only).}
 
 \item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-print}{\code{Formula$print()}}
+\item \href{#method-printFormula}{\code{Formula$printFormula()}}
+\item \href{#method-clone}{\code{Formula$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Formula$print(...)}\if{html}{\out{</div>}}
+}
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-printFormula"></a>}}
+\subsection{Method \code{printFormula()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Formula$printFormula()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Formula$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Formula]{ospsuite::Formula}} -> \code{TableFormula}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
 \item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
 
 \item{\code{useDerivedValues}}{Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}}
 
 \item{\code{xDimension}}{The dimension in which the x values are defined (Read-Only).}
-}}
-
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
-
-\describe{
-  \item{ addPoint(x, y)}{Adds a point to the table, with x value in base unit for XDimension and y value in base unit for Dimension}
-  \item{ removePoint(x, y)}{ Remove the point having the same x and y from the table}
-  \item{ clearPoints()}{ Remove all points from the table}
-  }
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-addPoint}{\code{TableFormula$addPoint()}}
+\item \href{#method-removePoint}{\code{TableFormula$removePoint()}}
+\item \href{#method-clearPoints}{\code{TableFormula$clearPoints()}}
+\item \href{#method-print}{\code{TableFormula$print()}}
+\item \href{#method-printFormula}{\code{TableFormula$printFormula()}}
+\item \href{#method-clone}{\code{TableFormula$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addPoint"></a>}}
+\subsection{Method \code{addPoint()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$addPoint(x, y)}\if{html}{\out{</div>}}
 }
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removePoint"></a>}}
+\subsection{Method \code{removePoint()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$removePoint(x, y)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clearPoints"></a>}}
+\subsection{Method \code{clearPoints()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$clearPoints()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-printFormula"></a>}}
+\subsection{Method \code{printFormula()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$printFormula()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -4,14 +4,14 @@
 \name{IndividualCharacteristics}
 \alias{IndividualCharacteristics}
 \title{IndividualCharacteristics}
-\usage{
-IndividualCharacteristics
-}
 \description{
 Characteristics of an individual describing its origin
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{IndividualCharacteristics}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{species}}{Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})}
 
@@ -26,6 +26,71 @@ Characteristics of an individual describing its origin
 \item{\code{weight}}{Weight of the individual as in instance of a \code{SnapshotParameter} (optional)}
 
 \item{\code{height}}{Height of the individual as in instance of a \code{SnapshotParameter} (optional)}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{IndividualCharacteristics$new()}}
+\item \href{#method-print}{\code{IndividualCharacteristics$print()}}
+\item \href{#method-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
+\item \href{#method-allMoleculeOntogenies}{\code{IndividualCharacteristics$allMoleculeOntogenies()}}
+\item \href{#method-clone}{\code{IndividualCharacteristics$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$new()}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addMoleculeOntogeny"></a>}}
+\subsection{Method \code{addMoleculeOntogeny()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allMoleculeOntogenies"></a>}}
+\subsection{Method \code{allMoleculeOntogenies()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$allMoleculeOntogenies()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

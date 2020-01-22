@@ -4,19 +4,9 @@
 \name{SimulationPKAnalyses}
 \alias{SimulationPKAnalyses}
 \title{SimulationPKAnalyses}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-SimulationPKAnalyses
-}
 \description{
 pK-Analyses of a simulation (either individual or population simulation).
 }
-\section{Fields}{
-
-\describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)}
-}}
-
 \section{Methods}{
 
 \describe{
@@ -25,4 +15,69 @@ pK-Analyses of a simulation (either individual or population simulation).
   }
 }
 
-\keyword{datasets}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationPKAnalyses}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{SimulationPKAnalyses$new()}}
+\item \href{#method-allPKParametersFor}{\code{SimulationPKAnalyses$allPKParametersFor()}}
+\item \href{#method-pKParameterFor}{\code{SimulationPKAnalyses$pKParameterFor()}}
+\item \href{#method-clone}{\code{SimulationPKAnalyses$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$new(ref, simulation)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allPKParametersFor"></a>}}
+\subsection{Method \code{allPKParametersFor()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$allPKParametersFor(quantityPath)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pKParameterFor"></a>}}
+\subsection{Method \code{pKParameterFor()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$pKParameterFor(quantityPath, pkParameter)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

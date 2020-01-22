@@ -1,0 +1,169 @@
+---
+title: "Introduction to ospsuite"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to ospsuite}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The **ospsuite** R-package is part of the [Open Systems Pharmacology](http://www.open-systems-pharmacology.org/) Software (OSPS), an open-source suite of modeling & simulation tools for pharmaceutical and other life-sciences applications. This package provides the functionality of loading, manipulating, and simulating the simulations created in the software tools PK-Sim and MoBi. This document gives an overview of the general workflow and the most important methods.
+
+## General information
+In order to load a simulation in R, it must be present in the **\*.pkml** file format. Every simulation in PK-Sim or MoBi can be exported to the *.pkml file. The examples shown below are based on the Aciclovir model located in the PK-Sim examples folder of the OSPS installation.
+
+The **ospsuite** R-package utilizes the concept of object oriented (OO) programming based on the [R6 system](https://adv-r.hadley.nz/r6.html). While the philisophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. Most of the functions implemented in **ospsuite** return an *instance* (or an *object*) of a *class*. These objects can be used as inputs for another functions. Additionally, each object offers a set of properties (which can be another objects) and functions, accessible by the `$` sign:
+
+```r
+object1 <- someFuction()
+aProperty <- object1$property1
+resultOfAFuction <- object1$multiply(1,2)
+```
+
+Important information about the object can be printed out by calling the `$print()` function of the object.
+
+The most important classes are:
+  : `Simulation` Representation of the simulation loaded from the *.pkml file.
+  : `SimulationSettings` #Short descriptions of the classes to be added here
+  : `SolverSettings`
+  : `OutputSchema`
+  : `OutputSelections`
+  : `SimulationResults`
+  : `Container`
+  : `Molecule`
+  : `Parameter`
+
+## Loading a simulation
+In general, every workflow starts with loading a simulation by calling the `loadSimulation()`function. The function receives the full path to the *.pkml file exported from PK-Sim or MoBi and returns an object of the class `Simulation`.
+
+```{r loadSim}
+library(ospsuite)
+
+dataPath <- file.path(getwd(), "..", "tests", "data", fsep = .Platform$file.sep)
+simFilePath <- file.path(dataPath, paste0("Aciclovir.pkml"), fsep = .Platform$file.sep)
+print(simFilePath)
+sim <- loadSimulation(simFilePath)
+sim$print()
+```
+
+## Accessing entities of the model - the path concept
+
+Once the simulation is loaded, it is possible to get access to various entities of the model. The most important entities are **containers**, **molecules**, and **parameters**. There are two types of functions for retrieving the entities - `getXXX(path, container, stopIfNotFound = TRUE)` and `getAllXXXMatching(paths, container)`. The former functions returns an object representing the entity with the given `path` located under the `container`, the latter returns a list of objects representing all entities whose paths match those provided in the list `paths` located under `container`.
+
+´path´ is a string where the elements of the path (i.e., containers in the hierarchy of the simulation) are separated by `|`. `container` is an instance of the 'Container'-class within the model structure the path is *relative* to. In most cases, `container` is the `Simulation` object created by calling `loadSimulation(pkmlSimulationFile)`.
+
+```{r getEntities}
+#Get the container "Liver"
+livContainer <- getContainer("Organism|Liver", sim)
+livContainer$print()
+
+#Get the molecule Aciclovir located in kindey intracellular space
+moleculeInKid <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
+moleculeInKid$print()
+
+#Get the parameter volume of the liver interstitial space
+livParam <- getParameter("Interstitial|Volume", livContainer)
+livParam$print()
+```
+
+The functions `getAllXXXMatching(paths, container)` take either a direct path (in this case they return a list with only one object per given path, if found), or generic paths as arugment. The generic paths are constructed by using the wildcard symbols `*` (exactly one occurrence of any element) or `**` (zero or more occurences of any element).
+
+```{r getAllEntitiesMatching}
+#Get the parameter `Volume` of the intracellular space of all organs, with exactly one path element before `Intracellular`
+volumeParams <- getAllParametersMatching("Organism|*|Intracellular|Volume", sim)
+length(volumeParams)
+#The PBPK model has 15 organs with an "Intracellular" sub-
+
+#Get the parameter `Volume` of the intracellular space of all organs, no matter how many sub-containers the organ has
+volumeParams <- getAllParametersMatching("Organism|**|Intracellular|Volume", sim)
+length(volumeParams)
+#The list also includes parameters of organs like "Liver|Periportal", or the mucosal compartments of the intestine.
+```
+Note that the path `"Organism|Kidney|*|IntracellularVolume"` will return no parameters in the standard models, as there are no sub-containers between `Kidney` and `Intracellular`. In contrast, `"Organism|Kidney|**|Intracellular|Volume"` is a valid path.
+
+The functions `getAllXXXMatching(paths, container)` can also be used to retrieve entities from multiple paths:
+
+```{r getAllEntitiesMatching_multiplePaths}
+#Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`
+molecules <- getAllMoleculesMatching(c("Organism|Liver|Periportal|Intracellular|Aciclovir", "Organism|VenousBlood|Plasma|Aciclovir"), sim)
+print(molecules)
+```
+
+## Running individual simulation and retreiving the results
+Once the simulation is loaded, it can be run to produce an object of the class `SimulationResults`.
+
+```{r runSim}
+individualResults <- runSimulation(simulation = sim)
+individualResults$print()
+```
+
+The advantage of storing the results in a object is that the user can keep different resutls of the same simulation produced with different settings (e.g., model parameters).
+
+
+Simulated time-value pairs for a specific ouput from the `SimulationResults`-object can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned. The paths of all available outputs can be accessed via
+
+```{r getAllOutputSelections}
+individualResults$allQuantityPaths
+```
+`getOutputValues` returns a list with two entries - `data` and `metadata`. `data`is a dataframe with three entries - `IndividualId` (not relevant for an individual simulation), `Time` a vector with simulated time values (in minutes, equal for all outputs), and a vector with simulated entries for each output requested.
+
+```{r getOutputValues}
+# Get simulated results by path
+resultsPath <- individualResults$allQuantityPaths[[1]]
+resultsData <- getOutputValues(simulationResults = individualResults, quantitiesOrPaths = resultsPath)
+
+resultsTime <- resultsData$data$Time
+resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
+
+plot(resultsTime, resultsValues)
+
+resultsValues <- resultsData$data[[3]]
+
+plot(resultsTime, resultsValues)
+```
+
+The results can be stored in and imported from a *.csv file with the methods `exportResultsToCSV` and `importResultsFromCSV`.
+
+## Adding new outputs
+By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to *.pkml file are generated. The user can add new outputs to the simulation with the method `addOutputs`. The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The ouput list is a property of the `simulation`, which has to be re-run to generate the newly added entries.
+
+```{r addOutputs}
+# Clear the list of generated outputs
+clearOutputs(sim)
+
+# Add new outputs as objects
+moleculeObject <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
+observerObject <- getQuantity("Organism|Lumen|Aciclovir|Fraction dissolved", container = sim)
+
+addOutputs(c(moleculeObject, observerObject), simulation = sim)
+
+# Add new ouputs as path strings
+addOutputs(c("Organism|Lumen|Stomach|Aciclovir", "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"), simulation = sim)
+
+# Run simulation
+individualResults <- runSimulation(simulation = sim)
+
+# Retrieve all generated outputs
+resultsData <- getOutputValues(simulationResults = individualResults)
+
+# Note that "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" is not in the list of generated results any more
+names(resultsData$data)
+```
+
+
+## Population simulaitons
+Exporting a population simulation in PK-Sim to pkml exports an individual simulation. Apply population parameter on top.
+
+SimulationRunOptions?
+
+## Functions to cover:
+Simulation$saveSimulation()
+
+-----
