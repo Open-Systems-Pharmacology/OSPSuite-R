@@ -12,7 +12,7 @@ initPKSim("C:/projects/PK-Sim/src/PKSim.R/bin/Debug/net472")
 # print(individualCharacteristics)
 #
 moleculeOntogeny <- MoleculeOntogeny$new()
-moleculeOntogeny$molecule <- "CYP3A4"
+moleculeOntogeny$molecule <- "MyMolecule"
 moleculeOntogeny$ontogeny <- "CYP3A4"
 
 dog <- createIndividualCharacteristics(
@@ -24,7 +24,7 @@ dogValues <- createIndividual(individualCharacteristics = dog)
 
 human <- createIndividualCharacteristics(
   species = Species$Human,
-  population = "toto",
+  population = HumanPopulation$Asian_Tanaka_1996,
   gender = Gender$Female,
   age = 10,
   height = 175,
@@ -35,4 +35,4 @@ human <- createIndividualCharacteristics(
 print(human)
 
 parameterValues <- createIndividual(individualCharacteristics = human)
-distributedValues <- createIndividual(individualCharacteristics = human, useDistribution = TRUE)
+distributedValues <- createDistributions(individualCharacteristics = human)
