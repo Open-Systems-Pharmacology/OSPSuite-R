@@ -4,20 +4,59 @@
 \name{ValuePoint}
 \alias{ValuePoint}
 \title{ValuePoint}
-\usage{
-ValuePoint
-}
 \description{
 A point in a table formula
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ValuePoint}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{x}}{The x value of the point.}
 
 \item{\code{y}}{the y value of the point.}
 
 \item{\code{restartSolver}}{Indicates whether the solver should be restarted when this point is reached. Default is \code{FALSE}}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-print}{\code{ValuePoint$print()}}
+\item \href{#method-clone}{\code{ValuePoint$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ValuePoint$print(...)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ValuePoint$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

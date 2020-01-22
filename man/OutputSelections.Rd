@@ -4,11 +4,75 @@
 \name{OutputSelections}
 \alias{OutputSelections}
 \title{OutputSelections}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-OutputSelections
-}
 \description{
 List of selected quantities selected as output for a given simulation
 }
-\keyword{datasets}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{OutputSelections}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-clear}{\code{OutputSelections$clear()}}
+\item \href{#method-addQuantity}{\code{OutputSelections$addQuantity()}}
+\item \href{#method-removeQuantity}{\code{OutputSelections$removeQuantity()}}
+\item \href{#method-print}{\code{OutputSelections$print()}}
+\item \href{#method-clone}{\code{OutputSelections$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clear"></a>}}
+\subsection{Method \code{clear()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$clear()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addQuantity"></a>}}
+\subsection{Method \code{addQuantity()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$addQuantity(quantity)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removeQuantity"></a>}}
+\subsection{Method \code{removeQuantity()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$removeQuantity(value)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

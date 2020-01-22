@@ -4,21 +4,59 @@
 \name{PKParameter}
 \alias{PKParameter}
 \title{PKParameter}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-PKParameter
-}
 \description{
 pK-Parameter values for all indiviudals of a simulation (1 or more) calculated for \code{quantityPath}
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{PKParameter}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{values}}{All values for \code{quantityPath} and \code{name}}
 
 \item{\code{name}}{The name of the pK-Parameter (AUC, Cmax, Tmax etc...)}
 
 \item{\code{quantityPath}}{The path of the quantity for which the values were calculated}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-print}{\code{PKParameter$print()}}
+\item \href{#method-clone}{\code{PKParameter$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PKParameter$print(...)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PKParameter$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

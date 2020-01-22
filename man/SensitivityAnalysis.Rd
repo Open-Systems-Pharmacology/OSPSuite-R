@@ -4,14 +4,25 @@
 \name{SensitivityAnalysis}
 \alias{SensitivityAnalysis}
 \title{SensitivityAnalysis}
-\usage{
-SensitivityAnalysis
-}
 \description{
 Supports Sensitivity Analysis workflow to assess the impact of input parameters on the simulation outputs
 }
-\section{Fields}{
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysis}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{simulation}}{Simulation for which the sensitivity analysis should be performed}
 
+\item{\code{parameters}}{List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
+on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+with a value that was overriden by the user}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{simulation}}{Simulation for which the sensitivity analysis should be performed}
 
@@ -22,6 +33,58 @@ with a value that was overriden by the user}
 \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 
 \item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{SensitivityAnalysis$new()}}
+\item \href{#method-print}{\code{SensitivityAnalysis$print()}}
+\item \href{#method-clone}{\code{SensitivityAnalysis$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$new(
+  simulation,
+  parameters = NULL,
+  numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
+  variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange
+)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

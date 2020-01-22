@@ -4,14 +4,14 @@
 \name{SimulationRunOptions}
 \alias{SimulationRunOptions}
 \title{SimulationRunOptions}
-\usage{
-SimulationRunOptions
-}
 \description{
 Options to be passed to the simulation engine
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationRunOptions}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
 Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
@@ -19,6 +19,48 @@ Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
 \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
 
 \item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{ospsuiteEnv$showProgress}}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{SimulationRunOptions$new()}}
+\item \href{#method-clone}{\code{SimulationRunOptions$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$new(
+  numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
+  checkForNegativeValues = TRUE,
+  showProgress = ospsuiteEnv$showProgress
+)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

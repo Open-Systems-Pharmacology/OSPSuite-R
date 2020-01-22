@@ -4,19 +4,48 @@
 \name{Entity}
 \alias{Entity}
 \title{Entity}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-Entity
-}
 \description{
 Abstract wrapper for an OSPSuite.Core Entity class
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Entity}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{path}}{The path of the entity in the container hiearchy without the simulation name. (read-only)}
 
 \item{\code{fullPath}}{Same as \code{path}, but with the simulation name. (read-only)}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-clone}{\code{Entity$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Entity$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}
