@@ -37,11 +37,11 @@ before_build:
   - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
 build_script:
-  - Rscript -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
-  - Rscript -e "devtools::install_github('Open-Systems-Pharmacology/rClr')"
+  - Rscript -e "install.packages('devtools', repos = 'http://cran.us.r-project.org', lib='C:\RLibrary')"
+  - Rscript -e "devtools::install_github('Open-Systems-Pharmacology/rClr', lib='C:\RLibrary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org', lib='C:\RLibrary')"
 
 on_success:
   - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
