@@ -21,10 +21,15 @@ Depends:
 Imports: 
     R6
 Suggests: 
-    testthat (>= 2.1.0)
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0),
+    pander
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
 Collate: 
     'api-config.R'
     'cache.R'
