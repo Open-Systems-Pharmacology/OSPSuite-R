@@ -19,6 +19,13 @@ SimulationRunOptions <- R6::R6Class(
       self$numberOfCoresToUse <- numberOfCoresToUse
       self$checkForNegativeValues <- checkForNegativeValues
       self$showProgress <- showProgress
+    },
+    print = function(...) {
+      private$printClass()
+      private$printLine("Number of cores to use", self$numberOfCoresToUse)
+      private$printLine("Negative values allowed", self$checkForNegativeValues)
+      private$printLine("Show progress bar", self$showProgress)
+      invisible(self)
     }
   ),
   active = list(

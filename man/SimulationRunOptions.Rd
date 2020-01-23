@@ -26,6 +26,7 @@ Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SimulationRunOptions$new()}}
+\item \href{#method-print}{\code{SimulationRunOptions$print()}}
 \item \href{#method-clone}{\code{SimulationRunOptions$clone()}}
 }
 }
@@ -44,6 +45,14 @@ Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
   checkForNegativeValues = TRUE,
   showProgress = ospsuiteEnv$showProgress
 )}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$print(...)}\if{html}{\out{</div>}}
 }
 
 }
