@@ -37,6 +37,7 @@ before_build:
   - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
 build_script:
+  - Rscript -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
   - Rscript -e "devtools::install_github('Open-Systems-Pharmacology/rClr')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
