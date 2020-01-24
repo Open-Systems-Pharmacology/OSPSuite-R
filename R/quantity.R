@@ -17,11 +17,11 @@ QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 #' @field isDistributed Returns \code{TRUE} if the quantity represents a quantity with an underlying distribution otherwise \code{FALSE}
 #' @field formulaString Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.
 #' @field isFixedValue Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}
+#'@field  the list of all supported units
 #' @section Methods:
 #' \describe{
 #'   \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
 #'   \item{hasUnit(unit)}{Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}. For the list of supported units, use \code{allUnits}}
-#'   \item{allUnits()}{Returns the list of all supported units}
 #'   \item{reset()}{Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}. }
 #'   }
 #' @format NULL
@@ -41,6 +41,9 @@ Quantity <- R6::R6Class(
     },
     dimension = function(value) {
       private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
+    },
+    allUnits = function(value) {
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
     },
     quantityType = function(value) {
       private$wrapReadOnlyProperty("QuantityType", value)
@@ -111,9 +114,6 @@ Quantity <- R6::R6Class(
     hasUnit = function(unit) {
       validateIsString(unit)
       rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "HasUnit", self$ref, unit)
-    },
-    allUnits = function() {
-      rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "AllUnitNames", self$ref)
     },
     reset = function() {
       self$isFixedValue <- FALSE

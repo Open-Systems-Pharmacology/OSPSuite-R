@@ -4,8 +4,7 @@
 \alias{runSimulation}
 \title{Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation}
 \usage{
-runSimulation(simulation, population = NULL,
-  simulationRunOptions = NULL)
+runSimulation(simulation, population = NULL, simulationRunOptions = NULL)
 }
 \arguments{
 \item{simulation}{Instance of a \code{Simulation} to simulate.}

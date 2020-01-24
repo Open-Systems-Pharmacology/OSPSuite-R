@@ -4,9 +4,6 @@
 \name{Molecule}
 \alias{Molecule}
 \title{Molecule}
-\usage{
-Molecule
-}
 \description{
 A molecule defined in a compartment of the system
 }
@@ -14,3 +11,77 @@ A molecule defined in a compartment of the system
 Derived from \link{Quantity}, please see base class documentation.
 }
 \keyword{Molecule}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Molecule}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Molecule$new()}}
+\item \href{#method-print}{\code{Molecule$print()}}
+\item \href{#method-clone}{\code{Molecule$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit">}\href{../../ospsuite/html/Quantity.html#method-hasUnit}{\code{ospsuite::Quantity$hasUnit()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue">}\href{../../ospsuite/html/Quantity.html#method-printQuantityValue}{\code{ospsuite::Quantity$printQuantityValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue">}\href{../../ospsuite/html/Quantity.html#method-printValue}{\code{ospsuite::Quantity$printValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset">}\href{../../ospsuite/html/Quantity.html#method-reset}{\code{ospsuite::Quantity$reset()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue">}\href{../../ospsuite/html/Quantity.html#method-setValue}{\code{ospsuite::Quantity$setValue()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Molecule$new(ref)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET reference object.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `Molecule` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Molecule$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Molecule$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

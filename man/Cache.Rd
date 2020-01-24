@@ -4,19 +4,106 @@
 \name{Cache}
 \alias{Cache}
 \title{Cache}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-Cache
-}
 \description{
 Structure for caching objects
 }
-\section{Fields}{
-
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{type}}{Type of the object that are cached. All objects must be of the same type.}
-
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
 \item{\code{keys}}{Keys of the cached objects}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Cache$new()}}
+\item \href{#method-reset}{\code{Cache$reset()}}
+\item \href{#method-set}{\code{Cache$set()}}
+\item \href{#method-hasKey}{\code{Cache$hasKey()}}
+\item \href{#method-get}{\code{Cache$get()}}
+\item \href{#method-dropKey}{\code{Cache$dropKey()}}
+\item \href{#method-print}{\code{Cache$print()}}
+\item \href{#method-clone}{\code{Cache$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$new(type = NULL)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-reset"></a>}}
+\subsection{Method \code{reset()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$reset()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set"></a>}}
+\subsection{Method \code{set()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$set(key, value)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hasKey"></a>}}
+\subsection{Method \code{hasKey()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$hasKey(key)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get"></a>}}
+\subsection{Method \code{get()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$get(key)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-dropKey"></a>}}
+\subsection{Method \code{dropKey()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$dropKey(key)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Cache$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

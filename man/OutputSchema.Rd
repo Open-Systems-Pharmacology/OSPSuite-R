@@ -4,22 +4,9 @@
 \name{OutputSchema}
 \alias{OutputSchema}
 \title{OutputSchema}
-\usage{
-OutputSchema
-}
 \description{
 Output schema associated with a given simulation
 }
-\section{Fields}{
-
-\describe{
-\item{\code{intervals}}{All intervals defined in the schema (Read-Only)}
-
-\item{\code{timePoints}}{All single time points defined in the schema (Read-Only)}
-
-\item{\code{endTime}}{Returns the end time of the simulation in kernel unit (Read-Only)}
-}}
-
 \section{Methods}{
 
 \describe{
@@ -30,4 +17,92 @@ Output schema associated with a given simulation
   }
 }
 
-\keyword{datasets}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{OutputSchema}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{intervals}}{All intervals defined in the schema (Read-Only)}
+
+\item{\code{timePoints}}{All single time points defined in the schema (Read-Only)}
+
+\item{\code{endTime}}{Returns the end time of the simulation in kernel unit (Read-Only)}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-clear}{\code{OutputSchema$clear()}}
+\item \href{#method-addInterval}{\code{OutputSchema$addInterval()}}
+\item \href{#method-removeInterval}{\code{OutputSchema$removeInterval()}}
+\item \href{#method-addTimePoints}{\code{OutputSchema$addTimePoints()}}
+\item \href{#method-print}{\code{OutputSchema$print()}}
+\item \href{#method-clone}{\code{OutputSchema$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clear"></a>}}
+\subsection{Method \code{clear()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$clear()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addInterval"></a>}}
+\subsection{Method \code{addInterval()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addInterval(interval)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removeInterval"></a>}}
+\subsection{Method \code{removeInterval()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$removeInterval(interval)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addTimePoints"></a>}}
+\subsection{Method \code{addTimePoints()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addTimePoints(timePoints)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

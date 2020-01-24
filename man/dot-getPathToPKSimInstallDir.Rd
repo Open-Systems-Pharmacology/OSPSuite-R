@@ -8,8 +8,10 @@ Searching is done in the following order:
 2. Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
 3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)}
 \usage{
-.getPathToPKSimInstallDir(pksim.version = ospsuiteEnv$packageVersion,
-  base.search.folder = Sys.getenv("ProgramW6432"))
+.getPathToPKSimInstallDir(
+  pksim.version = ospsuiteEnv$packageVersion,
+  base.search.folder = Sys.getenv("ProgramW6432")
+)
 }
 \arguments{
 \item{pksim.version}{The version number of Pk-Sim as a string.}

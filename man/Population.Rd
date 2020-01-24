@@ -4,20 +4,9 @@
 \name{Population}
 \alias{Population}
 \title{Population}
-\usage{
-Population
-}
 \description{
 List of individuals used in a population simulation
 }
-\section{Fields}{
-
-\describe{
-\item{\code{count}}{the number of individual in the population}
-
-\item{\code{allCovariateNames}}{the names of all covariates defined in the population}
-}}
-
 \section{Methods}{
 
 \describe{
@@ -29,4 +18,99 @@ List of individuals used in a population simulation
   }
 }
 
-\keyword{datasets}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{count}}{the number of individual in the population}
+
+\item{\code{allCovariateNames}}{the names of all covariates defined in the population}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-has}{\code{Population$has()}}
+\item \href{#method-setValues}{\code{Population$setValues()}}
+\item \href{#method-getValues}{\code{Population$getValues()}}
+\item \href{#method-getCovariateValues}{\code{Population$getCovariateValues()}}
+\item \href{#method-getCovariateValue}{\code{Population$getCovariateValue()}}
+\item \href{#method-print}{\code{Population$print()}}
+\item \href{#method-clone}{\code{Population$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-has"></a>}}
+\subsection{Method \code{has()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$has(parameterOrPath)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setValues"></a>}}
+\subsection{Method \code{setValues()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$setValues(parameterOrPath, values)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getValues"></a>}}
+\subsection{Method \code{getValues()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getValues(parameterOrPath)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCovariateValues"></a>}}
+\subsection{Method \code{getCovariateValues()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValues(covariateName)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCovariateValue"></a>}}
+\subsection{Method \code{getCovariateValue()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValue(covariateName, individualId)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$print(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -4,19 +4,9 @@
 \name{DotNetWrapper}
 \alias{DotNetWrapper}
 \title{DotNetRwapper}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
-\usage{
-DotNetWrapper
-}
 \description{
 Wrapper class for .net Object
 }
-\section{Fields}{
-
-\describe{
-\item{\code{ref}}{The actual .NET object instanced being wrapped}
-}}
-
 \section{Methods}{
 
 \describe{
@@ -25,4 +15,62 @@ Wrapper class for .net Object
   }
 }
 
-\keyword{datasets}
+\section{Super class}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DotNetWrapper}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{ref}}{The actual .NET object instanced being wrapped}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{DotNetWrapper$new()}}
+\item \href{#method-clone}{\code{DotNetWrapper$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DotNetWrapper$new(ref)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{Instance of the .NET object to wrap.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `DotNetWrapper` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DotNetWrapper$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

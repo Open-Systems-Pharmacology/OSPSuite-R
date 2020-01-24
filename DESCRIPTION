@@ -24,7 +24,7 @@ Suggests:
     testthat (>= 2.1.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Collate: 
     'api-config.R'
     'cache.R'
