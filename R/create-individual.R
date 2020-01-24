@@ -1,39 +1,68 @@
-#' Creates an individual using the PKSim Database.
+#' Creates an individual using the PKSim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
 #' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
 #' that are actually distributed parameters
 #'
+#' @return An list with two entries:
+#' The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
+#' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#'
+#' @note When updating a simulation with the value for a new individual, only use the \code{distributedParameters} to ensure that you do not override
+#' formula parameters.
+#'
+#' @export
+createIndividual <- function(individualCharacteristics) {
+  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+
+  individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
+  createIndividualResults <- rClr::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
+
+  distributedParameters <- .getPropertyValue(createIndividualResults, "DistributedParameters")
+  derivedParameters <- .getPropertyValue(createIndividualResults, "DerivedParameters")
+
+  distributedParameters <- .parameterValueListFrom(distributedParameters)
+  derivedParameters <- .parameterValueListFrom(derivedParameters)
+
+  list(distributedParameters = distributedParameters, derivedParameters = derivedParameters)
+}
+
+#' Creates the parameter distributions based on the given individual \code{individualCharacteristics}
+#'
+#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
+#'
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
 #'
 #' @export
-createIndividual <- function(individualCharacteristics, useDistribution = FALSE) {
+createDistributions <- function(individualCharacteristics) {
   validateIsOfType(individualCharacteristics, IndividualCharacteristics)
-  validateIsLogical(useDistribution)
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
-  methodToCall <- if (useDistribution) "DistributionsFor" else "CreateIndividual"
-  netParams <- rClr::clrCall(individualFactory, methodToCall, individualCharacteristics$ref)
+  distributedParameters <- rClr::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
 
-  outputList <- list(
-    paths = .getPropertyValues(netParams, "ParameterPath"),
-    values = .getPropertyValues(netParams, "Value")
+  list(
+    paths = .getPropertyValues(distributedParameters, "ParameterPath"),
+    values = .getPropertyValues(distributedParameters, "Value"),
+    means = .getPropertyValues(distributedParameters, "Mean"),
+    stds = .getPropertyValues(distributedParameters, "Std"),
+    distributionTypes = .getPropertyValues(.getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
   )
+}
 
-  if (useDistribution) {
-    distributionList <- list(
-      means = .getPropertyValues(netParams, "Mean"),
-      stds = .getPropertyValues(netParams, "Std"),
-      distributionTypes = .getPropertyValues(.getPropertyValues(netParams, "DistributionType"), "DisplayName")
-    )
-    outputList <- c(outputList, distributionList)
-  }
 
-  return(outputList)
+.parameterValueListFrom <- function(netParameterValues) {
+  list(
+    paths = .getPropertyValues(netParameterValues, "ParameterPath"),
+    values = .getPropertyValues(netParameterValues, "Value")
+  )
 }
 
 .getPropertyValues <- function(netObjects, propertyName) {
-  sapply(netObjects, function(x) rClr::clrGet(x, name = propertyName))
+  sapply(netObjects, function(x) .getPropertyValue(x, propertyName))
+}
+
+.getPropertyValue <- function(netObject, propertyName) {
+  rClr::clrGet(netObject, name = propertyName)
 }
 
 .createSnapshotParameter <- function(value, unit) {

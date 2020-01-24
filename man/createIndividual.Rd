@@ -2,9 +2,9 @@
 % Please edit documentation in R/create-individual.R
 \name{createIndividual}
 \alias{createIndividual}
-\title{Creates an individual using the PKSim Database.}
+\title{Creates an individual using the PKSim Database}
 \usage{
-createIndividual(individualCharacteristics, useDistribution = FALSE)
+createIndividual(individualCharacteristics)
 }
 \arguments{
 \item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{OriginData}}
@@ -13,8 +13,14 @@ createIndividual(individualCharacteristics, useDistribution = FALSE)
 that are actually distributed parameters}
 }
 \value{
-An array of \code{ParameterValue} containing the value of each individual parameter
+An list with two entries:
+The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
+The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 }
 \description{
-Creates an individual using the PKSim Database.
+Creates an individual using the PKSim Database
+}
+\note{
+When updating a simulation with the value for a new individual, only use the \code{distributedParameters} to ensure that you do not override
+formula parameters.
 }
