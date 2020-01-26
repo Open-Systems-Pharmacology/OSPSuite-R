@@ -10,6 +10,13 @@ Simulation Interval (typically associated with an instace of \code{OutputSchema}
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Container]{ospsuite::Container}} -> \code{Interval}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{Name}}{of the interval}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -18,6 +25,8 @@ Simulation Interval (typically associated with an instace of \code{OutputSchema}
 \item{\code{endTime}}{End time of interval (instance of \code{Parameter})}
 
 \item{\code{resolution}}{Resolution of interval in pts/min (instance of \code{Parameter})}
+
+\item{\code{Name}}{of the interval}
 }
 \if{html}{\out{</div>}}
 }
@@ -38,10 +47,18 @@ Simulation Interval (typically associated with an instace of \code{OutputSchema}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Interval$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

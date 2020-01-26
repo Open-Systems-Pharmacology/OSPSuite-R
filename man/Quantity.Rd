@@ -7,24 +7,8 @@
 \description{
 A quantity of the model (with unit, value) such as a Parameter or an Amount
 }
-\section{Methods}{
-
-\describe{
-  \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
-  \item{hasUnit(unit)}{Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}. For the list of supported units, use \code{allUnits}}
-  \item{reset()}{Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}. }
-  }
-}
-
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{Quantity}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{the}}{list of all supported units}
-}
-\if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -36,6 +20,8 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item{\code{displayUnit}}{The unit in which the quantity value is usually displayed (Read-Only)}
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
+
+\item{\code{allUnits}}{the list of all supported units}
 
 \item{\code{quantityType}}{The type of the quantity (Read-Only)}
 
@@ -51,9 +37,11 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 
 \item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
 
-\item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}}
-
-\item{\code{the}}{list of all supported units}
+\item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}
+@description
+Convert value from unit to the base unit and sets the value in base unit.
+@param value Value to set. If unit is null, we assume that the value is in base unit
+@param unit Optional unit in which the value is given.}
 }
 \if{html}{\out{</div>}}
 }
@@ -119,10 +107,21 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasUnit"></a>}}
 \subsection{Method \code{hasUnit()}}{
+Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
+For the list of supported units, use \code{allUnits}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$hasUnit(unit)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{unit}}{Unit to check
+@description
+Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reset"></a>}}

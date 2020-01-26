@@ -7,16 +7,6 @@
 \description{
 Output schema associated with a given simulation
 }
-\section{Methods}{
-
-\describe{
-  \item{clear}{Clears all intervals and time points}
-  \item{addInterval(interval)}{Adds an interval to the schema}
-  \item{removeInterval(interval)}{Removes the interval from the schema}
-  \item{addTimePoints(timePoints)}{Adds the time points to the schema}
-  }
-}
-
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{OutputSchema}
 }
@@ -52,6 +42,7 @@ Output schema associated with a given simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clear"></a>}}
 \subsection{Method \code{clear()}}{
+Clears all intervals and time points
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSchema$clear()}\if{html}{\out{</div>}}
 }
@@ -60,34 +51,66 @@ Output schema associated with a given simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addInterval"></a>}}
 \subsection{Method \code{addInterval()}}{
+Adds an interval to the schema
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addInterval(interval)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{interval}}{Interval to add}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-removeInterval"></a>}}
 \subsection{Method \code{removeInterval()}}{
+Removes the interval from the schema
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSchema$removeInterval(interval)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{interval}}{Interval to remove}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addTimePoints"></a>}}
 \subsection{Method \code{addTimePoints()}}{
+Adds the time points to the schema
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addTimePoints(timePoints)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{timePoints}}{Time points to add to the interval}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSchema$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
