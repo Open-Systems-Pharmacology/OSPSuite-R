@@ -13,7 +13,7 @@ Molecule <- R6::R6Class(
   "Molecule",
   inherit = Quantity,
   active = list(
-    #' @field Start value of the molecule
+    #' @field value Start value of the molecule
     value = function(value) {
       if (missing(value)) {
         ifNotNull(private$.startValue, private$.startValue$value, super$value)

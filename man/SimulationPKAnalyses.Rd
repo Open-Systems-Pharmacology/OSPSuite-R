@@ -7,14 +7,6 @@
 \description{
 pK-Analyses of a simulation (either individual or population simulation).
 }
-\section{Methods}{
-
-\describe{
-  \item{allPKParametersFor(quantityPath)}{All pK Parameters defined for a given path}
-  \item{pKParameterFor(quantityPath, pkParameter)}{The pK Parameter defined for the given path and name}
-  }
-}
-
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationPKAnalyses}
 }
@@ -43,26 +35,57 @@ pK-Analyses of a simulation (either individual or population simulation).
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$new(ref, simulation)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET reference}
+
+\item{\code{simulation}}{Simulation for which the pkParameters were calculated}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `SimulationPKAnalyses` object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParametersFor"></a>}}
 \subsection{Method \code{allPKParametersFor()}}{
+Returns all pK Parameters defined for a given path
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$allPKParametersFor(quantityPath)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quantityPath}}{Path for which pkParameters should be retrieved}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pKParameterFor"></a>}}
 \subsection{Method \code{pKParameterFor()}}{
+The pK Parameter defined for the given path and name
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$pKParameterFor(quantityPath, pkParameter)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quantityPath}}{Path for which the pkParameter named `pkParameter` should be retrieved}
+
+\item{\code{pkParameter}}{Name of the pkParameter to retrieve}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

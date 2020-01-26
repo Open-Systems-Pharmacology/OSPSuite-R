@@ -78,6 +78,10 @@ Quantity <- R6::R6Class(
     }
   ),
   public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param ref .NET Instance
+    #' @return A new `Quantity` object.
     initialize = function(ref) {
       super$initialize(ref)
       # Cannot use property Formula directly from the quantity because of new override in Distributed Parameter
@@ -87,20 +91,28 @@ Quantity <- R6::R6Class(
         private$.formula <- TableFormula$new(formula)
       }
     },
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printQuantity()
       private$printLine("Quantity Type", getQuantityTypeAsString(self$quantityType))
     },
+    #' @description
+    #' Print the name of the quantity and its value
     printValue = function() {
       self$printQuantityValue(self$name)
     },
+    #' @description
+    #' Print the the value and unit of the quantity
+    #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
       private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
     },
-    #'  @description
-    #'  Convert value from unit to the base unit and sets the value in base unit.
-    #'  @param value Value to set. If unit is null, we assume that the value is in base unit
-    #'  @param unit Optional unit in which the value is given.
+    #' @description
+    #' Convert value from unit to the base unit and sets the value in base unit.
+    #' @param value Value to set. If unit is null, we assume that the value is in base unit
+    #' @param unit Optional unit in which the value is given.
     setValue = function(value, unit = NULL) {
       validateIsNumeric(value)
       if (!is.null(unit)) {
@@ -117,8 +129,8 @@ Quantity <- R6::R6Class(
       validateIsString(unit)
       rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "HasUnit", self$ref, unit)
     },
-    #'  @description
-    #'  Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
+    #' @description
+    #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
     reset = function() {
       self$isFixedValue <- FALSE
     }

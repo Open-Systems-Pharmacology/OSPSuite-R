@@ -10,29 +10,15 @@ Supports Sensitivity Analysis workflow to assess the impact of input parameters 
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysis}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{simulation}}{Simulation for which the sensitivity analysis should be performed}
-
-\item{\code{parameters}}{List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
-on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
-with a value that was overriden by the user}
-}
-\if{html}{\out{</div>}}
-}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{simulation}}{Simulation for which the sensitivity analysis should be performed}
-
-\item{\code{parameters}}{List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
-on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
-with a value that was overriden by the user}
-
 \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 
-\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+parameters List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
+on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+with a value that was overriden by the user}
 }
 \if{html}{\out{</div>}}
 }
@@ -53,6 +39,7 @@ with a value that was overriden by the user}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$new(
   simulation,
@@ -62,14 +49,38 @@ with a value that was overriden by the user}
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{simulation}}{Simulation for which a sensitivity analysis should be performed}
+
+\item{\code{parameters}}{List of parameters to use for sensitivity calculation (optional).}
+
+\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+
+\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `SensitivityAnalysis` object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

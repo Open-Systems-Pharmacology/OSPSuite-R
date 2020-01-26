@@ -55,7 +55,7 @@ Initialize a new instance of the class
 \describe{
 \item{\code{ref}}{.NET Instance}
 
-\item{\code{simlatiom}}{Reference to the simulation object used to calculated the results}
+\item{\code{simulation}}{Reference to the simulation object used to calculated the results}
 }
 \if{html}{\out{</div>}}
 }

@@ -15,9 +15,9 @@ pK-Parameter values for all indiviudals of a simulation (1 or more) calculated f
 \describe{
 \item{\code{values}}{All values for \code{quantityPath} and \code{name}}
 
-\item{\code{name}}{The name of the pK-Parameter (AUC, Cmax, Tmax etc...)}
-
 \item{\code{quantityPath}}{The path of the quantity for which the values were calculated}
+
+\item{\code{name}}{The name of the pK-Parameter (AUC, Cmax, Tmax etc...)}
 }
 \if{html}{\out{</div>}}
 }
@@ -38,10 +38,18 @@ pK-Parameter values for all indiviudals of a simulation (1 or more) calculated f
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PKParameter$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

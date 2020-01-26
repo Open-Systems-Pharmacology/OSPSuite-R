@@ -19,7 +19,7 @@ Interval <- R6::R6Class(
     resolution = function(value) {
       private$readOnlyParameterProperty("Resolution", value)
     },
-    #' @field Name of the interval
+    #' @field name Name of the interval
     name = function(value) {
       private$wrapProperty("Name", value)
     }

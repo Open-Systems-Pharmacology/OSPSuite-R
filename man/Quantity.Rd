@@ -37,11 +37,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 
 \item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
 
-\item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}
-@description
-Convert value from unit to the base unit and sets the value in base unit.
-@param value Value to set. If unit is null, we assume that the value is in base unit
-@param unit Optional unit in which the value is given.}
+\item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}}
 }
 \if{html}{\out{</div>}}
 }
@@ -67,22 +63,42 @@ Convert value from unit to the base unit and sets the value in base unit.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$new(ref)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET Instance}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `Quantity` object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printValue"></a>}}
 \subsection{Method \code{printValue()}}{
+Print the name of the quantity and its value
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$printValue()}\if{html}{\out{</div>}}
 }
@@ -91,18 +107,36 @@ Convert value from unit to the base unit and sets the value in base unit.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printQuantityValue"></a>}}
 \subsection{Method \code{printQuantityValue()}}{
+Print the the value and unit of the quantity
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$printQuantityValue(caption)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{caption}}{Text to prepend to the value}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setValue"></a>}}
 \subsection{Method \code{setValue()}}{
+Convert value from unit to the base unit and sets the value in base unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$setValue(value, unit = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{Value to set. If unit is null, we assume that the value is in base unit}
+
+\item{\code{unit}}{Optional unit in which the value is given.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasUnit"></a>}}
@@ -116,9 +150,7 @@ For the list of supported units, use \code{allUnits}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{unit}}{Unit to check
-@description
-Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.}
+\item{\code{unit}}{Unit to check}
 }
 \if{html}{\out{</div>}}
 }
@@ -126,6 +158,7 @@ Ensures that the quantity uses the value computed by its formula. It is a shortc
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reset"></a>}}
 \subsection{Method \code{reset()}}{
+Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$reset()}\if{html}{\out{</div>}}
 }

@@ -7,13 +7,6 @@
 \description{
 Results of a sensitivity analysis run (either individual or population simulation)
 }
-\section{Methods}{
-
-\describe{
-  \item{allPKParameterSensitivitiesFor(pkParameterName, outputPath, totalSensitivityThreshold)}{Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to totalSensitivityThreshold}
-}
-}
-
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysisResults}
 }
@@ -35,6 +28,8 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
+Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity
+greater or equal to totalSensitivityThreshold
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
@@ -43,14 +38,34 @@ Results of a sensitivity analysis run (either individual or population simulatio
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should be retrieved}
+
+\item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
+
+\item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most sensitive parameter. A threshold of 0.9 means that only
+parameter participating to a total of 90% of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
