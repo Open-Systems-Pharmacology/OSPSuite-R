@@ -116,8 +116,8 @@ test_that("It returns an emptylist of parameters for a molecule that does not ex
 context("getAllParametersForSensitivityAnalysisMatching")
 test_that("It returns all parameter potentially interesting for sensitivity analysis for a given wild card path", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameters <- getAllParametersForSensitivityAnalysisMatching("**|Volume", sim);
-  varableParameters <- getAllSensitivityAnalysisParametersMatching("**|Volume", sim)
+  parameters <- getAllParametersMatching("**|Volume", sim);
+  varableParameters <- getAllParametersForSensitivityAnalysisMatching("**|Volume", sim)
   expect_gt(length(parameters), length(varableParameters))
 })
 
