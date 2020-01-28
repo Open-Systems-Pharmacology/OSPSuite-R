@@ -16,7 +16,7 @@ test_that("It can print the simulation", {
 })
 
 
-test_that("It can retrieve the name of all molecules used in the model", {
-  molecules <- sim$allMoleculeNames()
+test_that("It can retrieve the name of all endogenous molecules used in the model", {
+  molecules <- sim$allEndogenousMoleculeNames()
   expect_equal(molecules, c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1"))
 })
