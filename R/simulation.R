@@ -58,16 +58,16 @@ Simulation <- R6::R6Class(
       private$.settings <- SimulationSettings$new(rClr::clrGet(private$.buildConfiguration, "SimulationSettings"))
     },
     #' @description
-    #' Returns all endogenous molecule names defined in the simulation.
+    #' Returns the name of all stationary molecules defined in the simulation.
     #' This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
-    allEndogenousMoleculeNames = function() {
-      rClr::clrCall(private$.buildConfiguration, "AllPresentEndogenousStationaryMoleculeNames")
+    allStationaryMoleculeNames = function() {
+      rClr::clrCall(private$.buildConfiguration, "AllPresentStationaryMoleculeNames")
     },
     #' @description
-    #' Returns all xenobiotic molecule names defined in the simulation.
+    #' Returns the name of all floating molecules defined in the simulation.
     #' This is typically a molecule that is being simulated such as Compound, Inhibitor, DrugComplex.
-    allXenobioticMoleculeNames = function() {
-      rClr::clrCall(private$.buildConfiguration, "AllPresentXenobioticFloatingMoleculeNames")
+    allFloatingMoleculeNames = function() {
+      rClr::clrCall(private$.buildConfiguration, "AllPresentFloatingMoleculeNames")
     },
     #' @description
     #' Print the object to the console
