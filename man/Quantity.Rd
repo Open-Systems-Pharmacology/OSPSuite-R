@@ -50,6 +50,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item \href{#method-printQuantityValue}{\code{Quantity$printQuantityValue()}}
 \item \href{#method-setValue}{\code{Quantity$setValue()}}
 \item \href{#method-hasUnit}{\code{Quantity$hasUnit()}}
+\item \href{#method-unitIndex}{\code{Quantity$unitIndex()}}
 \item \href{#method-reset}{\code{Quantity$reset()}}
 }
 }
@@ -150,6 +151,22 @@ For the list of supported units, use \code{allUnits}
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{unit}}{Unit to check}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-unitIndex"></a>}}
+\subsection{Method \code{unitIndex()}}{
+Returns the index of the unit in the units array. This method if for internal use only
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$unitIndex(unit)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{unit}}{Unit for which index should be retrieved}
 }
 \if{html}{\out{</div>}}
 }
