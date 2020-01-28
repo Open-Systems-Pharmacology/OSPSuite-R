@@ -10,9 +10,19 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysisResults}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).}
+
+\item{\code{count}}{the number of pk parameter sensitivity entries}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{SensitivityAnalysisResults$new()}}
 \item \href{#method-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
 \item \href{#method-print}{\code{SensitivityAnalysisResults$print()}}
 \item \href{#method-clone}{\code{SensitivityAnalysisResults$clone()}}
@@ -21,9 +31,29 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
 }
 \out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$new(ref, simulation)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET Instance}
+
+\item{\code{simulation}}{Reference to the simulation object used to calculated the results}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `SensitivityAnalysisResults` object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
@@ -34,7 +64,8 @@ greater or equal to totalSensitivityThreshold
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
   outputPath,
-  totalSensitivityThreshold
+ 
+    totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
 )}\if{html}{\out{</div>}}
 }
 

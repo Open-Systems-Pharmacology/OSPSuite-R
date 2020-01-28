@@ -7,6 +7,9 @@
 SensitivityAnalysis <- R6::R6Class(
   "SensitivityAnalysis",
   inherit = DotNetWrapper,
+  private = list(
+    .simulation = NULL
+  ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
@@ -16,10 +19,12 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
     #' @return A new `SensitivityAnalysis` object.
     initialize = function(simulation,
-                          parameters = NULL,
+                              parameters = NULL,
                               numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
                               variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
+      validateIsOfType(simulation, Simulation)
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
+      private$.simulation <- simulation
       super$initialize(ref)
       self$numberOfSteps <- numberOfSteps
       self$variationRange <- variationRange
@@ -35,6 +40,10 @@ SensitivityAnalysis <- R6::R6Class(
     }
   ),
   active = list(
+    #' @field simulation Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).
+    simulation = function(value) {
+      private$readOnlyProperty("simulation", value, private$.simulation)
+    },
     #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
     numberOfSteps = function(value) {
       private$wrapIntegerProperty("NumberOfSteps", value)

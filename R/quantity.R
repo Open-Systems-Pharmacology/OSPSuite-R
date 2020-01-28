@@ -27,7 +27,7 @@ Quantity <- R6::R6Class(
     dimension = function(value) {
       private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
     },
-    #'@field  allUnits the list of all supported units
+    #' @field  allUnits the list of all supported units
     allUnits = function(value) {
       private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
     },

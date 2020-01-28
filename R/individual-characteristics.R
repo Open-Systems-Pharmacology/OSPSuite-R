@@ -38,7 +38,7 @@ IndividualCharacteristics <- R6::R6Class(
     },
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
-      private$readOnlyProperty('allMoleculeOntogenies', value, private$.moleculeOntogenies)
+      private$readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
     }
   ),
   private = list(

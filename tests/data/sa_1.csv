@@ -1,0 +1,13 @@
+﻿QuantityPath,Parameter,PKParameter,Value
+Organism|B,R1-k1,C_max,0.125017501
+Organism|B,R1-k1,t_max,0
+Organism|B,R1-k1,C_tEnd,0.125017501
+Organism|B,R1-k1,AUC,0.285662028
+Organism|B,R1-k1,Thalf,2.075023867
+Organism|A,R1-k1,C_max,0
+Organism|A,R1-k1,C_tEnd,-3.013659049
+Organism|A,R1-k1,AUC,-0.839483024
+Organism|A,R1-k1,AUC_inf,-0.99895907
+Organism|A,R1-k1,MRT,-1.010168922
+Organism|A,R1-k1,Thalf,-1.002129897
+Organism|A,R1-k1,FractionAucLastToInf,-3.017094423
