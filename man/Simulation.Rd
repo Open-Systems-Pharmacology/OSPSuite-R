@@ -33,6 +33,8 @@ An OSPSuite simulation
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Simulation$new()}}
+\item \href{#method-allEndogenousStationaryMoleculeNames}{\code{Simulation$allEndogenousStationaryMoleculeNames()}}
+\item \href{#method-allXenobioticFloatingMoleculeNames}{\code{Simulation$allXenobioticFloatingMoleculeNames()}}
 \item \href{#method-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
 \item \href{#method-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
 \item \href{#method-print}{\code{Simulation$print()}}
@@ -67,10 +69,29 @@ A new `Simulation` object.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allEndogenousStationaryMoleculeNames"></a>}}
+\subsection{Method \code{allEndogenousStationaryMoleculeNames()}}{
+Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
+This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$allEndogenousStationaryMoleculeNames()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allXenobioticFloatingMoleculeNames"></a>}}
+\subsection{Method \code{allXenobioticFloatingMoleculeNames()}}{
+Returns the name of all xenobiotoc floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
+This is typically a molecule that is being explicitely simulated such as Compound, Inhibitor, DrugComplex.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$allXenobioticFloatingMoleculeNames()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allStationaryMoleculeNames"></a>}}
 \subsection{Method \code{allStationaryMoleculeNames()}}{
-Returns the name of all stationary molecules defined in the simulation.
-This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
+Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allStationaryMoleculeNames()}\if{html}{\out{</div>}}
 }
@@ -79,8 +100,7 @@ This is a typically a molecule that is individual specific such as en Enzyme, Pr
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allFloatingMoleculeNames"></a>}}
 \subsection{Method \code{allFloatingMoleculeNames()}}{
-Returns the name of all floating molecules defined in the simulation.
-This is typically a molecule that is being simulated such as Compound, Inhibitor, DrugComplex.
+Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allFloatingMoleculeNames()}\if{html}{\out{</div>}}
 }
