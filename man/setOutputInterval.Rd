@@ -4,8 +4,13 @@
 \alias{setOutputInterval}
 \title{Clears the output interval from the simulation and adds a new one.}
 \usage{
-setOutputInterval(simulation, startTime, endTime, resolution,
-  intervalName = NULL)
+setOutputInterval(
+  simulation,
+  startTime,
+  endTime,
+  resolution,
+  intervalName = NULL
+)
 }
 \arguments{
 \item{simulation}{Simulation for which a new interval should be created}

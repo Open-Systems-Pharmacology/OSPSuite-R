@@ -4,14 +4,14 @@
 \name{Simulation}
 \alias{Simulation}
 \title{Simulation}
-\usage{
-Simulation
-}
 \description{
 An OSPSuite simulation
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Simulation}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{root}}{Root container of the simulation (read-only)}
 
@@ -21,7 +21,89 @@ An OSPSuite simulation
 
 \item{\code{solver}}{SimulationSolver object for the simulation (read-only)}
 
-\item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
-}}
+\item{\code{outputSchema}}{outputSchema object for the simulation (read-only)}
 
-\keyword{datasets}
+\item{\code{outputSelections}}{outputSelections object for the simulation (read-only)}
+
+\item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Simulation$new()}}
+\item \href{#method-allMoleculeNames}{\code{Simulation$allMoleculeNames()}}
+\item \href{#method-print}{\code{Simulation$print()}}
+\item \href{#method-clone}{\code{Simulation$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$new(ref, sourceFile = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{Reference to .NET simulation object}
+
+\item{\code{sourceFile}}{(Optional) File used to load the simulation}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `Simulation` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allMoleculeNames"></a>}}
+\subsection{Method \code{allMoleculeNames()}}{
+Returns all endogenous molecule names defined in the simulation
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$allMoleculeNames()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

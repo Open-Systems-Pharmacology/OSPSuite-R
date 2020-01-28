@@ -13,6 +13,7 @@ Molecule <- R6::R6Class(
   "Molecule",
   inherit = Quantity,
   active = list(
+    #' @field value Start value of the molecule
     value = function(value) {
       if (missing(value)) {
         ifNotNull(private$.startValue, private$.startValue$value, super$value)
@@ -29,12 +30,19 @@ Molecule <- R6::R6Class(
     .startValue = NULL
   ),
   public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param ref .NET reference object.
+    #' @return A new `Molecule` object.
     initialize = function(ref) {
       super$initialize(ref)
       # Is only set for a molecule representing a concenctration based molecule (e.g unit is umol)
       private$.startValue <- getParameter("Start value", self, stopIfNotFound = FALSE)
     },
 
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       private$printLine("Path", self$path)

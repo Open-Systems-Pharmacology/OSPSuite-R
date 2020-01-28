@@ -4,17 +4,114 @@
 \name{SensitivityAnalysisResults}
 \alias{SensitivityAnalysisResults}
 \title{SensitivityAnalysisResults}
-\usage{
-SensitivityAnalysisResults
-}
 \description{
 Results of a sensitivity analysis run (either individual or population simulation)
 }
-\section{Methods}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysisResults}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-  \item{allPKParameterSensitivitiesFor(pkParameterName, outputPath, totalSensitivityThreshold)}{Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to totalSensitivityThreshold}
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).}
+
+\item{\code{count}}{the number of pk parameter sensitivity entries}
 }
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{SensitivityAnalysisResults$new()}}
+\item \href{#method-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
+\item \href{#method-print}{\code{SensitivityAnalysisResults$print()}}
+\item \href{#method-clone}{\code{SensitivityAnalysisResults$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$new(ref, simulation)}\if{html}{\out{</div>}}
 }
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET Instance}
+
+\item{\code{simulation}}{Reference to the simulation object used to calculated the results}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `SensitivityAnalysisResults` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
+\subsection{Method \code{allPKParameterSensitivitiesFor()}}{
+Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity
+greater or equal to totalSensitivityThreshold
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
+  pkParameterName,
+  outputPath,
+ 
+    totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should be retrieved}
+
+\item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
+
+\item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most sensitive parameter. A threshold of 0.9 means that only
+parameter participating to a total of 90% of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

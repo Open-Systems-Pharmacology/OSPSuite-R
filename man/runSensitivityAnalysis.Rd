@@ -4,8 +4,10 @@
 \alias{runSensitivityAnalysis}
 \title{Runs a sensitivity analaysis}
 \usage{
-runSensitivityAnalysis(sensitivityAnalysis,
-  sensitivityAnalysisRunOptions = NULL)
+runSensitivityAnalysis(
+  sensitivityAnalysis,
+  sensitivityAnalysisRunOptions = NULL
+)
 }
 \arguments{
 \item{sensitivityAnalysis}{Instance of a \code{SensitivityAnalysis} to run}

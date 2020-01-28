@@ -4,14 +4,14 @@
 \name{SimulationResults}
 \alias{SimulationResults}
 \title{SimulationResults}
-\usage{
-SimulationResults
-}
 \description{
 Results of a simulation run (either individual or population simulation)
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationResults}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{count}}{the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results).}
 
@@ -22,6 +22,129 @@ Results of a simulation run (either individual or population simulation)
 \item{\code{allQuantityPaths}}{List of all paths for which results are defined.}
 
 \item{\code{allIndividualIds}}{List of Ids of all individuals that have been simulated}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{SimulationResults$new()}}
+\item \href{#method-hasResultsForIndividual}{\code{SimulationResults$hasResultsForIndividual()}}
+\item \href{#method-getValuesByPath}{\code{SimulationResults$getValuesByPath()}}
+\item \href{#method-resultsForIndividual}{\code{SimulationResults$resultsForIndividual()}}
+\item \href{#method-print}{\code{SimulationResults$print()}}
+\item \href{#method-clone}{\code{SimulationResults$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$new(ref, simulation)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET Instance}
+
+\item{\code{simulation}}{Reference to the simulation object used to calculated the results}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `SimulationResults` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hasResultsForIndividual"></a>}}
+\subsection{Method \code{hasResultsForIndividual()}}{
+Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$hasResultsForIndividual(individualId)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{individualId}}{Id of the individual}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getValuesByPath"></a>}}
+\subsection{Method \code{getValuesByPath()}}{
+Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$getValuesByPath(path, individualIds, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{Path for which values should be retrieved}
+
+\item{\code{individualIds}}{One or more individual ids for which values should be returned}
+
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the `path`/}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-resultsForIndividual"></a>}}
+\subsection{Method \code{resultsForIndividual()}}{
+Returns all available results for the individual with id `individualId`
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$resultsForIndividual(individualId)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{individualId}}{Id for which the results should be returned}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

@@ -4,7 +4,7 @@
 \alias{getAllEntitiesMatching}
 \title{Retrieve all entities of a container (simulation or container instance) matching the given path criteria.}
 \usage{
-getAllEntitiesMatching(paths, container, entityType)
+getAllEntitiesMatching(paths, container, entityType, method = NULL)
 }
 \arguments{
 \item{paths}{A vector of strings representing the paths relative to the \code{container}}
@@ -12,6 +12,8 @@ getAllEntitiesMatching(paths, container, entityType)
 \item{container}{A Container or Simulation used to find the entities}
 
 \item{entityType}{Class of the type that should be returned. Supported types are Container, Quantity, and Parameter}
+
+\item{method}{Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type}
 }
 \value{
 A list of entities matching the path criteria coerced to the \code{entityType}.

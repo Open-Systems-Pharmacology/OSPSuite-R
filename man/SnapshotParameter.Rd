@@ -4,18 +4,105 @@
 \name{SnapshotParameter}
 \alias{SnapshotParameter}
 \title{SnapshotParameter}
-\usage{
-SnapshotParameter
-}
 \description{
 A parameter typically used in the definition of \code{OriginData} covariates (Height, Weight etc...)
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SnapshotParameter}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{value}}{Parameter value}
 
 \item{\code{unit}}{Unit in which the value is defined}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{SnapshotParameter$new()}}
+\item \href{#method-print}{\code{SnapshotParameter$print()}}
+\item \href{#method-printValue}{\code{SnapshotParameter$printValue()}}
+\item \href{#method-clone}{\code{SnapshotParameter$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$new(ref = NULL, value = NULL, unit = NULL)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{Optional .NET reference object. If not defined, a new instance will be created}
+
+\item{\code{value}}{Optional value of the parameter.}
+
+\item{\code{unit}}{Optional unit of the value specified.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `SnapshotParameter` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-printValue"></a>}}
+\subsection{Method \code{printValue()}}{
+Print the the parameter in one line
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$printValue(caption)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{caption}}{Caption to display before the value of the parameter}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

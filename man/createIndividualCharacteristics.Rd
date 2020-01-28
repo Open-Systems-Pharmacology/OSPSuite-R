@@ -4,11 +4,20 @@
 \alias{createIndividualCharacteristics}
 \title{Creates an individual using the PKSim Database.}
 \usage{
-createIndividualCharacteristics(species, population = NULL,
-  gender = NULL, weight, weightUnit = "kg", height = NULL,
-  heightUnit = "cm", age = NULL, ageUnit = "year(s)",
-  gestationalAge = 40, gestationalAgeUnit = "week(s)",
-  moleculeOntogenies = NULL)
+createIndividualCharacteristics(
+  species,
+  population = NULL,
+  gender = NULL,
+  weight,
+  weightUnit = "kg",
+  height = NULL,
+  heightUnit = "cm",
+  age = NULL,
+  ageUnit = "year(s)",
+  gestationalAge = 40,
+  gestationalAgeUnit = "week(s)",
+  moleculeOntogenies = NULL
+)
 }
 \arguments{
 \item{species}{Species of the individual as defined in PK-Sim (see Species enum)}

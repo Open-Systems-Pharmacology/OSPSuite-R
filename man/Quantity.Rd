@@ -4,14 +4,14 @@
 \name{Quantity}
 \alias{Quantity}
 \title{Quantity}
-\usage{
-Quantity
-}
 \description{
 A quantity of the model (with unit, value) such as a Parameter or an Amount
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{Quantity}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{value}}{The value of the quantity in unit}
 
@@ -20,6 +20,8 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item{\code{displayUnit}}{The unit in which the quantity value is usually displayed (Read-Only)}
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
+
+\item{\code{allUnits}}{the list of all supported units}
 
 \item{\code{quantityType}}{The type of the quantity (Read-Only)}
 
@@ -36,16 +38,146 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
 
 \item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}}
-}}
-
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
-
-\describe{
-  \item{setValue(value, unit=NULL)}{Convert value from unit to the base unit and sets the value in base unit. If unit is null, we assume that the value is in base unit}
-  \item{hasUnit(unit)}{Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}. For the list of supported units, use \code{allUnits}}
-  \item{allUnits()}{Returns the list of all supported units}
-  \item{reset()}{Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}. }
-  }
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Quantity$new()}}
+\item \href{#method-print}{\code{Quantity$print()}}
+\item \href{#method-printValue}{\code{Quantity$printValue()}}
+\item \href{#method-printQuantityValue}{\code{Quantity$printQuantityValue()}}
+\item \href{#method-setValue}{\code{Quantity$setValue()}}
+\item \href{#method-hasUnit}{\code{Quantity$hasUnit()}}
+\item \href{#method-reset}{\code{Quantity$reset()}}
+\item \href{#method-clone}{\code{Quantity$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$new(ref)}\if{html}{\out{</div>}}
 }
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET Instance}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `Quantity` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-printValue"></a>}}
+\subsection{Method \code{printValue()}}{
+Print the name of the quantity and its value
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$printValue()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-printQuantityValue"></a>}}
+\subsection{Method \code{printQuantityValue()}}{
+Print the the value and unit of the quantity
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$printQuantityValue(caption)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{caption}}{Text to prepend to the value}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setValue"></a>}}
+\subsection{Method \code{setValue()}}{
+Convert value from unit to the base unit and sets the value in base unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$setValue(value, unit = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{Value to set. If unit is null, we assume that the value is in base unit}
+
+\item{\code{unit}}{Optional unit in which the value is given.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hasUnit"></a>}}
+\subsection{Method \code{hasUnit()}}{
+Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
+For the list of supported units, use \code{allUnits}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$hasUnit(unit)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{unit}}{Unit to check}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-reset"></a>}}
+\subsection{Method \code{reset()}}{
+Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$reset()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

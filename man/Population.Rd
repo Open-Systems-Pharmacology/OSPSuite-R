@@ -4,29 +4,154 @@
 \name{Population}
 \alias{Population}
 \title{Population}
-\usage{
-Population
-}
 \description{
 List of individuals used in a population simulation
 }
-\section{Fields}{
-
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{count}}{the number of individual in the population}
 
 \item{\code{allCovariateNames}}{the names of all covariates defined in the population}
-}}
-
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
-
-\describe{
-  \item{has(parameterOrPath)}{Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}}
-  \item{setValues(parameterOrPath, values)}{Adds or update the \code{values} for \code{parameterOrPath}}
-  \item{getValues(parameterOrPath)}{Returns the variability values defined in the population for \code{parameterOrPath}}
-  \item{getCovariateValues(covariateName)}{Returns the values defined in the population for \code{covariateName}}
-  \item{getCovariateValue(covariateName, individualId)}{Returns the covariate value defined in the population for the covariate \code{covariateName} and individual with id\code{individualId}}
-  }
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-has}{\code{Population$has()}}
+\item \href{#method-setValues}{\code{Population$setValues()}}
+\item \href{#method-getValues}{\code{Population$getValues()}}
+\item \href{#method-getCovariateValues}{\code{Population$getCovariateValues()}}
+\item \href{#method-getCovariateValue}{\code{Population$getCovariateValue()}}
+\item \href{#method-print}{\code{Population$print()}}
+\item \href{#method-clone}{\code{Population$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-has"></a>}}
+\subsection{Method \code{has()}}{
+Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$has(parameterOrPath)}\if{html}{\out{</div>}}
 }
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{parameterOrPath}}{Parameter instance of parameter path}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setValues"></a>}}
+\subsection{Method \code{setValues()}}{
+Sets the variability values in the population for \code{parameterOrPath}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$setValues(parameterOrPath, values)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{parameterOrPath}}{Parameter instance of parameter path}
+
+\item{\code{values}}{double vector containing the value to set for the `parameterOrPath`}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getValues"></a>}}
+\subsection{Method \code{getValues()}}{
+Returns the variability values defined in the population for \code{parameterOrPath}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getValues(parameterOrPath)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{parameterOrPath}}{Parameter instance of parameter path}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCovariateValues"></a>}}
+\subsection{Method \code{getCovariateValues()}}{
+Returns the values defined in the population for the covariate named `covariateName`
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValues(covariateName)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{covariateName}}{Name of covariate for which values should be retrieved}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getCovariateValue"></a>}}
+\subsection{Method \code{getCovariateValue()}}{
+Returns the values defined in the population for the covariate named `covariateName and invididual with id `individualId`
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValue(covariateName, individualId)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{covariateName}}{Name of covariate for which values should be retrieved}
+
+\item{\code{individualId}}{Id of individual for which the value for covariate `covariateName` should be retrieved}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

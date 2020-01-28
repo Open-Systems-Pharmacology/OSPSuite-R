@@ -4,8 +4,13 @@
 \alias{getOutputValues}
 \title{Returns the simulated values for the selected outputs (e.g molecules or parameters)}
 \usage{
-getOutputValues(simulationResults, quantitiesOrPaths = NULL,
-  population = NULL, individualIds = NULL, stopIfNotFound = TRUE)
+getOutputValues(
+  simulationResults,
+  quantitiesOrPaths = NULL,
+  population = NULL,
+  individualIds = NULL,
+  stopIfNotFound = TRUE
+)
 }
 \arguments{
 \item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}

@@ -4,8 +4,13 @@
 \alias{addOutputInterval}
 \title{Adds an interval to the output schema of the simulation}
 \usage{
-addOutputInterval(simulation, startTime, endTime, resolution,
-  intervalName = NULL)
+addOutputInterval(
+  simulation,
+  startTime,
+  endTime,
+  resolution,
+  intervalName = NULL
+)
 }
 \arguments{
 \item{simulation}{Simulation for which a new interval should be created}

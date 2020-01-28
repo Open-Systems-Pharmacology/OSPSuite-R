@@ -14,6 +14,10 @@ DotNetWrapper <- R6::R6Class(
   inherit = Printable,
   public = list(
     ref = NULL,
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param ref Instance of the .NET object to wrap.
+    #' @return A new `DotNetWrapper` object.
     initialize = function(ref) {
       self$ref <- ref
     }

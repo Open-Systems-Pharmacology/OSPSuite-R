@@ -4,19 +4,97 @@
 \name{MoleculeOntogeny}
 \alias{MoleculeOntogeny}
 \title{MoleculeOntogeny}
-\usage{
-MoleculeOntogeny
-}
 \description{
 Use when retrieving indvidual values using the createIndividualAlgorithm. This class is a simple pair {MoleculeName, Ontogeny}
 allowing the user to retrieve potential ontogeny values.
 }
-\section{Fields}{
-
+\section{Super class}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{MoleculeOntogeny}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{molecule}}{Name of the molecule in the model}
 
 \item{\code{ontogeny}}{Name of the ontogeny to use for the molecule}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{MoleculeOntogeny$new()}}
+\item \href{#method-print}{\code{MoleculeOntogeny$print()}}
+\item \href{#method-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
+\item \href{#method-clone}{\code{MoleculeOntogeny$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$new(molecule = NULL, ontogeny = NULL)}\if{html}{\out{</div>}}
+}
 
-\keyword{datasets}
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{molecule}}{Optional molecule name}
+
+\item{\code{ontogeny}}{Optional ontogeny to use for the Molecule}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new `MoleculeOntogeny` object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-printMoleculeOntogeny"></a>}}
+\subsection{Method \code{printMoleculeOntogeny()}}{
+Print the `MoleculeOntogeny` on one line
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$printMoleculeOntogeny()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

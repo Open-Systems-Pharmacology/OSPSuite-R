@@ -5,8 +5,12 @@
 \title{Loads a population from the \code{csvPopulationFile} and split the loaded population according to
 \code{numberOfCores}.}
 \usage{
-splitPopulationFile(csvPopulationFile, numberOfCores, outputFolder,
-  outputFileName)
+splitPopulationFile(
+  csvPopulationFile,
+  numberOfCores,
+  outputFolder,
+  outputFileName
+)
 }
 \arguments{
 \item{csvPopulationFile}{Full path of csv population file to split.}
