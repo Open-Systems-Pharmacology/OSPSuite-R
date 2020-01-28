@@ -20,3 +20,9 @@ test_that("It can retrieve the name of all endogenous molecules used in the mode
   molecules <- sim$allEndogenousMoleculeNames()
   expect_equal(molecules, c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1"))
 })
+
+test_that("It can retrieve the name of all dugs  used in the model", {
+  molecules <- sim$allXenobioticMoleculeNames()
+  expect_equal(molecules, c("Caffeine"))
+})
+
