@@ -10,6 +10,13 @@ List of selected quantities selected as output for a given simulation
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{OutputSelections}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{allOutputs}}{Returns all outputs defined in the selection}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -30,6 +37,7 @@ List of selected quantities selected as output for a given simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clear"></a>}}
 \subsection{Method \code{clear()}}{
+Removes all selected output from the selection
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSelections$clear()}\if{html}{\out{</div>}}
 }
@@ -38,26 +46,50 @@ List of selected quantities selected as output for a given simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addQuantity"></a>}}
 \subsection{Method \code{addQuantity()}}{
+Adds a quantity as selected
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSelections$addQuantity(quantity)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quantity}}{Quantity to add to the selection}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-removeQuantity"></a>}}
 \subsection{Method \code{removeQuantity()}}{
+Removes a quantity from the selection
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$removeQuantity(value)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$removeQuantity(quantity)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quantity}}{Quantity to remove from the selection}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSelections$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

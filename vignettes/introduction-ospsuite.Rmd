@@ -350,7 +350,7 @@ The values of a certain dimension can be presented in different units - for exam
 
 ```{r $allUnits}
 livParam$print()
-livParam$allUnits()
+livParam$allUnits
 
 ```
 
@@ -376,7 +376,7 @@ bmiParam$displayUnit
 
 liverVolume <- getParameter("Organism|Liver|Volume", container = sim)
 liverVolume$print()
-liverVolume$allUnits()
+liverVolume$allUnits
 # Convert from base volume unit to µl
 #toUnit(quantity = liverVolume, values = c(1,2,3,4), targetUnit = "ml")
 ```

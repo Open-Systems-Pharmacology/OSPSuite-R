@@ -37,26 +37,57 @@ A parameter typically used in the definition of \code{OriginData} covariates (He
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$new(ref = NULL, value = NULL, unit = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{Optional .NET reference object. If not defined, a new instance will be created}
+
+\item{\code{value}}{Optional value of the parameter.}
+
+\item{\code{unit}}{Optional unit of the value specified.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{SnapshotParameter} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printValue"></a>}}
 \subsection{Method \code{printValue()}}{
+Print the the parameter in one line
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$printValue(caption)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{caption}}{Caption to display before the value of the parameter}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

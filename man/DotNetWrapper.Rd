@@ -10,9 +10,9 @@ Wrapper class for .net Object
 \section{Methods}{
 
 \describe{
-  \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-  \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
-  }
+\item{wrapProperty}{Simple way to wrap a get;set; .NET property}
+\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
+}
 }
 
 \section{Super class}{
@@ -41,10 +41,21 @@ Wrapper class for .net Object
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DotNetWrapper$new(ref)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{Instance of the .NET object to wrap.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{DotNetWrapper} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

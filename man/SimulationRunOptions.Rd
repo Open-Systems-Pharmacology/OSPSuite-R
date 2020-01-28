@@ -39,6 +39,7 @@ Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$new(
   numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
@@ -47,6 +48,20 @@ Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{numberOfCoresToUse}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCoresToUse}}
+
+\item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
+
+\item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{ospsuiteEnv$showProgress}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{SimulationRunOptions} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

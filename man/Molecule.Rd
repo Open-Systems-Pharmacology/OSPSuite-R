@@ -14,6 +14,13 @@ Derived from \link{Quantity}, please see base class documentation.
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Molecule}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{value}}{Start value of the molecule}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -23,9 +30,8 @@ Derived from \link{Quantity}, please see base class documentation.
 }
 }
 \if{html}{
-\out{<details ><summary>Inherited methods</summary>}
+\out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="allUnits">}\href{../../ospsuite/html/Quantity.html#method-allUnits}{\code{ospsuite::Quantity$allUnits()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit">}\href{../../ospsuite/html/Quantity.html#method-hasUnit}{\code{ospsuite::Quantity$hasUnit()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue">}\href{../../ospsuite/html/Quantity.html#method-printQuantityValue}{\code{ospsuite::Quantity$printQuantityValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue">}\href{../../ospsuite/html/Quantity.html#method-printValue}{\code{ospsuite::Quantity$printValue()}}\out{</span>}
@@ -37,18 +43,37 @@ Derived from \link{Quantity}, please see base class documentation.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Molecule$new(ref)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET reference object.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{Molecule} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Molecule$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

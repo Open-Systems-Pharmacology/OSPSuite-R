@@ -18,6 +18,8 @@ Simulation Interval (typically associated with an instace of \code{OutputSchema}
 \item{\code{endTime}}{End time of interval (instance of \code{Parameter})}
 
 \item{\code{resolution}}{Resolution of interval in pts/min (instance of \code{Parameter})}
+
+\item{\code{name}}{Name of the interval}
 }
 \if{html}{\out{</div>}}
 }
@@ -38,10 +40,18 @@ Simulation Interval (typically associated with an instace of \code{OutputSchema}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Interval$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

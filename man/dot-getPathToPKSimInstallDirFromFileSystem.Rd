@@ -4,8 +4,10 @@
 \alias{.getPathToPKSimInstallDirFromFileSystem}
 \title{Tries to find the installation path for a specific version of PK-Sim via the filesystem.
 Searching is done in the following order:
-1. Search via filesystem in a guessed installation folder from the base.search.folder
-3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)}
+\enumerate{
+\item Search via filesystem in a guessed installation folder from the base.search.folder
+\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
+}}
 \usage{
 .getPathToPKSimInstallDirFromFileSystem(
   pksim.version,
@@ -25,8 +27,10 @@ If more than one matching path is found a warning is produced.
 \description{
 Tries to find the installation path for a specific version of PK-Sim via the filesystem.
 Searching is done in the following order:
-1. Search via filesystem in a guessed installation folder from the base.search.folder
-3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
+\enumerate{
+\item Search via filesystem in a guessed installation folder from the base.search.folder
+\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
+}
 }
 \examples{
 \dontrun{

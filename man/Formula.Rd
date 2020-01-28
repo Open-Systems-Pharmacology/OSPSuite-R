@@ -10,30 +10,12 @@ A formula of the model (Typically related to a \code{Quantity} such as a paramet
 
 A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
 }
-\section{Methods}{
-
-\describe{
-  \item{ addPoint(x, y)}{Adds a point to the table, with x value in base unit for XDimension and y value in base unit for Dimension}
-  \item{ removePoint(x, y)}{ Remove the point having the same x and y from the table}
-  \item{ clearPoints()}{ Remove all points from the table}
-  }
-}
-
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Formula}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
-}
-\if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
-
 \item{\code{isTable}}{Is this a table formula (Read-Only)}
 
 \item{\code{isConstant}}{Is this a constant formula (Read-Only)}
@@ -42,9 +24,9 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 
 \item{\code{isDistributed}}{Is this a distributed formula (Read-Only)}
 
-\item{\code{formulaString}}{Returns the formula as a string for an \code{ExplicitFormula} or \code{NULL} otherwise (Read-Only).}
+\item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 
-\item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
+\item{\code{formulaString}}{Returns the formula as a string for an \code{ExplicitFormula} or \code{NULL} otherwise (Read-Only).}
 }
 \if{html}{\out{</div>}}
 }
@@ -66,14 +48,23 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Formula$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printFormula"></a>}}
 \subsection{Method \code{printFormula()}}{
+Print the formula to the console without the name of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Formula$printFormula()}\if{html}{\out{</div>}}
 }
@@ -131,22 +122,43 @@ The objects of this class are cloneable with this method.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addPoint"></a>}}
 \subsection{Method \code{addPoint()}}{
+Adds a point to the table
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$addPoint(x, y)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{x value in base unit for XDimension}
+
+\item{\code{y}}{y value in base unit for Dimension}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-removePoint"></a>}}
 \subsection{Method \code{removePoint()}}{
+Remove the point having the same x and y from the table
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$removePoint(x, y)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{x value in base unit for XDimension}
+
+\item{\code{y}}{y value in base unit for Dimension}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clearPoints"></a>}}
 \subsection{Method \code{clearPoints()}}{
+Remove all points from the table
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$clearPoints()}\if{html}{\out{</div>}}
 }
@@ -155,14 +167,23 @@ The objects of this class are cloneable with this method.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printFormula"></a>}}
 \subsection{Method \code{printFormula()}}{
+Print the formula to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$printFormula()}\if{html}{\out{</div>}}
 }

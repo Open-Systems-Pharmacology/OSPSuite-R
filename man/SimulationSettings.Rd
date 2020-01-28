@@ -16,6 +16,8 @@ Settings associated with a given simulation
 \item{\code{solver}}{Container containing all solver parameters for the simulation (read-only)}
 
 \item{\code{outputSelections}}{All selected quantities (species, observers, parameters) that will be part of the simulated results}
+
+\item{\code{outputSchema}}{OutputSchema object containing the output intervals used to generate simulation data}
 }
 \if{html}{\out{</div>}}
 }
@@ -36,10 +38,18 @@ Settings associated with a given simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationSettings$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

@@ -13,9 +13,9 @@ Abstract wrapper for an OSPSuite.Core ObjectBase.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{id}}{The id of the .NET wrapped object. (read-only)}
-
 \item{\code{name}}{The name of the object}
+
+\item{\code{id}}{The id of the .NET wrapped object. (read-only)}
 }
 \if{html}{\out{</div>}}
 }

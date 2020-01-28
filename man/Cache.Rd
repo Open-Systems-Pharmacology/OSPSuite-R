@@ -17,7 +17,7 @@ Structure for caching objects
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{keys}}{Keys of the cached objects}
+\item{\code{keys}}{List all key in the cache}
 }
 \if{html}{\out{</div>}}
 }
@@ -37,14 +37,26 @@ Structure for caching objects
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$new(type = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{Optional type constraints for object stored in the cache.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{Cache} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reset"></a>}}
 \subsection{Method \code{reset()}}{
+Clear cache
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$reset()}\if{html}{\out{</div>}}
 }
@@ -53,42 +65,84 @@ Structure for caching objects
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set"></a>}}
 \subsection{Method \code{set()}}{
+Store the given value in cache with the given key
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$set(key, value)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{key}}{Key to use to store the \code{value} in the case}
+
+\item{\code{value}}{Value to store in the cache}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasKey"></a>}}
 \subsection{Method \code{hasKey()}}{
+Check if an entry with the given \code{key} exists in cache
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$hasKey(key)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{key}}{Key to check}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get"></a>}}
 \subsection{Method \code{get()}}{
+Get cached object by key
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$get(key)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{key}}{Key to use to retrieve the value}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-dropKey"></a>}}
 \subsection{Method \code{dropKey()}}{
+Remove the value associated with the key from cache.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$dropKey(key)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{key}}{Key used to find the value to remove. If the key is not found, nothing happens.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

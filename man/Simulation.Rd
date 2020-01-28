@@ -21,6 +21,10 @@ An OSPSuite simulation
 
 \item{\code{solver}}{SimulationSolver object for the simulation (read-only)}
 
+\item{\code{outputSchema}}{outputSchema object for the simulation (read-only)}
+
+\item{\code{outputSelections}}{outputSelections object for the simulation (read-only)}
+
 \item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
 }
 \if{html}{\out{</div>}}
@@ -43,14 +47,28 @@ An OSPSuite simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$new(ref, sourceFile = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{Reference to .NET simulation object}
+
+\item{\code{sourceFile}}{(Optional) File used to load the simulation}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{Simulation} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allMoleculeNames"></a>}}
 \subsection{Method \code{allMoleculeNames()}}{
+Returns all endogenous molecule names defined in the simulation
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allMoleculeNames()}\if{html}{\out{</div>}}
 }
@@ -59,10 +77,18 @@ An OSPSuite simulation
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

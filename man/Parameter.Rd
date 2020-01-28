@@ -24,7 +24,6 @@ Derived from \link{Quantity}, please see base class documentation.
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="allUnits">}\href{../../ospsuite/html/Quantity.html#method-allUnits}{\code{ospsuite::Quantity$allUnits()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit">}\href{../../ospsuite/html/Quantity.html#method-hasUnit}{\code{ospsuite::Quantity$hasUnit()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="initialize">}\href{../../ospsuite/html/Quantity.html#method-initialize}{\code{ospsuite::Quantity$initialize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue">}\href{../../ospsuite/html/Quantity.html#method-printQuantityValue}{\code{ospsuite::Quantity$printQuantityValue()}}\out{</span>}
@@ -37,10 +36,18 @@ Derived from \link{Quantity}, please see base class documentation.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Parameter$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

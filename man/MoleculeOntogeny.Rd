@@ -38,22 +38,44 @@ allowing the user to retrieve potential ontogeny values.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$new(molecule = NULL, ontogeny = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{molecule}}{Optional molecule name}
+
+\item{\code{ontogeny}}{Optional ontogeny to use for the Molecule}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{MoleculeOntogeny} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printMoleculeOntogeny"></a>}}
 \subsection{Method \code{printMoleculeOntogeny()}}{
+Print the \code{MoleculeOntogeny} on one line
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$printMoleculeOntogeny()}\if{html}{\out{</div>}}
 }

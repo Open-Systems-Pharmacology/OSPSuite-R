@@ -35,6 +35,7 @@ Options to be passed to the sensitivity analysis engine
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisRunOptions$new(
   numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
@@ -42,6 +43,18 @@ Options to be passed to the sensitivity analysis engine
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{numberOfCoresToUse}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCoresToUse}}
+
+\item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{ospsuiteEnv$showProgress}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{SensitivityAnalysisRunOptions} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
