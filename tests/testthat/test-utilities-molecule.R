@@ -59,3 +59,37 @@ test_that("It can set the values of multiple molecules", {
   })
   expect_equal(newVals, c(1:2))
 })
+
+context("setMoleculeScaleDivisors")
+
+test_that("It throws an error when no valid molecule objects are provided", {
+  expect_that(setMoleculeScaleDivisors("quantity", 1), throws_error())
+})
+
+test_that("It throws an error when no valid values are provided", {
+  molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
+  expect_that(setMoleculeScaleDivisors(molecules, "s"), throws_error())
+})
+
+test_that("It throws an error when the number of molecules differs from the number of values", {
+  molecule <- getMolecule("Organism|VenousBlood|Plasma|Caffeine", sim)
+  molecules <- getAllMoleculesMatching("Organism|VenousBlood|*|Caffeine", sim)
+  expect_that(setMoleculeScaleDivisors(molecule, c(1, 2)), throws_error())
+  expect_that(setMoleculeScaleDivisors(molecules, c(1:5)), throws_error())
+})
+
+test_that("It can set the scale divisor of a single quantity", {
+  molecule <- getMolecule("Organism|VenousBlood|Plasma|Caffeine", sim)
+  setMoleculeScaleDivisors(molecule, 0.5)
+  expect_equal(molecule$scaleDivisor, 0.5)
+})
+
+test_that("It can set the  scale divisors of multiple molecules", {
+  molecules <- getAllMoleculesMatching("Organism|VenousBlood|*|Caffeine", sim)
+  setMoleculeScaleDivisors(molecules, c(1:2))
+  newVals <- sapply(molecules, function(x) {
+    x$scaleDivisor
+  })
+  expect_equal(newVals, c(1:2))
+})
+

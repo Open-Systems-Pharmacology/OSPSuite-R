@@ -49,7 +49,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 
 #' Set molecule start values
 #'
-#' @param molecules A single or a list of \code{Molecule}nuti
+#' @param molecules A single or a list of \code{Molecule}
 #' @seealso \code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
 #'
 #' @param values A numeric value that should be assigned to the molecule start value or a vector
@@ -68,4 +68,34 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 setMoleculeInitialValues <- function(molecules, values) {
   validateIsOfType(molecules, Molecule)
   setQuantityValues(molecules, values)
+}
+
+#' Set molecule scale divisors
+#'
+#' @param molecules A single or a list of \code{Molecule}
+#' @seealso \code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
+#'
+#' @param values A numeric value that should be assigned to the molecule scale factor or a vector
+#' of numeric values, if the scale factor of more than one molecule should be changed. Must have the same
+#' length as `molecules`
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' molecule <- getMolecule("Organism|Liver|A", sim)
+#' setMoleculeScaleDivisors(molecule, 0.001)
+#' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
+#' setMoleculeScaleDivisors(molecules, c(0.002, 0.003))
+#' @export
+setMoleculeScaleDivisors <- function(molecules, values) {
+  molecules <- c(molecules)
+  validateIsOfType(molecules, Molecule)
+  validateIsNumeric(values)
+  validateIsSameLength(molecules, values)
+
+  for (i in seq_along(molecules)) {
+    molecule <- molecules[[i]]
+    molecule$scaleDivisor <- values[[i]]
+  }
 }

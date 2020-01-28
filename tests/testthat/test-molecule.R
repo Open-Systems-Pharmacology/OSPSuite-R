@@ -16,3 +16,11 @@ test_that("It can print molecule", {
   molecule <- getMolecule("Organism|M", sim_conc_based)
   expect_error(capture.output(molecule$print()), NA)
 })
+
+test_that("It can set the scale divisor", {
+  molecule <- getMolecule("Organism|M", sim_conc_based)
+  scaleDivisor <- molecule$scaleDivisor
+  molecule$scaleDivisor <- 0.025
+  expect_equal(molecule$scaleDivisor, 0.025)
+})
+
