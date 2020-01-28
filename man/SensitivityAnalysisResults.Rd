@@ -74,7 +74,8 @@ Returns the PKParameterSensitivity for a given pkParameter and output participat
 
 \item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
 
-\item{\code{totalSensitivityThreshold}}{A threshold of 0.9 means that only parameter participating to a total of 90 percent of the sensitivity would be returned}
+\item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most sensitive parameter. A threshold of 0.9 means that only
+parameter participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters.}
 }
 \if{html}{\out{</div>}}
 }
