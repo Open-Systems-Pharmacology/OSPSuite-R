@@ -3,11 +3,6 @@
 #' @docType class
 #' @description  Results of a simulation run (either individual or population simulation)
 #'
-#' @field count the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results).
-#' @field simulation Reference to the \code{Simulation} used to calculate or import the results (Read-Only).
-#' @field timeValues Vector of simulated time output values
-#' @field allQuantityPaths List of all paths for which results are defined.
-#' @field allIndividualIds List of Ids of all individuals that have been simulated
 #' @format NULL
 SimulationResults <- R6::R6Class("SimulationResults",
   inherit = DotNetWrapper,
@@ -27,18 +22,29 @@ SimulationResults <- R6::R6Class("SimulationResults",
     }
   ),
   public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param ref .NET Instance
+    #' @param simulation Reference to the simulation object used to calculated the results
+    #' @return A new `SimulationResults` object.
     initialize = function(ref, simulation) {
       validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
       private$.individualResultsCache <- Cache$new()
       super$initialize(ref)
     },
-
+    #' @description
+    #' Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+    #' @param individualId Id of the individual
     hasResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
-
+    #' @description
+    #' Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+    #' @param path Path for which values should be retrieved
+    #' @param individualIds One or more individual ids for which values should be returned
+    #' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no values could be found for the `path`/
     getValuesByPath = function(path, individualIds, stopIfNotFound = TRUE) {
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
@@ -51,7 +57,9 @@ SimulationResults <- R6::R6Class("SimulationResults",
       values[is.nan(values)] <- NA
       return(values)
     },
-
+    #' @description
+    #' Returns all available results for the individual with id `individualId`
+    #' @param individualId Id for which the results should be returned
     resultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       if (!private$.individualResultsCache$hasKey(individualId)) {
@@ -61,7 +69,9 @@ SimulationResults <- R6::R6Class("SimulationResults",
 
       private$.individualResultsCache$get(individualId)
     },
-
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       private$printLine("Number of individuals", self$count)
@@ -69,12 +79,15 @@ SimulationResults <- R6::R6Class("SimulationResults",
     }
   ),
   active = list(
+    #' @field count the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results).
     count = function(value) {
       private$wrapReadOnlyProperty("Count", value)
     },
+    #' @field simulation Reference to the \code{Simulation} used to calculate or import the results (Read-Only).
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
     },
+    #' @field timeValues Vector of simulated time output values
     timeValues = function(value) {
       quantityValuesTime <- private$wrapReadOnlyProperty("Time", value)
       if (is.null(quantityValuesTime)) {
@@ -82,6 +95,7 @@ SimulationResults <- R6::R6Class("SimulationResults",
       }
       rClr::clrGet(quantityValuesTime, "Values")
     },
+    #' @field allQuantityPaths List of all paths for which results are defined.
     allQuantityPaths = function(value) {
       if (missing(value)) {
         rClr::clrCall(self$ref, "AllQuantityPaths")
@@ -89,6 +103,7 @@ SimulationResults <- R6::R6Class("SimulationResults",
         private$throwPropertyIsReadonly("allQuantityPaths")
       }
     },
+    #' @field allIndividualIds List of Ids of all individuals that have been simulated
     allIndividualIds = function(value) {
       if (missing(value)) {
         rClr::clrCall(self$ref, "AllIndividualIds")

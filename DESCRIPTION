@@ -28,8 +28,11 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
+<<<<<<< HEAD
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+=======
+>>>>>>> c1658d3d8c5709b55cadbe4e8f3b6a8982cd8055
 Collate: 
     'api-config.R'
     'cache.R'

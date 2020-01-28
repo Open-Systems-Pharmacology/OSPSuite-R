@@ -180,3 +180,30 @@ getAllMoleculeParameters <- function(moleculeName, simulation) {
   paths <- sapply(MoleculeParameter, function(p) toPathString(moleculeName, p))
   getAllParametersMatching(paths = paths, container = simulation)
 }
+
+#' Retrieve all parameters of the given simulation matching the given path criteria and also potential candidate
+#' for sensitivity variation
+#'
+#' @param paths A vector of strings representing the path of the parameters (potentially using wildcards)
+#' @param simulation Simulation used to find the parameters
+#'
+#' @return A list of parameters matching the path criteria and also candiates for a sensitivity analysis.
+#' The list is empty if no parameters matching were found.
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' # Return all `Volume` parameters defined in all direct containers of the organism
+#' params <- getAllParametersForSensitivityAnalysisMatching("Organism|*|Volume", sim)
+#' @export
+getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
+  validateIsOfType(simulation, Simulation)
+  getAllEntitiesMatching(
+    paths = paths,
+    container = simulation,
+    entityType = Parameter,
+    method = "AllSensitivityAnalysisParametersMatching"
+  )
+}

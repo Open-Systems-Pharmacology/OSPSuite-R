@@ -1,17 +1,20 @@
 #' @title Container
 #' @docType class
 #' @description  Contains other entities such as Parameter or containers
-#' @field containerType Type of container
 #' @format NULL
 Container <- R6::R6Class(
   "Container",
   inherit = Entity,
   active = list(
+    #' @field containerType Type of container
     containerType = function(value) {
       private$wrapReadOnlyProperty("ContainerType", value)
     }
   ),
   public = list(
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       private$printLine("Container type", getEnumKey(ContainerType, self$containerType))

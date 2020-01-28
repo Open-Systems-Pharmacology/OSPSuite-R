@@ -2,28 +2,36 @@
 #' @docType class
 #' @description Supports Sensitivity Analysis workflow to assess the impact of input parameters on the simulation outputs
 #'
-#' @field simulation Simulation for which the sensitivity analysis should be performed
-#' @field parameters List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
-#' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
-#' with a value that was overriden by the user
-#' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
-#' @field variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
 #' @export
 #' @format NULL
 SensitivityAnalysis <- R6::R6Class(
   "SensitivityAnalysis",
   inherit = DotNetWrapper,
+  private = list(
+    .simulation = NULL
+  ),
   public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param simulation Simulation for which a sensitivity analysis should be performed
+    #' @param parameters List of parameters to use for sensitivity calculation (optional).
+    #' @param  numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+    #' @param variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+    #' @return A new `SensitivityAnalysis` object.
     initialize = function(simulation,
                               parameters = NULL,
                               numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
                               variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
+      validateIsOfType(simulation, Simulation)
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
+      private$.simulation <- simulation
       super$initialize(ref)
       self$numberOfSteps <- numberOfSteps
       self$variationRange <- variationRange
     },
-
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       private$printLine("Number of steps", self$numberOfSteps)
@@ -32,11 +40,20 @@ SensitivityAnalysis <- R6::R6Class(
     }
   ),
   active = list(
+    #' @field simulation Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).
+    simulation = function(value) {
+      private$readOnlyProperty("simulation", value, private$.simulation)
+    },
+    #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
     numberOfSteps = function(value) {
       private$wrapIntegerProperty("NumberOfSteps", value)
     },
+    #' @field variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
     variationRange = function(value) {
       private$wrapProperty("VariationRange", value)
     }
+    #' parameters List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
+    #' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+    #' with a value that was overriden by the user
   )
 )

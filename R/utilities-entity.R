@@ -86,22 +86,22 @@ unify <- function(groupEntitiesByPathFunc, paths) {
 #' @param container A Container or Simulation used to find the entities
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
 #' @param entityType Class of the type that should be returned. Supported types are Container, Quantity, and Parameter
-#'
+#' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
 #' @return A list of entities matching the path criteria coerced to the \code{entityType}.
 #' The list is empty if no entities matching were found.
 #'
-getAllEntitiesMatching <- function(paths, container, entityType) {
+getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) {
   # Test for correct inputs
   validateIsOfType(container, c(Simulation, Container, Molecule))
   validateIsString(paths)
-
+  validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(ContainerTasks) == className)) == 0) {
     stop(messages$errorWrongType("entityType", className, names(ContainerTasks)))
   }
 
   task <- getContainerTask()
-  method <- ContainerTasks[[className]]
+  method <- method %||% ContainerTasks[[className]]
 
   findEntitiesByPath <- function(path) {
     toObjectType(rClr::clrCall(task, method, container$ref, path), entityType)

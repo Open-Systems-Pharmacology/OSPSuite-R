@@ -1,16 +1,12 @@
 #' @title Simulation
 #' @docType class
 #' @description  An OSPSuite simulation
-#' @field root Root container of the simulation (read-only)
-#' @field path Path of the root container of the simulation (read-only)
-#' @field settings SimulationSettings object for the simulation (read-only)
-#' @field solver SimulationSolver object for the simulation (read-only)
-#' @field sourceFile Path to the file the simulation was loaded from (read-only)
 #' @format NULL
 Simulation <- R6::R6Class(
   "Simulation",
   inherit = ObjectBase,
   active = list(
+    #' @field root Root container of the simulation (read-only)
     root = function(value) {
       if (missing(value)) {
         model <- rClr::clrGet(self$ref, "Model")
@@ -20,9 +16,11 @@ Simulation <- R6::R6Class(
         private$throwPropertyIsReadonly("root")
       }
     },
+    #' @field path Path of the root container of the simulation (read-only)
     path = function(value) {
       private$readOnlyProperty("path", value, self$root$path)
     },
+    #' @field settings SimulationSettings object for the simulation (read-only)
     settings = function(value) {
       if (missing(value)) {
         private$.settings
@@ -30,29 +28,43 @@ Simulation <- R6::R6Class(
         private$throwPropertyIsReadonly("settings")
       }
     },
+    #' @field solver SimulationSolver object for the simulation (read-only)
     solver = function(value) {
       private$readOnlyProperty("solver", value, private$.settings$solver)
     },
+    #' @field outputSchema outputSchema object for the simulation (read-only)
     outputSchema = function(value) {
       private$readOnlyProperty("outputSchema", value, private$.settings$outputSchema)
     },
+    #' @field outputSelections outputSelections object for the simulation (read-only)
     outputSelections = function(value) {
       private$readOnlyProperty("outputSelections", value, private$.settings$outputSelections)
     },
+    #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
       private$readOnlyProperty("sourceFile", value, private$.sourceFile)
     }
   ),
   public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param ref Reference to .NET simulation object
+    #' @param sourceFile (Optional) File used to load the simulation
+    #' @return A new `Simulation` object.
     initialize = function(ref, sourceFile = NULL) {
       super$initialize(ref)
       private$.sourceFile <- sourceFile
       private$.buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
       private$.settings <- SimulationSettings$new(rClr::clrGet(private$.buildConfiguration, "SimulationSettings"))
     },
+    #' @description
+    #' Returns all endogenous molecule names defined in the simulation
     allMoleculeNames = function() {
       rClr::clrCall(private$.buildConfiguration, "AllPresentEndogenousStationaryMoleculeNames")
     },
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       private$printLine("Name", self$name)

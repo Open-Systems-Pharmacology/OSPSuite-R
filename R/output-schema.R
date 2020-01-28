@@ -2,22 +2,12 @@
 #' @docType class
 #' @description  Output schema associated with a given simulation
 #'
-#' @field intervals All intervals defined in the schema (Read-Only)
-#' @field timePoints All single time points defined in the schema (Read-Only)
-#' @field endTime Returns the end time of the simulation in kernel unit (Read-Only)
-#'
-#' @section Methods:
-#' \describe{
-#'   \item{clear}{Clears all intervals and time points}
-#'   \item{addInterval(interval)}{Adds an interval to the schema}
-#'   \item{removeInterval(interval)}{Removes the interval from the schema}
-#'   \item{addTimePoints(timePoints)}{Adds the time points to the schema}
-#'   }
 #' @format NULL
 OutputSchema <- R6::R6Class(
   "OutputSchema",
   inherit = DotNetWrapper,
   active = list(
+    #' @field intervals All intervals defined in the schema (Read-Only)
     intervals = function(value) {
       if (missing(value)) {
         intervals <- rClr::clrGet(self$ref, "IntervalsAsArray")
@@ -26,28 +16,42 @@ OutputSchema <- R6::R6Class(
         private$throwPropertyIsReadonly("solver")
       }
     },
+    #' @field timePoints All single time points defined in the schema (Read-Only)
     timePoints = function(value) {
       private$wrapReadOnlyProperty("TimePoints", value)
     },
+    #' @field endTime Returns the end time of the simulation in kernel unit (Read-Only)
     endTime = function(value) {
       private$wrapReadOnlyProperty("EndTime", value)
     }
   ),
   public = list(
+    #' @description
+    #' Clears all intervals and time points
     clear = function() {
       rClr::clrCall(self$ref, "Clear")
       invisible(self)
     },
+    #' @description
+    #' Adds an interval to the schema
+    #' @param interval Interval to add
     addInterval = function(interval) {
       validateIsOfType(interval, Interval)
       rClr::clrCall(self$ref, "AddInterval", interval$ref)
       invisible(self)
     },
+    #' @description
+    #' Removes the interval from the schema
+    #' @param interval Interval to remove
     removeInterval = function(interval) {
       validateIsOfType(interval, Interval)
       rClr::clrCall(self$ref, "RemoveInterval", interval$ref)
       invisible(self)
     },
+
+    #' @description
+    #' Adds the time points to the schema
+    #' @param timePoints Time points to add to the interval
     addTimePoints = function(timePoints) {
       timePoints <- c(timePoints)
       validateIsNumeric(timePoints)
@@ -59,7 +63,9 @@ OutputSchema <- R6::R6Class(
       }
       invisible(self)
     },
-
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       if (length(self$timePoints) > 0) {
