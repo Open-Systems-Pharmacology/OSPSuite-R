@@ -18,6 +18,15 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
       super$initialize(ref)
       self$numberOfCoresToUse <- numberOfCoresToUse
       self$showProgress <- showProgress
+    },
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
+    print = function(...) {
+      private$printClass()
+      private$printLine("Number of cores to use", self$numberOfCoresToUse)
+      private$printLine("Show progress bar", self$showProgress)
+      invisible(self)
     }
   ),
   active = list(

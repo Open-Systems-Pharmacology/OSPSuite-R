@@ -33,7 +33,8 @@ An OSPSuite simulation
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Simulation$new()}}
-\item \href{#method-allMoleculeNames}{\code{Simulation$allMoleculeNames()}}
+\item \href{#method-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
+\item \href{#method-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
 \item \href{#method-print}{\code{Simulation$print()}}
 \item \href{#method-clone}{\code{Simulation$clone()}}
 }
@@ -66,11 +67,22 @@ A new `Simulation` object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-allMoleculeNames"></a>}}
-\subsection{Method \code{allMoleculeNames()}}{
-Returns all endogenous molecule names defined in the simulation
+\if{html}{\out{<a id="method-allStationaryMoleculeNames"></a>}}
+\subsection{Method \code{allStationaryMoleculeNames()}}{
+Returns the name of all stationary molecules defined in the simulation.
+This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$allMoleculeNames()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$allStationaryMoleculeNames()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allFloatingMoleculeNames"></a>}}
+\subsection{Method \code{allFloatingMoleculeNames()}}{
+Returns the name of all floating molecules defined in the simulation.
+This is typically a molecule that is being simulated such as Compound, Inhibitor, DrugComplex.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$allFloatingMoleculeNames()}\if{html}{\out{</div>}}
 }
 
 }
