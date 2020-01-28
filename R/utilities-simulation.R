@@ -200,6 +200,6 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
     paths = paths,
     container = simulation,
     entityType = Parameter,
-    method = "AllSensitivityAnalysisParametersMatching"
+    method = "AllParametersForSensitivityAnalysisMatching"
   )
 }
