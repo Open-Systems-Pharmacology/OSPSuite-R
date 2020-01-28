@@ -5,6 +5,7 @@
 Population <- R6::R6Class(
   "Population",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field count the number of individual in the population
     count = function(value) {

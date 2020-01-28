@@ -4,7 +4,9 @@
 #' @description  Results of a simulation run (either individual or population simulation)
 #'
 #' @format NULL
-SimulationResults <- R6::R6Class("SimulationResults",
+SimulationResults <- R6::R6Class(
+  "SimulationResults",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   private = list(
     .simulation = NULL,

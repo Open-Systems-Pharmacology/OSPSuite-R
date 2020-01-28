@@ -24,7 +24,6 @@ List of selected quantities selected as output for a given simulation
 \item \href{#method-addQuantity}{\code{OutputSelections$addQuantity()}}
 \item \href{#method-removeQuantity}{\code{OutputSelections$removeQuantity()}}
 \item \href{#method-print}{\code{OutputSelections$print()}}
-\item \href{#method-clone}{\code{OutputSelections$clone()}}
 }
 }
 \if{html}{
@@ -87,22 +86,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSelections$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

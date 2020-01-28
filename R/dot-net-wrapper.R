@@ -12,6 +12,7 @@
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
   inherit = Printable,
+  cloneable = FALSE,
   public = list(
     ref = NULL,
     #' @description

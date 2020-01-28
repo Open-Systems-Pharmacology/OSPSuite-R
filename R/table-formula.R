@@ -5,6 +5,7 @@
 #' @format NULL
 TableFormula <- R6::R6Class(
   "TableFormula",
+  cloneable = FALSE,
   inherit = Formula,
   active = list(
     #' @field allPoints Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).
@@ -27,19 +28,26 @@ TableFormula <- R6::R6Class(
   ),
   public = list(
     #' @description
-    #' Adds a point to the table
-    #' @param x x value in base unit for XDimension
-    #' @param y y value in base unit for Dimension
-    addPoint = function(x, y) {
-      rClr::clrCall(self$ref, "AddPoint", x, y)
+    #' Adds one or more points to a table
+    #' @param xValues x values (single value or array) in base unit for XDimension
+    #' @param yValues y values (single value or array) in base unit for Dimension
+    addPoints = function(xValues, yValues) {
+      xValues <- c(xValues)
+      yValues <- c(yValues)
+      validateIsNumeric(xValues)
+      validateIsNumeric(yValues)
+      validateIsSameLength(xValues, yValues)
+      for (i in seq_along(xValues)) {
+        rClr::clrCall(self$ref, "AddPoint", xValues[i], yValues[i])
+      }
       invisible(self)
     },
     #' @description
     #' Remove the point having the same x and y from the table
-    #' @param x x value in base unit for XDimension
-    #' @param y y value in base unit for Dimension
-    removePoint = function(x, y) {
-      rClr::clrCall(self$ref, "RemovePoint", x, y)
+    #' @param xValue xValue value in base unit for XDimension
+    #' @param yValue yValue value in base unit for Dimension
+    removePoint = function(xValue, yValue) {
+      rClr::clrCall(self$ref, "RemovePoint", xValue, yValue)
       invisible(self)
     },
     #' @description
@@ -49,11 +57,28 @@ TableFormula <- R6::R6Class(
       invisible(self)
     },
     #' @description
+    #' Replace all points defined in the table with the new values given.
+    #' This is a convenience method for callign `clearPoints` and `addPoints`
+    #' @param xValues x values (single value or array) in base unit for XDimension
+    #' @param yValues y values (single value or array) in base unit for Dimension
+    setPoints = function(xValues, yValues) {
+      self$clearPoints()
+      self$addPoints(xValues, yValues)
+      invisible(self)
+    },
+    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       self$printFormula()
+    },
+    #' @description
+    #' Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
+    #' If the table contains no point, 0 is returned
+    #' @param xValue x value for in base unit for which the yValue should be returned
+    valueAt = function(xValue){
+      rClr::clrCall(self$ref, "ValueAt", xValue)
     },
     #' @description
     #' Print the formula to the console

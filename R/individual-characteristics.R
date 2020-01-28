@@ -6,6 +6,7 @@
 #' @export
 IndividualCharacteristics <- R6::R6Class(
   "IndividualCharacteristics",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})

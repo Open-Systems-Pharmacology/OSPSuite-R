@@ -5,7 +5,7 @@
 \alias{ValuePoint}
 \title{ValuePoint}
 \description{
-A point in a table formula
+An entry (x, y) in a table formula
 }
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ValuePoint}
@@ -25,7 +25,6 @@ A point in a table formula
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-print}{\code{ValuePoint$print()}}
-\item \href{#method-clone}{\code{ValuePoint$clone()}}
 }
 }
 \if{html}{
@@ -47,22 +46,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ValuePoint$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

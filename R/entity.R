@@ -6,6 +6,7 @@
 #' @format NULL
 ObjectBase <- R6::R6Class(
   "ObjectBase",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field name The name of the object
@@ -27,6 +28,7 @@ ObjectBase <- R6::R6Class(
 #' @format NULL
 Entity <- R6::R6Class(
   "Entity",
+  cloneable = FALSE,
   inherit = ObjectBase,
   active = list(
     #' @field path The path of the entity in the container hiearchy without the simulation name. (read-only)

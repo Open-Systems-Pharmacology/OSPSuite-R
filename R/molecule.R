@@ -11,6 +11,7 @@
 #' @format NULL
 Molecule <- R6::R6Class(
   "Molecule",
+  cloneable = FALSE,
   inherit = Quantity,
   active = list(
     #' @field value Start value of the molecule

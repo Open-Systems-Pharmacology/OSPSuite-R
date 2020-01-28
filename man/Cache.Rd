@@ -31,7 +31,6 @@ Structure for caching objects
 \item \href{#method-get}{\code{Cache$get()}}
 \item \href{#method-dropKey}{\code{Cache$dropKey()}}
 \item \href{#method-print}{\code{Cache$print()}}
-\item \href{#method-clone}{\code{Cache$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -140,22 +139,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Cache$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

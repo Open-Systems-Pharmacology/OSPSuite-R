@@ -8,8 +8,8 @@ QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 #' @format NULL
 Quantity <- R6::R6Class(
   "Quantity",
+  cloneable = FALSE,
   inherit = Entity,
-
   active = list(
     #' @field value The value of the quantity in unit
     value = function(value) {
