@@ -51,7 +51,6 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item \href{#method-setValue}{\code{Quantity$setValue()}}
 \item \href{#method-hasUnit}{\code{Quantity$hasUnit()}}
 \item \href{#method-reset}{\code{Quantity$reset()}}
-\item \href{#method-clone}{\code{Quantity$clone()}}
 }
 }
 \if{html}{
@@ -163,21 +162,5 @@ Ensures that the quantity uses the value computed by its formula. It is a shortc
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$reset()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

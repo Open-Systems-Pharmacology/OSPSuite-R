@@ -4,6 +4,7 @@
 #'
 SolverSettings <- R6::R6Class(
   "SolverSettings",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field useJacobian Use of Jacobian matrix during calculations

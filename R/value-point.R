@@ -1,6 +1,6 @@
 #' @title ValuePoint
 #'
-#' @description A point in a table formula
+#' @description An entry (x, y) in a table formula
 #'
 #' @docType class
 #' @name ValuePoint
@@ -8,6 +8,7 @@
 #' @format NULL
 ValuePoint <- R6::R6Class(
   "ValuePoint",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   public = list(
     #' @description

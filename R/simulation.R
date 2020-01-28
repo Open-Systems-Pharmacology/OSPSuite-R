@@ -4,6 +4,7 @@
 #' @format NULL
 Simulation <- R6::R6Class(
   "Simulation",
+  cloneable = FALSE,
   inherit = ObjectBase,
   active = list(
     #' @field root Root container of the simulation (read-only)

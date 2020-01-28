@@ -5,6 +5,7 @@
 #' @format NULL
 OutputSchema <- R6::R6Class(
   "OutputSchema",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field intervals All intervals defined in the schema (Read-Only)

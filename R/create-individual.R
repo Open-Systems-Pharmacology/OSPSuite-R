@@ -1,7 +1,6 @@
 #' Creates an individual using the PKSim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
-#' @param useDistribution Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
 #' that are actually distributed parameters
 #'
 #' @return An list with two entries:

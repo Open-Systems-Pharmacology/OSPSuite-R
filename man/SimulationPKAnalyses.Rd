@@ -23,7 +23,6 @@ pK-Analyses of a simulation (either individual or population simulation).
 \item \href{#method-new}{\code{SimulationPKAnalyses$new()}}
 \item \href{#method-allPKParametersFor}{\code{SimulationPKAnalyses$allPKParametersFor()}}
 \item \href{#method-pKParameterFor}{\code{SimulationPKAnalyses$pKParameterFor()}}
-\item \href{#method-clone}{\code{SimulationPKAnalyses$clone()}}
 }
 }
 \if{html}{
@@ -83,22 +82,6 @@ The pK Parameter defined for the given path and name
 \item{\code{quantityPath}}{Path for which the pkParameter named `pkParameter` should be retrieved}
 
 \item{\code{pkParameter}}{Name of the pkParameter to retrieve}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

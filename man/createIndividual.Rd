@@ -7,9 +7,7 @@
 createIndividual(individualCharacteristics)
 }
 \arguments{
-\item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{OriginData}}
-
-\item{useDistribution}{Boolean. Indicates wheather the function should returns all parameters defining an individual on only those parameters
+\item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{OriginData}
 that are actually distributed parameters}
 }
 \value{

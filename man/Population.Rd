@@ -28,7 +28,6 @@ List of individuals used in a population simulation
 \item \href{#method-getCovariateValues}{\code{Population$getCovariateValues()}}
 \item \href{#method-getCovariateValue}{\code{Population$getCovariateValue()}}
 \item \href{#method-print}{\code{Population$print()}}
-\item \href{#method-clone}{\code{Population$clone()}}
 }
 }
 \if{html}{
@@ -134,22 +133,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

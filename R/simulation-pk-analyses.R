@@ -3,7 +3,9 @@
 #' @docType class
 #' @description  pK-Analyses of a simulation (either individual or population simulation).
 #'
-SimulationPKAnalyses <- R6::R6Class("SimulationPKAnalyses",
+SimulationPKAnalyses <- R6::R6Class(
+  "SimulationPKAnalyses",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   private = list(
     .simulation = NULL,

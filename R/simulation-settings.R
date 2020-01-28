@@ -3,6 +3,7 @@
 #' @description  Settings associated with a given simulation
 SimulationSettings <- R6::R6Class(
   "SimulationSettings",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field solver Container containing all solver parameters for the simulation (read-only)

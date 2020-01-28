@@ -4,6 +4,7 @@
 #'
 Cache <- R6::R6Class(
   "Cache",
+  cloneable = FALSE,
   public = list(
     #' @field type Type of the object that are cached. All objects must be of the same type.
     type = NULL,

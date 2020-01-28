@@ -5,6 +5,7 @@
 #' @format NULL
 SimulationRunOptions <- R6::R6Class(
   "SimulationRunOptions",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   public = list(
     #' @description

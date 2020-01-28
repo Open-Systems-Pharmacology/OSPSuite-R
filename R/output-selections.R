@@ -4,6 +4,7 @@
 #'
 OutputSelections <- R6::R6Class(
   "OutputSelections",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field allOutputs Returns all outputs defined in the selection

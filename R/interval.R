@@ -5,6 +5,7 @@
 #' @format NULL
 Interval <- R6::R6Class(
   "Interval",
+  cloneable = FALSE,
   inherit = Container,
   active = list(
     #' @field startTime Start time of interval (instance of \code{Parameter})
