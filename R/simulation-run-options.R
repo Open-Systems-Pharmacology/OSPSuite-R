@@ -22,6 +22,9 @@ SimulationRunOptions <- R6::R6Class(
       self$checkForNegativeValues <- checkForNegativeValues
       self$showProgress <- showProgress
     },
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
       private$printLine("Number of cores to use", self$numberOfCoresToUse)

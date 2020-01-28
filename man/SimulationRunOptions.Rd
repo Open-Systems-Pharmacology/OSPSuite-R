@@ -66,10 +66,18 @@ A new \code{SimulationRunOptions} object.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Print the object to the console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$print(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

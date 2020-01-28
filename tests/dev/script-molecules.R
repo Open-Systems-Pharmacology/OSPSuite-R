@@ -1,15 +1,12 @@
 library(ospsuite)
 
 # sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/concentration_based.pkml")
-sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/amount_based.pkml", loadFromCache = FALSE)
+sim <- loadSimulation("C:/tests/9.0/R Generation/Vergin 1995 IV.pkml")
 
-molecules <- getAllMoleculesMatching("Organism|**", sim)
-for (molecule in molecules) {
-  print(molecule)
-}
+allDrugs <- sim$allXenobioticMoleculeNames();
 
-setMoleculeInitialValues(molecules, 30)
-
-for (molecule in molecules) {
-  print(molecule)
-}
+# molecules <- getAllMoleculesMatching("Organism|**", sim)
+# for (molecule in molecules) {
+#   print(molecule)
+# }
+#
