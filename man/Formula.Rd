@@ -152,7 +152,7 @@ Remove all points from the table
 \if{html}{\out{<a id="method-setPoints"></a>}}
 \subsection{Method \code{setPoints()}}{
 Replace all points defined in the table with the new values given.
-This is a convenience method for callign `clearPoints` and `addPoints`
+This is a convenience method for callign \code{clearPoints} and \code{addPoints}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$setPoints(xValues, yValues)}\if{html}{\out{</div>}}
 }

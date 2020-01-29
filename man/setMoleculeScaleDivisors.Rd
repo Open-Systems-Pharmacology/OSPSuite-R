@@ -11,7 +11,7 @@ setMoleculeScaleDivisors(molecules, values)
 
 \item{values}{A numeric value that should be assigned to the molecule scale factor or a vector
 of numeric values, if the scale factor of more than one molecule should be changed. Must have the same
-length as `molecules`}
+length as \code{molecules}}
 }
 \description{
 Set molecule scale divisors
