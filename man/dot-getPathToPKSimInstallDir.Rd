@@ -4,9 +4,11 @@
 \alias{.getPathToPKSimInstallDir}
 \title{Tries to find the installation path for a specific version of PK-Sim.
 Searching is done in the following order:
-1. Search via Windows registry entry
-2. Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
-3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)}
+\enumerate{
+\item Search via Windows registry entry
+\item Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
+\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
+}}
 \usage{
 .getPathToPKSimInstallDir(
   pksim.version = ospsuiteEnv$packageVersion,
@@ -26,9 +28,11 @@ If more than one matching path is found a warning is produced.
 \description{
 Tries to find the installation path for a specific version of PK-Sim.
 Searching is done in the following order:
-1. Search via Windows registry entry
-2. Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
-3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
+\enumerate{
+\item Search via Windows registry entry
+\item Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
+\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
+}
 }
 \examples{
 \dontrun{

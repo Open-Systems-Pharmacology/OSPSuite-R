@@ -51,7 +51,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `SensitivityAnalysisResults` object.
+A new \code{SensitivityAnalysisResults} object.
 }
 }
 \if{html}{\out{<hr>}}

@@ -40,7 +40,7 @@ Initialize a new instance of the class
 }
 
 \subsection{Returns}{
-A new `ApiConfig` object.
+A new \code{ApiConfig} object.
 }
 }
 }

@@ -26,8 +26,14 @@ sim <- loadSimulation(simPath)
 # Running an individual simulation
 results <- runSimulation(sim)
 
+# Creating custom simulation run options
+
+simRunOptions <- SimulationRunOptions$new()
+simRunOptions$numberOfCoresToUse <- 3
+simRunOptions$showProgress <- TRUE
+
 # Running a population simulation
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
-results <- runSimulation(sim, population)
+results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 }

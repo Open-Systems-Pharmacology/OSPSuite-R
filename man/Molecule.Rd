@@ -59,7 +59,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `Molecule` object.
+A new \code{Molecule} object.
 }
 }
 \if{html}{\out{<hr>}}

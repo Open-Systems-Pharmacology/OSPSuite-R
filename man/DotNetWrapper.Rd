@@ -10,9 +10,9 @@ Wrapper class for .net Object
 \section{Methods}{
 
 \describe{
-  \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-  \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
-  }
+\item{wrapProperty}{Simple way to wrap a get;set; .NET property}
+\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
+}
 }
 
 \section{Super class}{
@@ -53,7 +53,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `DotNetWrapper` object.
+A new \code{DotNetWrapper} object.
 }
 }
 }

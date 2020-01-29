@@ -49,7 +49,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `SimulationPKAnalyses` object.
+A new \code{SimulationPKAnalyses} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -79,7 +79,7 @@ The pK Parameter defined for the given path and name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{quantityPath}}{Path for which the pkParameter named `pkParameter` should be retrieved}
+\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter} should be retrieved}
 
 \item{\code{pkParameter}}{Name of the pkParameter to retrieve}
 }

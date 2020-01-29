@@ -64,7 +64,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `Simulation` object.
+A new \code{Simulation} object.
 }
 }
 \if{html}{\out{<hr>}}

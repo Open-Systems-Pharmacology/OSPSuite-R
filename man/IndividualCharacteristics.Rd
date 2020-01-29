@@ -54,7 +54,7 @@ Initialize a new instance of the class
 }
 
 \subsection{Returns}{
-A new `IndividualCharacteristics` object.
+A new \code{IndividualCharacteristics} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -76,7 +76,7 @@ Print the object to the console
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addMoleculeOntogeny"></a>}}
 \subsection{Method \code{addMoleculeOntogeny()}}{
-Add a molecule ontogeny `MoleculeOntogeny` to the individual characteristics
+Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristics
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)}\if{html}{\out{</div>}}
 }

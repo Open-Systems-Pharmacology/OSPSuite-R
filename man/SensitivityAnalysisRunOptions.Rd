@@ -46,14 +46,14 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{numberOfCoresToUse}}{Number of cores to use for the simulation. Default value is `ospsuiteEnv$numberOfCoresToUse`}
+\item{\code{numberOfCoresToUse}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCoresToUse}}
 
-\item{\code{showProgress}}{Should a progress information be displayed. Default value is `ospsuiteEnv$showProgress`}
+\item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{ospsuiteEnv$showProgress}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `SensitivityAnalysisRunOptions` object.
+A new \code{SensitivityAnalysisRunOptions} object.
 }
 }
 \if{html}{\out{<hr>}}

@@ -49,7 +49,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `Cache` object.
+A new \code{Cache} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -72,7 +72,7 @@ Store the given value in cache with the given key
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{key}}{Key to use to store the `value` in the case}
+\item{\code{key}}{Key to use to store the \code{value} in the case}
 
 \item{\code{value}}{Value to store in the cache}
 }
@@ -82,7 +82,7 @@ Store the given value in cache with the given key
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasKey"></a>}}
 \subsection{Method \code{hasKey()}}{
-Check if an entry with the given `key` exists in cache
+Check if an entry with the given \code{key} exists in cache
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Cache$hasKey(key)}\if{html}{\out{</div>}}
 }

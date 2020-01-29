@@ -66,7 +66,7 @@ Sets the variability values in the population for \code{parameterOrPath}
 \describe{
 \item{\code{parameterOrPath}}{Parameter instance of parameter path}
 
-\item{\code{values}}{double vector containing the value to set for the `parameterOrPath`}
+\item{\code{values}}{double vector containing the value to set for the \code{parameterOrPath}}
 }
 \if{html}{\out{</div>}}
 }
@@ -90,7 +90,7 @@ Returns the variability values defined in the population for \code{parameterOrPa
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getCovariateValues"></a>}}
 \subsection{Method \code{getCovariateValues()}}{
-Returns the values defined in the population for the covariate named `covariateName`
+Returns the values defined in the population for the covariate named \code{covariateName}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValues(covariateName)}\if{html}{\out{</div>}}
 }
@@ -106,7 +106,7 @@ Returns the values defined in the population for the covariate named `covariateN
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getCovariateValue"></a>}}
 \subsection{Method \code{getCovariateValue()}}{
-Returns the values defined in the population for the covariate named `covariateName and invididual with id `individualId`
+Returns the values defined in the population for the covariate named \verb{covariateName and invididual with id }individualId`
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValue(covariateName, individualId)}\if{html}{\out{</div>}}
 }
@@ -116,7 +116,7 @@ Returns the values defined in the population for the covariate named `covariateN
 \describe{
 \item{\code{covariateName}}{Name of covariate for which values should be retrieved}
 
-\item{\code{individualId}}{Id of individual for which the value for covariate `covariateName` should be retrieved}
+\item{\code{individualId}}{Id of individual for which the value for covariate \code{covariateName} should be retrieved}
 }
 \if{html}{\out{</div>}}
 }

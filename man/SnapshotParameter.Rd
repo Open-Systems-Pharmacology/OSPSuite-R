@@ -54,7 +54,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `SnapshotParameter` object.
+A new \code{SnapshotParameter} object.
 }
 }
 \if{html}{\out{<hr>}}

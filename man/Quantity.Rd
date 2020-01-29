@@ -76,7 +76,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `Quantity` object.
+A new \code{Quantity} object.
 }
 }
 \if{html}{\out{<hr>}}

@@ -59,13 +59,13 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `SimulationResults` object.
+A new \code{SimulationResults} object.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasResultsForIndividual"></a>}}
 \subsection{Method \code{hasResultsForIndividual()}}{
-Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationResults$hasResultsForIndividual(individualId)}\if{html}{\out{</div>}}
 }
@@ -81,7 +81,7 @@ Returns \code{TRUE} if results are available for the individual with id `individ
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getValuesByPath"></a>}}
 \subsection{Method \code{getValuesByPath()}}{
-Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationResults$getValuesByPath(path, individualIds, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
 }
@@ -93,7 +93,7 @@ Returns \code{TRUE} if results are available for the individual with id `individ
 
 \item{\code{individualIds}}{One or more individual ids for which values should be returned}
 
-\item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the `path`/}
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the \code{path}/}
 }
 \if{html}{\out{</div>}}
 }
@@ -101,7 +101,7 @@ Returns \code{TRUE} if results are available for the individual with id `individ
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-resultsForIndividual"></a>}}
 \subsection{Method \code{resultsForIndividual()}}{
-Returns all available results for the individual with id `individualId`
+Returns all available results for the individual with id \code{individualId}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationResults$resultsForIndividual(individualId)}\if{html}{\out{</div>}}
 }

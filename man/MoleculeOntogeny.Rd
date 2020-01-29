@@ -53,7 +53,7 @@ Initialize a new instance of the class
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `MoleculeOntogeny` object.
+A new \code{MoleculeOntogeny} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -75,7 +75,7 @@ Print the object to the console
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printMoleculeOntogeny"></a>}}
 \subsection{Method \code{printMoleculeOntogeny()}}{
-Print the `MoleculeOntogeny` on one line
+Print the \code{MoleculeOntogeny} on one line
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$printMoleculeOntogeny()}\if{html}{\out{</div>}}
 }
