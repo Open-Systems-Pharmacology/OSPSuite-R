@@ -11,6 +11,7 @@
 #' @format NULL
 Parameter <- R6::R6Class(
   "Parameter",
+  cloneable = FALSE,
   inherit = Quantity,
   public = list(
     #' @description

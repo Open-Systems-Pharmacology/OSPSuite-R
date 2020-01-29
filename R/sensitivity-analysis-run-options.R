@@ -5,6 +5,7 @@
 #' @format NULL
 SensitivityAnalysisRunOptions <- R6::R6Class(
   "SensitivityAnalysisRunOptions",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   public = list(
     #' @description

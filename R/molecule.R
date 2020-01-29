@@ -11,6 +11,7 @@
 #' @format NULL
 Molecule <- R6::R6Class(
   "Molecule",
+  cloneable = FALSE,
   inherit = Quantity,
   active = list(
     #' @field value Start value of the molecule
@@ -24,6 +25,11 @@ Molecule <- R6::R6Class(
           private$.startValue$value <- value
         }
       }
+    },
+    #' @field  scaleDivisor Scale divisor. Its purpose is to reduce numerical noise and to enhance computation performance.
+    #' see https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#import-molecule-and-parameter-start-values-from-excel
+    scaleDivisor = function(value){
+      private$wrapProperty("ScaleDivisor", value)
     }
   ),
   private = list(

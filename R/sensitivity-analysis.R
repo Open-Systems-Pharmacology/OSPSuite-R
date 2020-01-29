@@ -6,6 +6,7 @@
 #' @format NULL
 SensitivityAnalysis <- R6::R6Class(
   "SensitivityAnalysis",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   private = list(
     .simulation = NULL

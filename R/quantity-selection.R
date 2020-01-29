@@ -4,6 +4,7 @@
 #'
 QuantitySelection <- R6::R6Class(
   "QuantitySelection",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field path Path of quantity to select

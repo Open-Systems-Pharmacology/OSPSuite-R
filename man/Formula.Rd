@@ -35,7 +35,6 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \itemize{
 \item \href{#method-print}{\code{Formula$print()}}
 \item \href{#method-printFormula}{\code{Formula$printFormula()}}
-\item \href{#method-clone}{\code{Formula$clone()}}
 }
 }
 \if{html}{
@@ -70,22 +69,6 @@ Print the formula to the console without the name of the class
 }
 
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Formula$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Formula]{ospsuite::Formula}} -> \code{TableFormula}
@@ -104,12 +87,13 @@ The objects of this class are cloneable with this method.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-addPoint}{\code{TableFormula$addPoint()}}
+\item \href{#method-addPoints}{\code{TableFormula$addPoints()}}
 \item \href{#method-removePoint}{\code{TableFormula$removePoint()}}
 \item \href{#method-clearPoints}{\code{TableFormula$clearPoints()}}
+\item \href{#method-setPoints}{\code{TableFormula$setPoints()}}
 \item \href{#method-print}{\code{TableFormula$print()}}
+\item \href{#method-valueAt}{\code{TableFormula$valueAt()}}
 \item \href{#method-printFormula}{\code{TableFormula$printFormula()}}
-\item \href{#method-clone}{\code{TableFormula$clone()}}
 }
 }
 \if{html}{
@@ -120,19 +104,19 @@ The objects of this class are cloneable with this method.
 \out{</details>}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addPoint"></a>}}
-\subsection{Method \code{addPoint()}}{
-Adds a point to the table
+\if{html}{\out{<a id="method-addPoints"></a>}}
+\subsection{Method \code{addPoints()}}{
+Adds one or more points to a table
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$addPoint(x, y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$addPoints(xValues, yValues)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{x value in base unit for XDimension}
+\item{\code{xValues}}{x values (single value or array) in base unit for XDimension}
 
-\item{\code{y}}{y value in base unit for Dimension}
+\item{\code{yValues}}{y values (single value or array) in base unit for Dimension}
 }
 \if{html}{\out{</div>}}
 }
@@ -142,15 +126,15 @@ Adds a point to the table
 \subsection{Method \code{removePoint()}}{
 Remove the point having the same x and y from the table
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$removePoint(x, y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$removePoint(xValue, yValue)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{x value in base unit for XDimension}
+\item{\code{xValue}}{xValue value in base unit for XDimension}
 
-\item{\code{y}}{y value in base unit for Dimension}
+\item{\code{yValue}}{yValue value in base unit for Dimension}
 }
 \if{html}{\out{</div>}}
 }
@@ -163,6 +147,25 @@ Remove all points from the table
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$clearPoints()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setPoints"></a>}}
+\subsection{Method \code{setPoints()}}{
+Replace all points defined in the table with the new values given.
+This is a convenience method for callign `clearPoints` and `addPoints`
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$setPoints(xValues, yValues)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xValues}}{x values (single value or array) in base unit for XDimension}
+
+\item{\code{yValues}}{y values (single value or array) in base unit for Dimension}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
@@ -181,6 +184,23 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-valueAt"></a>}}
+\subsection{Method \code{valueAt()}}{
+Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
+If the table contains no point, 0 is returned
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TableFormula$valueAt(xValue)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xValue}}{x value for in base unit for which the yValue should be returned}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printFormula"></a>}}
 \subsection{Method \code{printFormula()}}{
 Print the formula to the console
@@ -188,21 +208,5 @@ Print the formula to the console
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$printFormula()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

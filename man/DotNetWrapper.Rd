@@ -29,7 +29,6 @@ Wrapper class for .net Object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DotNetWrapper$new()}}
-\item \href{#method-clone}{\code{DotNetWrapper$clone()}}
 }
 }
 \if{html}{
@@ -55,22 +54,6 @@ Initialize a new instance of the class
 }
 \subsection{Returns}{
 A new \code{DotNetWrapper} object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DotNetWrapper$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
 }
 }
 }

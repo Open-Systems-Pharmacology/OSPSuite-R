@@ -4,6 +4,7 @@
 #' @format NULL
 Container <- R6::R6Class(
   "Container",
+  cloneable = FALSE,
   inherit = Entity,
   active = list(
     #' @field containerType Type of container

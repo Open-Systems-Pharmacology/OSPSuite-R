@@ -6,6 +6,7 @@ FormulaExtensions <- "OSPSuite.Core.Domain.Formulas.FormulaExtensions"
 #' @format NULL
 Formula <- R6::R6Class(
   "Formula",
+  cloneable = FALSE,
   inherit = ObjectBase,
   active = list(
     #' @field isTable Is this a table formula (Read-Only)

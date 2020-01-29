@@ -37,7 +37,6 @@ Characteristics of an individual describing its origin
 \item \href{#method-new}{\code{IndividualCharacteristics$new()}}
 \item \href{#method-print}{\code{IndividualCharacteristics$print()}}
 \item \href{#method-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
-\item \href{#method-clone}{\code{IndividualCharacteristics$clone()}}
 }
 }
 \if{html}{
@@ -86,22 +85,6 @@ Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristic
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{moleculeOntogeny}}{Molecule ontogeny to add}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

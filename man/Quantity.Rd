@@ -50,8 +50,8 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item \href{#method-printQuantityValue}{\code{Quantity$printQuantityValue()}}
 \item \href{#method-setValue}{\code{Quantity$setValue()}}
 \item \href{#method-hasUnit}{\code{Quantity$hasUnit()}}
+\item \href{#method-unitIndex}{\code{Quantity$unitIndex()}}
 \item \href{#method-reset}{\code{Quantity$reset()}}
-\item \href{#method-clone}{\code{Quantity$clone()}}
 }
 }
 \if{html}{
@@ -156,6 +156,22 @@ For the list of supported units, use \code{allUnits}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-unitIndex"></a>}}
+\subsection{Method \code{unitIndex()}}{
+Returns the index of the unit in the units array. This method if for internal use only
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$unitIndex(unit)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{unit}}{Unit for which index should be retrieved}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reset"></a>}}
 \subsection{Method \code{reset()}}{
 Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
@@ -163,21 +179,5 @@ Ensures that the quantity uses the value computed by its formula. It is a shortc
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$reset()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

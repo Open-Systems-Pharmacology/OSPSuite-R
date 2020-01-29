@@ -1,4 +1,5 @@
 WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
+R_WITH_DIMENSION_EXTENSION <- "OSPSuite.R.Extensions.WithDimensionExtensions"
 WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions"
 QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 
@@ -8,8 +9,8 @@ QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 #' @format NULL
 Quantity <- R6::R6Class(
   "Quantity",
+  cloneable = FALSE,
   inherit = Entity,
-
   active = list(
     #' @field value The value of the quantity in unit
     value = function(value) {
@@ -29,7 +30,11 @@ Quantity <- R6::R6Class(
     },
     #' @field  allUnits the list of all supported units
     allUnits = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
+      #Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
+      if(is.null(private$.allUnits)){
+        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
+      }
+      return(private$.allUnits)
     },
     #' @field quantityType The type of the quantity (Read-Only)
     quantityType = function(value) {
@@ -66,6 +71,7 @@ Quantity <- R6::R6Class(
   ),
   private = list(
     .formula = NULL,
+    .allUnits = NULL,
     printQuantity = function(valueCaption = "Value") {
       private$printClass()
       private$printLine("Path", self$path)
@@ -107,7 +113,10 @@ Quantity <- R6::R6Class(
     #' Print the the value and unit of the quantity
     #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
-      private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
+      if(self$unit == "")
+        private$printLine(caption, formatNumerics(self$value))
+      else
+        private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
     },
     #' @description
     #' Convert value from unit to the base unit and sets the value in base unit.
@@ -117,7 +126,7 @@ Quantity <- R6::R6Class(
       validateIsNumeric(value)
       if (!is.null(unit)) {
         validateHasUnit(self, unit)
-        value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
+        value <- rClr::clrCallStatic(R_WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, as.integer(self$unitIndexOf(unit)))
       }
       self$value <- value
     },
@@ -127,7 +136,14 @@ Quantity <- R6::R6Class(
     #' @param unit Unit to check
     hasUnit = function(unit) {
       validateIsString(unit)
-      rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "HasUnit", self$ref, unit)
+      unit %in% self$allUnits
+    },
+    #' @description
+    #' Returns the index of the unit in the units array. This method if for internal use only
+    #' @param unit Unit for which index should be retrieved
+    unitIndexOf = function(unit){
+      validateIsString(unit)
+      match(unit, self$allUnits)[1]
     },
     #' @description
     #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.

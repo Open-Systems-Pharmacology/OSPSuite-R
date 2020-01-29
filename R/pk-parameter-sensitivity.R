@@ -5,6 +5,7 @@
 #' @format NULL
 PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field parameterPath  Unique name of parameter in sensitivity analysis
     parameterPath = function(value) {

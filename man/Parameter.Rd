@@ -18,7 +18,6 @@ Derived from \link{Quantity}, please see base class documentation.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-print}{\code{Parameter$print()}}
-\item \href{#method-clone}{\code{Parameter$clone()}}
 }
 }
 \if{html}{
@@ -30,6 +29,7 @@ Derived from \link{Quantity}, please see base class documentation.
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue">}\href{../../ospsuite/html/Quantity.html#method-printValue}{\code{ospsuite::Quantity$printValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset">}\href{../../ospsuite/html/Quantity.html#method-reset}{\code{ospsuite::Quantity$reset()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue">}\href{../../ospsuite/html/Quantity.html#method-setValue}{\code{ospsuite::Quantity$setValue()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="unitIndex">}\href{../../ospsuite/html/Quantity.html#method-unitIndex}{\code{ospsuite::Quantity$unitIndex()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -45,22 +45,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Parameter$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

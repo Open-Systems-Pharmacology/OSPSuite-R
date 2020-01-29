@@ -25,7 +25,6 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \item \href{#method-new}{\code{SensitivityAnalysisResults$new()}}
 \item \href{#method-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
 \item \href{#method-print}{\code{SensitivityAnalysisResults$print()}}
-\item \href{#method-clone}{\code{SensitivityAnalysisResults$clone()}}
 }
 }
 \if{html}{
@@ -58,8 +57,7 @@ A new \code{SensitivityAnalysisResults} object.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
-Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity
-greater or equal to totalSensitivityThreshold
+Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to `totalSensitivityThreshold`
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
@@ -77,7 +75,7 @@ greater or equal to totalSensitivityThreshold
 \item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
 
 \item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most sensitive parameter. A threshold of 0.9 means that only
-parameter participating to a total of 90\% of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters}
+parameter participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -94,22 +92,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

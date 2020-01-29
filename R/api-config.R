@@ -3,6 +3,7 @@
 #' @description  Global configuration for the OSPSuite .NET API
 ApiConfig <- R6::R6Class(
   "ApiConfig",
+  cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
     #' @field pkParametersFilePath Full path of the pkParameter file

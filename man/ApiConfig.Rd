@@ -23,7 +23,6 @@ Global configuration for the OSPSuite .NET API
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ApiConfig$new()}}
-\item \href{#method-clone}{\code{ApiConfig$clone()}}
 }
 }
 \if{html}{
@@ -42,22 +41,6 @@ Initialize a new instance of the class
 
 \subsection{Returns}{
 A new \code{ApiConfig} object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ApiConfig$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
 }
 }
 }
