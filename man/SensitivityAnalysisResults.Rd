@@ -57,7 +57,7 @@ A new \code{SensitivityAnalysisResults} object.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
-Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to `totalSensitivityThreshold`
+Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to \code{totalSensitivityThreshold}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
