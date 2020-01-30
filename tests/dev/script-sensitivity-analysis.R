@@ -3,9 +3,12 @@ library(ospsuite)
 sim <- loadSimulation("C:/projects/OSPSuite-R/inst/extdata/simple.pkml", loadFromCache = FALSE)
 
 outputSelections <- sim$outputSelections
-
+params <- getAllParametersMatching("**", sim)
+print(params)
 sensitivity <- SensitivityAnalysis$new(sim)
-
+print(sensitivity)
+print(outputSelections)
+sensitivity$addParameterPaths("Organism|Liver|Volume")
 sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(showProgress = TRUE)
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
 
