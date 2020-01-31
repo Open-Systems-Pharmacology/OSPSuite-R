@@ -248,7 +248,7 @@ setSimulationParameterValues <- function(parameterPaths, values, simulation) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
 #'
-#' exportIndividualSimulations(population, c(1, 2), tempdir(), simulation)
+#' exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
 #' @export
 exportIndividualSimulations <- function(population, individualIds, outputFolder, simulation) {
   validateIsString(outputFolder)
