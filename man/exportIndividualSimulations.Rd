@@ -30,7 +30,7 @@ Export simulation PKMLs for given \code{individualIds}. Each pkml file will cont
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+popPath <- system.file("extdata", "simple_pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 
 exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
