@@ -223,7 +223,7 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 #' sim <- loadSimulation(simPath)
 #' setSimulationParameterValues("Organism|Liver|Volume", 1, sim)
 #'
-#' setSimulationParameterValues(c("Organism|Liver|Volume", "Organism|Kidney|Volume"), c(2, 3))
+#' setSimulationParameterValues(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 #' @export
 setSimulationParameterValues <- function(parameterPaths, values, simulation) {
   validateIsString(parameterPaths)

@@ -22,5 +22,5 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 setSimulationParameterValues("Organism|Liver|Volume", 1, sim)
 
-setSimulationParameterValues(c("Organism|Liver|Volume", "Organism|Kidney|Volume"), c(2, 3))
+setSimulationParameterValues(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 }
