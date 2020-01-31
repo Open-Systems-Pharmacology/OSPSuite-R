@@ -30,8 +30,8 @@ Quantity <- R6::R6Class(
     },
     #' @field  allUnits the list of all supported units
     allUnits = function(value) {
-      #Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
-      if(is.null(private$.allUnits)){
+      # Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
+      if (is.null(private$.allUnits)) {
         private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
       }
       return(private$.allUnits)
@@ -113,10 +113,11 @@ Quantity <- R6::R6Class(
     #' Print the the value and unit of the quantity
     #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
-      if(self$unit == "")
+      if (self$unit == "") {
         private$printLine(caption, formatNumerics(self$value))
-      else
+      } else {
         private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
+      }
     },
     #' @description
     #' Convert value from unit to the base unit and sets the value in base unit.
@@ -141,7 +142,7 @@ Quantity <- R6::R6Class(
     #' @description
     #' Returns the index of the unit in the units array. This method if for internal use only
     #' @param unit Unit for which index should be retrieved
-    unitIndexOf = function(unit){
+    unitIndexOf = function(unit) {
       validateIsString(unit)
       match(unit, self$allUnits)[1]
     },

@@ -57,7 +57,7 @@ test_that("It can clear all points from the table", {
 test_that("It can add multiple points at once", {
   tableFormula$clearPoints()
   tableFormula$addPoints(c(0.1, 0.2), c(20, 30))
-  expect_equal(length( tableFormula$allPoints), 2)
+  expect_equal(length(tableFormula$allPoints), 2)
 })
 
 test_that("It can retrieves the values for existing points or interpolate for missing points", {
@@ -72,8 +72,8 @@ test_that("It can update all points at once in a table", {
   tableFormula$clearPoints()
   tableFormula$addPoints(10, 20)
   tableFormula$addPoints(20, 30)
-  expect_equal(length( tableFormula$allPoints), 2)
-  tableFormula$setPoints(c(0.1,0.2,0.3), c(10,20,30))
+  expect_equal(length(tableFormula$allPoints), 2)
+  tableFormula$setPoints(c(0.1, 0.2, 0.3), c(10, 20, 30))
   points <- tableFormula$allPoints
   expect_equal(length(points), 3)
   expect_equal(points[[3]]$x, 0.3)

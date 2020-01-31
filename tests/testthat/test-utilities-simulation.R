@@ -1,9 +1,29 @@
 
+context("exportIndividualSimulations")
+
+test_that("It can export the simulation for file for given individual in a population", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  paths <- exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
+  expect_length(paths, 2)
+  sapply(paths, function(p) file.remove(p))
+})
+
+
+test_that("It throws an exception when trying to export for an individual id that does not exist in the population", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_that(exportIndividualSimulations(population, c(50, 2), tempdir(), sim), throws_error())
+})
+
+
 context("setSimulationParameterValue")
 
 test_that("It can set single parameter values", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath <- "Organism|Liver|Intracellular|Volume";
+  parameterPath <- "Organism|Liver|Intracellular|Volume"
   setSimulationParameterValues(parameterPath, 100, sim)
   parameter <- getParameter(parameterPath, sim)
   expect_equal(parameter$value, 100)
@@ -11,8 +31,8 @@ test_that("It can set single parameter values", {
 
 test_that("It can set multiple parameter values", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath1 <- "Organism|Liver|Intracellular|Volume";
-  parameterPath2 <- "Organism|Kidney|Intracellular|Volume";
+  parameterPath1 <- "Organism|Liver|Intracellular|Volume"
+  parameterPath2 <- "Organism|Kidney|Intracellular|Volume"
   setSimulationParameterValues(c(parameterPath1, parameterPath2), c(40, 50), sim)
   parameter1 <- getParameter(parameterPath1, sim)
   parameter2 <- getParameter(parameterPath2, sim)
@@ -22,7 +42,7 @@ test_that("It can set multiple parameter values", {
 
 test_that("It throws an exception when setting values for a parameter that does not exist", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath1 <- "Organism|Liver|NOPE|Volume";
+  parameterPath1 <- "Organism|Liver|NOPE|Volume"
   expect_that(setSimulationParameterValues(parameterPath, 100, sim), throws_error())
 })
 
@@ -153,12 +173,7 @@ test_that("It returns an empty list of parameters for a molecule that does not e
 context("getAllParametersForSensitivityAnalysisMatching")
 test_that("It returns all parameter potentially interesting for sensitivity analysis for a given wild card path", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameters <- getAllParametersMatching("**|Volume", sim);
+  parameters <- getAllParametersMatching("**|Volume", sim)
   varableParameters <- getAllParametersForSensitivityAnalysisMatching("**|Volume", sim)
   expect_gt(length(parameters), length(varableParameters))
 })
-
-
-
-
-

@@ -20,10 +20,10 @@ toBaseUnit <- function(quantity, values, unit) {
   validateIsOfType(quantity, Quantity)
   validateIsNumeric(values)
   validateHasUnit(quantity, unit)
-  unitIndex <-  as.integer(quantity$unitIndexOf(unit))
+  unitIndex <- as.integer(quantity$unitIndexOf(unit))
   values <- c(values)
   sapply(values, function(value) {
-    rClr::clrCallStatic(R_WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", quantity$ref, value,unitIndex)
+    rClr::clrCallStatic(R_WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", quantity$ref, value, unitIndex)
   })
 }
 
@@ -48,10 +48,10 @@ toUnit <- function(quantity, values, targetUnit) {
   validateIsOfType(quantity, Quantity)
   validateIsNumeric(values)
   validateHasUnit(quantity, targetUnit)
-  targetUnitIndex <-  as.integer(quantity$unitIndexOf(targetUnit))
+  targetUnitIndex <- as.integer(quantity$unitIndexOf(targetUnit))
   values <- c(values)
   sapply(values, function(value) {
-    rClr::clrCallStatic(R_WITH_DIMENSION_EXTENSION, "ConvertToUnit", quantity$ref, value,targetUnitIndex)
+    rClr::clrCallStatic(R_WITH_DIMENSION_EXTENSION, "ConvertToUnit", quantity$ref, value, targetUnitIndex)
   })
 }
 

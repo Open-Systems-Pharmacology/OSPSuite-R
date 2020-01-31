@@ -92,4 +92,3 @@ test_that("It can set the  scale divisors of multiple molecules", {
   })
   expect_equal(newVals, c(1:2))
 })
-

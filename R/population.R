@@ -57,7 +57,7 @@ Population <- R6::R6Class(
     #' @description
     #' Returns all values defined in the population the invididual with id `individualId`
     #' @param individualId Id of individual for which all values should be returned
-    getParameterValuesForIndividual = function(individualId){
+    getParameterValuesForIndividual = function(individualId) {
       parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
     },
     #' @description
