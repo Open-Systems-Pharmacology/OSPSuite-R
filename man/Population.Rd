@@ -23,10 +23,11 @@ List of individuals used in a population simulation
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-has}{\code{Population$has()}}
-\item \href{#method-setValues}{\code{Population$setValues()}}
-\item \href{#method-getValues}{\code{Population$getValues()}}
+\item \href{#method-setParameterValues}{\code{Population$setParameterValues()}}
+\item \href{#method-getParameterValues}{\code{Population$getParameterValues()}}
 \item \href{#method-getCovariateValues}{\code{Population$getCovariateValues()}}
 \item \href{#method-getCovariateValue}{\code{Population$getCovariateValue()}}
+\item \href{#method-getParameterValuesForIndividual}{\code{Population$getParameterValuesForIndividual()}}
 \item \href{#method-print}{\code{Population$print()}}
 }
 }
@@ -54,11 +55,11 @@ Returns \code{TRUE} if the population has variability defined for \code{paramete
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setValues"></a>}}
-\subsection{Method \code{setValues()}}{
+\if{html}{\out{<a id="method-setParameterValues"></a>}}
+\subsection{Method \code{setParameterValues()}}{
 Sets the variability values in the population for \code{parameterOrPath}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$setValues(parameterOrPath, values)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Population$setParameterValues(parameterOrPath, values)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -72,11 +73,11 @@ Sets the variability values in the population for \code{parameterOrPath}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getValues"></a>}}
-\subsection{Method \code{getValues()}}{
+\if{html}{\out{<a id="method-getParameterValues"></a>}}
+\subsection{Method \code{getParameterValues()}}{
 Returns the variability values defined in the population for \code{parameterOrPath}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$getValues(parameterOrPath)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Population$getParameterValues(parameterOrPath)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -106,7 +107,7 @@ Returns the values defined in the population for the covariate named \code{covar
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getCovariateValue"></a>}}
 \subsection{Method \code{getCovariateValue()}}{
-Returns the values defined in the population for the covariate named \verb{covariateName and invididual with id }individualId`
+Returns the values defined in the population for the covariate named \code{covariateName} and invididual with id \code{individualId}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValue(covariateName, individualId)}\if{html}{\out{</div>}}
 }
@@ -117,6 +118,22 @@ Returns the values defined in the population for the covariate named \verb{covar
 \item{\code{covariateName}}{Name of covariate for which values should be retrieved}
 
 \item{\code{individualId}}{Id of individual for which the value for covariate \code{covariateName} should be retrieved}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getParameterValuesForIndividual"></a>}}
+\subsection{Method \code{getParameterValuesForIndividual()}}{
+Returns all values defined in the population the invididual with id \code{individualId}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$getParameterValuesForIndividual(individualId)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{individualId}}{Id of individual for which all values should be returned}
 }
 \if{html}{\out{</div>}}
 }

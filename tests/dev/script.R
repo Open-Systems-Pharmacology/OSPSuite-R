@@ -57,8 +57,10 @@ constantParameter <- getParameter("Organism|Age", sim)
 # print(parameter)
 
 
-# population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
-population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")
+population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+
+exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget", sim)
+# population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")
 
 # print(population)
 #

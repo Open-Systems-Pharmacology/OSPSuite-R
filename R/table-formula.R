@@ -77,7 +77,7 @@ TableFormula <- R6::R6Class(
     #' Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
     #' If the table contains no point, 0 is returned
     #' @param xValue x value for in base unit for which the yValue should be returned
-    valueAt = function(xValue){
+    valueAt = function(xValue) {
       rClr::clrCall(self$ref, "ValueAt", xValue)
     },
     #' @description

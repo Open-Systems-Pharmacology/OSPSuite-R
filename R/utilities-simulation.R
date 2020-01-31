@@ -209,3 +209,62 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
     method = "AllParametersForSensitivityAnalysisMatching"
   )
 }
+
+#' Set the values of parameters in the simulation by path
+#'
+#' @param parameterPaths A single or a list of parameter path
+#' @param values A numeric value that should be assigned to the parameters or a vector
+#' of numeric values, if the value of more than one parameter should be changed. Must have the same
+#' length as 'parameterPaths'
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' setSimulationParameterValues("Organism|Liver|Volume", 1, sim)
+#'
+#' setSimulationParameterValues(c("Organism|Liver|Volume", "Organism|Kidney|Volume"), c(2, 3))
+#' @export
+setSimulationParameterValues <- function(parameterPaths, values, simulation) {
+  validateIsString(parameterPaths)
+  validateIsNumeric(values)
+  parameters <- sapply(parameterPaths, function(p) getParameter(p, simulation))
+  setParameterValues(parameters, values)
+}
+
+#' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.
+#'
+#' @param population A population object typically loaded with `loadPopulation`
+#' @param individualIds Ids of individual (single value or array) to export
+#' @param outputFolder Folder where the individiual simulations will be exported. File format will be `simulationName_individualId`
+#' @param simulation Simulation uses to generate PKML files
+#'
+#' @return An array containing the path of all exported simulations.
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#' population <- loadPopulation(popPath)
+#'
+#' exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
+#' @export
+exportIndividualSimulations <- function(population, individualIds, outputFolder, simulation) {
+  validateIsString(outputFolder)
+  validateIsNumeric(individualIds)
+  validateIsOfType(simulation, Simulation)
+  validateIsOfType(population, Population)
+  individualIds <- c(individualIds)
+
+  simuationPaths <- NULL
+  for (individualId in individualIds) {
+    simulationPath <- file.path(outputFolder, paste0(simulation$name, "_", individualId))
+    simuationPaths <- c(simuationPaths, simulationPath)
+    parameterValues <- population$getParameterValuesForIndividual(individualId)
+    setSimulationParameterValues(parameterValues$paths, parameterValues$values, simulation)
+    saveSimulation(simulation, simulationPath)
+  }
+
+  return(simuationPaths)
+}

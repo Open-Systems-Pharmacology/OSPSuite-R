@@ -23,4 +23,3 @@ test_that("It can set the scale divisor", {
   molecule$scaleDivisor <- 0.025
   expect_equal(molecule$scaleDivisor, 0.025)
 })
-

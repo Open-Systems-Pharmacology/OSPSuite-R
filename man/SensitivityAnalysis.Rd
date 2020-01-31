@@ -17,9 +17,10 @@ Supports Sensitivity Analysis workflow to assess the impact of input parameters 
 
 \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 
-\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
-parameters List of parameters to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
-on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+
+\item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
+on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overriden by the user}
 }
 \if{html}{\out{</div>}}
@@ -28,6 +29,7 @@ with a value that was overriden by the user}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SensitivityAnalysis$new()}}
+\item \href{#method-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
 \item \href{#method-print}{\code{SensitivityAnalysis$print()}}
 }
 }
@@ -44,7 +46,7 @@ Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$new(
   simulation,
-  parameters = NULL,
+  parameterPaths = NULL,
   numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
   variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange
 )}\if{html}{\out{</div>}}
@@ -55,7 +57,9 @@ Initialize a new instance of the class
 \describe{
 \item{\code{simulation}}{Simulation for which a sensitivity analysis should be performed}
 
-\item{\code{parameters}}{List of parameters to use for sensitivity calculation (optional).}
+\item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
+on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
+with a value that was overriden by the user}
 
 \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 
@@ -65,6 +69,22 @@ Initialize a new instance of the class
 }
 \subsection{Returns}{
 A new \code{SensitivityAnalysis} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addParameterPaths"></a>}}
+\subsection{Method \code{addParameterPaths()}}{
+Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$addParameterPaths(parameterPaths)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{parameterPaths}}{Parameter paths to add (single or multiple values}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
