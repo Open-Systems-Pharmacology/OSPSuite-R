@@ -21,7 +21,7 @@ exportIndividualSimulations(
 \item{simulation}{Simulation uses to generate PKML files}
 }
 \value{
-An array containing the path of all exported simulations
+An array containing the path of all exported simulations.
 }
 \description{
 Export simulation PKMLs for given \code{individualIds}. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.
@@ -33,5 +33,5 @@ sim <- loadSimulation(simPath)
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 
-exportIndividualSimulations(population, c(1, 2), tempdir(), simulation)
+exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
 }
