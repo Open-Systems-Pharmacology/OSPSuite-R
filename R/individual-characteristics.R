@@ -82,7 +82,7 @@ IndividualCharacteristics <- R6::R6Class(
       private$printParam("GestationalAge", self$gestationalAge)
       private$printParam("Weight", self$weight)
       private$printParam("Height", self$height)
-      for (moleculeOntogeny in self$allMoleculeOntogenies()) {
+      for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
       }
       invisible(self)

@@ -28,7 +28,7 @@ Population <- R6::R6Class(
     #' Sets the variability values in the population for \code{parameterOrPath}
     #' @param parameterOrPath Parameter instance of parameter path
     #' @param values double vector containing the value to set for the `parameterOrPath`
-    setValues = function(parameterOrPath, values) {
+    setParameterValues = function(parameterOrPath, values) {
       parameterPath <- private$getPathFrom(parameterOrPath)
       validateIsNumeric(values)
       rClr::clrCall(self$ref, "SetValues", parameterPath, values)
@@ -37,7 +37,7 @@ Population <- R6::R6Class(
     #' @description
     #' Returns the variability values defined in the population for \code{parameterOrPath}
     #' @param parameterOrPath Parameter instance of parameter path
-    getValues = function(parameterOrPath) {
+    getParameterValues = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)
       rClr::clrCall(self$ref, "GetValues", parameterPath)
     },
@@ -48,11 +48,17 @@ Population <- R6::R6Class(
       rClr::clrCall(self$ref, "GetCovariateValues", covariateName)
     },
     #' @description
-    #' Returns the values defined in the population for the covariate named `covariateName and invididual with id `individualId`
+    #' Returns the values defined in the population for the covariate named `covariateName` and invididual with id `individualId`
     #' @param covariateName Name of covariate for which values should be retrieved
     #' @param individualId Id of individual for which the value for covariate `covariateName` should be retrieved
     getCovariateValue = function(covariateName, individualId) {
       rClr::clrCall(self$ref, "CovariateValueFor", covariateName, as.integer(individualId))
+    },
+    #' @description
+    #' Returns all values defined in the population the invididual with id `individualId`
+    #' @param individualId Id of individual for which all values should be returned
+    getParameterValuesForIndividual = function(individualId){
+      parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
     },
     #' @description
     #' Print the object to the console

@@ -1,4 +1,41 @@
 
+context("setSimulationParameterValue")
+
+test_that("It can set single parameter values", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameterPath <- "Organism|Liver|Intracellular|Volume";
+  setSimulationParameterValues(parameterPath, 100, sim)
+  parameter <- getParameter(parameterPath, sim)
+  expect_equal(parameter$value, 100)
+})
+
+test_that("It can set multiple parameter values", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameterPath1 <- "Organism|Liver|Intracellular|Volume";
+  parameterPath2 <- "Organism|Kidney|Intracellular|Volume";
+  setSimulationParameterValues(c(parameterPath1, parameterPath2), c(40, 50), sim)
+  parameter1 <- getParameter(parameterPath1, sim)
+  parameter2 <- getParameter(parameterPath2, sim)
+  expect_equal(parameter1$value, 40)
+  expect_equal(parameter2$value, 50)
+})
+
+test_that("It throws an exception when setting values for a parameter that does not exist", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameterPath1 <- "Organism|Liver|NOPE|Volume";
+  expect_that(setSimulationParameterValues(parameterPath, 100, sim), throws_error())
+})
+
+test_that("It can get the value of an individual from a population and set them into a simulation", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  individualValues <- population$getParameterValuesForIndividual(8)
+  setSimulationParameterValues(individualValues$paths, individualValues$values, sim)
+  parameter <- getParameter(individualValues$paths[1], sim)
+  expect_equal(parameter$value, individualValues$values[1])
+})
+
 context("loadSimulation")
 
 test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {
@@ -93,7 +130,7 @@ test_that("It can run a valid population simulation and returns results", {
   expect_equal(results$count, population$count)
 })
 
-test_that("It throws an exception when runninga population simulation with the wrong argumetns", {
+test_that("It throws an exception when running a population simulation with the wrong argumetns", {
   populationFileName <- getTestDataFilePath("pop_10.csv")
   population <- loadPopulation(populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
@@ -107,7 +144,7 @@ test_that("It returns all molecule parameters for an existing molecule in a simu
   expect_equal(length(parameters), length(MoleculeParameter))
 })
 
-test_that("It returns an emptylist of parameters for a molecule that does not exist", {
+test_that("It returns an empty list of parameters for a molecule that does not exist", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameters <- getStandardMoleculeParameters("NOPE", sim)
   expect_equal(length(parameters), 0)
@@ -120,4 +157,8 @@ test_that("It returns all parameter potentially interesting for sensitivity anal
   varableParameters <- getAllParametersForSensitivityAnalysisMatching("**|Volume", sim)
   expect_gt(length(parameters), length(varableParameters))
 })
+
+
+
+
 

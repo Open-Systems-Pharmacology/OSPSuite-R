@@ -20,6 +20,7 @@ dog <- createIndividualCharacteristics(
   weight = 10
 )
 
+print(dog)
 dogValues <- createIndividual(individualCharacteristics = dog)
 
 human <- createIndividualCharacteristics(

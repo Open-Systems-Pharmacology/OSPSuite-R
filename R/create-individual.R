@@ -17,11 +17,11 @@ createIndividual <- function(individualCharacteristics) {
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   createIndividualResults <- rClr::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
 
-  distributedParameters <- .getPropertyValue(createIndividualResults, "DistributedParameters")
-  derivedParameters <- .getPropertyValue(createIndividualResults, "DerivedParameters")
+  distributedParameters <- getPropertyValue(createIndividualResults, "DistributedParameters")
+  derivedParameters <- getPropertyValue(createIndividualResults, "DerivedParameters")
 
-  distributedParameters <- .parameterValueListFrom(distributedParameters)
-  derivedParameters <- .parameterValueListFrom(derivedParameters)
+  distributedParameters <- parameterValueListFrom(distributedParameters)
+  derivedParameters <- parameterValueListFrom(derivedParameters)
 
   list(distributedParameters = distributedParameters, derivedParameters = derivedParameters)
 }
@@ -40,28 +40,12 @@ createDistributions <- function(individualCharacteristics) {
   distributedParameters <- rClr::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
 
   list(
-    paths = .getPropertyValues(distributedParameters, "ParameterPath"),
-    values = .getPropertyValues(distributedParameters, "Value"),
-    means = .getPropertyValues(distributedParameters, "Mean"),
-    stds = .getPropertyValues(distributedParameters, "Std"),
-    distributionTypes = .getPropertyValues(.getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
+    paths = getPropertyValues(distributedParameters, "ParameterPath"),
+    values = getPropertyValues(distributedParameters, "Value"),
+    means = getPropertyValues(distributedParameters, "Mean"),
+    stds = getPropertyValues(distributedParameters, "Std"),
+    distributionTypes = getPropertyValues(getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
   )
-}
-
-
-.parameterValueListFrom <- function(netParameterValues) {
-  list(
-    paths = .getPropertyValues(netParameterValues, "ParameterPath"),
-    values = .getPropertyValues(netParameterValues, "Value")
-  )
-}
-
-.getPropertyValues <- function(netObjects, propertyName) {
-  sapply(netObjects, function(x) .getPropertyValue(x, propertyName))
-}
-
-.getPropertyValue <- function(netObject, propertyName) {
-  rClr::clrGet(netObject, name = propertyName)
 }
 
 .createSnapshotParameter <- function(value, unit) {

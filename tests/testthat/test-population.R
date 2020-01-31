@@ -22,46 +22,59 @@ test_that("It returns whether variability is defined for a parameter path", {
 test_that("It can add user defined variability using a new parameter path", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"
-  population$setValues(parameterPath, values)
+  population$setParameterValues(parameterPath, values)
   expect_true(population$has(parameterPath))
-  expect_identical(population$getValues(parameterPath), values)
+  expect_identical(population$getParameterValues(parameterPath), values)
 })
 
 test_that("It can add user defined variability using an existing parameter path with unit", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|VenousBlood|Volume [l]"
   expect_true(population$has(parameterPath))
-  population$setValues(parameterPath, values)
+  population$setParameterValues(parameterPath, values)
   expect_true(population$has(parameterPath))
-  expect_identical(population$getValues(parameterPath), values)
+  expect_identical(population$getParameterValues(parameterPath), values)
 })
 
 test_that("It can add user defined variability using an existing parameter path without unit", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|VenousBlood|Volume"
   expect_true(population$has(parameterPath))
-  population$setValues(parameterPath, values)
+  population$setParameterValues(parameterPath, values)
   expect_true(population$has(parameterPath))
-  expect_identical(population$getValues(parameterPath), values)
+  expect_identical(population$getParameterValues(parameterPath), values)
 })
 
 test_that("It can add user defined variability using an existing parameter", {
   population <- loadPopulation(populationFileName)
   expect_true(population$has(venousBloodVolume))
-  population$setValues(venousBloodVolume, values)
+  population$setParameterValues(venousBloodVolume, values)
   expect_true(population$has(venousBloodVolume))
-  expect_identical(population$getValues(venousBloodVolume), values)
+  expect_identical(population$getParameterValues(venousBloodVolume), values)
 })
 
-test_that("It throws an exception when adding values that have the wrong dimension", {
+test_that("It throws an exception when adding values that have the wrong number of items", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"
-  expect_that(population$setValues(parameterPath, c(1:5) * 2.5), throws_error())
+  expect_that(population$setParameterValues(parameterPath, c(1:5) * 2.5), throws_error())
+})
+
+test_that("It can retrieve all parameter values for an existing individual id", {
+  population <- loadPopulation(populationFileName)
+  parameterValues <- population$getParameterValuesForIndividual(7)
+  print(parameterValues)
+  expect_gt(length(parameterValues), 0)
+  expect_gt(length(parameterValues$paths), 0)
+  expect_gt(length(parameterValues$values), 0)
+})
+
+test_that("It throws an exception when retrieving all parameter values for an individual id that does not exist", {
+  population <- loadPopulation(populationFileName)
+  expect_that(parameterValues <- population$getParameterValuesForIndividual(666), throws_error())
 })
 
 context("Covariates")
 population <- loadPopulation(populationFileName)
-
 
 test_that("It can retrieve the covariates names defined in a population", {
   allCovariateNames <- population$allCovariateNames
