@@ -239,7 +239,7 @@ setSimulationParameterValues <- function(parameterPaths, values, simulation) {
 #' @param outputFolder Folder where the individiual simulations will be exported. File format will be `simulationName_individualId`
 #' @param simulation Simulation uses to generate PKML files
 #'
-#' @return An array containing the path of all exported simulations
+#' @return An array containing the path of all exported simulations.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
