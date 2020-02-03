@@ -37,6 +37,7 @@
 #' @export
 loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
   validateIsLogical(c(loadFromCache, addToCache))
+  validateIsString(filePath)
 
   if (loadFromCache) {
     # If the file has already been loaded, return the last loaded object
@@ -48,7 +49,10 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
   simulationPersister <- getNetTask("SimulationPersister")
-  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", filePath)
+
+  # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
+  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", path.expand(filePath))
+
   simulation <- Simulation$new(netSim, filePath)
 
   # Add the simulation to the cache of loaded simulations
@@ -67,6 +71,8 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
 #' @export
 saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, Simulation)
+  validateIsString(filePath)
+  filePath <- path.expand(filePath)
   simulationPersister <- getNetTask("SimulationPersister")
   rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
   invisible()
@@ -256,6 +262,7 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
   validateIsOfType(simulation, Simulation)
   validateIsOfType(population, Population)
   individualIds <- c(individualIds)
+  outputFolder <- path.expand(outputFolder)
 
   simuationPaths <- NULL
   for (individualId in individualIds) {

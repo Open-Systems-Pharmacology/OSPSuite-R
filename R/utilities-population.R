@@ -9,6 +9,7 @@
 #' @export
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
+  csvPopulationFile <- path.expand(csvPopulationFile)
   populationTask <- getNetTask("PopulationTask")
   population <- rClr::clrCall(populationTask, "ImportPopulation", csvPopulationFile)
   Population$new(population)
@@ -33,6 +34,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsNumeric(numberOfCores)
   validateIsString(outputFolder)
   validateIsString(outputFileName)
+  csvPopulationFile <- path.expand(csvPopulationFile)
   populationTask <- getNetTask("PopulationTask")
   rClr::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }

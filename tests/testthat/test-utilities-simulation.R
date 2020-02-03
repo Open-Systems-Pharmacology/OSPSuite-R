@@ -33,7 +33,7 @@ test_that("It can set multiple parameter values", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath1 <- "Organism|Liver|Intracellular|Volume"
   parameterPath2 <- "Organism|Kidney|Intracellular|Volume"
-  setSimulationParameterValues(c(parameterPath1, parameterPath2), c(40, 50),sim)
+  setSimulationParameterValues(c(parameterPath1, parameterPath2), c(40, 50), sim)
   parameter1 <- getParameter(parameterPath1, sim)
   parameter2 <- getParameter(parameterPath2, sim)
   expect_equal(parameter1$value, 40)
