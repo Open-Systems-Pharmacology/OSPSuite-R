@@ -13,9 +13,9 @@ List of selected quantities selected as output for a given simulation
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{path}}{Path of quantity to select}
+\item{\code{path}}{Path of selected quantity}
 
-\item{\code{quantityType}}{Type of quantity to select (see \code{QuantityType} enum)}
+\item{\code{quantityType}}{Type of selected quantity}
 }
 \if{html}{\out{</div>}}
 }

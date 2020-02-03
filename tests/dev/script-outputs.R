@@ -1,5 +1,5 @@
 library(ospsuite)
-sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
+sim <- loadSimulation("tests/data/S1.pkml")
 
 individualResults <- runSimulation(sim)
 resultsPaths <- individualResults$allQuantityPaths
@@ -7,7 +7,7 @@ resultsPaths <- individualResults$allQuantityPaths
 tlf <- getOutputValues(individualResults)
 print(tlf)
 
-population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+population <- loadPopulation("tests/data/pop_10.csv")
 populationResults <- runSimulation(sim, population)
 resultsPaths <- populationResults$allQuantityPaths
 

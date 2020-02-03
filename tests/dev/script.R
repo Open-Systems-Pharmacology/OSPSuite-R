@@ -1,13 +1,17 @@
 library(ospsuite)
 
 # library(profvis)
-sim <- loadSimulation("C:/projects/OSPSuite-R/tests/data/S1.pkml")
+sim <- loadSimulation("tests/data/S1.pkml")
+
+sim <- loadSimulation("tests/data/S1.pkml")
+container <- getContainer("Organism|Liver", sim)
+container$containerType
 
 distributedParameter <- getParameter("Organism|Liver|Volume", sim)
 formulaParameter <- getParameter("Organism|Weight", sim)
 constantParameter <- getParameter("Organism|Age", sim)
 
-# sim2 <- loadSimulation("C:/projects/OSPSuite-R/tests/data/simple.pkml")
+# sim2 <- loadSimulation("tests/data/simple.pkml")
 # tableParameter <- getParameter("Organism|TableParameter", sim2)
 # #
 # print(distributedParameter)
@@ -57,7 +61,7 @@ constantParameter <- getParameter("Organism|Age", sim)
 # print(parameter)
 
 
-population <- loadPopulation("C:/projects/OSPSuite-R/tests/data/pop_10.csv")
+population <- loadPopulation("tests/data/pop_10.csv")
 
 exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget", sim)
 # population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")
