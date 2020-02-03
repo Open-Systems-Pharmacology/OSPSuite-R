@@ -30,6 +30,7 @@ calculatePKAnalyses <- function(results) {
 exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   validateIsString(filePath)
+  filePath <- path.expand(filePath)
   simulationExporter <- getNetTask("SimulationExporter")
   rClr::clrCall(simulationExporter, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
