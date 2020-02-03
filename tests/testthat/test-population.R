@@ -62,7 +62,6 @@ test_that("It throws an exception when adding values that have the wrong number 
 test_that("It can retrieve all parameter values for an existing individual id", {
   population <- loadPopulation(populationFileName)
   parameterValues <- population$getParameterValuesForIndividual(7)
-  print(parameterValues)
   expect_gt(length(parameterValues), 0)
   expect_gt(length(parameterValues$paths), 0)
   expect_gt(length(parameterValues$values), 0)

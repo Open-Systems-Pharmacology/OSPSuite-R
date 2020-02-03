@@ -5,7 +5,7 @@
   }
 
   # get consistency (unix speparators) with R-base
-  result <- normalizePath(winPath, winslash = "/", mustWork = FALSE)
+  result <- gsub("\\\\", "/", winPath)
 
   # remove trailing slash for consistancy with R-base
   result <- sub("/$", "", result)
@@ -21,7 +21,14 @@
 
 # Adds the paramter pathToAdd to the system path
 .addPathToSystemPath <- function(pathToAdd) {
-  if (file.exists(pathToAdd)) {
-    Sys.setenv(path = paste(pathToAdd, Sys.getenv("path"), sep = ";"))
+  if (!file.exists(pathToAdd)) {
+    return()
   }
+
+  # Adding path only supported on windows
+  if (.Platform$OS.type != "windows") {
+    return()
+  }
+
+  Sys.setenv(path = paste(pathToAdd, Sys.getenv("path"), sep = ";"))
 }
