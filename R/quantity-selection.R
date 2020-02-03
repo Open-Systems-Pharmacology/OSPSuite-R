@@ -7,13 +7,13 @@ QuantitySelection <- R6::R6Class(
   cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
-    #' @field path Path of quantity to select
+    #' @field path Path of selected quantity
     path = function(value) {
       private$wrapReadOnlyProperty("Path", value)
     },
-    #' @field quantityType Type of quantity to select (see \code{QuantityType} enum)
+    #' @field quantityType Type of selected quantity
     quantityType = function(value) {
-      private$wrapReadOnlyProperty("QuantityType", value)
+      private$wrapReadOnlyProperty("QuantityTypeAsString", value)
     }
   ),
   public = list(
@@ -21,7 +21,7 @@ QuantitySelection <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printLine(self$path, getQuantityTypeAsString(self$quantityType))
+      private$printLine(self$path, self$quantityType)
       invisible(self)
     }
   )
