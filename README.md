@@ -17,7 +17,7 @@ The **ospsuite** R-package provides the functionality of loading, manipulating, 
 - [R6](https://github.com/r-lib/R6)
 
 ## Under Windows
-The release version of the package comes as a binary *.zip file together with the installation of the OSPS and can be found in the installation folder of the OSPS (default: `C:\Program Files\Open Systems Pharmacology\ospsuite_X.X.X.zip`). The package `rClr` can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/rClr/releases) and installed from binary *.zip. The package `R6` can be isntalled from CRAN.
+The release version of the package comes as a binary *.zip file together with the installation of the OSPS and can be found in the installation folder of the OSPS (default: `C:\Program Files\Open Systems Pharmacology\ospsuite_X.X.X.zip`). The package `rClr` can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/rClr/releases) and installed from binary *.zip. The package `R6` can be installed from CRAN.
 
 ```
 # Install dependencies
@@ -69,6 +69,19 @@ xlab = "Time [min]",
 ylab = "Concentration [µmol/l]")
 ```
 ![](man/figures/README-example-1.png)<!-- -->
+
+More detailes description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vigenttes available for **ospsuite** by calling
+
+```
+vignette(package = "ospsuite")
+```
+
+To open a specific vignette, call
+
+```
+# Insert the name of the vignette you want to view as the argument
+vignette("introduction-ospsuite")
+```
 
 ## Code of conduct
 
