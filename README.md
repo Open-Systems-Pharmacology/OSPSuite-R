@@ -7,33 +7,68 @@
 
   <!-- badges: end -->
 
-# Development tasks
+# Overview
+The **ospsuite** R-package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 
-## How to update dependencies from nuget?
+# Installation
+**ospsuite** requires following packages to be installed:
+
+- [rClr](https://github.com/Open-Systems-Pharmacology/rClr/releases)
+- [R6](https://github.com/r-lib/R6)
+
+## Under Windows
+The release version of the package comes as a binary *.zip file together with the installation of the OSPS and can be found in the installation folder of the OSPS (default: `C:\Program Files\Open Systems Pharmacology\ospsuite_X.X.X.zip`). The package `rClr` can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/rClr/releases) and installed from binary *.zip. The package `R6` can be isntalled from CRAN.
+
+```
+# Install dependencies
+install.packages(pathTorCLR.zip, repos = NULL)
+install.packages('R6')
+# Install ospsuite-r from local file
+install.packages(pathToOSPSuite.zip, repos = NULL)
+```
+
+## Under Linux
+The **ospsuite** package has been tested under Linux distributions CentOS 7 and Ubuntu 18. Some functionality, such as creating individuals, is not availble under Linux. Installation under Linux requires several prerequisites, the detailed instructions can be found in the [Wiki](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu).
+
+## Build from source
+You can clone the GIT repository and build the package from source.
+
+### How to update dependencies from nuget?
 - `git submodule update --init --recursive` to install all submodules
-- Make sure you have ruby install and that it is available in your path
+- Make sure you have [ruby](https://www.ruby-lang.org/de/downloads/) install and that it is available in your path
 - Run `rake postclean` or simply double click on `postclean.bat`. This will update all nuget packages and copy the dependencies in the package `inst/lib` folder.
 
-## dev_mode
+# Usage
+In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()`  returns the corresonding simulation that is used as input of other methods. The then can change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
 
-`devtools::dev_mode` function switches your version of R into "development mode". This is useful to avoid clobbering the existing versions of CRAN packages that you need for other tasks. Calling dev_mode() again will turn development mode off, and return you to your default library setup.
+```{r loadSim}
+library(ospsuite)
 
-```R
-# This will install the package in the folder C:/Rpackages
-devtools::dev_mode(path="C:/Rpackages")
+# Load a simulation
+dataPath <- file.path(path.package("ospsuite", quiet = FALSE), "extdata", fsep = .Platform$file.sep)
+simFilePath <- file.path(dataPath, "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+
+# Get the parameter "Dose"
+doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
+doseParam <- getParameter(doseParamPath, sim)
+
+# Change the dose to 350mg. The values has to be converted to base unit, first
+newValue <- toBaseUnit(quantity = doseParam, values = 350, unit = "mg")
+setParameterValues(parameters = doseParam, values = newValue)
+
+# Simulate
+simResults <- runSimulation(simulation = sim)
+# Retrieve the results
+simulatedValues <- getOutputValues(simulationResults = simResults)
+
+# Plot time-concentration profile
+plot(simulatedValues$data$Time, simulatedValues$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`,
+type = "l",
+xlab = "Time [min]",
+ylab = "Concentration [µmol/l]")
 ```
-
-## Reload the package
-
-```R
-devtools::load_all()
-```
-
-or `Ctrl + Shift + L`
-
-## Add or update script files
-
-`.R` files defined in `tests\dev\` will be removed from the package and can be used to simulate interaction with the package. See [scripts.R](tests/dev/scripts.R)
+![](man/figures/README-example-1.png)<!-- -->
 
 ## Code of conduct
 
