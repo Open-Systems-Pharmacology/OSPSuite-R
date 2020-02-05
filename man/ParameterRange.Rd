@@ -53,7 +53,7 @@ Initialize a new instance of the class
 
 \item{\code{max}}{Optional minimum value for the range}
 
-\item{\code{unit}}{Optional unit of the value specified.}
+\item{\code{unit}}{Optional unit of the specified min and max}
 }
 \if{html}{\out{</div>}}
 }

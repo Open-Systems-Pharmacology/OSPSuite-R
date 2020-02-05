@@ -7,13 +7,13 @@ moleculeOntogeny <- MoleculeOntogeny$new()
 moleculeOntogeny$molecule <- "MyMolecule"
 moleculeOntogeny$ontogeny <- "CYP3A4"
 
-dog <-  createPopulationCharacteristics(
+dog <- createPopulationCharacteristics(
   species = Species$Dog,
   numberOfIndividuals = 50
 )
 
 print(dog)
-populationDog <- createPopulation(populationCharacteristics  = dog)
+populationDog <- createPopulation(populationCharacteristics = dog)
 
 print(populationDog)
 
@@ -30,7 +30,7 @@ human <- createPopulationCharacteristics(
 
 print(human)
 
-populationHuman <- createPopulation(populationCharacteristics  = human)
+populationHuman <- createPopulation(populationCharacteristics = human)
 print(populationHuman)
 
 populationHuman$getParameterValues("Organism|Age")

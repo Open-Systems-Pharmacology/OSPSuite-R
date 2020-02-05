@@ -41,27 +41,27 @@ createPopulation <- function(populationCharacteristics) {
 #'
 #' @export
 createPopulationCharacteristics <- function(
-  species,
-  population = NULL,
-  numberOfIndividuals,
-  proportionOfFemales = 50,
-  weightMin = NULL,
-  weightMax = NULL,
-  weightUnit = "kg",
-  heightMin = NULL,
-  heightMax = NULL,
-  heightUnit = "cm",
-  ageMin = NULL,
-  ageMax = NULL,
-  ageUnit = "year(s)",
-  BMIMin = NULL,
-  BMIMax = NULL,
-  BMIUnit = "kg/m²",
-  gestationalAgeMin = NULL,
-  gestationalAgeMax = NULL,
-  gestationalAgeUnit = "week(s)",
+                                            species,
+                                            population = NULL,
+                                            numberOfIndividuals,
+                                            proportionOfFemales = 50,
+                                            weightMin = NULL,
+                                            weightMax = NULL,
+                                            weightUnit = "kg",
+                                            heightMin = NULL,
+                                            heightMax = NULL,
+                                            heightUnit = "cm",
+                                            ageMin = NULL,
+                                            ageMax = NULL,
+                                            ageUnit = "year(s)",
+                                            BMIMin = NULL,
+                                            BMIMax = NULL,
+                                            BMIUnit = "kg/m²",
+                                            gestationalAgeMin = NULL,
+                                            gestationalAgeMax = NULL,
+                                            gestationalAgeUnit = "week(s)",
 
-  moleculeOntogenies = NULL) {
+                                            moleculeOntogenies = NULL) {
 
   # Assuming that if this function is called directly, PKSim was either initialized already
   # or should be initialized automatically
