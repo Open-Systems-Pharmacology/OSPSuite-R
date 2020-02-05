@@ -48,6 +48,7 @@ Collate:
     'messages.R'
     'molecule-ontogeny.R'
     'molecule.R'
+    'object-base.R'
     'ospsuite-env.R'
     'output-schema.R'
     'output-selections.R'
