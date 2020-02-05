@@ -1,3 +1,5 @@
+EntityExtensions <- "OSPSuite.Core.Domain.EntityExtensions"
+
 
 #' @title ObjectBase
 #' @docType class
@@ -33,11 +35,11 @@ Entity <- R6::R6Class(
   active = list(
     #' @field path The path of the entity in the container hiearchy without the simulation name. (read-only)
     path = function(value) {
-      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "ConsolidatedPath", "path", value)
+      private$wrapExtensionMethod(EntityExtensions, "ConsolidatedPath", "path", value)
     },
     #' @field fullPath Same as \code{path}, but with the simulation name. (read-only)
     fullPath = function(value) {
-      private$wrapExtensionMethod("OSPSuite.Core.Domain.EntityExtensions", "EntityPath", "fullPath", value)
+      private$wrapExtensionMethod(EntityExtensions, "EntityPath", "fullPath", value)
     }
   )
 )

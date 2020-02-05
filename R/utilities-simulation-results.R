@@ -109,7 +109,7 @@ getOutputValues <- function(simulationResults,
 exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, SimulationResults)
   validateIsString(filePath)
-  filePath <- path.expand(filePath)
+  filePath <- expandPath(filePath)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
   rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
@@ -137,7 +137,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, Simulation)
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) path.expand(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)))
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)

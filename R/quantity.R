@@ -1,5 +1,4 @@
 WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
-R_WITH_DIMENSION_EXTENSION <- "OSPSuite.R.Extensions.WithDimensionExtensions"
 WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions"
 QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 
@@ -125,9 +124,11 @@ Quantity <- R6::R6Class(
     #' @param unit Optional unit in which the value is given.
     setValue = function(value, unit = NULL) {
       validateIsNumeric(value)
+      validateIsString(unit, nullAllowed = TRUE)
       if (!is.null(unit)) {
+        unit <- enc2utf8(unit)
         validateHasUnit(self, unit)
-        value <- rClr::clrCallStatic(R_WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, as.integer(self$unitIndexOf(unit)))
+        value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
       }
       self$value <- value
     },
@@ -138,13 +139,6 @@ Quantity <- R6::R6Class(
     hasUnit = function(unit) {
       validateIsString(unit)
       unit %in% self$allUnits
-    },
-    #' @description
-    #' Returns the index of the unit in the units array. This method if for internal use only
-    #' @param unit Unit for which index should be retrieved
-    unitIndexOf = function(unit) {
-      validateIsString(unit)
-      match(unit, self$allUnits)[1]
     },
     #' @description
     #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
