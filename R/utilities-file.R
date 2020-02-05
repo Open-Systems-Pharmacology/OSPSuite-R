@@ -32,3 +32,11 @@
 
   Sys.setenv(path = paste(pathToAdd, Sys.getenv("path"), sep = ";"))
 }
+
+
+#' Returns the expanded path for `path` and ensure that encoding is applied propertly
+#'
+#' @param  path Path to expand
+expandPath <- function(path){
+  path.expand(enc2utf8(path))
+}

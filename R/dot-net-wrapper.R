@@ -32,7 +32,12 @@ DotNetWrapper <- R6::R6Class(
         if (is.null(value) && !shouldSetNull) {
           return()
         }
-        rClr::clrSet(self$ref, propertyName, value)
+        if(isOfType(type = "character",object = value)){
+          rClr::clrSet(self$ref, propertyName, enc2utf8(value))
+        }
+        else{
+          rClr::clrSet(self$ref, propertyName, value)
+        }
       }
     },
     wrapReadOnlyProperty = function(propertyName, value) {
