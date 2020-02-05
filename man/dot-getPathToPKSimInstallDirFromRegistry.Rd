@@ -19,6 +19,6 @@ Tries to find the installation path for a specific version of PK-Sim from an Win
 \examples{
 
 \dontrun{
-path <- .getPathToPKSimInstallDirFromRegistry("7.4")
+path <- .getPathToPKSimInstallDirFromRegistry("9.0")
 }
 }

@@ -29,7 +29,6 @@ Derived from \link{Quantity}, please see base class documentation.
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue">}\href{../../ospsuite/html/Quantity.html#method-printValue}{\code{ospsuite::Quantity$printValue()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset">}\href{../../ospsuite/html/Quantity.html#method-reset}{\code{ospsuite::Quantity$reset()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue">}\href{../../ospsuite/html/Quantity.html#method-setValue}{\code{ospsuite::Quantity$setValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="unitIndexOf">}\href{../../ospsuite/html/Quantity.html#method-unitIndexOf}{\code{ospsuite::Quantity$unitIndexOf()}}\out{</span>}
 }
 \out{</details>}
 }

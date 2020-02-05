@@ -7,8 +7,7 @@
 createIndividual(individualCharacteristics)
 }
 \arguments{
-\item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{OriginData}
-that are actually distributed parameters}
+\item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}}
 }
 \value{
 An list with two entries:
