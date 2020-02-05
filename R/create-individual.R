@@ -1,7 +1,6 @@
 #' Creates an individual using the PKSim Database
 #'
-#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
-#' that are actually distributed parameters
+#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}
 #'
 #' @return An list with two entries:
 #' The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
@@ -46,13 +45,6 @@ createDistributions <- function(individualCharacteristics) {
     stds = getPropertyValues(distributedParameters, "Std"),
     distributionTypes = getPropertyValues(getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
   )
-}
-
-.createSnapshotParameter <- function(value, unit) {
-  if (is.null(value)) {
-    return(NULL)
-  }
-  return(SnapshotParameter$new(value = value, unit = unit))
 }
 
 #' Creates an individual using the PKSim Database.
@@ -109,10 +101,10 @@ createIndividualCharacteristics <- function(
   individualCharacteristics$species <- species
   individualCharacteristics$population <- population
   individualCharacteristics$gender <- gender
-  individualCharacteristics$age <- .createSnapshotParameter(age, ageUnit)
-  individualCharacteristics$weight <- .createSnapshotParameter(weight, weightUnit)
-  individualCharacteristics$height <- .createSnapshotParameter(height, heightUnit)
-  individualCharacteristics$gestationalAge <- .createSnapshotParameter(gestationalAge, gestationalAgeUnit)
+  individualCharacteristics$age <- createSnapshotParameter(age, ageUnit)
+  individualCharacteristics$weight <- createSnapshotParameter(weight, weightUnit)
+  individualCharacteristics$height <- createSnapshotParameter(height, heightUnit)
+  individualCharacteristics$gestationalAge <- createSnapshotParameter(gestationalAge, gestationalAgeUnit)
 
   for (moleculeOntogeny in moleculeOntogenies) {
     individualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)

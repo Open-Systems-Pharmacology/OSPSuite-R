@@ -7,9 +7,11 @@ test_that("It can print Quantity", {
   expect_error(capture.output(quantity$print()), NA)
 })
 
-test_that("It can retrieve the index of an existing unit", {
+test_that("It can retrieve the parent of an entity", {
   quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
-  allUnits <- quantity$allUnits
-  unitIndex <- quantity$unitIndexOf("ml")
-  expect_gte(unitIndex, match("ml", allUnits)[1])
+  parent <- quantity$parentContainer
+  expect_false(is.null(parent))
+  expect_equal(parent$name, "Intracellular")
+  expect_equal(parent$parentContainer$name, "Liver")
+  expect_equal(parent$parentContainer$parentContainer$name, "Organism")
 })

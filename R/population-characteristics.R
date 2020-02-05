@@ -1,14 +1,22 @@
-#' @title IndividualCharacteristics
+#' @title PopulationCharacteristics
 #' @docType class
-#' @description  Characteristics of an individual describing its origin
+#' @description  Characteristics of a population used for population creation
 #'
 #' @format NULL
 #' @export
-IndividualCharacteristics <- R6::R6Class(
-  "IndividualCharacteristics",
+PopulationCharacteristics <- R6::R6Class(
+  "PopulationCharacteristics",
   cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
+    #' @field numberOfIndividuals Number of individuals in the population
+    numberOfIndividuals = function(value) {
+      private$wrapIntegerProperty("NumberOfIndividuals", value)
+    },
+    #' @field proportionOfFemales Proportion of female in the population
+    proportionOfFemales = function(value) {
+      private$wrapIntegerProperty("ProportionOfFemales", value)
+    },
     #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})
     species = function(value) {
       private$wrapProperty("Species", value)
@@ -17,25 +25,25 @@ IndividualCharacteristics <- R6::R6Class(
     population = function(value) {
       private$wrapProperty("Population", value, shouldSetNull = FALSE)
     },
-    #' @field gender Gender of the individual. It should be defined for the species in PK-Sim  (see \code{Gender})
-    gender = function(value) {
-      private$wrapProperty("Gender", value, shouldSetNull = FALSE)
-    },
-    #' @field age Age of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field age Age range of the population as in instance of a \code{ParameterRange} (optional)
     age = function(value) {
-      private$parameterProperty("Age", value)
+      private$parameterRangeProperty("Age", value)
     },
-    #' @field gestationalAge Gestational Age of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field gestationalAge Gestational Age range of the population as in instance of a \code{ParameterRange} (optional)
     gestationalAge = function(value) {
-      private$parameterProperty("GestationalAge", value)
+      private$parameterRangeProperty("GestationalAge", value)
     },
-    #' @field weight Weight of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field weight Weight range of the population as in instance of a \code{ParameterRange} (optional)
     weight = function(value) {
-      private$parameterProperty("Weight", value)
+      private$parameterRangeProperty("Weight", value)
     },
-    #' @field height Height of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field height Height range of the population as in instance of a \code{ParameterRange} (optional)
     height = function(value) {
-      private$parameterProperty("Height", value)
+      private$parameterRangeProperty("Height", value)
+    },
+    #' @field BMI BMI range of the population as in instance of a \code{ParameterRange} (optional)
+    BMI = function(value) {
+      private$parameterRangeProperty("BMI", value)
     },
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
@@ -45,15 +53,15 @@ IndividualCharacteristics <- R6::R6Class(
   private = list(
     .moleculeOntogenies = NULL,
 
-    printParam = function(caption, param) {
-      if (is.null(param)) {
+    printRange = function(caption, range) {
+      if (is.null(range)) {
         return()
       }
-      param$printValue(caption)
+      range$printValue(caption)
     },
-    parameterProperty = function(parameterName, value) {
+    parameterRangeProperty = function(parameterName, value) {
       if (missing(value)) {
-        SnapshotParameter$new(ref = rClr::clrGet(self$ref, parameterName))
+        ParameterRange$new(ref = rClr::clrGet(self$ref, parameterName))
       } else {
         if (is.null(value)) {
           return()
@@ -65,9 +73,9 @@ IndividualCharacteristics <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @return A new `IndividualCharacteristics` object.
+    #' @return A new `PopulationCharacteristics` object.
     initialize = function() {
-      ref <- rClr::clrNew("PKSim.R.Domain.IndividualCharacteristics")
+      ref <- rClr::clrNew("PKSim.R.Domain.PopulationCharacteristics")
       super$initialize(ref)
     },
     #' @description
@@ -77,11 +85,13 @@ IndividualCharacteristics <- R6::R6Class(
       private$printClass()
       private$printLine("Species", self$species)
       private$printLine("Population", self$population)
-      private$printLine("Gender", self$gender)
-      private$printParam("Age", self$age)
-      private$printParam("Gestational age", self$gestationalAge)
-      private$printParam("Weight", self$weight)
-      private$printParam("Height", self$height)
+      private$printLine("Number of individuals", self$numberOfIndividuals)
+      private$printLine("Proportion of females", self$proportionOfFemales)
+      private$printRange("Age", self$age)
+      private$printRange("Gestational age", self$gestationalAge)
+      private$printRange("Weight", self$weight)
+      private$printRange("Height", self$height)
+      private$printRange("BMI", self$BMI)
       for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
       }
