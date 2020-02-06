@@ -9,7 +9,7 @@
 #' @export
 initPKSim <- function(pksimFolderPath = NULL) {
   if (ospsuiteEnv$isPKSimLoaded) {
-    return()
+    return(invisible())
   }
 
   pksimFolderPath <- pksimFolderPath %||% .getPathToPKSimInstallDir()
@@ -23,7 +23,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 
   # Only set the flag if initialization was successful
   ospsuiteEnv$isPKSimLoaded <- TRUE
-  print(ospsuiteEnv$isPKSimLoaded)
+  invisible()
 }
 
 
