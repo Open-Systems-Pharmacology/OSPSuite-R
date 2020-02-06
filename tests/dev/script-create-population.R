@@ -34,3 +34,23 @@ populationHuman <- createPopulation(populationCharacteristics = human)
 print(populationHuman)
 
 populationHuman$getParameterValues("Organism|Age")
+
+
+preterm <- createPopulationCharacteristics(
+  species = Species$Human,
+  population = HumanPopulation$Preterm,
+  ageMin = 1,
+  ageMax = 10,
+  ageUnit = "day(s)",
+  gestationalAgeMax = 32,
+  numberOfIndividuals = 50,
+)
+
+populationPreterm <- createPopulation(populationCharacteristics = preterm)
+
+
+
+populationPreterm$allCovariateNames
+
+populationPreterm$getParameterValues("Organism|Age")
+populationPreterm$getParameterValues("Organism|Gestational age")

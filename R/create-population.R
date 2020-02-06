@@ -88,8 +88,8 @@ createPopulationCharacteristics <- function(
   validateIsNumeric(BMIMax, nullAllowed = TRUE)
   validateIsString(BMIUnit)
 
-  validateIsNumeric(gestationalAgeMin, nullAllowed = TRUE)
-  validateIsNumeric(gestationalAgeMax, nullAllowed = TRUE)
+  validateIsInteger(gestationalAgeMin, nullAllowed = TRUE)
+  validateIsInteger(gestationalAgeMax, nullAllowed = TRUE)
   validateIsString(gestationalAgeUnit)
 
   validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)

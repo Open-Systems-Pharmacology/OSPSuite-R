@@ -69,6 +69,22 @@ validateIsNumeric <- function(object, nullAllowed = FALSE) {
   validateIsOfType(object, c("numeric", "integer"), nullAllowed)
 }
 
+validateIsInteger <- function(object, nullAllowed = FALSE) {
+  if (nullAllowed && is.null(object)) {
+    return()
+  }
+
+  if (all(floor(object) == object, na.rm = TRUE)) {
+    return()
+  }
+
+  # Name of the variable in the calling function
+  objectName <- deparse(substitute(object))
+  objectTypes <- "integer"
+
+  stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
+}
+
 validateIsLogical <- function(object, nullAllowed = FALSE) {
   validateIsOfType(object, "logical", nullAllowed)
 }
