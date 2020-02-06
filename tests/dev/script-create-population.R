@@ -42,6 +42,7 @@ preterm <- createPopulationCharacteristics(
   ageMin = 1,
   ageMax = 10,
   ageUnit = "day(s)",
+  gestationalAgeMin = 26,
   gestationalAgeMax = 32,
   numberOfIndividuals = 50,
 )
@@ -50,7 +51,7 @@ populationPreterm <- createPopulation(populationCharacteristics = preterm)
 
 
 
-populationPreterm$allCovariateNames
+populationPreterm$allParameterPaths
 
 populationPreterm$getParameterValues("Organism|Age")
 populationPreterm$getParameterValues("Organism|Gestational age")

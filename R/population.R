@@ -14,6 +14,10 @@ Population <- R6::R6Class(
     #' @field allCovariateNames the names of all covariates defined in the population
     allCovariateNames = function(value) {
       private$readOnlyProperty("allCovariateNames", value, rClr::clrCall(self$ref, "AllCovariatesNames"))
+    },
+    #' @field allParameterPaths the paths of all parameters defined in the population
+    allParameterPaths = function(value) {
+      private$readOnlyProperty("allCovariateNames", value, rClr::clrCall(self$ref, "AllParameterPaths"))
     }
   ),
   public = list(
