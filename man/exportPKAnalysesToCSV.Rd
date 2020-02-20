@@ -7,7 +7,7 @@
 exportPKAnalysesToCSV(pkAnalyses, filePath)
 }
 \arguments{
-\item{pkAnalyses}{pK-Analyses to exporte (typically calculated using \code{calculatePKAnalyses} or imported from file)}
+\item{pkAnalyses}{pK-Analyses to export (typically calculated using \code{calculatePKAnalyses} or imported from file)}
 
 \item{filePath}{Full path where the pK-Analyses will be saved.}
 }
