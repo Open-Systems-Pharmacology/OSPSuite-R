@@ -1,7 +1,7 @@
 # Create Individual example.
 # Assuming PKSim installed
 
-initPKSim("C:/projects/PK-Sim/src/PKSim.R/bin/Debug/net472")
+initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 
 moleculeOntogeny <- MoleculeOntogeny$new()
 moleculeOntogeny$molecule <- "MyMolecule"
@@ -55,3 +55,5 @@ populationPreterm$allParameterPaths
 
 populationPreterm$getParameterValues("Organism|Age")
 populationPreterm$getParameterValues("Organism|Gestational age")
+
+df <- populationAsDataFrame(population = populationPreterm)

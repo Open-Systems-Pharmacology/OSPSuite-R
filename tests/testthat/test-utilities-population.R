@@ -18,3 +18,12 @@ test_that("It can split a valid csv file to split files", {
   splitFiles <- splitPopulationFile(populationFileName, 3, tempdir(), "SplitFile")
   expect_equal(length(splitFiles), 3)
 })
+
+
+context("populationAsDataFrame")
+test_that("It can convert a population to data frame", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  df <- populationAsDataFrame(population);
+  expect_equal(nrow(df), 10)
+})
