@@ -30,9 +30,10 @@ toBaseUnit <- function(quantity, values, unit) {
 
 #' Converts a value given in base unit of a quantity into a target unit
 #'
-#' @param quantity Instance of a quantity from which the base unit will be retrieved
+#' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in base unit (single or vector)
 #' @param targetUnit Unit to convert to
+#' @param molWeight Optional molecule weight to use when converting from molar to mass amount or concentration
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -44,15 +45,21 @@ toBaseUnit <- function(quantity, values, unit) {
 #'
 #' valuesInMl <- toUnit(par, c(1, 5, 5), "ml")
 #' @export
-toUnit <- function(quantity, values, targetUnit) {
-  validateIsOfType(quantity, Quantity)
+toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
+  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
+  validateIsNumeric(molWeight, nullAllowed =  TRUE)
   targetUnit <- enc2utf8(targetUnit)
-  validateHasUnit(quantity, targetUnit)
+  dimension <- quantityOrDimension
+  if(isOfType(quantityOrDimension, Quantity))
+    dimension<- quantityOrDimension$dimension
+
   values <- c(values)
-  sapply(values, function(value) {
-    rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToUnit", quantity$ref, value, targetUnit)
-  })
+  dimensionTask <- getNetTask("DimensionTask")
+  if(is.null(molWeight))
+    rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values)
+  else
+    rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
@@ -73,4 +80,16 @@ toUnit <- function(quantity, values, targetUnit) {
 toDisplayUnit <- function(quantity, values) {
   validateIsOfType(quantity, Quantity)
   toUnit(quantity, values, quantity$displayUnit)
+}
+
+
+#' Returns the name of all available dimensions defined in the OSPSuite platform
+#'
+#' @examples
+#' dims <- allAvailableDimensions()
+#'
+#' @export
+allAvailableDimensions <- function(){
+  dimensionTask <- getNetTask("DimensionTask")
+  rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }

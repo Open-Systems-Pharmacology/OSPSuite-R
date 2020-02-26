@@ -5,8 +5,18 @@ sim <- loadSimulation("tests/data/S1.pkml")
 population <- loadPopulation("tests/data/pop_10.csv")
 
 simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
+
+
 populationResults <- runSimulation(sim, population, simRunOptions)
-populationPkAnalyses <- calculatePKAnalyses(populationResults)
+
+
+dynamicPkParameter = DynamicPKParameter$new("test", standardPKParameter =  StandardPKParameter$Cmin)
+dynamicPkParameter$startApplicationIndex <- 2
+dynamicPkParameter$normalizationFactor <- 2.5
+dynamicPkParameter$standardPKParameter <- StandardPKParameter$Cmax
+print(dynamicPkParameter)
+
+populationPkAnalyses <- calculatePKAnalyses(populationResults, dynamicPKParameters = dynamicPkParameter)
 
 exportPKAnalysesToCSV(populationPkAnalyses, "C:/temp/export/pk.csv")
 

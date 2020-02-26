@@ -4,14 +4,16 @@
 \alias{toUnit}
 \title{Converts a value given in base unit of a quantity into a target unit}
 \usage{
-toUnit(quantity, values, targetUnit)
+toUnit(quantityOrDimension, values, targetUnit, molWeight = NULL)
 }
 \arguments{
-\item{quantity}{Instance of a quantity from which the base unit will be retrieved}
+\item{quantityOrDimension}{Instance of a quantity from which the dimension will be retrieved or name of dimension}
 
 \item{values}{Value in base unit (single or vector)}
 
 \item{targetUnit}{Unit to convert to}
+
+\item{molWeight}{Optional molecule weight to use when converting from molar to mass amount or concentration}
 }
 \description{
 Converts a value given in base unit of a quantity into a target unit

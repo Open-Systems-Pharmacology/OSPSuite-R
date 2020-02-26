@@ -71,6 +71,16 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value))
       }
     },
+
+    wrapIndexProperty = function(propertyName, value) {
+      # Special method needed because Index are 0-based in .NET but 1-based in R
+      if (missing(value)) {
+        rClr::clrGet(self$ref, propertyName) + 1
+      } else {
+        rClr::clrSet(self$ref, propertyName, as.integer(value - 1))
+      }
+    },
+
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     }

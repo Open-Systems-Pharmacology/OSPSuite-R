@@ -32,3 +32,11 @@ test_that("It can add a multiple parameter paths", {
   sa$addParameterPaths(c("A", "B"))
   expect_identical(sa$parameterPaths, c("A", "B"))
 })
+
+test_that("It can add a single dynamic pk Parameters", {
+  sa <- SensitivityAnalysis$new(simple)
+  pkParameter <- DynamicPKParameter$new(name =  "toto", standardPKParameter =  StandardPKParameter$Cmax)
+  sa$addDynamicPKParameters(pkParameter)
+  expect_length(sa$allDynamicPKParameters, 1)
+})
+

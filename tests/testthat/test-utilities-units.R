@@ -9,10 +9,14 @@ test_that("It can convert from a value in base unit to a target unit", {
   expect_equal(toUnit(par, 1, "l"), 1)
 })
 
-test_that("It can convert from a value in base unit to display unit", {
-  expect_equal(toDisplayUnit(par, 1), 1)
+test_that("It can convert from a value in base unit to a target unit using the dimension name", {
+  expect_equal(toUnit(par$dimension, 1, "ml"), 1000)
 })
 
+test_that("It can convert from a value in mass to a value in mol using a molweight parameter", {
+  molWeight <- 50 #50umol/kg
+  expect_equal(toUnit("Amount", 10, "kg", molWeight), 500)
+})
 
 test_that("It can convert from an array of values in base unit to a target unit", {
   expect_equal(toUnit(par, c(1, 2, 3), "ml"), c(1000, 2000, 3000))
@@ -48,4 +52,15 @@ test_that("It does not change the value of the quantity when converting to anoth
   par$value <- 5
   toBaseUnit(par, 1000, "ml")
   expect_equal(par$value, 5)
+})
+
+context("toDisplayUnit")
+
+test_that("It can convert from a value in base unit to display unit", {
+  expect_equal(toDisplayUnit(par, 1), 1)
+})
+
+context("allAvailableDimensions")
+test_that("It should be able to return the name of all dimensions defined in the system", {
+  expect_gt(length(allAvailableDimensions()), 0)
 })

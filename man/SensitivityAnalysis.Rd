@@ -22,6 +22,8 @@ Supports Sensitivity Analysis workflow to assess the impact of input parameters 
 \item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
 on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overriden by the user}
+
+\item{\code{allDynamicPKParameters}}{Returns all dynamic PK Parameters defined for the sensitivity analysis}
 }
 \if{html}{\out{</div>}}
 }
@@ -30,6 +32,7 @@ with a value that was overriden by the user}
 \itemize{
 \item \href{#method-new}{\code{SensitivityAnalysis$new()}}
 \item \href{#method-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
+\item \href{#method-addDynamicPKParameters}{\code{SensitivityAnalysis$addDynamicPKParameters()}}
 \item \href{#method-print}{\code{SensitivityAnalysis$print()}}
 }
 }
@@ -82,7 +85,23 @@ Adds the parameterPaths to the list of parameter path to vary in the sensitivity
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{parameterPaths}}{Parameter paths to add (single or multiple values}
+\item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addDynamicPKParameters"></a>}}
+\subsection{Method \code{addDynamicPKParameters()}}{
+Adds the dynamicPKParameters to the list of dynamic pk parameters that will be calculated for the sensitivity analysis
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$addDynamicPKParameters(dynamicPKParameters)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dynamicPKParameters}}{Dynamic PK Parameters to add (single or multiple values)}
 }
 \if{html}{\out{</div>}}
 }
