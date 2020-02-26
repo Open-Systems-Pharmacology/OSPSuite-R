@@ -10,6 +10,13 @@ print(sensitivity)
 print(outputSelections)
 sensitivity$addParameterPaths("Organism|Liver|Volume")
 sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(showProgress = TRUE)
+
+dynamicPkParameter = DynamicPKParameter$new(name = "Test", standardPKParameter =  StandardPKParameter$Cmin)
+
+sensitivity$addDynamicPKParameters(dynamicPkParameter)
+
+p<-sensitivity$allDynamicPKParameters
+print(p)
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
 
 exportSensitivityAnalysisResultsToCSV(results, "inst/extdata/sa.csv")
