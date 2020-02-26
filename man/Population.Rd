@@ -18,6 +18,8 @@ List of individuals used in a population simulation
 \item{\code{allCovariateNames}}{the names of all covariates defined in the population}
 
 \item{\code{allParameterPaths}}{the paths of all parameters defined in the population}
+
+\item{\code{allIndividualIds}}{Ids of individuals defined in the population}
 }
 \if{html}{\out{</div>}}
 }

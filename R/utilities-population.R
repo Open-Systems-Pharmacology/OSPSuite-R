@@ -39,3 +39,30 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   populationTask <- getNetTask("PopulationTask")
   rClr::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }
+
+
+#' @title Creates a data.frame containing one column for each parameter defined in the population
+#'
+#' @param population Population to convert to data frame (typically imported from file using \code{loadPopulation})
+#'
+#' @examples
+#' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#'
+#' population <- loadPopulation(csvPath)
+#' df <- populationAsDataFrame(population)
+#' @export
+populationAsDataFrame <- function(population) {
+  validateIsOfType(population, Population)
+  columns <- list()
+  columns$IndividualId <- population$allIndividualIds
+
+  for (covariateName in population$allCovariateNames) {
+    columns[[covariateName]] <- population$getCovariateValues(covariateName)
+  }
+
+  for (parameterPath in population$allParameterPaths) {
+    columns[[parameterPath]] <- population$getParameterValues(parameterPath)
+  }
+
+  data.frame(columns, stringsAsFactors = FALSE, check.names = FALSE)
+}

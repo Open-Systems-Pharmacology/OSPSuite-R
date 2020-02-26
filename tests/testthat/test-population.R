@@ -94,3 +94,8 @@ test_that("It can print population", {
   population <- loadPopulation(populationFileName)
   expect_error(capture.output(population$print()), NA)
 })
+
+test_that("It can retrieve all ids define ina population", {
+  population <- loadPopulation(populationFileName)
+  expect_length(population$allIndividualIds, 10)
+})

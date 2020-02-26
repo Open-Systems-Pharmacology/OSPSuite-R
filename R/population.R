@@ -17,7 +17,11 @@ Population <- R6::R6Class(
     },
     #' @field allParameterPaths the paths of all parameters defined in the population
     allParameterPaths = function(value) {
-      private$readOnlyProperty("allCovariateNames", value, rClr::clrCall(self$ref, "AllParameterPaths"))
+      private$readOnlyProperty("allParameterPaths", value, rClr::clrCall(self$ref, "AllParameterPaths"))
+    },
+    #' @field allIndividualIds Ids of individuals defined in the population
+    allIndividualIds = function(value){
+      private$readOnlyProperty("allIndividualIds", value, rClr::clrCall(self$ref, "AllIndividualIds"))
     }
   ),
   public = list(
