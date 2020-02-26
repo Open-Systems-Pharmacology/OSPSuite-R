@@ -67,6 +67,8 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{ref}}{Reference to the .NET object. If null (default) a new .NET instance will be created}
+
 \item{\code{name}}{Name of the user defined PK-Parameter}
 
 \item{\code{standardPKParameter}}{What PK-Parameter should be used to perform calculation.

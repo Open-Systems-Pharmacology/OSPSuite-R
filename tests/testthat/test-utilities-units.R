@@ -60,3 +60,7 @@ test_that("It can convert from a value in base unit to display unit", {
   expect_equal(toDisplayUnit(par, 1), 1)
 })
 
+context("allAvailableDimensions")
+test_that("It should be able to return the name of all dimensions defined in the system", {
+  expect_gt(length(allAvailableDimensions()), 0)
+})

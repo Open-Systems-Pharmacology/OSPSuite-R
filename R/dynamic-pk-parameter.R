@@ -10,8 +10,8 @@ StandardPKParameter <- enum(c(
   Tmax = 3,
   Tmin = 4,
   CTrough = 5,
-  Auc = 6,
-  Aucm = 7,
+  AucTend = 6,
+  AucmTend = 7,
   AucInf = 8,
   AucTendInf = 9,
   Mrt = 10,
@@ -79,6 +79,7 @@ DynamicPKParameter <- R6::R6Class("DynamicPKParameter",
   public = list(
     #' @description
     #' Initialize a new instance of the class
+    #' @param ref Reference to the .NET object. If null (default) a new .NET instance will be created
     #' @param name Name of the user defined PK-Parameter
     #' @param standardPKParameter What PK-Parameter should be used to perform calculation.
     #' See \code{StandardPKParameter} enum for all possible pk parameters

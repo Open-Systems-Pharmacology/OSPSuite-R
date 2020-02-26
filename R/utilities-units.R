@@ -81,3 +81,15 @@ toDisplayUnit <- function(quantity, values) {
   validateIsOfType(quantity, Quantity)
   toUnit(quantity, values, quantity$displayUnit)
 }
+
+
+#' Returns the name of all available dimensions defined in the OSPSuite platform
+#'
+#' @examples
+#' dims <- allAvailableDimensions()
+#'
+#' @export
+allAvailableDimensions <- function(){
+  dimensionTask <- getNetTask("DimensionTask")
+  rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
+}
