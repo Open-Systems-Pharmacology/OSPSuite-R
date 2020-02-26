@@ -19,7 +19,7 @@ Population <- R6::R6Class(
     allParameterPaths = function(value) {
       private$readOnlyProperty("allParameterPaths", value, rClr::clrCall(self$ref, "AllParameterPaths"))
     },
-    #' @field individualIds Ids of individuals defined in the population
+    #' @field allIndividualIds Ids of individuals defined in the population
     allIndividualIds = function(value){
       private$readOnlyProperty("allIndividualIds", value, rClr::clrCall(self$ref, "AllIndividualIds"))
     }
