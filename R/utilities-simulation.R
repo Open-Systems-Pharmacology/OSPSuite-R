@@ -222,7 +222,7 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 #' @param values A numeric value that should be assigned to the parameters or a vector
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
 #' length as 'parameterPaths'
-#'
+#' @param simulation Simulation uses to retrieve parameter instances from given paths.
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -234,6 +234,7 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 setSimulationParameterValues <- function(parameterPaths, values, simulation) {
   validateIsString(parameterPaths)
   validateIsNumeric(values)
+  validateIsOfType(simulation, Simulation)
   parameters <- sapply(parameterPaths, function(p) getParameter(p, simulation))
   setParameterValues(parameters, values)
 }

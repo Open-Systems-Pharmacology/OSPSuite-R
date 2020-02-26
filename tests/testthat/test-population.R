@@ -27,15 +27,6 @@ test_that("It can add user defined variability using a new parameter path", {
   expect_identical(population$getParameterValues(parameterPath), values)
 })
 
-test_that("It can add user defined variability using an existing parameter path with unit", {
-  population <- loadPopulation(populationFileName)
-  parameterPath <- "Organism|VenousBlood|Volume [l]"
-  expect_true(population$has(parameterPath))
-  population$setParameterValues(parameterPath, values)
-  expect_true(population$has(parameterPath))
-  expect_identical(population$getParameterValues(parameterPath), values)
-})
-
 test_that("It can add user defined variability using an existing parameter path without unit", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|VenousBlood|Volume"

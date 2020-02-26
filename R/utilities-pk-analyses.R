@@ -66,6 +66,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 #' @title Convert the pk-Analysis to data frame
 #'
 #' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using \code{calculatePKAnalyses} or imported from file)
+#' @importFrom utils read.csv
 #'
 #' @export
 pkAnalysesAsDataFrame <- function(pkAnalyses) {

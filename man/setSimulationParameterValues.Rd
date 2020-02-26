@@ -12,6 +12,8 @@ setSimulationParameterValues(parameterPaths, values, simulation)
 \item{values}{A numeric value that should be assigned to the parameters or a vector
 of numeric values, if the value of more than one parameter should be changed. Must have the same
 length as 'parameterPaths'}
+
+\item{simulation}{Simulation uses to retrieve parameter instances from given paths.}
 }
 \description{
 Set the values of parameters in the simulation by path
