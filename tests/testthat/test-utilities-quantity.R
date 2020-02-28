@@ -13,6 +13,20 @@ test_that("It can retrieve quantities with generic path path", {
   expect_equal(length(quantities), 1)
 })
 
+
+context("getAllQuantityPathsIn")
+
+test_that("It can retrieve all quantity paths defined in the simulation", {
+  paths <- getAllQuantityPathsIn(sim)
+  expect_gt(length(paths), 0)
+})
+
+test_that("It can retrieve all quantity paths defined in a container", {
+  paths <- getAllQuantityPathsIn(sim$root)
+  expect_gt(length(paths), 0)
+})
+
+
 context("getQuantity")
 
 test_that("It can retrieve a single quantity by path if it exists", {

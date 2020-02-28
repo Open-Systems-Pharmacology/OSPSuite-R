@@ -50,6 +50,18 @@ test_that("It throws an error when no valid path is provided", {
   expect_that(containers <- getAllContainersMatching(NULL, sim), throws_error())
 })
 
+context("getAllContainerPathsIn")
+
+test_that("It can retrieve all container paths defined in the simulation", {
+  paths <- getAllContainerPathsIn(sim)
+  expect_gt(length(paths), 0)
+})
+
+test_that("It can retrieve all container paths defined in a container", {
+  paths <- getAllContainerPathsIn(sim$root)
+  expect_gt(length(paths), 0)
+})
+
 context("getContainer")
 
 test_that("It can retrieve a single container by path if it exists", {

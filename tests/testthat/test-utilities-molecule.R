@@ -27,6 +27,18 @@ test_that("It can retrieve a single molecule with absolute path", {
 })
 
 
+context("getAllMoleculePathsIn")
+
+test_that("It can retrieve all molecule paths defined in the simulation", {
+  paths <- getAllMoleculePathsIn(sim)
+  expect_gt(length(paths), 0)
+})
+
+test_that("It can retrieve all molecule paths defined in a container", {
+  paths <- getAllMoleculePathsIn(sim$root)
+  expect_gt(length(paths), 0)
+})
+
 context("setMoleculeInitialValues")
 
 test_that("It throws an error when no valid molecule objects are provided", {

@@ -50,6 +50,18 @@ test_that("It throws an error when no valid path is provided", {
   expect_that(parameters <- getAllParametersMatching(NULL, sim), throws_error())
 })
 
+context("getAllParameterPathsIn")
+
+test_that("It can retrieve all parameter paths defined in the simulation", {
+  paths <- getAllParameterPathsIn(sim)
+  expect_gt(length(paths), 0)
+})
+
+test_that("It can retrieve all parameter paths defined in a container", {
+  paths <- getAllParameterPathsIn(sim$root)
+  expect_gt(length(paths), 0)
+})
+
 context("getParameter")
 
 test_that("It can retrieve a single parameter by path if it exists", {
