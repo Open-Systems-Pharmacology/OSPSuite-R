@@ -11,12 +11,24 @@ CompareBy <- enum(c(
 #' Names of the .NET container tasks of the type "AllXXXMatching"
 #'
 #' @include enum.R
-ContainerTasks <- enum(c(
+AllMatchingMethod <- enum(c(
   Container = "AllContainersMatching",
   Quantity = "AllQuantitiesMatching",
   Parameter = "AllParametersMatching",
   Molecule = "AllMoleculesMatching"
 ))
+
+#' Names of the .NET container tasks of the type "AllXXXMatching"
+#'
+#' @include enum.R
+AllPathsInMethod <- enum(c(
+  Container = "AllContainerPathsIn",
+  Quantity = "AllQuantityPathsIn",
+  Parameter = "AllParameterPathsIn",
+  Molecule = "AllMoleculesPathsIn"
+))
+
+
 
 #' Extract Unique Elements of type 'Entity'
 #'
@@ -80,12 +92,12 @@ unify <- function(groupEntitiesByPathFunc, paths) {
   return(listOfEntitiesByPath)
 }
 
-#' Retrieve all entities of a container (simulation or container instance) matching the given path criteria.
+#' Retrieves all entities of a container (simulation or container instance) matching the given path criteria.
 #'
 #' @param paths A vector of strings representing the paths relative to the \code{container}
 #' @param container A Container or Simulation used to find the entities
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
-#' @param entityType Class of the type that should be returned. Supported types are Container, Quantity, and Parameter
+#' @param entityType Class of the type that should be returned.
 #' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
 #' @return A list of entities matching the path criteria coerced to the \code{entityType}.
 #' The list is empty if no entities matching were found.
@@ -96,18 +108,41 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
   validateIsString(paths)
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
-  if (length(which(names(ContainerTasks) == className)) == 0) {
-    stop(messages$errorWrongType("entityType", className, names(ContainerTasks)))
+  if (length(which(names(AllMatchingMethod) == className)) == 0) {
+    stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
   }
 
   task <- getContainerTask()
-  method <- method %||% ContainerTasks[[className]]
+  method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
     toObjectType(rClr::clrCall(task, method, container$ref, enc2utf8(path)), entityType)
   }
 
   return(unify(findEntitiesByPath, paths))
+}
+
+#' Retrieves all path of entities defined wihtin the container (simulation or container instance)
+#'
+#' @param container A Container or Simulation used to find the entities
+#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+#' @param entityType Type of entity for which the path should be returned.
+#' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
+#' @return An array of paths (one for each entity found under the container and its sub containers)
+#' The list is empty if no entities matching were found.
+#'
+getAllEntityPathsIn <- function(container, entityType, method = NULL) {
+  validateIsOfType(container, c(Simulation, Container, Molecule))
+  validateIsString(method, nullAllowed = TRUE)
+  className <- entityType$classname
+  if (length(which(names(AllPathsInMethod) == className)) == 0) {
+    stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
+  }
+
+  task <- getContainerTask()
+  method <- method %||% AllPathsInMethod[[className]]
+
+  rClr::clrCall(task, method, container$ref)
 }
 
 #' Retrieve a single entity by path in the given container
