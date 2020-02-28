@@ -2,7 +2,7 @@
 addBranch <- function(originalPathString, arrayToGo) {
   # Function to create a multilayered list called endList with a branched structure corresponding to the structure of arrayToGo that terminates with a string called 'path' that is equal to the string originalString
   if (length(arrayToGo) == 0) {
-    # If stringToGo is empty, create a terminal list with a string called 'path' and value equal to originalString
+    # If arrayToGo is empty, create a terminal list with a string called 'path' and value equal to originalString
     endList <- list()
     endList$path <- originalPathString
     return(endList)
@@ -16,16 +16,16 @@ addBranch <- function(originalPathString, arrayToGo) {
 }
 
 nextStep <- function(listSoFar, originalString, arrayToGo) {
-  # Recursive function that adds a multilayer list to listSoFar that has a branched structure representing the vector of strings stringToGo.
-  if (length(arrayToGo) == 0) { # If end of string vector stringToGo has been reached, create a vector called 'path' and give it the value 'originalString'.
+  # Recursive function that adds a multilayer list to listSoFar that has a branched structure representing the vector of strings arrayToGo.
+  if (length(arrayToGo) == 0) { # If end of string vector arrayToGo has been reached, create a vector called 'path' and give it the value 'originalString'.
     listSoFar$path <- originalString
   }
   else { # End of branch has not been reached.
-    # If this portion of the string vector stringToGo has not been added to listToGo yet, add it using the function addBranch
+    # If this portion of the string vector arrayToGo has not been added to listToGo yet, add it using the function addBranch
     if (is.null(listSoFar[[arrayToGo[1]]])) {
       listSoFar[[arrayToGo[1]]] <- addBranch(originalString, tail(arrayToGo, -1))
     }
-    # If this portion of the string vector stringToGo has already been added to listSoFar, remove the leading element of stringToGo and recursively apply this function using the remaining elements of stringToGo.
+    # If this portion of the string vector arrayToGo has already been added to listSoFar, remove the leading element of arrayToGo and recursively apply this function using the remaining elements of arrayToGo.
     else {
       listSoFar[[arrayToGo[1]]] <- nextStep(listSoFar[[arrayToGo[1]]], originalString, tail(arrayToGo, -1))
     }
