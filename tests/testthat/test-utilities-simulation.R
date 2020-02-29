@@ -19,12 +19,12 @@ test_that("It throws an exception when trying to export for an individual id tha
 })
 
 
-context("setSimulationParameterValue")
+context("setParameterValuesByPath")
 
 test_that("It can set single parameter values", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath <- "Organism|Liver|Intracellular|Volume"
-  setSimulationParameterValues(parameterPath, 100, sim)
+  setParameterValuesByPath(parameterPath, 100, sim)
   parameter <- getParameter(parameterPath, sim)
   expect_equal(parameter$value, 100)
 })
@@ -33,7 +33,7 @@ test_that("It can set multiple parameter values", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath1 <- "Organism|Liver|Intracellular|Volume"
   parameterPath2 <- "Organism|Kidney|Intracellular|Volume"
-  setSimulationParameterValues(c(parameterPath1, parameterPath2), c(40, 50), sim)
+  setParameterValuesByPath(c(parameterPath1, parameterPath2), c(40, 50), sim)
   parameter1 <- getParameter(parameterPath1, sim)
   parameter2 <- getParameter(parameterPath2, sim)
   expect_equal(parameter1$value, 40)
@@ -43,7 +43,7 @@ test_that("It can set multiple parameter values", {
 test_that("It throws an exception when setting values for a parameter that does not exist", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath1 <- "Organism|Liver|NOPE|Volume"
-  expect_that(setSimulationParameterValues(parameterPath, 100, sim), throws_error())
+  expect_that(setParameterValuesByPath(parameterPath, 100, sim), throws_error())
 })
 
 test_that("It can get the value of an individual from a population and set them into a simulation", {
@@ -51,7 +51,7 @@ test_that("It can get the value of an individual from a population and set them 
   population <- loadPopulation(populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   individualValues <- population$getParameterValuesForIndividual(8)
-  setSimulationParameterValues(individualValues$paths, individualValues$values, sim)
+  setParameterValuesByPath(individualValues$paths, individualValues$values, sim)
   parameter <- getParameter(individualValues$paths[1], sim)
   expect_equal(parameter$value, individualValues$values[1])
 })

@@ -227,11 +227,11 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' setSimulationParameterValues("Organism|Liver|Volume", 1, sim)
+#' setParameterValuesByPath("Organism|Liver|Volume", 1, sim)
 #'
-#' setSimulationParameterValues(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
+#' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 #' @export
-setSimulationParameterValues <- function(parameterPaths, values, simulation) {
+setParameterValuesByPath <- function(parameterPaths, values, simulation) {
   validateIsString(parameterPaths)
   validateIsNumeric(values)
   validateIsOfType(simulation, Simulation)
@@ -270,7 +270,7 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
     simulationPath <- file.path(outputFolder, paste0(simulation$name, "_", individualId))
     simuationPaths <- c(simuationPaths, simulationPath)
     parameterValues <- population$getParameterValuesForIndividual(individualId)
-    setSimulationParameterValues(parameterValues$paths, parameterValues$values, simulation)
+    setParameterValuesByPath(parameterValues$paths, parameterValues$values, simulation)
     saveSimulation(simulation, simulationPath)
   }
 
