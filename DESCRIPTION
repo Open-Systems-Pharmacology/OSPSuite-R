@@ -55,6 +55,7 @@ Collate:
     'output-selections.R'
     'parameter-range.R'
     'parameter.R'
+    'path-explorer.R'
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'

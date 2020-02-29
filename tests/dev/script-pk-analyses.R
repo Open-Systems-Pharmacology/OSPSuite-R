@@ -10,7 +10,7 @@ simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegati
 populationResults <- runSimulation(sim, population, simRunOptions)
 
 
-dynamicPkParameter = DynamicPKParameter$new("test", standardPKParameter =  StandardPKParameter$Cmin)
+dynamicPkParameter <- DynamicPKParameter$new(name = "test", standardPKParameter = StandardPKParameter$Cmin)
 dynamicPkParameter$startApplicationIndex <- 2
 dynamicPkParameter$normalizationFactor <- 2.5
 dynamicPkParameter$standardPKParameter <- StandardPKParameter$Cmax
@@ -21,9 +21,15 @@ populationPkAnalyses <- calculatePKAnalyses(populationResults, dynamicPKParamete
 exportPKAnalysesToCSV(populationPkAnalyses, "C:/temp/export/pk.csv")
 
 
-newPKAnalyses = importPKAnalysesFromCSV("C:/temp/export/pk.csv", sim)
+newPKAnalyses <- importPKAnalysesFromCSV("C:/temp/export/pk.csv", sim)
 
-df= pkAnalysesAsDataFrame(newPKAnalyses)
+df <- pkAnalysesAsDataFrame(newPKAnalyses)
+
+
+tree <- exploreSimulation(sim)
+path <- tree$Organism$Kidney$Interstitial$pH$path
+
+
 #
 # pkParameters <- pkAnalyses$allPKParametersFor("Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)")
 #

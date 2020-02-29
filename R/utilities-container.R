@@ -26,6 +26,26 @@ getAllContainersMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Container)
 }
 
+#' Retrieves the path of all containers defined in the container and all its children
+#'
+#' @param container A Container or Simulation used to find the parameters
+#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#'
+#' @return An array with one entry per container defined in the container
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' # Returns the path of all molecules defined in the simulation
+#' moleculePaths <- getAllContainerPathsIn(sim)
+#'
+#' @export
+getAllContainerPathsIn <- function(container){
+  getAllEntityPathsIn(container, Container)
+}
+
+
 #' Retrieve a single container by path under the given container
 #'
 #' @inherit getAllContainersMatching

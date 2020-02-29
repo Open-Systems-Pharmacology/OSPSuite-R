@@ -26,6 +26,25 @@ getAllQuantitiesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Quantity)
 }
 
+#' Retrieves the path of all quantities defined in the container and all its children
+#'
+#' @param container A Container or Simulation used to find the parameters
+#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#'
+#' @return An array with one entry per quantity defined in the container
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' # Returns the path of all quantities defined in the simulation
+#' quantityPaths <- getAllQuantityPathsIn(sim)
+#'
+#' @export
+getAllQuantityPathsIn <- function(container){
+  getAllEntityPathsIn(container, Quantity)
+}
+
 #' Retrieve a single quantty by path in the given container
 #'
 #' @inherit getAllQuantitiesMatching
