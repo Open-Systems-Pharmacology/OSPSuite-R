@@ -44,12 +44,12 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' tree <- exploreSimulation(sim)
+#' tree <- getSimulationTree(sim)
 #'
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
 #'
 #' @export
-exploreSimulation <- function(simulationOrFilePath) {
+getSimulationTree <- function(simulationOrFilePath) {
   validateIsOfType(simulationOrFilePath, c(Simulation, 'character'))
 
   simulation <- simulationOrFilePath

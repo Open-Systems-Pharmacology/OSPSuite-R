@@ -1,7 +1,7 @@
-context("exploreSimulation")
+context("getSimulationTree")
 test_that("it can explore a simulation by path", {
   simPath <- getSimulationFilePath("simple")
-  tree <- exploreSimulation(simPath)
+  tree <- getSimulationTree(simPath)
 
   path <- tree$Organism$Liver$Volume$path
   expect_equal(path, "Organism|Liver|Volume")
@@ -10,7 +10,7 @@ test_that("it can explore a simulation by path", {
 
 test_that("it can explore a simulation by instance", {
   sim <- loadTestSimulation("simple")
-  tree <- exploreSimulation(sim)
+  tree <- getSimulationTree(sim)
 
   path <- tree$Organism$Liver$Volume$path
   expect_equal(path, "Organism|Liver|Volume")
