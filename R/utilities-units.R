@@ -48,18 +48,20 @@ toBaseUnit <- function(quantity, values, unit) {
 toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
-  validateIsNumeric(molWeight, nullAllowed =  TRUE)
+  validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- enc2utf8(targetUnit)
   dimension <- quantityOrDimension
-  if(isOfType(quantityOrDimension, Quantity))
-    dimension<- quantityOrDimension$dimension
+  if (isOfType(quantityOrDimension, Quantity)) {
+    dimension <- quantityOrDimension$dimension
+  }
 
   values <- c(values)
   dimensionTask <- getNetTask("DimensionTask")
-  if(is.null(molWeight))
+  if (is.null(molWeight)) {
     rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values)
-  else
+  } else {
     rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
+  }
 }
 
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
@@ -87,9 +89,8 @@ toDisplayUnit <- function(quantity, values) {
 #'
 #' @examples
 #' dims <- allAvailableDimensions()
-#'
 #' @export
-allAvailableDimensions <- function(){
+allAvailableDimensions <- function() {
   dimensionTask <- getNetTask("DimensionTask")
   rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }

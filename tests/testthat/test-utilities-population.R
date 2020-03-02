@@ -24,6 +24,6 @@ context("populationAsDataFrame")
 test_that("It can convert a population to data frame", {
   populationFileName <- getTestDataFilePath("pop_10.csv")
   population <- loadPopulation(populationFileName)
-  df <- populationAsDataFrame(population);
+  df <- populationAsDataFrame(population)
   expect_equal(nrow(df), 10)
 })

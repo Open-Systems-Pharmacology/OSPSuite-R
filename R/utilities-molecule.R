@@ -40,9 +40,8 @@ getAllMoleculesMatching <- function(paths, container) {
 #'
 #' # Returns the path of all molecules defined in the simulation
 #' moleculePaths <- getAllMoleculePathsIn(sim)
-#'
 #' @export
-getAllMoleculePathsIn <- function(container){
+getAllMoleculePathsIn <- function(container) {
   getAllEntityPathsIn(container, Molecule)
 }
 

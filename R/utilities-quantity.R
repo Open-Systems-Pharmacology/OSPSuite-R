@@ -39,9 +39,8 @@ getAllQuantitiesMatching <- function(paths, container) {
 #'
 #' # Returns the path of all quantities defined in the simulation
 #' quantityPaths <- getAllQuantityPathsIn(sim)
-#'
 #' @export
-getAllQuantityPathsIn <- function(container){
+getAllQuantityPathsIn <- function(container) {
   getAllEntityPathsIn(container, Quantity)
 }
 
