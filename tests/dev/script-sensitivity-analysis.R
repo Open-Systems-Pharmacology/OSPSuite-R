@@ -8,7 +8,7 @@ print(params)
 
 sensitivity <- SensitivityAnalysis$new(sim)
 sensitivity$addParameterPaths("Organism|Liver|Volume")
-dynamicPkParameter = DynamicPKParameter$new(name = "Test", standardPKParameter =  StandardPKParameter$AucTend)
+dynamicPkParameter <- DynamicPKParameter$new(name = "Test", standardPKParameter = StandardPKParameter$AucTend)
 print(dynamicPkParameter)
 sensitivity$addDynamicPKParameters(dynamicPkParameter)
 
@@ -18,7 +18,7 @@ sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(showProgress = T
 
 
 
-p<-sensitivity$allDynamicPKParameters
+p <- sensitivity$allDynamicPKParameters
 print(p)
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
 

@@ -39,9 +39,8 @@ getAllParametersMatching <- function(paths, container) {
 #'
 #' # Returns the path of all quantities defined in the simulation
 #' parameterPaths <- getAllParameterPathsIn(sim)
-#'
 #' @export
-getAllParameterPathsIn <- function(container){
+getAllParameterPathsIn <- function(container) {
   getAllEntityPathsIn(container, Parameter)
 }
 
@@ -87,6 +86,30 @@ getParameter <- function(path, container, stopIfNotFound = TRUE) {
 setParameterValues <- function(parameters, values) {
   validateIsOfType(parameters, Parameter)
   setQuantityValues(parameters, values)
+}
+
+
+#' Set the values of parameters in the simulation by path
+#'
+#' @param parameterPaths A single or a list of parameter path
+#' @param values A numeric value that should be assigned to the parameters or a vector
+#' of numeric values, if the value of more than one parameter should be changed. Must have the same
+#' length as 'parameterPaths'
+#' @param simulation Simulation uses to retrieve parameter instances from given paths.
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' setParameterValuesByPath("Organism|Liver|Volume", 1, sim)
+#'
+#' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
+#' @export
+setParameterValuesByPath <- function(parameterPaths, values, simulation) {
+  validateIsString(parameterPaths)
+  validateIsNumeric(values)
+  validateIsOfType(simulation, Simulation)
+  parameters <- sapply(parameterPaths, function(p) getParameter(p, simulation))
+  setParameterValues(parameters, values)
 }
 
 #' Scale current values of parameters using a factor

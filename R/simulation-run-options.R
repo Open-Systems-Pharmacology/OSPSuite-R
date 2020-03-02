@@ -19,13 +19,13 @@ SimulationRunOptions <- R6::R6Class(
                               showProgress = ospsuiteEnv$showProgress) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationRunOptions")
       super$initialize(ref)
-      if(!is.null(numberOfCoresToUse)){
+      if (!is.null(numberOfCoresToUse)) {
         self$numberOfCoresToUse <- numberOfCoresToUse
       }
-      if(!is.null(checkForNegativeValues)){
+      if (!is.null(checkForNegativeValues)) {
         self$checkForNegativeValues <- checkForNegativeValues
       }
-      if(!is.null(showProgress)){
+      if (!is.null(showProgress)) {
         self$showProgress <- showProgress
       }
     },

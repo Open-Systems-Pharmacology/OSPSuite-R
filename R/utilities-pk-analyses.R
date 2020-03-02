@@ -17,9 +17,9 @@
 calculatePKAnalyses <- function(results, dynamicPKParameters = NULL) {
   dynamicPKParameters <- c(dynamicPKParameters)
   validateIsOfType(results, SimulationResults)
-  validateIsOfType(dynamicPKParameters, DynamicPKParameter, nullAllowed=TRUE)
+  validateIsOfType(dynamicPKParameters, DynamicPKParameter, nullAllowed = TRUE)
   pkAnalysesTask <- getNetTask("PKAnalysesTask")
-  calculatePKAnalysesArgs  <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
+  calculatePKAnalysesArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysesArgs, "Simulation", results$simulation$ref)
   rClr::clrSet(calculatePKAnalysesArgs, "NumberOfIndividuals", as.integer(results$count))
   rClr::clrSet(calculatePKAnalysesArgs, "SimulationResults", results$ref)

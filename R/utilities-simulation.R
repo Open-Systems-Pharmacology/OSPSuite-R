@@ -216,29 +216,6 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
   )
 }
 
-#' Set the values of parameters in the simulation by path
-#'
-#' @param parameterPaths A single or a list of parameter path
-#' @param values A numeric value that should be assigned to the parameters or a vector
-#' of numeric values, if the value of more than one parameter should be changed. Must have the same
-#' length as 'parameterPaths'
-#' @param simulation Simulation uses to retrieve parameter instances from given paths.
-#' @examples
-#'
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simPath)
-#' setParameterValuesByPath("Organism|Liver|Volume", 1, sim)
-#'
-#' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
-#' @export
-setParameterValuesByPath <- function(parameterPaths, values, simulation) {
-  validateIsString(parameterPaths)
-  validateIsNumeric(values)
-  validateIsOfType(simulation, Simulation)
-  parameters <- sapply(parameterPaths, function(p) getParameter(p, simulation))
-  setParameterValues(parameters, values)
-}
-
 #' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.
 #'
 #' @param population A population object typically loaded with `loadPopulation`

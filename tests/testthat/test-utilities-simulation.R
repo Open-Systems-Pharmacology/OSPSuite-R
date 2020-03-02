@@ -18,44 +18,6 @@ test_that("It throws an exception when trying to export for an individual id tha
   expect_that(exportIndividualSimulations(population, c(50, 2), tempdir(), sim), throws_error())
 })
 
-
-context("setParameterValuesByPath")
-
-test_that("It can set single parameter values", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath <- "Organism|Liver|Intracellular|Volume"
-  setParameterValuesByPath(parameterPath, 100, sim)
-  parameter <- getParameter(parameterPath, sim)
-  expect_equal(parameter$value, 100)
-})
-
-test_that("It can set multiple parameter values", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath1 <- "Organism|Liver|Intracellular|Volume"
-  parameterPath2 <- "Organism|Kidney|Intracellular|Volume"
-  setParameterValuesByPath(c(parameterPath1, parameterPath2), c(40, 50), sim)
-  parameter1 <- getParameter(parameterPath1, sim)
-  parameter2 <- getParameter(parameterPath2, sim)
-  expect_equal(parameter1$value, 40)
-  expect_equal(parameter2$value, 50)
-})
-
-test_that("It throws an exception when setting values for a parameter that does not exist", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath1 <- "Organism|Liver|NOPE|Volume"
-  expect_that(setParameterValuesByPath(parameterPath, 100, sim), throws_error())
-})
-
-test_that("It can get the value of an individual from a population and set them into a simulation", {
-  populationFileName <- getTestDataFilePath("pop_10.csv")
-  population <- loadPopulation(populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  individualValues <- population$getParameterValuesForIndividual(8)
-  setParameterValuesByPath(individualValues$paths, individualValues$values, sim)
-  parameter <- getParameter(individualValues$paths[1], sim)
-  expect_equal(parameter$value, individualValues$values[1])
-})
-
 context("loadSimulation")
 
 test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {

@@ -47,13 +47,12 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #' tree <- getSimulationTree(sim)
 #'
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
-#'
 #' @export
 getSimulationTree <- function(simulationOrFilePath) {
-  validateIsOfType(simulationOrFilePath, c(Simulation, 'character'))
+  validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
 
   simulation <- simulationOrFilePath
-  if(isOfType(simulationOrFilePath, 'character')){
+  if (isOfType(simulationOrFilePath, "character")) {
     simulation <- loadSimulation(simulationOrFilePath)
   }
 
