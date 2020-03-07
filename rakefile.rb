@@ -19,7 +19,7 @@ end
 # This task is temporary until we have an automated linux buold
 task :create_linux_build, [:product_version, :build_dir] do |t, args|
   product_version = sanitized_version(args.product_version)
-  build_dir = args.build_dir
+  build_dir = to_linux_path(args.build_dir)
   
   #run nuget to get linux packages
   nuget_restore 'linux'
@@ -27,9 +27,6 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
   # Tar file produced by the script
   tar_file = File.join(build_dir, tar_file_name)
-
-  puts "Tar file path #{tar_file}"
-  puts "Tar file exists #{File.exists?(tar_file)}"
 
   #unzip it in a temp folder
   temp_dir = File.join(build_dir, "temp")
@@ -60,6 +57,10 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
 end
 
 private
+
+def to_linux_path(path, end_slash=false)
+  "#{'/' if path[0]=='\\'}#{path.split('\\').join('/')}#{'/' if end_slash}" 
+end 
 
 def copy_so(file, target_dir)
   native_folder = '/bin/native/x64/Release/'
