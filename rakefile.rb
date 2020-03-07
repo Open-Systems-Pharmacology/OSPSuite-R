@@ -39,7 +39,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   command_line = %W[xzf #{tar_file} -C #{temp_dir}]
   Utils.run_cmd('tar', command_line)
   
-  command_line = %W[cvzf c:/test.tar.gz  C:/temp/ospsuite/]
+  command_line = %W[cvzf test.tar.gz  C:/temp/ospsuite/]
   Utils.run_cmd('tar', command_line)
 
   # ospsuite_dir = File.join(temp_dir,  'ospsuite')
