@@ -27,7 +27,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   #unzip it in a temp folder
   temp_dir = File.join(build_dir, "temp")
   FileUtils.mkdir_p temp_dir
-  command_line = %W[xzf #{tar_file} -C #{temp_dir}]
+  command_line = %W[xvzf #{tar_file} -C #{temp_dir}]
   Utils.run_cmd('tar', command_line)
 
   #run nuget to get linux packages

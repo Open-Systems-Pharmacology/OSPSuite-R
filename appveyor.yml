@@ -55,7 +55,7 @@ test_script:
   - travis-tool.sh run_tests
 
 after_test:
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]" --trace
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
