@@ -22,7 +22,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   build_dir = to_linux_path(args.build_dir)
   
   #run nuget to get linux packages
-  nuget_restore 'linux'
+  # nuget_restore 'linux'
 
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
 
@@ -33,7 +33,9 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   #unzip it in a temp folder
   #temp_dir = File.join(build_dir, "temp")
 #  FileUtils.mkdir_p temp_dir
-  temp_dir = "C:/"
+  temp_dir = "C:/temp/"
+  FileUtils.mkdir_p temp_dir
+  
   command_line = %W[xzf #{tar_file} -C #{temp_dir}]
   Utils.run_cmd('tar', command_line)
   
