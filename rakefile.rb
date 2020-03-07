@@ -53,7 +53,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   #Recreate tar ball in temp file
   temp_tar_file = File.join(temp_dir,  tar_file_name)
 #  command_line = %W[czf #{temp_tar_file}  -C #{temp_dir} ospsuite]
-command_line = %W[cvzf #{tar_file}  #{to_linux_path(temp_dir, end_slash=true)}]
+command_line = %W[cvzf #{tar_file_name}  #{temp_dir}]
 Utils.run_cmd('tar', command_line)
 
   #Last move new tar file and replace old tar file
