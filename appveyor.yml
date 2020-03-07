@@ -48,10 +48,8 @@ before_test:
   - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
   - pandoc -v
 
-after_build:
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
-
 on_success:
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
   - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
 
 test_script:
