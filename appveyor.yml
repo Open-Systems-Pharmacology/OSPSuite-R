@@ -75,10 +75,10 @@ artifacts:
     name: Logs
 
   - path: '\*_*.tar.gz'
-    name: Bits
+    name: Linux
 
   - path: '\*_*.zip'
-    name: Bits
+    name: Win
 
 platform: x64
 
