@@ -31,7 +31,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   #unzip it in a temp folder
   temp_dir = File.join(build_dir, "temp")
   FileUtils.mkdir_p temp_dir
-  command_line = %W[xvzf #{tar_file} -C #{temp_dir}]
+  command_line = %W[xzf #{tar_file} -C #{temp_dir}]
   Utils.run_cmd('tar', command_line)
   
   ospsuite_dir = File.join(temp_dir,  'ospsuite')
@@ -47,10 +47,14 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   copy_so('OSPSuite.SimModel', inst_lib_diir)
   copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
 
+  puts "Temp Directory exists #{Dir.exists?(temp_dir)}"
+  puts "OSPSUITE  Directory exists #{Dir.exists?( File.join(temp_dir, "ospsuite"))}"
+
   #Recreate tar ball in temp file
   temp_tar_file = File.join(temp_dir,  tar_file_name)
-  command_line = %W[czf #{temp_tar_file}  -C #{temp_dir} ospsuite]
-  Utils.run_cmd('tar', command_line)
+#  command_line = %W[czf #{temp_tar_file}  -C #{temp_dir} ospsuite]
+command_line = %W[czf #{temp_tar_file}  #{File.join(temp_dir, "ospsuite")}]
+Utils.run_cmd('tar', command_line)
 
   #Last move new tar file and replace old tar file
   FileUtils.copy_file(temp_tar_file, tar_file)
