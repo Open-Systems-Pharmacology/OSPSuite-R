@@ -57,7 +57,7 @@ command_line = %W[czf #{temp_tar_file}  #{File.join(temp_dir, "ospsuite")}]
 Utils.run_cmd('tar', command_line)
 
   #Last move new tar file and replace old tar file
-  FileUtils.copy_file(temp_tar_file, tar_file)
+ # FileUtils.copy_file(temp_tar_file, tar_file)
 end
 
 private
