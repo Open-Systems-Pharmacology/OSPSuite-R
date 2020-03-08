@@ -78,6 +78,9 @@ artifacts:
   - path: '\*_*.zip'
     name: Win
 
+  - path: "ospsuite_*_linux.zip"
+    name: Linux
+
 platform: x64
 
 skip_commits:
