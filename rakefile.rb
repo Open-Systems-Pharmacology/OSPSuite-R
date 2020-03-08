@@ -22,7 +22,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   build_dir = to_linux_path(args.build_dir)
   
   #run nuget to get linux packages
-  # nuget_restore 'linux'
+  nuget_restore 'linux'
 
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
 
@@ -50,13 +50,18 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   delete_dll('OSPSuite.SimModelNative', inst_lib_diir)
   delete_dll('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
 
-  command_line = %W[cvzf #{tar_file}   -C #{temp_dir} ospsuite]
-  Utils.run_cmd('tar', command_line)
-
   #Copy the linux binaries
-  # copy_so('OSPSuite.FuncParser', inst_lib_diir)
-  # copy_so('OSPSuite.SimModel', inst_lib_diir)
-  # copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
+  copy_so('OSPSuite.FuncParser', inst_lib_diir)
+  copy_so('OSPSuite.SimModel', inst_lib_diir)
+  copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
+
+  zip_archive_name = "ospsuite_#{product_version}_linux.zip"
+  zip_archive = File.join(build_dir,  zip_archive_name)
+  command_line = %W[a #{zip_archive} #{ospsuite_dir}]
+  zip command_line
+
+  # command_line = %W[cvzf #{tar_file}   -C #{temp_dir} ospsuite]
+  # Utils.run_cmd('tar', command_line)
 
   # puts "Temp Directory exists #{Dir.exists?(temp_dir)}"
   # puts "OSPSUITE  Directory exists #{Dir.exists?( File.join(temp_dir, "ospsuite"))}"
@@ -70,6 +75,11 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   #Last move new tar file and replace old tar file
  # FileUtils.copy_file(temp_tar_file, tar_file)
 end
+
+def zip(command_line)
+  Utils.run_cmd('7z', command_line) 
+end
+
 
 # This task is temporary until we have an automated linux buold
 # task :create_linux_build, [:product_version, :build_dir] do |t, args|
