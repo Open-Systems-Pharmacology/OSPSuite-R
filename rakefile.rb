@@ -36,8 +36,11 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
 #  temp_dir = "C:/temp/"
   FileUtils.mkdir_p temp_dir
 
-  command_line = %W[xzf #{tar_file} -C #{temp_dir}]
+  command_line = %W[xvzf #{tar_file} -C #{temp_dir}]
   Utils.run_cmd('tar', command_line)
+
+  puts "TAR File exists #{File.exists?(tar_file)}"
+
 
   ospsuite_dir = File.join(temp_dir,  'ospsuite')
   inst_lib_diir = File.join(ospsuite_dir, 'inst', 'lib')
@@ -47,7 +50,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   delete_dll('OSPSuite.SimModelNative', inst_lib_diir)
   delete_dll('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
 
-  command_line = %W[czf #{File.join(build_dir, tar_file_name)}   -C #{temp_dir} ospsuite]
+  command_line = %W[cvzf #{tar_file}   -C #{temp_dir} ospsuite]
   Utils.run_cmd('tar', command_line)
 
   #Copy the linux binaries
