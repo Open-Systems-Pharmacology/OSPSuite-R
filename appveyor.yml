@@ -49,13 +49,11 @@ before_test:
   - pandoc -v
 
 on_success:
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
   - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
 
 test_script:
   - travis-tool.sh run_tests
-
-after_test:
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
