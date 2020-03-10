@@ -56,12 +56,15 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   command_line = %W[a #{zip_archive} #{ospsuite_dir}]
   zip command_line
 
-  # Dir.chdir(temp_dir) do
-  #   tar_archive_name = "ospsuite_#{product_version}_#{linux_disto}.tar.gz"
-  #   command_line = %W[czf #{tar_archive_name} ospsuite]
-  #   Utils.run_cmd('tar', command_line)
-  #   FileUtils.mv(tar_archive_name, build_dir)
-  # end
+  Dir.chdir(temp_dir) do
+    tar_archive_name = "ospsuite_#{product_version}_#{linux_disto}.tar"
+    command_line = %W[cf #{tar_archive_name} ospsuite]
+    Utils.run_cmd('tar', command_line)
+
+    Utils.run_cmd('gzip', %W[#{tar_archive_name}])
+
+    FileUtils.mv("#{tar_archive_name}.gz", build_dir)
+  end
 end
 
 
