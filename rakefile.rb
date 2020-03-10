@@ -21,8 +21,10 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   product_version = sanitized_version(args.product_version)
   build_dir = args.build_dir
   
+  linux_disto = 'ubuntu18'
+
   #run nuget to get linux packages
-  nuget_restore 'linux'
+  nuget_restore linux_disto
 
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
   
@@ -37,38 +39,29 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   Utils.run_cmd('tar', command_line)
 
   ospsuite_dir = File.join(temp_dir,  'ospsuite')
-  inst_lib_diir = File.join(ospsuite_dir, 'inst', 'lib')
+  inst_lib_dir = File.join(ospsuite_dir, 'inst', 'lib')
 
   #Remove the windows dll that should be replace by linux binaries
-  delete_dll('OSPSuite.FuncParserNative', inst_lib_diir)
-  delete_dll('OSPSuite.SimModelNative', inst_lib_diir)
-  delete_dll('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
+  delete_dll('OSPSuite.FuncParserNative', inst_lib_dir)
+  delete_dll('OSPSuite.SimModelNative', inst_lib_dir)
+  delete_dll('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
 
   #Copy the linux binaries
-  copy_so('OSPSuite.FuncParser', inst_lib_diir)
-  copy_so('OSPSuite.SimModel', inst_lib_diir)
-  copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
+  copy_so('OSPSuite.FuncParser', inst_lib_dir)
+  copy_so('OSPSuite.SimModel', inst_lib_dir)
+  copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
 
-  zip_archive_name = "ospsuite_#{product_version}_ubuntu18.zip"
+  zip_archive_name = "ospsuite_#{product_version}_#{linux_disto}.zip"
   zip_archive = File.join(build_dir,  zip_archive_name)
   command_line = %W[a #{zip_archive} #{ospsuite_dir}]
   zip command_line
 
-  Dir.chdir(temp_dir) do
-    tar_archive_name = "ospsuite_#{product_version}_ubuntu18.tar.gz"
-    command_line = %W[cvzf #{tar_archive_name} ospsuite]
-    Utils.run_cmd('tar', command_line)
-    FileUtils.mv(tar_archive_name, build_dir)
-  end
- 
-  #Recreate tar ball in temp file
-  # temp_tar_file = File.join(temp_dir,  tar_file_name)
-#  command_line = %W[czf #{temp_tar_file}  -C #{temp_dir} ospsuite]
-# command_line = %W[cvzf #{tar_file_name}  #{temp_dir}]
-# Utils.run_cmd('tar', command_line)
-
-  #Last move new tar file and replace old tar file
- # FileUtils.copy_file(temp_tar_file, tar_file)
+  # Dir.chdir(temp_dir) do
+  #   tar_archive_name = "ospsuite_#{product_version}_#{linux_disto}.tar.gz"
+  #   command_line = %W[czf #{tar_archive_name} ospsuite]
+  #   Utils.run_cmd('tar', command_line)
+  #   FileUtils.mv(tar_archive_name, build_dir)
+  # end
 end
 
 
