@@ -54,6 +54,9 @@ on_success:
 test_script:
   - travis-tool.sh run_tests
 
+after_test:
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
+
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
@@ -71,11 +74,14 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\*_*.tar.gz'
-    name: Bits
+  - path: "ospsuite_*_ubuntu18.tar.gz"
+    name: Ubuntu18
+
+  # - path: "ospsuite_*_ubuntu18.zip"
+  #   name: Ubuntu18
 
   - path: '\*_*.zip'
-    name: Bits
+    name: Win
 
 platform: x64
 

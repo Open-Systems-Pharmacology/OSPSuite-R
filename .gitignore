@@ -4,6 +4,8 @@
 
 packages/
 
+temp/
+
 # Session Data files
 .RData
 
