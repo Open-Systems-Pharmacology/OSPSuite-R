@@ -77,8 +77,8 @@ artifacts:
   - path: "ospsuite_*_ubuntu18.tar.gz"
     name: Ubuntu18
 
-  - path: "ospsuite_*_ubuntu18.zip"
-    name: Ubuntu18
+  # - path: "ospsuite_*_ubuntu18.zip"
+  #   name: Ubuntu18
 
   - path: '\*_*.zip'
     name: Win

@@ -51,10 +51,10 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   copy_so('OSPSuite.SimModel', inst_lib_dir)
   copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
 
-  zip_archive_name = "ospsuite_#{product_version}_#{linux_disto}.zip"
-  zip_archive = File.join(build_dir,  zip_archive_name)
-  command_line = %W[a #{zip_archive} #{ospsuite_dir}]
-  zip command_line
+  # zip_archive_name = "ospsuite_#{product_version}_#{linux_disto}.zip"
+  # zip_archive = File.join(build_dir,  zip_archive_name)
+  # command_line = %W[a #{zip_archive} #{ospsuite_dir}]
+  # zip command_line
 
   Dir.chdir(temp_dir) do
     tar_archive_name = "ospsuite_#{product_version}_#{linux_disto}.tar"
