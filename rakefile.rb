@@ -49,14 +49,18 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   copy_so('OSPSuite.SimModel', inst_lib_diir)
   copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_diir)
 
-  zip_archive_name = "ospsuite_#{product_version}_linux.zip"
+  zip_archive_name = "ospsuite_#{product_version}_ubuntu18.zip"
   zip_archive = File.join(build_dir,  zip_archive_name)
   command_line = %W[a #{zip_archive} #{ospsuite_dir}]
   zip command_line
 
-  # command_line = %W[cvzf #{tar_file}   -C #{temp_dir} ospsuite]
-  # Utils.run_cmd('tar', command_line)
-
+  Dir.chdir(temp_dir) do
+    tar_archive_name = "ospsuite_#{product_version}_ubuntu18.tar.gz"
+    command_line = %W[cvzf #{tar_archive_name} ospsuite]
+    Utils.run_cmd('tar', command_line)
+    FileUtils.mv(tar_archive_name, build_dir)
+  end
+ 
   #Recreate tar ball in temp file
   # temp_tar_file = File.join(temp_dir,  tar_file_name)
 #  command_line = %W[czf #{temp_tar_file}  -C #{temp_dir} ospsuite]
