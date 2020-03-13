@@ -14,7 +14,7 @@
 #' results <- runSimulation(sim)
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
-calculatePKAnalyses <- function(result) {
+calculatePKAnalyses <- function(results) {
   validateIsOfType(results, SimulationResults)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
@@ -36,8 +36,8 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  pkAnalysesTask <- getNetTask("PKAnalysesTask")
-  rClr::clrCall(pkAnalysesTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
+  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
 }
 
@@ -52,8 +52,8 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
   validateIsOfType(simulation, Simulation)
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  pkAnalysesTask <- getNetTask("PKAnalysesTask")
-  pkAnalyses <- rClr::clrCall(pkAnalysesTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
+  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  pkAnalyses <- rClr::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
   SimulationPKAnalyses$new(pkAnalyses, simulation)
 }
 
