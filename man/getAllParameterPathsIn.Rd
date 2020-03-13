@@ -22,7 +22,6 @@ sim <- loadSimulation(simPath)
 
 # Returns the path of all quantities defined in the simulation
 parameterPaths <- getAllParameterPathsIn(sim)
-
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation

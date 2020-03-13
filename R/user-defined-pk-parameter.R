@@ -22,10 +22,11 @@ StandardPKParameter <- enum(c(
   Tthreshold = 15
 ))
 
-#' @title DynamicPKParameter
+#' @title UserDefinedPKParameter
 #' @docType class
-#' @description  Definition of a user defined PKParameter (dynamic) that can be calculated on top of the standard PK Parameters
-DynamicPKParameter <- R6::R6Class("DynamicPKParameter",
+#' @description  Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
+#' @export
+UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
   inherit = DotNetWrapper,
   active = list(
     #' @field name Name of the PK-Parameter
@@ -83,11 +84,11 @@ DynamicPKParameter <- R6::R6Class("DynamicPKParameter",
     #' @param name Name of the user defined PK-Parameter
     #' @param standardPKParameter What PK-Parameter should be used to perform calculation.
     #' See \code{StandardPKParameter} enum for all possible pk parameters
-    #' @return A new `DynamicPKParameter` object.
+    #' @return A new `UserDefinedPKParameter` object.
     initialize = function(ref = NULL, name = NULL, standardPKParameter = NULL) {
       validateIsString(name, nullAllowed = TRUE)
       validateEnumValue(StandardPKParameter, standardPKParameter, nullAllowed = TRUE)
-      ref <- ref %||% rClr::clrNew("OSPSuite.Core.Domain.PKAnalyses.DynamicPKParameter")
+      ref <- ref %||% rClr::clrNew("OSPSuite.Core.Domain.PKAnalyses.UserDefinedPKParameter")
       super$initialize(ref)
       # Because of weird issue with nullable value in rClr
       if (!is.null(name)) {

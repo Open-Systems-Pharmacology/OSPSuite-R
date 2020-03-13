@@ -40,6 +40,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #' @return A list with a branched structure representing the path tree of Quantities in the simulation file.
 #' At the end of each branch is a string called 'path' that is the path of the quantity represented by the branch.
 #'
+#' @importFrom utils tail
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
