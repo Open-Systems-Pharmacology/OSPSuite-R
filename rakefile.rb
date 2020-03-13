@@ -46,9 +46,9 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   delete_dll('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
 
   #Copy the linux binaries
-  copy_so('OSPSuite.FuncParser', inst_lib_dir)
-  copy_so('OSPSuite.SimModel', inst_lib_dir)
-  copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
+  copy_so('OSPSuite.FuncParser', linux_distro, inst_lib_dir)
+  copy_so('OSPSuite.SimModel', linux_distro,  inst_lib_dir)
+  copy_so('OSPSuite.SimModelSolver_CVODES', linux_distro,  inst_lib_dir)
 
   Dir.chdir(temp_dir) do
     tar_archive_name = "ospsuite_#{product_version}_#{linux_distro}.tar"
@@ -68,11 +68,11 @@ def zip(command_line)
   Utils.run_cmd('7z', command_line) 
 end
 
-def copy_so(file, target_dir)
+def copy_so(file, linux_distro, target_dir)
   native_folder = '/bin/native/x64/Release/'
   copy_depdencies packages_dir, target_dir do
-    copy_files "#{file}.Ubuntu*/**/#{native_folder}", 'so'
-    copy_files "#{file}.Ubuntu*/**/netstandard*", 'dll'
+    copy_files "#{file}.#{linux_distro}*/**/#{native_folder}", 'so'
+    copy_files "#{file}.#{linux_distro}*/**/netstandard*", 'dll'
   end
 
 
