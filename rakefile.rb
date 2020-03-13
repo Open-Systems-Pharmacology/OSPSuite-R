@@ -51,7 +51,7 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
 
   Dir.chdir(temp_dir) do
-    tar_archive_name = "ospsuite_#{product_version}_#{linux_disto}.tar"
+    tar_archive_name = "ospsuite_#{product_version}_#{linux_distro}.tar"
     command_line = %W[cf #{tar_archive_name} ospsuite]
     Utils.run_cmd('tar', command_line)
 
