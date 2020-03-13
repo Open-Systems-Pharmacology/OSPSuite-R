@@ -34,6 +34,7 @@ before_build:
   - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
   - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
   - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
+  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos    
   - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
   - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
@@ -55,7 +56,8 @@ test_script:
   - travis-tool.sh run_tests
 
 after_test:
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
@@ -77,10 +79,10 @@ artifacts:
   - path: "ospsuite_*_ubuntu18.tar.gz"
     name: Ubuntu18
 
-  # - path: "ospsuite_*_ubuntu18.zip"
-  #   name: Ubuntu18
-
-  - path: '\*_*.zip'
+  - path: "ospsuite_*_centOS7.tar.gz"
+    name: CentOS7
+  
+    - path: '\*_*.zip'
     name: Win
 
 platform: x64
