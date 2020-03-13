@@ -17,14 +17,13 @@ task :postclean do
 end
 
 # This task is temporary until we have an automated linux buold
-task :create_linux_build, [:product_version, :build_dir] do |t, args|
+task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, args|
   product_version = sanitized_version(args.product_version)
   build_dir = args.build_dir
-  
-  linux_disto = 'ubuntu18'
+  linux_distro = args.linux_distro
 
   #run nuget to get linux packages
-  nuget_restore linux_disto
+  nuget_restore linux_distro
 
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
   
@@ -32,7 +31,7 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   tar_file = File.join(build_dir, tar_file_name)
 
   #unzip it in a temp folder
-  temp_dir = File.join(build_dir, "temp")
+  temp_dir = File.join(build_dir, linux_distro)
   FileUtils.mkdir_p temp_dir
 
   command_line = %W[xzf #{tar_file} -C #{temp_dir}]
@@ -51,13 +50,8 @@ task :create_linux_build, [:product_version, :build_dir] do |t, args|
   copy_so('OSPSuite.SimModel', inst_lib_dir)
   copy_so('OSPSuite.SimModelSolver_CVODES', inst_lib_dir)
 
-  # zip_archive_name = "ospsuite_#{product_version}_#{linux_disto}.zip"
-  # zip_archive = File.join(build_dir,  zip_archive_name)
-  # command_line = %W[a #{zip_archive} #{ospsuite_dir}]
-  # zip command_line
-
   Dir.chdir(temp_dir) do
-    tar_archive_name = "ospsuite_#{product_version}_#{linux_disto}.tar"
+    tar_archive_name = "ospsuite_#{product_version}_#{linux_distro}.tar"
     command_line = %W[cf #{tar_archive_name} ospsuite]
     Utils.run_cmd('tar', command_line)
 
