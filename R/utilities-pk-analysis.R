@@ -14,19 +14,14 @@
 #' results <- runSimulation(sim)
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
-calculatePKAnalyses <- function(results, dynamicPKParameters = NULL) {
-  dynamicPKParameters <- c(dynamicPKParameters)
+calculatePKAnalyses <- function(result) {
   validateIsOfType(results, SimulationResults)
-  validateIsOfType(dynamicPKParameters, DynamicPKParameter, nullAllowed = TRUE)
-  pkAnalysesTask <- getNetTask("PKAnalysesTask")
-  calculatePKAnalysesArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
-  rClr::clrSet(calculatePKAnalysesArgs, "Simulation", results$simulation$ref)
-  rClr::clrSet(calculatePKAnalysesArgs, "NumberOfIndividuals", as.integer(results$count))
-  rClr::clrSet(calculatePKAnalysesArgs, "SimulationResults", results$ref)
-  for (dynamicPKParameter in dynamicPKParameters) {
-    rClr::clrCall(calculatePKAnalysesArgs, "AddDynamicParameter", dynamicPKParameter$ref)
-  }
-  pkAnalyses <- rClr::clrCall(pkAnalysesTask, "CalculateFor", calculatePKAnalysesArgs)
+  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
+  rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
+  rClr::clrSet(calculatePKAnalysisArgs, "NumberOfIndividuals", as.integer(results$count))
+  rClr::clrSet(calculatePKAnalysisArgs, "SimulationResults", results$ref)
+  pkAnalyses <- rClr::clrCall(pkAnalysisTask, "CalculateFor", calculatePKAnalysisArgs)
   SimulationPKAnalyses$new(pkAnalyses, results$simulation)
 }
 
@@ -75,10 +70,11 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
   dataFrame <- tryCatch({
     exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
     pkResultsDataFrame <- read.csv(pkParameterResultsFilePath, encoding = "UTF-8", check.names = FALSE)
-    colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
+    colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit", "Display")
     pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
     pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
     pkResultsDataFrame$Unit <- as.factor(pkResultsDataFrame$Unit)
+    pkResultsDataFrame$Display <- as.factor(pkResultsDataFrame$Display)
     return(pkResultsDataFrame)
   },
   finally = {

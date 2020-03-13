@@ -47,5 +47,5 @@ context("pkAnalysesAsDataFrame")
 
 test_that("It can convert valid pk-analysis results to data frame", {
   df <- pkAnalysesAsDataFrame(pkAnalyses = pkAnalyses)
-  expect_length(colnames(df), 5)
+  expect_length(colnames(df), 6)
 })
