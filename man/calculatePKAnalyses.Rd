@@ -4,7 +4,7 @@
 \alias{calculatePKAnalyses}
 \title{Calculates the pkAnalyses for all output values available in \code{results}.}
 \usage{
-calculatePKAnalyses(result)
+calculatePKAnalyses(results)
 }
 \arguments{
 \item{results}{Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}}

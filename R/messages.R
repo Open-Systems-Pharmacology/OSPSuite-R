@@ -73,6 +73,10 @@ messages <- list(
     paste0("Unit '", unit, "' is not defined in dimension '", dimension, "' used by '", quantityName, "'.")
   },
 
+  errorPKParameterNotFound = function(pkParameterName, allPKParameterNames){
+    paste0("PK-Parameter '", pkParameterName, "' not found.\nAvailable PK-Parameters are:\n",  paste0(allPKParameterNames, collapse = ", "))
+  },
+
   pkSimRPathInvalid = function(pksimPath) {
     paste0("Path to PKSim.R.dll '", pksimPath, "' is invalid.")
   }

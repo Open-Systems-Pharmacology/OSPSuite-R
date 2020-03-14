@@ -14,7 +14,7 @@ test_that("It should be able to calculate the PK-Analyses each output of a simul
 })
 
 test_that("It should be able to retrieve a standard pk parameter", {
-  pkParameter <- pkAnalyses$pKParameterFor("Organism|VenousBlood|Plasma|Caffeine", "AUC")
+  pkParameter <- pkAnalyses$pKParameterFor("Organism|VenousBlood|Plasma|Caffeine", "AUC_tEnd")
   expect_false(is.null(pkParameter))
 })
 

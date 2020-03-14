@@ -31,3 +31,8 @@ test_that("It can add a multiple parameter paths", {
   sa$addParameterPaths(c("A", "B"))
   expect_identical(sa$parameterPaths, c("A", "B"))
 })
+
+test_that("It can print a sensitivity analysis", {
+  sa <- SensitivityAnalysis$new(simple)
+  expect_error(capture.output(sa$print()), NA)
+})

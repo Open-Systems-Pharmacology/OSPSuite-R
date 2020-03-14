@@ -4,16 +4,34 @@
 \alias{addUserDefinedPKParameter}
 \title{Adds a User-Defined PK-Parameter to the managed list of PK-Parameters}
 \usage{
-addUserDefinedPKParameter(userDefinedPKParameter)
+addUserDefinedPKParameter(
+  name,
+  standardPKParameter,
+  displayName = NULL,
+  displayUnit = NULL
+)
 }
 \arguments{
-\item{userDefinedPKParameter}{User defined PK-Parameter to add}
+\item{name}{Name of the user defined PK-Parameter}
+
+\item{standardPKParameter}{Defined the standard PK-Parameter to use to perform the calculations}
+
+\item{displayName}{Unit in which the value will be exported}
+
+\item{displayUnit}{Display Name to use when exporting the values (optional, default value is name)}
 }
 \description{
 Adds a User-Defined PK-Parameter to the managed list of PK-Parameters
 }
 \examples{
 
-userDefinedPKParameter <- UserDefinedPKParameter$new(name = "MyAUC", standardPKParameter = StandardPKParameter$AucTend)
-addUserDefinedPKParameter(userDefinedPKParameter)
+# Adds a user defined parameter named MyAuc that will calculat the value of AUC between t=50 min and t=80min
+userDefinedPKParameter <- addUserDefinedPKParameter$new(name = "MyAUC", standardPKParameter = StandardPKParameter$AucTend)
+userDefinedPKParameter$startTime <- 50
+userDefinedPKParameter$endTime <- 80
+
+# Adds a user defined parameter named MyCMax that will calculat the value of Cmax between the 4th and 5th application
+userDefinedPKParameter <- addUserDefinedPKParameter$new(name = "MyCMax", standardPKParameter = StandardPKParameter$Cmax)
+userDefinedPKParameter$startApplicationIndex <- 4
+userDefinedPKParameter$endApplicationIndex <- 5
 }

@@ -20,16 +20,6 @@ SensitivityAnalysis <- R6::R6Class(
       methodName <- if (length(parameterPaths) > 1) "AddParameterPaths" else "AddParameterPath"
       rClr::clrCall(obj = self$ref, methodName = methodName, parameterPaths)
       invisible(self)
-    },
-    .addDynamicPKParameters = function(dynamicPKParameters) {
-      dynamicPKParameters <- c(dynamicPKParameters)
-      if (length(dynamicPKParameters) == 0) {
-        return()
-      }
-      for (dynamicPKParameter in dynamicPKParameters) {
-        rClr::clrCall(obj = self$ref, methodName = "AddDynamicPKParameter", dynamicPKParameter$ref)
-      }
-      invisible(self)
     }
   ),
   public = list(
@@ -84,10 +74,6 @@ SensitivityAnalysis <- R6::R6Class(
       private$printLine("Variation range", self$variationRange)
       parameterLength <- length(private$.parameterPaths)
       private$printLine("Number of parameters to vary", if (parameterLength > 0) parameterLength else "Will be estimated at run time")
-      private$printLine("Dynamic PK Parameters:")
-      for (dynamicPkParameter in self$allDynamicPKParameters) {
-        private$printLine(paste("   ", dynamicPkParameter$name))
-      }
       invisible(self)
     }
   ),
@@ -109,11 +95,6 @@ SensitivityAnalysis <- R6::R6Class(
     #' with a value that was overriden by the user
     parameterPaths = function(value) {
       private$readOnlyProperty("parameterPaths", value, private$.parameterPaths)
-    },
-    #' @field allDynamicPKParameters Returns all dynamic PK Parameters defined for the sensitivity analysis
-    allDynamicPKParameters = function(value) {
-      params <- rClr::clrCall(self$ref, "AllDynamicPKParametersAsArray")
-      toObjectType(params, DynamicPKParameter)
     }
   )
 )

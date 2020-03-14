@@ -8,13 +8,11 @@
 Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{UserDefinedPKParameter}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:PKParameter]{ospsuite::PKParameter}} -> \code{UserDefinedPKParameter}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{name}}{Name of the PK-Parameter}
-
 \item{\code{startTime}}{Start time for the calculation of the PK-Parameter.
 If not specified, the time will start at the first time point of the simulation (optional)}
 
@@ -61,18 +59,18 @@ See \code{StandardPKParameter} enum for all possible pk parameters}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{UserDefinedPKParameter$new(ref = NULL, name = NULL, standardPKParameter = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{UserDefinedPKParameter$new(name, standardPKParameter)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ref}}{Reference to the .NET object. If null (default) a new .NET instance will be created}
-
 \item{\code{name}}{Name of the user defined PK-Parameter}
 
 \item{\code{standardPKParameter}}{What PK-Parameter should be used to perform calculation.
 See \code{StandardPKParameter} enum for all possible pk parameters}
+
+\item{\code{ref}}{Reference to the .NET object. If null (default) a new .NET instance will be created}
 }
 \if{html}{\out{</div>}}
 }

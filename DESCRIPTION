@@ -61,6 +61,7 @@ Collate:
     'population-characteristics.R'
     'population.R'
     'printable.R'
+    'quantity-pk-parameter.R'
     'quantity-selection.R'
     'quantity.R'
     'sensitivity-analysis-results.R'

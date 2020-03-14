@@ -1,38 +1,9 @@
-
-#' Standard PK-Parameters defined in OSPSuite
-#'
-#' @include enum.R
-#' @export
-StandardPKParameter <- enum(c(
-  Unknown = 0,
-  Cmax = 1,
-  Cmin = 2,
-  Tmax = 3,
-  Tmin = 4,
-  CTrough = 5,
-  AucTend = 6,
-  AucmTend = 7,
-  AucInf = 8,
-  AucTendInf = 9,
-  Mrt = 10,
-  FractionAucEndToInf = 11,
-  Thalf = 12,
-  Vss = 13,
-  Vd = 14,
-  Tthreshold = 15
-))
-
 #' @title UserDefinedPKParameter
 #' @docType class
 #' @description  Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
-#' @export
 UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
-  inherit = DotNetWrapper,
+  inherit = PKParameter,
   active = list(
-    #' @field name Name of the PK-Parameter
-    name = function(value) {
-      private$wrapProperty("Name", value)
-    },
     #' @field startTime Start time for the calculation of the PK-Parameter.
     #' If not specified, the time will start at the first time point of the simulation (optional)
     startTime = function(value) {
@@ -85,18 +56,13 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
     #' @param standardPKParameter What PK-Parameter should be used to perform calculation.
     #' See \code{StandardPKParameter} enum for all possible pk parameters
     #' @return A new `UserDefinedPKParameter` object.
-    initialize = function(ref = NULL, name = NULL, standardPKParameter = NULL) {
-      validateIsString(name, nullAllowed = TRUE)
-      validateEnumValue(StandardPKParameter, standardPKParameter, nullAllowed = TRUE)
-      ref <- ref %||% rClr::clrNew("OSPSuite.Core.Domain.PKAnalyses.UserDefinedPKParameter")
+    initialize = function(name, standardPKParameter) {
+      validateIsString(name)
+      validateEnumValue(standardPKParameter, StandardPKParameter)
+      ref <- rClr::clrNew("OSPSuite.Core.Domain.PKAnalyses.UserDefinedPKParameter")
       super$initialize(ref)
-      # Because of weird issue with nullable value in rClr
-      if (!is.null(name)) {
-        self$name <- name
-      }
-      if (!is.null(standardPKParameter)) {
-        self$standardPKParameter <- standardPKParameter
-      }
+      self$name <- name
+      self$standardPKParameter <- standardPKParameter
     },
     #' @description
     #' Print the object to the console
@@ -104,6 +70,9 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
     print = function(...) {
       private$printClass()
       private$printLine("Name", self$name)
+      private$printLine("DisplayName", self$displayName)
+      private$printLine("Dimension", self$dimension)
+      private$printLine("DisplayUnit", self$displayUnit)
       private$printLine("StandardPKParameter", getEnumKey(StandardPKParameter, self$standardPKParameter))
       private$printLine("StartTime", self$startTime)
       private$printLine("startTimeOffset", self$startTimeOffset)

@@ -55,7 +55,7 @@ A new \code{SimulationPKAnalyses} object.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParametersFor"></a>}}
 \subsection{Method \code{allPKParametersFor()}}{
-Returns all pK Parameters defined for a given path
+Returns all QuantityPKParameter defined for a given path
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$allPKParametersFor(quantityPath)}\if{html}{\out{</div>}}
 }
