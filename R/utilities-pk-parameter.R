@@ -13,7 +13,7 @@
 #' userDefinedPKParameter$endTime <- 80
 #'
 #' # Adds a user defined parameter named MyCMax that will calculat the value of Cmax between the 4th and 5th application
-#' userDefinedPKParameter <- addUserDefinedPKParameter$new(name = "MyCMax", standardPKParameter = StandardPKParameter$Cmax)
+#' userDefinedPKParameter <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$Cmax)
 #' userDefinedPKParameter$startApplicationIndex <- 4
 #' userDefinedPKParameter$endApplicationIndex <- 5
 #' @export
