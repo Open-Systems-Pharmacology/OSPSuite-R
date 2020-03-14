@@ -26,12 +26,12 @@ Adds a User-Defined PK-Parameter to the managed list of PK-Parameters
 \examples{
 
 # Adds a user defined parameter named MyAuc that will calculat the value of AUC between t=50 min and t=80min
-userDefinedPKParameter <- addUserDefinedPKParameter$new(name = "MyAUC", standardPKParameter = StandardPKParameter$AucTend)
+userDefinedPKParameter <- addUserDefinedPKParameter(name = "MyAUC", standardPKParameter = StandardPKParameter$AucTend)
 userDefinedPKParameter$startTime <- 50
 userDefinedPKParameter$endTime <- 80
 
 # Adds a user defined parameter named MyCMax that will calculat the value of Cmax between the 4th and 5th application
-userDefinedPKParameter <- addUserDefinedPKParameter$new(name = "MyCMax", standardPKParameter = StandardPKParameter$Cmax)
+userDefinedPKParameter <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$Cmax)
 userDefinedPKParameter$startApplicationIndex <- 4
 userDefinedPKParameter$endApplicationIndex <- 5
 }
