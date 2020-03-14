@@ -8,7 +8,7 @@
 #' @examples
 #'
 #' # Adds a user defined parameter named MyAuc that will calculat the value of AUC between t=50 min and t=80min
-#' userDefinedPKParameter <- addUserDefinedPKParameter$new(name = "MyAUC", standardPKParameter = StandardPKParameter$AucTend)
+#' userDefinedPKParameter <- addUserDefinedPKParameter(name = "MyAUC", standardPKParameter = StandardPKParameter$AucTend)
 #' userDefinedPKParameter$startTime <- 50
 #' userDefinedPKParameter$endTime <- 80
 #'
