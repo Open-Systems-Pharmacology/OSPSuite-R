@@ -1,5 +1,16 @@
 library(ospsuite)
 
+#Remove to ensure that we can add the parameters again
+removeAllUserDefinedPKParameters()
+
+pkParameter<- updatePKParameter(name="t_max", displayName = "MyTmax", displayUnit = "min")
+print(pkParameter)
+
+userDefinedPKParameter<- addUserDefinedPKParameter(name = "Test", standardPKParameter = StandardPKParameter$AucTend, displayName = "toto", displayUnit = "mg")
+userDefinedPKParameter$startApplicationIndex
+print(userDefinedPKParameter)
+
+updatePKParameter(name="Test", displayName = "toto", displayUnit = "mg")
 sim <- loadSimulation("inst/extdata/simple.pkml", loadFromCache = FALSE)
 
 outputSelections <- sim$outputSelections
@@ -8,18 +19,11 @@ print(params)
 
 sensitivity <- SensitivityAnalysis$new(sim)
 sensitivity$addParameterPaths("Organism|Liver|Volume")
-dynamicPkParameter <- DynamicPKParameter$new(name = "Test", standardPKParameter = StandardPKParameter$AucTend)
-print(dynamicPkParameter)
-sensitivity$addDynamicPKParameters(dynamicPkParameter)
 
 print(sensitivity)
 
 sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(showProgress = TRUE)
 
-
-
-p <- sensitivity$allDynamicPKParameters
-print(p)
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
 
 exportSensitivityAnalysisResultsToCSV(results, "inst/extdata/sa.csv")
@@ -32,7 +36,7 @@ for (output in outputSelections$allOutputs) {
     print(pkSensitivity)
   }
 
-  pkSensitivities <- results$allPKParameterSensitivitiesFor(pkParameterName = "AUC", outputPath = output$path)
+  pkSensitivities <- results$allPKParameterSensitivitiesFor(pkParameterName = "t_max", outputPath = output$path)
   for (pkSensitivity in pkSensitivities) {
     print(pkSensitivity)
   }

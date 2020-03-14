@@ -94,3 +94,31 @@ allAvailableDimensions <- function() {
   dimensionTask <- getNetTask("DimensionTask")
   rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }
+
+#' Returns the dimension that can be used to support the given unit.
+#' Returns null
+#'
+#' @param unit Unit used to find the corresponding dimension
+#' @examples
+#' dim <- getDimensionForUnit("mg")
+#'
+#' @export
+getDimensionForUnit <- function(unit){
+  validateIsString(unit)
+  unit <- enc2utf8(unit)
+  dimensionTask <- getNetTask("DimensionTask")
+  rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
+}
+
+getDimensionForStandardPKParameter <- function(standardPKParameter){
+  validateEnumValue(standardPKParameter, StandardPKParameter)
+  dimensionTask <- getNetTask("DimensionTask")
+  rClr::clrCall(dimensionTask, "DimensionForStandardPKParameter", as.integer(standardPKParameter))
+}
+
+createUserDefinedDimension <- function(unit){
+  validateIsString(unit)
+  unit <- enc2utf8(unit)
+  dimensionTask <- getNetTask("DimensionTask")
+  rClr::clrCall(dimensionTask, "CreateUserDefinedDimension", unit)
+}

@@ -43,7 +43,7 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
-validateEnumValue <- function(enum, value, nullAllowed = FALSE) {
+validateEnumValue <- function(value, enum, nullAllowed = FALSE) {
   if (nullAllowed && is.null(value)) {
     return()
   }
@@ -93,7 +93,6 @@ validateIsInteger <- function(object, nullAllowed = FALSE) {
 validateIsLogical <- function(object, nullAllowed = FALSE) {
   validateIsOfType(object, "logical", nullAllowed)
 }
-
 
 validateHasUnit <- function(quantity, unit) {
   validateIsOfType(quantity, Quantity)

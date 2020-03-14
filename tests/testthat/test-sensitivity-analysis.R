@@ -26,16 +26,13 @@ test_that("It can add a single parameter path", {
   expect_identical(sa$parameterPaths, c("A"))
 })
 
-
 test_that("It can add a multiple parameter paths", {
   sa <- SensitivityAnalysis$new(simple)
   sa$addParameterPaths(c("A", "B"))
   expect_identical(sa$parameterPaths, c("A", "B"))
 })
 
-test_that("It can add a single dynamic pk Parameters", {
+test_that("It can print a sensitivity analysis", {
   sa <- SensitivityAnalysis$new(simple)
-  pkParameter <- DynamicPKParameter$new(name = "toto", standardPKParameter = StandardPKParameter$Cmax)
-  sa$addDynamicPKParameters(pkParameter)
-  expect_length(sa$allDynamicPKParameters, 1)
+  expect_error(capture.output(sa$print()), NA)
 })

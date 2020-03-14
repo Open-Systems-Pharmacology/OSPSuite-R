@@ -22,7 +22,6 @@ sim <- loadSimulation(simPath)
 
 # Returns the path of all molecules defined in the simulation
 moleculePaths <- getAllContainerPathsIn(sim)
-
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation

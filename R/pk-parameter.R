@@ -1,21 +1,58 @@
+#' Standard PK-Parameters types defined in OSPSuite
+#' This is only used to defined how a user defined PK Parameter should be calculated
+#' @include enum.R
+#' @export
+StandardPKParameter <- enum(c(
+  Unknown = 0,
+  Cmax = 1,
+  Cmin = 2,
+  Tmax = 3,
+  Tmin = 4,
+  CTrough = 5,
+  AucTend = 6,
+  AucmTend = 7,
+  AucInf = 8,
+  AucTendInf = 9,
+  Mrt = 10,
+  FractionAucEndToInf = 11,
+  Thalf = 12,
+  Vss = 13,
+  Vd = 14,
+  Tthreshold = 15
+))
 
 #' @title PKParameter
 #' @docType class
-#' @description  pK-Parameter values for all indiviudals of a simulation (1 or more) calculated for \code{quantityPath}
+#' @description Standard PK Parameters defined in the OSPSuite
 PKParameter <- R6::R6Class("PKParameter",
   inherit = DotNetWrapper,
   active = list(
-    #' @field values All values for \code{quantityPath} and \code{name}
-    values = function(value) {
-      private$wrapReadOnlyProperty("Values", value)
-    },
-    #' @field quantityPath The path of the quantity for which the values were calculated
-    quantityPath = function(value) {
-      private$wrapReadOnlyProperty("QuantityPath", value)
-    },
-    #' @field name The name of the pK-Parameter (AUC, Cmax, Tmax etc...)
+    #' @field name Name of the PK-Parameter
     name = function(value) {
-      private$wrapReadOnlyProperty("Name", value)
+      private$wrapProperty("Name", value)
+    },
+    #' @field displayName Display Name of the PK-Parameter. If not set, Name will be used
+    displayName = function(value) {
+      private$wrapProperty("DisplayName", value)
+    },
+    #' @field dimension Dimension instance used by the PK-Parameter (Read-Only)
+    dimension = function(value){
+      private$readOnlyProperty("Dimension", value, rClr::clrGet(private$.dimension(), "Name"))
+    },
+    #' @field displayUnit Display Unit used for the PK-Parameter
+    displayUnit = function(value) {
+      if (missing(value)) {
+        unit <- rClr::clrGet(self$ref, "DisplayUnit")
+        return(rClr::clrGet(unit, "Name"))
+      }
+
+      displayUnit <- rClr::clrCall(private$.dimension(), "Unit", value)
+      rClr::clrSet(self$ref, "DisplayUnit", displayUnit)
+    }
+  ),
+  private = list(
+    .dimension = function(){
+      rClr::clrGet(self$ref, "Dimension")
     }
   ),
   public = list(
@@ -23,7 +60,11 @@ PKParameter <- R6::R6Class("PKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printLine(self$quantityPath, self$name)
+      private$printClass()
+      private$printLine("Name", self$name)
+      private$printLine("DisplayName", self$displayName)
+      private$printLine("Dimension", self$dimension)
+      private$printLine("DisplayUnit", self$displayUnit)
       invisible(self)
     }
   )

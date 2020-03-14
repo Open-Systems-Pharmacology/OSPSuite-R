@@ -25,5 +25,4 @@ sim <- loadSimulation(simPath)
 tree <- getSimulationTree(sim)
 
 liver_volume_path <- tree$Organism$Liver$Volume$path
-
 }

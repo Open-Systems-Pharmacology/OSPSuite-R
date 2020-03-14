@@ -11,5 +11,4 @@ Returns the name of all available dimensions defined in the OSPSuite platform
 }
 \examples{
 dims <- allAvailableDimensions()
-
 }

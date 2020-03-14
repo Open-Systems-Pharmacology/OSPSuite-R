@@ -58,7 +58,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   }
 
   validateIsOfType(entities, Entity)
-  validateEnumValue(CompareBy, compareBy)
+  validateEnumValue(compareBy, CompareBy)
 
   uniqueEntities <- new.env(parent = emptyenv())
 

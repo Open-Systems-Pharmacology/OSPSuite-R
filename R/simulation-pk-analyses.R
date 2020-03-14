@@ -10,7 +10,7 @@ SimulationPKAnalyses <- R6::R6Class(
   private = list(
     .simulation = NULL,
     toPKParameter = function(netPKParameters) {
-      toObjectType(netPKParameters, PKParameter)
+      toObjectType(netPKParameters, QuantityPKParameter)
     }
   ),
   public = list(
@@ -25,7 +25,7 @@ SimulationPKAnalyses <- R6::R6Class(
       super$initialize(ref)
     },
     #' @description
-    #' Returns all pK Parameters defined for a given path
+    #' Returns all QuantityPKParameter defined for a given path
     #' @param quantityPath Path for which pkParameters should be retrieved
     allPKParametersFor = function(quantityPath) {
       validateIsString(quantityPath)
