@@ -97,6 +97,17 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
     return(pkParameter)
   }
 
-  allPKParameterNames <- rClr::clrCall(pkParameterTask, "AllPKParameterNames")
-  stop(messages$errorPKParameterNotFound(name, allPKParameterNames))
+  stop(messages$errorPKParameterNotFound(name, allPKParameterNames()))
+}
+
+
+#' @title Returns the name of all pk parameters defined in the system
+#'
+#' @examples
+#'
+#' pkParameterNames <- allPKParameterNames()
+#' @export
+allPKParameterNames <- function(){
+  pkParameterTask <- getNetTask("PKParameterTask")
+  rClr::clrCall(pkParameterTask, "AllPKParameterNames")
 }
