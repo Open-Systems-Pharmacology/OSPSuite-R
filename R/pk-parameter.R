@@ -4,21 +4,27 @@
 #' @export
 StandardPKParameter <- enum(c(
   Unknown = 0,
-  Cmax = 1,
-  Cmin = 2,
-  Tmax = 3,
-  Tmin = 4,
-  CTrough = 5,
-  AucTend = 6,
-  AucmTend = 7,
-  AucInf = 8,
-  AucTendInf = 9,
-  Mrt = 10,
-  FractionAucEndToInf = 11,
-  Thalf = 12,
-  Vss = 13,
-  Vd = 14,
-  Tthreshold = 15
+  C_max = 1,
+  C_max_norm = 2,
+  C_min = 3,
+  C_min_norm = 4,
+  t_max = 5,
+  t_min = 6,
+  C_trough = 7,
+  C_trough_norm = 8,
+  AUC_tEnd = 9,
+  AUC_tEnd_norm = 10,
+  AUCM_tEnd = 11,
+  AUC_inf = 12,
+  AUC_inf_norm = 13,
+  AUC_tEnd_inf = 14,
+  AUC_tEnd_inf_norm = 15,
+  MRT = 16,
+  FractionAucEndToInf = 17,
+  Thalf = 18,
+  Vss = 19,
+  Vd = 20,
+  Tthreshold = 21
 ))
 
 #' @title PKParameter
@@ -36,7 +42,7 @@ PKParameter <- R6::R6Class("PKParameter",
       private$wrapProperty("DisplayName", value)
     },
     #' @field dimension Dimension instance used by the PK-Parameter (Read-Only)
-    dimension = function(value){
+    dimension = function(value) {
       private$readOnlyProperty("Dimension", value, rClr::clrGet(private$.dimension(), "Name"))
     },
     #' @field displayUnit Display Unit used for the PK-Parameter
@@ -51,7 +57,7 @@ PKParameter <- R6::R6Class("PKParameter",
     }
   ),
   private = list(
-    .dimension = function(){
+    .dimension = function() {
       rClr::clrGet(self$ref, "Dimension")
     }
   ),
