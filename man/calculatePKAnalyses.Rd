@@ -8,8 +8,6 @@ calculatePKAnalyses(results)
 }
 \arguments{
 \item{results}{Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}}
-
-\item{dynamicPKParameters}{List of dynamic PK Parameters that should be used to calculate PK values (optional)}
 }
 \value{
 A list of QuantityPKParameter (one object for each output-pk parameter combination)

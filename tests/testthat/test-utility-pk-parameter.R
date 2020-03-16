@@ -2,7 +2,7 @@
 context("addUserDefinedPKParameter")
 
 test_that("It can add a user defined pk-parameter by name and type", {
-  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$Tmax)
+  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max)
   expect_equal(userDefinedPKParameter$name, "MyTmax")
   expect_equal(userDefinedPKParameter$displayName, "MyTmax")
   expect_equal(userDefinedPKParameter$dimension, "Time")
@@ -11,7 +11,7 @@ test_that("It can add a user defined pk-parameter by name and type", {
 })
 
 test_that("It can add a user defined pk-parameter with another display unit", {
-  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$Tmax, displayName = "MyTmaxDisplay", displayUnit = "min")
+  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max, displayName = "MyTmaxDisplay", displayUnit = "min")
   expect_equal(userDefinedPKParameter$name, "MyTmax")
   expect_equal(userDefinedPKParameter$displayName, "MyTmaxDisplay")
   expect_equal(userDefinedPKParameter$dimension, "Time")
@@ -21,7 +21,7 @@ test_that("It can add a user defined pk-parameter with another display unit", {
 
 context("updatePKParameter")
 test_that("It can update a pk parameter by name", {
-  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$Tmax, displayName = "MyTmaxDisplay", displayUnit = "min")
+  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max, displayName = "MyTmaxDisplay", displayUnit = "min")
   updatePKParameter("MyTmax", displayName = "TOTO", displayUnit = "h")
   expect_equal(userDefinedPKParameter$displayName, "TOTO")
   expect_equal(userDefinedPKParameter$displayUnit, "h")
@@ -30,7 +30,7 @@ test_that("It can update a pk parameter by name", {
 
 
 test_that("It throws an exception when updating a pkparameter with a unit that does not exist in the dimension", {
-  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$Tmax, displayUnit = "min")
+  userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max, displayUnit = "min")
   expect_that(updatePKParameter("MyTmax",  displayUnit = "mg"), throws_error())
   removeAllUserDefinedPKParameters()
 })
@@ -38,7 +38,7 @@ test_that("It throws an exception when updating a pkparameter with a unit that d
 context("removeAllUserDefinedPKParameters")
 
 test_that("It can remove all user defined pk parameters", {
-  addUserDefinedPKParameter("MyTmax", StandardPKParameter$Tmax, displayName = "MyTmaxDisplay", displayUnit = "min")
+  addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max, displayName = "MyTmaxDisplay", displayUnit = "min")
   pkParam <- pkParameterByName("MyTmax")
   expect_false(is.null(pkParam))
   removeAllUserDefinedPKParameters()
