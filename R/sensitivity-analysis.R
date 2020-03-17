@@ -58,14 +58,6 @@ SensitivityAnalysis <- R6::R6Class(
       invisible(self)
     },
     #' @description
-    #' Adds the dynamicPKParameters to the list of dynamic pk parameters that will be calculated for the sensitivity analysis
-    #' @param dynamicPKParameters Dynamic PK Parameters to add (single or multiple values)
-    addDynamicPKParameters = function(dynamicPKParameters) {
-      validateIsOfType(dynamicPKParameters, DynamicPKParameter)
-      private$.addDynamicPKParameters(dynamicPKParameters)
-      invisible(self)
-    },
-    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
