@@ -30,7 +30,7 @@ with a value that was overriden by the user}
 \itemize{
 \item \href{#method-new}{\code{SensitivityAnalysis$new()}}
 \item \href{#method-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
-\item \href{#method-addDynamicPKParameters}{\code{SensitivityAnalysis$addDynamicPKParameters()}}
+\item \href{#method-clearParameterPaths}{\code{SensitivityAnalysis$clearParameterPaths()}}
 \item \href{#method-print}{\code{SensitivityAnalysis$print()}}
 }
 }
@@ -89,20 +89,13 @@ Adds the parameterPaths to the list of parameter path to vary in the sensitivity
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDynamicPKParameters"></a>}}
-\subsection{Method \code{addDynamicPKParameters()}}{
-Adds the dynamicPKParameters to the list of dynamic pk parameters that will be calculated for the sensitivity analysis
+\if{html}{\out{<a id="method-clearParameterPaths"></a>}}
+\subsection{Method \code{clearParameterPaths()}}{
+Removes all parameter paths defined in the Sensitivity Analysis
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$addDynamicPKParameters(dynamicPKParameters)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$clearParameterPaths()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dynamicPKParameters}}{Dynamic PK Parameters to add (single or multiple values)}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

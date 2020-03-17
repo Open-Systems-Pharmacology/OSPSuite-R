@@ -6,6 +6,8 @@ packages/
 
 temp/
 
+tests/playground/
+
 # Session Data files
 .RData
 

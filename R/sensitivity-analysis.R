@@ -58,11 +58,10 @@ SensitivityAnalysis <- R6::R6Class(
       invisible(self)
     },
     #' @description
-    #' Adds the dynamicPKParameters to the list of dynamic pk parameters that will be calculated for the sensitivity analysis
-    #' @param dynamicPKParameters Dynamic PK Parameters to add (single or multiple values)
-    addDynamicPKParameters = function(dynamicPKParameters) {
-      validateIsOfType(dynamicPKParameters, DynamicPKParameter)
-      private$.addDynamicPKParameters(dynamicPKParameters)
+    #' Removes all parameter paths defined in the Sensitivity Analysis
+    clearParameterPaths = function(){
+      private$.parameterPaths <- NULL
+      rClr::clrCall(self$ref, "ClearParameterPaths")
       invisible(self)
     },
     #' @description
