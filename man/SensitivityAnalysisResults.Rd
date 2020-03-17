@@ -16,6 +16,9 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).}
 
 \item{\code{count}}{the number of pk parameter sensitivity entries}
+
+\item{\code{allPKParameterNames}}{Returns the name of all PK-Parameters available in this results.
+This will be a subset of all potential PK-Parameters available in the system}
 }
 \if{html}{\out{</div>}}
 }

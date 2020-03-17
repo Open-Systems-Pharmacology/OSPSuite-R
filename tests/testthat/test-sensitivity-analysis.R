@@ -26,6 +26,16 @@ test_that("It can add a single parameter path", {
   expect_identical(sa$parameterPaths, c("A"))
 })
 
+test_that("It can clear the parameters added to a SA", {
+  sa <- SensitivityAnalysis$new(simple)
+  sa$addParameterPaths("A")
+  sa$clearParameterPaths()
+  expect_length(sa$parameterPaths, 0)
+  sa$addParameterPaths("A")
+  expect_length(sa$parameterPaths, 1)
+})
+
+
 test_that("It can add a multiple parameter paths", {
   sa <- SensitivityAnalysis$new(simple)
   sa$addParameterPaths(c("A", "B"))

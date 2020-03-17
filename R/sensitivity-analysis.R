@@ -58,6 +58,13 @@ SensitivityAnalysis <- R6::R6Class(
       invisible(self)
     },
     #' @description
+    #' Removes all parameter paths defined in the Sensitivity Analysis
+    clearParameterPaths = function(){
+      private$.parameterPaths <- NULL
+      rClr::clrCall(self$ref, "ClearParameterPaths")
+      invisible(self)
+    },
+    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {

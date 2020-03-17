@@ -30,6 +30,7 @@ with a value that was overriden by the user}
 \itemize{
 \item \href{#method-new}{\code{SensitivityAnalysis$new()}}
 \item \href{#method-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
+\item \href{#method-clearParameterPaths}{\code{SensitivityAnalysis$clearParameterPaths()}}
 \item \href{#method-print}{\code{SensitivityAnalysis$print()}}
 }
 }
@@ -86,6 +87,15 @@ Adds the parameterPaths to the list of parameter path to vary in the sensitivity
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clearParameterPaths"></a>}}
+\subsection{Method \code{clearParameterPaths()}}{
+Removes all parameter paths defined in the Sensitivity Analysis
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$clearParameterPaths()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

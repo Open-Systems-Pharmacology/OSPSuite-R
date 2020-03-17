@@ -123,6 +123,27 @@
         <Unit name="pmol*min/l" factor="1E-6" />
       </Units>
     </Dimension>
+    <Dimension name="AUCM (molar)" baseUnit="µmol*min²/l">
+      <BaseRepresentation lengthExponent="-3" massExponent="0" timeExponent="2" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="mmol*h²/ml" factor="36E8" />
+        <Unit name="µmol*h²/ml" factor="36E5" />
+        <Unit name="nmol*h²/ml" factor="36E2" />
+        <Unit name="pmol*h²/ml" factor="36E-1" />
+        <Unit name="mmol*h²/l" factor="36E5" />
+        <Unit name="µmol*h²/l" factor="36E2" />
+        <Unit name="nmol*h²/l" factor="36E-1" />
+        <Unit name="pmol*h²/l" factor="36E-4" />
+        <Unit name="mmol*min²/ml" factor="1E6" />
+        <Unit name="µmol*min²/ml" factor="1E3" />
+        <Unit name="nmol*min²/ml" factor="1" />
+        <Unit name="pmol*min²/ml" factor="1E-3" />
+        <Unit name="µmol*min²/l" factor="1" />
+        <Unit name="mmol*min²/l" factor="1E3" />
+        <Unit name="nmol*min²/l" factor="1E-3" />
+        <Unit name="pmol*min²/l" factor="1E-6" />
+      </Units>
+    </Dimension>
     <Dimension name="BMI" baseUnit="kg/dm²" defaultUnit="kg/m²">
       <BaseRepresentation lengthExponent="-2" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>

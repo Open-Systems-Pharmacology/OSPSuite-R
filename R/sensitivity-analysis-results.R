@@ -18,6 +18,11 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @field count the number of pk parameter sensitivity entries
     count = function(value) {
       private$wrapReadOnlyProperty("Count", value)
+    },
+    #' @field allPKParameterNames Returns the name of all PK-Parameters available in this results.
+    #' This will be a subset of all potential PK-Parameters available in the system
+    allPKParameterNames = function(value) {
+      private$wrapReadOnlyProperty("AllPKParameterNames", value)
     }
   ),
   public = list(
