@@ -38,7 +38,6 @@
 loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
   validateIsLogical(c(loadFromCache, addToCache))
   validateIsString(filePath)
-
   if (loadFromCache) {
     # If the file has already been loaded, return the last loaded object
     if (ospsuiteEnv$loadedSimulationsCache$hasKey(filePath)) {

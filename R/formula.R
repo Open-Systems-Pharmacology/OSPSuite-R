@@ -13,6 +13,14 @@ Formula <- R6::R6Class(
     isTable = function(value) {
       private$wrapExtensionMethod(FormulaExtensions, "IsTable")
     },
+    #' @field isTableWithOffSet Is this a table formula with Offset (Read-Only)
+    isTableWithOffSet = function(value) {
+      private$wrapExtensionMethod(FormulaExtensions, "IsTableWithOffSet")
+    },
+    #' @field isTableWithXArgument Is this a table formula with xArgs (typically time, or pH) (Read-Only)
+    isTableWithXArgument = function(value) {
+      private$wrapExtensionMethod(FormulaExtensions, "IsTableWithXArgument")
+    },
     #' @field isConstant Is this a constant formula (Read-Only)
     isConstant = function(value) {
       private$wrapExtensionMethod(FormulaExtensions, "IsConstant")
@@ -64,6 +72,12 @@ Formula <- R6::R6Class(
       }
       else if (self$isDistributed) {
         private$printLine("isDistributed", TRUE)
+      }
+      else if (self$isTableWithOffSet) {
+        private$printLine("isTableWithOffSet", TRUE)
+      }
+      else if (self$isTableWithXArgument) {
+        private$printLine("isTableWithXArgument", TRUE)
       }
       invisible(self)
     }

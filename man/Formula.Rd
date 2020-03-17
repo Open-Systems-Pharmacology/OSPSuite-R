@@ -18,6 +18,10 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \describe{
 \item{\code{isTable}}{Is this a table formula (Read-Only)}
 
+\item{\code{isTableWithOffSet}}{Is this a table formula with Offset (Read-Only)}
+
+\item{\code{isTableWithXArgument}}{Is this a table formula with xArgs (typically time, or pH) (Read-Only)}
+
 \item{\code{isConstant}}{Is this a constant formula (Read-Only)}
 
 \item{\code{isExplicit}}{Is this an explicit formula (Read-Only)}
