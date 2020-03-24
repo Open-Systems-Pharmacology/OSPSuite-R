@@ -13,6 +13,10 @@ initPKSim <- function(pksimFolderPath = NULL) {
   }
 
   pksimFolderPath <- pksimFolderPath %||% .getPathToPKSimInstallDir()
+  if(is.na(pksimFolderPath)){
+    stop(messages$pkSimInstallPathNotFound())
+  }
+
   .addPathToSystemPath(pksimFolderPath)
   pksimR <- file.path(pksimFolderPath, "PKSim.R.dll")
   if (!file.exists(pksimR)) {
@@ -156,7 +160,6 @@ initPKSim <- function(pksimFolderPath = NULL) {
                                       base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.path <- .getPathToPKSimInstallDirFromRegistry(pksim.version)
   if (!is.na(pksim.path)) {
-    print(pksim.path)
     return(pksim.path)
   }
 

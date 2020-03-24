@@ -79,6 +79,10 @@ messages <- list(
 
   pkSimRPathInvalid = function(pksimPath) {
     paste0("Path to PKSim.R.dll '", pksimPath, "' is invalid.")
+  },
+
+  pkSimInstallPathNotFound = function() {
+    paste0("Could not find an installation of PK-Sim on the machine. Please install the OSPSuite or use 'initPKSim()' to specify the installation path")
   }
 )
 

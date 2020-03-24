@@ -69,11 +69,10 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
   dataFrame <- tryCatch({
     exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
     pkResultsDataFrame <- read.csv(pkParameterResultsFilePath, encoding = "UTF-8", check.names = FALSE)
-    colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit", "Display")
+    colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
     pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
     pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
     pkResultsDataFrame$Unit <- as.factor(pkResultsDataFrame$Unit)
-    pkResultsDataFrame$Display <- as.factor(pkResultsDataFrame$Display)
     return(pkResultsDataFrame)
   },
   finally = {
