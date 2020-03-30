@@ -101,24 +101,10 @@ allAvailableDimensions <- function() {
 #' @param unit Unit used to find the corresponding dimension
 #' @examples
 #' dim <- getDimensionForUnit("mg")
-#'
 #' @export
-getDimensionForUnit <- function(unit){
+getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- enc2utf8(unit)
   dimensionTask <- getNetTask("DimensionTask")
   rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
-}
-
-getDimensionForStandardPKParameter <- function(standardPKParameter){
-  validateEnumValue(standardPKParameter, StandardPKParameter)
-  dimensionTask <- getNetTask("DimensionTask")
-  rClr::clrCall(dimensionTask, "DimensionForStandardPKParameter", as.integer(standardPKParameter))
-}
-
-createUserDefinedDimension <- function(unit){
-  validateIsString(unit)
-  unit <- enc2utf8(unit)
-  dimensionTask <- getNetTask("DimensionTask")
-  rClr::clrCall(dimensionTask, "CreateUserDefinedDimension", unit)
 }

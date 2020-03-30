@@ -10,16 +10,16 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param numberOfCoresToUse Number of cores to use for the simulation. Default value is `ospsuiteEnv$numberOfCoresToUse`
+    #' @param numberOfCores Number of cores to use for the simulation. Default value is `ospsuiteEnv$numberOfCores`
     #' @param showProgress Should a progress information be displayed. Default value is `ospsuiteEnv$showProgress`
     #' @return A new `SensitivityAnalysisRunOptions` object.
-    initialize = function(numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
+    initialize = function(numberOfCores = ospsuiteEnv$numberOfCores,
                               showProgress = ospsuiteEnv$showProgress) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
       super$initialize(ref)
 
-      if (!is.null(numberOfCoresToUse)) {
-        self$numberOfCoresToUse <- numberOfCoresToUse
+      if (!is.null(numberOfCores)) {
+        self$numberOfCores <- numberOfCores
       }
       if (!is.null(showProgress)) {
         self$showProgress <- showProgress
@@ -30,14 +30,14 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
-      private$printLine("Number of cores to use", self$numberOfCoresToUse)
-      private$printLine("Show progress bar", self$showProgress)
+      private$printLine("numberOfCores", self$numberOfCores)
+      private$printLine("showProgress", self$showProgress)
       invisible(self)
     }
   ),
   active = list(
-    #' @field numberOfCoresToUse (Maximal) number of cores to be used. Per default set to \code{ospsuiteEnv$numberOfCoresToUse}.
-    numberOfCoresToUse = function(value) {
+    #' @field numberOfCores (Maximal) number of cores to be used. Per default set to \code{ospsuiteEnv$numberOfCores}.
+    numberOfCores = function(value) {
       private$wrapIntegerProperty("NumberOfCoresToUse", value)
     },
     #' @field showProgress  Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{ospsuiteEnv$showProgress}.

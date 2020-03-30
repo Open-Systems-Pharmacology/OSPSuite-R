@@ -20,7 +20,7 @@ ospsuiteEnv$formatNumericsDigits <- 5
 ospsuiteEnv$formatNumericsSmall <- 2
 
 # Number of cores to use for simualtions and sensitivity. Default to number of cores on the machine - 1
-ospsuiteEnv$numberOfCoresToUse <- parallel::detectCores() - 1
+ospsuiteEnv$numberOfCores <- parallel::detectCores() - 1
 
 # Specificies the default behavior fo progress visualization. By default FALSE
 ospsuiteEnv$showProgress <- FALSE

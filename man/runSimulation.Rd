@@ -29,7 +29,7 @@ results <- runSimulation(sim)
 # Creating custom simulation run options
 
 simRunOptions <- SimulationRunOptions$new()
-simRunOptions$numberOfCoresToUse <- 3
+simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Running a population simulation

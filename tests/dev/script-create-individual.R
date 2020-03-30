@@ -1,7 +1,7 @@
 # Create Individual example.
 # Assuming PKSim installed
 
-#initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
+# initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 
 #
 # individualCharacteristics <- IndividualCharacteristics$new()

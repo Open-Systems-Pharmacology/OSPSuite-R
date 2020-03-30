@@ -68,7 +68,7 @@ exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget"
 
 # print(population)
 #
-simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
+simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
 #
 # individualResults <- runSimulation(sim)
 # paths <- individualResults$allQuantityPaths

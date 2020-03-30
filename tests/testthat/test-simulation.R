@@ -1,5 +1,6 @@
 context("Simulation")
 
+quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 sim <- loadTestSimulation("S1")
 
 test_that("It can retrieve the file source of the simulation", {
@@ -33,4 +34,14 @@ test_that("It can retrieve the name of all endogenous stationary molecules used 
 test_that("It can retrieve the name of all xenobiotic floating molecule used in the model", {
   molecules <- sim$allXenobioticFloatingMoleculeNames()
   expect_equal(molecules, c("Caffeine"))
+})
+
+test_that("It can retrieve the mol weight of a valid quantity path", {
+  molWeight <- sim$molWeightFor(quantityPath)
+  expect_equal(molWeight, 1.942e-07)
+})
+
+test_that("It returns NA if the path is not valid for mol weight", {
+  molWeight <- sim$molWeightFor("A|B|c")
+  expect_true(is.na(molWeight))
 })

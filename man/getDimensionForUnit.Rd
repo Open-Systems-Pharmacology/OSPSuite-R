@@ -16,5 +16,4 @@ Returns null
 }
 \examples{
 dim <- getDimensionForUnit("mg")
-
 }

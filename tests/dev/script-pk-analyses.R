@@ -1,51 +1,36 @@
 library(ospsuite)
 
+# Remove to ensure that we can add the parameters again
+removeAllUserDefinedPKParameters()
+
+pkParameter <- updatePKParameter(name = "t_max", displayName = "MyTmax", displayUnit = "min")
+print(pkParameter)
+
+pkParameter <- updatePKParameter(name = "C_max", displayName = "MyCMax", displayUnit = "mg/ml")
+print(pkParameter)
+
+userDefinedPKParameter <- addUserDefinedPKParameter(name = "Test", standardPKParameter = StandardPKParameter$AUC_tEnd, displayName = "toto", displayUnit = "mg")
+userDefinedPKParameter$normalizationFactor <- 100
+
+quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+
 sim <- loadSimulation("tests/data/S1.pkml")
+toto <- sim$molWeightFor(quantityPath)
 
 population <- loadPopulation("tests/data/pop_10.csv")
-
-simRunOptions <- SimulationRunOptions$new(numberOfCoresToUse = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
-
-
+simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
 populationResults <- runSimulation(sim, population, simRunOptions)
-
 populationPkAnalyses <- calculatePKAnalyses(populationResults)
+df <- pkAnalysesAsDataFrame(populationPkAnalyses)
 
 exportPKAnalysesToCSV(populationPkAnalyses, "C:/temp/export/pk.csv")
-
-
 newPKAnalyses <- importPKAnalysesFromCSV("C:/temp/export/pk.csv", sim)
-
 df <- pkAnalysesAsDataFrame(newPKAnalyses)
 
+pkParameters <- populationPkAnalyses$allPKParametersFor(quantityPath)
 
-tree <- exploreSimulation(sim)
-path <- tree$Organism$Kidney$Interstitial$pH$path
+for (pkParameter in pkParameters) {
+  print(pkParameter)
+}
 
-
-#
-# pkParameters <- pkAnalyses$allPKParametersFor("Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)")
-#
-# for (pkParameter in pkParameters) {
-#   print(pkParameter)
-# }
-#
-#
-# pkParam <- pkParameters[[2]]
-#
-# val <- pkParam$values
-# getPkAnalysis(results)
-
-
-# individualResults <- results[[1]]
-#
-# time <- rClr::clrGet(individualResults, "Time")
-#
-# allValues <- rClr::clrCall(individualResults, "ValuesAsArray")
-#
-# firstOutput <- allValues[[1]]
-# path <- rClr::clrGet(firstOutput, "QuantityPath")
-# values <- rClr::clrGet(firstOutput, "Values")
-
-
-# saveSimulation(sim, "c:/temp/export/toto.xml")
+allPKParameterNames()

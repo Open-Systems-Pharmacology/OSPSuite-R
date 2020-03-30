@@ -13,7 +13,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
   }
 
   pksimFolderPath <- pksimFolderPath %||% .getPathToPKSimInstallDir()
-  if(is.na(pksimFolderPath)){
+  if (is.na(pksimFolderPath)) {
     stop(messages$pkSimInstallPathNotFound())
   }
 

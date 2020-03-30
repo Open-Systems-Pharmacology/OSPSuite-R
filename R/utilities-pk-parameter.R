@@ -22,24 +22,12 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateEnumValue(standardPKParameter, StandardPKParameter)
   validateIsString(displayName, nullAllowed = TRUE)
   validateIsString(displayUnit, nullAllowed = TRUE)
-  userDefinedPKParameter <- UserDefinedPKParameter$new(name = name, standardPKParameter = standardPKParameter)
 
-  dimension <- NULL
-  if (!is.null(displayUnit)) {
-    dimension <- getDimensionForUnit(displayUnit)
-    if (is.null(dimension)) {
-      # we have a display unit and a dimension that is not found, this will be a user defiend dimension
-      dimension <- createUserDefinedDimension(displayUnit)
-    }
-  }
-  else {
-    dimension <- getDimensionForStandardPKParameter(standardPKParameter)
-  }
-
-  rClr::clrSet(userDefinedPKParameter$ref, "Dimension", dimension)
   pkParameterTask <- getNetTask("PKParameterTask")
-  rClr::clrCall(pkParameterTask, "AddUserDefinedPKParameter", userDefinedPKParameter$ref)
-  .updatePKParameterProperties(userDefinedPKParameter, displayName, displayUnit)
+  netUserDefinedPKParameter <- rClr::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName %||% "", displayUnit %||% "")
+  userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
+  rClr::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
+  return(userDefinedPKParameter)
 }
 
 #' @title Removes all User-Defined PK-Parameters that may have been added to the system
@@ -107,7 +95,7 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
 #'
 #' pkParameterNames <- allPKParameterNames()
 #' @export
-allPKParameterNames <- function(){
+allPKParameterNames <- function() {
   pkParameterTask <- getNetTask("PKParameterTask")
   rClr::clrCall(pkParameterTask, "AllPKParameterNames")
 }

@@ -47,13 +47,7 @@ PKParameter <- R6::R6Class("PKParameter",
     },
     #' @field displayUnit Display Unit used for the PK-Parameter
     displayUnit = function(value) {
-      if (missing(value)) {
-        unit <- rClr::clrGet(self$ref, "DisplayUnit")
-        return(rClr::clrGet(unit, "Name"))
-      }
-
-      displayUnit <- rClr::clrCall(private$.dimension(), "Unit", value)
-      rClr::clrSet(self$ref, "DisplayUnit", displayUnit)
+      private$wrapProperty("DisplayUnit", value)
     }
   ),
   private = list(

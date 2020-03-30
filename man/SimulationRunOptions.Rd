@@ -13,8 +13,8 @@ Options to be passed to the simulation engine
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
-Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
+\item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
+Default is \code{ospsuiteEnv$numberOfCores}.}
 
 \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
 
@@ -41,7 +41,7 @@ Default is \code{ospsuiteEnv$numberOfCoresToUse}.}
 Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$new(
-  numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
+  numberOfCores = ospsuiteEnv$numberOfCores,
   checkForNegativeValues = TRUE,
   showProgress = ospsuiteEnv$showProgress
 )}\if{html}{\out{</div>}}
@@ -50,7 +50,7 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{numberOfCoresToUse}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCoresToUse}}
+\item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCores}}
 
 \item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
 
