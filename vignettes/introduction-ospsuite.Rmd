@@ -243,7 +243,7 @@ simRunOptions <- SimulationRunOptions$new()
 print(simRunOptions)
 
 # Change the maximal number of cores to use and show a progress bar during simulation
-simRunOptions$numberOfCoresToUse <- 3
+simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with cutom options
