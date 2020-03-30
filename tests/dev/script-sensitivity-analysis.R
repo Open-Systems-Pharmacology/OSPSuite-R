@@ -1,16 +1,19 @@
 library(ospsuite)
 
-#Remove to ensure that we can add the parameters again
+# Remove to ensure that we can add the parameters again
 removeAllUserDefinedPKParameters()
 
-pkParameter<- updatePKParameter(name="t_max", displayName = "MyTmax", displayUnit = "min")
+pkParameter <- updatePKParameter(name = "t_max", displayName = "MyTmax", displayUnit = "min")
 print(pkParameter)
 
-userDefinedPKParameter<- addUserDefinedPKParameter(name = "Test", standardPKParameter = StandardPKParameter$AucTend, displayName = "toto", displayUnit = "mg")
+pkParameter <- updatePKParameter(name = "C_max", displayName = "MyCMax", displayUnit = "mg/ml")
+print(pkParameter)
+
+userDefinedPKParameter <- addUserDefinedPKParameter(name = "Test", standardPKParameter = StandardPKParameter$AUC_tEnd, displayName = "toto", displayUnit = "mg")
 userDefinedPKParameter$startApplicationIndex
 print(userDefinedPKParameter)
 
-updatePKParameter(name="Test", displayName = "toto", displayUnit = "mg")
+updatePKParameter(name = "Test", displayName = "toto", displayUnit = "mg")
 sim <- loadSimulation("inst/extdata/simple.pkml", loadFromCache = FALSE)
 
 outputSelections <- sim$outputSelections

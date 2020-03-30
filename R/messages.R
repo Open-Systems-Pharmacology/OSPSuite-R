@@ -66,15 +66,19 @@ messages <- list(
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
   errorValueNotInEnum = function(enum, value) {
-    paste0("Value '", value, "' is not in defined enumeration values: '", paste0(enum, collapse = ", "), "'.")
+    paste0("Value '", value, "' is not in defined enumeration values: '", paste0(names(enum), collapse = ", "), "'.")
+  },
+
+  errorEnumValueUndefined = function(enum) {
+    paste0("Provided value is not in defined enumeration values: '", paste0(names(enum), collapse = ", "), "'.")
   },
 
   errorUnitNotDefined = function(quantityName, dimension, unit) {
     paste0("Unit '", unit, "' is not defined in dimension '", dimension, "' used by '", quantityName, "'.")
   },
 
-  errorPKParameterNotFound = function(pkParameterName, allPKParameterNames){
-    paste0("PK-Parameter '", pkParameterName, "' not found.\nAvailable PK-Parameters are:\n",  paste0(allPKParameterNames, collapse = ", "))
+  errorPKParameterNotFound = function(pkParameterName, allPKParameterNames) {
+    paste0("PK-Parameter '", pkParameterName, "' not found.\nAvailable PK-Parameters are:\n", paste0(allPKParameterNames, collapse = ", "))
   },
 
   pkSimRPathInvalid = function(pksimPath) {

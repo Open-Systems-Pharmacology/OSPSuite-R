@@ -37,6 +37,7 @@ An OSPSuite simulation
 \item \href{#method-allXenobioticFloatingMoleculeNames}{\code{Simulation$allXenobioticFloatingMoleculeNames()}}
 \item \href{#method-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
 \item \href{#method-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
+\item \href{#method-molWeightFor}{\code{Simulation$molWeightFor()}}
 \item \href{#method-print}{\code{Simulation$print()}}
 }
 }
@@ -104,6 +105,22 @@ Returns the name of all floating molecules defined in the simulation. (e.g. with
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allFloatingMoleculeNames()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-molWeightFor"></a>}}
+\subsection{Method \code{molWeightFor()}}{
+Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$molWeightFor(quantityPath)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quantityPath}}{Path of quantity used to retrieve the molecular weight}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

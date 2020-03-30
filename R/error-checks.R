@@ -48,6 +48,10 @@ validateEnumValue <- function(value, enum, nullAllowed = FALSE) {
     return()
   }
 
+  if (is.null(value)) {
+    stop(messages$errorEnumValueUndefined(enum))
+  }
+
   enumKey <- getEnumKey(enum, value)
   if (enumKey %in% names(enum)) {
     return()

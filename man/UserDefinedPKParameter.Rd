@@ -43,7 +43,6 @@ See \code{StandardPKParameter} enum for all possible pk parameters}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{UserDefinedPKParameter$new()}}
 \item \href{#method-print}{\code{UserDefinedPKParameter$print()}}
 \item \href{#method-clone}{\code{UserDefinedPKParameter$clone()}}
 }
@@ -51,32 +50,9 @@ See \code{StandardPKParameter} enum for all possible pk parameters}
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
 }
 \out{</details>}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{UserDefinedPKParameter$new(name, standardPKParameter)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name of the user defined PK-Parameter}
-
-\item{\code{standardPKParameter}}{What PK-Parameter should be used to perform calculation.
-See \code{StandardPKParameter} enum for all possible pk parameters}
-
-\item{\code{ref}}{Reference to the .NET object. If null (default) a new .NET instance will be created}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{UserDefinedPKParameter} object.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

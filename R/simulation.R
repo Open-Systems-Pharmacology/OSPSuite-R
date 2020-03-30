@@ -81,6 +81,15 @@ Simulation <- R6::R6Class(
       rClr::clrCall(private$.buildConfiguration, "AllPresentFloatingMoleculeNames")
     },
     #' @description
+    #' Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
+    #' @param quantityPath Path of quantity used to retrieve the molecular weight
+    molWeightFor = function(quantityPath) {
+      validateIsString(quantityPath)
+      mw <- rClr::clrCall(self$ref, "MolWeightFor", quantityPath)
+      mw %||% NA
+    },
+
+    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {

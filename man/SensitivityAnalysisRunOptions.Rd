@@ -13,7 +13,7 @@ Options to be passed to the sensitivity analysis engine
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{numberOfCoresToUse}}{(Maximal) number of cores to be used. Per default set to \code{ospsuiteEnv$numberOfCoresToUse}.}
+\item{\code{numberOfCores}}{(Maximal) number of cores to be used. Per default set to \code{ospsuiteEnv$numberOfCores}.}
 
 \item{\code{showProgress}}{Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{ospsuiteEnv$showProgress}.}
 }
@@ -38,7 +38,7 @@ Options to be passed to the sensitivity analysis engine
 Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisRunOptions$new(
-  numberOfCoresToUse = ospsuiteEnv$numberOfCoresToUse,
+  numberOfCores = ospsuiteEnv$numberOfCores,
   showProgress = ospsuiteEnv$showProgress
 )}\if{html}{\out{</div>}}
 }
@@ -46,7 +46,7 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{numberOfCoresToUse}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCoresToUse}}
+\item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{ospsuiteEnv$numberOfCores}}
 
 \item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{ospsuiteEnv$showProgress}}
 }
