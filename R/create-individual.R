@@ -19,8 +19,8 @@ createIndividual <- function(individualCharacteristics) {
   distributedParameters <- getPropertyValue(createIndividualResults, "DistributedParameters")
   derivedParameters <- getPropertyValue(createIndividualResults, "DerivedParameters")
 
-  distributedParameters <- parameterValueListFrom(distributedParameters)
-  derivedParameters <- parameterValueListFrom(derivedParameters)
+  distributedParameters <- parameterValueListFrom(distributedParameters, addUnits = TRUE)
+  derivedParameters <- parameterValueListFrom(derivedParameters, addUnits = TRUE)
 
   list(distributedParameters = distributedParameters, derivedParameters = derivedParameters)
 }
@@ -41,6 +41,7 @@ createDistributions <- function(individualCharacteristics) {
   list(
     paths = getPropertyValues(distributedParameters, "ParameterPath"),
     values = getPropertyValues(distributedParameters, "Value"),
+    units = getPropertyValues(distributedParameters, "Unit"),
     means = getPropertyValues(distributedParameters, "Mean"),
     stds = getPropertyValues(distributedParameters, "Std"),
     distributionTypes = getPropertyValues(getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
