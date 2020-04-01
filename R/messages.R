@@ -63,6 +63,8 @@ messages <- list(
     paste0("Property '$", propertyName, "' is readonly")
   },
 
+  errorCannotSetRHSFormula = "Creating a RHS Formula is not supported at the moment. This should be done in MoBi.",
+
   errorEnumNotAllNames = "The enumValues has some but not all names assigned. They must be all assigned or none assigned",
 
   errorValueNotInEnum = function(enum, value) {
@@ -85,9 +87,7 @@ messages <- list(
     paste0("Path to PKSim.R.dll '", pksimPath, "' is invalid.")
   },
 
-  pkSimInstallPathNotFound = function() {
-    paste0("Could not find an installation of PK-Sim on the machine. Please install the OSPSuite or use 'initPKSim()' to specify the installation path")
-  }
+  pkSimInstallPathNotFound = "Could not find an installation of PK-Sim on the machine. Please install the OSPSuite or use 'initPKSim()' to specify the installation path"
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,
