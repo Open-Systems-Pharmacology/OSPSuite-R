@@ -11,6 +11,7 @@ volumeParameter <- getParameter(volumePath, sim)
 formulaParameter <- getParameter("Organism|Weight", sim)
 constantParameter <- getParameter("Organism|Age", sim)
 tableParameter <- getParameter("Organism|TableParameter", simple)
+rhsParameter <- getParameter("Organism|RHSParameter", simple)
 
 test_that("It can retrieve name of a parameter", {
   par <- getParameter(toPathString(c(liverPathArray, "Blood flow rate")), sim)
@@ -99,7 +100,6 @@ test_that("It can retrieve the display unit of a parameter", {
   expect_equal(volumeParameter$displayUnit, "l")
 })
 
-
 test_that("It can set a value in another unit and the value will be updated as expected", {
   volumeParameter$setValue(1, "l")
   expect_equal(volumeParameter$value, 1)
@@ -121,12 +121,51 @@ test_that("It throws an exception when setting a value in a unit that does not e
   expect_that(volumeParameter$setValue(1, "kg"), throws_error())
 })
 
-
 test_that("it can retrieve all units defined for a quantity", {
   par <- getParameter(volumePath, sim)
   expect_identical(par$allUnits, c("l", "ml", "µl"))
 })
 
-test_that("It can print parameter", {
-  expect_error(capture.output(volumeParameter$print()), NA)
+test_that("It can retrieve RHS parameter and returns NULL if the parameter has no RHS", {
+  par <- getParameter(volumePath, sim)
+  expect_null(par$rhsFormula)
 })
+
+test_that("isStateVariable returns false if the parameter has no RHS Formula", {
+  par <- getParameter(volumePath, sim)
+  expect_false(par$isStateVariable)
+})
+
+test_that("isStateVariable returns true if the parameter has a RHS Formula ", {
+  expect_true(rhsParameter$isStateVariable)
+})
+
+test_that("It can retrieve RHS parameter and returns a formula if the parameter has a  RHS", {
+  expect_false(is.null(rhsParameter$rhsFormula))
+})
+
+test_that("It can set the isStateVariable to false for a parameter without RHS", {
+  par <- getParameter(volumePath, sim)
+  par$isStateVariable <- FALSE
+  expect_false(par$isStateVariable)
+  expect_null(par$rhsFormula)
+})
+
+test_that("It throws an exception when setting the isStateVariable to true for a parameter that has no state variable", {
+  par <- getParameter(volumePath, sim)
+  expect_that(par$isStateVariable <- TRUE, throws_error())
+})
+
+test_that("It can set the isStateVariable to true for a parameter with RHS", {
+  rhsParameter$isStateVariable <- TRUE
+  expect_true(rhsParameter$isStateVariable)
+  expect_false(is.null(rhsParameter$rhsFormula))
+})
+
+test_that("It can set the isStateVariable to false for a parameter with RHS", {
+  rhsParameter$isStateVariable <- FALSE
+  expect_false(rhsParameter$isStateVariable)
+  expect_null(rhsParameter$rhsFormula)
+})
+
+

@@ -2,16 +2,20 @@
 % Please edit documentation in R/utilities-parameter-value.R
 \name{parameterValueListFrom}
 \alias{parameterValueListFrom}
-\title{Converts a list of .NET \code{ParameterValue} into a list with 3 entries: \code{paths}, \code{values}, and \code{percentiles}.}
+\title{Converts a list of .NET \code{ParameterValue} into a list with 2 entries: \code{paths}, \code{values}.
+A 3rd optional entry \code{units} will be defined if the parameter `addUnits`` is set to \code{TRUE}.
+Note: Untis are only available for .NET object of type \code{ParameterValueWithUnit}}
 \usage{
-parameterValueListFrom(netParameterValues)
+parameterValueListFrom(netParameterValues, addUnits = FALSE)
 }
 \arguments{
-\item{netParameterValues}{List of.NET \code{ParameterValue}}
+\item{netParameterValues}{List of.NET \code{ParameterValue} or \code{ParameterValueWithUnit}}
 }
 \value{
-A list with 3 sublist: \code{paths}, \code{values}, and \code{percentiles} containing the corresponding values from each parameter value
+A list with 3 sublist: \code{paths}, \code{values}, and optionally \code{units} containing the corresponding values from each parameter value
 }
 \description{
-Converts a list of .NET \code{ParameterValue} into a list with 3 entries: \code{paths}, \code{values}, and \code{percentiles}.
+Converts a list of .NET \code{ParameterValue} into a list with 2 entries: \code{paths}, \code{values}.
+A 3rd optional entry \code{units} will be defined if the parameter `addUnits`` is set to \code{TRUE}.
+Note: Untis are only available for .NET object of type \code{ParameterValueWithUnit}
 }
