@@ -52,7 +52,7 @@ SimulationResults <- R6::R6Class(
       individualIds <- c(individualIds)
       values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
 
-      if (unique(is.nan(values)) && stopIfNotFound) {
+      if (all(is.nan(values)) && stopIfNotFound) {
         stop(messages$errorResultNotFound(path, individualIds))
       }
 
