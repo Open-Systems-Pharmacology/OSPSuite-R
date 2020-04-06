@@ -72,7 +72,7 @@ getParameter <- function(path, container, stopIfNotFound = TRUE) {
 #'
 #' @param values A numeric value that should be assigned to the parameter or a vector
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
-#' length as 'parameters'
+#' length as 'parameters'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
 #'
 #' @examples
 #'

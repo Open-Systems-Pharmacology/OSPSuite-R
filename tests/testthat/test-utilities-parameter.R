@@ -117,6 +117,14 @@ test_that("It can set the values of multiple parameters", {
   expect_equal(newVals, c(1:6))
 })
 
+test_that("It can set a single values in multiple parameters", {
+  parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
+  setParameterValues(parameters, 10)
+  newVals <- sapply(parameters, function(x) {
+    x$value
+  })
+  expect_equal(newVals, rep(10, 6))
+})
 
 context("setParameterValuesByPath")
 
