@@ -71,17 +71,24 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #'
 #' @param values A numeric value that should be assigned to the quantity or a vector
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
-#' length as 'quantities'
+#' length as 'quantities'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
 #'
 setQuantityValues <- function(quantities, values) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
   quantities <- c(quantities)
+  values <- c(values)
 
   # Test for correct inputs
   validateIsOfType(quantities, Quantity)
   validateIsNumeric(values)
-  validateIsSameLength(quantities, values)
+
+  if(length(values) > 1) {
+    validateIsSameLength(quantities, values)
+  }
+  else{
+    values <- rep(values, length(quantities))
+  }
 
   for (i in seq_along(quantities)) {
     quantity <- quantities[[i]]
