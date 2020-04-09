@@ -18,21 +18,42 @@ knitr::opts_chunk$set(
 The **ospsuite** R-package is part of the [Open Systems Pharmacology](http://www.open-systems-pharmacology.org/) Software (OSPS), an open-source suite of modeling & simulation tools for pharmaceutical and other life-sciences applications. This package provides the functionality of loading, manipulating, and simulating the simulations created in the software tools PK-Sim and MoBi. This document gives an overview of the general workflow and the most important methods.
 
 ## General information
-In order to load a simulation in R, it must be present in the **\*.pkml** file format. Every simulation in PK-Sim or MoBi can be exported to the *.pkml file. The examples shown below are based on the Aciclovir model located in the PK-Sim examples folder of the OSPS installation.
+In order to load a simulation in R, it must be present in the **\*.pkml** file format. Every simulation in PK-Sim or MoBi can be exported to the *.pkml file. The examples shown in the vignettes are based on the Aciclovir example model, until stated otherwise. The model can be found in the PK-Sim examples folder of the OSPS installation.
 
+The general workflow with the **ospsuite** package can be summarized in following steps:
+
+  1. Loading a simulation from .pkml file.
+  1. Accessing entities of the simulation, such as molecules, parameters, or containers, and reading information about them.
+  1. Changing simulation settings, parameter values, and molecules start values.
+  1. Retrieving the results and processing them.
+
+The workflow steps are described in the following vignettes:
+
+- [Loading a simulation and accessing entities](load-get.html)
+* [Changing parameter and molecule start values](set-values.html)
+* [Running a simulation](run-simulation.html)
+* [Creating individuals](create-individual.html)
+* [Population simulations](create-run-population.html)
+* [Table parameters](table-parameters.html)
+* [Dimensions and Units](unit-conversion.html)
+
+Some aspects of the ospsuite package may appear uncommon for the users not familiar with the object-oriented approach. It is reccommened to read the following section to better understand some semantics and to get the most of the flexibility and efficiency of the package.
+
+## Object-oriented approach
 The **ospsuite** R-package utilizes the concept of object oriented (OO) programming based on the [R6 system](https://adv-r.hadley.nz/r6.html). While the philisophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. Most of the functions implemented in **ospsuite** return an *instance* (or an *object*) of a *class*. These objects can be used as inputs for another functions. Additionally, each object offers a set of properties (which can be another objects) and functions, accessible by the `$` sign:
 
 ```r
-object1 <- someFuction()
+object1 <- ClassName$new()
 aProperty <- object1$property1
-resultOfAFuction <- object1$multiply(1,2)
+resultOfAFunction <- object1$multiply(1,2)
 ```
 
-Important information about the object can be printed out by calling the print(`)` function of the object.
+Important information about the object can be printed out by calling `print(object)`.
 
 The most important classes are:
   : `Simulation` Representation of the simulation loaded from the *.pkml file.
   : `SimulationSettings` #Short descriptions of the classes to be added here
+  : `SimulationRunOptions`
   : `SolverSettings`
   : `OutputSchema`
   : `OutputSelections`
@@ -40,384 +61,7 @@ The most important classes are:
   : `Container`
   : `Molecule`
   : `Parameter`
-
-## Loading a simulation
-In general, every workflow starts with loading a simulation by calling the `loadSimulation()` function. The function receives the full path to the PKML file (with extension *.pkml) exported from PK-Sim or MoBi and returns the corresonding simulation object.
-
-```{r loadSim}
-library(ospsuite)
-
-dataPath <- file.path(getwd(), "..", "tests", "data", fsep = .Platform$file.sep)
-simFilePath <- file.path(dataPath, paste0("Aciclovir.pkml"), fsep = .Platform$file.sep)
-print(simFilePath)
-
-sim <- loadSimulation(simFilePath)
-print(sim)
-```
-
-## Accessing entities of the model and their properties - the path concept
-
-Once the simulation is loaded, it is possible to get access to various entities of the model. The most important entities are **containers**, **molecules**, and **parameters**. 
-There are two types of functions for retrieving the entities - `getXXX(path, container, stopIfNotFound = TRUE)` and `getAllXXXMatching(paths, container)`. 
-The former functions returns an object representing the entity with the given `path` located under the `container`, the latter returns a list of objects representing 
-all entities whose paths match those provided in the list `paths` located under `container`.
-
- * `path` is a string where the elements of the path (i.e., containers in the hierarchy of the simulation) are separated by `|`. 
- * `container` is an instance of the 'Container'-class within the model structure the path is *relative* to. In most cases, `container` is the `Simulation` object created by calling `loadSimulation(pkmlSimulationFile)`.
-
-```{r getEntities}
-#Get the container "Liver"
-livContainer <- getContainer("Organism|Liver", sim)
-print(livContainer)
-
-#Get the molecule Aciclovir located in kindey intracellular space
-moleculeInKid <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
-print(moleculeInKid)
-
-#Get the parameter volume of the liver interstitial space. Note that the path used is relative to the liver container
-livParam <- getParameter("Interstitial|Volume", livContainer)
-print(livParam)
-```
-
-The functions `getAllXXXMatching(paths, container)` take either a direct path (in this case they return a list with only one object per given path, if found), or generic paths as arugment. 
-The generic paths are constructed by using the wildcard symbols `*` (exactly one occurrence of any element) or `**` (zero or more occurences of any element).
-
-```{r getAllEntitiesMatching}
-#Get the parameter `Volume` of the intracellular space of all organs, with exactly one path element before `Intracellular`
-volumeParams <- getAllParametersMatching("Organism|*|Intracellular|Volume", sim)
-length(volumeParams)
-#The PBPK model has 15 organs with an "Intracellular" sub-
-
-#Get the parameter `Volume` of the intracellular space of all organs, no matter how many sub-containers the organ has
-volumeParams <- getAllParametersMatching("Organism|**|Intracellular|Volume", sim)
-length(volumeParams)
-#The list also includes parameters of organs like "Liver|Periportal", or the mucosal compartments of the intestine.
-```
-Note that the path `"Organism|Kidney|*|Intracellular|Volume"` will return no parameters in the standard models, as there are no sub-containers between `Kidney` and `Intracellular`. 
-In contrast, `"Organism|Kidney|**|Intracellular|Volume"` is a valid path.
-
-The functions `getAllXXXMatching(paths, container)` can also be used to retrieve entities from multiple paths:
-
-```{r getAllEntitiesMatching_multiplePaths}
-#Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`
-molecules <- getAllMoleculesMatching(c("Organism|Liver|Periportal|Intracellular|Aciclovir", "Organism|VenousBlood|Plasma|Aciclovir"), sim)
-print(molecules)
-```
-The entities possess various properties that can be accessed through their objects. The most important properties for a container are:
-
-```{r containerProperties}
-# Path of the container
-livContainer$path
-```
-
-The most important properties for a molecule are:
-
-```{r moleculeProperties}
-#Initial value of the molecule
-moleculeInKid$value
-
-# Dimension of the molecule. See section "Unit conversion" for more information.
-moleculeInKid$dimension
-
-# Is the initial value defined by a formula?
-moleculeInKid$isFormula
-
-# Type of the formula. CONSTANT if the value is defined by a constant.
-moleculeInKid$formula
-```
-The most important properties for a parameter are:
-
-```{r parameterProperties}
-#Initial value of the parameter
-livParam$value
-
-# Dimension of the parameter. See section "Unit conversion" for more information.
-livParam$dimension
-
-# Base unit of the parameter. See section "Unit conversion" for more information.
-livParam$unit
-
-# Is the initial value defined by a formula?
-livParam$isFormula
-
-# Type of the formula. CONSTANT if the value is defined by a constant.
-livParam$formula
-```
-
-## Running individual simulation and retrieving the results
-Once the simulation is loaded, it can be run to produce an object of the class `SimulationResults`.
-
-```{r runSim}
-simulationResults <- runSimulation(simulation = sim)
-print(simulationResults)
-```
-
-The advantage of storing the results in a object is that the user can keep different resutls of the same simulation produced with different settings (e.g., model parameters).
-
-
-Simulated time-value pairs for a specific ouput from the `SimulationResults`-object can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), 
-or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned. 
-The paths of all available outputs can be accessed via
-
-```{r getAllOutputSelections}
-simulationResults$allQuantityPaths
-```
-
-`getOutputValues` returns a list with two entries: `data` and `metadata`:
-
- * `data` is a dataframe with two predefined columns (IndividualId and Time) as well as one columne for each requested output
- 
-     * `IndividualId` (not relevant for an individual simulation)
-     * `Time` a vector with simulated time values (in minutes, equal for all outputs) 
-     *  a vector with simulated entries for each output requested.
-
-```{r getOutputValues}
-# Get simulated results by path
-resultsPath <- simulationResults$allQuantityPaths[[1]]
-print(resultsPath)
-
-resultsData <- getOutputValues(simulationResults, quantitiesOrPaths = resultsPath)
-
-resultsTime <- resultsData$data$Time
-resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
-
-plot(resultsTime, resultsValues)
-
-resultsValues <- resultsData$data[[3]]
-
-plot(resultsTime, resultsValues)
-```
-
-The results can be stored in and imported from a *.csv file with the methods `exportResultsToCSV` and `importResultsFromCSV`.
-
-## Adding new outputs
-By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to `pkml file` are generated. The user can add new outputs to the simulation with the method `addOutputs`. 
-The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The ouput list is a property of the `simulation`. 
-After adding or removing outputs, the corresponding simulation needs to be re-run in order to generate updated results.
-
-```{r addOutputs}
-# Clear the list of generated outputs
-clearOutputs(sim)
-
-# Add new outputs as objects
-molecule <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
-observer <- getQuantity("Organism|Lumen|Aciclovir|Fraction dissolved", sim)
-
-addOutputs(c(molecule, observer), simulation = sim)
-
-# Add new ouputs as path strings
-addOutputs(c("Organism|Lumen|Stomach|Aciclovir", "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"), simulation = sim)
-
-# Run simulation
-simulationResults <- runSimulation(simulation = sim)
-
-# Retrieve all generated outputs (e.g. omitting the quantitiesOrPaths property will return all available values)
-resultsData <- getOutputValues(simulationResults)
-
-# Note that "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" is not in the list of generated results any more
-names(resultsData$data)
-```
-
-## Population simulations
-Population simulations can be easily performed in R by combining the simulation loaded from a pkml file with the population information created in PK-Sim and exported to CSV format (for details, please refer to [OSPS online documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-creating-populations)). The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulation` method.
-
-```{r runPopSim}
-# Load simulation from pkml
-sim <- loadSimulation(simFilePath)
-
-# Load population information from csv
-popFilePath <- file.path(dataPath, paste0("pop_10.csv"), fsep = .Platform$file.sep)
-myPopulation <- loadPopulation(csvPopulationFile = popFilePath)
-print(myPopulation)
-
-# Run population simulation
-populationResults <- runSimulation(simulation = sim, population = myPopulation)
-print(populationResults)
-```
-Population simulations are run in parallel on multi-core machines - one core simulates a subset of all individuals defined in the population. By default, the number of cores used is equals the maximum number of logical cores available minus one. 
-The user can change the default behavior by providing custom `SimulationRunOptions`.
-
-```{r simulationRunOptions}
-# Create a SimulationRunOptions object
-simRunOptions <- SimulationRunOptions$new()
-print(simRunOptions)
-
-# Change the maximal number of cores to use and show a progress bar during simulation
-simRunOptions$numberOfCores <- 3
-simRunOptions$showProgress <- TRUE
-
-# Run population simulation with cutom options
-populationResults <- runSimulation(simulation = sim, population = myPopulation, simulationRunOptions = simRunOptions)
-print(populationResults)
-```
-
-Accessing simulated values for a population simulation is similar to accessing the results of an individual simulation. The values of `IndividualId`, `Time`, and the simulated outputs, are appended for each simulated invidual. 
-Note that this results in non-monotonously increasing column `Time`.
-
-```{r getSimulationOutputValues}
-# Get all simulated results
-resultsData <- getOutputValues(simulationResults = populationResults)
-
-resultsTime <- resultsData$data$Time
-resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
-
-plot(resultsTime, resultsValues)
-
-# Accessing simulation values for specific individual by sub-setting `resultsData$data` with the respective individual id
-individualData <- resultsData$data[resultsData$data$IndividualId == 2, ]
-individualTime <- individualData$Time
-individualValues <- individualData$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
-plot(individualTime, individualValues)
-```
-
-## Changing parameter values and initial conditions
-The user can change initial values of parameters and molecules with the methods `setParameterValues` and `setMoleculeInitialValues`, respectively
-
-```{r changeDose}
-# Get the parameter Dose
-doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
-doseParam <- getParameter(doseParamPath, sim)
-
-# Get the value in mg - see section "Unit conversion" for additional information
-toUnit(quantity = doseParam, values = doseParam$value, targetUnit = "mg")
-
-# Simulate with default dose
-results250mg <- runSimulation(simulation = sim)
-values250mg <- getOutputValues(simulationResults = results250mg)
-
-# Change the dose to 350mg. The values has to be converted to base unit, first
-newValue <- toBaseUnit(quantity = doseParam, values = 350, unit = "mg")
-setParameterValues(parameters = doseParam, values = newValue)
-
-# Simulate with new dose
-results350mg <- runSimulation(simulation = sim)
-values350mg <- getOutputValues(simulationResults = results350mg)
-
-# Plot the results of the 250mg simulation
-plot(values250mg$data$Time, values250mg$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`, type = "l")
-
-# Add the results of the 350mg simulation
-points(values350mg$data$Time, values350mg$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`, type = "l", col = "red")
-legend("topright", legend = c("250mg", "350mg"), col = c("black", "red"), lty = c(1,1))
-```
-
-Another way to change parameter values is to scale them. The scaling is always performed relative to the current value:
-
-```{r scaleParameter}
-doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
-doseParam <- getParameter(doseParamPath, sim)
-print(doseParam)
-
-# Double the dose
-scaleParameterValues(doseParam, factor = 2)
-print(doseParam)
-
-# Half the dose
-scaleParameterValues(doseParam, factor = 0.5)
-print(doseParam)
-```
-
-An example how to set the initial values of molecules in all containers to a certain value:
-
-```{r changeInitialValue}
-# Get objects representing the molecule Aciclovir in all containers
-allAciclovirMolecules <- getAllMoleculesMatching("Organism|**|Aciclovir",sim)
-
-#Set initial values to 10 µmol in all containers
-setMoleculeInitialValues(allAciclovirMolecules, rep(10, length(allAciclovirMolecules)))
-
-# Simulate
-results350mg_newInitCond <- runSimulation(simulation = sim)
-values350mg_newInitCond <- getOutputValues(simulationResults = results350mg_newInitCond)
-
-# Plot the results of the 3350mg simulation
-plot(values350mg$data$Time, values350mg$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`, type = "l")
-
-# Add the results of the simulation with new initial conditions
-points(values350mg_newInitCond$data$Time, values350mg_newInitCond$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`, type = "l", col = "red")
-```
-
-## Changing simulation intervals
-The current simulation interval (i.e., the simulation times at which results are stored) be viewed by retrieving the property `outputSchema` of a `Simulation` object.
-
-```{r $outputSchema}
-print(sim$outputSchema)
-```
-
-To change the output schema, the user should use one of the function `clearOutputIntervals`, `addOutputInterval`, and `setOutputInterval`.
-
-```{r changeOutputInterval, error = TRUE, purl = FALSE}
-# Remove all output intervals - simulation not possible!
-clearOutputIntervals(simulation = sim)
-runSimulation(simulation = sim)
-
-# Add an interval
-addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")
-print(sim$outputSchema)
-
-# Add a second interval
-addOutputInterval(simulation = sim, startTime = 30, endTime = 2000, resolution = 4, intervalName = "lowRes")
-print(sim$outputSchema)
-
-# Replace the existing interval(s) with a new one
-setOutputInterval(simulation = sim, startTime = 0, endTime = 2000, resolution = 4)
-print(sim$outputSchema)
-```
-
-
-
-## PK parameters
-
-## Sensitivity analysis
-
-## Unit conversion
-Every entity - a molecule, a parameter, or an observer - has a certain dimension, like *Amount*, *Concentration*, or *Volume*. The dimension is a property of an entity:
-
-```{r $dimension}
-print(livParam)
-livParam$dimension
-
-```
-The values of a certain dimension can be presented in different units - for examlpe, *l* or *ml* for the dimension *Volume*, or *mol* and *µmol* for the dimension *Amount*. The list of all available units is a method of an entity:
-
-```{r $allUnits}
-print(livParam)
-livParam$allUnits
-
-```
-
-Internally, `OSPS` works with the **base units**, and all the values that are shown or passed to functions are in base units by default. 
-These base units are often different from the units that are displayed by default in PK-Sim (and MoBi). 
-The list of base and default display units can be found in the [documentation](https://docs.open-systems-pharmacology.org/appendix/appendix).
-
-As an example, the parameter **BMI** is given in the default unit `kg/dm²`, while the default display unit is the more convenient `kg/m²`. 
-The `ospuite-R` package provides a set of methods for conversion between different units. The methods `toUnit`, `toBaseUnit`, and `toDisplayUnit` require the quantity to get the correct dimension and units; 
-however, it does not change the value of the quantity!
-
-```{r unitConversion}
-# Get the BMI parameter
-bmiParam <- getParameter("Organism|BMI", sim)
-print(bmiParam)
-
-# Print the base and the default display units
-bmiParam$unit
-bmiParam$displayUnit
-
-# Convert the value from the base into the default display unit
-toDisplayUnit(quantity = bmiParam, values = bmiParam$value)
-
-# Convert the value to the base unit, that can be used e.g. for setting new parameter value
-toBaseUnit(quantity = bmiParam, values = 30, unit = "kg/m²")
-
-liverVolume <- getParameter("Organism|Liver|Volume",sim)
-
-print(liverVolume)
-liverVolume$allUnits
-# Convert from base volume unit to µl
-toUnit(quantity = liverVolume, values = c(1,2,3,4), targetUnit = "ml")
-```
-
-
-## Create individual
-
-## Table parameters
+  : `IndividualCharacteristics`
+  : `Population`
+  : `PopulationCharacteristics`
+  : `TableFormula`
