@@ -15,16 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-The ospsuite-R package provides an interface to the PK-Sim physiology database to create parameter sets describing a certain **individual**. By applying these parameter values to a simulation, it is possible to simulate different individuals based on one exported *.pkml simulation. This functionality is only available when PK-Sim is installed on the system.
+The ospsuite-R package provides an interface to the PK-Sim physiology database to create parameter sets describing a certain **individual**. By applying these parameter values to a simulation, it is possible to simulate different individuals based on one exported *.pkml simulation. 
+This functionality is only available when PK-Sim is installed on the system.
 
-If PK-Sim installation is not found (e.g., when using a portable version), one must specify the path to the PK-Sim folder by calling the function `initPKSim`:
-
-```{r initPKSim}
-library(ospsuite)
-
-pathToPKSim <- "c:/Program Files/Open Systems Pharmacology/PK-Sim 9.0"
-initPKSim(pksimFolderPath = pathToPKSim)
-```
+The easier way to get started is to install the OSPSuite Setup. This will link PK-Sim to your ospsuite-R installation automatically. 
+If the porable version of PK-Sim is used instaed,  one must specify the path to the PK-Sim folder by calling the function `initPKSim`:
 
 ## Creating individuals
 The physiology of an individual is defined by the values of the simulation parameters. To simulate a specific individual, one has to generate a set of parameter values and apply these values to the model. **NOTE**: Currently, only individuals of the *same* species as in the original *.pkml simulation can be applied. I.e., if the simulation exported from PK-Sim represents a human individual, it is possible to simulate another human individual of different race, gender, etc., but it is not possible to simulate a rat. Though it is technically possible, and the simulation will produce some results, these will not valid.
