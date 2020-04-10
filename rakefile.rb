@@ -87,7 +87,9 @@ def install_pksim()
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
+  
   puts "Installing #{msi_package} silently"
+  sleep(10)
   command_line = %W[/i #{msi_package} /quiet /qn /norestart]
   Utils.run_cmd('msiexec.exe', command_line)
   puts "Installation done."
