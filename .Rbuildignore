@@ -12,3 +12,5 @@
 ^rakefile\.rb
 ^postclean\.bat
 ^\.covrignore$
+^doc$
+^Meta$

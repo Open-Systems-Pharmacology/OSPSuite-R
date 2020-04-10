@@ -1,0 +1,125 @@
+---
+title: "Table parameters"
+output: rmarkdown::html_vignette
+#output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Table parameters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+  ```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error = TRUE
+)
+```
+
+Parameters defined by a **table formula** have special syntax of retrieving and changing the values. The value of a table parameter is given by a list of `ValuePoint` objects, each `ValuePoint` being an x-y value pair. X values usually refer to the simulation time.
+
+```{r getTableFormulaValue}
+library(ospsuite)
+
+# Load a simulation
+simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+
+#Get the parameter defined by a table.
+tableParam <- getParameter("Organism|TableParameter", sim)
+print(tableParam)
+```
+
+Direct access to the value points is possible through the `TableFormula` of the table parameter. All x- or y-values stored in the table can be conviniently retrieved using the `lapply` method:
+
+```{r getAllXYValues}
+library(ospsuite)
+#Get the parameter defined by a table.
+tableParam <- getParameter("Organism|TableParameter", sim)
+print(tableParam)
+
+# Get all value points
+tableParam$formula$allPoints
+
+# Get all x-values
+xValues <- lapply(tableParam$formula$allPoints, function(point){point$x})
+print(xValues)
+
+# Get all y-values
+yValues <- lapply(tableParam$formula$allPoints, function(point){point$y})
+print(yValues)
+```
+
+The method `valueAt` of the `TableFormula` returns the value of `y` for the given `x`. If no entry exists for the `x`, the value `y` is linearly interpolated between the two closest `x` values.
+
+```{r valueAt}
+library(ospsuite)
+#Get the parameter defined by a table.
+tableParam <- getParameter("Organism|TableParameter", sim)
+
+# Value at x = 60 is stored in the table
+tableParam$formula$valueAt(60)
+
+# Value at x = 90 is not in the table
+tableParam$formula$valueAt(90)
+```
+
+## Changing table parameter values
+Simply setting the value of a table-defined parameter using `setParameterValues` will override the formula and make the parameter constant.
+
+```{r setTableToConstant}
+library(ospsuite)
+#Get the parameter defined by a table.
+tableParam <- getParameter("Organism|TableParameter", sim)
+tableParam
+
+# Set value to a constant. tableParam$isFixedValue is now TRUE
+setParameterValues(tableParam, 10)
+tableParam
+```
+
+To change the values of the table, a set of methods of the `TableFormula` is available. The method `addPoints` adds a set of x-y values to the existing table. If trying to add a point with the x-value already present in the table, an error is thrown:
+
+```{r addPoints}
+library(ospsuite)
+
+tableParam <- getParameter("Organism|TableParameter", sim)
+tableParam
+
+# Add new points
+tableParam$formula$addPoints(c(1, 2, 3), c(5, 6, 7))
+tableParam
+
+#Try to add points with existing x-values
+tableParam$formula$addPoints(0, 1)
+```
+
+To remove a point from the table, use the method `removePoint`. It remove a point if the x value is present in the table and has the provided y.
+
+```{r removePoint}
+tableParam
+
+# Remove the point (0, 0)
+tableParam$formula$removePoint(0, 0)
+tableParam
+
+# Try to remove the point (1, 1). Note that the value for x = 1 is x = 5 in the original table,
+# and no point is removed.
+tableParam$formula$removePoint(1, 1)
+tableParam
+
+# Try to remove a non-existing point (0, 1). No point is removed.
+tableParam$formula$removePoint(1, 1)
+tableParam
+```
+
+The method `clearPoints` removes all points from the table. `setPoints` is a combination of clearing the table and adding new points:
+
+```{r setPoints}
+tableParam
+
+tableParam$formula$setPoints(c(1, 2, 3, 4), c(5, 6, 7, 8))
+tableParam
+
+```
+

@@ -2,6 +2,8 @@
 .Rhistory
 .Rapp.history
 
+deploy/
+
 packages/
 
 temp/
@@ -40,3 +42,5 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+doc
+Meta

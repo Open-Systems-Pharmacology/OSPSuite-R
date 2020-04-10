@@ -1,0 +1,121 @@
+---
+title: "Running a simulation"
+output: rmarkdown::html_vignette
+#output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Running a simulation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Running individual simulation and retrieving the results
+Once the simulation is loaded (see [Loading a simulation and accessing entities](load-get.html)), it can be run to produce an object of the class `SimulationResults`.
+
+```{r runSim}
+library(ospsuite)
+
+# Load the simulation
+simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+
+simulationResults <- runSimulation(simulation = sim)
+print(simulationResults)
+```
+
+The advantage of storing the results in a object is the option to keep different resutls of the same simulation produced with different settings (e.g., model parameters).
+
+Simulated time-value pairs for a specific ouput from the `SimulationResults`-object can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned.
+
+The paths of all available outputs can be accessed via
+
+```{r getAllOutputSelections}
+simulationResults$allQuantityPaths
+```
+
+`getOutputValues` returns a list with two entries: `data` and `metadata`:
+
+ * `data` is a dataframe with two predefined columns (IndividualId and Time) as well as one column for each requested output
+ 
+     * `IndividualId` (not relevant for an individual simulation)
+     * `Time` a vector with simulated time values (in minutes, equal for all outputs) 
+     *  a vector with simulated entries for each output requested.
+
+```{r getOutputValues}
+# Get simulated results by path
+resultsPath <- simulationResults$allQuantityPaths[[1]]
+print(resultsPath)
+
+resultsData <- getOutputValues(simulationResults, quantitiesOrPaths = resultsPath)
+
+resultsTime <- resultsData$data$Time
+resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
+
+plot(resultsTime, resultsValues, type = "l")
+```
+
+The results can be stored in and imported from a *.csv file with the methods `exportResultsToCSV` and `importResultsFromCSV`.
+
+## Adding new outputs
+By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to `pkml` are generated. The user can add new outputs to the simulation with the method `addOutputs`. The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The ouput list is a property of the `simulation`.
+After adding or removing outputs, the corresponding simulation needs to be re-run in order to generate updated results.
+
+```{r addOutputs}
+# Clear the list of generated outputs
+clearOutputs(sim)
+
+# Add new outputs as objects
+molecule <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
+observer <- getQuantity("Organism|Lumen|Aciclovir|Fraction dissolved", sim)
+
+addOutputs(c(molecule, observer), simulation = sim)
+
+# Add new ouputs as path strings
+addOutputs(c("Organism|Lumen|Stomach|Aciclovir", 
+             "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"),
+           simulation = sim)
+
+# Run simulation
+simulationResults <- runSimulation(simulation = sim)
+
+# Retrieve all generated outputs (e.g. omitting the quantitiesOrPaths property
+# will return all available values)
+resultsData <- getOutputValues(simulationResults)
+
+# Note that "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" 
+# is not in the list of generated results any more
+names(resultsData$data)
+```
+
+## Changing simulation intervals
+The simulation interval (i.e., the simulation times at which results are stored) can are stored as the property `outputSchema` of a `Simulation` object.
+
+```{r $outputSchema}
+print(sim$outputSchema)
+```
+
+To change the simulation interval, the user can use one of the functions `clearOutputIntervals`, `addOutputInterval`, and `setOutputInterval`.
+
+```{r changeOutputInterval, error = TRUE, purl = FALSE}
+# Remove all output intervals - simulation not possible!
+clearOutputIntervals(simulation = sim)
+runSimulation(simulation = sim)
+
+# Add an interval
+addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")
+print(sim$outputSchema)
+
+# Add a second interval
+addOutputInterval(simulation = sim, startTime = 30, endTime = 2000, resolution = 4, intervalName = "lowRes")
+print(sim$outputSchema)
+
+# Replace the existing interval(s) with a new one
+setOutputInterval(simulation = sim, startTime = 0, endTime = 2000, resolution = 4)
+print(sim$outputSchema)
+```
