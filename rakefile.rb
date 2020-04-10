@@ -108,7 +108,6 @@ def unzip_package(package_full_path)
   unzip_dir = unzip(package_full_path)
   artifact_name = ''
   Dir.glob(File.join(unzip_dir, '*.msi')) do |x|
-    copy x, deploy_dir
     artifact_name = x
   end 
   artifact_name
