@@ -9,11 +9,11 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
 task :prepare_for_build, [:product_version] do |t, args|
-  # product_version = sanitized_version(args.product_version)
+  product_version = sanitized_version(args.product_version)
  
-  # copy_files_to_lib_folder
+  copy_files_to_lib_folder
 
-  # update_package_version(product_version)
+  update_package_version(product_version)
 
   install_pksim()
 end
@@ -87,9 +87,9 @@ def install_pksim()
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
-  
+  # MSI installer only works with \\ style separator
+  msi_package = msi_package.split('/').join('\\')
   puts "Installing #{msi_package} silently"
-  sleep(10)
   command_line = %W[/i #{msi_package} /quiet /qn /norestart]
   Utils.run_cmd('msiexec.exe', command_line)
   puts "Installation done."

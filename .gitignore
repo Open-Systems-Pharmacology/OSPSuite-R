@@ -2,6 +2,8 @@
 .Rhistory
 .Rapp.history
 
+deploy/
+
 packages/
 
 temp/
