@@ -4,6 +4,8 @@ require 'openssl'
 require_relative 'scripts/copy-dependencies'
 require_relative 'scripts/utils'
 
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
 task :prepare_for_build, [:product_version] do |t, args|
