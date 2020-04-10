@@ -1,12 +1,19 @@
+require 'open-uri'
+require 'openssl'
+
 require_relative 'scripts/copy-dependencies'
 require_relative 'scripts/utils'
 
-task :prepare_for_build, [:product_version] do |t, args|
-  product_version = sanitized_version(args.product_version)
- 
-  copy_files_to_lib_folder
+APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-  update_package_version(product_version)
+task :prepare_for_build, [:product_version] do |t, args|
+  # product_version = sanitized_version(args.product_version)
+ 
+  # copy_files_to_lib_folder
+
+  # update_package_version(product_version)
+
+  install_pksim()
 end
 
 task :postclean do 
@@ -63,20 +70,55 @@ end
 
 
 private
-
-def zip(command_line)
-  Utils.run_cmd('7z', command_line) 
-end
-
 def copy_so(file, linux_distro, target_dir)
   native_folder = '/bin/native/x64/Release/'
   copy_depdencies packages_dir, target_dir do
     copy_files "#{file}.#{linux_distro}*/**/#{native_folder}", 'so'
     copy_files "#{file}.#{linux_distro}*/**/netstandard*", 'dll'
   end
-
-
 end
+
+def install_pksim()
+  file_name ='setup.zip'
+  appveyor_project_name = 'pk-sim'
+  branch = 'develop'
+  uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
+  zip_package = download_file(appveyor_project_name, file_name, uri)
+  msi_package = unzip_package(zip_package)
+  puts "Installing #{msi_package} silently"
+  command_line = %W[/i #{msi_package} /quiet /qn /norestart]
+  Utils.run_cmd('msiexec.exe', command_line)
+  puts "Installation done."
+end
+
+def download_file(project_name, file_name, uri)
+  download_dir = File.join(deploy_dir, project_name) 
+  FileUtils.mkdir_p download_dir
+  file = File.join(download_dir, file_name)
+  puts "Downloading #{file_name} from #{uri} under #{file}"
+  open(file, 'wb') do |fo| 
+    fo.print open(uri,:read_timeout => nil).read
+  end
+  file
+end
+
+def unzip_package(package_full_path)
+  unzip_dir = unzip(package_full_path)
+  artifact_name = ''
+  Dir.glob(File.join(unzip_dir, '*.msi')) do |x|
+    copy x, deploy_dir
+    artifact_name = x
+  end 
+  artifact_name
+end
+
+def unzip(package_full_path)
+  unzip_dir = File.dirname(package_full_path)
+  command_line = %W[e #{package_full_path} -o#{unzip_dir}]
+  Utils.run_cmd('7z', command_line)
+  unzip_dir
+end
+
 
 def delete_dll(file, dir)
   file_full_path = File.join(dir, "#{file}.dll")
@@ -160,3 +202,7 @@ end
 def description_file
   File.join(solution_dir,'DESCRIPTION')
 end 
+
+def deploy_dir
+  File.join(solution_dir,'deploy')
+end
