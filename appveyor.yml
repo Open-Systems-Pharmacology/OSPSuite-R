@@ -11,9 +11,6 @@ install:
   - ps: Bootstrap
   - git submodule update --init --recursive
 
-cache:
-  - C:\RLibrary
-
 environment:
   app_version: "9.0"
   USE_RTOOLS: true
