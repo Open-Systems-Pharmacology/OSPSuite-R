@@ -3,6 +3,7 @@ require 'openssl'
 
 require_relative 'scripts/copy-dependencies'
 require_relative 'scripts/utils'
+require_relative 'scripts/colorize'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
@@ -25,7 +26,7 @@ task :postclean do
   copy_files_to_lib_folder 
 end
 
-# This task is temporary until we have an automated linux buold
+# This task is temporary until we have an automated linux build
 task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, args|
   product_version = sanitized_version(args.product_version)
   build_dir = args.build_dir
@@ -40,13 +41,13 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   tar_file = File.join(build_dir, tar_file_name)
 
   #unzip it in a temp folder
-  temp_dir = File.join(build_dir, linux_distro)
-  FileUtils.mkdir_p temp_dir
+  temp_distro_dir = File.join(temp_dir, linux_distro)
+  FileUtils.mkdir_p temp_distro_dir
 
-  command_line = %W[xzf #{tar_file} -C #{temp_dir}]
+  command_line = %W[xzf #{tar_file} -C #{temp_distro_dir}]
   Utils.run_cmd('tar', command_line)
 
-  ospsuite_dir = File.join(temp_dir,  'ospsuite')
+  ospsuite_dir = File.join(temp_distro_dir,  'ospsuite')
   inst_lib_dir = File.join(ospsuite_dir, 'inst', 'lib')
 
   #Remove the windows dll that should be replace by linux binaries
@@ -59,7 +60,7 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   copy_so('OSPSuite.SimModel', linux_distro,  inst_lib_dir)
   copy_so('OSPSuite.SimModelSolver_CVODES', linux_distro,  inst_lib_dir)
 
-  Dir.chdir(temp_dir) do
+  Dir.chdir(temp_distro_dir) do
     tar_archive_name = "ospsuite_#{product_version}_#{linux_distro}.tar"
     command_line = %W[cf #{tar_archive_name} ospsuite]
     Utils.run_cmd('tar', command_line)
@@ -89,17 +90,17 @@ def install_pksim()
   msi_package = unzip_package(zip_package)
   # MSI installer only works with \\ style separator
   msi_package = msi_package.split('/').join('\\')
-  puts "Installing #{msi_package} silently"
+  puts "Installing #{msi_package} silently".light_blue
   command_line = %W[/i #{msi_package} /quiet /qn /norestart]
   Utils.run_cmd('msiexec.exe', command_line)
-  puts "Installation done."
+  puts "Installation done.".light_blue
 end
 
 def download_file(project_name, file_name, uri)
-  download_dir = File.join(deploy_dir, project_name) 
+  download_dir = File.join(temp_dir, project_name) 
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
-  puts "Downloading #{file_name} from #{uri} under #{file}"
+  puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
   open(file, 'wb') do |fo| 
     fo.print open(uri,:read_timeout => nil).read
   end
@@ -206,6 +207,6 @@ def description_file
   File.join(solution_dir,'DESCRIPTION')
 end 
 
-def deploy_dir
-  File.join(solution_dir,'deploy')
+def temp_dir
+  "C:/temp"
 end

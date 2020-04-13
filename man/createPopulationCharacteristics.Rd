@@ -64,7 +64,7 @@ createPopulationCharacteristics(
 
 \item{gestationalAgeMax}{max gestational age for the population (optional, for human species only)}
 
-\item{gestationalAgeUnit}{Unit in which the gestational age value is defined. Default is kg/m²}
+\item{gestationalAgeUnit}{Unit in which the gestational age value is defined. Default is kg/m2}
 
 \item{moleculeOntogenies}{Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.}
 }

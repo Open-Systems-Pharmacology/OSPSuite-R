@@ -34,7 +34,7 @@ createPopulation <- function(populationCharacteristics) {
 #' @param BMIUnit Unit in which the BMI value is defined. Default is year(s)
 #' @param gestationalAgeMin min gestational age for the population (optional, for human species only)
 #' @param gestationalAgeMax max gestational age for the population (optional, for human species only)
-#' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is kg/m²
+#' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is kg/m2
 #' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
 #'
 #' @return An instance of \code{PopulationCharacteristics} to be used in conjunction with \code{createPopulation}
