@@ -44,6 +44,26 @@ test_that("It can add user defined variability using an existing parameter", {
   expect_identical(population$getParameterValues(venousBloodVolume), values)
 })
 
+test_that("It can add user defined variability using values with NaN", {
+  population <- loadPopulation(populationFileName)
+  parameterPath <- "Organism|MyParameterWithNaN"
+  values_with_NAN <- c(1:10) * 2.5
+  values_with_NAN[2] <- NaN
+  population$setParameterValues(parameterPath, values_with_NAN)
+  expect_true(population$has(parameterPath))
+  expect_identical(population$getParameterValues(parameterPath), values_with_NAN)
+})
+
+test_that("It can add user defined variability using values with NA", {
+  population <- loadPopulation(populationFileName)
+  parameterPath <- "Organism|MyParameterWithNA"
+  values_with_NA <- c(1:10) * 2.5
+  values_with_NA[2] <- NA
+  population$setParameterValues(parameterPath, values_with_NA)
+  expect_true(population$has(parameterPath))
+  expect_identical(population$getParameterValues(parameterPath), values_with_NA)
+})
+
 test_that("It throws an exception when adding values that have the wrong number of items", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"
