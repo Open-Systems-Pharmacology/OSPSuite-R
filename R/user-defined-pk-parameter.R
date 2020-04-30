@@ -60,7 +60,7 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
       private$printLine("DisplayUnit", self$displayUnit)
       private$printLine("StandardPKParameter", getEnumKey(StandardPKParameter, self$standardPKParameter))
       private$printLine("StartTime", self$startTime)
-      private$printLine("startTimeOffset", self$startTimeOffset)
+      private$printLine("StartTimeOffset", self$startTimeOffset)
       private$printLine("EndTime", self$endTime)
       private$printLine("EndTimeOffset", self$endTimeOffset)
       private$printLine("StartApplicationIndex", self$startApplicationIndex)
