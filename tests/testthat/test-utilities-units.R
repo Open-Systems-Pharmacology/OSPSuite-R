@@ -64,3 +64,13 @@ context("allAvailableDimensions")
 test_that("It should be able to return the name of all dimensions defined in the system", {
   expect_gt(length(allAvailableDimensions()), 0)
 })
+
+context("getDimensionForUnit")
+
+test_that("It can return the expected dimension for a given unit", {
+  expect_equal(getDimensionForUnit("mg"), "Mass")
+})
+
+test_that("It returns null if the dimension is not found for the unit", {
+  expect_null(getDimensionForUnit("toto"))
+})
