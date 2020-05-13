@@ -95,10 +95,10 @@ allAvailableDimensions <- function() {
   rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }
 
-#' Returns the dimension that can be used to support the given unit.
-#' Returns null
+#' Returns the name of dimension that can be used to support the given unit or null if the dimension cannot be found
 #'
 #' @param unit Unit used to find the corresponding dimension
+#'
 #' @examples
 #' dim <- getDimensionForUnit("mg")
 #' @export
@@ -106,5 +106,6 @@ getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- enc2utf8(unit)
   dimensionTask <- getNetTask("DimensionTask")
-  rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
+  dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
+  ifNotNull(dim, rClr::clrGet(dim, "Name"))
 }
