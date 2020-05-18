@@ -61,7 +61,7 @@ Parameter <- R6::R6Class(
     print = function(...) {
       private$printQuantity()
       private$printLine("isStateVariable", self$isStateVariable)
-      if(self$isStateVariable){
+      if (self$isStateVariable) {
         private$printLine("RHSFormula")
         self$rhsFormula$printFormula()
       }

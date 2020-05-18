@@ -66,7 +66,7 @@ test_that("It can create a standard human for a given bodyweight with predefined
   )
 
   human_values <- createIndividual(individualCharacteristics = human)
-  paths <-  human_values$distributedParameters$paths
+  paths <- human_values$distributedParameters$paths
 
   expect_true("MyMolecule1|Ontogeny factor" %in% paths)
   expect_true("MyMolecule1|Ontogeny factor GI" %in% paths)
@@ -74,33 +74,3 @@ test_that("It can create a standard human for a given bodyweight with predefined
   expect_true("MyMolecule2|Ontogeny factor" %in% paths)
   expect_true("MyMolecule2|Ontogeny factor GI" %in% paths)
 })
-
-
-test_that("It can create a standard human for a given bodyweight and discard unknwon ontogenies", {
-  moleculeOntogeny1 <- MoleculeOntogeny$new(molecule = "MyMolecule1", ontogeny = "DOES NOT EXIST")
-
-  human <- createIndividualCharacteristics(
-    species = Species$Human,
-    population = HumanPopulation$BlackAmerican_NHANES_1997,
-    weight = 60,
-    age = 15,
-    gender = Gender$Female,
-    moleculeOntogenies = moleculeOntogeny1
-  )
-
-  human_values <- createIndividual(individualCharacteristics = human)
-  paths <-  human_values$distributedParameters$paths
-
-  expect_false("MyMolecule1|Ontogeny factor" %in% paths)
-  expect_false("MyMolecule1|Ontogeny factor GI" %in% paths)
-})
-
-# human <- createIndividualCharacteristics(
-#   species = Species$Human,
-#   population = HumanPopulation$Asian_Tanaka_1996,
-#   gender = Gender$Female,
-#   age = 10,
-#   height = 175,
-#   weight = 60,
-#   moleculeOntogenies = moleculeOntogeny
-# )
