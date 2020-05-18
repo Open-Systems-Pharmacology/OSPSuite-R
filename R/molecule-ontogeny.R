@@ -17,10 +17,12 @@ MoleculeOntogeny <- R6::R6Class(
 
     #' @description
     #' Initialize a new instance of the class
-    #' @param molecule Optional molecule name
-    #' @param ontogeny Optional ontogeny to use for the Molecule
+    #' @param molecule molecule name
+    #' @param ontogeny ontogeny to use for the Molecule (one of StandardOntogeny)
     #' @return A new `MoleculeOntogeny` object.
-    initialize = function(molecule = NULL, ontogeny = NULL) {
+    initialize = function(molecule, ontogeny) {
+      validateIsString(molecule)
+      validateEnumValue(ontogeny, StandardOntogeny)
       self$molecule <- molecule
       self$ontogeny <- ontogeny
     },
