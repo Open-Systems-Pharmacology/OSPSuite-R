@@ -38,3 +38,26 @@ Gender <- enum(c(
   Male = "MALE",
   Unknown = "UNKNOWN"
 ))
+
+#' List of ontogeny supported in PK-Sim
+#'
+#' @include enum.R
+#' @export
+StandardOntogeny <- enum(c(
+  "CYP1A2",
+  "CYP2C18",
+  "CYP2C19",
+  "CYP2C8",
+  "CYP2C9",
+  "CYP2D6",
+  "CYP2E1",
+  "CYP3A4",
+  "CYP3A5",
+  "CYP3A7",
+  "UGT1A1",
+  "UGT1A4",
+  "UGT1A6",
+  "UGT1A9",
+  "UGT2B4",
+  "UGT2B7"
+))
