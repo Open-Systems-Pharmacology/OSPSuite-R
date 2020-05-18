@@ -1,11 +1,10 @@
-WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
-
 #' Converts a value given in a specified unit into the base unit of a quantity
 #'
-#' @param quantity Instance of a quantity from which the base unit will be retrieved
+#' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in unit (single or vector)
 #' @param unit Unit of value
-#'
+#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration
+
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
@@ -16,15 +15,22 @@ WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
 #'
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
-toBaseUnit <- function(quantity, values, unit) {
-  validateIsOfType(quantity, Quantity)
+toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
+  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
+  validateIsNumeric(molWeight, nullAllowed = TRUE)
   unit <- enc2utf8(unit)
-  validateHasUnit(quantity, unit)
+  dimension <- quantityOrDimension
+  if (isOfType(quantityOrDimension, Quantity)) {
+    dimension <- quantityOrDimension$dimension
+  }
   values <- c(values)
-  sapply(values, function(value) {
-    rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", quantity$ref, value, unit)
-  })
+  dimensionTask <- getNetTask("DimensionTask")
+  if (is.null(molWeight)) {
+    rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values)
+  } else {
+    rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values, molWeight)
+  }
 }
 
 
@@ -33,7 +39,7 @@ toBaseUnit <- function(quantity, values, unit) {
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in base unit (single or vector)
 #' @param targetUnit Unit to convert to
-#' @param molWeight Optional molecule weight to use when converting from molar to mass amount or concentration
+#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
