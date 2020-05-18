@@ -167,5 +167,3 @@ test_that("It can set the isStateVariable to false for a parameter with RHS", {
   expect_false(rhsParameter$isStateVariable)
   expect_null(rhsParameter$rhsFormula)
 })
-
-

@@ -2,8 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{getDimensionForUnit}
 \alias{getDimensionForUnit}
-\title{Returns the dimension that can be used to support the given unit.
-Returns null}
+\title{Returns the name of dimension that can be used to support the given unit or null if the dimension cannot be found}
 \usage{
 getDimensionForUnit(unit)
 }
@@ -11,8 +10,7 @@ getDimensionForUnit(unit)
 \item{unit}{Unit used to find the corresponding dimension}
 }
 \description{
-Returns the dimension that can be used to support the given unit.
-Returns null
+Returns the name of dimension that can be used to support the given unit or null if the dimension cannot be found
 }
 \examples{
 dim <- getDimensionForUnit("mg")

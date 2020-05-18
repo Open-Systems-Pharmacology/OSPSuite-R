@@ -40,15 +40,15 @@ allowing the user to retrieve potential ontogeny values.
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$new(molecule = NULL, ontogeny = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$new(molecule, ontogeny)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{molecule}}{Optional molecule name}
+\item{\code{molecule}}{molecule name}
 
-\item{\code{ontogeny}}{Optional ontogeny to use for the Molecule}
+\item{\code{ontogeny}}{ontogeny to use for the Molecule (one of StandardOntogeny)}
 }
 \if{html}{\out{</div>}}
 }

@@ -83,10 +83,10 @@ setQuantityValues <- function(quantities, values) {
   validateIsOfType(quantities, Quantity)
   validateIsNumeric(values)
 
-  if(length(values) > 1) {
+  if (length(values) > 1) {
     validateIsSameLength(quantities, values)
   }
-  else{
+  else {
     values <- rep(values, length(quantities))
   }
 
