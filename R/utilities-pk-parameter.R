@@ -25,8 +25,11 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateIsString(displayName, nullAllowed = TRUE)
   validateIsString(displayUnit, nullAllowed = TRUE)
 
+  displayUnit <- enc2utf8(displayUnit %||% "")
+  displayName <- enc2utf8(displayName %||% "")
+
   pkParameterTask <- getNetTask("PKParameterTask")
-  netUserDefinedPKParameter <- rClr::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName %||% "", displayUnit %||% "")
+  netUserDefinedPKParameter <- rClr::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
   userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
   rClr::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
   return(userDefinedPKParameter)
