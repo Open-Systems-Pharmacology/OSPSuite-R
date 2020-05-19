@@ -1,14 +1,14 @@
 ---
-  title: "Calculating PK parameters of simulation outputs."
+title: "Calculating PK parameters of simulation outputs."
 output: rmarkdown::html_vignette
 #output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Calculating PK parameters of simulation outputs}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-  ```{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
