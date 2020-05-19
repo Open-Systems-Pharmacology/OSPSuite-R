@@ -21,11 +21,16 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   unit <- enc2utf8(unit)
   dimension <- quantityOrDimension
+  dimensionTask <- getNetTask("DimensionTask")
+
   if (isOfType(quantityOrDimension, Quantity)) {
     dimension <- quantityOrDimension$dimension
   }
-  values <- c(values)
-  dimensionTask <- getNetTask("DimensionTask")
+
+  if(all(is.na(molWeight))){
+    molWeight <- NULL
+  }
+
   if (is.null(molWeight)) {
     rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values)
   } else {
@@ -57,12 +62,17 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- enc2utf8(targetUnit)
   dimension <- quantityOrDimension
+  values <- c(values)
+  dimensionTask <- getNetTask("DimensionTask")
+
   if (isOfType(quantityOrDimension, Quantity)) {
     dimension <- quantityOrDimension$dimension
   }
 
-  values <- c(values)
-  dimensionTask <- getNetTask("DimensionTask")
+  if(all(is.na(molWeight))){
+    molWeight <- NULL
+  }
+
   if (is.null(molWeight)) {
     rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values)
   } else {

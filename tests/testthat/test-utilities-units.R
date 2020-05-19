@@ -9,6 +9,11 @@ test_that("It can convert from a value in base unit to a target unit", {
   expect_equal(toUnit(par, 1, "l"), 1)
 })
 
+test_that("It can convert from one given value in base unit to a target unit when the molweight is defined as NA but not required", {
+  expect_equal(toUnit(par, 1, "ml", molWeight = NULL), 1000)
+  expect_equal(toUnit(par, 1, "l", molWeight = NA), 1)
+})
+
 test_that("It can convert from a value in base unit to a target unit using the dimension name", {
   expect_equal(toUnit(par$dimension, 1, "ml"), 1000)
 })
@@ -38,6 +43,12 @@ test_that("It can convert from one given value in a unit to a base unit", {
   expect_equal(toBaseUnit(par, 1000, "ml"), 1)
   expect_equal(toBaseUnit(par, 100, "l"), 100)
 })
+
+test_that("It can convert from one given value in a unit to a base unit when the molweight is defined as NA but not required", {
+  expect_equal(toBaseUnit(par, 1000, "ml", molWeight = NULL), 1)
+  expect_equal(toBaseUnit(par, 100, "l", molWeight = NA), 100)
+})
+
 
 test_that("It can convert from a value in mass to a value in mol using a molweight parameter", {
   molWeight <- 50 # 50kg/umol
