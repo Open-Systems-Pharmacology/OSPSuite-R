@@ -2,7 +2,7 @@
 #'
 #' @param results Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}
 #'
-#' @return A list of QuantityPKParameter (one object for each output-pk parameter combination)
+#' @return An instance of \code{SimulationPKAnalyses} class.
 #'
 #' @examples
 #'

@@ -34,6 +34,7 @@ The workflow steps are described in the following vignettes:
 * [Running a simulation](run-simulation.html)
 * [Creating individuals](create-individual.html)
 * [Population simulations](create-run-population.html)
+* [PK Analysis](pk-analysis.html)
 * [Table parameters](table-parameters.html)
 * [Dimensions and Units](unit-conversion.html)
 
@@ -51,17 +52,40 @@ resultOfAFunction <- object1$multiply(1,2)
 Important information about the object can be printed out by calling `print(object)`.
 
 The most important classes are:
-  : `Simulation` Representation of the simulation loaded from the *.pkml file.
-  : `SimulationSettings` #Short descriptions of the classes to be added here
+  : `Simulation`
+    : Representation of the simulation loaded from the *.pkml file.
+  : `SimulationSettings`
+    : Settings of the simulation. The object includes `solver` an object of type `SolverSettings`, `outputSelections` list of quantities for which the output will be generated, and `outputSchema` definition of the output intervals of the simulation.
   : `SimulationRunOptions`
+    : An object defining the options of a simulation run. The options are: `numberOfCores` the maximal number of (logical) cores that can be used by the (population) simulation; `checkForNegativeValues` a boolean defining if an error if thrown if some variables become negative for which the "negativeValuesAllowed"-flag is set to FALSE (can be used to ignore numerical noise); `showProgress` a boolean if a "progress bar" is shown in the console representing the progress of the simulation.
   : `SolverSettings`
+    : Object defining the settings of the solver. Stored in `SimulationSettings` of a `Simulation` (accessibly by field `$settings`).
   : `OutputSchema`
+    : Definition of the output intervals of the simulation. The `OutputSchema` defines the total simulation time and the time points at which results are generated. Can be accessed as property of a `Simulation`-object.
   : `OutputSelections`
+    : List of quantities (parameters and molecules) for which the outputs will be generated. Can be accessed as property of a `Simulation`-object.
   : `SimulationResults`
+    : Results of a simulation, either individual or population. Holds the simulated values for all quantities defined in the `OutputSelections`. See [Running a simulation](run-simulation.html) for more information.
+  : `Entity`
+    : Every accessible distinct part of the model. Most prominent entities are `Molecule`, `Parameter`, `Container`. Every `Entity` has properties `$path` representing the path within the model structure and `$parentContainer` being the container this entity is located in.
   : `Container`
+    : A `Container` is an element of model structure that contains other entities (e.g., spatial containers, molecules, parameters).
+    The most prominent containers are organs and compartments. A loaded `Simulation` is also a container.
+  : `Quantity`
+    : An `Entity` in the simulation that has a value - namely `Molecule` and `Parameter`. Every `Quantity` has a `$value` and a `dimension`. Further important fields are `$unit`, which is the base unit of the dimension. See [Dimensions and Units](unit-conversion.html) for more information.
   : `Molecule`
+    : A molecule located in a `Container`. The `$value`-property referes to the initial value in the simulation. Inherits from `Quantity`.
   : `Parameter`
+    : A parameter. The `$value`-property referes to the initial value in the simulation. Inherits from `Quantity`.
+  : `Formula`
+    : The value of each `Quantity` is described by a `Formula`. There are different types of formulae, see [Changing parameter and molecule start values](set-values.html) for more information.
   : `IndividualCharacteristics`
+    : An object used for creating of individual parameter sets with the `createIndividual`-method. See [Creating individuals](create-individual.html) for more information.
   : `Population`
+    : An object describing a virtual population. Can be either loaded from a *.csv-file created by PK-Sim or created with the `createPopulation`-method. See [Population simulations](create-run-population.html) for more information.
   : `PopulationCharacteristics`
-  : `TableFormula`
+    : An object used for creating of population parameter sets with the `createPopulation`-method. See [Population simulations](create-run-population.html) for more information.
+  : `SimulationPKAnalyses`
+    : PK analyses for a simulations result.
+  : `QuantityPKParameter`
+    : A certain PK-parameter for an output quantity. Has the fields `$name` which is the name of the pk-parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).

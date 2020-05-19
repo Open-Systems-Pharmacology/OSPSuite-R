@@ -18,7 +18,7 @@ AllMatchingMethod <- enum(c(
   Molecule = "AllMoleculesMatching"
 ))
 
-#' Names of the .NET container tasks of the type "AllXXXMatching"
+#' Names of the .NET container tasks of the type "AllXXXPathsIn"
 #'
 #' @include enum.R
 AllPathsInMethod <- enum(c(
