@@ -3,12 +3,14 @@
 \docType{data}
 \name{AllPathsInMethod}
 \alias{AllPathsInMethod}
-\title{Names of the .NET container tasks of the type "AllXXXMatching"}
-\format{An object of class \code{list} of length 4.}
+\title{Names of the .NET container tasks of the type "AllXXXPathsIn"}
+\format{
+An object of class \code{list} of length 4.
+}
 \usage{
 AllPathsInMethod
 }
 \description{
-Names of the .NET container tasks of the type "AllXXXMatching"
+Names of the .NET container tasks of the type "AllXXXPathsIn"
 }
 \keyword{datasets}

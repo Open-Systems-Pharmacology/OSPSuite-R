@@ -119,3 +119,22 @@ livParam$isFormula
 # Type of the formula. CONSTANT if the value is defined by a constant.
 livParam$formula
 ```
+
+## Loading simulation tree
+A convenient way to traverse the simulation structure is given by the method \code{getSimulationTree}. The method generates a tree-like list of all paths within the simulation. Each element of the tree contains all the sub-containers of the element. The final elements are strings representing the path to the entity.
+
+```{r simTree}
+# Load simulation
+simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+
+# Create simulation tree
+simTree <- getSimulationTree(sim)
+
+# Calling simTree would list all entities within the simulation
+# Accessing the parameter "Organism|Weight"
+simTree$Organism$Weight
+
+# Getting all entities located under "Organism|Liver|Periportal|Intracellular"
+simTree$Organism$Liver$Periportal$Intracellular
+```

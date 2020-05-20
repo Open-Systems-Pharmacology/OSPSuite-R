@@ -1,6 +1,6 @@
 #' @title QuantitySelection
 #' @docType class
-#' @description  List of selected quantities selected as output for a given simulation
+#' @description  List of quantities selected as output for a given simulation
 #'
 QuantitySelection <- R6::R6Class(
   "QuantitySelection",

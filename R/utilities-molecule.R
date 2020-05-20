@@ -27,7 +27,7 @@ getAllMoleculesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Molecule)
 }
 
-#' Retrieves the path of all molecules defined in the container and all its children
+#' Retrieves the paths of all molecules defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
