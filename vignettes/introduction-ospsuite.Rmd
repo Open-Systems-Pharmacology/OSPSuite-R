@@ -35,6 +35,7 @@ The workflow steps are described in the following vignettes:
 * [Creating individuals](create-individual.html)
 * [Population simulations](create-run-population.html)
 * [PK Analysis](pk-analysis.html)
+* [Sensitivity analysis](sensitivity-analysis.html)
 * [Table parameters](table-parameters.html)
 * [Dimensions and Units](unit-conversion.html)
 

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Population simulations
-Population simulations can be easily performed in R by combining the simulation loaded from a *.pkml file with the population information created in PK-Sim and exported to CSV format (for details, please refer to [OSPS online documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-creating-populations)) or created directly in R (see [Creating simulations](#SecretionCreatePopulation)). 
+Population simulations can be easily performed in R by combining the simulation loaded from a *.pkml file with the population information created in PK-Sim and exported to CSV format (for details, please refer to [OSPS online documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-creating-populations)) or created directly in R (see [Creating simulations](#SectionCreatePopulation)). 
 
 ### Loading population file
 The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulation` method (see [Running simulations and retrieving the results](run-simulation.html)).
@@ -29,7 +29,7 @@ myPopulation <- loadPopulation(csvPopulationFile = popFilePath)
 print(myPopulation)
 ```
 
-## Creating populations {#SecretionCreatePopulation}
+## Creating populations {#SectionCreatePopulation}
 Similar to creating individual parameter sets (see [Creating individuals](create-individual.html)), a population is created from *population characteristics* created by calling the method `createPopulationCharacteristics`. To see the list of available values for the arguments `species` and `population` (only for human), use the enums `Species` and `HumanPopulation`, respectively. The returned object of type `PopulationCharacteristics` is then passed to the function `createPopulation` to generate a set of parameter values. The algoritghm behind is the same used in PK-Sim when creating an population.
 
 ```{r createPop}
