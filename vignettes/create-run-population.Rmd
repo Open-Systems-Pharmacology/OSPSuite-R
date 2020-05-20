@@ -35,6 +35,7 @@ Similar to creating individual parameter sets (see [Creating individuals](create
 ```{r createPop}
 library(ospsuite)
 
+#If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
 populationCharacteristics <- createPopulationCharacteristics(
                                             species = Species$Human,
                                             population = HumanPopulation$Asian_Tanaka_1996,
