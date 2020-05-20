@@ -30,11 +30,12 @@ print(myPopulation)
 ```
 
 ## Creating populations {#SecretionCreatePopulation}
-Similar to creating individual parameter sets (see [Creating individuals](create-individual.html)), a population is created from *population characteristics* created by calling the method `createPopulationCharacteristics`. To see the list of available values for the arguments `species` and `population` (only for human), use the enums `Species` and `HumanPopulation`, respectively. The returned object of type `PopulationCharacteristics` is then passed to the function `createPopulation` to generate a set of parameter values. The algoritghm behind is the same used in PK-Sim when creating an population.
+Similar to creating individual parameter sets (see [Creating individuals](create-individual.html)), a population is created from *population characteristics* created by calling the method `createPopulationCharacteristics`. To see the list of available values for the arguments `species` and `population` (only for human), use the enums `Species` and `HumanPopulation`, respectively. The returned object of type `PopulationCharacteristics` is then passed to the function `createPopulation` to generate a set of parameter values. The algoritghm behind is the same used in PK-Sim when creating an population. Molecule ontogenies can be added as described in the vignette [Creating individuals](create-individual.html).
 
 ```{r createPop}
 library(ospsuite)
 
+#If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
 populationCharacteristics <- createPopulationCharacteristics(
                                             species = Species$Human,
                                             population = HumanPopulation$Asian_Tanaka_1996,
