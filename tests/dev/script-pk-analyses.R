@@ -27,6 +27,7 @@ exportPKAnalysesToCSV(populationPkAnalyses, "C:/temp/export/pk.csv")
 newPKAnalyses <- importPKAnalysesFromCSV("C:/temp/export/pk.csv", sim)
 df <- pkAnalysesAsDataFrame(newPKAnalyses)
 
+print(populationPkAnalyses)
 pkParameters <- populationPkAnalyses$allPKParametersFor(quantityPath)
 
 for (pkParameter in pkParameters) {

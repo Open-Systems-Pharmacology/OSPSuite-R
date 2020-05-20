@@ -39,12 +39,36 @@ SimulationPKAnalyses <- R6::R6Class(
       validateIsString(quantityPath)
       validateIsString(pkParameter)
       private$toPKParameter(rClr::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
+    },
+
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
+    print = function(...) {
+      private$printClass()
+      private$printLine("For outputs:", addTab = FALSE)
+      for (quantityPath in self$allQuantityPaths) {
+        private$printLine(quantityPath)
+      }
+      private$printLine("For pK-Parameters:", addTab = FALSE)
+      for (pkParameter in self$allPKParameterNames) {
+        private$printLine(pkParameter)
+      }
+      invisible(self)
     }
   ),
   active = list(
     #' @field simulation Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
+    },
+    #' @field allPKParameterNames Returns the name of all pk parameters for which a value is availalbe
+    allPKParameterNames = function(value) {
+      private$readOnlyProperty("allPKParameterNames", value, rClr::clrGet(self$ref, "AllPKParameterNames"))
+    },
+    #' @field allQuantityPaths Returns the path of all quantities for which pk parameters were calculated
+    allQuantityPaths = function(value) {
+      private$readOnlyProperty("allQuantityPaths", value, rClr::clrGet(self$ref, "AllQuantityPaths"))
     }
   )
 )
