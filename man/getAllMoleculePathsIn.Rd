@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-molecule.R
 \name{getAllMoleculePathsIn}
 \alias{getAllMoleculePathsIn}
-\title{Retrieves the path of all molecules defined in the container and all its children}
+\title{Retrieves the paths of all molecules defined in the container and all its children}
 \usage{
 getAllMoleculePathsIn(container)
 }
@@ -13,7 +13,7 @@ getAllMoleculePathsIn(container)
 An array with one entry per molecule defined in the container
 }
 \description{
-Retrieves the path of all molecules defined in the container and all its children
+Retrieves the paths of all molecules defined in the container and all its children
 }
 \examples{
 
