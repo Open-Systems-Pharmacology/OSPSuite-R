@@ -4,9 +4,7 @@
 \name{AllPathsInMethod}
 \alias{AllPathsInMethod}
 \title{Names of the .NET container tasks of the type "AllXXXPathsIn"}
-\format{
-An object of class \code{list} of length 4.
-}
+\format{An object of class \code{list} of length 4.}
 \usage{
 AllPathsInMethod
 }

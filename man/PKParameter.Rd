@@ -19,6 +19,8 @@ Standard PK Parameters defined in the OSPSuite
 
 \item{\code{dimension}}{Dimension instance used by the PK-Parameter (Read-Only)}
 
+\item{\code{unit}}{Unit of the PK-Parameter (Read-Only)}
+
 \item{\code{displayUnit}}{Display Unit used for the PK-Parameter}
 }
 \if{html}{\out{</div>}}

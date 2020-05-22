@@ -18,12 +18,17 @@ pK-Parameter values for all indiviudals of a simulation (1 or more) calculated f
 \item{\code{quantityPath}}{The path of the quantity for which the values were calculated}
 
 \item{\code{name}}{The name of the pK-Parameter (AUC, Cmax, Tmax etc...)}
+
+\item{\code{unit}}{Base unit in which the pk parameter was calculated}
+
+\item{\code{dimension}}{Dimension in which the pk parameter was calculated}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{QuantityPKParameter$new()}}
 \item \href{#method-print}{\code{QuantityPKParameter$print()}}
 \item \href{#method-clone}{\code{QuantityPKParameter$clone()}}
 }
@@ -31,9 +36,27 @@ pK-Parameter values for all indiviudals of a simulation (1 or more) calculated f
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
 }
 \out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Initialize a new instance of the class
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{QuantityPKParameter$new(ref)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ref}}{.NET Instance}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{QuantityPKParameter} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

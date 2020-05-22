@@ -14,6 +14,10 @@ pK-Analyses of a simulation (either individual or population simulation).
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)}
+
+\item{\code{allPKParameterNames}}{Returns the name of all pk parameters for which a value is availalbe}
+
+\item{\code{allQuantityPaths}}{Returns the path of all quantities for which pk parameters were calculated}
 }
 \if{html}{\out{</div>}}
 }
@@ -23,6 +27,7 @@ pK-Analyses of a simulation (either individual or population simulation).
 \item \href{#method-new}{\code{SimulationPKAnalyses$new()}}
 \item \href{#method-allPKParametersFor}{\code{SimulationPKAnalyses$allPKParametersFor()}}
 \item \href{#method-pKParameterFor}{\code{SimulationPKAnalyses$pKParameterFor()}}
+\item \href{#method-print}{\code{SimulationPKAnalyses$print()}}
 }
 }
 \if{html}{
@@ -85,6 +90,22 @@ The pK Parameter defined for the given path and name
 \item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter} should be retrieved}
 
 \item{\code{pkParameter}}{Name of the pkParameter to retrieve}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationPKAnalyses$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}
 }

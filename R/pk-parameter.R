@@ -45,6 +45,10 @@ PKParameter <- R6::R6Class("PKParameter",
     dimension = function(value) {
       private$readOnlyProperty("Dimension", value, rClr::clrGet(private$.dimension(), "Name"))
     },
+    #' @field unit Unit of the PK-Parameter (Read-Only)
+    unit = function(value) {
+      private$wrapReadOnlyProperty("BaseUnit", value)
+    },
     #' @field displayUnit Display Unit used for the PK-Parameter
     displayUnit = function(value) {
       private$wrapProperty("DisplayUnit", value)
