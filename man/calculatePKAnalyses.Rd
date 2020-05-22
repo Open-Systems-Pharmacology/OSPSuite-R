@@ -10,7 +10,7 @@ calculatePKAnalyses(results)
 \item{results}{Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}}
 }
 \value{
-A list of QuantityPKParameter (one object for each output-pk parameter combination)
+An instance of \code{SimulationPKAnalyses} class.
 }
 \description{
 Calculates the pkAnalyses for all output values available in \code{results}.

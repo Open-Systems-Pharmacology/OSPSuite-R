@@ -35,6 +35,7 @@ List of selected quantities selected as output for a given simulation
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-clear}{}}}
 \subsection{Method \code{clear()}}{
 Removes all selected output from the selection
 \subsection{Usage}{
@@ -44,6 +45,7 @@ Removes all selected output from the selection
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addQuantity"></a>}}
+\if{latex}{\out{\hypertarget{method-addQuantity}{}}}
 \subsection{Method \code{addQuantity()}}{
 Adds a quantity as selected
 \subsection{Usage}{
@@ -60,6 +62,7 @@ Adds a quantity as selected
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-removeQuantity"></a>}}
+\if{latex}{\out{\hypertarget{method-removeQuantity}{}}}
 \subsection{Method \code{removeQuantity()}}{
 Removes a quantity from the selection
 \subsection{Usage}{
@@ -76,6 +79,7 @@ Removes a quantity from the selection
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

@@ -4,7 +4,9 @@
 \name{StandardContainer}
 \alias{StandardContainer}
 \title{Standard containers typically available in a PBPK simulation}
-\format{An object of class \code{list} of length 4.}
+\format{
+An object of class \code{list} of length 4.
+}
 \usage{
 StandardContainer
 }

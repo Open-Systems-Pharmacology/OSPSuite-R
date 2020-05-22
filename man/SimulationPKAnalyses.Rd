@@ -33,6 +33,7 @@ pK-Analyses of a simulation (either individual or population simulation).
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -54,6 +55,7 @@ A new \code{SimulationPKAnalyses} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParametersFor"></a>}}
+\if{latex}{\out{\hypertarget{method-allPKParametersFor}{}}}
 \subsection{Method \code{allPKParametersFor()}}{
 Returns all QuantityPKParameter defined for a given path
 \subsection{Usage}{
@@ -70,6 +72,7 @@ Returns all QuantityPKParameter defined for a given path
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pKParameterFor"></a>}}
+\if{latex}{\out{\hypertarget{method-pKParameterFor}{}}}
 \subsection{Method \code{pKParameterFor()}}{
 The pK Parameter defined for the given path and name
 \subsection{Usage}{

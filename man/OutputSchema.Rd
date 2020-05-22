@@ -40,6 +40,7 @@ Output schema associated with a given simulation
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-clear}{}}}
 \subsection{Method \code{clear()}}{
 Clears all intervals and time points
 \subsection{Usage}{
@@ -49,6 +50,7 @@ Clears all intervals and time points
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addInterval"></a>}}
+\if{latex}{\out{\hypertarget{method-addInterval}{}}}
 \subsection{Method \code{addInterval()}}{
 Adds an interval to the schema
 \subsection{Usage}{
@@ -65,6 +67,7 @@ Adds an interval to the schema
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-removeInterval"></a>}}
+\if{latex}{\out{\hypertarget{method-removeInterval}{}}}
 \subsection{Method \code{removeInterval()}}{
 Removes the interval from the schema
 \subsection{Usage}{
@@ -81,6 +84,7 @@ Removes the interval from the schema
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addTimePoints"></a>}}
+\if{latex}{\out{\hypertarget{method-addTimePoints}{}}}
 \subsection{Method \code{addTimePoints()}}{
 Adds the time points to the schema
 \subsection{Usage}{
@@ -97,6 +101,7 @@ Adds the time points to the schema
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

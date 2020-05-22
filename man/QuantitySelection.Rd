@@ -5,7 +5,7 @@
 \alias{QuantitySelection}
 \title{QuantitySelection}
 \description{
-List of selected quantities selected as output for a given simulation
+List of quantities selected as output for a given simulation
 }
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{QuantitySelection}
@@ -34,6 +34,7 @@ List of selected quantities selected as output for a given simulation
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

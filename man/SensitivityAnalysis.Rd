@@ -42,6 +42,7 @@ with a value that was overriden by the user}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -58,7 +59,7 @@ Initialize a new instance of the class
 \describe{
 \item{\code{simulation}}{Simulation for which a sensitivity analysis should be performed}
 
-\item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
+\item{\code{parameterPaths}}{Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
 on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overriden by the user}
 
@@ -74,6 +75,7 @@ A new \code{SensitivityAnalysis} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addParameterPaths"></a>}}
+\if{latex}{\out{\hypertarget{method-addParameterPaths}{}}}
 \subsection{Method \code{addParameterPaths()}}{
 Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
 \subsection{Usage}{
@@ -83,13 +85,16 @@ Adds the parameterPaths to the list of parameter path to vary in the sensitivity
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)}
+\item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)
+If no parameters were specified during creating of a \code{SensitivityAnalysis} (all constant parameters are considered),
+calling \code{addParameterPaths} will make only the manually added parameters being variated.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clearParameterPaths"></a>}}
+\if{latex}{\out{\hypertarget{method-clearParameterPaths}{}}}
 \subsection{Method \code{clearParameterPaths()}}{
 Removes all parameter paths defined in the Sensitivity Analysis
 \subsection{Usage}{
@@ -99,6 +104,7 @@ Removes all parameter paths defined in the Sensitivity Analysis
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
