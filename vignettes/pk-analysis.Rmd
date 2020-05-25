@@ -71,7 +71,7 @@ c_max$values
 In case of a population simulation, `$values` return a list of values calculated for each individual.
 
 ## Import and export of PK-analyses
-Population analysis calculated in R can be exported to a *.csv file and be loaded in PK-Sim, and vice versa.
+Population analysis calculated in R can be exported to a *.csv file and loaded in PK-Sim, and vice versa.
 
 ```{r PKAnalysesExport}
 # Load and run the simulation

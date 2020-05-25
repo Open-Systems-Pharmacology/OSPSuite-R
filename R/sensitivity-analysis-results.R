@@ -57,6 +57,8 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
+      private$printLine("Number of calculated sensitivities", self$count)
+      private$printLine("Available PK-parameters", self$allPKParameterNames)
       invisible(self)
     }
   )

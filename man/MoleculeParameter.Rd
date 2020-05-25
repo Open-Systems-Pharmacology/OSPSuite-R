@@ -4,7 +4,9 @@
 \name{MoleculeParameter}
 \alias{MoleculeParameter}
 \title{Standard molecule parameter names typically available in an endogenous molecule (enzyme, transporter etc...) coming from PK-Sim}
-\format{An object of class \code{list} of length 5.}
+\format{
+An object of class \code{list} of length 5.
+}
 \usage{
 MoleculeParameter
 }

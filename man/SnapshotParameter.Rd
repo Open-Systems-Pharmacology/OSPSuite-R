@@ -36,6 +36,7 @@ A parameter typically used in the definition of \code{IndividualCharacteristics}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -59,6 +60,7 @@ A new \code{SnapshotParameter} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -75,6 +77,7 @@ Print the object to the console
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printValue"></a>}}
+\if{latex}{\out{\hypertarget{method-printValue}{}}}
 \subsection{Method \code{printValue()}}{
 Print the the parameter in one line
 \subsection{Usage}{
@@ -91,6 +94,7 @@ Print the the parameter in one line
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
