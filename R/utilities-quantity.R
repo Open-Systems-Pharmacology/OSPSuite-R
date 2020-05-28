@@ -112,3 +112,29 @@ scaleQuantityValues <- function(quantities, factor) {
   lapply(quantities, function(q) q$value <- q$value * factor)
   invisible()
 }
+
+
+#' Retrieves the display path of the quantity defined by path in the simulation
+#'
+#' @param paths A single string or array of paths path relative to the \code{simulation}
+#' @param simulation A imulation used to find the entities
+#'
+#' @return a display path for each entry in paths
+#'
+getQuantityDisplayPaths <- function(paths, simulation) {
+  validateIsString(paths)
+  validateIsOfType(simulation, Simulation)
+  displayResolver <- getNetTask("FullPathDisplayResolver")
+  paths <- c(paths)
+
+  displayPaths <- lapply(paths, function(path) {
+    quantity <- getQuantity(path, simulation, stopIfNotFound = FALSE)
+    if (is.null(quantity)) {
+      return(path)
+    }
+
+    return(rClr::clrCall(displayResolver, "FullPathFor", quantity$ref))
+  })
+
+  return(unlist(displayPaths))
+}

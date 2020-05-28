@@ -179,3 +179,25 @@ test_that("It can scale mulstiple parameters with a given factor", {
   scaledValues <- sapply(parameters, function(x) x$value)
   expect_equal(scaledValues, originalValues * 1.5)
 })
+
+
+context("getParameterDisplayPaths")
+
+test_that("It return the display path for an existing parameter", {
+  path <- toPathString(c("Organism", "Liver", "Intracellular", "Volume"))
+  displayPath <- getParameterDisplayPaths(path, sim)
+  expect_equal(displayPath, "Liver-Intracellular-Volume")
+})
+
+test_that("It return the full path for a parameter that does not exist", {
+  path <- toPathString(c("Organism", "Nope"))
+  displayPath <- getParameterDisplayPaths(path, sim)
+  expect_equal(displayPath, path)
+})
+
+test_that("It return the display paths for a vector of parameters", {
+  path1 <- toPathString(c("Organism", "Liver", "Intracellular", "Volume"))
+  path2 <- toPathString(c("Organism", "Liver", "Volume"))
+  displayPath <- getParameterDisplayPaths(c(path1, path2), sim)
+  expect_identical(displayPath, c("Liver-Intracellular-Volume", "Liver-Volume"))
+})

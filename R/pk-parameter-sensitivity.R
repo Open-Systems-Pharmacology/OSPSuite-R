@@ -7,8 +7,8 @@ PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(
-    #' @field parameterPath  Unique name of parameter in sensitivity analysis
-    parameterPath = function(value) {
+    #' @field parameterName  Unique name of parameter in sensitivity analysis
+    parameterName = function(value) {
       private$wrapReadOnlyProperty("ParameterName", value)
     },
     #' @field pkParameterName  Name of PK Output (Cmax, Tmax etc...)
@@ -30,7 +30,7 @@ PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
     #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
-      private$printLine("Parameter path", self$parameterPath)
+      private$printLine("Parameter name", self$parameterName)
       private$printLine("PK-Parameter", self$pkParameterName)
       private$printLine("Output path", self$outputPath)
       private$printLine("Value", self$value)

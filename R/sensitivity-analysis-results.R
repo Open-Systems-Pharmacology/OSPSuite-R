@@ -23,6 +23,10 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' This will be a subset of all potential PK-Parameters available in the system
     allPKParameterNames = function(value) {
       private$wrapReadOnlyProperty("AllPKParameterNames", value)
+    },
+    #' @field allQuantityPaths Returns the path of all outputs available in this results.
+    allQuantityPaths = function(value) {
+      private$wrapReadOnlyProperty("AllQuantityPaths", value)
     }
   ),
   public = list(
@@ -51,6 +55,16 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       validateIsNumeric(totalSensitivityThreshold)
       pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
       toObjectType(pkParameterSentitivities, PKParameterSensitivity)
+    },
+    #' @description
+    #' Returns the sensisivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns `NaN`
+    #' @param pkParameterName Name of pkParameter for which sensitivity should be retrieved
+    #' @param outputPath Path of the output for which the sensitivity should be retrieved
+    #' @param parameterName Name of the sensitivity parameter for which the sensitivity should be retrieved
+    pkParameterSensitivityValueFor = function(pkParameterName, outputPath, parameterName) {
+      value <- rClr::clrCall(self$ref, "PKParameterSensitivityValueFor", pkParameterName, outputPath, parameterName)
+      value[is.nan(value)] <- NA
+      return(value)
     },
     #' @description
     #' Print the object to the console

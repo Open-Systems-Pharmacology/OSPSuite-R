@@ -38,7 +38,7 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
     initialize = function(ref) {
       super$initialize(ref)
       pkParameter <- pkParameterByName(self$name, stopIfNotFound = FALSE)
-      if(!is.null(pkParameter)){
+      if (!is.null(pkParameter)) {
         private$.unit <- pkParameter$unit
         private$.dimension <- pkParameter$dimension
       }

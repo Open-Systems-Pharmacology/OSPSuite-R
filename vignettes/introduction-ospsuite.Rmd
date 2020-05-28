@@ -95,4 +95,4 @@ The most important classes are:
   : `SensitivityAnalysisResults`
     : Resuls of running the `SensitivityAnalysis`
   : `PKParameterSensitivity`
-    : The sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the variated parameter `$parameterPath`. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
+    : The sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the variated parameter `$parameterName`. See [Sensitivity analysis](sensitivity-analysis.html) for more information.

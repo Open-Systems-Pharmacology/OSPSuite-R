@@ -7,7 +7,7 @@ Printable <- R6::R6Class(
   private = list(
     printLine = function(entry, value = NULL, addTab = TRUE) {
       entries <- c(entry)
-      if(addTab){
+      if (addTab) {
         entries <- c("  ", entry)
       }
       if (!is.null(value)) {
