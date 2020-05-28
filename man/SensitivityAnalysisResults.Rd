@@ -41,6 +41,7 @@ This will be a subset of all potential PK-Parameters available in the system}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -62,6 +63,7 @@ A new \code{SensitivityAnalysisResults} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
+\if{latex}{\out{\hypertarget{method-allPKParameterSensitivitiesFor}{}}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
 Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to \code{totalSensitivityThreshold}
 \subsection{Usage}{
@@ -88,6 +90,7 @@ parameter participating to a total of 90 percent of the sensitivity would be ret
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
+\if{latex}{\out{\hypertarget{method-pkParameterSensitivityValueFor}{}}}
 \subsection{Method \code{pkParameterSensitivityValueFor()}}{
 Returns the sensisivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns \code{NaN}
 \subsection{Usage}{
@@ -112,6 +115,7 @@ Returns the sensisivity value for a given pkParameter, output and parameter. If 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

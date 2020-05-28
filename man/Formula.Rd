@@ -50,6 +50,7 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -66,6 +67,7 @@ Print the object to the console
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printFormula"></a>}}
+\if{latex}{\out{\hypertarget{method-printFormula}{}}}
 \subsection{Method \code{printFormula()}}{
 Print the formula to the console without the name of the class
 \subsection{Usage}{
@@ -109,6 +111,7 @@ Print the formula to the console without the name of the class
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addPoints"></a>}}
+\if{latex}{\out{\hypertarget{method-addPoints}{}}}
 \subsection{Method \code{addPoints()}}{
 Adds one or more points to a table
 \subsection{Usage}{
@@ -127,6 +130,7 @@ Adds one or more points to a table
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-removePoint"></a>}}
+\if{latex}{\out{\hypertarget{method-removePoint}{}}}
 \subsection{Method \code{removePoint()}}{
 Remove the point having the same x and y from the table
 \subsection{Usage}{
@@ -145,6 +149,7 @@ Remove the point having the same x and y from the table
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clearPoints"></a>}}
+\if{latex}{\out{\hypertarget{method-clearPoints}{}}}
 \subsection{Method \code{clearPoints()}}{
 Remove all points from the table
 \subsection{Usage}{
@@ -154,6 +159,7 @@ Remove all points from the table
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setPoints"></a>}}
+\if{latex}{\out{\hypertarget{method-setPoints}{}}}
 \subsection{Method \code{setPoints()}}{
 Replace all points defined in the table with the new values given.
 This is a convenience method for callign \code{clearPoints} and \code{addPoints}
@@ -173,6 +179,7 @@ This is a convenience method for callign \code{clearPoints} and \code{addPoints}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -189,6 +196,7 @@ Print the object to the console
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-valueAt"></a>}}
+\if{latex}{\out{\hypertarget{method-valueAt}{}}}
 \subsection{Method \code{valueAt()}}{
 Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
 If the table contains no point, 0 is returned
@@ -206,6 +214,7 @@ If the table contains no point, 0 is returned
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printFormula"></a>}}
+\if{latex}{\out{\hypertarget{method-printFormula}{}}}
 \subsection{Method \code{printFormula()}}{
 Print the formula to the console
 \subsection{Usage}{

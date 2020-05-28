@@ -44,6 +44,7 @@ List of individuals used in a population simulation
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-has"></a>}}
+\if{latex}{\out{\hypertarget{method-has}{}}}
 \subsection{Method \code{has()}}{
 Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
 \subsection{Usage}{
@@ -60,6 +61,7 @@ Returns \code{TRUE} if the population has variability defined for \code{paramete
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setParameterValues"></a>}}
+\if{latex}{\out{\hypertarget{method-setParameterValues}{}}}
 \subsection{Method \code{setParameterValues()}}{
 Sets the variability values in the population for \code{parameterOrPath}
 \subsection{Usage}{
@@ -78,6 +80,7 @@ Sets the variability values in the population for \code{parameterOrPath}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getParameterValues"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterValues}{}}}
 \subsection{Method \code{getParameterValues()}}{
 Returns the variability values defined in the population for \code{parameterOrPath}
 \subsection{Usage}{
@@ -94,6 +97,7 @@ Returns the variability values defined in the population for \code{parameterOrPa
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getCovariateValues"></a>}}
+\if{latex}{\out{\hypertarget{method-getCovariateValues}{}}}
 \subsection{Method \code{getCovariateValues()}}{
 Returns the values defined in the population for the covariate named \code{covariateName}
 \subsection{Usage}{
@@ -110,6 +114,7 @@ Returns the values defined in the population for the covariate named \code{covar
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getCovariateValue"></a>}}
+\if{latex}{\out{\hypertarget{method-getCovariateValue}{}}}
 \subsection{Method \code{getCovariateValue()}}{
 Returns the values defined in the population for the covariate named \code{covariateName} and invididual with id \code{individualId}
 \subsection{Usage}{
@@ -128,6 +133,7 @@ Returns the values defined in the population for the covariate named \code{covar
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getParameterValuesForIndividual"></a>}}
+\if{latex}{\out{\hypertarget{method-getParameterValuesForIndividual}{}}}
 \subsection{Method \code{getParameterValuesForIndividual()}}{
 Returns all values defined in the population the invididual with id \code{individualId}
 \subsection{Usage}{
@@ -144,6 +150,7 @@ Returns all values defined in the population the invididual with id \code{indivi
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

@@ -61,6 +61,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -80,6 +81,7 @@ A new \code{Quantity} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -96,6 +98,7 @@ Print the object to the console
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printValue"></a>}}
+\if{latex}{\out{\hypertarget{method-printValue}{}}}
 \subsection{Method \code{printValue()}}{
 Print the name of the quantity and its value
 \subsection{Usage}{
@@ -105,6 +108,7 @@ Print the name of the quantity and its value
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-printQuantityValue"></a>}}
+\if{latex}{\out{\hypertarget{method-printQuantityValue}{}}}
 \subsection{Method \code{printQuantityValue()}}{
 Print the the value and unit of the quantity
 \subsection{Usage}{
@@ -121,6 +125,7 @@ Print the the value and unit of the quantity
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-setValue"></a>}}
+\if{latex}{\out{\hypertarget{method-setValue}{}}}
 \subsection{Method \code{setValue()}}{
 Convert value from unit to the base unit and sets the value in base unit.
 \subsection{Usage}{
@@ -139,6 +144,7 @@ Convert value from unit to the base unit and sets the value in base unit.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasUnit"></a>}}
+\if{latex}{\out{\hypertarget{method-hasUnit}{}}}
 \subsection{Method \code{hasUnit()}}{
 Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
 For the list of supported units, use \code{allUnits}
@@ -156,6 +162,7 @@ For the list of supported units, use \code{allUnits}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-reset}{}}}
 \subsection{Method \code{reset()}}{
 Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
 \subsection{Usage}{

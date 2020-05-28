@@ -4,7 +4,9 @@
 \name{StandardOntogeny}
 \alias{StandardOntogeny}
 \title{List of ontogeny supported in PK-Sim}
-\format{An object of class \code{list} of length 16.}
+\format{
+An object of class \code{list} of length 16.
+}
 \usage{
 StandardOntogeny
 }
