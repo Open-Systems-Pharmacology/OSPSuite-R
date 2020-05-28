@@ -4,9 +4,7 @@
 \name{Species}
 \alias{Species}
 \title{Default species defined in PK-Sim}
-\format{
-An object of class \code{list} of length 8.
-}
+\format{An object of class \code{list} of length 8.}
 \usage{
 Species
 }

@@ -51,7 +51,6 @@ Characteristics of a population used for population creation
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -64,7 +63,6 @@ A new \code{PopulationCharacteristics} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -81,7 +79,6 @@ Print the object to the console
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addMoleculeOntogeny"></a>}}
-\if{latex}{\out{\hypertarget{method-addMoleculeOntogeny}{}}}
 \subsection{Method \code{addMoleculeOntogeny()}}{
 Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristics
 \subsection{Usage}{

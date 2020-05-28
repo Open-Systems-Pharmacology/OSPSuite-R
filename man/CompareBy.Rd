@@ -4,9 +4,7 @@
 \name{CompareBy}
 \alias{CompareBy}
 \title{How should comparison of entities be performed}
-\format{
-An object of class \code{list} of length 3.
-}
+\format{An object of class \code{list} of length 3.}
 \usage{
 CompareBy
 }

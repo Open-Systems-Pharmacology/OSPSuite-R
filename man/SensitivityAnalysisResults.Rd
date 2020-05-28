@@ -19,6 +19,8 @@ Results of a sensitivity analysis run (either individual or population simulatio
 
 \item{\code{allPKParameterNames}}{Returns the name of all PK-Parameters available in this results.
 This will be a subset of all potential PK-Parameters available in the system}
+
+\item{\code{allQuantityPaths}}{Returns the path of all outputs available in this results.}
 }
 \if{html}{\out{</div>}}
 }
@@ -27,6 +29,7 @@ This will be a subset of all potential PK-Parameters available in the system}
 \itemize{
 \item \href{#method-new}{\code{SensitivityAnalysisResults$new()}}
 \item \href{#method-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
+\item \href{#method-pkParameterSensitivityValueFor}{\code{SensitivityAnalysisResults$pkParameterSensitivityValueFor()}}
 \item \href{#method-print}{\code{SensitivityAnalysisResults$print()}}
 }
 }
@@ -38,7 +41,6 @@ This will be a subset of all potential PK-Parameters available in the system}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -60,7 +62,6 @@ A new \code{SensitivityAnalysisResults} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
-\if{latex}{\out{\hypertarget{method-allPKParameterSensitivitiesFor}{}}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
 Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to \code{totalSensitivityThreshold}
 \subsection{Usage}{
@@ -86,8 +87,31 @@ parameter participating to a total of 90 percent of the sensitivity would be ret
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
+\subsection{Method \code{pkParameterSensitivityValueFor()}}{
+Returns the sensisivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns \code{NaN}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$pkParameterSensitivityValueFor(
+  pkParameterName,
+  outputPath,
+  parameterPath
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should be retrieved}
+
+\item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
+
+\item{\code{parameterPath}}{Path of the parameter for which the sensitivity should be retrieved}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

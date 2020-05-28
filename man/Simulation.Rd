@@ -49,7 +49,6 @@ An OSPSuite simulation
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -71,7 +70,6 @@ A new \code{Simulation} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allEndogenousStationaryMoleculeNames"></a>}}
-\if{latex}{\out{\hypertarget{method-allEndogenousStationaryMoleculeNames}{}}}
 \subsection{Method \code{allEndogenousStationaryMoleculeNames()}}{
 Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
 This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
@@ -82,7 +80,6 @@ This is a typically a molecule that is individual specific such as en Enzyme, Pr
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allXenobioticFloatingMoleculeNames"></a>}}
-\if{latex}{\out{\hypertarget{method-allXenobioticFloatingMoleculeNames}{}}}
 \subsection{Method \code{allXenobioticFloatingMoleculeNames()}}{
 Returns the name of all xenobiotoc floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
 This is typically a molecule that is being explicitely simulated such as Compound, Inhibitor, DrugComplex.
@@ -93,7 +90,6 @@ This is typically a molecule that is being explicitely simulated such as Compoun
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allStationaryMoleculeNames"></a>}}
-\if{latex}{\out{\hypertarget{method-allStationaryMoleculeNames}{}}}
 \subsection{Method \code{allStationaryMoleculeNames()}}{
 Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
 \subsection{Usage}{
@@ -103,7 +99,6 @@ Returns the name of all stationary molecules defined in the simulation. (e.g. wi
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-allFloatingMoleculeNames"></a>}}
-\if{latex}{\out{\hypertarget{method-allFloatingMoleculeNames}{}}}
 \subsection{Method \code{allFloatingMoleculeNames()}}{
 Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
 \subsection{Usage}{
@@ -113,7 +108,6 @@ Returns the name of all floating molecules defined in the simulation. (e.g. with
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-molWeightFor"></a>}}
-\if{latex}{\out{\hypertarget{method-molWeightFor}{}}}
 \subsection{Method \code{molWeightFor()}}{
 Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
 \subsection{Usage}{
@@ -130,7 +124,6 @@ Returns the mol weight value (in core unit) associated to the quantity with give
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

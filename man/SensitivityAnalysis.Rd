@@ -42,7 +42,6 @@ with a value that was overriden by the user}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -75,7 +74,6 @@ A new \code{SensitivityAnalysis} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addParameterPaths"></a>}}
-\if{latex}{\out{\hypertarget{method-addParameterPaths}{}}}
 \subsection{Method \code{addParameterPaths()}}{
 Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
 \subsection{Usage}{
@@ -94,7 +92,6 @@ calling \code{addParameterPaths} will make only the manually added parameters be
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clearParameterPaths"></a>}}
-\if{latex}{\out{\hypertarget{method-clearParameterPaths}{}}}
 \subsection{Method \code{clearParameterPaths()}}{
 Removes all parameter paths defined in the Sensitivity Analysis
 \subsection{Usage}{
@@ -104,7 +101,6 @@ Removes all parameter paths defined in the Sensitivity Analysis
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

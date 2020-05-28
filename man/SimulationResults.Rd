@@ -43,7 +43,6 @@ Results of a simulation run (either individual or population simulation)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -65,7 +64,6 @@ A new \code{SimulationResults} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasResultsForIndividual"></a>}}
-\if{latex}{\out{\hypertarget{method-hasResultsForIndividual}{}}}
 \subsection{Method \code{hasResultsForIndividual()}}{
 Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
 \subsection{Usage}{
@@ -82,7 +80,6 @@ Returns \code{TRUE} if results are available for the individual with id \code{in
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-getValuesByPath"></a>}}
-\if{latex}{\out{\hypertarget{method-getValuesByPath}{}}}
 \subsection{Method \code{getValuesByPath()}}{
 Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
 \subsection{Usage}{
@@ -103,7 +100,6 @@ Returns \code{TRUE} if results are available for the individual with id \code{in
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-resultsForIndividual"></a>}}
-\if{latex}{\out{\hypertarget{method-resultsForIndividual}{}}}
 \subsection{Method \code{resultsForIndividual()}}{
 Returns all available results for the individual with id \code{individualId}
 \subsection{Usage}{
@@ -120,7 +116,6 @@ Returns all available results for the individual with id \code{individualId}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

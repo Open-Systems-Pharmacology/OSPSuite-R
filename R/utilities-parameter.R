@@ -64,6 +64,21 @@ getParameter <- function(path, container, stopIfNotFound = TRUE) {
   getEntity(path, container, Parameter, stopIfNotFound)
 }
 
+#' Retrieves the display path of the parameters defined by paths in the simulation
+#'
+#' @param paths A single string or array of paths path relative to the \code{container}
+#' @param simulation A simulation used to find the entities
+#'
+#' @return a display path for each parameter in paths
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' displayPath <- getParameterDisplayPaths("Organism|Liver|Volume", sim)
+#' @export
+getParameterDisplayPaths <- function(paths, simulation) {
+  getQuantityDisplayPaths(paths, simulation)
+}
 
 #' Set values of parameters
 #'

@@ -35,7 +35,6 @@ Structure for caching objects
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -55,7 +54,6 @@ A new \code{Cache} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reset"></a>}}
-\if{latex}{\out{\hypertarget{method-reset}{}}}
 \subsection{Method \code{reset()}}{
 Clear cache
 \subsection{Usage}{
@@ -65,7 +63,6 @@ Clear cache
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set"></a>}}
-\if{latex}{\out{\hypertarget{method-set}{}}}
 \subsection{Method \code{set()}}{
 Store the given value in cache with the given key
 \subsection{Usage}{
@@ -84,7 +81,6 @@ Store the given value in cache with the given key
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hasKey"></a>}}
-\if{latex}{\out{\hypertarget{method-hasKey}{}}}
 \subsection{Method \code{hasKey()}}{
 Check if an entry with the given \code{key} exists in cache
 \subsection{Usage}{
@@ -101,7 +97,6 @@ Check if an entry with the given \code{key} exists in cache
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get"></a>}}
-\if{latex}{\out{\hypertarget{method-get}{}}}
 \subsection{Method \code{get()}}{
 Get cached object by key
 \subsection{Usage}{
@@ -118,7 +113,6 @@ Get cached object by key
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-dropKey"></a>}}
-\if{latex}{\out{\hypertarget{method-dropKey}{}}}
 \subsection{Method \code{dropKey()}}{
 Remove the value associated with the key from cache.
 \subsection{Usage}{
@@ -135,7 +129,6 @@ Remove the value associated with the key from cache.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

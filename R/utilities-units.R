@@ -27,7 +27,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
     dimension <- quantityOrDimension$dimension
   }
 
-  if(all(is.na(molWeight))){
+  if (all(is.na(molWeight))) {
     molWeight <- NULL
   }
 
@@ -69,7 +69,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
     dimension <- quantityOrDimension$dimension
   }
 
-  if(all(is.na(molWeight))){
+  if (all(is.na(molWeight))) {
     molWeight <- NULL
   }
 
