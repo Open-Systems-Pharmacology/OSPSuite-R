@@ -16,7 +16,6 @@ test_that("It can print a quantity PK-parameter", {
 
 test_that("It can resolve the unit and dimension of a quantity PK-Parameter", {
   for (pkParameter in allPKParameters) {
-    print(pkParameter)
     expect_false(is.null(pkParameter$unit))
     expect_false(is.null(pkParameter$dimension))
   }

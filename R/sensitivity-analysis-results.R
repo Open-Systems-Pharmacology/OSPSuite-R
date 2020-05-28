@@ -60,9 +60,9 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' Returns the sensisivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns `NaN`
     #' @param pkParameterName Name of pkParameter for which sensitivity should be retrieved
     #' @param outputPath Path of the output for which the sensitivity should be retrieved
-    #' @param parameterPath Path of the parameter for which the sensitivity should be retrieved
-    pkParameterSensitivityValueFor = function(pkParameterName, outputPath, parameterPath) {
-      value <- rClr::clrCall(self$ref, "PKParameterSensitivityValueFor", pkParameterName, outputPath, parameterPath)
+    #' @param parameterName Name of the sensitivity parameter for which the sensitivity should be retrieved
+    pkParameterSensitivityValueFor = function(pkParameterName, outputPath, parameterName) {
+      value <- rClr::clrCall(self$ref, "PKParameterSensitivityValueFor", pkParameterName, outputPath, parameterName)
       value[is.nan(value)] <- NA
       return(value)
     },

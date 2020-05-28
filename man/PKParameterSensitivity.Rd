@@ -13,7 +13,7 @@ Sensitivity of a PK Parameter for one output for a given parameter
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{parameterPath}}{Unique name of parameter in sensitivity analysis}
+\item{\code{parameterName}}{Unique name of parameter in sensitivity analysis}
 
 \item{\code{pkParameterName}}{Name of PK Output (Cmax, Tmax etc...)}
 

@@ -94,7 +94,7 @@ Returns the sensisivity value for a given pkParameter, output and parameter. If 
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$pkParameterSensitivityValueFor(
   pkParameterName,
   outputPath,
-  parameterPath
+  parameterName
 )}\if{html}{\out{</div>}}
 }
 
@@ -105,7 +105,7 @@ Returns the sensisivity value for a given pkParameter, output and parameter. If 
 
 \item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
 
-\item{\code{parameterPath}}{Path of the parameter for which the sensitivity should be retrieved}
+\item{\code{parameterName}}{Name of the sensitivity parameter for which the sensitivity should be retrieved}
 }
 \if{html}{\out{</div>}}
 }
