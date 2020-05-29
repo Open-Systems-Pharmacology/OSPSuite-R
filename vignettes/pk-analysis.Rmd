@@ -17,28 +17,15 @@ knitr::opts_chunk$set(
 
 PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a simulation. First, simulation results must be calculated, and the `SimulationResults` object is then passed to the method `calculatePKAnalyses`. For the list of calculated PK parameters and their description, please refer to [OSPS documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-analysis-view).
 
-## Calculating PK-parameters
 
 ```{r calculatePKAnalyses}
 library(ospsuite)
 
-# Load the simulation
+# Load and run the simulation
 simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
 
 # Run the simulation
-simulationResults <- runSimulation(simulation = sim)
-
-# Calculate PK-analysis
-pkAnalysis <- calculatePKAnalyses(results = simulationResults)
-```
- 
- `calculatePKAnalyses` returns an object of the class `SimulationPKAnalyses`, which allows to retrieve either a certain PK-parameter for an output path, or all calculated PK-parameters for an output path.
- 
-```{r getPKParameter}
-# Load and run the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
-sim <- loadSimulation(simFilePath)
 simulationResults <- runSimulation(simulation = sim)
 
 # Calculate PK-analyses
@@ -48,13 +35,15 @@ pkAnalysis <- calculatePKAnalyses(results = simulationResults)
 outputPath <- simulationResults$allQuantityPaths[[1]]
 print(outputPath)
 
-# Get all calculated PK-parameters for the output path
+# Get all calculated PK parameters for the output path
 allPkParams <- pkAnalysis$allPKParametersFor(outputPath)
 print(allPkParams)
 
 # Get C_max parameter
 c_max <- pkAnalysis$pKParameterFor(quantityPath = outputPath, pkParameter = "C_max")
 ```
+The function `calculatePKAnalyses` returns an object of the class `SimulationPKAnalyses`, which allows to retrieve either a certain PK parameter for an output path, or all calculated PK parameters for an output path.
+
 The methods `$allPKParametersFor` and `$pKParameterFor` return a object (or a list of objects) of the class `QuantityPKParameter`, with the fields `$name` which is the name of the pk-parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).
 
 ```{r QuantityPKParameter}

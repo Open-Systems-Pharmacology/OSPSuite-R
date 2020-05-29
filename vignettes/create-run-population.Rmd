@@ -107,6 +107,7 @@ populationResults$allQuantityPaths
      * `IndividualId`
      * `Time` a vector with simulated time values (in minutes, equal for all outputs) 
      *  a vector with simulated entries for each output requested.
+  *
      
 The values of `IndividualId`, `Time`, and the simulated outputs, are appended for each simulated invidual.  Note that this results in non-monotonously increasing column `Time`.
 

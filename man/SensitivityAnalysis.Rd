@@ -87,7 +87,7 @@ Adds the parameterPaths to the list of parameter path to vary in the sensitivity
 \describe{
 \item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)
 If no parameters were specified during creating of a \code{SensitivityAnalysis} (all constant parameters are considered),
-calling \code{addParameterPaths} will make only the manually added parameters being variated.}
+calling \code{addParameterPaths} will make only the manually added parameters being varied.}
 }
 \if{html}{\out{</div>}}
 }

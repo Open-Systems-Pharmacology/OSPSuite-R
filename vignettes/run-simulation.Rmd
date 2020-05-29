@@ -47,6 +47,9 @@ simulationResults$allQuantityPaths
      * `Time` a vector with simulated time values (in minutes, equal for all outputs) 
      *  a vector with simulated entries for each output requested.
 
+  * `metaData` is a list containing one entry for each requested output. Each entry contains information pertinent to the output such as its dimension or the unit.
+  
+  
 ```{r getOutputValues}
 # Get simulated results by path
 resultsPath <- simulationResults$allQuantityPaths[[1]]

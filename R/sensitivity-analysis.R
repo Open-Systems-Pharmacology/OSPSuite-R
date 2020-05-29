@@ -51,7 +51,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
     #' @param parameterPaths Parameter paths to add (single or multiple values)
     #' If no parameters were specified during creating of a `SensitivityAnalysis` (all constant parameters are considered),
-    #' calling `addParameterPaths` will make only the manually added parameters being variated.
+    #' calling `addParameterPaths` will make only the manually added parameters being varied.
     addParameterPaths = function(parameterPaths) {
       validateIsString(parameterPaths)
       parameterPaths <- c(parameterPaths)
