@@ -243,7 +243,7 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
 
   simuationPaths <- NULL
   for (individualId in individualIds) {
-    simulationPath <- file.path(outputFolder, paste0(simulation$name, "_", individualId))
+    simulationPath <- file.path(outputFolder, paste0(simulation$name, "_", individualId, ".pkml"))
     simuationPaths <- c(simuationPaths, simulationPath)
     parameterValues <- population$getParameterValuesForIndividual(individualId)
     setParameterValuesByPath(parameterValues$paths, parameterValues$values, simulation)
