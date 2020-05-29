@@ -7,6 +7,8 @@ test_that("It can export the simulation for file for given individual in a popul
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   paths <- exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
   expect_length(paths, 2)
+  expect_true(grepl("S1_1.pkml", paths[1], fixed = TRUE))
+  expect_true(grepl("S1_2.pkml", paths[2], fixed = TRUE))
   sapply(paths, function(p) file.remove(p))
 })
 
