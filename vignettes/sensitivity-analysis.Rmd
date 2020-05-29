@@ -43,7 +43,7 @@ print(sa)
 sa$parameterPaths
 ```
 
-New parameters can be added to an existing `SensitivityAnalysis` by calling the method `addParameterPaths`. WARNING: If no parameters were specified during the creation of a `SensitivityAnalysis` (all constant parameters are considered), calling `addParameterPaths` will only vary the newly added parameters."
+New parameters can be added to an existing `SensitivityAnalysis` by calling the method `addParameterPaths`. WARNING: If no parameters were specified during the creation of a `SensitivityAnalysis` (all constant parameters are considered), calling `addParameterPaths` will only vary the newly added parameters.
 
 ```{r addPathsToSensitivityAnalysis}
 library(ospsuite)
