@@ -65,6 +65,21 @@ plot(resultsTime, resultsValues, type = "l")
 
 The results can be stored in and imported from a *.csv file with the methods `exportResultsToCSV` and `importResultsFromCSV`.
 
+```{r SimResultsExport}
+# Load and run the simulation
+simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+simulationResults <- runSimulation(simulation = sim)
+
+# Export to csv
+csvResultsPath <- file.path(getwd(), "..", "tests", "data", "SimResults.csv", fsep = .Platform$file.sep)
+exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
+
+# Load from csv
+resultsLoaded <- importResultsFromCSV(filePath = csvResultsPath, simulation = sim)
+print(resultsLoaded)
+```
+
 ## Adding new outputs
 By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to `pkml` are generated. The user can add new outputs to the simulation with the method `addOutputs`. The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The ouput list is a property of the `simulation`.
 After adding or removing outputs, the corresponding simulation needs to be re-run in order to generate updated results.

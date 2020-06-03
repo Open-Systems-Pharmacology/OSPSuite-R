@@ -10,8 +10,8 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param numberOfCores Number of cores to use for the simulation. Default value is `ospsuiteEnv$numberOfCores`
-    #' @param showProgress Should a progress information be displayed. Default value is `ospsuiteEnv$showProgress`
+    #' @param numberOfCores Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}
+    #' @param showProgress Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}
     #' @return A new `SensitivityAnalysisRunOptions` object.
     initialize = function(numberOfCores = ospsuiteEnv$numberOfCores,
                               showProgress = ospsuiteEnv$showProgress) {
@@ -36,11 +36,11 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field numberOfCores (Maximal) number of cores to be used. Per default set to \code{ospsuiteEnv$numberOfCores}.
+    #' @field numberOfCores (Maximal) number of cores to be used. Per default set to \code{getOSPSuiteSetting("numberOfCores")}.
     numberOfCores = function(value) {
       private$wrapIntegerProperty("NumberOfCoresToUse", value)
     },
-    #' @field showProgress  Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{ospsuiteEnv$showProgress}.
+    #' @field showProgress  Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{getOSPSuiteSetting("showProgress")}.
     showProgress = function(value) {
       private$wrapProperty("ShowProgress", value)
     }

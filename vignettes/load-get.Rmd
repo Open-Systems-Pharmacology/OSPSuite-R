@@ -130,11 +130,11 @@ sim <- loadSimulation(simFilePath)
 
 # Create simulation tree
 simTree <- getSimulationTree(sim)
-
+ 
 # Calling simTree would list all entities within the simulation
 # Accessing the parameter "Organism|Weight"
 simTree$Organism$Weight
-
+# 
 # Getting all entities located under "Organism|Liver|Periportal|Intracellular"
-simTree$Organism$Liver$Periportal$Intracellular
+entitiesList <- simTree$Organism$Liver$Periportal$Intracellular
 ```

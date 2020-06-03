@@ -87,7 +87,11 @@ messages <- list(
     paste0("Path to PKSim.R.dll '", pksimPath, "' is invalid.")
   },
 
-  pkSimInstallPathNotFound = "Could not find an installation of PK-Sim on the machine. Please install the OSPSuite or use 'initPKSim()' to specify the installation path"
+  pkSimInstallPathNotFound = "Could not find an installation of PK-Sim on the machine. Please install the OSPSuite or use 'initPKSim()' to specify the installation path",
+
+  errorOSPSuiteSettingNotFound = function(settingName) {
+    paste0("No global setting with the name '", settingName, "' exists. Available global settings are:\n", paste0(names(ospsuiteEnv), collapse = ", "))
+  }
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,

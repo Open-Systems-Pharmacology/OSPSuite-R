@@ -39,7 +39,7 @@ ageParam$isConstant
 ```
 If the value is not constant, it is described by one of the formula types:
 
-  **Distributed**: The value of the parameter is given by a distribution. In the simulation, the behavior equals that of constant values.
+  **Distributed**: Distributed parameters describe a variation around a constant value or between two numerical limits. In the simulation, the behavior equals that of constant values. See [OSPS documentation](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#working-with-constant-and-distributed-parameters) for more information.
 
 ```{r getDistributedValue}
 #Get the parameter "Volume" of the Liver
