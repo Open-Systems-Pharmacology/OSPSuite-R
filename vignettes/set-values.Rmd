@@ -39,7 +39,7 @@ ageParam$isConstant
 ```
 If the value is not constant, it is described by one of the formula types:
 
-  **Distributed**: The value of the parameter is given by a distribution. In the simulation, the behavior equals that of constant values.
+  **Distributed**: Distributed parameters describe a variation around a constant value or between two numerical limits. In the simulation, the behavior equals that of constant values. See [OSPS documentation](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#working-with-constant-and-distributed-parameters) for more information.
 
 ```{r getDistributedValue}
 #Get the parameter "Volume" of the Liver
@@ -68,7 +68,7 @@ print(tableParam)
 Additionally, some parameters are modeled as *state variables*. In this case, the parameter has an *initial value* and a *right hand side (RHS)* formula, both of which can be any formula type.
 
 ```{r getStateVariableValue}
-#Get the parameter defined a state variable.
+#Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
 
@@ -138,7 +138,7 @@ liverIntVolume$isFixedValue
 Changing the value of a state variable parameter will only change its initial value, but not the right hand side (i.e., the value in the simulation will still change according to the rhs formula). To switch to RHS formula off and, by that, make the parameter be only dependent on its initial value, the field `isStateVariable` can be set to `FALSE`. This function is one-way only! It is not possible to re-activate the RHS formula after switching it off.
 
 ```{r setStateVariableValue}
-#Get the parameter defined a state variable.
+#Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
 

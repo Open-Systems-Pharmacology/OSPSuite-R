@@ -63,9 +63,9 @@ Initialize a new instance of the class
 on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overriden by the user}
 
-\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})}
 
-\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})}
 }
 \if{html}{\out{</div>}}
 }
@@ -87,7 +87,7 @@ Adds the parameterPaths to the list of parameter path to vary in the sensitivity
 \describe{
 \item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)
 If no parameters were specified during creating of a \code{SensitivityAnalysis} (all constant parameters are considered),
-calling \code{addParameterPaths} will make only the manually added parameters being variated.}
+calling \code{addParameterPaths} will make only the manually added parameters being varied.}
 }
 \if{html}{\out{</div>}}
 }

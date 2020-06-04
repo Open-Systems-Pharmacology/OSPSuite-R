@@ -20,72 +20,79 @@ The models built with OSPS depend on a lot of input parameters which are based o
 In brief, the values of the chosen parameters are changed by a certain percentage and the impact of these changes on PK parameters of model outputs is assessed.
 
 ## Performing a sensitivity analysis
-The first step of performing a sensitivity analysis is creating an object of the class `SensitivityAnalysis`. At this step, the user can define which parameters should be considered for the sensitivity analysis, in which range the values are variated, and how may steps are performed in one direction (plus and minus). If no parameters are specified, all constant parameters of the simulation will be variated.
+The first step of performing a sensitivity analysis is creating an object of the class `SensitivityAnalysis`. At this step, the user can define which parameters should be considered for the sensitivity analysis, in which range the values are varied, and how may steps are performed in one direction (plus and minus). If no parameters are specified, all constant and suitable for sensitivity calculations parameters of the simulation will be variated. The list of such parameters paths for a simulation can be accessed with the method `potentialVariableParameterPathsFor(simulation)`.
 
 ```{r createSensitivityAnalysis}
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
+
+# Get the paths of parameters that will be considered by default.
+potentialSAParameters <- potentialVariableParameterPathsFor(sim)
+print(potentialSAParameters)
 
 # Create a default `SensitivityAnalysis` for the simulation
 sa <- SensitivityAnalysis$new(simulation = sim)
 print(sa)
 
 # Create a `SensitivityAnalysis` with specified parameters
-sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c("Aciclovir|Lipophilicity",
-                                                                      "Aciclovir|Fraction unbound (plasma)",
-                                                                      "Organism|Age"))
+sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c("Organism|Q",
+                                                                      "Organism|Volume"))
 print(sa)
 
-# Show which parameters will be variated
+# Show which parameters will be varied
 sa$parameterPaths
 ```
 
-New parameters can be added to an existing `SensitivityAnalysis` by calling the method `addParameterPaths`. WARNING: If no parameters were specified during creating of a `SensitivityAnalysis` (all constant parameters are considered), calling `addParameterPaths` will make only the manually added parameters being variated.
+New parameters can be added to an existing `SensitivityAnalysis` by calling the method `addParameterPaths`. WARNING: If no parameters were specified during the creation of a `SensitivityAnalysis` (all constant and suitable for sensitivity calculation parameters are considered), calling `addParameterPaths` will only vary the newly added parameters.
 
 ```{r addPathsToSensitivityAnalysis}
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
 
 # Create a `SensitivityAnalysis` with specified parameters
-sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c("Aciclovir|Lipophilicity",
-                                                                      "Aciclovir|Fraction unbound (plasma)",
-                                                                      "Organism|Age"))
+sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c("Organism|Q",
+                                                                      "Organism|Volume"))
 # Add new parameter
-sa$addParameterPaths("Organism|Weight")
+sa$addParameterPaths("R1|k1")
 
-# Show which parameters will be variated
+# Show which parameters will be varied
 sa$parameterPaths
 ```
 
-To run the defined specified `SensitivityAnalysis`, call the method `runSensitivityAnalysis`. The method returns an object of the class `SensitivityAnalysisResults`. The impact of the defined parameters is calculated for PK-Parameters (see [PK Analysis](pk-analysis.html) for more information) of all model outputs.
+To run the specified `SensitivityAnalysis`, call the method `runSensitivityAnalysis`. The method returns an object of the class `SensitivityAnalysisResults`. The impact of the defined parameters is calculated for PK-Parameters (see [PK Analysis](pk-analysis.html) for more information) of all model outputs.
 
 ```{r runSA}
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
 
-# Create a `SensitivityAnalysis` with all constant parameters
+# Create a `SensitivityAnalysis` with all constant and suitable for sensitivity calculations parametersand suitable for sensitivity calculations parameters
 sa <- SensitivityAnalysis$new(simulation = sim)
 
 # Run the sensitivity analysis
 saResult <- runSensitivityAnalysis(sa)
 print(saResult)
 ```
-The method `allPKParameterSensitivitiesFor` returns a list of `PKParameterSensitivity` objets. `PKParameterSensitivity` describes the sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the variated parameter `$parameterPath`. The argument `totalSensitivityThreshold` of the method `allPKParameterSensitivitiesFor` is used to filter out the most impactful parameters. A threshold of 0.9 means that only parameters participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters.
+The method `allPKParameterSensitivitiesFor` returns a list of `PKParameterSensitivity` objects. `PKParameterSensitivity` describes the sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the varied parameter `$parameterPath`. The argument `totalSensitivityThreshold` of the method `allPKParameterSensitivitiesFor` is used to filter out the most impactful parameters. A threshold of 0.9 means that only parameters participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters. If no value is provided, a default value is used.
 
 ```{r allPKParameterSensitivitiesFor}
 # Load simulation
 simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
 
+# Default value of the threshold
+getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
+
 # Create a `SensitivityAnalysis` with all constant parameters and run it
-sa <- SensitivityAnalysis$new(simulation = sim)
+sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c("Aciclovir|Lipophilicity",
+                                                                      "Aciclovir|Fraction unbound (plasma)",
+                                                                      "Organism|Age"))
 saResult <- runSensitivityAnalysis(sa)
 print(saResult)
 
@@ -95,13 +102,14 @@ sensitivites <- saResult$allPKParameterSensitivitiesFor(pkParameterName = "AUC_i
 print(sensitivites)
 ```
 The value `-1` for the sensitivity of "AUC_inf" of the output `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)` for the parameter `Organism-Kidney-Volume` means that increasing `Organism-Kidney-Volume` by 10% will decrease "AUC_inf" by 10%.
+Note that the list of sensitivities is ordered from largest to smallest with respect to magnitude.
 
 ## Import and export of sensitivity analysis results
 Sensitivity analysis calculated in R can be exported to a *.csv file, which can be loaded in another instance.
 
 ```{r SAExport}
 # Load and run the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
 simulationResults <- runSimulation(simulation = sim)
 

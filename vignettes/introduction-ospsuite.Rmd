@@ -89,10 +89,10 @@ The most important classes are:
   : `SimulationPKAnalyses`
     : PK analyses for a simulations result.
   : `QuantityPKParameter`
-    : A certain PK-parameter for an output quantity. Has the fields `$name` which is the name of the pk-parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).
+    : A certain PK parameter for an output quantity. Has the fields `$name` which is the name of the PK parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).
   : `SensitivityAnalysis`
     : A class defining the analysis of which input parameters have most impact on the output curves of a simulation. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
   : `SensitivityAnalysisResults`
     : Resuls of running the `SensitivityAnalysis`
   : `PKParameterSensitivity`
-    : The sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the variated parameter `$parameterName`. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
+    : The sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the varied parameter `$parameterName`. See [Sensitivity analysis](sensitivity-analysis.html) for more information.

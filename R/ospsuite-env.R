@@ -43,3 +43,22 @@ ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 
 # Indicates whether PK-Sim was loaded already. This will prevent unrequired initialization of the pksim assemblies
 ospsuiteEnv$isPKSimLoaded <- FALSE
+
+
+#' Get the value of a global ospsuite-R setting.
+#'
+#' @param settingName String name of the setting
+#'
+#' @return Value of the setting stored in ospsuiteEnv. If the setting does not exist, an error is thrown.
+#' @export
+#'
+#' @examples
+#' getOSPSuiteSetting("packageVersion")
+#' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
+getOSPSuiteSetting <- function(settingName){
+  if(! (settingName %in% names(ospsuiteEnv))){
+    stop(messages$errorOSPSuiteSettingNotFound(settingName))
+  }
+
+  return(ospsuiteEnv[[settingName]])
+}

@@ -29,8 +29,8 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
     #' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overriden by the user
-    #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
-    #' @param variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+    #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
+    #' @param variationRange Variation applied to the parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
     #' @return A new `SensitivityAnalysis` object.
     initialize = function(
                               simulation,
@@ -51,7 +51,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
     #' @param parameterPaths Parameter paths to add (single or multiple values)
     #' If no parameters were specified during creating of a `SensitivityAnalysis` (all constant parameters are considered),
-    #' calling `addParameterPaths` will make only the manually added parameters being variated.
+    #' calling `addParameterPaths` will make only the manually added parameters being varied.
     addParameterPaths = function(parameterPaths) {
       validateIsString(parameterPaths)
       parameterPaths <- c(parameterPaths)
