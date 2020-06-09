@@ -42,7 +42,7 @@ constantParameter <- getParameter("Organism|Age", sim)
 
 # print(distributedParameter)
 #
-# solver <- sim$settings$solver
+# solver <- sim$$solver
 # print(solver)
 #
 # addOutputs("Organism|*|Plasma|Caffeine", simulation = sim)

@@ -29,7 +29,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
   }
 
   quantities <- uniqueEntities(quantities, compareBy = "path")
-  outputSelections <- simulation$settings$outputSelections
+  outputSelections <- simulation$outputSelections
 
   for (quantity in quantities) {
     outputSelections$addQuantity(quantity)
@@ -51,6 +51,6 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 #' @export
 clearOutputs <- function(simulation) {
   validateIsOfType(simulation, Simulation)
-  simulation$settings$outputSelections$clear()
+  simulation$outputSelections$clear()
   invisible(simulation)
 }

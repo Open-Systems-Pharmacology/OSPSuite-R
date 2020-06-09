@@ -55,8 +55,6 @@ Important information about the object can be printed out by calling `print(obje
 The most important classes are:
   : `Simulation`
     : Representation of the simulation loaded from the *.pkml file.
-  : `SimulationSettings`
-    : Settings of the simulation. The object includes `solver` an object of type `SolverSettings`, `outputSelections` list of quantities for which the output will be generated, and `outputSchema` definition of the output intervals of the simulation.
   : `SimulationRunOptions`
     : An object defining the options of a simulation run. The options are: `numberOfCores` the maximal number of (logical) cores that can be used by the (population) simulation; `checkForNegativeValues` a boolean defining if an error if thrown if some variables become negative for which the "negativeValuesAllowed"-flag is set to FALSE (can be used to ignore numerical noise); `showProgress` a boolean if a "progress bar" is shown in the console representing the progress of the simulation.
   : `SolverSettings`

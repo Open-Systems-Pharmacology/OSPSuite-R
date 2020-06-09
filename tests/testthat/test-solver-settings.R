@@ -1,7 +1,7 @@
 context("SolverSettings")
 
 sim <- loadTestSimulation("S1")
-solver <- sim$settings$solver
+solver <- sim$solver
 test_that("It can retrieve the basic solver parameters", {
   expect_true(solver$useJacobian)
   expect_equal(solver$h0, 1e-10)
@@ -32,6 +32,12 @@ test_that("It can set the basic solver parameters", {
 
   solver$absTol <- 1e-10
   expect_equal(solver$absTol, 1e-10)
+})
+
+test_that("It can set the  solver parameters from the simulation", {
+  sim$solver$h0 <- 1e-6
+  expect_equal(solver$h0, 1e-6)
+  expect_equal(sim$solver$h0, 1e-6)
 })
 
 context("SolverSettings$print")

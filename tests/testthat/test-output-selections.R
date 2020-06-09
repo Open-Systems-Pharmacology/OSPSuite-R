@@ -1,6 +1,6 @@
 sim <- loadTestSimulation("S1")
 
-outputSelections <- sim$settings$outputSelections
+outputSelections <- sim$outputSelections
 context("OutputSelections")
 
 test_that("It remove all outputs when outputs are cleared", {

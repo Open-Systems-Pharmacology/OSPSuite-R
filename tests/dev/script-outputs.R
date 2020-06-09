@@ -1,6 +1,8 @@
 library(ospsuite)
 sim <- loadSimulation("tests/data/S1.pkml")
 
+sim$solver$absTol <- 1e-13
+
 individualResults <- runSimulation(sim)
 resultsPaths <- individualResults$allQuantityPaths
 
