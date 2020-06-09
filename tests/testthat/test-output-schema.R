@@ -16,7 +16,7 @@ test_that("it can add some local time points", {
   expect_identical(outputSchema$timePoints, c(10, 20, 30))
 })
 
-test_that("it does nto duplicate entries", {
+test_that("it does not duplicate entries", {
   outputSchema$addTimePoints(c(10, 20, 20, 30, 30))
   expect_identical(outputSchema$timePoints, c(10, 20, 30))
 })

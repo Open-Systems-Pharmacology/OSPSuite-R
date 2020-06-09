@@ -1,5 +1,5 @@
 sim <- loadTestSimulation("S1")
-outputSelections <- sim$settings$outputSelections
+outputSelections <- sim$outputSelections
 
 context("addOutputs")
 

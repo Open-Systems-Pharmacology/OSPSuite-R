@@ -21,17 +21,11 @@ Simulation <- R6::R6Class(
     path = function(value) {
       private$readOnlyProperty("path", value, self$root$path)
     },
-    #' @field settings SimulationSettings object for the simulation (read-only)
-    settings = function(value) {
-      if (missing(value)) {
-        private$.settings
-      } else {
-        private$throwPropertyIsReadonly("settings")
-      }
-    },
     #' @field solver SimulationSolver object for the simulation (read-only)
     solver = function(value) {
-      private$readOnlyProperty("solver", value, private$.settings$solver)
+      if (missing(value)) {
+        private$.settings$solver
+      }
     },
     #' @field outputSchema outputSchema object for the simulation (read-only)
     outputSchema = function(value) {
