@@ -45,3 +45,8 @@ test_that("It returns NA if the path is not valid for mol weight", {
   molWeight <- sim$molWeightFor("A|B|c")
   expect_true(is.na(molWeight))
 })
+
+test_that("It returns the applications defined for the simulation", {
+  applications <- sim$allApplicationsFor(quantityPath)
+  expect_gt(length(applications), 0)
+})

@@ -32,6 +32,7 @@ Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
     'api-config.R'
+    'application.R'
     'cache.R'
     'container.R'
     'create-individual.R'
