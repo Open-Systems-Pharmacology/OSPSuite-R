@@ -13,17 +13,13 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @param numberOfCores Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}
     #' @param showProgress Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}
     #' @return A new `SensitivityAnalysisRunOptions` object.
-    initialize = function(numberOfCores = ospsuiteEnv$numberOfCores,
-                              showProgress = ospsuiteEnv$showProgress) {
+    initialize = function(numberOfCores = NULL,
+                              showProgress = NULL) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
       super$initialize(ref)
 
-      if (!is.null(numberOfCores)) {
-        self$numberOfCores <- numberOfCores
-      }
-      if (!is.null(showProgress)) {
-        self$showProgress <- showProgress
-      }
+      self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
+      self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
     },
     #' @description
     #' Print the object to the console

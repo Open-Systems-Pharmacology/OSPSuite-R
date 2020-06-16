@@ -42,7 +42,7 @@ Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$new(
-  numberOfCores = ospsuiteEnv$numberOfCores,
+  numberOfCores = getOSPSuiteSetting("numberOfCores"),
   checkForNegativeValues = TRUE,
   showProgress = ospsuiteEnv$showProgress
 )}\if{html}{\out{</div>}}
