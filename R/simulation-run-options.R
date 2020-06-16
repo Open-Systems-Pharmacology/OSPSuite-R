@@ -14,7 +14,7 @@ SimulationRunOptions <- R6::R6Class(
     #' @param checkForNegativeValues Should the solver check for negative values. Default is \code{TRUE}
     #' @param showProgress Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}
     #' @return A new `SimulationRunOptions` object.
-    initialize = function(numberOfCores = ospsuiteEnv$numberOfCores,
+    initialize = function(numberOfCores = getOSPSuiteSetting("numberOfCores"),
                               checkForNegativeValues = TRUE,
                               showProgress = ospsuiteEnv$showProgress) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationRunOptions")
