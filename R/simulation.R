@@ -1,3 +1,5 @@
+MODEL_CORE_SIMULATION_EXTENSIONS <- "OSPSuite.Core.Domain.ModelCoreSimulationExtensions"
+
 #' @title Simulation
 #' @docType class
 #' @description  An OSPSuite simulation
@@ -82,7 +84,14 @@ Simulation <- R6::R6Class(
       mw <- rClr::clrCall(self$ref, "MolWeightFor", quantityPath)
       mw %||% NA
     },
-
+    #' @description
+    #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an emtpty list if not found
+    #' @param quantityPath Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)
+    allApplicationsFor = function(quantityPath) {
+      validateIsString(quantityPath)
+      netApplicationParameters <- rClr::clrCallStatic(MODEL_CORE_SIMULATION_EXTENSIONS, "AllApplicationParametersOrderedByStartTimeForQuantityPath", self$ref, quantityPath)
+      toObjectType(netApplicationParameters, Application)
+    },
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.

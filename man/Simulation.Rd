@@ -17,8 +17,6 @@ An OSPSuite simulation
 
 \item{\code{path}}{Path of the root container of the simulation (read-only)}
 
-\item{\code{settings}}{SimulationSettings object for the simulation (read-only)}
-
 \item{\code{solver}}{SimulationSolver object for the simulation (read-only)}
 
 \item{\code{outputSchema}}{outputSchema object for the simulation (read-only)}
@@ -38,6 +36,7 @@ An OSPSuite simulation
 \item \href{#method-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
 \item \href{#method-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
 \item \href{#method-molWeightFor}{\code{Simulation$molWeightFor()}}
+\item \href{#method-allApplicationsFor}{\code{Simulation$allApplicationsFor()}}
 \item \href{#method-print}{\code{Simulation$print()}}
 }
 }
@@ -124,6 +123,23 @@ Returns the mol weight value (in core unit) associated to the quantity with give
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{quantityPath}}{Path of quantity used to retrieve the molecular weight}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-allApplicationsFor"></a>}}
+\if{latex}{\out{\hypertarget{method-allApplicationsFor}{}}}
+\subsection{Method \code{allApplicationsFor()}}{
+Returns the applications ordered by start time associated to the quantity with path \code{quantityPath} or an emtpty list if not found
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$allApplicationsFor(quantityPath)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quantityPath}}{Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)}
 }
 \if{html}{\out{</div>}}
 }
