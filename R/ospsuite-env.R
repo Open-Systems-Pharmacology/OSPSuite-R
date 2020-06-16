@@ -20,7 +20,9 @@ ospsuiteEnv$formatNumericsDigits <- 5
 ospsuiteEnv$formatNumericsSmall <- 2
 
 # Number of cores to use for simualtions and sensitivity. Default to number of cores on the machine - 1
-ospsuiteEnv$numberOfCores <- function(){parallel::detectCores() - 1}
+ospsuiteEnv$numberOfCores <- function() {
+  parallel::detectCores() - 1
+}
 
 # Specificies the default behavior fo progress visualization. By default FALSE
 ospsuiteEnv$showProgress <- FALSE
@@ -55,14 +57,14 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 #' @examples
 #' getOSPSuiteSetting("packageVersion")
 #' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
-getOSPSuiteSetting <- function(settingName){
-  if(! (settingName %in% names(ospsuiteEnv))){
+getOSPSuiteSetting <- function(settingName) {
+  if (!(settingName %in% names(ospsuiteEnv))) {
     stop(messages$errorOSPSuiteSettingNotFound(settingName))
   }
 
   obj <- ospsuiteEnv[[settingName]]
-  #Evalulate if the object is a function
-  if (is.function(obj)){
+  # Evalulate if the object is a function. This is required since some properties are defined as function reference
+  if (is.function(obj)) {
     return(obj())
   }
 
