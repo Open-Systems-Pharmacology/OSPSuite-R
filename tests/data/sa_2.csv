@@ -1,0 +1,13 @@
+﻿QuantityPath,Parameter,PKParameter,Value
+Organism|Liver|A,R1-k1,C_max,0
+Organism|Liver|A,R1-k1,C_tEnd,-3.013659349
+Organism|Liver|A,R1-k1,AUC,-0.839483373
+Organism|Liver|A,R1-k1,AUC_inf,-0.998959435
+Organism|Liver|A,R1-k1,MRT,-1.010169345
+Organism|Liver|A,R1-k1,Thalf,-1.002134387
+Organism|Liver|A,R1-k1,FractionAucLastToInf,-3.017100043
+Organism|Liver|B,R1-k1,C_max,0.134344883
+Organism|Liver|B,R1-k1,t_max,0
+Organism|Liver|B,R1-k1,C_tEnd,0.134344883
+Organism|Liver|B,R1-k1,AUC,0.313691019
+Organism|Liver|B,R1-k1,Thalf,2.08496234

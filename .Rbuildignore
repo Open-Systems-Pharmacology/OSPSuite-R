@@ -1,0 +1,16 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^appveyor\.yml$
+^README\.md$
+^tests/dev
+^tools
+^packages
+^packages\.config$
+^scripts
+^dimensions
+^pkparameters
+^rakefile\.rb
+^postclean\.bat
+^\.covrignore$
+^doc$
+^Meta$

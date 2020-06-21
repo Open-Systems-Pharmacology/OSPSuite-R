@@ -1,0 +1,143 @@
+---
+title: "Population simulations"
+output: rmarkdown::html_vignette
+#output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Population simulations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Population simulations
+Population simulations can be easily performed in R by combining the simulation loaded from a *.pkml file with the population information created in PK-Sim and exported to CSV format (for details, please refer to [OSPS online documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-creating-populations)) or created directly in R (see [Creating simulations](#SectionCreatePopulation)). 
+
+### Loading population file
+The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulation` method (see [Running simulations and retrieving the results](run-simulation.html)).
+
+```{r loadPop}
+library(ospsuite)
+# Load population information from csv
+popFilePath <- file.path(getwd(), "..", "tests", "data", "pop_10.csv", fsep = .Platform$file.sep)
+myPopulation <- loadPopulation(csvPopulationFile = popFilePath)
+print(myPopulation)
+```
+
+## Creating populations {#SectionCreatePopulation}
+Similar to creating individual parameter sets (see [Creating individuals](create-individual.html)), a population is created from *population characteristics* created by calling the method `createPopulationCharacteristics`. To see the list of available values for the arguments `species` and `population` (only for human), use the enums `Species` and `HumanPopulation`, respectively. The returned object of type `PopulationCharacteristics` is then passed to the function `createPopulation` to generate a set of parameter values. The algoritghm behind is the same used in PK-Sim when creating an population. Molecule ontogenies can be added as described in the vignette [Creating individuals](create-individual.html).
+
+```{r createPop}
+library(ospsuite)
+
+#If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
+populationCharacteristics <- createPopulationCharacteristics(
+                                            species = Species$Human,
+                                            population = HumanPopulation$Asian_Tanaka_1996,
+                                            numberOfIndividuals = 50,
+                                            proportionOfFemales = 50,
+                                            weightMin = 30,
+                                            weightMax = 98,
+                                            weightUnit = "kg",
+                                            heightMin = NULL,
+                                            heightMax = NULL,
+                                            ageMin = 0,
+                                            ageMax = 80,
+                                            ageUnit = "year(s)")
+print(populationCharacteristics)
+
+# Create population from population characteristics
+myPopulation <- createPopulation(populationCharacteristics = populationCharacteristics)
+print(myPopulation)
+```
+
+## Running population simulation
+To run a population simulation, the `Population` object created by the `createPopulation` method must be passed to the `runSimulation` method:
+
+```{r runPop}
+library(ospsuite)
+
+# Load simulation
+simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+
+# Run population simulation
+simulationResults <- runSimulation(simulation = sim, population = myPopulation)
+print(simulationResults)
+```
+
+Population simulations are run in parallel on multi-core machines - one core simulates a subset of all individuals defined in the population. By default, the number of cores used equals the maximal number of logical cores available minus one. 
+The user can change the default behavior by providing custom `SimulationRunOptions`.
+
+```{r simulationRunOptions}
+# Load simulation
+simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+sim <- loadSimulation(simFilePath)
+
+# Create a SimulationRunOptions object
+simRunOptions <- SimulationRunOptions$new()
+print(simRunOptions)
+
+# Change the maximal number of cores to use and show a progress bar during simulation
+simRunOptions$numberOfCores <- 3
+simRunOptions$showProgress <- TRUE
+
+# Run population simulation with cutom options
+populationResults <- runSimulation(simulation = sim, population = myPopulation, simulationRunOptions = simRunOptions)
+print(populationResults)
+```
+
+Simulated time-value pairs for a specific ouput from the `SimulationResults`-object returned by the `runSimulation` method can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), 
+or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned. 
+The paths of all available outputs can be accessed via
+
+```{r getAllOutputSelections}
+populationResults$allQuantityPaths
+```
+
+`getOutputValues` returns a list with two entries: `data` and `metadata`:
+
+ * `data` is a dataframe with two predefined columns (IndividualId and Time) as well as one columne for each requested output
+ 
+     * `IndividualId`
+     * `Time` a vector with simulated time values (in minutes, equal for all outputs) 
+     *  a vector with simulated entries for each output requested.
+  *
+     
+The values of `IndividualId`, `Time`, and the simulated outputs, are appended for each simulated invidual. Note that this results in non-monotonously increasing column `Time`.
+
+```{r getOutputValues}
+# Get simulated results by path
+resultsPath <- populationResults$allQuantityPaths[[1]]
+print(resultsPath)
+
+resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath)
+
+resultsTime <- resultsData$data$Time
+resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
+
+plot(resultsTime, resultsValues, type = "l")
+```
+
+To get the results for a specific individual or a set of individuals, the argument `individualIds` of the method `getOutputValues` can be specified:
+
+```{r getOutputValuesForIndividual}
+# Get simulated results by path
+resultsPath <- populationResults$allQuantityPaths[[1]]
+print(resultsPath)
+
+#Get only the results for individuals with IDs 1 and 2
+resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath, individualIds = c(1, 2))
+
+resultsTime <- resultsData$data$Time
+resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
+
+plot(resultsTime, resultsValues, type = "l")
+```
+
+For more information about running simulations, please refer to [Running simulations and retrieving the results](run-simulation.html).

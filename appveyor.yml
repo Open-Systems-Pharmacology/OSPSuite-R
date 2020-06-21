@@ -1,0 +1,104 @@
+image: Visual Studio 2019
+
+# Download script file from GitHub
+init:
+  ps: |
+    $ErrorActionPreference = "Stop"
+    Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+    Import-Module '..\appveyor-tool.ps1'
+
+install:
+  - ps: Bootstrap
+  - git submodule update --init --recursive
+
+environment:
+  app_version: "9.0"
+  USE_RTOOLS: true
+  NOT_CRAN: true
+  KEEP_VIGNETTES: true
+  R_ARCH: x64
+  R_VERSION: "3.6.3"
+  COVERALLS_TOKEN:
+    secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
+
+version: "$(app_version).{build}"
+
+before_build:
+  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
+  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
+  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
+  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
+  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
+  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
+  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
+  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
+  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
+
+build_script:
+  - Rscript -e "install.packages('./tools/rClr_0.8.3.zip', repos = NULL, type = 'binary')"
+  - travis-tool.sh install_deps
+  - travis-tool.sh r_binary_install curl
+  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
+
+before_test:
+  - cinst pandoc
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
+
+on_success:
+  - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
+
+test_script:
+  - travis-tool.sh run_tests
+
+after_test:
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: "ospsuite_*_ubuntu18.tar.gz"
+    name: Ubuntu18
+
+  - path: "ospsuite_*_centOS7.tar.gz"
+    name: CentOS7
+
+  - path: '\*_*.zip'
+    name: Win
+
+platform: x64
+
+skip_commits:
+  files:
+    - "*.md"
+
+skip_branch_with_pr: true
+
+skip_tags: true
+
+branches:
+  only:
+    - develop
+
+pull_requests:
+  do_not_increment_build_number: true
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: 4MH9Em6TtrKalq6808dhPOqypTfYBJvVlqPaa9akNyFEAs8X080yIO8g1FLt3tNfBN4OpeBnkgrXzf7AqNKV5561x7Coux3ByGrHmsL1sCo=

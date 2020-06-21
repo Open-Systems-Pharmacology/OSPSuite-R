@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PKParameterRepository>
+  <All>
+    <PKParameter name="C_max" displayName="C_max" mode="Always" dimension="Concentration (molar)" description="Maximum concentration" />
+    <PKParameter name="C_max_norm" displayName="C_max_norm" mode="Always" dimension="Concentration (mass)" description="Maximum concentration normalized to dose, with dose in drug mass per body weight" />
+
+    <PKParameter name="C_max_tD1_tD2" displayName="C_max_tD1-tD2" mode="Multi" dimension="Concentration (molar)" description="Maximum concentration of the first application interval"/>
+    <PKParameter name="C_max_tD1_tD2_norm" displayName="C_max_tD1-tD2_norm" mode="Multi" dimension="Concentration (mass)" description="Maximum concentration of the first application interval normalized to dose, with dose in drug mass per body weight" />
+
+    <PKParameter name="C_max_tDLast_tEnd" displayName="C_max_tDlast-tEnd" mode="Multi" dimension="Concentration (molar)" description="Maximum concentration following the last application" />
+    <PKParameter name="C_max_tDLast_tEnd_norm" displayName="C_max_tDLast-tEnd_norm" mode="Multi" dimension="Concentration (mass)" description="Maximum concentration following the last application normalized to dose, with dose in drug mass per body weight" />
+
+    <PKParameter name="t_max" displayName="t_max" mode="Always" dimension="Time" description="Time at which the maximum concentration occurs"/>
+    <PKParameter name="t_max_tD1_tD2" displayName="t_max_tD1-tD2" mode="Multi" dimension="Time" description="Time at which the maximum concentration occurs within the first application interval"/>
+    <PKParameter name="t_max_tDLast_tEnd" displayName="t_max_tDlast-tEnd" mode="Multi" dimension="Time" description="Time at which the maximum concentration occurs following the last application " />
+
+    <PKParameter name="C_trough_tD2" displayName="C_trough_tD2" mode="Multi" dimension="Concentration (molar)" description="Trough concentration just before the second dose is administered"/>
+    <PKParameter name="C_trough_tDLast" displayName="C_trough_tDlast" mode="Multi" dimension="Concentration (molar)" description="Trough concentration just before the last dose is administered"/>
+    <PKParameter name="C_tEnd" displayName="C_tEnd" mode="Single" dimension="Concentration (molar)" description="Concentration at the end of simulation" />
+
+    <PKParameter name="AUC_tEnd" displayName="AUC_tEnd" mode="Single" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the first to the last data point" />
+    <PKParameter name="AUC_tEnd_norm" displayName="AUC_tEnd_norm" mode="Single" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the first to the last data point normalized to dose, with dose in drug mass per body weight" />
+
+    <PKParameter name="AUC_inf" displayName="AUC_inf" mode="Single" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the first data point extrapolated to infinity" />
+    <PKParameter name="AUC_inf_norm" displayName="AUC_inf_norm" mode="Single" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the first data point extrapolated to infinity normalized to dose, with dose in drug mass per body weight" />
+
+    <PKParameter name="AUC_tD1_tD2" displayName="AUC_tD1-tD2" mode="Multi" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the administration time of the first dose until the administration time of the second dose"/>
+    <PKParameter name="AUC_tD1_tD2_norm" displayName="AUC_tD1-tD2_norm" mode="Multi" dimension="AUC (mass)" description="Area under the concentration vs. time curve of the first application interval normalized to dose, with dose in drug mass per body weight"/>
+
+    <PKParameter name="AUC_tDLast_minus_1_tDLast" displayName="AUC_tDlast-1_tDlast" mode="Multi" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the administration time of the last dose but one until administration time of the last dose"/>
+    <PKParameter name="AUC_tDLast_minus_1_tDLast_norm" displayName="AUC_tDlast-1_tDlast_norm" mode="Multi" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the administration time of the last dose but one until administration time of the last dose normalized to dose, with dose in drug mass per body weight"/>
+
+    <PKParameter name="AUC_inf_tD1" displayName="AUC_inf_tD1" mode="Multi" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the first data point extrapolated to infinity (further administrations not considered!)"/>
+    <PKParameter name="AUC_inf_tD1_norm" displayName="AUC_inf_tD1_norm" mode="Multi" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the first data point extrapolated to infinity (further administrations not considered!) normalized to dose, with dose in drug mass per body weight"/>
+
+    <PKParameter name="AUC_inf_tDLast" displayName="AUC_inf_tDLast" mode="Multi" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the time of the last dose extrapolated to infinity"/>
+    <PKParameter name="AUC_inf_tDLast_norm" displayName="AUC_inf_tDLast_norm" mode="Multi" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the time of the last dose extrapolated to infinity normalized to dose, with dose in drug mass per body weight"/>
+
+    <PKParameter name="MRT" displayName="MRT" mode="Always" dimension="Time" description="Mean residence time of a drug molecule within the organism (Note MRT_iv=MRT-infusiontime*0.5)" />
+
+    <PKParameter name="Thalf" displayName="Half-Life" mode="Always" dimension="Time" description="Half life time associated with terminal slope" />
+    <PKParameter name="Thalf_tDLast_tEnd" displayName="Half-Life_tDlast-tEnd" mode="Multi" dimension="Time" description="Half life time determined following the administration of the last dose until end of simulation"/>
+
+    <PKParameter name="FractionAucLastToInf" displayName="% AUC (tlast-∞)" mode="Single" dimension="Fraction" description="Fraction of AUC from the last data point to infinity"/>
+    <PKParameter name="CL" displayName="Total body clearance/F" mode="Single" dimension="Flow per weight" description="D/AUC - Total body clearance of drug or apparent clearance (CL for intravenous administration)" />
+    <PKParameter name="Vss" displayName="Vss (plasma)/F" mode="Single" dimension="Volume per body weight" description="CL*MRT - Apparent volume of distribution at steady-state (Vss for intravenous administration)" />
+    <PKParameter name="Vd" displayName="Vd (plasma)/F" mode="Single" dimension="Volume per body weight" description="D/AUC/lambda- Apparent volume of distribution during terminal phase (Vd for intravenous administration)" />
+  </All>
+</PKParameterRepository>
