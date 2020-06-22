@@ -13,11 +13,11 @@ The **ospsuite** R-package provides the functionality of loading, manipulating, 
 # Installation
 **ospsuite** requires following packages to be installed:
 
-- [rClr](https://github.com/Open-Systems-Pharmacology/rClr/releases)
+- [rClr](https://github.com/Open-Systems-Pharmacology/rClr/releases/latest)
 - [R6](https://github.com/r-lib/R6)
 
 ## Under Windows
-The release version of the package comes as a binary *.zip file together with the installation of the OSPS and can be found in the installation folder of the OSPS (default: `C:\Program Files\Open Systems Pharmacology\ospsuite_X.X.X.zip`). The package `rClr` can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/rClr/releases) and installed from binary *.zip. The package `R6` can be installed from CRAN.
+The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases). The package `rClr` can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/rClr/releases/latest) and installed from binary *.zip. The package `R6` can be installed from CRAN.
 
 The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
 
