@@ -7,7 +7,9 @@ moleculeOntogeny <- MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = Sta
 
 dog <- createPopulationCharacteristics(
   species = Species$Dog,
-  numberOfIndividuals = 50
+  numberOfIndividuals = 50,
+  weightMin = 2,
+  weightMax = 5
 )
 
 print(dog)
