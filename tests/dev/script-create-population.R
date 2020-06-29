@@ -11,8 +11,8 @@ dog <- createPopulationCharacteristics(
 )
 
 print(dog)
-populationDog <- createPopulation(populationCharacteristics = dog)
-
+result <- createPopulation(populationCharacteristics = dog)
+populationDog <- result$population
 print(populationDog)
 
 human <- createPopulationCharacteristics(
@@ -28,7 +28,8 @@ human <- createPopulationCharacteristics(
 
 print(human)
 
-populationHuman <- createPopulation(populationCharacteristics = human)
+result <- createPopulation(populationCharacteristics = human)
+populationHuman <- result$population
 print(populationHuman)
 
 populationHuman$getParameterValues("Organism|Age")
@@ -45,8 +46,8 @@ preterm <- createPopulationCharacteristics(
   numberOfIndividuals = 50,
 )
 
-populationPreterm <- createPopulation(populationCharacteristics = preterm)
-
+result <- createPopulation(populationCharacteristics = preterm)
+populationPreterm <- result$population
 
 
 populationPreterm$allParameterPaths

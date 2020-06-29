@@ -3,15 +3,50 @@
 #' @param populationCharacteristics Characteristics of the population to create as an instance of \code{OriginData}
 #' that are actually distributed parameters
 #'
-#' @return An instance of a population object
+#' @return An list with two entries:
+#' The \code{population} An instance of a population object.
+#' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'
 #' @export
 createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, PopulationCharacteristics)
 
   populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
-  population <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
-  Population$new(population)
+  netPopulation <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
+  population <- Population$new(netPopulation)
+
+  individualCharacteristics <- NULL
+
+  #NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
+  if (populationCharacteristics$species == Species$Human) {
+    # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
+    individualCharacteristics <- ospsuite::createIndividualCharacteristics(
+      species = populationCharacteristics$species,
+      population = populationCharacteristics$population,
+      weight = 70,
+      age = 30
+    )
+  }
+  else {
+    # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
+    individualCharacteristics <- ospsuite::createIndividualCharacteristics(
+      species = populationCharacteristics$species,
+      population = populationCharacteristics$population,
+      weight = populationCharacteristics$weightMin
+    )
+  }
+
+  individual <- createIndividual(individualCharacteristics = individualCharacteristics)
+
+  derivedParameters <- list()
+  for (derivedParameterPath in individual$derivedParameters$paths) {
+    if (population$has(derivedParameterPath)) {
+      derivedParameters[[derivedParameterPath]] <- population$getParameterValues(derivedParameterPath)
+      rClr::clrCall(population$ref, "Remove", derivedParameterPath)
+    }
+  }
+
+  return(list(population = population, derivedParameters = derivedParameters))
 }
 
 #' Creates the population characteristics used to create a population
