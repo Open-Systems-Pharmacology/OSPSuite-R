@@ -64,6 +64,16 @@ test_that("It can add user defined variability using values with NA", {
   expect_identical(population$getParameterValues(parameterPath), values_with_NA)
 })
 
+test_that("It can remove user defined variability", {
+  population <- loadPopulation(populationFileName)
+  parameterPath <- "Organism|MyParameterWithNA"
+  values <- c(1:10) * 2.5
+  population$setParameterValues(parameterPath, values)
+  expect_true(population$has(parameterPath))
+  population$remove(parameterPath)
+  expect_false(population$has(parameterPath))
+})
+
 test_that("It throws an exception when adding values that have the wrong number of items", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"

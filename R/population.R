@@ -69,6 +69,12 @@ Population <- R6::R6Class(
       parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
     },
     #' @description
+    #' Removes the value of a parameter by path
+    #' @param parameterPath Path of the parameter values to remove
+    remove = function(parameterPath) {
+      rClr::clrCall(self$ref, "Remove", parameterPath)
+    },
+    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {

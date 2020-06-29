@@ -42,7 +42,7 @@ createPopulation <- function(populationCharacteristics) {
   for (derivedParameterPath in individual$derivedParameters$paths) {
     if (population$has(derivedParameterPath)) {
       derivedParameters[[derivedParameterPath]] <- population$getParameterValues(derivedParameterPath)
-      rClr::clrCall(population$ref, "Remove", derivedParameterPath)
+      population$remove(derivedParameterPath)
     }
   }
 
