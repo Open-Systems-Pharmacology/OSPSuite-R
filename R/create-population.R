@@ -17,13 +17,12 @@ createPopulation <- function(populationCharacteristics) {
 
   individualCharacteristics <- NULL
 
-  #NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
+  # NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
   if (populationCharacteristics$species == Species$Human) {
     # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
     individualCharacteristics <- ospsuite::createIndividualCharacteristics(
       species = populationCharacteristics$species,
       population = populationCharacteristics$population,
-      weight = 70,
       age = 30
     )
   }
@@ -32,17 +31,32 @@ createPopulation <- function(populationCharacteristics) {
     individualCharacteristics <- ospsuite::createIndividualCharacteristics(
       species = populationCharacteristics$species,
       population = populationCharacteristics$population,
-      weight = populationCharacteristics$weightMin
     )
   }
 
   individual <- createIndividual(individualCharacteristics = individualCharacteristics)
 
   derivedParameters <- list()
+
+  # Even though those parameters are derived parmaeters, we keep them in the population for consistency purpose with the PKSim export.
+  standardDerivedParametersToKeep <- c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)
+
   for (derivedParameterPath in individual$derivedParameters$paths) {
+    if (derivedParameterPath %in% c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)) {
+      next
+    }
+
     if (population$has(derivedParameterPath)) {
       derivedParameters[[derivedParameterPath]] <- population$getParameterValues(derivedParameterPath)
       population$remove(derivedParameterPath)
+    }
+  }
+
+  # other parameters to remvove that should not have been exported in the first place
+  standardDistributedParametersToRemove <- c(toPathString(StandardContainer$Organism, "MeanBW"), toPathString(StandardContainer$Organism, "MeanHeight"))
+  for (parameterToRemove in standardDistributedParametersToRemove) {
+    if (population$has(parameterToRemove)) {
+      population$remove(parameterToRemove)
     }
   }
 

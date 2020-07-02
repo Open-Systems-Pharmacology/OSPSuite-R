@@ -31,7 +31,7 @@ human <- createPopulationCharacteristics(
 print(human)
 
 result <- createPopulation(populationCharacteristics = human)
-populationHuman <- result$population
+resupopulationHuman <- result$population
 print(populationHuman)
 
 populationHuman$getParameterValues("Organism|Age")
