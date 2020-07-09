@@ -12,7 +12,7 @@ install:
   - git submodule update --init --recursive
 
 environment:
-  app_version: "9.0"
+  app_version: "9.1"
   USE_RTOOLS: true
   NOT_CRAN: true
   KEEP_VIGNETTES: true
@@ -97,8 +97,3 @@ branches:
 
 pull_requests:
   do_not_increment_build_number: true
-
-notifications:
-  - provider: Slack
-    incoming_webhook:
-      secure: 4MH9Em6TtrKalq6808dhPOqypTfYBJvVlqPaa9akNyFEAs8X080yIO8g1FLt3tNfBN4OpeBnkgrXzf7AqNKV5561x7Coux3ByGrHmsL1sCo=

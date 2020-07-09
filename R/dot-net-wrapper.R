@@ -21,6 +21,10 @@ DotNetWrapper <- R6::R6Class(
     #' @return A new `DotNetWrapper` object.
     initialize = function(ref) {
       self$ref <- ref
+    },
+    finalize = function() {
+      # maybe dispose should be called to if available.
+      self$ref <- NULL
     }
   ),
   private = list(
