@@ -84,7 +84,7 @@ end
 def install_pksim()
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
-  branch = 'develop'
+  branch = 'hotfix/9.1'
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
@@ -101,7 +101,7 @@ def download_file(project_name, file_name, uri)
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
-  open(file, 'wb') do |fo| 
+  open(file, 'wb') do |fo|
     fo.print open(uri,:read_timeout => nil).read
   end
   file
