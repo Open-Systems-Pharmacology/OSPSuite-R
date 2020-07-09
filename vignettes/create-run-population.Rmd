@@ -52,7 +52,8 @@ populationCharacteristics <- createPopulationCharacteristics(
 print(populationCharacteristics)
 
 # Create population from population characteristics
-myPopulation <- createPopulation(populationCharacteristics = populationCharacteristics)
+result <- createPopulation(populationCharacteristics = populationCharacteristics)
+myPopulation <- result$population
 print(myPopulation)
 ```
 

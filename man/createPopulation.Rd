@@ -11,7 +11,9 @@ createPopulation(populationCharacteristics)
 that are actually distributed parameters}
 }
 \value{
-An instance of a population object
+An list with two entries:
+The \code{population} An instance of a population object.
+The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 }
 \description{
 Creates an population using the PKSim Database

@@ -1,6 +1,6 @@
 context("createIndividual")
 
-# initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
+#initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 
 test_that("It can create a standard dog for a given bodyweight", {
   dog <- createIndividualCharacteristics(
@@ -43,13 +43,16 @@ test_that("It throwns an error when creating a human with population missing", {
   expect_that(createIndividual(individualCharacteristics = human), throws_error())
 })
 
-test_that("It throwns an error when creating a human with weight missing", {
-  expect_that(createIndividualCharacteristics(
+test_that("It can create reating a human with weight missing", {
+  human <- createIndividualCharacteristics(
     species = Species$Human,
     population = HumanPopulation$BlackAmerican_NHANES_1997,
     age = 15,
     gender = Gender$Female
-  ), throws_error())
+  )
+
+  human_values <- createIndividual(individualCharacteristics = human)
+  expect_false(is.null((human_values)))
 })
 
 test_that("It can create a standard human for a given bodyweight with predefined ontogenies", {

@@ -7,7 +7,7 @@ ospsuiteEnv$packageName <- "ospsuite"
 
 ospsuiteEnv$suiteName <- "Open Systems Pharmacology"
 
-ospsuiteEnv$packageVersion <- "9.0"
+ospsuiteEnv$packageVersion <- "9.1"
 
 # Reference to container task for optimization purposes only
 ospsuiteEnv$containerTask <- NULL

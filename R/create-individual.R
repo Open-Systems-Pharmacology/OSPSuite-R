@@ -73,7 +73,7 @@ createIndividualCharacteristics <- function(
                                             species,
                                             population = NULL,
                                             gender = NULL,
-                                            weight,
+                                            weight = NULL,
                                             weightUnit = "kg",
                                             height = NULL,
                                             heightUnit = "cm",
@@ -90,7 +90,7 @@ createIndividualCharacteristics <- function(
   validateIsString(species)
   validateIsString(population, nullAllowed = TRUE)
   validateIsString(gender, nullAllowed = TRUE)
-  validateIsNumeric(weight)
+  validateIsNumeric(weight, nullAllowed = TRUE)
   validateIsString(weightUnit)
   validateIsNumeric(height, nullAllowed = TRUE)
   validateIsString(heightUnit)

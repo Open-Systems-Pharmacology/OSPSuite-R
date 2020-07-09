@@ -32,6 +32,7 @@ List of individuals used in a population simulation
 \item \href{#method-getCovariateValues}{\code{Population$getCovariateValues()}}
 \item \href{#method-getCovariateValue}{\code{Population$getCovariateValue()}}
 \item \href{#method-getParameterValuesForIndividual}{\code{Population$getParameterValuesForIndividual()}}
+\item \href{#method-remove}{\code{Population$remove()}}
 \item \href{#method-print}{\code{Population$print()}}
 }
 }
@@ -144,6 +145,23 @@ Returns all values defined in the population the invididual with id \code{indivi
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{individualId}}{Id of individual for which all values should be returned}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-remove"></a>}}
+\if{latex}{\out{\hypertarget{method-remove}{}}}
+\subsection{Method \code{remove()}}{
+Removes the value of a parameter by path
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Population$remove(parameterPath)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{parameterPath}}{Path of the parameter values to remove}
 }
 \if{html}{\out{</div>}}
 }
