@@ -38,10 +38,7 @@ Options to be passed to the sensitivity analysis engine
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisRunOptions$new(
-  numberOfCores = ospsuiteEnv$numberOfCores,
-  showProgress = ospsuiteEnv$showProgress
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisRunOptions$new(numberOfCores = NULL, showProgress = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

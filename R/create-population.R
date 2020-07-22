@@ -3,15 +3,64 @@
 #' @param populationCharacteristics Characteristics of the population to create as an instance of \code{OriginData}
 #' that are actually distributed parameters
 #'
-#' @return An instance of a population object
+#' @return An list with two entries:
+#' The \code{population} An instance of a population object.
+#' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'
 #' @export
 createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, PopulationCharacteristics)
 
   populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
-  population <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
-  Population$new(population)
+  netPopulation <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
+  population <- Population$new(netPopulation)
+
+  individualCharacteristics <- NULL
+
+  # NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
+  if (populationCharacteristics$species == Species$Human) {
+    # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
+    individualCharacteristics <- ospsuite::createIndividualCharacteristics(
+      species = populationCharacteristics$species,
+      population = populationCharacteristics$population,
+      age = 30
+    )
+  }
+  else {
+    # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
+    individualCharacteristics <- ospsuite::createIndividualCharacteristics(
+      species = populationCharacteristics$species,
+      population = populationCharacteristics$population,
+    )
+  }
+
+  individual <- createIndividual(individualCharacteristics = individualCharacteristics)
+
+  derivedParameters <- list()
+
+  # Even though those parameters are derived parmaeters, we keep them in the population for consistency purpose with the PKSim export.
+  standardDerivedParametersToKeep <- c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)
+
+  for (derivedParameterPath in individual$derivedParameters$paths) {
+    if (derivedParameterPath %in% c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)) {
+      next
+    }
+
+    if (population$has(derivedParameterPath)) {
+      derivedParameters[[derivedParameterPath]] <- population$getParameterValues(derivedParameterPath)
+      population$remove(derivedParameterPath)
+    }
+  }
+
+  # other parameters to remvove that should not have been exported in the first place
+  standardDistributedParametersToRemove <- c(toPathString(StandardContainer$Organism, "MeanBW"), toPathString(StandardContainer$Organism, "MeanHeight"))
+  for (parameterToRemove in standardDistributedParametersToRemove) {
+    if (population$has(parameterToRemove)) {
+      population$remove(parameterToRemove)
+    }
+  }
+
+  return(list(population = population, derivedParameters = derivedParameters))
 }
 
 #' Creates the population characteristics used to create a population
