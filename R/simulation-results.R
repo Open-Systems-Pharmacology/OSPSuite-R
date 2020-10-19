@@ -47,6 +47,7 @@ SimulationResults <- R6::R6Class(
     #' @param path Path for which values should be retrieved
     #' @param individualIds One or more individual ids for which values should be returned
     #' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no values could be found for the `path`/
+    #' If \code{FALSE}, a list of \code{NA} values is returned
     getValuesByPath = function(path, individualIds, stopIfNotFound = TRUE) {
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)

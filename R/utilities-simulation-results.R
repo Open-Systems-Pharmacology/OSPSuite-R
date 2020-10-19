@@ -18,6 +18,8 @@
 #' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.
 #'
 #' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
+#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`
+#' If \code{FALSE}, a list of \code{NA} values is returned for the repsecitve path.
 #' @export
 getOutputValues <- function(simulationResults,
                             quantitiesOrPaths = NULL,
@@ -77,7 +79,7 @@ getOutputValues <- function(simulationResults,
 
 
   for (path in paths) {
-    quantity <- getQuantity(path, simulationResults$simulation)
+    quantity <- getQuantity(path, simulationResults$simulation, stopIfNotFound = stopIfNotFound)
     metaData[[path]] <- list(unit = quantity$unit, dimension = quantity$dimension)
     values[[path]] <- simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
   }

@@ -11,8 +11,8 @@ getQuantity(path, container, stopIfNotFound = TRUE)
 
 \item{container}{A Container or Simulation used to find the parameters}
 
-\item{stopIfNotFound}{Boolean. If TRUE and no quantity exist for the given path,
-an error is thrown. Default is TRUE.}
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
+an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \value{
 The \code{Quantity} with the given path. If the quantity for the path

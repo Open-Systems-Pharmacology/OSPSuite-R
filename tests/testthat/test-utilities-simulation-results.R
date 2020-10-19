@@ -13,7 +13,16 @@ NUMBER_OF_EXTRA_COLUMNS <- NUMBER_OF_STATIC_COLUMNS + NUMBER_OF_COVARIATES_COLUM
 context("getOutputValues")
 
 test_that("It throws an error when no valid simulation results are provided", {
-  expect_error(getOutputValues(sim, resultsPaths))
+  expect_error(getOutputValues(individualResults, "NoPath"))
+})
+
+test_that("It returns an array of NA if specific result is not found and stopIfNotFound = FALSE", {
+  res <- getOutputValues(individualResults, "NoPath", stopIfNotFound = FALSE)
+
+  data <- res$data
+  expect_equal(length(data), 1 + NUMBER_OF_STATIC_COLUMNS)
+
+  expect_true(all(is.na(data$NoPath)))
 })
 
 test_that("It can retrieve values without a population specified", {

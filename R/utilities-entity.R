@@ -149,8 +149,8 @@ getAllEntityPathsIn <- function(container, entityType, method = NULL) {
 #'
 #' @inherit getAllEntitiesMatching
 #' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If TRUE and no parameter exist for the given path,
-#' an error is thrown. Default is TRUE.
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no entity exists for the given path,
+#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
 #' @param entityType Class of the type that should be returned. Supported types are Container, Quantity, and Parameter
 #'
 #' @return The \code{Entity} with the given path coerced to the \code{entityType}.

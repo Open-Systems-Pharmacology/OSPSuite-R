@@ -8,7 +8,7 @@ createIndividualCharacteristics(
   species,
   population = NULL,
   gender = NULL,
-  weight,
+  weight = NULL,
   weightUnit = "kg",
   height = NULL,
   heightUnit = "cm",
