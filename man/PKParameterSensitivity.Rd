@@ -32,6 +32,7 @@ Sensitivity of a PK Parameter for one output for a given parameter
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
 }
 \out{</details>}

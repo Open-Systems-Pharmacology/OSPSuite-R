@@ -48,8 +48,8 @@ getAllQuantityPathsIn <- function(container) {
 #'
 #' @inherit getAllQuantitiesMatching
 #' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If TRUE and no quantity exist for the given path,
-#' an error is thrown. Default is TRUE.
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
+#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
 #'
 #' @return The \code{Quantity} with the given path. If the quantity for the path
 #' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),

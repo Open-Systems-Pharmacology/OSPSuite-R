@@ -75,7 +75,8 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' @title Returns an instance of a PK-Parameter by name or NULL if the parameter by name is not found
 #'
 #' @param name Name of PK-Parameter to update
-#' @param stopIfNotFound Indicates whether an exception is thrown when the PK-Parameter was not found. Default is \code{TRUE}
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no pk parameter exist for the given name,
+#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
 #'
 #' @examples
 #'

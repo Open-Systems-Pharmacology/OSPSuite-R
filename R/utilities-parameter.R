@@ -48,8 +48,8 @@ getAllParameterPathsIn <- function(container) {
 #'
 #' @inherit getAllParametersMatching
 #' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If TRUE and no parameter exist for the given path,
-#' an error is thrown. Default is TRUE.
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no parameter exist for the given path,
+#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
 #'
 #' @return The \code{Parameter} with the given path. If the parameter for the path
 #' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),

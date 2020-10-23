@@ -38,6 +38,7 @@ Results of a simulation run (either individual or population simulation)
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -96,7 +97,8 @@ Returns \code{TRUE} if results are available for the individual with id \code{in
 
 \item{\code{individualIds}}{One or more individual ids for which values should be returned}
 
-\item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the \code{path}/}
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the \code{path}/
+If \code{FALSE}, a list of \code{NA} values is returned}
 }
 \if{html}{\out{</div>}}
 }
