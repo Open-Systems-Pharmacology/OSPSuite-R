@@ -11,6 +11,8 @@
 The **ospsuite** R-package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 
 # Installation
+**As of now, R 4.x.x is not supported by ospsuite! The latest supported R version is 3.6.3.**
+
 **ospsuite** requires following packages to be installed:
 
 - [rClr](https://github.com/Open-Systems-Pharmacology/rClr/releases/latest)
