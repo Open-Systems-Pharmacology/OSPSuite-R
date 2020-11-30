@@ -85,7 +85,7 @@ def install_pksim(branch)
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
 #  uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
-  uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}"
+  uri ="https://ci.appveyor.com/api/buildjobs/f2bs44jpudmb60b7/artifacts/setup.zip"
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
   # MSI installer only works with \\ style separator
