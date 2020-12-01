@@ -58,7 +58,8 @@ setOutputInterval <- function(simulation, startTime, endTime, resolution, interv
   addOutputInterval(simulation, startTime, endTime, resolution, intervalName)
 }
 
-#' @title  Removes all intervals from the output schema defined in \code{simulation}
+#' @title  Removes all intervals as well as all single time points from the output schema
+#' defined in \code{simulation}
 #'
 #' @param simulation Instance of a simulation for which output intervals should be cleared
 #'

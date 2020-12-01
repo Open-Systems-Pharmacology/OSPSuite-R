@@ -52,7 +52,7 @@ OutputSchema <- R6::R6Class(
 
     #' @description
     #' Adds the time points to the schema
-    #' @param timePoints Time points to add to the interval
+    #' @param timePoints Time points to add to the schema
     addTimePoints = function(timePoints) {
       timePoints <- c(timePoints)
       validateIsNumeric(timePoints)
