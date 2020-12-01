@@ -51,7 +51,8 @@ OutputSchema <- R6::R6Class(
     },
 
     #' @description
-    #' Adds the time points to the schema
+    #' Adds the time points to the schema. Note that time points and intervals exists concurrently.
+    #' Use time points only if you need to ensure that specific time are used.
     #' @param timePoints Time points to add to the schema
     addTimePoints = function(timePoints) {
       timePoints <- c(timePoints)
