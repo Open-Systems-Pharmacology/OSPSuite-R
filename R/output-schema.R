@@ -14,7 +14,7 @@ OutputSchema <- R6::R6Class(
         intervals <- rClr::clrGet(self$ref, "IntervalsAsArray")
         toObjectType(intervals, Interval)
       } else {
-        private$throwPropertyIsReadonly("solver")
+        private$throwPropertyIsReadonly("intervals")
       }
     },
     #' @field timePoints All single time points defined in the schema (Read-Only)
