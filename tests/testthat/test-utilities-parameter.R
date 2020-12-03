@@ -198,6 +198,7 @@ test_that("It return the full path for a parameter that does not exist", {
 test_that("It return the display paths for a vector of parameters", {
   path1 <- toPathString(c("Organism", "Liver", "Intracellular", "Volume"))
   path2 <- toPathString(c("Organism", "Liver", "Volume"))
-  displayPath <- getParameterDisplayPaths(c(path1, path2), sim)
-  expect_identical(displayPath, c("Liver-Intracellular-Volume", "Liver-Volume"))
+  path3 <- toPathString(c("Organism", "Age"))
+  displayPath <- getParameterDisplayPaths(c(path1, path2, path3), sim)
+  expect_identical(displayPath, c("Liver-Intracellular-Volume", "Liver-Volume", "Age"))
 })
