@@ -13,8 +13,8 @@ getEntity(path, container, entityType, stopIfNotFound = TRUE)
 
 \item{entityType}{Class of the type that should be returned. Supported types are Container, Quantity, and Parameter}
 
-\item{stopIfNotFound}{Boolean. If TRUE and no parameter exist for the given path,
-an error is thrown. Default is TRUE.}
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no entity exists for the given path,
+an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \value{
 The \code{Entity} with the given path coerced to the \code{entityType}.

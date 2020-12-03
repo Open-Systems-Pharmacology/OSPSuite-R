@@ -9,7 +9,8 @@ pkParameterByName(name, stopIfNotFound = TRUE)
 \arguments{
 \item{name}{Name of PK-Parameter to update}
 
-\item{stopIfNotFound}{Indicates whether an exception is thrown when the PK-Parameter was not found. Default is \code{TRUE}}
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no pk parameter exist for the given name,
+an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \description{
 Returns an instance of a PK-Parameter by name or NULL if the parameter by name is not found

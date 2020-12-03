@@ -49,8 +49,8 @@ getAllMoleculePathsIn <- function(container) {
 #'
 #' @inherit getAllMoleculesMatching
 #' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If TRUE and no molecule exist for the given path,
-#' an error is thrown. Default is TRUE.
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no molecule exist for the given path,
+#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
 #'
 #' @return The \code{Molecule} with the given path. If the molecule for the path
 #' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
