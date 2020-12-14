@@ -5,11 +5,14 @@
 #' @param filePath Full path of pkml simulation file to load.
 #'
 #' @param loadFromCache If \code{TRUE}, an already loaded pkml file will not be loaded
-#' again, but the simulation object will be retrieved from cache. This is the
-#' default behavior. If \code{FALSE}, new object will be created. Default value is \code{FALSE}
+#' again, but the simulation object will be retrieved from cache.
+#' If \code{FALSE}, a new simulation object will be created. Default value is \code{FALSE}
 #'
 #' @param addToCache If \code{TRUE}, the loaded simulation is added to cache. If \code{FALSE},
 #' the returned simulation only exists locally. Default is \code{TRUE}
+#'
+#' @param resetIds If \code{TRUE}, the internal object ids in the simulation are resetted to a unique value.
+#' If \code{FALSE}, the ids are kept as defined in the pkml simulation. Default is \code{TRUE}
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -35,7 +38,7 @@
 #' setParameterValues(parameters = parameter3, values = 1)
 #' parameter2$value == parameter3$value # FALSE#'
 #' @export
-loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
+loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, resetIds = TRUE) {
   validateIsLogical(c(loadFromCache, addToCache))
   validateIsString(filePath)
   if (loadFromCache) {
@@ -50,7 +53,7 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE) {
   simulationPersister <- getNetTask("SimulationPersister")
 
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
-  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", expandPath(filePath))
+  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", expandPath(filePath), resetIds)
 
   simulation <- Simulation$new(netSim, filePath)
 

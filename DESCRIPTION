@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 9.1.0
+Version: 10.0.0
 Authors@R: 
     c(person(given = "Open-Systems-Pharmacology Community",
              role = "cph"),

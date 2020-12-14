@@ -12,7 +12,7 @@ install:
   - git submodule update --init --recursive
 
 environment:
-  app_version: "9.1"
+  app_version: "10.0"
   USE_RTOOLS: true
   NOT_CRAN: true
   KEEP_VIGNETTES: true
@@ -51,9 +51,9 @@ on_success:
 test_script:
   - travis-tool.sh run_tests
 
-after_test:
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
+# after_test:
+#   - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
+#   - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*

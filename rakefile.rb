@@ -16,7 +16,7 @@ task :prepare_for_build, [:product_version] do |t, args|
 
   update_package_version(product_version)
 
-  install_pksim()
+  install_pksim('feature/relative_expression_redesign')
 end
 
 task :postclean do 
@@ -81,10 +81,9 @@ def copy_so(file, linux_distro, target_dir)
   end
 end
 
-def install_pksim()
+def install_pksim(branch)
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
-  branch = 'hotfix/v9.1'
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
