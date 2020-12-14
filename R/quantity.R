@@ -17,21 +17,21 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", value)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
     displayUnit = function(value) {
-      private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit")
+      private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value)
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
+      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", value)
     },
-    #' @field  allUnits the list of all supported units
+    #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
       # Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
       if (is.null(private$.allUnits)) {
-        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
+        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits, value)
       }
       return(private$.allUnits)
     },
