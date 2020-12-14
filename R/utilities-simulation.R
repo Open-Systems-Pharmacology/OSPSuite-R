@@ -5,8 +5,8 @@
 #' @param filePath Full path of pkml simulation file to load.
 #'
 #' @param loadFromCache If \code{TRUE}, an already loaded pkml file will not be loaded
-#' again, but the simulation object will be retrieved from cache. This is the
-#' default behavior. If \code{FALSE}, new object will be created. Default value is \code{FALSE}
+#' again, but the simulation object will be retrieved from cache.
+#' If \code{FALSE}, a new simulation object will be created. Default value is \code{FALSE}
 #'
 #' @param addToCache If \code{TRUE}, the loaded simulation is added to cache. If \code{FALSE},
 #' the returned simulation only exists locally. Default is \code{TRUE}
