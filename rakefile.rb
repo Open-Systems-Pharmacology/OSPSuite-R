@@ -16,7 +16,7 @@ task :prepare_for_build, [:product_version] do |t, args|
 
   update_package_version(product_version)
 
-  install_pksim('feature@relative_expression_redesign')
+  install_pksim('feature/relative_expression_redesign')
 end
 
 task :postclean do 
