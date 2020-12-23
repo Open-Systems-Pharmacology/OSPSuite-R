@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-file.R
 \name{expandPath}
 \alias{expandPath}
-\title{Returns the expanded path for \code{path} and ensure that encoding is applied propertly}
+\title{Returns the expanded path for \code{path} and ensure that encoding is applied properly}
 \usage{
 expandPath(path)
 }
@@ -10,5 +10,5 @@ expandPath(path)
 \item{path}{Path to expand}
 }
 \description{
-Returns the expanded path for \code{path} and ensure that encoding is applied propertly
+Returns the expanded path for \code{path} and ensure that encoding is applied properly
 }

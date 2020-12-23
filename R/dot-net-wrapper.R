@@ -22,6 +22,8 @@ DotNetWrapper <- R6::R6Class(
     initialize = function(ref) {
       self$ref <- ref
     },
+    #' @description
+    #' Clears the reference to the wrapped .NET object
     finalize = function() {
       # maybe dispose should be called to if available.
       self$ref <- NULL
@@ -82,6 +84,20 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrGet(self$ref, propertyName) + 1
       } else {
         rClr::clrSet(self$ref, propertyName, as.integer(value - 1))
+      }
+    },
+
+    wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName = NULL) {
+      if(missing(value)){
+        rClr::clrGet(self$ref, returnPropertyName %||% propertyName)
+      }
+      else{
+        if(length(value) > 1){
+          rClr::clrSet(self$ref, propertyNamePlural, value)
+        }
+        else{
+          rClr::clrSet(self$ref, propertyNameSingular, value)
+        }
       }
     },
 

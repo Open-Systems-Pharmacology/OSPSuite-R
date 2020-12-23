@@ -56,14 +56,14 @@ Population <- R6::R6Class(
       rClr::clrCall(self$ref, "GetCovariateValues", covariateName)
     },
     #' @description
-    #' Returns the values defined in the population for the covariate named `covariateName` and invididual with id `individualId`
+    #' Returns the values defined in the population for the covariate named `covariateName` and individual with id `individualId`
     #' @param covariateName Name of covariate for which values should be retrieved
     #' @param individualId Id of individual for which the value for covariate `covariateName` should be retrieved
     getCovariateValue = function(covariateName, individualId) {
       rClr::clrCall(self$ref, "CovariateValueFor", covariateName, as.integer(individualId))
     },
     #' @description
-    #' Returns all values defined in the population the invididual with id `individualId`
+    #' Returns all values defined in the population the individual with id `individualId`
     #' @param individualId Id of individual for which all values should be returned
     getParameterValuesForIndividual = function(individualId) {
       parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))

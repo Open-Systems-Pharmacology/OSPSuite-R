@@ -91,7 +91,9 @@ messages <- list(
 
   errorOSPSuiteSettingNotFound = function(settingName) {
     paste0("No global setting with the name '", settingName, "' exists. Available global settings are:\n", paste0(names(ospsuiteEnv), collapse = ", "))
-  }
+  },
+
+  errorSimulationBatchNothingToVary = "You need to vary at least one parameter or one molecule in order to use the SimulationBatch"
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,

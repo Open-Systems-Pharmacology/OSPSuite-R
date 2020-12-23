@@ -87,7 +87,8 @@ Removes the interval from the schema
 \if{html}{\out{<a id="method-addTimePoints"></a>}}
 \if{latex}{\out{\hypertarget{method-addTimePoints}{}}}
 \subsection{Method \code{addTimePoints()}}{
-Adds the time points to the schema
+Adds the time points to the schema. Note that time points and intervals exists concurrently.
+Use time points only if you need to ensure that specific time are used.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addTimePoints(timePoints)}\if{html}{\out{</div>}}
 }
@@ -95,7 +96,7 @@ Adds the time points to the schema
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{timePoints}}{Time points to add to the interval}
+\item{\code{timePoints}}{Time points to add to the schema}
 }
 \if{html}{\out{</div>}}
 }

@@ -118,7 +118,7 @@ Returns the values defined in the population for the covariate named \code{covar
 \if{html}{\out{<a id="method-getCovariateValue"></a>}}
 \if{latex}{\out{\hypertarget{method-getCovariateValue}{}}}
 \subsection{Method \code{getCovariateValue()}}{
-Returns the values defined in the population for the covariate named \code{covariateName} and invididual with id \code{individualId}
+Returns the values defined in the population for the covariate named \code{covariateName} and individual with id \code{individualId}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValue(covariateName, individualId)}\if{html}{\out{</div>}}
 }
@@ -137,7 +137,7 @@ Returns the values defined in the population for the covariate named \code{covar
 \if{html}{\out{<a id="method-getParameterValuesForIndividual"></a>}}
 \if{latex}{\out{\hypertarget{method-getParameterValuesForIndividual}{}}}
 \subsection{Method \code{getParameterValuesForIndividual()}}{
-Returns all values defined in the population the invididual with id \code{individualId}
+Returns all values defined in the population the individual with id \code{individualId}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Population$getParameterValuesForIndividual(individualId)}\if{html}{\out{</div>}}
 }

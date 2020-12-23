@@ -2,7 +2,8 @@
 % Please edit documentation in R/utilities-output-schema.R
 \name{clearOutputIntervals}
 \alias{clearOutputIntervals}
-\title{Removes all intervals from the output schema defined in \code{simulation}}
+\title{Removes all intervals as well as all single time points from the output schema
+defined in \code{simulation}}
 \usage{
 clearOutputIntervals(simulation)
 }
@@ -10,7 +11,8 @@ clearOutputIntervals(simulation)
 \item{simulation}{Instance of a simulation for which output intervals should be cleared}
 }
 \description{
-Removes all intervals from the output schema defined in \code{simulation}
+Removes all intervals as well as all single time points from the output schema
+defined in \code{simulation}
 }
 \examples{
 
