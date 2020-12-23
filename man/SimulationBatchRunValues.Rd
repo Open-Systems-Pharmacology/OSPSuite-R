@@ -15,7 +15,7 @@ Options to be passed to the SimulationBatch run
 \describe{
 \item{\code{parameterValues}}{Vector of parameter values used in a batch run}
 
-\item{\code{variableMolecules}}{Vector of initial values used in a batch run}
+\item{\code{initialValues}}{Vector of initial values used in a batch run}
 }
 \if{html}{\out{</div>}}
 }
