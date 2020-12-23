@@ -147,7 +147,7 @@ context("createSimulationBatch")
 
 test_that("It throws an error when initializing a simulation batch without any variable parameter or molecule", {
   sim <- loadTestSimulation("simple", loadFromCache = TRUE)
-  expect_that(createSimulationBatch(sim),throws_error())
+  expect_that(createSimulationBatch(sim), throws_error())
 })
 
 test_that("It creates a simulation batch when using only parameter paths", {
@@ -167,15 +167,13 @@ test_that("It creates a simulation batch when using only molecule paths", {
 test_that("It creates a simulation batch when using only parameter instances", {
   sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim)
-  simulationBatch <- createSimulationBatch(sim, parametersOrPaths =  parameter1)
+  simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameter1)
   expect_false(is.null(simulationBatch))
 })
 
 test_that("It creates a simulation batch when using only molecule instances", {
   sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   molecule <- getMolecule(toPathString(c("Organism", "Liver", "A")), sim)
-  simulationBatch <- createSimulationBatch(sim, moleculesOrPaths =  molecule)
+  simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecule)
   expect_false(is.null(simulationBatch))
 })
-
-

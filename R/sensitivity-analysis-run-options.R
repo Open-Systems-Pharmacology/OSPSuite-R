@@ -14,7 +14,7 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @param showProgress Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}
     #' @return A new `SensitivityAnalysisRunOptions` object.
     initialize = function(numberOfCores = NULL,
-                              showProgress = NULL) {
+                          showProgress = NULL) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
       super$initialize(ref)
 

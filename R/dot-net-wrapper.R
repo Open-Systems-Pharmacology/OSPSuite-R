@@ -87,15 +87,13 @@ DotNetWrapper <- R6::R6Class(
       }
     },
 
-    wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName = NULL) {
-      if(missing(value)){
-        rClr::clrGet(self$ref, returnPropertyName %||% propertyName)
-      }
-      else{
-        if(length(value) > 1){
+    wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName) {
+      if (missing(value)) {
+        rClr::clrGet(self$ref, returnPropertyName)
+      } else {
+        if (length(value) > 1) {
           rClr::clrSet(self$ref, propertyNamePlural, value)
-        }
-        else{
+        } else {
           rClr::clrSet(self$ref, propertyNameSingular, value)
         }
       }

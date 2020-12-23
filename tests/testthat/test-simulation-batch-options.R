@@ -17,7 +17,7 @@ test_that("It can set the variable parameters and variable molecules", {
 
 test_that("It can set the single parameter and molecule", {
   batchOptions <- SimulationBatchOptions$new()
-  batchOptions$variableParameters <-"P1"
+  batchOptions$variableParameters <- "P1"
   expect_equal(batchOptions$variableParameters, "P1")
 
   batchOptions$variableMolecules <- "M1"

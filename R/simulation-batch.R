@@ -29,7 +29,7 @@ SimulationBatch <- R6::R6Class(
     run = function(parameterValues = NULL, initialValues = NULL) {
       validateIsNumeric(parameterValues, nullAllowed = TRUE)
       validateIsNumeric(initialValues, nullAllowed = TRUE)
-      batchRunValues <-SimulationBatchRunValues$new(parameterValues, initialValues)
+      batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
 
       results <- rClr::clrCall(self$ref, "Run", batchRunValues$ref)
       SimulationResults$new(results, self$simulation)

@@ -33,10 +33,10 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param variationRange Variation applied to the parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
     #' @return A new `SensitivityAnalysis` object.
     initialize = function(
-                              simulation,
-                              parameterPaths = NULL,
-                              numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
-                              variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
+                          simulation,
+                          parameterPaths = NULL,
+                          numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
+                          variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
       validateIsOfType(simulation, Simulation)
       validateIsString(parameterPaths, nullAllowed = TRUE)
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
