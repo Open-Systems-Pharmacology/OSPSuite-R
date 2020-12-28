@@ -1,6 +1,6 @@
 context("createIndividual")
 
-#initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
+# initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 
 test_that("It can create a standard dog for a given bodyweight", {
   dog <- createIndividualCharacteristics(

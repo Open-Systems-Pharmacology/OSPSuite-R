@@ -41,17 +41,14 @@ getOutputValues <- function(simulationResults,
   # If quantities are passed, get their paths.
   if (isOfType(quantitiesOrPaths, Quantity)) {
     quantities <- uniqueEntities(quantitiesOrPaths)
-    paths <- unlist(
-      lapply(quantities, function(x) x$path)
-      )
-    names(quantities) <- paths
+    paths <- unlist(lapply(quantities, function(x) x$path))
   } else {
     paths <- unique(quantitiesOrPaths)
-    quantities <- lapply(paths, function(path){
+    quantities <- lapply(paths, function(path) {
       getQuantity(path, simulationResults$simulation, stopIfNotFound)
     })
-    names(quantities) <- paths
   }
+  names(quantities) <- paths
 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
@@ -62,7 +59,7 @@ getOutputValues <- function(simulationResults,
   covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
 
   individualPropertiesCache <- vector("list", length(individualIds))
-  # create a cache of all indivdual values that are constant independent from the path
+  # create a cache of all individual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
     individualId <- individualIds[individualIndex]
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
@@ -80,16 +77,17 @@ getOutputValues <- function(simulationResults,
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
-  values <- lapply(paths, function(path){
-    simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
-  })
-  names(values) <- paths
-
-  metaData <- lapply(paths, function(path){
+  metaData <- vector("list", length(paths))
+  values <- vector("list", length(paths))
+  for (idx in seq_along(paths)) {
+    path <- paths[[idx]]
     quantity <- quantities[[path]]
-    list(unit = quantity$unit, dimension = quantity$dimension)
-  })
+    values[[idx]] <- simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+    metaData[[idx]] <- list(unit = quantity$unit, dimension = quantity$dimension)
+  }
+  names(values) <- paths
   names(metaData) <- paths
+
   metaData[["Time"]] <- list(unit = "min", dimension = "Time")
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)

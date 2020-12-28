@@ -17,7 +17,10 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", value)
+      if (is.null(private$.unit)) {
+        private$.unit <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", value)
+      }
+      return(private$.unit)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
     displayUnit = function(value) {
@@ -25,13 +28,16 @@ Quantity <- R6::R6Class(
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", value)
+      if (is.null(private$.dimension)) {
+        private$.dimension <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", value)
+      }
+      return(private$.dimension)
     },
     #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
-      # Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
+      # Optimized implementation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
       if (is.null(private$.allUnits)) {
-        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits, value)
+        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", value)
       }
       return(private$.allUnits)
     },
@@ -71,6 +77,8 @@ Quantity <- R6::R6Class(
   private = list(
     .formula = NULL,
     .allUnits = NULL,
+    .unit = NULL,
+    .dimension = NULL,
     printQuantity = function(valueCaption = "Value") {
       private$printClass()
       private$printLine("Path", self$path)
