@@ -5,8 +5,10 @@ test_that("It returns a value of a setting", {
 })
 
 test_that("It returns a value of a nested setting", {
-  expect_equal(getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold,
-               ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold)
+  expect_equal(
+    getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold,
+    ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
+  )
 })
 
 

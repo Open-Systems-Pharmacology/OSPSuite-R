@@ -79,10 +79,11 @@ simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeVal
 populationResults <- importResultsFromCSV(sim, "C:/temp/export/results.csv")
 # populationPkAnalyses <- calculatePKAnalyses(populationResults)
 #
-profvis({
-  outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths)
-},
-prof_output = "C:/temp/export/prof.html"
+profvis(
+  {
+    outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths)
+  },
+  prof_output = "C:/temp/export/prof.html"
 )
 
 outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths, c(1))

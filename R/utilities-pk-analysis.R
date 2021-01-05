@@ -66,18 +66,19 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
   validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   pkParameterResultsFilePath <- tempfile()
-  dataFrame <- tryCatch({
-    exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
-    pkResultsDataFrame <- read.csv(pkParameterResultsFilePath, encoding = "UTF-8", check.names = FALSE)
-    colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
-    pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
-    pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
-    pkResultsDataFrame$Unit <- as.factor(pkResultsDataFrame$Unit)
-    return(pkResultsDataFrame)
-  },
-  finally = {
-    file.remove(pkParameterResultsFilePath)
-  }
+  dataFrame <- tryCatch(
+    {
+      exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
+      pkResultsDataFrame <- read.csv(pkParameterResultsFilePath, encoding = "UTF-8", check.names = FALSE)
+      colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
+      pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
+      pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
+      pkResultsDataFrame$Unit <- as.factor(pkResultsDataFrame$Unit)
+      return(pkResultsDataFrame)
+    },
+    finally = {
+      file.remove(pkParameterResultsFilePath)
+    }
   )
   return(dataFrame)
 }

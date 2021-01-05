@@ -21,7 +21,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 
-\item{\code{allUnits}}{the list of all supported units}
+\item{\code{allUnits}}{the list of all supported units (Read-Only)}
 
 \item{\code{quantityType}}{The type of the quantity (Read-Only)}
 
