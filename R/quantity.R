@@ -17,9 +17,7 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      if (is.null(private$.unit)) {
-        private$.unit <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", value)
-      }
+      private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
       return(private$.unit)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
@@ -28,17 +26,13 @@ Quantity <- R6::R6Class(
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      if (is.null(private$.dimension)) {
-        private$.dimension <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", value)
-      }
+      private$.dimension <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
       return(private$.dimension)
     },
     #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
       # Optimized implementation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
-      if (is.null(private$.allUnits)) {
-        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", value)
-      }
+      private$.allUnits <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", private$.allUnits, value)
       return(private$.allUnits)
     },
     #' @field quantityType The type of the quantity (Read-Only)

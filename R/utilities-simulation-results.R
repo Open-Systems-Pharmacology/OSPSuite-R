@@ -77,18 +77,18 @@ getOutputValues <- function(simulationResults,
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
-  metaData <- vector("list", length(paths))
-  values <- vector("list", length(paths))
-  for (idx in seq_along(paths)) {
-    path <- paths[[idx]]
-    quantity <- quantities[[path]]
-    values[[idx]] <- simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
-    metaData[[idx]] <- list(unit = quantity$unit, dimension = quantity$dimension)
-  }
-  names(values) <- paths
-  names(metaData) <- paths
 
-  metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  values <- lapply(paths, function(path){
+  simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+})
+names(values) <- paths
+
+metaData <- lapply(paths, function(path){
+  quantity <- quantities[[path]]
+  list(unit = quantity$unit, dimension = quantity$dimension)
+})
+names(metaData) <- paths
+metaData[["Time"]] <- list(unit = "min", dimension = "Time")
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
   return(list(data = data, metaData = metaData))
