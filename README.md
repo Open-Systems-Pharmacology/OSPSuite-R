@@ -33,6 +33,7 @@ install.packages(pathToOSPSuite.zip, repos = NULL)
 
 ## Under Linux
 The **ospsuite** package has been tested under Linux distributions CentOS 7 and Ubuntu 18. Some functionality, such as creating individuals, is not availble under Linux. Installation under Linux requires several prerequisites, the detailed instructions can be found in the [Wiki](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu).
+For other Linux distributions Docker containers can be used (Dockerfiles based on CentOS 7 and Ubuntu 18 are available under https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases )
 
 ## Build from source
 You can clone the GIT repository and build the package from source.
