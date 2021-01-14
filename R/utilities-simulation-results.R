@@ -78,17 +78,17 @@ getOutputValues <- function(simulationResults,
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
 
-  values <- lapply(paths, function(path){
-  simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
-})
-names(values) <- paths
+  values <- lapply(paths, function(path) {
+    simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+  })
+  names(values) <- paths
 
-metaData <- lapply(paths, function(path){
-  quantity <- quantities[[path]]
-  list(unit = quantity$unit, dimension = quantity$dimension)
-})
-names(metaData) <- paths
-metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  metaData <- lapply(paths, function(path) {
+    quantity <- quantities[[path]]
+    list(unit = quantity$unit, dimension = quantity$dimension)
+  })
+  names(metaData) <- paths
+  metaData[["Time"]] <- list(unit = "min", dimension = "Time")
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
   return(list(data = data, metaData = metaData))
