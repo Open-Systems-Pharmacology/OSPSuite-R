@@ -53,7 +53,7 @@ validateEnumValue <- function(value, enum, nullAllowed = FALSE) {
   }
 
   enumKey <- getEnumKey(enum, value)
-  if (enumKey %in% names(enum)) {
+  if (any(names(enum) == enumKey)) {
     return()
   }
 

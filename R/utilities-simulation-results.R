@@ -41,7 +41,7 @@ getOutputValues <- function(simulationResults,
   # If quantities are passed, get their paths.
   if (isOfType(quantitiesOrPaths, Quantity)) {
     quantities <- uniqueEntities(quantitiesOrPaths)
-    paths <- unlist(lapply(quantities, function(x) x$path))
+    paths <- unlist(lapply(quantities, function(x) x$path), use.names = FALSE)
   } else {
     paths <- unique(quantitiesOrPaths)
     quantities <- lapply(paths, function(path) {
@@ -78,17 +78,17 @@ getOutputValues <- function(simulationResults,
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
 
-  values <- lapply(paths, function(path){
-  simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
-})
-names(values) <- paths
+  values <- lapply(paths, function(path) {
+    simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+  })
+  names(values) <- paths
 
-metaData <- lapply(paths, function(path){
-  quantity <- quantities[[path]]
-  list(unit = quantity$unit, dimension = quantity$dimension)
-})
-names(metaData) <- paths
-metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  metaData <- lapply(paths, function(path) {
+    quantity <- quantities[[path]]
+    list(unit = quantity$unit, dimension = quantity$dimension)
+  })
+  names(metaData) <- paths
+  metaData[["Time"]] <- list(unit = "min", dimension = "Time")
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
   return(list(data = data, metaData = metaData))
@@ -145,7 +145,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, Simulation)
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)

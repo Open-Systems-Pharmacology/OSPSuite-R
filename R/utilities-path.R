@@ -11,7 +11,7 @@
 #' @export
 toPathArray <- function(path) {
   validateIsString(path)
-  unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)))
+  unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)), use.names = FALSE)
 }
 
 #' Convert a path array to a path as string with entries separated by '|'

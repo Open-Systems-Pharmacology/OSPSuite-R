@@ -19,7 +19,7 @@ enum <- function(enumValues) {
   enumNames <- names(myEnum)
   if (is.null(enumNames)) {
     names(myEnum) <- myEnum
-  } else if ("" %in% enumNames) {
+  } else if (any(enumNames == "")) {
     stop(messages$errorEnumNotAllNames)
   }
   return(myEnum)

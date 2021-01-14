@@ -79,7 +79,7 @@ unify <- function(groupEntitiesByPathFunc, paths) {
   listOfEntitiesByPath <- lapply(paths, groupEntitiesByPathFunc)
 
   numberOfEntitiesSet <- length(listOfEntitiesByPath)
-  listOfEntitiesByPath <- unlist(listOfEntitiesByPath)
+  listOfEntitiesByPath <- unlist(listOfEntitiesByPath, use.names = FALSE)
 
   # If the search results in multiple entities lists (== paths is a list of strings),
   # The results have to be checked for duplicates
