@@ -140,7 +140,7 @@ Quantity <- R6::R6Class(
     #' @param unit Unit to check
     hasUnit = function(unit) {
       validateIsString(unit)
-      unit %in% self$allUnits
+      any(self$allUnits == unit)
     },
     #' @description
     #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.

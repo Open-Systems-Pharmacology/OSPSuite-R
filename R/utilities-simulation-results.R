@@ -41,7 +41,7 @@ getOutputValues <- function(simulationResults,
   # If quantities are passed, get their paths.
   if (isOfType(quantitiesOrPaths, Quantity)) {
     quantities <- uniqueEntities(quantitiesOrPaths)
-    paths <- unlist(lapply(quantities, function(x) x$path))
+    paths <- unlist(lapply(quantities, function(x) x$path), use.names = FALSE)
   } else {
     paths <- unique(quantitiesOrPaths)
     quantities <- lapply(paths, function(path) {
@@ -145,7 +145,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, Simulation)
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)
