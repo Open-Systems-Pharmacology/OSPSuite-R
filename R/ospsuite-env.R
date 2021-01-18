@@ -58,7 +58,7 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 #' getOSPSuiteSetting("packageVersion")
 #' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 getOSPSuiteSetting <- function(settingName) {
-  if (!(settingName %in% names(ospsuiteEnv))) {
+  if (!(any(names(ospsuiteEnv) == settingName))) {
     stop(messages$errorOSPSuiteSettingNotFound(settingName))
   }
 

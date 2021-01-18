@@ -136,5 +136,5 @@ getQuantityDisplayPaths <- function(paths, simulation) {
     return(rClr::clrCall(displayResolver, "FullPathFor", quantity$ref))
   })
 
-  return(unlist(displayPaths))
+  return(unlist(displayPaths, use.names = FALSE))
 }

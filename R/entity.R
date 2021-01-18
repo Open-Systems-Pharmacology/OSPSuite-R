@@ -10,12 +10,14 @@ Entity <- R6::R6Class(
   cloneable = FALSE,
   inherit = ObjectBase,
   private = list(
-    .parentContainer = NULL
+    .parentContainer = NULL,
+    .path = NULL
   ),
   active = list(
-    #' @field path The path of the entity in the container hiearchy without the simulation name. (read-only)
+    #' @field path The path of the entity in the container hierarchy without the simulation name. (read-only)
     path = function(value) {
-      private$wrapExtensionMethod(EntityExtensions, "ConsolidatedPath", "path", value)
+      private$.path <- private$wrapExtensionMethodCached(EntityExtensions, "ConsolidatedPath", "path", private$.path, value)
+      return(private$.path)
     },
     #' @field fullPath Same as \code{path}, but with the simulation name. (read-only)
     fullPath = function(value) {

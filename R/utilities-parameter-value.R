@@ -14,7 +14,7 @@ parameterValueListFrom <- function(netParameterValues, addUnits = FALSE) {
   )
 
   if (addUnits) {
-    parameterList <- c(parameterList, list(units = getPropertyValues(netParameterValues, "Unit")))
+    parameterList$units <- getPropertyValues(netParameterValues, "Unit")
   }
 
   return(parameterList)

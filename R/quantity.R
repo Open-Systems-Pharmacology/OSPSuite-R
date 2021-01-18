@@ -17,7 +17,8 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", value)
+      private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
+      return(private$.unit)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
     displayUnit = function(value) {
@@ -25,14 +26,13 @@ Quantity <- R6::R6Class(
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", value)
+      private$.dimension <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
+      return(private$.dimension)
     },
     #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
-      # Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
-      if (is.null(private$.allUnits)) {
-        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits, value)
-      }
+      # Optimized implementation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
+      private$.allUnits <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", private$.allUnits, value)
       return(private$.allUnits)
     },
     #' @field quantityType The type of the quantity (Read-Only)
@@ -71,6 +71,8 @@ Quantity <- R6::R6Class(
   private = list(
     .formula = NULL,
     .allUnits = NULL,
+    .unit = NULL,
+    .dimension = NULL,
     printQuantity = function(valueCaption = "Value") {
       private$printClass()
       private$printLine("Path", self$path)
@@ -138,7 +140,7 @@ Quantity <- R6::R6Class(
     #' @param unit Unit to check
     hasUnit = function(unit) {
       validateIsString(unit)
-      unit %in% self$allUnits
+      any(self$allUnits == unit)
     },
     #' @description
     #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.

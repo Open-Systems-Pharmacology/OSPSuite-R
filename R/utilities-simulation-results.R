@@ -34,16 +34,21 @@ getOutputValues <- function(simulationResults,
   quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
-  # If quantities are passed, get their paths.
-  paths <- quantitiesOrPaths
-  if (isOfType(paths, Quantity)) {
-    paths <- unlist(lapply(paths, function(x) x$path))
-  }
-  paths <- unique(paths)
-
-  if (length(paths) == 0) {
+  if (length(quantitiesOrPaths) == 0) {
     return(list(data = NULL, metaData = NULL))
   }
+
+  # If quantities are passed, get their paths.
+  if (isOfType(quantitiesOrPaths, Quantity)) {
+    quantities <- uniqueEntities(quantitiesOrPaths)
+    paths <- unlist(lapply(quantities, function(x) x$path), use.names = FALSE)
+  } else {
+    paths <- unique(quantitiesOrPaths)
+    quantities <- lapply(paths, function(path) {
+      getQuantity(path, simulationResults$simulation, stopIfNotFound)
+    })
+  }
+  names(quantities) <- paths
 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
@@ -53,13 +58,8 @@ getOutputValues <- function(simulationResults,
   valueLength <- length(timeValues)
   covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
 
-  values <- list()
-  metaData <- list(
-    Time = list(unit = "min", dimension = "Time")
-  )
-
   individualPropertiesCache <- vector("list", length(individualIds))
-  # create a cache of all indivdual values that are constant independent from the path
+  # create a cache of all individual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
     individualId <- individualIds[individualIndex]
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
@@ -78,11 +78,17 @@ getOutputValues <- function(simulationResults,
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
 
-  for (path in paths) {
-    quantity <- getQuantity(path, simulationResults$simulation, stopIfNotFound = stopIfNotFound)
-    metaData[[path]] <- list(unit = quantity$unit, dimension = quantity$dimension)
-    values[[path]] <- simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
-  }
+  values <- lapply(paths, function(path) {
+    simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+  })
+  names(values) <- paths
+
+  metaData <- lapply(paths, function(path) {
+    quantity <- quantities[[path]]
+    list(unit = quantity$unit, dimension = quantity$dimension)
+  })
+  names(metaData) <- paths
+  metaData[["Time"]] <- list(unit = "min", dimension = "Time")
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
   return(list(data = data, metaData = metaData))
@@ -139,7 +145,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, Simulation)
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)
