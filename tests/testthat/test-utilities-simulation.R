@@ -114,7 +114,7 @@ test_that("It can run a valid population simulation and returns results", {
   expect_equal(results$count, population$count)
 })
 
-test_that("It throws an exception when running a population simulation with the wrong argumetns", {
+test_that("It throws an exception when running a population simulation with the wrong arguments", {
   populationFileName <- getTestDataFilePath("pop_10.csv")
   population <- loadPopulation(populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
@@ -138,6 +138,42 @@ context("getAllParametersForSensitivityAnalysisMatching")
 test_that("It returns all parameter potentially interesting for sensitivity analysis for a given wild card path", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameters <- getAllParametersMatching("**|Volume", sim)
-  varableParameters <- getAllParametersForSensitivityAnalysisMatching("**|Volume", sim)
-  expect_gt(length(parameters), length(varableParameters))
+  variableParameters <- getAllParametersForSensitivityAnalysisMatching("**|Volume", sim)
+  expect_gt(length(parameters), length(variableParameters))
+})
+
+
+context("createSimulationBatch")
+
+test_that("It throws an error when initializing a simulation batch without any variable parameter or molecule", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  expect_that(createSimulationBatch(sim), throws_error())
+})
+
+test_that("It creates a simulation batch when using only parameter paths", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  parameters <- c("Organism|Liver|Volume", "R1|k1")
+  simulationBatch <- createSimulationBatch(sim, parameters)
+  expect_false(is.null(simulationBatch))
+})
+
+test_that("It creates a simulation batch when using only molecule paths", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  molecules <- c("Organism|Liver|A")
+  simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
+  expect_false(is.null(simulationBatch))
+})
+
+test_that("It creates a simulation batch when using only parameter instances", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  parameter1 <- getParameter(toPathString(c("Organism", "Liver", "Volume")), sim)
+  simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameter1)
+  expect_false(is.null(simulationBatch))
+})
+
+test_that("It creates a simulation batch when using only molecule instances", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  molecule <- getMolecule(toPathString(c("Organism", "Liver", "A")), sim)
+  simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecule)
+  expect_false(is.null(simulationBatch))
 })

@@ -18,10 +18,10 @@ loadPopulation <- function(csvPopulationFile) {
 #' Loads a population from the \code{csvPopulationFile} and split the loaded population according to
 #' \code{numberOfCores}.
 #' @param csvPopulationFile Full path of csv population file to split.
-#' @param numberOfCores Number of cores used for parallelisation computing. The population will be split accross all cores.
+#' @param numberOfCores Number of cores used for parallelization computing. The population will be split across all cores.
 #' @param outputFolder Folder where all split files will be created
 #' @param outputFileName File names will be constructed using this parameter concatenated with the core index.
-#' @return A tring vector containing the full path of the population files created. Note that there might be less files than cores
+#' @return A string vector containing the full path of the population files created. Note that there might be less files than cores
 #'
 #' @examples
 #' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
