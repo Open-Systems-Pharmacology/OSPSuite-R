@@ -171,7 +171,7 @@ def update_package_version(version)
   replacement = {
     /Version: \d+\.\d+\.\d+/ => "Version: #{version}"
   }
-
+  puts "Patching #{description_file} with version #{version}".light_blue
   Utils.replace_tokens(replacement, description_file)
 end
 
