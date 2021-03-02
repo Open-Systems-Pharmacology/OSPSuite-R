@@ -42,16 +42,16 @@ build_script:
   - travis-tool.sh r_binary_install curl
   - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
 
-# before_test:
-#   - cinst pandoc
-#   - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
-#   - pandoc -v
+before_test:
+  - cinst pandoc
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
 
 on_success:
   - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
 
-# test_script:
-#   - travis-tool.sh run_tests
+test_script:
+  - travis-tool.sh run_tests
 
 after_test:
   - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
