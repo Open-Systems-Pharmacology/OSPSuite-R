@@ -11,12 +11,12 @@ APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
 task :prepare_for_build, [:product_version] do |t, args|
   product_version = sanitized_version(args.product_version)
- 
+  puts "Prepre for build with version #{product_version} and original verison #{args.product_version}".light_blue
   copy_files_to_lib_folder
 
   update_package_version(product_version)
 
-  install_pksim('develop')
+  # install_pksim('develop')
 end
 
 task :postclean do 
@@ -29,6 +29,8 @@ end
 # This task is temporary until we have an automated linux build
 task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, args|
   product_version = sanitized_version(args.product_version)
+  puts "Create linux build #{product_version} and original verison #{args.product_version}".light_blue
+
   build_dir = args.build_dir
   linux_distro = args.linux_distro
 
