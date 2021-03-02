@@ -11,12 +11,11 @@ APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
 task :prepare_for_build, [:product_version] do |t, args|
   product_version = sanitized_version(args.product_version)
- 
   copy_files_to_lib_folder
 
   update_package_version(product_version)
 
-  install_pksim('feature/relative_expression_redesign')
+  install_pksim('develop')
 end
 
 task :postclean do 
@@ -29,6 +28,7 @@ end
 # This task is temporary until we have an automated linux build
 task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, args|
   product_version = sanitized_version(args.product_version)
+
   build_dir = args.build_dir
   linux_distro = args.linux_distro
 
@@ -168,9 +168,9 @@ end
 def update_package_version(version) 
   #Replace token Version: x.y.z with the version from appveyor
   replacement = {
-    /Version: \d\.\d\.\d/ => "Version: #{version}"
+    /Version: \d+\.\d+\.\d+/ => "Version: #{version}"
   }
-
+  puts "Patching #{description_file} with version #{version}".light_blue
   Utils.replace_tokens(replacement, description_file)
 end
 
