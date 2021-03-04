@@ -73,7 +73,7 @@ end
 private
 def copy_so(file, linux_distro, target_dir)
   native_folder = '/bin/native/x64/Release/'
-  copy_depdencies packages_dir, target_dir do
+  copy_dependencies packages_dir, target_dir do
     copy_files "#{file}.#{linux_distro}*/**/#{native_folder}", 'so'
     copy_files "#{file}.#{linux_distro}*/**/netstandard*", 'dll'
   end
@@ -140,7 +140,7 @@ end
 
 def copy_packages_files
   native_folder = '/bin/native/x64/Release/'
-  copy_depdencies packages_dir, lib_dir do
+  copy_dependencies packages_dir, lib_dir do
     # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
     copy_files '*/**/netstandard*', 'dll'
 
@@ -151,7 +151,7 @@ def copy_packages_files
 end
 
 def copy_modules_files
-  copy_depdencies solution_dir, lib_dir do
+  copy_dependencies solution_dir, lib_dir do
     copy_dimensions_xml
     copy_pkparameters_xml
   end
