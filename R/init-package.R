@@ -18,4 +18,6 @@ initPackage <- function() {
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
+  dimensionTask <- getNetTask("DimensionTask")
+  ospsuiteEnv$muSymbol <-  rClr::clrGet(dimensionTask, "MuSymbol")
 }

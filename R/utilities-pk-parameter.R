@@ -25,7 +25,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateIsString(displayName, nullAllowed = TRUE)
   validateIsString(displayUnit, nullAllowed = TRUE)
 
-  displayUnit <- enc2utf8(displayUnit %||% "")
+  displayUnit <- encodeUnit(displayUnit %||% "")
   displayName <- enc2utf8(displayName %||% "")
 
   pkParameterTask <- getNetTask("PKParameterTask")

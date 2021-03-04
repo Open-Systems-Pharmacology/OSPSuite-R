@@ -19,7 +19,8 @@ Depends:
     R (>= 3.5),
     rClr (>= 0.8.3)
 Imports: 
-    R6
+    R6,
+    stringr
 Suggests: 
     knitr,
     rmarkdown,
