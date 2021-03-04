@@ -3,18 +3,16 @@ require 'openssl'
 
 require_relative 'scripts/copy-dependencies'
 require_relative 'scripts/utils'
+require_relative 'scripts/R'
 require_relative 'scripts/colorize'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-task :prepare_for_build, [:product_version] do |t, args|
-  product_version = sanitized_version(args.product_version)
+task :prepare_for_build, [:build_version] do |t, args|
+  update_package_version(args.build_version, description_file)
   copy_files_to_lib_folder
-
-  update_package_version(product_version)
-
   install_pksim('develop')
 end
 
@@ -157,21 +155,6 @@ def copy_modules_files
     copy_dimensions_xml
     copy_pkparameters_xml
   end
-end
-
-def sanitized_version(version) 
-  pull_request_index = version.index('-')
-  return version unless pull_request_index
-  version.slice(0, pull_request_index)
-end
-
-def update_package_version(version) 
-  #Replace token Version: x.y.z with the version from appveyor
-  replacement = {
-    /Version: \d+\.\d+\.\d+/ => "Version: #{version}"
-  }
-  puts "Patching #{description_file} with version #{version}".light_blue
-  Utils.replace_tokens(replacement, description_file)
 end
 
 def nuget_restore(os)
