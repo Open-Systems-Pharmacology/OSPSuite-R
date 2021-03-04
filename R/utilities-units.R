@@ -19,7 +19,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  unit <- enc2utf8(unit)
+  unit <- encodeUnit(unit)
   dimension <- quantityOrDimension
   dimensionTask <- getNetTask("DimensionTask")
 
@@ -60,7 +60,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  targetUnit <- enc2utf8(targetUnit)
+  targetUnit <- encodeUnit(targetUnit)
   dimension <- quantityOrDimension
   values <- c(values)
   dimensionTask <- getNetTask("DimensionTask")
@@ -120,7 +120,7 @@ allAvailableDimensions <- function() {
 #' @export
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
-  unit <- enc2utf8(unit)
+  unit <- encodeUnit(unit)
   dimensionTask <- getNetTask("DimensionTask")
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))

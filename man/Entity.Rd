@@ -13,7 +13,7 @@ Abstract wrapper for an OSPSuite.Core Entity class
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{path}}{The path of the entity in the container hiearchy without the simulation name. (read-only)}
+\item{\code{path}}{The path of the entity in the container hierarchy without the simulation name. (read-only)}
 
 \item{\code{fullPath}}{Same as \code{path}, but with the simulation name. (read-only)}
 
