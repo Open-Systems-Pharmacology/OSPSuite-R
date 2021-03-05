@@ -88,7 +88,16 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value))
       }
     },
-
+    wrapNullableIntegerProperty = function(propertyName, value) {
+      if(missing(value)){
+        return(rClr::clrGet(self$ref, propertyName))
+      }
+      if(is.null(value)){
+        return()
+      } else {
+        rClr::clrSet(self$ref, propertyName, as.integer(value))
+      }
+    },
     wrapIndexProperty = function(propertyName, value) {
       # Special method needed because Index are 0-based in .NET but 1-based in R
       if (missing(value)) {

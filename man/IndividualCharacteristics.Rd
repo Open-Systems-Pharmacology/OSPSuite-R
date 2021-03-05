@@ -28,6 +28,8 @@ Characteristics of an individual describing its origin
 \item{\code{height}}{Height of the individual as in instance of a \code{SnapshotParameter} (optional)}
 
 \item{\code{allMoleculeOntogenies}}{All molecule ontogenies defined for this individual characteristics.}
+
+\item{\code{seed}}{Seed used to generate the population}
 }
 \if{html}{\out{</div>}}
 }

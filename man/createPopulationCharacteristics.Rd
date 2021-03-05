@@ -24,7 +24,8 @@ createPopulationCharacteristics(
   gestationalAgeMin = NULL,
   gestationalAgeMax = NULL,
   gestationalAgeUnit = "week(s)",
-  moleculeOntogenies = NULL
+  moleculeOntogenies = NULL,
+  seed = NULL
 )
 }
 \arguments{
@@ -67,6 +68,8 @@ createPopulationCharacteristics(
 \item{gestationalAgeUnit}{Unit in which the gestational age value is defined. Default is kg/m2}
 
 \item{moleculeOntogenies}{Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.}
+
+\item{seed}{Optional Seed parameter used to generate random values. This is only useful in order to reproduce the same population}
 }
 \value{
 An instance of \code{PopulationCharacteristics} to be used in conjunction with \code{createPopulation}

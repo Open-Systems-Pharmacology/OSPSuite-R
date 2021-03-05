@@ -66,3 +66,27 @@ populationAsDataFrame <- function(population) {
 
   data.frame(columns, stringsAsFactors = FALSE, check.names = FALSE)
 }
+
+#' Saves the population to csv file
+#'
+#' @param population Population to export to csv (typically imported from file using \code{loadPopulation})
+#' @param filePath Full path where the population will be saved.
+#'
+#' @examples
+#' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#'
+#' # Load the population
+#' population <- loadPopulation(csvPath)
+#'
+#' # Exports the population
+#' exportPopulationToCSV(population, tempfile())
+#' @export
+exportPopulationToCSV <- function(population, filePath) {
+  validateIsOfType(population, Population)
+  validateIsString(filePath)
+  filePath <- expandPath(filePath)
+  df <- populationAsDataFrame(population)
+  write.csv(df, file = filePath, row.names = FALSE)
+  invisible()
+}
+

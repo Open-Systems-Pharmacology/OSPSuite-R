@@ -16,7 +16,8 @@ createIndividualCharacteristics(
   ageUnit = "year(s)",
   gestationalAge = 40,
   gestationalAgeUnit = "week(s)",
-  moleculeOntogenies = NULL
+  moleculeOntogenies = NULL,
+  seed = NULL
 )
 }
 \arguments{
