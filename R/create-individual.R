@@ -2,7 +2,7 @@
 #'
 #' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}
 #'
-#' @return An list with two entries:
+#' @return A list with two entries:
 #' The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
 #' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'
