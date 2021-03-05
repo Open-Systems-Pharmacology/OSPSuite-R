@@ -18,7 +18,6 @@ calculatePKAnalyses <- function(results) {
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
-  rClr::clrSet(calculatePKAnalysisArgs, "NumberOfIndividuals", as.integer(results$count))
   rClr::clrSet(calculatePKAnalysisArgs, "SimulationResults", results$ref)
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "CalculateFor", calculatePKAnalysisArgs)
   SimulationPKAnalyses$new(pkAnalyses, results$simulation)
