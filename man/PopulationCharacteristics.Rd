@@ -32,6 +32,8 @@ Characteristics of a population used for population creation
 \item{\code{BMI}}{BMI range of the population as in instance of a \code{ParameterRange} (optional)}
 
 \item{\code{allMoleculeOntogenies}}{All molecule ontogenies defined for this individual characteristics.}
+
+\item{\code{seed}}{Seed used to generate the population}
 }
 \if{html}{\out{</div>}}
 }

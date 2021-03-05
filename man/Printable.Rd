@@ -5,7 +5,7 @@
 \alias{Printable}
 \title{Printable}
 \description{
-Base class that implements some basic functionalities for printing to console
+Base class that implements some basic properties for printing to console
 }
 \section{Methods}{
 \subsection{Public methods}{

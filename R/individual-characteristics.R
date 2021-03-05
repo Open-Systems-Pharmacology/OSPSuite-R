@@ -40,6 +40,10 @@ IndividualCharacteristics <- R6::R6Class(
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
       private$readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
+    },
+    #' @field seed Seed used to generate the population
+    seed = function(value) {
+      private$wrapNullableIntegerProperty("Seed", value)
     }
   ),
   private = list(
@@ -84,6 +88,9 @@ IndividualCharacteristics <- R6::R6Class(
       private$printParam("Height", self$height)
       for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
+      }
+      if(!is.null(self$seed)){
+        private$printLine("Seed", self$seed)
       }
       invisible(self)
     },
