@@ -110,6 +110,8 @@ saveSimulation <- function(simulation, filePath) {
 runSimulation <- function(simulation, populationOrList = NULL, simulationRunOptions = NULL) {
   validateIsOfType(simulation, Simulation)
   if (is.list(populationOrList)) {
+    #if a list was given as parameter, we assume that the user wants to run a population simulation
+    #The population object must be present otherwise, this is an error => nullAllowed is FALSE
     population <- populationOrList$population
     validateIsOfType(population, Population)
   }
