@@ -114,6 +114,15 @@ test_that("It can run a valid population simulation and returns results", {
   expect_equal(results$count, population$count)
 })
 
+test_that("It can run a valid population simulation created directly from create population", {
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  list <- list(population = population)
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  results <- runSimulation(sim, list)
+  expect_equal(results$count, population$count)
+})
+
 test_that("It throws an exception when running a population simulation with the wrong arguments", {
   populationFileName <- getTestDataFilePath("pop_10.csv")
   population <- loadPopulation(populationFileName)

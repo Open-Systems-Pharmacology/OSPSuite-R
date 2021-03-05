@@ -65,8 +65,8 @@ createPopulation <- function(populationCharacteristics) {
 
 #' Creates the population characteristics used to create a population
 #'
-#' @param species Species of the individual as defined in PK-Sim (see Species enum)
-#' @param population Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)
+#' @param species Species of the individual as defined in PK-Sim (see \code{Species} enum)
+#' @param population Population to use to create the individual. This is required only when the species is Human. (See \code{HumanPopulation} enum)
 #' @param numberOfIndividuals Number of individuals in the population
 #' @param proportionOfFemales Proportions of females. Default is 50 (50%)
 #' @param weightMin min weight for the population (optional)
@@ -80,7 +80,7 @@ createPopulation <- function(populationCharacteristics) {
 #' @param ageUnit Unit in which the age value is defined. Default is year(s)
 #' @param BMIMin min BMI for the population (optional, for human species only)
 #' @param BMIMax max BMI for the population (optional, for human species only)
-#' @param BMIUnit Unit in which the BMI value is defined. Default is year(s)
+#' @param BMIUnit Unit in which the BMI value is defined. Default is kg/m²
 #' @param gestationalAgeMin min gestational age for the population (optional, for human species only)
 #' @param gestationalAgeMax max gestational age for the population (optional, for human species only)
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is kg/m2
