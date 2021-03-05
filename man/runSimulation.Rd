@@ -4,12 +4,12 @@
 \alias{runSimulation}
 \title{Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation}
 \usage{
-runSimulation(simulation, populationOrList = NULL, simulationRunOptions = NULL)
+runSimulation(simulation, population = NULL, simulationRunOptions = NULL)
 }
 \arguments{
 \item{simulation}{Instance of a \code{Simulation} to simulate.}
 
-\item{populationOrList}{Optional instance of a \code{Population} to use for the simulation.
+\item{population}{Optional instance of a \code{Population} to use for the simulation.
 Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted}
 
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}

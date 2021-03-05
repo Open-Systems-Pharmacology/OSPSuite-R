@@ -83,7 +83,7 @@ saveSimulation <- function(simulation, filePath) {
 #' @title  Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
 #'
 #' @param simulation Instance of a \code{Simulation} to simulate.
-#' @param populationOrList Optional instance of a \code{Population} to use for the simulation.
+#' @param population Optional instance of a \code{Population} to use for the simulation.
 #' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
 #' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
 #'
@@ -107,16 +107,15 @@ saveSimulation <- function(simulation, filePath) {
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' @export
-runSimulation <- function(simulation, populationOrList = NULL, simulationRunOptions = NULL) {
+runSimulation <- function(simulation, population = NULL, simulationRunOptions = NULL) {
   validateIsOfType(simulation, Simulation)
-  if (is.list(populationOrList)) {
+  if (is.list(population)) {
     #if a list was given as parameter, we assume that the user wants to run a population simulation
     #The population object must be present otherwise, this is an error => nullAllowed is FALSE
-    population <- populationOrList$population
+    population <- population$population
     validateIsOfType(population, Population)
   }
   else {
-    population <- populationOrList
     validateIsOfType(population, Population, nullAllowed = TRUE)
   }
   validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
