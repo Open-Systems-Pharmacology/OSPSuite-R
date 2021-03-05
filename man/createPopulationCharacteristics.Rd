@@ -29,9 +29,9 @@ createPopulationCharacteristics(
 )
 }
 \arguments{
-\item{species}{Species of the individual as defined in PK-Sim (see Species enum)}
+\item{species}{Species of the individual as defined in PK-Sim (see \code{Species} enum)}
 
-\item{population}{Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)}
+\item{population}{Population to use to create the individual. This is required only when the species is Human. (See \code{HumanPopulation} enum)}
 
 \item{numberOfIndividuals}{Number of individuals in the population}
 
@@ -59,7 +59,7 @@ createPopulationCharacteristics(
 
 \item{BMIMax}{max BMI for the population (optional, for human species only)}
 
-\item{BMIUnit}{Unit in which the BMI value is defined. Default is year(s)}
+\item{BMIUnit}{Unit in which the BMI value is defined. Default is kg/m²}
 
 \item{gestationalAgeMin}{min gestational age for the population (optional, for human species only)}
 
