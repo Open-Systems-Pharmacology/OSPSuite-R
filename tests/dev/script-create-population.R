@@ -3,6 +3,8 @@
 
 initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 
+sim <- loadSimulation("tests/data/S1.pkml")
+
 moleculeOntogeny <- MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = StandardOntogeny$CYP3A4)
 
 dog <- createPopulationCharacteristics(
@@ -28,10 +30,8 @@ human <- createPopulationCharacteristics(
   moleculeOntogenies = moleculeOntogeny
 )
 
-print(human)
-
 result <- createPopulation(populationCharacteristics = human)
-resupopulationHuman <- result$population
+populationHuman <- result$population
 print(populationHuman)
 
 populationHuman$getParameterValues("Organism|Age")
@@ -49,6 +49,9 @@ preterm <- createPopulationCharacteristics(
 )
 
 result <- createPopulation(populationCharacteristics = preterm)
+
+res <- runSimulation(simulation = sim, population = result)
+
 populationPreterm <- result$population
 
 

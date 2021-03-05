@@ -83,7 +83,8 @@ saveSimulation <- function(simulation, filePath) {
 #' @title  Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
 #'
 #' @param simulation Instance of a \code{Simulation} to simulate.
-#' @param population Optional instance of a \code{Population} to use for the simulation
+#' @param populationOrList Optional instance of a \code{Population} to use for the simulation.
+#' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
 #' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
 #'
 #' @return SimulationResults (one entry per Individual)
@@ -106,9 +107,16 @@ saveSimulation <- function(simulation, filePath) {
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' @export
-runSimulation <- function(simulation, population = NULL, simulationRunOptions = NULL) {
+runSimulation <- function(simulation, populationOrList = NULL, simulationRunOptions = NULL) {
   validateIsOfType(simulation, Simulation)
-  validateIsOfType(population, Population, nullAllowed = TRUE)
+  if (is.list(populationOrList)) {
+    population <- populationOrList$population
+    validateIsOfType(population, Population)
+  }
+  else {
+    population <- populationOrList
+    validateIsOfType(population, Population, nullAllowed = TRUE)
+  }
   validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
   options <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner <- getNetTask("SimulationRunner")
