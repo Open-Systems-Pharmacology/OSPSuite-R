@@ -19,3 +19,11 @@ values[2] <- NA
 values[4] <- NaN
 population$setParameterValues("Organism|Lung|Volume", values)
 res <- runSimulation(simulation = sim, population = population)
+
+agingData_baby <- loadAgingDataFromCSV("tests/data/baby_aging.csv")
+
+
+aging_data <- loadAgingDataFromCSV("tests/data/aging_data.csv")
+
+
+res <- runSimulation(simulation = sim, population = population, agingData = aging_data)

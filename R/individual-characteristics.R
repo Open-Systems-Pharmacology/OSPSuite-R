@@ -13,7 +13,7 @@ IndividualCharacteristics <- R6::R6Class(
     species = function(value) {
       private$wrapProperty("Species", value)
     },
-    #' @field population For a Human species, the population of intereset. It should be a population available in PK-Sim (see \code{HumanPopulation})
+    #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})
     population = function(value) {
       private$wrapProperty("Population", value, shouldSetNull = FALSE)
     },

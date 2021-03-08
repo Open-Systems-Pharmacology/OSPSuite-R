@@ -90,3 +90,23 @@ exportPopulationToCSV <- function(population, filePath) {
   invisible()
 }
 
+#' Loads aging data (typically generated from PK-Sim) i
+#'
+#' @param filePath Full path containing an aging data table.
+#'
+#' @examples
+#' csvPath <- system.file("extdata", "aging_data.csv", package = "ospsuite")
+#'
+#' agingData <- loadAgingDataFromCSV(tempfile())
+#' @export
+loadAgingDataFromCSV <- function(filePath){
+  validateIsString(filePath)
+  df <- read.csv(filePath, encoding = "UTF-8", check.names = FALSE)
+  colnames(df) <- c("IndividualId", "ParameterPath", "Time", "Value")
+  agingData <- AgingData$new();
+  agingData$individualIds <- as.integer(df$IndividualId)
+  agingData$parameterPaths <- as.character(df$ParameterPath)
+  agingData$times <- as.numeric(df$Time)
+  agingData$values <- as.numeric(df$Value)
+  return(agingData)
+}

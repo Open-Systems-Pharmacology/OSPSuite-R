@@ -15,7 +15,7 @@ Characteristics of an individual describing its origin
 \describe{
 \item{\code{species}}{Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})}
 
-\item{\code{population}}{For a Human species, the population of intereset. It should be a population available in PK-Sim (see \code{HumanPopulation})}
+\item{\code{population}}{For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})}
 
 \item{\code{gender}}{Gender of the individual. It should be defined for the species in PK-Sim  (see \code{Gender})}
 
