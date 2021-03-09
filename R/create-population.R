@@ -156,7 +156,7 @@ createPopulationCharacteristics <- function(
   populationCharacteristics$height <- createParameterRange(heightMin, heightMax, heightUnit)
   populationCharacteristics$gestationalAge <- createParameterRange(gestationalAgeMin, gestationalAgeMax, gestationalAgeUnit)
   populationCharacteristics$BMI <- createParameterRange(BMIMin, BMIMax, BMIUnit)
-  populationCharacteristics$seed <-seed
+  populationCharacteristics$seed <- seed
 
   for (moleculeOntogeny in moleculeOntogenies) {
     populationCharacteristics$addMoleculeOntogeny(moleculeOntogeny)

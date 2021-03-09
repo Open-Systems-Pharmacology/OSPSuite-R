@@ -100,7 +100,7 @@ PopulationCharacteristics <- R6::R6Class(
       for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
       }
-      if(!is.null(self$seed)){
+      if (!is.null(self$seed)) {
         private$printLine("Seed", self$seed)
       }
       invisible(self)

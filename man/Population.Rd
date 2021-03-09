@@ -65,7 +65,7 @@ Returns \code{TRUE} if the population has variability defined for \code{paramete
 \if{html}{\out{<a id="method-setParameterValues"></a>}}
 \if{latex}{\out{\hypertarget{method-setParameterValues}{}}}
 \subsection{Method \code{setParameterValues()}}{
-Sets the variability values in the population for \code{parameterOrPath}
+Updates or adds the variability values in the population for \code{parameterOrPath}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Population$setParameterValues(parameterOrPath, values)}\if{html}{\out{</div>}}
 }
@@ -73,7 +73,8 @@ Sets the variability values in the population for \code{parameterOrPath}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{parameterOrPath}}{Parameter instance of parameter path}
+\item{\code{parameterOrPath}}{Parameter instance of parameter path.
+If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.}
 
 \item{\code{values}}{double vector containing the value to set for the \code{parameterOrPath}}
 }

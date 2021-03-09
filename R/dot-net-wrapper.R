@@ -89,10 +89,10 @@ DotNetWrapper <- R6::R6Class(
       }
     },
     wrapNullableIntegerProperty = function(propertyName, value) {
-      if(missing(value)){
+      if (missing(value)) {
         return(rClr::clrGet(self$ref, propertyName))
       }
-      if(is.null(value)){
+      if (is.null(value)) {
         return()
       } else {
         rClr::clrSet(self$ref, propertyName, as.integer(value))
