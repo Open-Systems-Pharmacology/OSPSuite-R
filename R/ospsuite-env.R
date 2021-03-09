@@ -1,3 +1,11 @@
+
+.getSuiteVersion <- function() {
+  version <- getNamespaceVersion("ospsuite")
+  last <- tail(unlist(gregexpr(pattern = "\\.", version)), 1)
+  return(unname(substr(version, 1, last -1)))
+}
+
+
 # Environment that holds various global variables and settings for the ospsuite,
 # It is not exported and should not be directly manipulated by other packages.
 ospsuiteEnv <- new.env(parent = emptyenv())
@@ -7,7 +15,7 @@ ospsuiteEnv$packageName <- "ospsuite"
 
 ospsuiteEnv$suiteName <- "Open Systems Pharmacology"
 
-ospsuiteEnv$packageVersion <- "10.0"
+ospsuiteEnv$suiteVersion <- .getSuiteVersion();
 
 # Reference to container task for optimization purposes only
 ospsuiteEnv$containerTask <- NULL
@@ -58,7 +66,7 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 #' @export
 #'
 #' @examples
-#' getOSPSuiteSetting("packageVersion")
+#' getOSPSuiteSetting("suiteVersion")
 #' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 getOSPSuiteSetting <- function(settingName) {
   if (!(any(names(ospsuiteEnv) == settingName))) {
