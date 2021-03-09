@@ -101,12 +101,11 @@ exportPopulationToCSV <- function(population, filePath) {
 #' @export
 loadAgingDataFromCSV <- function(filePath){
   validateIsString(filePath)
-  df <- read.csv(filePath, encoding = "UTF-8", check.names = FALSE)
-  colnames(df) <- c("IndividualId", "ParameterPath", "Time", "Value")
+  df <- readr::read_csv(filePath, locale = readr::locale(encoding = "UTF-8"), comment = "#")
   agingData <- AgingData$new();
   agingData$individualIds <- as.integer(df$IndividualId)
-  agingData$parameterPaths <- as.character(df$ParameterPath)
-  agingData$times <- as.numeric(df$Time)
-  agingData$values <- as.numeric(df$Value)
+  agingData$parameterPaths <- df$ParameterPath
+  agingData$times <- df$Time
+  agingData$values <- df$Value
   return(agingData)
 }

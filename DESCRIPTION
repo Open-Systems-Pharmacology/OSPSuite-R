@@ -20,7 +20,8 @@ Depends:
     rClr (>= 0.8.3)
 Imports: 
     R6,
-    stringr
+    stringr,
+    readr
 Suggests: 
     knitr,
     rmarkdown,

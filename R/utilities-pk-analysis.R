@@ -59,7 +59,6 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 #' @title Convert the pk-Analysis to data frame
 #'
 #' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using \code{calculatePKAnalyses} or imported from file)
-#' @importFrom utils read.csv
 #'
 #' @export
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
@@ -68,7 +67,7 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
   dataFrame <- tryCatch(
     {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
-      pkResultsDataFrame <- read.csv(pkParameterResultsFilePath, encoding = "UTF-8", check.names = FALSE)
+      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#")
       colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
       pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
       pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
