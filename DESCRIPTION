@@ -20,7 +20,8 @@ Depends:
     rClr (>= 0.8.3)
 Imports: 
     R6,
-    stringr
+    stringr,
+    readr
 Suggests: 
     knitr,
     rmarkdown,
@@ -32,6 +33,7 @@ RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
+    'aging-data.R'
     'api-config.R'
     'application.R'
     'cache.R'
