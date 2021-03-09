@@ -97,7 +97,7 @@ exportPopulationToCSV <- function(population, filePath) {
 #' @examples
 #' csvPath <- system.file("extdata", "aging_data.csv", package = "ospsuite")
 #'
-#' agingData <- loadAgingDataFromCSV(tempfile())
+#' agingData <- loadAgingDataFromCSV(csvPath)
 #' @export
 loadAgingDataFromCSV <- function(filePath){
   validateIsString(filePath)
