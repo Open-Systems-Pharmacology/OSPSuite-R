@@ -19,5 +19,5 @@ initPackage <- function() {
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
   dimensionTask <- getNetTask("DimensionTask")
-  ospsuiteEnv$muSymbol <-  rClr::clrGet(dimensionTask, "MuSymbol")
+  ospsuiteEnv$muSymbol <- rClr::clrGet(dimensionTask, "MuSymbol")
 }

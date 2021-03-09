@@ -1,7 +1,7 @@
 context("ospsuiteEnv")
 
 test_that("It returns a value of a setting", {
-  expect_equal(getOSPSuiteSetting("packageVersion"), ospsuiteEnv$packageVersion)
+  expect_equal(getOSPSuiteSetting("suiteVersion"), ospsuiteEnv$suiteVersion)
 })
 
 test_that("It returns a value of a nested setting", {

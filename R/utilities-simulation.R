@@ -124,18 +124,18 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   options <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner <- getNetTask("SimulationRunner")
   simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
-  rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref )
-  rClr::clrSet(simulationRunArgs, "SimulationRunOptions",options$ref )
+  rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
+  rClr::clrSet(simulationRunArgs, "SimulationRunOptions", options$ref)
 
-  if(!is.null(population)){
-    rClr::clrSet(simulationRunArgs, "Population",population$ref )
+  if (!is.null(population)) {
+    rClr::clrSet(simulationRunArgs, "Population", population$ref)
   }
 
-  if(!is.null(agingData)){
-    rClr::clrSet(simulationRunArgs, "AgingData",agingData$ref )
+  if (!is.null(agingData)) {
+    rClr::clrSet(simulationRunArgs, "AgingData", agingData$ref)
   }
 
-  results <- rClr::clrCall(simulationRunner, "Run",simulationRunArgs)
+  results <- rClr::clrCall(simulationRunner, "Run", simulationRunArgs)
 
   SimulationResults$new(results, simulation)
 }

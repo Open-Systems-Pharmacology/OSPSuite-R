@@ -156,7 +156,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' path <- .getPathToPKSimInstallDir("7.4")
 #' path2 <- .getPathToPKSimInstallDir("7.5", "C:/MyOSPFolder/")
 #' }
-.getPathToPKSimInstallDir <- function(pksim.version = ospsuiteEnv$packageVersion,
+.getPathToPKSimInstallDir <- function(pksim.version = ospsuiteEnv$suiteVersion,
                                       base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.path <- .getPathToPKSimInstallDirFromRegistry(pksim.version)
   if (!is.na(pksim.path)) {
