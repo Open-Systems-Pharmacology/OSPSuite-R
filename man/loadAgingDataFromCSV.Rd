@@ -15,5 +15,5 @@ Loads aging data (typically generated from PK-Sim) i
 \examples{
 csvPath <- system.file("extdata", "aging_data.csv", package = "ospsuite")
 
-agingData <- loadAgingDataFromCSV(tempfile())
+agingData <- loadAgingDataFromCSV(csvPath)
 }
