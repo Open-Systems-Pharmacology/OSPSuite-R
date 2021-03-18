@@ -1,0 +1,7 @@
+context("loadObservedData")
+
+test_that("It can load a valid observed data file", {
+  file <- getTestDataFilePath("obs_data.pkml")
+  obsData <- loadObservedData(file)
+  expect_true(!is.null(obsData))
+})
