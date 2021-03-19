@@ -9,7 +9,14 @@ DataRepository <- R6::R6Class(
   active = list(
     #' @field baseGrid Returns the base column for the population (typically time column)
     baseGrid = function(value) {
-      DataColumn$new(private$wrapReadOnlyProperty("BaseGrid", value))
+      if (missing(value)) {
+        if (is.null(private$.baseGrid)) {
+          private$.baseGrid <- DataColumn$new(private$wrapReadOnlyProperty("BaseGrid", value))
+        }
+        return(private$.baseGrid)
+      }
+
+      private$throwPropertyIsReadonly("baseGrid")
     },
     #' @field columns Returns all columns (including baseGrid defined in the data)
     columns = function(value) {
@@ -18,9 +25,18 @@ DataRepository <- R6::R6Class(
           private$.columns <- toObjectType(private$wrapReadOnlyProperty("ColumnsAsArray", value), DataColumn)
         }
         return(private$.columns)
-      } else {
-        private$throwPropertyIsReadonly(propertyName)
       }
+      private$throwPropertyIsReadonly("columns")
+    },
+    #' @field columns Returns all columns (including baseGrid defined in the data)
+    allButBaseGrid = function(value) {
+      if (missing(value)) {
+        if (is.null(private$.allButBaseGrid)) {
+          private$.columns <- toObjectType(private$wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
+        }
+        return(private$.columns)
+      }
+      private$throwPropertyIsReadonly("columns")
     }
   ),
   public = list(
@@ -33,6 +49,8 @@ DataRepository <- R6::R6Class(
     }
   ),
   private = list(
-    .columns = NULL
+    .columns = NULL,
+    .allButBaseGrid = NULL,
+    .baseGrid = NULL
   )
 )
