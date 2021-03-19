@@ -12,8 +12,15 @@ DataRepository <- R6::R6Class(
       DataColumn$new(private$wrapReadOnlyProperty("BaseGrid", value))
     },
     #' @field columns Returns all columns (including baseGrid defined in the data)
-    columns = function(value){
-      toObjectType(private$wrapReadOnlyProperty("ColumnsAsArray", value), DataColumn)
+    columns = function(value) {
+      if (missing(value)) {
+        if (is.null(private$.columns)) {
+          private$.columns <- toObjectType(private$wrapReadOnlyProperty("ColumnsAsArray", value), DataColumn)
+        }
+        return(private$.columns)
+      } else {
+        private$throwPropertyIsReadonly(propertyName)
+      }
     }
   ),
   public = list(
@@ -24,5 +31,8 @@ DataRepository <- R6::R6Class(
       private$printClass()
       invisible(self)
     }
+  ),
+  private = list(
+    .columns = NULL
   )
 )
