@@ -22,7 +22,7 @@ DataRepository <- R6::R6Class(
     columns = function(value) {
       if (missing(value)) {
         if (is.null(private$.columns)) {
-          private$.columns <- toObjectType(private$wrapReadOnlyProperty("ColumnsAsArray", value), DataColumn)
+          private$.columns <- c(self$baseGrid, self$allButBaseGrid)
         }
         return(private$.columns)
       }
@@ -32,9 +32,9 @@ DataRepository <- R6::R6Class(
     allButBaseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.allButBaseGrid)) {
-          private$.columns <- toObjectType(private$wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
+          private$.allButBaseGrid <- toObjectType(private$wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
         }
-        return(private$.columns)
+        return(private$.allButBaseGrid)
       }
       private$throwPropertyIsReadonly("columns")
     }

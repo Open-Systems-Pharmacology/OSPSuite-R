@@ -14,3 +14,7 @@ test_that("it returns the same reference to columns once instantiated", {
   col2 <- obsData$columns[[2]]
   expect_identical(obsData$columns[[2]], col2)
 })
+
+test_that("it returns the same reference to base grids once instantiated", {
+  expect_identical(obsData$columns[[1]], obsData$baseGrid)
+})
