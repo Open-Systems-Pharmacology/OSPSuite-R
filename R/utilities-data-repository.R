@@ -1,13 +1,14 @@
-#' Loads a population from a csv file and returns the population.
+#' Loads a data repository (typically observed data) from a PKML file and returns the loaded observed data.
+#' The pkml files are typically exported from PK-Sim or MoBi
 #'
 #' @param filePath Full path of pkml file containing the observed data to load
 #'
 #' @examples
 #' filePath <- system.file("extdata", "obsData.pkml", package = "ospsuite")
 #'
-#' obsData <- loadObservedData(filePath)
+#' obsData <- loadDataRepositoryFromPKML(filePath)
 #' @export
-loadObservedData <- function(filePath) {
+loadDataRepositoryFromPKML <- function(filePath) {
   validateIsString(filePath)
   filePath <- expandPath(filePath)
   dataRepositoryTask <- getNetTask("DataRepositoryTask")

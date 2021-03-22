@@ -7,7 +7,7 @@ DataRepository <- R6::R6Class(
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(
-    #' @field baseGrid Returns the base column for the population (typically time column)
+    #' @field baseGrid Returns the base column for the data repository (typically time column).
     baseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.baseGrid)) {
@@ -18,7 +18,7 @@ DataRepository <- R6::R6Class(
 
       private$throwPropertyIsReadonly("baseGrid")
     },
-    #' @field columns Returns all columns (including baseGrid defined in the data)
+    #' @field columns Returns all columns (including baseGrid) defined in the data repository.
     columns = function(value) {
       if (missing(value)) {
         if (is.null(private$.columns)) {
@@ -28,7 +28,7 @@ DataRepository <- R6::R6Class(
       }
       private$throwPropertyIsReadonly("columns")
     },
-    #' @field columns Returns all columns (including baseGrid defined in the data)
+    #' @field allButBaseGrid Returns all columns excluding baseGrid defined on the data repository.
     allButBaseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.allButBaseGrid)) {

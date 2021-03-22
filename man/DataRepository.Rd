@@ -13,9 +13,11 @@ An object typically holding observed data
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{baseGrid}}{Returns the base column for the population (typically time column)}
+\item{\code{baseGrid}}{Returns the base column for the data repository (typically time column).}
 
-\item{\code{columns}}{Returns all columns (including baseGrid defined in the data)}
+\item{\code{columns}}{Returns all columns (including baseGrid) defined in the data repository.}
+
+\item{\code{allButBaseGrid}}{Returns all columns excluding baseGrid defined on the data repository.}
 }
 \if{html}{\out{</div>}}
 }

@@ -5,7 +5,7 @@
 \alias{DataColumn}
 \title{DataColumn}
 \description{
-An object typically holding observed data
+One column defined in a \code{DataRepository}
 }
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataColumn}
@@ -13,7 +13,15 @@ An object typically holding observed data
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{values}}{Returns the values defined in the column}
+\item{\code{values}}{Returns the values defined in the column  (Read-Only)}
+
+\item{\code{name}}{Returns the name of the column  (Read-Only)}
+
+\item{\code{unit}}{The base unit in which the values are defined (Read-Only)}
+
+\item{\code{displayUnit}}{The unit in which the values should be displayed (Read-Only)}
+
+\item{\code{dimension}}{The dimension of the values  (Read-Only)}
 }
 \if{html}{\out{</div>}}
 }
