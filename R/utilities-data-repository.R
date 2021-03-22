@@ -7,6 +7,7 @@
 #' filePath <- system.file("extdata", "obsData.pkml", package = "ospsuite")
 #'
 #' obsData <- loadDataRepositoryFromPKML(filePath)
+#' metaData <- obsData$metaData
 #' @export
 loadDataRepositoryFromPKML <- function(filePath) {
   validateIsString(filePath)
