@@ -19,7 +19,8 @@ An object typically holding observed data
 
 \item{\code{allButBaseGrid}}{Returns all columns excluding baseGrid defined on the data repository.}
 
-\item{\code{metaData}}{Returns the list of meta data defined for the data repository.}
+\item{\code{metaData}}{Returns a named list of meta data defined for the data repository.
+where the name is the name of the metaData and the value is the meta data value.}
 }
 \if{html}{\out{</div>}}
 }

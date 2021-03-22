@@ -15,7 +15,8 @@ Loads a data repository (typically observed data) from a PKML file and returns t
 The pkml files are typically exported from PK-Sim or MoBi
 }
 \examples{
-filePath <- system.file("extdata", "obsData.pkml", package = "ospsuite")
+filePath <- system.file("extdata", "obs_data.pkml", package = "ospsuite")
 
 obsData <- loadDataRepositoryFromPKML(filePath)
+metaData <- obsData$metaData
 }
