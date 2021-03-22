@@ -4,7 +4,7 @@
 #' @param filePath Full path of pkml file containing the observed data to load
 #'
 #' @examples
-#' filePath <- system.file("extdata", "obsData.pkml", package = "ospsuite")
+#' filePath <- system.file("extdata", "obs_data.pkml", package = "ospsuite")
 #'
 #' obsData <- loadDataRepositoryFromPKML(filePath)
 #' metaData <- obsData$metaData
