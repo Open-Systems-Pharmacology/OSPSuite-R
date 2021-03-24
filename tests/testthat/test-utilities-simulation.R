@@ -177,3 +177,57 @@ test_that("It creates a simulation batch when using only molecule instances", {
   simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecule)
   expect_false(is.null(simulationBatch))
 })
+
+context("runSimulationsConcurrent")
+
+test_that("It runs one individual simulation without simulationRunOptions", {
+  resetSimulationCache()
+
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulationsConcurrently(sim)
+  expect_equal(length(results), 1)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+  })
+
+test_that("It runs one individual simulation with simulationRunOptions", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  simRunOptions <- SimulationRunOptions$new()
+  results <- runSimulationsConcurrently(sim, simulationRunOptions = simRunOptions)
+  expect_equal(length(results), 1)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It runs one population simulation without simulation settings", {
+  resetSimulationCache()
+
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  results <- runSimulationsConcurrently(sim, population)
+  expect_equal(length(results), 1)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It runs multiple individual simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulationsConcurrently(c(sim, sim2))
+  expect_equal(length(results), 2)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It runs multiple pop/individual simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim3 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  populationFileName <- getTestDataFilePath("pop_10.csv")
+  population <- loadPopulation(populationFileName)
+  results <- runSimulationsConcurrently(simulations = c(sim, sim2, sim3), populations = list(NULL, population, NULL))
+  expect_equal(length(results), 3)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+test_that("It throws an error if the number of simulations does not match the number of populations")
+"one of the runs fails"

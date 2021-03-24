@@ -13,7 +13,7 @@ Supports Sensitivity Analysis workflow to assess the impact of input parameters 
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).}
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
 
 \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
 
@@ -62,7 +62,7 @@ Initialize a new instance of the class
 
 \item{\code{parameterPaths}}{Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
 on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
-with a value that was overriden by the user}
+with a value that was overridden by the user}
 
 \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})}
 

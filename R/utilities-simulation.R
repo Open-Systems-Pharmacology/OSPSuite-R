@@ -122,6 +122,54 @@ runSimulation <- function(simulation, population = NULL, simulationRunOptions = 
   SimulationResults$new(results, simulation)
 }
 
+#' @title  Runs a set of simulations (individual or population) and returns a list of \code{SimulationResults}
+#'
+#' @param simulations A list of \code{Simulation} objects to simulate.
+#' @param population A list of \code{Population} objects to use for the simulation. If \code{NULL} (default),
+#' all simulations are treated as individual simulations. If not \code{NULL}, must have the same length as \code{simulations}.
+#' It is possible to mix individual and population simulations by setting the values of the population objects to \code{NULL}
+#' at the index of the individual simulation. See examples for details.
+#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
+#'
+#' @return A list of \code{SimulationResults} objects in the order corresponding to the order of simulations.
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' sim2 <- loadSimulation(simPath)
+#' sim3 <- loadSimulation(simPath)
+#' populationFileName <- system.file("extdata", "pop_10.csv", package = "ospsuite")
+#' population <- loadPopulation(populationFileName)
+#' #First and third simulations are individual simulations, the second one is a population simulation
+#' results <- runSimulationsConcurrently(list(sim, sim2, sim3), populations = list(NULL, population, NULL))
+#' @export
+runSimulationsConcurrently <- function(simulations, populations = NULL, simulationRunOptions = NULL) {
+  validateIsOfType(simulations, Simulation)
+  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
+  simulationRunner <- getNetTask("SimulationRunner")
+
+  simulations <- c(simulations)
+
+  if (!is.null(populations)){
+    populations <- c(populations)
+    validateIsSameLength(simulations, populations)
+  }
+
+  #Create SimulationRunnerConcurrentOptions and add all simulations
+  runConcurrentOptions <- SimulationRunnerConcurrentOptions$new()
+  for (i in seq_along(simulations)){
+    runConcurrentOptions$addSimulation(simulations[[i]], populations[[i]])
+  }
+
+  results <- rClr::clrCall(simulationRunner, "RunConcurrently", runConcurrentOptions$ref)
+
+  simResultsList <- vector("list", length(simulations))
+  for (i in seq_along(simulations)){
+    simResultsList[[i]] <- SimulationResults$new(results[[i]], simulations[[i]])
+  }
+  return(simResultsList)
+}
+
 #' @title  Creates and returns an instance of a \code{SimulationBatch} that can be used to efficiently vary parameters and initial values in a simulation
 #'
 #' @param simulation Instance of a \code{Simulation} to simulate in a batch mode
