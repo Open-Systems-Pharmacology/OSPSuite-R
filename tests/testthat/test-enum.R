@@ -104,7 +104,7 @@ test_that("enumRemove does nothing if the key is not present", {
   expect_equal(names(myEnum), c("Diamond", "Triangle", "Circle"))
 })
 
-test_that("enumRemove removes present keys if on of the keys is not present", {
+test_that("enumRemove removes present keys if one of the keys is not present", {
   myEnum <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
   myEnum <- enumRemove(keys = c("Diamond", "Sun", "Circle"), enum = myEnum)
   expect_equal(names(myEnum), c("Triangle"))
