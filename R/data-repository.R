@@ -45,7 +45,7 @@ DataRepository <- R6::R6Class(
         if (is.null(private$.metaData)) {
           netExtendedProperties <- private$wrapReadOnlyProperty("ExtendedProperties", value)
           netMetaData <- rClr::clrGet(netExtendedProperties, "All")
-          names <- unlist(lapply(netMetaData,  function(data) rClr::clrGet(data, "Name")))
+          names <- unlist(lapply(netMetaData,  function(data) rClr::clrGet(data, "Name")), use.names = FALSE)
           metaData <- lapply(netMetaData,  function(data) rClr::clrGet(data, "ValueAsObject"))
           names(metaData)<-names
           private$.metaData <- metaData
