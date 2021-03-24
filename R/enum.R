@@ -89,9 +89,11 @@ enumHasKey <- function(key, enum) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' myEnum <- enum(c(a = "b"))
 #' myEnum <- enumPut("c", "d", myEnum)
 #' myEnum <- enumPut(c("c", "d", "g"), c(12, 2, "a"), myEnum, overwrite = TRUE)
+#' }
 enumPut <- function(keys, values, enum, overwrite = FALSE) {
   validateIsSameLength(keys, values)
 
