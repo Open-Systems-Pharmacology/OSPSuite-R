@@ -75,6 +75,10 @@ messages <- list(
     paste0("Provided value is not in defined enumeration values: '", paste0(names(enum), collapse = ", "), "'.")
   },
 
+  errorKeyInEnumPresent = function(key, optionalMessage = NULL) {
+    paste0("enum already contains the key '", key, "'! Use 'overwrite = TRUE' to overwrite the value. ", optionalMessage)
+  },
+
   errorKeyNotInEnum = function(key) {
     paste0("No value with the key '", key, "' is present in the enum!")
   },
