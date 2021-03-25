@@ -1,11 +1,4 @@
-#' Supported dimensions.
-#'
-#' @include enum.R
-#'
-#' @export
-Dimensions <- enum(allAvailableDimensions())
-
-#' Dimension existence.
+#' Dimension existence
 #'
 #' @param dimension String name of the dimension.
 #' @details Check if the provided dimension is supported.
@@ -16,7 +9,7 @@ existsDimension <- function(dimension) {
 
 #' Validate dimension
 #'
-#' @param dimension String representation of the dimension.
+#' @param dimension String name of the dimension.
 #' @details Check if the provided dimension is supported. If not, throw an error
 #' @export
 validateDimension <- function(dimension) {
@@ -27,8 +20,8 @@ validateDimension <- function(dimension) {
 
 #' Unit existence
 #'
-#' @param unit String representation of the unit
-#' @param dimension String representation of the dimension.
+#' @param unit String name of the unit
+#' @param dimension String name of the dimension.
 #' @details Check if the unit is valid for the dimension.
 #' @export
 hasUnit <- function(unit, dimension) {
@@ -42,8 +35,8 @@ hasUnit <- function(unit, dimension) {
 
 #' Validate unit
 #'
-#' @param unit String representation of the unit
-#' @param dimension String representation of the dimension.
+#' @param unit String name of the unit
+#' @param dimension String name of the dimension.
 #' @details Check if the unit is valid for the dimension. If not, throw an error
 #' @export
 validateUnit <- function(unit, dimension) {
@@ -56,7 +49,7 @@ validateUnit <- function(unit, dimension) {
 #'
 #' @param dimension Dimension for which the base unit is returned.
 #'
-#' @return String representation of the base unit.
+#' @return String name of the base unit.
 #' @export
 getBaseUnit <- function(dimension) {
   validateDimension(dimension)
@@ -69,10 +62,10 @@ getBaseUnit <- function(dimension) {
 
 #' Calculate factor for converting values of one dimension into another
 #'
-#' @param dimension1 String representation of the first dimension
-#' @param dimension2 String representation fo the second dimension
+#' @param dimension1 String name of the first dimension
+#' @param dimension2 String name fo the second dimension
 #' @param mw Double value of the molecular weight of the molecule. Used
-#' for conversion between molar and mass concentrations. Can be \code{NULL}
+#' for conversion between molar and mass concentrations or amounts. Can be \code{NULL}
 #' for other dimensions (default)
 #'
 #' @return A numerical factor the values of the first dimensions must be multiplied by to
@@ -81,6 +74,7 @@ getBaseUnit <- function(dimension) {
 #' If the values cannot be transformed between the dimensions, an error is thrown.
 #' @export
 dimensionsConversionFactor <- function(dimension1, dimension2, mw = NULL) {
+  # No conversion if the dimensions are equall
   validateIsString(c(dimension1, dimension2))
   if (dimension1 == dimension2) {
     return(1)
@@ -116,6 +110,24 @@ dimensionsConversionFactor <- function(dimension1, dimension2, mw = NULL) {
     }
   }
 
+  # Amount (molar) <-> Mass
+  if (dimension1 == Dimensions$Amount) {
+    if (dimension2 == Dimensions$Mass) {
+      if (is.null(mw)) {
+        stop(messages$errorCannotConvertDimensionsNoMW(dimension1, dimension2))
+      }
+      return(1 * 1e-6 * mw * 1e-3)
+    }
+  }
+  if (dimension1 == Dimensions$Mass) {
+    if (dimension2 == Dimensions$Amount) {
+      if (is.null(mw)) {
+        stop(messages$errorCannotConvertDimensionsNoMW(dimension1, dimension2))
+      }
+      return(1 * 1e3 / mw * 1e6)
+    }
+  }
+
   stop(messages$errorCannotConvertDimensions(dimension1, dimension2))
 }
 
@@ -141,3 +153,10 @@ getUnitConversionFactor <- function(fromUnit, toUnit, dimension) {
   convFac <- convFac * rClr::clrCall(dimension, "BaseUnitValueToUnitValue", toUnitObj, 1)
   return(convFac)
 }
+
+#' Supported dimensions.
+#'
+#' @include enum.R
+#'
+#' @export
+Dimensions <- enum(allAvailableDimensions())
