@@ -89,6 +89,7 @@ Collate:
     'user-defined-pk-parameter.R'
     'utilities-container.R'
     'utilities-data-repository.R'
+    'utilities-dimensions.R'
     'utilities-dot-net.R'
     'utilities-entity.R'
     'utilities-file.R'

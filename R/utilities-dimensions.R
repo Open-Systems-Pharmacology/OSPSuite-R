@@ -154,9 +154,9 @@ getUnitConversionFactor <- function(fromUnit, toUnit, dimension) {
   return(convFac)
 }
 
-#' Supported dimensions.
-#'
-#' @include enum.R
-#'
-#' @export
-Dimensions <- enum(allAvailableDimensions())
+#' #' Supported dimensions.
+#' #'
+#' #' @include enum.R
+#' #'
+#' #' @export
+#' Dimensions <- enum(allAvailableDimensions())
