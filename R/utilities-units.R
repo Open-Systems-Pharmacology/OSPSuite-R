@@ -136,7 +136,7 @@ getDimensionForUnit <- function(unit) {
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", enc2utf8(dimension))
+  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
 }
 
 
