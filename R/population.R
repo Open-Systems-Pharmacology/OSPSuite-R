@@ -33,8 +33,9 @@ Population <- R6::R6Class(
       rClr::clrCall(self$ref, "Has", parameterPath)
     },
     #' @description
-    #' Sets the variability values in the population for \code{parameterOrPath}
-    #' @param parameterOrPath Parameter instance of parameter path
+    #' Updates or adds the variability values in the population for \code{parameterOrPath}.
+    #' @param parameterOrPath Parameter instance of parameter path.
+    #' If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.
     #' @param values double vector containing the value to set for the `parameterOrPath`
     setParameterValues = function(parameterOrPath, values) {
       parameterPath <- private$getPathFrom(parameterOrPath)

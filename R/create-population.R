@@ -19,7 +19,7 @@ createPopulation <- function(populationCharacteristics) {
 
   # NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
   if (populationCharacteristics$species == Species$Human) {
-    # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
+    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
     individualCharacteristics <- ospsuite::createIndividualCharacteristics(
       species = populationCharacteristics$species,
       population = populationCharacteristics$population,
@@ -27,7 +27,7 @@ createPopulation <- function(populationCharacteristics) {
     )
   }
   else {
-    # create an individual with similar properites Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
+    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
     individualCharacteristics <- ospsuite::createIndividualCharacteristics(
       species = populationCharacteristics$species,
       population = populationCharacteristics$population,
@@ -38,7 +38,7 @@ createPopulation <- function(populationCharacteristics) {
 
   derivedParameters <- list()
 
-  # Even though those parameters are derived parmaeters, we keep them in the population for consistency purpose with the PKSim export.
+  # Even though those parameters are derived parameters, we keep them in the population for consistency purpose with the PKSim export.
   standardDerivedParametersToKeep <- c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)
 
   for (derivedParameterPath in individual$derivedParameters$paths) {
@@ -52,7 +52,7 @@ createPopulation <- function(populationCharacteristics) {
     }
   }
 
-  # other parameters to remvove that should not have been exported in the first place
+  # other parameters to remove that should not have been exported in the first place
   standardDistributedParametersToRemove <- c(toPathString(StandardContainer$Organism, "MeanBW"), toPathString(StandardContainer$Organism, "MeanHeight"))
   for (parameterToRemove in standardDistributedParametersToRemove) {
     if (population$has(parameterToRemove)) {
@@ -65,8 +65,8 @@ createPopulation <- function(populationCharacteristics) {
 
 #' Creates the population characteristics used to create a population
 #'
-#' @param species Species of the individual as defined in PK-Sim (see Species enum)
-#' @param population Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)
+#' @param species Species of the individual as defined in PK-Sim (see \code{Species} enum)
+#' @param population Population to use to create the individual. This is required only when the species is Human. (See \code{HumanPopulation} enum)
 #' @param numberOfIndividuals Number of individuals in the population
 #' @param proportionOfFemales Proportions of females. Default is 50 (50%)
 #' @param weightMin min weight for the population (optional)
@@ -80,11 +80,12 @@ createPopulation <- function(populationCharacteristics) {
 #' @param ageUnit Unit in which the age value is defined. Default is year(s)
 #' @param BMIMin min BMI for the population (optional, for human species only)
 #' @param BMIMax max BMI for the population (optional, for human species only)
-#' @param BMIUnit Unit in which the BMI value is defined. Default is year(s)
+#' @param BMIUnit Unit in which the BMI value is defined. Default is kg/m²
 #' @param gestationalAgeMin min gestational age for the population (optional, for human species only)
 #' @param gestationalAgeMax max gestational age for the population (optional, for human species only)
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is kg/m2
 #' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
+#' @param seed Optional Seed parameter used to generate random values. This is only useful in order to reproduce the same population
 #'
 #' @return An instance of \code{PopulationCharacteristics} to be used in conjunction with \code{createPopulation}
 #'
@@ -109,8 +110,8 @@ createPopulationCharacteristics <- function(
                                             gestationalAgeMin = NULL,
                                             gestationalAgeMax = NULL,
                                             gestationalAgeUnit = "week(s)",
-
-                                            moleculeOntogenies = NULL) {
+                                            moleculeOntogenies = NULL,
+                                            seed = NULL) {
 
   # Assuming that if this function is called directly, PKSim was either initialized already
   # or should be initialized automatically
@@ -142,6 +143,7 @@ createPopulationCharacteristics <- function(
   validateIsString(gestationalAgeUnit)
 
   validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  validateIsInteger(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)
   populationCharacteristics <- PopulationCharacteristics$new()
@@ -154,6 +156,7 @@ createPopulationCharacteristics <- function(
   populationCharacteristics$height <- createParameterRange(heightMin, heightMax, heightUnit)
   populationCharacteristics$gestationalAge <- createParameterRange(gestationalAgeMin, gestationalAgeMax, gestationalAgeUnit)
   populationCharacteristics$BMI <- createParameterRange(BMIMin, BMIMax, BMIUnit)
+  populationCharacteristics$seed <- seed
 
   for (moleculeOntogeny in moleculeOntogenies) {
     populationCharacteristics$addMoleculeOntogeny(moleculeOntogeny)

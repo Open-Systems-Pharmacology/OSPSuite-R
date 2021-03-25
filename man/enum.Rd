@@ -2,7 +2,7 @@
 % Please edit documentation in R/enum.R
 \name{enum}
 \alias{enum}
-\title{Create an enumeration to be used instead of arbitraty values in code.}
+\title{Create an enumeration to be used instead of arbitrary values in code.}
 \usage{
 enum(enumValues)
 }
@@ -13,7 +13,7 @@ enum(enumValues)
 the Enum created
 }
 \description{
-Create an enumeration to be used instead of arbitraty values in code.
+Create an enumeration to be used instead of arbitrary values in code.
 }
 \examples{
 \dontrun{

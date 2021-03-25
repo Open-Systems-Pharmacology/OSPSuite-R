@@ -83,7 +83,9 @@ saveSimulation <- function(simulation, filePath) {
 #' @title  Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
 #'
 #' @param simulation Instance of a \code{Simulation} to simulate.
-#' @param population Optional instance of a \code{Population} to use for the simulation
+#' @param population Optional instance of a \code{Population} to use for the simulation.
+#' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
+#' @param agingData Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation
 #' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
 #'
 #' @return SimulationResults (one entry per Individual)
@@ -106,18 +108,34 @@ saveSimulation <- function(simulation, filePath) {
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' @export
-runSimulation <- function(simulation, population = NULL, simulationRunOptions = NULL) {
+runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
   validateIsOfType(simulation, Simulation)
-  validateIsOfType(population, Population, nullAllowed = TRUE)
+  if (is.list(population)) {
+    # if a list was given as parameter, we assume that the user wants to run a population simulation
+    # The population object must be present otherwise, this is an error => nullAllowed is FALSE
+    population <- population$population
+    validateIsOfType(population, Population)
+  }
+  else {
+    validateIsOfType(population, Population, nullAllowed = TRUE)
+  }
   validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
+  validateIsOfType(agingData, AgingData, nullAllowed = TRUE)
   options <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner <- getNetTask("SimulationRunner")
+  simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
+  rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
+  rClr::clrSet(simulationRunArgs, "SimulationRunOptions", options$ref)
 
-  results <- ifNotNull(
-    population,
-    rClr::clrCall(simulationRunner, "Run", simulation$ref, population$ref, options$ref),
-    rClr::clrCall(simulationRunner, "Run", simulation$ref, options$ref)
-  )
+  if (!is.null(population)) {
+    rClr::clrSet(simulationRunArgs, "Population", population$ref)
+  }
+
+  if (!is.null(agingData)) {
+    rClr::clrSet(simulationRunArgs, "AgingData", agingData$ref)
+  }
+
+  results <- rClr::clrCall(simulationRunner, "Run", simulationRunArgs)
 
   SimulationResults$new(results, simulation)
 }

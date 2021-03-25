@@ -2,7 +2,7 @@
 #'
 #' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}
 #'
-#' @return An list with two entries:
+#' @return A list with two entries:
 #' The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
 #' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'
@@ -81,9 +81,10 @@ createIndividualCharacteristics <- function(
                                             ageUnit = "year(s)",
                                             gestationalAge = 40,
                                             gestationalAgeUnit = "week(s)",
-                                            moleculeOntogenies = NULL) {
+                                            moleculeOntogenies = NULL,
+                                            seed = NULL) {
 
-  # Assuming that if this function is called directly, PKSim was either initialized already
+  # Assuming that if this function is called directly, PK-Sim was either initialized already
   # or should be initialized automatically
   initPKSim()
 
@@ -99,6 +100,7 @@ createIndividualCharacteristics <- function(
   validateIsNumeric(gestationalAge)
   validateIsString(gestationalAgeUnit)
   validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  validateIsNumeric(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)
   individualCharacteristics <- IndividualCharacteristics$new()
@@ -109,7 +111,7 @@ createIndividualCharacteristics <- function(
   individualCharacteristics$weight <- createSnapshotParameter(weight, weightUnit)
   individualCharacteristics$height <- createSnapshotParameter(height, heightUnit)
   individualCharacteristics$gestationalAge <- createSnapshotParameter(gestationalAge, gestationalAgeUnit)
-
+  individualCharacteristics$seed <- seed
   for (moleculeOntogeny in moleculeOntogenies) {
     individualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)
   }

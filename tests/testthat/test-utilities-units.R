@@ -90,3 +90,13 @@ test_that("It can return the expected dimension for a given unit", {
 test_that("It returns null if the dimension is not found for the unit", {
   expect_null(getDimensionForUnit("toto"))
 })
+
+context("getUnitsForDimension")
+
+test_that("It can return the expected dimension for a given unit", {
+  expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", "µg", "ng", "pg"))
+})
+
+test_that("It throws an error if the dimension is not found", {
+  expect_that(getUnitsForDimension("toto"), throws_error())
+})

@@ -19,7 +19,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  unit <- enc2utf8(unit)
+  unit <- encodeUnit(unit)
   dimension <- quantityOrDimension
   dimensionTask <- getNetTask("DimensionTask")
 
@@ -60,7 +60,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  targetUnit <- enc2utf8(targetUnit)
+  targetUnit <- encodeUnit(targetUnit)
   dimension <- quantityOrDimension
   values <- c(values)
   dimensionTask <- getNetTask("DimensionTask")
@@ -120,8 +120,35 @@ allAvailableDimensions <- function() {
 #' @export
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
-  unit <- enc2utf8(unit)
-  dimensionTask <- getNetTask("DimensionTask")
+  unit <- encodeUnit(unit)
+  dimensionTask <- getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
+}
+
+#' Returns a vector containing all units defined in the dimension
+#'
+#' @param dimension Name of dimension for which units should be returned
+#'
+#' @examples
+#' units <- getUnitsForDimension("Mass")
+#' @export
+getUnitsForDimension <- function(dimension) {
+  validateIsString(dimension)
+  dimensionTask <- getDimensionTask()
+  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", dimension)
+}
+
+
+#' Return an instance of the .NET Task `DimensionTask`
+#' This is purely for optimization purposes
+#'
+#' @return An instance of the Task
+getDimensionTask <- function() {
+  dimensionTask <- ospsuiteEnv$dimensionTask
+  if (is.null(dimensionTask)) {
+    dimensionTask <- getNetTask("DimensionTask")
+    ospsuiteEnv$dimensionTask <- dimensionTask
+  }
+  return(dimensionTask)
 }

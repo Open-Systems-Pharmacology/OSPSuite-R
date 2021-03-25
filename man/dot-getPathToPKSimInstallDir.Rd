@@ -11,7 +11,7 @@ Searching is done in the following order:
 }}
 \usage{
 .getPathToPKSimInstallDir(
-  pksim.version = ospsuiteEnv$packageVersion,
+  pksim.version = ospsuiteEnv$suiteVersion,
   base.search.folder = Sys.getenv("ProgramW6432")
 )
 }

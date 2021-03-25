@@ -43,3 +43,18 @@ ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
     outputIfNull
   }
 }
+
+#' This is required to ensure that we have no issue using the mu symbol in different OS
+#' See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details
+#' @import stringr
+encodeUnit <- function(unit) {
+
+  # TODO maybe we don't even need to load from .NET
+  # dimensionTask <- getNetTask("DimensionTask")
+  # ospsuiteEnv$muSymbol <- rClr::clrGet(dimensionTask, "MuSymbol")
+  mu <- ospsuiteEnv$muSymbol
+  unit <- enc2utf8(unit)
+  unit <- str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)
+  unit <- str_replace(unit, rawToChar(as.raw(c(0xc2, 0xb5))), mu)
+  unit <- str_replace(unit, rawToChar(as.raw(0xb5)), mu)
+}

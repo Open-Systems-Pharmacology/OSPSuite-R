@@ -13,7 +13,7 @@ IndividualCharacteristics <- R6::R6Class(
     species = function(value) {
       private$wrapProperty("Species", value)
     },
-    #' @field population For a Human species, the population of intereset. It should be a population available in PK-Sim (see \code{HumanPopulation})
+    #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})
     population = function(value) {
       private$wrapProperty("Population", value, shouldSetNull = FALSE)
     },
@@ -40,6 +40,10 @@ IndividualCharacteristics <- R6::R6Class(
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
       private$readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
+    },
+    #' @field seed Seed used to generate the population
+    seed = function(value) {
+      private$wrapNullableIntegerProperty("Seed", value)
     }
   ),
   private = list(
@@ -84,6 +88,9 @@ IndividualCharacteristics <- R6::R6Class(
       private$printParam("Height", self$height)
       for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
+      }
+      if (!is.null(self$seed)) {
+        private$printLine("Seed", self$seed)
       }
       invisible(self)
     },

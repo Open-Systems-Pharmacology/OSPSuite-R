@@ -1,6 +1,6 @@
 #' @title Printable
 #' @docType class
-#' @description  Base class that implements some basic functionalities for printing to console
+#' @description  Base class that implements some basic properties for printing to console
 #'
 Printable <- R6::R6Class(
   "Printable",
