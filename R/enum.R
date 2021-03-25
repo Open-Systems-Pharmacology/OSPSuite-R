@@ -4,8 +4,8 @@
 #' @param enumValues Values to use for the enum
 #'
 #' @return the Enum created
+#' @export
 #' @examples
-#' \dontrun{
 #' # Without predefined values
 #' Color <- enum(c("Red", "Blue", "Green"))
 #' myColor <- Color$Red
@@ -13,7 +13,6 @@
 #' # With predefined values
 #' Symbol <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
 #' mySymbol <- Symbol$Diamond
-#' }
 enum <- function(enumValues) {
   myEnum <- as.list(enumValues)
   enumNames <- names(myEnum)
@@ -89,11 +88,9 @@ enumHasKey <- function(key, enum) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' myEnum <- enum(c(a = "b"))
 #' myEnum <- enumPut("c", "d", myEnum)
 #' myEnum <- enumPut(c("c", "d", "g"), c(12, 2, "a"), myEnum, overwrite = TRUE)
-#' }
 enumPut <- function(keys, values, enum, overwrite = FALSE) {
   validateIsSameLength(keys, values)
 
