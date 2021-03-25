@@ -1,10 +1,12 @@
 #' Dimension existence
 #'
 #' @param dimension String name of the dimension.
-#' @details Check if the provided dimension is supported.
+#' @details Returns \code{TRUE} if the provided dimension is supported otherwise \code{FALSE}
 #' @export
-existsDimension <- function(dimension) {
-  enumHasKey(dimension, enum = Dimensions)
+hasDimension <- function(dimension) {
+  validateIsString(dimension)
+  dimensionTask <- getDimensionTask()
+  rClr::clrCall(dimensionTask, "HasDimension", enc2utf8(dimension))
 }
 
 #' Validate dimension
@@ -13,6 +15,7 @@ existsDimension <- function(dimension) {
 #' @details Check if the provided dimension is supported. If not, throw an error
 #' @export
 validateDimension <- function(dimension) {
+  validateIsString(dimension)
   if (!existsDimension(dimension)) {
     stop(messages$errorDimensionNotSupported(dimension))
   }
@@ -25,12 +28,10 @@ validateDimension <- function(dimension) {
 #' @details Check if the unit is valid for the dimension.
 #' @export
 hasUnit <- function(unit, dimension) {
-  validateIsString(c(unit, dimension))
+  validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
-  # Get the dimension object
-  dimension <- rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(dimension))
-  rClr::clrCall(dimension, "HasUnit", enc2utf8(unit))
+  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension),  enc2utf8(unit))
 }
 
 #' Validate unit
@@ -54,10 +55,7 @@ validateUnit <- function(unit, dimension) {
 getBaseUnit <- function(dimension) {
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
-  # Get the dimension object
-  dimension <- rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(dimension))
-  unit <- rClr::clrCall(dimension, "get_BaseUnit")
-  rClr::clrCall(unit, "ToString")
+  rClr::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
 }
 
 #' Calculate factor for converting values of one dimension into another
