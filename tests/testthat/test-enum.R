@@ -16,13 +16,13 @@ test_that("It throws an error when not all values are provided", {
 
 test_that("getEnumKey returns the correct key", {
   myEnum <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
-  expect_equal(getEnumKey(enum = myEnum, value = 2), c("Triangle", "Circle" ))
-  expect_equal(getEnumKey(enum = myEnum, value = 1), c("Diamond" ))
+  expect_equal(getEnumKey(enum = myEnum, value = 2), c("Triangle", "Circle"))
+  expect_equal(getEnumKey(enum = myEnum, value = 1), c("Diamond"))
 })
 
 test_that("getEnumKey returns NULL if the value is not present", {
   myEnum <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
-  expect_null(getEnumKey(enum = myEnum, value = 3), c("Triangle", "Circle" ))
+  expect_null(getEnumKey(enum = myEnum, value = 3), c("Triangle", "Circle"))
 })
 
 test_that("enumGetValue returns the correct value", {
@@ -89,7 +89,7 @@ test_that("enumPut adds multiple keys with one already present if overwrite is T
 test_that("enumRemove removes one key", {
   myEnum <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
   myEnum <- enumRemove(keys = "Diamond", enum = myEnum)
-  expect_equal(names(myEnum), c("Triangle", "Circle" ))
+  expect_equal(names(myEnum), c("Triangle", "Circle"))
 })
 
 test_that("enumRemove removes multiple keys", {
