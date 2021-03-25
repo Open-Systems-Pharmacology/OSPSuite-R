@@ -87,6 +87,22 @@ messages <- list(
     paste0("Unit '", unit, "' is not defined in dimension '", dimension, "' used by '", quantityName, "'.")
   },
 
+  errorDimensionNotSupported = function(dimension, optionalMessage = NULL) {
+    paste0("Dimension '", dimension, "' is not supported! See enum Dimensions for the list of supported dimensions.")
+  },
+
+  errorUnitNotSupported = function(unit, dimension, optionalMessage = NULL) {
+    paste0("Unit '", unit, "' is not supported by the dimension '", dimension, "'!")
+  },
+
+  errorCannotConvertDimensions = function(dimension1, dimension2, optionalMessage = NULL) {
+    paste0("Cannot convert dimension '", dimension1, "' to dimension '", dimension2, "'", optionalMessage)
+  },
+
+  errorCannotConvertDimensionsNoMW = function(dimension1, dimension2, optionalMessage = NULL) {
+    paste0("Cannot convert dimension '", dimension1, "' to dimension '", dimension2, "' without a valid molecular weight!", optionalMessage)
+  },
+
   errorPKParameterNotFound = function(pkParameterName, allPKParameterNames) {
     paste0("PK-Parameter '", pkParameterName, "' not found.\nAvailable PK-Parameters are:\n", paste0(allPKParameterNames, collapse = ", "))
   },
