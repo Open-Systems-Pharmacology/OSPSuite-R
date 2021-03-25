@@ -57,6 +57,8 @@ ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 # Indicates whether PK-Sim was loaded already. This will prevent unnecessary initialization of the PK-Sim assemblies
 ospsuiteEnv$isPKSimLoaded <- FALSE
 
+# NetTask `DimensionTask` cached for performance benefits. Created the first time it is requested.
+ospsuiteEnv$DimensionTask <- NULL
 
 #' Get the value of a global ospsuite-R setting.
 #'

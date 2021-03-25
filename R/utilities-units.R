@@ -121,7 +121,35 @@ allAvailableDimensions <- function() {
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- encodeUnit(unit)
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
 }
+
+#' Returns a vector containing all units defined in the dimension
+#'
+#' @param dimension Name of dimension for which units should be returned
+#'
+#' @examples
+#' units <- getUnitsForDimension("Mass")
+#' @export
+getUnitsForDimension <- function(dimension){
+  validateIsString(dimension)
+  dimensionTask <- getDimensionTask()
+  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", dimension)
+}
+
+
+#' Return an instance of the .NET Task `DimensionTask`
+#' This is purely for optimization purposes
+#'
+#' @return An instance of the Task
+getDimensionTask <- function() {
+  dimensionTask <- ospsuiteEnv$DimensionTask
+  if (is.null(dimensionTask)) {
+    dimensionTask <- getNetTask("DimensionTask")
+    ospsuiteEnv$DimensionTask <- dimensionTask
+  }
+  return(dimensionTask)
+}
+
