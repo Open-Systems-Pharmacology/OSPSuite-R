@@ -48,8 +48,8 @@ ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
 #' See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details
 #' @import stringr
 encodeUnit <- function(unit) {
-  
-  #TODO maybe we don't even need to load from .NET
+
+  # TODO maybe we don't even need to load from .NET
   # dimensionTask <- getNetTask("DimensionTask")
   # ospsuiteEnv$muSymbol <- rClr::clrGet(dimensionTask, "MuSymbol")
   mu <- ospsuiteEnv$muSymbol

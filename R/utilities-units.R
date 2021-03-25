@@ -133,7 +133,7 @@ getDimensionForUnit <- function(unit) {
 #' @examples
 #' units <- getUnitsForDimension("Mass")
 #' @export
-getUnitsForDimension <- function(dimension){
+getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", dimension)
@@ -145,11 +145,10 @@ getUnitsForDimension <- function(dimension){
 #'
 #' @return An instance of the Task
 getDimensionTask <- function() {
-  dimensionTask <- ospsuiteEnv$DimensionTask
+  dimensionTask <- ospsuiteEnv$dimensionTask
   if (is.null(dimensionTask)) {
     dimensionTask <- getNetTask("DimensionTask")
-    ospsuiteEnv$DimensionTask <- dimensionTask
+    ospsuiteEnv$dimensionTask <- dimensionTask
   }
   return(dimensionTask)
 }
-

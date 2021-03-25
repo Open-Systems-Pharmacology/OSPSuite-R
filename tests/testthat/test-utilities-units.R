@@ -100,4 +100,3 @@ test_that("It can return the expected dimension for a given unit", {
 test_that("It throws an error if the dimension is not found", {
   expect_that(getUnitsForDimension("toto"), throws_error())
 })
-

@@ -2,7 +2,7 @@
 .getSuiteVersion <- function() {
   version <- getNamespaceVersion("ospsuite")
   last <- tail(unlist(gregexpr(pattern = "\\.", version)), 1)
-  return(unname(substr(version, 1, last -1)))
+  return(unname(substr(version, 1, last - 1)))
 }
 
 
@@ -15,8 +15,7 @@ ospsuiteEnv$packageName <- "ospsuite"
 
 ospsuiteEnv$suiteName <- "Open Systems Pharmacology"
 
-ospsuiteEnv$suiteVersion <- .getSuiteVersion();
-
+ospsuiteEnv$suiteVersion <- .getSuiteVersion()
 # Reference to container task for optimization purposes only
 ospsuiteEnv$containerTask <- NULL
 
@@ -58,7 +57,7 @@ ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 ospsuiteEnv$isPKSimLoaded <- FALSE
 
 # NetTask `DimensionTask` cached for performance benefits. Created the first time it is requested.
-ospsuiteEnv$DimensionTask <- NULL
+ospsuiteEnv$dimensionTask <- NULL
 
 #' Get the value of a global ospsuite-R setting.
 #'

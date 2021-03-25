@@ -40,14 +40,14 @@ DataRepository <- R6::R6Class(
     },
     #' @field metaData Returns a named list of meta data defined for the data repository.
     #' where the name is the name of the metaData and the value is the meta data value.
-    metaData = function(value){
+    metaData = function(value) {
       if (missing(value)) {
         if (is.null(private$.metaData)) {
           netExtendedProperties <- private$wrapReadOnlyProperty("ExtendedProperties", value)
           netMetaData <- rClr::clrGet(netExtendedProperties, "All")
-          names <- unlist(lapply(netMetaData,  function(data) rClr::clrGet(data, "Name")), use.names = FALSE)
-          metaData <- lapply(netMetaData,  function(data) rClr::clrGet(data, "ValueAsObject"))
-          names(metaData)<-names
+          names <- unlist(lapply(netMetaData, function(data) rClr::clrGet(data, "Name")), use.names = FALSE)
+          metaData <- lapply(netMetaData, function(data) rClr::clrGet(data, "ValueAsObject"))
+          names(metaData) <- names
           private$.metaData <- metaData
         }
         return(private$.metaData)
