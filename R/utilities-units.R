@@ -31,7 +31,7 @@ hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension),  enc2utf8(unit))
+  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), enc2utf8(unit))
 }
 
 #' Validate unit
@@ -212,17 +212,21 @@ getUnitsForDimension <- function(dimension) {
 getUnitConversionFactor <- function(fromUnit, toUnit, dimension, MW = NULL) {
   validateDimension(dimension)
 
-  #Convert MW to base unit
-  if (!is.null(MW)){
+  # Convert MW to base unit
+  if (!is.null(MW)) {
     MW <- toBaseUnit(quantityOrDimension = Dimensions$`Molecular weight`, values = MW, unit = "g/mol")
   }
 
-  #Conversion of fromUnit to base unit
-  convFac <- toBaseUnit(quantityOrDimension = dimension, values = 1,
-                        unit = fromUnit, molWeight = MW)
-  #Convertion from base unit to toUnit
-  convFac <- convFac * toUnit(quantityOrDimension = dimension, values = 1,
-                              targetUnit = toUnit, molWeight = MW)
+  # Conversion of fromUnit to base unit
+  convFac <- toBaseUnit(
+    quantityOrDimension = dimension, values = 1,
+    unit = fromUnit, molWeight = MW
+  )
+  # Convertion from base unit to toUnit
+  convFac <- convFac * toUnit(
+    quantityOrDimension = dimension, values = 1,
+    targetUnit = toUnit, molWeight = MW
+  )
   return(convFac)
 }
 
