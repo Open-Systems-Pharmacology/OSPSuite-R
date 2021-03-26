@@ -109,3 +109,57 @@ test_that("It can return the expected set of units for a given dimension", {
 test_that("It throws an error if the dimension is not found", {
   expect_that(getUnitsForDimension("toto"), throws_error())
 })
+
+context("hasDimension")
+test_that("It returns true for an existing dimension, false otherwise", {
+  expect_true(hasDimension("Amount"))
+  expect_false(hasDimension("AAmount"))
+})
+
+context("validateDimension")
+test_that("It returns NULL when the dimension exists,
+          or throws an error otherwise", {
+  expect_null(validateDimension("Amount"))
+  expect_error(hasDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
+})
+
+context("hasUnit")
+test_that("It returns true for an existing unit in the dimension, false otherwise", {
+  expect_true(hasUnit(unit = "µmol", dimension = "Amount"))
+  expect_false(hasUnit(unit = "g", "Amount"))
+})
+
+context("validateUnit")
+test_that("It returns NULL when the unit exists in the dimension,
+          or throws an error otherwise", {
+            expect_null(validateUnit(unit = "µmol", dimension = "Amount"))
+            expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
+          })
+
+context("getBaseUnit")
+test_that("It returns the correct base unit", {
+  expect_equal(getBaseUnit(dimension = "Amount"), "µmol")
+})
+
+context("getUnitConversionFactor")
+test_that("It returns the correct conversion factor within the same dimension", {
+  expect_equal(getUnitConversionFactor(fromUnit = "pmol", toUnit = "mol", dimension = "Amount"), 1e-12)
+})
+
+test_that("It can convert from Concentration (molar) to Concentration (mass)", {
+  expect_equal(getUnitConversionFactor(fromUnit = "pmol/l", toUnit = "mg/dl", dimension = Dimensions$`Concentration (molar)`, MW = 180), 1.8e-8)
+
+  expect_equal(getUnitConversionFactor(fromUnit = "mg/dl", toUnit = "pmol/l", dimension = Dimensions$`Concentration (molar)`, MW = 180), 1*10*1e-3/180*1e12)
+})
+
+test_that("It can convert from Concentration (mass) to Concentration (molar)", {
+  expect_equal(getUnitConversionFactor(fromUnit = "pmol/l", toUnit = "mg/dl", dimension = Dimensions$`Concentration (mass)`, MW = 180), 1.8e-8)
+
+  expect_equal(getUnitConversionFactor(fromUnit = "mg/dl", toUnit = "pmol/l", dimension = Dimensions$`Concentration (mass)`, MW = 180), 1*10*1e-3/180*1e12)
+})
+
+test_that("It can convert from Amount to Mass", {
+  expect_equal(getUnitConversionFactor(fromUnit = "pmol", toUnit = "mg", dimension = Dimensions$Amount, MW = 180), 1.8e-7)
+
+  expect_equal(getUnitConversionFactor(fromUnit = "mg", toUnit = "pmol", dimension = Dimensions$Amount, MW = 180), 1e-3/180*1e12)
+})

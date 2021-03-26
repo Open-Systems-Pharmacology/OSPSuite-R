@@ -13,7 +13,7 @@ toBaseUnit(quantityOrDimension, values, unit, molWeight = NULL)
 
 \item{unit}{Unit of value}
 
-\item{molWeight}{Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration}
+\item{molWeight}{Optional molecule weight (in kg/µmol) to use when converting, for example,  from molar to mass amount or concentration}
 }
 \description{
 Converts a value given in a specified unit into the base unit of a quantity

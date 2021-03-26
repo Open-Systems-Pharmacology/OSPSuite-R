@@ -1,9 +1,69 @@
+#' Dimension existence
+#'
+#' @param dimension String name of the dimension.
+#' @details Returns \code{TRUE} if the provided dimension is supported otherwise \code{FALSE}
+#' @export
+hasDimension <- function(dimension) {
+  validateIsString(dimension)
+  dimensionTask <- getDimensionTask()
+  rClr::clrCall(dimensionTask, "HasDimension", enc2utf8(dimension))
+}
+
+#' Validate dimension
+#'
+#' @param dimension String name of the dimension.
+#' @details Check if the provided dimension is supported. If not, throw an error
+#' @export
+validateDimension <- function(dimension) {
+  validateIsString(dimension)
+  if (!hasDimension(dimension)) {
+    stop(messages$errorDimensionNotSupported(dimension))
+  }
+}
+
+#' Unit existence
+#'
+#' @param unit String name of the unit
+#' @param dimension String name of the dimension.
+#' @details Check if the unit is valid for the dimension.
+#' @export
+hasUnit <- function(unit, dimension) {
+  validateIsString(unit)
+  validateDimension(dimension)
+  dimensionTask <- getDimensionTask()
+  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension),  enc2utf8(unit))
+}
+
+#' Validate unit
+#'
+#' @param unit String name of the unit
+#' @param dimension String name of the dimension.
+#' @details Check if the unit is valid for the dimension. If not, throw an error
+#' @export
+validateUnit <- function(unit, dimension) {
+  if (!hasUnit(unit, dimension)) {
+    stop(messages$errorUnitNotSupported(unit, dimension))
+  }
+}
+
+#' Get base unit of a dimension
+#'
+#' @param dimension Dimension for which the base unit is returned.
+#'
+#' @return String name of the base unit.
+#' @export
+getBaseUnit <- function(dimension) {
+  validateDimension(dimension)
+  dimensionTask <- getDimensionTask()
+  rClr::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
+}
+
 #' Converts a value given in a specified unit into the base unit of a quantity
 #'
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in unit (single or vector)
 #' @param unit Unit of value
-#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration
+#' @param molWeight Optional molecule weight (in kg/µmol) to use when converting, for example,  from molar to mass amount or concentration
 
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -44,7 +104,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in base unit (single or vector)
 #' @param targetUnit Unit to convert to
-#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration
+#' @param molWeight Optional molecule weight (in kg/µmol) to use when converting, for example,  from molar to mass amount or concentration
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -138,6 +198,40 @@ getUnitsForDimension <- function(dimension) {
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
 }
+
+#' Get conversion factor from one unit to another
+#'
+#' @param fromUnit String name of the unit to convert from
+#' @param toUnit String name of the unit to convert to
+#' @param dimension Dimension of the units (conversion between mass and molar possible when
+#' \code{MW} is provided)
+#' @param MW Optional molecule weight in g/mol to use when converting, for example, from molar to mass amount or concentration
+#' @return Numerical value. A value in \code{fromUnit} multiplied by the factor
+#' corresponds to the value in \code{toUnit}
+#' @export
+getUnitConversionFactor <- function(fromUnit, toUnit, dimension, MW = NULL) {
+  validateDimension(dimension)
+
+  #Convert MW to base unit
+  if (!is.null(MW)){
+    MW <- toBaseUnit(quantityOrDimension = Dimensions$`Molecular weight`, values = MW, unit = "g/mol")
+  }
+
+  #Conversion of fromUnit to base unit
+  convFac <- toBaseUnit(quantityOrDimension = dimension, values = 1,
+                        unit = fromUnit, molWeight = MW)
+  #Convertion from base unit to toUnit
+  convFac <- convFac * toUnit(quantityOrDimension = dimension, values = 1,
+                              targetUnit = toUnit, molWeight = MW)
+  return(convFac)
+}
+
+#' Supported dimensions.
+#'
+#' @include enum.R
+#'
+#' @export
+Dimensions <- list()
 
 
 #' Return an instance of the .NET Task `DimensionTask`
