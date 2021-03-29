@@ -152,3 +152,23 @@ getDimensionTask <- function() {
   }
   return(dimensionTask)
 }
+
+
+
+#'Loop through dimensions and build a list containing an enum of all units available for each dimension
+#' @return enum of all units for each dimension
+#' @export
+getUnitsEnum <- function(){
+  dimensions <- allAvailableDimensions()[!(allAvailableDimensions() %in% c("CV mmHg*s²/ml","Time²","Flow²"))]
+  units <- lapply(dimensions,function(dimension){enum(getUnitsForDimension(dimension = dimension))})
+  names(units) <- dimensions
+  return(units)
+}
+
+#' #'Function to return an enum of all available dimensions
+#' @return enum of all dimensions
+#' @export
+getDimensionsEnum <- function(){
+   dimensions <- enum(allAvailableDimensions()[!(allAvailableDimensions() %in% c("CV mmHg*s²/ml","Time²","Flow²"))])
+   return(dimensions)
+}
