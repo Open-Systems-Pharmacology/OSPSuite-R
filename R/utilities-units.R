@@ -136,7 +136,7 @@ getDimensionForUnit <- function(unit) {
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", dimension)
+  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", enc2utf8(dimension))
 }
 
 
@@ -151,4 +151,24 @@ getDimensionTask <- function() {
     ospsuiteEnv$dimensionTask <- dimensionTask
   }
   return(dimensionTask)
+}
+
+
+
+#'Loop through dimensions and build a list containing an enum of all units available for each dimension
+#' @return enum of all units for each dimension
+#' @export
+getUnitsEnum <- function(){
+  dimensions <- allAvailableDimensions()
+  units <- lapply(dimensions,function(dimension){enum(getUnitsForDimension(dimension = dimension))})
+  names(units) <- dimensions
+  return(units)
+}
+
+#' #'Function to return an enum of all available dimensions
+#' @return enum of all dimensions
+#' @export
+getDimensionsEnum <- function(){
+   dimensions <- enum(allAvailableDimensions())
+   return(dimensions)
 }
