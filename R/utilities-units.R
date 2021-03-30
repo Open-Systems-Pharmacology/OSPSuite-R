@@ -136,7 +136,7 @@ getDimensionForUnit <- function(unit) {
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", dimension)
+  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesForDimension", enc2utf8(dimension))
 }
 
 
@@ -159,7 +159,7 @@ getDimensionTask <- function() {
 #' @return enum of all units for each dimension
 #' @export
 getUnitsEnum <- function(){
-  dimensions <- allAvailableDimensions()[!(allAvailableDimensions() %in% c("CV mmHg*s²/ml","Time²","Flow²"))]
+  dimensions <- allAvailableDimensions()
   units <- lapply(dimensions,function(dimension){enum(getUnitsForDimension(dimension = dimension))})
   names(units) <- dimensions
   return(units)
@@ -169,6 +169,6 @@ getUnitsEnum <- function(){
 #' @return enum of all dimensions
 #' @export
 getDimensionsEnum <- function(){
-   dimensions <- enum(allAvailableDimensions()[!(allAvailableDimensions() %in% c("CV mmHg*s²/ml","Time²","Flow²"))])
+   dimensions <- enum(allAvailableDimensions())
    return(dimensions)
 }
