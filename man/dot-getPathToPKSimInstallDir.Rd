@@ -7,7 +7,6 @@ Searching is done in the following order:
 \enumerate{
 \item Search via Windows registry entry
 \item Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
-\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
 }}
 \usage{
 .getPathToPKSimInstallDir(
@@ -31,12 +30,11 @@ Searching is done in the following order:
 \enumerate{
 \item Search via Windows registry entry
 \item Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
-\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
 }
 }
 \examples{
 \dontrun{
-path <- .getPathToPKSimInstallDir("7.4")
-path2 <- .getPathToPKSimInstallDir("7.5", "C:/MyOSPFolder/")
+path <- .getPathToPKSimInstallDir("9")
+path2 <- .getPathToPKSimInstallDir("10.1", "C:/MyOSPFolder/")
 }
 }
