@@ -97,6 +97,15 @@ test_that("It can return the expected dimension for a given unit", {
   expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", "µg", "ng", "pg"))
 })
 
+
+test_that("It can return an enum of dimensions.", {
+  expect_true(getDimensionsEnum()[["Mass"]] == "Mass")
+})
+
+test_that("It can return the expected set of units for a given dimension", {
+  expect_true("kg" %in% getUnitsEnum()[["Mass"]])
+})
+
 test_that("It throws an error if the dimension is not found", {
   expect_that(getUnitsForDimension("toto"), throws_error())
 })
