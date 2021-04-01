@@ -63,7 +63,8 @@ getBaseUnit <- function(dimension) {
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in unit (single or vector)
 #' @param unit Unit of value
-#' @param molWeight Optional molecule weight (in kg/µmol) to use when converting, for example,  from molar to mass amount or concentration
+#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol
+#' @param molWeightUnit Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.
 
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -75,7 +76,7 @@ getBaseUnit <- function(dimension) {
 #'
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
-toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
+toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
@@ -94,6 +95,10 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL) {
   if (is.null(molWeight)) {
     rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values)
   } else {
+    #Convert molWeight value to base unit if a unit is provided
+    if (!is.null(molWeightUnit)){
+      molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", Dimensions$`Molecular weight`, molWeightUnit, molWeight)
+    }
     rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values, molWeight)
   }
 }
