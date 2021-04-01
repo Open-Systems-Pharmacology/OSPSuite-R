@@ -16,7 +16,7 @@ toUnit(
 \arguments{
 \item{quantityOrDimension}{Instance of a quantity from which the dimension will be retrieved or name of dimension}
 
-\item{values}{Values to converts (single or vector). If \code{sourceUnit} is not specified, \code{values} are in the base unit of the dimension}
+\item{values}{Values to convert (single or vector). If \code{sourceUnit} is not specified, \code{values} are in the base unit of the dimension}
 
 \item{targetUnit}{Unit to convert to}
 
@@ -40,6 +40,8 @@ valueInMl <- toUnit(par, 1, "ml")
 valuesInMl <- toUnit(par, c(1, 5, 5), "ml")
 
 # Converts a numerical value in from mmol/l to mg/dl
-valuesInMgDl <- toUnit(Dimensions$`Concentration (molar)`, 5, targetUnit = "mmol/l",
-sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol")
+valuesInMgDl <- toUnit(Dimensions$`Concentration (molar)`, 5,
+  targetUnit = "mmol/l",
+  sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
+)
 }

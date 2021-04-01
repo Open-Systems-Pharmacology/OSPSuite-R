@@ -4,7 +4,13 @@
 \alias{toBaseUnit}
 \title{Converts a value given in a specified unit into the base unit of a quantity}
 \usage{
-toBaseUnit(quantityOrDimension, values, unit, molWeight = NULL)
+toBaseUnit(
+  quantityOrDimension,
+  values,
+  unit,
+  molWeight = NULL,
+  molWeightUnit = NULL
+)
 }
 \arguments{
 \item{quantityOrDimension}{Instance of a quantity from which the dimension will be retrieved or name of dimension}
@@ -13,7 +19,9 @@ toBaseUnit(quantityOrDimension, values, unit, molWeight = NULL)
 
 \item{unit}{Unit of value}
 
-\item{molWeight}{Optional molecule weight (in kg/?mol) to use when converting, for example,  from molar to mass amount or concentration}
+\item{molWeight}{Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol}
+
+\item{molWeightUnit}{Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.}
 }
 \description{
 Converts a value given in a specified unit into the base unit of a quantity
