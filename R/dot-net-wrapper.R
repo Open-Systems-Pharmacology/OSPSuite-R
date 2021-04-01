@@ -60,7 +60,6 @@ DotNetWrapper <- R6::R6Class(
         private$throwPropertyIsReadonly(propertyName)
       }
     },
-
     wrapExtensionMethodCached = function(typename, methodName, propertyName, cachedValue, value) {
       if (missing(value)) {
         if (is.null(cachedValue)) {
@@ -71,7 +70,6 @@ DotNetWrapper <- R6::R6Class(
         private$throwPropertyIsReadonly(propertyName)
       }
     },
-
     readOnlyProperty = function(propertyName, value, returnValue) {
       if (missing(value)) {
         returnValue
@@ -79,7 +77,6 @@ DotNetWrapper <- R6::R6Class(
         private$throwPropertyIsReadonly(propertyName)
       }
     },
-
     wrapIntegerProperty = function(propertyName, value) {
       # Special method needed because of double to int conversion issues between R and .NET
       if (missing(value)) {
@@ -106,7 +103,6 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value - 1))
       }
     },
-
     wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName) {
       if (missing(value)) {
         rClr::clrGet(self$ref, returnPropertyName)
@@ -118,7 +114,6 @@ DotNetWrapper <- R6::R6Class(
         }
       }
     },
-
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     }

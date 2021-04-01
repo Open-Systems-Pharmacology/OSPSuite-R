@@ -32,8 +32,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
     #' @param variationRange Variation applied to the parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
     #' @return A new `SensitivityAnalysis` object.
-    initialize = function(
-                          simulation,
+    initialize = function(simulation,
                           parameterPaths = NULL,
                           numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
                           variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {

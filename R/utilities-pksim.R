@@ -40,7 +40,6 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
 #'
 #' @examples
-#'
 #' \dontrun{
 #' path <- .getPathToPKSimInstallDirFromRegistry("9")
 #' }

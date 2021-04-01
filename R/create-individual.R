@@ -69,8 +69,7 @@ createDistributions <- function(individualCharacteristics) {
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
 #'
 #' @export
-createIndividualCharacteristics <- function(
-                                            species,
+createIndividualCharacteristics <- function(species,
                                             population = NULL,
                                             gender = NULL,
                                             weight = NULL,

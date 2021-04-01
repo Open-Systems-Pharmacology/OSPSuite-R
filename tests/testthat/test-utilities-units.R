@@ -42,8 +42,10 @@ test_that("It can convert from a value in a non-base unit to another unit", {
 })
 
 test_that("It can convert from Concentration (molar) to Concentration (mass)", {
-  expect_equal(toUnit(quantityOrDimension = Dimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
-                      molWeight = 180, molWeightUnit = "g/mol"), 1.8e-8)
+  expect_equal(toUnit(
+    quantityOrDimension = Dimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
+    molWeight = 180, molWeightUnit = "g/mol"
+  ), 1.8e-8)
 })
 
 context("toBaseUnit")
