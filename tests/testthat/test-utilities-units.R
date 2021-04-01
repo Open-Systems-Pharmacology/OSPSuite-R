@@ -37,6 +37,14 @@ test_that("It does not change the value of the quantity when converting to anoth
   expect_equal(par$value, 5)
 })
 
+test_that("It can convert from a value in a non-base unit to another unit", {
+  expect_equal(toUnit(quantityOrDimension = Dimensions$Amount, values = 1, targetUnit = "mol", sourceUnit = "pmol"), 1e-12)
+})
+
+test_that("It can convert from Concentration (molar) to Concentration (mass)", {
+  expect_equal(toUnit(quantityOrDimension = Dimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
+                      molWeight = 180, molWeightUnit = "g/mol"), 1.8e-8)
+})
 
 context("toBaseUnit")
 test_that("It can convert from one given value in a unit to a base unit", {
@@ -139,27 +147,4 @@ test_that("It returns NULL when the unit exists in the dimension,
 context("getBaseUnit")
 test_that("It returns the correct base unit", {
   expect_equal(getBaseUnit(dimension = "Amount"), "µmol")
-})
-
-context("getUnitConversionFactor")
-test_that("It returns the correct conversion factor within the same dimension", {
-  expect_equal(getUnitConversionFactor(fromUnit = "pmol", toUnit = "mol", dimension = "Amount"), 1e-12)
-})
-
-test_that("It can convert from Concentration (molar) to Concentration (mass)", {
-  expect_equal(getUnitConversionFactor(fromUnit = "pmol/l", toUnit = "mg/dl", dimension = Dimensions$`Concentration (molar)`, MW = 180), 1.8e-8)
-
-  expect_equal(getUnitConversionFactor(fromUnit = "mg/dl", toUnit = "pmol/l", dimension = Dimensions$`Concentration (molar)`, MW = 180), 1 * 10 * 1e-3 / 180 * 1e12)
-})
-
-test_that("It can convert from Concentration (mass) to Concentration (molar)", {
-  expect_equal(getUnitConversionFactor(fromUnit = "pmol/l", toUnit = "mg/dl", dimension = Dimensions$`Concentration (mass)`, MW = 180), 1.8e-8)
-
-  expect_equal(getUnitConversionFactor(fromUnit = "mg/dl", toUnit = "pmol/l", dimension = Dimensions$`Concentration (mass)`, MW = 180), 1 * 10 * 1e-3 / 180 * 1e12)
-})
-
-test_that("It can convert from Amount to Mass", {
-  expect_equal(getUnitConversionFactor(fromUnit = "pmol", toUnit = "mg", dimension = Dimensions$Amount, MW = 180), 1.8e-7)
-
-  expect_equal(getUnitConversionFactor(fromUnit = "mg", toUnit = "pmol", dimension = Dimensions$Amount, MW = 180), 1e-3 / 180 * 1e12)
 })

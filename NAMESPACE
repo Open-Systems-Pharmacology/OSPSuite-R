@@ -2,6 +2,7 @@
 
 export(CompareBy)
 export(Dimensions)
+export(DimensionsUnits)
 export(Gender)
 export(HumanPopulation)
 export(IndividualCharacteristics)
