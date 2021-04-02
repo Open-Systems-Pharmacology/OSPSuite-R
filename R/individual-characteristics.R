@@ -48,7 +48,6 @@ IndividualCharacteristics <- R6::R6Class(
   ),
   private = list(
     .moleculeOntogenies = NULL,
-
     printParam = function(caption, param) {
       if (is.null(param)) {
         return()

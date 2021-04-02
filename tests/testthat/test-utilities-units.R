@@ -37,6 +37,16 @@ test_that("It does not change the value of the quantity when converting to anoth
   expect_equal(par$value, 5)
 })
 
+test_that("It can convert from a value in a non-base unit to another unit", {
+  expect_equal(toUnit(quantityOrDimension = ospDimensions$Amount, values = 1, targetUnit = "mol", sourceUnit = "pmol"), 1e-12)
+})
+
+test_that("It can convert from Concentration (molar) to Concentration (mass)", {
+  expect_equal(toUnit(
+    quantityOrDimension = ospDimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
+    molWeight = 180, molWeightUnit = "g/mol"
+  ), 1.8e-8)
+})
 
 context("toBaseUnit")
 test_that("It can convert from one given value in a unit to a base unit", {
@@ -108,4 +118,35 @@ test_that("It can return the expected set of units for a given dimension", {
 
 test_that("It throws an error if the dimension is not found", {
   expect_that(getUnitsForDimension("toto"), throws_error())
+})
+
+context("hasDimension")
+test_that("It returns true for an existing dimension, false otherwise", {
+  expect_true(hasDimension("Amount"))
+  expect_false(hasDimension("AAmount"))
+})
+
+context("validateDimension")
+test_that("It returns NULL when the dimension exists,
+          or throws an error otherwise", {
+  expect_null(validateDimension("Amount"))
+  expect_error(validateDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
+})
+
+context("hasUnit")
+test_that("It returns true for an existing unit in the dimension, false otherwise", {
+  expect_true(hasUnit(unit = "µmol", dimension = "Amount"))
+  expect_false(hasUnit(unit = "g", "Amount"))
+})
+
+context("validateUnit")
+test_that("It returns NULL when the unit exists in the dimension,
+          or throws an error otherwise", {
+  expect_null(validateUnit(unit = "µmol", dimension = "Amount"))
+  expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
+})
+
+context("getBaseUnit")
+test_that("It returns the correct base unit", {
+  expect_equal(getBaseUnit(dimension = "Amount"), "µmol")
 })

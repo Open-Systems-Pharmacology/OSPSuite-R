@@ -4,16 +4,27 @@
 \alias{toUnit}
 \title{Converts a value given in base unit of a quantity into a target unit}
 \usage{
-toUnit(quantityOrDimension, values, targetUnit, molWeight = NULL)
+toUnit(
+  quantityOrDimension,
+  values,
+  targetUnit,
+  molWeight = NULL,
+  sourceUnit = NULL,
+  molWeightUnit = NULL
+)
 }
 \arguments{
 \item{quantityOrDimension}{Instance of a quantity from which the dimension will be retrieved or name of dimension}
 
-\item{values}{Value in base unit (single or vector)}
+\item{values}{Values to convert (single or vector). If \code{sourceUnit} is not specified, \code{values} are in the base unit of the dimension}
 
 \item{targetUnit}{Unit to convert to}
 
-\item{molWeight}{Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration}
+\item{molWeight}{Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol}
+
+\item{sourceUnit}{Optional Name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.}
+
+\item{molWeightUnit}{Optional Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.}
 }
 \description{
 Converts a value given in base unit of a quantity into a target unit
@@ -27,4 +38,10 @@ par <- getParameter("Organism|Liver|Volume", sim)
 valueInMl <- toUnit(par, 1, "ml")
 
 valuesInMl <- toUnit(par, c(1, 5, 5), "ml")
+
+# Converts a numerical value in from mmol/l to mg/dl
+valuesInMgDl <- toUnit(ospDimensions$`Concentration (molar)`, 5,
+  targetUnit = "mmol/l",
+  sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
+)
 }

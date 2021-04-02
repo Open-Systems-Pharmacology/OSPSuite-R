@@ -19,7 +19,6 @@ Printable <- R6::R6Class(
 
       invisible(self)
     },
-
     printClass = function() {
       cat(class(self)[1], ": \n", sep = "")
     }
