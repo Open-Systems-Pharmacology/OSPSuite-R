@@ -93,14 +93,14 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   }
 
   if (is.null(molWeight)) {
-    rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values)
-  } else {
-    # Convert molWeight value to base unit if a unit is provided
-    if (!is.null(molWeightUnit)) {
-      molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", Dimensions$`Molecular weight`, molWeightUnit, molWeight)
-    }
-    rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values, molWeight)
+    return(rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values))
   }
+
+  # Convert molWeight value to base unit if a unit is provided
+  if (!is.null(molWeightUnit)) {
+    molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
+  }
+  rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values, molWeight)
 }
 
 #' Converts a value given in base unit of a quantity into a target unit
@@ -123,7 +123,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #' valuesInMl <- toUnit(par, c(1, 5, 5), "ml")
 #'
 #' # Converts a numerical value in from mmol/l to mg/dl
-#' valuesInMgDl <- toUnit(Dimensions$`Concentration (molar)`, 5,
+#' valuesInMgDl <- toUnit(ospDimensions$`Concentration (molar)`, 5,
 #'   targetUnit = "mmol/l",
 #'   sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
 #' )
@@ -153,18 +153,18 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
     if (!is.null(sourceUnit)) {
       values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values)
     }
-    rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values)
-  } else {
-    # Convert molWeight value to base unit if a unit is provided
-    if (!is.null(molWeightUnit)) {
-      molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", Dimensions$`Molecular weight`, molWeightUnit, molWeight)
-    }
-    # Convert values to base unit first if the source unit is provided
-    if (!is.null(sourceUnit)) {
-      values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
-    }
-    rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
+    return(rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values))
   }
+
+  # Convert molWeight value to base unit if a unit is provided
+  if (!is.null(molWeightUnit)) {
+    molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
+  }
+  # Convert values to base unit first if the source unit is provided
+  if (!is.null(sourceUnit)) {
+    values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
+  }
+  rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
@@ -221,7 +221,7 @@ getDimensionForUnit <- function(unit) {
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
-  dimension <- encodeUnit(dimension)
+  dimension <- enc2utf8(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
 }
@@ -256,8 +256,7 @@ getUnitsEnum <- function() {
 #' @return enum of all dimensions
 #' @export
 getDimensionsEnum <- function() {
-  dimensions <- enum(allAvailableDimensions())
-  return(dimensions)
+  enum(allAvailableDimensions())
 }
 
 
@@ -274,6 +273,7 @@ ospDimensions <- list()
 ospUnits <- list()
 
 initializeDimensionAndUnitLists <- function() {
+  #This initializes the two lists in the parent environment which is the package environments
   ospDimensions <<- getDimensionsEnum()
   ospUnits <<- getUnitsEnum()
 }
