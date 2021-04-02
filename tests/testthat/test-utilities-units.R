@@ -38,12 +38,12 @@ test_that("It does not change the value of the quantity when converting to anoth
 })
 
 test_that("It can convert from a value in a non-base unit to another unit", {
-  expect_equal(toUnit(quantityOrDimension = Dimensions$Amount, values = 1, targetUnit = "mol", sourceUnit = "pmol"), 1e-12)
+  expect_equal(toUnit(quantityOrDimension = ospDimensions$Amount, values = 1, targetUnit = "mol", sourceUnit = "pmol"), 1e-12)
 })
 
 test_that("It can convert from Concentration (molar) to Concentration (mass)", {
   expect_equal(toUnit(
-    quantityOrDimension = Dimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
+    quantityOrDimension = ospDimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
     molWeight = 180, molWeightUnit = "g/mol"
   ), 1.8e-8)
 })
@@ -130,7 +130,7 @@ context("validateDimension")
 test_that("It returns NULL when the dimension exists,
           or throws an error otherwise", {
   expect_null(validateDimension("Amount"))
-  expect_error(hasDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
+  expect_error(validateDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
 })
 
 context("hasUnit")

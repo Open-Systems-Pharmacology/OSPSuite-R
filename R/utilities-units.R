@@ -108,9 +108,9 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Values to convert (single or vector). If \code{sourceUnit} is not specified, \code{values} are in the base unit of the dimension
 #' @param targetUnit Unit to convert to
-#' @param sourceUnit String name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.
-#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol
-#' @param molWeightUnit Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.
+#' @param sourceUnit Optional Name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.
+#' @param molWeight Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol
+#' @param molWeightUnit Optional Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -128,7 +128,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #'   sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
 #' )
 #' @export
-toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL) {
+toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL, molWeightUnit = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
