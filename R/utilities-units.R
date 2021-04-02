@@ -31,7 +31,7 @@ hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), enc2utf8(unit))
+  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), encodeUnit(unit))
 }
 
 #' Validate unit
@@ -221,9 +221,8 @@ getDimensionForUnit <- function(unit) {
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
-  dimension <- enc2utf8(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
+  rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
 
 #' Return an instance of the .NET Task `DimensionTask`
