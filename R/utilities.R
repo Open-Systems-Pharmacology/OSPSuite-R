@@ -49,10 +49,6 @@ ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
 #' @param unit Unit to encode
 #' @import stringr
 encodeUnit <- function(unit) {
-
-  # TODO maybe we don't even need to load from .NET
-  # dimensionTask <- getNetTask("DimensionTask")
-  # ospsuiteEnv$muSymbol <- rClr::clrGet(dimensionTask, "MuSymbol")
   mu <- ospsuiteEnv$muSymbol
   unit <- enc2utf8(unit)
   unit <- str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)

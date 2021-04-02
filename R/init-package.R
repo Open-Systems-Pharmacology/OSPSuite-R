@@ -19,5 +19,5 @@ initPackage <- function() {
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 
-  Dimensions <<- enum(allAvailableDimensions())
+  initializeDimensionAndUnitLists()
 }

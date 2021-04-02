@@ -221,17 +221,10 @@ getDimensionForUnit <- function(unit) {
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
+  dimension <- encodeUnit(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
 }
-
-#' Supported dimensions.
-#'
-#' @include enum.R
-#'
-#' @export
-Dimensions <- list()
-
 
 #' Return an instance of the .NET Task `DimensionTask`
 #' This is purely for optimization purposes
@@ -247,8 +240,7 @@ getDimensionTask <- function() {
 }
 
 
-
-#'Loop through dimensions and build a list containing an enum of all units available for each dimension
+#' Loop through dimensions and build a list containing an enum of all units available for each dimension
 #' @return enum of all units for each dimension
 #' @export
 getUnitsEnum <- function() {
@@ -266,4 +258,22 @@ getUnitsEnum <- function() {
 getDimensionsEnum <- function() {
   dimensions <- enum(allAvailableDimensions())
   return(dimensions)
+}
+
+
+#' Supported dimensions defined as a named list
+#'
+#' ospDimensions$Mass => "Mass"
+#' @export
+ospDimensions <- list()
+
+#' Supported units defined as a named list of lists
+#'
+#' ospUnits$Mass$kg => "kg"
+#' @export
+ospUnits <- list()
+
+initializeDimensionAndUnitLists <- function() {
+  ospDimensions <<- getDimensionsEnum()
+  ospUnits <<- getUnitsEnum()
 }
