@@ -128,7 +128,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #'   sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
 #' )
 #' @export
-toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL) {
+toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
   validateIsNumeric(values)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
