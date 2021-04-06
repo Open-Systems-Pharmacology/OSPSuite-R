@@ -272,7 +272,7 @@ ospDimensions <- list()
 ospUnits <- list()
 
 initializeDimensionAndUnitLists <- function() {
-  #This initializes the two lists in the parent environment which is the package environments
+  # This initializes the two lists in the parent environment which is the package environments
   ospDimensions <<- getDimensionsEnum()
   ospUnits <<- getUnitsEnum()
 }
