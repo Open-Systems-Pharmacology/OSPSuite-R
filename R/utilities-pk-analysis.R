@@ -67,7 +67,7 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
   dataFrame <- tryCatch(
     {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
-      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = cols())
+      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = readr::cols())
       colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
       pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
       pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
