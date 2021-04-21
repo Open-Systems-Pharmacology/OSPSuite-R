@@ -90,8 +90,7 @@ createPopulation <- function(populationCharacteristics) {
 #' @return An instance of \code{PopulationCharacteristics} to be used in conjunction with \code{createPopulation}
 #'
 #' @export
-createPopulationCharacteristics <- function(
-                                            species,
+createPopulationCharacteristics <- function(species,
                                             population = NULL,
                                             numberOfIndividuals,
                                             proportionOfFemales = 50,

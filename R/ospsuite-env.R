@@ -1,10 +1,9 @@
 
 .getSuiteVersion <- function() {
   version <- getNamespaceVersion("ospsuite")
-  last <- tail(unlist(gregexpr(pattern = "\\.", version)), 1)
-  return(unname(substr(version, 1, last - 1)))
+  first <- head(unlist(gregexpr(pattern = "\\.", version)), 1)
+  return(unname(substr(version, 1, first - 1)))
 }
-
 
 # Environment that holds various global variables and settings for the ospsuite,
 # It is not exported and should not be directly manipulated by other packages.
@@ -15,7 +14,9 @@ ospsuiteEnv$packageName <- "ospsuite"
 
 ospsuiteEnv$suiteName <- "Open Systems Pharmacology"
 
+# Major version of the suite
 ospsuiteEnv$suiteVersion <- .getSuiteVersion()
+
 # Reference to container task for optimization purposes only
 ospsuiteEnv$containerTask <- NULL
 

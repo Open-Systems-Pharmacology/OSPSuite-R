@@ -101,7 +101,7 @@ exportPopulationToCSV <- function(population, filePath) {
 #' @export
 loadAgingDataFromCSV <- function(filePath) {
   validateIsString(filePath)
-  df <- readr::read_csv(filePath, locale = readr::locale(encoding = "UTF-8"), comment = "#")
+  df <- readr::read_csv(filePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = readr::cols())
   agingData <- AgingData$new()
   agingData$individualIds <- as.integer(df$IndividualId)
   agingData$parameterPaths <- df$ParameterPath

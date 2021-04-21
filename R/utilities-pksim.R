@@ -40,9 +40,8 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
 #'
 #' @examples
-#'
 #' \dontrun{
-#' path <- .getPathToPKSimInstallDirFromRegistry("9.0")
+#' path <- .getPathToPKSimInstallDirFromRegistry("9")
 #' }
 .getPathToPKSimInstallDirFromRegistry <- function(pksim.version) {
   pksimVersion <- trimws(pksim.version)
@@ -141,7 +140,6 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' Searching is done in the following order:
 #' 1. Search via Windows registry entry
 #' 2. Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
-#' 3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback 2)
 #'
 #' @param pksim.version The version number of Pk-Sim as a string.
 #' @param base.search.folder The base folder for filesystem-lookup fallback (default: 64-bit program folder)
@@ -153,8 +151,8 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' path <- .getPathToPKSimInstallDir("7.4")
-#' path2 <- .getPathToPKSimInstallDir("7.5", "C:/MyOSPFolder/")
+#' path <- .getPathToPKSimInstallDir("9")
+#' path2 <- .getPathToPKSimInstallDir("10.1", "C:/MyOSPFolder/")
 #' }
 .getPathToPKSimInstallDir <- function(pksim.version = ospsuiteEnv$suiteVersion,
                                       base.search.folder = Sys.getenv("ProgramW6432")) {

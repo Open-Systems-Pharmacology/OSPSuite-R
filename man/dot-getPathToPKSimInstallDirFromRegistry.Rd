@@ -17,8 +17,7 @@ The path is separated with slashes (unix-style) and in compilance with base-R wi
 Tries to find the installation path for a specific version of PK-Sim from an Windows registry entry.
 }
 \examples{
-
 \dontrun{
-path <- .getPathToPKSimInstallDirFromRegistry("9.0")
+path <- .getPathToPKSimInstallDirFromRegistry("9")
 }
 }

@@ -8,7 +8,7 @@ If \code{condition} is not null, returns \code{outputIfNotNull} otherwise \code{
 ifNotNull(condition, outputIfNotNull, outputIfNull = NULL)
 }
 \arguments{
-\item{condition}{The .NET object instances (single or list) to wrapp}
+\item{condition}{The .NET object instances (single or list) to wrap}
 
 \item{outputIfNotNull}{The class definition that will be used to convert the parameter}
 

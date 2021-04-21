@@ -56,7 +56,6 @@ PopulationCharacteristics <- R6::R6Class(
   ),
   private = list(
     .moleculeOntogenies = NULL,
-
     printRange = function(caption, range) {
       if (is.null(range)) {
         return()

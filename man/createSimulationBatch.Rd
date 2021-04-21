@@ -18,10 +18,10 @@ createSimulationBatch(
 When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
 If parametersOrPaths is \code{NULL}, you will not be able to set parameter values during batch run.}
 
-\item{moleculeOrPaths}{Molecule instances (element or vector) typically retrieved using
+\item{moleculesOrPaths}{Molecule instances (element or vector) typically retrieved using
 \code{getAllMoleculesMatching} or molecule path (element or vector of strings) that will be varied in the simulation. (optional)
 When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
-If moleculeOrPaths is \code{NULL}, you will not be able to set molecule initial values during batch run.}
+If moleculesOrPaths is \code{NULL}, you will not be able to set molecule initial values during batch run.}
 }
 \value{
 SimulationBatch that can be used to vary parameter values or molecule initial values and run simulation in an optimized manner

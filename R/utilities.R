@@ -33,7 +33,7 @@ toObjectType <- function(netObject, class) {
 #' Mimic the ternary operator  \code{a ? x : y} behavior in other languages
 #' If \code{condition} is not null, returns \code{outputIfNotNull} otherwise \code{outputIfNull}
 #'
-#' @param condition The .NET object instances (single or list) to wrapp
+#' @param condition The .NET object instances (single or list) to wrap
 #' @param outputIfNotNull The class definition that will be used to convert the parameter
 #' @param outputIfNull The class definition that will be used to convert the parameter
 ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
@@ -46,12 +46,9 @@ ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
 
 #' This is required to ensure that we have no issue using the mu symbol in different OS
 #' See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details
+#' @param unit Unit to encode
 #' @import stringr
 encodeUnit <- function(unit) {
-
-  # TODO maybe we don't even need to load from .NET
-  # dimensionTask <- getNetTask("DimensionTask")
-  # ospsuiteEnv$muSymbol <- rClr::clrGet(dimensionTask, "MuSymbol")
   mu <- ospsuiteEnv$muSymbol
   unit <- enc2utf8(unit)
   unit <- str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)

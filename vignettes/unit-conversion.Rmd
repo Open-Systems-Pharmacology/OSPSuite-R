@@ -33,7 +33,7 @@ print(livParam)
 livParam$dimension
 ```
 
-The values of a certain dimension can be presented in different units - for examlpe, *l* or *ml* for the dimension *Volume*, or *mol* and *µmol* for the dimension *Amount*. The list of all available units is a method of an entity:
+The values of a certain dimension can be presented in different units - for example, *l* or *ml* for the dimension *Volume*, or *mol* and *µmol* for the dimension *Amount*. The list of all available units is a method of an entity:
 
 ```{r $allUnits}
 # Dimension of the parameter

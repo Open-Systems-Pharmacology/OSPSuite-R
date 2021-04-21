@@ -62,15 +62,15 @@ createDistributions <- function(individualCharacteristics) {
 #' @param gestationalAge Gestational age of the created individual (for human species only using the Preterm population). Default is 40 Weeks
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is week(s)
 #' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
+#' @param seed Optional seed parameter to use to generate start values for the created individual algorithm.
 #' A `MoleculeOntogeny` is an object with the name a `molecule` property (e.g the name of the molecule as defined in your simulation)
 #' and an `ontogeny` property (e.g. the name of the predefined ontogeny to use for this molecule). The list of all available ontogenies
-#' can be accessed programatically using the enum `StandardOntogeny`
+#' can be accessed programmatically using the enum `StandardOntogeny`
 #'
 #' @return An array of \code{ParameterValue} containing the value of each individual parameter
 #'
 #' @export
-createIndividualCharacteristics <- function(
-                                            species,
+createIndividualCharacteristics <- function(species,
                                             population = NULL,
                                             gender = NULL,
                                             weight = NULL,

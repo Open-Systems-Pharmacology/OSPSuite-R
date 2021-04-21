@@ -71,7 +71,6 @@ Cache <- R6::R6Class(
       invisible(self)
     }
   ),
-
   active = list(
     #' @field keys List all key in the cache
     keys = function(value) {
@@ -82,7 +81,6 @@ Cache <- R6::R6Class(
       }
     }
   ),
-
   private = list(
     # Environment holding cached objects.
     cachedObjects = NULL,
