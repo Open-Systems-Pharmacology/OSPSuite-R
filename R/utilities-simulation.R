@@ -160,7 +160,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL, silentMode = FALSE) {
   validateIsOfType(simulations, Simulation)
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
-  if (!is.null(simulationRunOptions)){
+  if (!is.null(simulationRunOptions)) {
     validateIsOfType(simulationRunOptions, SimulationRunOptions)
     rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
   }
@@ -169,29 +169,29 @@ runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL,
   # Create an Id <-> simulation map to get the correct simulation for the results.
   simulationsIdMap <- list()
 
-  #Create SimulationRunnerConcurrentOptions and add all simulations
-  for (simulation in simulations){
+  # Create SimulationRunnerConcurrentOptions and add all simulations
+  for (simulation in simulations) {
     simulationsIdMap[[simulation$id]] <- simulation
     rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
   }
-  #Run all simulations
+  # Run all simulations
   results <- rClr::clrCall(simulationRunner, "RunConcurrently")
-  #Pre-allocate lists for SimulationResult
+  # Pre-allocate lists for SimulationResult
   simulationResults <- vector("list", length(simulations))
   # Set the order of IDs so the results appear in the same order as simulations were provided
   names(simulationResults) <- names(simulationsIdMap)
 
-  for (i in seq_along(results)){
+  for (i in seq_along(results)) {
     resultObject <- results[[i]]
     id <- rClr::clrGet(resultObject, "Id")
     succeeded <- rClr::clrGet(resultObject, "Succeeded")
-    if (succeeded){
-      #Get the correct simulation and create a SimulationResults object
+    if (succeeded) {
+      # Get the correct simulation and create a SimulationResults object
       simulationResults[[id]] <- SimulationResults$new(ref = rClr::clrGet(resultObject, "Result"), simulation = simulationsIdMap[[id]])
       next()
     }
-    #If the simulation run failed, show a warning
-    if (!silentMode){
+    # If the simulation run failed, show a warning
+    if (!silentMode) {
       errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
       warning(errorMessage)
     }

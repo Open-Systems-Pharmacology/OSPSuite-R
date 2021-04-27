@@ -207,7 +207,7 @@ test_that("It runs one individual simulation without simulationRunOptions", {
   results <- runSimulationsConcurrently(sim)
   expect_equal(length(results), 1)
   expect_true(isOfType(results[[1]], "SimulationResults"))
-  })
+})
 
 test_that("It runs one individual simulation with simulationRunOptions", {
   resetSimulationCache()
@@ -224,7 +224,7 @@ test_that("It runs multiple individual simulations", {
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
   results <- runSimulationsConcurrently(c(sim, sim2))
   expect_equal(length(results), 2)
-  #Check the ids
+  # Check the ids
   expect_equal(names(results)[[1]], sim$id)
   expect_true(isOfType(results[[1]], "SimulationResults"))
 })
