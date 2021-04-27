@@ -141,7 +141,9 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 }
 
 #' @title  Runs a set of simulations.
-#' @details Runs a set of simulations (only individual simulations) and returns a named list of \code{SimulationResults}. The names of the entries are the IDs of the corresponding (i.e. \code{simulation$id}).
+#' @details Runs a set of simulations (only individual simulations) and returns
+#' a named list of \code{SimulationResults}. The names of the entries are the IDs of the
+#' corresponding simulation (i.e. \code{simulation$id}).
 #'
 #' @param simulations A list of \code{Simulation} objects to simulate.
 #' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run.
