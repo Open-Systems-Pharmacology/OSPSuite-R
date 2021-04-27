@@ -140,12 +140,15 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   SimulationResults$new(results, simulation)
 }
 
-#' @title  Runs a set of simulations (only individual simulations) and returns a list of \code{SimulationResults}
+#' @title  Runs a set of simulations.
+#' @details Runs a set of simulations (only individual simulations) and returns a named list of \code{SimulationResults}. The names of the entries are the IDs of the corresponding (i.e. \code{simulation$id}).
 #'
 #' @param simulations A list of \code{Simulation} objects to simulate.
-#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
+#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run.
+#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails.
+#' Default is \code{FALSE}.
 #'
-#' @return A list of \code{SimulationResults} objects in the order corresponding to the order of simulations.
+#' @return A list of \code{SimulationResults} objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is \code{NULL}
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -154,26 +157,46 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' sim3 <- loadSimulation(simPath)
 #' results <- runSimulationsConcurrently(list(sim, sim2, sim3))
 #' @export
-runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL) {
+runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL, silentMode = FALSE) {
   validateIsOfType(simulations, Simulation)
-  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
-  simulationRunner <- getNetTask("SimulationRunner")
+  simulationRunner <- getNetTask("ConcurrentSimulationRunner")
+  if (!is.null(simulationRunOptions)){
+    validateIsOfType(simulationRunOptions, SimulationRunOptions)
+    rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+  }
 
   simulations <- c(simulations)
+  # Create an Id <-> simulation map to get the correct simulation for the results.
+  simulationsIdMap <- list()
 
   #Create SimulationRunnerConcurrentOptions and add all simulations
-  runConcurrentOptions <- SimulationRunnerConcurrentOptions$new()
-  for (i in seq_along(simulations)){
-    runConcurrentOptions$addSimulation(simulations[[i]])
+  for (simulation in simulations){
+    simulationsIdMap[[simulation$id]] <- simulation
+    rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
   }
+  #Run all simulations
+  results <- rClr::clrCall(simulationRunner, "RunConcurrently")
+  #Pre-allocate lists for SimulationResult
+  simulationResults <- vector("list", length(simulations))
+  # Set the order of IDs so the results appear in the same order as simulations were provided
+  names(simulationResults) <- names(simulationsIdMap)
 
-  results <- rClr::clrCall(simulationRunner, "RunConcurrently", runConcurrentOptions$ref)
-
-  simResultsList <- vector("list", length(simulations))
-  for (i in seq_along(simulations)){
-    simResultsList[[i]] <- SimulationResults$new(results[[i]], simulations[[i]])
+  for (i in seq_along(results)){
+    resultObject <- results[[i]]
+    id <- rClr::clrGet(resultObject, "Id")
+    succeeded <- rClr::clrGet(resultObject, "Succeeded")
+    if (succeeded){
+      #Get the correct simulation and create a SimulationResults object
+      simulationResults[[id]] <- SimulationResults$new(ref = rClr::clrGet(resultObject, "Result"), simulation = simulationsIdMap[[id]])
+      next()
+    }
+    #If the simulation run failed, show a warning
+    if (!silentMode){
+      errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
+      warning(errorMessage)
+    }
   }
-  return(simResultsList)
+  return(simulationResults)
 }
 
 #' @title  Creates and returns an instance of a \code{SimulationBatch} that can be used to efficiently vary parameters and initial values in a simulation

@@ -218,36 +218,39 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   expect_true(isOfType(results[[1]], "SimulationResults"))
 })
 
-test_that("It runs one population simulation without simulation settings", {
-  resetSimulationCache()
-
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  populationFileName <- getTestDataFilePath("pop_10.csv")
-  population <- loadPopulation(populationFileName)
-  results <- runSimulationsConcurrently(sim, population)
-  expect_equal(length(results), 1)
-  expect_true(isOfType(results[[1]], "SimulationResults"))
-})
-
 test_that("It runs multiple individual simulations", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
   results <- runSimulationsConcurrently(c(sim, sim2))
   expect_equal(length(results), 2)
+  #Check the ids
+  expect_equal(names(results)[[1]], sim$id)
   expect_true(isOfType(results[[1]], "SimulationResults"))
 })
 
-test_that("It runs multiple pop/individual simulations", {
+test_that("It shows a warning if one of simulations fails. Results for this simulation are NULL", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim3 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  populationFileName <- getTestDataFilePath("pop_10.csv")
-  population <- loadPopulation(populationFileName)
-  results <- runSimulationsConcurrently(simulations = c(sim, sim2, sim3), populations = list(NULL, population, NULL))
-  expect_equal(length(results), 3)
-  expect_true(isOfType(results[[1]], "SimulationResults"))
+  sim$solver$relTol <- 1000
+
+  expect_warning(results <- runSimulationsConcurrently(c(sim, sim2)))
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
 })
-test_that("It throws an error if the number of simulations does not match the number of populations")
-"one of the runs fails"
+
+test_that("It does not show a warning if one of simulations fails in silent mode. Results for this simulation are NULL", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$solver$relTol <- 1000
+
+  expect_warning(results <- runSimulationsConcurrently(c(sim, sim2), silentMode = TRUE), regexp = NA)
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
+})
