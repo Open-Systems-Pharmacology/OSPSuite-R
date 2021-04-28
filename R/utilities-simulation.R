@@ -183,14 +183,12 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path))
   }
 
-  simulationBatchFactory <- getNetTask("SimulationBatchFactory")
-
   simulationBatchOptions <- SimulationBatchOptions$new(
     variableParameters = variableParameters,
     variableMolecules = variableMolecules
   )
 
-  net <- rClr::clrCall(simulationBatchFactory, "Create", simulation$ref, simulationBatchOptions$ref)
+  net <- rClr::clrNew("OSPSuite.R.Services.SettingsForConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
   SimulationBatch$new(net, simulation)
 }
 
