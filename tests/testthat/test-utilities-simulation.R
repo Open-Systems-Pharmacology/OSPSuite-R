@@ -197,3 +197,60 @@ test_that("It creates a simulation batch when using only molecule instances", {
   simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecule)
   expect_false(is.null(simulationBatch))
 })
+
+context("runSimulationsConcurrent")
+
+test_that("It runs one individual simulation without simulationRunOptions", {
+  resetSimulationCache()
+
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulationsConcurrently(sim)
+  expect_equal(length(results), 1)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It runs one individual simulation with simulationRunOptions", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  simRunOptions <- SimulationRunOptions$new()
+  results <- runSimulationsConcurrently(sim, simulationRunOptions = simRunOptions)
+  expect_equal(length(results), 1)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It runs multiple individual simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulationsConcurrently(c(sim, sim2))
+  expect_equal(length(results), 2)
+  # Check the ids
+  expect_equal(names(results)[[1]], sim$id)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It shows a warning if one of simulations fails. Results for this simulation are NULL", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$solver$relTol <- 1000
+
+  expect_warning(results <- runSimulationsConcurrently(c(sim, sim2)))
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
+})
+
+test_that("It does not show a warning if one of simulations fails in silent mode. Results for this simulation are NULL", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$solver$relTol <- 1000
+
+  expect_warning(results <- runSimulationsConcurrently(c(sim, sim2), silentMode = TRUE), regexp = NA)
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
+})

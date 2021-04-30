@@ -2,7 +2,7 @@
 % Please edit documentation in R/get-net-task.R
 \name{getNetTask}
 \alias{getNetTask}
-\title{Returns an instace of the specified .NET Task}
+\title{Returns an instance of the specified .NET Task}
 \usage{
 getNetTask(taskName)
 }
@@ -13,7 +13,7 @@ getNetTask(taskName)
 An instance of the Task
 }
 \description{
-Returns an instace of the specified .NET Task
+Returns an instance of the specified .NET Task
 }
 \details{
 simulationLoader <- getNetTask("SimulationLoader")

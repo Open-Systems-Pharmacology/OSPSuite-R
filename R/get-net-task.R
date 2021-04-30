@@ -1,4 +1,4 @@
-#' Returns an instace of the specified .NET Task
+#' Returns an instance of the specified .NET Task
 #'
 #' @param taskName The name of the task to retrieve (without the Get)
 #'
