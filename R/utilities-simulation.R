@@ -171,34 +171,36 @@ runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL,
   # Create an Id <-> simulation map to get the correct simulation for the results.
   simulationsIdMap <- list()
 
-  # Create SimulationRunnerConcurrentOptions and add all simulations
+  # Add simulations
   for (simulation in simulations) {
     simulationsIdMap[[simulation$id]] <- simulation
     rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
   }
   # Run all simulations
   results <- rClr::clrCall(simulationRunner, "RunConcurrently")
-  # Pre-allocate lists for SimulationResult
-  simulationResults <- vector("list", length(simulations))
-  # Set the order of IDs so the results appear in the same order as simulations were provided
-  names(simulationResults) <- names(simulationsIdMap)
 
-  for (i in seq_along(results)) {
-    resultObject <- results[[i]]
-    id <- rClr::clrGet(resultObject, "Id")
-    succeeded <- rClr::clrGet(resultObject, "Succeeded")
-    if (succeeded) {
-      # Get the correct simulation and create a SimulationResults object
-      simulationResults[[id]] <- SimulationResults$new(ref = rClr::clrGet(resultObject, "Result"), simulation = simulationsIdMap[[id]])
-      next()
-    }
-    # If the simulation run failed, show a warning
-    if (!silentMode) {
-      errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
-      warning(errorMessage)
-    }
-  }
+  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, ids = names(simulationsIdMap), simulationsIdMap = simulationsIdMap, silentMode = silentMode)
+
   return(simulationResults)
+}
+
+runSimulationBatchesConcurrently <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE){
+  validateIsOfType(simulationBatches, "SimulationBatch")
+  simulationRunner <- getNetTask("ConcurrentSimulationRunner")
+  if (!is.null(simulationRunOptions)) {
+    validateIsOfType(simulationRunOptions, SimulationRunOptions)
+    rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+  }
+
+  simulationBatches <- c(simulationBatches)
+
+  # List of ids. Each SimulationBatchRunValues has its own id
+  ids <- vector("character", length(parameterValues))
+  # Create an Id <-> simulation map to get the correct simulation for the results.
+  simulationsIdMap <- list()
+
+  # output: list of lists of SimulationResults, per SimulationBatch
+
 }
 
 #' @title  Creates and returns an instance of a \code{SimulationBatch} that can be used to efficiently vary parameters and initial values in a simulation
@@ -384,4 +386,41 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
   }
 
   return(simuationPaths)
+}
+
+#' Get SimulationResults from ConcurrentSimulationRunner
+#'
+#' @details Create a list of \code{SimulationResults}-objects from the results of a
+#' \code{ConcurrentSimulationRunner}
+#' @param results .NET object created by \code{RunConcurrently()}
+#' @param ids List of ids of simulations or simulation-batch values pairs in the order
+#' as they were enqueued
+#' @param simulationsIdMap A named list of simulation objects assigning the correct simulation
+#' to the id of a result
+#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails.
+#'
+#' @return A named list of \code{SimulationResults} objects with the names being the ids of simulations or
+#' simulation-batch values pairs they were produced by
+.getConcurrentSimulationRunnerResults <- function(results, ids, simulationsIdMap, silentMode){
+  # Pre-allocate lists for SimulationResult
+  simulationResults <- vector("list", length(results))
+  # Set the correct order of IDs
+  names(simulationResults) <- ids
+
+  for (i in seq_along(results)) {
+    resultObject <- results[[i]]
+    id <- rClr::clrGet(resultObject, "Id")
+    succeeded <- rClr::clrGet(resultObject, "Succeeded")
+    if (succeeded) {
+      # Get the correct simulation and create a SimulationResults object
+      simulationResults[[id]] <- SimulationResults$new(ref = rClr::clrGet(resultObject, "Result"), simulation = simulationsIdMap[[id]])
+      next()
+    }
+    # If the simulation run failed, show a warning
+    if (!silentMode) {
+      errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
+      warning(errorMessage)
+    }
+  }
+  return(simulationResults)
 }

@@ -8,18 +8,27 @@ isSameLength <- function(...) {
 #' Check if the provided object is of certain type
 #'
 #' @param object An object or a list of objects
-#' @param type String  representation or Class of the type that should be checked for
+#' @param type String representation or Class of the type that should be checked for
+#' @param nullAllowed Boolean flag if \code{NULL} is accepted for the \code{object}. If \code{TRUE},
+#' \code{NULL} always returns \code{TRUE}, otherwise \code{NULL} returns \code{FALSE}. Default is \code{FALSE}
 #'
 #' @return TRUE if the object or all objects inside the list are of the given type.
 #' Only the first level of the given list is considered.
-isOfType <- function(object, type) {
+isOfType <- function(object, type, nullAllowed = FALSE) {
   if (is.null(object)) {
+    if (nullAllowed) {
+      return(TRUE)
+    }
     return(FALSE)
   }
 
   type <- typeNamesFrom(type)
-  inheritType <- function(x) inherits(x, type)
-
+  inheritType <- function(x) {
+    if (is.null(x) && nullAllowed) {
+      return(TRUE)
+    }
+    inherits(x, type)
+  }
   if (inheritType(object)) {
     return(TRUE)
   }
@@ -28,12 +37,14 @@ isOfType <- function(object, type) {
   all(sapply(object, inheritType))
 }
 
+#' Check if the provided object is of certain type. If not, stop with an error.
+#'
+#' @param object An object or a list of objects
+#' @param type String representation or Class of the type that should be checked for
+#' @param nullAllowed Boolean flag if \code{NULL} is accepted for the \code{object}. If \code{TRUE},
+#' \code{NULL} is always valid, otherwise the error is thrown. Default is \code{FALSE}
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
-  if (nullAllowed && is.null(object)) {
-    return()
-  }
-
-  if (isOfType(object, type)) {
+  if (isOfType(object, type, nullAllowed)) {
     return()
   }
   # Name of the variable in the calling function
@@ -43,12 +54,17 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
+#' Check if \code{value} is in the given {enum}. If not, stops with an error.
+#'
+#' @param enum \code{enum} where the \code{value} should be contained
+#' @param value \code{value} to search for in the \code{enum}
+#' @param nullAllowed If TRUE, \code{value} can be \code{NULL} and the test always passes.
+#' If \code{FALSE} (default), NULL is not accepted and the test fails.
 validateEnumValue <- function(value, enum, nullAllowed = FALSE) {
-  if (nullAllowed && is.null(value)) {
-    return()
-  }
-
   if (is.null(value)) {
+    if (nullAllowed) {
+      return()
+    }
     stop(messages$errorEnumValueUndefined(enum))
   }
 
