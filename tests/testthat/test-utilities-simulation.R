@@ -339,3 +339,4 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   expect_equal(names(res[[2]])[[1]], ids[[3]])
   expect_equal(names(res[[2]])[[2]], ids[[4]])
 })
+
