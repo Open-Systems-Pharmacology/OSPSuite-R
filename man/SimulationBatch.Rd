@@ -15,7 +15,7 @@ An optimized simulation with faster loading. The corresponding .NET class is
 ## ------------------------------------------------
 
 \dontrun{
-sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+sim <- loadSimulation("simple", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
 # Create two simulation batches. In this case, they are based on the same simulation
@@ -112,7 +112,7 @@ Id of the values set that can be used to get the correct result from \code{runSi
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{\dontrun{
-sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+sim <- loadSimulation("simple", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
 # Create two simulation batches. In this case, they are based on the same simulation

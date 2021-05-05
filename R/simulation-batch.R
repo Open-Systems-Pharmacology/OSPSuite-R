@@ -35,7 +35,7 @@ SimulationBatch <- R6::R6Class(
     #'
     #' @examples
     #' \dontrun{
-    #' sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+    #' sim <- loadSimulation("simple", loadFromCache = TRUE)
     #' parameters <- c("Organism|Liver|Volume", "R1|k1")
     #' molecules <- "Organism|Liver|A"
     #' # Create two simulation batches. In this case, they are based on the same simulation
