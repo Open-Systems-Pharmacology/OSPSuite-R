@@ -11,15 +11,28 @@ An optimized simulation with faster loading. The corresponding .NET class is
 \examples{
 
 ## ------------------------------------------------
-## Method `SimulationBatch$enqueueRunValues`
+## Method `SimulationBatch$addRunValues`
 ## ------------------------------------------------
 
 \dontrun{
 sim <- loadTestSimulation("simple", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
-simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameters, moleculesOrPaths = molecules)
-valueSetId <- simulationBatch$enqueueRunValues(parametervalues = c(1, 2), initialValues = 2)
+# Create two simulation batches. In this case, they are based on the same simulation
+# and vary the same paramter and initial values.
+simulationBatch1 <- createSimulationBatch(simulation = sim,
+parametersOrPaths = parameters,
+moleculesOrPaths = molecules)
+simulationBatch2 <- createSimulationBatch(simulation = sim,
+parametersOrPaths = parameters,
+moleculesOrPaths = molecules)
+#Ids of run values
+ids <- c()
+ids[[1]] <- simulationBatch1$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+ids[[2]] <- simulationBatch1$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+ids[[3]] <- simulationBatch2$addRunValues(parameterValues = c(4, 2), initialValues = 4)
+ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
+res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 }
 }
 \section{Super classes}{
@@ -28,7 +41,9 @@ valueSetId <- simulationBatch$enqueueRunValues(parametervalues = c(1, 2), initia
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{simulation}}{Underlying simulation used for the batch run}
+\item{\code{simulation}}{Underlying simulation used for the batch run. Read only.}
+
+\item{\code{runValuesIds}}{Ids of the run values that will be executed on next run}
 }
 \if{html}{\out{</div>}}
 }
@@ -36,9 +51,7 @@ valueSetId <- simulationBatch$enqueueRunValues(parametervalues = c(1, 2), initia
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SimulationBatch$new()}}
-\item \href{#method-run}{\code{SimulationBatch$run()}}
-\item \href{#method-enqueueRunValues}{\code{SimulationBatch$enqueueRunValues()}}
-\item \href{#method-clearRunValuesQueue}{\code{SimulationBatch$clearRunValuesQueue()}}
+\item \href{#method-addRunValues}{\code{SimulationBatch$addRunValues()}}
 \item \href{#method-finalize}{\code{SimulationBatch$finalize()}}
 }
 }
@@ -71,45 +84,12 @@ A new \code{SimulationBatch} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
-\if{latex}{\out{\hypertarget{method-run}{}}}
-\subsection{Method \code{run()}}{
-Set the parameter and initial values in the simulation and run the simulation
+\if{html}{\out{<a id="method-addRunValues"></a>}}
+\if{latex}{\out{\hypertarget{method-addRunValues}{}}}
+\subsection{Method \code{addRunValues()}}{
+Add a set of parameter and start values for next execution.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$run(
-  parameterValues = NULL,
-  initialValues = NULL,
-  silentMode = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterValues}}{Vector of parameter values or a list of vectors to set in the simulation (default is \code{NULL})}
-
-\item{\code{initialValues}}{Vector of initial values or a list of vectors to set in the simulation  (default is \code{NULL})}
-
-\item{\code{silentMode}}{If \code{TRUE}, no warnings are displayed if a simulation fails.
-Default is \code{FALSE}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Details}{
-If multiple parameter and initial values sets are provided, the simulation is solved with each values set and results for each set are returned.
-}
-
-\subsection{Returns}{
-A list of \code{SimulationResults} objects for each set of parmeter/initial values (in the same order as parameter/initial values are provided). If a simulation with a parameter/initial values set fails, the result for this run is \code{NULL}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-enqueueRunValues"></a>}}
-\if{latex}{\out{\hypertarget{method-enqueueRunValues}{}}}
-\subsection{Method \code{enqueueRunValues()}}{
-Schedule a set of parameter and start values for concurrent execution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$enqueueRunValues(parameterValues = NULL, initialValues = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$addRunValues(parameterValues = NULL, initialValues = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -122,12 +102,12 @@ Schedule a set of parameter and start values for concurrent execution.
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Intended for the use with \code{runSimulationBatchesConcurrently}. The simulation batch is executed
-with the sets of parameter and initial values that have been scheduled. Has no impact on the \code{run} method.
+Intended for the use with \code{runSimulationBatches}. The simulation batch is executed
+with the sets of parameter and initial values that have been scheduled. The set of run values is cleared after successful run.
 }
 
 \subsection{Returns}{
-Id of the values set that can be used to get the correct result from \code{runSimulationBatchesConcurrently}.
+Id of the values set that can be used to get the correct result from \code{runSimulationBatches}.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
@@ -135,26 +115,25 @@ Id of the values set that can be used to get the correct result from \code{runSi
 sim <- loadTestSimulation("simple", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
-simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameters, moleculesOrPaths = molecules)
-valueSetId <- simulationBatch$enqueueRunValues(parametervalues = c(1, 2), initialValues = 2)
+# Create two simulation batches. In this case, they are based on the same simulation
+# and vary the same paramter and initial values.
+simulationBatch1 <- createSimulationBatch(simulation = sim,
+parametersOrPaths = parameters,
+moleculesOrPaths = molecules)
+simulationBatch2 <- createSimulationBatch(simulation = sim,
+parametersOrPaths = parameters,
+moleculesOrPaths = molecules)
+#Ids of run values
+ids <- c()
+ids[[1]] <- simulationBatch1$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+ids[[2]] <- simulationBatch1$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+ids[[3]] <- simulationBatch2$addRunValues(parameterValues = c(4, 2), initialValues = 4)
+ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
+res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 }
 }
 \if{html}{\out{</div>}}
 
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clearRunValuesQueue"></a>}}
-\if{latex}{\out{\hypertarget{method-clearRunValuesQueue}{}}}
-\subsection{Method \code{clearRunValuesQueue()}}{
-Remove all value sets enqueued for concurrent execution
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$clearRunValuesQueue()}\if{html}{\out{</div>}}
-}
-
-\subsection{Details}{
-For details, see \code{runSimulationBatchesConcurrently}.
 }
 
 }

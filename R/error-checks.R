@@ -34,7 +34,12 @@ isOfType <- function(object, type, nullAllowed = FALSE) {
   }
 
   object <- c(object)
-  all(sapply(object, inheritType))
+  # Have to check for the lenght because otherwise sapply() always returns list()
+  # which is always TRUE
+  if (length(object) > 0) {
+    return(all(sapply(object, inheritType)))
+  }
+  return(FALSE)
 }
 
 #' Check if the provided object is of certain type. If not, stop with an error.

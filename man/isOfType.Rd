@@ -9,7 +9,7 @@ isOfType(object, type, nullAllowed = FALSE)
 \arguments{
 \item{object}{An object or a list of objects}
 
-\item{type}{String representation of the type that should be checked for}
+\item{type}{String representation or Class of the type that should be checked for}
 
 \item{nullAllowed}{Boolean flag if \code{NULL} is accepted for the \code{object}. If \code{TRUE},
 \code{NULL} always returns \code{TRUE}, otherwise \code{NULL} returns \code{FALSE}. Default is \code{FALSE}}

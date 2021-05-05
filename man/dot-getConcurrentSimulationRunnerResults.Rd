@@ -6,18 +6,17 @@
 \usage{
 .getConcurrentSimulationRunnerResults(
   results,
-  ids,
-  simulationsIdMap,
+  resultsIdSimulationIdMap,
+  simulationIdSimulationMap,
   silentMode
 )
 }
 \arguments{
 \item{results}{.NET object created by \code{RunConcurrently()}}
 
-\item{ids}{List of ids of simulations or simulation-batch values pairs in the order
-as they were enqueued}
+\item{resultsIdSimulationIdMap}{Map of results ids as keys with values being the ids of simulations the respective batch was created with. The order of IDs is as they were added to the batch.}
 
-\item{simulationsIdMap}{A named list of simulation objects assigning the correct simulation
+\item{simulationIdSimulationMap}{A named list of simulation ids as keys and simulation objects as values
 to the id of a result}
 
 \item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails.}
