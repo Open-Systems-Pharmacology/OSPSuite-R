@@ -244,9 +244,10 @@ getDimensionTask <- function() {
 #' @export
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
-  units <- lapply(dimensions, function(dimension){
+  units <- lapply(dimensions, function(dimension) {
     x <- getUnitsForDimension(dimension = dimension)
-  return(enum( replace(x, x == "", "Unitless")))})
+    return(enum(replace(x, x == "", "Unitless")))
+  })
   names(units) <- dimensions
   return(units)
 }
