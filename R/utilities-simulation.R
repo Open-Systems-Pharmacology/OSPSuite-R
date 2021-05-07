@@ -214,9 +214,11 @@ runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL,
 #'
 #' # Create a simulation batch that will allow batch run for multiple parameter
 #' # values and initial values
-#' simulationBatch <- createSimulationBatch(sim,
-#' c("Organism|Liver|Volume", "R1|k1"),
-#' c("Organism|Liver|A"))
+#' simulationBatch <- createSimulationBatch(
+#'   sim,
+#'   c("Organism|Liver|Volume", "R1|k1"),
+#'   c("Organism|Liver|A")
+#' )
 #' @export
 createSimulationBatch <- function(simulation, parametersOrPaths = NULL, moleculesOrPaths = NULL) {
   validateIsOfType(simulation, Simulation)
@@ -241,7 +243,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules = variableMolecules
   )
 
-  net <- rClr::clrNew("OSPSuite.R.Services.SettingsForConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
+  net <- rClr::clrNew("OSPSuite.R.Services.ConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
   SimulationBatch$new(net, simulation)
 }
 
@@ -265,13 +267,17 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' molecules <- "Organism|Liver|A"
 #' # Create two simulation batches. In this case, they are based on the same simulation
 #' # and vary the same parameter and initial values.
-#' simulationBatch1 <- createSimulationBatch(simulation = sim,
-#' parametersOrPaths = parameters,
-#' moleculesOrPaths = molecules)
-#' simulationBatch2 <- createSimulationBatch(simulation = sim,
-#' parametersOrPaths = parameters,
-#' moleculesOrPaths = molecules)
-#' #Ids of run values
+#' simulationBatch1 <- createSimulationBatch(
+#'   simulation = sim,
+#'   parametersOrPaths = parameters,
+#'   moleculesOrPaths = molecules
+#' )
+#' simulationBatch2 <- createSimulationBatch(
+#'   simulation = sim,
+#'   parametersOrPaths = parameters,
+#'   moleculesOrPaths = molecules
+#' )
+#' # Ids of run values
 #' ids <- c()
 #' ids[[1]] <- simulationBatch1$addRunValues(parameterValues = c(1, 2), initialValues = 1)
 #' ids[[2]] <- simulationBatch1$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
@@ -296,16 +302,15 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   # Map of simulations ids to simulations objects
   simulationIdSimulationMap <- vector("list", length(simulationBatches))
   # Iterate through all simulation batches
-  for (simBatchIdx in seq_along(simulationBatches)) {
-    simBatch <- simulationBatches[[simBatchIdx]]
-    # Put the simulation into sim pointer id <-> sim map
-    simId <- deparse(rClr::clrGetExtPtr(simBatch$ref))
-    simulationIdSimulationMap[[simBatchIdx]] <- simBatch$simulation
-    names(simulationIdSimulationMap)[[simBatchIdx]] <- simId
+  for (simBatchIndex in seq_along(simulationBatches)) {
+    simBatch <- simulationBatches[[simBatchIndex]]
+    simBatchId <- rClr::clrGet(simBatch$ref, "Id")
+    simulationIdSimulationMap[[simBatchIndex]] <- simBatch$simulation
+    names(simulationIdSimulationMap)[[simBatchIndex]] <- simBatchId
     # Ids of the values of the batch
     valuesIds <- simBatch$runValuesIds
     # All results of this batch have the id of the same simulation
-    resultsIdSimulationIdMap[valuesIds] <- simId
+    resultsIdSimulationIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
     rClr::clrCall(simulationRunner, "AddSimulationBatchOption", simBatch$ref)
   }
