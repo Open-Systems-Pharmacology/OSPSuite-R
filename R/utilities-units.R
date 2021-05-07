@@ -245,7 +245,8 @@ getDimensionTask <- function() {
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
   units <- lapply(dimensions, function(dimension) {
-    enum(getUnitsForDimension(dimension = dimension))
+    x <- getUnitsForDimension(dimension = dimension)
+    return(enum(replace(x, x == "", "Unitless")))
   })
   names(units) <- dimensions
   return(units)
@@ -257,7 +258,6 @@ getUnitsEnum <- function() {
 getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
 }
-
 
 #' Supported dimensions defined as a named list
 #'
