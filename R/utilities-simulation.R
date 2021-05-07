@@ -264,7 +264,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' parameters <- c("Organism|Liver|Volume", "R1|k1")
 #' molecules <- "Organism|Liver|A"
 #' # Create two simulation batches. In this case, they are based on the same simulation
-#' # and vary the same paramter and initial values.
+#' # and vary the same parameter and initial values.
 #' simulationBatch1 <- createSimulationBatch(simulation = sim,
 #' parametersOrPaths = parameters,
 #' moleculesOrPaths = molecules)
@@ -280,7 +280,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 #' }
 runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE) {
-  validateIsOfType(simulationBatches, "SimulationBatch")
+  validateIsOfType(simulationBatches, SimulationBatch)
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
   if (!is.null(simulationRunOptions)) {
     validateIsOfType(simulationRunOptions, SimulationRunOptions)
@@ -318,7 +318,8 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   output <- lapply(names(simulationIdSimulationMap), function(simId) {
     simulationResults[which(resultsIdSimulationIdMap == simId)]
   })
-  # Not sure this is required
+
+  # Dispose of the runner to release any possible instances still in memory (.NET side)
   rClr::clrCall(simulationRunner, "Dispose")
 
   return(output)
