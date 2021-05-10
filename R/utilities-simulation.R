@@ -167,7 +167,7 @@ runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL,
     rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
   }
 
-  simulations <- c(simulations)
+  simulations <- enforceIsList(simulations)
   # Create an Id <-> simulation map to get the correct simulation for the results.
   simulationsIdMap <- list()
 

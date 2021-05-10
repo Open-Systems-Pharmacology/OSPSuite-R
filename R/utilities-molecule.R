@@ -107,7 +107,7 @@ setMoleculeInitialValues <- function(molecules, values) {
 #' setMoleculeScaleDivisors(molecules, c(0.002, 0.003))
 #' @export
 setMoleculeScaleDivisors <- function(molecules, values) {
-  molecules <- c(molecules)
+  molecules <- enforceIsList(molecules)
   validateIsOfType(molecules, Molecule)
   validateIsNumeric(values)
   validateIsSameLength(molecules, values)

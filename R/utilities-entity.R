@@ -57,11 +57,11 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     return(NULL)
   }
 
+  entities <- enforceIsList(entities)
   validateIsOfType(entities, Entity)
   validateEnumValue(compareBy, CompareBy)
 
   uniqueEntities <- new.env(parent = emptyenv())
-
   for (i in seq_along(entities)) {
     propertyToCompare <- entities[[i]][[compareBy]]
     if (!exists(propertyToCompare, where = uniqueEntities)) {
