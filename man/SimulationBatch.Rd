@@ -6,7 +6,7 @@
 \title{SimulationBatch}
 \description{
 An optimized simulation with faster loading. The corresponding .NET class is
-"OSPSuite.R.Services.SettingsForConcurrentRunSimulationBatch"
+"OSPSuite.R.Services.ConcurrentRunSimulationBatch"
 }
 \examples{
 
@@ -15,15 +15,15 @@ An optimized simulation with faster loading. The corresponding .NET class is
 ## ------------------------------------------------
 
 \dontrun{
-sim <- loadSimulation("simple", loadFromCache = TRUE)
+sim1 <- loadSimulation("sim1", loadFromCache = TRUE)
+sim2 <- loadSimulation("sim2", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
-# Create two simulation batches. In this case, they are based on the same simulation
-# and vary the same paramter and initial values.
-simulationBatch1 <- createSimulationBatch(simulation = sim,
+# Create two simulation batches.
+simulationBatch1 <- createSimulationBatch(simulation = sim1,
 parametersOrPaths = parameters,
 moleculesOrPaths = molecules)
-simulationBatch2 <- createSimulationBatch(simulation = sim,
+simulationBatch2 <- createSimulationBatch(simulation = sim2,
 parametersOrPaths = parameters,
 moleculesOrPaths = molecules)
 #Ids of run values
@@ -112,15 +112,15 @@ Id of the values set that can be used to get the correct result from \code{runSi
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{\dontrun{
-sim <- loadSimulation("simple", loadFromCache = TRUE)
+sim1 <- loadSimulation("sim1", loadFromCache = TRUE)
+sim2 <- loadSimulation("sim2", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
-# Create two simulation batches. In this case, they are based on the same simulation
-# and vary the same paramter and initial values.
-simulationBatch1 <- createSimulationBatch(simulation = sim,
+# Create two simulation batches.
+simulationBatch1 <- createSimulationBatch(simulation = sim1,
 parametersOrPaths = parameters,
 moleculesOrPaths = molecules)
-simulationBatch2 <- createSimulationBatch(simulation = sim,
+simulationBatch2 <- createSimulationBatch(simulation = sim2,
 parametersOrPaths = parameters,
 moleculesOrPaths = molecules)
 #Ids of run values

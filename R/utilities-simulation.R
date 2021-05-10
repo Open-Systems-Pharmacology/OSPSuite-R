@@ -267,13 +267,17 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' parameters <- c("Organism|Liver|Volume", "R1|k1")
 #' molecules <- "Organism|Liver|A"
 #' # Create two simulation batches.
-#' simulationBatch1 <- createSimulationBatch(simulation = sim1,
-#' parametersOrPaths = parameters,
-#' moleculesOrPaths = molecules)
-#' simulationBatch2 <- createSimulationBatch(simulation = sim2,
-#' parametersOrPaths = parameters,
-#' moleculesOrPaths = molecules)
-#' #Ids of run values
+#' simulationBatch1 <- createSimulationBatch(
+#'   simulation = sim1,
+#'   parametersOrPaths = parameters,
+#'   moleculesOrPaths = molecules
+#' )
+#' simulationBatch2 <- createSimulationBatch(
+#'   simulation = sim2,
+#'   parametersOrPaths = parameters,
+#'   moleculesOrPaths = molecules
+#' )
+#' # Ids of run values
 #' ids <- c()
 #' ids[[1]] <- simulationBatch1$addRunValues(parameterValues = c(1, 2), initialValues = 1)
 #' ids[[2]] <- simulationBatch1$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)

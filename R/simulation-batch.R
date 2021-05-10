@@ -1,7 +1,7 @@
 #' @title SimulationBatch
 #' @docType class
 #' @description  An optimized simulation with faster loading. The corresponding .NET class is
-#' "OSPSuite.R.Services.SettingsForConcurrentRunSimulationBatch"
+#' "OSPSuite.R.Services.ConcurrentRunSimulationBatch"
 #' @export
 #' @format NULL
 SimulationBatch <- R6::R6Class(
