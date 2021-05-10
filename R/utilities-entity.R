@@ -57,7 +57,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     return(NULL)
   }
 
-  entities <- enforceIsList(entities)
+  entities <- toList(entities)
   validateIsOfType(entities, Entity)
   validateEnumValue(compareBy, CompareBy)
 
