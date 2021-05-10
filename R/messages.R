@@ -1,21 +1,14 @@
 messages <- list(
   errorWrongType = function(objectName, type, expectedType, optionalMessage = NULL) {
-    # Name of the calling function
-    callingFunctions <- sys.calls()
-    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
-
+    callingFunction <- .getCallingFunctionName()
     expectedTypeMsg <- paste0(expectedType, collapse = ", or ")
-
     paste0(
       callingFunction, ": argument '", objectName,
       "' is of type '", type, "', but expected '", expectedTypeMsg, "'!", optionalMessage
     )
   },
   errorGetEntityMultipleOutputs = function(path, container, optionalMessage = NULL) {
-    # Name of the calling function
-    callingFunctions <- sys.calls()
-    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
-
+    callingFunction <- .getCallingFunctionName()
     paste0(
       callingFunction, ": the path '", toString(path), "' located under container '",
       container$path,
@@ -24,10 +17,7 @@ messages <- list(
     )
   },
   errorEntityNotFound = function(path, container, optionalMessage = NULL) {
-    # Name of the calling function
-    callingFunctions <- sys.calls()
-    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
-
+    callingFunction <- .getCallingFunctionName()
     paste0(
       callingFunction, ": No entity exists for path '", toString(path), "' located under container '",
       container$path,
@@ -35,20 +25,14 @@ messages <- list(
     )
   },
   errorResultNotFound = function(path, individualId, optionalMessage = NULL) {
-    # Name of the calling function
-    callingFunctions <- sys.calls()
-    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
-
+    callingFunction <- .getCallingFunctionName()
     paste0(
       callingFunction, ": No results exists for path '", toString(path), "' for individual IDs ",
       "'", individualId, "'!", optionalMessage
     )
   },
   errorDifferentLength = function(objectNames, optionalMessage = NULL) {
-    # Name of the calling function
-    callingFunctions <- sys.calls()
-    callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
-
+    callingFunction <- .getCallingFunctionName()
     paste0(
       callingFunction, ": Arguments '", objectNames,
       "' must have the same length, but they don't!", optionalMessage
@@ -90,10 +74,23 @@ messages <- list(
   errorOSPSuiteSettingNotFound = function(settingName) {
     paste0("No global setting with the name '", settingName, "' exists. Available global settings are:\n", paste0(names(ospsuiteEnv), collapse = ", "))
   },
-  errorSimulationBatchNothingToVary = "You need to vary at least one parameter or one molecule in order to use the SimulationBatch"
+  errorSimulationBatchNothingToVary = "You need to vary at least one parameter or one molecule in order to use the SimulationBatch",
+  errorOnlyOneValuesSetAllowed = function(argumentName) {
+    callingFunction <- .getCallingFunctionName()
+    paste0(
+      callingFunction, ": argument '", argumentName,
+      "' is a list with multiple values sets, but only one value set is allowed!"
+    )
+  }
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,
                            nsmall = ospsuiteEnv$formatNumericsSmall) {
   format(numerics, digits = digits, nsmall = nsmall)
+}
+
+.getCallingFunctionName <- function() {
+  callingFunctions <- sys.calls()
+  callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+  return(deparse(callingFunction))
 }

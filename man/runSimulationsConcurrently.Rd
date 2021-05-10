@@ -25,7 +25,9 @@ A list of \code{SimulationResults} objects with names being the IDs of the simul
 Runs a set of simulations.
 }
 \details{
-Runs a set of simulations (only individual simulations) and returns a named list of \code{SimulationResults}. The names of the entries are the IDs of the corresponding (i.e. \code{simulation$id}).
+Runs a set of simulations (only individual simulations) and returns
+a named list of \code{SimulationResults}. The names of the entries are the IDs of the
+corresponding simulation (i.e. \code{simulation$id}).
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
