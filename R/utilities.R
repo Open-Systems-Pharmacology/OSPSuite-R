@@ -55,3 +55,15 @@ encodeUnit <- function(unit) {
   unit <- str_replace(unit, rawToChar(as.raw(c(0xc2, 0xb5))), mu)
   unit <- str_replace(unit, rawToChar(as.raw(0xb5)), mu)
 }
+
+#' Make sure the object is a list
+#'
+#' @param object To be converted to a list
+#'
+#' @return If \code{is.list(object) == TRUE}, returns the \code{object}, otherwise \code{list(object)}
+toList <- function(object) {
+  if (is.list(object)) {
+    return(object)
+  }
+  return(list(object))
+}

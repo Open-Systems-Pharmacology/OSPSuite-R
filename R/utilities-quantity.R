@@ -76,7 +76,7 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 setQuantityValues <- function(quantities, values) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
-  quantities <- c(quantities)
+  quantities <- toList(quantities)
   values <- c(values)
 
   # Test for correct inputs
