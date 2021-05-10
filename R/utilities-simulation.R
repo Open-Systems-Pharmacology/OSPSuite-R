@@ -262,22 +262,18 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #'
 #' @examples
 #' \dontrun{
-#' sim <- loadSimulation("simple", loadFromCache = TRUE)
+#' sim1 <- loadSimulation("sim1", loadFromCache = TRUE)
+#' sim2 <- loadSimulation("sim2", loadFromCache = TRUE)
 #' parameters <- c("Organism|Liver|Volume", "R1|k1")
 #' molecules <- "Organism|Liver|A"
-#' # Create two simulation batches. In this case, they are based on the same simulation
-#' # and vary the same parameter and initial values.
-#' simulationBatch1 <- createSimulationBatch(
-#'   simulation = sim,
-#'   parametersOrPaths = parameters,
-#'   moleculesOrPaths = molecules
-#' )
-#' simulationBatch2 <- createSimulationBatch(
-#'   simulation = sim,
-#'   parametersOrPaths = parameters,
-#'   moleculesOrPaths = molecules
-#' )
-#' # Ids of run values
+#' # Create two simulation batches.
+#' simulationBatch1 <- createSimulationBatch(simulation = sim1,
+#' parametersOrPaths = parameters,
+#' moleculesOrPaths = molecules)
+#' simulationBatch2 <- createSimulationBatch(simulation = sim2,
+#' parametersOrPaths = parameters,
+#' moleculesOrPaths = molecules)
+#' #Ids of run values
 #' ids <- c()
 #' ids[[1]] <- simulationBatch1$addRunValues(parameterValues = c(1, 2), initialValues = 1)
 #' ids[[2]] <- simulationBatch1$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
@@ -481,8 +477,7 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
   # Set the correct order of IDs
   names(simulationResults) <- names(resultsIdSimulationIdMap)
 
-  for (i in seq_along(results)) {
-    resultObject <- results[[i]]
+  for (resultObject in results) {
     resultsId <- rClr::clrGet(resultObject, "Id")
     succeeded <- rClr::clrGet(resultObject, "Succeeded")
     if (succeeded) {

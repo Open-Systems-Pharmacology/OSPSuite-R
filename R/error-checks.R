@@ -16,10 +16,7 @@ isSameLength <- function(...) {
 #' Only the first level of the given list is considered.
 isOfType <- function(object, type, nullAllowed = FALSE) {
   if (is.null(object)) {
-    if (nullAllowed) {
-      return(TRUE)
-    }
-    return(FALSE)
+    return(nullAllowed)
   }
 
   type <- typeNamesFrom(type)
@@ -34,7 +31,7 @@ isOfType <- function(object, type, nullAllowed = FALSE) {
   }
 
   object <- c(object)
-    all(sapply(object, inheritType))
+  all(sapply(object, inheritType))
 }
 
 #' Check if the provided object is of certain type. If not, stop with an error.
