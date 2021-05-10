@@ -36,6 +36,11 @@ sim <- loadSimulation(simPath)
 # Create a simulation batch that will allow batch run for one parameter value
 simulationBatch <- createSimulationBatch(sim, "Organism|Liver|Volume")
 
-# Create a simulation batch that will allow batch run for multiple parameter values and initial values
-simulationBatch <- createSimulationBatch(sim, c("Organism|Liver|Volume", "R1|k1"), c("Organism|Liver|A"))
+# Create a simulation batch that will allow batch run for multiple parameter
+# values and initial values
+simulationBatch <- createSimulationBatch(
+  sim,
+  c("Organism|Liver|Volume", "R1|k1"),
+  c("Organism|Liver|A")
+)
 }

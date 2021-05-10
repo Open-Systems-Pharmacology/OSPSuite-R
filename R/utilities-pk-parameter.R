@@ -11,13 +11,19 @@
 #'
 #' # Adds a user defined parameter named MyAuc that will calculate the value of AUC
 #' # between t=50 min and t=80min
-#' myAUC <- addUserDefinedPKParameter(name = "MyAUC", standardPKParameter = StandardPKParameter$AUC_tEnd)
+#' myAUC <- addUserDefinedPKParameter(
+#'   name = "MyAUC",
+#'   standardPKParameter = StandardPKParameter$AUC_tEnd
+#' )
 #' myAUC$startTime <- 50
 #' myAUC$endTime <- 80
 #'
 #' # Adds a user defined parameter named MyCMax that will calculate the value of Cmax
 #' # between the 4th and 5th application
-#' myCMax <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$C_max)
+#' myCMax <- addUserDefinedPKParameter(
+#'   name = "MyCMax",
+#'   standardPKParameter = StandardPKParameter$C_max
+#' )
 #' myCMax$startApplicationIndex <- 4
 #' myCMax$endApplicationIndex <- 5
 #' @export
