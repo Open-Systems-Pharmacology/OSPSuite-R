@@ -19,7 +19,8 @@
 #'
 #' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
 #' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`
-#' If \code{FALSE}, a list of \code{NA} values is returned for the repsecitve path.
+#' If \code{FALSE}, a list of \code{NA} values is returned for the respecitve path.
+#' @import hash
 #' @export
 getOutputValues <- function(simulationResults,
                             quantitiesOrPaths = NULL,
@@ -38,17 +39,43 @@ getOutputValues <- function(simulationResults,
     return(list(data = NULL, metaData = NULL))
   }
 
-  # If quantities are passed, get their paths.
+  # Use low-level methods to get .net objects and aviod creating R6 objects
+  task <- getContainerTask()
+  method <- AllMatchingMethod$Quantity
+  # Create a hash mapping .net quantity objects to their paths
+  netQuantityHash <- hash::hash()
   if (isOfType(quantitiesOrPaths, Quantity)) {
-    quantities <- uniqueEntities(quantitiesOrPaths)
-    paths <- unlist(lapply(quantities, function(x) x$path), use.names = FALSE)
+    # No need to filter unique entities as a key-value pair is overwritten of a
+    # new pair with the same key is put
+    for (quantity in quantitiesOrPaths) {
+      netQuantityHash[[quantity$path]] <- quantity$ref
+    }
+    # The keys of the hash are all possible paths
+    paths <- hash::keys(netQuantityHash)
   } else {
+    # In this case we cannot use the names of the hash as all paths,
+    # as for some paths no entity may exist if stopIfNotFound == FALSE
     paths <- unique(quantitiesOrPaths)
-    quantities <- lapply(paths, function(path) {
-      getQuantity(path, simulationResults$simulation, stopIfNotFound)
-    })
+    # If paths are provided, get a .net quantity object for each path
+    for (path in paths) {
+      netQuantities <- rClr::clrCall(task, method, simulationResults$simulation$ref, enc2utf8(path))
+      # A path could produce multiple quantities. If so, stop, as only absolute paths
+      # are allowed
+      if (length(netQuantities) > 1) {
+        stop(messages$errorGetEntityMultipleOutputs(path, simulationResults$simulation))
+      }
+      if (length(netQuantities) == 0) {
+        if (stopIfNotFound) {
+          stop(messages$errorEntityNotFound(path, simulationResults$simulation))
+        }
+        # If no entity with the path exists and stopIfNotFound == FALSE,
+        # just do not add any entry to the hash
+      }
+      else {
+        netQuantityHash[[path]] <- netQuantities[[1]]
+      }
+    }
   }
-  names(quantities) <- paths
 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
@@ -77,20 +104,30 @@ getOutputValues <- function(simulationResults,
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
-
   values <- lapply(paths, function(path) {
     simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
   })
   names(values) <- paths
 
   metaData <- lapply(paths, function(path) {
-    quantity <- quantities[[path]]
-    list(unit = quantity$unit, dimension = quantity$dimension)
+    netQuantity <- netQuantityHash[[path]]
+    unit <- NULL
+    dimension <- NULL
+    # Get unit and dimension from .net object
+    if (!is.null(netQuantity)) {
+      unit <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "BaseUnitName", netQuantity)
+      dimension <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "DimensionName", netQuantity)
+    }
+    list(unit = unit, dimension = dimension)
   })
   names(metaData) <- paths
   metaData[["Time"]] <- list(unit = "min", dimension = "Time")
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
+
+  # Clean up hash
+  hash::clear(netQuantityHash)
+  rm(netQuantityHash)
   return(list(data = data, metaData = metaData))
 }
 

@@ -17,7 +17,7 @@ test_that("It throws an error when no valid simulation results are provided", {
 })
 
 test_that("It returns an array of NA if specific result is not found and stopIfNotFound = FALSE", {
-  res <- getOutputValues(individualResults, "NoPath", stopIfNotFound = FALSE)
+  res <- getOutputValues(simulationResults = individualResults, quantitiesOrPaths = "NoPath", stopIfNotFound = FALSE)
 
   data <- res$data
   expect_equal(length(data), 1 + NUMBER_OF_STATIC_COLUMNS)
