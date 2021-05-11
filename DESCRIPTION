@@ -16,9 +16,9 @@ URL: https://github.com/open-systems-pharmacology/ospsuite-r
 BugReports: 
     https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
+    rClr (>= 0.8.3),
     R (>= 3.5)
 Imports: 
-    rClr (>= 0.8.3),
     R6,
     stringr,
     readr,
