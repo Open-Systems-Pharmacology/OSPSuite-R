@@ -37,7 +37,7 @@ addOutputs <- function(quantitiesOrPaths, simulation, returnQuantities = TRUE) {
   }
   paths <- unique(paths)
 
-  task <- ospsuite:::getContainerTask()
+  task <- getContainerTask()
   for (path in paths) {
     rClr::clrCall(task, "AddQuantitiesToSimulationOutputFromPath", simulation$ref, enc2utf8(path))
   }
