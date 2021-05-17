@@ -3,6 +3,9 @@
 #'
 #' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.
 #' @param simulation Instance of a simulation for which output selection should be updated.
+#' @param returnQuantities Boolean. If \code{TRUE} (default), list of quantities that have been
+#' added is returned. If \code{FALSE}, \code{NULL} is (invisibly) returned, but the function
+#' performes much faster.
 #'
 #' @return A list of quantities added as output (Especially useful when a wildcard was used to verify)
 #'
@@ -17,24 +20,32 @@
 #' parameter <- getParameter("Organism|Liver|Volume", sim)
 #' addOutputs(parameter, sim)
 #' @export
-addOutputs <- function(quantitiesOrPaths, simulation) {
+addOutputs <- function(quantitiesOrPaths, simulation, returnQuantities = TRUE) {
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
   validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
   validateIsOfType(simulation, Simulation)
-  quantities <- quantitiesOrPaths
 
-  if (isOfType(quantitiesOrPaths, "character")) {
-    quantities <- getAllQuantitiesMatching(quantitiesOrPaths, simulation)
+  # If quantities are provided, get their paths
+  paths <- vector("character", length(quantitiesOrPaths))
+  if (isOfType(quantitiesOrPaths, Quantity)) {
+    for (idx in seq_along(quantitiesOrPaths)) {
+      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
+    }
+  } else {
+    paths <- quantitiesOrPaths
+  }
+  paths <- unique(paths)
+
+  task <- ospsuite:::getContainerTask()
+  for (path in paths) {
+    rClr::clrCall(task, "AddQuantitiesToSimulationOutputFromPath", simulation$ref, enc2utf8(path))
   }
 
-  quantities <- uniqueEntities(quantities, compareBy = "path")
-  outputSelections <- simulation$outputSelections
-
-  for (quantity in quantities) {
-    outputSelections$addQuantity(quantity)
+  quantities <- NULL
+  if (returnQuantities) {
+    quantities <- getAllQuantitiesMatching(paths = paths, container = simulation)
   }
-
   invisible(quantities)
 }
 

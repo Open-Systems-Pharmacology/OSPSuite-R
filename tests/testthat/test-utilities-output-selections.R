@@ -34,7 +34,7 @@ test_that("It can add single output by reference", {
   quantities <- addOutputs(parameter, sim)
   expect_equal(length(quantities), 1)
   expect_equal(length(outputSelections$allOutputs), 1)
-  expect_equal(quantities[[1]], parameter)
+  expect_equal(quantities[[1]]$path, parameter$path)
 })
 
 test_that("It throws an exception if the parameters do not have the expect type", {

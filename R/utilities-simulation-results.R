@@ -18,15 +18,18 @@
 #' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.
 #'
 #' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
-#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`
-#' If \code{FALSE}, a list of \code{NA} values is returned for the respecitve path.
-#' @import hash
+#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`. If \code{FALSE}, a list of \code{NA} values is returned for the respective path.
+#' @param withMetaData If \code{TRUE} (default), the output is a list two sublists `data`and
+#' `metaData`, with latter storing information about units and dimensions of the outputs. If \code{FALSE}, \code{metaData} is \code{NULL}. Setting this option to \code{FALSE} might improve
+#' the performance of the function.
+#'
 #' @export
 getOutputValues <- function(simulationResults,
                             quantitiesOrPaths = NULL,
                             population = NULL,
                             individualIds = NULL,
-                            stopIfNotFound = TRUE) {
+                            stopIfNotFound = TRUE,
+                            withMetaData = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population, nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
@@ -39,43 +42,16 @@ getOutputValues <- function(simulationResults,
     return(list(data = NULL, metaData = NULL))
   }
 
-  # Use low-level methods to get .net objects and aviod creating R6 objects
-  task <- getContainerTask()
-  method <- AllMatchingMethod$Quantity
-  # Create a hash mapping .net quantity objects to their paths
-  netQuantityHash <- hash::hash()
+  # If quantities are provided, get their paths
+  paths <- vector("character", length(quantitiesOrPaths))
   if (isOfType(quantitiesOrPaths, Quantity)) {
-    # No need to filter unique entities as a key-value pair is overwritten of a
-    # new pair with the same key is put
-    for (quantity in quantitiesOrPaths) {
-      netQuantityHash[[quantity$path]] <- quantity$ref
+    for (idx in seq_along(quantitiesOrPaths)) {
+      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
     }
-    # The keys of the hash are all possible paths
-    paths <- hash::keys(netQuantityHash)
   } else {
-    # In this case we cannot use the names of the hash as all paths,
-    # as for some paths no entity may exist if stopIfNotFound == FALSE
-    paths <- unique(quantitiesOrPaths)
-    # If paths are provided, get a .net quantity object for each path
-    for (path in paths) {
-      netQuantities <- rClr::clrCall(task, method, simulationResults$simulation$ref, enc2utf8(path))
-      # A path could produce multiple quantities. If so, stop, as only absolute paths
-      # are allowed
-      if (length(netQuantities) > 1) {
-        stop(messages$errorGetEntityMultipleOutputs(path, simulationResults$simulation))
-      }
-      if (length(netQuantities) == 0) {
-        if (stopIfNotFound) {
-          stop(messages$errorEntityNotFound(path, simulationResults$simulation))
-        }
-        # If no entity with the path exists and stopIfNotFound == FALSE,
-        # just do not add any entry to the hash
-      }
-      else {
-        netQuantityHash[[path]] <- netQuantities[[1]]
-      }
-    }
+    paths <- quantitiesOrPaths
   }
+  paths <- unique(paths)
 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
@@ -109,25 +85,26 @@ getOutputValues <- function(simulationResults,
   })
   names(values) <- paths
 
-  metaData <- lapply(paths, function(path) {
-    netQuantity <- netQuantityHash[[path]]
-    unit <- NULL
-    dimension <- NULL
-    # Get unit and dimension from .net object
-    if (!is.null(netQuantity)) {
-      unit <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "BaseUnitName", netQuantity)
-      dimension <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "DimensionName", netQuantity)
-    }
-    list(unit = unit, dimension = dimension)
-  })
-  names(metaData) <- paths
-  metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  # Use low-level methods to get unit and dimension
+  task <- getContainerTask()
+  metaData <- NULL
+  if (withMetaData) {
+    metaData <- lapply(paths, function(path) {
+      unit <- NULL
+      dimension <- NULL
+      # Get the dimension and unit from path if the results are obtained. If the results
+      # are NA, the entity with such path does not exist
+      if (!all(is.na(values[[path]]))) {
+        unit <- rClr::clrCall(task, "BaseUnitNamesFromPath", simulationResults$simulation$ref, enc2utf8(path))[[1]]
+        dimension <- rClr::clrCall(task, "DimensionNamesFromPath", simulationResults$simulation$ref, enc2utf8(path))[[1]]
+      }
+      list(unit = unit, dimension = dimension)
+    })
+    names(metaData) <- paths
+    metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  }
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
-
-  # Clean up hash
-  hash::clear(netQuantityHash)
-  rm(netQuantityHash)
   return(list(data = data, metaData = metaData))
 }
 

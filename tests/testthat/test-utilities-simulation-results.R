@@ -47,6 +47,16 @@ test_that("It can retrieve results by quantities", {
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_EXTRA_COLUMNS)
 })
 
+test_that("It can retrieve correct unit and dimension", {
+  res <- getOutputValues(populationResults, population = population, getAllQuantitiesMatching(resultsPaths, sim))
+  path <- resultsPaths[[1]]
+  quantity <- getQuantity(path = path, sim)
+
+  metadata <- res$metaData
+  expect_equal(metadata[[path]]$unit, quantity$unit)
+  expect_equal(metadata[[path]]$dimension, quantity$dimension)
+})
+
 test_that("It should return a data and meta data data frame per output paths", {
   path <- resultsPaths[[1]]
   res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1))
@@ -55,6 +65,17 @@ test_that("It should return a data and meta data data frame per output paths", {
   expect_equal(length(data), 1 + NUMBER_OF_EXTRA_COLUMNS)
   expect_false(is.null(data))
   expect_false(is.null(metaData))
+  expect_null(data[[resultsPaths[[2]]]])
+})
+
+test_that("It should return NULL for meta data if withMetaData = FALSE", {
+  path <- resultsPaths[[1]]
+  res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1), withMetaData = FALSE)
+  data <- res$data
+  metaData <- res$metaData
+  expect_equal(length(data), 1 + NUMBER_OF_EXTRA_COLUMNS)
+  expect_false(is.null(data))
+  expect_null(metaData)
   expect_null(data[[resultsPaths[[2]]]])
 })
 

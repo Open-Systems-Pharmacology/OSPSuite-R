@@ -4,12 +4,16 @@
 \alias{addOutputs}
 \title{Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.}
 \usage{
-addOutputs(quantitiesOrPaths, simulation)
+addOutputs(quantitiesOrPaths, simulation, returnQuantities = TRUE)
 }
 \arguments{
 \item{quantitiesOrPaths}{Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.}
 
 \item{simulation}{Instance of a simulation for which output selection should be updated.}
+
+\item{returnQuantities}{Boolean. If \code{TRUE} (default), list of quantities that have been
+added is returned. If \code{FALSE}, \code{NULL} is (invisibly) returned, but the function
+performes much faster.}
 }
 \value{
 A list of quantities added as output (Especially useful when a wildcard was used to verify)

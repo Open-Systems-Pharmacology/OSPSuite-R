@@ -16,13 +16,12 @@ URL: https://github.com/open-systems-pharmacology/ospsuite-r
 BugReports: 
     https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
-    rClr (>= 0.8.3),
-    R (>= 3.5)
+    R (>= 3.5),
+    rClr (>= 0.8.3)
 Imports: 
     R6,
     stringr,
-    readr,
-    hash
+    readr
 Suggests: 
     knitr,
     rmarkdown,
