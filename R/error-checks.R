@@ -139,9 +139,9 @@ validateIsSameLength <- function(...) {
   stop(messages$errorDifferentLength(arguments))
 }
 
-validatePathIsAbsolute <- function(path){
+validatePathIsAbsolute <- function(path) {
   wildcardChar <- "*"
-  if (any(unlist(strsplit(path, ""), use.names = FALSE) == wildcardChar)){
+  if (any(unlist(strsplit(path, ""), use.names = FALSE) == wildcardChar)) {
     stop(messages$errorEntityPathNotAbsolute(path))
   }
 }

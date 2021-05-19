@@ -120,8 +120,10 @@ setParameterValues <- function(parameters, values) {
 #' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 #' @export
 setParameterValuesByPath <- function(parameterPaths, values, simulation) {
-  setQuantityValuesByPath(quantityPaths = parameterPaths, values = values,
-                          simulation = simulation)
+  setQuantityValuesByPath(
+    quantityPaths = parameterPaths, values = values,
+    simulation = simulation
+  )
 }
 
 #' Scale current values of parameters using a factor

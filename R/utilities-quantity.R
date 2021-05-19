@@ -118,9 +118,11 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation) {
   validateIsOfType(simulation, Simulation)
 
   task <- getContainerTask()
-  for (i in seq_along(quantityPaths)){
-    rClr::clrCall(task, "SetValueByPath", simulation$ref,
-                  enc2utf8(quantityPaths[[i]]), values[[i]])
+  for (i in seq_along(quantityPaths)) {
+    rClr::clrCall(
+      task, "SetValueByPath", simulation$ref,
+      enc2utf8(quantityPaths[[i]]), values[[i]]
+    )
   }
 }
 
