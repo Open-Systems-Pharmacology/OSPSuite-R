@@ -69,7 +69,7 @@ messages <- list(
   },
   errorEntityPathNotAbsolute = function(path) {
     paste0(
-      "Only absolut paths (i.e. without the wildcard(s) `*`) are allowed, but the passed path is: ",
+      "Only absolut paths (i.e. without the wildcard(s) `*`) are allowed, but the given path is: ",
       path
     )
   },
