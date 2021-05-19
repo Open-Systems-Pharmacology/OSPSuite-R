@@ -121,8 +121,7 @@ setParameterValues <- function(parameters, values) {
 #' @export
 setParameterValuesByPath <- function(parameterPaths, values, simulation) {
   setQuantityValuesByPath(
-    quantityPaths = parameterPaths, values = values,
-    simulation = simulation
+    quantityPaths = parameterPaths, values = values, simulation = simulation
   )
 }
 
