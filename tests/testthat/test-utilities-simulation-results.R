@@ -68,9 +68,9 @@ test_that("It should return a data and meta data data frame per output paths", {
   expect_null(data[[resultsPaths[[2]]]])
 })
 
-test_that("It should return NULL for meta data if withMetaData = FALSE", {
+test_that("It should return NULL for meta data if addMetaData = FALSE", {
   path <- resultsPaths[[1]]
-  res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1), withMetaData = FALSE)
+  res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1), addMetaData = FALSE)
   data <- res$data
   metaData <- res$metaData
   expect_equal(length(data), 1 + NUMBER_OF_EXTRA_COLUMNS)

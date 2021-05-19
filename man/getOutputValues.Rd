@@ -10,7 +10,7 @@ getOutputValues(
   population = NULL,
   individualIds = NULL,
   stopIfNotFound = TRUE,
-  withMetaData = TRUE
+  addMetaData = TRUE
 )
 }
 \arguments{
@@ -29,7 +29,7 @@ By default, all individuals from the results are considered. If the individual w
 
 \item{stopIfNotFound}{If \code{TRUE} (default) an error is thrown if no results exist for any \code{path}. If \code{FALSE}, a list of \code{NA} values is returned for the respective path.}
 
-\item{withMetaData}{If \code{TRUE} (default), the output is a list two sublists \code{data}and
+\item{addMetaData}{If \code{TRUE} (default), the output is a list two sublists \code{data}and
 \code{metaData}, with latter storing information about units and dimensions of the outputs. If \code{FALSE}, \code{metaData} is \code{NULL}. Setting this option to \code{FALSE} might improve
 the performance of the function.}
 }

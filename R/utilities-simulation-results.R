@@ -19,7 +19,7 @@
 #'
 #' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
 #' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`. If \code{FALSE}, a list of \code{NA} values is returned for the respective path.
-#' @param withMetaData If \code{TRUE} (default), the output is a list two sublists `data`and
+#' @param addMetaData If \code{TRUE} (default), the output is a list two sublists `data`and
 #' `metaData`, with latter storing information about units and dimensions of the outputs. If \code{FALSE}, \code{metaData} is \code{NULL}. Setting this option to \code{FALSE} might improve
 #' the performance of the function.
 #'
@@ -29,7 +29,7 @@ getOutputValues <- function(simulationResults,
                             population = NULL,
                             individualIds = NULL,
                             stopIfNotFound = TRUE,
-                            withMetaData = TRUE) {
+                            addMetaData = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population, nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
@@ -88,7 +88,7 @@ getOutputValues <- function(simulationResults,
   # Use low-level methods to get unit and dimension
   task <- getContainerTask()
   metaData <- NULL
-  if (withMetaData) {
+  if (addMetaData) {
     metaData <- lapply(paths, function(path) {
       unit <- NULL
       dimension <- NULL

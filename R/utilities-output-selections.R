@@ -3,14 +3,8 @@
 #'
 #' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.
 #' @param simulation Instance of a simulation for which output selection should be updated.
-#' @param returnQuantities Boolean. If \code{TRUE} (default), list of quantities that have been
-#' added is returned. If \code{FALSE}, \code{NULL} is (invisibly) returned, but the function
-#' performes much faster.
 #'
-#' @return A list of quantities added as output (Especially useful when a wildcard was used to verify)
-#'
-#' @examples
-#'
+#' @examples#'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -20,7 +14,7 @@
 #' parameter <- getParameter("Organism|Liver|Volume", sim)
 #' addOutputs(parameter, sim)
 #' @export
-addOutputs <- function(quantitiesOrPaths, simulation, returnQuantities = TRUE) {
+addOutputs <- function(quantitiesOrPaths, simulation) {
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
   validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
@@ -41,12 +35,6 @@ addOutputs <- function(quantitiesOrPaths, simulation, returnQuantities = TRUE) {
   for (path in paths) {
     rClr::clrCall(task, "AddQuantitiesToSimulationOutputFromPath", simulation$ref, enc2utf8(path))
   }
-
-  quantities <- NULL
-  if (returnQuantities) {
-    quantities <- getAllQuantitiesMatching(paths = paths, container = simulation)
-  }
-  invisible(quantities)
 }
 
 #' @title  Removes all selected output from the given \code{simulation}
