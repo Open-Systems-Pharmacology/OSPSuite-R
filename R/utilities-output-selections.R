@@ -33,7 +33,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 
   task <- getContainerTask()
   for (path in paths) {
-    rClr::clrCall(task, "AddQuantitiesToSimulationOutputFromPath", simulation$ref, enc2utf8(path))
+    rClr::clrCall(task, "AddQuantitiesToSimulationOutputByPath", simulation$ref, enc2utf8(path))
   }
 }
 
