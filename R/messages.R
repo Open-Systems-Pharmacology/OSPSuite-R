@@ -67,6 +67,10 @@ messages <- list(
   errorPKParameterNotFound = function(pkParameterName, allPKParameterNames) {
     paste0("PK-Parameter '", pkParameterName, "' not found.\nAvailable PK-Parameters are:\n", paste0(allPKParameterNames, collapse = ", "))
   },
+  errorEntityPathNotAbsolute = function(path){
+    paste0("Only absolut paths (i.e. without the wildcard(s) `*`) are allowed, but the passed path is: ",
+           path)
+  },
   pkSimRPathInvalid = function(pksimPath) {
     paste0("Path to PKSim.R.dll '", pksimPath, "' is invalid.")
   },
@@ -91,6 +95,6 @@ formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,
 
 .getCallingFunctionName <- function() {
   callingFunctions <- sys.calls()
-  callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]
+  callingFunction <- sys.call(-length(callingFunctions) + 2)[[1]]
   return(deparse(callingFunction))
 }

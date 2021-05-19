@@ -1,4 +1,3 @@
-
 context("getAllQuantitiesMatching")
 
 sim <- loadTestSimulation("S1")
@@ -45,4 +44,32 @@ test_that("It returns null if the quantity by path does not exist and stopIfNotF
 
 test_that("It throws an error when trying to retrieve a quantity by path that would result in multiple quantities", {
   expect_that(getQuantity(toPathString(c("Organism", "Liver", "*")), sim), throws_error())
+})
+
+
+context("setQuantityValuesByPath")
+
+test_that("It can set single parameter values", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameterPath <- "Organism|Liver|Intracellular|Volume"
+  setQuantityValuesByPath(parameterPath, 100, sim)
+  parameter <- getParameter(parameterPath, sim)
+  expect_equal(parameter$value, 100)
+})
+
+test_that("It can set multiple quantity values", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
+  quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim)
+  quantity1 <- getQuantity(quantityPath1, sim)
+  quantity2 <- getQuantity(quantityPath2, sim)
+  expect_equal(quantity1$value, 40)
+  expect_equal(quantity2$value, 50)
+})
+
+test_that("It throws an exception when setting values for a quantity that does not exist", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameterPath <- "Organism|Liver|NOPE|Volume"
+  expect_that(setQuantityValuesByPath(parameterPath, 100, sim), throws_error())
 })
