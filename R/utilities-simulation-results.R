@@ -95,8 +95,8 @@ getOutputValues <- function(simulationResults,
       # Get the dimension and unit from path if the results are obtained. If the results
       # are NA, the entity with such path does not exist
       if (!all(is.na(values[[path]]))) {
-        unit <- rClr::clrCall(task, "BaseUnitNamesFromPath", simulationResults$simulation$ref, enc2utf8(path))[[1]]
-        dimension <- rClr::clrCall(task, "DimensionNamesFromPath", simulationResults$simulation$ref, enc2utf8(path))[[1]]
+        unit <- rClr::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path))
+        dimension <- rClr::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path))
       }
       list(unit = unit, dimension = dimension)
     })
