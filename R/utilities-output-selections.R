@@ -4,10 +4,7 @@
 #' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.
 #' @param simulation Instance of a simulation for which output selection should be updated.
 #'
-#' @return A list of quantities added as output (Especially useful when a wildcard was used to verify)
-#'
-#' @examples
-#'
+#' @examples#'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -22,20 +19,22 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 
   validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
   validateIsOfType(simulation, Simulation)
-  quantities <- quantitiesOrPaths
 
-  if (isOfType(quantitiesOrPaths, "character")) {
-    quantities <- getAllQuantitiesMatching(quantitiesOrPaths, simulation)
+  # If quantities are provided, get their paths
+  paths <- vector("character", length(quantitiesOrPaths))
+  if (isOfType(quantitiesOrPaths, Quantity)) {
+    for (idx in seq_along(quantitiesOrPaths)) {
+      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
+    }
+  } else {
+    paths <- quantitiesOrPaths
   }
+  paths <- unique(paths)
 
-  quantities <- uniqueEntities(quantities, compareBy = "path")
-  outputSelections <- simulation$outputSelections
-
-  for (quantity in quantities) {
-    outputSelections$addQuantity(quantity)
+  task <- getContainerTask()
+  for (path in paths) {
+    rClr::clrCall(task, "AddQuantitiesToSimulationOutputByPath", simulation$ref, enc2utf8(path))
   }
-
-  invisible(quantities)
 }
 
 #' @title  Removes all selected output from the given \code{simulation}

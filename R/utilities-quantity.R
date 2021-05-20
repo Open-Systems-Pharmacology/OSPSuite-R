@@ -96,6 +96,36 @@ setQuantityValues <- function(quantities, values) {
   }
 }
 
+#' Set the values of parameters in the simulation by path
+#'
+#' @param quantityPaths A single or a list of absolute quantity path
+#' @param values A numeric value that should be assigned to the quantities or a vector
+#' of numeric values, if the value of more than one quantity should be changed. Must have the same
+#' length as 'quantityPaths'
+#' @param simulation Simulation uses to retrieve quantity instances from given paths.
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' setQuantityValuesByPath("Organism|Liver|Volume", 1, sim)
+#'
+#' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
+#' @export
+setQuantityValuesByPath <- function(quantityPaths, values, simulation) {
+  validateIsString(quantityPaths)
+  validateIsNumeric(values)
+  validateIsSameLength(quantityPaths, values)
+  validateIsOfType(simulation, Simulation)
+
+  task <- getContainerTask()
+  for (i in seq_along(quantityPaths)) {
+    rClr::clrCall(
+      task, "SetValueByPath", simulation$ref,
+      enc2utf8(quantityPaths[[i]]), values[[i]]
+    )
+  }
+}
+
 #' Scale current values of quantities using a factor
 #'
 #' @param quantities A single or a list of \code{Quantity}

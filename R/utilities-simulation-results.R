@@ -18,14 +18,18 @@
 #' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.
 #'
 #' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
-#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`
-#' If \code{FALSE}, a list of \code{NA} values is returned for the repsecitve path.
+#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`. If \code{FALSE}, a list of \code{NA} values is returned for the respective path.
+#' @param addMetaData If \code{TRUE} (default), the output is a list two sublists `data`and
+#' `metaData`, with latter storing information about units and dimensions of the outputs. If \code{FALSE}, \code{metaData} is \code{NULL}. Setting this option to \code{FALSE} might improve
+#' the performance of the function.
+#'
 #' @export
 getOutputValues <- function(simulationResults,
                             quantitiesOrPaths = NULL,
                             population = NULL,
                             individualIds = NULL,
-                            stopIfNotFound = TRUE) {
+                            stopIfNotFound = TRUE,
+                            addMetaData = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population, nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
@@ -38,17 +42,16 @@ getOutputValues <- function(simulationResults,
     return(list(data = NULL, metaData = NULL))
   }
 
-  # If quantities are passed, get their paths.
+  # If quantities are provided, get their paths
+  paths <- vector("character", length(quantitiesOrPaths))
   if (isOfType(quantitiesOrPaths, Quantity)) {
-    quantities <- uniqueEntities(quantitiesOrPaths)
-    paths <- unlist(lapply(quantities, function(x) x$path), use.names = FALSE)
+    for (idx in seq_along(quantitiesOrPaths)) {
+      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
+    }
   } else {
-    paths <- unique(quantitiesOrPaths)
-    quantities <- lapply(paths, function(path) {
-      getQuantity(path, simulationResults$simulation, stopIfNotFound)
-    })
+    paths <- quantitiesOrPaths
   }
-  names(quantities) <- paths
+  paths <- unique(paths)
 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
@@ -77,18 +80,29 @@ getOutputValues <- function(simulationResults,
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
-
   values <- lapply(paths, function(path) {
     simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
   })
   names(values) <- paths
 
-  metaData <- lapply(paths, function(path) {
-    quantity <- quantities[[path]]
-    list(unit = quantity$unit, dimension = quantity$dimension)
-  })
-  names(metaData) <- paths
-  metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  # Use low-level methods to get unit and dimension
+  task <- getContainerTask()
+  metaData <- NULL
+  if (addMetaData) {
+    metaData <- lapply(paths, function(path) {
+      unit <- NULL
+      dimension <- NULL
+      # Get the dimension and unit from path if the results are obtained. If the results
+      # are NA, the entity with such path does not exist
+      if (!all(is.na(values[[path]]))) {
+        unit <- rClr::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path))
+        dimension <- rClr::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path))
+      }
+      list(unit = unit, dimension = dimension)
+    })
+    names(metaData) <- paths
+    metaData[["Time"]] <- list(unit = "min", dimension = "Time")
+  }
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
   return(list(data = data, metaData = metaData))

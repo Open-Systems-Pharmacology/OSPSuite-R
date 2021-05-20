@@ -13,7 +13,21 @@ test_that("it can validate that an integer array type is an integer", {
   expect_true(TRUE)
 })
 
-test_that("it throws a vlaidatin error when an object is not an integer", {
+test_that("it throws a validation error when an object is not an integer", {
   expect_that(validateIsInteger(c(1.5, 5)), throws_error())
   expect_that(validateIsInteger(2.4), throws_error())
+})
+
+test_that("It accepts an empty string", {
+  expect_error(validatePathIsAbsolute(""), NA)
+})
+
+test_that("It accepts a path without wildcard", {
+  path <- "Organism|path"
+  expect_error(validatePathIsAbsolute(path), NA)
+})
+
+test_that("It throws an error for a path with a wildcard", {
+  path <- "Organism|*path"
+  expect_error(validatePathIsAbsolute(path), messages$errorEntityPathNotAbsolute(path))
 })
