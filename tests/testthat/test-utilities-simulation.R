@@ -340,3 +340,10 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   expect_equal(names(res[[2]])[[2]], ids[[4]])
 })
 
+context("getAllStateVariablesPaths")
+
+test_that("It returns the correct paths of the state variables", {
+  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  stateVariablePaths <- getAllStateVariablesPaths(simulation = sim)
+  expect_equal(length(stateVariablePaths), 5)
+})

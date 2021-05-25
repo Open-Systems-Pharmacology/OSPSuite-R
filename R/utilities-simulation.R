@@ -425,6 +425,23 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
   )
 }
 
+#' Get the paths of all state variable quantities of the simulation
+#'
+#' @param simulation \code{Simulation} object
+#' @details List of paths of all molecules in all compartments and all parameters that are
+#' state variables.
+#'
+#' @return A list of paths
+#' @import ospsuite
+#' @export
+getAllStateVariablesPaths <- function(simulation) {
+  ospsuite:::validateIsOfType(simulation, type = "Simulation")
+  allMoleculesPaths <- ospsuite:::getAllEntityPathsIn(container = simulation, entityType = ospsuite:::Molecule)
+  allStateVariableParamsPaths <- ospsuite:::getAllEntityPathsIn(container = simulation, entityType = ospsuite:::Parameter, method = "AllStateVariableParameterPathsIn")
+  allQantitiesPaths <- append(allMoleculesPaths, allStateVariableParamsPaths)
+  return(allQantitiesPaths)
+}
+
 #' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.
 #'
 #' @param population A population object typically loaded with `loadPopulation`
