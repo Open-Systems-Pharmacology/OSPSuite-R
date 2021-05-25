@@ -432,12 +432,11 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 #' state variables.
 #'
 #' @return A list of paths
-#' @import ospsuite
 #' @export
 getAllStateVariablesPaths <- function(simulation) {
-  ospsuite:::validateIsOfType(simulation, type = "Simulation")
-  allMoleculesPaths <- ospsuite:::getAllEntityPathsIn(container = simulation, entityType = ospsuite:::Molecule)
-  allStateVariableParamsPaths <- ospsuite:::getAllEntityPathsIn(container = simulation, entityType = ospsuite:::Parameter, method = "AllStateVariableParameterPathsIn")
+  validateIsOfType(simulation, type = "Simulation")
+  allMoleculesPaths <- getAllEntityPathsIn(container = simulation, entityType = Molecule)
+  allStateVariableParamsPaths <- getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
   allQantitiesPaths <- append(allMoleculesPaths, allStateVariableParamsPaths)
   return(allQantitiesPaths)
 }
