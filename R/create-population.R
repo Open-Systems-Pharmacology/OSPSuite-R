@@ -19,16 +19,16 @@ createPopulation <- function(populationCharacteristics) {
 
   # NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
   if (populationCharacteristics$species == Species$Human) {
-    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
-    individualCharacteristics <- ospsuite::createIndividualCharacteristics(
+    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invdiviual
+    individualCharacteristics <- createIndividualCharacteristics(
       species = populationCharacteristics$species,
       population = populationCharacteristics$population,
       age = 30
     )
   }
   else {
-    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invidiual
-    individualCharacteristics <- ospsuite::createIndividualCharacteristics(
+    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an indiviual
+    individualCharacteristics <- createIndividualCharacteristics(
       species = populationCharacteristics$species,
       population = populationCharacteristics$population,
     )
