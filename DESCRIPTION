@@ -9,15 +9,15 @@ Authors@R:
              family = "Sevestre",
              role = c("aut", "cre"),
              email = "michael@design2code.ca"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
+  created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 License: GPL-2 | file LICENSE
 URL: https://github.com/open-systems-pharmacology/ospsuite-r
 BugReports: 
     https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
     R (>= 3.5),
-    rClr (>= 0.9.1)
+    rClr (>= 0.8.3)
 Imports: 
     R6,
     stringr,

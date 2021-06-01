@@ -8,25 +8,32 @@
   <!-- badges: end -->
 
 # Overview
-The **ospsuite** R-package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
+The **ospsuite-R** package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 
 # Installation
-**As of now, R 4.x.x is not supported by ospsuite! The latest supported R version is 3.6.3.**
+
+The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.x of R. One of its dependency, **rClr** needs to be installed specifically for the targeted R version. Please follow the installation instructions below:
+
 
 **ospsuite** requires following packages to be installed:
-
-- [rClr](https://github.com/Open-Systems-Pharmacology/rClr/releases/latest)
 - [R6](https://github.com/r-lib/R6)
+- rClr
+  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
+  - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+
 
 ## Under Windows
-The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases). The package `rClr` can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/rClr/releases/latest) and installed from binary *.zip. The package `R6` can be installed from CRAN.
+The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases). The package `R6` can be installed from CRAN.
 
 The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
 
 ```
 # Install dependencies
-install.packages(pathTorCLR.zip, repos = NULL)
 install.packages('R6')
+
+# Install rClr from local file 
+install.packages(pathTorCLR.zip, repos = NULL)
+
 # Install ospsuite-r from local file
 install.packages(pathToOSPSuite.zip, repos = NULL)
 ```
