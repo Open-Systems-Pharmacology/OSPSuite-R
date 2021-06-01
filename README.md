@@ -20,6 +20,7 @@ The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.
 - rClr
   - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
   - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+- [stringr](https://cran.r-project.org/web/packages/stringr/)
 
 
 ## Under Windows
