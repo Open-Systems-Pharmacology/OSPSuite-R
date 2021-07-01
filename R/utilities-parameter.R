@@ -111,6 +111,9 @@ setParameterValues <- function(parameters, values) {
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
 #' length as 'parameterPaths'
 #' @param simulation Simulation uses to retrieve parameter instances from given paths.
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no parameter exists for the given path,
+#' an error is thrown. If \code{FALSE}, a warning is shown to the user
+#'
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -119,9 +122,12 @@ setParameterValues <- function(parameters, values) {
 #'
 #' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 #' @export
-setParameterValuesByPath <- function(parameterPaths, values, simulation) {
+setParameterValuesByPath <- function(parameterPaths, values, simulation, stopIfNotFound = TRUE) {
   setQuantityValuesByPath(
-    quantityPaths = parameterPaths, values = values, simulation = simulation
+    quantityPaths = parameterPaths,
+    values = values,
+    simulation = simulation,
+    stopIfNotFound = stopIfNotFound
   )
 }
 

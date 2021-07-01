@@ -103,6 +103,9 @@ setQuantityValues <- function(quantities, values) {
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
 #' length as 'quantityPaths'
 #' @param simulation Simulation uses to retrieve quantity instances from given paths.
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no qyantuty exists for the given path,
+#' an error is thrown. If \code{FALSE}, a warning is shown to the user
+
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -111,7 +114,7 @@ setQuantityValues <- function(quantities, values) {
 #'
 #' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
 #' @export
-setQuantityValuesByPath <- function(quantityPaths, values, simulation) {
+setQuantityValuesByPath <- function(quantityPaths, values, simulation, stopIfNotFound = TRUE) {
   validateIsString(quantityPaths)
   validateIsNumeric(values)
   validateIsSameLength(quantityPaths, values)
@@ -120,8 +123,11 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation) {
   task <- getContainerTask()
   for (i in seq_along(quantityPaths)) {
     rClr::clrCall(
-      task, "SetValueByPath", simulation$ref,
-      enc2utf8(quantityPaths[[i]]), values[[i]]
+      task, "SetValueByPath",
+      simulation$ref,
+      enc2utf8(quantityPaths[[i]]),
+      values[[i]],
+      stopIfNotFound
     )
   }
 }

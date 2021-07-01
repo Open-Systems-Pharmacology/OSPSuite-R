@@ -73,3 +73,11 @@ test_that("It throws an exception when setting values for a quantity that does n
   parameterPath <- "Organism|Liver|NOPE|Volume"
   expect_that(setQuantityValuesByPath(parameterPath, 100, sim), throws_error())
 })
+
+test_that("It does not throw an exception when setting values for a quantity that does not exist and the stopIfnotFound flag is set to false", {
+  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  parameterPath <- "Organism|Liver|NOPE|Volume"
+  setQuantityValuesByPath(parameterPath, 100, sim, FALSE)
+  expect_false(is.null(sim))
+})
+
