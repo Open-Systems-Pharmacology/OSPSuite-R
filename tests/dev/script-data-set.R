@@ -3,9 +3,11 @@ library(ospsuite)
 # Load the obs data from a pkml file
 obsData <- loadDataRepositoryFromPKML("tests/data/obs_data.pkml")
 
-# get the meta data properties as a list
-metaData <- obsData$metaData
+# Create an empty data set
+dataSet <- DataSet$new()
 
-columns <- obsData$columns
+# get the values
+xValues <- dataSet$xValues
 
+xUnit <- dataSet$xUnit
 
