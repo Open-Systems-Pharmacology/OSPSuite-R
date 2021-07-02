@@ -15,23 +15,49 @@ DataSet <- R6::R6Class(
       }
       self$dataRepository$name <- value
     },
+    #' @field xDimension Dimension in which the xValues are defined
+    xDimension = function(value) {
+      if (missing(value)) {
+        return(private$.xValues$dimension)
+      }
+      private$setColumnDimension(private$.xValues, value)
+    },
     #' @field xUnit Unit in which the xValues are defined
-    xUnit = function(value){
+    xUnit = function(value) {
       if (missing(value)) {
         return(private$.xValues$displayUnit)
       }
+      private$setColumnUnit(private$.xValues, value)
+    },
+    #' @field xValues Values stored in the xUnit dimension (not necessarily in the base unit of the dimension)
+    xValues = function(values) {
+      if (missing(values)) {
+        return(private$getColumnValues(private$.xValues))
+      }
+
+      private$setColumnValues(private$.xValues, values)
+    },
+    #' @field yDimension Dimension in which the xValues are defined
+    yDimension = function(value) {
+      if (missing(value)) {
+        return(private$.yValues$dimension)
+      }
+      private$setColumnDimension(private$.yValues, value)
     },
     #' @field yUnit Unit in which the yValues are defined
-    yUnit = function(value){
+    yUnit = function(value) {
       if (missing(value)) {
         return(private$.yValues$displayUnit)
       }
+      private$.yValues$displayUnit <- value
     },
-    #' @field xValues Values stored in the xUnit dimension (not necessarily in the base unit of the dimension)
-    xValues = function(value){
-      if (missing(value)) {
-        return ( self$dataRepository$baseGrid$values)
+    #' @field yValues Values stored in the yUnit dimension (not necessarily in the base unit of the dimension)
+    yValues = function(values) {
+      if (missing(values)) {
+        return(private$getColumnValues(private$.yValues))
       }
+
+      private$setColumnValues(private$.yValues, values)
     }
   ),
   public = list(
@@ -55,26 +81,61 @@ DataSet <- R6::R6Class(
   private = list(
     .xValues = NULL,
     .yValues = NULL,
+    setColumnValues = function(column, values) {
+      # values are set in the display unit. We need to make sure we convert them to the base unit
+      valuesInBaseUnit <- toBaseUnit(quantityOrDimension = column$dimension, values = values, unit = column$displayUnit)
+      column$values <- valuesInBaseUnit
+      invisible()
+    },
+    getColumnValues = function(column) {
+      # we need to convert the values in the display unit
+      toUnit(quantityOrDimension = column$dimension, values = column$values, targetUnit = column$displayUnit)
+    },
+    setColumnDimension = function(column, value){
+      # no need to update anything if we are setting the same values
+      if(column$dimension == value){
+        return()
+      }
+
+      # save the values in their display unit before updating
+      values <- private$getColumnValues(column)
+
+      #now we need to update dimension (display unit will be the default one as per .NET implementation)
+      column$dimension <- value
+
+      private$setColumnValues(column, values)
+    },
+    setColumnUnit = function(column, unit){
+      # no need to update anything if we are setting the same values
+      if(column$displayUnit == unit){
+        return()
+      }
+
+      # save the values in their display unit before updating
+      values <- private$getColumnValues(column)
+
+      #now we need to update dimension and display unit
+      column$displayUnit <- unit
+
+      private$setColumnValues(column, values)
+    },
     createDataRepository = function() {
       # Create an empty data repository with a base grid and column
       dataRepository <- DataRepository$new()
       # Passing time for dimension for now
-      xValues <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.BaseGrid", "xValues", getDimensionByName("Time")))
+      xValues <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.BaseGrid", "xValues", getDimensionByName(ospDimensions$Time)))
 
       # Passing concentration (mass) for dimension for now
-      yValues <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.DataColumn", "yValues", getDimensionByName("Concentration (mass)"), xValues$ref))
+      yValues <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.DataColumn", "yValues", getDimensionByName(ospDimensions$`Concentration (mass)`), xValues$ref))
 
       dataRepository$addColumn(xValues)
       dataRepository$addColumn(yValues)
       return(dataRepository)
     },
-
-    initializeCache = function(){
+    initializeCache = function() {
       private$.xValues <- self$dataRepository$baseGrid
-      #TODO we need to be a bit more careful here
-      private$.yValues <- self$dataRepository$allButBaseGrid[1]
+      # TODO we need to be a bit more careful here
+      private$.yValues <- self$dataRepository$allButBaseGrid[[1]]
     }
-
-
   )
 )

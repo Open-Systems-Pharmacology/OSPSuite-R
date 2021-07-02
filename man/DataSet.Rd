@@ -16,11 +16,17 @@ A wrapper around DataRepository exposing convenience methods to use and manipula
 \describe{
 \item{\code{name}}{The name of the DataSet}
 
+\item{\code{xDimension}}{Dimension in which the xValues are defined}
+
+\item{\code{yDimension}}{Dimension in which the xValues are defined}
+
 \item{\code{xUnit}}{Unit in which the xValues are defined}
 
 \item{\code{yUnit}}{Unit in which the yValues are defined}
 
 \item{\code{xValues}}{Values stored in the xUnit dimension (not necessarily in the base unit of the dimension)}
+
+\item{\code{yValues}}{Values stored in the yUnit dimension (not necessarily in the base unit of the dimension)}
 }
 \if{html}{\out{</div>}}
 }

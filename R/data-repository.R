@@ -19,8 +19,6 @@ DataRepository <- R6::R6Class(
         }
         return(private$.baseGrid)
       }
-      private$.baseGrid <- value
-      private$wrapProperty("BaseGrid", value$ref)
     },
     #' @field columns Returns all columns (including baseGrid) defined in the data repository.
     columns = function(value) {
