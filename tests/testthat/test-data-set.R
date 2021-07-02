@@ -60,15 +60,3 @@ test_that("it can update the dimension of the yValues and this does not change t
   expect_equal(dataSet$yValues, c(1, 2, 4))
   expect_equal(dataSet$yUnit, ospUnits$Ampere$A)
 })
-
-#
-# test_that("it returns the same reference to base grids once instantiated", {
-#   expect_identical(obsData$columns[[1]], obsData$baseGrid)
-# })
-#
-# test_that("it retrives the meta data associated with the data repository", {
-#   metaData <- obsData$metaData
-#   expect_equal(metaData$DoubleValue, 5.0)
-#   expect_equal(metaData$IntegerValue, 4)
-#   expect_equal(metaData$StringValues, "hello")
-# })
