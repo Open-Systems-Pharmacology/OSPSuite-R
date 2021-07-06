@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Loading a simulation
-In general, every workflow starts with loading a simulation by calling the `loadSimulation()` function. The function receives the full path to the PKML file (with extension *.pkml) exported from PK-Sim or MoBi and returns the corresonding simulation object.
+In general, every workflow starts with loading a simulation by calling the `loadSimulation()` function. The function receives the full path to the PKML file (with extension *.pkml) exported from PK-Sim or MoBi and returns the corresponding simulation object.
 
 ```{r loadSim}
 library(ospsuite)

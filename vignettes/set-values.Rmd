@@ -142,7 +142,7 @@ Changing the value of a state variable parameter will only change its initial va
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
 
-# Setting its value only changes the intitial value
+# Setting its value only changes the initial value
 setParameterValues(stateVariableParam, 10)
 print(stateVariableParam)
 
