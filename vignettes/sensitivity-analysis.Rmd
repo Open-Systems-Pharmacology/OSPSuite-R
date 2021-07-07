@@ -72,7 +72,7 @@ To run the specified `SensitivityAnalysis`, call the method `runSensitivityAnaly
 simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
 
-# Create a `SensitivityAnalysis` with all constant and suitable for sensitivity calculations parametersand suitable for sensitivity calculations parameters
+# Create a `SensitivityAnalysis` with all constant and suitable for sensitivity calculations parameters and suitable for sensitivity calculations parameters
 sa <- SensitivityAnalysis$new(simulation = sim)
 
 # Run the sensitivity analysis
@@ -98,8 +98,8 @@ print(saResult)
 
 # Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8
 outputPath <- sim$outputSelections$allOutputs[[1]]$path
-sensitivites <- saResult$allPKParameterSensitivitiesFor(pkParameterName = "AUC_inf", outputPath = outputPath, totalSensitivityThreshold = 0.8)
-print(sensitivites)
+sensitivities <- saResult$allPKParameterSensitivitiesFor(pkParameterName = "AUC_inf", outputPath = outputPath, totalSensitivityThreshold = 0.8)
+print(sensitivities)
 ```
 The value `-1` for the sensitivity of "AUC_inf" of the output `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)` for the parameter `Organism-Kidney-Volume` means that increasing `Organism-Kidney-Volume` by 10% will decrease "AUC_inf" by 10%.
 Note that the list of sensitivities is ordered from largest to smallest with respect to magnitude.
