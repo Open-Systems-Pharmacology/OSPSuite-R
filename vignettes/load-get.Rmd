@@ -1,6 +1,8 @@
 ---
 title: "Loading a simulation and accessing entities"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette
+    keep_md: yes
 #output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Loading a simulation and accessing entities}

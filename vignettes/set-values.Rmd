@@ -1,6 +1,8 @@
 ---
 title: "Changing parameter and molecule start values"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette
+    keep_md: yes
 #output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Changing parameter and molecule start values}
