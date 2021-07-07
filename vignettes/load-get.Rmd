@@ -22,10 +22,8 @@ In general, every workflow starts with loading a simulation by calling the `load
 library(ospsuite)
 
 simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
-print(simFilePath)
 
 sim <- loadSimulation(simFilePath)
-print(sim)
 ```
 
 ## Accessing entities of the model and their properties - the path concept
@@ -48,7 +46,7 @@ print(livParam)
 ```
 
 The functions `getAllContainersMatching`, `getAllMoleculesMatching`, and `getAllParametersMatching` return a list of objects representing 
-all entities whose paths match the generic paths provided in the list `paths` located under `container`. Generic paths are constructed by using the wildcard symbols `*` (exactly one occurrence of any element) or `**` (zero or more occurences of any element).
+all entities whose paths match the generic paths provided in the list `paths` located under `container`. Generic paths are constructed by using the wildcard symbols `*` (exactly one occurrence of any element) or `**` (zero or more occurrences of any element).
 
 ```{r getAllEntitiesMatching}
 # Get the parameter `Volume` of the intracellular space of all organs,
