@@ -23,7 +23,6 @@ library(ospsuite)
 # Load a simulation
 simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
 sim <- loadSimulation(simFilePath)
-print(sim)
 
 #Get the parameter volume of the liver.
 livParam <- getParameter("Organism|Liver|Volume", sim)
