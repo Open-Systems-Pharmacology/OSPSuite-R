@@ -15,7 +15,6 @@ test_that("it can create a new data set from scratch", {
   expect_identical(dataSet$xValues, numeric(0))
 })
 
-
 test_that("it can create a new data set from an existing repository", {
   dataSet <- DataSet$new(obsData)
   expect_false(is.null(dataSet))
