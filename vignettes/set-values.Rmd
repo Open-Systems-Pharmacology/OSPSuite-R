@@ -29,7 +29,7 @@ Every (initial) value is described either by a constant or by a formula. If the 
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 #Get the parameter "Age" of the Organism

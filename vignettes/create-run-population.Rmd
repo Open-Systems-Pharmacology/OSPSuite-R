@@ -24,7 +24,7 @@ The method `loadPopulation` creates an object of the `Population` class that can
 ```{r loadPop}
 library(ospsuite)
 # Load population information from csv
-popFilePath <- file.path(getwd(), "..", "tests", "data", "pop_10.csv", fsep = .Platform$file.sep)
+popFilePath <- system.file("extdata", "pop.csv", package = "ospsuite")
 myPopulation <- loadPopulation(csvPopulationFile = popFilePath)
 print(myPopulation)
 ```
@@ -64,7 +64,7 @@ To run a population simulation, the `Population` object created by the `createPo
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
@@ -77,7 +77,7 @@ The user can change the default behavior by providing custom `SimulationRunOptio
 
 ```{r simulationRunOptions}
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Create a SimulationRunOptions object

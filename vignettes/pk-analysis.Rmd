@@ -22,7 +22,7 @@ PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a s
 library(ospsuite)
 
 # Load  the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run the simulation
@@ -65,7 +65,7 @@ Population analysis calculated in R can be exported to a *.csv file and loaded i
 
 ```{r PKAnalysesExport}
 # Load and run the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 simulationResults <- runSimulation(simulation = sim)
 
@@ -73,7 +73,7 @@ simulationResults <- runSimulation(simulation = sim)
 pkAnalysis <- calculatePKAnalyses(results = simulationResults)
 
 # Export to csv
-csvPKAnalysisPath <- file.path(getwd(), "..", "tests", "data", "PKAnalyses.csv", fsep = .Platform$file.sep)
+csvPKAnalysisPath <- system.file("extdata", "PKAnalyses.csv", package = "ospsuite")
 exportPKAnalysesToCSV(pkAnalyses = pkAnalysis, filePath = csvPKAnalysisPath)
 
 # Load from csv

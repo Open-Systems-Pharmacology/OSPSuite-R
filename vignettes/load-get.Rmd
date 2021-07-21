@@ -21,7 +21,7 @@ In general, every workflow starts with loading a simulation by calling the `load
 ```{r loadSim}
 library(ospsuite)
 
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
 sim <- loadSimulation(simFilePath)
 ```
@@ -123,7 +123,7 @@ A convenient way to traverse the simulation structure is given by the method \co
 
 ```{r simTree}
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Create simulation tree
