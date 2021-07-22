@@ -22,7 +22,7 @@ Once the simulation is loaded (see [Loading a simulation and accessing entities]
 library(ospsuite)
 
 # Load the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 simulationResults <- runSimulation(simulation = sim)
@@ -67,12 +67,12 @@ The results can be stored in and imported from a *.csv file with the methods `ex
 
 ```{r SimResultsExport}
 # Load and run the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 simulationResults <- runSimulation(simulation = sim)
 
 # Export to csv
-csvResultsPath <- file.path(getwd(), "..", "tests", "data", "SimResults.csv", fsep = .Platform$file.sep)
+csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
 exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 
 # Load from csv

@@ -48,7 +48,8 @@ The output contains two lists of parameters - `distributedParameters` and `deriv
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+print(simFilePath)
 sim <- loadSimulation(simFilePath)
 
 # Apply individual parameters

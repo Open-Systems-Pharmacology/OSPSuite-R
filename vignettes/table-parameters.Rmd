@@ -22,7 +22,7 @@ Parameters defined by a **table formula** have special syntax of retrieving and 
 library(ospsuite)
 
 # Load a simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 #Get the parameter defined by a table.

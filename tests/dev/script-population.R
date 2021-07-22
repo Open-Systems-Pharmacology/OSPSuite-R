@@ -23,6 +23,6 @@ res <- runSimulation(simulation = sim, population = population)
 
 agingData_baby <- loadAgingDataFromCSV("tests/data/baby_aging.csv")
 
-aging_data <- loadAgingDataFromCSV("tests/data/aging_data.csv")
+aging_data <- loadAgingDataFromCSV("inst/extdata/aging_data.csv")
 
 res <- runSimulation(simulation = sim, population = population, agingData = aging_data)
