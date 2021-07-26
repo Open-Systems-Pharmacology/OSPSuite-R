@@ -31,3 +31,7 @@ test_that("it retrives the meta data associated with the data repository", {
   expect_equal(metaData$IntegerValue, 4)
   expect_equal(metaData$StringValues, "hello")
 })
+
+test_that("it can print a data repository", {
+  expect_error(capture.output(print(obsData)), regexp = NA)
+})
