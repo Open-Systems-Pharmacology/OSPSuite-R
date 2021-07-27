@@ -81,6 +81,6 @@ toList <- function(object) {
 #'
 #' @return A string containing the name of the enumerated constant in enumType whose value is enumValue; or null if no such constant is found.
 netEnumName <- function(enumType, enumValue){
-  netTypeObj <- rClr::clrGetType("OSPSuite.Core.Domain.Data.AuxiliaryType")
+  netTypeObj <- rClr::clrGetType(enumType)
   rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }

@@ -26,47 +26,47 @@ DataSet <- R6::R6Class(
     #' @field xDimension Dimension in which the xValues are defined
     xDimension = function(value) {
       if (missing(value)) {
-        return(private$.xValues$dimension)
+        return(private$.xColumn$dimension)
       }
-      private$.setColumnDimension(private$.xValues, value)
+      private$.setColumnDimension(private$.xColumn, value)
     },
     #' @field xUnit Unit in which the xValues are defined
     xUnit = function(value) {
       if (missing(value)) {
-        return(private$.xValues$displayUnit)
+        return(private$.xColumn$displayUnit)
       }
-      private$.setColumnUnit(private$.xValues, value)
+      private$.setColumnUnit(private$.xColumn, value)
     },
     #' @field xValues Values stored in the xDimension dimension (not necessarily in the base unit)
     xValues = function(values) {
       if (missing(values)) {
-        return(private$.getColumnValues(private$.xValues))
+        return(private$.getColumnValues(private$.xColumn))
       }
 
       #TODO how to handle a situation when the lenght of new x values differs from the length of y values?
-      private$.setColumnValues(private$.xValues, values)
+      private$.setColumnValues(private$.xColumn, values)
     },
     #' @field yDimension Dimension in which the yValues are defined
     yDimension = function(value) {
       if (missing(value)) {
-        return(private$.yValues$dimension)
+        return(private$.yColumn$dimension)
       }
-      private$.setColumnDimension(private$.yValues, value)
+      private$.setColumnDimension(private$.yColumn, value)
     },
     #' @field yUnit Unit in which the yValues are defined
     yUnit = function(value) {
       if (missing(value)) {
-        return(private$.yValues$displayUnit)
+        return(private$.yColumn$displayUnit)
       }
-      private$.yValues$displayUnit <- value
+      private$.yColumn$displayUnit <- value
     },
     #' @field yValues Values stored in the yDimension dimension (not necessarily in the base unit)
     yValues = function(values) {
       if (missing(values)) {
-        return(private$.getColumnValues(private$.yValues))
+        return(private$.getColumnValues(private$.yColumn))
       }
       validateIsSameLength(self$xValues, values)
-      private$.setColumnValues(private$.yValues, values)
+      private$.setColumnValues(private$.yColumn, values)
     },
 
     #' @field yErrorType Type of the error - geometric or arithmetic.
@@ -74,7 +74,7 @@ DataSet <- R6::R6Class(
     #' When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.
     yErrorType = function(value) {
       if (missing(value)) {
-        dataInfo <- rClr::clrGet(private$.yErrorValues$ref, "DataInfo")
+        dataInfo <- rClr::clrGet(private$.yErrorColumn$ref, "DataInfo")
         errorTypeEnumVal <- rClr::clrGet(dataInfo, "AuxiliaryType")
         return(netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
       }
@@ -84,18 +84,18 @@ DataSet <- R6::R6Class(
     #' for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.
     yErrorUnit = function(value) {
       if (missing(value)) {
-        return(private$.yErrorValues$displayUnit)
+        return(private$.yErrorColumn$displayUnit)
       }
-      private$.yErrorValues$displayUnit <- value
+      private$.yErrorColumn$displayUnit <- value
     },
     #' @field yErrorValues Values of error stored in the yErrorUnit unit
     yErrorValues = function(values) {
       if (missing(values)) {
-        return(private$.getColumnValues(private$.yErrorValues))
+        return(private$.getColumnValues(private$.yErrorColumn))
       }
 
       validateIsSameLength(self$yValues, values)
-      private$.setColumnValues(private$.yErrorValues, values)
+      private$.setColumnValues(private$.yErrorColumn, values)
     },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
@@ -136,22 +136,23 @@ DataSet <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$printLine("X dimension", c(self$xDimension))
-      private$printLine("X unit", c(self$xUnit))
-      private$printLine("Y dimension", c(self$yDimension))
-      private$printLine("Y unit", c(self$yUnit))
-      private$printLine("Error type", c(self$yErrorType))
-      private$printLine("Error unit", c(self$yErrorUnit))
-      private$printLine("Meta data", c(self$metaData))
+      private$printClass()
+      private$printLine("X dimension", self$xDimension)
+      private$printLine("X unit", self$xUnit)
+      private$printLine("Y dimension", self$yDimension)
+      private$printLine("Y unit", self$yUnit)
+      private$printLine("Error type", self$yErrorType)
+      private$printLine("Error unit", self$yErrorUnit)
+      private$printLine("Meta data")
+      print(self$metaData)
       invisible(self)
     }
   ),
   private = list(
     .dataRepository = NULL,
-    .xValues = NULL,
-    .yValues = NULL,
-    .yErrorValues = NULL,
+    .xColumn = NULL,
+    .yColumn = NULL,
+    .yErrorColumn = NULL,
     .setColumnValues = function(column, values) {
       # values are set in the display unit. We need to make sure we convert them to the base unit
       valuesInBaseUnit <- toBaseUnit(quantityOrDimension = column$dimension, values = values, unit = column$displayUnit)
@@ -195,10 +196,9 @@ DataSet <- R6::R6Class(
       if (errorType == self$yErrorType){
         invisible(self)
       }
-      browser()
 
       validateEnumValue(errorType, DataErrorType)
-      column <- private$.yErrorValues
+      column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
 
       dataInfo <- rClr::clrGet(column$ref, "DataInfo")
@@ -233,19 +233,19 @@ DataSet <- R6::R6Class(
     },
 
     .initializeCache = function() {
-      private$.xValues <- private$.dataRepository$baseGrid
+      private$.xColumn <- private$.dataRepository$baseGrid
       # TODO we need to be a bit more careful here
-      private$.yValues <- private$.dataRepository$allButBaseGrid[[1]]
+      private$.yColumn <- private$.dataRepository$allButBaseGrid[[1]]
 
       dataRepositoryTask <- getNetTask("DataRepositoryTask")
-      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", private$.yValues$ref)
+      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", private$.yColumn$ref)
       #If the repository does not have an error column, create a new one
       if (is.null(netYErrorColumn)){
-        netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "AddErrorColumn", private$.yValues$ref, "yErrorValues", DataErrorType$ArithmeticStdDev)
+        netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "AddErrorColumn", private$.yColumn$ref, "yErrorValues", DataErrorType$ArithmeticStdDev)
       }
       yErrorColumn <- DataColumn$new(netYErrorColumn)
       private$.dataRepository$addColumn(yErrorColumn)
-      private$.yErrorValues <- yErrorColumn
+      private$.yErrorColumn <- yErrorColumn
     }
   )
 )

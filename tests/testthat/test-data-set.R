@@ -35,7 +35,7 @@ test_that("it can return and set the yValues", {
 
 test_that("it can update the unit of the xValues and this does not change the returned value", {
   dataSet <- DataSet$new()
-  #this will be in h
+  # this will be in h
   dataSet$xValues <- c(1, 2, 3, 4, 5)
   dataSet$xUnit <- ospUnits$Time$min
   expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5))
@@ -43,7 +43,7 @@ test_that("it can update the unit of the xValues and this does not change the re
 
 test_that("it can update the dimension of the xValues and this does not change the returned value", {
   dataSet <- DataSet$new()
-  #this will be Time in h
+  # this will be Time in h
   dataSet$xValues <- c(1, 2, 3, 4, 5)
   dataSet$xDimension <- ospDimensions$Ampere
   expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5))
@@ -52,7 +52,7 @@ test_that("it can update the dimension of the xValues and this does not change t
 
 test_that("it can update the dimension of the yValues and this does not change the returned value", {
   dataSet <- DataSet$new()
-  #this will be Time in min
+  # this will be Time in min
   dataSet$xValues <- c(10, 20, 40)
   dataSet$yValues <- c(1, 2, 4)
   dataSet$yDimension <- ospDimensions$Ampere
@@ -73,7 +73,7 @@ test_that("it can set the yValues if yUnit is different from base unit", {
   dataSet$xValues <- c(1, 2, 3, 4, 5)
   dataSet$yUnit <- "mg/l"
   dataSet$yValues <- c(1, 2, 3, 4, 5)
-  #TODO this test fails because of numerical error in the conversion if default tolerance is used
+  # TODO this test fails because of numerical error in the conversion if default tolerance is used
   expect_equal(dataSet$yValues, c(1, 2, 3, 4, 5), tolerance = 0.0001)
   expect_equal(dataSet$yUnit, "mg/l")
 })
@@ -87,27 +87,25 @@ test_that("it can change yErrorType when no yError is defined", {
   dataSet$xValues <- c(1, 2, 3, 4, 5)
   dataSet$yUnit <- "mg/l"
   dataSet$yValues <- c(1, 2, 3, 4, 5)
-  #TODO this test fails because of numerical error in the conversion if default tolerance is used
+  # TODO this test fails because of numerical error in the conversion if default tolerance is used
   expect_equal(dataSet$yValues, c(1, 2, 3, 4, 5), tolerance = 0.0001)
   expect_equal(dataSet$yUnit, "mg/l")
 })
 
 test_that("empty y values", {
-  #TODO FAILING!
   dataSet <- DataSet$new()
-  dataSet$yValues
+  expect_equal(dataSet$yValues, numeric(0))
 })
 
 test_that("empty y error", {
-  #TODO FAILING!
   dataSet <- DataSet$new()
-  dataSet$yErrorValues
+  expect_equal(dataSet$yErrorValues, numeric(0))
 })
 
 
 test_that("it can print a data set", {
   dataSet <- DataSet$new()
-  #this will be Time in h
+  # this will be Time in h
   dataSet$xValues <- c(1, 2, 3, 4, 5)
   dataSet$xDimension <- ospDimensions$Ampere
   dataSet$yUnit <- "mg/l"
