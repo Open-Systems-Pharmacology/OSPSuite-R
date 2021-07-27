@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The models built with OSPS depend on a lot of input parameters which are based on literature values, measurements, databases, assumptions. For a given set of input parameters a number of output curves is computed in a simulation. To assess which input parameters have most impact on the output curves, a sensitivity analysis of the simulaiton can be performed. For more information about theoretical background, see [OSPS documentation](https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/sensitivity-analysis).
+The models built with OSPS depend on a lot of input parameters which are based on literature values, measurements, databases, assumptions. For a given set of input parameters a number of output curves is computed in a simulation. To assess which input parameters have most impact on the output curves, a sensitivity analysis of the simulation can be performed. For more information about theoretical background, see [OSPS documentation](https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/sensitivity-analysis).
 
 In brief, the values of the chosen parameters are changed by a certain percentage and the impact of these changes on PK parameters of model outputs is assessed.
 
@@ -26,7 +26,7 @@ The first step of performing a sensitivity analysis is creating an object of the
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Get the paths of parameters that will be considered by default.
@@ -52,7 +52,7 @@ New parameters can be added to an existing `SensitivityAnalysis` by calling the 
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Create a `SensitivityAnalysis` with specified parameters
@@ -69,10 +69,10 @@ To run the specified `SensitivityAnalysis`, call the method `runSensitivityAnaly
 
 ```{r runSA}
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
-# Create a `SensitivityAnalysis` with all constant and suitable for sensitivity calculations parametersand suitable for sensitivity calculations parameters
+# Create a `SensitivityAnalysis` with all constant and suitable for sensitivity calculations parameters and suitable for sensitivity calculations parameters
 sa <- SensitivityAnalysis$new(simulation = sim)
 
 # Run the sensitivity analysis
@@ -83,7 +83,7 @@ The method `allPKParameterSensitivitiesFor` returns a list of `PKParameterSensit
 
 ```{r allPKParameterSensitivitiesFor}
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Default value of the threshold
@@ -98,8 +98,8 @@ print(saResult)
 
 # Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8
 outputPath <- sim$outputSelections$allOutputs[[1]]$path
-sensitivites <- saResult$allPKParameterSensitivitiesFor(pkParameterName = "AUC_inf", outputPath = outputPath, totalSensitivityThreshold = 0.8)
-print(sensitivites)
+sensitivities <- saResult$allPKParameterSensitivitiesFor(pkParameterName = "AUC_inf", outputPath = outputPath, totalSensitivityThreshold = 0.8)
+print(sensitivities)
 ```
 The value `-1` for the sensitivity of "AUC_inf" of the output `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)` for the parameter `Organism-Kidney-Volume` means that increasing `Organism-Kidney-Volume` by 10% will decrease "AUC_inf" by 10%.
 Note that the list of sensitivities is ordered from largest to smallest with respect to magnitude.
@@ -109,7 +109,7 @@ Sensitivity analysis calculated in R can be exported to a *.csv file, which can 
 
 ```{r SAExport}
 # Load and run the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "simple.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 simulationResults <- runSimulation(simulation = sim)
 
@@ -118,7 +118,7 @@ sa <- SensitivityAnalysis$new(simulation = sim)
 saResult <- runSensitivityAnalysis(sa)
 
 # Export to csv
-saResultPath <- file.path(getwd(), "..", "tests", "data", "SAResult.csv", fsep = .Platform$file.sep)
+saResultPath <- system.file("extdata", "SAResult.csv", package = "ospsuite")
 exportSensitivityAnalysisResultsToCSV(results = saResult, filePath = saResultPath)
 
 # Load from csv

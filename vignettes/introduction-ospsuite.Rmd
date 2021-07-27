@@ -39,10 +39,10 @@ The workflow steps are described in the following vignettes:
 * [Table parameters](table-parameters.html)
 * [Dimensions and Units](unit-conversion.html)
 
-Some aspects of the ospsuite package may appear uncommon for the users not familiar with the object-oriented approach. It is reccommened to read the following section to better understand some semantics and to get the most of the flexibility and efficiency of the package.
+Some aspects of the ospsuite package may appear uncommon for the users not familiar with the object-oriented approach. It is recommended to read the following section to better understand some semantics and to get the most of the flexibility and efficiency of the package.
 
 ## Object-oriented approach
-The **ospsuite** R-package utilizes the concept of object oriented (OO) programming based on the [R6 system](https://adv-r.hadley.nz/r6.html). While the philisophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. Most of the functions implemented in **ospsuite** return an *instance* (or an *object*) of a *class*. These objects can be used as inputs for another functions. Additionally, each object offers a set of properties (which can be another objects) and functions, accessible by the `$` sign:
+The **ospsuite** R-package utilizes the concept of object oriented (OO) programming based on the [R6 system](https://adv-r.hadley.nz/r6.html). While the philosophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. Most of the functions implemented in **ospsuite** return an *instance* (or an *object*) of a *class*. These objects can be used as inputs for another functions. Additionally, each object offers a set of properties (which can be another objects) and functions, accessible by the `$` sign:
 
 ```r
 object1 <- ClassName$new()
@@ -73,9 +73,9 @@ The most important classes are:
   : `Quantity`
     : An `Entity` in the simulation that has a value - namely `Molecule` and `Parameter`. Every `Quantity` has a `$value` and a `dimension`. Further important fields are `$unit`, which is the base unit of the dimension. See [Dimensions and Units](unit-conversion.html) for more information.
   : `Molecule`
-    : A molecule located in a `Container`. The `$value`-property referes to the initial value in the simulation. Inherits from `Quantity`.
+    : A molecule located in a `Container`. The `$value`-property refers to the initial value in the simulation. Inherits from `Quantity`.
   : `Parameter`
-    : A parameter. The `$value`-property referes to the initial value in the simulation. Inherits from `Quantity`.
+    : A parameter. The `$value`-property refers to the initial value in the simulation. Inherits from `Quantity`.
   : `Formula`
     : The value of each `Quantity` is described by a `Formula`. There are different types of formulae, see [Changing parameter and molecule start values](set-values.html) for more information.
   : `IndividualCharacteristics`
@@ -91,6 +91,7 @@ The most important classes are:
   : `SensitivityAnalysis`
     : A class defining the analysis of which input parameters have most impact on the output curves of a simulation. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
   : `SensitivityAnalysisResults`
-    : Resuls of running the `SensitivityAnalysis`
+    : Results of running the `SensitivityAnalysis`
   : `PKParameterSensitivity`
     : The sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the varied parameter `$parameterName`. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
+

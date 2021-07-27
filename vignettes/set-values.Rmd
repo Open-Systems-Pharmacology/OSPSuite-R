@@ -29,7 +29,7 @@ Every (initial) value is described either by a constant or by a formula. If the 
 library(ospsuite)
 
 # Load simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 #Get the parameter "Age" of the Organism
@@ -142,7 +142,7 @@ Changing the value of a state variable parameter will only change its initial va
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
 
-# Setting its value only changes the intitial value
+# Setting its value only changes the initial value
 setParameterValues(stateVariableParam, 10)
 print(stateVariableParam)
 

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   error = TRUE
 )
-```
+  ```
 
 Parameters defined by a **table formula** have special syntax of retrieving and changing the values. The value of a table parameter is given by a list of `ValuePoint` objects, each `ValuePoint` being an x-y value pair. X values usually refer to the simulation time.
 
@@ -22,7 +22,7 @@ Parameters defined by a **table formula** have special syntax of retrieving and 
 library(ospsuite)
 
 # Load a simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 #Get the parameter defined by a table.
@@ -30,7 +30,7 @@ tableParam <- getParameter("Organism|TableParameter", sim)
 print(tableParam)
 ```
 
-Direct access to the value points is possible through the `TableFormula` of the table parameter. All x- or y-values stored in the table can be conviniently retrieved using the `lapply` method:
+Direct access to the value points is possible through the `TableFormula` of the table parameter. All x- or y-values stored in the table can be conveniently retrieved using the `lapply` method:
 
 ```{r getAllXYValues}
 library(ospsuite)
