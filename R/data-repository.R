@@ -81,6 +81,37 @@ DataRepository <- R6::R6Class(
     print = function(...) {
       private$printClass()
       invisible(self)
+    },
+    #' @description
+    #' Adds a new entry to meta data list or changes its value if the name is already present.
+    #' If \code{value} is \code{NULL}, the entry with corresponding name is deleted from meta data set.
+    #'
+    #' @param name Name of new meta data list entry
+    #' @param value Value of new meta data list entry
+    addMetaData = function(name, value) {
+      if (length(name) != 1) {
+        stop(messages$errorMultipleMetaDataEntries())
+      }
+      validateIsString(name)
+      validateIsString(value)
+      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      rClr::clrCall(dataRepositoryTask, "AddMetaData", self$ref, name, value)
+      #we need to reset the cache when adding a new meta data
+      private$.metaData <- NULL
+    },
+    #' @description
+    #' Removes the meta data entry in the list if one is defined with this name
+    #'
+    #' @param name Name of meta data entry to delete
+    removeMetaData = function(name) {
+      if (length(name) != 1) {
+        stop(messages$errorMultipleMetaDataEntries())
+      }
+      validateIsString(name)
+      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      rClr::clrCall(dataRepositoryTask, "RemoveMetaData", self$ref, name)
+      #we need to reset the cache when adding a new meta data
+      private$.metaData <- NULL
     }
   ),
   private = list(
