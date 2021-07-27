@@ -102,7 +102,6 @@ Print the object to the console
 \if{latex}{\out{\hypertarget{method-addMetaData}{}}}
 \subsection{Method \code{addMetaData()}}{
 Adds a new entry to meta data list or changes its value if the name is already present.
-If \code{value} is \code{NULL}, the entry with corresponding name is deleted from meta data set.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataRepository$addMetaData(name, value)}\if{html}{\out{</div>}}
 }

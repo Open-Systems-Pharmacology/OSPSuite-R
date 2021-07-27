@@ -84,7 +84,6 @@ DataRepository <- R6::R6Class(
     },
     #' @description
     #' Adds a new entry to meta data list or changes its value if the name is already present.
-    #' If \code{value} is \code{NULL}, the entry with corresponding name is deleted from meta data set.
     #'
     #' @param name Name of new meta data list entry
     #' @param value Value of new meta data list entry
