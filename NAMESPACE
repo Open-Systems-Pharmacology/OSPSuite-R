@@ -2,6 +2,7 @@
 
 export(CompareBy)
 export(DataErrorType)
+export(DataSet)
 export(Gender)
 export(HumanPopulation)
 export(IndividualCharacteristics)

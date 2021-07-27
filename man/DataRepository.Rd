@@ -32,6 +32,8 @@ where the name is the name of the metaData and the value is the meta data value.
 \item \href{#method-addColumn}{\code{DataRepository$addColumn()}}
 \item \href{#method-new}{\code{DataRepository$new()}}
 \item \href{#method-print}{\code{DataRepository$print()}}
+\item \href{#method-addMetaData}{\code{DataRepository$addMetaData()}}
+\item \href{#method-removeMetaData}{\code{DataRepository$removeMetaData()}}
 }
 }
 \if{html}{
@@ -91,6 +93,43 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-addMetaData}{}}}
+\subsection{Method \code{addMetaData()}}{
+Adds a new entry to meta data list or changes its value if the name is already present.
+If \code{value} is \code{NULL}, the entry with corresponding name is deleted from meta data set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataRepository$addMetaData(name, value)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{Name of new meta data list entry}
+
+\item{\code{value}}{Value of new meta data list entry}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removeMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-removeMetaData}{}}}
+\subsection{Method \code{removeMetaData()}}{
+Removes the meta data entry in the list if one is defined with this name
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataRepository$removeMetaData(name)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{Name of meta data entry to delete}
 }
 \if{html}{\out{</div>}}
 }

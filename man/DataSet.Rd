@@ -5,11 +5,10 @@
 \alias{DataSet}
 \title{DataSet}
 \description{
-A wrapper around DataRepository exposing convenience methods to use and manipulate dataSets
-(typically observed data) containing an X column, a Y column and potentially an Error columns
+A class for storage of numerical x- and y-value pairs and optional error for y-values.
 }
-\section{Super class}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DataSet}
+\section{Super classes}{
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -20,19 +19,24 @@ A wrapper around DataRepository exposing convenience methods to use and manipula
 
 \item{\code{xUnit}}{Unit in which the xValues are defined}
 
-\item{\code{xValues}}{Values stored in the xUnit dimension (not necessarily in the base unit of the dimension)}
+\item{\code{xValues}}{Values stored in the xUnit. This field is read-only.}
 
-\item{\code{yDimension}}{Dimension in which the xValues are defined}
+\item{\code{yDimension}}{Dimension in which the yValues are defined}
 
 \item{\code{yUnit}}{Unit in which the yValues are defined}
 
-\item{\code{yValues}}{Values stored in the yUnit dimension (not necessarily in the base unit of the dimension)}
+\item{\code{yValues}}{Values stored in the yUnit. This field is read-only.}
 
-\item{\code{yErrorType}}{Type of the error - geometric or arithmetic}
+\item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
+When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100\%).
+When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.}
 
-\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined}
+\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
+for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.}
 
-\item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit}
+\item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.}
+
+\item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
 }
 \if{html}{\out{</div>}}
 }
@@ -40,12 +44,16 @@ A wrapper around DataRepository exposing convenience methods to use and manipula
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DataSet$new()}}
+\item \href{#method-addMetaData}{\code{DataSet$addMetaData()}}
+\item \href{#method-removeMetaData}{\code{DataSet$removeMetaData()}}
+\item \href{#method-setValues}{\code{DataSet$setValues()}}
 \item \href{#method-print}{\code{DataSet$print()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -61,12 +69,71 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap}
+\item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap.
+If \code{NULL}, an empty \code{DataRepository} is created.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{DotNetWrapper} object.
+A new \code{DataSet} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-addMetaData}{}}}
+\subsection{Method \code{addMetaData()}}{
+Adds a new entry to meta data list or changes its value if the name is already present.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataSet$addMetaData(name, value)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{Name of new meta data list entry}
+
+\item{\code{value}}{Value of new meta data list entry}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removeMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-removeMetaData}{}}}
+\subsection{Method \code{removeMetaData()}}{
+Removes the meta data entry in the list if one is defined with this name
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataSet$removeMetaData(name)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{Name of meta data entry to delete}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setValues"></a>}}
+\if{latex}{\out{\hypertarget{method-setValues}{}}}
+\subsection{Method \code{setValues()}}{
+Sets the xValues and yValues into the dataSet. Optionally also set the yErrorValues.
+Note: xValues, yValues and yErrorValues must have the same length
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataSet$setValues(xValues, yValues, yErrorValues = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xValues}}{xValues to use}
+
+\item{\code{yValues}}{yValues to use}
+
+\item{\code{yErrorValues}}{Optional error values associated with yValues}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

@@ -135,6 +135,9 @@ DataSet <- R6::R6Class(
     #' @description
     #' Sets the xValues and yValues into the dataSet. Optionally also set the yErrorValues.
     #' Note: xValues, yValues and yErrorValues must have the same length
+    #' @param xValues xValues to use
+    #' @param yValues yValues to use
+    #' @param yErrorValues Optional error values associated with yValues
     setValues = function(xValues, yValues, yErrorValues = NULL) {
       validateIsNumeric(xValues)
       validateIsNumeric(yValues)
