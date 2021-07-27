@@ -19,9 +19,9 @@ One column defined in a \code{DataRepository}
 
 \item{\code{unit}}{The base unit in which the values are defined (Read-Only)}
 
-\item{\code{displayUnit}}{The unit in which the values should be displayed (Read-Only)}
+\item{\code{displayUnit}}{The unit in which the values should be displayed}
 
-\item{\code{dimension}}{The dimension of the values  (Read-Only)}
+\item{\code{dimension}}{The dimension of the values}
 }
 \if{html}{\out{</div>}}
 }

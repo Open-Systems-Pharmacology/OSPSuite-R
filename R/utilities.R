@@ -72,3 +72,15 @@ toList <- function(object) {
   }
   return(list(object))
 }
+
+
+#' Retrieves the name of the constant in the specified enumeration that has the specified value.
+#'
+#' @inheritParams rClr::clrGetEnumNames
+#' @param enumValue The value of a particular enumerated constant in terms of its underlying type. Typically an integer.
+#'
+#' @return A string containing the name of the enumerated constant in enumType whose value is enumValue; or null if no such constant is found.
+netEnumName <- function(enumType, enumValue){
+  netTypeObj <- rClr::clrGetType("OSPSuite.Core.Domain.Data.AuxiliaryType")
+  rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
+}

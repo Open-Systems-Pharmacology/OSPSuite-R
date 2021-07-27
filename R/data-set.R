@@ -1,7 +1,15 @@
+#' Supported types of the error
+#' @include enum.R
+#' @export
+DataErrorType <- enum(c(
+  "ArithmeticStdDev",
+  "GeometricStdDev"
+))
+
 #' @title DataSet
 #' @docType class
-#' @description  A wrapper around DataRepository exposing convenience methods to use and manipulate dataSets
-#' (typically observed data) containing an X column, a Y column and potentially an Error columns
+#' @description  A class for storage of numerical x- and y-value pairs and optional error for y-values.
+#' @export
 #' @format NULL
 DataSet <- R6::R6Class(
   "DataSet",
@@ -11,38 +19,39 @@ DataSet <- R6::R6Class(
     #' @field name The name of the DataSet
     name = function(value) {
       if (missing(value)) {
-        return(self$dataRepository$name)
+        return(private$.dataRepository$name)
       }
-      self$dataRepository$name <- value
+      private$.dataRepository$name <- value
     },
     #' @field xDimension Dimension in which the xValues are defined
     xDimension = function(value) {
       if (missing(value)) {
         return(private$.xValues$dimension)
       }
-      private$setColumnDimension(private$.xValues, value)
+      private$.setColumnDimension(private$.xValues, value)
     },
     #' @field xUnit Unit in which the xValues are defined
     xUnit = function(value) {
       if (missing(value)) {
         return(private$.xValues$displayUnit)
       }
-      private$setColumnUnit(private$.xValues, value)
+      private$.setColumnUnit(private$.xValues, value)
     },
-    #' @field xValues Values stored in the xUnit dimension (not necessarily in the base unit of the dimension)
+    #' @field xValues Values stored in the xDimension dimension (not necessarily in the base unit)
     xValues = function(values) {
       if (missing(values)) {
-        return(private$getColumnValues(private$.xValues))
+        return(private$.getColumnValues(private$.xValues))
       }
 
-      private$setColumnValues(private$.xValues, values)
+      #TODO how to handle a situation when the lenght of new x values differs from the length of y values?
+      private$.setColumnValues(private$.xValues, values)
     },
-    #' @field yDimension Dimension in which the xValues are defined
+    #' @field yDimension Dimension in which the yValues are defined
     yDimension = function(value) {
       if (missing(value)) {
         return(private$.yValues$dimension)
       }
-      private$setColumnDimension(private$.yValues, value)
+      private$.setColumnDimension(private$.yValues, value)
     },
     #' @field yUnit Unit in which the yValues are defined
     yUnit = function(value) {
@@ -51,76 +60,166 @@ DataSet <- R6::R6Class(
       }
       private$.yValues$displayUnit <- value
     },
-    #' @field yValues Values stored in the yUnit dimension (not necessarily in the base unit of the dimension)
+    #' @field yValues Values stored in the yDimension dimension (not necessarily in the base unit)
     yValues = function(values) {
       if (missing(values)) {
-        return(private$getColumnValues(private$.yValues))
+        return(private$.getColumnValues(private$.yValues))
+      }
+      validateIsSameLength(self$xValues, values)
+      private$.setColumnValues(private$.yValues, values)
+    },
+
+    #' @field yErrorType Type of the error - geometric or arithmetic.
+    #' When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100%).
+    #' When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.
+    yErrorType = function(value) {
+      if (missing(value)) {
+        dataInfo <- rClr::clrGet(private$.yErrorValues$ref, "DataInfo")
+        errorTypeEnumVal <- rClr::clrGet(dataInfo, "AuxiliaryType")
+        return(netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
+      }
+      private$.setErrorType(value)
+    },
+    #' @field yErrorUnit Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
+    #' for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.
+    yErrorUnit = function(value) {
+      if (missing(value)) {
+        return(private$.yErrorValues$displayUnit)
+      }
+      private$.yErrorValues$displayUnit <- value
+    },
+    #' @field yErrorValues Values of error stored in the yErrorUnit unit
+    yErrorValues = function(values) {
+      if (missing(values)) {
+        return(private$.getColumnValues(private$.yErrorValues))
       }
 
-      private$setColumnValues(private$.yValues, values)
+      validateIsSameLength(self$yValues, values)
+      private$.setColumnValues(private$.yErrorValues, values)
+    },
+
+    #' @field metaData Returns a named list of meta data defined for the data set.
+    metaData = function(value) {
+      if (missing(value)) {
+        return(private$.dataRepository$metaData)
+      }
+      private$throwPropertyIsReadonly("metaData")
     }
   ),
   public = list(
-    dataRepository = NULL,
     #' @description
     #' Initialize a new instance of the class
-    #' @param dataRepository Instance of the \code{DataRepository} object to wrap
-    #' @return A new `DotNetWrapper` object.
+    #' @param dataRepository Instance of the \code{DataRepository} object to wrap.
+    #' If \code{NULL}, an empty \code{DataRepository} is created.
+    #' @return A new `DataSet` object.
     initialize = function(dataRepository = NULL) {
-      self$dataRepository <- dataRepository %||% private$createDataRepository()
-      private$initializeCache()
+      private$.dataRepository <- dataRepository %||% private$.createDataRepository()
+      private$.initializeCache()
     },
+
+    #' @description
+    #' Adds a new entry to meta data list or changes its value if the name is already present.
+    #' If \code{value} is \code{NULL}, the entry with corresponding name is deleted from meta data set.
+    #'
+    #' @param name Name of new meta data list entry
+    #' @param value Value of new meta data list entry
+    addMetaData = function(name, value) {
+      if (length(name) != 1) {
+        stop(messages$errorMultipleMetaDataEntries())
+      }
+      validateIsString(name)
+
+      # TODO
+    },
+
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
+      private$printLine("X dimension", c(self$xDimension))
+      private$printLine("X unit", c(self$xUnit))
+      private$printLine("Y dimension", c(self$yDimension))
+      private$printLine("Y unit", c(self$yUnit))
+      private$printLine("Error type", c(self$yErrorType))
+      private$printLine("Error unit", c(self$yErrorUnit))
+      private$printLine("Meta data", c(self$metaData))
       invisible(self)
     }
   ),
   private = list(
+    .dataRepository = NULL,
     .xValues = NULL,
     .yValues = NULL,
-    setColumnValues = function(column, values) {
+    .yErrorValues = NULL,
+    .setColumnValues = function(column, values) {
       # values are set in the display unit. We need to make sure we convert them to the base unit
       valuesInBaseUnit <- toBaseUnit(quantityOrDimension = column$dimension, values = values, unit = column$displayUnit)
       column$values <- valuesInBaseUnit
-      invisible()
+      invisible(self)
     },
-    getColumnValues = function(column) {
+    .getColumnValues = function(column) {
       # we need to convert the values in the display unit
       toUnit(quantityOrDimension = column$dimension, values = column$values, targetUnit = column$displayUnit)
     },
-    setColumnDimension = function(column, value){
+    .setColumnDimension = function(column, value){
       # no need to update anything if we are setting the same values
       if(column$dimension == value){
         return()
       }
 
       # save the values in their display unit before updating
-      values <- private$getColumnValues(column)
+      values <- private$.getColumnValues(column)
 
       #now we need to update dimension (display unit will be the default one as per .NET implementation)
       column$dimension <- value
 
-      private$setColumnValues(column, values)
+      private$.setColumnValues(column, values)
     },
-    setColumnUnit = function(column, unit){
+    .setColumnUnit = function(column, unit){
       # no need to update anything if we are setting the same values
       if(column$displayUnit == unit){
         return()
       }
 
       # save the values in their display unit before updating
-      values <- private$getColumnValues(column)
+      values <- private$.getColumnValues(column)
 
       #now we need to update dimension and display unit
       column$displayUnit <- unit
 
-      private$setColumnValues(column, values)
+      private$.setColumnValues(column, values)
     },
-    createDataRepository = function() {
-      # Create an empty data repository with a base grid and column
+    .setErrorType = function(errorType){
+      #If error type does not change, do nothing
+      if (errorType == self$yErrorType){
+        invisible(self)
+      }
+      browser()
+
+      validateEnumValue(errorType, DataErrorType)
+      column <- private$.yErrorValues
+      values <- private$.getColumnValues(column)
+
+      dataInfo <- rClr::clrGet(column$ref, "DataInfo")
+      rClr::clrSet(dataInfo, "AuxiliaryType", rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType))
+
+      # Geometric to arithmetic - set to the same dimension and unit as yValues
+      if (errorType == DataErrorType$ArithmeticStdDev){
+        private$.setColumnDimension(column, self$yDimension)
+        private$.setColumnUnit(column, self$yUnit)
+      }
+
+      # Arithmetic to geometric - set to dimensionless
+      if (errorType == DataErrorType$ArithmeticStdDev){
+        private$.setColumnDimension(column, ospDimensions$Dimensionless)
+      }
+
+      private$.setColumnValues(column, values)
+    },
+
+    .createDataRepository = function() {
+      # Create an empty data repository with a base grid and columns
       dataRepository <- DataRepository$new()
       # Passing time for dimension for now
       xValues <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.BaseGrid", "xValues", getDimensionByName(ospDimensions$Time)))
@@ -132,10 +231,21 @@ DataSet <- R6::R6Class(
       dataRepository$addColumn(yValues)
       return(dataRepository)
     },
-    initializeCache = function() {
-      private$.xValues <- self$dataRepository$baseGrid
+
+    .initializeCache = function() {
+      private$.xValues <- private$.dataRepository$baseGrid
       # TODO we need to be a bit more careful here
-      private$.yValues <- self$dataRepository$allButBaseGrid[[1]]
+      private$.yValues <- private$.dataRepository$allButBaseGrid[[1]]
+
+      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", private$.yValues$ref)
+      #If the repository does not have an error column, create a new one
+      if (is.null(netYErrorColumn)){
+        netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "AddErrorColumn", private$.yValues$ref, "yErrorValues", DataErrorType$ArithmeticStdDev)
+      }
+      yErrorColumn <- DataColumn$new(netYErrorColumn)
+      private$.dataRepository$addColumn(yErrorColumn)
+      private$.yErrorValues <- yErrorColumn
     }
   )
 )

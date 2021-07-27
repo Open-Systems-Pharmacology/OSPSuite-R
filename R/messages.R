@@ -88,6 +88,10 @@ messages <- list(
       callingFunction, ": argument '", argumentName,
       "' is a list with multiple values sets, but only one value set is allowed!"
     )
+  },
+
+  errorMultipleMetaDataEntries = function(optionalMessage = NULL) {
+    paste("Can only add a single meta data entry at once", optionalMessage)
   }
 )
 

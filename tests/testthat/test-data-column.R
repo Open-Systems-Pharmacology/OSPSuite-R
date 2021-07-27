@@ -11,6 +11,14 @@ test_that("it can set and retrieve the dimension of a data column", {
   expect_equal(baseGrid$dimension, ospDimensions$Amount)
 })
 
+test_that("it can retrieve the name of a data column", {
+  expect_equal(baseGrid$name, "baseGrid")
+})
+
+test_that("it can retrieve the base unit of a data column", {
+  expect_equal(baseGrid$unit, ospUnits$Time$min)
+})
+
 test_that("it can set and retrieve the display unit of a data column", {
   baseGrid$dimension <- ospDimensions$Time
   expect_equal(baseGrid$displayUnit, ospUnits$Time$h)
@@ -26,4 +34,8 @@ test_that("it can set and retrieve the values of the column", {
 test_that("it throws an error when setting a unit thast does not exist in the dimension", {
   baseGrid$dimension <- ospDimensions$Time
   expect_error(baseGrid$displayUnit <- ospUnits$Amount$mmol)
+})
+
+test_that("it can print a data column", {
+  expect_error(capture.output(print(column)), regexp = NA)
 })
