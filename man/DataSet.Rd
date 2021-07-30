@@ -36,6 +36,8 @@ for \code{yDimension}. For geometric error, the unit must be valid for \code{Dim
 
 \item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.}
 
+\item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
+
 \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
 }
 \if{html}{\out{</div>}}

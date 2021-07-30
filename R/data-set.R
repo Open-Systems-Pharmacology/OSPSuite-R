@@ -96,6 +96,19 @@ DataSet <- R6::R6Class(
       }
       private$throwPropertyIsReadonly("yErrorValues")
     },
+    #' @field molWeight Molecular weight of the yValues in g/mol
+    molWeight = function(value) {
+      dataInfo <- rClr::clrGet(private$.yColumn$ref, "DataInfo")
+      if (missing(value)) {
+        molWeight <- rClr::clrGet(dataInfo, "MolWeight")
+        if (is.null(molWeight)) {
+          return(NULL)
+        }
+        return(toUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = molWeight, targetUnit = ospUnits$`Molecular weight`$`g/mol`))
+      }
+
+      rClr::clrSet(dataInfo, "MolWeight", toBaseUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = value, unit = ospUnits$`Molecular weight`$`g/mol`))
+    },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {

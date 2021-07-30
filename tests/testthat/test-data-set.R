@@ -142,3 +142,13 @@ test_that("it does not crash when removing a meta data that does not exist", {
   expect_null(dataSet$metaData[["Meta"]])
 })
 
+test_that("empty molWeight", {
+  dataSet <- DataSet$new()
+  expect_equal(dataSet$molWeight, NULL)
+})
+
+test_that("it can get and set molWeight", {
+  dataSet <- DataSet$new()
+  dataSet$molWeight <- 123
+  expect_equal(dataSet$molWeight, 123)
+})
