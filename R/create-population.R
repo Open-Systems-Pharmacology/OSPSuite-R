@@ -25,8 +25,7 @@ createPopulation <- function(populationCharacteristics) {
       population = populationCharacteristics$population,
       age = 30
     )
-  }
-  else {
+  } else {
     # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an indiviual
     individualCharacteristics <- createIndividualCharacteristics(
       species = populationCharacteristics$species,

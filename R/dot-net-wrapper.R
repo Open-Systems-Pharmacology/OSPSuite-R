@@ -39,13 +39,12 @@ DotNetWrapper <- R6::R6Class(
           return()
         }
         if (isOfType(type = "character", object = value)) {
-          #isOfType returns TRUE for empty `object` and enc2utf8(value) fails
-          if (length(value) > 0){
+          # isOfType returns TRUE for empty `object` and enc2utf8(value) fails
+          if (length(value) > 0) {
             value <- enc2utf8(value)
           }
           rClr::clrSet(self$ref, propertyName, value)
-        }
-        else {
+        } else {
           rClr::clrSet(self$ref, propertyName, value)
         }
       }

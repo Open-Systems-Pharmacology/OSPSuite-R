@@ -31,6 +31,8 @@ dataSetToDataFrame <- function(dataSets) {
   yValue <- unlist(mapply(makeDataFrameColumn, dataSets, "yValues"))
   yErrorValues <- unlist(mapply(makeDataFrameColumn, dataSets, "yErrorValues"))
 
-  return(data.frame(name, xValue, yValue, yErrorValues, xDimension, xUnit, yDimension,
-                    yUnit, yErrorType, yErrorUnit, yMolWeight))
+  return(data.frame(
+    name, xValue, yValue, yErrorValues, xDimension, xUnit, yDimension,
+    yUnit, yErrorType, yErrorUnit, yMolWeight
+  ))
 }

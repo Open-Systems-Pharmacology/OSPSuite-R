@@ -80,4 +80,3 @@ test_that("It does not throw an exception when setting values for a quantity tha
   setQuantityValuesByPath(parameterPath, 100, sim, FALSE)
   expect_false(is.null(sim))
 })
-

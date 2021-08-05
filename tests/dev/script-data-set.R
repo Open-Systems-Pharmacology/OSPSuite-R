@@ -16,11 +16,10 @@ emptyDataSet <- DataSet$new()
 
 yVal <- emptyDataSet$yValues
 
-#this will be Time in min
+# this will be Time in min
 emptyDataSet$xValues <- c(1, 2, 3, 4, 5)
 emptyDataSet$xDimension <- ospDimensions$Amount
 
 dataSet <- DataSet$new()
 dataSet$addMetaData("Meta", "Value")
 expect_equal(dataSet$metaData[["Meta"]], "Value")
-

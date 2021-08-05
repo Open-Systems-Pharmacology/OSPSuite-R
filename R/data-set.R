@@ -51,8 +51,8 @@ DataSet <- R6::R6Class(
         return(private$.yColumn$dimension)
       }
       private$.setColumnDimension(private$.yColumn, value)
-      #Also update the dimension of yError
-      if (!is.null(private$.yErrorColumn)){
+      # Also update the dimension of yError
+      if (!is.null(private$.yErrorColumn)) {
         private$.setColumnDimension(private$.yErrorColumn, value)
       }
     },
@@ -78,7 +78,7 @@ DataSet <- R6::R6Class(
     #' In case no yError is defined, the value is \code{NULL} and cannot be changed
     yErrorType = function(value) {
       if (missing(value)) {
-        if (is.null(private$.yErrorColumn)){
+        if (is.null(private$.yErrorColumn)) {
           return(NULL)
         }
 
@@ -93,13 +93,13 @@ DataSet <- R6::R6Class(
     #' In case no yError is defined, the value is \code{NULL} and cannot be changed
     yErrorUnit = function(value) {
       if (missing(value)) {
-        #Do not have to check for NULL here becase NULL$something is NULL
+        # Do not have to check for NULL here becase NULL$something is NULL
         return(private$.yErrorColumn$displayUnit)
-    }
+      }
 
-    if (!is.null((private$.yErrorColumn))){
-      private$.yErrorColumn$displayUnit <- value
-    }
+      if (!is.null((private$.yErrorColumn))) {
+        private$.yErrorColumn$displayUnit <- value
+      }
       invisible(self)
     },
     #' @field yErrorValues Values of error stored in the yErrorUnit unit. This field is read-only.
@@ -108,7 +108,7 @@ DataSet <- R6::R6Class(
     #' Use \code{$setValues()} to change the values.
     yErrorValues = function(values) {
       if (missing(values)) {
-        if (is.null(private$.yErrorColumn)){
+        if (is.null(private$.yErrorColumn)) {
           return(NULL)
         }
 
@@ -184,8 +184,8 @@ DataSet <- R6::R6Class(
       private$.setColumnValues(column = private$.xColumn, xValues)
       private$.setColumnValues(column = private$.yColumn, yValues)
 
-      #yError column must be removed in case yError is NULL and there is a yErrorColumn already
-      if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)){
+      # yError column must be removed in case yError is NULL and there is a yErrorColumn already
+      if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
         dataRepositoryTask <- getNetTask("DataRepositoryTask")
         rClr::clrCall(dataRepositoryTask, "RemoveColumn", private$.dataRepository$ref, private$.yErrorColumn$ref)
         private$.yErrorColumn <- NULL
@@ -258,7 +258,7 @@ DataSet <- R6::R6Class(
       private$.setColumnValues(column, values)
     },
     .setErrorType = function(errorType) {
-      if (is.null(private$.yErrorColumn)){
+      if (is.null(private$.yErrorColumn)) {
         return(invisible(self))
       }
       # If error type does not change, do nothing
@@ -310,7 +310,6 @@ DataSet <- R6::R6Class(
         private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
       }
     },
-
     .createErrorColumnIfMissing = function() {
       if (!is.null(private$.yErrorColumn)) {
         return()

@@ -1,9 +1,9 @@
 context("DataColumn")
 
-createBaseGrid <- function(){
+createBaseGrid <- function() {
   DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.BaseGrid", "baseGrid", getDimensionByName(ospDimensions$Time)))
 }
-createColumn <- function(baseGrid){
+createColumn <- function(baseGrid) {
   DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.DataColumn", "column", getDimensionByName(ospDimensions$`Concentration (mass)`), baseGrid$ref))
 }
 
@@ -29,7 +29,7 @@ test_that("it can set and retrieve the display unit of a data column", {
   baseGrid$dimension <- ospDimensions$Time
   expect_equal(baseGrid$displayUnit, ospUnits$Time$h)
   baseGrid$displayUnit <- ospUnits$Time$`day(s)`
-  expect_equal(baseGrid$displayUnit,ospUnits$Time$`day(s)`)
+  expect_equal(baseGrid$displayUnit, ospUnits$Time$`day(s)`)
 })
 
 test_that("it can set and retrieve the values of the column", {

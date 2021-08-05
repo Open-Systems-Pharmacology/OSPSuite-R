@@ -245,7 +245,7 @@ getDimensionTask <- function() {
 #' @examples
 #' dim <- getDimensionByName("Time")
 #' @export
-getDimensionByName <- function(name){
+getDimensionByName <- function(name) {
   validateIsString(name)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(name))
