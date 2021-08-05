@@ -20,6 +20,7 @@ DataColumn <- R6::R6Class(
     },
     #' @field unit The base unit in which the values are defined (Read-Only)
     unit = function(value) {
+      value <- enc2utf8(value)
       private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
       return(private$.unit)
     },
@@ -28,6 +29,7 @@ DataColumn <- R6::R6Class(
       if (missing(value)) {
         return(private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value))
       }
+      value <- enc2utf8(value)
       dimension <- getDimensionByName(self$dimension)
       # we use the ignore case parameter set  to true so that we do not have to worry about casing when set via scripts
       unit <-  rClr::clrCall(dimension, "FindUnit", value, TRUE)
@@ -44,6 +46,7 @@ DataColumn <- R6::R6Class(
         }
         return(private$.dimension)
       }
+      value <- enc2utf8(value)
       # updating the dimension
       rClr::clrSet(self$ref, "Dimension", getDimensionByName(value))
       private$.dimension <- NULL
