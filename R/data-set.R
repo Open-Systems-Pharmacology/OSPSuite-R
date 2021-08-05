@@ -116,6 +116,19 @@ DataSet <- R6::R6Class(
       }
       private$throwPropertyIsReadonly("yErrorValues")
     },
+    #' @field molWeight Molecular weight of the yValues in g/mol
+    molWeight = function(value) {
+      dataInfo <- rClr::clrGet(private$.yColumn$ref, "DataInfo")
+      if (missing(value)) {
+        molWeight <- rClr::clrGet(dataInfo, "MolWeight")
+        if (is.null(molWeight)) {
+          return(NULL)
+        }
+        return(toUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = molWeight, targetUnit = ospUnits$`Molecular weight`$`g/mol`))
+      }
+
+      rClr::clrSet(dataInfo, "MolWeight", toBaseUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = value, unit = ospUnits$`Molecular weight`$`g/mol`))
+    },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {
@@ -171,14 +184,11 @@ DataSet <- R6::R6Class(
       private$.setColumnValues(column = private$.xColumn, xValues)
       private$.setColumnValues(column = private$.yColumn, yValues)
 
-      #TODO yError column must be removed in case yError is NULL and there is a yErrorColumn already
+      #yError column must be removed in case yError is NULL and there is a yErrorColumn already
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)){
-        ##Set yError values to NaN
-        # Adjust the basegrid of the error column
-
-        rClr::clrCall(private$.dataRepository$ref, "Add", private$.yErrorColumn$ref)
+        dataRepositoryTask <- getNetTask("DataRepositoryTask")
+        rClr::clrCall(dataRepositoryTask, "RemoveColumn", private$.dataRepository$ref, private$.yErrorColumn$ref)
         private$.yErrorColumn <- NULL
-        # TODO do we have to dispose the .NET object of the column somehow??
       }
 
       if (!is.null(yErrorValues)) {
@@ -198,6 +208,7 @@ DataSet <- R6::R6Class(
       private$printLine("Y unit", self$yUnit)
       private$printLine("Error type", self$yErrorType)
       private$printLine("Error unit", self$yErrorUnit)
+      private$printLine("Molecular weight", self$molWeight)
       private$printLine("Meta data")
       print(self$metaData)
       invisible(self)

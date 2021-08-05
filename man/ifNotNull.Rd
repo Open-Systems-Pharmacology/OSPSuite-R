@@ -7,17 +7,17 @@
 ifNotNull(condition, outputIfNotNull, outputIfNull = NULL)
 }
 \arguments{
+\item{condition}{argument 1}
+
 \item{outputIfNotNull}{argument 2}
 
 \item{outputIfNull}{argument 3}
-
-\item{inputToCheck}{argument 1}
 }
 \value{
-outputIfNotNull if inputToCheck is not null, outputIfNull otherwise
+outputIfNotNull if condition is not null, outputIfNull otherwise
 }
 \description{
-Check if inputToCheck is not null, if so output outputIfNotNull,
+Check if condition is not null, if so output outputIfNotNull,
 otherwise, output outputIfNull
 }
 \details{

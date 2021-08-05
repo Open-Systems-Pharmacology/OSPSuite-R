@@ -19,22 +19,31 @@ A class for storage of numerical x- and y-value pairs and optional error for y-v
 
 \item{\code{xUnit}}{Unit in which the xValues are defined}
 
-\item{\code{xValues}}{Values stored in the xUnit. This field is read-only.}
+\item{\code{xValues}}{Values stored in the xUnit. This field is read-only.
+Use \code{$setValues()} to change the values.}
 
 \item{\code{yDimension}}{Dimension in which the yValues are defined}
 
 \item{\code{yUnit}}{Unit in which the yValues are defined}
 
-\item{\code{yValues}}{Values stored in the yUnit. This field is read-only.}
+\item{\code{yValues}}{Values stored in the yUnit. This field is read-only.
+Use \code{$setValues()} to change the values.}
 
 \item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
 When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100\%).
-When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.}
+When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.
+In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
 \item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
-for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.}
+for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.
+In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
-\item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.}
+\item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.
+Use \code{$setValues()} to change the values.
+In case no yError is defined, the value is \code{NULL} and cannot be changed.
+Use \code{$setValues()} to change the values.}
+
+\item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
 
 \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
 }
@@ -118,7 +127,7 @@ Removes the meta data entry in the list if one is defined with this name
 \if{html}{\out{<a id="method-setValues"></a>}}
 \if{latex}{\out{\hypertarget{method-setValues}{}}}
 \subsection{Method \code{setValues()}}{
-Sets the xValues and yValues into the dataSet. Optionally also set the yErrorValues.
+Sets the xValues, yValues, and (optionally) yErrorValuues into the dataSet.
 Note: xValues, yValues and yErrorValues must have the same length
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataSet$setValues(xValues, yValues, yErrorValues = NULL)}\if{html}{\out{</div>}}

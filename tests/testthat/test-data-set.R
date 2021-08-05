@@ -151,7 +151,9 @@ test_that("it can update x and y values and remove y error", {
   dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
   dataSet$setValues(xValues= c(1, 2, 3), yValues = c(10, 20, 30))
 
-  expect_equal(dataSet$yErrorValues,NULL)
+  expect_equal(dataSet$yErrorValues, NULL)
+  dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
 })
 
 test_that("it can add a new meta data", {
@@ -180,9 +182,16 @@ test_that("it does not crash when removing a meta data that does not exist", {
   expect_null(dataSet$metaData[["Meta"]])
 })
 
+test_that("empty molWeight", {
+  dataSet <- DataSet$new()
+  expect_equal(dataSet$molWeight, NULL)
+})
 
-
-
+test_that("it can get and set molWeight", {
+  dataSet <- DataSet$new()
+  dataSet$molWeight <- 123
+  expect_equal(dataSet$molWeight, 123)
+})
 
 context("DataSet from pkml without error")
 obsDataFile <- getTestDataFilePath("obs_data_no_error.pkml")
@@ -195,7 +204,6 @@ test_that("it can create a new data set from an existing repository", {
 
 context("DataSet from pkml with error")
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
-obsData <- loadDataRepositoryFromPKML(obsDataFile)
 
 xValues <- c(1.79999995231628, 4.86999988555908, 10.1999998092651,
              30, 60, 120, 240)
@@ -210,6 +218,7 @@ metaData <- list(Source = "C:\\temp\\RanorexTestData\\ObservedData.xlsx",
                  IntegerValue = 4)
 
 test_that("it can create a new data set from an existing repository", {
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   expect_equal(dataSet$xValues, xValues)
   expect_equal(dataSet$yValues, yValues)
@@ -227,84 +236,49 @@ test_that("it can create a new data set from an existing repository", {
 })
 
 test_that("it can set the name of the data set", {
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$name <- "TOTO"
   expect_equal(dataSet$name, "TOTO")
 })
 
 test_that("it can update the dimension of the xValues and this does not change the returned value", {
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$xDimension <- ospDimensions$Ampere
   expect_equal(dataSet$xValues,xValues, tolerance)
   expect_equal(dataSet$xUnit, ospUnits$Ampere$A)
 })
 
-
 test_that("it can update x and y values and remove y error", {
-  dataSet <- DataSet$new()
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  dataSet <- DataSet$new(obsData)
   dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
-  expect_equal(dataSet$yErrorValues,NULL)
-})
-
-test_that("it does not crash when setting yErrorType without error values", {
-  dataSet <- DataSet$new()
-  dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
-  dataSet$yErrorType <- DataErrorType$GeometricStdDev
-  expect_equal(dataSet$yErrorType, NULL)
+  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance)
+  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
+  expect_equal(dataSet$yErrorValues, NULL)
 })
 
 test_that("it does not change the unit of yError when setting to the currently set error type", {
-  dataSet <- DataSet$new()
-  dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  dataSet <- DataSet$new(obsData)
   dataSet$yErrorUnit <- ospUnits$`Concentration (mass)`[[2]]
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration (mass)`[[2]])
 })
 
 test_that("arithmetic to geometric error changes the dimension of yError", {
-  dataSet <- DataSet$new()
-  dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  dataSet <- DataSet$new(obsData)
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
+  expect_equal(dataSet$yErrorValues, yError, tolerance)
   expect_equal(dataSet$yErrorUnit, "")
 })
 
-test_that("geometric to arithmetic error sets the dimension and unit of yError to those of yValues", {
-  dataSet <- DataSet$new()
-  dataSet$setValues(xValues= c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$yUnit <- ospUnits$`Concentration (mass)`[[2]]
-  expect_equal(dataSet$yUnit, ospUnits$`Concentration (mass)`[[2]])
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration (mass)`[[1]])
-  dataSet$yErrorType <- DataErrorType$GeometricStdDev
-  dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
-  expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration (mass)`[[2]])
-})
-
 test_that("it can add a new meta data", {
-  dataSet <- DataSet$new()
+  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  dataSet <- DataSet$new(obsData)
   dataSet$addMetaData("Meta", "Value")
   expect_equal(dataSet$metaData[["Meta"]], "Value")
-})
-
-test_that("it can update existing meta data", {
-  dataSet <- DataSet$new()
-  dataSet$addMetaData("Meta", "Value")
-  dataSet$addMetaData("Meta", "Value2")
-  expect_equal(dataSet$metaData[["Meta"]], "Value2")
-})
-
-test_that("it can remove existing meta data", {
-  dataSet <- DataSet$new()
-  dataSet$addMetaData("Meta", "Value")
-  dataSet$removeMetaData("Meta")
-  expect_null(dataSet$metaData[["Meta"]])
-})
-
-test_that("it does not crash when removing a meta data that does not exist", {
-  dataSet <- DataSet$new()
-  dataSet$removeMetaData("Meta")
-  expect_null(dataSet$metaData[["Meta"]])
 })

@@ -7,7 +7,7 @@
 getDimensionByName(name)
 }
 \arguments{
-\item{dimension}{Name of dimension that should be retrieved}
+\item{name}{Name of dimension that should be retrieved}
 }
 \description{
 Returns the an instance of the dimension with the given name if found or NULL otherwise

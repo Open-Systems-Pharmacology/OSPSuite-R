@@ -240,7 +240,7 @@ getDimensionTask <- function() {
 
 #' Returns the an instance of the dimension with the given name if found or NULL otherwise
 #'
-#' @param dimension Name of dimension that should be retrieved
+#' @param name Name of dimension that should be retrieved
 #'
 #' @examples
 #' dim <- getDimensionByName("Time")

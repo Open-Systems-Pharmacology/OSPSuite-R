@@ -34,12 +34,12 @@ toObjectType <- function(netObject, class) {
 #' output the argument 2 if not null, or output argument 3 otherwise
 #'
 #' @title ifnotnull
-#' @param inputToCheck argument 1
+#' @param condition argument 1
 #' @param outputIfNotNull argument 2
 #' @param outputIfNull argument 3
-#' @return outputIfNotNull if inputToCheck is not null, outputIfNull otherwise
+#' @return outputIfNotNull if condition is not null, outputIfNull otherwise
 #' @description
-#' Check if inputToCheck is not null, if so output outputIfNotNull,
+#' Check if condition is not null, if so output outputIfNotNull,
 #' otherwise, output outputIfNull
 ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
   if (!is.null(condition)) {

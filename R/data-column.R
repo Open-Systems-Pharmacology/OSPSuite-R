@@ -20,7 +20,9 @@ DataColumn <- R6::R6Class(
     },
     #' @field unit The base unit in which the values are defined (Read-Only)
     unit = function(value) {
-      value <- enc2utf8(value)
+      if (!missing(value)){
+        value <- enc2utf8(value)
+      }
       private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
       return(private$.unit)
     },
