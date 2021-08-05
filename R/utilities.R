@@ -30,12 +30,17 @@ toObjectType <- function(netObject, class) {
 }
 
 
-#' Mimic the ternary operator  \code{a ? x : y} behavior in other languages
-#' If \code{condition} is not null, returns \code{outputIfNotNull} otherwise \code{outputIfNull}
+#' Shortkey checking if argument 1 is not null,
+#' output the argument 2 if not null, or output argument 3 otherwise
 #'
-#' @param condition The .NET object instances (single or list) to wrap
-#' @param outputIfNotNull The class definition that will be used to convert the parameter
-#' @param outputIfNull The class definition that will be used to convert the parameter
+#' @title ifnotnull
+#' @param condition argument 1
+#' @param outputIfNotNull argument 2
+#' @param outputIfNull argument 3
+#' @return outputIfNotNull if condition is not null, outputIfNull otherwise
+#' @description
+#' Check if condition is not null, if so output outputIfNotNull,
+#' otherwise, output outputIfNull
 ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
   if (!is.null(condition)) {
     outputIfNotNull
@@ -66,4 +71,16 @@ toList <- function(object) {
     return(object)
   }
   return(list(object))
+}
+
+
+#' Retrieves the name of the constant in the specified enumeration that has the specified value.
+#'
+#' @inheritParams rClr::clrGetEnumNames
+#' @param enumValue The value of a particular enumerated constant in terms of its underlying type. Typically an integer.
+#'
+#' @return A string containing the name of the enumerated constant in enumType whose value is enumValue; or null if no such constant is found.
+netEnumName <- function(enumType, enumValue) {
+  netTypeObj <- rClr::clrGetType(enumType)
+  rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }

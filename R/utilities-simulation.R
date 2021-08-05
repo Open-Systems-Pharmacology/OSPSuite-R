@@ -115,8 +115,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
     # The population object must be present otherwise, this is an error => nullAllowed is FALSE
     population <- population$population
     validateIsOfType(population, Population)
-  }
-  else {
+  } else {
     validateIsOfType(population, Population, nullAllowed = TRUE)
   }
   validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)

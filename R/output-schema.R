@@ -59,8 +59,7 @@ OutputSchema <- R6::R6Class(
       validateIsNumeric(timePoints)
       if (length(timePoints) > 1) {
         rClr::clrCall(self$ref, "AddTimePoints", timePoints)
-      }
-      else {
+      } else {
         rClr::clrCall(self$ref, "AddTimePoint", timePoints)
       }
       invisible(self)

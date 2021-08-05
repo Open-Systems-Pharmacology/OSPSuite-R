@@ -85,8 +85,7 @@ setQuantityValues <- function(quantities, values) {
 
   if (length(values) > 1) {
     validateIsSameLength(quantities, values)
-  }
-  else {
+  } else {
     values <- rep(values, length(quantities))
   }
 

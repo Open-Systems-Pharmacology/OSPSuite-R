@@ -62,21 +62,16 @@ Formula <- R6::R6Class(
     printFormula = function() {
       if (self$isConstant) {
         private$printLine("isConstant", TRUE)
-      }
-      else if (self$isExplicit) {
+      } else if (self$isExplicit) {
         private$printLine("isFormula", TRUE)
         private$printLine("formula", self$formulaString)
-      }
-      else if (self$isTable) {
+      } else if (self$isTable) {
         private$printLine("isTable", TRUE)
-      }
-      else if (self$isDistributed) {
+      } else if (self$isDistributed) {
         private$printLine("isDistributed", TRUE)
-      }
-      else if (self$isTableWithOffSet) {
+      } else if (self$isTableWithOffSet) {
         private$printLine("isTableWithOffSet", TRUE)
-      }
-      else if (self$isTableWithXArgument) {
+      } else if (self$isTableWithXArgument) {
         private$printLine("isTableWithXArgument", TRUE)
       }
       invisible(self)
