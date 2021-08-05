@@ -47,6 +47,10 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))
   objectTypes <- typeNamesFrom(type)
+  # Object name is one frame further for functions such as ValidateIsNumeric
+  if(grepl(pattern = "validateIs", x = as.character(sys.call(-1)[[1]]))){
+    objectName <- deparse(substitute(object, sys.frame(-1)))
+  }
 
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }

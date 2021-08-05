@@ -64,19 +64,21 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
   validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   pkParameterResultsFilePath <- tempfile()
-  dataFrame <- tryCatch(
-    {
-      exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
-      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = readr::cols())
-      colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
-      pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
-      pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
-      pkResultsDataFrame$Unit <- as.factor(pkResultsDataFrame$Unit)
-      return(pkResultsDataFrame)
-    },
-    finally = {
-      file.remove(pkParameterResultsFilePath)
-    }
+  dataFrame <- tryCatch({
+    exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
+    colTypes <- list(
+      IndividualId = readr::col_integer(),
+      QuantityPath = readr::col_factor(),
+      Parameter = readr::col_factor(),
+      Value = readr::col_double(),
+      Unit = readr::col_factor()
+    )
+    pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = colTypes)
+    return(pkResultsDataFrame)
+  },
+  finally = {
+    file.remove(pkParameterResultsFilePath)
+  }
   )
   return(dataFrame)
 }
