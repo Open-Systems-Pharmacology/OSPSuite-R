@@ -10,22 +10,34 @@
 # Overview
 The **ospsuite-R** package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Known issues](#known-issues)
+- [Code of conduct](#code-of-conduct)
+- [Contribution](#contribution)
+- [Licence](#licence)
+
 # Installation
 
 The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.x of R. One of its dependency, **rClr** needs to be installed specifically for the targeted R version. Please follow the installation instructions below:
 
 
 **ospsuite** requires following packages to be installed:
+
+From CRAN:
 - [R6](https://github.com/r-lib/R6)
-- rClr
-  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
-  - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
 - [stringr](https://cran.r-project.org/web/packages/stringr/)
 - [readr](https://cran.r-project.org/web/packages/readr/index.html)
 
+Must be downloaded manually:
+- rClr
+  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
+  - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+
+
 
 ## Under Windows
-The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases). The package `R6` can be installed from CRAN.
+The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 
 The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
 
@@ -97,15 +109,19 @@ To open a specific vignette, call
 vignette("introduction-ospsuite")
 ```
 
-## Code of conduct
+# Known issues
+
+- **RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating .NET objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore .RData into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
+
+# Code of conduct
 
 Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc...) is expected to follow the Open Systems Pharmacology [code of conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
 
-## Contribution
+# Contribution
 
 We encourage contribution to the Open Systems Pharmacology community. Before getting started please read the [contribution guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md). If you are contributing code, please be familiar with the [coding standards](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING_STANDARDS_R.md).
 
-## License
+# License
 
 OSPSuite-R is released under the [GPLv2 License](LICENSE).
 
