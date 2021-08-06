@@ -23,16 +23,20 @@ The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.
 
 
 **ospsuite** requires following packages to be installed:
+From CRAN:
 - [R6](https://github.com/r-lib/R6)
-- rClr
-  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
-  - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
 - [stringr](https://cran.r-project.org/web/packages/stringr/)
 - [readr](https://cran.r-project.org/web/packages/readr/index.html)
 
+Must be downloaded manually:
+- rClr
+  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
+  - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+
+
 
 ## Under Windows
-The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases). The package `R6` can be installed from CRAN.
+The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 
 The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
 
