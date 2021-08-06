@@ -23,6 +23,7 @@ The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.
 
 
 **ospsuite** requires following packages to be installed:
+
 From CRAN:
 - [R6](https://github.com/r-lib/R6)
 - [stringr](https://cran.r-project.org/web/packages/stringr/)
