@@ -129,6 +129,18 @@ DataSet <- R6::R6Class(
 
       rClr::clrSet(dataInfo, "MolWeight", toBaseUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = value, unit = ospUnits$`Molecular weight`$`g/mol`))
     },
+    #' @field lloq LLOQ value in yUnit associated with the yValues
+    lloq = function(value){
+       dataInfo <- rClr::clrGet(private$.yColumn$ref, "DataInfo")
+      if (missing(value)) {
+        lloq <- rClr::clrGet(dataInfo, "LLOQAsDouble")
+        if (is.null(lloq)) {
+          return(NULL)
+        }
+      return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
+      }
+      rClr::clrSet(dataInfo, "LLOQAsDouble", toBaseUnit(quantityOrDimension =private$.yColumn$dimension, values = value, unit =  private$.yColumn$displayUnit))
+    },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {
@@ -209,6 +221,7 @@ DataSet <- R6::R6Class(
       private$printLine("Error type", self$yErrorType)
       private$printLine("Error unit", self$yErrorUnit)
       private$printLine("Molecular weight", self$molWeight)
+      private$printLine("LLOQ", self$lloq)
       private$printLine("Meta data")
       print(self$metaData)
       invisible(self)
