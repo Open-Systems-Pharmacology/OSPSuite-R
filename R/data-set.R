@@ -198,6 +198,18 @@ DataSet <- R6::R6Class(
     },
 
     #' @description
+    #' Save the \code{DataSet} to a pkml file that can be loaded by MoBi
+    #' @param filePath Path to the location (incl. file name)
+    saveToPKML = function(filePath){
+      validateIsString(filePath)
+      filePath <- expandPath(filePath)
+      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      rClr::clrCall(dataRepositoryTask, "SaveDataRepository", private$.dataRepository$ref, filePath)
+
+      invisible(self)
+    },
+
+    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
