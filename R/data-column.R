@@ -53,6 +53,28 @@ DataColumn <- R6::R6Class(
       rClr::clrSet(self$ref, "Dimension", getDimensionByName(value))
       private$.dimension <- NULL
       private$.unit <- NULL
+    },
+    #' @field molWeight Molecular weight of associated observed data in internal unit
+    #' In no molecular weight is defined, the value is \code{NULL}
+    molWeight = function(value) {
+      dataInfo <- rClr::clrGet(self$ref, "DataInfo")
+      if (missing(value)) {
+        return(rClr::clrGet(dataInfo, "MolWeight"))
+      }
+
+      validateIsNumeric(value)
+      rClr::clrSet(dataInfo, "MolWeight", value)
+    },
+    #' @field LLOQ Lower Limit Of Quantification.
+    #' In no LLOQ is defined, the value is \code{NULL}
+    LLOQ = function(value) {
+      dataInfo <- rClr::clrGet(self$ref, "DataInfo")
+      if (missing(value)) {
+        return(rClr::clrGet(dataInfo, "LLOQAsDouble"))
+      }
+
+      validateIsNumeric(value)
+      rClr::clrSet(dataInfo, "LLOQAsDouble", value)
     }
   ),
   public = list(

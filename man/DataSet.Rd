@@ -45,7 +45,8 @@ Use \code{$setValues()} to change the values.}
 
 \item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
 
-\item{\code{lloq}}{LLOQ value in yUnit associated with the yValues}
+\item{\code{LLOQ}}{LLOQ Lower Limit Of Quantification.
+Value in yUnit associated with the yValues}
 
 \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
 }

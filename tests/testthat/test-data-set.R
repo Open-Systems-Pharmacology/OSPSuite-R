@@ -295,6 +295,6 @@ test_that("it can add a new meta data", {
 test_that("it can set the llog value a new meta data", {
   obsData <- loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
-  dataSet$lloq <- 0.25
-  expect_equal(dataSet$lloq, 0.25, tolerance)
+  dataSet$LLOQ <- 0.25
+  expect_equal(dataSet$LLOQ, 0.25, tolerance)
 })
