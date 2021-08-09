@@ -118,16 +118,28 @@ DataSet <- R6::R6Class(
     },
     #' @field molWeight Molecular weight of the yValues in g/mol
     molWeight = function(value) {
-      dataInfo <- rClr::clrGet(private$.yColumn$ref, "DataInfo")
       if (missing(value)) {
-        molWeight <- rClr::clrGet(dataInfo, "MolWeight")
+        molWeight <- private$.yColumn$molWeight
         if (is.null(molWeight)) {
           return(NULL)
         }
         return(toUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = molWeight, targetUnit = ospUnits$`Molecular weight`$`g/mol`))
       }
 
-      rClr::clrSet(dataInfo, "MolWeight", toBaseUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = value, unit = ospUnits$`Molecular weight`$`g/mol`))
+      private$.yColumn$molWeight <- toBaseUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = value, unit = ospUnits$`Molecular weight`$`g/mol`)
+    },
+    #' @field LLOQ LLOQ Lower Limit Of Quantification.
+    #' Value in yUnit associated with the yValues
+    LLOQ = function(value) {
+      if (missing(value)) {
+        # Value in base unit
+        lloq <- private$.yColumn$LLOQ
+        if (is.null(lloq)) {
+          return(NULL)
+        }
+        return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
+      }
+      private$.yColumn$LLOQ <- toBaseUnit(quantityOrDimension = private$.yColumn$dimension, values = value, unit = private$.yColumn$displayUnit)
     },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
@@ -209,6 +221,7 @@ DataSet <- R6::R6Class(
       private$printLine("Error type", self$yErrorType)
       private$printLine("Error unit", self$yErrorUnit)
       private$printLine("Molecular weight", self$molWeight)
+      private$printLine("LLOQ", self$LLOQ)
       private$printLine("Meta data")
       print(self$metaData)
       invisible(self)
