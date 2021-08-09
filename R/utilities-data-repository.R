@@ -8,8 +8,7 @@
 #'
 #' obsData <- loadDataRepositoryFromPKML(filePath)
 #' metaData <- obsData$metaData
-#' @export
-loadDataRepositoryFromPKML <- function(filePath) {
+.loadDataRepositoryFromPKML <- function(filePath) {
   validateIsString(filePath)
   filePath <- expandPath(filePath)
   dataRepositoryTask <- getNetTask("DataRepositoryTask")
