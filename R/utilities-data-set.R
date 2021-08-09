@@ -8,6 +8,22 @@
   }
 }
 
+#' Loads data (typically observed data) from a PKML file and creates a \code{DataSet} from it.
+#' The pkml files are typically exported from PK-Sim or MoBi.
+#'
+#' @param filePath Full path of pkml file containing the observed data to load
+#'
+#' @examples
+#' filePath <- system.file("extdata", "obs_data.pkml", package = "ospsuite")
+#'
+#' obsData <- loadDataSetFromPKML(filePath)
+#' @export
+loadDataSetFromPKML <- function(filePath) {
+  dataRepository <- .loadDataRepositoryFromPKML(filePath)
+  return(DataSet$new(dataRepository))
+}
+
+
 #' Converts a list of DataSet objects to a data.frame
 #'
 #' @param dataSets A list of DataSet objects or a single DataSet

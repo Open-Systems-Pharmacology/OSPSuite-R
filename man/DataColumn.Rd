@@ -22,6 +22,12 @@ One column defined in a \code{DataRepository}
 \item{\code{displayUnit}}{The unit in which the values should be displayed}
 
 \item{\code{dimension}}{The dimension of the values}
+
+\item{\code{molWeight}}{Molecular weight of associated observed data in internal unit
+In no molecular weight is defined, the value is \code{NULL}}
+
+\item{\code{LLOQ}}{Lower Limit Of Quantification.
+In no LLOQ is defined, the value is \code{NULL}}
 }
 \if{html}{\out{</div>}}
 }
