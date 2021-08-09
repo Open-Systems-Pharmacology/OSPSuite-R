@@ -2,12 +2,6 @@
 #' The pkml files are typically exported from PK-Sim or MoBi
 #'
 #' @param filePath Full path of pkml file containing the observed data to load
-#'
-#' @examples
-#' filePath <- system.file("extdata", "obs_data.pkml", package = "ospsuite")
-#'
-#' obsData <- loadDataRepositoryFromPKML(filePath)
-#' metaData <- obsData$metaData
 .loadDataRepositoryFromPKML <- function(filePath) {
   validateIsString(filePath)
   filePath <- expandPath(filePath)

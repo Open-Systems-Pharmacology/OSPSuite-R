@@ -1,7 +1,7 @@
 context("DataRepository")
 
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
-obsData <- loadDataRepositoryFromPKML(obsDataFile)
+obsData <- .loadDataRepositoryFromPKML(obsDataFile)
 
 test_that("it can set the name of the data repository", {
   obsData$name <- "toto"
