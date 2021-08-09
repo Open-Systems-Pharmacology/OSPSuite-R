@@ -19,10 +19,7 @@
 #' obsData <- loadDataSetFromPKML(filePath)
 #' @export
 loadDataSetFromPKML <- function(filePath) {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
-  dataSet <- DataSet$new(obsData)
-
-  dataRepository <- loadDataRepositoryFromPKML(filePath)
+  dataRepository <- .loadDataRepositoryFromPKML(filePath)
   return(DataSet$new(dataRepository))
 }
 
