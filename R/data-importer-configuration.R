@@ -17,25 +17,21 @@ DataImporterConfiguration <- R6::R6Class(
       #TODO set time column name
     },
 
-    #' @field timeColumnDimension Dimension of the values in time column
-    timeColumnDimension = function(value){
-      if (missing(value)) {
-        #TODO get time column dimension
-        return()
-      }
-      #TODO set time column dimension
-      #TODO from column?
-    },
-
-    #' @field timeColumnUnit Unit of the values in time column
-    timeColumnUnit = function(value){
+    #' @field timeUnit If \code{timeUnitFromColumn} is \code{FALSE}, unit of the values in time column
+    #' If \code{timeUnitFromColumn} is \code{TRUE}, name of the column with the unit of the values in time column
+    timeUnit = function(value){
       if (missing(value)) {
         #TODO get time column unit
         return()
       }
       #TODO set time column unit
-      #TODO from column?
     },
+
+    #' @field timeUnitFromColumn If \code{TRUE}, units of the values in time column
+    #' are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined by
+    #' \code{timeUnit}.
+    timeUnitFromColumn = function(value){
+    }
 
     #' @field measurementColumn Name of the column for measurement values
     measurementColumn = function(value){
@@ -46,24 +42,31 @@ DataImporterConfiguration <- R6::R6Class(
       #TODO set measurement column name
     },
 
-    #' @field measurementColumnDimension Dimension of the values in measurement column
-    measurementColumnDimension = function(value){
+    #' @field measurementDimension If \code{measurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
+    #' If \code{measurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit}
+    #'
+    measurementDimension = function(value){
       if (missing(value)) {
         #TODO get measurement column dimension
         return()
       }
       #TODO set measurement column dimension
-      #TODO from column?
     },
 
-    #' @field measurementColumnUnit Unit of the values in measurement column
-    measurementColumnUnit = function(value){
+    #' @field measurementUnit If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
+    #' If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with the unit of the values in measurement column
+    measurementUnit = function(value){
       if (missing(value)) {
         #TODO get measurement column unit
         return()
       }
       #TODO set measurement column unit
-      #TODO from column?
+    },
+
+    #' @field measurementUnitFromColumn If \code{TRUE}, units of the values in measurement column
+    #' are defined in the column \code{measurementUnit}. If \code{FALSE}, the unit is defined by
+    #' \code{measurementUnit}.
+    measurementUnitFromColumn = function(value){
     },
 
     #' @field errorColumn Name of the column for measurement error values
