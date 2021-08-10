@@ -23,7 +23,6 @@ loadDataSetFromPKML <- function(filePath) {
   return(DataSet$new(dataRepository))
 }
 
-
 #' Converts a list of DataSet objects to a data.frame
 #'
 #' @param dataSets A list of DataSet objects or a single DataSet
