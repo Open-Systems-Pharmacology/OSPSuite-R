@@ -293,20 +293,20 @@ test_that("it can add a new meta data", {
 })
 
 test_that("it can set the llog value", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$LLOQ <- 0.25
   expect_equal(dataSet$LLOQ, 0.25, tolerance)
 })
 
 test_that("it can save the data set as pkml", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   filePath <- getTestDataFilePath("obs_data_save.pkml")
 
   dataSet$saveToPKML(filePath = filePath)
   #load the saved file and check everything is correct
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
 
   expect_equal(dataSet$xValues, xValues)
