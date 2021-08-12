@@ -6,7 +6,7 @@
 \title{Standard PK-Parameters types defined in OSPSuite
 This is only used to defined how a user defined PK Parameter should be calculated}
 \format{
-An object of class \code{list} of length 22.
+An object of class \code{list} of length 23.
 }
 \usage{
 StandardPKParameter
