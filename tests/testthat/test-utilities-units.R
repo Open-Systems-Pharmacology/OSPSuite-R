@@ -9,6 +9,17 @@ test_that("It can convert from a value in base unit to a target unit", {
   expect_equal(toUnit(par, 1, "l"), 1)
 })
 
+test_that("It can convert NULL in base unit to NULL", {
+  expect_null(toUnit(par, NULL, "ml"))
+  expect_identical(toUnit(par, c(NULL, NULL), "ml"), c(NULL, NULL))
+})
+
+test_that("It can convert NA in base unit to NA", {
+  expect_equal(toUnit(par, NA, "ml"), NA)
+  expect_identical(toUnit(par, c(NA, NA), "ml"), c(NA, NA))
+})
+
+
 test_that("It can convert from one given value in base unit to a target unit when the molweight is defined as NA but not required", {
   expect_equal(toUnit(par, 1, "ml", molWeight = NULL), 1000)
   expect_equal(toUnit(par, 1, "l", molWeight = NA), 1)
@@ -59,7 +70,6 @@ test_that("It can convert from one given value in a unit to a base unit when the
   expect_equal(toBaseUnit(par, 100, "l", molWeight = NA), 100)
 })
 
-
 test_that("It can convert from a value in mass to a value in mol using a molweight parameter", {
   molWeight <- 50 # 50kg/umol
   expect_equal(toBaseUnit("Amount", 500, "kg", molWeight), 10)
@@ -73,6 +83,15 @@ test_that("It throws an exception when converting to a unit that is not suppored
   expect_that(toBaseUnit(par, 1000, "kg"), throws_error())
 })
 
+test_that("It can convert NULL in unit to NULL", {
+  expect_null(toBaseUnit(par, NULL, "ml"))
+  expect_identical(toBaseUnit(par, c(NULL, NULL), "ml"), c(NULL, NULL))
+})
+
+test_that("It can convert NA in unit to NA", {
+  expect_equal(toBaseUnit(par, NA, "ml"), NA)
+  expect_identical(toBaseUnit(par, c(NA, NA), "ml"), c(NA, NA))
+})
 
 test_that("It does not change the value of the quantity when converting to another unit", {
   par$value <- 5
