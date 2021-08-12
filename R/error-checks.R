@@ -93,7 +93,7 @@ validateIsString <- function(object, nullAllowed = FALSE) {
 
 validateIsNumeric <- function(object, nullAllowed = FALSE) {
   # Only NA values. It is numeric
-  if (all(is.na(object))) {
+  if (all(is.na(object)) && !any(is.null(object))) {
     return()
   }
 
