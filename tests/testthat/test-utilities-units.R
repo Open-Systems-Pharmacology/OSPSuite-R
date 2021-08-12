@@ -93,6 +93,10 @@ test_that("It can convert NA in unit to NA", {
   expect_identical(toBaseUnit(par, c(NA, NA), "ml"), c(NA, NA))
 })
 
+test_that("It can convert from an array of values with NULL entrues in a unit to base unit", {
+  expect_equal(toBaseUnit(par, c(1000, 2000, 3000, NULL), "ml"), c(1, 2, 3, NULL))
+})
+
 test_that("It does not change the value of the quantity when converting to another unit", {
   par$value <- 5
   toBaseUnit(par, 1000, "ml")
