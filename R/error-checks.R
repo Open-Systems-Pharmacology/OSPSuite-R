@@ -48,7 +48,7 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   objectName <- deparse(substitute(object))
   objectTypes <- typeNamesFrom(type)
   # Object name is one frame further for functions such as ValidateIsNumeric
-  if(grepl(pattern = "validateIs", x = as.character(sys.call(-1)[[1]]))){
+  if (grepl(pattern = "validateIs", x = as.character(sys.call(-1)[[1]]))) {
     objectName <- deparse(substitute(object, sys.frame(-1)))
   }
 
@@ -93,7 +93,7 @@ validateIsString <- function(object, nullAllowed = FALSE) {
 
 validateIsNumeric <- function(object, nullAllowed = FALSE) {
   # Only NA values. It is numeric
-  if (all(is.na(object))) {
+  if (all(is.na(object)) && !any(is.null(object))) {
     return()
   }
 
