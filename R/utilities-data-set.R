@@ -3,7 +3,6 @@
   if (is.null(metaDataName)) {
     len <- length(dataSet[[property]])
   } else {
-    # len <- min(length(dataSet[[property]][[metaDataName]]), 1)
     len <- length(dataSet[[property]][[metaDataName]])
   }
 
