@@ -124,3 +124,51 @@ test_that("It can convert a list of data sets with meta data", {
     )
   )
 })
+
+obsDataFile <- getTestDataFilePath("obs_data.pkml")
+
+xValues <- c(
+  1.79999995231628, 4.86999988555908, 10.1999998092651,
+  30, 60, 120, 240
+)
+yValues <- c(
+  0.00100999997254547, 0.000830000013163357, 0.00073000000488932,
+  0.000279999995411728, 0.000119999996051057, 3.0499998360245E-05, 5.9299999806417E-06
+)
+yError <- c(
+  1.15000000278087, 1.08999995518388, 1.12999998691521, 1.21999994462385, 1.4099999816608,
+  1.18000002657936, 1.48000003719062
+)
+metaData <- list(
+  Source = "C:\\temp\\RanorexTestData\\ObservedData.xlsx",
+  Sheet = "Tabelle1",
+  DoubleValue = 5,
+  StringValues = "hello",
+  IntegerValue = 4
+)
+
+test_that("it can save the data set as pkml", {
+  dataSet <- loadDataSetFromPKML(obsDataFile)
+  filePath <- getTestDataFilePath("obs_data_save.pkml")
+
+  saveDataSetToPKML(dataSet = dataSet, filePath = filePath)
+  #load the saved file and check everything is correct
+  dataSet <- loadDataSetFromPKML(filePath)
+
+  expect_equal(dataSet$xValues, xValues)
+  expect_equal(dataSet$yValues, yValues)
+  expect_equal(dataSet$yErrorValues, yError)
+  expect_equal(dataSet$metaData, metaData)
+  expect_equal(dataSet$name, "ObservedData")
+  expect_equal(dataSet$xDimension, ospDimensions$Time)
+  expect_equal(dataSet$xUnit, ospUnits$Time$min)
+  expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
+  expect_equal(dataSet$yUnit, "mg/l")
+  expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(dataSet$yErrorUnit, "mg/l")
+  expect_equal(dataSet$yErrorValues, yError)
+  expect_error(capture.output(print(dataSet)), regexp = NA)
+
+  #remove the temp file
+  capture.output(file.remove(filePath))
+})

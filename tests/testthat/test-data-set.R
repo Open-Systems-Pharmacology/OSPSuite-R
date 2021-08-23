@@ -298,31 +298,3 @@ test_that("it can set the llog value", {
   dataSet$LLOQ <- 0.25
   expect_equal(dataSet$LLOQ, 0.25, tolerance)
 })
-
-test_that("it can save the data set as pkml", {
-  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
-  dataSet <- DataSet$new(obsData)
-  filePath <- getTestDataFilePath("obs_data_save.pkml")
-
-  dataSet$saveToPKML(filePath = filePath)
-  #load the saved file and check everything is correct
-  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
-  dataSet <- DataSet$new(obsData)
-
-  expect_equal(dataSet$xValues, xValues)
-  expect_equal(dataSet$yValues, yValues)
-  expect_equal(dataSet$yErrorValues, yError)
-  expect_equal(dataSet$metaData, metaData)
-  expect_equal(dataSet$name, "ObservedData")
-  expect_equal(dataSet$xDimension, ospDimensions$Time)
-  expect_equal(dataSet$xUnit, ospUnits$Time$min)
-  expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
-  expect_equal(dataSet$yUnit, "mg/l")
-  expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSet$yErrorUnit, "mg/l")
-  expect_equal(dataSet$yErrorValues, yError)
-  expect_error(capture.output(print(dataSet)), regexp = NA)
-
-  #remove the temp file
-  capture.output(file.remove(filePath))
-})

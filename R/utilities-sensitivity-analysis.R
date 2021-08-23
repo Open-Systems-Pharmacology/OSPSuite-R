@@ -55,6 +55,11 @@ exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   invisible()
 }
 
+#' @inherit exportSensitivityAnalysisResultsToCSV
+saveSensitivityAnalysisResultsToCSV <- function(results, filePath) {
+  exportSensitivityAnalysisResultsToCSV(results, filePath)
+}
+
 
 #' Imports the simulation analysis results from one or more csv files
 #'

@@ -15,6 +15,8 @@ A class for storage of numerical x- and y-value pairs and optional error for y-v
 \describe{
 \item{\code{name}}{The name of the DataSet}
 
+\item{\code{name}}{The underlying DataRepository object}
+
 \item{\code{xDimension}}{Dimension in which the xValues are defined}
 
 \item{\code{xUnit}}{Unit in which the xValues are defined}
@@ -59,7 +61,6 @@ Value in yUnit associated with the yValues}
 \item \href{#method-addMetaData}{\code{DataSet$addMetaData()}}
 \item \href{#method-removeMetaData}{\code{DataSet$removeMetaData()}}
 \item \href{#method-setValues}{\code{DataSet$setValues()}}
-\item \href{#method-saveToPKML}{\code{DataSet$saveToPKML()}}
 \item \href{#method-print}{\code{DataSet$print()}}
 }
 }
@@ -145,23 +146,6 @@ Note: xValues, yValues and yErrorValues must have the same length
 \item{\code{yValues}}{yValues to use}
 
 \item{\code{yErrorValues}}{Optional error values associated with yValues}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-saveToPKML"></a>}}
-\if{latex}{\out{\hypertarget{method-saveToPKML}{}}}
-\subsection{Method \code{saveToPKML()}}{
-Save the \code{DataSet} to a pkml file that can be loaded by MoBi
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$saveToPKML(filePath)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{filePath}}{Path to the location (incl. file name)}
 }
 \if{html}{\out{</div>}}
 }

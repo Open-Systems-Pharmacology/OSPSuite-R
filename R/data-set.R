@@ -23,6 +23,15 @@ DataSet <- R6::R6Class(
       }
       private$.dataRepository$name <- value
     },
+
+    #' @field name The underlying DataRepository object
+    dataRepository = function(value) {
+      if (missing(value)) {
+        return(private$.dataRepository)
+      }
+      private$throwPropertyIsReadonly("dataRepository")
+    },
+
     #' @field xDimension Dimension in which the xValues are defined
     xDimension = function(value) {
       if (missing(value)) {
@@ -207,18 +216,6 @@ DataSet <- R6::R6Class(
         private$.createErrorColumnIfMissing()
         private$.setColumnValues(column = private$.yErrorColumn, yErrorValues)
       }
-    },
-
-    #' @description
-    #' Save the \code{DataSet} to a pkml file that can be loaded by MoBi
-    #' @param filePath Path to the location (incl. file name)
-    saveToPKML = function(filePath){
-      validateIsString(filePath)
-      filePath <- expandPath(filePath)
-      dataRepositoryTask <- getNetTask("DataRepositoryTask")
-      rClr::clrCall(dataRepositoryTask, "SaveDataRepository", private$.dataRepository$ref, filePath)
-
-      invisible(self)
     },
 
     #' @description

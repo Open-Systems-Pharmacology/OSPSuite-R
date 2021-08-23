@@ -34,6 +34,27 @@ loadDataSetFromPKML <- function(filePath) {
   return(DataSet$new(dataRepository))
 }
 
+#' Save the \code{DataSet} to pkml
+#' @details Save the \code{DataSet} to a pkml file that can be loaded by MoBi
+#'
+#' @param dataSet The \code{DataSet} object
+#' @param filePath Path where the pkml file will be created
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' dataSet <- DataSet$new()
+#' dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
+#' dataSet$saveToPKML(filePath = "../ObsData.pkml")
+#' }
+saveDataSetToPKML <- function(dataSet, filePath){
+  validateIsString(filePath)
+  validateIsOfType(dataSet, DataSet)
+  filePath <- expandPath(filePath)
+  dataRepositoryTask <- getNetTask("DataRepositoryTask")
+  rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
+}
+
 #' Converts a list of DataSet objects to a data.frame
 #'
 #' @param dataSets A list of DataSet objects or a single DataSet
