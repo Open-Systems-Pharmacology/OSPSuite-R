@@ -15,6 +15,8 @@ A class for storage of numerical x- and y-value pairs and optional error for y-v
 \describe{
 \item{\code{name}}{The name of the DataSet}
 
+\item{\code{name}}{The underlying DataRepository object}
+
 \item{\code{xDimension}}{Dimension in which the xValues are defined}
 
 \item{\code{xUnit}}{Unit in which the xValues are defined}

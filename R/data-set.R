@@ -23,6 +23,15 @@ DataSet <- R6::R6Class(
       }
       private$.dataRepository$name <- value
     },
+
+    #' @field name The underlying DataRepository object
+    dataRepository = function(value) {
+      if (missing(value)) {
+        return(private$.dataRepository)
+      }
+      private$throwPropertyIsReadonly("dataRepository")
+    },
+
     #' @field xDimension Dimension in which the xValues are defined
     xDimension = function(value) {
       if (missing(value)) {

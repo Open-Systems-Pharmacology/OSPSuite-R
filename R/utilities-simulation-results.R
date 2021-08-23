@@ -137,6 +137,10 @@ exportResultsToCSV <- function(results, filePath) {
   invisible()
 }
 
+#' @inherit exportResultsToCSV
+saveResultsToCSV <- function(results, filePath) {
+  exportResultsToCSV(results, filePath)
+}
 
 #' Imports the simulation results from one or more csv files
 #'

@@ -292,7 +292,7 @@ test_that("it can add a new meta data", {
   expect_equal(dataSet$metaData[["Meta"]], "Value")
 })
 
-test_that("it can set the llog value a new meta data", {
+test_that("it can set the llog value", {
   obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$LLOQ <- 0.25
