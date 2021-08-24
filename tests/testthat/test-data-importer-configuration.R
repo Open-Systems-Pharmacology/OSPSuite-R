@@ -231,52 +231,32 @@ test_that("it can load a data importer configuration", {
   expect_equal(importerConfiguration$timeUnitFromColumn, FALSE)
   # just checking for the number of grouping columns here as the sequence of column
   # names is not obvious
+  expect_equal(length(importerConfiguration$groupingColumns), 10)
+  expect_equal(importerConfiguration$sheets, character())
+
+  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
+})
+
+test_that("it can load a data importer configuration with units from columns", {
+  configurationPath <- getTestDataFilePath("dataImporterConfiguration_UnitFromColumn.xml")
+  importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+  expect_equal(importerConfiguration$timeColumn, "Time [h]")
+  expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
+  expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
+  expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(importerConfiguration$errorUnit, "measurementUnit")
+  expect_equal(importerConfiguration$measurementDimension, NULL)
+  expect_equal(importerConfiguration$measurementUnit, "measurementUnit")
+  expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
+  expect_equal(importerConfiguration$timeUnit, "TimeUnit")
+  expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
+  # just checking for the number of grouping columns here as the sequence of column
+  # names is not obvious
   expect_equal(length(importerConfiguration$groupingColumns), 11)
   expect_equal(importerConfiguration$sheets, c("UnitsFromColumn", "UnitsFromColumn_secondSheet"))
 
   expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
-test_that("it can load a data importer configuration with units from columns", {
-  configurationPath <- getTestDataFilePath("dataImporterConfiguration_UnitFromColumn.xml")
-  importerConfiguration <- DataImporterConfiguration$new(configurationPath)
-  expect_equal(importerConfiguration$timeColumn, "Time [h]")
-  expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
-  expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
-  expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(importerConfiguration$errorUnit, "measurementUnit")
-  expect_equal(importerConfiguration$measurementDimension, NULL)
-  expect_equal(importerConfiguration$measurementUnit, "measurementUnit")
-  expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
-  expect_equal(importerConfiguration$timeUnit, "TimeUnit")
-  expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
-  # just checking for the number of grouping columns here as the sequence of column
-  # names is not obvious
-  expect_equal(length(importerConfiguration$groupingColumns), 10)
-  expect_equal(importerConfiguration$sheets, character())
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
-})
-
-test_that("it can load a data importer configuration with units from columns", {
-  configurationPath <- getTestDataFilePath("dataImporterConfiguration_UnitFromColumn.xml")
-  importerConfiguration <- DataImporterConfiguration$new(configurationPath)
-  expect_equal(importerConfiguration$timeColumn, "Time [h]")
-  expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
-  expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
-  expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(importerConfiguration$errorUnit, "measurementUnit")
-  expect_equal(importerConfiguration$measurementDimension, NULL)
-  expect_equal(importerConfiguration$measurementUnit, "measurementUnit")
-  expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
-  expect_equal(importerConfiguration$timeUnit, "TimeUnit")
-  expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
-  # just checking for the number of grouping columns here as the sequence of column
-  # names is not obvious
-  expect_equal(length(importerConfiguration$groupingColumns), 10)
-  expect_equal(importerConfiguration$sheets, character())
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
-})
-
 context("DataImporterConfiguration for a file")
+
