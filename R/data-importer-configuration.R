@@ -50,7 +50,7 @@ DataImporterConfiguration <- R6::R6Class(
       unit <- rClr::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
         columnName <- rClr::clrGet(unit, "ColumnName")
-        if (is.null(columnName)){
+        if (is.null(columnName) || nchar(columnName) == 0){
           return(FALSE)
         }
         return(TRUE)
@@ -136,7 +136,7 @@ DataImporterConfiguration <- R6::R6Class(
       unit <- rClr::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
         columnName <- rClr::clrGet(unit, "ColumnName")
-        if (is.null(columnName)){
+        if (is.null(columnName) || nchar(columnName) == 0){
           return(FALSE)
         }
         return(TRUE)
@@ -244,8 +244,9 @@ DataImporterConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(rClr::clrCall(private$.dataImporterTask, "GetAllLoadedSheets", self$ref))
       }
-      if (length(value == 0)){
+      if (length(value) == 0){
         rClr::clrCall(self$ref, "ClearLoadedSheets")
+        return(invisible(self))
       }
       validateIsString(value)
       rClr::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)

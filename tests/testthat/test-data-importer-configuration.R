@@ -163,6 +163,9 @@ test_that("it can add grouping columns", {
   expect_equal(importerConfiguration$groupingColumns, character())
   importerConfiguration$addGroupingColumn("foo")
   expect_equal(importerConfiguration$groupingColumns, "foo")
+  #adding the same group does not create duplicates
+  importerConfiguration$addGroupingColumn("foo")
+  expect_equal(importerConfiguration$groupingColumns, "foo")
 
   expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
@@ -201,8 +204,6 @@ test_that("it can remove all sheets", {
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$sheets <- NULL
   expect_equal(importerConfiguration$sheets, character())
-  importerConfiguration$sheets <- ""
-  expect_equal(importerConfiguration$sheets, character())
 
   importerConfiguration$sheets <- c("S1", "S2")
   expect_equal(importerConfiguration$sheets, c("S1", "S2"))
@@ -218,17 +219,61 @@ context("DataImporterConfiguration from file")
 test_that("it can load a data importer configuration", {
   configurationPath <- getTestDataFilePath("dataImporterConfiguration.xml")
   importerConfiguration <- DataImporterConfiguration$new(configurationPath)
-  expect_equal(importerConfiguration$timeColumn, "Time")
-  expect_equal(importerConfiguration$errorColumn, NULL)
-  expect_equal(importerConfiguration$measurementColumn, "Measurement")
-  expect_equal(importerConfiguration$errorType, NULL)
-  expect_equal(importerConfiguration$errorUnit, NULL)
-  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
-  expect_equal(importerConfiguration$measurementUnit, "µmol/l")
+  expect_equal(importerConfiguration$timeColumn, "Time [h]")
+  expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
+  expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
+  expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(importerConfiguration$errorUnit, "ng/ml")
+  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (mass)`)
+  expect_equal(importerConfiguration$measurementUnit, "ng/ml")
   expect_equal(importerConfiguration$measurementUnitFromColumn, FALSE)
   expect_equal(importerConfiguration$timeUnit, ospUnits$Time$h)
   expect_equal(importerConfiguration$timeUnitFromColumn, FALSE)
-  expect_equal(importerConfiguration$groupingColumns, character())
+  #just checking for the number of grouping columns here as the sequence of column
+  #names is not obvious
+  expect_equal(length(importerConfiguration$groupingColumns), 11)
+  expect_equal(importerConfiguration$sheets, c("UnitsFromColumn", "UnitsFromColumn_secondSheet"))
+
+  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
+})
+
+test_that("it can load a data importer configuration with units from columns", {
+  configurationPath <- getTestDataFilePath("dataImporterConfiguration_UnitFromColumn.xml")
+  importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+  expect_equal(importerConfiguration$timeColumn, "Time [h]")
+  expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
+  expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
+  expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(importerConfiguration$errorUnit, "measurementUnit")
+  expect_equal(importerConfiguration$measurementDimension, NULL)
+  expect_equal(importerConfiguration$measurementUnit, "measurementUnit")
+  expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
+  expect_equal(importerConfiguration$timeUnit, "TimeUnit")
+  expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
+  #just checking for the number of grouping columns here as the sequence of column
+  #names is not obvious
+  expect_equal(length(importerConfiguration$groupingColumns), 10)
+  expect_equal(importerConfiguration$sheets, character())
+
+  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
+})
+
+test_that("it can load a data importer configuration with units from columns", {
+  configurationPath <- getTestDataFilePath("dataImporterConfiguration_UnitFromColumn.xml")
+  importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+  expect_equal(importerConfiguration$timeColumn, "Time [h]")
+  expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
+  expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
+  expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(importerConfiguration$errorUnit, "measurementUnit")
+  expect_equal(importerConfiguration$measurementDimension, NULL)
+  expect_equal(importerConfiguration$measurementUnit, "measurementUnit")
+  expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
+  expect_equal(importerConfiguration$timeUnit, "TimeUnit")
+  expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
+  #just checking for the number of grouping columns here as the sequence of column
+  #names is not obvious
+  expect_equal(length(importerConfiguration$groupingColumns), 10)
   expect_equal(importerConfiguration$sheets, character())
 
   expect_error(capture.output(print(importerConfiguration)), regexp = NA)
