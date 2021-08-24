@@ -163,7 +163,7 @@ test_that("it can add grouping columns", {
   expect_equal(importerConfiguration$groupingColumns, character())
   importerConfiguration$addGroupingColumn("foo")
   expect_equal(importerConfiguration$groupingColumns, "foo")
-  #adding the same group does not create duplicates
+  # adding the same group does not create duplicates
   importerConfiguration$addGroupingColumn("foo")
   expect_equal(importerConfiguration$groupingColumns, "foo")
 
@@ -229,8 +229,8 @@ test_that("it can load a data importer configuration", {
   expect_equal(importerConfiguration$measurementUnitFromColumn, FALSE)
   expect_equal(importerConfiguration$timeUnit, ospUnits$Time$h)
   expect_equal(importerConfiguration$timeUnitFromColumn, FALSE)
-  #just checking for the number of grouping columns here as the sequence of column
-  #names is not obvious
+  # just checking for the number of grouping columns here as the sequence of column
+  # names is not obvious
   expect_equal(length(importerConfiguration$groupingColumns), 11)
   expect_equal(importerConfiguration$sheets, c("UnitsFromColumn", "UnitsFromColumn_secondSheet"))
 
@@ -250,8 +250,8 @@ test_that("it can load a data importer configuration with units from columns", {
   expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
   expect_equal(importerConfiguration$timeUnit, "TimeUnit")
   expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
-  #just checking for the number of grouping columns here as the sequence of column
-  #names is not obvious
+  # just checking for the number of grouping columns here as the sequence of column
+  # names is not obvious
   expect_equal(length(importerConfiguration$groupingColumns), 10)
   expect_equal(importerConfiguration$sheets, character())
 
@@ -271,8 +271,8 @@ test_that("it can load a data importer configuration with units from columns", {
   expect_equal(importerConfiguration$measurementUnitFromColumn, TRUE)
   expect_equal(importerConfiguration$timeUnit, "TimeUnit")
   expect_equal(importerConfiguration$timeUnitFromColumn, TRUE)
-  #just checking for the number of grouping columns here as the sequence of column
-  #names is not obvious
+  # just checking for the number of grouping columns here as the sequence of column
+  # names is not obvious
   expect_equal(length(importerConfiguration$groupingColumns), 10)
   expect_equal(importerConfiguration$sheets, character())
 

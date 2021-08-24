@@ -1,2 +1,2 @@
-createConfigurationForFile <- function(filePath){
+createConfigurationForFile <- function(filePath) {
 }
