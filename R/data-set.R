@@ -24,7 +24,7 @@ DataSet <- R6::R6Class(
       private$.dataRepository$name <- value
     },
 
-    #' @field name The underlying DataRepository object
+    #' @field dataRepository The underlying DataRepository object
     dataRepository = function(value) {
       if (missing(value)) {
         return(private$.dataRepository)

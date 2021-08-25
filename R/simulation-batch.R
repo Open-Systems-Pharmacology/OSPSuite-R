@@ -70,6 +70,8 @@ SimulationBatch <- R6::R6Class(
     #' Clears the reference to the wrapped .NET object
     finalize = function() {
       private$.simulation <- NULL
+      # SimulationBatch are disposable object and should be disposed
+      rClr::clrCall(self$ref, "Dispose")
       super$finalize()
     }
   ),
