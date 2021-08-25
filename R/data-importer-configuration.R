@@ -310,13 +310,13 @@ DataImporterConfiguration <- R6::R6Class(
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(self$measurementDimension)))
     },
-    .setColumnUnit = function(column, value){
+    .setColumnUnit = function(column, value) {
       value <- enc2utf8(value)
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       dimension <- rClr::clrGet(mappedColumn, "Dimension")
       # Fixed unit or from column?
       if (private$.isUnitFromColumn(column)) {
-        #Get the old unit and set it as default unit
+        # Get the old unit and set it as default unit
         unit <- rClr::clrGet(mappedColumn, "Unit")
         unitDescription <- rClr::clrNew("OSPSuite.Core.Import.UnitDescription", enc2utf8(rClr::clrGet(unit, "SelectedUnit")), value)
       } else {
@@ -325,14 +325,14 @@ DataImporterConfiguration <- R6::R6Class(
       }
       rClr::clrSet(mappedColumn, "Unit", unitDescription)
     },
-    .isUnitFromColumn = function(column){
+    .isUnitFromColumn = function(column) {
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       unit <- rClr::clrGet(mappedColumn, "Unit")
-        columnName <- rClr::clrGet(unit, "ColumnName")
-        if (is.null(columnName) || nchar(columnName) == 0) {
-          return(FALSE)
-        }
-        return(TRUE)
+      columnName <- rClr::clrGet(unit, "ColumnName")
+      if (is.null(columnName) || nchar(columnName) == 0) {
+        return(FALSE)
+      }
+      return(TRUE)
     }
   )
 )
