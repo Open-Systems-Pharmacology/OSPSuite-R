@@ -48,7 +48,7 @@ validateUnit <- function(unit, dimension) {
 
 #' Get base unit of a dimension
 #'
-#' @param dimension Dimension for which the base unit is returned.
+#' @param dimension Dimension (string name) for which the base unit is returned.
 #'
 #' @return String name of the base unit.
 #' @export
