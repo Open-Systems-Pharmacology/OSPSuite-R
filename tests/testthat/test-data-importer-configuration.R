@@ -259,4 +259,3 @@ test_that("it can load a data importer configuration with units from columns", {
 })
 
 context("DataImporterConfiguration for a file")
-
