@@ -340,6 +340,29 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   expect_equal(names(res[[2]])[[2]], ids[[4]])
 })
 
+test_that("It can run a simulation batch, add new values, and run again", {
+  parameters <- c("Organism|Liver|Volume", "R1|k1")
+  molecules <- "Organism|Liver|A"
+  simulationBatch <- createSimulationBatch(simulation = sim, parametersOrPaths = parameters, moleculesOrPaths = molecules)
+  # Ids of run values
+  ids <- c()
+  ids[[1]] <- simulationBatch$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+  ids[[2]] <- simulationBatch$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+  res <- runSimulationBatches(simulationBatches = simulationBatch)
+  expect_equal(length(res), 1)
+  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_equal(names(res[[1]])[[1]], ids[[1]])
+  expect_equal(names(res[[1]])[[2]], ids[[2]])
+
+  ids[[1]] <- simulationBatch$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+  ids[[2]] <- simulationBatch$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+  res <- runSimulationBatches(simulationBatches = simulationBatch)
+  expect_equal(length(res), 1)
+  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_equal(names(res[[1]])[[1]], ids[[1]])
+  expect_equal(names(res[[1]])[[2]], ids[[2]])
+})
+
 context("getAllStateVariablesPaths")
 
 test_that("It returns the correct paths of the state variables", {
