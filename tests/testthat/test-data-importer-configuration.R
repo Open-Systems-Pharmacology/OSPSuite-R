@@ -1,5 +1,4 @@
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
-obsData <- loadDataRepositoryFromPKML(obsDataFile)
 
 context("New DataImporterConfiguration")
 

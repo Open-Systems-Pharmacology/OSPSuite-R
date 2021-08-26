@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImporterConfiguration fileName="D:\Work\OSPS\Repos\esqlabsR\tests\data\CompiledDataSet.xlsx">
+<ImporterConfiguration fileName="D:\Work\OSPS\Repos\esqlabsR\tests\data\CompiledDataSet.xlsx" version="15">
   <Parameters>
     <MappingDataFormatParameter columnName="Time [h]">
       <MappedColumn name="Time" dimension="Time">

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImporterConfiguration fileName="D:\Work\OSPS\Repos\OSPSuite-R\tests\data\CompiledDataSet.xlsx" namingConventions="{Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}.{Group Id}">
+<ImporterConfiguration fileName="D:\Work\OSPS\Repos\OSPSuite-R\tests\data\CompiledDataSet.xlsx" namingConventions="{Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}.{Group Id}" version="15">
   <Parameters>
     <MappingDataFormatParameter columnName="Time [h]">
       <MappedColumn name="Time">
