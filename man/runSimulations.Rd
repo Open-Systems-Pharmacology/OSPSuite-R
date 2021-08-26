@@ -14,6 +14,8 @@ runSimulations(
 )
 }
 \arguments{
+\item{simulations}{One \code{Simulation} or list of \code{Simulation}  to simulate.}
+
 \item{population}{Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
 Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted}
 
@@ -22,8 +24,6 @@ Alternatively, you can also pass the result of \code{createPopulation} directly.
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}
 
 \item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}}
-
-\item{simulation}{One \code{Simulation} or list of \code{Simulation}  to simulate.}
 }
 \value{
 SimulationResults (one entry per Individual) for a single simulation or
