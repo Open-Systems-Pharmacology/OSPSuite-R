@@ -327,10 +327,7 @@ DataImporterConfiguration <- R6::R6Class(
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       unit <- rClr::clrGet(mappedColumn, "Unit")
       columnName <- rClr::clrGet(unit, "ColumnName")
-      if (is.null(columnName) || nchar(columnName) == 0) {
-        return(FALSE)
-      }
-      return(TRUE)
+      return(!(is.null(columnName) || nchar(columnName) == 0))
     }
   )
 )
