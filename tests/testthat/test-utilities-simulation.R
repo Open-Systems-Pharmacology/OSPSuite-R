@@ -159,7 +159,7 @@ test_that("It runs multiple individual simulations", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulation(simulation = c(sim, sim2))
+  results <- runSimulations(simulations = c(sim, sim2))
   expect_equal(length(results), 2)
   # Check the ids
   expect_equal(names(results)[[1]], sim$id)
@@ -172,7 +172,7 @@ test_that("It shows a warning if one of simulations fails. Results for this simu
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim$solver$relTol <- 1000
 
-  expect_warning(results <- runSimulation(simulation = c(sim, sim2)))
+  expect_warning(results <- runSimulations(simulations = c(sim, sim2)))
   expect_equal(length(results), 2)
   expect_equal(names(results)[[2]], sim2$id)
   expect_null(results[[sim$id]])
@@ -185,7 +185,7 @@ test_that("It does not show a warning if one of simulations fails in silent mode
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim$solver$relTol <- 1000
 
-  expect_warning(results <- runSimulation(simulation = c(sim, sim2), silentMode = TRUE), regexp = NA)
+  expect_warning(results <- runSimulations(simulations = c(sim, sim2), silentMode = TRUE), regexp = NA)
   expect_equal(length(results), 2)
   expect_equal(names(results)[[2]], sim2$id)
   expect_null(results[[sim$id]])
@@ -196,7 +196,7 @@ test_that("It throws an error when running multiple simulations with a populatio
   sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   populationFileName <- getTestDataFilePath(fileName = "pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
-  expect_that(runSimulation(simulation = c(sim, sim), population = population), throws_error())
+  expect_that(runSimulations(simulations = c(sim, sim), population = population), throws_error())
 })
 
 

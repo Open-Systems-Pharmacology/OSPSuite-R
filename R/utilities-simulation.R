@@ -121,7 +121,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' @title  Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
 #' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
 #'
-#' @param simulation One \code{Simulation} or list of \code{Simulation}  to simulate.
+#' @param simulations One \code{Simulation} or list of \code{Simulation}  to simulate.
 #' @param population Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
 #' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
 #' @param agingData Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation
