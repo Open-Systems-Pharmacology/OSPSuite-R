@@ -57,5 +57,5 @@ sim2 <- loadSimulation(simPath)
 sim3 <- loadSimulation(simPath)
 
 # Results is an array of \code{SimulationResults}
-results <- runSimulations(list(sim1, sim2, sim3))
+results <- runSimulations(list(sim, sim2, sim3))
 }
