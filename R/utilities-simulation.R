@@ -80,21 +80,25 @@ saveSimulation <- function(simulation, filePath) {
   invisible()
 }
 
-#' @title  Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
+#' @title  Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
+#' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
 #'
-#' @param simulation Instance of a \code{Simulation} to simulate.
-#' @param population Optional instance of a \code{Population} to use for the simulation.
+#' @param simulation One \code{Simulation} or list of \code{Simulation}  to simulate.
+#' @param population Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
 #' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
 #' @param agingData Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation
 #' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
+#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}
 #'
-#' @return SimulationResults (one entry per Individual)
+#' @return SimulationResults (one entry per Individual) for a single simulation or
+#' a list of \code{SimulationResults} objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is \code{NULL}
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
+#' # Results is an instance of \code{SimulationResults}
 #' results <- runSimulation(sim)
 #'
 #' # Creating custom simulation run options
@@ -107,8 +111,42 @@ saveSimulation <- function(simulation, filePath) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
+#'
+#' # Running multiple simulations in parallel
+#' sim2 <- loadSimulation(simPath)
+#' sim3 <- loadSimulation(simPath)
+#'
+#' # Results is an array of \code{SimulationResults}
+#' results <- runSimulation(list(sim1, sim2, sim3))
 #' @export
-runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
+runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
+  simulations <- c(simulation)
+  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
+  simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
+
+  # only one simulation? We allow population run
+  if (length(simulations) == 1) {
+    return(.runSingleSimulation(
+      simulation = simulation,
+      simulationRunOptions = simulationRunOptions,
+      population = population,
+      agingData = agingData
+    ))
+  }
+
+  # more than one simulation? This is a concurrent run. We do not allow population variation
+  if(!is.null(population)){
+    stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+  }
+
+  #we are now running the simulations concurrently
+  return(.runSimulationsConcurrently(
+    simulations=simulations,
+    simulationRunOptions = simulationRunOptions,
+    silentMode = silentMode))
+}
+
+.runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
   validateIsOfType(simulation, Simulation)
   if (is.list(population)) {
     # if a list was given as parameter, we assume that the user wants to run a population simulation
@@ -118,13 +156,11 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   } else {
     validateIsOfType(population, Population, nullAllowed = TRUE)
   }
-  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
   validateIsOfType(agingData, AgingData, nullAllowed = TRUE)
-  options <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner <- getNetTask("SimulationRunner")
   simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
   rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
-  rClr::clrSet(simulationRunArgs, "SimulationRunOptions", options$ref)
+  rClr::clrSet(simulationRunArgs, "SimulationRunOptions", simulationRunOptions$ref)
 
   if (!is.null(population)) {
     rClr::clrSet(simulationRunArgs, "Population", population$ref)
@@ -139,34 +175,11 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   SimulationResults$new(results, simulation)
 }
 
-#' @title  Runs a set of simulations.
-#' @details Runs a set of simulations (only individual simulations) and returns
-#' a named list of \code{SimulationResults}. The names of the entries are the IDs of the
-#' corresponding simulation (i.e. \code{simulation$id}).
-#'
-#' @param simulations A list of \code{Simulation} objects to simulate.
-#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run.
-#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails.
-#' Default is \code{FALSE}.
-#'
-#' @return A list of \code{SimulationResults} objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is \code{NULL}
-#'
-#' @examples
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simPath)
-#' sim2 <- loadSimulation(simPath)
-#' sim3 <- loadSimulation(simPath)
-#' results <- runSimulationsConcurrently(list(sim, sim2, sim3))
-#' @export
-runSimulationsConcurrently <- function(simulations, simulationRunOptions = NULL, silentMode = FALSE) {
+.runSimulationsConcurrently <- function(simulations,simulationRunOptions,  silentMode = FALSE) {
   validateIsOfType(simulations, Simulation)
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
-  if (!is.null(simulationRunOptions)) {
-    validateIsOfType(simulationRunOptions, SimulationRunOptions)
-    rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
-  }
+  rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
-  simulations <- c(simulations)
   # Map of simulations ids to simulations objects
   simulationIdSimulationMap <- vector("list", length(simulations))
 

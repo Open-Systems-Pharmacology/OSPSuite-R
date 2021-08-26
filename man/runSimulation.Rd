@@ -2,36 +2,43 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulation}
 \alias{runSimulation}
-\title{Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation}
+\title{Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
+Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation}
 \usage{
 runSimulation(
   simulation,
   population = NULL,
   agingData = NULL,
-  simulationRunOptions = NULL
+  simulationRunOptions = NULL,
+  silentMode = FALSE
 )
 }
 \arguments{
-\item{simulation}{Instance of a \code{Simulation} to simulate.}
+\item{simulation}{One \code{Simulation} or list of \code{Simulation}  to simulate.}
 
-\item{population}{Optional instance of a \code{Population} to use for the simulation.
+\item{population}{Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
 Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted}
 
 \item{agingData}{Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation}
 
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}
+
+\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}}
 }
 \value{
-SimulationResults (one entry per Individual)
+SimulationResults (one entry per Individual) for a single simulation or
+a list of \code{SimulationResults} objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is \code{NULL}
 }
 \description{
-Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
+Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
+Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 # Running an individual simulation
+# Results is an instance of \code{SimulationResults}
 results <- runSimulation(sim)
 
 # Creating custom simulation run options
@@ -44,4 +51,11 @@ simRunOptions$showProgress <- TRUE
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
+
+# Running multiple simulations in parallel
+sim2 <- loadSimulation(simPath)
+sim3 <- loadSimulation(simPath)
+
+# Results is an array of \code{SimulationResults}
+results <- runSimulation(list(sim1, sim2, sim3))
 }
