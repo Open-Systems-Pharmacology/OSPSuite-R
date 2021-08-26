@@ -80,6 +80,44 @@ saveSimulation <- function(simulation, filePath) {
   invisible()
 }
 
+#' @title
+#'
+#' DEPRECATED
+#'  \code{runSimulations} should be used in favor of  \code{runSimulation}. The latter will be removed in future releases
+#' Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
+#'
+#' @param simulation One \code{Simulation} to simulate.
+#' @param population Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
+#' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
+#' @param agingData Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation
+#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
+#'
+#' @return SimulationResults (one entry per Individual) for a single simulation
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' # Running an individual simulation
+#' # results is an instance of \code{SimulationResults}
+#' results <- runSimulation(sim)
+#'
+#' # Creating custom simulation run options
+#'
+#' simRunOptions <- SimulationRunOptions$new()
+#' simRunOptions$numberOfCores <- 3
+#' simRunOptions$showProgress <- TRUE
+#'
+#' # Running a population simulation
+#' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#' population <- loadPopulation(popPath)
+#' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
+#'
+#' @export
+runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL ){
+  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)
+}
+
 #' @title  Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
 #' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
 #'
@@ -99,7 +137,7 @@ saveSimulation <- function(simulation, filePath) {
 #'
 #' # Running an individual simulation
 #' # Results is an instance of \code{SimulationResults}
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)
 #'
 #' # Creating custom simulation run options
 #'
@@ -110,24 +148,24 @@ saveSimulation <- function(simulation, filePath) {
 #' # Running a population simulation
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
-#' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
+#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
 #'
 #' # Running multiple simulations in parallel
 #' sim2 <- loadSimulation(simPath)
 #' sim3 <- loadSimulation(simPath)
 #'
 #' # Results is an array of \code{SimulationResults}
-#' results <- runSimulation(list(sim1, sim2, sim3))
+#' results <- runSimulations(list(sim1, sim2, sim3))
 #' @export
-runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
-  simulations <- c(simulation)
+runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
+  simulations <- c(simulations)
   validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
   # only one simulation? We allow population run
   if (length(simulations) == 1) {
     return(.runSingleSimulation(
-      simulation = simulation,
+      simulation = simulations[[1]],
       simulationRunOptions = simulationRunOptions,
       population = population,
       agingData = agingData
