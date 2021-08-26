@@ -32,6 +32,7 @@ The workflow steps are described in the following vignettes:
 - [Loading a simulation and accessing entities](load-get.html)
 * [Changing parameter and molecule start values](set-values.html)
 * [Running a simulation](run-simulation.html)
+* [Efficient calculations](efficient-calculations.html)
 * [Creating individuals](create-individual.html)
 * [Population simulations](create-run-population.html)
 * [PK Analysis](pk-analysis.html)

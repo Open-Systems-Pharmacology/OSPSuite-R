@@ -1,0 +1,79 @@
+---
+title: "Efficient calculation"
+output: rmarkdown::html_vignette
+#output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Efficient calculation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+There are a few ways to run simulations using this package. 
+The easiest way is,  as expected,  not necessarily the most efficient way. So depending on your use cases, you might want to use a different approach than the one
+described in [Run Simulations](run-simulation.html)
+
+This vignettes aims at describing some scenarios and the suggested method to efficiently run the simulations
+
+## Life cycle of a simulation run
+
+In general, a user loads a simulation in order to set some parameters, calculate the simulatiion and get some results. 
+Here are some steps inherent to each simulation 
+
+1. Loading a simulation
+2. Optional: Setting parameter values
+3. Optional: Setting initial values
+4. Initializing the simulation engine
+5. Solving the ODE System (calculating the outputs)
+
+Depending on the simulation of interest, some steps might take much longer than others. For example, a simulation with multile administrations simulated over many months
+will load and initialize quickly (1 and 4) while calculating (5) will be the critical step. On the other hand, a simulation with dozens of compounds will also take time to 
+load and initialize (1 and 4). 
+
+
+## Running a single simulation once
+
+This is by far the easiset use cases. A simulation is loaded from a pkml file and the outputs are calculated. In this use case, step 4 and 5 are lumped together in one single call
+See [Run Simulations](run-simulation.html) for more details. 
+
+
+## Running a single simulation multiple times and varying some parameters/initial values between each run
+
+This is already a use case where the optimal and most efficient way depends drastically on the simulation at hand.
+Let say you want to calculate the outputs of a simulation for different doses
+
+A simple implementation could be something like this, where we load the simulation once, set the dose value and calculate for each dose of interest. 
+```{r SequentialRun}
+# Load and run the simulation 
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+doseParameter <- getAllParametersMatching(toPathString("Applications", "**", "Dose"), sim)[[1]]
+
+# run for dose 100mg
+doseParameter$value = toBaseUnit(doseParameter, 100, 'mg')
+result100 <- runSimulations(simulations = sim)
+
+# run for dose 200mg
+doseParameter$value = toBaseUnit(doseParameter, 200, 'mg')
+result200 <- runSimulations(simulations = sim)
+
+#...
+
+# run for dose 1000mg
+doseParameter$value = toBaseUnit(doseParameter, 100, 'mg')
+result1000 <- runSimulations(simulations = sim)
+```
+
+This implementation is very easy to understand, but has potentially one big performance bottleneck. Each simulation is run sequentially. 
+That means that you wont have any performance boost from having multiple core on your machine  
+
+
+
+
+
