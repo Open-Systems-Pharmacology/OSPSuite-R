@@ -4,7 +4,7 @@
 #' @export
 #' @format NULL
 DataImporterConfiguration <- R6::R6Class(
-  "DataSet",
+  "DataImporterConfiguration",
   inherit = DotNetWrapper,
   cloneable = TRUE,
   active = list(
@@ -76,19 +76,20 @@ DataImporterConfiguration <- R6::R6Class(
       # Fixed unit or from column?
       if (private$.isUnitFromColumn(column)) {
         # do nothing as it should be NULL
-      } else {
-        validateDimension(enc2utf8(value))
-        rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(value)))
-        rClr::clrSet(unit, "SelectedUnit", getBaseUnit(enc2utf8(value)))
+        return(invisible(self))
+      }
+      value <- enc2utf8(value)
+      validateDimension(value)
+      rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
+      rClr::clrSet(unit, "SelectedUnit", getBaseUnit(value))
 
-        # also change dimension of the error
-        column <- private$.errorColumn
-        if (!is.null(column)) {
-          mappedColumn <- rClr::clrGet(column, "MappedColumn")
-          unit <- rClr::clrGet(mappedColumn, "Unit")
-          rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(value)))
-          private$.setColumnUnit(column, getBaseUnit(enc2utf8(value)))
-        }
+      # also change dimension of the error
+      column <- private$.errorColumn
+      if (!is.null(column)) {
+        mappedColumn <- rClr::clrGet(column, "MappedColumn")
+        unit <- rClr::clrGet(mappedColumn, "Unit")
+        rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
+        private$.setColumnUnit(column, getBaseUnit(value))
       }
     },
 
@@ -131,10 +132,7 @@ DataImporterConfiguration <- R6::R6Class(
     errorColumn = function(value) {
       column <- private$.errorColumn
       if (missing(value)) {
-        if (is.null(column)) {
-          return(NULL)
-        }
-        return(rClr::clrGet(column, "ColumnName"))
+        return(ifNotNull(column, rClr::clrGet(column, "ColumnName")))
       }
       # If value is NULL, remove the error column
       if (is.null(value)) {
@@ -320,7 +318,7 @@ DataImporterConfiguration <- R6::R6Class(
         unit <- rClr::clrGet(mappedColumn, "Unit")
         unitDescription <- rClr::clrNew("OSPSuite.Core.Import.UnitDescription", enc2utf8(rClr::clrGet(unit, "SelectedUnit")), value)
       } else {
-        validateUnit(enc2utf8(value), rClr::clrGet(dimension, "Name"))
+        validateUnit(value, rClr::clrGet(dimension, "Name"))
         unitDescription <- rClr::clrNew("OSPSuite.Core.Import.UnitDescription", value)
       }
       rClr::clrSet(mappedColumn, "Unit", unitDescription)
