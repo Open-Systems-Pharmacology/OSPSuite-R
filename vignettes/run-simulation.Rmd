@@ -25,7 +25,7 @@ library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
-simulationResults <- runSimulation(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 print(simulationResults)
 ```
 
@@ -69,7 +69,7 @@ The results can be stored in and imported from a *.csv file with the methods `ex
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simulationResults <- runSimulation(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 
 # Export to csv
 csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
@@ -78,6 +78,36 @@ exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 # Load from csv
 resultsLoaded <- importResultsFromCSV(filePath = csvResultsPath, simulation = sim)
 print(resultsLoaded)
+```
+
+## Running multiple individual simulations and retrieving the results
+In some cases, the user might want want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations to run.
+By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 
+4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.
+
+```{r SimResultsExport}
+# Load and run multiple simulations concurrently. 
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+
+# We load 3 times the same simulation for convenience. But in real life scenarios, they would be different simulations
+sim1 <- loadSimulation(simFilePath)
+sim2 <- loadSimulation(simFilePath)
+sim3 <- loadSimulation(simFilePath)
+
+simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
+```
+
+The results in this case will be a list of `SimulationResults`-object , e.g. one for each simulation.
+
+```{r runSim}
+library(ospsuite)
+
+# Load the simulation
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+
+simulationResults <- runSimulations(simulations = sim)
+print(simulationResults)
 ```
 
 ## Adding new outputs
@@ -100,7 +130,7 @@ addOutputs(c("Organism|Lumen|Stomach|Aciclovir",
            simulation = sim)
 
 # Run simulation
-simulationResults <- runSimulation(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 
 # Retrieve all generated outputs (e.g. omitting the quantitiesOrPaths property
 # will return all available values)
@@ -123,7 +153,7 @@ To change the simulation interval, the user can use one of the functions `clearO
 ```{r changeOutputInterval, error = TRUE, purl = FALSE}
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
-runSimulation(simulation = sim)
+runSimulations(simulations = sim)
 
 # Add an interval
 addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")
