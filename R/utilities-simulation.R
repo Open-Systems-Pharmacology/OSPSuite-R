@@ -135,15 +135,16 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   }
 
   # more than one simulation? This is a concurrent run. We do not allow population variation
-  if(!is.null(population)){
+  if (!is.null(population)) {
     stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
   }
 
-  #we are now running the simulations concurrently
+  # we are now running the simulations concurrently
   return(.runSimulationsConcurrently(
-    simulations=simulations,
+    simulations = simulations,
     simulationRunOptions = simulationRunOptions,
-    silentMode = silentMode))
+    silentMode = silentMode
+  ))
 }
 
 .runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
@@ -175,7 +176,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   SimulationResults$new(results, simulation)
 }
 
-.runSimulationsConcurrently <- function(simulations,simulationRunOptions,  silentMode = FALSE) {
+.runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE) {
   validateIsOfType(simulations, Simulation)
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
   rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
