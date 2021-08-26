@@ -242,7 +242,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules = variableMolecules
   )
 
-  net <- rClr::clrNew("OSPSuite.R.Services.ConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
+  net <- rClr::clrNew("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
   SimulationBatch$new(net, simulation)
 }
 
@@ -311,7 +311,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
     # All results of this batch have the id of the same simulation
     resultsIdSimulationIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
-    rClr::clrCall(simulationRunner, "AddSimulationBatchOption", simBatch$ref)
+    rClr::clrCall(simulationRunner, "AddSimulationBatch", simBatch$ref)
   }
 
   # Run the batch with the ConcurrentSimulationRunner
