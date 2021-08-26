@@ -70,7 +70,7 @@ messages <- list(
   errorEntityPathNotAbsolute = function(path) {
     callingFunction <- .getCallingFunctionName()
     paste0(
-      callingFunction, ": Only absolut paths (i.e. without the wildcard(s) `*`) are allowed, but the given path is: ",
+      callingFunction, ": Only absolute paths (i.e. without the wildcard(s) `*`) are allowed, but the given path is: ",
       path
     )
   },
@@ -91,7 +91,8 @@ messages <- list(
   },
   errorMultipleMetaDataEntries = function(optionalMessage = NULL) {
     paste("Can only add a single meta data entry at once", optionalMessage)
-  }
+  },
+  errorMultipleSimulationsCannotBeUsedWithPopulation = "Multiple simulations cannot be run concurrently with a population."
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,
