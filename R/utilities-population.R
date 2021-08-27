@@ -90,6 +90,11 @@ exportPopulationToCSV <- function(population, filePath) {
   invisible()
 }
 
+#' @inherit exportPopulationToCSV
+savePopulationToCSV <- function(population, filePath) {
+  exportPopulationToCSV(population, filePath)
+}
+
 #' Loads aging data (typically generated from PK-Sim) i
 #'
 #' @param filePath Full path containing an aging data table.

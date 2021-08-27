@@ -16,6 +16,7 @@ test_that("it can create a new data set from scratch", {
   expect_identical(dataSet$yErrorType, NULL)
   expect_identical(dataSet$yErrorUnit, NULL)
   expect_identical(dataSet$yErrorValues, NULL)
+  expect_identical(dataSet$lloq, NULL)
   expect_identical(dataSet$yValues, numeric())
   expect_error(capture.output(print(dataSet)), regexp = NA)
 })
@@ -195,7 +196,7 @@ test_that("it can get and set molWeight", {
 
 context("DataSet from pkml without error")
 obsDataFile <- getTestDataFilePath("obs_data_no_error.pkml")
-obsData <- loadDataRepositoryFromPKML(obsDataFile)
+obsData <- .loadDataRepositoryFromPKML(obsDataFile)
 
 test_that("it can create a new data set from an existing repository", {
   dataSet <- DataSet$new(obsData)
@@ -226,7 +227,7 @@ metaData <- list(
 )
 
 test_that("it can create a new data set from an existing repository", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   expect_equal(dataSet$xValues, xValues)
   expect_equal(dataSet$yValues, yValues)
@@ -244,14 +245,14 @@ test_that("it can create a new data set from an existing repository", {
 })
 
 test_that("it can set the name of the data set", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$name <- "TOTO"
   expect_equal(dataSet$name, "TOTO")
 })
 
 test_that("it can update the dimension of the xValues and this does not change the returned value", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$xDimension <- ospDimensions$Ampere
   expect_equal(dataSet$xValues, xValues, tolerance)
@@ -259,7 +260,7 @@ test_that("it can update the dimension of the xValues and this does not change t
 })
 
 test_that("it can update x and y values and remove y error", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
   expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance)
@@ -268,7 +269,7 @@ test_that("it can update x and y values and remove y error", {
 })
 
 test_that("it does not change the unit of yError when setting to the currently set error type", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$yErrorUnit <- ospUnits$`Concentration (mass)`[[2]]
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
@@ -276,7 +277,7 @@ test_that("it does not change the unit of yError when setting to the currently s
 })
 
 test_that("arithmetic to geometric error changes the dimension of yError", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$GeometricStdDev)
@@ -285,8 +286,15 @@ test_that("arithmetic to geometric error changes the dimension of yError", {
 })
 
 test_that("it can add a new meta data", {
-  obsData <- loadDataRepositoryFromPKML(obsDataFile)
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
   dataSet$addMetaData("Meta", "Value")
   expect_equal(dataSet$metaData[["Meta"]], "Value")
+})
+
+test_that("it can set the llog value", {
+  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
+  dataSet <- DataSet$new(obsData)
+  dataSet$LLOQ <- 0.25
+  expect_equal(dataSet$LLOQ, 0.25, tolerance)
 })

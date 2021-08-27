@@ -19,12 +19,13 @@ StandardPKParameter <- enum(c(
   AUC_inf_norm = 13,
   AUC_tEnd_inf = 14,
   AUC_tEnd_inf_norm = 15,
-  MRT = 16,
-  FractionAucEndToInf = 17,
-  Thalf = 18,
-  Vss = 19,
-  Vd = 20,
-  Tthreshold = 21
+  CL = 16,
+  MRT = 17,
+  FractionAucEndToInf = 18,
+  Thalf = 19,
+  Vss = 20,
+  Vd = 21,
+  Tthreshold = 22
 ))
 
 #' @title PKParameter

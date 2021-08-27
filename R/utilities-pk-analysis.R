@@ -23,7 +23,6 @@ calculatePKAnalyses <- function(results) {
   SimulationPKAnalyses$new(pkAnalyses, results$simulation)
 }
 
-
 #' @title Saves the pK-analyses  to csv file
 #'
 #' @param pkAnalyses pK-Analyses to export (typically calculated using \code{calculatePKAnalyses} or imported from file)
@@ -37,6 +36,11 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
+}
+
+#' @inherit exportPKAnalysesToCSV
+savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
+  exportPKAnalysesToCSV(pkAnalyses, filePath)
 }
 
 #' @title Loads the pK-analyses from csv file

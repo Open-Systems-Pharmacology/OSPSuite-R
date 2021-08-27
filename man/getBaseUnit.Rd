@@ -7,7 +7,7 @@
 getBaseUnit(dimension)
 }
 \arguments{
-\item{dimension}{Dimension for which the base unit is returned.}
+\item{dimension}{Dimension (string name) for which the base unit is returned.}
 }
 \value{
 String name of the base unit.

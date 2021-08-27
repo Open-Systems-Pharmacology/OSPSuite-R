@@ -15,6 +15,8 @@ A class for storage of numerical x- and y-value pairs and optional error for y-v
 \describe{
 \item{\code{name}}{The name of the DataSet}
 
+\item{\code{dataRepository}}{The underlying DataRepository object}
+
 \item{\code{xDimension}}{Dimension in which the xValues are defined}
 
 \item{\code{xUnit}}{Unit in which the xValues are defined}
@@ -44,6 +46,9 @@ In case no yError is defined, the value is \code{NULL} and cannot be changed.
 Use \code{$setValues()} to change the values.}
 
 \item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
+
+\item{\code{LLOQ}}{LLOQ Lower Limit Of Quantification.
+Value in yUnit associated with the yValues}
 
 \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
 }

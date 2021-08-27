@@ -139,6 +139,67 @@ test_that("It throws an exception when running a population simulation with the 
   expect_that(runSimulation(simulation = population, population = simulation), throws_error())
 })
 
+test_that("It runs one individual simulation without simulationRunOptions", {
+  resetSimulationCache()
+
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulation(simulation = sim)
+  expect_true(isOfType(results, "SimulationResults"))
+})
+
+test_that("It runs one individual simulation with simulationRunOptions", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  simRunOptions <- SimulationRunOptions$new()
+  results <- runSimulation(simulation = sim, simulationRunOptions = simRunOptions)
+  expect_true(isOfType(results, "SimulationResults"))
+})
+
+test_that("It runs multiple individual simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulations(simulations = c(sim, sim2))
+  expect_equal(length(results), 2)
+  # Check the ids
+  expect_equal(names(results)[[1]], sim$id)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It shows a warning if one of simulations fails. Results for this simulation are NULL", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$solver$relTol <- 1000
+
+  expect_warning(results <- runSimulations(simulations = c(sim, sim2)))
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
+})
+
+test_that("It does not show a warning if one of simulations fails in silent mode. Results for this simulation are NULL", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$solver$relTol <- 1000
+
+  expect_warning(results <- runSimulations(simulations = c(sim, sim2), silentMode = TRUE), regexp = NA)
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
+})
+
+test_that("It throws an error when running multiple simulations with a population", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  populationFileName <- getTestDataFilePath(fileName = "pop_10.csv")
+  population <- loadPopulation(csvPopulationFile = populationFileName)
+  expect_that(runSimulations(simulations = c(sim, sim), population = population), throws_error())
+})
+
+
 context("getStandardMoleculeParameters")
 test_that("It returns all molecule parameters for an existing molecule in a simulation", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
@@ -194,61 +255,6 @@ test_that("It creates a simulation batch when using only molecule instances", {
   expect_false(is.null(simulationBatch))
 })
 
-context("runSimulationsConcurrent")
-test_that("It runs one individual simulation without simulationRunOptions", {
-  resetSimulationCache()
-
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulationsConcurrently(simulations = sim)
-  expect_equal(sim$id, names(results)[[1]])
-  expect_true(isOfType(results[[1]], "SimulationResults"))
-})
-
-test_that("It runs one individual simulation with simulationRunOptions", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  simRunOptions <- SimulationRunOptions$new()
-  results <- runSimulationsConcurrently(simulations = sim, simulationRunOptions = simRunOptions)
-  expect_equal(sim$id, names(results)[[1]])
-  expect_true(isOfType(results[[1]], "SimulationResults"))
-})
-
-test_that("It runs multiple individual simulations", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulationsConcurrently(simulations = c(sim, sim2))
-  expect_equal(length(results), 2)
-  # Check the ids
-  expect_equal(names(results)[[1]], sim$id)
-  expect_true(isOfType(results[[1]], "SimulationResults"))
-})
-
-test_that("It shows a warning if one of simulations fails. Results for this simulation are NULL", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim$solver$relTol <- 1000
-
-  expect_warning(results <- runSimulationsConcurrently(simulations = c(sim, sim2)))
-  expect_equal(length(results), 2)
-  expect_equal(names(results)[[2]], sim2$id)
-  expect_null(results[[sim$id]])
-  expect_true(isOfType(results[[2]], "SimulationResults"))
-})
-
-test_that("It does not show a warning if one of simulations fails in silent mode. Results for this simulation are NULL", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim$solver$relTol <- 1000
-
-  expect_warning(results <- runSimulationsConcurrently(simulations = c(sim, sim2), silentMode = TRUE), regexp = NA)
-  expect_equal(length(results), 2)
-  expect_equal(names(results)[[2]], sim2$id)
-  expect_null(results[[sim$id]])
-  expect_true(isOfType(results[[2]], "SimulationResults"))
-})
 
 context("runSimulationBatches")
 sim <- loadTestSimulation("simple", loadFromCache = TRUE)
@@ -338,6 +344,29 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   expect_equal(names(res[[1]])[[2]], ids[[2]])
   expect_equal(names(res[[2]])[[1]], ids[[3]])
   expect_equal(names(res[[2]])[[2]], ids[[4]])
+})
+
+test_that("It can run a simulation batch, add new values, and run again", {
+  parameters <- c("Organism|Liver|Volume", "R1|k1")
+  molecules <- "Organism|Liver|A"
+  simulationBatch <- createSimulationBatch(simulation = sim, parametersOrPaths = parameters, moleculesOrPaths = molecules)
+  # Ids of run values
+  ids <- c()
+  ids[[1]] <- simulationBatch$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+  ids[[2]] <- simulationBatch$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+  res <- runSimulationBatches(simulationBatches = simulationBatch)
+  expect_equal(length(res), 1)
+  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_equal(names(res[[1]])[[1]], ids[[1]])
+  expect_equal(names(res[[1]])[[2]], ids[[2]])
+
+  ids[[1]] <- simulationBatch$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+  ids[[2]] <- simulationBatch$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+  res <- runSimulationBatches(simulationBatches = simulationBatch)
+  expect_equal(length(res), 1)
+  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_equal(names(res[[1]])[[1]], ids[[1]])
+  expect_equal(names(res[[1]])[[2]], ids[[2]])
 })
 
 context("getAllStateVariablesPaths")

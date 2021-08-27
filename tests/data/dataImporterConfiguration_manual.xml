@@ -12,11 +12,11 @@
       </MappedColumn>
     </MappingDataFormatParameter>
     <MetaDataFormatParameter columnName="Study Id" metaDataId="Study Id" isColumn="1" />
-    <MetaDataFormatParameter columnName="Organ" metaDataId="Organ" isColumn="1" />
-    <MetaDataFormatParameter columnName="Compartment" metaDataId="Compartment" isColumn="1" />
-    <MetaDataFormatParameter columnName="Species" metaDataId="Species" isColumn="1" />
-    <MetaDataFormatParameter columnName="Gender" metaDataId="Gender" isColumn="1" />
-    <MetaDataFormatParameter columnName="Molecule" metaDataId="Molecule" isColumn="1" />
+    <MetaDataFormatParameter columnName="Spleen" metaDataId="Organ" isColumn="0" />
+    <MetaDataFormatParameter columnName="Intracellular Unbound" metaDataId="Compartment" isColumn="0" />
+    <MetaDataFormatParameter columnName="Mouse" metaDataId="Species" isColumn="0" />
+    <MetaDataFormatParameter columnName="FEMALE" metaDataId="Gender" isColumn="0" />
+    <MetaDataFormatParameter columnName="MyMolecule" metaDataId="Molecule" isColumn="0" />
     <MetaDataFormatParameter columnName="Route" metaDataId="Route" isColumn="1" />
     <MappingDataFormatParameter columnName="Concentration (mass)[ng/ml]">
       <MappedColumn name="Measurement" dimension="Concentration (mass)">

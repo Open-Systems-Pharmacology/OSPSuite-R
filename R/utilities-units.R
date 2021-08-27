@@ -78,11 +78,16 @@ getBaseUnit <- function(dimension) {
 #' @export
 toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
-  validateIsNumeric(values)
+  validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   unit <- encodeUnit(unit)
   dimension <- quantityOrDimension
   dimensionTask <- getNetTask("DimensionTask")
+
+  #covers all NULL or NA
+  if(all(is.na(values))){
+    return(values)
+  }
 
   if (isOfType(quantityOrDimension, Quantity)) {
     dimension <- quantityOrDimension$dimension
@@ -130,12 +135,19 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #' @export
 toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL, molWeightUnit = NULL) {
   validateIsOfType(quantityOrDimension, c(Quantity, "character"))
-  validateIsNumeric(values)
+  validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- encodeUnit(targetUnit)
+
+  #covers all NULL or NA
+  if(all(is.na(values))){
+    return(values)
+  }
+
   if (!is.null(sourceUnit)) {
     sourceUnit <- encodeUnit(sourceUnit)
   }
+
   dimension <- quantityOrDimension
   values <- c(values)
   dimensionTask <- getNetTask("DimensionTask")

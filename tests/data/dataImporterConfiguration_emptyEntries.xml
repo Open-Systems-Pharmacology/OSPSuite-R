@@ -8,25 +8,16 @@
     </MappingDataFormatParameter>
     <MappingDataFormatParameter columnName="Concentration (mass)[ng/ml]">
       <MappedColumn name="Measurement">
-        <Unit columnName="measurementUnit" selectedUnit="ng/ml" />
+        <Unit selectedUnit="µmol/l" />
       </MappedColumn>
     </MappingDataFormatParameter>
     <MappingDataFormatParameter columnName="Error [ng/ml]">
       <MappedColumn errorStdDev="Arithmetic Standard Deviation" name="Error">
-        <Unit columnName="measurementUnit" selectedUnit="ng/ml" />
+        <Unit selectedUnit="?" />
       </MappedColumn>
     </MappingDataFormatParameter>
-    <MetaDataFormatParameter columnName="Study Id" metaDataId="Study Id" isColumn="1" />
-    <MetaDataFormatParameter columnName="Organ" metaDataId="Organ" isColumn="1" />
-    <MetaDataFormatParameter columnName="Compartment" metaDataId="Compartment" isColumn="1" />
     <MetaDataFormatParameter columnName="Species" metaDataId="Species" isColumn="1" />
-    <MetaDataFormatParameter columnName="Gender" metaDataId="Gender" isColumn="1" />
-    <MetaDataFormatParameter columnName="Molecule" metaDataId="Molecule" isColumn="1" />
-    <MetaDataFormatParameter columnName="Route" metaDataId="Route" isColumn="1" />
-    <MetaDataFormatParameter columnName="MW" metaDataId="Molecular Weight" isColumn="1" />
-    <MetaDataFormatParameter columnName="Patient Id" metaDataId="Subject Id" isColumn="1" />
-    <MetaDataFormatParameter columnName="Dose [unit]" metaDataId="Dose" isColumn="1" />
-    <GroupByDataFormatParameter columnName="Group Id" />
+    <MetaDataFormatParameter metaDataId="Molecule" isColumn="0" />
   </Parameters>
   <LoadedSheets>
     <LoadedSheetsChild>UnitsFromColumn</LoadedSheetsChild>

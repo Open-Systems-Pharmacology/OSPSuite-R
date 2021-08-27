@@ -1,14 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImporterConfiguration fileName="D:\Work\OSPS\Repos\esqlabsR\tests\data\CompiledDataSet.xlsx" version="15">
+<ImporterConfiguration fileName="D:\Work\OSPS\Repos\OSPSuite-R\tests\data\CompiledDataSet.xlsx" version="15">
   <Parameters>
     <MappingDataFormatParameter columnName="Time [h]">
       <MappedColumn name="Time" dimension="Time">
         <Unit selectedUnit="h" />
       </MappedColumn>
     </MappingDataFormatParameter>
+    <MappingDataFormatParameter columnName="measurementUnit">
+      <MappedColumn name="Measurement">
+        <Unit columnName="Dose [unit]" selectedUnit="1 [mg/kg]" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
     <MappingDataFormatParameter columnName="Error [ng/ml]">
-      <MappedColumn errorStdDev="Arithmetic Standard Deviation" name="Error" dimension="Concentration (mass)">
-        <Unit selectedUnit="ng/ml" />
+      <MappedColumn errorStdDev="Geometric Standard Deviation" name="Error">
+        <Unit />
       </MappedColumn>
     </MappingDataFormatParameter>
     <MetaDataFormatParameter columnName="Study Id" metaDataId="Study Id" isColumn="1" />
@@ -18,13 +23,5 @@
     <MetaDataFormatParameter columnName="Gender" metaDataId="Gender" isColumn="1" />
     <MetaDataFormatParameter columnName="Molecule" metaDataId="Molecule" isColumn="1" />
     <MetaDataFormatParameter columnName="Route" metaDataId="Route" isColumn="1" />
-    <MappingDataFormatParameter columnName="Concentration (mass)[ng/ml]">
-      <MappedColumn name="Measurement" dimension="Concentration (mass)">
-        <Unit selectedUnit="ng/ml" />
-      </MappedColumn>
-    </MappingDataFormatParameter>
-    <MetaDataFormatParameter columnName="MW" metaDataId="Molecular Weight" isColumn="1" />
-    <MetaDataFormatParameter columnName="Patient Id" metaDataId="Subject Id" isColumn="1" />
-    <MetaDataFormatParameter columnName="Dose [unit]" metaDataId="Dose" isColumn="1" />
   </Parameters>
 </ImporterConfiguration>
