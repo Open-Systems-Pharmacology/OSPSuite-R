@@ -153,6 +153,10 @@ simBatch2$addRunValues(parameterValues = 200)
 
 # this run will be much faster as the simulation won't be initialized again. Only the new value will be set as specified when adding new run values with addRunValues
 results2 <- runSimulationBatches(simulationBatches)
+
+# Once you are done with your simulation batches, you can free the allocated memory by removing them from the environment. This will be done automatically when your R session is terminated.
+rm(simBatch1)
+rm(simBatch2)
 ```
 
-
+Usage of `SimulationBatch` is recommended for advanced scenarios where you are expecting to run simulations hundreds of times and where each second that you can spare will impact the performance significantly. 
