@@ -116,7 +116,8 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE)
 sim2 <- loadSimulation(simFilePath, loadFromCache = FALSE)
 
-# define the list of parameter that will be varied in the run. We will vary 2 parameters: Lipophilicity and Permeability 
+# define the list of parameter that will be varied in the run. 
+# We will vary 2 parameters: Lipophilicity and Permeability 
 parameterPaths <- c("Aciclovir|Lipophilicity", "Aciclovir|Permeability")
 
 # define a first simulation batch
@@ -126,7 +127,8 @@ simBatch1 <- createSimulationBatch(simulation = sim1, parametersOrPaths = parame
 simBatch2 <- createSimulationBatch(simulation = sim2, parametersOrPaths = c("Aciclovir|Molecular weight"))
 
 simulationBatches <- list(simBatch1, simBatch2)
-# now setting some parameter run values (the size of the array should match the number of parameters to vary for each batch
+# now setting some parameter run values (the size of the array should match 
+# the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
 simBatch1$addRunValues(parameterValues = c(3, 4))
 simBatch1$addRunValues(parameterValues = c(5, 6))
@@ -138,10 +140,15 @@ simBatch2$addRunValues(parameterValues = 300)
 simBatch2$addRunValues(parameterValues = 400)
 
 
-# So far, we created 2 simulation batches, one with 3 parameter sets and the other one with 4. That means that 3 run slots will be allocated for simBatch1 and 4 will be allocated for simBatch2. These slots will remain in memory until the batch object is discarded
+# So far, we created 2 simulation batches, one with 3 parameter sets and the 
+# other one with 4. That means that 3 run slots will be allocated for simBatch1 and 
+# 4 will be allocated for simBatch2. These slots will remain in memory until the 
+# batch object is discarded
 
-# Now we run the simulation batches. By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel. 
-# Please see documentation of runSimulationBatches for more details on how to match parameter set to results.
+# Now we run the simulation batches. 
+# By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel. 
+# Please see documentation of runSimulationBatches for more details 
+# on how to match parameter set to results.
 results <- runSimulationBatches(simulationBatches)
 
 # We can now set more values to the batches and run them again. 
@@ -153,10 +160,13 @@ simBatch1$addRunValues(parameterValues = c(30, 40))
 simBatch2$addRunValues(parameterValues = 500)
 simBatch2$addRunValues(parameterValues = 200)
 
-# this run will be much faster as the simulation won't be initialized again. Only the new value will be set as specified when adding new run values with addRunValues
+# this run will be much faster as the simulation won't be initialized again. 
+# Only the new value will be set as specified when adding new run values with addRunValues
 results2 <- runSimulationBatches(simulationBatches)
 
-# Once the simulation batches instances are not need anymore, they can be removed from the environment and the allocated memory cleared. This will be done automatically when the R session is terminated.
+# Once the simulation batches instances are not need anymore, they can be removed 
+# from the environment and the allocated memory cleared. 
+# This will be done automatically when the R session is terminated.
 rm(simBatch1)
 rm(simBatch2)
 ```
