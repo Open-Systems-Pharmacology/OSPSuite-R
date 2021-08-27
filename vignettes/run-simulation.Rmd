@@ -85,7 +85,7 @@ In some cases, the user might want want to run multiple simulations in parallel.
 By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 
 4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.
 
-```{r SimResultsExport}
+```{r MultipleSimResultsExport}
 # Load and run multiple simulations concurrently. 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
@@ -99,7 +99,7 @@ simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
 
 The results in this case will be a list of `SimulationResults`-object , e.g. one for each simulation.
 
-```{r runSim}
+```{r MultipleRunSim}
 library(ospsuite)
 
 # Load the simulation
