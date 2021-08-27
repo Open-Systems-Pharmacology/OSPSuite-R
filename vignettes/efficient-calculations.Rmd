@@ -124,7 +124,10 @@ parameterPaths <- c("Aciclovir|Lipophilicity", "Aciclovir|Permeability")
 simBatch1 <- createSimulationBatch(simulation = sim1, parametersOrPaths = parameterPaths)
 
 # For this new batch, we will vary Molecular Weight
-simBatch2 <- createSimulationBatch(simulation = sim2, parametersOrPaths = c("Aciclovir|Molecular weight"))
+simBatch2 <- createSimulationBatch(
+  simulation = sim2, 
+  parametersOrPaths = c("Aciclovir|Molecular weight")
+  )
 
 simulationBatches <- list(simBatch1, simBatch2)
 # now setting some parameter run values (the size of the array should match 
