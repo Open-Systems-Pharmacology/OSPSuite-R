@@ -36,3 +36,12 @@ dataSetToDataFrame <- function(dataSets) {
     yUnit, yErrorType, yErrorUnit, yMolWeight
   ))
 }
+
+
+loadDataSetsFromXls <- function(xlsFilePath, configuration, importAllSheets = FALSE){
+  validateIsString(xlsFilePath)
+  validateIsOfType(configuration, DataImporterConfiguration)
+  validateIsLogical(importAllSheets)
+
+  dataImporterTask <- getNetTask("DataImporter")
+}

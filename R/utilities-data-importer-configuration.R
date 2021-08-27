@@ -1,0 +1,2 @@
+# createConfigurationForFile <- function(filePath) {
+# }
