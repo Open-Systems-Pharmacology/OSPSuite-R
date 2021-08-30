@@ -97,10 +97,14 @@ dataSetToDataFrame <- function(dataSets) {
 }
 
 
-loadDataSetsFromXls <- function(xlsFilePath, configuration, importAllSheets = FALSE){
+loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE){
   validateIsString(xlsFilePath)
-  validateIsOfType(configuration, DataImporterConfiguration)
+  validateIsOfType(importerConfiguration, DataImporterConfiguration)
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- getNetTask("DataImporter")
+  dataImporterTask <- getNetTask("DataImporterTask")
+  rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
+  dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
+
+  return(dataRepositories)
 }

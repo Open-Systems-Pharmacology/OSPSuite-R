@@ -125,6 +125,8 @@ test_that("It can convert a list of data sets with meta data", {
   )
 })
 
+context("saveDataSetToPKML")
+
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
@@ -172,3 +174,19 @@ test_that("it can save the data set as pkml", {
   #remove the temp file
   capture.output(file.remove(filePath))
 })
+
+context("loadDataSetsFromXls")
+configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+
+test_that("it returns an empty list when loading from file with one sheet without
+          sheet definition in configuration and importAllSheets == FALSE", {
+            expect_equal(loadDataSetsFromXls(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), list())
+
+})
+
+test_that("it can load when loading from file with one sheet without
+          sheet definition in configuration and importAllSheets == FALSE", {
+
+          })
