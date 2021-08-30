@@ -18,11 +18,11 @@ knitr::opts_chunk$set(
 There are a few ways to run simulations using this package. 
 The easiest way is, as expected, not necessarily the most efficient one. So depending on the use case, a different approach than what is outlined in [Run Simulations](run-simulation.html) might be more suited.
 
-This vignettes aims at describing some scenarios and the suggested methods to efficiently run simulations.
+This vignette aims at describing some scenarios and the suggested methods to efficiently run simulations.
 
 ## Life cycle of a simulation run
 
-In general, a user loads a simulation, update some parameter values, calculates the simulation and retrieves some results. 
+In general, a user loads a simulation, updates some parameter values, calculates the simulation and retrieves the results. 
 Here are some steps inherent to each simulation:
 
 1. Loading a simulation
@@ -37,13 +37,13 @@ Depending on the simulation of interest, some steps might take much longer than 
 ## Running a single simulation once
 
 This is by far the easiest use cases. A simulation is loaded from a pkml file and the outputs are calculated. In this use case, step 4 and 5 are automatically lumped together in one single call
-See [Run Simulations](run-simulation.html) for more details. 
+(See [Run Simulations](run-simulation.html) for more details).
 
 
 ## Running a single simulation multiple times and varying some parameters/initial values between each run
 
 This is already a use case where the optimal and most efficient way depends drastically on the simulation at hand.
-Let's assume that we want to calculate the outputs of a simulation for different doses
+Let's assume that we want to calculate the outputs of a simulation for different doses.
 
 A simple implementation could follow the following idea, where a simulation is loaded once, the dose value is updated and the simulation is calculated for each dose of interest. 
 ```{r SequentialRun, eval=TRUE}
@@ -68,10 +68,10 @@ doseParameter$value <- toBaseUnit(doseParameter, 500, "mg")
 result500 <- runSimulations(simulations = sim)
 ```
 
-This implementation is fairly easy to understand, but has potentially one big performance bottleneck. Each simulation run is performed **sequentially** (e.g. one at a time). That means that there will not be any performance boost from having multiple cores on the machine.
+This implementation is fairly easy to understand, but has potentially one big performance bottleneck. Each simulation run is performed **sequentially** (i.e. one at a time). That means that there will not be any performance boost from having multiple cores on the machine.
 If the simulation only takes a few seconds to run, this solution is absolutely acceptable. However, if we assume that a simulation takes 1h to run, this code would take over 5h to complete, as each `runSimulations` call would be executed sequentially. 
 
-When the simulation run time (5) is much greater than the loading time (1) and initialization time (4), a better approach is to load the simulation multiple times and run the simulation concurrently (e.g. in parallel)
+When the simulation run time (5) is much greater than the loading (1) and initialization time (4), a better approach is to load the simulation multiple times and run the simulation concurrently (i.e. in parallel).
 
 Consider the following implementation:
 ```{r ParallelRun, eval=TRUE}
@@ -100,64 +100,81 @@ results <- runSimulations(simulations = list(sim100, sim200, sim300, sim400, sim
 # Results in now a list of SimulationResults
 ```
 
-This implementation is also fairly straight forward. We load the simulation multiple times from the same file (note the usage of `loadFromCache=FALSE` to ensure that we always get a new instance of a simulation and not the same instance) and we set the dose. Then, we call the `runSimulations` function with the list of simulations. The engine will run these simulations in parallel, which means that the overall execution time should be slightly more than 1h, as each run would be executed **at the same time**.
+This implementation is also fairly straight forward. We load the simulation multiple times from the same file (note the usage of `loadFromCache = FALSE` to ensure that we always get a new instance of a simulation and not the same instance) and we set the dose. Then, we call the `runSimulations` function with the list of simulations. The engine will run these simulations in parallel, which means that the overall execution time should be slightly more than 1h, as each run would be executed **at the same time**.
 
 
-## Running one or more simulations multiple times in a loop
+## Optimized loading for running simulations with pre-defined set of variable parameters
 
-This is a more advanced use case, typically when implementing some kind of optimization or sensitivity algorithms. The ospsuite-r package introduces the concept of a **simulation batch**. With a simulation batch, the variable parameters (or initial values) of a simulation to vary between each run are specified explicitely. This allows the simulation engine to speed up the system significantly as some equations can be rewritten and simplified. A simulation batch also keeps the simplified simulation in memory. That means that running a simulation again with a new set of values will be much faster, as the initialization phase (4) is only done if required and not for every run. 
+This is a more advanced use case, typically when implementing some kind of optimization or sensitivity algorithms. The ospsuite-r package introduces the concept of a **simulation batch**. With a simulation batch, the variable parameters (or initial values) of a simulation to vary between each run are specified explicitly during the creation of the simulation batch. This allows the simulation engine to speed up the system significantly as some equations can be rewritten and simplified. A simulation batch also keeps the simplified simulation in memory. That means that running a simulation again with a new set of values will be much faster, as the initialization phase (4) is only done if required and not for every run. 
 
-Consider the following implementation:
-```{r BatchRun, eval=TRUE}
+Consider the following implementation. We first create two simulation batches for the same model
+and define the parameter values that can be changed between runs. Note that, as opposed to 
+the `Simulation` object, we do not have access to any parameter/species values nor can we change
+the outputs or simulation time.
+```{r BatchRunInit, eval=TRUE}
 library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
-# We create two different instances of the same simulation to illustrate the usage.
+# We load the simulation for which the batches will be created
 sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE)
-sim2 <- loadSimulation(simFilePath, loadFromCache = FALSE)
 
-# define the list of parameter that will be varied in the run. 
-# We will vary 2 parameters: Lipophilicity and Permeability 
+# define the list of parameter that will be varied between the runs. 
+# For the first batch, we will vary 2 parameters: Lipophilicity and Permeability 
 parameterPaths <- c("Aciclovir|Lipophilicity", "Aciclovir|Permeability")
 
 # define a first simulation batch
 simBatch1 <- createSimulationBatch(simulation = sim1, parametersOrPaths = parameterPaths)
 
-# For this new batch, we will vary Molecular Weight
+# for the second batch, we will vary Molecular Weight
 simBatch2 <- createSimulationBatch(
-  simulation = sim2, 
+  simulation = sim1, 
   parametersOrPaths = c("Aciclovir|Molecular weight")
   )
 
 simulationBatches <- list(simBatch1, simBatch2)
+```
+
+In the next step, we define multiple runs of the simulation batch by adding different
+parameter (and/or species start) values set. Each set of values correspond to one run. The benefit of this approach 
+is that the initialization steps (1 and 4) are only performed once. After that, ony the execution time (step 5)
+will have an impact on the total performance.
+
+```{r BatchRunEnque, eval=TRUE}
 # now setting some parameter run values (the size of the array should match 
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
 simBatch1$addRunValues(parameterValues = c(3, 4))
 simBatch1$addRunValues(parameterValues = c(5, 6))
 
-# We only have one parameter to vary for simBatch2, therefor only one value to set
+# We only have one parameter to vary for simBatch2, therefore only one value to set
 simBatch2$addRunValues(parameterValues = 150)
 simBatch2$addRunValues(parameterValues = 200)
 simBatch2$addRunValues(parameterValues = 300)
 simBatch2$addRunValues(parameterValues = 400)
+```
 
+So far, we created 2 simulation batches, one with 3 parameter sets and the 
+other one with 4. That means that 3 runs will be enqueued for simBatch1 and 
+4 will be enqueued for simBatch2. Each run gets a unique id that can later be used
+to correctly assign simulation results to the simulated set of parameters.
 
-# So far, we created 2 simulation batches, one with 3 parameter sets and the 
-# other one with 4. That means that 3 run slots will be allocated for simBatch1 and 
-# 4 will be allocated for simBatch2. These slots will remain in memory until the 
-# batch object is discarded
-
+```{r BatchRunRun, eval=TRUE}
 # Now we run the simulation batches. 
 # By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel. 
-# Please see documentation of runSimulationBatches for more details 
-# on how to match parameter set to results.
+# Please see documentation of runSimulationBatches for more details.
+# The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
+print(names(unlist(results)))
+```
 
-# We can now set more values to the batches and run them again. 
-# Notes: 
-#  - We do not have to always set the same number of values at the same time
-#  - Previous runValues are automaticaly cleared when runSimulationBatches is called. 
+
+The enqueued run values are cleared after calling `runSimulationBatches`, so executing the run
+again would result in an empty results list. We can now set more values to the batches and run them again. 
+Notes: 
+  - We do not have to always set the same number of values at the same time
+  - Previous runValues are automaticaly cleared when runSimulationBatches is called. 
+  
+```{r BatchRunRunNewValues, eval=TRUE}  
 simBatch1$addRunValues(parameterValues = c(10, 20))
 simBatch1$addRunValues(parameterValues = c(30, 40))
 simBatch2$addRunValues(parameterValues = 500)
@@ -167,11 +184,13 @@ simBatch2$addRunValues(parameterValues = 200)
 # Only the new value will be set as specified when adding new run values with addRunValues
 results2 <- runSimulationBatches(simulationBatches)
 
-# Once the simulation batches instances are not need anymore, they can be removed 
+# Once the simulation batches instances are not needed anymore, they can be removed 
 # from the environment and the allocated memory cleared. 
 # This will be done automatically when the R session is terminated.
 rm(simBatch1)
 rm(simBatch2)
 ```
 
-Usage of `SimulationBatch` is recommended for advanced scenarios where simulations expected to be run hundreds of times and where each second that can be spared will impact the performance significantly. 
+Usage of `SimulationBatch` is recommended for advanced scenarios where simulations
+expected to be run hundreds of times and where each second that can be spared
+will impact the performance significantly. 

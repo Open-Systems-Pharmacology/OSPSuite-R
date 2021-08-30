@@ -76,20 +76,22 @@ csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
 exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 
 # Load from csv
-resultsLoaded <- importResultsFromCSV(filePath = csvResultsPath, simulation = sim)
+resultsLoaded <- importResultsFromCSV(filePaths = csvResultsPath, simulation = sim)
 print(resultsLoaded)
 ```
 
 ## Running multiple individual simulations and retrieving the results
-In some cases, the user might want want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations to run.
+In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations the `runSimulations` function. However, only individual simulations (i.e., the `population` argument must remain empty) 
+are supported.
 By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 
 4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.
 
-```{r MultipleSimResultsExport}
+```{r MultipleSimRun}
 # Load and run multiple simulations concurrently. 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
-# We load 3 times the same simulation for convenience. But in real life scenarios, they would be different simulations
+# We load 3 times the same simulation for convenience. But in real life scenarios, 
+# they should be different simulations
 sim1 <- loadSimulation(simFilePath)
 sim2 <- loadSimulation(simFilePath)
 sim3 <- loadSimulation(simFilePath)
@@ -97,17 +99,17 @@ sim3 <- loadSimulation(simFilePath)
 simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
 ```
 
-The results in this case will be a list of `SimulationResults`-object , e.g. one for each simulation.
+The results in this case will be a named list of `SimulationResults`-object , i.e. one for each simulation.
+The names of the entries of the list are the ids of the simulation to which the results
+correspond. This way, it is easy to retrieve the correct results for the specific simulation
 
-```{r MultipleRunSim}
-library(ospsuite)
-
-# Load the simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
-
-simulationResults <- runSimulations(simulations = sim)
-print(simulationResults)
+```{r MultipleRunSimResultsIds}
+#Get the id of the second simulation
+id <- sim2$id
+print(id)
+#get the corresponding result
+sim2Results <- simulationResults[[id]]
+print(sim2Results$simulation$id)
 ```
 
 ## Adding new outputs
