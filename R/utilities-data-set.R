@@ -47,7 +47,7 @@ loadDataSetFromPKML <- function(filePath) {
 #' dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
-saveDataSetToPKML <- function(dataSet, filePath){
+saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, DataSet)
   filePath <- expandPath(filePath)
@@ -97,7 +97,7 @@ dataSetToDataFrame <- function(dataSets) {
 }
 
 
-loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE){
+loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
   validateIsOfType(importerConfiguration, DataImporterConfiguration)
   validateIsLogical(importAllSheets)
@@ -105,6 +105,13 @@ loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllShe
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
+  dataSets <- lapply(dataRepositories, \(x){
+    repository <- DataRepository$new(x)
+    DataSet$new(repository)
+  })
+  names(dataSets) <- lapply(dataSets, \(x){
+    x$name
+  })
 
-  return(dataRepositories)
+  return(dataSets)
 }

@@ -219,6 +219,23 @@ DataImporterConfiguration <- R6::R6Class(
       }
       validateIsString(value)
       rClr::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)
+    },
+    #' @field namingPattern Regular expression used for naming of loaded data sets.
+    #' Words between curly brackets (e.g. \code{{Group Id}}) will be replaced by the value
+    #' in the corresponding column. Further keywords are \code{{Source}} for the file name
+    #' and \code{{Sheet}} for sheet name.
+    namingPattern = function(value) {
+      if (missing(value)) {
+        pattern <- rClr::clrGet(self$ref, "NamingConventions")
+        # Create a default pattern if no is defined
+        if (is.null(pattern)) {
+          pattern <- "{Source}.{Sheet}"
+          rClr::clrSet(self$ref, "NamingConventions", pattern)
+        }
+        return(pattern)
+      }
+      validateIsString(value)
+      rClr::clrSet(self$ref, "NamingConventions", enc2utf8(value))
     }
   ),
   public = list(
@@ -292,6 +309,7 @@ DataImporterConfiguration <- R6::R6Class(
       private$printLine("Error unit", self$errorUnit)
       private$printLine("Grouping columns", self$groupingColumns)
       private$printLine("Sheets", self$sheets)
+      private$printLine("Naming pattern", self$namingPattern)
 
       invisible(self)
     }
