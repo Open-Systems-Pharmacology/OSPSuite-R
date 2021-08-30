@@ -51,6 +51,11 @@ If no error column is present, the value is \code{NULL}}
 
 \item{\code{sheets}}{Names of the sheets (list of strings) of the excel workbook for which the
 configuration will be applied.}
+
+\item{\code{namingPattern}}{Regular expression used for naming of loaded data sets.
+Words between curly brackets (e.g. \code{{Group Id}}) will be replaced by the value
+in the corresponding column. Further keywords are \code{{Source}} for the file name
+and \code{{Sheet}} for sheet name.}
 }
 \if{html}{\out{</div>}}
 }

@@ -97,6 +97,28 @@ dataSetToDataFrame <- function(dataSets) {
 }
 
 
+#' Load data sets from excel
+#'
+#' @details Load observed data from an excel file using an importer configuration
+#'
+#' @param xlsFilePath Path to the excel file with the data
+#' @param importerConfiguration An object of type \code{DataImporterConfiguration} that is valid for the excel file
+#' @param importAllSheets If \code{FALSE} (default), only sheets specified in the
+#' \code{importerConfiguration} will be loaded. If \code{TRUE}, an attempt to load all sheets
+#' is performed. If any sheet does not comply with the configuration, an error is thrown.
+#'
+#' @return A named set of \code{DataSet} objects. The naming is defined by the property
+#' \code{importerConfiguration$namingPattern}.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' configurationPath <- "../dataImporterConfiguration_noSheets.xml"
+#' xlsFilePath <- "../CompiledDataSet_oneSheet.xlsx"
+#' importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+#'
+#' dataSets <- loadDataSetsFromXls(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+#' }
 loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
   validateIsOfType(importerConfiguration, DataImporterConfiguration)
