@@ -175,19 +175,19 @@ test_that("it can save the data set as pkml", {
   capture.output(file.remove(filePath))
 })
 
-context("loadDataSetsFromXls")
+context("loadDataSetsFromExcel")
 configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
 importerConfiguration <- DataImporterConfiguration$new(configurationPath)
 
 test_that("it returns an empty list when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
-  expect_named(loadDataSetsFromXls(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
 })
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
-  dataSets <- loadDataSetsFromXls(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, DataSet))
   expect_equal(length(dataSets), 4)
 })

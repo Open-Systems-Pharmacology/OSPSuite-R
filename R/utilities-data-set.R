@@ -117,9 +117,9 @@ dataSetToDataFrame <- function(dataSets) {
 #' xlsFilePath <- "../CompiledDataSet_oneSheet.xlsx"
 #' importerConfiguration <- DataImporterConfiguration$new(configurationPath)
 #'
-#' dataSets <- loadDataSetsFromXls(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+#' dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
 #' }
-loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
+loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
   validateIsOfType(importerConfiguration, DataImporterConfiguration)
   validateIsLogical(importAllSheets)
