@@ -127,11 +127,11 @@ loadDataSetsFromXls <- function(xlsFilePath, importerConfiguration, importAllShe
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
-  dataSets <- lapply(dataRepositories, \(x){
+  dataSets <- lapply(dataRepositories, function(x){
     repository <- DataRepository$new(x)
     DataSet$new(repository)
   })
-  names(dataSets) <- lapply(dataSets, \(x){
+  names(dataSets) <- lapply(dataSets, function(x){
     x$name
   })
 
