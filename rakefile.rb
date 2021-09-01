@@ -142,7 +142,7 @@ def copy_packages_files
   native_folder = '/bin/native/x64/Release/'
   copy_dependencies packages_dir, lib_dir do
     # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
-    copy_files '*/**/netstandard*', 'dll'
+    copy_files '*/**/netstandard2.0', 'dll'
 
     # Copy all x64 release dll and so from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
