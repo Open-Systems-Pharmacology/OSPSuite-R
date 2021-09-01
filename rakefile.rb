@@ -146,6 +146,9 @@ def copy_packages_files
 
     # Copy all x64 release dll and so from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
+
+    #special case for NPOI that does not work in .net standard mode
+    copy_files 'NPOI*/**/net45', 'dll'
   end
 
 end
