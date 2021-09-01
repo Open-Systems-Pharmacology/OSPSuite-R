@@ -125,6 +125,8 @@ test_that("It can convert a list of data sets with meta data", {
   )
 })
 
+context("saveDataSetToPKML")
+
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
@@ -152,7 +154,7 @@ test_that("it can save the data set as pkml", {
   filePath <- getTestDataFilePath("obs_data_save.pkml")
 
   saveDataSetToPKML(dataSet = dataSet, filePath = filePath)
-  #load the saved file and check everything is correct
+  # load the saved file and check everything is correct
   dataSet <- loadDataSetFromPKML(filePath)
 
   expect_equal(dataSet$xValues, xValues)
@@ -169,6 +171,23 @@ test_that("it can save the data set as pkml", {
   expect_equal(dataSet$yErrorValues, yError)
   expect_error(capture.output(print(dataSet)), regexp = NA)
 
-  #remove the temp file
+  # remove the temp file
   capture.output(file.remove(filePath))
+})
+
+context("loadDataSetsFromExcel")
+configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+
+test_that("it returns an empty list when loading from file with one sheet without
+          sheet definition in configuration and importAllSheets == FALSE", {
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
+})
+
+test_that("it can load when loading from file with one sheet without
+          sheet definition in configuration and importAllSheets == FALSE", {
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  expect_true(isOfType(dataSets, DataSet))
+  expect_equal(length(dataSets), 4)
 })

@@ -49,5 +49,4 @@ simRunOptions$showProgress <- TRUE
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
-
 }

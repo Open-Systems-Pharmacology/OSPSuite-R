@@ -84,8 +84,8 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   dimension <- quantityOrDimension
   dimensionTask <- getNetTask("DimensionTask")
 
-  #covers all NULL or NA
-  if(all(is.na(values))){
+  # covers all NULL or NA
+  if (all(is.na(values))) {
     return(values)
   }
 
@@ -139,8 +139,8 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- encodeUnit(targetUnit)
 
-  #covers all NULL or NA
-  if(all(is.na(values))){
+  # covers all NULL or NA
+  if (all(is.na(values))) {
     return(values)
   }
 
