@@ -94,12 +94,12 @@ unify <- function(groupEntitiesByPathFunc, paths) {
 
 #' Retrieves all entities of a container (simulation or container instance) matching the given path criteria.
 #'
-#' @param paths A vector of strings representing the paths relative to the \code{container}
+#' @param paths A vector of strings representing the paths relative to the `container`
 #' @param container A Container or Simulation used to find the entities
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to create objects of type Container or Simulation
 #' @param entityType Class of the type that should be returned.
 #' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
-#' @return A list of entities matching the path criteria coerced to the \code{entityType}.
+#' @return A list of entities matching the path criteria coerced to the `entityType`.
 #' The list is empty if no entities matching were found.
 #'
 getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) {
@@ -125,7 +125,7 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
 #' Retrieves all path of entities defined within the container (simulation or container instance)
 #'
 #' @param container A Container or Simulation used to find the entities
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to create objects of type Container or Simulation
 #' @param entityType Type of entity for which the path should be returned.
 #' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
 #' @return An array of paths (one for each entity found under the container and its sub containers)
@@ -148,14 +148,14 @@ getAllEntityPathsIn <- function(container, entityType, method = NULL) {
 #' Retrieve a single entity by path in the given container
 #'
 #' @inherit getAllEntitiesMatching
-#' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no entity exists for the given path,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param path A string representing the path relative to the `container`
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no entity exists for the given path,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 #' @param entityType Class of the type that should be returned. Supported types are Container, Quantity, and Parameter
 #'
-#' @return The \code{Entity} with the given path coerced to the \code{entityType}.
+#' @return The `Entity` with the given path coerced to the `entityType`.
 #' If the entity for the path does not exist, an error is thrown in case of
-#' \code{stopIfNotFound} is TRUE (default), otherwise \code{NULL}
+#' `stopIfNotFound` is TRUE (default), otherwise `NULL`
 #'
 getEntity <- function(path, container, entityType, stopIfNotFound = TRUE) {
   entities <- getAllEntitiesMatching(path, container, entityType)

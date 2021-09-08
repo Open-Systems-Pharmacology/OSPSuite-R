@@ -37,13 +37,13 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
     normalizationFactor = function(value) {
       private$wrapProperty("NormalizationFactor", value)
     },
-    #' @field concentrationThreshold Used in conjunction with the \code{threshold} parameter type.
+    #' @field concentrationThreshold Used in conjunction with the `threshold` parameter type.
     #' If defined, the time at which this concentration was reached will be calculated
     concentrationThreshold = function(value) {
       private$wrapProperty("ConcentrationThreshold", value)
     },
     #' @field standardPKParameter Based parameter to use to perform the PK-Analysis calculation.
-    #' See \code{StandardPKParameter} enum for all possible pk parameters
+    #' See `StandardPKParameter` enum for all possible pk parameters
     standardPKParameter = function(value) {
       private$wrapIntegerProperty("StandardPKParameter", value)
     }

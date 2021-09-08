@@ -4,15 +4,15 @@
 #'
 #' @param filePath Full path of pkml simulation file to load.
 #'
-#' @param loadFromCache If \code{TRUE}, an already loaded pkml file will not be loaded
+#' @param loadFromCache If `TRUE`, an already loaded pkml file will not be loaded
 #' again, but the simulation object will be retrieved from cache.
-#' If \code{FALSE}, a new simulation object will be created. Default value is \code{FALSE}
+#' If `FALSE`, a new simulation object will be created. Default value is `FALSE`
 #'
-#' @param addToCache If \code{TRUE}, the loaded simulation is added to cache. If \code{FALSE},
-#' the returned simulation only exists locally. Default is \code{TRUE}
+#' @param addToCache If `TRUE`, the loaded simulation is added to cache. If `FALSE`,
+#' the returned simulation only exists locally. Default is `TRUE`
 #'
-#' @param resetIds If \code{TRUE}, the internal object ids in the simulation are resetted to a unique value.
-#' If \code{FALSE}, the ids are kept as defined in the pkml simulation. Default is \code{TRUE}
+#' @param resetIds If `TRUE`, the internal object ids in the simulation are resetted to a unique value.
+#' If `FALSE`, the ids are kept as defined in the pkml simulation. Default is `TRUE`
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -83,14 +83,14 @@ saveSimulation <- function(simulation, filePath) {
 #' @title
 #'
 #' DEPRECATED
-#'  \code{runSimulations} should be used in favor of  \code{runSimulation}. The latter will be removed in future releases
-#' Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
+#'  `runSimulations` should be used in favor of  `runSimulation`. The latter will be removed in future releases
+#' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
 #'
-#' @param simulation One \code{Simulation} to simulate.
-#' @param population Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
-#' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
-#' @param agingData Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation
-#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
+#' @param simulation One `Simulation` to simulate.
+#' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
+#' Alternatively, you can also pass the result of `createPopulation` directly. In this case, the population will be extracted
+#' @param agingData Optional instance of `AgingData` to use for the simulation. This is only used with a population simulation
+#' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
 #'
 #' @return SimulationResults (one entry per Individual) for a single simulation
 #'
@@ -99,7 +99,7 @@ saveSimulation <- function(simulation, filePath) {
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
-#' # results is an instance of \code{SimulationResults}
+#' # results is an instance of `SimulationResults`
 #' results <- runSimulation(sim)
 #'
 #' # Creating custom simulation run options
@@ -117,25 +117,25 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)
 }
 
-#' @title  Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
+#' @title  Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
 #' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
 #'
-#' @param simulations One \code{Simulation} or list of \code{Simulation}  to simulate.
-#' @param population Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
-#' Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted
-#' @param agingData Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation
-#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run
-#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}
+#' @param simulations One `Simulation` or list of `Simulation`  to simulate.
+#' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
+#' Alternatively, you can also pass the result of `createPopulation` directly. In this case, the population will be extracted
+#' @param agingData Optional instance of `AgingData` to use for the simulation. This is only used with a population simulation
+#' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
+#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`
 #'
 #' @return SimulationResults (one entry per Individual) for a single simulation or
-#' a list of \code{SimulationResults} objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is \code{NULL}
+#' a list of `SimulationResults` objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is `NULL`
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
-#' # Results is an instance of \code{SimulationResults}
+#' # Results is an instance of `SimulationResults`
 #' results <- runSimulations(sim)
 #'
 #' # Creating custom simulation run options
@@ -153,7 +153,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' sim2 <- loadSimulation(simPath)
 #' sim3 <- loadSimulation(simPath)
 #'
-#' # Results is an array of \code{SimulationResults}
+#' # Results is an array of `SimulationResults`
 #' results <- runSimulations(list(sim, sim2, sim3))
 #' @export
 runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
@@ -240,18 +240,18 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   return(simulationResults)
 }
 
-#' @title  Creates and returns an instance of a \code{SimulationBatch} that can be used to efficiently vary parameters and initial values in a simulation
+#' @title  Creates and returns an instance of a `SimulationBatch` that can be used to efficiently vary parameters and initial values in a simulation
 #'
-#' @param simulation Instance of a \code{Simulation} to simulate in a batch mode
+#' @param simulation Instance of a `Simulation` to simulate in a batch mode
 #' @param parametersOrPaths  Parameter instances (element or vector) typically retrieved using
-#' \code{getAllParametersMatching} or parameter path (element or vector of strings) that will be varied in the simulation. (optional)
+#' `getAllParametersMatching` or parameter path (element or vector of strings) that will be varied in the simulation. (optional)
 #' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
-#' If parametersOrPaths is \code{NULL}, you will not be able to set parameter values during batch run.
+#' If parametersOrPaths is `NULL`, you will not be able to set parameter values during batch run.
 #'
 #' @param moleculesOrPaths  Molecule instances (element or vector) typically retrieved using
-#' \code{getAllMoleculesMatching} or molecule path (element or vector of strings) that will be varied in the simulation. (optional)
+#' `getAllMoleculesMatching` or molecule path (element or vector of strings) that will be varied in the simulation. (optional)
 #' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
-#' If moleculesOrPaths is \code{NULL}, you will not be able to set molecule initial values during batch run.
+#' If moleculesOrPaths is `NULL`, you will not be able to set molecule initial values during batch run.
 #'
 #' @return SimulationBatch that can be used to vary parameter values or molecule initial values and run simulation in an optimized manner
 #'
@@ -299,15 +299,15 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 
 #' Run simulation batches
 #' @details Runs a set of simulation batches. The simulation batches must be populated
-#' with sets of parameter and start values with \code{SimulationBatch$addRunValues()}
+#' with sets of parameter and start values with `SimulationBatch$addRunValues()`
 #' prior to running. After the run, the list of parameter and start values is cleared.
 #'
-#' @param simulationBatches List of \code{SimulationBatch} objects with added parameter and initial values
-#' @param simulationRunOptions Optional instance of a \code{SimulationRunOptions} used during the simulation run.
-#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails.
-#' Default is \code{FALSE}.
+#' @param simulationBatches List of `SimulationBatch` objects with added parameter and initial values
+#' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run.
+#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails.
+#' Default is `FALSE`.
 #'
-#' @return Nested list of \code{SimulationResults} objects. The first level of the list are the IDs of the simulations of SimulationBatches, containing a list of \code{SimulationResults} for each set of parameter/initial values. If a simulation with a parameter/initial values set fails, the result for this run is \code{NULL}
+#' @return Nested list of `SimulationResults` objects. The first level of the list are the IDs of the simulations of SimulationBatches, containing a list of `SimulationResults` for each set of parameter/initial values. If a simulation with a parameter/initial values set fails, the result for this run is `NULL`
 #' @export
 #'
 #' @examples
@@ -423,15 +423,15 @@ removeSimulationFromCache <- function(simulation) {
   return(TRUE)
 }
 
-#' @title  Returns a list containing all standard global parameters defined in a \code{simulation} for given \code{moleculeName}.
-#' These parameters are typically located directly under the container named after the \code{moleculeName}.
+#' @title  Returns a list containing all standard global parameters defined in a `simulation` for given `moleculeName`.
+#' These parameters are typically located directly under the container named after the `moleculeName`.
 #' For the list of standard parameters
-#' @seealso  \link{MoleculeParameter}
+#' @seealso  [MoleculeParameter]
 #'
 #' @param simulation Simulation to query for molecule parameters
 #' @param moleculeName Name of molecule (Enzyme, Transporter etc..) for which global parameters should be returned
 #'
-#' @return A list of all standard global parameters defined for \code{moleculeName} if the molecule exists in the \code{simulation}.
+#' @return A list of all standard global parameters defined for `moleculeName` if the molecule exists in the `simulation`.
 #' Otherwise an empty list is returned
 #'
 #' @export
@@ -477,7 +477,7 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 
 #' Get the paths of all state variable quantities of the simulation
 #'
-#' @param simulation \code{Simulation} object
+#' @param simulation `Simulation` object
 #' @details List of paths of all molecules in all compartments and all parameters that are
 #' state variables.
 #'
@@ -531,15 +531,15 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
 
 #' Get SimulationResults from ConcurrentSimulationRunner
 #'
-#' @details Create a list of \code{SimulationResults}-objects from the results of a
-#' \code{ConcurrentSimulationRunner}
-#' @param results .NET object created by \code{RunConcurrently()}
+#' @details Create a list of `SimulationResults`-objects from the results of a
+#' `ConcurrentSimulationRunner`
+#' @param results .NET object created by `RunConcurrently()`
 #' @param resultsIdSimulationIdMap Map of results ids as keys with values being the ids of simulations the respective batch was created with. The order of IDs is as they were added to the batch.
 #' @param simulationIdSimulationMap A named list of simulation ids as keys and simulation objects as values
 #' to the id of a result
-#' @param silentMode If \code{TRUE}, no warnings are displayed if a simulation fails.
+#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails.
 #'
-#' @return A named list of \code{SimulationResults} objects with the names being the ids of simulations or
+#' @return A named list of `SimulationResults` objects with the names being the ids of simulations or
 #' simulation-batch values pairs they were produced by
 .getConcurrentSimulationRunnerResults <- function(results, resultsIdSimulationIdMap, simulationIdSimulationMap, silentMode) {
   # Pre-allocate lists for SimulationResult

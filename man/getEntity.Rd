@@ -25,5 +25,5 @@ If the entity for the path does not exist, an error is thrown in case of
 Retrieve a single entity by path in the given container
 }
 \seealso{
-\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to create objects of type Container or Simulation
 }

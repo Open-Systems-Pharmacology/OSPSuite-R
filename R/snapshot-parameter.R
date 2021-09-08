@@ -1,6 +1,6 @@
 #' @title SnapshotParameter
 #' @docType class
-#' @description  A parameter typically used in the definition of \code{IndividualCharacteristics} covariates (Height, Weight etc...)
+#' @description  A parameter typically used in the definition of `IndividualCharacteristics` covariates (Height, Weight etc...)
 #'
 #' @format NULL
 #' @export

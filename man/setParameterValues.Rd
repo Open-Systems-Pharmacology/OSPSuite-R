@@ -26,5 +26,5 @@ params <- getAllParametersMatching("Organism|**|Volume", sim)
 setParameterValues(params, c(2, 3))
 }
 \seealso{
-\code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
+\code{\link[=getParameter]{getParameter()}} and \code{\link[=getAllParametersMatching]{getAllParametersMatching()}} to create objects of type Parameter
 }

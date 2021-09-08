@@ -21,5 +21,5 @@ The list is empty if no entities matching were found.
 Retrieves all path of entities defined within the container (simulation or container instance)
 }
 \seealso{
-\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to create objects of type Container or Simulation
 }

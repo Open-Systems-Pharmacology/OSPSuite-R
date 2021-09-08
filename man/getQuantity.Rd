@@ -29,5 +29,5 @@ sim <- loadSimulation(simPath)
 quantity <- getQuantity("Organism|Liver|Volume", sim)
 }
 \seealso{
-\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to retrieve objects of type Container or Simulation
 }

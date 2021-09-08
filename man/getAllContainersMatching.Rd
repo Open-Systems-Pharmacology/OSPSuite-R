@@ -34,5 +34,5 @@ containers <- getAllContainersMatching(paths, sim)
 containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 }
 \seealso{
-\code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}} and \code{\link[=getContainer]{getContainer()}} to create objects of type Container or Simulation
 }

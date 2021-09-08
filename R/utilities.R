@@ -65,7 +65,7 @@ encodeUnit <- function(unit) {
 #'
 #' @param object To be converted to a list
 #'
-#' @return If \code{is.list(object) == TRUE}, returns the \code{object}, otherwise \code{list(object)}
+#' @return If `is.list(object) == TRUE`, returns the `object`, otherwise `list(object)`
 toList <- function(object) {
   if (is.list(object)) {
     return(object)

@@ -1,9 +1,9 @@
 
 #' Retrieve all quantities of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param paths A vector of strings relative to the \code{container}
+#' @param paths A vector of strings relative to the `container`
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return A list of quantities matching the path criteria. The list is empty if no quantity matching were found.
 #' @examples
@@ -29,7 +29,7 @@ getAllQuantitiesMatching <- function(paths, container) {
 #' Retrieves the path of all quantities defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return An array with one entry per quantity defined in the container
 #' @examples
@@ -47,13 +47,13 @@ getAllQuantityPathsIn <- function(container) {
 #' Retrieve a single quantity by path in the given container
 #'
 #' @inherit getAllQuantitiesMatching
-#' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param path A string representing the path relative to the `container`
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 #'
-#' @return The \code{Quantity} with the given path. If the quantity for the path
-#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
-#' otherwise \code{NULL}
+#' @return The `Quantity` with the given path. If the quantity for the path
+#' does not exist, an error is thrown if `stopIfNotFound` is TRUE (default),
+#' otherwise `NULL`
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -67,7 +67,7 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 
 #' Set values of quantity
 #'
-#' @param quantities A single or a list of \code{Quantity}
+#' @param quantities A single or a list of `Quantity`
 #'
 #' @param values A numeric value that should be assigned to the quantity or a vector
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
@@ -102,8 +102,8 @@ setQuantityValues <- function(quantities, values) {
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
 #' length as 'quantityPaths'
 #' @param simulation Simulation uses to retrieve quantity instances from given paths.
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
-#' an error is thrown. If \code{FALSE}, a warning is shown to the user
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
+#' an error is thrown. If `FALSE`, a warning is shown to the user
 
 #' @examples
 #'
@@ -133,7 +133,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, stopIfNot
 
 #' Scale current values of quantities using a factor
 #'
-#' @param quantities A single or a list of \code{Quantity}
+#' @param quantities A single or a list of `Quantity`
 #'
 #' @param factor A numeric value that will be used to scale all quantities
 #'
@@ -151,7 +151,7 @@ scaleQuantityValues <- function(quantities, factor) {
 
 #' Retrieves the display path of the quantity defined by path in the simulation
 #'
-#' @param paths A single string or array of paths path relative to the \code{simulation}
+#' @param paths A single string or array of paths path relative to the `simulation`
 #' @param simulation A imulation used to find the entities
 #'
 #' @return a display path for each entry in paths

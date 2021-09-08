@@ -26,5 +26,5 @@ molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 setMoleculeInitialValues(molecules, c(2, 3))
 }
 \seealso{
-\code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
+\code{\link[=getMolecule]{getMolecule()}} and \code{\link[=getAllMoleculesMatching]{getAllMoleculesMatching()}} to retrieve objects of type Molecule
 }

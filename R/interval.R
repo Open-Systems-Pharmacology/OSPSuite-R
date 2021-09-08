@@ -1,6 +1,6 @@
 #' @title Interval
 #' @docType class
-#' @description  Simulation Interval (typically associated with an instance of \code{OutputSchema})
+#' @description  Simulation Interval (typically associated with an instance of `OutputSchema`)
 #'
 #' @format NULL
 Interval <- R6::R6Class(
@@ -8,15 +8,15 @@ Interval <- R6::R6Class(
   cloneable = FALSE,
   inherit = Container,
   active = list(
-    #' @field startTime Start time of interval (instance of \code{Parameter})
+    #' @field startTime Start time of interval (instance of `Parameter`)
     startTime = function(value) {
       private$readOnlyParameterProperty("StartTime", value)
     },
-    #' @field endTime End time of interval (instance of \code{Parameter})
+    #' @field endTime End time of interval (instance of `Parameter`)
     endTime = function(value) {
       private$readOnlyParameterProperty("EndTime", value)
     },
-    #' @field resolution Resolution of interval in pts/min (instance of \code{Parameter})
+    #' @field resolution Resolution of interval in pts/min (instance of `Parameter`)
     resolution = function(value) {
       private$readOnlyParameterProperty("Resolution", value)
     },

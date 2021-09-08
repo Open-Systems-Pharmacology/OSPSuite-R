@@ -1,12 +1,12 @@
 #' Creates an individual using the PKSim Database
 #'
-#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}
+#' @param individualCharacteristics Characteristics of the individual to create as an instance of `IndividualCharacteristics`
 #'
 #' @return A list with two entries:
-#' The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
-#' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#' The `distributedParameters` containing the actual parameter values modified by the create individual algorithm.
+#' The `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'
-#' @note When updating a simulation with the value for a new individual, only use the \code{distributedParameters} to ensure that you do not override
+#' @note When updating a simulation with the value for a new individual, only use the `distributedParameters` to ensure that you do not override
 #' formula parameters.
 #'
 #' @export
@@ -25,11 +25,11 @@ createIndividual <- function(individualCharacteristics) {
   list(distributedParameters = distributedParameters, derivedParameters = derivedParameters)
 }
 
-#' Creates the parameter distributions based on the given individual \code{individualCharacteristics}
+#' Creates the parameter distributions based on the given individual `individualCharacteristics`
 #'
-#' @param individualCharacteristics Characteristics of the individual to create as an instance of \code{OriginData}
+#' @param individualCharacteristics Characteristics of the individual to create as an instance of `OriginData`
 #'
-#' @return An array of \code{ParameterValue} containing the value of each individual parameter
+#' @return An array of `ParameterValue` containing the value of each individual parameter
 #'
 #' @export
 createDistributions <- function(individualCharacteristics) {
@@ -61,13 +61,13 @@ createDistributions <- function(individualCharacteristics) {
 #' @param ageUnit Unit in which the age value is defined. Default is year(s)
 #' @param gestationalAge Gestational age of the created individual (for human species only using the Preterm population). Default is 40 Weeks
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is week(s)
-#' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
+#' @param moleculeOntogenies Optional list of `MoleculeOntogeny` that will be used to retrieve ontogeny information for molecules.
 #' @param seed Optional seed parameter to use to generate start values for the created individual algorithm.
 #' A `MoleculeOntogeny` is an object with the name a `molecule` property (e.g the name of the molecule as defined in your simulation)
 #' and an `ontogeny` property (e.g. the name of the predefined ontogeny to use for this molecule). The list of all available ontogenies
 #' can be accessed programmatically using the enum `StandardOntogeny`
 #'
-#' @return An array of \code{ParameterValue} containing the value of each individual parameter
+#' @return An array of `ParameterValue` containing the value of each individual parameter
 #'
 #' @export
 createIndividualCharacteristics <- function(species,

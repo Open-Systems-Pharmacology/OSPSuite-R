@@ -47,7 +47,7 @@ DataSet <- R6::R6Class(
       private$.setColumnUnit(private$.xColumn, value)
     },
     #' @field xValues Values stored in the xUnit. This field is read-only.
-    #' Use \code{$setValues()} to change the values.
+    #' Use `$setValues()` to change the values.
     xValues = function(values) {
       if (missing(values)) {
         return(private$.getColumnValues(private$.xColumn))
@@ -73,7 +73,7 @@ DataSet <- R6::R6Class(
       private$.setColumnUnit(private$.yColumn, value)
     },
     #' @field yValues Values stored in the yUnit. This field is read-only.
-    #' Use \code{$setValues()} to change the values.
+    #' Use `$setValues()` to change the values.
     yValues = function(values) {
       if (missing(values)) {
         return(private$.getColumnValues(private$.yColumn))
@@ -83,8 +83,8 @@ DataSet <- R6::R6Class(
 
     #' @field yErrorType Type of the error - geometric or arithmetic.
     #' When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100%).
-    #' When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.
-    #' In case no yError is defined, the value is \code{NULL} and cannot be changed
+    #' When changing from geometric to arithmetic, the values are set to the same unit as `yErrorUnit`.
+    #' In case no yError is defined, the value is `NULL` and cannot be changed
     yErrorType = function(value) {
       if (missing(value)) {
         if (is.null(private$.yErrorColumn)) {
@@ -98,8 +98,8 @@ DataSet <- R6::R6Class(
       private$.setErrorType(value)
     },
     #' @field yErrorUnit Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
-    #' for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.
-    #' In case no yError is defined, the value is \code{NULL} and cannot be changed
+    #' for `yDimension`. For geometric error, the unit must be valid for `Dimensionless`.
+    #' In case no yError is defined, the value is `NULL` and cannot be changed
     yErrorUnit = function(value) {
       if (missing(value)) {
         # Do not have to check for NULL here becase NULL$something is NULL
@@ -112,9 +112,9 @@ DataSet <- R6::R6Class(
       invisible(self)
     },
     #' @field yErrorValues Values of error stored in the yErrorUnit unit. This field is read-only.
-    #' Use \code{$setValues()} to change the values.
-    #' In case no yError is defined, the value is \code{NULL} and cannot be changed.
-    #' Use \code{$setValues()} to change the values.
+    #' Use `$setValues()` to change the values.
+    #' In case no yError is defined, the value is `NULL` and cannot be changed.
+    #' Use `$setValues()` to change the values.
     yErrorValues = function(values) {
       if (missing(values)) {
         if (is.null(private$.yErrorColumn)) {
@@ -162,8 +162,8 @@ DataSet <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param dataRepository Instance of the \code{DataRepository} object to wrap.
-    #' If \code{NULL}, an empty \code{DataRepository} is created.
+    #' @param dataRepository Instance of the `DataRepository` object to wrap.
+    #' If `NULL`, an empty `DataRepository` is created.
     #' @return A new `DataSet` object.
     initialize = function(dataRepository = NULL) {
       private$.dataRepository <- dataRepository %||% private$.createDataRepository()

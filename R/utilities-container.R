@@ -1,9 +1,9 @@
 
 #' Retrieve all sub containers of a parent container (simulation or container instance) matching the given path criteria
 #'
-#' @param paths A vector of strings representing the paths relative to the \code{container}
+#' @param paths A vector of strings representing the paths relative to the `container`
 #' @param container A Container or Simulation used to find the containers
-#' @seealso \code{\link{loadSimulation}} and \code{\link{getContainer}} to create objects of type Container or Simulation
+#' @seealso [loadSimulation()] and [getContainer()] to create objects of type Container or Simulation
 #'
 #' @return A list of containers matching the path criteria. The list is empty if no containers matching were found.
 #' @examples
@@ -29,7 +29,7 @@ getAllContainersMatching <- function(paths, container) {
 #' Retrieves the path of all containers defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return An array with one entry per container defined in the container
 #' @examples
@@ -48,13 +48,13 @@ getAllContainerPathsIn <- function(container) {
 #' Retrieve a single container by path under the given container
 #'
 #' @inherit getAllContainersMatching
-#' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no container exists for the given path,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param path A string representing the path relative to the `container`
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no container exists for the given path,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 
-#' @return The \code{Container} with the given path. If the container for the path
-#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
-#' otherwise \code{NULL}
+#' @return The `Container` with the given path. If the container for the path
+#' does not exist, an error is thrown if `stopIfNotFound` is TRUE (default),
+#' otherwise `NULL`
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

@@ -5,7 +5,7 @@
 #' @param displayName Display Name to use when exporting the values (optional, default value is name)
 #' @param displayUnit Unit in which the value will be exported
 #'
-#' @return The newly created \code{UserDefinedPKParameter}that was added to the list of PK-Parameters
+#' @return The newly created `UserDefinedPKParameter`that was added to the list of PK-Parameters
 #'
 #' @examples
 #'
@@ -83,8 +83,8 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' @title Returns an instance of a PK-Parameter by name or NULL if the parameter by name is not found
 #'
 #' @param name Name of PK-Parameter to update
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no pk parameter exist for the given name,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no pk parameter exist for the given name,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 #'
 #' @examples
 #'

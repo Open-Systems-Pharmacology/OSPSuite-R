@@ -1,7 +1,7 @@
 #' Dimension existence
 #'
 #' @param dimension String name of the dimension.
-#' @details Returns \code{TRUE} if the provided dimension is supported otherwise \code{FALSE}
+#' @details Returns `TRUE` if the provided dimension is supported otherwise `FALSE`
 #' @export
 hasDimension <- function(dimension) {
   validateIsString(dimension)
@@ -63,8 +63,8 @@ getBaseUnit <- function(dimension) {
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in unit (single or vector)
 #' @param unit Unit of value
-#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol
-#' @param molWeightUnit Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.
+#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If `molWeightUnit` is not specified, `molWeight` is assumed to be in kg/µmol
+#' @param molWeightUnit Unit of the molecular weight value. If `NULL` (default), kg/µmol is assumed.
 
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -111,11 +111,11 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #' Converts a value given in base unit of a quantity into a target unit
 #'
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
-#' @param values Values to convert (single or vector). If \code{sourceUnit} is not specified, \code{values} are in the base unit of the dimension
+#' @param values Values to convert (single or vector). If `sourceUnit` is not specified, `values` are in the base unit of the dimension
 #' @param targetUnit Unit to convert to
-#' @param sourceUnit Optional Name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.
-#' @param molWeight Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol
-#' @param molWeightUnit Optional Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.
+#' @param sourceUnit Optional Name of the unit to convert from. If `NULL` (default), the values are assumed to be in base unit.
+#' @param molWeight Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If `molWeightUnit` is not specified, `molWeight` is assumed to be in kg/µmol
+#' @param molWeightUnit Optional Unit of the molecular weight value. If `NULL` (default), kg/µmol is assumed.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

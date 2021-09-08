@@ -1,6 +1,6 @@
 #' @title TableFormula
 #' @docType class
-#' @description  A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
+#' @description  A table formula of the model (Typically related to a `Quantity` such as a parameter)
 #' @name Formula
 #' @format NULL
 TableFormula <- R6::R6Class(
@@ -8,7 +8,7 @@ TableFormula <- R6::R6Class(
   cloneable = FALSE,
   inherit = Formula,
   active = list(
-    #' @field allPoints Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).
+    #' @field allPoints Returns all points defined in the table formulafor a `TableFormula` or `NULL`  otherwise (Read-Only).
     allPoints = function(value) {
       if (missing(value)) {
         toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
@@ -16,7 +16,7 @@ TableFormula <- R6::R6Class(
         private$throwPropertyIsReadonly("allPoints")
       }
     },
-    #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}
+    #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is `TRUE`
     useDerivedValues = function(value) {
       private$wrapProperty("UseDerivedValues", value)
     },

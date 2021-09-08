@@ -55,7 +55,7 @@ DataColumn <- R6::R6Class(
       private$.unit <- NULL
     },
     #' @field molWeight Molecular weight of associated observed data in internal unit
-    #' In no molecular weight is defined, the value is \code{NULL}
+    #' In no molecular weight is defined, the value is `NULL`
     molWeight = function(value) {
       dataInfo <- rClr::clrGet(self$ref, "DataInfo")
       if (missing(value)) {
@@ -66,7 +66,7 @@ DataColumn <- R6::R6Class(
       rClr::clrSet(dataInfo, "MolWeight", value)
     },
     #' @field LLOQ Lower Limit Of Quantification.
-    #' In no LLOQ is defined, the value is \code{NULL}
+    #' In no LLOQ is defined, the value is `NULL`
     LLOQ = function(value) {
       dataInfo <- rClr::clrGet(self$ref, "DataInfo")
       if (missing(value)) {

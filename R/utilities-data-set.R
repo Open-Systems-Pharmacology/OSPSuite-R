@@ -19,7 +19,7 @@
   }
 }
 
-#' Loads data (typically observed data) from a PKML file and creates a \code{DataSet} from it.
+#' Loads data (typically observed data) from a PKML file and creates a `DataSet` from it.
 #' The pkml files are typically exported from PK-Sim or MoBi.
 #'
 #' @param filePath Full path of pkml file containing the observed data to load
@@ -34,10 +34,10 @@ loadDataSetFromPKML <- function(filePath) {
   return(DataSet$new(dataRepository))
 }
 
-#' Save the \code{DataSet} to pkml
-#' @details Save the \code{DataSet} to a pkml file that can be loaded by MoBi
+#' Save the `DataSet` to pkml
+#' @details Save the `DataSet` to a pkml file that can be loaded by MoBi
 #'
-#' @param dataSet The \code{DataSet} object
+#' @param dataSet The `DataSet` object
 #' @param filePath Path where the pkml file will be created
 #' @export
 #'
@@ -102,13 +102,13 @@ dataSetToDataFrame <- function(dataSets) {
 #' @details Load observed data from an excel file using an importer configuration
 #'
 #' @param xlsFilePath Path to the excel file with the data
-#' @param importerConfiguration An object of type \code{DataImporterConfiguration} that is valid for the excel file
-#' @param importAllSheets If \code{FALSE} (default), only sheets specified in the
-#' \code{importerConfiguration} will be loaded. If \code{TRUE}, an attempt to load all sheets
+#' @param importerConfiguration An object of type `DataImporterConfiguration` that is valid for the excel file
+#' @param importAllSheets If `FALSE` (default), only sheets specified in the
+#' `importerConfiguration` will be loaded. If `TRUE`, an attempt to load all sheets
 #' is performed. If any sheet does not comply with the configuration, an error is thrown.
 #'
-#' @return A named set of \code{DataSet} objects. The naming is defined by the property
-#' \code{importerConfiguration$namingPattern}.
+#' @return A named set of `DataSet` objects. The naming is defined by the property
+#' `importerConfiguration$namingPattern`.
 #' @export
 #'
 #' @examples

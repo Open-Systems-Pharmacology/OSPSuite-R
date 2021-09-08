@@ -1,11 +1,11 @@
 #' Creates an population using the PKSim Database
 #'
-#' @param populationCharacteristics Characteristics of the population to create as an instance of \code{OriginData}
+#' @param populationCharacteristics Characteristics of the population to create as an instance of `OriginData`
 #' that are actually distributed parameters
 #'
 #' @return An list with two entries:
-#' The \code{population} An instance of a population object.
-#' The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#' The `population` An instance of a population object.
+#' The `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'
 #' @export
 createPopulation <- function(populationCharacteristics) {
@@ -64,8 +64,8 @@ createPopulation <- function(populationCharacteristics) {
 
 #' Creates the population characteristics used to create a population
 #'
-#' @param species Species of the individual as defined in PK-Sim (see \code{Species} enum)
-#' @param population Population to use to create the individual. This is required only when the species is Human. (See \code{HumanPopulation} enum)
+#' @param species Species of the individual as defined in PK-Sim (see `Species` enum)
+#' @param population Population to use to create the individual. This is required only when the species is Human. (See `HumanPopulation` enum)
 #' @param numberOfIndividuals Number of individuals in the population
 #' @param proportionOfFemales Proportions of females. Default is 50 (50%)
 #' @param weightMin min weight for the population (optional)
@@ -83,10 +83,10 @@ createPopulation <- function(populationCharacteristics) {
 #' @param gestationalAgeMin min gestational age for the population (optional, for human species only)
 #' @param gestationalAgeMax max gestational age for the population (optional, for human species only)
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is kg/m2
-#' @param moleculeOntogenies Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
+#' @param moleculeOntogenies Optional list of `MoleculeOntogeny` that will be used to retrieve ontogeny information for molecules.
 #' @param seed Optional Seed parameter used to generate random values. This is only useful in order to reproduce the same population
 #'
-#' @return An instance of \code{PopulationCharacteristics} to be used in conjunction with \code{createPopulation}
+#' @return An instance of `PopulationCharacteristics` to be used in conjunction with `createPopulation`
 #'
 #' @export
 createPopulationCharacteristics <- function(species,

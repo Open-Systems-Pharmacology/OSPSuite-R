@@ -9,8 +9,8 @@ isSameLength <- function(...) {
 #'
 #' @param object An object or a list of objects
 #' @param type String representation or Class of the type that should be checked for
-#' @param nullAllowed Boolean flag if \code{NULL} is accepted for the \code{object}. If \code{TRUE},
-#' \code{NULL} always returns \code{TRUE}, otherwise \code{NULL} returns \code{FALSE}. Default is \code{FALSE}
+#' @param nullAllowed Boolean flag if `NULL` is accepted for the `object`. If `TRUE`,
+#' `NULL` always returns `TRUE`, otherwise `NULL` returns `FALSE`. Default is `FALSE`
 #'
 #' @return TRUE if the object or all objects inside the list are of the given type.
 #' Only the first level of the given list is considered.
@@ -38,8 +38,8 @@ isOfType <- function(object, type, nullAllowed = FALSE) {
 #'
 #' @param object An object or a list of objects
 #' @param type String representation or Class of the type that should be checked for
-#' @param nullAllowed Boolean flag if \code{NULL} is accepted for the \code{object}. If \code{TRUE},
-#' \code{NULL} is always valid, otherwise the error is thrown. Default is \code{FALSE}
+#' @param nullAllowed Boolean flag if `NULL` is accepted for the `object`. If `TRUE`,
+#' `NULL` is always valid, otherwise the error is thrown. Default is `FALSE`
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   if (isOfType(object, type, nullAllowed)) {
     return()
@@ -55,12 +55,12 @@ validateIsOfType <- function(object, type, nullAllowed = FALSE) {
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
-#' Check if \code{value} is in the given {enum}. If not, stops with an error.
+#' Check if `value` is in the given {enum}. If not, stops with an error.
 #'
-#' @param enum \code{enum} where the \code{value} should be contained
-#' @param value \code{value} to search for in the \code{enum}
-#' @param nullAllowed If TRUE, \code{value} can be \code{NULL} and the test always passes.
-#' If \code{FALSE} (default), NULL is not accepted and the test fails.
+#' @param enum `enum` where the `value` should be contained
+#' @param value `value` to search for in the `enum`
+#' @param nullAllowed If TRUE, `value` can be `NULL` and the test always passes.
+#' If `FALSE` (default), NULL is not accepted and the test fails.
 validateEnumValue <- function(value, enum, nullAllowed = FALSE) {
   if (is.null(value)) {
     if (nullAllowed) {

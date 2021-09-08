@@ -42,7 +42,7 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
 #'
 #' @inherit addOutputInterval
 #'
-#' @note This is essentially a shortcut for \code{clearOutputIntervals} followed by \code{addOutputInterval}
+#' @note This is essentially a shortcut for `clearOutputIntervals` followed by `addOutputInterval`
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -59,7 +59,7 @@ setOutputInterval <- function(simulation, startTime, endTime, resolution, interv
 }
 
 #' @title  Removes all intervals as well as all single time points from the output schema
-#' defined in \code{simulation}
+#' defined in `simulation`
 #'
 #' @param simulation Instance of a simulation for which output intervals should be cleared
 #'
