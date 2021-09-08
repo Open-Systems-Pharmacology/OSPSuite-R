@@ -1,4 +1,5 @@
-.makeDataFrameColumn <- function(dataSet, property, metaDataName = NULL) {
+.makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
+  columForDataSet <- function(dataSet){
   # check length of entry for a certain property of this data set, i.e. if it exists
   if (is.null(metaDataName)) {
     len <- length(dataSet[[property]])
@@ -17,6 +18,11 @@
   } else {
     dataSet[[property]]
   }
+  }
+
+  unlist(lapply(dataSets, function(x) {
+    columForDataSet(x)
+  }), use.names = FALSE)
 }
 
 #' Loads data (typically observed data) from a PKML file and creates a `DataSet` from it.
@@ -55,41 +61,42 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }
 
-#' Converts a list of DataSet objects to a data.frame
+#' Converts a list of `DataSet` objects to a data.frame
 #'
-#' @param dataSets A list of DataSet objects or a single DataSet
+#' @param dataSets A list of `DataSet` objects or a single `DataSet`
 #'
-#' @return DataSet objects as data.frame with columns name, xValue, yValue, yErrorValues,
-#' xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit, yMolWeight
+#' @return DataSet objects as data.frame with columns name, xValues, yValues, yErrorValues,
+#' xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit, molWeight, lloq,
+#'  and a column for each meta data that is present in any `DataSet`
 #' @export
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, DataSet)
 
-  name <- unlist(mapply(.makeDataFrameColumn, dataSets, "name"))
-  xUnit <- unlist(mapply(.makeDataFrameColumn, dataSets, "xUnit"))
-  yUnit <- unlist(mapply(.makeDataFrameColumn, dataSets, "yUnit"))
-  yErrorUnit <- as.character(unlist(mapply(.makeDataFrameColumn, dataSets, "yErrorUnit")))
-  xDimension <- unlist(mapply(.makeDataFrameColumn, dataSets, "xDimension"))
-  yDimension <- unlist(mapply(.makeDataFrameColumn, dataSets, "yDimension"))
-  yErrorType <- as.character(unlist(mapply(.makeDataFrameColumn, dataSets, "yErrorType")))
-  yMolWeight <- unlist(mapply(.makeDataFrameColumn, dataSets, "molWeight"))
-  xValue <- unlist(mapply(.makeDataFrameColumn, dataSets, "xValues"))
-  yValue <- unlist(mapply(.makeDataFrameColumn, dataSets, "yValues"))
-  yErrorValues <- unlist(mapply(.makeDataFrameColumn, dataSets, "yErrorValues"))
-
+    name <- .makeDataFrameColumn(dataSets, "name")
+     xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
+     yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
+    yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
+    xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
+    yDimension <-   .makeDataFrameColumn(dataSets, "yDimension")
+    yErrorType <-   .makeDataFrameColumn(dataSets, "yErrorType")
+    molWeight <-   .makeDataFrameColumn(dataSets, "molWeight")
+    xValues <-  .makeDataFrameColumn(dataSets, "xValues")
+    yValues <-  .makeDataFrameColumn(dataSets, "yValues")
+    yErrorValues <-  .makeDataFrameColumn(dataSets, "yErrorValues")
+    lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
   df <- data.frame(
-    name, xValue, yValue, yErrorValues, xDimension, xUnit, yDimension,
-    yUnit, yErrorType, yErrorUnit, yMolWeight
+    name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
+    yUnit, yErrorType, yErrorUnit, molWeight, lloq
   )
 
   # get all names of meta data entries from all data sets
-  metaDataNames <- unique(unlist(sapply(dataSets, function(dataSets) {
-    return(names(dataSets[["metaData"]]))
-  })))
+  metaDataNames <- unique(unlist(lapply(dataSets, function(dataSets) {
+    names(dataSets[["metaData"]])
+  }), use.names = FALSE))
   # add one column for each one
   for (name in metaDataNames) {
-    col <- unlist(lapply(dataSets, .makeDataFrameColumn, "metaData", metaDataName = name))
+    col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
     df[[name]] <- col
   }
 
@@ -127,11 +134,11 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllS
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
-  dataSets <- lapply(dataRepositories, function(x){
+  dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(repository)
   })
-  names(dataSets) <- lapply(dataSets, function(x){
+  names(dataSets) <- lapply(dataSets, function(x) {
     x$name
   })
 

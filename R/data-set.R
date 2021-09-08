@@ -223,6 +223,7 @@ DataSet <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
+      private$printLine("Name", self$name)
       private$printLine("X dimension", self$xDimension)
       private$printLine("X unit", self$xUnit)
       private$printLine("Y dimension", self$yDimension)
