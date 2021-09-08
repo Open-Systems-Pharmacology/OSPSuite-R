@@ -24,7 +24,7 @@ If quantitiesOrPaths is \code{NULL} (default value), returns the results for all
 
 \item{population}{population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.}
 
-\item{individualIds}{\code{numeric} IDs of individiuals for which the results should be extracted.
+\item{individualIds}{\code{numeric} IDs of individuals for which the results should be extracted.
 By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored}
 
 \item{stopIfNotFound}{If \code{TRUE} (default) an error is thrown if no results exist for any \code{path}. If \code{FALSE}, a list of \code{NA} values is returned for the respective path.}

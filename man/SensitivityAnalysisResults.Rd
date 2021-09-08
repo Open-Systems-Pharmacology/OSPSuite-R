@@ -13,7 +13,7 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).}
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
 
 \item{\code{count}}{the number of pk parameter sensitivity entries}
 

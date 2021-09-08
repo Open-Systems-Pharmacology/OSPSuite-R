@@ -63,7 +63,7 @@ Quantity <- R6::R6Class(
     formulaString = function(value) {
       private$readOnlyProperty("formulaString", value, self$formula$formulaString)
     },
-    #' @field isFixedValue Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}
+    #' @field isFixedValue Returns \code{TRUE} if the formula was overridden by a constant value, otherwise \code{FALSE}
     isFixedValue = function(value) {
       private$wrapProperty("IsFixedValue", value)
     }

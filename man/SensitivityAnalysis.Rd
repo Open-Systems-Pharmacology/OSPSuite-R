@@ -21,7 +21,7 @@ Supports Sensitivity Analysis workflow to assess the impact of input parameters 
 
 \item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
 on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
-with a value that was overriden by the user}
+with a value that was overridden by the user}
 }
 \if{html}{\out{</div>}}
 }

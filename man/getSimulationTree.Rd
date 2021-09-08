@@ -3,7 +3,7 @@
 \name{getSimulationTree}
 \alias{getSimulationTree}
 \title{Given a simulation file path or an instance of a simulation, traverses the simulation structure and returns a tree like structure
-allowing for intuitive navigration in the simulation tree}
+allowing for intuitive navigation in the simulation tree}
 \usage{
 getSimulationTree(simulationOrFilePath)
 }
@@ -16,7 +16,7 @@ At the end of each branch is a string called 'path' that is the path of the quan
 }
 \description{
 Given a simulation file path or an instance of a simulation, traverses the simulation structure and returns a tree like structure
-allowing for intuitive navigration in the simulation tree
+allowing for intuitive navigation in the simulation tree
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

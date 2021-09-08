@@ -1,6 +1,6 @@
 #' @title Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 #' has been loaded before, the simulation is not loaded again but a cached object is returned.
-#' This behavior can be overriden.
+#' This behavior can be overridden.
 #'
 #' @param filePath Full path of pkml simulation file to load.
 #'
@@ -454,7 +454,7 @@ getStandardMoleculeParameters <- function(moleculeName, simulation) {
 #' @param paths A vector of strings representing the path of the parameters (potentially using wildcards)
 #' @param simulation Simulation used to find the parameters
 #'
-#' @return A list of parameters matching the path criteria and also candiates for a sensitivity analysis.
+#' @return A list of parameters matching the path criteria and also candidates for a sensitivity analysis.
 #' The list is empty if no parameters matching were found.
 #'
 #' @examples
@@ -491,11 +491,11 @@ getAllStateVariablesPaths <- function(simulation) {
   return(allQantitiesPaths)
 }
 
-#' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.
+#' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the original simulation updated with parameters of the corresponding individual.
 #'
 #' @param population A population object typically loaded with `loadPopulation`
 #' @param individualIds Ids of individual (single value or array) to export
-#' @param outputFolder Folder where the individiual simulations will be exported. File format will be `simulationName_individualId`
+#' @param outputFolder Folder where the individual simulations will be exported. File format will be `simulationName_individualId`
 #' @param simulation Simulation uses to generate PKML files
 #'
 #' @return An array containing the path of all exported simulations.

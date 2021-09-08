@@ -21,7 +21,7 @@ setOutputInterval(
 
 \item{resolution}{resolution in points/min}
 
-\item{intervalName}{Optional Name of interval. If not specified, a unique name wil be assigned.}
+\item{intervalName}{Optional Name of interval. If not specified, a unique name will be assigned.}
 }
 \value{
 Returns the interval created.
@@ -30,7 +30,7 @@ Returns the interval created.
 Clears the output interval from the simulation and adds a new one.
 }
 \note{
-This is essentialy a shortcut for \code{clearOutputIntervals} followed by \code{addOutputInterval}
+This is essentially a shortcut for \code{clearOutputIntervals} followed by \code{addOutputInterval}
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

@@ -44,7 +44,7 @@ getAllQuantityPathsIn <- function(container) {
   getAllEntityPathsIn(container, Quantity)
 }
 
-#' Retrieve a single quantty by path in the given container
+#' Retrieve a single quantity by path in the given container
 #'
 #' @inherit getAllQuantitiesMatching
 #' @param path A string representing the path relative to the \code{container}
@@ -102,7 +102,7 @@ setQuantityValues <- function(quantities, values) {
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
 #' length as 'quantityPaths'
 #' @param simulation Simulation uses to retrieve quantity instances from given paths.
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no qyantuty exists for the given path,
+#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
 #' an error is thrown. If \code{FALSE}, a warning is shown to the user
 
 #' @examples

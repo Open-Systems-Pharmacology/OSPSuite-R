@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-quantity.R
 \name{getQuantity}
 \alias{getQuantity}
-\title{Retrieve a single quantty by path in the given container}
+\title{Retrieve a single quantity by path in the given container}
 \usage{
 getQuantity(path, container, stopIfNotFound = TRUE)
 }
@@ -20,7 +20,7 @@ does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
 otherwise \code{NULL}
 }
 \description{
-Retrieve a single quantty by path in the given container
+Retrieve a single quantity by path in the given container
 }
 \examples{
 

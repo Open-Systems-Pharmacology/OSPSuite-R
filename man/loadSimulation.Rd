@@ -4,7 +4,7 @@
 \alias{loadSimulation}
 \title{Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 has been loaded before, the simulation is not loaded again but a cached object is returned.
-This behavior can be overriden.}
+This behavior can be overridden.}
 \usage{
 loadSimulation(
   filePath,
@@ -29,7 +29,7 @@ If \code{FALSE}, the ids are kept as defined in the pkml simulation. Default is 
 \description{
 Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
 has been loaded before, the simulation is not loaded again but a cached object is returned.
-This behavior can be overriden.
+This behavior can be overridden.
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

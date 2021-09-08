@@ -122,7 +122,7 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
   return(unify(findEntitiesByPath, paths))
 }
 
-#' Retrieves all path of entities defined wihtin the container (simulation or container instance)
+#' Retrieves all path of entities defined within the container (simulation or container instance)
 #'
 #' @param container A Container or Simulation used to find the entities
 #' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation

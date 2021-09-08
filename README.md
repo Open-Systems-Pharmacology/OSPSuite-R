@@ -65,7 +65,7 @@ You can clone the GIT repository and build the package from source.
 - Run `rake postclean` or simply double click on `postclean.bat`. This will update all nuget packages and copy the dependencies in the package `inst/lib` folder.
 
 # Usage
-In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()`  returns the corresonding simulation that is used as input of other methods. The then can change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
+In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()`  returns the corresponding simulation that is used as input of other methods. The user can then change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
 
 ```{r loadSim}
 library(ospsuite)
@@ -96,7 +96,7 @@ ylab = "Concentration [µmol/l]")
 ```
 ![](man/figures/README-example-1.png)<!-- -->
 
-More detailes description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vigenttes available for **ospsuite** by calling
+More detailes description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vignettes available for **ospsuite** by calling
 
 ```
 vignette(package = "ospsuite")

@@ -19,7 +19,7 @@ Characteristics of a population used for population creation
 
 \item{\code{species}}{Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})}
 
-\item{\code{population}}{For a Human species, the population of intereset. It should be a population available in PK-Sim (see \code{HumanPopulation})}
+\item{\code{population}}{For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})}
 
 \item{\code{age}}{Age range of the population as in instance of a \code{ParameterRange} (optional)}
 

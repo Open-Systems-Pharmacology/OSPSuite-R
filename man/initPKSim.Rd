@@ -14,5 +14,5 @@ Loads the PKSim.R that will enable create individual and create population workf
 }
 \note{
 This will only work on Windows machine and should not be called on any other OS.
-This function should also only be called explicitely when using a portable install of the package
+This function should also only be called explicitly when using a portable install of the package
 }
