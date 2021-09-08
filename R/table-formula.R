@@ -58,7 +58,7 @@ TableFormula <- R6::R6Class(
     },
     #' @description
     #' Replace all points defined in the table with the new values given.
-    #' This is a convenience method for callign `clearPoints` and `addPoints`
+    #' This is a convenience method for calling `clearPoints` and `addPoints`
     #' @param xValues x values (single value or array) in base unit for XDimension
     #' @param yValues y values (single value or array) in base unit for Dimension
     setPoints = function(xValues, yValues) {

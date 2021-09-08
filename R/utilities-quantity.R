@@ -52,7 +52,7 @@ getAllQuantityPathsIn <- function(container) {
 #' an error is thrown. If `FALSE`, `NULL` is returned.
 #'
 #' @return The `Quantity` with the given path. If the quantity for the path
-#' does not exist, an error is thrown if `stopIfNotFound` is TRUE (default),
+#' does not exist, an error is thrown if `stopIfNotFound` is `TRUE` (default),
 #' otherwise `NULL`
 #' @examples
 #'

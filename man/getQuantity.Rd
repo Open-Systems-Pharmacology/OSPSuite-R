@@ -16,7 +16,7 @@ an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \value{
 The \code{Quantity} with the given path. If the quantity for the path
-does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+does not exist, an error is thrown if \code{stopIfNotFound} is \code{TRUE} (default),
 otherwise \code{NULL}
 }
 \description{
