@@ -1,4 +1,5 @@
-.makeDataFrameColumn <- function(dataSet, property, metaDataName = NULL) {
+.makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
+  columForDataSet <- function(dataSet){
   # check length of entry for a certain property of this data set, i.e. if it exists
   if (is.null(metaDataName)) {
     len <- length(dataSet[[property]])
@@ -17,6 +18,11 @@
   } else {
     dataSet[[property]]
   }
+  }
+
+  unlist(lapply(dataSets, function(x) {
+    columForDataSet(x)
+  }), use.names = FALSE)
 }
 
 #' Loads data (typically observed data) from a PKML file and creates a \code{DataSet} from it.
@@ -67,43 +73,18 @@ dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, DataSet)
 
-  name <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "name")
-  }), use.names = FALSE)
-  xUnit <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "xUnit")
-  }), use.names = FALSE)
-  yUnit <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "yUnit")
-  }), use.names = FALSE)
-  yErrorUnit <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "yErrorUnit")
-  }), use.names = FALSE)
-  xDimension <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "xDimension")
-  }), use.names = FALSE)
-  yDimension <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "yDimension")
-  }), use.names = FALSE)
-  yErrorType <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "yErrorType")
-  }), use.names = FALSE)
-  molWeight <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "molWeight")
-  }), use.names = FALSE)
-  xValues <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "xValues")
-  }), use.names = FALSE)
-  yValues <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "yValues")
-  }), use.names = FALSE)
-  yErrorValues <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "yErrorValues")
-  }), use.names = FALSE)
-  lloq <- unlist(lapply(dataSets, function(x) {
-    .makeDataFrameColumn(x, "LLOQ")
-  }), use.names = FALSE)
-
+    name <- .makeDataFrameColumn(dataSets, "name")
+     xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
+     yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
+    yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
+    xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
+    yDimension <-   .makeDataFrameColumn(dataSets, "yDimension")
+    yErrorType <-   .makeDataFrameColumn(dataSets, "yErrorType")
+    molWeight <-   .makeDataFrameColumn(dataSets, "molWeight")
+    xValues <-  .makeDataFrameColumn(dataSets, "xValues")
+    yValues <-  .makeDataFrameColumn(dataSets, "yValues")
+    yErrorValues <-  .makeDataFrameColumn(dataSets, "yErrorValues")
+    lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
   df <- data.frame(
     name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
     yUnit, yErrorType, yErrorUnit, molWeight, lloq
@@ -115,7 +96,7 @@ dataSetToDataFrame <- function(dataSets) {
   }), use.names = FALSE))
   # add one column for each one
   for (name in metaDataNames) {
-    col <- unlist(lapply(dataSets, .makeDataFrameColumn, "metaData", metaDataName = name))
+    col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
     df[[name]] <- col
   }
 
