@@ -24,13 +24,13 @@ SimulationBatch <- R6::R6Class(
     },
 
     #' @description Add a set of parameter and start values for next execution.
-    #' @details Intended for the use with \code{runSimulationBatches}. The simulation batch is executed
+    #' @details Intended for the use with `runSimulationBatches`. The simulation batch is executed
     #' with the sets of parameter and initial values that have been scheduled. The set of run values is cleared after successful run.
     #'
     #' @param parameterValues Vector of parameter values to set in the simulation (default is `NULL`)
     #' @param initialValues Vector of initial values to set in the simulation  (default is `NULL`)
     #'
-    #' @return Id of the values set that can be used to get the correct result from \code{runSimulationBatches}.
+    #' @return Id of the values set that can be used to get the correct result from `runSimulationBatches`.
     #' @export
     #'
     #' @examples

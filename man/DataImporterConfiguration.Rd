@@ -25,7 +25,7 @@ are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined 
 \item{\code{measurementColumn}}{Name of the column for measurement values}
 
 \item{\code{measurementDimension}}{If \code{measurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
-If \code{measurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \code{$measurementDimension} is \code{NULL}.
+If \code{measurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \verb{$measurementDimension} is \code{NULL}.
 When changing dimension, the unit is set to the base unit of this dimension.}
 
 \item{\code{measurementUnit}}{If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column

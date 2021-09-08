@@ -9,31 +9,31 @@ IndividualCharacteristics <- R6::R6Class(
   cloneable = FALSE,
   inherit = DotNetWrapper,
   active = list(
-    #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})
+    #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see `Species`)
     species = function(value) {
       private$wrapProperty("Species", value)
     },
-    #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})
+    #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see `HumanPopulation`)
     population = function(value) {
       private$wrapProperty("Population", value, shouldSetNull = FALSE)
     },
-    #' @field gender Gender of the individual. It should be defined for the species in PK-Sim  (see \code{Gender})
+    #' @field gender Gender of the individual. It should be defined for the species in PK-Sim  (see `Gender`)
     gender = function(value) {
       private$wrapProperty("Gender", value, shouldSetNull = FALSE)
     },
-    #' @field age Age of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field age Age of the individual as in instance of a `SnapshotParameter` (optional)
     age = function(value) {
       private$parameterProperty("Age", value)
     },
-    #' @field gestationalAge Gestational Age of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field gestationalAge Gestational Age of the individual as in instance of a `SnapshotParameter` (optional)
     gestationalAge = function(value) {
       private$parameterProperty("GestationalAge", value)
     },
-    #' @field weight Weight of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field weight Weight of the individual as in instance of a `SnapshotParameter` (optional)
     weight = function(value) {
       private$parameterProperty("Weight", value)
     },
-    #' @field height Height of the individual as in instance of a \code{SnapshotParameter} (optional)
+    #' @field height Height of the individual as in instance of a `SnapshotParameter` (optional)
     height = function(value) {
       private$parameterProperty("Height", value)
     },

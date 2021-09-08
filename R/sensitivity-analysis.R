@@ -29,8 +29,8 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
     #' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
-    #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
-    #' @param variationRange Variation applied to the parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})
+    #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
+    #' @param variationRange Variation applied to the parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
     #' @return A new `SensitivityAnalysis` object.
     initialize = function(simulation,
                           parameterPaths = NULL,
@@ -78,15 +78,15 @@ SensitivityAnalysis <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field simulation Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).
+    #' @field simulation Reference to the `Simulation` used to calculate or import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
     },
-    #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+    #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     numberOfSteps = function(value) {
       private$wrapIntegerProperty("NumberOfSteps", value)
     },
-    #' @field variationRange Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})
+    #' @field variationRange Variation applied to the parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     variationRange = function(value) {
       private$wrapProperty("VariationRange", value)
     },

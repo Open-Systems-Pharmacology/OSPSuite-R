@@ -164,7 +164,7 @@ Remove all points from the table
 \if{latex}{\out{\hypertarget{method-setPoints}{}}}
 \subsection{Method \code{setPoints()}}{
 Replace all points defined in the table with the new values given.
-This is a convenience method for callign \code{clearPoints} and \code{addPoints}
+This is a convenience method for calling \code{clearPoints} and \code{addPoints}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TableFormula$setPoints(xValues, yValues)}\if{html}{\out{</div>}}
 }

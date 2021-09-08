@@ -4,23 +4,23 @@
 #' and returns time-values profiles for the chosen quantities. Results of a simulation
 #' of a single individual is treated as a population simulation with only one individual.
 #'
-#' @param simulationResults Object of type \code{SimulationResults} produced by calling \code{runSimulation}
-#' on a \code{Simulation} object.
+#' @param simulationResults Object of type `SimulationResults` produced by calling `runSimulation`
+#' on a `Simulation` object.
 #'
 #' @param quantitiesOrPaths Quantity instances (element or vector) typically retrieved using
-#' \code{getAllQuantitiesMatching} or quantity path (element or vector of strings) for which the results are to be returned. (optional)
+#' `getAllQuantitiesMatching` or quantity path (element or vector of strings) for which the results are to be returned. (optional)
 #' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
-#' If quantitiesOrPaths is \code{NULL} (default value), returns the results for all output defined in the results.
+#' If quantitiesOrPaths is `NULL` (default value), returns the results for all output defined in the results.
 #'
-#' @param individualIds \code{numeric} IDs of individuals for which the results should be extracted.
+#' @param individualIds `numeric` IDs of individuals for which the results should be extracted.
 #' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored
 #'
 #' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.
 #'
-#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
-#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`. If \code{FALSE}, a list of \code{NA} values is returned for the respective path.
-#' @param addMetaData If \code{TRUE} (default), the output is a list two sublists `data`and
-#' `metaData`, with latter storing information about units and dimensions of the outputs. If \code{FALSE}, \code{metaData} is \code{NULL}. Setting this option to \code{FALSE} might improve
+#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is `TRUE`
+#' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results exist for any `path`. If `FALSE`, a list of `NA` values is returned for the respective path.
+#' @param addMetaData If `TRUE` (default), the output is a list two sublists `data`and
+#' `metaData`, with latter storing information about units and dimensions of the outputs. If `FALSE`, `metaData` is `NULL`. Setting this option to `FALSE` might improve
 #' the performance of the function.
 #'
 #' @export
@@ -110,7 +110,7 @@ getOutputValues <- function(simulationResults,
 
 #' Saves the simulation results to csv file
 #'
-#' @param results Results to export (typically calculated using \code{runSimulation} or imported from file)
+#' @param results Results to export (typically calculated using `runSimulation` or imported from file)
 #' @param filePath Full path where the results will be saved.
 #'
 #' @examples

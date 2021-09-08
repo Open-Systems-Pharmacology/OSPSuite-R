@@ -2,7 +2,7 @@
 #'
 #' @description A model parameter
 #'
-#' @details  Derived from \link{Quantity}, please see base class documentation.
+#' @details  Derived from [Quantity], please see base class documentation.
 #'
 #' @docType class
 #' @name Parameter
@@ -17,8 +17,8 @@ Parameter <- R6::R6Class(
     .rhsFormula = NULL
   ),
   active = list(
-    #' @field isStateVariable Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.
-    #' @details Setting the value to \code{FALSE} will delete the RHS Formula. Setting it to \code{TRUE} is not currently supported and will throw an error
+    #' @field isStateVariable Returns `TRUE` is the parameter has a RHS otherwise `FALSE`.
+    #' @details Setting the value to `FALSE` will delete the RHS Formula. Setting it to `TRUE` is not currently supported and will throw an error
     isStateVariable = function(value) {
       hasRHSFormula <- !is.null(private$.rhsFormula)
       if (missing(value)) {
@@ -40,7 +40,7 @@ Parameter <- R6::R6Class(
       private$.rhsFormula <- NULL
       rClr::clrCall(self$ref, "ClearRHSFormula")
     },
-    #' @field rhsFormula An instance of a \code{Formula} object representing the RHS Formula (Read-Only)
+    #' @field rhsFormula An instance of a `Formula` object representing the RHS Formula (Read-Only)
     rhsFormula = function(value) {
       private$readOnlyProperty("rhsFormula", value, private$.rhsFormula)
     }

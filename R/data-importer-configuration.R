@@ -18,8 +18,8 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
-    #' @field timeUnit If \code{timeUnitFromColumn} is \code{FALSE}, unit of the values in time column
-    #' If \code{timeUnitFromColumn} is \code{TRUE}, name of the column with units of the values in time column
+    #' @field timeUnit If `timeUnitFromColumn` is `FALSE`, unit of the values in time column
+    #' If `timeUnitFromColumn` is `TRUE`, name of the column with units of the values in time column
     timeUnit = function(value) {
       column <- private$.timeColumn
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
@@ -35,9 +35,9 @@ DataImporterConfiguration <- R6::R6Class(
       private$.setColumnUnit(column = column, value = value)
     },
 
-    #' @field timeUnitFromColumn If \code{TRUE}, units of the values in time column
-    #' are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined by
-    #' \code{timeUnit}.
+    #' @field timeUnitFromColumn If `TRUE`, units of the values in time column
+    #' are defined in the column `timeUnit`. If `FALSE`, the unit is defined by
+    #' `timeUnit`.
     timeUnitFromColumn = function(value) {
       column <- private$.timeColumn
       if (missing(value)) {
@@ -57,8 +57,8 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
-    #' @field measurementDimension If \code{measurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
-    #' If \code{measurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \code{$measurementDimension} is \code{NULL}.
+    #' @field measurementDimension If `measurementUnitFromColumn` is `FALSE`, dimension of the values in measurement column
+    #' If `measurementUnitFromColumn` is `TRUE`, the dimension is guessed from the unit defined in the column `measurementUnit` during import process and `$measurementDimension` is `NULL`.
     #' When changing dimension, the unit is set to the base unit of this dimension.
     measurementDimension = function(value) {
       column <- private$.measurementColumn
@@ -93,8 +93,8 @@ DataImporterConfiguration <- R6::R6Class(
       }
     },
 
-    #' @field measurementUnit If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
-    #' If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column
+    #' @field measurementUnit If `measurementUnitFromColumn` is `FALSE`, unit of the values in measurement column
+    #' If `measurementUnitFromColumn` is `TRUE`, name of the column with units of the values in measurement column
     measurementUnit = function(value) {
       column <- private$.measurementColumn
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
@@ -110,9 +110,9 @@ DataImporterConfiguration <- R6::R6Class(
       private$.setColumnUnit(column = column, value = value)
     },
 
-    #' @field measurementUnitFromColumn If \code{TRUE}, units of the values in measurement column
-    #' are defined in the column \code{measurementUnit}. If \code{FALSE}, the unit is defined by
-    #' \code{measurementUnit}.
+    #' @field measurementUnitFromColumn If `TRUE`, units of the values in measurement column
+    #' are defined in the column `measurementUnit`. If `FALSE`, the unit is defined by
+    #' `measurementUnit`.
     measurementUnitFromColumn = function(value) {
       column <- private$.measurementColumn
       if (missing(value)) {
@@ -127,8 +127,8 @@ DataImporterConfiguration <- R6::R6Class(
     },
 
     #' @field errorColumn Name of the column for measurement error values
-    #' If no error column is defined, the value is \code{NULL}. Setting the value
-    #' to \code{NULL} removes an existing error column.
+    #' If no error column is defined, the value is `NULL`. Setting the value
+    #' to `NULL` removes an existing error column.
     errorColumn = function(value) {
       column <- private$.errorColumn
       if (missing(value)) {
@@ -148,9 +148,9 @@ DataImporterConfiguration <- R6::R6Class(
       }
     },
 
-    #' @field errorUnit If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
-    #' If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in error column
-    #' If no error column is present, the value is \code{NULL}
+    #' @field errorUnit If `measurementUnitFromColumn` is `FALSE`, unit of the values in the error column
+    #' If `measurementUnitFromColumn` is `TRUE`, name of the column with units of the values in error column
+    #' If no error column is present, the value is `NULL`
     errorUnit = function(value) {
       column <- private$.errorColumn
       if (is.null(column)) {
@@ -173,9 +173,9 @@ DataImporterConfiguration <- R6::R6Class(
       private$.setColumnUnit(column = column, value = value)
     },
 
-    #' @field errorType Type of the measurement error values. See enum \code{DataErrorType}
+    #' @field errorType Type of the measurement error values. See enum `DataErrorType`
     #' for possible values
-    #' If no error column is present, the value is \code{NULL}
+    #' If no error column is present, the value is `NULL`
     errorType = function(value) {
       column <- private$.errorColumn
 
@@ -243,7 +243,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @param configurationFilePath Path to the XML file with stored configuration
     #' (e.g. create in PK-Sim or MoBi).
-    #' If \code{NULL} (default), an empty configuration with columns "Time" and
+    #' If `NULL` (default), an empty configuration with columns "Time" and
     #' "Measurement" is created.
     #' @return A new `DataImporterConfiguration` object.
     initialize = function(configurationFilePath = NULL) {

@@ -36,18 +36,18 @@ SimulationResults <- R6::R6Class(
       super$initialize(ref)
     },
     #' @description
-    #' Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+    #' Returns `TRUE` if results are available for the individual with id `individualId` otherwise `FALSE`
     #' @param individualId Id of the individual
     hasResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
     #' @description
-    #' Returns \code{TRUE} if results are available for the individual with id `individualId` otherwise \code{FALSE}
+    #' Returns `TRUE` if results are available for the individual with id `individualId` otherwise `FALSE`
     #' @param path Path for which values should be retrieved
     #' @param individualIds One or more individual ids for which values should be returned
-    #' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no values could be found for the `path`/
-    #' If \code{FALSE}, a list of \code{NA} values is returned
+    #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no values could be found for the `path`/
+    #' If `FALSE`, a list of `NA` values is returned
     getValuesByPath = function(path, individualIds, stopIfNotFound = TRUE) {
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
@@ -82,11 +82,11 @@ SimulationResults <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field count the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results).
+    #' @field count the number of individual results (`Count==1` generally means that we are dealing with an individual simulation results).
     count = function(value) {
       private$wrapReadOnlyProperty("Count", value)
     },
-    #' @field simulation Reference to the \code{Simulation} used to calculate or import the results (Read-Only).
+    #' @field simulation Reference to the `Simulation` used to calculate or import the results (Read-Only).
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
     },

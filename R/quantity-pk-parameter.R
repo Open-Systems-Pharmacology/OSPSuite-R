@@ -1,7 +1,7 @@
 
 #' @title QuantityPKParameter
 #' @docType class
-#' @description  pK-Parameter values for all individuals of a simulation (1 or more) calculated for a specific quantity with path \code{quantityPath}
+#' @description  pK-Parameter values for all individuals of a simulation (1 or more) calculated for a specific quantity with path `quantityPath`
 QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
   inherit = DotNetWrapper,
   private = list(
@@ -9,7 +9,7 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
     .dimension = NULL
   ),
   active = list(
-    #' @field values All values for \code{quantityPath} and \code{name}
+    #' @field values All values for `quantityPath` and `name`
     values = function(value) {
       private$wrapReadOnlyProperty("Values", value)
     },

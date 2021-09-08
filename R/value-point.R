@@ -28,7 +28,7 @@ ValuePoint <- R6::R6Class(
     y = function(value) {
       private$wrapProperty("Y", value)
     },
-    #' @field restartSolver Indicates whether the solver should be restarted when this point is reached. Default is \code{FALSE}
+    #' @field restartSolver Indicates whether the solver should be restarted when this point is reached. Default is `FALSE`
     restartSolver = function(value) {
       private$wrapProperty("RestartSolver", value)
     }

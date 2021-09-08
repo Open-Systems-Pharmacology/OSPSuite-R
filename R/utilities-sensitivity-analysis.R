@@ -1,7 +1,7 @@
 #' @title  Runs a sensitivity analysis
 #'
-#' @param sensitivityAnalysis Instance of a \code{SensitivityAnalysis} to run
-#' @param sensitivityAnalysisRunOptions Optional instance of a \code{SensitivityAnalysisRunOptions} used during the sensitivity analysis run
+#' @param sensitivityAnalysis Instance of a `SensitivityAnalysis` to run
+#' @param sensitivityAnalysisRunOptions Optional instance of a `SensitivityAnalysisRunOptions` used during the sensitivity analysis run
 #'
 #' @return SimulationResults (one entry per Individual)
 #'
@@ -28,7 +28,7 @@ runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOp
 
 #' Saves the simulation analysis results to csv file
 #'
-#' @param results Results to export (typically calculated using \code{runSensitivityAnalysis} or imported from file)
+#' @param results Results to export (typically calculated using `runSensitivityAnalysis` or imported from file)
 #' @param filePath Full path where the results will be saved.
 #'
 #' @examples

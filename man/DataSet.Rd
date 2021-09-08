@@ -22,14 +22,14 @@ A class for storage of numerical x- and y-value pairs and optional error for y-v
 \item{\code{xUnit}}{Unit in which the xValues are defined}
 
 \item{\code{xValues}}{Values stored in the xUnit. This field is read-only.
-Use \code{$setValues()} to change the values.}
+Use \verb{$setValues()} to change the values.}
 
 \item{\code{yDimension}}{Dimension in which the yValues are defined}
 
 \item{\code{yUnit}}{Unit in which the yValues are defined}
 
 \item{\code{yValues}}{Values stored in the yUnit. This field is read-only.
-Use \code{$setValues()} to change the values.}
+Use \verb{$setValues()} to change the values.}
 
 \item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
 When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100\%).
@@ -41,9 +41,9 @@ for \code{yDimension}. For geometric error, the unit must be valid for \code{Dim
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
 \item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.
-Use \code{$setValues()} to change the values.
+Use \verb{$setValues()} to change the values.
 In case no yError is defined, the value is \code{NULL} and cannot be changed.
-Use \code{$setValues()} to change the values.}
+Use \verb{$setValues()} to change the values.}
 
 \item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
 

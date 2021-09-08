@@ -15,8 +15,8 @@ loadPopulation <- function(csvPopulationFile) {
   Population$new(population)
 }
 
-#' Loads a population from the \code{csvPopulationFile} and split the loaded population according to
-#' \code{numberOfCores}.
+#' Loads a population from the `csvPopulationFile` and split the loaded population according to
+#' `numberOfCores`.
 #' @param csvPopulationFile Full path of csv population file to split.
 #' @param numberOfCores Number of cores used for parallelization computing. The population will be split across all cores.
 #' @param outputFolder Folder where all split files will be created
@@ -43,7 +43,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
 
 #' @title Creates a data.frame containing one column for each parameter defined in the population
 #'
-#' @param population Population to convert to data frame (typically imported from file using \code{loadPopulation})
+#' @param population Population to convert to data frame (typically imported from file using `loadPopulation`)
 #'
 #' @examples
 #' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
@@ -69,7 +69,7 @@ populationAsDataFrame <- function(population) {
 
 #' Saves the population to csv file
 #'
-#' @param population Population to export to csv (typically imported from file using \code{loadPopulation})
+#' @param population Population to export to csv (typically imported from file using `loadPopulation`)
 #' @param filePath Full path where the population will be saved.
 #'
 #' @examples

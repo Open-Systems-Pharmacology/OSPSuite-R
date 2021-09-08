@@ -24,5 +24,5 @@ params <- getAllParametersMatching("Organism|**|Volume", sim)
 scaleParameterValues(params, 1.5)
 }
 \seealso{
-\code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
+\code{\link[=getParameter]{getParameter()}} and \code{\link[=getAllParametersMatching]{getAllParametersMatching()}} to create objects of type Parameter
 }

@@ -36,7 +36,7 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 # Running an individual simulation
-# results is an instance of \code{SimulationResults}
+# results is an instance of `SimulationResults`
 results <- runSimulation(sim)
 
 # Creating custom simulation run options

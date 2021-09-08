@@ -26,5 +26,5 @@ molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 setMoleculeScaleDivisors(molecules, c(0.002, 0.003))
 }
 \seealso{
-\code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
+\code{\link[=getMolecule]{getMolecule()}} and \code{\link[=getAllMoleculesMatching]{getAllMoleculesMatching()}} to retrieve objects of type Molecule
 }

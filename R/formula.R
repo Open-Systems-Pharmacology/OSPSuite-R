@@ -2,7 +2,7 @@ FormulaExtensions <- "OSPSuite.Core.Domain.Formulas.FormulaExtensions"
 
 #' @title Formula
 #' @docType class
-#' @description  A formula of the model (Typically related to a \code{Quantity} such as a parameter)
+#' @description  A formula of the model (Typically related to a `Quantity` such as a parameter)
 #' @format NULL
 Formula <- R6::R6Class(
   "Formula",
@@ -37,7 +37,7 @@ Formula <- R6::R6Class(
     dimension = function(value) {
       private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", value)
     },
-    #' @field formulaString Returns the formula as a string for an \code{ExplicitFormula} or \code{NULL} otherwise (Read-Only).
+    #' @field formulaString Returns the formula as a string for an `ExplicitFormula` or `NULL` otherwise (Read-Only).
     formulaString = function(value) {
       if (missing(value)) {
         if (self$isExplicit) {

@@ -2,7 +2,7 @@
 #'
 #' @description A molecule defined in a compartment of the system
 #'
-#' @details  Derived from \link{Quantity}, please see base class documentation.
+#' @details  Derived from [Quantity], please see base class documentation.
 #'
 #' @docType class
 #' @name Molecule

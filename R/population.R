@@ -26,14 +26,14 @@ Population <- R6::R6Class(
   ),
   public = list(
     #' @description
-    #' Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
+    #' Returns `TRUE` if the population has variability defined for `parameterOrPath` otherwise `FALSE`
     #' @param parameterOrPath Parameter instance of parameter path
     has = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)
       rClr::clrCall(self$ref, "Has", parameterPath)
     },
     #' @description
-    #' Updates or adds the variability values in the population for \code{parameterOrPath}.
+    #' Updates or adds the variability values in the population for `parameterOrPath`.
     #' @param parameterOrPath Parameter instance of parameter path.
     #' If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.
     #' @param values double vector containing the value to set for the `parameterOrPath`
@@ -44,7 +44,7 @@ Population <- R6::R6Class(
       invisible(self)
     },
     #' @description
-    #' Returns the variability values defined in the population for \code{parameterOrPath}
+    #' Returns the variability values defined in the population for `parameterOrPath`
     #' @param parameterOrPath Parameter instance of parameter path
     getParameterValues = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)

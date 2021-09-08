@@ -1,9 +1,9 @@
 
 #' Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param paths A vector of strings representing the paths relative to the \code{container}
+#' @param paths A vector of strings representing the paths relative to the `container`
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return A list of parameters matching the path criteria. The list is empty if no parameters matching were found.
 #' @examples
@@ -29,7 +29,7 @@ getAllParametersMatching <- function(paths, container) {
 #' Retrieves the path of all parameters defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return An array with one entry per parameter defined in the container
 #' @examples
@@ -47,13 +47,13 @@ getAllParameterPathsIn <- function(container) {
 #' Retrieve a single parameter by path in the given container
 #'
 #' @inherit getAllParametersMatching
-#' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no parameter exist for the given path,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param path A string representing the path relative to the `container`
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no parameter exist for the given path,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 #'
-#' @return The \code{Parameter} with the given path. If the parameter for the path
-#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
-#' otherwise \code{NULL}
+#' @return The `Parameter` with the given path. If the parameter for the path
+#' does not exist, an error is thrown if `stopIfNotFound` is TRUE (default),
+#' otherwise `NULL`
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -66,7 +66,7 @@ getParameter <- function(path, container, stopIfNotFound = TRUE) {
 
 #' Retrieves the display path of the parameters defined by paths in the simulation
 #'
-#' @param paths A single string or array of paths path relative to the \code{container}
+#' @param paths A single string or array of paths path relative to the `container`
 #' @param simulation A simulation used to find the entities
 #'
 #' @return a display path for each parameter in paths
@@ -82,8 +82,8 @@ getParameterDisplayPaths <- function(paths, simulation) {
 
 #' Set values of parameters
 #'
-#' @param parameters A single or a list of \code{Parameter}
-#' @seealso \code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
+#' @param parameters A single or a list of `Parameter`
+#' @seealso [getParameter()] and [getAllParametersMatching()] to create objects of type Parameter
 #'
 #' @param values A numeric value that should be assigned to the parameter or a vector
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
@@ -111,8 +111,8 @@ setParameterValues <- function(parameters, values) {
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
 #' length as 'parameterPaths'
 #' @param simulation Simulation uses to retrieve parameter instances from given paths.
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no parameter exists for the given path,
-#' an error is thrown. If \code{FALSE}, a warning is shown to the user
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no parameter exists for the given path,
+#' an error is thrown. If `FALSE`, a warning is shown to the user
 #'
 #' @examples
 #'
@@ -133,8 +133,8 @@ setParameterValuesByPath <- function(parameterPaths, values, simulation, stopIfN
 
 #' Scale current values of parameters using a factor
 #'
-#' @param parameters A single or a list of \code{Parameter}
-#' @seealso \code{\link{getParameter}} and \code{\link{getAllParametersMatching}} to create objects of type Parameter
+#' @param parameters A single or a list of `Parameter`
+#' @seealso [getParameter()] and [getAllParametersMatching()] to create objects of type Parameter
 #'
 #' @param factor A numeric value that will be used to scale all parameters
 #'

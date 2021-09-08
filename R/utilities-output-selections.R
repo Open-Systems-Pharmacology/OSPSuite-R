@@ -1,7 +1,7 @@
 
-#' @title  Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.
+#' @title  Adds the quantities as output into the  `simulation`. The quantities can either be specified using explicit instances or using paths.
 #'
-#' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.
+#' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using `getAllQuantitiesMatching`) or quantity path (element or vector) to add.
 #' @param simulation Instance of a simulation for which output selection should be updated.
 #'
 #' @examples#'
@@ -37,7 +37,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
   }
 }
 
-#' @title  Removes all selected output from the given \code{simulation}
+#' @title  Removes all selected output from the given `simulation`
 #'
 #' @param simulation Instance of a simulation for which output selection should be cleared.
 #'

@@ -18,13 +18,13 @@ loadSimulation(
 
 \item{loadFromCache}{If \code{TRUE}, an already loaded pkml file will not be loaded
 again, but the simulation object will be retrieved from cache.
-If \code{FALSE}, a new simulation object will be created. Default value is \code{FALSE}}
+If \code{FALSE}, a new simulation object will be created. Default value is \code{FALSE}.}
 
 \item{addToCache}{If \code{TRUE}, the loaded simulation is added to cache. If \code{FALSE},
-the returned simulation only exists locally. Default is \code{TRUE}}
+the returned simulation only exists locally. Default is \code{TRUE}.}
 
-\item{resetIds}{If \code{TRUE}, the internal object ids in the simulation are resetted to a unique value.
-If \code{FALSE}, the ids are kept as defined in the pkml simulation. Default is \code{TRUE}}
+\item{resetIds}{If \code{TRUE}, the internal object ids in the simulation are reset to a unique value.
+If \code{FALSE}, the ids are kept as defined in the pkml simulation. Default is \code{TRUE}.}
 }
 \description{
 Loads a simulation from a pkml file and returns the simulation. If the passed simulation file

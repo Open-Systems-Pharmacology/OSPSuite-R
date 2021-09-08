@@ -11,7 +11,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     .simulation = NULL
   ),
   active = list(
-    #' @field simulation Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).
+    #' @field simulation Reference to the `Simulation` used to calculate or import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
     },
@@ -56,7 +56,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
     #' @description
-    #' Returns the sensisivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns `NaN`
+    #' Returns the sensitivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns `NaN`
     #' @param pkParameterName Name of pkParameter for which sensitivity should be retrieved
     #' @param outputPath Path of the output for which the sensitivity should be retrieved
     #' @param parameterName Name of the sensitivity parameter for which the sensitivity should be retrieved

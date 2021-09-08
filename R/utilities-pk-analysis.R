@@ -1,8 +1,8 @@
-#' @title Calculates the pkAnalyses for all output values available in \code{results}.
+#' @title Calculates the pkAnalyses for all output values available in `results`.
 #'
-#' @param results Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}
+#' @param results Results of simulation. Typically the `results` are calculated using `runSimulation` or imported from csv file via `importResults`
 #'
-#' @return An instance of \code{SimulationPKAnalyses} class.
+#' @return An instance of `SimulationPKAnalyses` class.
 #'
 #' @examples
 #'
@@ -25,7 +25,7 @@ calculatePKAnalyses <- function(results) {
 
 #' @title Saves the pK-analyses  to csv file
 #'
-#' @param pkAnalyses pK-Analyses to export (typically calculated using \code{calculatePKAnalyses} or imported from file)
+#' @param pkAnalyses pK-Analyses to export (typically calculated using `calculatePKAnalyses` or imported from file)
 #' @param filePath Full path where the pK-Analyses will be saved.
 #'
 #' @export
@@ -62,7 +62,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 
 #' @title Convert the pk-Analysis to data frame
 #'
-#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using \code{calculatePKAnalyses} or imported from file)
+#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using `calculatePKAnalyses` or imported from file)
 #'
 #' @export
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
