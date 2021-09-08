@@ -15,9 +15,10 @@ test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = character(0), xValue = logical(0), yValue = logical(0), yErrorValues = logical(0),
+      name = character(0), xValues = logical(0), yValues = logical(0), yErrorValues = logical(0),
       xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = character(0), yErrorUnit = character(0), yMolWeight = logical(0)
+      yUnit = character(0), yErrorType = character(0), yErrorUnit = character(0), molWeight = logical(0),
+      lloq = logical(0)
     )
   )
 })
@@ -27,10 +28,10 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep("", 5), xValue = dataSet$xValues, yValue = dataSet$yValues, yErrorValues = rep(NA, 5),
+      name = rep("", 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA, 5),
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA_character_, 5), yErrorUnit = rep(NA_character_, 5), yMolWeight = rep(NA, 5)
+      yErrorType = rep(NA_character_, 5), yErrorUnit = rep(NA_character_, 5), molWeight = rep(NA, 5), lloq = rep(NA, 5)
     )
   )
 })
@@ -39,88 +40,56 @@ test_that("It can convert a data set with only non-empty fields, except for meta
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
   dataSet$name <- "Data1"
   dataSet$molWeight <- 123
+  dataSet$LLOQ <- 0.2
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep(dataSet$name, 5), xValue = dataSet$xValues,
-      yValue = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
+      name = rep(dataSet$name, 5), xValues = dataSet$xValues,
+      yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
       yErrorType = rep(dataSet$yErrorType, 5), yErrorUnit = rep(dataSet$yErrorUnit, 5),
-      yMolWeight = rep(dataSet$molWeight, 5)
+      molWeight = rep(dataSet$molWeight, 5), lloq = rep(dataSet$LLOQ, 5)
+    )
+  )
+})
+
+test_that("It can convert a data set with metaData", {
+  dataSet$addMetaData("Organ", "Blood")
+  expect_equal(
+    dataSetToDataFrame(dataSet),
+    data.frame(
+      name = rep(dataSet$name, 5), xValues = dataSet$xValues,
+      yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
+      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(dataSet$yErrorType, 5), yErrorUnit = rep(dataSet$yErrorUnit, 5),
+      molWeight = rep(dataSet$molWeight, 5), lloq = rep(dataSet$LLOQ, 5),
+      Organ = rep("Blood", 5)
     )
   )
 })
 
 test_that("It can convert a list of data sets", {
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$name <- "Data1"
-  dataSet$molWeight <- 123
   dataSet2 <- DataSet$new()
   dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
   dataSet2$molWeight <- 456
+  dataSet2$addMetaData("Compartment", "Plasma")
 
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
     data.frame(
-      name = c(rep(dataSet$name, 5), rep("", 3)), xValue = c(dataSet$xValues, dataSet2$xValues),
-      yValue = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
+      name = c(rep(dataSet$name, 5), rep("", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
+      yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
       xUnit = c(rep(dataSet$xUnit, 5), rep(dataSet2$xUnit, 3)),
       yDimension = c(rep(dataSet$yDimension, 5), rep(dataSet2$yDimension, 3)),
       yUnit = c(rep(dataSet$yUnit, 5), rep(dataSet2$yUnit, 3)),
       yErrorType = c(rep(dataSet$yErrorType, 5), rep(NA_character_, 3)),
       yErrorUnit = c(rep(dataSet$yErrorUnit, 5), rep(NA_character_, 3)),
-      yMolWeight = c(rep(dataSet$molWeight, 5), rep(dataSet2$molWeight, 3))
-    )
-  )
-})
-
-test_that("It can convert a single data set with meta data", {
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
-  dataSet$name <- "Data1"
-  dataSet$molWeight <- 123
-  dataSet$addMetaData("City", "Rome")
-
-  expect_equal(
-    dataSetToDataFrame(dataSet),
-    data.frame(
-      name = rep(dataSet$name, 5), xValue = dataSet$xValues, yValue = dataSet$yValues, yErrorValues = rep(NA, 5),
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA_character_, 5), yErrorUnit = rep(NA_character_, 5), yMolWeight = rep(123, 5),
-      City = rep("Rome", 5)
-    )
-  )
-})
-
-test_that("It can convert a list of data sets with meta data", {
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$name <- "Data1"
-  dataSet$molWeight <- 123
-  dataSet$addMetaData("City", "Rome")
-  dataSet2 <- DataSet$new()
-  dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
-  dataSet2$molWeight <- 456
-  dataSet2$addMetaData("City", "Berlin")
-  dataSet2$addMetaData("ZIP", "10245")
-  dataSet2$addMetaData("Country", "Germany")
-
-  expect_equal(
-    dataSetToDataFrame(list(dataSet, dataSet2)),
-    data.frame(
-      name = c(rep(dataSet$name, 5), rep("", 3)), xValue = c(dataSet$xValues, dataSet2$xValues),
-      yValue = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
-      xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
-      xUnit = c(rep(dataSet$xUnit, 5), rep(dataSet2$xUnit, 3)),
-      yDimension = c(rep(dataSet$yDimension, 5), rep(dataSet2$yDimension, 3)),
-      yUnit = c(rep(dataSet$yUnit, 5), rep(dataSet2$yUnit, 3)),
-      yErrorType = c(rep(dataSet$yErrorType, 5), rep(NA_character_, 3)),
-      yErrorUnit = c(rep(dataSet$yErrorUnit, 5), rep(NA_character_, 3)),
-      yMolWeight = c(rep(dataSet$molWeight, 5), rep(dataSet2$molWeight, 3)),
-      City = c(rep("Rome", 5), rep("Berlin", 3)),
-      ZIP = c(rep(NA_character_, 5), rep("10245", 3)),
-      Country = c(rep(NA_character_, 5), rep("Germany", 3))
+      molWeight = c(rep(dataSet$molWeight, 5), rep(dataSet2$molWeight, 3)),
+      lloq = c(rep(dataSet$LLOQ, 5), rep(NA, 3)),
+      Organ = c(rep("Blood", 5), rep(NA, 3)), Compartment = c(rep(NA, 5), rep("Plasma", 3))
     )
   )
 })
@@ -190,4 +159,35 @@ test_that("it can load when loading from file with one sheet without
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, DataSet))
   expect_equal(length(dataSets), 4)
+})
+
+test_that("it can convert DataSets loaded from excel to data.frame", {
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSetsFrame <- dataSetToDataFrame(dataSets)
+  expect_equal(names(dataSetsFrame), c(
+    "name",
+    "xValues",
+    "yValues",
+    "yErrorValues",
+    "xDimension",
+    "xUnit",
+    "yDimension",
+    "yUnit",
+    "yErrorType",
+    "yErrorUnit",
+    "molWeight",
+    "lloq",
+    "Source",
+    "Sheet",
+    "Study Id",
+    "Organ",
+    "Compartment",
+    "Species",
+    "Gender",
+    "Molecule",
+    "Route",
+    "Subject Id",
+    "Dose",
+    "Group Id"
+  ))
 })
