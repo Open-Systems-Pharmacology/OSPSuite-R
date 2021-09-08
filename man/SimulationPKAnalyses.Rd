@@ -15,7 +15,7 @@ pK-Analyses of a simulation (either individual or population simulation).
 \describe{
 \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)}
 
-\item{\code{allPKParameterNames}}{Returns the name of all pk parameters for which a value is availalbe}
+\item{\code{allPKParameterNames}}{Returns the name of all pk parameters for which a value is available}
 
 \item{\code{allQuantityPaths}}{Returns the path of all quantities for which pk parameters were calculated}
 }

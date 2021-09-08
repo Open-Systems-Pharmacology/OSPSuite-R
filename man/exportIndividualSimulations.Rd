@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{exportIndividualSimulations}
 \alias{exportIndividualSimulations}
-\title{Export simulation PKMLs for given \code{individualIds}. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.}
+\title{Export simulation PKMLs for given \code{individualIds}. Each pkml file will contain the original simulation updated with parameters of the corresponding individual.}
 \usage{
 exportIndividualSimulations(
   population,
@@ -16,7 +16,7 @@ exportIndividualSimulations(
 
 \item{individualIds}{Ids of individual (single value or array) to export}
 
-\item{outputFolder}{Folder where the individiual simulations will be exported. File format will be \code{simulationName_individualId}}
+\item{outputFolder}{Folder where the individual simulations will be exported. File format will be \code{simulationName_individualId}}
 
 \item{simulation}{Simulation uses to generate PKML files}
 }
@@ -24,7 +24,7 @@ exportIndividualSimulations(
 An array containing the path of all exported simulations.
 }
 \description{
-Export simulation PKMLs for given \code{individualIds}. Each pkml file will contain the orginial simulation updated with parameters of the corresponding individual.
+Export simulation PKMLs for given \code{individualIds}. Each pkml file will contain the original simulation updated with parameters of the corresponding individual.
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

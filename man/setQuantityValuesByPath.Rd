@@ -20,7 +20,7 @@ length as 'quantityPaths'}
 
 \item{simulation}{Simulation uses to retrieve quantity instances from given paths.}
 
-\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no qyantuty exists for the given path,
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
 an error is thrown. If \code{FALSE}, a warning is shown to the user}
 }
 \description{

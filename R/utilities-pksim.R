@@ -3,7 +3,7 @@
 #' @param pksimFolderPath Path where PK-Sim is installed. If this is not specified, path will be read from registry using the package version
 #'
 #' @note  This will only work on Windows machine and should not be called on any other OS.
-#' This function should also only be called explicitely when using a portable install of the package
+#' This function should also only be called explicitly when using a portable install of the package
 #'
 #' @import rClr
 #' @export
@@ -74,14 +74,14 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' Tries to find the installation path for a specific version of PK-Sim via the filesystem.
 #' Searching is done in the following order:
 #' 1. Search via filesystem in a guessed installation folder from the base.search.folder
-#' 3. Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
+#' 3. Search via filesystem for PKSim.exe recursively from the defined base.search.folder (fallback)
 #'
 #' @param pksim.version The version number of Pk-Sim as a string.
 #' @param base.search.folder The base folder for filesystem-lookup fallback (default: 64-bit program folder)
 #'
 #' @return
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-#' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+#' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #' If more than one matching path is found a warning is produced.
 #'
 #' @examples
@@ -113,7 +113,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     include.dirs = TRUE
   )
   if (length(full.match) == 0) {
-    # Second guess: Search base folder recursivly for exe.name
+    # Second guess: Search base folder recursively for exe.name
     # This might be expensive !
     exe.name <- "PKSim.exe$"
     full.match <- list.files(base.search.folder,

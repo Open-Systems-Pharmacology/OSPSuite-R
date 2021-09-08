@@ -62,7 +62,7 @@ SimulationPKAnalyses <- R6::R6Class(
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
     },
-    #' @field allPKParameterNames Returns the name of all pk parameters for which a value is availalbe
+    #' @field allPKParameterNames Returns the name of all pk parameters for which a value is available
     allPKParameterNames = function(value) {
       private$readOnlyProperty("allPKParameterNames", value, rClr::clrGet(self$ref, "AllPKParameterNames"))
     },

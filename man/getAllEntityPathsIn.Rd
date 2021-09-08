@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-entity.R
 \name{getAllEntityPathsIn}
 \alias{getAllEntityPathsIn}
-\title{Retrieves all path of entities defined wihtin the container (simulation or container instance)}
+\title{Retrieves all path of entities defined within the container (simulation or container instance)}
 \usage{
 getAllEntityPathsIn(container, entityType, method = NULL)
 }
@@ -18,7 +18,7 @@ An array of paths (one for each entity found under the container and its sub con
 The list is empty if no entities matching were found.
 }
 \description{
-Retrieves all path of entities defined wihtin the container (simulation or container instance)
+Retrieves all path of entities defined within the container (simulation or container instance)
 }
 \seealso{
 \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to create objects of type Container or Simulation

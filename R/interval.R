@@ -1,6 +1,6 @@
 #' @title Interval
 #' @docType class
-#' @description  Simulation Interval (typically associated with an instace of \code{OutputSchema})
+#' @description  Simulation Interval (typically associated with an instance of \code{OutputSchema})
 #'
 #' @format NULL
 Interval <- R6::R6Class(

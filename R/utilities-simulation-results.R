@@ -12,7 +12,7 @@
 #' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
 #' If quantitiesOrPaths is \code{NULL} (default value), returns the results for all output defined in the results.
 #'
-#' @param individualIds \code{numeric} IDs of individiuals for which the results should be extracted.
+#' @param individualIds \code{numeric} IDs of individuals for which the results should be extracted.
 #' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored
 #'
 #' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.

@@ -13,7 +13,7 @@ getAllParametersForSensitivityAnalysisMatching(paths, simulation)
 \item{simulation}{Simulation used to find the parameters}
 }
 \value{
-A list of parameters matching the path criteria and also candiates for a sensitivity analysis.
+A list of parameters matching the path criteria and also candidates for a sensitivity analysis.
 The list is empty if no parameters matching were found.
 }
 \description{

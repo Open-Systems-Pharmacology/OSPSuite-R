@@ -1,4 +1,4 @@
-#' @title  Runs a sensitivity analaysis
+#' @title  Runs a sensitivity analysis
 #'
 #' @param sensitivityAnalysis Instance of a \code{SensitivityAnalysis} to run
 #' @param sensitivityAnalysisRunOptions Optional instance of a \code{SensitivityAnalysisRunOptions} used during the sensitivity analysis run

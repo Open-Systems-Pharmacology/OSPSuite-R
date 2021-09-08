@@ -11,7 +11,7 @@ Wrapper class for .net Object
 
 \describe{
 \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
+\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET Read-Only property}
 }
 }
 

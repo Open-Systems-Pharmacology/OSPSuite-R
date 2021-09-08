@@ -85,7 +85,7 @@ This is a typically a molecule that is individual specific such as en Enzyme, Pr
 \if{latex}{\out{\hypertarget{method-allXenobioticFloatingMoleculeNames}{}}}
 \subsection{Method \code{allXenobioticFloatingMoleculeNames()}}{
 Returns the name of all xenobiotoc floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
-This is typically a molecule that is being explicitely simulated such as Compound, Inhibitor, DrugComplex.
+This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allXenobioticFloatingMoleculeNames()}\if{html}{\out{</div>}}
 }
@@ -132,7 +132,7 @@ Returns the mol weight value (in core unit) associated to the quantity with give
 \if{html}{\out{<a id="method-allApplicationsFor"></a>}}
 \if{latex}{\out{\hypertarget{method-allApplicationsFor}{}}}
 \subsection{Method \code{allApplicationsFor()}}{
-Returns the applications ordered by start time associated to the quantity with path \code{quantityPath} or an emtpty list if not found
+Returns the applications ordered by start time associated to the quantity with path \code{quantityPath} or an empty list if not found
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allApplicationsFor(quantityPath)}\if{html}{\out{</div>}}
 }

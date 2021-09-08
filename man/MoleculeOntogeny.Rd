@@ -5,7 +5,7 @@
 \alias{MoleculeOntogeny}
 \title{MoleculeOntogeny}
 \description{
-Use when retrieving indvidual values using the createIndividualAlgorithm. This class is a simple pair {MoleculeName, Ontogeny}
+Use when retrieving individual values using the createIndividualAlgorithm. This class is a simple pair {MoleculeName, Ontogeny}
 allowing the user to retrieve potential ontogeny values.
 }
 \section{Super class}{

@@ -5,7 +5,7 @@
 \alias{ParameterRange}
 \title{ParameterRange}
 \description{
-A parameter rnage typically used in the definition of \code{PopulationCharacteristics} covariates (Height, Weight etc...)
+A parameter range typically used in the definition of \code{PopulationCharacteristics} covariates (Height, Weight etc...)
 }
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ParameterRange}

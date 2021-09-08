@@ -32,7 +32,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 }
 
 #'  Given a simulation file path or an instance of a simulation, traverses the simulation structure and returns a tree like structure
-#'  allowing for intuitive navigration in the simulation tree
+#'  allowing for intuitive navigation in the simulation tree
 #
 #' @param simulationOrFilePath Full path of the simulation to load or instance of a simulation
 #' @return A list with a branched structure representing the path tree of Quantities in the simulation file.
