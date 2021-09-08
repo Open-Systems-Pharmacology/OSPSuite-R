@@ -3,35 +3,28 @@
 #' @param populationCharacteristics Characteristics of the population to create as an instance of `OriginData`
 #' that are actually distributed parameters
 #'
-#' @return An list with two entries:
-#' The `population` An instance of a population object.
-#' The `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#' @return An list with three entries:
+#'  * `population` An instance of a population object.
+#'  * `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#'  * `seed` containing the seed value used to generate random values
 #'
 #' @export
 createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, PopulationCharacteristics)
 
   populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
-  netPopulation <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
+  results <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
+  netPopulation <- getPropertyValue(results, "IndividualValuesCache")
+  seed <- getPropertyValue(results, "Seed")
   population <- Population$new(netPopulation)
 
   individualCharacteristics <- NULL
 
-  # NOTE THIS IS A WORKAROUND UNTIL THE CODE IN PKSIM IS UPDATED
-  if (populationCharacteristics$species == Species$Human) {
-    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an invdiviual
-    individualCharacteristics <- createIndividualCharacteristics(
-      species = populationCharacteristics$species,
-      population = populationCharacteristics$population,
-      age = 30
-    )
-  } else {
-    # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an indiviual
-    individualCharacteristics <- createIndividualCharacteristics(
-      species = populationCharacteristics$species,
-      population = populationCharacteristics$population,
-    )
-  }
+  # create an individual with similar properties Species and population. WEIGHT AND AGE DO NOT MATTER as long as we can create an individual
+  individualCharacteristics <- createIndividualCharacteristics(
+    species = populationCharacteristics$species,
+    population = populationCharacteristics$population,
+  )
 
   individual <- createIndividual(individualCharacteristics = individualCharacteristics)
 
@@ -59,7 +52,7 @@ createPopulation <- function(populationCharacteristics) {
     }
   }
 
-  return(list(population = population, derivedParameters = derivedParameters))
+  return(list(population = population, derivedParameters = derivedParameters, seed = seed))
 }
 
 #' Creates the population characteristics used to create a population

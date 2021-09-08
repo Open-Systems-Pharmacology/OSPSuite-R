@@ -90,8 +90,6 @@ Collate:
     'table-formula.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
-    'utilities-data-import-configuration.R'
-    'utilities-data-importer-configuration.R'
     'utilities-data-repository.R'
     'utilities-data-set.R'
     'utilities-dot-net.R'
