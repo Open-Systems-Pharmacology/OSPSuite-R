@@ -21,10 +21,24 @@ test_that("It can create a standard human populaiton", {
   human <- createPopulationCharacteristics(
     species = Species$Human,
     population = HumanPopulation$BlackAmerican_NHANES_1997,
-    numberOfIndividuals = 10
+    numberOfIndividuals = 10,
+    seed = 1234
   )
   human_values <- createPopulation(populationCharacteristics = human)
   expect_equal(human_values$population$count, 10)
+  expect_equal(human_values$seed, human$seed)
+})
+
+test_that("It returns the random seed used if not specified", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  human <- createPopulationCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$BlackAmerican_NHANES_1997,
+    numberOfIndividuals = 10,
+  )
+  human_values <- createPopulation(populationCharacteristics = human)
+  expect_gt(human_values$seed, 0)
 })
 
 test_that("It can create a standard human populaiton with weight constraints", {

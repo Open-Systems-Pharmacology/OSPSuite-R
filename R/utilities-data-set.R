@@ -1,23 +1,23 @@
 .makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
-  columForDataSet <- function(dataSet){
-  # check length of entry for a certain property of this data set, i.e. if it exists
-  if (is.null(metaDataName)) {
-    len <- length(dataSet[[property]])
-  } else {
-    len <- length(dataSet[[property]][[metaDataName]])
-  }
-
-  if (len == 0) {
-    rep(NA, length(dataSet$xValues))
-  } else if (len == 1) {
+  columForDataSet <- function(dataSet) {
+    # check length of entry for a certain property of this data set, i.e. if it exists
     if (is.null(metaDataName)) {
-      rep(dataSet[[property]], length(dataSet$xValues))
+      len <- length(dataSet[[property]])
     } else {
-      rep(dataSet[[property]][[metaDataName]], length(dataSet$xValues))
+      len <- length(dataSet[[property]][[metaDataName]])
     }
-  } else {
-    dataSet[[property]]
-  }
+
+    if (len == 0) {
+      rep(NA, length(dataSet$xValues))
+    } else if (len == 1) {
+      if (is.null(metaDataName)) {
+        rep(dataSet[[property]], length(dataSet$xValues))
+      } else {
+        rep(dataSet[[property]][[metaDataName]], length(dataSet$xValues))
+      }
+    } else {
+      dataSet[[property]]
+    }
   }
 
   unlist(lapply(dataSets, function(x) {
@@ -73,18 +73,18 @@ dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, DataSet)
 
-    name <- .makeDataFrameColumn(dataSets, "name")
-     xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
-     yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
-    yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
-    xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
-    yDimension <-   .makeDataFrameColumn(dataSets, "yDimension")
-    yErrorType <-   .makeDataFrameColumn(dataSets, "yErrorType")
-    molWeight <-   .makeDataFrameColumn(dataSets, "molWeight")
-    xValues <-  .makeDataFrameColumn(dataSets, "xValues")
-    yValues <-  .makeDataFrameColumn(dataSets, "yValues")
-    yErrorValues <-  .makeDataFrameColumn(dataSets, "yErrorValues")
-    lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
+  name <- .makeDataFrameColumn(dataSets, "name")
+  xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
+  yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
+  yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
+  xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
+  yDimension <- .makeDataFrameColumn(dataSets, "yDimension")
+  yErrorType <- .makeDataFrameColumn(dataSets, "yErrorType")
+  molWeight <- .makeDataFrameColumn(dataSets, "molWeight")
+  xValues <- .makeDataFrameColumn(dataSets, "xValues")
+  yValues <- .makeDataFrameColumn(dataSets, "yValues")
+  yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
+  lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
   df <- data.frame(
     name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
     yUnit, yErrorType, yErrorUnit, molWeight, lloq

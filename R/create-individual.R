@@ -2,9 +2,10 @@
 #'
 #' @param individualCharacteristics Characteristics of the individual to create as an instance of `IndividualCharacteristics`
 #'
-#' @return A list with two entries:
-#' The `distributedParameters` containing the actual parameter values modified by the create individual algorithm.
-#' The `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#' @return A list with three entries:
+#'  * `distributedParameters` containing the actual parameter values modified by the create individual algorithm.
+#'  * `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+#'  * `seed` containing the seed value used to generate random values
 #'
 #' @note When updating a simulation with the value for a new individual, only use the `distributedParameters` to ensure that you do not override
 #' formula parameters.
@@ -18,11 +19,12 @@ createIndividual <- function(individualCharacteristics) {
 
   distributedParameters <- getPropertyValue(createIndividualResults, "DistributedParameters")
   derivedParameters <- getPropertyValue(createIndividualResults, "DerivedParameters")
+  seed <- getPropertyValue(createIndividualResults, "Seed")
 
   distributedParameters <- parameterValueListFrom(distributedParameters, addUnits = TRUE)
   derivedParameters <- parameterValueListFrom(derivedParameters, addUnits = TRUE)
 
-  list(distributedParameters = distributedParameters, derivedParameters = derivedParameters)
+  list(distributedParameters = distributedParameters, derivedParameters = derivedParameters, seed = seed)
 }
 
 #' Creates the parameter distributions based on the given individual `individualCharacteristics`

@@ -10,9 +10,12 @@ createIndividual(individualCharacteristics)
 \item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}}
 }
 \value{
-A list with two entries:
-The \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
-The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+A list with three entries:
+\itemize{
+\item \code{distributedParameters} containing the actual parameter values modified by the create individual algorithm.
+\item \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+\item \code{seed} containing the seed value used to generate random values
+}
 }
 \description{
 Creates an individual using the PKSim Database
