@@ -9,6 +9,12 @@ test_that("It can convert from a value in base unit to a target unit", {
   expect_equal(toUnit(par, 1, "l"), 1)
 })
 
+test_that("It can convert from a value in base unit to a target unit with different case", {
+  expect_equal(toUnit(par, 1, "mL"), 1000)
+  expect_equal(toUnit(par, 1, "L"), 1)
+})
+
+
 test_that("It can convert NULL in base unit to NULL", {
   expect_null(toUnit(par, NULL, "ml"))
   expect_identical(toUnit(par, c(NULL, NULL), "ml"), c(NULL, NULL))
