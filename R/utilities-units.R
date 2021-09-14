@@ -89,6 +89,9 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
     return(values)
   }
 
+  # ensure that we are dealing with an list of values seen as number (and not integer)
+  values <- as.numeric(c(values))
+
   if (isOfType(quantityOrDimension, Quantity)) {
     dimension <- quantityOrDimension$dimension
   }
@@ -96,6 +99,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   if (all(is.na(molWeight))) {
     molWeight <- NULL
   }
+
 
   if (is.null(molWeight)) {
     return(rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values))
@@ -138,6 +142,9 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- encodeUnit(targetUnit)
+  dimension <- quantityOrDimension
+  dimensionTask <- getNetTask("DimensionTask")
+
 
   # covers all NULL or NA
   if (all(is.na(values))) {
@@ -148,10 +155,6 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
     sourceUnit <- encodeUnit(sourceUnit)
   }
 
-  dimension <- quantityOrDimension
-  values <- c(values)
-  dimensionTask <- getNetTask("DimensionTask")
-
   if (isOfType(quantityOrDimension, Quantity)) {
     dimension <- quantityOrDimension$dimension
   }
@@ -159,6 +162,10 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
   if (all(is.na(molWeight))) {
     molWeight <- NULL
   }
+
+  # ensure that we are dealing with an list of values seen as number (and not integer)
+  values <- as.numeric(c(values))
+
 
   if (is.null(molWeight)) {
     # Convert values to base unit first if the source unit is provided
