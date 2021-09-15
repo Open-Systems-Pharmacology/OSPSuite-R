@@ -280,7 +280,9 @@ getUnitsEnum <- function() {
     x <- getUnitsForDimension(dimension = dimension)
     return(enum(replace(x, x == "", "Unitless")))
   })
-  names(units) <- dimensions
+  names(units) <- sapply(dimensions,function(str){
+    str <- gsub(pattern = "[(]",replacement = "[",x = str)
+    str <- gsub(pattern = "[)]",replacement = "]",x = str)})
   return(units)
 }
 
