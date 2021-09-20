@@ -78,30 +78,30 @@ test_that("it can update the dimension of the yValues and this does not change t
 test_that("it does not change the display unit when updating the dimension with the currently set one", {
   dataSet <- DataSet$new()
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$yUnit <- ospUnits$`Concentration [mass]`[[2]]
-  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`[[2]])
+  dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
+  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
   dataSet$yDimension <- ospDimensions$`Concentration (mass)`
-  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`[[2]])
+  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
   expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
   expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
 
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`[[1]])
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
 })
 
 test_that("it can update the unit of the yValues when no values are set", {
   dataSet <- DataSet$new()
-  dataSet$yUnit <- ospUnits$`Concentration [mass]`[[2]]
+  dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   expect_equal(dataSet$yValues, numeric(), tolerance)
-  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`[[2]])
+  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 })
 
 test_that("it can update the unit of the yValues and this does not change the returned value", {
   dataSet <- DataSet$new()
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$yUnit <- ospUnits$`Concentration [mass]`[[2]]
+  dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
-  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`[[2]])
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`[[1]])
+  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
 })
 
 test_that("Empty error with defined y values", {
@@ -120,9 +120,9 @@ test_that("it does not crash when setting yErrorType without error values", {
 test_that("it does not change the unit of yError when setting to the currently set error type", {
   dataSet <- DataSet$new()
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`[[2]]
+  dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`[[2]])
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 })
 
 test_that("arithmetic to geometric error changes the dimension of yError", {
@@ -137,14 +137,14 @@ test_that("arithmetic to geometric error changes the dimension of yError", {
 test_that("geometric to arithmetic error sets the dimension and unit of yError to those of yValues", {
   dataSet <- DataSet$new()
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
-  dataSet$yUnit <- ospUnits$`Concentration [mass]`[[2]]
-  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`[[2]])
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`[[1]])
+  dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
+  expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
   expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`[[2]])
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 })
 
 test_that("it can update x and y values and remove y error", {
@@ -271,9 +271,9 @@ test_that("it can update x and y values and remove y error", {
 test_that("it does not change the unit of yError when setting to the currently set error type", {
   obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(obsData)
-  dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`[[2]]
+  dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
-  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`[[2]])
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 })
 
 test_that("arithmetic to geometric error changes the dimension of yError", {
