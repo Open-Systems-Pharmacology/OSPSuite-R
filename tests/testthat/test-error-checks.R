@@ -32,8 +32,12 @@ test_that("It throws an error for a path with a wildcard", {
   expect_error(validatePathIsAbsolute(path), messages$errorEntityPathNotAbsolute(path))
 })
 
-test_that("It does not crash when passing some argument for type that are invalid", {
+test_that("It does not throw an error when a number is indeed an integer", {
   validateIsOfType(object = 2, type = "integer")
   # This is just to have an expectation. Validation throws if not ok
   expect_true(TRUE)
+})
+
+test_that("It does throw an error when a number is not an integer", {
+  expect_that(validateIsOfType(object = 2.5, type = "integer"), throws_error())
 })
