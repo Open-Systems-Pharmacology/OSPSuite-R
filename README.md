@@ -11,12 +11,17 @@
 
 The **ospsuite-R** package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 
+- [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Known issues](#known-issues)
 - [Code of conduct](#code-of-conduct)
 - [Contribution](#contribution)
 - [Licence](#licence)
+
+# Documentation
+Please refer to the [online documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/) for more details on the package 
+
 
 # Installation
 
