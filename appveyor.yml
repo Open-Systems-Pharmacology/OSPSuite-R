@@ -37,7 +37,7 @@ before_build:
   - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
 build_script:
-  - Rscript -e "install.packages('./tools/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
