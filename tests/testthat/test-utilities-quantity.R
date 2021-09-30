@@ -48,17 +48,23 @@ test_that("It throws an error when trying to retrieve a quantity by path that wo
 
 
 context("setQuantityValuesByPath")
+sim <- loadTestSimulation("S1", loadFromCache = TRUE)
 
-test_that("It can set single parameter values", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+test_that("It can set single parameter value", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
   setQuantityValuesByPath(parameterPath, 100, sim)
   parameter <- getParameter(parameterPath, sim)
   expect_equal(parameter$value, 100)
 })
 
+test_that("It can set single parameter value with unit", {
+  parameterPath <- "Organism|Liver|Intracellular|Volume"
+  setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "ml")
+  parameter <- getParameter(parameterPath, sim)
+  expect_equal(parameter$value, 100e-3)
+})
+
 test_that("It can set multiple quantity values", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
   setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim)
@@ -68,15 +74,32 @@ test_that("It can set multiple quantity values", {
   expect_equal(quantity2$value, 50)
 })
 
+test_that("It can set multiple quantity values with units", {
+  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
+  quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  setQuantityValuesByPath(
+    quantityPaths = c(quantityPath1, quantityPath2), values = c(40, 50), simulation = sim,
+    units = c("ml", "mol")
+  )
+  quantity1 <- getQuantity(quantityPath1, sim)
+  quantity2 <- getQuantity(quantityPath2, sim)
+  expect_equal(quantity1$value, 40e-3)
+  expect_equal(quantity2$value, 50e6)
+})
+
 test_that("It throws an exception when setting values for a quantity that does not exist", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath <- "Organism|Liver|NOPE|Volume"
   expect_that(setQuantityValuesByPath(parameterPath, 100, sim), throws_error())
 })
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist and the stopIfnotFound flag is set to false", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath <- "Organism|Liver|NOPE|Volume"
   setQuantityValuesByPath(parameterPath, 100, sim, FALSE)
   expect_false(is.null(sim))
+})
+
+test_that("It throws an error when the number of quantity paths differs from the number units", {
+  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
+  quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  expect_that(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"), throws_error())
 })

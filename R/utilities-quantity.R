@@ -72,8 +72,10 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #' @param values A numeric value that should be assigned to the quantity or a vector
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
 #' length as 'quantities'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
+#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
+#' are assumed to be in base units. If not `NULL`, must have the same length as `quantities`.
 #'
-setQuantityValues <- function(quantities, values) {
+setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
   quantities <- toList(quantities)
@@ -89,9 +91,18 @@ setQuantityValues <- function(quantities, values) {
     values <- rep(values, length(quantities))
   }
 
+  if (!is.null(units)) {
+    validateIsSameLength(quantities, units)
+    validateIsString(units)
+  }
+
   for (i in seq_along(quantities)) {
     quantity <- quantities[[i]]
-    quantity$value <- values[[i]]
+    value <- values[[i]]
+    if (!is.null(units)) {
+      value <- toBaseUnit(quantityOrDimension = quantity, values = value, unit = units[[i]])
+    }
+    quantity$value <- value
   }
 }
 
@@ -104,7 +115,8 @@ setQuantityValues <- function(quantities, values) {
 #' @param simulation Simulation uses to retrieve quantity instances from given paths.
 #' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
 #' an error is thrown. If `FALSE`, a warning is shown to the user
-
+#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
+#' are assumed to be in base units. If not `NULL`, must have the same length as `quantityPaths`.
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -113,19 +125,31 @@ setQuantityValues <- function(quantities, values) {
 #'
 #' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
 #' @export
-setQuantityValuesByPath <- function(quantityPaths, values, simulation, stopIfNotFound = TRUE) {
+setQuantityValuesByPath <- function(quantityPaths, values, simulation, stopIfNotFound = TRUE, units = NULL) {
   validateIsString(quantityPaths)
   validateIsNumeric(values)
   validateIsSameLength(quantityPaths, values)
   validateIsOfType(simulation, Simulation)
 
+  if (!is.null(units)) {
+    validateIsSameLength(quantityPaths, units)
+    validateIsString(units)
+  }
+
   task <- getContainerTask()
   for (i in seq_along(quantityPaths)) {
+    path <- enc2utf8(quantityPaths[[i]])
+    value <- values[[i]]
+    if (!is.null(units)) {
+      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path)
+      value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
+    }
+
     rClr::clrCall(
       task, "SetValueByPath",
       simulation$ref,
-      enc2utf8(quantityPaths[[i]]),
-      values[[i]],
+      path,
+      value,
       stopIfNotFound
     )
   }

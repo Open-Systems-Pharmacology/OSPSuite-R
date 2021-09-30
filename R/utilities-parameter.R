@@ -88,6 +88,7 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' @param values A numeric value that should be assigned to the parameter or a vector
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
 #' length as 'parameters'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
+#' @inheritParams setQuantityValues
 #'
 #' @examples
 #'
@@ -96,11 +97,11 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' param <- getParameter("Organism|Liver|Volume", sim)
 #' setParameterValues(param, 1)
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
-#' setParameterValues(params, c(2, 3))
+#' setParameterValues(params, c(2, 3), units = c("ml", "l"))
 #' @export
-setParameterValues <- function(parameters, values) {
+setParameterValues <- function(parameters, values, units = NULL) {
   validateIsOfType(parameters, Parameter)
-  setQuantityValues(parameters, values)
+  setQuantityValues(parameters, values, units)
 }
 
 
@@ -113,6 +114,7 @@ setParameterValues <- function(parameters, values) {
 #' @param simulation Simulation uses to retrieve parameter instances from given paths.
 #' @param stopIfNotFound Boolean. If `TRUE` (default) and no parameter exists for the given path,
 #' an error is thrown. If `FALSE`, a warning is shown to the user
+#' @inheritParams setQuantityValuesByPath
 #'
 #' @examples
 #'
@@ -122,12 +124,13 @@ setParameterValues <- function(parameters, values) {
 #'
 #' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 #' @export
-setParameterValuesByPath <- function(parameterPaths, values, simulation, stopIfNotFound = TRUE) {
+setParameterValuesByPath <- function(parameterPaths, values, simulation, stopIfNotFound = TRUE, units) {
   setQuantityValuesByPath(
     quantityPaths = parameterPaths,
     values = values,
     simulation = simulation,
-    stopIfNotFound = stopIfNotFound
+    stopIfNotFound = stopIfNotFound,
+    units = units
   )
 }
 
