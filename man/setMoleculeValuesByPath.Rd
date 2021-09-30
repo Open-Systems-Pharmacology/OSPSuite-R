@@ -34,7 +34,7 @@ Set molecule start values in the simulation by path
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-setMoleculeValuesByPath("Organism|VenousBlood|Plasma|CYP3A4", 1, sim)
+setMoleculeValuesByPath("Organism|Liver|A", 1, sim)
 
-setMoleculeValuesByPath(c("Organism|VenousBlood|Plasma|CYP3A4", "Organism|ArterialBlood|Plasma|CYP3A4"), c(2, 3), sim, units = c("Âµmol", "mmol"))
+setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("Âµmol", "mmol"))
 }
