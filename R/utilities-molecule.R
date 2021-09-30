@@ -106,7 +106,7 @@ setMoleculeInitialValues <- function(molecules, values, units = NULL) {
 #'
 #' setMoleculeValuesByPath(c("Organism|VenousBlood|Plasma|CYP3A4", "Organism|ArterialBlood|Plasma|CYP3A4"), c(2, 3), sim, units = c("µmol", "mmol"))
 #' @export
-setMoleculeValuesByPath <- function(moleculePaths, values, simulation, stopIfNotFound = TRUE, units) {
+setMoleculeValuesByPath <- function(moleculePaths, values, simulation, stopIfNotFound = TRUE, units = NULL) {
   setQuantityValuesByPath(
     quantityPaths = moleculePaths,
     values = values,
