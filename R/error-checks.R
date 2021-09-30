@@ -41,14 +41,20 @@ isOfType <- function(object, type, nullAllowed = FALSE) {
 #' @param nullAllowed Boolean flag if `NULL` is accepted for the `object`. If `TRUE`,
 #' `NULL` is always valid, otherwise the error is thrown. Default is `FALSE`
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
+  if (type == "integer") {
+    return(validateIsInteger(object, nullAllowed = nullAllowed))
+  }
+
   if (isOfType(object, type, nullAllowed)) {
     return()
   }
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))
   objectTypes <- typeNamesFrom(type)
+
+  callStack <- as.character(sys.call(-1)[[1]])
   # Object name is one frame further for functions such as ValidateIsNumeric
-  if (grepl(pattern = "validateIs", x = as.character(sys.call(-1)[[1]]))) {
+  if ((length(callStack) > 0) && grepl(pattern = "validateIs", x = callStack)) {
     objectName <- deparse(substitute(object, sys.frame(-1)))
   }
 
