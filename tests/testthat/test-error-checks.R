@@ -41,3 +41,7 @@ test_that("It does not throw an error when a number is indeed an integer", {
 test_that("It does throw an error when a number is not an integer", {
   expect_that(validateIsOfType(object = 2.5, type = "integer"), throws_error())
 })
+
+test_that("It does not throw an error when a validating that a string in an integer", {
+  expect_error(validateIsInteger("s"), messages$errorWrongType(objectName = "\"s\"", expectedType = "integer", type = "character" ))
+})

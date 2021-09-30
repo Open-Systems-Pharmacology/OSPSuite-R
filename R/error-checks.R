@@ -111,7 +111,8 @@ validateIsInteger <- function(object, nullAllowed = FALSE) {
     return()
   }
 
-  if (all(floor(object) == object, na.rm = TRUE)) {
+  # Making sure we check for numeric values before calling floor
+  if (inherits(object, "numeric") && all(floor(object) == object, na.rm = TRUE)) {
     return()
   }
 
