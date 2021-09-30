@@ -89,6 +89,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -122,6 +125,7 @@
 <a href="#overview" class="anchor"></a>Overview</h1>
 <p>The <strong>ospsuite-R</strong> package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.</p>
 <ul>
+<li><a href="#documentation">Documentation</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#known-issues">Known issues</a></li>
@@ -129,6 +133,11 @@
 <li><a href="#contribution">Contribution</a></li>
 <li><a href="#licence">Licence</a></li>
 </ul>
+</div>
+<div id="documentation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h1>
+<p>Please refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/">online documentation</a> for more details on the package</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
@@ -194,7 +203,7 @@ install.packages(pathToOSPSuite.zip, repos = NULL)</a></code></pre>
 <div id="load-a-simulation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#load-a-simulation" class="anchor"></a>Load a simulation</h1>
-<p>dataPath &lt;- file.path(path.package(“ospsuite”, quiet = FALSE), “extdata”, fsep = .Platform<span class="math inline">$file.sep) simFilePath &lt;- file.path(dataPath, "Aciclovir.pkml", fsep = .Platform$</span>file.sep) sim &lt;- loadSimulation(simFilePath)</p>
+<p>simFilePath &lt;- system.file(“extdata”, “Aciclovir.pkml”, package = “ospsuite”) sim &lt;- loadSimulation(simFilePath)</p>
 </div>
 <div id="get-the-parameter-dose" class="section level1">
 <h1 class="hasAnchor">
@@ -284,6 +293,8 @@ To open a specific vignette, call
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael Sevestre <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Pavel Balazki <br><small class="roles"> Author </small>  </li>
+<li>Juri Solodenko <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -293,7 +304,7 @@ To open a specific vignette, call
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

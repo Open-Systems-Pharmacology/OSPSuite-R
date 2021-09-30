@@ -82,8 +82,7 @@ In general, every workflow starts with loading a simulation that has been export
 library(ospsuite)
 
 # Load a simulation
-dataPath <- file.path(path.package("ospsuite", quiet = FALSE), "extdata", fsep = .Platform$file.sep)
-simFilePath <- file.path(dataPath, "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Get the parameter "Dose"

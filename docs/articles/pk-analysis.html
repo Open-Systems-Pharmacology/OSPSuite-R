@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="pk-analysis_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="pk-analysis_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating PK parameters of simulation outputs</h1>
@@ -125,6 +128,7 @@
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
+
 <span class="co"># Load  the simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
@@ -139,6 +143,7 @@
 <span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
+
 <span class="co"># Get all calculated PK parameters for the output path</span>
 <span class="va">allPkParams</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">allPKParametersFor</span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">allPkParams</span><span class="op">)</span>
@@ -211,6 +216,7 @@
 <span class="co">#&gt;   Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Vd</span>
 <span class="co">#&gt;   Dimension: Volume per body weight</span>
 <span class="co">#&gt;   Unit: l/kg</span>
+
 <span class="co"># Get C_max parameter</span>
 <span class="va">c_max</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">pKParameterFor</span><span class="op">(</span>quantityPath <span class="op">=</span> <span class="va">outputPath</span>, pkParameter <span class="op">=</span> <span class="st">"C_max"</span><span class="op">)</span></code></pre></div>
 <p>The function <code>calculatePKAnalyses</code> returns an object of the class <code>SimulationPKAnalyses</code>, which allows to retrieve either a certain PK parameter for an output path, or all calculated PK parameters for an output path.</p>
@@ -223,6 +229,7 @@
 <span class="co">#&gt;   Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max</span>
 <span class="co">#&gt;   Dimension: Concentration (molar)</span>
 <span class="co">#&gt;   Unit: µmol/l</span>
+
 <span class="va">c_max</span><span class="op">$</span><span class="va">name</span>
 <span class="co">#&gt; [1] "C_max"</span>
 <span class="va">c_max</span><span class="op">$</span><span class="va">quantityPath</span>
@@ -263,7 +270,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

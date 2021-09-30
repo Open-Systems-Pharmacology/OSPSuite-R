@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="load-get_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="load-get_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Loading a simulation and accessing entities</h1>
@@ -128,6 +131,7 @@
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
+
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></code></pre></div>
@@ -143,12 +147,14 @@
 <span class="co">#&gt; Container: </span>
 <span class="co">#&gt;   Container type: Organ</span>
 <span class="co">#&gt;   Path: Organism|Liver</span>
+
 <span class="co">#Get the molecule Aciclovir located in kindey intracellular space</span>
 <span class="va">moleculeInKid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getMolecule.html">getMolecule</a></span><span class="op">(</span><span class="st">"Organism|Kidney|Intracellular|Aciclovir"</span>, <span class="va">sim</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">moleculeInKid</span><span class="op">)</span>
 <span class="co">#&gt; Molecule: </span>
 <span class="co">#&gt;   Path: Organism|Kidney|Intracellular|Aciclovir</span>
 <span class="co">#&gt;   Initial Value: 0.00 [µmol]</span>
+
 <span class="co">#Get the parameter volume of the liver interstitial space.</span>
 <span class="co"># Note that the path used is relative to the liver container</span>
 <span class="va">livParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Interstitial|Volume"</span>, <span class="va">livContainer</span><span class="op">)</span>
@@ -185,18 +191,19 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">molecules</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; Molecule: </span>
-<span class="co">#&gt;   Path: Organism|Liver|Periportal|Intracellular|Aciclovir</span>
+<span class="co">#&gt;   Path: Organism|VenousBlood|Plasma|Aciclovir</span>
 <span class="co">#&gt;   Initial Value: 0.00 [µmol]</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; Molecule: </span>
-<span class="co">#&gt;   Path: Organism|VenousBlood|Plasma|Aciclovir</span>
+<span class="co">#&gt;   Path: Organism|Liver|Periportal|Intracellular|Aciclovir</span>
 <span class="co">#&gt;   Initial Value: 0.00 [µmol]</span></code></pre></div>
 <p>The entities possess various properties that can be accessed through their objects. The most important properties for a container are:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Path of the container</span>
 <span class="va">livContainer</span><span class="op">$</span><span class="va">path</span>
 <span class="co">#&gt; [1] "Organism|Liver"</span>
+
 <span class="co"># Parent container</span>
 <span class="va">livContainer</span><span class="op">$</span><span class="va">parentContainer</span>
 <span class="co">#&gt; Container: </span>
@@ -207,12 +214,15 @@
 <code class="sourceCode R"><span class="co">#Initial value of the molecule</span>
 <span class="va">moleculeInKid</span><span class="op">$</span><span class="va">value</span>
 <span class="co">#&gt; [1] 0</span>
+
 <span class="co"># Dimension of the molecule. See section "Unit conversion" for more information.</span>
 <span class="va">moleculeInKid</span><span class="op">$</span><span class="va">dimension</span>
 <span class="co">#&gt; [1] "Amount"</span>
+
 <span class="co"># Is the initial value defined by a formula?</span>
 <span class="va">moleculeInKid</span><span class="op">$</span><span class="va">isFormula</span>
 <span class="co">#&gt; [1] FALSE</span>
+
 <span class="co"># Type of the formula. CONSTANT if the value is defined by a constant.</span>
 <span class="va">moleculeInKid</span><span class="op">$</span><span class="va">formula</span>
 <span class="co">#&gt; Formula: </span>
@@ -222,15 +232,19 @@
 <code class="sourceCode R"><span class="co">#Initial value of the parameter</span>
 <span class="va">livParam</span><span class="op">$</span><span class="va">value</span>
 <span class="co">#&gt; [1] 0.3533005</span>
+
 <span class="co"># Dimension of the parameter. See section "Unit conversion" for more information.</span>
 <span class="va">livParam</span><span class="op">$</span><span class="va">dimension</span>
 <span class="co">#&gt; [1] "Volume"</span>
+
 <span class="co"># Base unit of the parameter. See section "Unit conversion" for more information.</span>
 <span class="va">livParam</span><span class="op">$</span><span class="va">unit</span>
 <span class="co">#&gt; [1] "l"</span>
+
 <span class="co"># Is the initial value defined by a formula?</span>
 <span class="va">livParam</span><span class="op">$</span><span class="va">isFormula</span>
 <span class="co">#&gt; [1] TRUE</span>
+
 <span class="co"># Type of the formula. CONSTANT if the value is defined by a constant.</span>
 <span class="va">livParam</span><span class="op">$</span><span class="va">formula</span>
 <span class="co">#&gt; Formula: </span>
@@ -271,7 +285,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="run-simulation_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="run-simulation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Running a simulation</h1>
@@ -128,6 +131,7 @@
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
+
 <span class="co"># Load the simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
@@ -161,6 +165,7 @@
 <span class="va">resultsPath</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
+
 <span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">simulationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span><span class="op">)</span>
 
 <span class="va">resultsTime</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>
@@ -205,11 +210,11 @@
 <code class="sourceCode R"><span class="co">#Get the id of the second simulation</span>
 <span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
-<span class="co">#&gt; [1] "hE6gklFAzkigsbYx-uVJdw"</span>
+<span class="co">#&gt; [1] "lyl5oDy9iEG9IAdr4-qq-A"</span>
 <span class="co">#get the corresponding result</span>
 <span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
-<span class="co">#&gt; [1] "hE6gklFAzkigsbYx-uVJdw"</span></code></pre></div>
+<span class="co">#&gt; [1] "lyl5oDy9iEG9IAdr4-qq-A"</span></code></pre></div>
 </div>
 <div id="adding-new-outputs" class="section level2">
 <h2 class="hasAnchor">
@@ -285,6 +290,7 @@
 <span class="co">#&gt;    at OSPSuite.R.Services.SimulationRunner.&lt;&gt;c__DisplayClass13_0.&lt;runAsync&gt;b__0()</span>
 <span class="co">#&gt;    at System.Threading.Tasks.Task`1.InnerInvoke()</span>
 <span class="co">#&gt;    at System.Threading.Tasks.Task.Execute()</span>
+
 <span class="co"># Add an interval</span>
 <span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">20</span>, resolution <span class="op">=</span> <span class="fl">60</span>, intervalName <span class="op">=</span> <span class="st">"highRes"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
@@ -294,6 +300,7 @@
 <span class="co">#&gt;   Start time: 0.00 [min]</span>
 <span class="co">#&gt;   End time: 20.00 [min]</span>
 <span class="co">#&gt;   Resolution: 60.00 [pts/min]</span>
+
 <span class="co"># Add a second interval</span>
 <span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">30</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span>, intervalName <span class="op">=</span> <span class="st">"lowRes"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
@@ -308,6 +315,7 @@
 <span class="co">#&gt;   Start time: 30.00 [min]</span>
 <span class="co">#&gt;   End time: 2000.00 [min]</span>
 <span class="co">#&gt;   Resolution: 4.00 [pts/min]</span>
+
 <span class="co"># Replace the existing interval(s) with a new one</span>
 <span class="fu"><a href="../reference/setOutputInterval.html">setOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
@@ -331,7 +339,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

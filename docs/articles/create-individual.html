@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="create-individual_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="create-individual_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating individuals</h1>
@@ -131,6 +134,7 @@
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
+
 <span class="co">#If no unit is specified, the default units are used. For "weight" it is "kg", for "age" it is "year(s)".</span>
 <span class="va">individualCharacteristics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividualCharacteristics.html">createIndividualCharacteristics</a></span><span class="op">(</span>species <span class="op">=</span> <span class="va">Species</span><span class="op">$</span><span class="va">Human</span>,
                                                             population <span class="op">=</span> <span class="va">HumanPopulation</span><span class="op">$</span><span class="va">Japanese_Population</span>,
@@ -148,6 +152,7 @@
 <span class="co">#&gt;   Gestational age: 40.00 [week(s)]</span>
 <span class="co">#&gt;   Weight: 75.00 [kg]</span>
 <span class="co">#&gt;   Height: 1.75 [m]</span>
+
 <span class="va">individual</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividual.html">createIndividual</a></span><span class="op">(</span>individualCharacteristics <span class="op">=</span> <span class="va">individualCharacteristics</span><span class="op">)</span></code></pre></div>
 <p>The output contains two lists of parameters - <code>distributedParameters</code> and <code>derivedParameters</code>. The first list contains parameters that differ between the individuals of the selected species, while the second list mostly consists of values of parameters defined by formulas in the simulation. When applying the generated individual parameter set to a simulation in R, only parameters from the <code>distributedParameters</code> should be overwritten, otherwise formula dependencies may be destroyed. Generated parameter values can be conveniently applied using the <code>setParameterValuesByPath</code> method:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -156,7 +161,7 @@
 <span class="co"># Load simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
-<span class="co">#&gt; [1] "C:/Users/IndrajeetPatil/AppData/Local/Temp/Rtmpk1kgnv/temp_libpath138811786079/ospsuite/extdata/Aciclovir.pkml"</span>
+<span class="co">#&gt; [1] "C:/Users/Michael/AppData/Local/Temp/RtmpmIaKWJ/temp_libpathd10861581969/ospsuite/extdata/Aciclovir.pkml"</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Apply individual parameters</span>
@@ -220,12 +225,14 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $UGT2B7</span>
 <span class="co">#&gt; [1] "UGT2B7"</span>
+
 <span class="co">#Create the ontogeny for the protein "MyProtein" based on ontology of CYP3A4</span>
 <span class="va">myProteinOntogeny</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/MoleculeOntogeny.html">MoleculeOntogeny</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>molecule <span class="op">=</span> <span class="st">"MyProtein"</span>, ontogeny <span class="op">=</span> <span class="va">StandardOntogeny</span><span class="op">$</span><span class="va">CYP3A4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">myProteinOntogeny</span><span class="op">)</span>
 <span class="co">#&gt; MoleculeOntogeny: </span>
 <span class="co">#&gt;   Molecule: MyProtein</span>
 <span class="co">#&gt;   Ontogeny: CYP3A4</span>
+
 <span class="co"># Add this ontogeny to the individual characteristics used to create the individual parameters set</span>
 <span class="va">individualCharacterstics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividualCharacteristics.html">createIndividualCharacteristics</a></span><span class="op">(</span>species <span class="op">=</span> <span class="va">Species</span><span class="op">$</span><span class="va">Human</span>,
                                                             population <span class="op">=</span> <span class="va">HumanPopulation</span><span class="op">$</span><span class="va">Japanese_Population</span>,
@@ -245,6 +252,7 @@
 <span class="co">#&gt;   Weight: 75.00 [kg]</span>
 <span class="co">#&gt;   Height: 1.75 [m]</span>
 <span class="co">#&gt;   Molecule MyProtein with ontogeny CYP3A4:</span>
+
 <span class="va">individual</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividual.html">createIndividual</a></span><span class="op">(</span>individualCharacteristics <span class="op">=</span> <span class="va">individualCharacterstics</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
@@ -260,7 +268,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

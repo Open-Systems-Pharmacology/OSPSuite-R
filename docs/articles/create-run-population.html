@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="create-run-population_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="create-run-population_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Population simulations</h1>
@@ -172,6 +175,7 @@
 <span class="co">#&gt;   Weight: [30.00 kg..98.00 kg]</span>
 <span class="co">#&gt;   Height: ]-Inf..+Inf[</span>
 <span class="co">#&gt;   BMI: ]-Inf..+Inf[</span>
+
 <span class="co"># Create population from population characteristics</span>
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createPopulation.html">createPopulation</a></span><span class="op">(</span>populationCharacteristics <span class="op">=</span> <span class="va">populationCharacteristics</span><span class="op">)</span>
 <span class="va">myPopulation</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">population</span>
@@ -205,9 +209,10 @@
 <span class="va">simRunOptions</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimulationRunOptions.html">SimulationRunOptions</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">simRunOptions</span><span class="op">)</span>
 <span class="co">#&gt; SimulationRunOptions: </span>
-<span class="co">#&gt;   numberOfCores: 15</span>
+<span class="co">#&gt;   numberOfCores: 7</span>
 <span class="co">#&gt;   checkForNegativeValues: TRUE</span>
 <span class="co">#&gt;   showProgress: FALSE</span>
+
 <span class="co"># Change the maximal number of cores to use and show a progress bar during simulation</span>
 <span class="va">simRunOptions</span><span class="op">$</span><span class="va">numberOfCores</span> <span class="op">&lt;-</span> <span class="fl">3</span>
 <span class="va">simRunOptions</span><span class="op">$</span><span class="va">showProgress</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
@@ -240,6 +245,7 @@
 <span class="va">resultsPath</span> <span class="op">&lt;-</span> <span class="va">populationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
+
 <span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">populationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span><span class="op">)</span>
 
 <span class="va">resultsTime</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>
@@ -253,6 +259,7 @@
 <span class="va">resultsPath</span> <span class="op">&lt;-</span> <span class="va">populationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
+
 <span class="co">#Get only the results for individuals with IDs 1 and 2</span>
 <span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">populationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span>, individualIds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
@@ -276,7 +283,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

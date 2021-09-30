@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="sensitivity-analysis_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="sensitivity-analysis_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sensitivity analysis</h1>
@@ -130,6 +133,7 @@
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
+
 <span class="co"># Load simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
@@ -138,6 +142,7 @@
 <span class="va">potentialSAParameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/potentialVariableParameterPathsFor.html">potentialVariableParameterPathsFor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">potentialSAParameters</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|Volume" "Organism|Q"      "R1|k1"</span>
+
 <span class="co"># Create a default `SensitivityAnalysis` for the simulation</span>
 <span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
@@ -145,6 +150,7 @@
 <span class="co">#&gt;   Number of steps: 2</span>
 <span class="co">#&gt;   Variation range: 0.1</span>
 <span class="co">#&gt;   Number of parameters to vary: Will be estimated at run time</span>
+
 <span class="co"># Create a `SensitivityAnalysis` with specified parameters</span>
 <span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>,
                                                                       <span class="st">"Organism|Volume"</span><span class="op">)</span><span class="op">)</span>
@@ -153,6 +159,7 @@
 <span class="co">#&gt;   Number of steps: 2</span>
 <span class="co">#&gt;   Variation range: 0.1</span>
 <span class="co">#&gt;   Number of parameters to vary: 2</span>
+
 <span class="co"># Show which parameters will be varied</span>
 <span class="va">sa</span><span class="op">$</span><span class="va">parameterPaths</span>
 <span class="co">#&gt; [1] "Organism|Q"      "Organism|Volume"</span></code></pre></div>
@@ -197,6 +204,7 @@
 <span class="co"># Default value of the threshold</span>
 <span class="fu"><a href="../reference/getOSPSuiteSetting.html">getOSPSuiteSetting</a></span><span class="op">(</span><span class="st">"sensitivityAnalysisConfig"</span><span class="op">)</span><span class="op">$</span><span class="va">totalSensitivityThreshold</span>
 <span class="co">#&gt; [1] 0.9</span>
+
 <span class="co"># Create a `SensitivityAnalysis` with all constant parameters and run it</span>
 <span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Aciclovir|Lipophilicity"</span>,
                                                                       <span class="st">"Aciclovir|Fraction unbound (plasma)"</span>,
@@ -206,6 +214,7 @@
 <span class="co">#&gt; SensitivityAnalysisResults: </span>
 <span class="co">#&gt;   Number of calculated sensitivities: 11</span>
 <span class="co">#&gt;   Available PK parameters: C_maxt_maxC_tEndAUC_tEndAUC_infMRTThalfFractionAucLastToInfCLVssVd</span>
+
 <span class="co"># Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8</span>
 <span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span><span class="op">$</span><span class="va">allOutputs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">path</span>
 <span class="va">sensitivities</span> <span class="op">&lt;-</span> <span class="va">saResult</span><span class="op">$</span><span class="fu">allPKParameterSensitivitiesFor</span><span class="op">(</span>pkParameterName <span class="op">=</span> <span class="st">"AUC_inf"</span>, outputPath <span class="op">=</span> <span class="va">outputPath</span>, totalSensitivityThreshold <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>
@@ -252,7 +261,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">

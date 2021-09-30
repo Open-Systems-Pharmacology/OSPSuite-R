@@ -88,6 +88,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="table-parameters_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="table-parameters_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Table parameters</h1>
@@ -125,6 +128,7 @@
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
+
 <span class="co"># Load a simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
@@ -162,6 +166,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: FALSE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co"># Get all value points</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="va">allPoints</span>
 <span class="co">#&gt; [[1]]</span>
@@ -175,6 +180,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[4]]</span>
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
+
 <span class="co"># Get all x-values</span>
 <span class="va">xValues</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="va">allPoints</span>, <span class="kw">function</span><span class="op">(</span><span class="va">point</span><span class="op">)</span><span class="op">{</span><span class="va">point</span><span class="op">$</span><span class="va">x</span><span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">xValues</span><span class="op">)</span>
@@ -189,6 +195,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[4]]</span>
 <span class="co">#&gt; [1] 180</span>
+
 <span class="co"># Get all y-values</span>
 <span class="va">yValues</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="va">allPoints</span>, <span class="kw">function</span><span class="op">(</span><span class="va">point</span><span class="op">)</span><span class="op">{</span><span class="va">point</span><span class="op">$</span><span class="va">y</span><span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">yValues</span><span class="op">)</span>
@@ -212,6 +219,7 @@
 <span class="co"># Value at x = 60 is stored in the table</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">valueAt</span><span class="op">(</span><span class="fl">60</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1</span>
+
 <span class="co"># Value at x = 90 is not in the table</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">valueAt</span><span class="op">(</span><span class="fl">90</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1.5</span></code></pre></div>
@@ -236,6 +244,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: FALSE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co"># Set value to a constant. tableParam$isFixedValue is now TRUE</span>
 <span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">tableParam</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="va">tableParam</span>
@@ -269,6 +278,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: TRUE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co"># Add new points</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">addPoints</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span>
 <span class="va">tableParam</span>
@@ -287,6 +297,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: TRUE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co">#Try to add points with existing x-values</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">addPoints</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; Error in rClr::clrCall(self$ref, "AddPoint", xValues[i], yValues[i]): Type:    OSPSuite.Core.Domain.ValuePointAlreadyExistsForPointException</span>
@@ -313,6 +324,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: TRUE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co"># Remove the point (0, 0)</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">removePoint</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>
 <span class="va">tableParam</span>
@@ -330,6 +342,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: TRUE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co"># Try to remove the point (1, 1). Note that the value for x = 1 is x = 5 in the original table,</span>
 <span class="co"># and no point is removed.</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">removePoint</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>
@@ -348,6 +361,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: TRUE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="co"># Try to remove a non-existing point (0, 1). No point is removed.</span>
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">removePoint</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="va">tableParam</span>
@@ -382,6 +396,7 @@
 <span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span>
 <span class="co">#&gt;   Value overrides formula: TRUE</span>
 <span class="co">#&gt;   isStateVariable: FALSE</span>
+
 <span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">setPoints</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
 <span class="va">tableParam</span>
 <span class="co">#&gt; Parameter: </span>
@@ -410,7 +425,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
