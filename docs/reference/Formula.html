@@ -46,6 +46,8 @@ A table formula of the model (Typically related to a Quantity such as a paramete
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -57,9 +59,15 @@ A table formula of the model (Typically related to a Quantity such as a paramete
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,17 +81,14 @@ A table formula of the model (Typically related to a Quantity such as a paramete
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/ospsuite.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -95,11 +100,6 @@ A table formula of the model (Typically related to a Quantity such as a paramete
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Introduction</li>
-    <li>
-      <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
-    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Primary functions</li>
     <li>
@@ -198,7 +198,7 @@ A table formula of the model (Typically related to a Quantity such as a paramete
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-print'><code>Formula$print()</code></a></p></li>
@@ -212,19 +212,32 @@ A table formula of the model (Typically related to a Quantity such as a paramete
 </details>
 
 <hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Print the object to the console</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Formula</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the object to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Formula</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Rest arguments.</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-print-'><a class='anchor' aria-hidden='true' href='#list-print-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the object to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Formula</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>Rest arguments.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-printFormula"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>printFormula()</code></h3>
-<p>Print the formula to the console without the name of the class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Formula</span><span class='op'>$</span><span class='fu'>printFormula</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-printFormula"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>printFormula()</code></h3>
+<p>Print the formula to the console without the name of the class</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Formula</span><span class='op'>$</span><span class='fu'>printFormula</span><span class='op'>(</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h3 class='hasAnchor' id='list-printformula-'><a class='anchor' aria-hidden='true' href='#list-printformula-'></a>Method <code>printFormula()</code></h3>
+<p>Print the formula to the console without the name of the class</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Formula</span><span class='op'>$</span><span class='fu'>printFormula</span><span class='op'>(</span><span class='op'>)</span></code></pre><p></div></p>
 
 
 
@@ -244,7 +257,7 @@ A table formula of the model (Typically related to a Quantity such as a paramete
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-addPoints'><code>TableFormula$addPoints()</code></a></p></li>
@@ -263,11 +276,22 @@ A table formula of the model (Typically related to a Quantity such as a paramete
 </details>
 
 <hr>
-<a id="method-addPoints"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>addPoints()</code></h3>
-<p>Adds one or more points to a table</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>addPoints</span><span class='op'>(</span><span class='va'>xValues</span>, <span class='va'>yValues</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-addPoints"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>addPoints()</code></h3>
+<p>Adds one or more points to a table</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>addPoints</span><span class='op'>(</span><span class='va'>xValues</span>, <span class='va'>yValues</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>xValues</code></dt><dd><p>x values (single value or array) in base unit for XDimension</p></dd>
+
+<dt><code>yValues</code></dt><dd><p>y values (single value or array) in base unit for Dimension</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-addpoints-'><a class='anchor' aria-hidden='true' href='#list-addpoints-'></a>Method <code>addPoints()</code></h3>
+<p>Adds one or more points to a table</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>addPoints</span><span class='op'>(</span><span class='va'>xValues</span>, <span class='va'>yValues</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>xValues</code></dt><dd><p>x values (single value or array) in base unit for XDimension</p></dd>
 
@@ -275,11 +299,22 @@ A table formula of the model (Typically related to a Quantity such as a paramete
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-removePoint"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>removePoint()</code></h3>
-<p>Remove the point having the same x and y from the table</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>removePoint</span><span class='op'>(</span><span class='va'>xValue</span>, <span class='va'>yValue</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-removePoint"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>removePoint()</code></h3>
+<p>Remove the point having the same x and y from the table</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>removePoint</span><span class='op'>(</span><span class='va'>xValue</span>, <span class='va'>yValue</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>xValue</code></dt><dd><p>xValue value in base unit for XDimension</p></dd>
+
+<dt><code>yValue</code></dt><dd><p>yValue value in base unit for Dimension</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-removepoint-'><a class='anchor' aria-hidden='true' href='#list-removepoint-'></a>Method <code>removePoint()</code></h3>
+<p>Remove the point having the same x and y from the table</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>removePoint</span><span class='op'>(</span><span class='va'>xValue</span>, <span class='va'>yValue</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>xValue</code></dt><dd><p>xValue value in base unit for XDimension</p></dd>
 
@@ -287,17 +322,33 @@ A table formula of the model (Typically related to a Quantity such as a paramete
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-clearPoints"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clearPoints()</code></h3>
-<p>Remove all points from the table</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>clearPoints</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-clearPoints"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clearPoints()</code></h3>
+<p>Remove all points from the table</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>clearPoints</span><span class='op'>(</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h3 class='hasAnchor' id='list-clearpoints-'><a class='anchor' aria-hidden='true' href='#list-clearpoints-'></a>Method <code>clearPoints()</code></h3>
+<p>Remove all points from the table</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>clearPoints</span><span class='op'>(</span><span class='op'>)</span></code></pre><p></div></p>
 
 <p><hr>
-<a id="method-setPoints"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>setPoints()</code></h3>
+<a id="method-setPoints"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>setPoints()</code></h3>
 <p>Replace all points defined in the table with the new values given.
-This is a convenience method for calling <code>clearPoints</code> and <code>addPoints</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>setPoints</span><span class='op'>(</span><span class='va'>xValues</span>, <span class='va'>yValues</span><span class='op'>)</span></pre><p></div></p>
+This is a convenience method for calling <code>clearPoints</code> and <code>addPoints</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>setPoints</span><span class='op'>(</span><span class='va'>xValues</span>, <span class='va'>yValues</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>xValues</code></dt><dd><p>x values (single value or array) in base unit for XDimension</p></dd>
+
+<dt><code>yValues</code></dt><dd><p>y values (single value or array) in base unit for Dimension</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-setpoints-'><a class='anchor' aria-hidden='true' href='#list-setpoints-'></a>Method <code>setPoints()</code></h3>
+<p>Replace all points defined in the table with the new values given.
+This is a convenience method for calling <code>clearPoints</code> and <code>addPoints</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>setPoints</span><span class='op'>(</span><span class='va'>xValues</span>, <span class='va'>yValues</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>xValues</code></dt><dd><p>x values (single value or array) in base unit for XDimension</p></dd>
 
@@ -305,30 +356,53 @@ This is a convenience method for calling <code>clearPoints</code> and <code>addP
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Print the object to the console</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the object to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Rest arguments.</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-print-'><a class='anchor' aria-hidden='true' href='#list-print-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the object to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>Rest arguments.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-valueAt"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>valueAt()</code></h3>
+<a id="method-valueAt"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>valueAt()</code></h3>
 <p>Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
-If the table contains no point, 0 is returned</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>valueAt</span><span class='op'>(</span><span class='va'>xValue</span><span class='op'>)</span></pre><p></div></p>
+If the table contains no point, 0 is returned</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>valueAt</span><span class='op'>(</span><span class='va'>xValue</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>xValue</code></dt><dd><p>x value for in base unit for which the yValue should be returned</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-valueat-'><a class='anchor' aria-hidden='true' href='#list-valueat-'></a>Method <code>valueAt()</code></h3>
+<p>Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
+If the table contains no point, 0 is returned</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>valueAt</span><span class='op'>(</span><span class='va'>xValue</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>xValue</code></dt><dd><p>x value for in base unit for which the yValue should be returned</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-printFormula"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>printFormula()</code></h3>
-<p>Print the formula to the console</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>printFormula</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-printFormula"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>printFormula()</code></h3>
+<p>Print the formula to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>printFormula</span><span class='op'>(</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h3 class='hasAnchor' id='list-printformula-'><a class='anchor' aria-hidden='true' href='#list-printformula-'></a>Method <code>printFormula()</code></h3>
+<p>Print the formula to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>TableFormula</span><span class='op'>$</span><span class='fu'>printFormula</span><span class='op'>(</span><span class='op'>)</span></code></pre><p></div></p>
 
 
 
@@ -344,11 +418,11 @@ If the table contains no point, 0 is returned</p><h4 class='hasAnchor' id='argum
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -356,6 +430,8 @@ If the table contains no point, 0 is returned</p><h4 class='hasAnchor' id='argum
 
   
 
+
+  
 
   </body>
 </html>

@@ -48,6 +48,8 @@ Alternatively if multiple simulations are provided, they will be run concurrentl
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -59,9 +61,15 @@ Alternatively if multiple simulations are provided, they will be run concurrentl
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -75,17 +83,14 @@ Alternatively if multiple simulations are provided, they will be run concurrentl
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/ospsuite.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -97,11 +102,6 @@ Alternatively if multiple simulations are provided, they will be run concurrentl
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Introduction</li>
-    <li>
-      <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
-    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Primary functions</li>
     <li>
@@ -173,13 +173,13 @@ Alternatively if multiple simulations are provided, they will be run concurrentl
 Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>runSimulations</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>runSimulations</span><span class='op'>(</span>
   <span class='va'>simulations</span>,
   population <span class='op'>=</span> <span class='cn'>NULL</span>,
   agingData <span class='op'>=</span> <span class='cn'>NULL</span>,
   simulationRunOptions <span class='op'>=</span> <span class='cn'>NULL</span>,
   silentMode <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,31 +213,31 @@ Alternatively, you can also pass the result of <code>createPopulation</code> dir
 a list of <code>SimulationResults</code> objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is <code>NULL</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>simPath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"simple.pkml"</span>, package <span class='op'>=</span> <span class='st'>"ospsuite"</span><span class='op'>)</span>
-<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span>
-
-<span class='co'># Running an individual simulation</span>
-<span class='co'># Results is an instance of `SimulationResults`</span>
-<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>runSimulations</span><span class='op'>(</span><span class='va'>sim</span><span class='op'>)</span>
-
-<span class='co'># Creating custom simulation run options</span>
-
-<span class='va'>simRunOptions</span> <span class='op'>&lt;-</span> <span class='va'><a href='SimulationRunOptions.html'>SimulationRunOptions</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>simRunOptions</span><span class='op'>$</span><span class='va'>numberOfCores</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>
-<span class='va'>simRunOptions</span><span class='op'>$</span><span class='va'>showProgress</span> <span class='op'>&lt;-</span> <span class='cn'>TRUE</span>
-
-<span class='co'># Running a population simulation</span>
-<span class='va'>popPath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pop.csv"</span>, package <span class='op'>=</span> <span class='st'>"ospsuite"</span><span class='op'>)</span>
-<span class='va'>population</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadPopulation.html'>loadPopulation</a></span><span class='op'>(</span><span class='va'>popPath</span><span class='op'>)</span>
-<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>runSimulations</span><span class='op'>(</span><span class='va'>sim</span>, <span class='va'>population</span>, simulationRunOptions <span class='op'>=</span> <span class='va'>simRunOptions</span><span class='op'>)</span>
-
-<span class='co'># Running multiple simulations in parallel</span>
-<span class='va'>sim2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span>
-<span class='va'>sim3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span>
-
-<span class='co'># Results is an array of `SimulationResults`</span>
-<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>runSimulations</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>sim</span>, <span class='va'>sim2</span>, <span class='va'>sim3</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>simPath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"simple.pkml"</span>, package <span class='op'>=</span> <span class='st'>"ospsuite"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Running an individual simulation</span></span>
+<span class='r-in'><span class='co'># Results is an instance of `SimulationResults`</span></span>
+<span class='r-in'><span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>runSimulations</span><span class='op'>(</span><span class='va'>sim</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Creating custom simulation run options</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>simRunOptions</span> <span class='op'>&lt;-</span> <span class='va'><a href='SimulationRunOptions.html'>SimulationRunOptions</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>simRunOptions</span><span class='op'>$</span><span class='va'>numberOfCores</span> <span class='op'>&lt;-</span> <span class='fl'>3</span></span>
+<span class='r-in'><span class='va'>simRunOptions</span><span class='op'>$</span><span class='va'>showProgress</span> <span class='op'>&lt;-</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Running a population simulation</span></span>
+<span class='r-in'><span class='va'>popPath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pop.csv"</span>, package <span class='op'>=</span> <span class='st'>"ospsuite"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>population</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadPopulation.html'>loadPopulation</a></span><span class='op'>(</span><span class='va'>popPath</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>runSimulations</span><span class='op'>(</span><span class='va'>sim</span>, <span class='va'>population</span>, simulationRunOptions <span class='op'>=</span> <span class='va'>simRunOptions</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Running multiple simulations in parallel</span></span>
+<span class='r-in'><span class='va'>sim2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>sim3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Results is an array of `SimulationResults`</span></span>
+<span class='r-in'><span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>runSimulations</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>sim</span>, <span class='va'>sim2</span>, <span class='va'>sim3</span><span class='op'>)</span><span class='op'>)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -249,11 +249,11 @@ a list of <code>SimulationResults</code> objects with names being the IDs of the
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -261,6 +261,8 @@ a list of <code>SimulationResults</code> objects with names being the IDs of the
 
   
 
+
+  
 
   </body>
 </html>
