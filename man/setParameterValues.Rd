@@ -4,7 +4,7 @@
 \alias{setParameterValues}
 \title{Set values of parameters}
 \usage{
-setParameterValues(parameters, values)
+setParameterValues(parameters, values, units = NULL)
 }
 \arguments{
 \item{parameters}{A single or a list of \code{Parameter}}
@@ -12,6 +12,9 @@ setParameterValues(parameters, values)
 \item{values}{A numeric value that should be assigned to the parameter or a vector
 of numeric values, if the value of more than one parameter should be changed. Must have the same
 length as 'parameters'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters}
+
+\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
+are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantities}.}
 }
 \description{
 Set values of parameters
@@ -23,7 +26,7 @@ sim <- loadSimulation(simPath)
 param <- getParameter("Organism|Liver|Volume", sim)
 setParameterValues(param, 1)
 params <- getAllParametersMatching("Organism|**|Volume", sim)
-setParameterValues(params, c(2, 3))
+setParameterValues(params, c(2, 3), units = c("ml", "l"))
 }
 \seealso{
 \code{\link[=getParameter]{getParameter()}} and \code{\link[=getAllParametersMatching]{getAllParametersMatching()}} to create objects of type Parameter

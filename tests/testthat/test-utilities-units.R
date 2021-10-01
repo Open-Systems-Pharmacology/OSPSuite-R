@@ -15,7 +15,7 @@ test_that("It can convert from a value in base unit to a target unit with differ
 })
 
 test_that("it can convert values given as integer", {
-  expect_equal(toUnit("Time", as.integer(c(60,120,180)), "h"), c(1, 2, 3))
+  expect_equal(toUnit("Time", as.integer(c(60, 120, 180)), "h"), c(1, 2, 3))
 })
 
 test_that("It can convert NULL in base unit to NULL", {
@@ -85,7 +85,7 @@ test_that("It can convert from a value in mass to a value in mol using a molweig
 })
 
 test_that("it can convert values given as integer", {
-  expect_equal(toBaseUnit("Time", as.integer(c(1,2,3)), "h"), c(60, 120, 180))
+  expect_equal(toBaseUnit("Time", as.integer(c(1, 2, 3)), "h"), c(60, 120, 180))
 })
 
 test_that("It can convert from an array of values in a unit to base unit", {

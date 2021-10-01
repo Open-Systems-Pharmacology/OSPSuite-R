@@ -72,7 +72,8 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #'
 #' @param values A numeric value that should be assigned to the molecule start value or a vector
 #' of numeric values, if the start value of more than one molecule should be changed. Must have the same
-#' length as 'molecules'
+#' length as `molecules`
+#' @inheritParams setQuantityValues
 #'
 #' @examples
 #'
@@ -81,11 +82,38 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #' molecule <- getMolecule("Organism|Liver|A", sim)
 #' setMoleculeInitialValues(molecule, 1)
 #' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
-#' setMoleculeInitialValues(molecules, c(2, 3))
+#' setMoleculeInitialValues(molecules, c(2, 3), units = c("pmol", "mmol"))
 #' @export
-setMoleculeInitialValues <- function(molecules, values) {
+setMoleculeInitialValues <- function(molecules, values, units = NULL) {
   validateIsOfType(molecules, Molecule)
-  setQuantityValues(molecules, values)
+  setQuantityValues(molecules, values, units)
+}
+
+
+#' Set molecule start values in the simulation by path
+#'
+#' @param moleculePaths A single or a list of molecule paths
+#' @param values A numeric value that should be assigned to the molecule start value or a vector
+#' of numeric values, if the start value of more than one molecule should be changed. Must have the same
+#' length as `moleculePaths`
+#' @inheritParams setQuantityValuesByPath
+#'
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' setMoleculeValuesByPath("Organism|Liver|A", 1, sim)
+#'
+#' setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("µmol", "mmol"))
+#' @export
+setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
+  setQuantityValuesByPath(
+    quantityPaths = moleculePaths,
+    values = values,
+    simulation = simulation,
+    units = units,
+    stopIfNotFound = stopIfNotFound
+  )
 }
 
 #' Set molecule scale divisors
