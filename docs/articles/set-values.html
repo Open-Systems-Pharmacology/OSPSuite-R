@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,17 +33,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/ospsuite.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -54,11 +53,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li class="dropdown-header">Introduction</li>
-    <li>
-      <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
-    </li>
-    <li class="divider">
     <li class="dropdown-header">Primary functions</li>
     <li>
       <a href="../articles/load-get.html">Loading a simulation and accessing entities</a>
@@ -100,7 +94,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/">
+  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -115,13 +109,13 @@
 
       
 
-      </header><script src="set-values_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="set-values_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Changing parameter and molecule start values</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/set-values.Rmd"><code>vignettes/set-values.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/set-values.Rmd" class="external-link"><code>vignettes/set-values.Rmd</code></a></small>
       <div class="hidden name"><code>set-values.Rmd</code></div>
 
     </div>
@@ -130,25 +124,25 @@
     
 <div id="changing-initial-values" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changing-initial-values" class="anchor"></a>Changing initial values</h2>
+<a href="#changing-initial-values" class="anchor" aria-hidden="true"></a>Changing initial values</h2>
 <p>It is possible to change the initial values of all parameters and molecules in a simulation. It is important to differentiate between the <em>constant</em> values and the values that are defined by a <em>formula</em>.</p>
 <div id="formula-types" class="section level3">
 <h3 class="hasAnchor">
-<a href="#formula-types" class="anchor"></a>Formula types</h3>
+<a href="#formula-types" class="anchor" aria-hidden="true"></a>Formula types</h3>
 <p>Every (initial) value is described either by a constant or by a formula. If the value is defined by a simple constant, the field <code>isConstant</code> of the respective parameter or molecule has the value <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
 
 <span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co">#Get the parameter "Age" of the Organism</span>
 <span class="va">ageParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Age"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">ageParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ageParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Age</span>
 <span class="co">#&gt;   Value: 25.70 [year(s)]</span>
@@ -157,11 +151,11 @@
 <span class="va">ageParam</span><span class="op">$</span><span class="va">isConstant</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>If the value is not constant, it is described by one of the formula types:</p>
-<p><strong>Distributed</strong>: Distributed parameters describe a variation around a constant value or between two numerical limits. In the simulation, the behavior equals that of constant values. See <a href="https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#working-with-constant-and-distributed-parameters">OSPS documentation</a> for more information.</p>
+<p><strong>Distributed</strong>: Distributed parameters describe a variation around a constant value or between two numerical limits. In the simulation, the behavior equals that of constant values. See <a href="https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#working-with-constant-and-distributed-parameters" class="external-link">OSPS documentation</a> for more information.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the parameter "Volume" of the Liver</span>
 <span class="va">liverVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">liverVolume</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverVolume</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Liver|Volume</span>
 <span class="co">#&gt;   Value: 2.1675 [l]</span>
@@ -173,7 +167,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the parameter "Volume" of the Liver interstital</span>
 <span class="va">liverIntVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Interstitial|Volume"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Liver|Interstitial|Volume</span>
 <span class="co">#&gt;   Value: 0.3533 [l]</span>
@@ -187,7 +181,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the parameter defined by a table.</span>
 <span class="va">tableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|TableParameter"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|TableParameter</span>
 <span class="co">#&gt;   Value: 0.00</span>
@@ -204,7 +198,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the parameter defined by a state variable.</span>
 <span class="va">stateVariableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|StateVariable_Parameter"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|StateVariable_Parameter</span>
 <span class="co">#&gt;   Value: 0.00</span>
@@ -225,13 +219,13 @@
 </div>
 <div id="changing-parameters-and-molecules-initial-values" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changing-parameters-and-molecules-initial-values" class="anchor"></a>Changing parameters and molecules initial values</h3>
+<a href="#changing-parameters-and-molecules-initial-values" class="anchor" aria-hidden="true"></a>Changing parameters and molecules initial values</h3>
 <p>The user can change initial values of parameters and molecules with the methods <code>setParameterValues</code> and <code>setMoleculeInitialValues</code>, respectively.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the parameter Dose</span>
 <span class="va">doseParamPath</span> <span class="op">&lt;-</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>
 <span class="va">doseParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="va">doseParamPath</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span>
 <span class="co">#&gt;   Value: 0.00025 [kg]</span>
@@ -241,7 +235,7 @@
 <span class="co"># Change the dose to 350mg. The value has to be converted to base unit, first</span>
 <span class="va">newValue</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/toBaseUnit.html">toBaseUnit</a></span><span class="op">(</span>quantity <span class="op">=</span> <span class="va">doseParam</span>, values <span class="op">=</span> <span class="fl">350</span>, unit <span class="op">=</span> <span class="st">"mg"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span>parameters <span class="op">=</span> <span class="va">doseParam</span>, values <span class="op">=</span> <span class="va">newValue</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span>
 <span class="co">#&gt;   Value: 0.00035 [kg]</span>
@@ -251,7 +245,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">doseParamPath</span> <span class="op">&lt;-</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>
 <span class="va">doseParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="va">doseParamPath</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span>
 <span class="co">#&gt;   Value: 0.00035 [kg]</span>
@@ -260,7 +254,7 @@
 
 <span class="co"># Double the dose</span>
 <span class="fu"><a href="../reference/scaleParameterValues.html">scaleParameterValues</a></span><span class="op">(</span><span class="va">doseParam</span>, factor <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span>
 <span class="co">#&gt;   Value: 7e-04 [kg]</span>
@@ -269,7 +263,7 @@
 
 <span class="co"># Half the dose</span>
 <span class="fu"><a href="../reference/scaleParameterValues.html">scaleParameterValues</a></span><span class="op">(</span><span class="va">doseParam</span>, factor <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span>
 <span class="co">#&gt;   Value: 0.00035 [kg]</span>
@@ -279,7 +273,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the parameter "Volume" of the Liver interstital</span>
 <span class="va">liverIntVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Interstitial|Volume"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Liver|Interstitial|Volume</span>
 <span class="co">#&gt;   Value: 0.3533 [l]</span>
@@ -292,7 +286,7 @@
 <span class="co">#&gt; [1] FALSE</span>
 
 <span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">liverIntVolume</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Liver|Interstitial|Volume</span>
 <span class="co">#&gt;   Value: 1.00 [l]</span>
@@ -305,7 +299,7 @@
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>The parameter value can be reset to its formula after assigning a constant value:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Liver|Interstitial|Volume</span>
 <span class="co">#&gt;   Value: 1.00 [l]</span>
@@ -318,7 +312,7 @@
 <span class="co">#&gt; [1] TRUE</span>
 
 <span class="va">liverIntVolume</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|Liver|Interstitial|Volume</span>
 <span class="co">#&gt;   Value: 0.3533 [l]</span>
@@ -332,7 +326,7 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the parameter defined by a state variable.</span>
 <span class="va">stateVariableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|StateVariable_Parameter"</span>, <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|StateVariable_Parameter</span>
 <span class="co">#&gt;   Value: 0.00</span>
@@ -344,7 +338,7 @@
 
 <span class="co"># Setting its value only changes the initial value</span>
 <span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">stateVariableParam</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|StateVariable_Parameter</span>
 <span class="co">#&gt;   Value: 10.00</span>
@@ -356,7 +350,7 @@
 
 <span class="co"># Switching the RHS formula off</span>
 <span class="va">stateVariableParam</span><span class="op">$</span><span class="va">isStateVariable</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;   Path: Organism|StateVariable_Parameter</span>
 <span class="co">#&gt;   Value: 10.00</span>
@@ -372,7 +366,7 @@
 <span class="va">allAciclovirMolecules</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching</a></span><span class="op">(</span><span class="st">"Organism|**|Aciclovir"</span>,<span class="va">sim</span><span class="op">)</span>
 
 <span class="co">#Set initial values to 10 µmol in all containers</span>
-<span class="fu"><a href="../reference/setMoleculeInitialValues.html">setMoleculeInitialValues</a></span><span class="op">(</span><span class="va">allAciclovirMolecules</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">allAciclovirMolecules</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/setMoleculeInitialValues.html">setMoleculeInitialValues</a></span><span class="op">(</span><span class="va">allAciclovirMolecules</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">allAciclovirMolecules</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -388,11 +382,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -400,6 +396,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -2,15 +2,10 @@ url: https://www.open-systems-pharmacology.org/OSPSuite-R/
 
 
 articles:
-  - title: Introduction
-    navbar: Introduction
-    desc: Basic introduction on the ospsuite package
-    contents:
-    - introduction-ospsuite
 
   - title: Primary functions
     navbar: Primary functions
-    desc: Details about primary functions 
+    desc: Details about primary functions
     contents:
     - load-get
     - set-values

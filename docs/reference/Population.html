@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,17 +80,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/ospsuite.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -94,11 +99,6 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Introduction</li>
-    <li>
-      <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
-    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Primary functions</li>
     <li>
@@ -188,7 +188,7 @@
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-has'><code>Population$has()</code></a></p></li>
@@ -208,21 +208,42 @@
 </details>
 
 <hr>
-<a id="method-has"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>has()</code></h3>
-<p>Returns <code>TRUE</code> if the population has variability defined for <code>parameterOrPath</code> otherwise <code>FALSE</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>has</span><span class='op'>(</span><span class='va'>parameterOrPath</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-has"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>has()</code></h3>
+<p>Returns <code>TRUE</code> if the population has variability defined for <code>parameterOrPath</code> otherwise <code>FALSE</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>has</span><span class='op'>(</span><span class='va'>parameterOrPath</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>parameterOrPath</code></dt><dd><p>Parameter instance of parameter path</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-has-'><a class='anchor' aria-hidden='true' href='#list-has-'></a>Method <code>has()</code></h3>
+<p>Returns <code>TRUE</code> if the population has variability defined for <code>parameterOrPath</code> otherwise <code>FALSE</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>has</span><span class='op'>(</span><span class='va'>parameterOrPath</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>parameterOrPath</code></dt><dd><p>Parameter instance of parameter path</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-setParameterValues"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='setParameterValues.html'>setParameterValues()</a></code></h3>
-<p>Updates or adds the variability values in the population for <code>parameterOrPath</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>parameterOrPath</span>, <span class='va'>values</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-setParameterValues"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='setParameterValues.html'>setParameterValues()</a></code></h3>
+<p>Updates or adds the variability values in the population for <code>parameterOrPath</code>.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>parameterOrPath</span>, <span class='va'>values</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>parameterOrPath</code></dt><dd><p>Parameter instance of parameter path.
+If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.</p></dd>
+
+<dt><code>values</code></dt><dd><p>double vector containing the value to set for the <code>parameterOrPath</code></p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-setparametervalues-'><a class='anchor' aria-hidden='true' href='#list-setparametervalues-'></a>Method <code><a href='setParameterValues.html'>setParameterValues()</a></code></h3>
+<p>Updates or adds the variability values in the population for <code>parameterOrPath</code>.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>parameterOrPath</span>, <span class='va'>values</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>parameterOrPath</code></dt><dd><p>Parameter instance of parameter path.
 If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.</p></dd>
@@ -231,31 +252,60 @@ If an entry already exists for this parameter by path, its values be overwritten
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getParameterValues"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>getParameterValues()</code></h3>
-<p>Returns the variability values defined in the population for <code>parameterOrPath</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getParameterValues</span><span class='op'>(</span><span class='va'>parameterOrPath</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-getParameterValues"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>getParameterValues()</code></h3>
+<p>Returns the variability values defined in the population for <code>parameterOrPath</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getParameterValues</span><span class='op'>(</span><span class='va'>parameterOrPath</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>parameterOrPath</code></dt><dd><p>Parameter instance of parameter path</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-getparametervalues-'><a class='anchor' aria-hidden='true' href='#list-getparametervalues-'></a>Method <code>getParameterValues()</code></h3>
+<p>Returns the variability values defined in the population for <code>parameterOrPath</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getParameterValues</span><span class='op'>(</span><span class='va'>parameterOrPath</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>parameterOrPath</code></dt><dd><p>Parameter instance of parameter path</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getCovariateValues"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>getCovariateValues()</code></h3>
-<p>Returns the values defined in the population for the covariate named <code>covariateName</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getCovariateValues</span><span class='op'>(</span><span class='va'>covariateName</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-getCovariateValues"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>getCovariateValues()</code></h3>
+<p>Returns the values defined in the population for the covariate named <code>covariateName</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getCovariateValues</span><span class='op'>(</span><span class='va'>covariateName</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>covariateName</code></dt><dd><p>Name of covariate for which values should be retrieved</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-getcovariatevalues-'><a class='anchor' aria-hidden='true' href='#list-getcovariatevalues-'></a>Method <code>getCovariateValues()</code></h3>
+<p>Returns the values defined in the population for the covariate named <code>covariateName</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getCovariateValues</span><span class='op'>(</span><span class='va'>covariateName</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>covariateName</code></dt><dd><p>Name of covariate for which values should be retrieved</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getCovariateValue"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>getCovariateValue()</code></h3>
-<p>Returns the values defined in the population for the covariate named <code>covariateName</code> and individual with id <code>individualId</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getCovariateValue</span><span class='op'>(</span><span class='va'>covariateName</span>, <span class='va'>individualId</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-getCovariateValue"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>getCovariateValue()</code></h3>
+<p>Returns the values defined in the population for the covariate named <code>covariateName</code> and individual with id <code>individualId</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getCovariateValue</span><span class='op'>(</span><span class='va'>covariateName</span>, <span class='va'>individualId</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>covariateName</code></dt><dd><p>Name of covariate for which values should be retrieved</p></dd>
+
+<dt><code>individualId</code></dt><dd><p>Id of individual for which the value for covariate <code>covariateName</code> should be retrieved</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-getcovariatevalue-'><a class='anchor' aria-hidden='true' href='#list-getcovariatevalue-'></a>Method <code>getCovariateValue()</code></h3>
+<p>Returns the values defined in the population for the covariate named <code>covariateName</code> and individual with id <code>individualId</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getCovariateValue</span><span class='op'>(</span><span class='va'>covariateName</span>, <span class='va'>individualId</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>covariateName</code></dt><dd><p>Name of covariate for which values should be retrieved</p></dd>
 
@@ -263,31 +313,58 @@ If an entry already exists for this parameter by path, its values be overwritten
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-getParameterValuesForIndividual"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>getParameterValuesForIndividual()</code></h3>
-<p>Returns all values defined in the population the individual with id <code>individualId</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getParameterValuesForIndividual</span><span class='op'>(</span><span class='va'>individualId</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-getParameterValuesForIndividual"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>getParameterValuesForIndividual()</code></h3>
+<p>Returns all values defined in the population the individual with id <code>individualId</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getParameterValuesForIndividual</span><span class='op'>(</span><span class='va'>individualId</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>individualId</code></dt><dd><p>Id of individual for which all values should be returned</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-getparametervaluesforindividual-'><a class='anchor' aria-hidden='true' href='#list-getparametervaluesforindividual-'></a>Method <code>getParameterValuesForIndividual()</code></h3>
+<p>Returns all values defined in the population the individual with id <code>individualId</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>getParameterValuesForIndividual</span><span class='op'>(</span><span class='va'>individualId</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>individualId</code></dt><dd><p>Id of individual for which all values should be returned</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-remove"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/rm.html'>remove()</a></code></h3>
-<p>Removes the value of a parameter by path</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>remove</span><span class='op'>(</span><span class='va'>parameterPath</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-remove"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/rm.html'>remove()</a></code></h3>
+<p>Removes the value of a parameter by path</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>remove</span><span class='op'>(</span><span class='va'>parameterPath</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>parameterPath</code></dt><dd><p>Path of the parameter values to remove</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-remove-'><a class='anchor' aria-hidden='true' href='#list-remove-'></a>Method <code><a href='https://rdrr.io/r/base/rm.html'>remove()</a></code></h3>
+<p>Removes the value of a parameter by path</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>remove</span><span class='op'>(</span><span class='va'>parameterPath</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>parameterPath</code></dt><dd><p>Path of the parameter values to remove</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Print the object to the console</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Population</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the object to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>Rest arguments.</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-print-'><a class='anchor' aria-hidden='true' href='#list-print-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the object to the console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre class='sourceCode r'><code><span class='va'>Population</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>Rest arguments.</p></dd>
 
@@ -306,11 +383,11 @@ If an entry already exists for this parameter by path, its values be overwritten
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -318,6 +395,8 @@ If an entry already exists for this parameter by path, its values be overwritten
 
   
 
+
+  
 
   </body>
 </html>
