@@ -20,13 +20,12 @@ The **ospsuite-R** package provides the functionality of loading, manipulating, 
 - [Licence](#licence)
 
 # Documentation
-Please refer to the [online documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/) for more details on the package 
 
+Please refer to the [online documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/) for more details on the package 
 
 # Installation
 
-The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.x of R. One of its dependency, **rClr** needs to be installed specifically for the targeted R version. Please follow the installation instructions below:
-
+The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.x of R. One of its dependency, **rClr** needs to be installed specifically for the targeted R version. Please follow the installation instructions below.
 
 **ospsuite** requires following packages to be installed:
 
@@ -48,7 +47,7 @@ The release version of the package comes as a binary *.zip and can be downloaded
 
 The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
 
-```
+```r
 # Install dependencies
 install.packages('R6')
 
@@ -78,7 +77,7 @@ You can clone the GIT repository and build the package from source.
 
 In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()`  returns the corresponding simulation that is used as input of other methods. The user can then change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
 
-```{r loadSim}
+```r
 library(ospsuite)
 
 # Load a simulation
@@ -104,24 +103,23 @@ type = "l",
 xlab = "Time [min]",
 ylab = "Concentration [µmol/l]")
 ```
-![](man/figures/README-example-1.png)<!-- -->
 
 More detailed description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vignettes available for **ospsuite** by calling
 
-```
+```r
 vignette(package = "ospsuite")
 ```
 
 To open a specific vignette, call
 
-```
+```r
 # Insert the name of the vignette you want to view as the argument
 vignette("introduction-ospsuite")
 ```
 
 # Known issues
 
-- **RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating .NET objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore .RData into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
+**RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating .NET objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore .RData into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
 
 # Code of conduct
 
