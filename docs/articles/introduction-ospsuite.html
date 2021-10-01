@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -94,7 +90,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/">
+  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -109,23 +105,23 @@
 
       
 
-      </header><script src="introduction-ospsuite_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="introduction-ospsuite_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to ospsuite</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/introduction-ospsuite.Rmd"><code>vignettes/introduction-ospsuite.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/introduction-ospsuite.Rmd" class="external-link"><code>vignettes/introduction-ospsuite.Rmd</code></a></small>
       <div class="hidden name"><code>introduction-ospsuite.Rmd</code></div>
 
     </div>
 
     
     
-<p>The <strong>ospsuite</strong> R-package is part of the <a href="http://www.open-systems-pharmacology.org/">Open Systems Pharmacology</a> Software (OSPS), an open-source suite of modeling &amp; simulation tools for pharmaceutical and other life-sciences applications. This package provides the functionality of loading, manipulating, and simulating the simulations created in the software tools PK-Sim and MoBi. This document gives an overview of the general workflow and the most important methods.</p>
+<p>The <strong>ospsuite</strong> R-package is part of the <a href="http://www.open-systems-pharmacology.org/" class="external-link">Open Systems Pharmacology</a> Software (OSPS), an open-source suite of modeling &amp; simulation tools for pharmaceutical and other life-sciences applications. This package provides the functionality of loading, manipulating, and simulating the simulations created in the software tools PK-Sim and MoBi. This document gives an overview of the general workflow and the most important methods.</p>
 <div id="general-information" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-information" class="anchor"></a>General information</h2>
+<a href="#general-information" class="anchor" aria-hidden="true"></a>General information</h2>
 <p>In order to load a simulation in R, it must be present in the <strong>*.pkml</strong> file format. Every simulation in PK-Sim or MoBi can be exported to the *.pkml file. The examples shown in the vignettes are based on the Aciclovir example model, until stated otherwise. The model can be found in the PK-Sim examples folder of the OSPS installation.</p>
 <p>The general workflow with the <strong>ospsuite</strong> package can be summarized in following steps:</p>
 <ol style="list-style-type: decimal">
@@ -151,13 +147,13 @@
 </div>
 <div id="object-oriented-approach" class="section level2">
 <h2 class="hasAnchor">
-<a href="#object-oriented-approach" class="anchor"></a>Object-oriented approach</h2>
-<p>The <strong>ospsuite</strong> R-package utilizes the concept of object oriented (OO) programming based on the <a href="https://adv-r.hadley.nz/r6.html">R6 system</a>. While the philosophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. Most of the functions implemented in <strong>ospsuite</strong> return an <em>instance</em> (or an <em>object</em>) of a <em>class</em>. These objects can be used as inputs for another functions. Additionally, each object offers a set of properties (which can be another objects) and functions, accessible by the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> sign:</p>
+<a href="#object-oriented-approach" class="anchor" aria-hidden="true"></a>Object-oriented approach</h2>
+<p>The <strong>ospsuite</strong> R-package utilizes the concept of object oriented (OO) programming based on the <a href="https://adv-r.hadley.nz/r6.html" class="external-link">R6 system</a>. While the philosophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. Most of the functions implemented in <strong>ospsuite</strong> return an <em>instance</em> (or an <em>object</em>) of a <em>class</em>. These objects can be used as inputs for another functions. Additionally, each object offers a set of properties (which can be another objects) and functions, accessible by the <code>$</code> sign:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">object1</span> <span class="op">&lt;-</span> <span class="va">ClassName</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va">aProperty</span> <span class="op">&lt;-</span> <span class="va">object1</span><span class="op">$</span><span class="va">property1</span>
 <span class="va">resultOfAFunction</span> <span class="op">&lt;-</span> <span class="va">object1</span><span class="op">$</span><span class="fu">multiply</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p>Important information about the object can be printed out by calling <code><a href="https://rdrr.io/r/base/print.html">print(object)</a></code>.</p>
+<p>Important information about the object can be printed out by calling <code>print(object)</code>.</p>
 <dl>
 <dt>The most important classes are:</dt>
 <dd><dl>
@@ -275,11 +271,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -287,6 +285,8 @@
 
   
 
+
+  
 
   </body>
 </html>
