@@ -1,6 +1,4 @@
-
-
-# ospsuite-R 10.0
+# ospsuite 10.0
 
 Version compatible with the OSPSuite V10.
 
@@ -29,8 +27,7 @@ Version compatible with the OSPSuite V10.
 * [Integer variables not handled by some functions](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/553)
 
 
-# ospsuite-R 9.0
+# ospsuite 9.0
 
-Version compatible with the OSPSuite V9.
-
-Initial Release
+* Version compatible with the OSPSuite V9.
+* Initial Release

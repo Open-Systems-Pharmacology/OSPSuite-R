@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,19 +80,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -162,7 +164,7 @@
     <p>Set values of parameters</p>
     </div>
 
-    <pre class="usage"><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>parameters</span>, <span class='va'>values</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>parameters</span>, <span class='va'>values</span>, units <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,6 +179,11 @@
 of numeric values, if the value of more than one parameter should be changed. Must have the same
 length as 'parameters'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters</p></td>
     </tr>
+    <tr>
+      <th>units</th>
+      <td><p>A string or a list of strings defining the units of the <code>values</code>. If <code>NULL</code> (default), values
+are assumed to be in base units. If not <code>NULL</code>, must have the same length as <code>quantities</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -184,14 +191,14 @@ length as 'parameters'. Alternatively, the value can be a unique number. In that
     <div class='dont-index'><p><code><a href='getParameter.html'>getParameter()</a></code> and <code><a href='getAllParametersMatching.html'>getAllParametersMatching()</a></code> to create objects of type Parameter</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>simPath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"simple.pkml"</span>, package <span class='op'>=</span> <span class='st'>"ospsuite"</span><span class='op'>)</span>
-<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span>
-<span class='va'>param</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getParameter.html'>getParameter</a></span><span class='op'>(</span><span class='st'>"Organism|Liver|Volume"</span>, <span class='va'>sim</span><span class='op'>)</span>
-<span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>param</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getAllParametersMatching.html'>getAllParametersMatching</a></span><span class='op'>(</span><span class='st'>"Organism|**|Volume"</span>, <span class='va'>sim</span><span class='op'>)</span>
-<span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>params</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'></span>
+<span class='r-in'><span class='va'>simPath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"simple.pkml"</span>, package <span class='op'>=</span> <span class='st'>"ospsuite"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='loadSimulation.html'>loadSimulation</a></span><span class='op'>(</span><span class='va'>simPath</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>param</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getParameter.html'>getParameter</a></span><span class='op'>(</span><span class='st'>"Organism|Liver|Volume"</span>, <span class='va'>sim</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>param</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getAllParametersMatching.html'>getAllParametersMatching</a></span><span class='op'>(</span><span class='st'>"Organism|**|Volume"</span>, <span class='va'>sim</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>setParameterValues</span><span class='op'>(</span><span class='va'>params</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>, units <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ml"</span>, <span class='st'>"l"</span><span class='op'>)</span><span class='op'>)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -203,11 +210,11 @@ length as 'parameters'. Alternatively, the value can be a unique number. In that
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -215,6 +222,8 @@ length as 'parameters'. Alternatively, the value can be a unique number. In that
 
   
 
+
+  
 
   </body>
 </html>

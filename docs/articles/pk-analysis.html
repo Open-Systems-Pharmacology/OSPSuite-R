@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -94,7 +90,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/">
+  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -109,28 +105,28 @@
 
       
 
-      </header><script src="pk-analysis_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="pk-analysis_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating PK parameters of simulation outputs</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/pk-analysis.Rmd"><code>vignettes/pk-analysis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/pk-analysis.Rmd" class="external-link"><code>vignettes/pk-analysis.Rmd</code></a></small>
       <div class="hidden name"><code>pk-analysis.Rmd</code></div>
 
     </div>
 
     
     
-<p>PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a simulation. First, simulation results must be calculated, and the <code>SimulationResults</code> object is then passed to the method <code>calculatePKAnalyses</code>. For the list of calculated PK parameters and their description, please refer to <a href="https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-analysis-view">OSPS documentation</a>.</p>
+<p>PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a simulation. First, simulation results must be calculated, and the <code>SimulationResults</code> object is then passed to the method <code>calculatePKAnalyses</code>. For the list of calculated PK parameters and their description, please refer to <a href="https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-analysis-view" class="external-link">OSPS documentation</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
 
 <span class="co"># Load  the simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Run the simulation</span>
@@ -141,12 +137,12 @@
 
 <span class="co"># Get the path of the simulated output</span>
 <span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
 
 <span class="co"># Get all calculated PK parameters for the output path</span>
 <span class="va">allPkParams</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">allPKParametersFor</span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">allPkParams</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">allPkParams</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt;   Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max</span>
 <span class="co">#&gt;   Dimension: Concentration (molar)</span>
@@ -225,7 +221,7 @@
 <code class="sourceCode R"><span class="co"># Get C_max parameter</span>
 <span class="va">c_max</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">pKParameterFor</span><span class="op">(</span>quantityPath <span class="op">=</span> <span class="va">outputPath</span>, pkParameter <span class="op">=</span> <span class="st">"C_max"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">c_max</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">c_max</span><span class="op">)</span>
 <span class="co">#&gt;   Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max</span>
 <span class="co">#&gt;   Dimension: Concentration (molar)</span>
 <span class="co">#&gt;   Unit: µmol/l</span>
@@ -239,11 +235,11 @@
 <p>In case of a population simulation, <code>$values</code> return a list of values calculated for each individual.</p>
 <div id="import-and-export-of-pk-analyses" class="section level2">
 <h2 class="hasAnchor">
-<a href="#import-and-export-of-pk-analyses" class="anchor"></a>Import and export of PK-analyses</h2>
+<a href="#import-and-export-of-pk-analyses" class="anchor" aria-hidden="true"></a>Import and export of PK-analyses</h2>
 <p>Population analysis calculated in R can be exported to a *.csv file and loaded in PK-Sim, and vice versa.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load and run the simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 <span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
 
@@ -251,7 +247,7 @@
 <span class="va">pkAnalysis</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculatePKAnalyses.html">calculatePKAnalyses</a></span><span class="op">(</span>results <span class="op">=</span> <span class="va">simulationResults</span><span class="op">)</span>
 
 <span class="co"># Export to csv</span>
-<span class="va">csvPKAnalysisPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"PKAnalyses.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">csvPKAnalysisPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"PKAnalyses.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/exportPKAnalysesToCSV.html">exportPKAnalysesToCSV</a></span><span class="op">(</span>pkAnalyses <span class="op">=</span> <span class="va">pkAnalysis</span>, filePath <span class="op">=</span> <span class="va">csvPKAnalysisPath</span><span class="op">)</span>
 
 <span class="co"># Load from csv</span>
@@ -270,11 +266,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -282,6 +280,8 @@
 
   
 
+
+  
 
   </body>
 </html>

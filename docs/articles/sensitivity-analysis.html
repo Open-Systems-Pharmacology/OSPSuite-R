@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -94,7 +90,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/">
+  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -109,52 +105,52 @@
 
       
 
-      </header><script src="sensitivity-analysis_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="sensitivity-analysis_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sensitivity analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/sensitivity-analysis.Rmd"><code>vignettes/sensitivity-analysis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/sensitivity-analysis.Rmd" class="external-link"><code>vignettes/sensitivity-analysis.Rmd</code></a></small>
       <div class="hidden name"><code>sensitivity-analysis.Rmd</code></div>
 
     </div>
 
     
     
-<p>The models built with OSPS depend on a lot of input parameters which are based on literature values, measurements, databases, assumptions. For a given set of input parameters a number of output curves is computed in a simulation. To assess which input parameters have most impact on the output curves, a sensitivity analysis of the simulation can be performed. For more information about theoretical background, see <a href="https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/sensitivity-analysis">OSPS documentation</a>.</p>
+<p>The models built with OSPS depend on a lot of input parameters which are based on literature values, measurements, databases, assumptions. For a given set of input parameters a number of output curves is computed in a simulation. To assess which input parameters have most impact on the output curves, a sensitivity analysis of the simulation can be performed. For more information about theoretical background, see <a href="https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/sensitivity-analysis" class="external-link">OSPS documentation</a>.</p>
 <p>In brief, the values of the chosen parameters are changed by a certain percentage and the impact of these changes on PK parameters of model outputs is assessed.</p>
 <div id="performing-a-sensitivity-analysis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#performing-a-sensitivity-analysis" class="anchor"></a>Performing a sensitivity analysis</h2>
-<p>The first step of performing a sensitivity analysis is creating an object of the class <code>SensitivityAnalysis</code>. At this step, the user can define which parameters should be considered for the sensitivity analysis, in which range the values are varied, and how may steps are performed in one direction (plus and minus). If no parameters are specified, all constant and suitable for sensitivity calculations parameters of the simulation will be variated. The list of such parameters paths for a simulation can be accessed with the method <code><a href="../reference/potentialVariableParameterPathsFor.html">potentialVariableParameterPathsFor(simulation)</a></code>.</p>
+<a href="#performing-a-sensitivity-analysis" class="anchor" aria-hidden="true"></a>Performing a sensitivity analysis</h2>
+<p>The first step of performing a sensitivity analysis is creating an object of the class <code>SensitivityAnalysis</code>. At this step, the user can define which parameters should be considered for the sensitivity analysis, in which range the values are varied, and how may steps are performed in one direction (plus and minus). If no parameters are specified, all constant and suitable for sensitivity calculations parameters of the simulation will be variated. The list of such parameters paths for a simulation can be accessed with the method <code>potentialVariableParameterPathsFor(simulation)</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
 
 <span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Get the paths of parameters that will be considered by default.</span>
 <span class="va">potentialSAParameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/potentialVariableParameterPathsFor.html">potentialVariableParameterPathsFor</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">potentialSAParameters</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">potentialSAParameters</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|Volume" "Organism|Q"      "R1|k1"</span>
 
 <span class="co"># Create a default `SensitivityAnalysis` for the simulation</span>
 <span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
 <span class="co">#&gt; SensitivityAnalysis: </span>
 <span class="co">#&gt;   Number of steps: 2</span>
 <span class="co">#&gt;   Variation range: 0.1</span>
 <span class="co">#&gt;   Number of parameters to vary: Will be estimated at run time</span>
 
 <span class="co"># Create a `SensitivityAnalysis` with specified parameters</span>
-<span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>,
+<span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>,
                                                                       <span class="st">"Organism|Volume"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
 <span class="co">#&gt; SensitivityAnalysis: </span>
 <span class="co">#&gt;   Number of steps: 2</span>
 <span class="co">#&gt;   Variation range: 0.1</span>
@@ -165,14 +161,14 @@
 <span class="co">#&gt; [1] "Organism|Q"      "Organism|Volume"</span></code></pre></div>
 <p>New parameters can be added to an existing <code>SensitivityAnalysis</code> by calling the method <code>addParameterPaths</code>. WARNING: If no parameters were specified during the creation of a <code>SensitivityAnalysis</code> (all constant and suitable for sensitivity calculation parameters are considered), calling <code>addParameterPaths</code> will only vary the newly added parameters.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 
 <span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Create a `SensitivityAnalysis` with specified parameters</span>
-<span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>,
+<span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>,
                                                                       <span class="st">"Organism|Volume"</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Add new parameter</span>
 <span class="va">sa</span><span class="op">$</span><span class="fu">addParameterPaths</span><span class="op">(</span><span class="st">"R1|k1"</span><span class="op">)</span>
@@ -183,7 +179,7 @@
 <p>To run the specified <code>SensitivityAnalysis</code>, call the method <code>runSensitivityAnalysis</code>. The method returns an object of the class <code>SensitivityAnalysisResults</code>. The impact of the defined parameters is calculated for PK-Parameters (see <a href="pk-analysis.html">PK Analysis</a> for more information) of all model outputs.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Create a `SensitivityAnalysis` with all constant and suitable for sensitivity calculations parameters and suitable for sensitivity calculations parameters</span>
@@ -191,14 +187,14 @@
 
 <span class="co"># Run the sensitivity analysis</span>
 <span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span>
 <span class="co">#&gt; SensitivityAnalysisResults: </span>
 <span class="co">#&gt;   Number of calculated sensitivities: 72</span>
 <span class="co">#&gt;   Available PK parameters: C_maxt_maxC_tEndAUC_tEndThalfAUC_infMRTFractionAucLastToInf</span></code></pre></div>
 <p>The method <code>allPKParameterSensitivitiesFor</code> returns a list of <code>PKParameterSensitivity</code> objects. <code>PKParameterSensitivity</code> describes the sensitivity (field <code>$value</code>) of a PK-Parameter (<code>$pkParameterName</code>) for the output <code>$outputPath</code> calculated for the varied parameter <code>$parameterPath</code>. The argument <code>totalSensitivityThreshold</code> of the method <code>allPKParameterSensitivitiesFor</code> is used to filter out the most impactful parameters. A threshold of 0.9 means that only parameters participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters. If no value is provided, a default value is used.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Default value of the threshold</span>
@@ -206,11 +202,11 @@
 <span class="co">#&gt; [1] 0.9</span>
 
 <span class="co"># Create a `SensitivityAnalysis` with all constant parameters and run it</span>
-<span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Aciclovir|Lipophilicity"</span>,
+<span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aciclovir|Lipophilicity"</span>,
                                                                       <span class="st">"Aciclovir|Fraction unbound (plasma)"</span>,
                                                                       <span class="st">"Organism|Age"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span>
 <span class="co">#&gt; SensitivityAnalysisResults: </span>
 <span class="co">#&gt;   Number of calculated sensitivities: 11</span>
 <span class="co">#&gt;   Available PK parameters: C_maxt_maxC_tEndAUC_tEndAUC_infMRTThalfFractionAucLastToInfCLVssVd</span>
@@ -218,7 +214,7 @@
 <span class="co"># Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8</span>
 <span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span><span class="op">$</span><span class="va">allOutputs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">path</span>
 <span class="va">sensitivities</span> <span class="op">&lt;-</span> <span class="va">saResult</span><span class="op">$</span><span class="fu">allPKParameterSensitivitiesFor</span><span class="op">(</span>pkParameterName <span class="op">=</span> <span class="st">"AUC_inf"</span>, outputPath <span class="op">=</span> <span class="va">outputPath</span>, totalSensitivityThreshold <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sensitivities</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sensitivities</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; PKParameterSensitivity: </span>
 <span class="co">#&gt;   Parameter name: Aciclovir-Lipophilicity</span>
@@ -229,11 +225,11 @@
 </div>
 <div id="import-and-export-of-sensitivity-analysis-results" class="section level2">
 <h2 class="hasAnchor">
-<a href="#import-and-export-of-sensitivity-analysis-results" class="anchor"></a>Import and export of sensitivity analysis results</h2>
+<a href="#import-and-export-of-sensitivity-analysis-results" class="anchor" aria-hidden="true"></a>Import and export of sensitivity analysis results</h2>
 <p>Sensitivity analysis calculated in R can be exported to a *.csv file, which can be loaded in another instance.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load and run the simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 <span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
 
@@ -242,7 +238,7 @@
 <span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span>
 
 <span class="co"># Export to csv</span>
-<span class="va">saResultPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"SAResult.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">saResultPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"SAResult.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/exportSensitivityAnalysisResultsToCSV.html">exportSensitivityAnalysisResultsToCSV</a></span><span class="op">(</span>results <span class="op">=</span> <span class="va">saResult</span>, filePath <span class="op">=</span> <span class="va">saResultPath</span><span class="op">)</span>
 
 <span class="co"># Load from csv</span>
@@ -261,11 +257,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p></p>
+<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -273,6 +271,8 @@
 
   
 
+
+  
 
   </body>
 </html>
