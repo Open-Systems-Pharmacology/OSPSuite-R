@@ -1,0 +1,29 @@
+url: https://www.open-systems-pharmacology.org/OSPSuite-R/
+
+
+articles:
+  - title: Introduction
+    navbar: Introduction
+    desc: Basic introduction on the ospsuite package
+    contents:
+    - introduction-ospsuite
+
+  - title: Primary functions
+    navbar: Primary functions
+    desc: Details about primary functions 
+    contents:
+    - load-get
+    - set-values
+    - run-simulation
+    - pk-analysis
+    - sensitivity-analysis
+    - create-individual
+    - create-run-population
+
+  - title: Miscellaneous
+    navbar: Miscellaneous
+    desc: Salad of various things
+    contents:
+    - efficient-calculations
+    - table-parameters
+    - unit-conversion
