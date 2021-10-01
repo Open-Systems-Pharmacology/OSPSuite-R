@@ -125,7 +125,7 @@ setQuantityValues <- function(quantities, values, units = NULL) {
 #'
 #' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
 #' @export
-setQuantityValuesByPath <- function(quantityPaths, values, simulation, stopIfNotFound = TRUE, units = NULL) {
+setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
   validateIsString(quantityPaths)
   validateIsNumeric(values)
   validateIsSameLength(quantityPaths, values)
