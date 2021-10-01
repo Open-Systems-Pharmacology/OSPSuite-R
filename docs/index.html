@@ -20,8 +20,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -34,12 +32,18 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -50,32 +54,38 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/create-individual.html">Creating individuals</a>
-    </li>
-    <li>
-      <a href="articles/create-run-population.html">Population simulations</a>
-    </li>
-    <li>
-      <a href="articles/efficient-calculations.html">Efficient calculation</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Introduction</li>
     <li>
       <a href="articles/introduction-ospsuite.html">Introduction to ospsuite</a>
     </li>
+    <li class="divider">
+    <li class="dropdown-header">Primary functions</li>
     <li>
       <a href="articles/load-get.html">Loading a simulation and accessing entities</a>
     </li>
     <li>
-      <a href="articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+      <a href="articles/set-values.html">Changing parameter and molecule start values</a>
     </li>
     <li>
       <a href="articles/run-simulation.html">Running a simulation</a>
     </li>
     <li>
+      <a href="articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+    </li>
+    <li>
       <a href="articles/sensitivity-analysis.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="articles/set-values.html">Changing parameter and molecule start values</a>
+      <a href="articles/create-individual.html">Creating individuals</a>
+    </li>
+    <li>
+      <a href="articles/create-run-population.html">Population simulations</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Miscellaneous</li>
+    <li>
+      <a href="articles/efficient-calculations.html">Efficient calculation</a>
     </li>
     <li>
       <a href="articles/table-parameters.html">Table parameters</a>
@@ -111,14 +121,14 @@
 
 <div id="ospsuite-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ospsuite-r" class="anchor" aria-hidden="true"></a>OSPSuite-R</h1></div>
+<a href="#ospsuite-r" class="anchor"></a>OSPSuite-R</h1></div>
 <p><!-- badges: start --></p>
-<p><a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/ospsuite-r" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="external-link"><img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"></a></p>
+<p><a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/ospsuite-r"><img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R"><img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"></a></p>
 <p><!-- badges: end --></p>
 </div>
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
-<a href="#overview" class="anchor" aria-hidden="true"></a>Overview</h1>
+<a href="#overview" class="anchor"></a>Overview</h1>
 <p>The <strong>ospsuite-R</strong> package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.</p>
 <ul>
 <li><a href="#documentation">Documentation</a></li>
@@ -132,47 +142,60 @@
 </div>
 <div id="documentation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#documentation" class="anchor" aria-hidden="true"></a>Documentation</h1>
-<p>Please refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/" class="external-link">online documentation</a> for more details on the package</p>
+<a href="#documentation" class="anchor"></a>Documentation</h1>
+<p>Please refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/">online documentation</a> for more details on the package</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h1>
+<a href="#installation" class="anchor"></a>Installation</h1>
 <p>The <strong>ospsuite-R</strong> package is compatible with version 3.6.x <strong>AND</strong> version 4.x.x of R. One of its dependency, <strong>rClr</strong> needs to be installed specifically for the targeted R version. Please follow the installation instructions below.</p>
 <p><strong>ospsuite</strong> requires following packages to be installed:</p>
-<p>From CRAN: - <a href="https://github.com/r-lib/R6" class="external-link">R6</a> - <a href="https://cran.r-project.org/web/packages/stringr/" class="external-link">stringr</a> - <a href="https://cran.r-project.org/web/packages/readr/index.html" class="external-link">readr</a></p>
-<p>Must be downloaded manually: - rClr - <a href="https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip" class="external-link">For R 4.x.x</a> - <a href="https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip" class="external-link">For R 3.6.x</a></p>
+<p>From CRAN:</p>
+<ul>
+<li><a href="https://github.com/r-lib/R6">R6</a></li>
+<li><a href="https://cran.r-project.org/web/packages/stringr/">stringr</a></li>
+<li><a href="https://cran.r-project.org/web/packages/readr/index.html">readr</a></li>
+</ul>
+<p>Must be downloaded manually:</p>
+<ul>
+<li>rClr
+<ul>
+<li><a href="https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip">For R 4.x.x</a></li>
+<li><a href="https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip">For R 3.6.x</a></li>
+</ul>
+</li>
+</ul>
 <div id="under-windows" class="section level2">
 <h2 class="hasAnchor">
-<a href="#under-windows" class="anchor" aria-hidden="true"></a>Under Windows</h2>
-<p>The release version of the package comes as a binary *.zip and can be downloaded from <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link">here</a>.</p>
-<p>The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded <a href="https://aka.ms/vs/16/release/vc_redist.x64.exe" class="external-link">here</a>.</p>
+<a href="#under-windows" class="anchor"></a>Under Windows</h2>
+<p>The release version of the package comes as a binary *.zip and can be downloaded from <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases">here</a>.</p>
+<p>The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded <a href="https://aka.ms/vs/16/release/vc_redist.x64.exe">here</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Install dependencies</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'R6'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'R6'</span><span class="op">)</span>
 
 <span class="co"># Install rClr from local file </span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTorCLR.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">pathTorCLR.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
 <span class="co"># Install ospsuite-r from local file</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathToOSPSuite.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">pathToOSPSuite.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="under-linux" class="section level2">
 <h2 class="hasAnchor">
-<a href="#under-linux" class="anchor" aria-hidden="true"></a>Under Linux</h2>
-<p>The <strong>ospsuite</strong> package has been tested under Linux distributions CentOS 7 and Ubuntu 18. Some functionality, such as creating individuals, is not available under Linux. Installation under Linux requires several prerequisites, the detailed instructions can be found in the <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu" class="external-link">Wiki</a>. For other Linux distributions Docker containers can be used (Dockerfiles based on CentOS 7 and Ubuntu 18 are available under <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases</a> )</p>
+<a href="#under-linux" class="anchor"></a>Under Linux</h2>
+<p>The <strong>ospsuite</strong> package has been tested under Linux distributions CentOS 7 and Ubuntu 18. Some functionality, such as creating individuals, is not available under Linux. Installation under Linux requires several prerequisites, the detailed instructions can be found in the <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu">Wiki</a>. For other Linux distributions Docker containers can be used (Dockerfiles based on CentOS 7 and Ubuntu 18 are available under <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases</a> )</p>
 </div>
 <div id="build-from-source" class="section level2">
 <h2 class="hasAnchor">
-<a href="#build-from-source" class="anchor" aria-hidden="true"></a>Build from source</h2>
+<a href="#build-from-source" class="anchor"></a>Build from source</h2>
 <p>You can clone the GIT repository and build the package from source.</p>
 <div id="how-to-update-dependencies-from-nuget" class="section level3">
 <h3 class="hasAnchor">
-<a href="#how-to-update-dependencies-from-nuget" class="anchor" aria-hidden="true"></a>How to update dependencies from nuget?</h3>
+<a href="#how-to-update-dependencies-from-nuget" class="anchor"></a>How to update dependencies from nuget?</h3>
 <ul>
 <li>
 <code>git submodule update --init --recursive</code> to install all submodules</li>
-<li>Make sure you have <a href="https://www.ruby-lang.org/de/downloads/" class="external-link">ruby</a> install and that it is available in your path</li>
+<li>Make sure you have <a href="https://www.ruby-lang.org/de/downloads/">ruby</a> install and that it is available in your path</li>
 <li>Run <code>rake postclean</code> or simply double click on <code>postclean.bat</code>. This will update all nuget packages and copy the dependencies in the package <code>inst/lib</code> folder.</li>
 </ul>
 </div>
@@ -180,13 +203,13 @@
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
-<a href="#usage" class="anchor" aria-hidden="true"></a>Usage</h1>
+<a href="#usage" class="anchor"></a>Usage</h1>
 <p>In general, every workflow starts with loading a simulation that has been exported to the <code>*.pkml</code> format. The method <code><a href="reference/loadSimulation.html">loadSimulation()</a></code> returns the corresponding simulation that is used as input of other methods. The user can then change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
 
 <span class="co"># Load a simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Get the parameter "Dose"</span>
@@ -203,36 +226,36 @@
 <span class="va">simulatedValues</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span>simulationResults <span class="op">=</span> <span class="va">simResults</span><span class="op">)</span>
 
 <span class="co"># Plot time-concentration profile</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">simulatedValues</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>, <span class="va">simulatedValues</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">simulatedValues</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>, <span class="va">simulatedValues</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`</span>,
 type <span class="op">=</span> <span class="st">"l"</span>,
 xlab <span class="op">=</span> <span class="st">"Time [min]"</span>,
-ylab <span class="op">=</span> <span class="st">"Concentration [µmol/l]"</span><span class="op">)</span>)</code></pre></div>
+ylab <span class="op">=</span> <span class="st">"Concentration [µmol/l]"</span><span class="op">)</span></code></pre></div>
 <p>More detailed description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vignettes available for <strong>ospsuite</strong> by calling</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></code></pre></div>
 <p>To open a specific vignette, call</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Insert the name of the vignette you want to view as the argument</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"introduction-ospsuite"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"introduction-ospsuite"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="known-issues" class="section level1">
 <h1 class="hasAnchor">
-<a href="#known-issues" class="anchor" aria-hidden="true"></a>Known issues</h1>
+<a href="#known-issues" class="anchor"></a>Known issues</h1>
 <p><strong>RStudio crashes when trying to load a workspace.</strong> The ospsuite package uses the features implemented in PK-Sim and MoBi by creating .NET objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box “Restore .RData into workspace at startup” in the options of RStudio. Keep in mind that you can also change this setting for specific projects.</p>
 </div>
 <div id="code-of-conduct" class="section level1">
 <h1 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor" aria-hidden="true"></a>Code of conduct</h1>
-<p>Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc…) is expected to follow the Open Systems Pharmacology <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md" class="external-link">code of conduct</a>.</p>
+<a href="#code-of-conduct" class="anchor"></a>Code of conduct</h1>
+<p>Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc…) is expected to follow the Open Systems Pharmacology <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
 </div>
 <div id="contribution" class="section level1">
 <h1 class="hasAnchor">
-<a href="#contribution" class="anchor" aria-hidden="true"></a>Contribution</h1>
-<p>We encourage contribution to the Open Systems Pharmacology community. Before getting started please read the <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md" class="external-link">contribution guidelines</a>. If you are contributing code, please be familiar with the <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING_STANDARDS_R.md" class="external-link">coding standards</a>.</p>
+<a href="#contribution" class="anchor"></a>Contribution</h1>
+<p>We encourage contribution to the Open Systems Pharmacology community. Before getting started please read the <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md">contribution guidelines</a>. If you are contributing code, please be familiar with the <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING_STANDARDS_R.md">coding standards</a>.</p>
 </div>
 <div id="license" class="section level1">
 <h1 class="hasAnchor">
-<a href="#license" class="anchor" aria-hidden="true"></a>License</h1>
+<a href="#license" class="anchor"></a>License</h1>
 <p>OSPSuite-R is released under the <a href="LICENSE">GPLv2 License</a>.</p>
 <p>All trademarks within this document belong to their legitimate owners.</p>
 </div>
@@ -241,7 +264,7 @@ ylab <span class="op">=</span> <span class="st">"Concentration [µmol/l]"</span>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2 data-toc-skip>Links</h2>
+<h2>Links</h2>
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/open-systems-pharmacology/ospsuite-r/">https://​github.com/​open-systems-pharmacology/​ospsuite-r/​</a>
 </li>
@@ -250,41 +273,34 @@ ylab <span class="op">=</span> <span class="st">"Concentration [µmol/l]"</span>
 </li>
 </ul>
 </div>
-
 <div class="license">
-<h2 data-toc-skip>License</h2>
+<h2>License</h2>
 <ul class="list-unstyled">
 <li>
 <a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a> | file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
-
-
 <div class="developers">
-<h2 data-toc-skip>Developers</h2>
+<h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael Sevestre <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Pavel Balazki <br><small class="roles"> Author </small>  </li>
 <li>Juri Solodenko <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">More on authors...</a></li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
-
-
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -292,8 +308,6 @@ ylab <span class="op">=</span> <span class="st">"Concentration [µmol/l]"</span>
 
   
 
-
-  
 
   </body>
 </html>

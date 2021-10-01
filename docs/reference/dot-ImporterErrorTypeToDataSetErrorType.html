@@ -48,8 +48,6 @@ to the values supported in the importer configuration" />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -61,15 +59,9 @@ to the values supported in the importer configuration" />
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,13 +75,19 @@ to the values supported in the importer configuration" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -99,32 +97,38 @@ to the values supported in the importer configuration" />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Introduction</li>
+    <li>
+      <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Primary functions</li>
+    <li>
+      <a href="../articles/load-get.html">Loading a simulation and accessing entities</a>
+    </li>
+    <li>
+      <a href="../articles/set-values.html">Changing parameter and molecule start values</a>
+    </li>
+    <li>
+      <a href="../articles/run-simulation.html">Running a simulation</a>
+    </li>
+    <li>
+      <a href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
+    </li>
     <li>
       <a href="../articles/create-individual.html">Creating individuals</a>
     </li>
     <li>
       <a href="../articles/create-run-population.html">Population simulations</a>
     </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Miscellaneous</li>
     <li>
       <a href="../articles/efficient-calculations.html">Efficient calculation</a>
-    </li>
-    <li>
-      <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
-    </li>
-    <li>
-      <a href="../articles/load-get.html">Loading a simulation and accessing entities</a>
-    </li>
-    <li>
-      <a href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
-    </li>
-    <li>
-      <a href="../articles/run-simulation.html">Running a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
-    </li>
-    <li>
-      <a href="../articles/set-values.html">Changing parameter and molecule start values</a>
     </li>
     <li>
       <a href="../articles/table-parameters.html">Table parameters</a>
@@ -169,7 +173,7 @@ to the values supported in the importer configuration</h1>
 to the values supported in the importer configuration</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>.ImporterErrorTypeToDataSetErrorType</span></code></pre></div>
+    <pre class="usage"><span class='va'>.ImporterErrorTypeToDataSetErrorType</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -187,11 +191,11 @@ to the values supported in the importer configuration</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p></p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -199,8 +203,6 @@ to the values supported in the importer configuration</p>
 
   
 
-
-  
 
   </body>
 </html>

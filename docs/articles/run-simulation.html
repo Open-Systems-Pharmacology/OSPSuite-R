@@ -19,8 +19,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,12 +31,18 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -49,32 +53,38 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/create-individual.html">Creating individuals</a>
-    </li>
-    <li>
-      <a href="../articles/create-run-population.html">Population simulations</a>
-    </li>
-    <li>
-      <a href="../articles/efficient-calculations.html">Efficient calculation</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Introduction</li>
     <li>
       <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
     </li>
+    <li class="divider">
+    <li class="dropdown-header">Primary functions</li>
     <li>
       <a href="../articles/load-get.html">Loading a simulation and accessing entities</a>
     </li>
     <li>
-      <a href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+      <a href="../articles/set-values.html">Changing parameter and molecule start values</a>
     </li>
     <li>
       <a href="../articles/run-simulation.html">Running a simulation</a>
     </li>
     <li>
+      <a href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+    </li>
+    <li>
       <a href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="../articles/set-values.html">Changing parameter and molecule start values</a>
+      <a href="../articles/create-individual.html">Creating individuals</a>
+    </li>
+    <li>
+      <a href="../articles/create-run-population.html">Population simulations</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Miscellaneous</li>
+    <li>
+      <a href="../articles/efficient-calculations.html">Efficient calculation</a>
     </li>
     <li>
       <a href="../articles/table-parameters.html">Table parameters</a>
@@ -90,7 +100,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/" class="external-link">
+  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -105,13 +115,13 @@
 
       
 
-      </header><script src="run-simulation_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="run-simulation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Running a simulation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/run-simulation.Rmd" class="external-link"><code>vignettes/run-simulation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/run-simulation.Rmd"><code>vignettes/run-simulation.Rmd</code></a></small>
       <div class="hidden name"><code>run-simulation.Rmd</code></div>
 
     </div>
@@ -120,20 +130,20 @@
     
 <div id="running-individual-simulation-and-retrieving-the-results" class="section level2">
 <h2 class="hasAnchor">
-<a href="#running-individual-simulation-and-retrieving-the-results" class="anchor" aria-hidden="true"></a>Running individual simulation and retrieving the results</h2>
+<a href="#running-individual-simulation-and-retrieving-the-results" class="anchor"></a>Running individual simulation and retrieving the results</h2>
 <p>Once the simulation is loaded (see <a href="load-get.html">Loading a simulation and accessing entities</a>), it can be run to produce an object of the class <code>SimulationResults</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
 
 <span class="co"># Load the simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span>
 <span class="co">#&gt; SimulationResults: </span>
 <span class="co">#&gt;   Number of individuals: 1</span></code></pre></div>
 <p>The advantage of storing the results in a object is the option to keep different results of the same simulation produced with different settings (e.g., model parameters).</p>
@@ -159,7 +169,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get simulated results by path</span>
 <span class="va">resultsPath</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
 
 <span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">simulationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span><span class="op">)</span>
@@ -167,32 +177,32 @@
 <span class="va">resultsTime</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>
 <span class="va">resultsValues</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">resultsTime</span>, <span class="va">resultsValues</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">resultsTime</span>, <span class="va">resultsValues</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
 <p><img src="run-simulation_files/figure-html/getOutputValues-1.png" width="700"></p>
 <p>The results can be stored in and imported from a *.csv file with the methods <code>exportResultsToCSV</code> and <code>importResultsFromCSV</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load and run the simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 <span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
 
 <span class="co"># Export to csv</span>
-<span class="va">csvResultsPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"SimResults.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">csvResultsPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"SimResults.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/exportResultsToCSV.html">exportResultsToCSV</a></span><span class="op">(</span>results <span class="op">=</span> <span class="va">simulationResults</span>, filePath <span class="op">=</span> <span class="va">csvResultsPath</span><span class="op">)</span>
 
 <span class="co"># Load from csv</span>
 <span class="va">resultsLoaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importResultsFromCSV.html">importResultsFromCSV</a></span><span class="op">(</span>filePaths <span class="op">=</span> <span class="va">csvResultsPath</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsLoaded</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsLoaded</span><span class="op">)</span>
 <span class="co">#&gt; SimulationResults: </span>
 <span class="co">#&gt;   Number of individuals: 1</span></code></pre></div>
 </div>
 <div id="running-multiple-individual-simulations-and-retrieving-the-results" class="section level2">
 <h2 class="hasAnchor">
-<a href="#running-multiple-individual-simulations-and-retrieving-the-results" class="anchor" aria-hidden="true"></a>Running multiple individual simulations and retrieving the results</h2>
+<a href="#running-multiple-individual-simulations-and-retrieving-the-results" class="anchor"></a>Running multiple individual simulations and retrieving the results</h2>
 <p>In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations the <code>runSimulations</code> function. However, only individual simulations (i.e., the <code>population</code> argument must remain empty) are supported. By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load and run multiple simulations concurrently. </span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 
 <span class="co"># We load 3 times the same simulation for convenience. But in real life scenarios, </span>
 <span class="co"># they should be different simulations</span>
@@ -200,21 +210,21 @@
 <span class="va">sim2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 <span class="va">sim3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
-<span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="va">sim2</span>, <span class="va">sim3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="va">sim2</span>, <span class="va">sim3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The results in this case will be a named list of <code>SimulationResults</code>-object , i.e. one for each simulation. The names of the entries of the list are the ids of the simulation to which the results correspond. This way, it is easy to retrieve the correct results for the specific simulation</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Get the id of the second simulation</span>
 <span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
-<span class="co">#&gt; [1] "YG2267gHIUSvuFNcSg49AA"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
+<span class="co">#&gt; [1] "jSsofH_EUUWafZYS_tHDDw"</span>
 <span class="co">#get the corresponding result</span>
 <span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
-<span class="co">#&gt; [1] "YG2267gHIUSvuFNcSg49AA"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
+<span class="co">#&gt; [1] "jSsofH_EUUWafZYS_tHDDw"</span></code></pre></div>
 </div>
 <div id="adding-new-outputs" class="section level2">
 <h2 class="hasAnchor">
-<a href="#adding-new-outputs" class="anchor" aria-hidden="true"></a>Adding new outputs</h2>
+<a href="#adding-new-outputs" class="anchor"></a>Adding new outputs</h2>
 <p>By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to <code>pkml</code> are generated. The user can add new outputs to the simulation with the method <code>addOutputs</code>. The outputs can be provided either as objects of the type(s) <code>Molecule</code>, <code>Parameter</code>, or <code>Quantity</code>, or as path strings. The output list is a property of the <code>simulation</code>. After adding or removing outputs, the corresponding simulation needs to be re-run in order to generate updated results.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Clear the list of generated outputs</span>
@@ -224,10 +234,10 @@
 <span class="va">molecule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getMolecule.html">getMolecule</a></span><span class="op">(</span><span class="st">"Organism|Kidney|Intracellular|Aciclovir"</span>, <span class="va">sim</span><span class="op">)</span>
 <span class="va">observer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getQuantity.html">getQuantity</a></span><span class="op">(</span><span class="st">"Organism|Lumen|Aciclovir|Fraction dissolved"</span>, <span class="va">sim</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/addOutputs.html">addOutputs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">molecule</span>, <span class="va">observer</span><span class="op">)</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
+<span class="fu"><a href="../reference/addOutputs.html">addOutputs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">molecule</span>, <span class="va">observer</span><span class="op">)</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
 
 <span class="co"># Add new outputs as path strings</span>
-<span class="fu"><a href="../reference/addOutputs.html">addOutputs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Lumen|Stomach|Aciclovir"</span>, 
+<span class="fu"><a href="../reference/addOutputs.html">addOutputs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Organism|Lumen|Stomach|Aciclovir"</span>, 
              <span class="st">"Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"</span><span class="op">)</span>,
            simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>
 
@@ -240,7 +250,7 @@
 
 <span class="co"># Note that "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" </span>
 <span class="co"># is not in the list of generated results any more</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "IndividualId"                                                                  </span>
 <span class="co">#&gt; [2] "Time"                                                                          </span>
 <span class="co">#&gt; [3] "Organism|Kidney|Intracellular|Aciclovir"                                       </span>
@@ -250,10 +260,10 @@
 </div>
 <div id="changing-simulation-intervals" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changing-simulation-intervals" class="anchor" aria-hidden="true"></a>Changing simulation intervals</h2>
+<a href="#changing-simulation-intervals" class="anchor"></a>Changing simulation intervals</h2>
 <p>The simulation interval (i.e., the simulation times at which results are stored) can are stored as the property <code>outputSchema</code> of a <code>Simulation</code> object.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
 <span class="co">#&gt; OutputSchema: </span>
 <span class="co">#&gt; Interval: </span>
 <span class="co">#&gt;   Name: Simulation interval high resolution</span>
@@ -289,7 +299,7 @@
 
 <span class="co"># Add an interval</span>
 <span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">20</span>, resolution <span class="op">=</span> <span class="fl">60</span>, intervalName <span class="op">=</span> <span class="st">"highRes"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
 <span class="co">#&gt; OutputSchema: </span>
 <span class="co">#&gt; Interval: </span>
 <span class="co">#&gt;   Name: highRes</span>
@@ -299,7 +309,7 @@
 
 <span class="co"># Add a second interval</span>
 <span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">30</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span>, intervalName <span class="op">=</span> <span class="st">"lowRes"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
 <span class="co">#&gt; OutputSchema: </span>
 <span class="co">#&gt; Interval: </span>
 <span class="co">#&gt;   Name: highRes</span>
@@ -314,7 +324,7 @@
 
 <span class="co"># Replace the existing interval(s) with a new one</span>
 <span class="fu"><a href="../reference/setOutputInterval.html">setOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span>
 <span class="co">#&gt; OutputSchema: </span>
 <span class="co">#&gt; Interval: </span>
 <span class="co">#&gt;   Name: Output interval</span>
@@ -335,13 +345,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -349,8 +357,6 @@
 
   
 
-
-  
 
   </body>
 </html>

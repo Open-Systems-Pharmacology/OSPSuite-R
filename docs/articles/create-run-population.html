@@ -19,8 +19,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,12 +31,18 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ospsuite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">10.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">10.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -49,32 +53,38 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/create-individual.html">Creating individuals</a>
-    </li>
-    <li>
-      <a href="../articles/create-run-population.html">Population simulations</a>
-    </li>
-    <li>
-      <a href="../articles/efficient-calculations.html">Efficient calculation</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Introduction</li>
     <li>
       <a href="../articles/introduction-ospsuite.html">Introduction to ospsuite</a>
     </li>
+    <li class="divider">
+    <li class="dropdown-header">Primary functions</li>
     <li>
       <a href="../articles/load-get.html">Loading a simulation and accessing entities</a>
     </li>
     <li>
-      <a href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+      <a href="../articles/set-values.html">Changing parameter and molecule start values</a>
     </li>
     <li>
       <a href="../articles/run-simulation.html">Running a simulation</a>
     </li>
     <li>
+      <a href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
+    </li>
+    <li>
       <a href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
     </li>
     <li>
-      <a href="../articles/set-values.html">Changing parameter and molecule start values</a>
+      <a href="../articles/create-individual.html">Creating individuals</a>
+    </li>
+    <li>
+      <a href="../articles/create-run-population.html">Population simulations</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Miscellaneous</li>
+    <li>
+      <a href="../articles/efficient-calculations.html">Efficient calculation</a>
     </li>
     <li>
       <a href="../articles/table-parameters.html">Table parameters</a>
@@ -90,7 +100,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/" class="external-link">
+  <a href="https://github.com/open-systems-pharmacology/ospsuite-r/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -105,13 +115,13 @@
 
       
 
-      </header><script src="create-run-population_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="create-run-population_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Population simulations</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/create-run-population.Rmd" class="external-link"><code>vignettes/create-run-population.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/master/vignettes/create-run-population.Rmd"><code>vignettes/create-run-population.Rmd</code></a></small>
       <div class="hidden name"><code>create-run-population.Rmd</code></div>
 
     </div>
@@ -120,31 +130,31 @@
     
 <div id="population-simulations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#population-simulations" class="anchor" aria-hidden="true"></a>Population simulations</h2>
-<p>Population simulations can be easily performed in R by combining the simulation loaded from a *.pkml file with the population information created in PK-Sim and exported to CSV format (for details, please refer to <a href="https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-creating-populations" class="external-link">OSPS online documentation</a>) or created directly in R (see <a href="#creating-populations">Creating populations</a>).</p>
+<a href="#population-simulations" class="anchor"></a>Population simulations</h2>
+<p>Population simulations can be easily performed in R by combining the simulation loaded from a *.pkml file with the population information created in PK-Sim and exported to CSV format (for details, please refer to <a href="https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-creating-populations">OSPS online documentation</a>) or created directly in R (see <a href="#creating-populations">Creating populations</a>).</p>
 <div id="loading-population-file" class="section level3">
 <h3 class="hasAnchor">
-<a href="#loading-population-file" class="anchor" aria-hidden="true"></a>Loading population file</h3>
+<a href="#loading-population-file" class="anchor"></a>Loading population file</h3>
 <p>The method <code>loadPopulation</code> creates an object of the <code>Population</code> class that can be passed to the <code>runSimulation</code> method (see <a href="run-simulation.html">Running simulations and retrieving the results</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
 <span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span>
 <span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span>
 <span class="co"># Load population information from csv</span>
-<span class="va">popFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pop.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">popFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pop.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">myPopulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadPopulation.html">loadPopulation</a></span><span class="op">(</span>csvPopulationFile <span class="op">=</span> <span class="va">popFilePath</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span>
 <span class="co">#&gt; Population: </span>
 <span class="co">#&gt;   Number of Individuals: 10</span></code></pre></div>
 </div>
 </div>
 <div id="SectionCreatePopulation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#SectionCreatePopulation" class="anchor" aria-hidden="true"></a>Creating populations</h2>
+<a href="#SectionCreatePopulation" class="anchor"></a>Creating populations</h2>
 <p>Similar to creating individual parameter sets (see <a href="create-individual.html">Creating individuals</a>), a population is created from <em>population characteristics</em> created by calling the method <code>createPopulationCharacteristics</code>. To see the list of available values for the arguments <code>species</code> and <code>population</code> (only for human), use the enums <code>Species</code> and <code>HumanPopulation</code>, respectively. The returned object of type <code>PopulationCharacteristics</code> is then passed to the function <code>createPopulation</code> to generate a set of parameter values. The algorithm behind is the same used in PK-Sim when creating an population. Molecule ontogenies can be added as described in the vignette <a href="create-individual.html">Creating individuals</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
 
 <span class="co">#If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".</span>
 <span class="va">populationCharacteristics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createPopulationCharacteristics.html">createPopulationCharacteristics</a></span><span class="op">(</span>
@@ -160,7 +170,7 @@
                                             ageMin <span class="op">=</span> <span class="fl">0</span>,
                                             ageMax <span class="op">=</span> <span class="fl">80</span>,
                                             ageUnit <span class="op">=</span> <span class="st">"year(s)"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">populationCharacteristics</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">populationCharacteristics</span><span class="op">)</span>
 <span class="co">#&gt; PopulationCharacteristics: </span>
 <span class="co">#&gt;   Species: Human</span>
 <span class="co">#&gt;   Population: Asian_Tanaka_1996</span>
@@ -175,37 +185,37 @@
 <span class="co"># Create population from population characteristics</span>
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createPopulation.html">createPopulation</a></span><span class="op">(</span>populationCharacteristics <span class="op">=</span> <span class="va">populationCharacteristics</span><span class="op">)</span>
 <span class="va">myPopulation</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">population</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span>
 <span class="co">#&gt; Population: </span>
 <span class="co">#&gt;   Number of Individuals: 50</span></code></pre></div>
 </div>
 <div id="running-population-simulation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#running-population-simulation" class="anchor" aria-hidden="true"></a>Running population simulation</h2>
+<a href="#running-population-simulation" class="anchor"></a>Running population simulation</h2>
 <p>To run a population simulation, the <code>Population</code> object created by the <code>createPopulation</code> method must be passed to the <code>runSimulation</code> method:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r">ospsuite</a></span><span class="op">)</span>
 
 <span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Run population simulation</span>
 <span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, population <span class="op">=</span> <span class="va">myPopulation</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span>
 <span class="co">#&gt; SimulationResults: </span>
 <span class="co">#&gt;   Number of individuals: 50</span></code></pre></div>
 <p>Population simulations are run in parallel on multi-core machines - one core simulates a subset of all individuals defined in the population. By default, the number of cores used equals the maximal number of logical cores available minus one. The user can change the default behavior by providing custom <code>SimulationRunOptions</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load simulation</span>
-<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
+<span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Create a SimulationRunOptions object</span>
 <span class="va">simRunOptions</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimulationRunOptions.html">SimulationRunOptions</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simRunOptions</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">simRunOptions</span><span class="op">)</span>
 <span class="co">#&gt; SimulationRunOptions: </span>
-<span class="co">#&gt;   numberOfCores: 15</span>
+<span class="co">#&gt;   numberOfCores: 7</span>
 <span class="co">#&gt;   checkForNegativeValues: TRUE</span>
 <span class="co">#&gt;   showProgress: FALSE</span>
 
@@ -215,7 +225,7 @@
 
 <span class="co"># Run population simulation with custom options</span>
 <span class="va">populationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, population <span class="op">=</span> <span class="va">myPopulation</span>, simulationRunOptions <span class="op">=</span> <span class="va">simRunOptions</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">populationResults</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">populationResults</span><span class="op">)</span>
 <span class="co">#&gt; SimulationResults: </span>
 <span class="co">#&gt;   Number of individuals: 50</span></code></pre></div>
 <p>Simulated time-value pairs for a specific output from the <code>SimulationResults</code>-object returned by the <code>runSimulation</code> method can be accessed with the method <code>getOutputValues</code>. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), or the object(s) of the type <code>Molecule</code>, <code>Parameter</code>, or <code>Quantity</code> (for observers) with the argument <code>quantitiesOrPaths</code>. If no output is specified, all outputs available in the simulation results are returned. The paths of all available outputs can be accessed via</p>
@@ -239,7 +249,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get simulated results by path</span>
 <span class="va">resultsPath</span> <span class="op">&lt;-</span> <span class="va">populationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
 
 <span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">populationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span><span class="op">)</span>
@@ -247,22 +257,22 @@
 <span class="va">resultsTime</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>
 <span class="va">resultsValues</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">resultsTime</span>, <span class="va">resultsValues</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">resultsTime</span>, <span class="va">resultsValues</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
 <p><img src="create-run-population_files/figure-html/getOutputValues-1.png" width="700"></p>
 <p>To get the results for a specific individual or a set of individuals, the argument <code>individualIds</code> of the method <code>getOutputValues</code> can be specified:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get simulated results by path</span>
 <span class="va">resultsPath</span> <span class="op">&lt;-</span> <span class="va">populationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span>
 
 <span class="co">#Get only the results for individuals with IDs 1 and 2</span>
-<span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">populationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span>, individualIds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">populationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span>, individualIds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">resultsTime</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span>
 <span class="va">resultsValues</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">resultsTime</span>, <span class="va">resultsValues</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">resultsTime</span>, <span class="va">resultsValues</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
 <p><img src="create-run-population_files/figure-html/getOutputValuesForIndividual-1.png" width="700"></p>
 <p>For more information about running simulations, please refer to <a href="run-simulation.html">Running simulations and retrieving the results</a>.</p>
 </div>
@@ -279,13 +289,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -293,8 +301,6 @@
 
   
 
-
-  
 
   </body>
 </html>
