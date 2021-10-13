@@ -6,8 +6,7 @@ addBranch <- function(originalPathString, arrayToGo) {
     endList <- list()
     endList$path <- originalPathString
     return(endList)
-  }
-  else {
+  } else {
     # If arrayToGo is still not empty, remove its leading element and create a sub-branch list corresponding to the structure of the remaining elements of arrayToGo
     newBranch <- list()
     newBranch[[arrayToGo[1]]] <- addBranch(originalPathString, tail(arrayToGo, -1))
@@ -19,8 +18,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
   # Recursive function that adds a multilayer list to listSoFar that has a branched structure representing the vector of strings arrayToGo.
   if (length(arrayToGo) == 0) { # If end of string vector arrayToGo has been reached, create a vector called 'path' and give it the value 'originalString'.
     listSoFar$path <- originalString
-  }
-  else { # End of branch has not been reached.
+  } else { # End of branch has not been reached.
     # If this portion of the string vector arrayToGo has not been added to listToGo yet, add it using the function addBranch
     if (is.null(listSoFar[[arrayToGo[1]]])) {
       listSoFar[[arrayToGo[1]]] <- addBranch(originalString, tail(arrayToGo, -1))
@@ -34,7 +32,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 }
 
 #'  Given a simulation file path or an instance of a simulation, traverses the simulation structure and returns a tree like structure
-#'  allowing for intuitive navigration in the simulation tree
+#'  allowing for intuitive navigation in the simulation tree
 #
 #' @param simulationOrFilePath Full path of the simulation to load or instance of a simulation
 #' @return A list with a branched structure representing the path tree of Quantities in the simulation file.

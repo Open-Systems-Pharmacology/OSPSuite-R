@@ -102,10 +102,22 @@ test_that("It throws an error when the number of parameters differs from the num
   expect_that(setParameterValues(parameters, c(1:5)), throws_error())
 })
 
+test_that("It throws an error when the number of parameters differs from the number units", {
+  parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
+  parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
+  expect_that(setParameterValues(parameters = parameters, values = c(1:6), units = c("l", "ml")), throws_error())
+})
+
 test_that("It can set the value of a single parameter", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
   setParameterValues(parameter, 1)
   expect_equal(parameter$value, 1)
+})
+
+test_that("It can set the value of a single parameter with unit", {
+  parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
+  setParameterValues(parameters = parameter, values = 1, units = "ml")
+  expect_equal(parameter$value, 1e-3)
 })
 
 test_that("It can set the values of multiple parameters", {
@@ -115,6 +127,15 @@ test_that("It can set the values of multiple parameters", {
     x$value
   })
   expect_equal(newVals, c(1:6))
+})
+
+test_that("It can set the values of multiple parameters with units", {
+  parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
+  setParameterValues(parameters, c(1:6), units = rep(c("l", "ml"), 3))
+  newVals <- sapply(parameters, function(x) {
+    x$value
+  })
+  expect_equal(newVals, c(1:6) * c(1, 1e-3))
 })
 
 test_that("It can set a single values in multiple parameters", {

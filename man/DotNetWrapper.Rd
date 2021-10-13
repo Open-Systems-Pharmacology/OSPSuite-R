@@ -11,7 +11,7 @@ Wrapper class for .net Object
 
 \describe{
 \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
+\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET Read-Only property}
 }
 }
 
@@ -62,6 +62,7 @@ A new \code{DotNetWrapper} object.
 \if{html}{\out{<a id="method-finalize"></a>}}
 \if{latex}{\out{\hypertarget{method-finalize}{}}}
 \subsection{Method \code{finalize()}}{
+Clears the reference to the wrapped .NET object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DotNetWrapper$finalize()}\if{html}{\out{</div>}}
 }

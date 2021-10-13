@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-pk-parameter.R
 \name{addUserDefinedPKParameter}
 \alias{addUserDefinedPKParameter}
-\title{Adds a User-Defined PK-Parameter to the managed list of PK-Parameters}
+\title{Adds and returns a User-Defined PK-Parameter to the managed list of PK-Parameters}
 \usage{
 addUserDefinedPKParameter(
   name,
@@ -16,24 +16,33 @@ addUserDefinedPKParameter(
 
 \item{standardPKParameter}{Defined the standard PK-Parameter to use to perform the calculations}
 
-\item{displayName}{Unit in which the value will be exported}
+\item{displayName}{Display Name to use when exporting the values (optional, default value is name)}
 
-\item{displayUnit}{Display Name to use when exporting the values (optional, default value is name)}
+\item{displayUnit}{Unit in which the value will be exported}
+}
+\value{
+The newly created \code{UserDefinedPKParameter}that was added to the list of PK-Parameters
 }
 \description{
-Adds a User-Defined PK-Parameter to the managed list of PK-Parameters
+Adds and returns a User-Defined PK-Parameter to the managed list of PK-Parameters
 }
 \examples{
 
-# Adds a user defined parameter named MyAuc that will calculat the value of AUC
+# Adds a user defined parameter named MyAuc that will calculate the value of AUC
 # between t=50 min and t=80min
-myAUC <- addUserDefinedPKParameter(name = "MyAUC", standardPKParameter = StandardPKParameter$AUC_tEnd)
+myAUC <- addUserDefinedPKParameter(
+  name = "MyAUC",
+  standardPKParameter = StandardPKParameter$AUC_tEnd
+)
 myAUC$startTime <- 50
 myAUC$endTime <- 80
 
-# Adds a user defined parameter named MyCMax that will calculat the value of Cmax
+# Adds a user defined parameter named MyCMax that will calculate the value of Cmax
 # between the 4th and 5th application
-myCMax <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$C_max)
+myCMax <- addUserDefinedPKParameter(
+  name = "MyCMax",
+  standardPKParameter = StandardPKParameter$C_max
+)
 myCMax$startApplicationIndex <- 4
 myCMax$endApplicationIndex <- 5
 }

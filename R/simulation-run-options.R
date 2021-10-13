@@ -10,13 +10,13 @@ SimulationRunOptions <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param numberOfCores Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}
-    #' @param checkForNegativeValues Should the solver check for negative values. Default is \code{TRUE}
-    #' @param showProgress Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}
+    #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
+    #' @param checkForNegativeValues Should the solver check for negative values. Default is `TRUE`
+    #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SimulationRunOptions` object.
     initialize = function(numberOfCores = NULL,
-                              checkForNegativeValues = NULL,
-                              showProgress = NULL) {
+                          checkForNegativeValues = NULL,
+                          showProgress = NULL) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationRunOptions")
       super$initialize(ref)
       self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
@@ -36,15 +36,15 @@ SimulationRunOptions <- R6::R6Class(
   ),
   active = list(
     #' @field numberOfCores (Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
-    #' Default is \code{getOSPSuiteSetting("numberOfCores")}.
+    #' Default is `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
       private$wrapIntegerProperty("NumberOfCoresToUse", value)
     },
-    #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is \code{TRUE}
+    #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is `TRUE`
     checkForNegativeValues = function(value) {
       private$wrapProperty("CheckForNegativeValues", value)
     },
-    #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is \code{getOSPSuiteSetting("showProgress")}
+    #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is `getOSPSuiteSetting("showProgress")`
     showProgress = function(value) {
       private$wrapProperty("ShowProgress", value)
     }

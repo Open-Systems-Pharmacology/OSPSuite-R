@@ -1,6 +1,6 @@
 #' @title TableFormula
 #' @docType class
-#' @description  A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
+#' @description  A table formula of the model (Typically related to a `Quantity` such as a parameter)
 #' @name Formula
 #' @format NULL
 TableFormula <- R6::R6Class(
@@ -8,7 +8,7 @@ TableFormula <- R6::R6Class(
   cloneable = FALSE,
   inherit = Formula,
   active = list(
-    #' @field allPoints Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).
+    #' @field allPoints Returns all points defined in the table formulafor a `TableFormula` or `NULL`  otherwise (Read-Only).
     allPoints = function(value) {
       if (missing(value)) {
         toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
@@ -16,7 +16,7 @@ TableFormula <- R6::R6Class(
         private$throwPropertyIsReadonly("allPoints")
       }
     },
-    #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}
+    #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is `TRUE`
     useDerivedValues = function(value) {
       private$wrapProperty("UseDerivedValues", value)
     },
@@ -58,7 +58,7 @@ TableFormula <- R6::R6Class(
     },
     #' @description
     #' Replace all points defined in the table with the new values given.
-    #' This is a convenience method for callign `clearPoints` and `addPoints`
+    #' This is a convenience method for calling `clearPoints` and `addPoints`
     #' @param xValues x values (single value or array) in base unit for XDimension
     #' @param yValues y values (single value or array) in base unit for Dimension
     setPoints = function(xValues, yValues) {

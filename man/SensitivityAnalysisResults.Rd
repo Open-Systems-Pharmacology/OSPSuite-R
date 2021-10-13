@@ -13,7 +13,7 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitiviy analysis results (Read-Only).}
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
 
 \item{\code{count}}{the number of pk parameter sensitivity entries}
 
@@ -93,7 +93,7 @@ parameter participating to a total of 90 percent of the sensitivity would be ret
 \if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
 \if{latex}{\out{\hypertarget{method-pkParameterSensitivityValueFor}{}}}
 \subsection{Method \code{pkParameterSensitivityValueFor()}}{
-Returns the sensisivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns \code{NaN}
+Returns the sensitivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns \code{NaN}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$pkParameterSensitivityValueFor(
   pkParameterName,

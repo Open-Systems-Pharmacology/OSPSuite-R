@@ -2,28 +2,41 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulation}
 \alias{runSimulation}
-\title{Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation}
+\title{DEPRECATED
+\code{runSimulations} should be used in favor of  \code{runSimulation}. The latter will be removed in future releases
+Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.}
 \usage{
-runSimulation(simulation, population = NULL, simulationRunOptions = NULL)
+runSimulation(
+  simulation,
+  population = NULL,
+  agingData = NULL,
+  simulationRunOptions = NULL
+)
 }
 \arguments{
-\item{simulation}{Instance of a \code{Simulation} to simulate.}
+\item{simulation}{One \code{Simulation} to simulate.}
 
-\item{population}{Optional instance of a \code{Population} to use for the simulation}
+\item{population}{Optional instance of a \code{Population} to use for the simulation. This is only used when simulating one simulation
+Alternatively, you can also pass the result of \code{createPopulation} directly. In this case, the population will be extracted}
+
+\item{agingData}{Optional instance of \code{AgingData} to use for the simulation. This is only used with a population simulation}
 
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}
 }
 \value{
-SimulationResults (one entry per Individual)
+SimulationResults (one entry per Individual) for a single simulation
 }
 \description{
-Runs a simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation
+DEPRECATED
+\code{runSimulations} should be used in favor of  \code{runSimulation}. The latter will be removed in future releases
+Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 # Running an individual simulation
+# results is an instance of `SimulationResults`
 results <- runSimulation(sim)
 
 # Creating custom simulation run options

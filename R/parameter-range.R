@@ -1,6 +1,6 @@
 #' @title ParameterRange
 #' @docType class
-#' @description  A parameter rnage typically used in the definition of \code{PopulationCharacteristics} covariates (Height, Weight etc...)
+#' @description  A parameter range typically used in the definition of `PopulationCharacteristics` covariates (Height, Weight etc...)
 #'
 #' @format NULL
 #' @export

@@ -23,16 +23,16 @@ If not specified, the time will end at the last time point of the simulation (op
 
 \item{\code{endTimeOffset}}{Offset in \link{min} to apply to the end time (0 by default).}
 
-\item{\code{startApplicationIndex}}{1-based Index of the appplication to use to determine the start time for the calculation of the PK-Parameter.
+\item{\code{startApplicationIndex}}{1-based Index of the application to use to determine the start time for the calculation of the PK-Parameter.
 If not specified, the time will start at the first time point of the simulation (optional)}
 
-\item{\code{endApplicationIndex}}{1-based Index of the appplication to use to determine the end time for the calculation of the PK-Parameter.
+\item{\code{endApplicationIndex}}{1-based Index of the application to use to determine the end time for the calculation of the PK-Parameter.
 If not specified, the time will end at the last time point of the simulation (optional)}
 
 \item{\code{normalizationFactor}}{Factor to use to normalized the calculated PK-Parameter. (typically DrugMass, Dose, Dose per bodyweight).
-It is the responsability of the caller to ensure that the value is in the correct unit. (optional)}
+It is the responsibility of the caller to ensure that the value is in the correct unit. (optional)}
 
-\item{\code{concentrationThreshold}}{Used in conjonction with the \code{threshold} parameter type.
+\item{\code{concentrationThreshold}}{Used in conjunction with the \code{threshold} parameter type.
 If defined, the time at which this concentration was reached will be calculated}
 
 \item{\code{standardPKParameter}}{Based parameter to use to perform the PK-Analysis calculation.

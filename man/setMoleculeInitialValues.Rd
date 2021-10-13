@@ -4,14 +4,17 @@
 \alias{setMoleculeInitialValues}
 \title{Set molecule start values}
 \usage{
-setMoleculeInitialValues(molecules, values)
+setMoleculeInitialValues(molecules, values, units = NULL)
 }
 \arguments{
 \item{molecules}{A single or a list of \code{Molecule}}
 
 \item{values}{A numeric value that should be assigned to the molecule start value or a vector
 of numeric values, if the start value of more than one molecule should be changed. Must have the same
-length as 'molecules'}
+length as \code{molecules}}
+
+\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
+are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantities}.}
 }
 \description{
 Set molecule start values
@@ -23,8 +26,8 @@ sim <- loadSimulation(simPath)
 molecule <- getMolecule("Organism|Liver|A", sim)
 setMoleculeInitialValues(molecule, 1)
 molecules <- getAllMoleculesMatching("Organism|**|A", sim)
-setMoleculeInitialValues(molecules, c(2, 3))
+setMoleculeInitialValues(molecules, c(2, 3), units = c("pmol", "mmol"))
 }
 \seealso{
-\code{\link{getMolecule}} and \code{\link{getAllMoleculesMatching}} to retrieve objects of type Molecule
+\code{\link[=getMolecule]{getMolecule()}} and \code{\link[=getAllMoleculesMatching]{getAllMoleculesMatching()}} to retrieve objects of type Molecule
 }

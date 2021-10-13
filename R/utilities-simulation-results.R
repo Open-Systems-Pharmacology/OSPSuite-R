@@ -4,28 +4,32 @@
 #' and returns time-values profiles for the chosen quantities. Results of a simulation
 #' of a single individual is treated as a population simulation with only one individual.
 #'
-#' @param simulationResults Object of type \code{SimulationResults} produced by calling \code{runSimulation}
-#' on a \code{Simulation} object.
+#' @param simulationResults Object of type `SimulationResults` produced by calling `runSimulation`
+#' on a `Simulation` object.
 #'
 #' @param quantitiesOrPaths Quantity instances (element or vector) typically retrieved using
-#' \code{getAllQuantitiesMatching} or quantity path (element or vector of strings) for which the results are to be returned. (optional)
+#' `getAllQuantitiesMatching` or quantity path (element or vector of strings) for which the results are to be returned. (optional)
 #' When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
-#' If quantitiesOrPaths is \code{NULL} (default value), returns the results for all output defined in the results.
+#' If quantitiesOrPaths is `NULL` (default value), returns the results for all output defined in the results.
 #'
-#' @param individualIds \code{numeric} IDs of individiuals for which the results should be extracted.
+#' @param individualIds `numeric` IDs of individuals for which the results should be extracted.
 #' By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored
 #'
 #' @param population population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.
 #'
-#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is \code{TRUE}
-#' @param stopIfNotFound If \code{TRUE} (default) an error is thrown if no results exist for any `path`
-#' If \code{FALSE}, a list of \code{NA} values is returned for the repsecitve path.
+#' @param stopIfNotFound Boolean. If TRUE and no result exist for the given path, an error is thrown. Default is `TRUE`
+#' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results exist for any `path`. If `FALSE`, a list of `NA` values is returned for the respective path.
+#' @param addMetaData If `TRUE` (default), the output is a list two sublists `data`and
+#' `metaData`, with latter storing information about units and dimensions of the outputs. If `FALSE`, `metaData` is `NULL`. Setting this option to `FALSE` might improve
+#' the performance of the function.
+#'
 #' @export
 getOutputValues <- function(simulationResults,
                             quantitiesOrPaths = NULL,
                             population = NULL,
                             individualIds = NULL,
-                            stopIfNotFound = TRUE) {
+                            stopIfNotFound = TRUE,
+                            addMetaData = TRUE) {
   validateIsOfType(simulationResults, SimulationResults)
   validateIsOfType(population, Population, nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
@@ -34,16 +38,20 @@ getOutputValues <- function(simulationResults,
   quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
-  # If quantities are passed, get their paths.
-  paths <- quantitiesOrPaths
-  if (isOfType(paths, Quantity)) {
-    paths <- unlist(lapply(paths, function(x) x$path))
-  }
-  paths <- unique(paths)
-
-  if (length(paths) == 0) {
+  if (length(quantitiesOrPaths) == 0) {
     return(list(data = NULL, metaData = NULL))
   }
+
+  # If quantities are provided, get their paths
+  paths <- vector("character", length(quantitiesOrPaths))
+  if (isOfType(quantitiesOrPaths, Quantity)) {
+    for (idx in seq_along(quantitiesOrPaths)) {
+      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
+    }
+  } else {
+    paths <- quantitiesOrPaths
+  }
+  paths <- unique(paths)
 
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
@@ -53,13 +61,8 @@ getOutputValues <- function(simulationResults,
   valueLength <- length(timeValues)
   covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
 
-  values <- list()
-  metaData <- list(
-    Time = list(unit = "min", dimension = "Time")
-  )
-
   individualPropertiesCache <- vector("list", length(individualIds))
-  # create a cache of all indivdual values that are constant independent from the path
+  # create a cache of all individual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
     individualId <- individualIds[individualIndex]
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
@@ -77,11 +80,28 @@ getOutputValues <- function(simulationResults,
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
   allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
 
+  values <- lapply(paths, function(path) {
+    simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+  })
+  names(values) <- paths
 
-  for (path in paths) {
-    quantity <- getQuantity(path, simulationResults$simulation, stopIfNotFound = stopIfNotFound)
-    metaData[[path]] <- list(unit = quantity$unit, dimension = quantity$dimension)
-    values[[path]] <- simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
+  # Use low-level methods to get unit and dimension
+  task <- getContainerTask()
+  metaData <- NULL
+  if (addMetaData) {
+    metaData <- lapply(paths, function(path) {
+      unit <- NULL
+      dimension <- NULL
+      # Get the dimension and unit from path if the results are obtained. If the results
+      # are NA, the entity with such path does not exist
+      if (!all(is.na(values[[path]]))) {
+        unit <- rClr::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path))
+        dimension <- rClr::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path))
+      }
+      list(unit = unit, dimension = dimension)
+    })
+    names(metaData) <- paths
+    metaData[["Time"]] <- list(unit = "min", dimension = "Time")
   }
 
   data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
@@ -90,7 +110,7 @@ getOutputValues <- function(simulationResults,
 
 #' Saves the simulation results to csv file
 #'
-#' @param results Results to export (typically calculated using \code{runSimulation} or imported from file)
+#' @param results Results to export (typically calculated using `runSimulation` or imported from file)
 #' @param filePath Full path where the results will be saved.
 #'
 #' @examples
@@ -117,6 +137,10 @@ exportResultsToCSV <- function(results, filePath) {
   invisible()
 }
 
+#' @inherit exportResultsToCSV
+saveResultsToCSV <- function(results, filePath) {
+  exportResultsToCSV(results, filePath)
+}
 
 #' Imports the simulation results from one or more csv files
 #'
@@ -139,7 +163,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, Simulation)
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)

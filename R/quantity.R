@@ -17,53 +17,53 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit")
+      private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
+      return(private$.unit)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
     displayUnit = function(value) {
-      private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit")
+      private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value)
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension")
+      private$.dimension <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
+      return(private$.dimension)
     },
-    #' @field  allUnits the list of all supported units
+    #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
-      # Optimized implememtation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
-      if (is.null(private$.allUnits)) {
-        private$.allUnits <- private$wrapExtensionMethod(WITH_DIMENSION_EXTENSION, "AllUnitNames", allUnits)
-      }
+      # Optimized implementation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
+      private$.allUnits <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", private$.allUnits, value)
       return(private$.allUnits)
     },
     #' @field quantityType The type of the quantity (Read-Only)
     quantityType = function(value) {
       private$wrapReadOnlyProperty("QuantityTypeAsString", value)
     },
-    #' @field formula An instance of a \code{Formula} object used by this quantity (Read-Only)
+    #' @field formula An instance of a `Formula` object used by this quantity (Read-Only)
     formula = function(value) {
       private$readOnlyProperty("formula", value, private$.formula)
     },
-    #' @field isTable Returns \code{TRUE} if the formula used by this quantity is a table formula otherwise \code{FALSE}
+    #' @field isTable Returns `TRUE` if the formula used by this quantity is a table formula otherwise `FALSE`
     isTable = function(value) {
       private$readOnlyProperty("isTable", value, self$formula$isTable)
     },
-    #' @field isConstant Returns \code{TRUE} if the formula used by this quantity is a constant formula otherwise \code{FALSE}
+    #' @field isConstant Returns `TRUE` if the formula used by this quantity is a constant formula otherwise `FALSE`
     isConstant = function(value) {
       private$readOnlyProperty("isConstant", value, self$formula$isConstant)
     },
-    #' @field isFormula Returns \code{TRUE} if the formula used by this quantity is an explicit formula (e.g an equation) otherwise \code{FALSE}
+    #' @field isFormula Returns `TRUE` if the formula used by this quantity is an explicit formula (e.g an equation) otherwise `FALSE`
     isFormula = function(value) {
       private$readOnlyProperty("isFormula", value, self$formula$isExplicit)
     },
-    #' @field isDistributed Returns \code{TRUE} if the quantity represents a quantity with an underlying distribution otherwise \code{FALSE}
+    #' @field isDistributed Returns `TRUE` if the quantity represents a quantity with an underlying distribution otherwise `FALSE`
     isDistributed = function(value) {
       private$readOnlyProperty("isDistributed", value, self$formula$isDistributed)
     },
-    #' @field formulaString Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.
+    #' @field formulaString Returns the equation of the formula for a quantity using an explicit formula (e.g. `isFormula == TRUE`) or `NULL` for a quantity that does not use an explicit formula.
     formulaString = function(value) {
       private$readOnlyProperty("formulaString", value, self$formula$formulaString)
     },
-    #' @field isFixedValue Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}
+    #' @field isFixedValue Returns `TRUE` if the formula was overridden by a constant value, otherwise `FALSE`
     isFixedValue = function(value) {
       private$wrapProperty("IsFixedValue", value)
     }
@@ -71,6 +71,8 @@ Quantity <- R6::R6Class(
   private = list(
     .formula = NULL,
     .allUnits = NULL,
+    .unit = NULL,
+    .dimension = NULL,
     printQuantity = function(valueCaption = "Value") {
       private$printClass()
       private$printLine("Path", self$path)
@@ -126,22 +128,22 @@ Quantity <- R6::R6Class(
       validateIsNumeric(value)
       validateIsString(unit, nullAllowed = TRUE)
       if (!is.null(unit)) {
-        unit <- enc2utf8(unit)
+        unit <- encodeUnit(unit)
         validateHasUnit(self, unit)
         value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
       }
       self$value <- value
     },
     #' @description
-    #' Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
-    #' For the list of supported units, use \code{allUnits}
+    #' Returns `TRUE` if the quantity supports the given unit otherwise `FALSE`.
+    #' For the list of supported units, use `allUnits`
     #' @param unit Unit to check
     hasUnit = function(unit) {
       validateIsString(unit)
-      unit %in% self$allUnits
+      any(self$allUnits == unit)
     },
     #' @description
-    #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
+    #' Ensures that the quantity uses the value computed by its formula. It is a shortcut for `self$isFixedValue <- false`.
     reset = function() {
       self$isFixedValue <- FALSE
     }

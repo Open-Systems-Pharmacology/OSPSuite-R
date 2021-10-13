@@ -58,11 +58,11 @@ SimulationPKAnalyses <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field simulation Reference to the \code{Simulation} used to calculate or import the PK-Analyses (Read-Only)
+    #' @field simulation Reference to the `Simulation` used to calculate or import the PK-Analyses (Read-Only)
     simulation = function(value) {
       private$readOnlyProperty("simulation", value, private$.simulation)
     },
-    #' @field allPKParameterNames Returns the name of all pk parameters for which a value is availalbe
+    #' @field allPKParameterNames Returns the name of all pk parameters for which a value is available
     allPKParameterNames = function(value) {
       private$readOnlyProperty("allPKParameterNames", value, rClr::clrGet(self$ref, "AllPKParameterNames"))
     },

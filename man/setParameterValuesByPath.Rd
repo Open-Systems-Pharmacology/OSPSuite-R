@@ -4,7 +4,13 @@
 \alias{setParameterValuesByPath}
 \title{Set the values of parameters in the simulation by path}
 \usage{
-setParameterValuesByPath(parameterPaths, values, simulation)
+setParameterValuesByPath(
+  parameterPaths,
+  values,
+  simulation,
+  stopIfNotFound = TRUE,
+  units = NULL
+)
 }
 \arguments{
 \item{parameterPaths}{A single or a list of parameter path}
@@ -14,6 +20,12 @@ of numeric values, if the value of more than one parameter should be changed. Mu
 length as 'parameterPaths'}
 
 \item{simulation}{Simulation uses to retrieve parameter instances from given paths.}
+
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no parameter exists for the given path,
+an error is thrown. If \code{FALSE}, a warning is shown to the user}
+
+\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
+are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantityPaths}.}
 }
 \description{
 Set the values of parameters in the simulation by path

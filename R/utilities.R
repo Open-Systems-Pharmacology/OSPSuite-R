@@ -1,7 +1,7 @@
-#' Transforms a single .NET object  or a list of .NET Object to their correpsonding wrapper class in R.
+#' Transforms a single .NET object  or a list of .NET Object to their corresponding wrapper class in R.
 #' Note that if the object is a single object, NULL will be returned if the .NET object is null. This allows semantic equivalence between .NET and R
 #'
-#' @param netObject The .NET object instances (single or list) to wrapp
+#' @param netObject The .NET object instances (single or list) to wrap
 #' @param class The class definition that will be used to convert the parameter
 #'
 #' @return The wrapped object (single or list)
@@ -30,16 +30,57 @@ toObjectType <- function(netObject, class) {
 }
 
 
-#' Mimic the ternary operator  \code{a ? x : y} behavior in other languages
-#' If \code{condition} is not null, returns \code{outputIfNotNull} otherwise \code{outputIfNull}
+#' Shortkey checking if argument 1 is not null,
+#' output the argument 2 if not null, or output argument 3 otherwise
 #'
-#' @param condition The .NET object instances (single or list) to wrapp
-#' @param outputIfNotNull The class definition that will be used to convert the parameter
-#' @param outputIfNull The class definition that will be used to convert the parameter
+#' @title ifnotnull
+#' @param condition argument 1
+#' @param outputIfNotNull argument 2
+#' @param outputIfNull argument 3
+#' @return outputIfNotNull if condition is not null, outputIfNull otherwise
+#' @description
+#' Check if condition is not null, if so output outputIfNotNull,
+#' otherwise, output outputIfNull
 ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
   if (!is.null(condition)) {
     outputIfNotNull
   } else {
     outputIfNull
   }
+}
+
+#' This is required to ensure that we have no issue using the mu symbol in different OS
+#' See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details
+#' @param unit Unit to encode
+#' @import stringr
+encodeUnit <- function(unit) {
+  mu <- ospsuiteEnv$muSymbol
+  unit <- enc2utf8(unit)
+  unit <- str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)
+  unit <- str_replace(unit, rawToChar(as.raw(c(0xc2, 0xb5))), mu)
+  unit <- str_replace(unit, rawToChar(as.raw(0xb5)), mu)
+}
+
+#' Make sure the object is a list
+#'
+#' @param object To be converted to a list
+#'
+#' @return If `is.list(object) == TRUE`, returns the `object`, otherwise `list(object)`
+toList <- function(object) {
+  if (is.list(object)) {
+    return(object)
+  }
+  return(list(object))
+}
+
+
+#' Retrieves the name of the constant in the specified enumeration that has the specified value.
+#'
+#' @inheritParams rClr::clrGetEnumNames
+#' @param enumValue The value of a particular enumerated constant in terms of its underlying type. Typically an integer.
+#'
+#' @return A string containing the name of the enumerated constant in enumType whose value is enumValue; or null if no such constant is found.
+netEnumName <- function(enumType, enumValue) {
+  netTypeObj <- rClr::clrGetType(enumType)
+  rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }

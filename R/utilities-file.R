@@ -1,13 +1,13 @@
-# Returns a consistent base-R flavoured path
+# Returns a consistent base-R flavored path
 .homogenizePath <- function(winPath) {
   if (is.na(winPath) || !nzchar(winPath)) {
     return(NA)
   }
 
-  # get consistency (unix speparators) with R-base
+  # get consistency (unix separators) with R-base
   result <- gsub("\\\\", "/", winPath)
 
-  # remove trailing slash for consistancy with R-base
+  # remove trailing slash for consistency with R-base
   result <- sub("/$", "", result)
 
   return(result)
@@ -19,7 +19,7 @@
   .addPathToSystemPath(libPath)
 }
 
-# Adds the paramter pathToAdd to the system path
+# Adds the parameter `pathToAdd` to the system path
 .addPathToSystemPath <- function(pathToAdd) {
   if (!file.exists(pathToAdd)) {
     return()
@@ -34,7 +34,7 @@
 }
 
 
-#' Returns the expanded path for `path` and ensure that encoding is applied propertly
+#' Returns the expanded path for `path` and ensure that encoding is applied properly
 #'
 #' @param  path Path to expand
 expandPath <- function(path) {

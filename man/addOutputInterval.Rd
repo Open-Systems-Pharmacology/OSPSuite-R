@@ -21,7 +21,7 @@ addOutputInterval(
 
 \item{resolution}{resolution in points/min}
 
-\item{intervalName}{Optional Name of interval. If not specified, a unique name wil be assigned.}
+\item{intervalName}{Optional Name of interval. If not specified, a unique name will be assigned.}
 }
 \value{
 Returns the interval created.

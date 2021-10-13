@@ -7,6 +7,11 @@ test_that("It throws an error when no valid entities are provided", {
   expect_that(uniqueEntities("String"), throws_error())
 })
 
+test_that("It returns the entity for uniqueEntities with one passed entity", {
+  parameter <- getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim)
+  expect_equal(uniqueEntities(parameter)[[1]], parameter)
+})
+
 test_that("It throws an error when no valid 'compareBy' is provided", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim)
   expect_that(uniqueEntities(parameter, compareBy = 2), throws_error())

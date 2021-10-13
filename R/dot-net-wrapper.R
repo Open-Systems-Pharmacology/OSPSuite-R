@@ -6,7 +6,7 @@
 #' @section Methods:
 #' \describe{
 #'   \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-#'   \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET readonly property}
+#'   \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET Read-Only property}
 #'   }
 #'
 DotNetWrapper <- R6::R6Class(
@@ -22,6 +22,8 @@ DotNetWrapper <- R6::R6Class(
     initialize = function(ref) {
       self$ref <- ref
     },
+    #' @description
+    #' Clears the reference to the wrapped .NET object
     finalize = function() {
       # maybe dispose should be called to if available.
       self$ref <- NULL
@@ -37,9 +39,12 @@ DotNetWrapper <- R6::R6Class(
           return()
         }
         if (isOfType(type = "character", object = value)) {
-          rClr::clrSet(self$ref, propertyName, enc2utf8(value))
-        }
-        else {
+          # isOfType returns TRUE for empty `object` and enc2utf8(value) fails
+          if (length(value) > 0) {
+            value <- enc2utf8(value)
+          }
+          rClr::clrSet(self$ref, propertyName, value)
+        } else {
           rClr::clrSet(self$ref, propertyName, value)
         }
       }
@@ -58,7 +63,16 @@ DotNetWrapper <- R6::R6Class(
         private$throwPropertyIsReadonly(propertyName)
       }
     },
-
+    wrapExtensionMethodCached = function(typename, methodName, propertyName, cachedValue, value) {
+      if (missing(value)) {
+        if (is.null(cachedValue)) {
+          return(rClr::clrCallStatic(typename, methodName, self$ref))
+        }
+        return(cachedValue)
+      } else {
+        private$throwPropertyIsReadonly(propertyName)
+      }
+    },
     readOnlyProperty = function(propertyName, value, returnValue) {
       if (missing(value)) {
         returnValue
@@ -66,7 +80,6 @@ DotNetWrapper <- R6::R6Class(
         private$throwPropertyIsReadonly(propertyName)
       }
     },
-
     wrapIntegerProperty = function(propertyName, value) {
       # Special method needed because of double to int conversion issues between R and .NET
       if (missing(value)) {
@@ -75,7 +88,16 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value))
       }
     },
-
+    wrapNullableIntegerProperty = function(propertyName, value) {
+      if (missing(value)) {
+        return(rClr::clrGet(self$ref, propertyName))
+      }
+      if (is.null(value)) {
+        return()
+      } else {
+        rClr::clrSet(self$ref, propertyName, as.integer(value))
+      }
+    },
     wrapIndexProperty = function(propertyName, value) {
       # Special method needed because Index are 0-based in .NET but 1-based in R
       if (missing(value)) {
@@ -84,7 +106,17 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value - 1))
       }
     },
-
+    wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName) {
+      if (missing(value)) {
+        rClr::clrGet(self$ref, returnPropertyName)
+      } else {
+        if (length(value) > 1) {
+          rClr::clrSet(self$ref, propertyNamePlural, value)
+        } else {
+          rClr::clrSet(self$ref, propertyNameSingular, value)
+        }
+      }
+    },
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     }

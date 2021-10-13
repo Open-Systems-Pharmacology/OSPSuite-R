@@ -1,9 +1,9 @@
 
 #' Retrieve all quantities of a container (simulation or container instance) matching the given path criteria
 #'
-#' @param paths A vector of strings relative to the \code{container}
+#' @param paths A vector of strings relative to the `container`
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return A list of quantities matching the path criteria. The list is empty if no quantity matching were found.
 #' @examples
@@ -29,7 +29,7 @@ getAllQuantitiesMatching <- function(paths, container) {
 #' Retrieves the path of all quantities defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso \code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
 #'
 #' @return An array with one entry per quantity defined in the container
 #' @examples
@@ -44,16 +44,16 @@ getAllQuantityPathsIn <- function(container) {
   getAllEntityPathsIn(container, Quantity)
 }
 
-#' Retrieve a single quantty by path in the given container
+#' Retrieve a single quantity by path in the given container
 #'
 #' @inherit getAllQuantitiesMatching
-#' @param path A string representing the path relative to the \code{container}
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param path A string representing the path relative to the `container`
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 #'
-#' @return The \code{Quantity} with the given path. If the quantity for the path
-#' does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
-#' otherwise \code{NULL}
+#' @return The `Quantity` with the given path. If the quantity for the path
+#' does not exist, an error is thrown if `stopIfNotFound` is `TRUE` (default),
+#' otherwise `NULL`
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -67,16 +67,18 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 
 #' Set values of quantity
 #'
-#' @param quantities A single or a list of \code{Quantity}
+#' @param quantities A single or a list of `Quantity`
 #'
 #' @param values A numeric value that should be assigned to the quantity or a vector
 #' of numeric values, if the value of more than one quantity should be changed. Must have the same
 #' length as 'quantities'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
+#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
+#' are assumed to be in base units. If not `NULL`, must have the same length as `quantities`.
 #'
-setQuantityValues <- function(quantities, values) {
+setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
-  quantities <- c(quantities)
+  quantities <- toList(quantities)
   values <- c(values)
 
   # Test for correct inputs
@@ -85,20 +87,77 @@ setQuantityValues <- function(quantities, values) {
 
   if (length(values) > 1) {
     validateIsSameLength(quantities, values)
-  }
-  else {
+  } else {
     values <- rep(values, length(quantities))
+  }
+
+  if (!is.null(units)) {
+    validateIsSameLength(quantities, units)
+    validateIsString(units)
   }
 
   for (i in seq_along(quantities)) {
     quantity <- quantities[[i]]
-    quantity$value <- values[[i]]
+    value <- values[[i]]
+    if (!is.null(units)) {
+      value <- toBaseUnit(quantityOrDimension = quantity, values = value, unit = units[[i]])
+    }
+    quantity$value <- value
+  }
+}
+
+#' Set the values of parameters in the simulation by path
+#'
+#' @param quantityPaths A single or a list of absolute quantity path
+#' @param values A numeric value that should be assigned to the quantities or a vector
+#' of numeric values, if the value of more than one quantity should be changed. Must have the same
+#' length as 'quantityPaths'
+#' @param simulation Simulation uses to retrieve quantity instances from given paths.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
+#' an error is thrown. If `FALSE`, a warning is shown to the user
+#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
+#' are assumed to be in base units. If not `NULL`, must have the same length as `quantityPaths`.
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' setQuantityValuesByPath("Organism|Liver|Volume", 1, sim)
+#'
+#' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
+#' @export
+setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
+  validateIsString(quantityPaths)
+  validateIsNumeric(values)
+  validateIsSameLength(quantityPaths, values)
+  validateIsOfType(simulation, Simulation)
+
+  if (!is.null(units)) {
+    validateIsSameLength(quantityPaths, units)
+    validateIsString(units)
+  }
+
+  task <- getContainerTask()
+  for (i in seq_along(quantityPaths)) {
+    path <- enc2utf8(quantityPaths[[i]])
+    value <- values[[i]]
+    if (!is.null(units)) {
+      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path)
+      value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
+    }
+
+    rClr::clrCall(
+      task, "SetValueByPath",
+      simulation$ref,
+      path,
+      value,
+      stopIfNotFound
+    )
   }
 }
 
 #' Scale current values of quantities using a factor
 #'
-#' @param quantities A single or a list of \code{Quantity}
+#' @param quantities A single or a list of `Quantity`
 #'
 #' @param factor A numeric value that will be used to scale all quantities
 #'
@@ -116,7 +175,7 @@ scaleQuantityValues <- function(quantities, factor) {
 
 #' Retrieves the display path of the quantity defined by path in the simulation
 #'
-#' @param paths A single string or array of paths path relative to the \code{simulation}
+#' @param paths A single string or array of paths path relative to the `simulation`
 #' @param simulation A imulation used to find the entities
 #'
 #' @return a display path for each entry in paths
@@ -136,5 +195,5 @@ getQuantityDisplayPaths <- function(paths, simulation) {
     return(rClr::clrCall(displayResolver, "FullPathFor", quantity$ref))
   })
 
-  return(unlist(displayPaths))
+  return(unlist(displayPaths, use.names = FALSE))
 }

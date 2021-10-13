@@ -3,20 +3,17 @@ require 'openssl'
 
 require_relative 'scripts/copy-dependencies'
 require_relative 'scripts/utils'
+require_relative 'scripts/R'
 require_relative 'scripts/colorize'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-task :prepare_for_build, [:product_version] do |t, args|
-  product_version = sanitized_version(args.product_version)
- 
+task :prepare_for_build, [:build_version] do |t, args|
+  update_package_version(args.build_version, description_file)
   copy_files_to_lib_folder
-
-  update_package_version(product_version)
-
-  install_pksim()
+  install_pksim('develop')
 end
 
 task :postclean do 
@@ -29,6 +26,7 @@ end
 # This task is temporary until we have an automated linux build
 task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, args|
   product_version = sanitized_version(args.product_version)
+
   build_dir = args.build_dir
   linux_distro = args.linux_distro
 
@@ -75,16 +73,15 @@ end
 private
 def copy_so(file, linux_distro, target_dir)
   native_folder = '/bin/native/x64/Release/'
-  copy_depdencies packages_dir, target_dir do
+  copy_dependencies packages_dir, target_dir do
     copy_files "#{file}.#{linux_distro}*/**/#{native_folder}", 'so'
     copy_files "#{file}.#{linux_distro}*/**/netstandard*", 'dll'
   end
 end
 
-def install_pksim()
+def install_pksim(branch)
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
-  branch = 'hotfix/v9.1'
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
@@ -143,36 +140,24 @@ end
 
 def copy_packages_files
   native_folder = '/bin/native/x64/Release/'
-  copy_depdencies packages_dir, lib_dir do
+  copy_dependencies packages_dir, lib_dir do
     # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
-    copy_files '*/**/netstandard*', 'dll'
+    copy_files '*/**/netstandard2.0', 'dll'
 
     # Copy all x64 release dll and so from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
+
+    #special case for NPOI that does not work in .net standard mode
+    copy_files 'NPOI*/**/net45', 'dll'
   end
 
 end
 
 def copy_modules_files
-  copy_depdencies solution_dir, lib_dir do
+  copy_dependencies solution_dir, lib_dir do
     copy_dimensions_xml
     copy_pkparameters_xml
   end
-end
-
-def sanitized_version(version) 
-  pull_request_index = version.index('-')
-  return version unless pull_request_index
-  version.slice(0, pull_request_index)
-end
-
-def update_package_version(version) 
-  #Replace token Version: x.y.z with the version from appveyor
-  replacement = {
-    /Version: \d\.\d\.\d/ => "Version: #{version}"
-  }
-
-  Utils.replace_tokens(replacement, description_file)
 end
 
 def nuget_restore(os)

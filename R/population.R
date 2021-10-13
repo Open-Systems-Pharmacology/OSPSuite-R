@@ -26,15 +26,16 @@ Population <- R6::R6Class(
   ),
   public = list(
     #' @description
-    #' Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
+    #' Returns `TRUE` if the population has variability defined for `parameterOrPath` otherwise `FALSE`
     #' @param parameterOrPath Parameter instance of parameter path
     has = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)
       rClr::clrCall(self$ref, "Has", parameterPath)
     },
     #' @description
-    #' Sets the variability values in the population for \code{parameterOrPath}
-    #' @param parameterOrPath Parameter instance of parameter path
+    #' Updates or adds the variability values in the population for `parameterOrPath`.
+    #' @param parameterOrPath Parameter instance of parameter path.
+    #' If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.
     #' @param values double vector containing the value to set for the `parameterOrPath`
     setParameterValues = function(parameterOrPath, values) {
       parameterPath <- private$getPathFrom(parameterOrPath)
@@ -43,7 +44,7 @@ Population <- R6::R6Class(
       invisible(self)
     },
     #' @description
-    #' Returns the variability values defined in the population for \code{parameterOrPath}
+    #' Returns the variability values defined in the population for `parameterOrPath`
     #' @param parameterOrPath Parameter instance of parameter path
     getParameterValues = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)
@@ -56,14 +57,14 @@ Population <- R6::R6Class(
       rClr::clrCall(self$ref, "GetCovariateValues", covariateName)
     },
     #' @description
-    #' Returns the values defined in the population for the covariate named `covariateName` and invididual with id `individualId`
+    #' Returns the values defined in the population for the covariate named `covariateName` and individual with id `individualId`
     #' @param covariateName Name of covariate for which values should be retrieved
     #' @param individualId Id of individual for which the value for covariate `covariateName` should be retrieved
     getCovariateValue = function(covariateName, individualId) {
       rClr::clrCall(self$ref, "CovariateValueFor", covariateName, as.integer(individualId))
     },
     #' @description
-    #' Returns all values defined in the population the invididual with id `individualId`
+    #' Returns all values defined in the population the individual with id `individualId`
     #' @param individualId Id of individual for which all values should be returned
     getParameterValuesForIndividual = function(individualId) {
       parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/enum.R
 \name{enum}
 \alias{enum}
-\title{Create an enumeration to be used instead of arbitraty values in code.}
+\title{Create an enumeration to be used instead of arbitrary values in code.}
 \usage{
 enum(enumValues)
 }
@@ -13,10 +13,9 @@ enum(enumValues)
 the Enum created
 }
 \description{
-Create an enumeration to be used instead of arbitraty values in code.
+Create an enumeration to be used instead of arbitrary values in code.
 }
 \examples{
-\dontrun{
 # Without predefined values
 Color <- enum(c("Red", "Blue", "Green"))
 myColor <- Color$Red
@@ -24,5 +23,4 @@ myColor <- Color$Red
 # With predefined values
 Symbol <- enum(c(Diamond = 1, Triangle = 2, Circle = 2))
 mySymbol <- Symbol$Diamond
-}
 }

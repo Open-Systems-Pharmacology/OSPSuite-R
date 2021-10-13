@@ -1,21 +1,29 @@
-#' @title Adds a User-Defined PK-Parameter to the managed list of PK-Parameters
+#' @title Adds and returns a User-Defined PK-Parameter to the managed list of PK-Parameters
 #'
 #' @param name Name of the user defined PK-Parameter
 #' @param standardPKParameter Defined the standard PK-Parameter to use to perform the calculations
-#' @param displayUnit Display Name to use when exporting the values (optional, default value is name)
-#' @param displayName Unit in which the value will be exported
+#' @param displayName Display Name to use when exporting the values (optional, default value is name)
+#' @param displayUnit Unit in which the value will be exported
+#'
+#' @return The newly created `UserDefinedPKParameter`that was added to the list of PK-Parameters
 #'
 #' @examples
 #'
-#' # Adds a user defined parameter named MyAuc that will calculat the value of AUC
+#' # Adds a user defined parameter named MyAuc that will calculate the value of AUC
 #' # between t=50 min and t=80min
-#' myAUC <- addUserDefinedPKParameter(name = "MyAUC", standardPKParameter = StandardPKParameter$AUC_tEnd)
+#' myAUC <- addUserDefinedPKParameter(
+#'   name = "MyAUC",
+#'   standardPKParameter = StandardPKParameter$AUC_tEnd
+#' )
 #' myAUC$startTime <- 50
 #' myAUC$endTime <- 80
 #'
-#' # Adds a user defined parameter named MyCMax that will calculat the value of Cmax
+#' # Adds a user defined parameter named MyCMax that will calculate the value of Cmax
 #' # between the 4th and 5th application
-#' myCMax <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$C_max)
+#' myCMax <- addUserDefinedPKParameter(
+#'   name = "MyCMax",
+#'   standardPKParameter = StandardPKParameter$C_max
+#' )
 #' myCMax$startApplicationIndex <- 4
 #' myCMax$endApplicationIndex <- 5
 #' @export
@@ -25,7 +33,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateIsString(displayName, nullAllowed = TRUE)
   validateIsString(displayUnit, nullAllowed = TRUE)
 
-  displayUnit <- enc2utf8(displayUnit %||% "")
+  displayUnit <- encodeUnit(displayUnit %||% "")
   displayName <- enc2utf8(displayName %||% "")
 
   pkParameterTask <- getNetTask("PKParameterTask")
@@ -75,8 +83,8 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' @title Returns an instance of a PK-Parameter by name or NULL if the parameter by name is not found
 #'
 #' @param name Name of PK-Parameter to update
-#' @param stopIfNotFound Boolean. If \code{TRUE} (default) and no pk parameter exist for the given name,
-#' an error is thrown. If \code{FALSE}, \code{NULL} is returned.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no pk parameter exist for the given name,
+#' an error is thrown. If `FALSE`, `NULL` is returned.
 #'
 #' @examples
 #'

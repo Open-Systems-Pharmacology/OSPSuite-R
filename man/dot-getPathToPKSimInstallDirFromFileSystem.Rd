@@ -6,7 +6,7 @@
 Searching is done in the following order:
 \enumerate{
 \item Search via filesystem in a guessed installation folder from the base.search.folder
-\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
+\item Search via filesystem for PKSim.exe recursively from the defined base.search.folder (fallback)
 }}
 \usage{
 .getPathToPKSimInstallDirFromFileSystem(
@@ -21,7 +21,7 @@ Searching is done in the following order:
 }
 \value{
 The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 If more than one matching path is found a warning is produced.
 }
 \description{
@@ -29,7 +29,7 @@ Tries to find the installation path for a specific version of PK-Sim via the fil
 Searching is done in the following order:
 \enumerate{
 \item Search via filesystem in a guessed installation folder from the base.search.folder
-\item Search via filesystem for PKSim.exe recursivly from the defined base.search.folder (fallback)
+\item Search via filesystem for PKSim.exe recursively from the defined base.search.folder (fallback)
 }
 }
 \examples{

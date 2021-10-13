@@ -1,8 +1,8 @@
-#' @title Calculates the pkAnalyses for all output values available in \code{results}.
+#' @title Calculates the pkAnalyses for all output values available in `results`.
 #'
-#' @param results Results of simulation. Typically the \code{results} are calculated using \code{runSimulation} or imported from csv file via \code{importResults}
+#' @param results Results of simulation. Typically the `results` are calculated using `runSimulation` or imported from csv file via `importResults`
 #'
-#' @return An instance of \code{SimulationPKAnalyses} class.
+#' @return An instance of `SimulationPKAnalyses` class.
 #'
 #' @examples
 #'
@@ -18,16 +18,14 @@ calculatePKAnalyses <- function(results) {
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
-  rClr::clrSet(calculatePKAnalysisArgs, "NumberOfIndividuals", as.integer(results$count))
   rClr::clrSet(calculatePKAnalysisArgs, "SimulationResults", results$ref)
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "CalculateFor", calculatePKAnalysisArgs)
   SimulationPKAnalyses$new(pkAnalyses, results$simulation)
 }
 
-
 #' @title Saves the pK-analyses  to csv file
 #'
-#' @param pkAnalyses pK-Analyses to export (typically calculated using \code{calculatePKAnalyses} or imported from file)
+#' @param pkAnalyses pK-Analyses to export (typically calculated using `calculatePKAnalyses` or imported from file)
 #' @param filePath Full path where the pK-Analyses will be saved.
 #'
 #' @export
@@ -38,6 +36,11 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
+}
+
+#' @inherit exportPKAnalysesToCSV
+savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
+  exportPKAnalysesToCSV(pkAnalyses, filePath)
 }
 
 #' @title Loads the pK-analyses from csv file
@@ -59,25 +62,28 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 
 #' @title Convert the pk-Analysis to data frame
 #'
-#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using \code{calculatePKAnalyses} or imported from file)
-#' @importFrom utils read.csv
+#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using `calculatePKAnalyses` or imported from file)
 #'
 #' @export
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
   validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   pkParameterResultsFilePath <- tempfile()
-  dataFrame <- tryCatch({
-    exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
-    pkResultsDataFrame <- read.csv(pkParameterResultsFilePath, encoding = "UTF-8", check.names = FALSE)
-    colnames(pkResultsDataFrame) <- c("IndividualId", "QuantityPath", "Parameter", "Value", "Unit")
-    pkResultsDataFrame$QuantityPath <- as.factor(pkResultsDataFrame$QuantityPath)
-    pkResultsDataFrame$Parameter <- as.factor(pkResultsDataFrame$Parameter)
-    pkResultsDataFrame$Unit <- as.factor(pkResultsDataFrame$Unit)
-    return(pkResultsDataFrame)
-  },
-  finally = {
-    file.remove(pkParameterResultsFilePath)
-  }
+  dataFrame <- tryCatch(
+    {
+      exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
+      colTypes <- list(
+        IndividualId = readr::col_integer(),
+        QuantityPath = readr::col_factor(),
+        Parameter = readr::col_factor(),
+        Value = readr::col_double(),
+        Unit = readr::col_factor()
+      )
+      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = colTypes)
+      return(pkResultsDataFrame)
+    },
+    finally = {
+      file.remove(pkParameterResultsFilePath)
+    }
   )
   return(dataFrame)
 }

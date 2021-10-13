@@ -120,3 +120,13 @@ test_that("It can retrieve all ids define ina population", {
   population <- loadPopulation(populationFileName)
   expect_length(population$allIndividualIds, 10)
 })
+
+context("exportPopulationToCSV")
+
+test_that("It can export valid population to CSV", {
+  executeWithTestFile(function(csvFile) {
+    population <- loadPopulation(populationFileName)
+    exportPopulationToCSV(population, csvFile)
+    expect_true(file.exists(csvFile))
+  })
+})

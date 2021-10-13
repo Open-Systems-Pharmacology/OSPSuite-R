@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImporterConfiguration fileName="D:\Work\OSPS\Repos\OSPSuite-R\tests\data\CompiledDataSet.xlsx" namingConventions="{Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}.{Group Id}" version="15">
+  <Parameters>
+    <MappingDataFormatParameter columnName="Time [h]">
+      <MappedColumn name="Time">
+        <Unit columnName="TimeUnit" selectedUnit="h" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
+    <MappingDataFormatParameter columnName="Concentration (mass)[ng/ml]">
+      <MappedColumn name="Measurement">
+        <Unit columnName="measurementUnit" selectedUnit="ng/ml" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
+    <MappingDataFormatParameter columnName="Error [ng/ml]">
+      <MappedColumn errorStdDev="Arithmetic Standard Deviation" name="Error">
+        <Unit columnName="measurementUnit" selectedUnit="ng/ml" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
+    <MetaDataFormatParameter columnName="Study Id" metaDataId="Study Id" isColumn="1" />
+    <MetaDataFormatParameter columnName="Organ" metaDataId="Organ" isColumn="1" />
+    <MetaDataFormatParameter columnName="Compartment" metaDataId="Compartment" isColumn="1" />
+    <MetaDataFormatParameter columnName="Species" metaDataId="Species" isColumn="1" />
+    <MetaDataFormatParameter columnName="Gender" metaDataId="Gender" isColumn="1" />
+    <MetaDataFormatParameter columnName="Molecule" metaDataId="Molecule" isColumn="1" />
+    <MetaDataFormatParameter columnName="Route" metaDataId="Route" isColumn="1" />
+    <MetaDataFormatParameter columnName="MW" metaDataId="Molecular Weight" isColumn="1" />
+    <MetaDataFormatParameter columnName="Patient Id" metaDataId="Subject Id" isColumn="1" />
+    <MetaDataFormatParameter columnName="Dose [unit]" metaDataId="Dose" isColumn="1" />
+    <GroupByDataFormatParameter columnName="Group Id" />
+  </Parameters>
+  <LoadedSheets>
+    <LoadedSheetsChild>UnitsFromColumn</LoadedSheetsChild>
+    <LoadedSheetsChild>UnitsFromColumn_secondSheet</LoadedSheetsChild>
+  </LoadedSheets>
+</ImporterConfiguration>

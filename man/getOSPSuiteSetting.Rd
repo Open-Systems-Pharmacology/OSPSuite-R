@@ -16,6 +16,6 @@ Value of the setting stored in ospsuiteEnv. If the setting does not exist, an er
 Get the value of a global ospsuite-R setting.
 }
 \examples{
-getOSPSuiteSetting("packageVersion")
+getOSPSuiteSetting("suiteVersion")
 getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 }

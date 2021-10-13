@@ -21,7 +21,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 
 \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 
-\item{\code{allUnits}}{the list of all supported units}
+\item{\code{allUnits}}{the list of all supported units (Read-Only)}
 
 \item{\code{quantityType}}{The type of the quantity (Read-Only)}
 
@@ -37,7 +37,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 
 \item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
 
-\item{\code{isFixedValue}}{Returns \code{TRUE} of the formua was overriden by a constant value otherwise \code{FALSE}}
+\item{\code{isFixedValue}}{Returns \code{TRUE} if the formula was overridden by a constant value, otherwise \code{FALSE}}
 }
 \if{html}{\out{</div>}}
 }

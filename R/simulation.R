@@ -62,7 +62,7 @@ Simulation <- R6::R6Class(
     },
     #' @description
     #' Returns the name of all xenobiotoc floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
-    #' This is typically a molecule that is being explicitely simulated such as Compound, Inhibitor, DrugComplex.
+    #' This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
     allXenobioticFloatingMoleculeNames = function() {
       rClr::clrCall(private$.buildConfiguration, "AllPresentXenobioticFloatingMoleculeNames")
     },
@@ -85,7 +85,7 @@ Simulation <- R6::R6Class(
       mw %||% NA
     },
     #' @description
-    #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an emtpty list if not found
+    #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an empty list if not found
     #' @param quantityPath Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)
     allApplicationsFor = function(quantityPath) {
       validateIsString(quantityPath)

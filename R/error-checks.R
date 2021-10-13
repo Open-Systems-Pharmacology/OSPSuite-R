@@ -8,18 +8,24 @@ isSameLength <- function(...) {
 #' Check if the provided object is of certain type
 #'
 #' @param object An object or a list of objects
-#' @param type String  representation or Class of the type that should be checked for
+#' @param type String representation or Class of the type that should be checked for
+#' @param nullAllowed Boolean flag if `NULL` is accepted for the `object`. If `TRUE`,
+#' `NULL` always returns `TRUE`, otherwise `NULL` returns `FALSE`. Default is `FALSE`
 #'
 #' @return TRUE if the object or all objects inside the list are of the given type.
 #' Only the first level of the given list is considered.
-isOfType <- function(object, type) {
+isOfType <- function(object, type, nullAllowed = FALSE) {
   if (is.null(object)) {
-    return(FALSE)
+    return(nullAllowed)
   }
 
   type <- typeNamesFrom(type)
-  inheritType <- function(x) inherits(x, type)
-
+  inheritType <- function(x) {
+    if (is.null(x) && nullAllowed) {
+      return(TRUE)
+    }
+    inherits(x, type)
+  }
   if (inheritType(object)) {
     return(TRUE)
   }
@@ -28,32 +34,54 @@ isOfType <- function(object, type) {
   all(sapply(object, inheritType))
 }
 
+#' Check if the provided object is of certain type. If not, stop with an error.
+#'
+#' @param object An object or a list of objects
+#' @param type String representation or Class of the type that should be checked for
+#' @param nullAllowed Boolean flag if `NULL` is accepted for the `object`. If `TRUE`,
+#' `NULL` is always valid, otherwise the error is thrown. Default is `FALSE`
 validateIsOfType <- function(object, type, nullAllowed = FALSE) {
-  if (nullAllowed && is.null(object)) {
+  type <- c(type)
+
+  # special case for integer to ensure that we call the special method
+  if (length(type) == 1 && type[1] == "integer") {
+    return(validateIsInteger(object, nullAllowed = nullAllowed))
+  }
+
+  if (isOfType(object, type, nullAllowed)) {
     return()
   }
 
-  if (isOfType(object, type)) {
-    return()
-  }
   # Name of the variable in the calling function
   objectName <- deparse(substitute(object))
   objectTypes <- typeNamesFrom(type)
 
+  # There might be no call stack available if called from terminal
+  callStack <- as.character(sys.call(-1)[[1]])
+  # Object name is one frame further for functions such as ValidateIsNumeric
+  if ((length(callStack) > 0) && grepl(pattern = "validateIs", x = callStack)) {
+    objectName <- deparse(substitute(object, sys.frame(-1)))
+  }
+
   stop(messages$errorWrongType(objectName, class(object)[1], objectTypes))
 }
 
+#' Check if `value` is in the given {enum}. If not, stops with an error.
+#'
+#' @param enum `enum` where the `value` should be contained
+#' @param value `value` to search for in the `enum`
+#' @param nullAllowed If TRUE, `value` can be `NULL` and the test always passes.
+#' If `FALSE` (default), NULL is not accepted and the test fails.
 validateEnumValue <- function(value, enum, nullAllowed = FALSE) {
-  if (nullAllowed && is.null(value)) {
-    return()
-  }
-
   if (is.null(value)) {
+    if (nullAllowed) {
+      return()
+    }
     stop(messages$errorEnumValueUndefined(enum))
   }
 
   enumKey <- getEnumKey(enum, value)
-  if (enumKey %in% names(enum)) {
+  if (any(names(enum) == enumKey)) {
     return()
   }
 
@@ -76,7 +104,7 @@ validateIsString <- function(object, nullAllowed = FALSE) {
 
 validateIsNumeric <- function(object, nullAllowed = FALSE) {
   # Only NA values. It is numeric
-  if (all(is.na(object))) {
+  if (all(is.na(object)) && !any(is.null(object))) {
     return()
   }
 
@@ -88,7 +116,8 @@ validateIsInteger <- function(object, nullAllowed = FALSE) {
     return()
   }
 
-  if (all(floor(object) == object, na.rm = TRUE)) {
+  # Making sure we check for numeric values before calling floor
+  if (inherits(object, "numeric") && all(floor(object) == object, na.rm = TRUE)) {
     return()
   }
 
@@ -124,4 +153,11 @@ validateIsSameLength <- function(...) {
   arguments <- paste(lapply(argnames[-1], as.character), collapse = ", ")
 
   stop(messages$errorDifferentLength(arguments))
+}
+
+validatePathIsAbsolute <- function(path) {
+  wildcardChar <- "*"
+  if (any(unlist(strsplit(path, ""), use.names = FALSE) == wildcardChar)) {
+    stop(messages$errorEntityPathNotAbsolute(path))
+  }
 }

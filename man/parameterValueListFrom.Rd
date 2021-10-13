@@ -4,7 +4,7 @@
 \alias{parameterValueListFrom}
 \title{Converts a list of .NET \code{ParameterValue} into a list with 2 entries: \code{paths}, \code{values}.
 A 3rd optional entry \code{units} will be defined if the parameter \code{addUnits} is set to \code{TRUE}.
-Note: Untis are only available for .NET object of type \code{ParameterValueWithUnit}}
+Note: Units are only available for .NET object of type \code{ParameterValueWithUnit}}
 \usage{
 parameterValueListFrom(netParameterValues, addUnits = FALSE)
 }
@@ -19,5 +19,5 @@ A list with 3 sublist: \code{paths}, \code{values}, and optionally \code{units} 
 \description{
 Converts a list of .NET \code{ParameterValue} into a list with 2 entries: \code{paths}, \code{values}.
 A 3rd optional entry \code{units} will be defined if the parameter \code{addUnits} is set to \code{TRUE}.
-Note: Untis are only available for .NET object of type \code{ParameterValueWithUnit}
+Note: Units are only available for .NET object of type \code{ParameterValueWithUnit}
 }

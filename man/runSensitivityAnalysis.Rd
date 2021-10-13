@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-sensitivity-analysis.R
 \name{runSensitivityAnalysis}
 \alias{runSensitivityAnalysis}
-\title{Runs a sensitivity analaysis}
+\title{Runs a sensitivity analysis}
 \usage{
 runSensitivityAnalysis(
   sensitivityAnalysis,
@@ -18,7 +18,7 @@ runSensitivityAnalysis(
 SimulationResults (one entry per Individual)
 }
 \description{
-Runs a sensitivity analaysis
+Runs a sensitivity analysis
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

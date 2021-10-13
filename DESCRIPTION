@@ -1,25 +1,25 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 9.1.0
+Version: 10.0.70
 Authors@R: 
-    c(person(given = "Open-Systems-Pharmacology Community",
-             role = "cph"),
-      person(given = "Michael",
-             family = "Sevestre",
-             role = c("aut", "cre"),
-             email = "michael@design2code.ca"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+    c(person("Open-Systems-Pharmacology Community", role = "cph"),
+      person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
+      person("Pavel", "Balazki", role = "aut"),
+      person("Juri", "Solodenko", role = "aut"))
+Description: The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
+  created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 License: GPL-2 | file LICENSE
 URL: https://github.com/open-systems-pharmacology/ospsuite-r
 BugReports: 
     https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
-    R (>= 3.5),
-    rClr (>= 0.8.3)
+    R (>= 3.6),
+    rClr (>= 0.9.1)
 Imports: 
-    R6
+    R6,
+    stringr,
+    readr
 Suggests: 
     knitr,
     rmarkdown,
@@ -27,19 +27,24 @@ Suggests:
     pander
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
+    'aging-data.R'
     'api-config.R'
     'application.R'
     'cache.R'
     'container.R'
     'create-individual.R'
     'create-population.R'
+    'data-column.R'
+    'enum.R'
+    'data-importer-configuration.R'
+    'data-repository.R'
+    'data-set.R'
     'dot-net-wrapper.R'
     'entity.R'
-    'enum.R'
     'error-checks.R'
     'formula.R'
     'get-net-task.R'
@@ -68,6 +73,9 @@ Collate:
     'sensitivity-analysis-results.R'
     'sensitivity-analysis-run-options.R'
     'sensitivity-analysis.R'
+    'simulation-batch-options.R'
+    'simulation-batch-run-values.R'
+    'simulation-batch.R'
     'simulation-pk-analyses.R'
     'simulation-results.R'
     'simulation-run-options.R'
@@ -80,6 +88,8 @@ Collate:
     'table-formula.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
+    'utilities-data-repository.R'
+    'utilities-data-set.R'
     'utilities-dot-net.R'
     'utilities-entity.R'
     'utilities-file.R'

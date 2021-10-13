@@ -17,42 +17,45 @@ PopulationCharacteristics <- R6::R6Class(
     proportionOfFemales = function(value) {
       private$wrapIntegerProperty("ProportionOfFemales", value)
     },
-    #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})
+    #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see `Species`)
     species = function(value) {
       private$wrapProperty("Species", value)
     },
-    #' @field population For a Human species, the population of intereset. It should be a population available in PK-Sim (see \code{HumanPopulation})
+    #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see `HumanPopulation`)
     population = function(value) {
       private$wrapProperty("Population", value, shouldSetNull = FALSE)
     },
-    #' @field age Age range of the population as in instance of a \code{ParameterRange} (optional)
+    #' @field age Age range of the population as in instance of a `ParameterRange` (optional)
     age = function(value) {
       private$parameterRangeProperty("Age", value)
     },
-    #' @field gestationalAge Gestational Age range of the population as in instance of a \code{ParameterRange} (optional)
+    #' @field gestationalAge Gestational Age range of the population as in instance of a `ParameterRange` (optional)
     gestationalAge = function(value) {
       private$parameterRangeProperty("GestationalAge", value)
     },
-    #' @field weight Weight range of the population as in instance of a \code{ParameterRange} (optional)
+    #' @field weight Weight range of the population as in instance of a `ParameterRange` (optional)
     weight = function(value) {
       private$parameterRangeProperty("Weight", value)
     },
-    #' @field height Height range of the population as in instance of a \code{ParameterRange} (optional)
+    #' @field height Height range of the population as in instance of a `ParameterRange` (optional)
     height = function(value) {
       private$parameterRangeProperty("Height", value)
     },
-    #' @field BMI BMI range of the population as in instance of a \code{ParameterRange} (optional)
+    #' @field BMI BMI range of the population as in instance of a `ParameterRange` (optional)
     BMI = function(value) {
       private$parameterRangeProperty("BMI", value)
     },
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
       private$readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
+    },
+    #' @field seed Seed used to generate the population
+    seed = function(value) {
+      private$wrapNullableIntegerProperty("Seed", value)
     }
   ),
   private = list(
     .moleculeOntogenies = NULL,
-
     printRange = function(caption, range) {
       if (is.null(range)) {
         return()
@@ -92,8 +95,12 @@ PopulationCharacteristics <- R6::R6Class(
       private$printRange("Weight", self$weight)
       private$printRange("Height", self$height)
       private$printRange("BMI", self$BMI)
+
       for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
+      }
+      if (!is.null(self$seed)) {
+        private$printLine("Seed", self$seed)
       }
       invisible(self)
     },

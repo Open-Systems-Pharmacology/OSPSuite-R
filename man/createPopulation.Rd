@@ -11,9 +11,12 @@ createPopulation(populationCharacteristics)
 that are actually distributed parameters}
 }
 \value{
-An list with two entries:
-The \code{population} An instance of a population object.
-The \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+An list with three entries:
+\itemize{
+\item \code{population} An instance of a population object.
+\item \code{derivedParameters} containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
+\item \code{seed} containing the seed value used to generate random values
+}
 }
 \description{
 Creates an population using the PKSim Database

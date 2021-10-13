@@ -22,16 +22,16 @@ Once the simulation is loaded (see [Loading a simulation and accessing entities]
 library(ospsuite)
 
 # Load the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
-simulationResults <- runSimulation(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 print(simulationResults)
 ```
 
-The advantage of storing the results in a object is the option to keep different resutls of the same simulation produced with different settings (e.g., model parameters).
+The advantage of storing the results in a object is the option to keep different results of the same simulation produced with different settings (e.g., model parameters).
 
-Simulated time-value pairs for a specific ouput from the `SimulationResults`-object can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned.
+Simulated time-value pairs for a specific output from the `SimulationResults`-object can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned.
 
 The paths of all available outputs can be accessed via
 
@@ -42,14 +42,14 @@ simulationResults$allQuantityPaths
 `getOutputValues` returns a list with two entries: `data` and `metadata`:
 
  * `data` is a dataframe with two predefined columns (IndividualId and Time) as well as one column for each requested output
- 
+
      * `IndividualId` (not relevant for an individual simulation)
      * `Time` a vector with simulated time values (in minutes, equal for all outputs) 
      *  a vector with simulated entries for each output requested.
 
   * `metaData` is a list containing one entry for each requested output. Each entry contains information pertinent to the output such as its dimension or the unit.
-  
-  
+
+
 ```{r getOutputValues}
 # Get simulated results by path
 resultsPath <- simulationResults$allQuantityPaths[[1]]
@@ -67,21 +67,53 @@ The results can be stored in and imported from a *.csv file with the methods `ex
 
 ```{r SimResultsExport}
 # Load and run the simulation
-simFilePath <- file.path(getwd(), "..", "tests", "data", "Aciclovir.pkml", fsep = .Platform$file.sep)
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simulationResults <- runSimulation(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 
 # Export to csv
-csvResultsPath <- file.path(getwd(), "..", "tests", "data", "SimResults.csv", fsep = .Platform$file.sep)
+csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
 exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 
 # Load from csv
-resultsLoaded <- importResultsFromCSV(filePath = csvResultsPath, simulation = sim)
+resultsLoaded <- importResultsFromCSV(filePaths = csvResultsPath, simulation = sim)
 print(resultsLoaded)
 ```
 
+## Running multiple individual simulations and retrieving the results
+In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations the `runSimulations` function. However, only individual simulations (i.e., the `population` argument must remain empty) 
+are supported.
+By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 
+4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.
+
+```{r MultipleSimRun}
+# Load and run multiple simulations concurrently. 
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+
+# We load 3 times the same simulation for convenience. But in real life scenarios, 
+# they should be different simulations
+sim1 <- loadSimulation(simFilePath)
+sim2 <- loadSimulation(simFilePath)
+sim3 <- loadSimulation(simFilePath)
+
+simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
+```
+
+The results in this case will be a named list of `SimulationResults`-object , i.e. one for each simulation.
+The names of the entries of the list are the ids of the simulation to which the results
+correspond. This way, it is easy to retrieve the correct results for the specific simulation
+
+```{r MultipleRunSimResultsIds}
+#Get the id of the second simulation
+id <- sim2$id
+print(id)
+#get the corresponding result
+sim2Results <- simulationResults[[id]]
+print(sim2Results$simulation$id)
+```
+
 ## Adding new outputs
-By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to `pkml` are generated. The user can add new outputs to the simulation with the method `addOutputs`. The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The ouput list is a property of the `simulation`.
+By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to `pkml` are generated. The user can add new outputs to the simulation with the method `addOutputs`. The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The output list is a property of the `simulation`.
 After adding or removing outputs, the corresponding simulation needs to be re-run in order to generate updated results.
 
 ```{r addOutputs}
@@ -94,13 +126,13 @@ observer <- getQuantity("Organism|Lumen|Aciclovir|Fraction dissolved", sim)
 
 addOutputs(c(molecule, observer), simulation = sim)
 
-# Add new ouputs as path strings
+# Add new outputs as path strings
 addOutputs(c("Organism|Lumen|Stomach|Aciclovir", 
              "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"),
            simulation = sim)
 
 # Run simulation
-simulationResults <- runSimulation(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 
 # Retrieve all generated outputs (e.g. omitting the quantitiesOrPaths property
 # will return all available values)
@@ -123,7 +155,7 @@ To change the simulation interval, the user can use one of the functions `clearO
 ```{r changeOutputInterval, error = TRUE, purl = FALSE}
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
-runSimulation(simulation = sim)
+runSimulations(simulations = sim)
 
 # Add an interval
 addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")

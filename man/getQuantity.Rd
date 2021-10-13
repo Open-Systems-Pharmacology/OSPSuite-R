@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-quantity.R
 \name{getQuantity}
 \alias{getQuantity}
-\title{Retrieve a single quantty by path in the given container}
+\title{Retrieve a single quantity by path in the given container}
 \usage{
 getQuantity(path, container, stopIfNotFound = TRUE)
 }
@@ -16,11 +16,11 @@ an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \value{
 The \code{Quantity} with the given path. If the quantity for the path
-does not exist, an error is thrown if \code{stopIfNotFound} is TRUE (default),
+does not exist, an error is thrown if \code{stopIfNotFound} is \code{TRUE} (default),
 otherwise \code{NULL}
 }
 \description{
-Retrieve a single quantty by path in the given container
+Retrieve a single quantity by path in the given container
 }
 \examples{
 
@@ -29,5 +29,5 @@ sim <- loadSimulation(simPath)
 quantity <- getQuantity("Organism|Liver|Volume", sim)
 }
 \seealso{
-\code{\link{loadSimulation}}, \code{\link{getContainer}} and \code{\link{getAllContainersMatching}} to retrieve objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to retrieve objects of type Container or Simulation
 }
