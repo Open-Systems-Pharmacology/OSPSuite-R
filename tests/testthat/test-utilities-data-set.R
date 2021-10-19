@@ -55,6 +55,8 @@ test_that("It can convert a data set with only non-empty fields, except for meta
 })
 
 test_that("It can convert a data set with metaData", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+  
   dataSet$addMetaData("Organ", "Blood")
   expect_equal(
     dataSetToDataFrame(dataSet),
@@ -71,6 +73,8 @@ test_that("It can convert a data set with metaData", {
 })
 
 test_that("It can convert a list of data sets", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+
   dataSet2 <- DataSet$new()
   dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
   dataSet2$molWeight <- 456
@@ -151,17 +155,23 @@ importerConfiguration <- DataImporterConfiguration$new(configurationPath)
 
 test_that("it returns an empty list when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+
   expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
 })
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, DataSet))
   expect_equal(length(dataSets), 4)
 })
 
 test_that("it can convert DataSets loaded from excel to data.frame", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
   expect_equal(names(dataSetsFrame), c(
