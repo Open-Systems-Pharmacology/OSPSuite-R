@@ -1,14 +1,13 @@
 ---
 title: "Calculating PK parameters of simulation outputs"
 output: rmarkdown::html_vignette
-#output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Calculating PK parameters of simulation outputs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -21,31 +20,32 @@ PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a s
 ```{r calculatePKAnalyses}
 library(ospsuite)
 
-# Load  the simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
+# Load the simulation
+simFilePath       <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim               <- loadSimulation(simFilePath)
 
 # Run the simulation
 simulationResults <- runSimulation(simulation = sim)
 
 # Calculate PK-analyses
-pkAnalysis <- calculatePKAnalyses(results = simulationResults)
+pkAnalysis        <- calculatePKAnalyses(results = simulationResults)
 
 # Get the path of the simulated output
-outputPath <- simulationResults$allQuantityPaths[[1]]
+outputPath        <- simulationResults$allQuantityPaths[[1]]
 print(outputPath)
 
 # Get all calculated PK parameters for the output path
-allPkParams <- pkAnalysis$allPKParametersFor(outputPath)
+allPkParams       <- pkAnalysis$allPKParametersFor(outputPath)
 print(allPkParams)
 
 # Get C_max parameter
-c_max <- pkAnalysis$pKParameterFor(quantityPath = outputPath, pkParameter = "C_max")
+c_max             <- pkAnalysis$pKParameterFor(quantityPath = outputPath, pkParameter = "C_max")
+c_max
 ```
 
 The function `calculatePKAnalyses` returns an object of the class `SimulationPKAnalyses`, which allows to retrieve either a certain PK parameter for an output path, or all calculated PK parameters for an output path.
 
-The methods `$allPKParametersFor` and `$pKParameterFor` return a object (or a list of objects) of the class `QuantityPKParameter`, with the fields `$name` which is the name of the pk-parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).
+The methods `$allPKParametersFor()` and `$pKParameterFor()` return a object (or a list of objects) of the class `QuantityPKParameter`, with the fields `$name` which is the name of the pk-parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).
 
 ```{r QuantityPKParameter}
 # Get C_max parameter
@@ -65,17 +65,17 @@ Population analysis calculated in R can be exported to a *.csv file and loaded i
 
 ```{r PKAnalysesExport}
 # Load and run the simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
+simFilePath       <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim               <- loadSimulation(simFilePath)
 simulationResults <- runSimulation(simulation = sim)
 
 # Calculate PK-analysis
-pkAnalysis <- calculatePKAnalyses(results = simulationResults)
+pkAnalysis        <- calculatePKAnalyses(results = simulationResults)
 
 # Export to csv
 csvPKAnalysisPath <- system.file("extdata", "PKAnalyses.csv", package = "ospsuite")
 exportPKAnalysesToCSV(pkAnalyses = pkAnalysis, filePath = csvPKAnalysisPath)
 
 # Load from csv
-pkAnalysisLoaded <- importPKAnalysesFromCSV(filePath = csvPKAnalysisPath, simulation = sim)
+pkAnalysisLoaded  <- importPKAnalysesFromCSV(filePath = csvPKAnalysisPath, simulation = sim)
 ```
