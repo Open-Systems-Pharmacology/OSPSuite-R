@@ -40,7 +40,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #'
 #' @return
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-#' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+#' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #'
 #' @examples
 #' \dontrun{
@@ -149,7 +149,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #'
 #' @return
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-#' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+#' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #' If more than one matching path is found a warning is produced.
 #'
 #' @examples

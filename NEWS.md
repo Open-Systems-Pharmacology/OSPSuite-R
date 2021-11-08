@@ -1,3 +1,5 @@
+# ospsuite 11.0 (development version)
+
 # ospsuite 10.0
 
 Version compatible with the OSPSuite V10.
@@ -22,7 +24,7 @@ Version compatible with the OSPSuite V10.
 * [uniqueEntities: Error when passing only one entity](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/515)
 * [R-Toolbox bug? getAllParametersMatching()](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/428)
 * [Add CL parameter to the list of StandardPKPArameters](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/582)
-* [toBaseUnit and toUnit should support null as input (and reutrn null)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/583)
+* [toBaseUnit and toUnit should support null as input (and return null)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/583)
 * [ospsuite::toBaseUnit should be case insensitive](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/614)
 * [Integer variables not handled by some functions](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/553)
 

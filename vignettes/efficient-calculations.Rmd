@@ -1,7 +1,6 @@
 ---
 title: "Efficient calculation"
 output: rmarkdown::html_vignette
-#output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Efficient calculation}
   %\VignetteEngine{knitr::rmarkdown}
@@ -33,12 +32,10 @@ Here are some steps inherent to each simulation:
 
 Depending on the simulation of interest, some steps might take much longer than others. For example, a simulation with multiple administrations simulated over many months will load and initialize quickly (1 and 4) while calculating (5) will be the critical step. On the other hand, a simulation with dozens of compounds will also take time to load and initialize (1 and 4). 
 
-
 ## Running a single simulation once
 
-This is by far the easiest use cases. A simulation is loaded from a pkml file and the outputs are calculated. In this use case, step 4 and 5 are automatically lumped together in one single call
+This is by far the easiest use cases. A simulation is loaded from a .pkml file and the outputs are calculated. In this use case, step 4 and 5 are automatically lumped together in one single call
 (See [Run Simulations](run-simulation.html) for more details).
-
 
 ## Running a single simulation multiple times and varying some parameters/initial values between each run
 
@@ -46,8 +43,10 @@ This is already a use case where the optimal and most efficient way depends dras
 Let's assume that we want to calculate the outputs of a simulation for different doses.
 
 A simple implementation could follow the following idea, where a simulation is loaded once, the dose value is updated and the simulation is calculated for each dose of interest. 
-```{r SequentialRun, eval=TRUE}
+
+```{r SequentialRun}
 library(ospsuite)
+
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -74,6 +73,7 @@ If the simulation only takes a few seconds to run, this solution is absolutely a
 When the simulation run time (5) is much greater than the loading (1) and initialization time (4), a better approach is to load the simulation multiple times and run the simulation concurrently (i.e. in parallel).
 
 Consider the following implementation:
+
 ```{r ParallelRun, eval=TRUE}
 library(ospsuite)
 # Load and run the simulation
@@ -105,12 +105,13 @@ This implementation is also fairly straight forward. We load the simulation mult
 
 ## Optimized loading for running simulations with pre-defined set of variable parameters
 
-This is a more advanced use case, typically when implementing some kind of optimization or sensitivity algorithms. The ospsuite-r package introduces the concept of a **simulation batch**. With a simulation batch, the variable parameters (or initial values) of a simulation to vary between each run are specified explicitly during the creation of the simulation batch. This allows the simulation engine to speed up the system significantly as some equations can be rewritten and simplified. A simulation batch also keeps the simplified simulation in memory. That means that running a simulation again with a new set of values will be much faster, as the initialization phase (4) is only done if required and not for every run. 
+This is a more advanced use case, typically when implementing some kind of optimization or sensitivity algorithms. The `{ospsuite}` package introduces the concept of a **simulation batch**. With a simulation batch, the variable parameters (or initial values) of a simulation to vary between each run are specified explicitly during the creation of the simulation batch. This allows the simulation engine to speed up the system significantly as some equations can be rewritten and simplified. A simulation batch also keeps the simplified simulation in memory. That means that running a simulation again with a new set of values will be much faster, as the initialization phase (4) is only done if required and not for every run. 
 
 Consider the following implementation. We first create two simulation batches for the same model
 and define the parameter values that can be changed between runs. Note that, as opposed to 
 the `Simulation` object, we do not have access to any parameter/species values nor can we change
 the outputs or simulation time.
+
 ```{r BatchRunInit, eval=TRUE}
 library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -135,9 +136,7 @@ simulationBatches <- list(simBatch1, simBatch2)
 ```
 
 In the next step, we define multiple runs of the simulation batch by adding different
-parameter (and/or species start) values set. Each set of values correspond to one run. The benefit of this approach 
-is that the initialization steps (1 and 4) are only performed once. After that, ony the execution time (step 5)
-will have an impact on the total performance.
+parameter (and/or species start) values set. Each set of values correspond to one run. The benefit of this approach is that the initialization steps (1 and 4) are only performed once. After that, only the execution time (step 5) will have an impact on the total performance.
 
 ```{r BatchRunEnque, eval=TRUE}
 # now setting some parameter run values (the size of the array should match 
@@ -168,11 +167,11 @@ print(names(unlist(results)))
 ```
 
 
-The enqueued run values are cleared after calling `runSimulationBatches`, so executing the run
+The enqueued run values are cleared after calling `runSimulationBatches()`, so executing the run
 again would result in an empty results list. We can now set more values to the batches and run them again. 
 Notes: 
   - We do not have to always set the same number of values at the same time
-  - Previous runValues are automaticaly cleared when runSimulationBatches is called. 
+  - Previous `runValues` are automatically cleared when `runSimulationBatches()` is called. 
   
 ```{r BatchRunRunNewValues, eval=TRUE}  
 simBatch1$addRunValues(parameterValues = c(10, 20))

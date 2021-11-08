@@ -1,14 +1,13 @@
 ---
 title: "Loading a simulation and accessing entities"
 output: rmarkdown::html_vignette
-#output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Loading a simulation and accessing entities}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -16,7 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 ## Loading a simulation
-In general, every workflow starts with loading a simulation by calling the `loadSimulation()` function. The function receives the full path to the PKML file (with extension *.pkml) exported from PK-Sim or MoBi and returns the corresponding simulation object.
+
+In general, every workflow starts with loading a simulation by calling the `loadSimulation()` function. The function receives the full path to the **\*.pkml** file format exported from PK-Sim or MoBi, and returns the corresponding simulation object.
 
 ```{r loadSim}
 library(ospsuite)
@@ -31,29 +31,28 @@ sim <- loadSimulation(simFilePath)
 Once the simulation is loaded, it is possible to retrieve various entities of the model. The most important entities are **containers**, **molecules**, and **parameters**. The methods `getContainer`, `getMolecule`, and `getParameter` search for the respective entity with the given `path` located under a `container`. `path` is a string where the elements of the path (i.e., containers in the hierarchy of the simulation) are separated by `|`. `container` is an instance of the `Container`-class within the model structure the path is *relative* to. In most cases, `container` is the `Simulation` object created by calling `loadSimulation(pkmlSimulationFile)`.
 
 ```{r getEntities}
-#Get the container "Liver"
-livContainer <- getContainer("Organism|Liver", sim)
-print(livContainer)
-
-#Get the molecule Aciclovir located in kindey intracellular space
+# Get the molecule Aciclovir located in kidney intracellular space
 moleculeInKid <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
 print(moleculeInKid)
 
-#Get the parameter volume of the liver interstitial space.
+# Get the container "Liver"
+livContainer  <- getContainer("Organism|Liver", sim)
+print(livContainer)
+
+# Get the parameter volume of the liver interstitial space
 # Note that the path used is relative to the liver container
-livParam <- getParameter("Interstitial|Volume", livContainer)
+livParam      <- getParameter("Interstitial|Volume", livContainer)
 print(livParam)
 ```
 
-The functions `getAllContainersMatching`, `getAllMoleculesMatching`, and `getAllParametersMatching` return a list of objects representing 
-all entities whose paths match the generic paths provided in the list `paths` located under `container`. Generic paths are constructed by using the wildcard symbols `*` (exactly one occurrence of any element) or `**` (zero or more occurrences of any element).
+The functions `getAllContainersMatching()`, `getAllMoleculesMatching()`, and `getAllParametersMatching()` return a list of objects representing  all entities whose paths match the generic paths provided in the list `paths` located under `container`. Generic paths are constructed by using the wildcard symbols `*` (exactly one occurrence of any element) or `**` (zero or more occurrences of any element).
 
 ```{r getAllEntitiesMatching}
 # Get the parameter `Volume` of the intracellular space of all organs,
 # with exactly one path element before `Intracellular`
 volumeParams <- getAllParametersMatching("Organism|*|Intracellular|Volume", sim)
 length(volumeParams)
-#The PBPK model has 15 organs with an "Intracellular" sub-compartment
+# The PBPK model has 15 organs with an "Intracellular" sub-compartment
 
 # Get the parameter `Volume` of the intracellular space of all organs,
 # no matter how many sub-containers the organ has
@@ -62,15 +61,16 @@ length(volumeParams)
 # The list also includes parameters of organs like "Liver|Periportal",
 # or the mucosal compartments of the intestine.
 ```
+
 Note that the path `"Organism|Kidney|*|Intracellular|Volume"` will return no parameters in the standard models, as there are no sub-containers between `Kidney` and `Intracellular`. 
 In contrast, `"Organism|Kidney|**|Intracellular|Volume"` is a valid path.
 
-The functions `getAllXXXMatching` can also be used to retrieve entities from multiple paths:
+The functions `getAllContainersMatching()`, `getAllMoleculesMatching()`, and `getAllParametersMatching()` can also be used to retrieve entities from multiple paths:
 
 ```{r getAllEntitiesMatching_multiplePaths}
-#Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`
-molecules <- getAllMoleculesMatching(c("Organism|Liver|Periportal|Intracellular|Aciclovir",
-                                       "Organism|VenousBlood|Plasma|Aciclovir"), sim)
+# Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`
+molecules <- getAllMoleculesMatching(c("Organism|VenousBlood|Plasma|Aciclovir",
+                                       "Organism|Liver|Periportal|Intracellular|Aciclovir"), sim)
 print(molecules)
 ```
 
@@ -87,7 +87,7 @@ livContainer$parentContainer
 The most important properties for a molecule are:
 
 ```{r moleculeProperties}
-#Initial value of the molecule
+# Initial value of the molecule
 moleculeInKid$value
 
 # Dimension of the molecule. See section "Unit conversion" for more information.
@@ -99,10 +99,11 @@ moleculeInKid$isFormula
 # Type of the formula. CONSTANT if the value is defined by a constant.
 moleculeInKid$formula
 ```
+
 The most important properties for a parameter are:
 
 ```{r parameterProperties}
-#Initial value of the parameter
+# Initial value of the parameter
 livParam$value
 
 # Dimension of the parameter. See section "Unit conversion" for more information.
@@ -119,7 +120,8 @@ livParam$formula
 ```
 
 ## Loading simulation tree
-A convenient way to traverse the simulation structure is given by the method \code{getSimulationTree}. The method generates a tree-like list of all paths within the simulation. Each element of the tree contains all the sub-containers of the element. The final elements are strings representing the path to the entity.
+
+A convenient way to traverse the simulation structure is given by the method `getSimulationTree`. The method generates a tree-like list of all paths within the simulation. Each element of the tree contains all the sub-containers of the element. The final elements are strings representing the path to the entity.
 
 ```{r simTree}
 # Load simulation
@@ -130,9 +132,14 @@ sim <- loadSimulation(simFilePath)
 simTree <- getSimulationTree(sim)
  
 # Calling simTree would list all entities within the simulation
+# (given how long this tree can be, we will skip it here, but you can try
+# running the following command in your console)
+# simTree
+
 # Accessing the parameter "Organism|Weight"
 simTree$Organism$Weight
-# 
+
 # Getting all entities located under "Organism|Liver|Periportal|Intracellular"
 entitiesList <- simTree$Organism$Liver$Periportal$Intracellular
+entitiesList
 ```
