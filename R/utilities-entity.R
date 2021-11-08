@@ -11,6 +11,7 @@ CompareBy <- enum(c(
 #' Names of the .NET container tasks of the type "AllXXXMatching"
 #'
 #' @include enum.R
+#' @keywords internal
 AllMatchingMethod <- enum(c(
   Container = "AllContainersMatching",
   Quantity = "AllQuantitiesMatching",
@@ -21,6 +22,7 @@ AllMatchingMethod <- enum(c(
 #' Names of the .NET container tasks of the type "AllXXXPathsIn"
 #'
 #' @include enum.R
+#' @keywords internal
 AllPathsInMethod <- enum(c(
   Container = "AllContainerPathsIn",
   Quantity = "AllQuantityPathsIn",

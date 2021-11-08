@@ -6,6 +6,7 @@
 #'
 #' @details
 #' simulationLoader <- getNetTask("SimulationLoader")
+#' @keywords internal
 getNetTask <- function(taskName) {
   rClr::clrCallStatic("OSPSuite.R.Api", paste0("Get", taskName))
 }

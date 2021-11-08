@@ -14,3 +14,4 @@ getPropertyValues(netObjects, propertyName)
 \description{
 Returns a list containing all properties \code{propertyName} from the .NET objects \code{netObjects}
 }
+\keyword{internal}

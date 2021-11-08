@@ -9,3 +9,4 @@ initPackage()
 \description{
 This will be called once when the package is loaded
 }
+\keyword{internal}

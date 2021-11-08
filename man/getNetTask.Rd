@@ -18,3 +18,4 @@ Returns an instance of the specified .NET Task
 \details{
 simulationLoader <- getNetTask("SimulationLoader")
 }
+\keyword{internal}

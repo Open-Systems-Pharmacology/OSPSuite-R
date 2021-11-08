@@ -100,6 +100,7 @@ formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,
   format(numerics, digits = digits, nsmall = nsmall)
 }
 
+#' @keywords internal
 .getCallingFunctionName <- function() {
   callingFunctions <- sys.calls()
   callingFunction <- sys.call(-length(callingFunctions) + 1)[[1]]

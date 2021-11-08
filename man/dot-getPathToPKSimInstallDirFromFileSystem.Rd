@@ -38,3 +38,4 @@ path <- .getPathToPKSimInstallDirFromFileSystem("7.4")
 path2 <- .getPathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
 }
 }
+\keyword{internal}

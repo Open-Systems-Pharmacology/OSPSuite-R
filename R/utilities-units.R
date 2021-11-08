@@ -273,7 +273,7 @@ getDimensionByName <- function(name) {
 
 #' Loop through dimensions and build a list containing an enum of all units available for each dimension
 #' @return enum of all units for each dimension
-#' @export
+#' @keywords internal
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
   units <- lapply(dimensions, function(dimension) {
@@ -289,7 +289,7 @@ getUnitsEnum <- function() {
 
 #' #'Function to return an enum of all available dimensions
 #' @return enum of all dimensions
-#' @export
+#' @keywords internal
 getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
 }

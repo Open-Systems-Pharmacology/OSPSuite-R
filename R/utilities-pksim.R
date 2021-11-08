@@ -92,6 +92,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' path <- .getPathToPKSimInstallDirFromFileSystem("7.4")
 #' path2 <- .getPathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
 #' }
+#' @keywords internal
 .getPathToPKSimInstallDirFromFileSystem <- function(pksim.version,
                                                     base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.version <- trimws(pksim.version)
@@ -157,6 +158,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' path <- .getPathToPKSimInstallDir("9")
 #' path2 <- .getPathToPKSimInstallDir("10.1", "C:/MyOSPFolder/")
 #' }
+#' #' @keywords internal
 .getPathToPKSimInstallDir <- function(pksim.version = ospsuiteEnv$suiteVersion,
                                       base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.path <- .getPathToPKSimInstallDirFromRegistry(pksim.version)

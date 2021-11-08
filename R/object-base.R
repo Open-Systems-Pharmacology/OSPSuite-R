@@ -4,6 +4,7 @@
 #' @description  Abstract wrapper for an OSPSuite.Core ObjectBase.
 #'
 #' @format NULL
+#' @keywords internal
 ObjectBase <- R6::R6Class(
   "ObjectBase",
   cloneable = FALSE,

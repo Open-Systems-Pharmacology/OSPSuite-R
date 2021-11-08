@@ -5,6 +5,7 @@
 #' @param class The class definition that will be used to convert the parameter
 #'
 #' @return The wrapped object (single or list)
+#' @keywords internal
 toObjectType <- function(netObject, class) {
   if (!is.list(netObject)) {
     return(ifNotNull(netObject, class$new(ref = netObject)))
@@ -41,6 +42,7 @@ toObjectType <- function(netObject, class) {
 #' @description
 #' Check if condition is not null, if so output outputIfNotNull,
 #' otherwise, output outputIfNull
+#' @keywords internal
 ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
   if (!is.null(condition)) {
     outputIfNotNull
@@ -53,6 +55,7 @@ ifNotNull <- function(condition, outputIfNotNull, outputIfNull = NULL) {
 #' See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details
 #' @param unit Unit to encode
 #' @import stringr
+#' @keywords internal
 encodeUnit <- function(unit) {
   mu <- ospsuiteEnv$muSymbol
   unit <- enc2utf8(unit)
@@ -66,6 +69,7 @@ encodeUnit <- function(unit) {
 #' @param object To be converted to a list
 #'
 #' @return If `is.list(object) == TRUE`, returns the `object`, otherwise `list(object)`
+#' @keywords internal
 toList <- function(object) {
   if (is.list(object)) {
     return(object)
@@ -80,6 +84,7 @@ toList <- function(object) {
 #' @param enumValue The value of a particular enumerated constant in terms of its underlying type. Typically an integer.
 #'
 #' @return A string containing the name of the enumerated constant in enumType whose value is enumValue; or null if no such constant is found.
+#' @keywords internal
 netEnumName <- function(enumType, enumValue) {
   netTypeObj <- rClr::clrGetType(enumType)
   rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)

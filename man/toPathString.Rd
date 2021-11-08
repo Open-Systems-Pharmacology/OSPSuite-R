@@ -16,6 +16,5 @@ A string built using each entry of the pathArray
 Convert a path array to a path as string with entries separated by '|'
 }
 \examples{
-
 path <- toPathString(c("Organism", "Organ", "Liver"))
 }

@@ -1,7 +1,7 @@
 #' @title Cache
 #' @docType class
 #' @description Structure for caching objects
-#'
+#' @keywords internal
 Cache <- R6::R6Class(
   "Cache",
   cloneable = FALSE,

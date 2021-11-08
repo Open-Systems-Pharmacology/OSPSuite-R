@@ -15,6 +15,7 @@ Wrapper class for .net Object
 }
 }
 
+\keyword{internal}
 \section{Super class}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DotNetWrapper}
 }

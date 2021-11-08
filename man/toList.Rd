@@ -15,3 +15,4 @@ If \code{is.list(object) == TRUE}, returns the \code{object}, otherwise \code{li
 \description{
 Make sure the object is a list
 }
+\keyword{internal}

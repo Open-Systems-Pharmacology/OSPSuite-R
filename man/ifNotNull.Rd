@@ -24,3 +24,4 @@ otherwise, output outputIfNull
 Shortkey checking if argument 1 is not null,
 output the argument 2 if not null, or output argument 3 otherwise
 }
+\keyword{internal}

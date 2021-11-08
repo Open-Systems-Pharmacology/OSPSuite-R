@@ -1,4 +1,4 @@
-
+#' @keywords internal
 .getSuiteVersion <- function() {
   version <- getNamespaceVersion("ospsuite")
   first <- head(unlist(gregexpr(pattern = "\\.", version)), 1)

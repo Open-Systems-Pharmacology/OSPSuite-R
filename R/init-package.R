@@ -3,6 +3,7 @@
 #' This will be called once when the package is loaded
 #'
 #' @import rClr
+#' @keywords internal
 initPackage <- function() {
   filePathFor <- function(name) {
     system.file("lib", name, package = ospsuiteEnv$packageName)
