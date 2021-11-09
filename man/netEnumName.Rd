@@ -17,3 +17,4 @@ A string containing the name of the enumerated constant in enumType whose value 
 \description{
 Retrieves the name of the constant in the specified enumeration that has the specified value.
 }
+\keyword{internal}

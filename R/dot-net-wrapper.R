@@ -8,7 +8,7 @@
 #'   \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
 #'   \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET Read-Only property}
 #'   }
-#'
+#' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
   inherit = Printable,

@@ -13,4 +13,4 @@ AllPathsInMethod
 \description{
 Names of the .NET container tasks of the type "AllXXXPathsIn"
 }
-\keyword{datasets}
+\keyword{internal}

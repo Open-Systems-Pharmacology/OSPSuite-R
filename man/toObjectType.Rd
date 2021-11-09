@@ -19,3 +19,4 @@ The wrapped object (single or list)
 Transforms a single .NET object  or a list of .NET Object to their corresponding wrapper class in R.
 Note that if the object is a single object, NULL will be returned if the .NET object is null. This allows semantic equivalence between .NET and R
 }
+\keyword{internal}

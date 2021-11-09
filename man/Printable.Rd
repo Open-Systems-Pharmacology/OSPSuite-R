@@ -7,6 +7,7 @@
 \description{
 Base class that implements some basic properties for printing to console
 }
+\keyword{internal}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

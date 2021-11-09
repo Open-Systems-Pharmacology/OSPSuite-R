@@ -1,7 +1,7 @@
 #' @title Printable
 #' @docType class
 #' @description  Base class that implements some basic properties for printing to console
-#'
+#' @keywords internal
 Printable <- R6::R6Class(
   "Printable",
   private = list(

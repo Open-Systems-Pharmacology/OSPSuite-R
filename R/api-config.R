@@ -1,6 +1,7 @@
 #' @title ApiConfig
 #' @docType class
 #' @description  Global configuration for the OSPSuite .NET API
+#' @keywords internal
 ApiConfig <- R6::R6Class(
   "ApiConfig",
   cloneable = FALSE,

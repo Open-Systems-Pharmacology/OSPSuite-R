@@ -8,8 +8,8 @@ setMoleculeValuesByPath(
   moleculePaths,
   values,
   simulation,
-  stopIfNotFound = TRUE,
-  units = NULL
+  units = NULL,
+  stopIfNotFound = TRUE
 )
 }
 \arguments{
@@ -21,11 +21,11 @@ length as \code{moleculePaths}}
 
 \item{simulation}{Simulation uses to retrieve quantity instances from given paths.}
 
-\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
-an error is thrown. If \code{FALSE}, a warning is shown to the user}
-
 \item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
 are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantityPaths}.}
+
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
+an error is thrown. If \code{FALSE}, a warning is shown to the user}
 }
 \description{
 Set molecule start values in the simulation by path
@@ -36,5 +36,5 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 setMoleculeValuesByPath("Organism|Liver|A", 1, sim)
 
-setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("Âµmol", "mmol"))
+setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("µmol", "mmol"))
 }

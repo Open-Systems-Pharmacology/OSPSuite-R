@@ -12,3 +12,4 @@ enum of all units for each dimension
 \description{
 Loop through dimensions and build a list containing an enum of all units available for each dimension
 }
+\keyword{internal}

@@ -353,6 +353,7 @@ DataImporterConfiguration <- R6::R6Class(
 #' Mapping of string representation for the error types supported by DataSet
 #' to the values supported in the importer configuration
 #' @include enum.R
+#' @keywords internal
 .ImporterErrorTypeToDataSetErrorType <- enum(c(
   "Arithmetic Standard Deviation" = "ArithmeticStdDev",
   "Geometric Standard Deviation" = "GeometricStdDev"

@@ -15,4 +15,4 @@ An object of class \code{list} of length 2.
 Mapping of string representation for the error types supported by DataSet
 to the values supported in the importer configuration
 }
-\keyword{datasets}
+\keyword{internal}

@@ -1,4 +1,3 @@
-
 #' Convert a path defined as string to a path array
 #'
 #' @param path A string representation of a path, with path entries separated
@@ -20,7 +19,6 @@ toPathArray <- function(path) {
 #'
 #' @return A string built using each entry of the pathArray
 #' @examples
-#'
 #' path <- toPathString(c("Organism", "Organ", "Liver"))
 #' @export
 toPathString <- function(...) {

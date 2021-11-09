@@ -14,3 +14,4 @@ getPropertyValue(netObject, propertyName)
 \description{
 Returns the value of property named \code{propertyName} from .NET object instance \code{netObject}
 }
+\keyword{internal}
