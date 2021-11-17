@@ -159,7 +159,7 @@ print(sim$outputSchema)
 
 To change the simulation interval, the user can use one of the functions `clearOutputIntervals()`, `addOutputInterval()`, and `setOutputInterval()`.
 
-```{r changeOutputInterval, purl = FALSE}
+```{r changeOutputInterval, error = TRUE, purl = FALSE}
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
