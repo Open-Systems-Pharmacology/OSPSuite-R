@@ -80,43 +80,6 @@ saveSimulation <- function(simulation, filePath) {
   invisible()
 }
 
-#' @title
-#'
-#' DEPRECATED
-#'  `runSimulations` should be used in favor of  `runSimulation`. The latter will be removed in future releases
-#' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
-#'
-#' @param simulation One `Simulation` to simulate.
-#' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
-#' Alternatively, you can also pass the result of `createPopulation` directly. In this case, the population will be extracted
-#' @param agingData Optional instance of `AgingData` to use for the simulation. This is only used with a population simulation
-#' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
-#'
-#' @return SimulationResults (one entry per Individual) for a single simulation
-#'
-#' @examples
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simPath)
-#'
-#' # Running an individual simulation
-#' # results is an instance of `SimulationResults`
-#' results <- runSimulation(sim)
-#'
-#' # Creating custom simulation run options
-#'
-#' simRunOptions <- SimulationRunOptions$new()
-#' simRunOptions$numberOfCores <- 3
-#' simRunOptions$showProgress <- TRUE
-#'
-#' # Running a population simulation
-#' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
-#' population <- loadPopulation(popPath)
-#' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
-#' @export
-runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
-  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)
-}
-
 #' @title  Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
 #' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
 #'

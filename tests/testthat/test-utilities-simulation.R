@@ -97,10 +97,10 @@ test_that("It returns false when attempting to remove a simulation from cache th
   expect_false(removeSimulationFromCache(sim2))
 })
 
-context("runSimulation")
+context("runSimulations")
 test_that("It can run a valid individual simulation and returns results", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim)
+  results <- runSimulations(simulation = sim)
   expect_equal(results$count, 1)
 })
 
@@ -108,7 +108,7 @@ test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim, population = population)
+  results <- runSimulations(simulation = sim, population = population)
   expect_equal(results$count, population$count)
 })
 
@@ -119,7 +119,7 @@ test_that("It can run a valid population simulation with aging data and returns 
   agingData <- loadAgingDataFromCSV(filePath = agingDataFileName)
 
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim, population = population, agingData = agingData)
+  results <- runSimulations(simulation = sim, population = population, agingData = agingData)
   expect_equal(results$count, population$count)
 })
 
@@ -128,7 +128,7 @@ test_that("It can run a valid population simulation created directly from create
   population <- loadPopulation(csvPopulationFile = populationFileName)
   list <- list(population = population)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim, population = list)
+  results <- runSimulations(simulation = sim, population = list)
   expect_equal(results$count, population$count)
 })
 
@@ -136,14 +136,14 @@ test_that("It throws an exception when running a population simulation with the 
   populationFileName <- getTestDataFilePath("pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  expect_that(runSimulation(simulation = population, population = simulation), throws_error())
+  expect_that(runSimulations(simulation = population, population = simulation), throws_error())
 })
 
 test_that("It runs one individual simulation without simulationRunOptions", {
   resetSimulationCache()
 
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulation(simulation = sim)
+  results <- runSimulations(simulation = sim)
   expect_true(isOfType(results, "SimulationResults"))
 })
 
@@ -151,7 +151,7 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   simRunOptions <- SimulationRunOptions$new()
-  results <- runSimulation(simulation = sim, simulationRunOptions = simRunOptions)
+  results <- runSimulations(simulation = sim, simulationRunOptions = simRunOptions)
   expect_true(isOfType(results, "SimulationResults"))
 })
 

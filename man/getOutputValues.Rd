@@ -14,7 +14,7 @@ getOutputValues(
 )
 }
 \arguments{
-\item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}
+\item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulations}
 on a \code{Simulation} object.}
 
 \item{quantitiesOrPaths}{Quantity instances (element or vector) typically retrieved using

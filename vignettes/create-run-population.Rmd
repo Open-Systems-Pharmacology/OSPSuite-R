@@ -20,7 +20,7 @@ Population simulations can be easily performed in R by combining the simulation 
 
 ### Loading population file
 
-The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulation()` method (see [Running simulations and retrieving the results](run-simulation.html)).
+The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulations()` method (see [Running simulations and retrieving the results](run-simulation.html)).
 
 ```{r loadPop}
 library(ospsuite)
@@ -62,7 +62,7 @@ print(myPopulation)
 
 ## Running population simulation
 
-To run a population simulation, the `Population` object created by the `createPopulation` method must be passed to the `runSimulation()` method:
+To run a population simulation, the `Population` object created by the `createPopulation` method must be passed to the `runSimulations()` method:
 
 ```{r runPop}
 library(ospsuite)
@@ -72,7 +72,7 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
-simulationResults <- runSimulation(simulation = sim, population = myPopulation)
+simulationResults <- runSimulations(simulation = sim, population = myPopulation)
 print(simulationResults)
 ```
 
@@ -94,11 +94,11 @@ simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with custom options
-populationResults <- runSimulation(simulation = sim, population = myPopulation, simulationRunOptions = simRunOptions)
+populationResults <- runSimulations(simulation = sim, population = myPopulation, simulationRunOptions = simRunOptions)
 print(populationResults)
 ```
 
-Simulated time-value pairs for a specific output from the `SimulationResults`-object returned by the `runSimulation` method can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), 
+Simulated time-value pairs for a specific output from the `SimulationResults`-object returned by the `runSimulations` method can be accessed with the method `getOutputValues`. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), 
 or the object(s) of the type `Molecule`, `Parameter`, or `Quantity` (for observers) with the argument `quantitiesOrPaths`. If no output is specified, all outputs available in the simulation results are returned. 
 
 The paths of all available outputs can be accessed via

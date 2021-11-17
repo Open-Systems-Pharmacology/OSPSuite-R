@@ -1,5 +1,9 @@
 # ospsuite 11.0 (development version)
 
+## Breaking changes
+
+* Removes the deprecated `runSimulation()` function. Please use `runSimulations()` (plural) function instead.
+ 
 # ospsuite 10.0
 
 Version compatible with the OSPSuite V10.

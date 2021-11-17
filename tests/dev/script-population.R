@@ -13,16 +13,16 @@ ids <- population$allIndividualIds
 df <- populationAsDataFrame(population = population)
 
 
-res <- runSimulation(simulation = sim, population = population)
+res <- runSimulations(simulation = sim, population = population)
 
 
 values[2] <- NA
 values[4] <- NaN
 population$setParameterValues("Organism|Lung|Volume", values)
-res <- runSimulation(simulation = sim, population = population)
+res <- runSimulations(simulation = sim, population = population)
 
 agingData_baby <- loadAgingDataFromCSV("tests/data/baby_aging.csv")
 
 aging_data <- loadAgingDataFromCSV("inst/extdata/aging_data.csv")
 
-res <- runSimulation(simulation = sim, population = population, agingData = aging_data)
+res <- runSimulations(simulation = sim, population = population, agingData = aging_data)

@@ -70,12 +70,12 @@ exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget"
 #
 simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
 #
-# individualResults <- runSimulation(sim)
+# individualResults <- runSimulations(sim)
 # paths <- individualResults$allQuantityPaths
 # individualPkkAnalyses <- calculatePKAnalyses(individualResults)
 #
 #
-# populationResults <- runSimulation(sim, population, simRunOptions)
+# populationResults <- runSimulations(sim, population, simRunOptions)
 populationResults <- importResultsFromCSV(sim, "C:/temp/export/results.csv")
 # populationPkAnalyses <- calculatePKAnalyses(populationResults)
 #

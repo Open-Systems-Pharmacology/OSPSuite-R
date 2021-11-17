@@ -19,7 +19,7 @@ toto <- sim$molWeightFor(quantityPath)
 
 population <- loadPopulation("tests/data/pop_10.csv")
 simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
-populationResults <- runSimulation(sim, population, simRunOptions)
+populationResults <- runSimulations(sim, population, simRunOptions)
 populationPkAnalyses <- calculatePKAnalyses(populationResults)
 df <- pkAnalysesAsDataFrame(populationPkAnalyses)
 

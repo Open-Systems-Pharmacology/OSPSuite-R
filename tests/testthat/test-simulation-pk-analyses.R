@@ -4,7 +4,7 @@ sim <- loadTestSimulation("S1")
 clearOutputs(sim)
 outputs <- "Organism|VenousBlood|*|Caffeine"
 addOutputs(outputs, sim)
-results <- runSimulation(sim)
+results <- runSimulations(sim)
 pkAnalyses <- calculatePKAnalyses(results)
 
 test_that("It returns the path of all quantities for which PK-Analyses were calculated", {

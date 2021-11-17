@@ -1,9 +1,9 @@
 sim <- loadTestSimulation("S1")
-individualResults <- runSimulation(sim)
+individualResults <- runSimulations(sim)
 resultsPaths <- individualResults$allQuantityPaths
 
 population <- loadPopulation(getTestDataFilePath("pop_10.csv"))
-populationResults <- runSimulation(sim, population)
+populationResults <- runSimulations(sim, population)
 
 
 NUMBER_OF_COVARIATES_COLUMNS <- 3

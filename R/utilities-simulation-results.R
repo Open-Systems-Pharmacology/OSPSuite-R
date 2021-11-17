@@ -4,7 +4,7 @@
 #' and returns time-values profiles for the chosen quantities. Results of a simulation
 #' of a single individual is treated as a population simulation with only one individual.
 #'
-#' @param simulationResults Object of type `SimulationResults` produced by calling `runSimulation`
+#' @param simulationResults Object of type `SimulationResults` produced by calling `runSimulations`
 #' on a `Simulation` object.
 #'
 #' @param quantitiesOrPaths Quantity instances (element or vector) typically retrieved using
@@ -110,7 +110,7 @@ getOutputValues <- function(simulationResults,
 
 #' Saves the simulation results to csv file
 #'
-#' @param results Results to export (typically calculated using `runSimulation` or imported from file)
+#' @param results Results to export (typically calculated using `runSimulations` or imported from file)
 #' @param filePath Full path where the results will be saved.
 #'
 #' @examples
@@ -123,7 +123,7 @@ getOutputValues <- function(simulationResults,
 #' addOutputs("Organism|**|*", sim)
 #'
 #' # Run the simulation
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)
 #'
 #' # Export the results to csv file
 #' exportResultsToCSV(results, tempfile())
