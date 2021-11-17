@@ -25,7 +25,7 @@ simFilePath       <- system.file("extdata", "Aciclovir.pkml", package = "ospsuit
 sim               <- loadSimulation(simFilePath)
 
 # Run the simulation
-simulationResults <- runSimulations(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 
 # Calculate PK-analyses
 pkAnalysis        <- calculatePKAnalyses(results = simulationResults)
@@ -67,7 +67,7 @@ Population analysis calculated in R can be exported to a *.csv file and loaded i
 # Load and run the simulation
 simFilePath       <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim               <- loadSimulation(simFilePath)
-simulationResults <- runSimulations(simulation = sim)
+simulationResults <- runSimulations(simulations = sim)
 
 # Calculate PK-analysis
 pkAnalysis        <- calculatePKAnalyses(results = simulationResults)

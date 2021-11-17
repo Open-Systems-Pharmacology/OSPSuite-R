@@ -72,7 +72,7 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
-simulationResults <- runSimulations(simulation = sim, population = myPopulation)
+simulationResults <- runSimulations(simulations = sim, population = myPopulation)
 print(simulationResults)
 ```
 
@@ -94,7 +94,7 @@ simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with custom options
-populationResults <- runSimulations(simulation = sim, population = myPopulation, simulationRunOptions = simRunOptions)
+populationResults <- runSimulations(simulations = sim, population = myPopulation, simulationRunOptions = simRunOptions)
 print(populationResults)
 ```
 
