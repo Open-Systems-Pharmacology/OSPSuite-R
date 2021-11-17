@@ -1,13 +1,14 @@
 url: https://www.open-systems-pharmacology.org/OSPSuite-R/
 
+# uncomment to turn on dark mode
 template:
   bootstrap: 5
-  bootswatch: cyborg
-  theme: arrow-dark
-  bslib:
-    primary: "#0054AD"
-    border-radius: 0.5rem
-    btn-border-radius: 0.25rem
+  # bootswatch: cyborg
+  # theme: arrow-dark
+  # bslib:
+  #   primary: "#0054AD"
+  #   border-radius: 0.5rem
+  #   btn-border-radius: 0.25rem
 
 articles:
 
