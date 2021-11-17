@@ -10,7 +10,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", error = TRUE
+  comment = "#>",
+  error = TRUE
 )
 ```
 
@@ -139,7 +140,7 @@ liverIntVolume$isFixedValue
 
 Changing the value of a state variable parameter will only change its initial value, but not the right hand side (i.e., the value in the simulation will still change according to the RHS formula). To switch to RHS formula off and, by that, make the parameter be only dependent on its initial value, the field `isStateVariable` can be set to `FALSE`. This function is one-way only! It is not possible to re-activate the RHS formula after switching it off.
 
-```{r setStateVariableValue, error = TRUE}
+```{r setStateVariableValue}
 # Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
