@@ -10,7 +10,7 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", error = TRUE
+  comment = "#>"
 )
 ```
 
@@ -159,7 +159,7 @@ print(sim$outputSchema)
 
 To change the simulation interval, the user can use one of the functions `clearOutputIntervals()`, `addOutputInterval()`, and `setOutputInterval()`.
 
-```{r changeOutputInterval, error = TRUE, purl = FALSE}
+```{r changeOutputInterval, purl = FALSE}
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
