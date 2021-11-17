@@ -6,10 +6,10 @@
     <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-dark"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">10.0.72</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">11.0.0</small>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -101,25 +101,13 @@ is performed. If any sheet does not comply with the configuration, an error is t
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \dontrun{</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="va">configurationPath</span> <span class="op">&lt;-</span> <span class="st">"../dataImporterConfiguration_noSheets.xml"</span></span>
 <span class="r-in"><span class="va">xlsFilePath</span> <span class="op">&lt;-</span> <span class="st">"../CompiledDataSet_oneSheet.xlsx"</span></span>
 <span class="r-in"><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="va"><a href="DataImporterConfiguration.html">DataImporterConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">configurationPath</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath):</span> Type:    System.IO.FileNotFoundException</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Message: Could not find file 'C:\Users\IndrajeetPatil\Documents\GitHub\OSPSuite-R\docs\dataImporterConfiguration_noSheets.xml'.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Method:  Void WinIOError(Int32, System.String)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Stack trace:</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlTextReaderImpl.FinishInitUriString()</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlReade</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dataSets</span> <span class="op">&lt;-</span> <span class="fu">loadDataSetsFromExcel</span><span class="op">(</span>xlsFilePath <span class="op">=</span> <span class="va">xlsFilePath</span>, importerConfiguration <span class="op">=</span> <span class="va">importerConfiguration</span>, importAllSheets <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in isOfType(object, type, nullAllowed):</span> object 'importerConfiguration' not found</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>
