@@ -46,8 +46,8 @@ savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
 #' @title Loads the pK-analyses from csv file
 #'
 #' @param filePath Full path of the file containing the pK-Analyses to load.
-#' @param simulation Instance of the simulation for which the pk-Analyses were calculated. This is required to verify that the file
-#' matches the simulation
+#' @param simulation Instance of the simulation for which the pk-Analyses were
+#'   calculated. This is required to verify that the file matches the simulation.
 #'
 #' @export
 importPKAnalysesFromCSV <- function(filePath, simulation) {
@@ -78,7 +78,14 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
         Value = readr::col_double(),
         Unit = readr::col_factor()
       )
-      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = colTypes)
+
+      pkResultsDataFrame <- readr::read_csv(
+          pkParameterResultsFilePath,
+          locale = readr::locale(encoding = "UTF-8"),
+          comment = "#",
+          col_types = colTypes
+        )
+
       return(pkResultsDataFrame)
     },
     finally = {
