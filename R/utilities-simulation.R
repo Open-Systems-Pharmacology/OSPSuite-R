@@ -1,18 +1,20 @@
-#' @title Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
-#' has been loaded before, the simulation is not loaded again but a cached object is returned.
-#' This behavior can be overridden.
+#' @title Load a simulation from a pkml file
+#'
+#' @description
+#' Loads a simulation from a pkml file and returns the simulation. If the passed
+#' simulation file has been loaded before, the simulation is not loaded again
+#' but a cached object is returned. This behavior can be overridden.
 #'
 #' @param filePath Full path of pkml simulation file to load.
 #'
-#' @param loadFromCache If `TRUE`, an already loaded pkml file will not be loaded
-#' again, but the simulation object will be retrieved from cache.
-#' If `FALSE`, a new simulation object will be created. Default value is `FALSE`.
-#'
-#' @param addToCache If `TRUE`, the loaded simulation is added to cache. If `FALSE`,
-#' the returned simulation only exists locally. Default is `TRUE`.
-#'
-#' @param resetIds If `TRUE`, the internal object ids in the simulation are reset to a unique value.
-#' If `FALSE`, the ids are kept as defined in the pkml simulation. Default is `TRUE`.
+#' @param loadFromCache If `TRUE`, an already loaded pkml file will not be
+#'   loaded again, but the simulation object will be retrieved from cache. If
+#'   `FALSE`, a new simulation object will be created. Default value is `FALSE`.
+#' @param addToCache If `TRUE`, the loaded simulation is added to cache. If
+#'   `FALSE`, the returned simulation only exists locally. Default is `TRUE`.
+#' @param resetIds If `TRUE`, the internal object ids in the simulation are
+#'   reset to a unique value. If `FALSE`, the ids are kept as defined in the
+#'   pkml simulation. Default is `TRUE`.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
