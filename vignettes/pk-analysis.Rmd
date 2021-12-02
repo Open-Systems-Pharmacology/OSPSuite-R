@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Calculating PK parameters
+
 PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a simulation. First, simulation results must be calculated, and the `SimulationResults` object is then passed to the method `calculatePKAnalyses`. For the list of calculated PK parameters and their description, please refer to [OSPS documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-analysis-view).
 
 
@@ -60,7 +62,16 @@ c_max$values
 
 In case of a population simulation, `$values` return a list of values calculated for each individual.
 
+## Extracting a dataframe
+
+Sometimes it is desirable to have the calculated parameters in a dataframe for working with them further in other workflows (e.g. data wrangling), and the package provides a convenient helper to extract it:
+
+```{r}
+pkAnalysesAsDataFrame(pkAnalysis)
+```
+
 ## Import and export of PK-analyses
+
 Population analysis calculated in R can be exported to a *.csv file and loaded in PK-Sim, and vice versa.
 
 ```{r PKAnalysesExport}
