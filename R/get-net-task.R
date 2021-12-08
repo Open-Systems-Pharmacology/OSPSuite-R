@@ -6,11 +6,13 @@
 #'
 #' @details
 #' simulationLoader <- getNetTask("SimulationLoader")
-#' @keywords internal
+#' @export
 getNetTask <- function(taskName) {
   rClr::clrCallStatic("OSPSuite.R.Api", paste0("Get", taskName))
 }
 
+#' @rdname getNetTask
+#' @export
 getContainerTask <- function() {
   if (is.null(ospsuiteEnv$containerTask)) {
     ospsuiteEnv$containerTask <- getNetTask("ContainerTask")

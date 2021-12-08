@@ -2,9 +2,12 @@
 % Please edit documentation in R/get-net-task.R
 \name{getNetTask}
 \alias{getNetTask}
+\alias{getContainerTask}
 \title{Returns an instance of the specified .NET Task}
 \usage{
 getNetTask(taskName)
+
+getContainerTask()
 }
 \arguments{
 \item{taskName}{The name of the task to retrieve (without the Get)}
@@ -18,4 +21,3 @@ Returns an instance of the specified .NET Task
 \details{
 simulationLoader <- getNetTask("SimulationLoader")
 }
-\keyword{internal}
