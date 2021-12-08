@@ -99,7 +99,7 @@ def download_file(project_name, file_name, uri)
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
   open(file, 'wb') do |fo|
-    fo.print open(uri,:read_timeout => nil).read
+    fo.print URI.open(uri,:read_timeout => nil).read
   end
   file
 end
