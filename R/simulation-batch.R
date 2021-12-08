@@ -9,7 +9,15 @@ SimulationBatch <- R6::R6Class(
   cloneable = FALSE,
   inherit = DotNetWrapper,
   private = list(
-    .simulation = NULL
+    .simulation = NULL,
+    #' @description
+    #' Clears the reference to the wrapped .NET object
+    finalize = function() {
+      private$.simulation <- NULL
+      # SimulationBatch are disposable object and should be disposed
+      rClr::clrCall(self$ref, "Dispose")
+      super$finalize()
+    }
   ),
   public = list(
     #' @description
@@ -64,15 +72,6 @@ SimulationBatch <- R6::R6Class(
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
       rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
-    },
-
-    #' @description
-    #' Clears the reference to the wrapped .NET object
-    finalize = function() {
-      private$.simulation <- NULL
-      # SimulationBatch are disposable object and should be disposed
-      rClr::clrCall(self$ref, "Dispose")
-      super$finalize()
     }
   ),
   active = list(

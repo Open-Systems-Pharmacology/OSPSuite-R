@@ -21,12 +21,6 @@ DotNetWrapper <- R6::R6Class(
     #' @return A new `DotNetWrapper` object.
     initialize = function(ref) {
       self$ref <- ref
-    },
-    #' @description
-    #' Clears the reference to the wrapped .NET object
-    finalize = function() {
-      # maybe dispose should be called to if available.
-      self$ref <- NULL
     }
   ),
   private = list(
@@ -119,6 +113,12 @@ DotNetWrapper <- R6::R6Class(
     },
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
+    },
+    #' @description
+    #' Clears the reference to the wrapped .NET object
+    finalize = function() {
+      # maybe dispose should be called to if available.
+      self$ref <- NULL
     }
   )
 )
