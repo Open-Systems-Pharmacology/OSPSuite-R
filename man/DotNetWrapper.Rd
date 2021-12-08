@@ -29,7 +29,6 @@ Wrapper class for .net Object
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DotNetWrapper$new()}}
-\item \href{#method-finalize}{\code{DotNetWrapper$finalize()}}
 }
 }
 \if{html}{
@@ -57,15 +56,5 @@ Initialize a new instance of the class
 \subsection{Returns}{
 A new \code{DotNetWrapper} object.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-finalize"></a>}}
-\if{latex}{\out{\hypertarget{method-finalize}{}}}
-\subsection{Method \code{finalize()}}{
-Clears the reference to the wrapped .NET object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DotNetWrapper$finalize()}\if{html}{\out{</div>}}
-}
-
 }
 }

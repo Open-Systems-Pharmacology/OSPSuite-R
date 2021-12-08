@@ -33,7 +33,6 @@ pK-Analyses of a simulation (either individual or population simulation).
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -88,7 +87,8 @@ The pK Parameter defined for the given path and name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter} should be retrieved}
+\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter}
+should be retrieved}
 
 \item{\code{pkParameter}}{Name of the pkParameter to retrieve}
 }
