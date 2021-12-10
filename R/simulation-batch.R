@@ -10,8 +10,6 @@ SimulationBatch <- R6::R6Class(
   inherit = DotNetWrapper,
   private = list(
     .simulation = NULL,
-    #' @description
-    #' Clears the reference to the wrapped .NET object
     finalize = function() {
       private$.simulation <- NULL
       # SimulationBatch are disposable object and should be disposed

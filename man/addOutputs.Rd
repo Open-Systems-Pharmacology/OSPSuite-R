@@ -2,20 +2,24 @@
 % Please edit documentation in R/utilities-output-selections.R
 \name{addOutputs}
 \alias{addOutputs}
-\title{Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.}
+\title{Adds the quantities as output into the  \code{simulation}. The quantities
+can either be specified using explicit instances or using paths.}
 \usage{
 addOutputs(quantitiesOrPaths, simulation)
 }
 \arguments{
-\item{quantitiesOrPaths}{Quantity instances (element or vector) (typically retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or vector) to add.}
+\item{quantitiesOrPaths}{Quantity instances (element or vector) (typically
+retrieved using \code{getAllQuantitiesMatching}) or quantity path (element or
+vector) to add.}
 
-\item{simulation}{Instance of a simulation for which output selection should be updated.}
+\item{simulation}{Instance of a simulation for which output selection should
+be updated.}
 }
 \description{
-Adds the quantities as output into the  \code{simulation}. The quantities can either be specified using explicit instances or using paths.
+Adds the quantities as output into the  \code{simulation}. The quantities
+can either be specified using explicit instances or using paths.
 }
 \examples{
-#'
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 

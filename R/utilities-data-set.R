@@ -65,10 +65,15 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 #'
 #' @param dataSets A list of `DataSet` objects or a single `DataSet`
 #'
-#' @return DataSet objects as data.frame with columns name, xValues, yValues, yErrorValues,
-#' xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit, molWeight, lloq,
-#'  and a column for each meta data that is present in any `DataSet`
+#' @return
+#'
+#' DataSet objects as data.frame with columns name, xValues, yValues,
+#' yErrorValues, xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit,
+#' molWeight, lloq, and a column for each meta data that is present in any
+#' `DataSet`.
+#'
 #' @export
+
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, DataSet)
@@ -86,11 +91,13 @@ dataSetToDataFrame <- function(dataSets) {
   yValues      <- .makeDataFrameColumn(dataSets, "yValues")
   yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
   lloq         <- .makeDataFrameColumn(dataSets, "LLOQ")
-  df           <- data.frame(
+  # styler: on
+
+  df <- data.frame(
     name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
     yUnit, yErrorType, yErrorUnit, molWeight, lloq
   )
-  # styler: on
+
 
   # get all names of meta data entries from all data sets
   metaDataNames <- unique(unlist(lapply(dataSets, function(dataSets) {
