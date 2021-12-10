@@ -33,16 +33,14 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   #run nuget to get linux packages
   nuget_restore linux_distro
 
+  # Tar file produced by the script
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
   
-  # Tar file produced by the script
-  tar_file = File.join(build_dir, tar_file_name)
-
   #unzip it in a temp folder
   temp_distro_dir = File.join(temp_dir, linux_distro)
   FileUtils.mkdir_p temp_distro_dir
 
-  command_line = %W[xzf #{tar_file} -C #{temp_distro_dir}]
+  command_line = %W[xzf #{tar_file_name} -C #{temp_distro_dir}]
   Utils.run_cmd('tar', command_line)
 
   ospsuite_dir = File.join(temp_distro_dir,  'ospsuite')
@@ -99,7 +97,7 @@ def download_file(project_name, file_name, uri)
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
   open(file, 'wb') do |fo|
-    fo.print open(uri,:read_timeout => nil).read
+    fo.print URI.open(uri,:read_timeout => nil).read
   end
   file
 end
