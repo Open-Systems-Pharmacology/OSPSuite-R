@@ -73,27 +73,30 @@ dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, DataSet)
 
-  name <- .makeDataFrameColumn(dataSets, "name")
-  xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
-  yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
-  yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
-  xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
-  yDimension <- .makeDataFrameColumn(dataSets, "yDimension")
-  yErrorType <- .makeDataFrameColumn(dataSets, "yErrorType")
-  molWeight <- .makeDataFrameColumn(dataSets, "molWeight")
-  xValues <- .makeDataFrameColumn(dataSets, "xValues")
-  yValues <- .makeDataFrameColumn(dataSets, "yValues")
+  # styler: off
+  name         <- .makeDataFrameColumn(dataSets, "name")
+  xUnit        <- .makeDataFrameColumn(dataSets, "xUnit")
+  yUnit        <- .makeDataFrameColumn(dataSets, "yUnit")
+  yErrorUnit   <- .makeDataFrameColumn(dataSets, "yErrorUnit")
+  xDimension   <- .makeDataFrameColumn(dataSets, "xDimension")
+  yDimension   <- .makeDataFrameColumn(dataSets, "yDimension")
+  yErrorType   <- .makeDataFrameColumn(dataSets, "yErrorType")
+  molWeight    <- .makeDataFrameColumn(dataSets, "molWeight")
+  xValues      <- .makeDataFrameColumn(dataSets, "xValues")
+  yValues      <- .makeDataFrameColumn(dataSets, "yValues")
   yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
-  lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
-  df <- data.frame(
+  lloq         <- .makeDataFrameColumn(dataSets, "LLOQ")
+  df           <- data.frame(
     name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
     yUnit, yErrorType, yErrorUnit, molWeight, lloq
   )
+  # styler: on
 
   # get all names of meta data entries from all data sets
   metaDataNames <- unique(unlist(lapply(dataSets, function(dataSets) {
     names(dataSets[["metaData"]])
   }), use.names = FALSE))
+
   # add one column for each one
   for (name in metaDataNames) {
     col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
