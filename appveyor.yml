@@ -13,8 +13,6 @@ init:
 install:
   - ps: Bootstrap
   - git submodule update --init --recursive
-  - cd
-  - echo %APPVEYOR_BUILD_FOLDER% 
 
 environment:
   USE_RTOOLS: true
