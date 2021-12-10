@@ -30,13 +30,18 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   build_dir = args.build_dir
   linux_distro = args.linux_distro
 
+  puts "Build dir is #{build_dir}".light_blue
+
+  #TEMP
+  build_dir = "C:/projects/ospsuite-r"
+
   #run nuget to get linux packages
   nuget_restore linux_distro
 
   # Tar file produced by the script
   tar_file_name = "ospsuite_#{product_version}.tar.gz"
   tar_file = File.join(build_dir, tar_file_name)
-  puts "Widows package is #{tar_file}".light_blue
+  puts "Windows package is #{tar_file}".light_blue
 
   #unzip it in a temp folder
   temp_distro_dir = File.join(temp_dir, linux_distro)
