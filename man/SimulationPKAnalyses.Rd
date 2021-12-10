@@ -88,7 +88,8 @@ The pK Parameter defined for the given path and name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter} should be retrieved}
+\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter}
+should be retrieved}
 
 \item{\code{pkParameter}}{Name of the pkParameter to retrieve}
 }
