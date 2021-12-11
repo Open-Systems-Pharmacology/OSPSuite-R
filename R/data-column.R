@@ -62,7 +62,7 @@ DataColumn <- R6::R6Class(
         return(rClr::clrGet(dataInfo, "MolWeight"))
       }
 
-      validateIsNumeric(value)
+      ospsuite.utils::validateIsNumeric(value)
       rClr::clrSet(dataInfo, "MolWeight", value)
     },
     #' @field LLOQ Lower Limit Of Quantification.
@@ -73,7 +73,7 @@ DataColumn <- R6::R6Class(
         return(rClr::clrGet(dataInfo, "LLOQAsDouble"))
       }
 
-      validateIsNumeric(value)
+      ospsuite.utils::validateIsNumeric(value)
       rClr::clrSet(dataInfo, "LLOQAsDouble", value)
     }
   ),

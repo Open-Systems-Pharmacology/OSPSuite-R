@@ -144,7 +144,7 @@ test_that("It runs one individual simulation without simulationRunOptions", {
 
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   results <- runSimulation(simulation = sim)
-  expect_true(isOfType(results, "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(results, "SimulationResults"))
 })
 
 test_that("It runs one individual simulation with simulationRunOptions", {
@@ -152,7 +152,7 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   simRunOptions <- SimulationRunOptions$new()
   results <- runSimulation(simulation = sim, simulationRunOptions = simRunOptions)
-  expect_true(isOfType(results, "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(results, "SimulationResults"))
 })
 
 test_that("It runs multiple individual simulations", {
@@ -163,7 +163,7 @@ test_that("It runs multiple individual simulations", {
   expect_equal(length(results), 2)
   # Check the ids
   expect_equal(names(results)[[1]], sim$id)
-  expect_true(isOfType(results[[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(results[[1]], "SimulationResults"))
 })
 
 test_that("It shows a warning if one of simulations fails. Results for this simulation are NULL", {
@@ -176,7 +176,7 @@ test_that("It shows a warning if one of simulations fails. Results for this simu
   expect_equal(length(results), 2)
   expect_equal(names(results)[[2]], sim2$id)
   expect_null(results[[sim$id]])
-  expect_true(isOfType(results[[2]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(results[[2]], "SimulationResults"))
 })
 
 test_that("It does not show a warning if one of simulations fails in silent mode. Results for this simulation are NULL", {
@@ -189,7 +189,7 @@ test_that("It does not show a warning if one of simulations fails in silent mode
   expect_equal(length(results), 2)
   expect_equal(names(results)[[2]], sim2$id)
   expect_null(results[[sim$id]])
-  expect_true(isOfType(results[[2]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(results[[2]], "SimulationResults"))
 })
 
 test_that("It throws an error when running multiple simulations with a population", {
@@ -266,7 +266,7 @@ test_that("It can run a simulation batch by varying some parameters and molecule
   id <- simulationBatch$addRunValues(parameterValues = c(1.2, 2.4), initialValues = 2.5)
   res <- runSimulationBatches(simulationBatches = simulationBatch)
   expect_equal(length(res), 1)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
 })
 
 test_that("It can run a simulation batch by varying some parameters only", {
@@ -275,7 +275,7 @@ test_that("It can run a simulation batch by varying some parameters only", {
   id <- simulationBatch$addRunValues(parameterValues = c(1.2, 2.4))
   res <- runSimulationBatches(simulationBatch)
   expect_equal(length(res), 1)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
 })
 
 test_that("It can run a simulation batch by varying some molecule only", {
@@ -284,7 +284,7 @@ test_that("It can run a simulation batch by varying some molecule only", {
   id <- simulationBatch$addRunValues(initialValues = 1.2)
   res <- runSimulationBatches(simulationBatch)
   expect_equal(length(res), 1)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
 })
 
 test_that("The result is NULL when the number of values does not match the initialization count for initial values", {
@@ -322,7 +322,7 @@ test_that("It can run a simulation batch with multiple parameters and molecules 
   res <- runSimulationBatches(simulationBatches = simulationBatch)
 
   expect_equal(length(res), 1)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
 })
 
@@ -339,7 +339,7 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
   res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
   expect_equal(length(res), 2)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
   expect_equal(names(res[[1]])[[2]], ids[[2]])
   expect_equal(names(res[[2]])[[1]], ids[[3]])
@@ -356,7 +356,7 @@ test_that("It can run a simulation batch, add new values, and run again", {
   ids[[2]] <- simulationBatch$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
   res <- runSimulationBatches(simulationBatches = simulationBatch)
   expect_equal(length(res), 1)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
   expect_equal(names(res[[1]])[[2]], ids[[2]])
 
@@ -364,7 +364,7 @@ test_that("It can run a simulation batch, add new values, and run again", {
   ids[[2]] <- simulationBatch$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
   res <- runSimulationBatches(simulationBatches = simulationBatch)
   expect_equal(length(res), 1)
-  expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
+  expect_true(ospsuite.utils::isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
   expect_equal(names(res[[1]])[[2]], ids[[2]])
 })

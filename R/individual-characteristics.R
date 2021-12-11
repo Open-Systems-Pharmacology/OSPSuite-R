@@ -98,7 +98,7 @@ IndividualCharacteristics <- R6::R6Class(
     #' Add a molecule ontogeny `MoleculeOntogeny` to the individual characteristics
     #' @param moleculeOntogeny Molecule ontogeny to add
     addMoleculeOntogeny = function(moleculeOntogeny) {
-      validateIsOfType(moleculeOntogeny, MoleculeOntogeny)
+      ospsuite.utils::validateIsOfType(moleculeOntogeny, MoleculeOntogeny)
       private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
       netMoleculeOntogeny <- rClr::clrNew("PKSim.R.Domain.MoleculeOntogeny")
       rClr::clrSet(netMoleculeOntogeny, "Molecule", moleculeOntogeny$molecule)

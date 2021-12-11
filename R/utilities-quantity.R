@@ -94,18 +94,18 @@ setQuantityValues <- function(quantities, values, units = NULL) {
   values <- c(values)
 
   # Test for correct inputs
-  validateIsOfType(quantities, Quantity)
-  validateIsNumeric(values)
+  ospsuite.utils::validateIsOfType(quantities, Quantity)
+  ospsuite.utils::validateIsNumeric(values)
 
   if (length(values) > 1) {
-    validateIsSameLength(quantities, values)
+    ospsuite.utils::validateIsSameLength(quantities, values)
   } else {
     values <- rep(values, length(quantities))
   }
 
   if (!is.null(units)) {
-    validateIsSameLength(quantities, units)
-    validateIsString(units)
+    ospsuite.utils::validateIsSameLength(quantities, units)
+    ospsuite.utils::validateIsString(units)
   }
 
   for (i in seq_along(quantities)) {
@@ -141,14 +141,14 @@ setQuantityValues <- function(quantities, values, units = NULL) {
 #' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
 #' @export
 setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
-  validateIsString(quantityPaths)
-  validateIsNumeric(values)
-  validateIsSameLength(quantityPaths, values)
-  validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsString(quantityPaths)
+  ospsuite.utils::validateIsNumeric(values)
+  ospsuite.utils::validateIsSameLength(quantityPaths, values)
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
 
   if (!is.null(units)) {
-    validateIsSameLength(quantityPaths, units)
-    validateIsString(units)
+    ospsuite.utils::validateIsSameLength(quantityPaths, units)
+    ospsuite.utils::validateIsString(units)
   }
 
   task <- getContainerTask()
@@ -180,8 +180,8 @@ scaleQuantityValues <- function(quantities, factor) {
   quantities <- c(quantities)
 
   # Test for correct inputs
-  validateIsOfType(quantities, Quantity)
-  validateIsNumeric(factor)
+  ospsuite.utils::validateIsOfType(quantities, Quantity)
+  ospsuite.utils::validateIsNumeric(factor)
 
   lapply(quantities, function(q) q$value <- q$value * factor)
   invisible()
@@ -196,8 +196,8 @@ scaleQuantityValues <- function(quantities, factor) {
 #' @return a display path for each entry in paths
 #'
 getQuantityDisplayPaths <- function(paths, simulation) {
-  validateIsString(paths)
-  validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsString(paths)
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
   displayResolver <- getNetTask("FullPathDisplayResolver")
   paths <- c(paths)
 
