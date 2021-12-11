@@ -13,8 +13,9 @@ setMoleculeInitialValues(molecules, values, units = NULL)
 of numeric values, if the start value of more than one molecule should be changed. Must have the same
 length as \code{molecules}}
 
-\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
-are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantities}.}
+\item{units}{A string or a list of strings defining the units of the
+\code{values}. If \code{NULL} (default), values are assumed to be in base units. If
+not \code{NULL}, must have the same length as \code{quantities}.}
 }
 \description{
 Set molecule start values

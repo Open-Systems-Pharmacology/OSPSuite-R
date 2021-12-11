@@ -21,8 +21,9 @@ length as 'parameterPaths'}
 
 \item{simulation}{Simulation uses to retrieve parameter instances from given paths.}
 
-\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
-are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantityPaths}.}
+\item{units}{A string or a list of strings defining the units of the
+\code{values}. If \code{NULL} (default), values are assumed to be in base units. If
+not \code{NULL}, must have the same length as \code{quantityPaths}.}
 
 \item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no parameter exists for the given path,
 an error is thrown. If \code{FALSE}, a warning is shown to the user}

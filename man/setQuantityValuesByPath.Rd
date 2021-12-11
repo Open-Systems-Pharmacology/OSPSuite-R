@@ -15,17 +15,20 @@ setQuantityValuesByPath(
 \arguments{
 \item{quantityPaths}{A single or a list of absolute quantity path}
 
-\item{values}{A numeric value that should be assigned to the quantities or a vector
-of numeric values, if the value of more than one quantity should be changed. Must have the same
-length as 'quantityPaths'}
+\item{values}{A numeric value that should be assigned to the quantities or a
+vector of numeric values, if the value of more than one quantity should be
+changed. Must have the same length as 'quantityPaths'.}
 
-\item{simulation}{Simulation uses to retrieve quantity instances from given paths.}
+\item{simulation}{Simulation uses to retrieve quantity instances from given
+paths.}
 
-\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
-are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantityPaths}.}
+\item{units}{A string or a list of strings defining the units of the
+\code{values}. If \code{NULL} (default), values are assumed to be in base units. If
+not \code{NULL}, must have the same length as \code{quantityPaths}.}
 
-\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
-an error is thrown. If \code{FALSE}, a warning is shown to the user}
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for
+the given path, an error is thrown. If \code{FALSE}, a warning is shown to the
+user.}
 }
 \description{
 Set the values of parameters in the simulation by path
