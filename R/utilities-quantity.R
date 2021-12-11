@@ -1,11 +1,18 @@
 
-#' Retrieve all quantities of a container (simulation or container instance) matching the given path criteria
+#' Retrieve all quantities of a container (simulation or container instance)
+#' matching the given path criteria
 #'
 #' @param paths A vector of strings relative to the `container`
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and
+#'   [getAllContainersMatching()] to retrieve objects of type Container or
+#'   Simulation
 #'
-#' @return A list of quantities matching the path criteria. The list is empty if no quantity matching were found.
+#' @return
+#'
+#' A list of quantities matching the path criteria. The list is empty if no
+#' quantity matching were found.
+#'
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -21,6 +28,7 @@
 #'
 #' # Returns all `Volume` quantities defined in `Organism` and all its subcontainers
 #' quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
+#'
 #' @export
 getAllQuantitiesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Quantity)
@@ -29,7 +37,9 @@ getAllQuantitiesMatching <- function(paths, container) {
 #' Retrieves the path of all quantities defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and
+#'   [getAllContainersMatching()] to retrieve objects of type Container or
+#'   Simulation
 #'
 #' @return An array with one entry per quantity defined in the container
 #' @examples
@@ -48,8 +58,8 @@ getAllQuantityPathsIn <- function(container) {
 #'
 #' @inherit getAllQuantitiesMatching
 #' @param path A string representing the path relative to the `container`
-#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
-#' an error is thrown. If `FALSE`, `NULL` is returned.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, `NULL` is returned.
 #'
 #' @return The `Quantity` with the given path. If the quantity for the path
 #' does not exist, an error is thrown if `stopIfNotFound` is `TRUE` (default),
@@ -68,12 +78,14 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #' Set values of quantity
 #'
 #' @param quantities A single or a list of `Quantity`
-#'
-#' @param values A numeric value that should be assigned to the quantity or a vector
-#' of numeric values, if the value of more than one quantity should be changed. Must have the same
-#' length as 'quantities'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
-#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
-#' are assumed to be in base units. If not `NULL`, must have the same length as `quantities`.
+#' @param values A numeric value that should be assigned to the quantity or a
+#'   vector of numeric values, if the value of more than one quantity should be
+#'   changed. Must have the same length as 'quantities'. Alternatively, the
+#'   value can be a unique number. In that case, the same value will be set in
+#'   all parameters
+#' @param units A string or a list of strings defining the units of the
+#'   `values`. If `NULL` (default), values are assumed to be in base units. If
+#'   not `NULL`, must have the same length as `quantities`.
 #'
 setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
@@ -109,14 +121,17 @@ setQuantityValues <- function(quantities, values, units = NULL) {
 #' Set the values of parameters in the simulation by path
 #'
 #' @param quantityPaths A single or a list of absolute quantity path
-#' @param values A numeric value that should be assigned to the quantities or a vector
-#' of numeric values, if the value of more than one quantity should be changed. Must have the same
-#' length as 'quantityPaths'
-#' @param simulation Simulation uses to retrieve quantity instances from given paths.
-#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
-#' an error is thrown. If `FALSE`, a warning is shown to the user
-#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
-#' are assumed to be in base units. If not `NULL`, must have the same length as `quantityPaths`.
+#' @param values A numeric value that should be assigned to the quantities or a
+#'   vector of numeric values, if the value of more than one quantity should be
+#'   changed. Must have the same length as 'quantityPaths'.
+#' @param simulation Simulation uses to retrieve quantity instances from given
+#'   paths.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, a warning is shown to the
+#'   user.
+#' @param units A string or a list of strings defining the units of the
+#'   `values`. If `NULL` (default), values are assumed to be in base units. If
+#'   not `NULL`, must have the same length as `quantityPaths`.
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

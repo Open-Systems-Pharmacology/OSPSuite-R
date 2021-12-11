@@ -64,9 +64,6 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Clears the reference to the wrapped .NET object
-
-
 Initialize a new instance of the class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$new(ref, simulation)}\if{html}{\out{</div>}}
