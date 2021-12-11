@@ -155,11 +155,7 @@ DataSet <- R6::R6Class(
         if (is.null(molWeight)) {
           return(NULL)
         }
-        return(toUnit(
-          quantityOrDimension = ospDimensions$`Molecular weight`,
-          values = molWeight,
-          targetUnit = ospUnits$`Molecular weight`$`g/mol`
-        ))
+        return(toUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = molWeight, targetUnit = ospUnits$`Molecular weight`$`g/mol`))
       }
 
       private$.yColumn$molWeight <- toBaseUnit(
@@ -168,6 +164,7 @@ DataSet <- R6::R6Class(
         unit = ospUnits$`Molecular weight`$`g/mol`
       )
     },
+
     #' @field LLOQ LLOQ Lower Limit Of Quantification.
     #' Value in yUnit associated with the yValues
 
@@ -179,13 +176,7 @@ DataSet <- R6::R6Class(
           return(NULL)
         }
 
-        return(
-          toUnit(
-            quantityOrDimension = private$.yColumn$dimension,
-            values = lloq,
-            targetUnit = private$.yColumn$displayUnit
-          )
-        )
+        return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
       }
 
       private$.yColumn$LLOQ <- toBaseUnit(
