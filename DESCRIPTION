@@ -6,7 +6,9 @@ Authors@R:
     c(person("Open-Systems-Pharmacology Community", role = "cph"),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
       person("Pavel", "Balazki", role = "aut"),
-      person("Juri", "Solodenko", role = "aut"))
+      person("Juri", "Solodenko", role = "aut", comment = c(ORCID = "0000-0001-6922-588X")),
+      person("Indrajeet", "Patil", , "patilindrajeet.science@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")))
 Description: The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
   created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 License: GPL-2 | file LICENSE
