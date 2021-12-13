@@ -67,22 +67,27 @@ Add simulated data.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
   simulationResults,
-  grouping = NULL,
-  paths = NULL
+  groups = NULL,
+  paths = NULL,
+  individualIds = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{simulationResults}}{Instance of the \code{SimulationResults} object.}
+\item{\code{simulationResults}}{Instance of the \code{SimulationResults} object. A list
+of such instances will \strong{not} be accepted.}
 
-\item{\code{grouping}}{TODO:}
+\item{\code{groups}}{TODO:}
 
 \item{\code{paths}}{Quantity paths (element or vector of strings) for which the
 results are to be returned. When providing the paths, only absolute full
 paths are supported (i.e., no matching with '*' possible). If \code{NULL}
 (default value), returns the results for all output defined in the results.}
+
+\item{\code{individualIds}}{A list of IDs of individuals whose simulations are of
+interest.}
 }
 \if{html}{\out{</div>}}
 }
@@ -96,7 +101,7 @@ paths are supported (i.e., no matching with '*' possible). If \code{NULL}
 \subsection{Method \code{addDataSet()}}{
 Add observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSet(dataSet, grouping = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSet(dataSet, groups = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -104,7 +109,7 @@ Add observed data.
 \describe{
 \item{\code{dataSet}}{Instance (or a list of instances) of the \code{DataSet} object(s).}
 
-\item{\code{grouping}}{TODO:}
+\item{\code{groups}}{TODO:}
 }
 \if{html}{\out{</div>}}
 }

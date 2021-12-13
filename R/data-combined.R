@@ -5,13 +5,16 @@
 #' A class for storage of simulated and/or observed data, which can be further
 #' used to extract as a dataframe or for visualization methods.
 #'
-#' @param simulationResults Instance of the `SimulationResults` object.
+#' @param simulationResults Instance of the `SimulationResults` object. A list
+#'   of such instances will **not** be accepted.
 #' @param dataSet Instance (or a list of instances) of the `DataSet` object(s).
-#' @param grouping TODO:
+#' @param groups TODO:
 #' @param paths Quantity paths (element or vector of strings) for which the
 #'   results are to be returned. When providing the paths, only absolute full
 #'   paths are supported (i.e., no matching with '*' possible). If `NULL`
 #'   (default value), returns the results for all output defined in the results.
+#' @param individualIds A list of IDs of individuals whose simulations are of
+#'   interest.
 #'
 #' @examples
 #'
@@ -58,8 +61,22 @@ DataCombined <- R6::R6Class(
     #' Add simulated data.
     #' @return `DataCombined` object containing simulated data.
 
-    addSimulationResults = function(simulationResults, grouping = NULL, paths = NULL) {
+    addSimulationResults = function(simulationResults,
+                                    groups = NULL,
+                                    paths = NULL,
+                                    individualIds = NULL) {
+      # list input is possible only for dataSet argument, and not here
+      if (is.list(simulationResults)) {
+        stop(
+          "Only a single instance, and not a list, of `SimulationResults` objects is expected.",
+          call. = FALSE
+        )
+      }
+
+      # ascertain that the object is of the correct type
       validateIsOfType(simulationResults, "SimulationResults")
+
+      # extract data
       private$.simulationResults <- simulationResults
     },
 
@@ -67,7 +84,7 @@ DataCombined <- R6::R6Class(
     #' Add observed data.
     #' @return `DataCombined` object containing observed data.
 
-    addDataSet = function(dataSet, grouping = NULL) {
+    addDataSet = function(dataSet, groups = NULL) {
       # if a list is provided, keep only elements which are of DataSet type
       if (is.list(dataSet)) {
         dataSet <- purrr::keep(dataSet, ~ inherits(.x, "DataSet"))
@@ -121,7 +138,7 @@ DataCombined <- R6::R6Class(
       private$.simulationResults$print()
 
       if (is.list(private$.dataSet)) {
-         purrr::walk(private$.dataSet, print)
+        purrr::walk(private$.dataSet, print)
       } else {
         private$.dataSet$print()
       }

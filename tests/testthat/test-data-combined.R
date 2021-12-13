@@ -23,12 +23,11 @@ test_that("it can set and retrieve the dimension of a data column", {
 
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))
-  # TODO: turn on only when implementation is finalized
-  # expect_snapshot(myCombDat)
 
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
+  expect_equal(dim(df), c(77L, 18L))
 
   # with DataSet input ----------------------------
 
@@ -39,15 +38,16 @@ test_that("it can set and retrieve the dimension of a data column", {
 
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
-  # TODO: turn on only when implementation is finalized
-  # expect_snapshot(myCombDat2)
 
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
+  expect_equal(dim(df2), c(12L, 18L))
 
-  # with nonsense DataSet list input ----------------------------
+  # with nonsense list inputs ----------------------------
 
   myCombDat3 <- DataCombined$new()
   expect_error(myCombDat3$addDataSet(list("x" = 1, "y" = 2)))
+
+  expect_error(myCombDat3$addSimulationResults(list(simResults, simResults)))
 })
