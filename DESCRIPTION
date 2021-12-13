@@ -16,11 +16,12 @@ BugReports:
 Depends: 
     R (>= 3.6),
     rClr (>= 0.9.1)
-Imports: 
+Imports:
+    dplyr,
     purrr,
     R6,
-    stringr,
-    readr
+    readr,
+    stringr
 Suggests: 
     knitr,
     rmarkdown,
