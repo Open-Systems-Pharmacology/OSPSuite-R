@@ -23,3 +23,4 @@ Retrieves all path of entities defined within the container (simulation or conta
 \seealso{
 \code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to create objects of type Container or Simulation
 }
+\keyword{internal}

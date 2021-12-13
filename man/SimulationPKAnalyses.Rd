@@ -7,6 +7,7 @@
 \description{
 pK-Analyses of a simulation (either individual or population simulation).
 }
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationPKAnalyses}
 }

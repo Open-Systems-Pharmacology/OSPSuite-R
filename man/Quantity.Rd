@@ -7,6 +7,7 @@
 \description{
 A quantity of the model (with unit, value) such as a Parameter or an Amount
 }
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{Quantity}
 }

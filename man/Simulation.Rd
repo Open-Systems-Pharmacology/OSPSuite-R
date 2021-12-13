@@ -7,6 +7,7 @@
 \description{
 An OSPSuite simulation
 }
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Simulation}
 }

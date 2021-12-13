@@ -6,6 +6,7 @@ QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
 #' @docType class
 #' @description  A quantity of the model (with unit, value) such as a Parameter or an Amount
 #' @format NULL
+#' @keywords internal
 Quantity <- R6::R6Class(
   "Quantity",
   cloneable = FALSE,

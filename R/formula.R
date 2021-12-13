@@ -4,6 +4,7 @@ FormulaExtensions <- "OSPSuite.Core.Domain.Formulas.FormulaExtensions"
 #' @docType class
 #' @description  A formula of the model (Typically related to a `Quantity` such as a parameter)
 #' @format NULL
+#' @keywords internal
 Formula <- R6::R6Class(
   "Formula",
   cloneable = FALSE,

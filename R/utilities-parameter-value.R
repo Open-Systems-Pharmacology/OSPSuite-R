@@ -7,6 +7,7 @@
 #' @param  addUnits If `TRUE`, a a third list will be returned containing the units in which the parameters are defined. Default is `FALSE`
 #'
 #' @return A list with 3 sublist: `paths`, `values`, and optionally `units` containing the corresponding values from each parameter value
+#' @keywords internal
 parameterValueListFrom <- function(netParameterValues, addUnits = FALSE) {
   parameterList <- list(
     paths = getPropertyValues(netParameterValues, "ParameterPath"),

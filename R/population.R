@@ -2,6 +2,7 @@
 #' @docType class
 #' @description  List of individuals used in a population simulation
 #' @format NULL
+#' @keywords internal
 Population <- R6::R6Class(
   "Population",
   inherit = DotNetWrapper,

@@ -3,6 +3,7 @@
 #' @description  A table formula of the model (Typically related to a `Quantity` such as a parameter)
 #' @name Formula
 #' @format NULL
+#' @keywords internal
 TableFormula <- R6::R6Class(
   "TableFormula",
   cloneable = FALSE,

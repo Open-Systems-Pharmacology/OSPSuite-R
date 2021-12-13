@@ -37,6 +37,7 @@
 #' Returns the expanded path for `path` and ensure that encoding is applied properly
 #'
 #' @param  path Path to expand
+#' @keywords internal
 expandPath <- function(path) {
   path.expand(enc2utf8(path))
 }

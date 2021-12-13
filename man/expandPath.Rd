@@ -12,3 +12,4 @@ expandPath(path)
 \description{
 Returns the expanded path for \code{path} and ensure that encoding is applied properly
 }
+\keyword{internal}

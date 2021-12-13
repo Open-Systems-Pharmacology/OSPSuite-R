@@ -2,7 +2,7 @@
 #' @title SimulationPKAnalyses
 #' @docType class
 #' @description  pK-Analyses of a simulation (either individual or population simulation).
-#'
+#' @keywords internal
 SimulationPKAnalyses <- R6::R6Class(
   "SimulationPKAnalyses",
   cloneable = FALSE,

@@ -21,3 +21,4 @@ Tries to find the installation path for a specific version of PK-Sim from an Win
 path <- .getPathToPKSimInstallDirFromRegistry("9")
 }
 }
+\keyword{internal}

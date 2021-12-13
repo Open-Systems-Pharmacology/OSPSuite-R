@@ -8,7 +8,7 @@
 #' @name Molecule
 #'
 #' @keywords Molecule
-#' @format NULL
+#' @keywords internal
 Molecule <- R6::R6Class(
   "Molecule",
   cloneable = FALSE,

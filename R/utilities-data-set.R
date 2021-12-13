@@ -45,7 +45,6 @@ loadDataSetFromPKML <- function(filePath) {
 #'
 #' @param dataSet The `DataSet` object
 #' @param filePath Path where the pkml file will be created
-#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -53,6 +52,7 @@ loadDataSetFromPKML <- function(filePath) {
 #' dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
+#' @export
 saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, DataSet)
@@ -126,7 +126,6 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' @return A named set of `DataSet` objects. The naming is defined by the property
 #' `importerConfiguration$namingPattern`.
-#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -136,6 +135,7 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
 #' }
+#' @export
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
   validateIsOfType(importerConfiguration, DataImporterConfiguration)

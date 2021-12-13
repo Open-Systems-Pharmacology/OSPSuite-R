@@ -248,6 +248,7 @@ getUnitsForDimension <- function(dimension) {
 #' This is purely for optimization purposes
 #'
 #' @return An instance of the Task
+#' @keywords internal
 getDimensionTask <- function() {
   dimensionTask <- ospsuiteEnv$dimensionTask
   if (is.null(dimensionTask)) {

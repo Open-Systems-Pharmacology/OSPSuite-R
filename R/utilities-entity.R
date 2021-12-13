@@ -39,8 +39,7 @@ AllPathsInMethod <- enum(c(
 #' Can take values 'id', 'name', and 'path'. Default is 'id'.
 #'
 #' @return List of entities that are unique for the property defined by the
-#' argument 'compareBy'
-#' @export
+#' argument 'compareBy'.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -54,6 +53,8 @@ AllPathsInMethod <- enum(c(
 #'
 #' # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
 #' uniqueEntities(parameters, CompareBy$id)
+#' @export
+
 uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   if (is.null(entities)) {
     return(NULL)
@@ -94,7 +95,8 @@ unify <- function(groupEntitiesByPathFunc, paths) {
   return(listOfEntitiesByPath)
 }
 
-#' Retrieves all entities of a container (simulation or container instance) matching the given path criteria.
+#' Retrieves all entities of a container (simulation or container instance)
+#' matching the given path criteria.
 #'
 #' @param paths A vector of strings representing the paths relative to the `container`
 #' @param container A Container or Simulation used to find the entities
@@ -103,7 +105,8 @@ unify <- function(groupEntitiesByPathFunc, paths) {
 #' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
 #' @return A list of entities matching the path criteria coerced to the `entityType`.
 #' The list is empty if no entities matching were found.
-#'
+#' @keywords internal
+
 getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) {
   # Test for correct inputs
   validateIsOfType(container, c(Simulation, Container, Molecule))
@@ -132,7 +135,7 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
 #' @param method Method to call in the underlying .NET class. (optional). If unspecified, the method will be estimated from entity type
 #' @return An array of paths (one for each entity found under the container and its sub containers)
 #' The list is empty if no entities matching were found.
-#'
+#' @keywords internal
 getAllEntityPathsIn <- function(container, entityType, method = NULL) {
   validateIsOfType(container, c(Simulation, Container, Molecule))
   validateIsString(method, nullAllowed = TRUE)
@@ -158,7 +161,7 @@ getAllEntityPathsIn <- function(container, entityType, method = NULL) {
 #' @return The `Entity` with the given path coerced to the `entityType`.
 #' If the entity for the path does not exist, an error is thrown in case of
 #' `stopIfNotFound` is TRUE (default), otherwise `NULL`
-#'
+#' @keywords internal
 getEntity <- function(path, container, entityType, stopIfNotFound = TRUE) {
   entities <- getAllEntitiesMatching(path, container, entityType)
   if (length(entities) > 1) {

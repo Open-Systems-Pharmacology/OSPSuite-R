@@ -7,6 +7,7 @@
 \description{
 List of individuals used in a population simulation
 }
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
 }

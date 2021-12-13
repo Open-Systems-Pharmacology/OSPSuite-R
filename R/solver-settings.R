@@ -1,7 +1,7 @@
 #' @title SolverSettings
 #' @docType class
 #' @description  Solver settings associated with a given simulation
-#'
+#' @keywords internal
 SolverSettings <- R6::R6Class(
   "SolverSettings",
   cloneable = FALSE,

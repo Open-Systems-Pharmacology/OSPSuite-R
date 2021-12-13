@@ -10,6 +10,7 @@ A formula of the model (Typically related to a \code{Quantity} such as a paramet
 
 A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
 }
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Formula}
 }

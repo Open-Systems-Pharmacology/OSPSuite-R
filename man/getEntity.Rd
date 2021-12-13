@@ -27,3 +27,4 @@ Retrieve a single entity by path in the given container
 \seealso{
 \code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to create objects of type Container or Simulation
 }
+\keyword{internal}

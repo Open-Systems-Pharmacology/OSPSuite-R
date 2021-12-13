@@ -14,3 +14,4 @@ An instance of the Task
 Return an instance of the .NET Task \code{DimensionTask}
 This is purely for optimization purposes
 }
+\keyword{internal}

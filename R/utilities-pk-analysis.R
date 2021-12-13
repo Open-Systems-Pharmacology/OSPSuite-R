@@ -39,6 +39,7 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
 }
 
 #' @inherit exportPKAnalysesToCSV
+#' @export
 savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
   exportPKAnalysesToCSV(pkAnalyses, filePath)
 }

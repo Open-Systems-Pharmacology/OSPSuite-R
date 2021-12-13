@@ -1,6 +1,7 @@
 #' @title SimulationSettings
 #' @docType class
 #' @description  Settings associated with a given simulation
+#' @keywords internal
 SimulationSettings <- R6::R6Class(
   "SimulationSettings",
   cloneable = FALSE,

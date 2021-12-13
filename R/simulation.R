@@ -4,6 +4,7 @@ MODEL_CORE_SIMULATION_EXTENSIONS <- "OSPSuite.Core.Domain.ModelCoreSimulationExt
 #' @docType class
 #' @description  An OSPSuite simulation
 #' @format NULL
+#' @keywords internal
 Simulation <- R6::R6Class(
   "Simulation",
   cloneable = FALSE,

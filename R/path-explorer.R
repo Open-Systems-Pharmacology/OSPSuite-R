@@ -1,4 +1,4 @@
-
+#' @keywords internal
 addBranch <- function(originalPathString, arrayToGo) {
   # Function to create a multilayered list called endList with a branched structure corresponding to the structure of arrayToGo that terminates with a string called 'path' that is equal to the string originalString
   if (length(arrayToGo) == 0) {
@@ -14,6 +14,7 @@ addBranch <- function(originalPathString, arrayToGo) {
   }
 }
 
+#' @keywords internal
 nextStep <- function(listSoFar, originalString, arrayToGo) {
   # Recursive function that adds a multilayer list to listSoFar that has a branched structure representing the vector of strings arrayToGo.
   if (length(arrayToGo) == 0) { # If end of string vector arrayToGo has been reached, create a vector called 'path' and give it the value 'originalString'.

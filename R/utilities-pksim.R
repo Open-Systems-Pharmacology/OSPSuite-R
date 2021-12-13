@@ -46,6 +46,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' \dontrun{
 #' path <- .getPathToPKSimInstallDirFromRegistry("9")
 #' }
+#' @keywords internal
 .getPathToPKSimInstallDirFromRegistry <- function(pksim.version) {
   pksimVersion <- trimws(pksim.version)
 

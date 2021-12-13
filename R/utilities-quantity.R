@@ -87,6 +87,7 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #'   `values`. If `NULL` (default), values are assumed to be in base units. If
 #'   not `NULL`, must have the same length as `quantities`.
 #'
+#' @export
 setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
@@ -175,7 +176,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 #' @param quantities A single or a list of `Quantity`
 #'
 #' @param factor A numeric value that will be used to scale all quantities
-#'
+#' @export
 scaleQuantityValues <- function(quantities, factor) {
   quantities <- c(quantities)
 
@@ -191,10 +192,10 @@ scaleQuantityValues <- function(quantities, factor) {
 #' Retrieves the display path of the quantity defined by path in the simulation
 #'
 #' @param paths A single string or array of paths path relative to the `simulation`
-#' @param simulation A imulation used to find the entities
+#' @param simulation A simulation used to find the entities
 #'
 #' @return a display path for each entry in paths
-#'
+#' @export
 getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
   validateIsOfType(simulation, Simulation)

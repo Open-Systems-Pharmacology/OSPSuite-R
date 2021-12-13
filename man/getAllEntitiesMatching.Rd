@@ -2,7 +2,8 @@
 % Please edit documentation in R/utilities-entity.R
 \name{getAllEntitiesMatching}
 \alias{getAllEntitiesMatching}
-\title{Retrieves all entities of a container (simulation or container instance) matching the given path criteria.}
+\title{Retrieves all entities of a container (simulation or container instance)
+matching the given path criteria.}
 \usage{
 getAllEntitiesMatching(paths, container, entityType, method = NULL)
 }
@@ -20,8 +21,10 @@ A list of entities matching the path criteria coerced to the \code{entityType}.
 The list is empty if no entities matching were found.
 }
 \description{
-Retrieves all entities of a container (simulation or container instance) matching the given path criteria.
+Retrieves all entities of a container (simulation or container instance)
+matching the given path criteria.
 }
 \seealso{
 \code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to create objects of type Container or Simulation
 }
+\keyword{internal}
