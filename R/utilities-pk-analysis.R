@@ -73,10 +73,10 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
       colTypes <- list(
         IndividualId = readr::col_integer(),
-        QuantityPath = readr::col_factor(),
-        Parameter = readr::col_factor(),
+        QuantityPath = readr::col_character(),
+        Parameter = readr::col_character(),
         Value = readr::col_double(),
-        Unit = readr::col_factor()
+        Unit = readr::col_character()
       )
 
       pkResultsDataFrame <- readr::read_csv(
