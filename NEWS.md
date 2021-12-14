@@ -1,5 +1,9 @@
 # ospsuite 11.0 (development version)
 
+## New features
+
+* Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
+
 # ospsuite 10.0
 
 Version compatible with the OSPSuite V10.
