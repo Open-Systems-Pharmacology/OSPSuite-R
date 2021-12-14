@@ -57,7 +57,7 @@ test_script:
 after_test:
   - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
   - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
-  - ps: copy ospsuite_*.zip ospsuite.zip
+  - ps: copy ospsuite_*.zip ospsuite_windows.zip
   - ps: copy ospsuite_*ubuntu18.tar.gz ospsuite_ubuntu18.tar.gz
   - ps: copy ospsuite_*centOS7.tar.gz ospsuite_centOS7.tar.gz
 
