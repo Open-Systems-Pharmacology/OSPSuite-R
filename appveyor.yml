@@ -78,10 +78,10 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: "ospsuite_*_ubuntu18.tar.gz"
+  - path: "ospsuite_*ubuntu18.tar.gz"
     name: Ubuntu18
 
-  - path: "ospsuite_*_centOS7.tar.gz"
+  - path: "ospsuite_*centOS7.tar.gz"
     name: CentOS7
 
   - path: '\*_*.zip'
