@@ -12,18 +12,24 @@ simulationResultsToDataFrame(
 )
 }
 \arguments{
-\item{simulationResults}{Object of type \code{SimulationResults} produced by calling \code{runSimulation}
-on a \code{Simulation} object.}
+\item{simulationResults}{Object of type \code{SimulationResults} produced by
+calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{quantitiesOrPaths}{Quantity instances (element or vector) typically retrieved using
-\code{getAllQuantitiesMatching} or quantity path (element or vector of strings) for which the results are to be returned. (optional)
-When providing the paths, only absolute full paths are supported (i.e., no matching with '*' possible).
-If quantitiesOrPaths is \code{NULL} (default value), returns the results for all output defined in the results.}
+\item{quantitiesOrPaths}{Quantity instances (element or vector) typically
+retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
+vector of strings) for which the results are to be returned. (optional)
+When providing the paths, only absolute full paths are supported (i.e., no
+matching with '*' possible). If quantitiesOrPaths is \code{NULL} (default
+value), returns the results for all output defined in the results.}
 
-\item{population}{population used to calculate the simulationResults (optional). This is used only to add the population covariates to the resulting data table.}
+\item{population}{population used to calculate the \code{simulationResults}
+(optional). This is used only to add the population covariates to the
+resulting data table.}
 
-\item{individualIds}{\code{numeric} IDs of individuals for which the results should be extracted.
-By default, all individuals from the results are considered. If the individual with the provided ID is not found, the ID is ignored}
+\item{individualIds}{\code{numeric} IDs of individuals for which the results
+should be extracted. By default, all individuals from the results are
+considered. If the individual with the provided ID is not found, the ID is
+ignored.}
 }
 \value{
 SimulationResults object as data.frame with columns IndividualId, Time, paths,
