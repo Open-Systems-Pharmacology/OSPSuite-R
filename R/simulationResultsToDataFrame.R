@@ -43,7 +43,10 @@ simulationResultsToDataFrame <- function(simulationResults,
   )
 
   # extract units and dimensions for paths in a separate dataframe
-  # iterate over the list using index (which here is names for list elements)
+  # iterate over the list (in .x) using index (names for list elements)
+  # and apply function in .f to each elements
+  # the result will be a list of dataframes, which will be bound into
+  # a single dataframe with the _dfr variant of this function
   df_meta <- purrr::imap_dfr(
     .x  = simList$metaData,
     .f  = ~ as.data.frame(.x, row.names = NULL),
@@ -53,11 +56,11 @@ simulationResultsToDataFrame <- function(simulationResults,
   # leave out time units and dimensions since it is not a path
   df_meta <- dplyr::filter(df_meta, paths != "Time")
 
-  # combine these dataframes
+  # combine dataframe with simulated data and meta data
   df <- dplyr::left_join(df_data, df_meta, by = "paths")
 
-  # add time unit to the combined dataframe
-  # the time dimension is "Time", which is redundant and thus left out
+  # add time unit to the this combined dataframe
+  # the time dimension is "Time", which is redundant and is thus left out
   df <- dplyr::bind_cols(
     df,
     data.frame("TimeUnit" = simList$metaData$Time$unit[[1]])
@@ -67,6 +70,7 @@ simulationResultsToDataFrame <- function(simulationResults,
   return(df)
 }
 
+# custom function to convert dataframe from wide to long format
 # simplified version of
 # https://github.com/easystats/datawizard/blob/master/R/data_reshape.R
 # IP is author on this package
