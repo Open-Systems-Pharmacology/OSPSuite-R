@@ -6,6 +6,8 @@
 
 ## Breaking changes
 
+* All `validate*()` helper functions and `"%||%"` infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <https://www.open-systems-pharmacology.org/OSPSuite.RUtils/>.
+
 * The `pkAnalysesAsDataFrame()` function changes column data types for `QuantityPath`, `Parameter`, and `Unit`  from `factor` to `character` (https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/673).
 
 # ospsuite 10.0

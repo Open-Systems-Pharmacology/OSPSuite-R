@@ -39,5 +39,10 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 setMoleculeValuesByPath("Organism|Liver|A", 1, sim)
 
-setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("µmol", "mmol"))
+setMoleculeValuesByPath(
+  c("Organism|Liver|A", "Organism|Liver|B"),
+  c(2, 3),
+  sim,
+  units = c("µmol", "mmol")
+)
 }
