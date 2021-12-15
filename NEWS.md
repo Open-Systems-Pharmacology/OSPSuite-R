@@ -1,5 +1,9 @@
 # ospsuite 11.0 (development version)
 
+## New features
+
+* Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
+
 ## Breaking changes
 
 * All `validate*()` helper functions and `"%||%"` infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <https://www.open-systems-pharmacology.org/OSPSuite.RUtils/>.

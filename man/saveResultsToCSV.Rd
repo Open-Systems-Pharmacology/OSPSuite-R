@@ -7,7 +7,8 @@
 saveResultsToCSV(results, filePath)
 }
 \arguments{
-\item{results}{Results to export (typically calculated using \code{runSimulation} or imported from file)}
+\item{results}{Results to export (typically calculated using \code{runSimulation}
+or imported from file).}
 
 \item{filePath}{Full path where the results will be saved.}
 }
