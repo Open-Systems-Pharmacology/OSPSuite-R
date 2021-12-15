@@ -38,7 +38,6 @@ Results of a simulation run (either individual or population simulation)
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
 }
 \out{</details>}
 }

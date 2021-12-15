@@ -9,7 +9,13 @@ SimulationBatch <- R6::R6Class(
   cloneable = FALSE,
   inherit = DotNetWrapper,
   private = list(
-    .simulation = NULL
+    .simulation = NULL,
+    finalize = function() {
+      private$.simulation <- NULL
+      # SimulationBatch are disposable object and should be disposed
+      rClr::clrCall(self$ref, "Dispose")
+      super$finalize()
+    }
   ),
   public = list(
     #' @description
@@ -18,7 +24,7 @@ SimulationBatch <- R6::R6Class(
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      ospsuite.utils::validateIsOfType(simulation, Simulation)
       super$initialize(ref)
       private$.simulation <- simulation
     },
@@ -55,8 +61,8 @@ SimulationBatch <- R6::R6Class(
     #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
     #' }
     addRunValues = function(parameterValues = NULL, initialValues = NULL) {
-      validateIsNumeric(parameterValues, nullAllowed = TRUE)
-      validateIsNumeric(initialValues, nullAllowed = TRUE)
+      ospsuite.utils::validateIsNumeric(parameterValues, nullAllowed = TRUE)
+      ospsuite.utils::validateIsNumeric(initialValues, nullAllowed = TRUE)
       # Only one values set is allowed - no lists of values
       if (is.list(parameterValues) || is.list(initialValues)) {
         stop(messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
@@ -64,15 +70,6 @@ SimulationBatch <- R6::R6Class(
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
       rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
-    },
-
-    #' @description
-    #' Clears the reference to the wrapped .NET object
-    finalize = function() {
-      private$.simulation <- NULL
-      # SimulationBatch are disposable object and should be disposed
-      rClr::clrCall(self$ref, "Dispose")
-      super$finalize()
     }
   ),
   active = list(

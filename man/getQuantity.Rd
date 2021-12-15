@@ -11,8 +11,8 @@ getQuantity(path, container, stopIfNotFound = TRUE)
 
 \item{container}{A Container or Simulation used to find the parameters}
 
-\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for the given path,
-an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for
+the given path, an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \value{
 The \code{Quantity} with the given path. If the quantity for the path
@@ -29,5 +29,7 @@ sim <- loadSimulation(simPath)
 quantity <- getQuantity("Organism|Liver|Volume", sim)
 }
 \seealso{
-\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to retrieve objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and
+\code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to retrieve objects of type Container or
+Simulation
 }

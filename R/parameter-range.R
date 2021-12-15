@@ -30,9 +30,9 @@ ParameterRange <- R6::R6Class(
     #' @param unit Optional unit of the specified min and max
     #' @return A new `ParameterRange` object.
     initialize = function(ref = NULL, min = NULL, max = NULL, unit = NULL) {
-      validateIsNumeric(min, nullAllowed = TRUE)
-      validateIsNumeric(max, nullAllowed = TRUE)
-      validateIsString(unit, nullAllowed = TRUE)
+      ospsuite.utils::validateIsNumeric(min, nullAllowed = TRUE)
+      ospsuite.utils::validateIsNumeric(max, nullAllowed = TRUE)
+      ospsuite.utils::validateIsString(unit, nullAllowed = TRUE)
       ref <- ref %||% rClr::clrNew("PKSim.Core.Snapshots.ParameterRange")
       super$initialize(ref)
       # Because of weird issue with nullable value in rClr

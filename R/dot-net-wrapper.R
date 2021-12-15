@@ -21,12 +21,6 @@ DotNetWrapper <- R6::R6Class(
     #' @return A new `DotNetWrapper` object.
     initialize = function(ref) {
       self$ref <- ref
-    },
-    #' @description
-    #' Clears the reference to the wrapped .NET object
-    finalize = function() {
-      # maybe dispose should be called to if available.
-      self$ref <- NULL
     }
   ),
   private = list(
@@ -38,8 +32,8 @@ DotNetWrapper <- R6::R6Class(
         if (is.null(value) && !shouldSetNull) {
           return()
         }
-        if (isOfType(type = "character", object = value)) {
-          # isOfType returns TRUE for empty `object` and enc2utf8(value) fails
+        if (ospsuite.utils::isOfType(type = "character", object = value)) {
+          # ospsuite.utils::isOfType returns TRUE for empty `object` and enc2utf8(value) fails
           if (length(value) > 0) {
             value <- enc2utf8(value)
           }
@@ -119,6 +113,10 @@ DotNetWrapper <- R6::R6Class(
     },
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
+    },
+    finalize = function() {
+      # maybe dispose should be called to if available.
+      self$ref <- NULL
     }
   )
 )

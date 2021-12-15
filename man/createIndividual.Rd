@@ -7,7 +7,8 @@
 createIndividual(individualCharacteristics)
 }
 \arguments{
-\item{individualCharacteristics}{Characteristics of the individual to create as an instance of \code{IndividualCharacteristics}}
+\item{individualCharacteristics}{Characteristics of the individual to create
+as an instance of \code{IndividualCharacteristics}}
 }
 \value{
 A list with three entries:
@@ -21,6 +22,7 @@ A list with three entries:
 Creates an individual using the PKSim Database
 }
 \note{
-When updating a simulation with the value for a new individual, only use the \code{distributedParameters} to ensure that you do not override
-formula parameters.
+When updating a simulation with the value for a new individual, only
+use the \code{distributedParameters} to ensure that you do not override formula
+parameters.
 }

@@ -32,12 +32,15 @@ Use \verb{$setValues()} to change the values.}
 Use \verb{$setValues()} to change the values.}
 
 \item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
-When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100\%).
-When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.
+When changing from arithmetic to geometric error, the values are
+considered in as fraction (1 = 100\%).
+When changing from geometric to arithmetic, the values are set to the
+same unit as \code{yErrorUnit}.
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
-\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
-for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.
+\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For
+arithmetic error, the unit must be valid for \code{yDimension}. For
+geometric error, the unit must be valid for \code{Dimensionless}.
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
 \item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.
@@ -67,7 +70,6 @@ Value in yUnit associated with the yValues}
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -96,7 +98,8 @@ A new \code{DataSet} object.
 \if{html}{\out{<a id="method-addMetaData"></a>}}
 \if{latex}{\out{\hypertarget{method-addMetaData}{}}}
 \subsection{Method \code{addMetaData()}}{
-Adds a new entry to meta data list or changes its value if the name is already present.
+Adds a new entry to meta data list or changes its value if the name is
+already present.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataSet$addMetaData(name, value)}\if{html}{\out{</div>}}
 }

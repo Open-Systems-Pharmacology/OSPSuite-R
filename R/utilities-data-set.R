@@ -54,8 +54,8 @@ loadDataSetFromPKML <- function(filePath) {
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
 saveDataSetToPKML <- function(dataSet, filePath) {
-  validateIsString(filePath)
-  validateIsOfType(dataSet, DataSet)
+  ospsuite.utils::validateIsString(filePath)
+  ospsuite.utils::validateIsOfType(dataSet, DataSet)
   filePath <- expandPath(filePath)
   dataRepositoryTask <- getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
@@ -65,35 +65,45 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 #'
 #' @param dataSets A list of `DataSet` objects or a single `DataSet`
 #'
-#' @return DataSet objects as data.frame with columns name, xValues, yValues, yErrorValues,
-#' xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit, molWeight, lloq,
-#'  and a column for each meta data that is present in any `DataSet`
+#' @return
+#'
+#' DataSet objects as data.frame with columns name, xValues, yValues,
+#' yErrorValues, xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit,
+#' molWeight, lloq, and a column for each meta data that is present in any
+#' `DataSet`.
+#'
 #' @export
+
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
-  validateIsOfType(dataSets, DataSet)
+  ospsuite.utils::validateIsOfType(dataSets, DataSet)
 
-  name <- .makeDataFrameColumn(dataSets, "name")
-  xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
-  yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
-  yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
-  xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
-  yDimension <- .makeDataFrameColumn(dataSets, "yDimension")
-  yErrorType <- .makeDataFrameColumn(dataSets, "yErrorType")
-  molWeight <- .makeDataFrameColumn(dataSets, "molWeight")
-  xValues <- .makeDataFrameColumn(dataSets, "xValues")
-  yValues <- .makeDataFrameColumn(dataSets, "yValues")
+  # styler: off
+  name         <- .makeDataFrameColumn(dataSets, "name")
+  xUnit        <- .makeDataFrameColumn(dataSets, "xUnit")
+  yUnit        <- .makeDataFrameColumn(dataSets, "yUnit")
+  yErrorUnit   <- .makeDataFrameColumn(dataSets, "yErrorUnit")
+  xDimension   <- .makeDataFrameColumn(dataSets, "xDimension")
+  yDimension   <- .makeDataFrameColumn(dataSets, "yDimension")
+  yErrorType   <- .makeDataFrameColumn(dataSets, "yErrorType")
+  molWeight    <- .makeDataFrameColumn(dataSets, "molWeight")
+  xValues      <- .makeDataFrameColumn(dataSets, "xValues")
+  yValues      <- .makeDataFrameColumn(dataSets, "yValues")
   yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
-  lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
+  lloq         <- .makeDataFrameColumn(dataSets, "LLOQ")
+  # styler: on
+
   df <- data.frame(
     name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
     yUnit, yErrorType, yErrorUnit, molWeight, lloq
   )
 
+
   # get all names of meta data entries from all data sets
   metaDataNames <- unique(unlist(lapply(dataSets, function(dataSets) {
     names(dataSets[["metaData"]])
   }), use.names = FALSE))
+
   # add one column for each one
   for (name in metaDataNames) {
     col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
@@ -127,9 +137,9 @@ dataSetToDataFrame <- function(dataSets) {
 #' dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
 #' }
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
-  validateIsString(xlsFilePath)
-  validateIsOfType(importerConfiguration, DataImporterConfiguration)
-  validateIsLogical(importAllSheets)
+  ospsuite.utils::validateIsString(xlsFilePath)
+  ospsuite.utils::validateIsOfType(importerConfiguration, DataImporterConfiguration)
+  ospsuite.utils::validateIsLogical(importAllSheets)
 
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)

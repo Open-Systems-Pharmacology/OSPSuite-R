@@ -52,7 +52,6 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \itemize{
 \item \href{#method-new}{\code{SimulationBatch$new()}}
 \item \href{#method-addRunValues}{\code{SimulationBatch$addRunValues()}}
-\item \href{#method-finalize}{\code{SimulationBatch$finalize()}}
 }
 }
 \if{html}{
@@ -134,16 +133,6 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 }
 \if{html}{\out{</div>}}
 
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-finalize"></a>}}
-\if{latex}{\out{\hypertarget{method-finalize}{}}}
-\subsection{Method \code{finalize()}}{
-Clears the reference to the wrapped .NET object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$finalize()}\if{html}{\out{</div>}}
 }
 
 }

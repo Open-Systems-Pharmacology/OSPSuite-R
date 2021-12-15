@@ -37,7 +37,7 @@ OutputSchema <- R6::R6Class(
     #' Adds an interval to the schema
     #' @param interval Interval to add
     addInterval = function(interval) {
-      validateIsOfType(interval, Interval)
+      ospsuite.utils::validateIsOfType(interval, Interval)
       rClr::clrCall(self$ref, "AddInterval", interval$ref)
       invisible(self)
     },
@@ -45,7 +45,7 @@ OutputSchema <- R6::R6Class(
     #' Removes the interval from the schema
     #' @param interval Interval to remove
     removeInterval = function(interval) {
-      validateIsOfType(interval, Interval)
+      ospsuite.utils::validateIsOfType(interval, Interval)
       rClr::clrCall(self$ref, "RemoveInterval", interval$ref)
       invisible(self)
     },
@@ -56,7 +56,7 @@ OutputSchema <- R6::R6Class(
     #' @param timePoints Time points to add to the schema
     addTimePoints = function(timePoints) {
       timePoints <- c(timePoints)
-      validateIsNumeric(timePoints)
+      ospsuite.utils::validateIsNumeric(timePoints)
       if (length(timePoints) > 1) {
         rClr::clrCall(self$ref, "AddTimePoints", timePoints)
       } else {

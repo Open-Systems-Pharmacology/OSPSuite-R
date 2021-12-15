@@ -13,8 +13,9 @@ setParameterValues(parameters, values, units = NULL)
 of numeric values, if the value of more than one parameter should be changed. Must have the same
 length as 'parameters'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters}
 
-\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
-are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantities}.}
+\item{units}{A string or a list of strings defining the units of the
+\code{values}. If \code{NULL} (default), values are assumed to be in base units. If
+not \code{NULL}, must have the same length as \code{quantities}.}
 }
 \description{
 Set values of parameters

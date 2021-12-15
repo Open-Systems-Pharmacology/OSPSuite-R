@@ -1,10 +1,13 @@
-
-#' @title  Adds the quantities as output into the  `simulation`. The quantities can either be specified using explicit instances or using paths.
+#' @title  Adds the quantities as output into the  `simulation`. The quantities
+#'   can either be specified using explicit instances or using paths.
 #'
-#' @param quantitiesOrPaths Quantity instances (element or vector) (typically retrieved using `getAllQuantitiesMatching`) or quantity path (element or vector) to add.
-#' @param simulation Instance of a simulation for which output selection should be updated.
+#' @param quantitiesOrPaths Quantity instances (element or vector) (typically
+#'   retrieved using `getAllQuantitiesMatching`) or quantity path (element or
+#'   vector) to add.
+#' @param simulation Instance of a simulation for which output selection should
+#'   be updated.
 #'
-#' @examples#'
+#' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -17,12 +20,12 @@
 addOutputs <- function(quantitiesOrPaths, simulation) {
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
-  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
-  validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
 
   # If quantities are provided, get their paths
   paths <- vector("character", length(quantitiesOrPaths))
-  if (isOfType(quantitiesOrPaths, Quantity)) {
+  if (ospsuite.utils::isOfType(quantitiesOrPaths, Quantity)) {
     for (idx in seq_along(quantitiesOrPaths)) {
       paths[[idx]] <- quantitiesOrPaths[[idx]]$path
     }
@@ -49,7 +52,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 #' clearOutputs(sim)
 #' @export
 clearOutputs <- function(simulation) {
-  validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
   simulation$outputSelections$clear()
   invisible(simulation)
 }

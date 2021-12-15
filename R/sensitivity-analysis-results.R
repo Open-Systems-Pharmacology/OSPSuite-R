@@ -36,7 +36,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SensitivityAnalysisResults` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      ospsuite.utils::validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
       super$initialize(ref)
     },
@@ -49,9 +49,9 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     allPKParameterSensitivitiesFor = function(pkParameterName,
                                               outputPath,
                                               totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold) {
-      validateIsString(pkParameterName)
-      validateIsString(outputPath)
-      validateIsNumeric(totalSensitivityThreshold)
+      ospsuite.utils::validateIsString(pkParameterName)
+      ospsuite.utils::validateIsString(outputPath)
+      ospsuite.utils::validateIsNumeric(totalSensitivityThreshold)
       pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
       toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },

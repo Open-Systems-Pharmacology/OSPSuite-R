@@ -14,7 +14,7 @@
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {
-  validateIsOfType(results, SimulationResults)
+  ospsuite.utils::validateIsOfType(results, SimulationResults)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
@@ -30,8 +30,8 @@ calculatePKAnalyses <- function(results) {
 #'
 #' @export
 exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
-  validateIsOfType(pkAnalyses, SimulationPKAnalyses)
-  validateIsString(filePath)
+  ospsuite.utils::validateIsOfType(pkAnalyses, SimulationPKAnalyses)
+  ospsuite.utils::validateIsString(filePath)
   filePath <- expandPath(filePath)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
@@ -51,8 +51,8 @@ savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
 #'
 #' @export
 importPKAnalysesFromCSV <- function(filePath, simulation) {
-  validateIsOfType(simulation, Simulation)
-  validateIsString(filePath)
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsString(filePath)
   filePath <- expandPath(filePath)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
@@ -66,17 +66,17 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 #'
 #' @export
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
-  validateIsOfType(pkAnalyses, SimulationPKAnalyses)
+  ospsuite.utils::validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   pkParameterResultsFilePath <- tempfile()
   dataFrame <- tryCatch(
     {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
       colTypes <- list(
         IndividualId = readr::col_integer(),
-        QuantityPath = readr::col_factor(),
-        Parameter = readr::col_factor(),
+        QuantityPath = readr::col_character(),
+        Parameter = readr::col_character(),
         Value = readr::col_double(),
-        Unit = readr::col_factor()
+        Unit = readr::col_character()
       )
 
       pkResultsDataFrame <- readr::read_csv(
