@@ -50,5 +50,4 @@ results <- runSimulations(sim)
 
 # convert to a dataframe
 simulationResultsToDataFrame(results)
-
 }

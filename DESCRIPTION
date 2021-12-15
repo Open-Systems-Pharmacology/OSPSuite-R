@@ -21,7 +21,6 @@ Imports:
     purrr,
     R6,
     stringr,
-    tidyr,
     readr
 Suggests: 
     knitr,
