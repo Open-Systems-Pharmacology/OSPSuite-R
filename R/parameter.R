@@ -24,7 +24,7 @@ Parameter <- R6::R6Class(
       if (missing(value)) {
         return(hasRHSFormula)
       }
-      validateIsLogical(value)
+      ospsuite.utils::validateIsLogical(value)
 
       # Set to TRUE AND we have a rhs, nothing to do
       if (value && hasRHSFormula) {

@@ -20,7 +20,7 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param simulation Simulation for which the pkParameters were calculated
     #' @return A new `SimulationPKAnalyses` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      ospsuite.utils::validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
       super$initialize(ref)
     },
@@ -28,7 +28,7 @@ SimulationPKAnalyses <- R6::R6Class(
     #' Returns all QuantityPKParameter defined for a given path
     #' @param quantityPath Path for which pkParameters should be retrieved
     allPKParametersFor = function(quantityPath) {
-      validateIsString(quantityPath)
+      ospsuite.utils::validateIsString(quantityPath)
       private$toPKParameter(rClr::clrCall(self$ref, "AllPKParametersFor", quantityPath))
     },
     #' @description
@@ -37,8 +37,8 @@ SimulationPKAnalyses <- R6::R6Class(
     #'   should be retrieved
     #' @param pkParameter Name of the pkParameter to retrieve
     pKParameterFor = function(quantityPath, pkParameter) {
-      validateIsString(quantityPath)
-      validateIsString(pkParameter)
+      ospsuite.utils::validateIsString(quantityPath)
+      ospsuite.utils::validateIsString(pkParameter)
       private$toPKParameter(rClr::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
     },
 

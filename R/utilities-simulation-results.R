@@ -56,10 +56,10 @@ getOutputValues <- function(simulationResults,
                             individualIds = NULL,
                             stopIfNotFound = TRUE,
                             addMetaData = TRUE) {
-  validateIsOfType(simulationResults, SimulationResults)
-  validateIsOfType(population, Population, nullAllowed = TRUE)
-  validateIsNumeric(individualIds, nullAllowed = TRUE)
-  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"), nullAllowed = TRUE)
+  ospsuite.utils::validateIsOfType(simulationResults, SimulationResults)
+  ospsuite.utils::validateIsOfType(population, Population, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(individualIds, nullAllowed = TRUE)
+  ospsuite.utils::validateIsOfType(quantitiesOrPaths, c(Quantity, "character"), nullAllowed = TRUE)
 
   quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
   quantitiesOrPaths <- c(quantitiesOrPaths)
@@ -70,7 +70,7 @@ getOutputValues <- function(simulationResults,
 
   # If quantities are provided, get their paths
   paths <- vector("character", length(quantitiesOrPaths))
-  if (isOfType(quantitiesOrPaths, Quantity)) {
+  if (ospsuite.utils::isOfType(quantitiesOrPaths, Quantity)) {
     for (idx in seq_along(quantitiesOrPaths)) {
       paths[[idx]] <- quantitiesOrPaths[[idx]]$path
     }
@@ -156,8 +156,8 @@ getOutputValues <- function(simulationResults,
 #' exportResultsToCSV(results, tempfile())
 #' @export
 exportResultsToCSV <- function(results, filePath) {
-  validateIsOfType(results, SimulationResults)
-  validateIsString(filePath)
+  ospsuite.utils::validateIsOfType(results, SimulationResults)
+  ospsuite.utils::validateIsString(filePath)
   filePath <- expandPath(filePath)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
   rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
@@ -187,8 +187,8 @@ saveResultsToCSV <- function(results, filePath) {
 #' results <- importResultsFromCSV(sim, resultPath)
 #' @export
 importResultsFromCSV <- function(simulation, filePaths) {
-  validateIsOfType(simulation, Simulation)
-  validateIsString(filePaths)
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
   filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
 
