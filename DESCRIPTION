@@ -43,6 +43,7 @@ Collate:
     'create-individual.R'
     'create-population.R'
     'data-column.R'
+    'data-combined.R'
     'data-importer-configuration.R'
     'data-repository.R'
     'data-set.R'
