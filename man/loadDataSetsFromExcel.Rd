@@ -35,6 +35,10 @@ configurationPath <- "../dataImporterConfiguration_noSheets.xml"
 xlsFilePath <- "../CompiledDataSet_oneSheet.xlsx"
 importerConfiguration <- DataImporterConfiguration$new(configurationPath)
 
-dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+dataSets <- loadDataSetsFromExcel(
+  xlsFilePath = xlsFilePath,
+  importerConfiguration = importerConfiguration,
+  importAllSheets = TRUE
+)
 }
 }

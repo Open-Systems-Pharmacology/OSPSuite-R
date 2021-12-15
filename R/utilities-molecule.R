@@ -104,7 +104,12 @@ setMoleculeInitialValues <- function(molecules, values, units = NULL) {
 #' sim <- loadSimulation(simPath)
 #' setMoleculeValuesByPath("Organism|Liver|A", 1, sim)
 #'
-#' setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("µmol", "mmol"))
+#' setMoleculeValuesByPath(
+#'   c("Organism|Liver|A", "Organism|Liver|B"),
+#'   c(2, 3),
+#'   sim,
+#'   units = c("µmol", "mmol")
+#' )
 #' @export
 setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
   setQuantityValuesByPath(
