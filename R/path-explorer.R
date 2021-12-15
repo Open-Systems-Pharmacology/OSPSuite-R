@@ -48,10 +48,10 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
 #' @export
 getSimulationTree <- function(simulationOrFilePath) {
-  validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
+  ospsuite.utils::validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
 
   simulation <- simulationOrFilePath
-  if (isOfType(simulationOrFilePath, "character")) {
+  if (ospsuite.utils::isOfType(simulationOrFilePath, "character")) {
     simulation <- loadSimulation(simulationOrFilePath)
   }
 

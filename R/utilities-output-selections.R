@@ -20,12 +20,12 @@
 addOutputs <- function(quantitiesOrPaths, simulation) {
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
-  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
-  validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsOfType(quantitiesOrPaths, c(Quantity, "character"))
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
 
   # If quantities are provided, get their paths
   paths <- vector("character", length(quantitiesOrPaths))
-  if (isOfType(quantitiesOrPaths, Quantity)) {
+  if (ospsuite.utils::isOfType(quantitiesOrPaths, Quantity)) {
     for (idx in seq_along(quantitiesOrPaths)) {
       paths[[idx]] <- quantitiesOrPaths[[idx]]$path
     }
@@ -52,7 +52,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 #' clearOutputs(sim)
 #' @export
 clearOutputs <- function(simulation) {
-  validateIsOfType(simulation, Simulation)
+  ospsuite.utils::validateIsOfType(simulation, Simulation)
   simulation$outputSelections$clear()
   invisible(simulation)
 }

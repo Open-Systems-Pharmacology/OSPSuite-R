@@ -1,8 +1,8 @@
 #' How should comparison of entities be performed
 #'
-#' @include enum.R
+#' 
 #' @export
-CompareBy <- enum(c(
+CompareBy <- ospsuite.utils::enum(c(
   "id",
   "name",
   "path"
@@ -10,9 +10,9 @@ CompareBy <- enum(c(
 
 #' Names of the .NET container tasks of the type "AllXXXMatching"
 #'
-#' @include enum.R
+#' 
 #' @keywords internal
-AllMatchingMethod <- enum(c(
+AllMatchingMethod <- ospsuite.utils::enum(c(
   Container = "AllContainersMatching",
   Quantity = "AllQuantitiesMatching",
   Parameter = "AllParametersMatching",
@@ -21,9 +21,9 @@ AllMatchingMethod <- enum(c(
 
 #' Names of the .NET container tasks of the type "AllXXXPathsIn"
 #'
-#' @include enum.R
+#' 
 #' @keywords internal
-AllPathsInMethod <- enum(c(
+AllPathsInMethod <- ospsuite.utils::enum(c(
   Container = "AllContainerPathsIn",
   Quantity = "AllQuantityPathsIn",
   Parameter = "AllParameterPathsIn",
@@ -60,7 +60,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   }
 
   entities <- toList(entities)
-  validateIsOfType(entities, Entity)
+  ospsuite.utils::validateIsOfType(entities, Entity)
   validateEnumValue(compareBy, CompareBy)
 
   uniqueEntities <- new.env(parent = emptyenv())
@@ -106,9 +106,9 @@ unify <- function(groupEntitiesByPathFunc, paths) {
 #'
 getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) {
   # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container, Molecule))
-  validateIsString(paths)
-  validateIsString(method, nullAllowed = TRUE)
+  ospsuite.utils::validateIsOfType(container, c(Simulation, Container, Molecule))
+  ospsuite.utils::validateIsString(paths)
+  ospsuite.utils::validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllMatchingMethod) == className)) == 0) {
     stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
@@ -134,8 +134,8 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
 #' The list is empty if no entities matching were found.
 #'
 getAllEntityPathsIn <- function(container, entityType, method = NULL) {
-  validateIsOfType(container, c(Simulation, Container, Molecule))
-  validateIsString(method, nullAllowed = TRUE)
+  ospsuite.utils::validateIsOfType(container, c(Simulation, Container, Molecule))
+  ospsuite.utils::validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllPathsInMethod) == className)) == 0) {
     stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))

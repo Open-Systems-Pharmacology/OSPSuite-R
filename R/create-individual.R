@@ -1,18 +1,20 @@
 #' Creates an individual using the PKSim Database
 #'
-#' @param individualCharacteristics Characteristics of the individual to create as an instance of `IndividualCharacteristics`
+#' @param individualCharacteristics Characteristics of the individual to create
+#'   as an instance of `IndividualCharacteristics`
 #'
 #' @return A list with three entries:
 #'  * `distributedParameters` containing the actual parameter values modified by the create individual algorithm.
 #'  * `derivedParameters` containing the parameter values modified indirectly by the algorithm. Those parameters are typically formula parameters.
 #'  * `seed` containing the seed value used to generate random values
 #'
-#' @note When updating a simulation with the value for a new individual, only use the `distributedParameters` to ensure that you do not override
-#' formula parameters.
+#' @note When updating a simulation with the value for a new individual, only
+#'   use the `distributedParameters` to ensure that you do not override formula
+#'   parameters.
 #'
 #' @export
 createIndividual <- function(individualCharacteristics) {
-  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+  ospsuite.utils::validateIsOfType(individualCharacteristics, IndividualCharacteristics)
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   createIndividualResults <- rClr::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
@@ -35,7 +37,7 @@ createIndividual <- function(individualCharacteristics) {
 #'
 #' @export
 createDistributions <- function(individualCharacteristics) {
-  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+  ospsuite.utils::validateIsOfType(individualCharacteristics, IndividualCharacteristics)
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   distributedParameters <- rClr::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
@@ -69,6 +71,8 @@ createDistributions <- function(individualCharacteristics) {
 #' and an `ontogeny` property (e.g. the name of the predefined ontogeny to use for this molecule). The list of all available ontogenies
 #' can be accessed programmatically using the enum `StandardOntogeny`
 #'
+#' @import ospsuite.utils
+#'
 #' @return An array of `ParameterValue` containing the value of each individual parameter
 #'
 #' @export
@@ -90,19 +94,19 @@ createIndividualCharacteristics <- function(species,
   # or should be initialized automatically
   initPKSim()
 
-  validateIsString(species)
-  validateIsString(population, nullAllowed = TRUE)
-  validateIsString(gender, nullAllowed = TRUE)
-  validateIsNumeric(weight, nullAllowed = TRUE)
-  validateIsString(weightUnit)
-  validateIsNumeric(height, nullAllowed = TRUE)
-  validateIsString(heightUnit)
-  validateIsNumeric(age, nullAllowed = TRUE)
-  validateIsString(ageUnit)
-  validateIsNumeric(gestationalAge)
-  validateIsString(gestationalAgeUnit)
-  validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
-  validateIsNumeric(seed, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(species)
+  ospsuite.utils::validateIsString(population, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(gender, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(weight, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(weightUnit)
+  ospsuite.utils::validateIsNumeric(height, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(heightUnit)
+  ospsuite.utils::validateIsNumeric(age, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(ageUnit)
+  ospsuite.utils::validateIsNumeric(gestationalAge)
+  ospsuite.utils::validateIsString(gestationalAgeUnit)
+  ospsuite.utils::validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)
   individualCharacteristics <- IndividualCharacteristics$new()

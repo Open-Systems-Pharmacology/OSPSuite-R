@@ -8,7 +8,7 @@
 #' population <- loadPopulation(csvPath)
 #' @export
 loadPopulation <- function(csvPopulationFile) {
-  validateIsString(csvPopulationFile)
+  ospsuite.utils::validateIsString(csvPopulationFile)
   csvPopulationFile <- expandPath(csvPopulationFile)
   populationTask <- getNetTask("PopulationTask")
   population <- rClr::clrCall(populationTask, "ImportPopulation", csvPopulationFile)
@@ -30,10 +30,10 @@ loadPopulation <- function(csvPopulationFile) {
 #' splitFiles <- splitPopulationFile(csvPath, 3, tempdir(), "PopFile")
 #' @export
 splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, outputFileName) {
-  validateIsString(csvPopulationFile)
-  validateIsNumeric(numberOfCores)
-  validateIsString(outputFolder)
-  validateIsString(outputFileName)
+  ospsuite.utils::validateIsString(csvPopulationFile)
+  ospsuite.utils::validateIsNumeric(numberOfCores)
+  ospsuite.utils::validateIsString(outputFolder)
+  ospsuite.utils::validateIsString(outputFileName)
   csvPopulationFile <- expandPath(csvPopulationFile)
   outputFileName <- enc2utf8(outputFileName)
   populationTask <- getNetTask("PopulationTask")
@@ -52,7 +52,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
 #' df <- populationAsDataFrame(population)
 #' @export
 populationAsDataFrame <- function(population) {
-  validateIsOfType(population, Population)
+  ospsuite.utils::validateIsOfType(population, Population)
   columns <- list()
   columns$IndividualId <- population$allIndividualIds
 
@@ -82,8 +82,8 @@ populationAsDataFrame <- function(population) {
 #' exportPopulationToCSV(population, tempfile())
 #' @export
 exportPopulationToCSV <- function(population, filePath) {
-  validateIsOfType(population, Population)
-  validateIsString(filePath)
+  ospsuite.utils::validateIsOfType(population, Population)
+  ospsuite.utils::validateIsString(filePath)
   filePath <- expandPath(filePath)
   df <- populationAsDataFrame(population)
   write.csv(df, file = filePath, row.names = FALSE)
@@ -105,7 +105,7 @@ savePopulationToCSV <- function(population, filePath) {
 #' agingData <- loadAgingDataFromCSV(csvPath)
 #' @export
 loadAgingDataFromCSV <- function(filePath) {
-  validateIsString(filePath)
+  ospsuite.utils::validateIsString(filePath)
   df <- readr::read_csv(filePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = readr::cols())
   agingData <- AgingData$new()
   agingData$individualIds <- as.integer(df$IndividualId)

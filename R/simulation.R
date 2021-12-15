@@ -80,7 +80,7 @@ Simulation <- R6::R6Class(
     #' Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
     #' @param quantityPath Path of quantity used to retrieve the molecular weight
     molWeightFor = function(quantityPath) {
-      validateIsString(quantityPath)
+      ospsuite.utils::validateIsString(quantityPath)
       mw <- rClr::clrCall(self$ref, "MolWeightFor", quantityPath)
       mw %||% NA
     },
@@ -88,7 +88,7 @@ Simulation <- R6::R6Class(
     #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an empty list if not found
     #' @param quantityPath Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)
     allApplicationsFor = function(quantityPath) {
-      validateIsString(quantityPath)
+      ospsuite.utils::validateIsString(quantityPath)
       netApplicationParameters <- rClr::clrCallStatic(MODEL_CORE_SIMULATION_EXTENSIONS, "AllApplicationParametersOrderedByStartTimeForQuantityPath", self$ref, quantityPath)
       toObjectType(netApplicationParameters, Application)
     },

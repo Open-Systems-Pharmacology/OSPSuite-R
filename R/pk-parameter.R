@@ -1,8 +1,8 @@
 #' Standard PK-Parameters types defined in OSPSuite
 #' This is only used to defined how a user defined PK Parameter should be calculated
-#' @include enum.R
+#' 
 #' @export
-StandardPKParameter <- enum(c(
+StandardPKParameter <- ospsuite.utils::enum(c(
   Unknown = 0,
   C_max = 1,
   C_max_norm = 2,

@@ -10,7 +10,7 @@
 #'
 #' @export
 createPopulation <- function(populationCharacteristics) {
-  validateIsOfType(populationCharacteristics, PopulationCharacteristics)
+  ospsuite.utils::validateIsOfType(populationCharacteristics, PopulationCharacteristics)
 
   populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
   results <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
@@ -108,33 +108,33 @@ createPopulationCharacteristics <- function(species,
   # or should be initialized automatically
   initPKSim()
 
-  validateIsString(species)
-  validateIsString(population, nullAllowed = TRUE)
-  validateIsNumeric(numberOfIndividuals)
-  validateIsNumeric(proportionOfFemales)
+  ospsuite.utils::validateIsString(species)
+  ospsuite.utils::validateIsString(population, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(numberOfIndividuals)
+  ospsuite.utils::validateIsNumeric(proportionOfFemales)
 
-  validateIsNumeric(weightMin, nullAllowed = TRUE)
-  validateIsNumeric(weightMax, nullAllowed = TRUE)
-  validateIsString(weightUnit)
+  ospsuite.utils::validateIsNumeric(weightMin, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(weightMax, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(weightUnit)
 
-  validateIsNumeric(heightMin, nullAllowed = TRUE)
-  validateIsNumeric(heightMax, nullAllowed = TRUE)
-  validateIsString(heightUnit)
+  ospsuite.utils::validateIsNumeric(heightMin, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(heightMax, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(heightUnit)
 
-  validateIsNumeric(ageMin, nullAllowed = TRUE)
-  validateIsNumeric(ageMax, nullAllowed = TRUE)
-  validateIsString(ageUnit)
+  ospsuite.utils::validateIsNumeric(ageMin, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(ageMax, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(ageUnit)
 
-  validateIsNumeric(BMIMin, nullAllowed = TRUE)
-  validateIsNumeric(BMIMax, nullAllowed = TRUE)
-  validateIsString(BMIUnit)
+  ospsuite.utils::validateIsNumeric(BMIMin, nullAllowed = TRUE)
+  ospsuite.utils::validateIsNumeric(BMIMax, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(BMIUnit)
 
-  validateIsInteger(gestationalAgeMin, nullAllowed = TRUE)
-  validateIsInteger(gestationalAgeMax, nullAllowed = TRUE)
-  validateIsString(gestationalAgeUnit)
+  ospsuite.utils::validateIsInteger(gestationalAgeMin, nullAllowed = TRUE)
+  ospsuite.utils::validateIsInteger(gestationalAgeMax, nullAllowed = TRUE)
+  ospsuite.utils::validateIsString(gestationalAgeUnit)
 
-  validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
-  validateIsInteger(seed, nullAllowed = TRUE)
+  ospsuite.utils::validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  ospsuite.utils::validateIsInteger(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)
   populationCharacteristics <- PopulationCharacteristics$new()
