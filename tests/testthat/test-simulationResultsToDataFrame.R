@@ -65,6 +65,7 @@ test_that("simulationResultsToDataFrame with lists", {
 
 
 test_that("simulationResultsToDataFrame with population", {
+  skip_if(.Platform$OS.type != "windows")
   # ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
 
   # If no unit is specified, the default units are used. For "height" it is "dm",
