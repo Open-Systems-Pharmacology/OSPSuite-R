@@ -20,10 +20,11 @@ Depends:
     rClr (>= 0.9.1)
 Imports: 
     dplyr,
+    ospsuite.utils,
     purrr,
     R6,
-    stringr,
-    readr
+    readr,
+    stringr
 Suggests: 
     knitr,
     rmarkdown,
@@ -42,7 +43,6 @@ Collate:
     'create-individual.R'
     'create-population.R'
     'data-column.R'
-    'enum.R'
     'data-importer-configuration.R'
     'data-repository.R'
     'data-set.R'
@@ -73,6 +73,7 @@ Collate:
     'quantity-pk-parameter.R'
     'quantity-selection.R'
     'quantity.R'
+    'reexports.R'
     'sensitivity-analysis-results.R'
     'sensitivity-analysis-run-options.R'
     'sensitivity-analysis.R'
