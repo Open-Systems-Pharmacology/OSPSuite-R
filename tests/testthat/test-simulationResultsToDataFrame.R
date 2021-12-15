@@ -10,7 +10,7 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
 
   # with all paths
-  expect_equal(dim(df1), c(84L, 8L))
+  expect_equal(dim(df1), c(84L, 7L))
   expect_equal(
     unique(df1$paths),
     c("Organism|Liver|A", "Organism|Liver|B", "Organism|A", "Organism|B")
@@ -19,10 +19,9 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   expect_equal(unique(df1$unit), "µmol")
   expect_equal(unique(df1$dimension), "Amount")
   expect_equal(unique(df1$TimeUnit), "min")
-  expect_equal(unique(df1$TimeDimension), "Time")
 
   # certain path
-  expect_equal(dim(df2), c(21L, 8L))
+  expect_equal(dim(df2), c(21L, 7L))
   expect_equal(unique(df2$paths), "Organism|A")
 })
 
@@ -37,7 +36,7 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
   df1 <- simulationResultsToDataFrame(results)
 
   # with all paths
-  expect_equal(dim(df1), c(491L, 8L))
+  expect_equal(dim(df1), c(491L, 7L))
   expect_equal(
     unique(df1$paths),
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
@@ -46,6 +45,4 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
   expect_equal(unique(df1$unit), "µmol/l")
   expect_equal(unique(df1$dimension), "Concentration (molar)")
   expect_equal(unique(df1$TimeUnit), "min")
-  expect_equal(unique(df1$TimeDimension), "Time")
-
 })

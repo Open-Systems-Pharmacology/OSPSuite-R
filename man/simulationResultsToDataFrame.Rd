@@ -33,7 +33,7 @@ ignored.}
 }
 \value{
 SimulationResults object as data.frame with columns IndividualId, Time, paths,
-simulationValues, unit, dimension, TimeUnit, TimeDimension.
+simulationValues, unit, dimension, TimeUnit.
 }
 \description{
 Converts a \code{SimulationResults} objects to a data.frame

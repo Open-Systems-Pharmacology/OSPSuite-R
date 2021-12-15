@@ -17,7 +17,7 @@
 #' @return
 #'
 #' SimulationResults object as data.frame with columns IndividualId, Time, paths,
-#' simulationValues, unit, dimension, TimeUnit, TimeDimension.
+#' simulationValues, unit, dimension, TimeUnit.
 #'
 #' @export
 
@@ -43,21 +43,24 @@ simulationResultsToDataFrame <- function(simulationResults,
   )
 
   # extract units and dimensions for paths in a separate dataframe
-  # leave out time units and dimensions since it is not a path
+  # iterate over the list using index (which here is names for list elements)
   df_meta <- purrr::imap_dfr(
     .x  = simList$metaData,
     .f  = ~ as.data.frame(.x, row.names = NULL),
     .id = "paths"
-  ) %>%
-    dplyr::filter(paths != "Time")
+  )
+
+  # leave out time units and dimensions since it is not a path
+  df_meta <- dplyr::filter(df_meta, paths != "Time")
 
   # combine these dataframes
   df <- dplyr::left_join(df_data, df_meta, by = "paths")
 
-  # add time unit and dimnensions now to the combined dataframe
+  # add time unit to the combined dataframe
+  # the time dimension is "Time", which is redundant and thus left out
   df <- dplyr::bind_cols(
     df,
-    as.data.frame(simList$metaData$Time, col.names = c("TimeUnit", "TimeDimension"))
+    data.frame("TimeUnit" = simList$metaData$Time$unit[[1]])
   )
 
   # return the combined dataframe
@@ -72,14 +75,6 @@ simulationResultsToDataFrame <- function(simulationResults,
                              cols = "all",
                              names_to = "Name",
                              values_to = "Value") {
-  if (inherits(data, "tbl_df")) {
-    tbl_input <- TRUE
-    data <- as.data.frame(data)
-  } else {
-    tbl_input <- FALSE
-  }
-
-
   if (is.character(cols) && length(cols) == 1) {
     if (cols == "all") {
       # If all, take all
@@ -131,10 +126,6 @@ simulationResultsToDataFrame <- function(simulationResults,
   # add back attributes where possible
   for (i in colnames(long)) {
     attributes(long[[i]]) <- variable_attr[[i]]
-  }
-
-  if (isTRUE(tbl_input)) {
-    class(long) <- c("tbl_df", "tbl", "data.frame")
   }
 
   long
