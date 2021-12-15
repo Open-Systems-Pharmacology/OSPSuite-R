@@ -4,6 +4,10 @@
 
 * Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
 
+## Breaking changes
+
+* The `pkAnalysesAsDataFrame()` function changes column data types for `QuantityPath`, `Parameter`, and `Unit`  from `factor` to `character` (https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/673).
+
 # ospsuite 10.0
 
 Version compatible with the OSPSuite V10.
