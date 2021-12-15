@@ -134,7 +134,11 @@ dataSetToDataFrame <- function(dataSets) {
 #' xlsFilePath <- "../CompiledDataSet_oneSheet.xlsx"
 #' importerConfiguration <- DataImporterConfiguration$new(configurationPath)
 #'
-#' dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfiguration = importerConfiguration,
+#'   importAllSheets = TRUE
+#' )
 #' }
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   ospsuite.utils::validateIsString(xlsFilePath)
