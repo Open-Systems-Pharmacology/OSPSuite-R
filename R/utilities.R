@@ -41,3 +41,71 @@ netEnumName <- function(enumType, enumValue) {
   netTypeObj <- rClr::clrGetType(enumType)
   rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }
+
+
+#' Create a DataImporterConfiguration object for a XLS file
+#'
+#' @param filePath Path to XLS file
+#' @param sheet optional - name of the sheet
+#'
+#' @return DataImporterConfiguration object for XLS file
+#' @export
+createConfigurationForFile = function(filePath, sheet = NULL) {
+  # warum sind aenderungen, z.b. unit nicht in ref?????
+  validateIsString(filePath)
+
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerTask <- getNetTask("DataImporterTask")
+  if(is.null(sheet)) {
+    ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath)
+  } else {
+    ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath, sheet)
+  }
+  importerConfiguration$ref <- ref
+
+  measurement <- rClr::clrCall(importerTask, "GetMeasurement", ref)
+  importerConfiguration$measurementColumn <- rClr::clrGet(measurement, "ColumnName")
+  mappedMeasurementCol <- rClr::clrGet(measurement, "MappedColumn")
+  measurementUnitDescription <- rClr::clrGet(mappedMeasurementCol, "Unit")
+  measurementUnit <- rClr::clrGet(measurementUnitDescription, "SelectedUnit")
+  # measurementUnitCol <- rClr::clrGet(measurementUnitDescription, "ColumnName")
+  dimension <- rClr::clrGet(mappedMeasurementCol, "Dimension")
+
+  # set to default if unit and dimension can not be read from file, i.e. it is "?"
+  if (measurementUnit == "?") {
+    rClr::clrSet(mappedMeasurementCol, "Dimension", getDimensionByName("Concentration (molar)"))
+    rClr::clrSet(measurementUnitDescription, "SelectedUnit", getBaseUnit("Concentration (molar)"))
+  } else {
+  # if (is.null(measurementUnitCol)) {
+    if (is.null(dimension)) {
+      importerConfiguration$measurementDimension <- getDimensionForUnit(measurementUnit)
+    } else {
+      importerConfiguration$measurementDimension <- dimension
+    }
+    importerConfiguration$measurementUnit <- measurementUnit
+  # } else {
+  #   importerConfiguration$measurementUnitFromColumn <- TRUE
+  # }
+  }
+
+  time <- rClr::clrCall(importerTask, "GetTime", ref)
+  importerConfiguration$timeColumn <- rClr::clrGet(time, "ColumnName")
+  mappedTimeCol <- rClr::clrGet(time, "MappedColumn")
+  timeUnitDescription <- rClr::clrGet(mappedTimeCol, "Unit")
+  importerConfiguration$timeUnit <- rClr::clrGet(timeUnitDescription, "SelectedUnit")
+  timeUnitCol <- rClr::clrGet(timeUnitDescription, "ColumnName")
+  if(!is.null(timeUnitCol)) {
+    importerConfiguration$timeUnitFromColumn <- TRUE
+  }
+
+  error <- rClr::clrCall(importerTask, "GetError", ref)
+  if(!is.null(error)) {
+    importerConfiguration$errorColumn <- rClr::clrGet(error, "ColumnName")
+    mappedErrorCol <- rClr::clrGet(error, "MappedColumn")
+    importerConfiguration$errorType <- .ImporterErrorTypeToDataSetErrorType[[rClr::clrGet(mappedErrorCol, "ErrorStdDev")]]
+    errorUnitDescription <- rClr::clrGet(mappedErrorCol, "Unit")
+    importerConfiguration$errorUnit <- rClr::clrGet(errorUnitDescription, "SelectedUnit")
+  }
+
+  return(importerConfiguration)
+}
