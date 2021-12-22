@@ -81,9 +81,13 @@ DataCombined <- R6::R6Class(
         )
       }
 
+      # save the original object
+      ospsuite.utils::validateIsOfType(simulationResults, SimulationResults)
+      private$.simulationResults <- simulationResults
+
       # extract data
       # validation happens in the function itself
-      private$.simulationResults <- simulationResultsToDataFrame(
+      private$.simulationResultsDF <- simulationResultsToDataFrame(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
         population = population,
@@ -97,7 +101,6 @@ DataCombined <- R6::R6Class(
 
     addDataSet = function(dataSet, groups = NULL) {
       # if a list is provided, keep only elements which are of `DataSet` type
-      # if a single object, validation happens in `dataSetToDataFrame()` function
       if (is.list(dataSet)) {
         dataSet <- purrr::keep(dataSet, ~ inherits(.x, "DataSet"))
 
@@ -105,12 +108,16 @@ DataCombined <- R6::R6Class(
         if (length(dataSet) == 0L) {
           stop("No `DataSet` object detected.", call. = FALSE)
         }
+      } else {
+        ospsuite.utils::validateIsOfType(dataSet, DataSet)
       }
 
+      private$.dataSet <- dataSet
+
       if (is.list(dataSet)) {
-        private$.dataSet <- purrr::map_dfr(dataSet, dataSetToDataFrame)
+        private$.dataSetDF <- purrr::map_dfr(dataSet, dataSetToDataFrame)
       } else {
-        private$.dataSet <- dataSetToDataFrame(dataSet)
+        private$.dataSetDF <- dataSetToDataFrame(dataSet)
       }
     },
 
@@ -123,16 +130,16 @@ DataCombined <- R6::R6Class(
 
     toDataFrame = function() {
       # dataframe for observed data
-      if (!is.null(private$.dataSet)) {
+      if (!is.null(private$.dataSetDF)) {
         # add column describing the type of data
-        dataObs <- dplyr::mutate(private$.dataSet, dataType = "observed", .before = 1) %>%
+        dataObs <- dplyr::mutate(private$.dataSetDF, dataType = "observed", .before = 1) %>%
           dplyr::as_tibble()
       }
 
       # dataframe for simulated data
-      if (!is.null(private$.simulationResults)) {
+      if (!is.null(private$.simulationResultsDF)) {
         # add column describing the type of data
-        dataSim <- dplyr::mutate(private$.simulationResults, dataType = "simulated", .before = 1) %>%
+        dataSim <- dplyr::mutate(private$.simulationResultsDF, dataType = "simulated", .before = 1) %>%
           dplyr::as_tibble()
 
         # rename according to column naming conventions for DataSet
@@ -146,15 +153,15 @@ DataCombined <- R6::R6Class(
       }
 
       # if both not NULL, combine and return
-      if (!is.null(private$.dataSet) && !is.null(private$.simulationResults)) {
+      if (!is.null(private$.dataSetDF) && !is.null(private$.simulationResultsDF)) {
         return(dplyr::bind_rows(dataObs, dataSim))
       }
 
       # if either is NULL, return the non-NULL one
-      if (!is.null(private$.dataSet) && is.null(private$.simulationResults)) {
+      if (!is.null(private$.dataSetDF) && is.null(private$.simulationResultsDF)) {
         return(dataObs)
       }
-      if (is.null(private$.dataSet) && !is.null(private$.simulationResults)) {
+      if (is.null(private$.dataSetDF) && !is.null(private$.simulationResultsDF)) {
         return(dataSim)
       }
     },
@@ -187,8 +194,10 @@ DataCombined <- R6::R6Class(
   # private fields and methods -----------------------------------
 
   private = list(
-    .dataSet           = NULL,
-    .simulationResults = NULL
+    .dataSet = NULL,
+    .dataSetDF = NULL,
+    .simulationResults = NULL,
+    .simulationResultsDF = NULL
   ),
 
   # other object properties --------------------------------------
