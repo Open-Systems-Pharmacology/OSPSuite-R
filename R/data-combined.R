@@ -114,17 +114,44 @@ DataCombined <- R6::R6Class(
         } else {
           dataObs <- dataSetToDataFrame(private$.dataSet)
         }
+
+        # add column describing the type of data
+        dataObs <- dplyr::mutate(dataObs, dataType = "observed") %>%
+          dplyr::select(dataType, dplyr::everything()) %>%
+          dplyr::as_tibble()
       }
 
       # dataframe for simulated data
-      # if (!is.null(private$.simulationResults)) {
-      #   dataSim <- dataSetToDataFrame(private$.simulationResults)
-      # }
+      if (!is.null(private$.simulationResults)) {
+        dataSim <- simulationResultsToDataFrame(private$.simulationResults)
 
-      # TODO: convert simulationResults to dataframe
+        # add column describing the type of data
+        dataSim <- dplyr::mutate(dataSim, dataType = "simulated") %>%
+          dplyr::select(dataType, dplyr::everything()) %>%
+          dplyr::as_tibble()
+
+        # rename according to column naming conventions for DataSet
+        dataSim <- dplyr::rename(dataSim,
+          "xValues" = "Time",
+          "xUnit" = "TimeUnit",
+          "yValues" = "simulationValues",
+          "yUnit" = "unit",
+          "yDimension" = "dimension"
+        )
+      }
+
       # if both not NULL, combine and return
+      if (!is.null(private$.dataSet) && !is.null(private$.simulationResults)) {
+        return(dplyr::bind_rows(dataObs, dataSim))
+      }
+
       # if either is NULL, return the non-NULL one
-      return(dataObs)
+      if (!is.null(private$.dataSet) && is.null(private$.simulationResults)) {
+        return(dataObs)
+      }
+      if (is.null(private$.dataSet) && !is.null(private$.simulationResults)) {
+        return(dataSim)
+      }
     },
 
     ## print method -----------------
