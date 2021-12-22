@@ -68,7 +68,7 @@ Add simulated data.
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
   simulationResults,
   groups = NULL,
-  paths = NULL,
+  quantitiesOrPaths = NULL,
   individualIds = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -76,18 +76,22 @@ Add simulated data.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{simulationResults}}{Instance of the \code{SimulationResults} object. A list
-of such instances will \strong{not} be accepted.}
+\item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
+calling \code{runSimulation} on a \code{Simulation} object.}
 
 \item{\code{groups}}{TODO:}
 
-\item{\code{paths}}{Quantity paths (element or vector of strings) for which the
-results are to be returned. When providing the paths, only absolute full
-paths are supported (i.e., no matching with '*' possible). If \code{NULL}
-(default value), returns the results for all output defined in the results.}
+\item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
+retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
+vector of strings) for which the results are to be returned. (optional)
+When providing the paths, only absolute full paths are supported (i.e., no
+matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
+value), returns the results for all output defined in the results.}
 
-\item{\code{individualIds}}{A list of IDs of individuals whose simulations are of
-interest.}
+\item{\code{individualIds}}{Numeric IDs of individuals for which the results
+should be extracted. By default, all individuals from the results are
+considered. If the individual with the provided ID is not found, the ID is
+ignored.}
 }
 \if{html}{\out{</div>}}
 }
@@ -121,7 +125,8 @@ Add observed data.
 \if{html}{\out{<a id="method-toDataFrame"></a>}}
 \if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
-A dataframe of simulated and observed data.
+A dataframe of simulated and/or observed data (depending on instances of
+which objects have been added to the object).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}
 }

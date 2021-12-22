@@ -5,16 +5,20 @@
 #' A class for storage of simulated and/or observed data, which can be further
 #' used to extract as a dataframe or for visualization methods.
 #'
-#' @param simulationResults Instance of the `SimulationResults` object. A list
-#'   of such instances will **not** be accepted.
+#' @param simulationResults Object of type `SimulationResults` produced by
+#'   calling `runSimulation` on a `Simulation` object.
+#' @param quantitiesOrPaths Quantity instances (element or vector) typically
+#'   retrieved using `getAllQuantitiesMatching` or quantity path (element or
+#'   vector of strings) for which the results are to be returned. (optional)
+#'   When providing the paths, only absolute full paths are supported (i.e., no
+#'   matching with '*' possible). If `quantitiesOrPaths` is `NULL` (default
+#'   value), returns the results for all output defined in the results.
+#' @param individualIds Numeric IDs of individuals for which the results
+#'   should be extracted. By default, all individuals from the results are
+#'   considered. If the individual with the provided ID is not found, the ID is
+#'   ignored.
 #' @param dataSet Instance (or a list of instances) of the `DataSet` object(s).
 #' @param groups TODO:
-#' @param paths Quantity paths (element or vector of strings) for which the
-#'   results are to be returned. When providing the paths, only absolute full
-#'   paths are supported (i.e., no matching with '*' possible). If `NULL`
-#'   (default value), returns the results for all output defined in the results.
-#' @param individualIds A list of IDs of individuals whose simulations are of
-#'   interest.
 #'
 #' @examples
 #'
@@ -63,7 +67,7 @@ DataCombined <- R6::R6Class(
 
     addSimulationResults = function(simulationResults,
                                     groups = NULL,
-                                    paths = NULL,
+                                    quantitiesOrPaths = NULL,
                                     individualIds = NULL) {
       # list input is possible only for dataSet argument, and not here
       if (is.list(simulationResults)) {
@@ -103,7 +107,8 @@ DataCombined <- R6::R6Class(
     ## getter methods ---------------
 
     #' @description
-    #' A dataframe of simulated and observed data.
+    #' A dataframe of simulated and/or observed data (depending on instances of
+    #' which objects have been added to the object).
     #' @return A dataframe.
 
     toDataFrame = function() {
@@ -116,8 +121,7 @@ DataCombined <- R6::R6Class(
         }
 
         # add column describing the type of data
-        dataObs <- dplyr::mutate(dataObs, dataType = "observed") %>%
-          dplyr::select(dataType, dplyr::everything()) %>%
+        dataObs <- dplyr::mutate(dataObs, dataType = "observed", .before = 1) %>%
           dplyr::as_tibble()
       }
 
@@ -126,8 +130,7 @@ DataCombined <- R6::R6Class(
         dataSim <- simulationResultsToDataFrame(private$.simulationResults)
 
         # add column describing the type of data
-        dataSim <- dplyr::mutate(dataSim, dataType = "simulated") %>%
-          dplyr::select(dataType, dplyr::everything()) %>%
+        dataSim <- dplyr::mutate(dataSim, dataType = "simulated", .before = 1) %>%
           dplyr::as_tibble()
 
         # rename according to column naming conventions for DataSet
@@ -162,12 +165,17 @@ DataCombined <- R6::R6Class(
 
     print = function() {
       private$printClass()
-      private$.simulationResults$print()
 
-      if (is.list(private$.dataSet)) {
-        purrr::walk(private$.dataSet, print)
-      } else {
-        private$.dataSet$print()
+      if (!is.null(private$.simulationResults)) {
+        private$.simulationResults$print()
+      }
+
+      if (!is.null(private$.dataSet)) {
+        if (is.list(private$.dataSet)) {
+          purrr::walk(private$.dataSet, print)
+        } else {
+          private$.dataSet$print()
+        }
       }
 
       invisible(self)

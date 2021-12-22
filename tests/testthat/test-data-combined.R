@@ -1,6 +1,8 @@
 test_that("dataCombined - both dataSet and SimulationResults provided", {
   skip_if_not_installed("R6")
 
+  expect_true(R6::is.R6Class(DataCombined))
+
   # load the simulation
   sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
   simResults <- importResultsFromCSV(
@@ -87,6 +89,9 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))
 
+  # no snapshot test for this object because DataSet objects print source file location
+  # this is not going to be the same on CI platforms and so the test will fail
+
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
@@ -109,6 +114,10 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
+
+  # needs testthat 3rd edition, plus the team seems to be doubtful about
+  # snapshot testing. So this is just for my own testing
+  # expect_snapshot(print(myCombDat2))
 
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
