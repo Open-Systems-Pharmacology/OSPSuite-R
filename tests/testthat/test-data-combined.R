@@ -212,7 +212,8 @@ test_that("DataCombined works with population", {
     )
   )
 
-  expect_equal(unique(df$IndividualId), c(1, 8, 10, 44))
+  expect_equal(min(df$IndividualId), 1)
+  expect_equal(max(df$IndividualId), 44)
   expect_equal(
     unique(df$paths),
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
