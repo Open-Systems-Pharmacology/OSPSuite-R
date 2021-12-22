@@ -69,6 +69,7 @@ Add simulated data.
   simulationResults,
   groups = NULL,
   quantitiesOrPaths = NULL,
+  population = NULL,
   individualIds = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -87,6 +88,10 @@ vector of strings) for which the results are to be returned. (optional)
 When providing the paths, only absolute full paths are supported (i.e., no
 matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
 value), returns the results for all output defined in the results.}
+
+\item{\code{population}}{population used to calculate the \code{simulationResults}
+(optional). This is used only to add the population covariates to the
+resulting dataframe.}
 
 \item{\code{individualIds}}{Numeric IDs of individuals for which the results
 should be extracted. By default, all individuals from the results are

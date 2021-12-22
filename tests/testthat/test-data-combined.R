@@ -20,7 +20,14 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
 
   # created object with datasets combined
   myCombDat <- DataCombined$new()
-  myCombDat$addSimulationResults(simResults)
+  myCombDat$addSimulationResults(
+    simResults,
+    quantitiesOrPaths = c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )
+  )
   myCombDat$addDataSet(dataSet)
 
   expect_true(R6::is.R6(myCombDat))
@@ -29,8 +36,9 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1332L, 21L))
+  expect_equal(dim(df), c(830L, 21L))
 
+  # check exact values
   expect_equal(
     names(df),
     c(
@@ -38,6 +46,16 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit", "molWeight",
       "lloq", "Source", "Sheet", "Organ", "Compartment", "Molecule",
       "Group Id", "IndividualId", "paths"
+    )
+  )
+
+  # There will be NAs because there will be no paths values for observed data
+  expect_equal(
+    as.character(na.omit(unique(df$paths))),
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
     )
   )
 
@@ -131,4 +149,75 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       "yUnit", "yDimension", "xUnit"
     )
   )
+
+  expect_equal(
+    as.character(na.omit(unique(df2$paths))),
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )
+  )
+})
+
+
+test_that("DataCombined works with population", {
+  skip_if(.Platform$OS.type != "windows")
+  #ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
+
+  # If no unit is specified, the default units are used. For "height" it is "dm",
+  # for "weight" it is "kg", for "age" it is "year(s)".
+  populationCharacteristics <- createPopulationCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$Asian_Tanaka_1996,
+    numberOfIndividuals = 50,
+    proportionOfFemales = 50,
+    weightMin = 30,
+    weightMax = 98,
+    weightUnit = "kg",
+    heightMin = NULL,
+    heightMax = NULL,
+    ageMin = 0,
+    ageMax = 80,
+    ageUnit = "year(s)"
+  )
+
+  # Create population from population characteristics
+  result <- createPopulation(populationCharacteristics = populationCharacteristics)
+  myPopulation <- result$population
+
+  # Load simulation
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  populationResults <- runSimulation(
+    simulation = sim,
+    population = myPopulation
+  )
+
+  myDataComb <- DataCombined$new()
+  myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
+  df <- myDataComb$toDataFrame()
+
+  expect_s3_class(df, "data.frame")
+  expect_equal(dim(df), c(1964L, 8L))
+
+  expect_equal(
+    names(df),
+    c(
+      "dataType", "IndividualId", "xValues", "paths", "yValues",
+      "yUnit", "yDimension", "xUnit"
+    )
+  )
+
+  expect_equal(unique(df$IndividualId), c(1, 8, 10, 44))
+  expect_equal(
+    unique(df$paths),
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  )
+  expect_equal(unique(df$yUnit), "µmol/l")
+  expect_equal(unique(df$yDimension), "Concentration (molar)")
+  expect_equal(unique(df$xUnit), "min")
 })

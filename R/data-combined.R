@@ -17,6 +17,9 @@
 #'   should be extracted. By default, all individuals from the results are
 #'   considered. If the individual with the provided ID is not found, the ID is
 #'   ignored.
+#' @param population population used to calculate the `simulationResults`
+#'   (optional). This is used only to add the population covariates to the
+#'   resulting dataframe.
 #' @param dataSet Instance (or a list of instances) of the `DataSet` object(s).
 #' @param groups TODO:
 #'
@@ -68,8 +71,9 @@ DataCombined <- R6::R6Class(
     addSimulationResults = function(simulationResults,
                                     groups = NULL,
                                     quantitiesOrPaths = NULL,
+                                    population = NULL,
                                     individualIds = NULL) {
-      # list input is possible only for dataSet argument, and not here
+      # list input is possible only for `dataSet` argument, and not here
       if (is.list(simulationResults)) {
         stop(
           "Only a single instance, and not a list, of `SimulationResults` objects is expected.",
@@ -77,11 +81,14 @@ DataCombined <- R6::R6Class(
         )
       }
 
-      # ascertain that the object is of the correct type
-      validateIsOfType(simulationResults, "SimulationResults")
-
       # extract data
-      private$.simulationResults <- simulationResults
+      # validation happens in the function itself
+      private$.simulationResults <- simulationResultsToDataFrame(
+        simulationResults = simulationResults,
+        quantitiesOrPaths = quantitiesOrPaths,
+        population = population,
+        individualIds = individualIds
+      )
     },
 
     #' @description
@@ -89,19 +96,22 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object containing observed data.
 
     addDataSet = function(dataSet, groups = NULL) {
-      # if a list is provided, keep only elements which are of DataSet type
+      # if a list is provided, keep only elements which are of `DataSet` type
+      # if a single object, validation happens in `dataSetToDataFrame()` function
       if (is.list(dataSet)) {
         dataSet <- purrr::keep(dataSet, ~ inherits(.x, "DataSet"))
 
-        # if no object of DataSet type is retained, inform the user
+        # if no object of `DataSet` type is retained, inform the user
         if (length(dataSet) == 0L) {
           stop("No `DataSet` object detected.", call. = FALSE)
         }
-      } else {
-        validateIsOfType(dataSet, "DataSet")
       }
 
-      private$.dataSet <- dataSet
+      if (is.list(dataSet)) {
+        private$.dataSet <- purrr::map_dfr(dataSet, dataSetToDataFrame)
+      } else {
+        private$.dataSet <- dataSetToDataFrame(dataSet)
+      }
     },
 
     ## getter methods ---------------
@@ -114,23 +124,15 @@ DataCombined <- R6::R6Class(
     toDataFrame = function() {
       # dataframe for observed data
       if (!is.null(private$.dataSet)) {
-        if (is.list(private$.dataSet)) {
-          dataObs <- purrr::map_dfr(private$.dataSet, dataSetToDataFrame)
-        } else {
-          dataObs <- dataSetToDataFrame(private$.dataSet)
-        }
-
         # add column describing the type of data
-        dataObs <- dplyr::mutate(dataObs, dataType = "observed", .before = 1) %>%
+        dataObs <- dplyr::mutate(private$.dataSet, dataType = "observed", .before = 1) %>%
           dplyr::as_tibble()
       }
 
       # dataframe for simulated data
       if (!is.null(private$.simulationResults)) {
-        dataSim <- simulationResultsToDataFrame(private$.simulationResults)
-
         # add column describing the type of data
-        dataSim <- dplyr::mutate(dataSim, dataType = "simulated", .before = 1) %>%
+        dataSim <- dplyr::mutate(private$.simulationResults, dataType = "simulated", .before = 1) %>%
           dplyr::as_tibble()
 
         # rename according to column naming conventions for DataSet
