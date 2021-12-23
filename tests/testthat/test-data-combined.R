@@ -28,7 +28,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     )
   )
-  myCombDat$addDataSet(dataSet)
+  myCombDat$addDataSets(dataSet)
 
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))
@@ -64,7 +64,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   # created object with datasets combined
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
-  myCombDat2$addDataSet(dataSet[[1]])
+  myCombDat2$addDataSets(dataSet[[1]])
 
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
@@ -77,7 +77,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   # with nonsense list inputs ----------------------------
 
   myCombDat3 <- DataCombined$new()
-  expect_error(myCombDat3$addDataSet(list("x" = 1, "y" = 2)))
+  expect_error(myCombDat3$addDataSets(list("x" = 1, "y" = 2)))
 
   expect_error(myCombDat3$addSimulationResults(list(simResults, simResults)))
 })
@@ -102,7 +102,7 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # only DataSet input ----------------------------
 
   myCombDat <- DataCombined$new()
-  myCombDat$addDataSet(dataSet[[1]])
+  myCombDat$addDataSets(dataSet[[1]])
 
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))

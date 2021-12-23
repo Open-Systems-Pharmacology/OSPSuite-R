@@ -21,7 +21,7 @@ dataSet <- DataSet$new()
 # created object with datasets combined
 myCombDat <- DataCombined$new()
 myCombDat$addSimulationResults(simulationResults)
-myCombDat$addDataSet(dataSet)
+myCombDat$addDataSets(dataSet)
 
 # print the object
 myCombDat
@@ -34,7 +34,7 @@ myCombDat
 \itemize{
 \item \href{#method-new}{\code{DataCombined$new()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
-\item \href{#method-addDataSet}{\code{DataCombined$addDataSet()}}
+\item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
 \item \href{#method-clone}{\code{DataCombined$clone()}}
@@ -105,18 +105,18 @@ ignored.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDataSet"></a>}}
-\if{latex}{\out{\hypertarget{method-addDataSet}{}}}
-\subsection{Method \code{addDataSet()}}{
+\if{html}{\out{<a id="method-addDataSets"></a>}}
+\if{latex}{\out{\hypertarget{method-addDataSets}{}}}
+\subsection{Method \code{addDataSets()}}{
 Add observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSet(dataSet, groups = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, groups = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataSet}}{Instance (or a list of instances) of the \code{DataSet} object(s).}
+\item{\code{dataSets}}{Instance (or a list of instances) of the \code{DataSet} object(s).}
 
 \item{\code{groups}}{TODO:}
 }
@@ -145,7 +145,8 @@ A dataframe.
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
-If dataSet provided was a list of DataSet objects, this can be quite long
+If \code{dataSets} is a list of \code{DataSet} objects, then the print output is
+going to be quite long.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$print()}\if{html}{\out{</div>}}
 }

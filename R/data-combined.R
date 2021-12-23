@@ -20,7 +20,7 @@
 #' @param population population used to calculate the `simulationResults`
 #'   (optional). This is used only to add the population covariates to the
 #'   resulting dataframe.
-#' @param dataSet Instance (or a list of instances) of the `DataSet` object(s).
+#' @param dataSets Instance (or a list of instances) of the `DataSet` object(s).
 #' @param groups TODO:
 #'
 #' @examples
@@ -36,7 +36,7 @@
 #' # created object with datasets combined
 #' myCombDat <- DataCombined$new()
 #' myCombDat$addSimulationResults(simulationResults)
-#' myCombDat$addDataSet(dataSet)
+#' myCombDat$addDataSets(dataSet)
 #'
 #' # print the object
 #' myCombDat
@@ -73,7 +73,7 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL) {
-      # list input is possible only for `dataSet` argument, and not here
+      # list input is possible only for `dataSets` argument, and not here
       if (is.list(simulationResults)) {
         stop(
           "Only a single instance, and not a list, of `SimulationResults` objects is expected.",
@@ -99,25 +99,25 @@ DataCombined <- R6::R6Class(
     #' Add observed data.
     #' @return `DataCombined` object containing observed data.
 
-    addDataSet = function(dataSet, groups = NULL) {
+    addDataSets = function(dataSets, groups = NULL) {
       # if a list is provided, keep only elements which are of `DataSet` type
-      if (is.list(dataSet)) {
-        dataSet <- purrr::keep(dataSet, ~ inherits(.x, "DataSet"))
+      if (is.list(dataSets)) {
+        dataSets <- purrr::keep(dataSets, ~ inherits(.x, "DataSet"))
 
         # if no object of `DataSet` type is retained, inform the user
-        if (length(dataSet) == 0L) {
+        if (length(dataSets) == 0L) {
           stop("No `DataSet` object detected.", call. = FALSE)
         }
       } else {
-        ospsuite.utils::validateIsOfType(dataSet, DataSet)
+        ospsuite.utils::validateIsOfType(dataSets, DataSet)
       }
 
-      private$.dataSet <- dataSet
+      private$.dataSets <- dataSets
 
-      if (is.list(dataSet)) {
-        private$.dataSetDF <- purrr::map_dfr(dataSet, dataSetToDataFrame)
+      if (is.list(dataSets)) {
+        private$.dataSetsDF <- purrr::map_dfr(dataSets, dataSetToDataFrame)
       } else {
-        private$.dataSetDF <- dataSetToDataFrame(dataSet)
+        private$.dataSetsDF <- dataSetToDataFrame(dataSets)
       }
     },
 
@@ -130,9 +130,9 @@ DataCombined <- R6::R6Class(
 
     toDataFrame = function() {
       # dataframe for observed data
-      if (!is.null(private$.dataSetDF)) {
+      if (!is.null(private$.dataSetsDF)) {
         # add column describing the type of data
-        dataObs <- dplyr::mutate(private$.dataSetDF, dataType = "observed", .before = 1) %>%
+        dataObs <- dplyr::mutate(private$.dataSetsDF, dataType = "observed", .before = 1) %>%
           dplyr::as_tibble()
       }
 
@@ -153,15 +153,15 @@ DataCombined <- R6::R6Class(
       }
 
       # if both not NULL, combine and return
-      if (!is.null(private$.dataSetDF) && !is.null(private$.simulationResultsDF)) {
+      if (!is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
         return(dplyr::bind_rows(dataObs, dataSim))
       }
 
       # if either is NULL, return the non-NULL one
-      if (!is.null(private$.dataSetDF) && is.null(private$.simulationResultsDF)) {
+      if (!is.null(private$.dataSetsDF) && is.null(private$.simulationResultsDF)) {
         return(dataObs)
       }
-      if (is.null(private$.dataSetDF) && !is.null(private$.simulationResultsDF)) {
+      if (is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
         return(dataSim)
       }
     },
@@ -170,7 +170,8 @@ DataCombined <- R6::R6Class(
 
     #' @description
     #' Print the object to the console
-    #' If dataSet provided was a list of DataSet objects, this can be quite long
+    #' If `dataSets` is a list of `DataSet` objects, then the print output is
+    #' going to be quite long.
 
     print = function() {
       private$printClass()
@@ -179,11 +180,11 @@ DataCombined <- R6::R6Class(
         private$.simulationResults$print()
       }
 
-      if (!is.null(private$.dataSet)) {
-        if (is.list(private$.dataSet)) {
-          purrr::walk(private$.dataSet, print)
+      if (!is.null(private$.dataSets)) {
+        if (is.list(private$.dataSets)) {
+          purrr::walk(private$.dataSets, print)
         } else {
-          private$.dataSet$print()
+          private$.dataSets$print()
         }
       }
 
@@ -194,8 +195,8 @@ DataCombined <- R6::R6Class(
   # private fields and methods -----------------------------------
 
   private = list(
-    .dataSet = NULL,
-    .dataSetDF = NULL,
+    .dataSets = NULL,
+    .dataSetsDF = NULL,
     .simulationResults = NULL,
     .simulationResultsDF = NULL
   ),
