@@ -20,8 +20,10 @@
 #' @param population population used to calculate the `simulationResults`
 #'   (optional). This is used only to add the population covariates to the
 #'   resulting dataframe.
-#' @param dataSets Instance (or a list of instances) of the `DataSet` object(s).
-#' @param groups TODO:
+#' @param dataSets Instance (or a `list` of instances) of the `DataSet`
+#'   object(s).
+#' @param groups A named `list` specifying which data sets should be grouped
+#'   together.
 #'
 #' @examples
 #'
@@ -55,10 +57,11 @@ DataCombined <- R6::R6Class(
 
     #' @description
     #' Initialize a new instance of the class.
+    #' The constructor is empty because we prefer that the users add
+    #' `SimulationResults` and `DataSet` objects separately and individually.
     #' @return A new instance of `DataCombined` object.
 
-    # empty constructor because we prefer that the users add simulationResults
-    # and DataSet objects separately and individually
+    # empty constructor
     initialize = function() {
     },
 
@@ -73,7 +76,7 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL) {
-      # list input is possible only for `dataSets` argument, and not here
+      # list of `SimulationResults` instances is not allowed
       if (is.list(simulationResults)) {
         stop(
           "Only a single instance, and not a list, of `SimulationResults` objects is expected.",
@@ -85,13 +88,12 @@ DataCombined <- R6::R6Class(
       ospsuite.utils::validateIsOfType(simulationResults, SimulationResults)
       private$.simulationResults <- simulationResults
 
-      # extract data
-      # validation happens in the function itself
+      # extract a dataframe and store it internally
       private$.simulationResultsDF <- simulationResultsToDataFrame(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
-        population = population,
-        individualIds = individualIds
+        population        = population,
+        individualIds     = individualIds
       )
     },
 
@@ -192,13 +194,60 @@ DataCombined <- R6::R6Class(
     }
   ),
 
+  # active bindings ---------------------------------------------------
+
+  active = list(
+
+    #' @field dataSets Instance (or a `list` of instances) of the `DataSet`
+    #'   object(s).
+
+    # don't return `as.list()`, because it just returns a list of public members
+    # from the R6 object by calls `as.list.environment()`, which is not
+    # particularly useful for the users
+    dataSets = function(value) {
+      if (missing(value)) {
+        private$.dataSets
+      } else {
+        stop(messages$errorPropertyReadOnly("dataSets"))
+      }
+    },
+
+    #' @field simulationResults Object of type `SimulationResults` produced by
+    #'   calling `runSimulation` on a `Simulation` object.
+
+    # don't run `as.list()` for reasons mentioned above
+    simulationResults = function(value) {
+      if (missing(value)) {
+        private$.simulationResults
+      } else {
+        stop(messages$errorPropertyReadOnly("simulationResults"))
+      }
+    },
+
+    #' @field groups A named `list` specifying which data sets should be grouped
+    #'   together.
+
+    # just a way to access whatever was specified
+    groups = function(value) {
+      if (missing(value)) {
+        private$.groups
+      } else {
+        stop(messages$errorPropertyReadOnly(
+          "groupings",
+          optionalMessage = "Data sets are assigned to groups when adding via `$addSimulationResults()` or `$addDataSets()` methods."
+        ))
+      }
+    }
+  ),
+
   # private fields and methods -----------------------------------
 
   private = list(
     .dataSets = NULL,
     .dataSetsDF = NULL,
     .simulationResults = NULL,
-    .simulationResultsDF = NULL
+    .simulationResultsDF = NULL,
+    .groups = NULL
   ),
 
   # other object properties --------------------------------------

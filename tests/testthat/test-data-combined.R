@@ -50,6 +50,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   )
 
   # There will be NAs because there will be no paths values for observed data
+
   expect_equal(
     as.character(na.omit(unique(df$paths))),
     c(
@@ -58,6 +59,24 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     )
   )
+
+  expect_equal(
+    as.character(na.omit(unique(df$name))),
+    c(
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist"
+    )
+  )
+
+  # read-only
+  expect_equal(dataSet, myCombDat$dataSets)
+  expect_error(myCombDat$dataSets(dataSet))
+  expect_equal(simResults, myCombDat$simulationResults)
+  expect_error(myCombDat$simulationResults(simResults))
 
   # with DataSet input ----------------------------
 
@@ -73,6 +92,21 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
   expect_equal(dim(df2), c(1267L, 21L))
+
+  expect_equal(
+    as.character(na.omit(unique(df2$paths))),
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying", "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )
+  )
+
+  expect_equal(
+    as.character(na.omit(unique(df2$name))),
+    "Stevens_2012_placebo.Placebo_total"
+  )
 
   # with nonsense list inputs ----------------------------
 
@@ -165,7 +199,7 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 
 test_that("DataCombined works with population", {
   skip_if(.Platform$OS.type != "windows")
-  #ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
+  # ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
 
   # If no unit is specified, the default units are used. For "height" it is "dm",
   # for "weight" it is "kg", for "age" it is "year(s)".

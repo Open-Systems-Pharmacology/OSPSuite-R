@@ -29,6 +29,20 @@ myCombDat
 \section{Super class}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DataCombined}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
+object(s).}
+
+\item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
+calling \code{runSimulation} on a \code{Simulation} object.}
+
+\item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
+together.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -51,6 +65,8 @@ myCombDat
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class.
+The constructor is empty because we prefer that the users add
+\code{SimulationResults} and \code{DataSet} objects separately and individually.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$new()}\if{html}{\out{</div>}}
 }
@@ -80,7 +96,8 @@ Add simulated data.
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{groups}}{TODO:}
+\item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
+together.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
@@ -116,9 +133,11 @@ Add observed data.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataSets}}{Instance (or a list of instances) of the \code{DataSet} object(s).}
+\item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
+object(s).}
 
-\item{\code{groups}}{TODO:}
+\item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
+together.}
 }
 \if{html}{\out{</div>}}
 }
