@@ -22,8 +22,11 @@
 #'   resulting dataframe.
 #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
 #'   object(s).
-#' @param groups A named `list` specifying which data sets should be grouped
-#'   together.
+#' @param groups A string or a list of strings assigning the data set to a
+#'   group. If an entry within the list is `NULL`, the corresponding data set is
+#'   not assigned to any group. If `NULL` (default), all data sets are not
+#'   assigned to any group. If provided, `groups` must have the same length as
+#'   `dataSets`.
 #'
 #' @examples
 #'
@@ -89,6 +92,7 @@ DataCombined <- R6::R6Class(
       private$.simulationResults <- simulationResults
 
       # extract a dataframe and store it internally
+      # all input validation will take place in this function itself
       private$.simulationResultsDF <- simulationResultsToDataFrame(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
@@ -131,17 +135,20 @@ DataCombined <- R6::R6Class(
     #' @return A dataframe.
 
     toDataFrame = function() {
+      # initialize both dataframes to NULL
+      dataObs <- dataSim <- NULL
+
       # dataframe for observed data
       if (!is.null(private$.dataSetsDF)) {
         # add column describing the type of data
-        dataObs <- dplyr::mutate(private$.dataSetsDF, dataType = "observed", .before = 1) %>%
+        dataObs <- dplyr::mutate(private$.dataSetsDF, dataType = "observed", .before = 1L) %>%
           dplyr::as_tibble()
       }
 
       # dataframe for simulated data
       if (!is.null(private$.simulationResultsDF)) {
         # add column describing the type of data
-        dataSim <- dplyr::mutate(private$.simulationResultsDF, dataType = "simulated", .before = 1) %>%
+        dataSim <- dplyr::mutate(private$.simulationResultsDF, dataType = "simulated", .before = 1L) %>%
           dplyr::as_tibble()
 
         # rename according to column naming conventions for DataSet
@@ -155,17 +162,14 @@ DataCombined <- R6::R6Class(
       }
 
       # if both not NULL, combine and return
-      if (!is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
+      # if either is NULL, return the non-NULL one
+      if (!is.null(dataObs) && !is.null(dataSim)) {
         return(dplyr::bind_rows(dataObs, dataSim))
+      } else {
+        return(dataObs %||% dataSim)
       }
 
-      # if either is NULL, return the non-NULL one
-      if (!is.null(private$.dataSetsDF) && is.null(private$.simulationResultsDF)) {
-        return(dataObs)
-      }
-      if (is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
-        return(dataSim)
-      }
+
     },
 
     ## print method -----------------

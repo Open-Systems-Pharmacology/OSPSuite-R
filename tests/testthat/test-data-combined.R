@@ -1,3 +1,14 @@
+test_that("dataCombined - initialization", {
+  skip_if_not_installed("R6")
+
+  # initialize empty object
+  myCombDat <- DataCombined$new()
+
+  expect_null(myCombDat$dataSets)
+  expect_null(myCombDat$simulationResults)
+  expect_null(myCombDat$groups)
+})
+
 test_that("dataCombined - both dataSet and SimulationResults provided", {
   skip_if_not_installed("R6")
 

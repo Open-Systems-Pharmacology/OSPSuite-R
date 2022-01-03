@@ -96,8 +96,11 @@ Add simulated data.
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
-together.}
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group. If \code{NULL} (default), all data sets are not
+assigned to any group. If provided, \code{groups} must have the same length as
+\code{dataSets}.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
@@ -136,8 +139,11 @@ Add observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 object(s).}
 
-\item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
-together.}
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group. If \code{NULL} (default), all data sets are not
+assigned to any group. If provided, \code{groups} must have the same length as
+\code{dataSets}.}
 }
 \if{html}{\out{</div>}}
 }
