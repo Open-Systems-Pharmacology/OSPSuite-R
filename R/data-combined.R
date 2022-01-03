@@ -135,24 +135,21 @@ DataCombined <- R6::R6Class(
     #' @return A dataframe.
 
     toDataFrame = function() {
-      # initialize both dataframes to NULL
-      dataObs <- dataSim <- NULL
-
       # dataframe for observed data
       if (!is.null(private$.dataSetsDF)) {
         # add column describing the type of data
-        dataObs <- dplyr::mutate(private$.dataSetsDF, dataType = "observed", .before = 1L) %>%
+        private$.dataSetsDF <- dplyr::mutate(private$.dataSetsDF, dataType = "observed", .before = 1L) %>%
           dplyr::as_tibble()
       }
 
       # dataframe for simulated data
       if (!is.null(private$.simulationResultsDF)) {
         # add column describing the type of data
-        dataSim <- dplyr::mutate(private$.simulationResultsDF, dataType = "simulated", .before = 1L) %>%
+        private$.simulationResultsDF <- dplyr::mutate(private$.simulationResultsDF, dataType = "simulated", .before = 1L) %>%
           dplyr::as_tibble()
 
         # rename according to column naming conventions for DataSet
-        dataSim <- dplyr::rename(dataSim,
+        private$.simulationResultsDF <- dplyr::rename(private$.simulationResultsDF,
           "xValues" = "Time",
           "xUnit" = "TimeUnit",
           "yValues" = "simulationValues",
@@ -163,10 +160,10 @@ DataCombined <- R6::R6Class(
 
       # if both not NULL, combine and return
       # if either is NULL, return the non-NULL one
-      if (!is.null(dataObs) && !is.null(dataSim)) {
-        return(dplyr::bind_rows(dataObs, dataSim))
+      if (!is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
+        return(dplyr::bind_rows(private$.dataSetsDF, private$.simulationResultsDF))
       } else {
-        return(dataObs %||% dataSim)
+        return(private$.dataSetsDF %||% private$.simulationResultsDF)
       }
 
 
