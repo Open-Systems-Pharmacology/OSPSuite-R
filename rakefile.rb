@@ -10,10 +10,11 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-task :prepare_for_build, [:build_version] do |t, args|
+task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
+  args.with_defaults(:pksim_branch => 'develop')
   update_package_version(args.build_version, description_file)
   copy_files_to_lib_folder
-  install_pksim('develop')
+  install_pksim(args.pksim_branch)
 end
 
 task :postclean do 
@@ -147,7 +148,7 @@ def copy_packages_files
   native_folder = '/bin/native/x64/Release/'
   copy_dependencies packages_dir, lib_dir do
     # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
-    copy_files '*/**/netstandard2.0', 'dll'
+    copy_files '*/**/lib/netstandard2.0', 'dll'
 
     # Copy all x64 release dll and so from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
