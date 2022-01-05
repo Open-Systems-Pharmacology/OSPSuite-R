@@ -136,6 +136,18 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_error(myCombDat3$addDataSets(list("x" = 1, "y" = 2)))
 
   expect_error(myCombDat3$addSimulationResults(list(simResults, simResults)))
+
+  # order should not matter ----------------------------
+
+  # you can use one add method, extract a dataframe, and then add another add method
+  # and then extract again; the dataframe method should then combine
+  myCombDat4 <- DataCombined$new()
+  myCombDat4$addSimulationResults(simResults)
+  df3 <- myCombDat4$toDataFrame()
+  myCombDat4$addDataSets(dataSet[[1]])
+  df4 <- myCombDat4$toDataFrame()
+  expect_equal(dim(df3), c(1255L, 9L))
+  expect_equal(dim(df4), c(1267L, 21L))
 })
 
 
@@ -258,13 +270,13 @@ test_that("DataCombined works with population", {
   df <- myDataComb$toDataFrame()
 
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1964L, 8L))
+  expect_equal(dim(df), c(1964L, 9L))
 
   expect_equal(
     names(df),
     c(
       "dataType", "IndividualId", "xValues", "paths", "yValues",
-      "yUnit", "yDimension", "xUnit"
+      "yUnit", "yDimension", "xUnit", "name"
     )
   )
 
