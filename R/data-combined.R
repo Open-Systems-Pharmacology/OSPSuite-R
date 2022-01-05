@@ -138,7 +138,13 @@ DataCombined <- R6::R6Class(
                                  yOffsets = 0,
                                  xScaleFactors = 1,
                                  yScaleFactors = 1) {
-
+      # styler: off
+      private$.names         <- names
+      private$.xOffsets      <- xOffsets
+      private$.yOffsets      <- yOffsets
+      private$.xScaleFactors <- xScaleFactors
+      private$.yScaleFactors <- yScaleFactors
+      # styler: on
     },
 
     ## getter methods ---------------
@@ -201,6 +207,91 @@ DataCombined <- R6::R6Class(
         private$.dataCombinedDF <- private$.dataSetsDF %||% private$.simulationResultsDF
       }
 
+      # data transformations
+      if (!is.null(private$.dataCombinedDF)) {
+        # select only the selected dataset names and paths
+        if (!is.null(private$.names)) {
+          private$.dataCombinedDF <- dplyr::filter(private$.dataCombinedDF, name %in% private$.names)
+
+          # if separate offsets and scale factors are provided for each name, then store
+          # the respective values for each name, otherwise all rows gets the same value
+
+          # offset for x-axis
+          if (length(private$.xOffsets) > 1L) {
+            if (length(private$.xOffsets) != length(private$.names)) {
+              stop("Length of `xOffsets` argument should either be 1 or the same as `names` argument.", call. = FALSE)
+            }
+
+            names(private$.xOffsets) <- private$.names
+            private$.dataCombinedDF <- private$.dataCombinedDF %>%
+              dplyr::group_by(name) %>%
+              dplyr::mutate(xOffsets = private$.xOffsets[match(name, private$.names)][[1]])
+          } else {
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xOffsets = private$.xOffsets[[1]])
+          }
+
+          # offset for y-axis
+          if (length(private$.yOffsets) > 1L) {
+            if (length(private$.yOffsets) != length(private$.names)) {
+              stop("Length of `yOffsets` argument should either be 1 or the same as `names` argument.", call. = FALSE)
+            }
+
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yOffsets = private$.yOffsets[match(name, private$.names)][[1]])
+          } else {
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yOffsets = private$.yOffsets[[1]])
+          }
+
+          # scale factor for x-axis
+          if (length(private$.xScaleFactors) > 1L) {
+            if (length(private$.xScaleFactors) != length(private$.names)) {
+              stop("Length of `xScaleFactors` argument should either be 1 or the same as `names` argument.", call. = FALSE)
+            }
+
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xScaleFactors = private$.xScaleFactors[match(name, private$.names)][[1]])
+          } else {
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xScaleFactors = private$.xScaleFactors[[1]])
+          }
+
+          if (length(private$.yScaleFactors) > 1L) {
+            if (length(private$.yScaleFactors) != length(private$.names)) {
+              stop("Length of `yScaleFactors` argument should either be 1 or the same as `names` argument.", call. = FALSE)
+            }
+
+            # scale factor for y-axis
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yScaleFactors = private$.yScaleFactors[match(name, private$.names)][[1]]) %>%
+              dplyr::ungroup()
+          } else {
+            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yScaleFactors = private$.yScaleFactors[[1]])
+          }
+        } else {
+          private$.dataCombinedDF <- dplyr::mutate(
+            private$.dataCombinedDF,
+            xOffsets = private$.xOffsets[[1]],
+            yOffsets = private$.yOffsets[[1]],
+            xScaleFactors = private$.xScaleFactors[[1]],
+            yScaleFactors = private$.yScaleFactors[[1]]
+          )
+        }
+
+        # apply transformations
+        private$.dataCombinedDF <- dplyr::mutate(
+          private$.dataCombinedDF,
+          xValues = (xValues + xOffsets) * xScaleFactors,
+          yValues = (yValues + yOffsets) * yScaleFactors
+        )
+
+        # applicable only if the error is available
+        if ("yErrorValues" %in% names(private$.dataCombinedDF)) {
+          private$.dataCombinedDF <- dplyr::mutate(
+            private$.dataCombinedDF, yErrorValues = yErrorValues * yScaleFactors
+          )
+        }
+
+        # these columns are no longer necessary
+        private$.dataCombinedDF <- dplyr::select(private$.dataCombinedDF, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
+      }
+
+      # final dataframe to return
       return(private$.dataCombinedDF)
     },
 
@@ -279,15 +370,20 @@ DataCombined <- R6::R6Class(
   # private fields and methods -----------------------------------
 
   private = list(
-    .dataSets = NULL,
-    .dataSetsDF = NULL,
-    .simulationResults = NULL,
+    .dataSets            = NULL,
+    .dataSetsDF          = NULL,
+    .simulationResults   = NULL,
     .simulationResultsDF = NULL,
-    .dataCombinedDF = NULL,
-    .groups = NULL,
-    .quantitiesOrPaths = NULL,
-    .population = NULL,
-    .individualIds = NULL
+    .dataCombinedDF      = NULL,
+    .groups              = NULL,
+    .quantitiesOrPaths   = NULL,
+    .population          = NULL,
+    .individualIds       = NULL,
+    .names               = NULL,
+    .xOffsets            = 0,
+    .yOffsets            = 0,
+    .xScaleFactors       = 1,
+    .yScaleFactors       = 1
   ),
 
   # other object properties --------------------------------------

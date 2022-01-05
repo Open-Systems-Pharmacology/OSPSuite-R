@@ -231,6 +231,95 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 })
 
 
+test_that("DataCombined with data transformations", {
+  skip_if_not_installed("R6")
+
+  # load the simulation
+  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+  )
+
+  # created object with datasets combined
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$addDataSets(dataSet)
+
+  names_ls <- list(
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+    "Stevens_2012_placebo.Sita_proximal",
+    "Stevens_2012_placebo.Placebo_distal"
+  )
+
+  # original dataframe
+  dfOriginal <- myCombDat$toDataFrame()
+  dfOriginal <- dplyr::filter(dfOriginal, name %in% names_ls)
+
+  myCombDat$setDataTransforms(
+    names = names_ls,
+    xOffsets = 2,
+    yOffsets = 4,
+    xScaleFactors = 1.5,
+    yScaleFactors = 2.5
+  )
+
+  dfTransformed <- myCombDat$toDataFrame()
+
+  expect_equal(dfTransformed$xValues, (dfOriginal$xValues + 2) * 1.5)
+  expect_equal(dfTransformed$yValues, (dfOriginal$yValues + 4) * 2.5)
+  expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
+
+  # created object with datasets combined
+  myCombDat2 <- DataCombined$new()
+  myCombDat2$addDataSets(dataSet)
+  myCombDat2$addSimulationResults(simResults)
+  myCombDat2$setDataTransforms(
+    names = list(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Stevens_2012_placebo.Sita_proximal"
+    ),
+    xOffsets = list(2, 3),
+    yOffsets = list(4, 7),
+    xScaleFactors = list(1.5, 2.4),
+    yScaleFactors = list(1.1, 2.2)
+  )
+
+  df <- myCombDat2$toDataFrame()
+  expect_equal(
+    head(df$xValues),
+    c(
+      9.52223539352417, 46.3355529785156, 80.7838302612305, 115.264205932617,
+      154.742211914062, 186.81474609375
+    )
+  )
+
+  expect_equal(
+    head(df$yValues),
+    c(
+      179.262065076828, 148.917247438431, 126.917242193222, 107.193100237846,
+      89.7448281288147, 75.3310338497162
+    )
+  )
+
+  expect_equal(
+    na.omit(df$yErrorValues),
+    structure(c(
+      10.6206896156073, 4.55172412097454, 6.82758618146181,
+      3.79310343414545, 6.06896549463272, 5.31034480780363, 5.31034480780363,
+      5.31034480780363, 6.06896549463272, 6.06896549463272, 4.55172412097454,
+      0, 0
+    ), na.action = structure(14:264, class = "omit"))
+  )
+})
+
 test_that("DataCombined works with population", {
   skip_if(.Platform$OS.type != "windows")
   # ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
