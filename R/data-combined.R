@@ -225,7 +225,8 @@ DataCombined <- R6::R6Class(
             names(private$.xOffsets) <- private$.names
             private$.dataCombinedDF <- private$.dataCombinedDF %>%
               dplyr::group_by(name) %>%
-              dplyr::mutate(xOffsets = private$.xOffsets[match(name, private$.names)][[1]])
+              dplyr::mutate(xOffsets = private$.xOffsets[match(name, private$.names)][[1]]) %>%
+              dplyr::ungroup()
           } else {
             private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xOffsets = private$.xOffsets[[1]])
           }
@@ -236,7 +237,10 @@ DataCombined <- R6::R6Class(
               stop("Length of `yOffsets` argument should either be 1 or the same as `names` argument.", call. = FALSE)
             }
 
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yOffsets = private$.yOffsets[match(name, private$.names)][[1]])
+            private$.dataCombinedDF <- private$.dataCombinedDF %>%
+              dplyr::group_by(name) %>%
+              dplyr::mutate(yOffsets = private$.yOffsets[match(name, private$.names)][[1]]) %>%
+              dplyr::ungroup()
           } else {
             private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yOffsets = private$.yOffsets[[1]])
           }
@@ -247,7 +251,10 @@ DataCombined <- R6::R6Class(
               stop("Length of `xScaleFactors` argument should either be 1 or the same as `names` argument.", call. = FALSE)
             }
 
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xScaleFactors = private$.xScaleFactors[match(name, private$.names)][[1]])
+            private$.dataCombinedDF <- private$.dataCombinedDF %>%
+              dplyr::group_by(name) %>%
+              dplyr::mutate(xScaleFactors = private$.xScaleFactors[match(name, private$.names)][[1]]) %>%
+              dplyr::ungroup()
           } else {
             private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xScaleFactors = private$.xScaleFactors[[1]])
           }
@@ -258,7 +265,9 @@ DataCombined <- R6::R6Class(
             }
 
             # scale factor for y-axis
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yScaleFactors = private$.yScaleFactors[match(name, private$.names)][[1]]) %>%
+            private$.dataCombinedDF <- private$.dataCombinedDF %>%
+              dplyr::group_by(name) %>%
+              dplyr::mutate(yScaleFactors = private$.yScaleFactors[match(name, private$.names)][[1]]) %>%
               dplyr::ungroup()
           } else {
             private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yScaleFactors = private$.yScaleFactors[[1]])
@@ -283,7 +292,8 @@ DataCombined <- R6::R6Class(
         # applicable only if the error is available
         if ("yErrorValues" %in% names(private$.dataCombinedDF)) {
           private$.dataCombinedDF <- dplyr::mutate(
-            private$.dataCombinedDF, yErrorValues = yErrorValues * yScaleFactors
+            private$.dataCombinedDF,
+            yErrorValues = yErrorValues * yScaleFactors
           )
         }
 
