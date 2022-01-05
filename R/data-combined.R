@@ -27,6 +27,13 @@
 #'   not assigned to any group. If `NULL` (default), all data sets are not
 #'   assigned to any group. If provided, `groups` must have the same length as
 #'   `dataSets`.
+#' @param names A list of names specifying which observed datasets or paths in
+#'   simulated dataset to transform.
+#' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a numeric scalar
+#'   or a list of numeric quantities specifying offsets and scale factors to
+#'   apply to raw values. The default offset is `0`, while default scale factor
+#'   is `1`, i.e., the data will not be modified. If a list is specified, it
+#'   should be the same length as `names` argument.
 #'
 #' @examples
 #'
@@ -87,18 +94,17 @@ DataCombined <- R6::R6Class(
         )
       }
 
-      # save the original object
+      # validate the object type
       ospsuite.utils::validateIsOfType(simulationResults, SimulationResults)
-      private$.simulationResults <- simulationResults
 
-      # extract a dataframe and store it internally
-      # all input validation will take place in this function itself
-      private$.simulationResultsDF <- simulationResultsToDataFrame(
-        simulationResults = simulationResults,
-        quantitiesOrPaths = quantitiesOrPaths,
-        population        = population,
-        individualIds     = individualIds
-      )
+      # save the original object as it is; useful for toDataFrame method
+      # styler: off
+      private$.simulationResults <- simulationResults
+      private$.groups            <- groups
+      private$.quantitiesOrPaths <- quantitiesOrPaths
+      private$.population        <- population
+      private$.individualIds     <- individualIds
+      # styler: on
     },
 
     #' @description
@@ -118,13 +124,21 @@ DataCombined <- R6::R6Class(
         ospsuite.utils::validateIsOfType(dataSets, DataSet)
       }
 
+      # save the original object as it is; useful for toDataFrame method
       private$.dataSets <- dataSets
+    },
 
-      if (is.list(dataSets)) {
-        private$.dataSetsDF <- purrr::map_dfr(dataSets, dataSetToDataFrame)
-      } else {
-        private$.dataSetsDF <- dataSetToDataFrame(dataSets)
-      }
+    #' @description
+    #' Transform raw data with required offsets and scale factors.
+    #' @return A dataframe with respective raw quantities plus offsets
+    #'   multiplied by the specified scale factors.
+
+    setDataTransforms = function(names = NULL,
+                                 xOffsets = 0,
+                                 yOffsets = 0,
+                                 xScaleFactors = 1,
+                                 yScaleFactors = 1) {
+
     },
 
     ## getter methods ---------------
@@ -136,37 +150,58 @@ DataCombined <- R6::R6Class(
 
     toDataFrame = function() {
       # dataframe for observed data
-      if (!is.null(private$.dataSetsDF)) {
+      if (!is.null(private$.dataSets)) {
+        # if a list of DataSet instances, merge iterated dataframes by rows
+        if (is.list(private$.dataSets)) {
+          private$.dataSetsDF <- purrr::map_dfr(private$.dataSets, dataSetToDataFrame)
+        } else {
+          private$.dataSetsDF <- dataSetToDataFrame(private$.dataSets)
+        }
+
         # add column describing the type of data
         private$.dataSetsDF <- dplyr::mutate(private$.dataSetsDF, dataType = "observed", .before = 1L) %>%
           dplyr::as_tibble()
       }
 
       # dataframe for simulated data
-      if (!is.null(private$.simulationResultsDF)) {
+      if (!is.null(private$.simulationResults)) {
+        # extract a dataframe and store it internally
+        # all input validation will take place in this function itself
+        private$.simulationResultsDF <- simulationResultsToDataFrame(
+          simulationResults = private$.simulationResults,
+          quantitiesOrPaths = private$.quantitiesOrPaths,
+          population        = private$.population,
+          individualIds     = private$.individualIds
+        )
+
         # add column describing the type of data
         private$.simulationResultsDF <- dplyr::mutate(private$.simulationResultsDF, dataType = "simulated", .before = 1L) %>%
           dplyr::as_tibble()
 
         # rename according to column naming conventions for DataSet
         private$.simulationResultsDF <- dplyr::rename(private$.simulationResultsDF,
-          "xValues" = "Time",
-          "xUnit" = "TimeUnit",
-          "yValues" = "simulationValues",
-          "yUnit" = "unit",
+          "xValues"    = "Time",
+          "xUnit"      = "TimeUnit",
+          "yValues"    = "simulationValues",
+          "yUnit"      = "unit",
           "yDimension" = "dimension"
         )
+
+        # if names are not specified, use paths as unique names
+        if (!"name" %in% names(private$.simulationResultsDF)) {
+          private$.simulationResultsDF <- dplyr::mutate(private$.simulationResultsDF, name = paths)
+        }
       }
 
-      # if both not NULL, combine and return
+      # if both not NULL, return the combined one
       # if either is NULL, return the non-NULL one
       if (!is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
-        return(dplyr::bind_rows(private$.dataSetsDF, private$.simulationResultsDF))
+        private$.dataCombinedDF <- dplyr::bind_rows(private$.dataSetsDF, private$.simulationResultsDF)
       } else {
-        return(private$.dataSetsDF %||% private$.simulationResultsDF)
+        private$.dataCombinedDF <- private$.dataSetsDF %||% private$.simulationResultsDF
       }
 
-
+      return(private$.dataCombinedDF)
     },
 
     ## print method -----------------
@@ -248,7 +283,11 @@ DataCombined <- R6::R6Class(
     .dataSetsDF = NULL,
     .simulationResults = NULL,
     .simulationResultsDF = NULL,
-    .groups = NULL
+    .dataCombinedDF = NULL,
+    .groups = NULL,
+    .quantitiesOrPaths = NULL,
+    .population = NULL,
+    .individualIds = NULL
   ),
 
   # other object properties --------------------------------------

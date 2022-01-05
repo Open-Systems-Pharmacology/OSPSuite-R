@@ -49,6 +49,7 @@ together.}
 \item \href{#method-new}{\code{DataCombined$new()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
+\item \href{#method-setDataTransforms}{\code{DataCombined$setDataTransforms()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
 \item \href{#method-clone}{\code{DataCombined$clone()}}
@@ -149,6 +150,34 @@ assigned to any group. If provided, \code{groups} must have the same length as
 }
 \subsection{Returns}{
 \code{DataCombined} object containing observed data.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setDataTransforms"></a>}}
+\if{latex}{\out{\hypertarget{method-setDataTransforms}{}}}
+\subsection{Method \code{setDataTransforms()}}{
+Transform raw data with required offsets and scale factors.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTransforms(
+  names = NULL,
+  xOffsets = 0,
+  yOffsets = 0,
+  xScaleFactors = 1,
+  yScaleFactors = 1
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{A list of names specifying which observed datasets or paths in
+simulated dataset to transform.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A dataframe with respective raw quantities plus offsets
+multiplied by the specified scale factors.
 }
 }
 \if{html}{\out{<hr>}}

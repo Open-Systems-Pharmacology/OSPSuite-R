@@ -72,14 +72,17 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   )
 
   expect_equal(
-    as.character(na.omit(unique(df$name))),
+    as.character(unique(df$name)),
     c(
       "Stevens_2012_placebo.Placebo_total",
       "Stevens_2012_placebo.Sita_total",
       "Stevens_2012_placebo.Placebo_proximal",
       "Stevens_2012_placebo.Sita_proximal",
       "Stevens_2012_placebo.Placebo_distal",
-      "Stevens_2012_placebo.Sita_dist"
+      "Stevens_2012_placebo.Sita_dist",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
     )
   )
 
@@ -107,7 +110,8 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_equal(
     as.character(na.omit(unique(df2$paths))),
     c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying", "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
@@ -115,8 +119,15 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   )
 
   expect_equal(
-    as.character(na.omit(unique(df2$name))),
-    "Stevens_2012_placebo.Placebo_total"
+    as.character(unique(df2$name)),
+    c(
+      "Stevens_2012_placebo.Placebo_total",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )
   )
 
   # with nonsense list inputs ----------------------------
@@ -185,13 +196,13 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 8L))
+  expect_equal(dim(df2), c(1255L, 9L))
 
   expect_equal(
     names(df2),
     c(
       "dataType", "IndividualId", "xValues", "paths", "yValues",
-      "yUnit", "yDimension", "xUnit"
+      "yUnit", "yDimension", "xUnit", "name"
     )
   )
 
