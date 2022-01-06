@@ -97,9 +97,9 @@ Add simulated data.
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group. If \code{NULL} (default), all data sets are not
+\item{\code{groups}}{A string or a vector of strings assigning the data set to a
+group. If an entry within the vector is \code{NULL}, the corresponding data set
+is not assigned to any group. If \code{NULL} (default), all data sets are not
 assigned to any group. If provided, \code{groups} must have the same length as
 \code{dataSets}.}
 
@@ -140,9 +140,9 @@ Add observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 object(s).}
 
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group. If \code{NULL} (default), all data sets are not
+\item{\code{groups}}{A string or a vector of strings assigning the data set to a
+group. If an entry within the vector is \code{NULL}, the corresponding data set
+is not assigned to any group. If \code{NULL} (default), all data sets are not
 assigned to any group. If provided, \code{groups} must have the same length as
 \code{dataSets}.}
 }
@@ -170,7 +170,7 @@ Transform raw data with required offsets and scale factors.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{names}}{A list of names specifying which observed datasets or paths in
+\item{\code{names}}{A vector of names specifying which observed datasets or paths in
 simulated dataset to transform.}
 }
 \if{html}{\out{</div>}}

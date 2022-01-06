@@ -22,17 +22,17 @@
 #'   resulting dataframe.
 #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
 #'   object(s).
-#' @param groups A string or a list of strings assigning the data set to a
-#'   group. If an entry within the list is `NULL`, the corresponding data set is
-#'   not assigned to any group. If `NULL` (default), all data sets are not
+#' @param groups A string or a vector of strings assigning the data set to a
+#'   group. If an entry within the vector is `NULL`, the corresponding data set
+#'   is not assigned to any group. If `NULL` (default), all data sets are not
 #'   assigned to any group. If provided, `groups` must have the same length as
 #'   `dataSets`.
-#' @param names A list of names specifying which observed datasets or paths in
+#' @param names A vector of names specifying which observed datasets or paths in
 #'   simulated dataset to transform.
 #' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a numeric scalar
-#'   or a list of numeric quantities specifying offsets and scale factors to
+#'   or a vector of numeric quantities specifying offsets and scale factors to
 #'   apply to raw values. The default offset is `0`, while default scale factor
-#'   is `1`, i.e., the data will not be modified. If a list is specified, it
+#'   is `1`, i.e., the data will not be modified. If a vector is specified, it
 #'   should be the same length as `names` argument.
 #'
 #' @examples
@@ -86,6 +86,9 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL) {
+      # fail fast if this is not correct
+      validateIsString(groups, nullAllowed = TRUE)
+
       # list of `SimulationResults` instances is not allowed
       if (is.list(simulationResults)) {
         stop(
@@ -95,9 +98,9 @@ DataCombined <- R6::R6Class(
       }
 
       # validate the object type
-      ospsuite.utils::validateIsOfType(simulationResults, SimulationResults)
+      validateIsOfType(simulationResults, SimulationResults)
 
-      # save the original object as it is; useful for toDataFrame method
+      # save the original object as it is; useful for `$toDataFrame()` method
       # styler: off
       private$.simulationResults <- simulationResults
       private$.groups            <- groups
@@ -112,6 +115,9 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object containing observed data.
 
     addDataSets = function(dataSets, groups = NULL) {
+      # fail fast if this is not correct
+      validateIsString(groups, nullAllowed = TRUE)
+
       # if a list is provided, keep only elements which are of `DataSet` type
       if (is.list(dataSets)) {
         dataSets <- purrr::keep(dataSets, ~ inherits(.x, "DataSet"))
@@ -121,10 +127,10 @@ DataCombined <- R6::R6Class(
           stop("No `DataSet` object detected.", call. = FALSE)
         }
       } else {
-        ospsuite.utils::validateIsOfType(dataSets, DataSet)
+        validateIsOfType(dataSets, DataSet)
       }
 
-      # save the original object as it is; useful for toDataFrame method
+      # save the original object as it is; useful for `$toDataFrame()` method
       private$.dataSets <- dataSets
     },
 
@@ -138,6 +144,13 @@ DataCombined <- R6::R6Class(
                                  yOffsets = 0,
                                  xScaleFactors = 1,
                                  yScaleFactors = 1) {
+      # check that the arguments to parameters make sense
+      validateIsString(names, nullAllowed = TRUE)
+      validateIsNumeric(xOffsets)
+      validateIsNumeric(yOffsets)
+      validateIsNumeric(xScaleFactors)
+      validateIsNumeric(yScaleFactors)
+
       # styler: off
       private$.names         <- names
       private$.xOffsets      <- xOffsets

@@ -230,6 +230,7 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   )
 })
 
+# data transformations ---------------------------------
 
 test_that("DataCombined with data transformations", {
   skip_if_not_installed("R6")
@@ -249,6 +250,11 @@ test_that("DataCombined with data transformations", {
 
   # created object with datasets combined
   myCombDat <- DataCombined$new()
+
+  # this should fail because of incorrect argument type
+  expect_error(myCombDat$addSimulationResults(simResults, groups = 2))
+  expect_error(myCombDat$addDataSets(dataSet, groups = c(2, 4)))
+
   myCombDat$addSimulationResults(simResults)
   myCombDat$addDataSets(dataSet)
 
@@ -281,15 +287,32 @@ test_that("DataCombined with data transformations", {
   myCombDat2 <- DataCombined$new()
   myCombDat2$addDataSets(dataSet)
   myCombDat2$addSimulationResults(simResults)
+
+  # should error with inappropriate arguments
+  expect_error(myCombDat2$setDataTransforms(
+    names = 2,
+    xOffsets = "2"
+  ))
+
+  expect_error(myCombDat2$setDataTransforms(
+    names = c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Stevens_2012_placebo.Sita_proximal"
+    ),
+    xOffsets = c("2", 3),
+    xScaleFactors = c("1.5", 2.4)
+  ))
+
   myCombDat2$setDataTransforms(
     names = list(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Stevens_2012_placebo.Sita_proximal"
     ),
+    # mix atomic vectors and lists to make sure that both work
     xOffsets = list(2, 3),
-    yOffsets = list(4, 7),
+    yOffsets = c(4, 7),
     xScaleFactors = list(1.5, 2.4),
-    yScaleFactors = list(1.1, 2.2)
+    yScaleFactors = c(1.1, 2.2)
   )
 
   df <- myCombDat2$toDataFrame()
