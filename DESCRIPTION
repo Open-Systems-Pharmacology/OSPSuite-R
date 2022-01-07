@@ -24,7 +24,8 @@ Imports:
     purrr,
     R6,
     readr,
-    stringr
+    stringr,
+    tidyr
 Suggests: 
     knitr,
     rmarkdown,

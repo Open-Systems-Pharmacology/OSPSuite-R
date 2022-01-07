@@ -40,6 +40,9 @@ calling \code{runSimulation} on a \code{Simulation} object.}
 
 \item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
 together.}
+
+\item{\code{groupMap}}{A dataframe specifying which data sets have been grouped
+together and the name of the dataset.}
 }
 \if{html}{\out{</div>}}
 }
