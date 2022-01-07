@@ -86,8 +86,8 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL) {
-      # fail fast if this is not correct
-      validateIsString(groups, nullAllowed = TRUE)
+      # fail fast; walk is needed because there is no output here
+      purrr::walk(.x = groups, .f = ~validateIsString(.x, nullAllowed = TRUE))
 
       # list of `SimulationResults` instances is not allowed
       if (is.list(simulationResults)) {
@@ -249,6 +249,34 @@ DataCombined <- R6::R6Class(
         private$.dataCombinedDF <- private$.dataSetsDF %||% private$.simulationResultsDF
       }
 
+      # data grouping ----------------
+
+      # compact will remove null lists
+      if (length(purrr::compact(private$.groups)) > 0L) {
+        # add a new group column
+        private$.dataCombinedDF <- private$.dataCombinedDF %>%
+          dplyr::group_by(name) %>%
+          tidyr::nest() %>%
+          dplyr::ungroup() %>%
+          dplyr::mutate(group = purrr::flatten_chr(private$.groups), .before = 1L) %>%
+          tidyr::unnest(cols = c(data))
+
+        # datasets with no mapping get their own name as a group
+        private$.dataCombinedDF <- private$.dataCombinedDF %>%
+          dplyr::mutate(
+            group = dplyr::case_when(
+              is.na(group) ~ name,
+              TRUE ~ group
+            )
+          )
+
+        # save mapping internally as a tibble
+        private$.groupMap <- private$.dataCombinedDF %>%
+          dplyr::select(group, name, dataType) %>%
+          dplyr::distinct() %>%
+          dplyr::arrange(group)
+      }
+
       # data transformations ----------------
 
       if (!is.null(private$.dataCombinedDF)) {
@@ -342,32 +370,6 @@ DataCombined <- R6::R6Class(
 
         # these columns are no longer necessary
         private$.dataCombinedDF <- dplyr::select(private$.dataCombinedDF, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
-      }
-
-      # data grouping ----------------
-
-      if (!is.null(private$.groups)) {
-        # add a new group column
-        private$.dataCombinedDF <- private$.dataCombinedDF %>%
-          dplyr::nest_by(name) %>%
-          dplyr::ungroup() %>%
-          dplyr::mutate(group = purrr::flatten_chr(private$.groups), .before = 1L) %>%
-          tidyr::unnest(cols = c(data))
-
-        # datasets with no mapping get their own name as a group
-        private$.dataCombinedDF <- private$.dataCombinedDF %>%
-          dplyr::mutate(
-            group = dplyr::case_when(
-              is.na(group) ~ name,
-              TRUE ~ group
-            )
-          )
-
-        # save mapping internally as a tibble
-        private$.groupMap <- private$.dataCombinedDF %>%
-          dplyr::select(group, name, dataType) %>%
-          dplyr::distinct() %>%
-          dplyr::arrange(group)
       }
 
       # final dataframe to return
@@ -479,7 +481,7 @@ DataCombined <- R6::R6Class(
     .simulationResults   = NULL,
     .simulationResultsDF = NULL,
     .dataCombinedDF      = NULL,
-    .groups              = NULL,
+    .groups              = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
     .groupMap            = NULL,
     .quantitiesOrPaths   = NULL,
     .population          = NULL,

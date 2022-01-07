@@ -6,7 +6,7 @@ test_that("dataCombined - initialization", {
 
   expect_null(myCombDat$dataSets)
   expect_null(myCombDat$simulationResults)
-  expect_null(myCombDat$groups)
+  expect_equal(length(purrr::compact(myCombDat$groups)), 0L)
 })
 
 test_that("dataCombined - both dataSet and SimulationResults provided", {
@@ -29,7 +29,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
 
   # with list input ----------------------------
 
-  # created object with datasets combined
+  # create object with datasets combined
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -94,7 +94,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
 
   # with DataSet input ----------------------------
 
-  # created object with datasets combined
+  # create object with datasets combined
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
   myCombDat2$addDataSets(dataSet[[1]])
@@ -248,7 +248,7 @@ test_that("DataCombined with data transformations", {
     importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
   )
 
-  # created object with datasets combined
+  # create object with datasets combined
   myCombDat <- DataCombined$new()
 
   # this should fail because of incorrect argument type
@@ -283,7 +283,7 @@ test_that("DataCombined with data transformations", {
   expect_equal(dfTransformed$yValues, (dfOriginal$yValues + 4) * 2.5)
   expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
 
-  # created object with datasets combined
+  # create object with datasets combined
   myCombDat2 <- DataCombined$new()
   myCombDat2$addDataSets(dataSet)
   myCombDat2$addSimulationResults(simResults)
@@ -342,6 +342,121 @@ test_that("DataCombined with data transformations", {
     ), na.action = structure(14:264, class = "omit"))
   )
 })
+
+# data grouping works ---------------------------------
+
+test_that("DataCombined works with data grouping", {
+  skip_if_not_installed("R6")
+
+  # load the simulation
+  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+  )
+
+  # create object with datasets combined
+  myCombDat <- DataCombined$new()
+
+  # expect error when grouping length is inaccurate
+  expect_error(myCombDat$addSimulationResults(simResults, groups = list(2, 4)))
+  expect_error(myCombDat$addDataSets(dataSet, groups = list(1)))
+
+  # proper grouping
+  myCombDat$addSimulationResults(
+    simResults,
+    groups = list(NULL, NULL, "distal", "proximal", "total")
+  )
+  myCombDat$addDataSets(dataSet,
+    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
+  )
+
+  # order should not matter
+  myCombDat2 <- DataCombined$new()
+  myCombDat2$addDataSets(dataSet,
+    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
+  )
+  myCombDat2$addSimulationResults(
+    simResults,
+    groups = list(NULL, NULL, "distal", "proximal", "total")
+  )
+
+  # check dataframe
+  df <- myCombDat$toDataFrame()
+  expect_s3_class(df, "data.frame")
+  expect_equal(dim(df), c(1332L, 22L))
+  expect_equal(
+    names(df),
+    c(
+      "group", "name", "dataType", "xValues", "yValues", "yErrorValues",
+      "xDimension", "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit",
+      "molWeight", "lloq", "Source", "Sheet", "Organ", "Compartment",
+      "Molecule", "Group Id", "IndividualId", "paths"
+    )
+  )
+
+  df2 <- myCombDat2$toDataFrame()
+  expect_s3_class(df2, "data.frame")
+  expect_equal(dim(df2), c(1332L, 22L))
+  expect_equal(
+    names(df2),
+    c(
+      "group", "name", "dataType", "xValues", "yValues", "yErrorValues",
+      "xDimension", "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit",
+      "molWeight", "lloq", "Source", "Sheet", "Organ", "Compartment",
+      "Molecule", "Group Id", "IndividualId", "paths"
+    )
+  )
+
+  # check mapping
+  dfMap <- myCombDat$groupMap
+  dfMap2 <- myCombDat2$groupMap
+
+  expect_equal(
+    dfMap$group,
+    c(
+      "distal",
+      "distal",
+      "distal",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "proximal",
+      "proximal",
+      "proximal",
+      "total",
+      "total",
+      "total"
+    )
+  )
+
+  expect_equal(
+    dfMap$name,
+    c(
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )
+  )
+
+  expect_equal(dfMap$group, dfMap2$group)
+  expect_equal(dfMap$name, dfMap2$name)
+})
+
+# population objects work ---------------------------------
 
 test_that("DataCombined works with population", {
   skip_if(.Platform$OS.type != "windows")
