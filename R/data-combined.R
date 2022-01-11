@@ -156,6 +156,8 @@ DataCombined <- R6::R6Class(
       if (length(purrr::compact(private$.groups)) > 0L) {
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
+
+      invisible(self)
     },
 
     #' @description
@@ -204,6 +206,8 @@ DataCombined <- R6::R6Class(
       if (length(purrr::compact(private$.groups)) > 0L) {
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
+
+      invisible(self)
     },
 
     #' @description
@@ -235,6 +239,8 @@ DataCombined <- R6::R6Class(
       if (!is.null(private$.dataCombinedDF)) {
         private$.dataCombinedDF <- private$.dataTransform(private$.dataCombinedDF)
       }
+
+      invisible(self)
     },
 
     ## getter methods ---------------

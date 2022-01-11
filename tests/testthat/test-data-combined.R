@@ -161,6 +161,12 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_equal(dim(df3), c(1255L, 10L))
   expect_equal(dim(df4), c(1267L, 22L))
 
+  # method chaining works ----------------------------
+
+  myCombDat5 <- DataCombined$new()
+  df5 <- myCombDat5$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$toDataFrame()
+  expect_equal(dim(df4), dim(df5))
+
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
 })
