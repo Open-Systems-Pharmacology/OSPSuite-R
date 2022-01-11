@@ -40,6 +40,27 @@
 #'   is `1`, i.e., the data will not be modified. If a list is specified, it
 #'   should be the same length as `names` argument.
 #'
+#' @import tidyr
+#' @importFrom rlang ":=" "%||%"
+#' @importFrom ospsuite.utils Printable
+#' @importFrom ospsuite.utils enum enumGetValue enumHasKey enumKeys enumPut enumRemove enumValues
+#' @importFrom ospsuite.utils formatNumerics
+#' @importFrom ospsuite.utils getEnumKey
+#' @importFrom ospsuite.utils hasUniqueValues
+#' @importFrom ospsuite.utils ifNotNull
+#' @importFrom ospsuite.utils isFileExtension isIncluded isOfLength isOfType isSameLength
+#' @importFrom ospsuite.utils toList
+#' @importFrom ospsuite.utils validateEnumValue
+#' @importFrom ospsuite.utils validateIsIncluded
+#' @importFrom ospsuite.utils validateIsInteger
+#' @importFrom ospsuite.utils validateIsLogical
+#' @importFrom ospsuite.utils validateIsNumeric
+#' @importFrom ospsuite.utils validateIsOfLength
+#' @importFrom ospsuite.utils validateIsOfType
+#' @importFrom ospsuite.utils validateIsSameLength
+#' @importFrom ospsuite.utils validateIsString
+#' @importFrom ospsuite.utils validatePathIsAbsolute
+#'
 #' @examples
 #'
 #' # load the simulation
@@ -423,63 +444,20 @@ DataCombined <- R6::R6Class(
         dplyr::distinct() %>%
         dplyr::arrange(group, name)
     },
+
+    # transform the dataset using specified offsets and scale factors
     .dataTransform = function(data) {
       # select only the selected dataset names and paths
+      # if a list of names is provided then the list of other arguments must be
+      # checked to be of the same length as this list
       if (!is.null(private$.names)) {
         data <- dplyr::filter(data, name %in% private$.names)
 
-        # if separate offsets and scale factors are provided for each name, then store
-        # the respective values for each name, otherwise all rows gets the same value
-
-        # offset for x-axis
-        if (length(private$.xOffsets) > 1L) {
-          validateIsSameLength(private$.xOffsets, private$.names)
-
-          names(private$.xOffsets) <- private$.names
-          data <- data %>%
-            dplyr::group_by(name) %>%
-            dplyr::mutate(xOffsets = private$.xOffsets[match(name, private$.names)][[1]]) %>%
-            dplyr::ungroup()
-        } else {
-          data <- dplyr::mutate(data, xOffsets = private$.xOffsets[[1]])
-        }
-
-        # offset for y-axis
-        if (length(private$.yOffsets) > 1L) {
-          validateIsSameLength(private$.yOffsets, private$.names)
-
-          data <- data %>%
-            dplyr::group_by(name) %>%
-            dplyr::mutate(yOffsets = private$.yOffsets[match(name, private$.names)][[1]]) %>%
-            dplyr::ungroup()
-        } else {
-          data <- dplyr::mutate(data, yOffsets = private$.yOffsets[[1]])
-        }
-
-        # scale factor for x-axis
-        if (length(private$.xScaleFactors) > 1L) {
-          validateIsSameLength(private$.xScaleFactors, private$.names)
-
-          data <- data %>%
-            dplyr::group_by(name) %>%
-            dplyr::mutate(xScaleFactors = private$.xScaleFactors[match(name, private$.names)][[1]]) %>%
-            dplyr::ungroup()
-        } else {
-          data <- dplyr::mutate(data, xScaleFactors = private$.xScaleFactors[[1]])
-        }
-
-        if (length(private$.yScaleFactors) > 1L) {
-          validateIsSameLength(private$.yScaleFactors, private$.names)
-
-
-          # scale factor for y-axis
-          data <- data %>%
-            dplyr::group_by(name) %>%
-            dplyr::mutate(yScaleFactors = private$.yScaleFactors[match(name, private$.names)][[1]]) %>%
-            dplyr::ungroup()
-        } else {
-          data <- dplyr::mutate(data, yScaleFactors = private$.yScaleFactors[[1]])
-        }
+        # offset and scale factor for x- and y-axes
+        data <- private$.colTransform(data, private$.xOffsets, xOffsets)
+        data <- private$.colTransform(data, private$.xScaleFactors, xScaleFactors)
+        data <- private$.colTransform(data, private$.yOffsets, yOffsets)
+        data <- private$.colTransform(data, private$.yScaleFactors, yScaleFactors)
       } else {
         data <- dplyr::mutate(
           data,
@@ -511,6 +489,22 @@ DataCombined <- R6::R6Class(
       # values or these transformations have already been carried out by the
       # method using these values
       data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
+
+      return(data)
+    },
+
+    # to transform a single column
+    .colTransform = function(data, arg, colName) {
+      if (length(arg) > 1L) {
+        validateIsSameLength(arg, private$.names)
+
+        data <- data %>%
+          dplyr::group_by(name) %>%
+          dplyr::mutate({{ colName }} := arg[match(name, private$.names)][[1]]) %>%
+          dplyr::ungroup()
+      } else {
+        data <- dplyr::mutate(data, {{ colName }} := arg[[1]])
+      }
 
       return(data)
     },

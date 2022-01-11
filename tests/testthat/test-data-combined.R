@@ -335,12 +335,42 @@ test_that("DataCombined with data transformations", {
     ),
     # mix atomic vectors and lists to make sure that both work
     xOffsets = list(2, 3),
-    yOffsets = c(4, 7),
     xScaleFactors = list(1.5, 2.4),
+    yOffsets = c(4, 7),
     yScaleFactors = c(1.1, 2.2)
   )
 
   df <- myCombDat2$toDataFrame()
+
+  # first level
+  expect_equal(
+    dplyr::filter(df, name == "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention")$xValues,
+    (dplyr::filter(dfOriginal, name == "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention")$xValues + 2) * 1.5
+  )
+  expect_equal(
+    dplyr::filter(df, name == "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention")$yValues,
+    (dplyr::filter(dfOriginal, name == "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention")$yValues + 4) * 1.1
+  )
+  expect_equal(
+    dplyr::filter(df, name == "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention")$yErrorValues,
+    dplyr::filter(dfOriginal, name == "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention")$yErrorValues * 1.1
+  )
+
+
+  # second level
+  expect_equal(
+    dplyr::filter(df, name == "Stevens_2012_placebo.Sita_proximal")$xValues,
+    (dplyr::filter(dfOriginal, name == "Stevens_2012_placebo.Sita_proximal")$xValues + 3) * 2.4
+  )
+  expect_equal(
+    dplyr::filter(df, name == "Stevens_2012_placebo.Sita_proximal")$yValues,
+    (dplyr::filter(dfOriginal, name == "Stevens_2012_placebo.Sita_proximal")$yValues + 7) * 2.2
+  )
+  expect_equal(
+    dplyr::filter(df, name == "Stevens_2012_placebo.Sita_proximal")$yErrorValues,
+    dplyr::filter(dfOriginal, name == "Stevens_2012_placebo.Sita_proximal")$yErrorValues * 2.2
+  )
+
   expect_equal(
     head(df$xValues),
     c(

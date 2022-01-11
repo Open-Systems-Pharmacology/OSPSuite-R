@@ -24,6 +24,7 @@ Imports:
     purrr,
     R6,
     readr,
+    rlang,
     stringr,
     tidyr
 Suggests: 
