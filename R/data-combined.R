@@ -25,6 +25,8 @@
 #' @param population population used to calculate the `simulationResults`
 #'   (optional). This is used only to add the population covariates to the
 #'   resulting dataframe.
+#' @param namesSimulationResults A list of strings assigning new names to the
+#'   quantities or paths present in the entered `SimulationResults` object.
 #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
 #'   object(s).
 #' @param groups A string or a list of strings assigning the data set to a
@@ -32,8 +34,9 @@
 #'   not assigned to any group. If `NULL` (default), data sets are not assigned
 #'   to any group, instead their name is used as a grouping column. If provided,
 #'   `groups` must have the same length as `dataSets`.
-#' @param names A list of names specifying which observed datasets or paths in
-#'   simulated dataset to transform.
+#' @param names A list of names specifying which observed datasets and/or paths
+#'   in simulated dataset to transform. Default is `NULL`, i.e., the
+#'   transformations will be applied to all rows of the dataframe.
 #' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a numeric scalar
 #'   or a list of numeric quantities specifying offsets and scale factors to
 #'   apply to raw values. The default offset is `0`, while default scale factor
@@ -109,7 +112,7 @@ DataCombined <- R6::R6Class(
 
     addSimulationResults = function(simulationResults,
                                     groups = NULL,
-                                    names = NULL, # TODO:
+                                    namesSimulationResults = NULL,
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL) {
@@ -127,28 +130,26 @@ DataCombined <- R6::R6Class(
       # validate the object type
       validateIsOfType(simulationResults, SimulationResults)
 
-      # they should be of same length
-      if (!is.null(groups)) {
-        validateIsSameLength(simulationResults$allQuantityPaths, groups)
-
-        # if a list is specified, convert NULL to NA
-        # and then flatten list to a vector
-        if (is.list(groups)) {
-          groups <- purrr::flatten_chr(purrr::modify(groups, .null_to_na))
-        }
-      }
+      # make sure that length of groups and names are as expected
+      groups <- .validateListArgs(groups, simulationResults$allQuantityPaths)
+      namesSimulationResults <- .validateListArgs(namesSimulationResults, quantitiesOrPaths %||% simulationResults$allQuantityPaths)
 
       # save the original object as it is; useful for `$toDataFrame()` method
       # styler: off
       private$.simulationResults              <- simulationResults
       private$.groups$groupsSimulationResults <- groups
+      private$.namesSimulationResults         <- namesSimulationResults
       private$.quantitiesOrPaths              <- quantitiesOrPaths
       private$.population                     <- population
       private$.individualIds                  <- individualIds
       # styler: on
 
       # extract a dataframe and store it internally
-      private$.simulationResultsDF <- private$.simResults2DF(private$.simulationResults, groups)
+      private$.simulationResultsDF <- private$.simResults2DF(
+        private$.simulationResults,
+        groups,
+        private$.namesSimulationResults
+      )
 
       # add it to combined dataframe
       private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.simulationResultsDF)
@@ -351,7 +352,7 @@ DataCombined <- R6::R6Class(
     }
   ),
 
-  # private fields and methods -----------------------------------
+  # private methods and fields -----------------------------------
 
   private = list(
     # methods --------------------
@@ -367,7 +368,7 @@ DataCombined <- R6::R6Class(
 
       # add column describing the type of data
       data <- data %>%
-        dplyr::mutate(dataType = "observed", .before = 1L) %>%
+        dplyr::mutate(dataType = "observed") %>%
         dplyr::as_tibble()
 
       data <- private$.addGroupCol(data, groups)
@@ -377,7 +378,7 @@ DataCombined <- R6::R6Class(
     },
 
     # extract dataframe from SimulationResults objects
-    .simResults2DF = function(object, groups = NULL) {
+    .simResults2DF = function(object, groups = NULL, namesSimulationResults = NULL) {
       # all input validation will take place in this function itself
       data <- simulationResultsToDataFrame(
         simulationResults = object,
@@ -387,7 +388,7 @@ DataCombined <- R6::R6Class(
       )
 
       # add column describing the type of data
-      data <- dplyr::mutate(data, dataType = "simulated", .before = 1L) %>%
+      data <- dplyr::mutate(data, dataType = "simulated") %>%
         dplyr::as_tibble()
 
       # rename according to column naming conventions for DataSet
@@ -399,11 +400,28 @@ DataCombined <- R6::R6Class(
         "yDimension" = "dimension"
       )
 
+      # if alternative names are provided, use them
+      if (!is.null(namesSimulationResults)) {
+        data <- data %>%
+          dplyr::group_by(paths) %>%
+          tidyr::nest() %>%
+          dplyr::ungroup() %>%
+          dplyr::mutate(name = namesSimulationResults) %>%
+          tidyr::unnest(cols = c(data)) %>%
+          dplyr::mutate(
+            group = dplyr::case_when(
+              is.na(name) ~ paths,
+              TRUE ~ name
+            )
+          )
+      }
+
       # if names are not specified, use paths as unique names
       if (!"name" %in% names(data)) {
         data <- dplyr::mutate(data, name = paths)
       }
 
+      # add group column
       data <- private$.addGroupCol(data, groups)
 
       return(data)
@@ -418,7 +436,7 @@ DataCombined <- R6::R6Class(
           dplyr::group_by(name) %>%
           tidyr::nest() %>%
           dplyr::ungroup() %>%
-          dplyr::mutate(group = groups, .before = 1L) %>%
+          dplyr::mutate(group = groups) %>%
           tidyr::unnest(cols = c(data)) %>%
           dplyr::mutate(
             group = dplyr::case_when(
@@ -427,7 +445,7 @@ DataCombined <- R6::R6Class(
             )
           )
       } else {
-        data <- data %>% dplyr::mutate(group = name, .before = 1L)
+        data <- data %>% dplyr::mutate(group = name)
       }
 
       return(data)
@@ -516,23 +534,25 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    # fields
+    # fields --------------------
+
     # styler: off
-    .dataSets            = NULL,
-    .dataSetsDF          = NULL,
-    .simulationResults   = NULL,
-    .simulationResultsDF = NULL,
-    .dataCombinedDF      = NULL,
-    .groups              = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
-    .groupMap            = NULL,
-    .quantitiesOrPaths   = NULL,
-    .population          = NULL,
-    .individualIds       = NULL,
-    .names               = NULL,
-    .xOffsets            = 0,
-    .yOffsets            = 0,
-    .xScaleFactors       = 1,
-    .yScaleFactors       = 1
+    .dataSets               = NULL,
+    .dataSetsDF             = NULL,
+    .simulationResults      = NULL,
+    .simulationResultsDF    = NULL,
+    .namesSimulationResults = NULL,
+    .dataCombinedDF         = NULL,
+    .groups                 = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
+    .groupMap               = NULL,
+    .quantitiesOrPaths      = NULL,
+    .population             = NULL,
+    .individualIds          = NULL,
+    .names                  = NULL,
+    .xOffsets               = 0,
+    .yOffsets               = 0,
+    .xScaleFactors          = 1,
+    .yScaleFactors          = 1
     # styler: on
   ),
 
@@ -562,4 +582,18 @@ DataCombined <- R6::R6Class(
   } else {
     x
   }
+}
+
+.validateListArgs <- function(arg = NULL, expectedLength) {
+  if (!is.null(arg)) {
+    validateIsSameLength(expectedLength, arg)
+
+    # if a list is specified, convert NULL to NA
+    # and then flatten list to a vector
+    if (is.list(arg)) {
+      arg <- purrr::flatten_chr(purrr::modify(arg, .null_to_na))
+    }
+  }
+
+  return(arg)
 }

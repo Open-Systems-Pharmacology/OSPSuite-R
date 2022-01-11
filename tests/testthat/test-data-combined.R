@@ -42,7 +42,8 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
-    )
+    ),
+    namesSimulationResults = list("x", "y", "z")
   )
   myCombDat$addDataSets(dataSet)
 
@@ -81,9 +82,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_equal(
     as.character(unique(df$name)),
     c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "x", "y", "z",
       "Stevens_2012_placebo.Placebo_total",
       "Stevens_2012_placebo.Sita_total",
       "Stevens_2012_placebo.Placebo_proximal",

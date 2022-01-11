@@ -92,7 +92,7 @@ Add simulated data.
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
   simulationResults,
   groups = NULL,
-  names = NULL,
+  namesSimulationResults = NULL,
   quantitiesOrPaths = NULL,
   population = NULL,
   individualIds = NULL
@@ -111,8 +111,8 @@ not assigned to any group. If \code{NULL} (default), data sets are not assigned
 to any group, instead their name is used as a grouping column. If provided,
 \code{groups} must have the same length as \code{dataSets}.}
 
-\item{\code{names}}{A list of names specifying which observed datasets or paths in
-simulated dataset to transform.}
+\item{\code{namesSimulationResults}}{A list of strings assigning new names to the
+quantities or paths present in the entered \code{SimulationResults} object.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
@@ -181,8 +181,9 @@ Transform raw data with required offsets and scale factors.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{names}}{A list of names specifying which observed datasets or paths in
-simulated dataset to transform.}
+\item{\code{names}}{A list of names specifying which observed datasets and/or paths
+in simulated dataset to transform. Default is \code{NULL}, i.e., the
+transformations will be applied to all rows of the dataframe.}
 }
 \if{html}{\out{</div>}}
 }
