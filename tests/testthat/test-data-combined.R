@@ -269,6 +269,15 @@ test_that("DataCombined with data transformations", {
   dfOriginal <- myCombDat$toDataFrame()
   dfOriginal <- dplyr::filter(dfOriginal, name %in% names_ls)
 
+  # expect error since the lengths of argument are not the same
+  # TODO: make sure that this errors
+  # expect_error(
+  #   myCombDat$setDataTransforms(
+  #     names = names_ls,
+  #     xOffsets = list(2, 4, 5, 5, 6)
+  #   )
+  # )
+
   myCombDat$setDataTransforms(
     names = names_ls,
     xOffsets = 2,

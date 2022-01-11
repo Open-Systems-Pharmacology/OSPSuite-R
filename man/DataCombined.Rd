@@ -88,6 +88,7 @@ Add simulated data.
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
   simulationResults,
   groups = NULL,
+  names = NULL,
   quantitiesOrPaths = NULL,
   population = NULL,
   individualIds = NULL
@@ -100,15 +101,18 @@ Add simulated data.
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{groups}}{A string or a vector of strings assigning the data set to a
-group. If an entry within the vector is \code{NULL}, the corresponding data set
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set
 is not assigned to any group. If \code{NULL} (default), all data sets are not
 assigned to any group. If provided, \code{groups} must have the same length as
 \code{dataSets}.}
 
-\item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
+\item{\code{names}}{A list of names specifying which observed datasets or paths in
+simulated dataset to transform.}
+
+\item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
-vector of strings) for which the results are to be returned. (optional)
+list of strings) for which the results are to be returned. (optional)
 When providing the paths, only absolute full paths are supported (i.e., no
 matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
 value), returns the results for all output defined in the results.}
@@ -143,8 +147,8 @@ Add observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 object(s).}
 
-\item{\code{groups}}{A string or a vector of strings assigning the data set to a
-group. If an entry within the vector is \code{NULL}, the corresponding data set
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set
 is not assigned to any group. If \code{NULL} (default), all data sets are not
 assigned to any group. If provided, \code{groups} must have the same length as
 \code{dataSets}.}
@@ -173,7 +177,7 @@ Transform raw data with required offsets and scale factors.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{names}}{A vector of names specifying which observed datasets or paths in
+\item{\code{names}}{A list of names specifying which observed datasets or paths in
 simulated dataset to transform.}
 }
 \if{html}{\out{</div>}}
