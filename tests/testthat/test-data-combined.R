@@ -502,6 +502,139 @@ test_that("DataCombined works with data grouping", {
   expect_equal(dim(df2), c(1332L, 22L))
 })
 
+
+# sequential update ---------------------------------
+
+test_that("DataCombined works with sequential update", {
+  skip_if_not_installed("R6")
+
+  # load the simulation
+  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+  )
+
+  # create object with datasets combined
+  myCombDat <- DataCombined$new()
+
+  # add grouping
+  myCombDat$addSimulationResults(
+    simResults,
+    groups = list(NULL, NULL, "distal", "proximal", "total")
+  )
+  myCombDat$addDataSets(
+    dataSet,
+    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
+  )
+
+  # first dataframe
+  df1 <- myCombDat$toDataFrame()
+
+  # now add same object but with different groupings just to check the behavior
+  myCombDat$addSimulationResults(
+    simResults,
+    groups = list("Dapagliflozin - emptying", "Dapagliflozin - retention", NULL, NULL, NULL)
+  )
+  myCombDat$addDataSets(
+    dataSet,
+    groups = list(NULL, NULL, NULL, NULL, "distal", "distal")
+  )
+
+  # second dataframe
+  df2 <- myCombDat$toDataFrame()
+
+  # should be twice the number of rows and same no. of columns
+  expect_equal(nrow(df2), 2 * nrow(df1))
+  expect_equal(length(df2), length(df1))
+  expect_equal(unique(df1$group), unique(df2$group)[1:length(unique(df1$group))])
+
+  expect_equal(
+    myCombDat$groupMap,
+    structure(
+      list(
+        group = c(
+          "Dapagliflozin - emptying",
+          "Dapagliflozin - retention",
+          "distal",
+          "distal",
+          "distal",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "proximal",
+          "proximal",
+          "proximal",
+          "Stevens_2012_placebo.Placebo_proximal",
+          "Stevens_2012_placebo.Placebo_total",
+          "Stevens_2012_placebo.Sita_proximal",
+          "Stevens_2012_placebo.Sita_total",
+          "total",
+          "total",
+          "total"
+        ),
+        name = c(
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Stevens_2012_placebo.Placebo_distal",
+          "Stevens_2012_placebo.Sita_dist",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "Stevens_2012_placebo.Placebo_proximal",
+          "Stevens_2012_placebo.Sita_proximal",
+          "Stevens_2012_placebo.Placebo_proximal",
+          "Stevens_2012_placebo.Placebo_total",
+          "Stevens_2012_placebo.Sita_proximal",
+          "Stevens_2012_placebo.Sita_total",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention",
+          "Stevens_2012_placebo.Placebo_total",
+          "Stevens_2012_placebo.Sita_total"
+        ),
+        dataType = c(
+          "simulated",
+          "simulated",
+          "simulated",
+          "observed",
+          "observed",
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "simulated",
+          "observed",
+          "observed"
+        )
+      ),
+      row.names = c(
+        NA,
+        -20L
+      ),
+      class = c("tbl_df", "tbl", "data.frame")
+    )
+  )
+})
+
 # population objects work ---------------------------------
 
 test_that("DataCombined works with population", {
