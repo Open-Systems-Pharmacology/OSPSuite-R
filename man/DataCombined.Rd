@@ -6,7 +6,14 @@
 \title{Object combining simulated and observed data}
 \description{
 A class for storage of simulated and/or observed data, which can be further
-used to extract as a dataframe or for visualization methods.
+used to extract as a dataframe for visualization methods. Additionally, it
+allows:
+\itemize{
+\item Grouping different (simulated and/or observed) datasets with unique
+grouping labels. If no grouping is specified, name of the dataset is used as
+a grouping column.
+\item Transforming data (with given offsets and scale factors).
+}
 }
 \examples{
 
@@ -38,11 +45,8 @@ object(s).}
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{groups}}{A named \code{list} specifying which data sets should be grouped
-together.}
-
 \item{\code{groupMap}}{A dataframe specifying which data sets have been grouped
-together and the name of the dataset.}
+together and the name and the nature of the dataset.}
 }
 \if{html}{\out{</div>}}
 }
@@ -102,10 +106,10 @@ Add simulated data.
 calling \code{runSimulation} on a \code{Simulation} object.}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set
-is not assigned to any group. If \code{NULL} (default), all data sets are not
-assigned to any group. If provided, \code{groups} must have the same length as
-\code{dataSets}.}
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group. If \code{NULL} (default), data sets are not assigned
+to any group, instead their name is used as a grouping column. If provided,
+\code{groups} must have the same length as \code{dataSets}.}
 
 \item{\code{names}}{A list of names specifying which observed datasets or paths in
 simulated dataset to transform.}
@@ -148,10 +152,10 @@ Add observed data.
 object(s).}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set
-is not assigned to any group. If \code{NULL} (default), all data sets are not
-assigned to any group. If provided, \code{groups} must have the same length as
-\code{dataSets}.}
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group. If \code{NULL} (default), data sets are not assigned
+to any group, instead their name is used as a grouping column. If provided,
+\code{groups} must have the same length as \code{dataSets}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -193,6 +197,10 @@ multiplied by the specified scale factors.
 \subsection{Method \code{toDataFrame()}}{
 A dataframe of simulated and/or observed data (depending on instances of
 which objects have been added to the object).
+
+Note that the order in which you enter different object matters. If you
+first enter observed data and simulated data later, the rows will also be
+ordered in the same way.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}
 }

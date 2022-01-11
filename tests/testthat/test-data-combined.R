@@ -1,3 +1,5 @@
+# empty initialization ----------------------------
+
 test_that("dataCombined - initialization", {
   skip_if_not_installed("R6")
 
@@ -6,8 +8,10 @@ test_that("dataCombined - initialization", {
 
   expect_null(myCombDat$dataSets)
   expect_null(myCombDat$simulationResults)
-  expect_equal(length(purrr::compact(myCombDat$groups)), 0L)
+  expect_null(myCombDat$groupMap)
 })
+
+# both `DataSet` and `SimulationResults` provided -------------
 
 test_that("dataCombined - both dataSet and SimulationResults provided", {
   skip_if_not_installed("R6")
@@ -47,16 +51,16 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(830L, 21L))
+  expect_equal(dim(df), c(830L, 22L))
 
   # check exact values
   expect_equal(
     names(df),
     c(
-      "dataType", "name", "xValues", "yValues", "yErrorValues", "xDimension",
-      "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit", "molWeight",
-      "lloq", "Source", "Sheet", "Organ", "Compartment", "Molecule",
-      "Group Id", "IndividualId", "paths"
+      "group", "dataType", "name", "paths", "IndividualId", "Group Id", "xValues",
+      "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
+      "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
+      "Organ", "Compartment", "Molecule"
     )
   )
 
@@ -71,18 +75,20 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
     )
   )
 
+  expect_equal(df$name, df$group)
+  expect_equal(unique(dplyr::filter(df, dataType == "observed")$name), names(dataSet))
   expect_equal(
     as.character(unique(df$name)),
     c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Stevens_2012_placebo.Placebo_total",
       "Stevens_2012_placebo.Sita_total",
       "Stevens_2012_placebo.Placebo_proximal",
       "Stevens_2012_placebo.Sita_proximal",
       "Stevens_2012_placebo.Placebo_distal",
-      "Stevens_2012_placebo.Sita_dist",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+      "Stevens_2012_placebo.Sita_dist"
     )
   )
 
@@ -108,7 +114,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1267L, 21L))
+  expect_equal(dim(df2), c(1267L, 22L))
 
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
@@ -127,12 +133,12 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_equal(
     as.character(unique(df2$name)),
     c(
-      "Stevens_2012_placebo.Placebo_total",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Stevens_2012_placebo.Placebo_total"
     )
   )
 
@@ -152,8 +158,8 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   df3 <- myCombDat4$toDataFrame()
   myCombDat4$addDataSets(dataSet[[1]])
   df4 <- myCombDat4$toDataFrame()
-  expect_equal(dim(df3), c(1255L, 9L))
-  expect_equal(dim(df4), c(1267L, 21L))
+  expect_equal(dim(df3), c(1255L, 10L))
+  expect_equal(dim(df4), c(1267L, 22L))
 
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
@@ -190,17 +196,19 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(12L, 19L))
+  expect_equal(dim(df), c(12L, 20L))
 
   expect_equal(
     names(df),
     c(
-      "dataType", "name", "xValues", "yValues", "yErrorValues", "xDimension",
-      "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit", "molWeight",
-      "lloq", "Source", "Sheet", "Organ", "Compartment", "Molecule",
-      "Group Id"
+      "group", "dataType", "name", "Group Id", "xValues", "xDimension",
+      "xUnit", "yValues", "yErrorValues", "yDimension", "yUnit", "yErrorType",
+      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Organ",
+      "Compartment", "Molecule"
     )
   )
+  expect_equal(df$name, df$group)
+  expect_equal(unique(df$name), names(dataSet)[[1]])
 
   # only SimulationResults input ----------------------------
 
@@ -210,22 +218,19 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
 
-  # needs testthat 3rd edition, plus the team seems to be doubtful about
-  # snapshot testing. So this is just for my own testing
-  # expect_snapshot(print(myCombDat2))
-
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 9L))
+  expect_equal(dim(df2), c(1255L, 10L))
 
   expect_equal(
     names(df2),
     c(
-      "dataType", "IndividualId", "xValues", "paths", "yValues",
-      "yUnit", "yDimension", "xUnit", "name"
+      "group", "dataType", "name", "paths", "IndividualId", "xValues",  "xUnit", "yValues",
+      "yUnit", "yDimension"
     )
   )
+  expect_equal(unique(df2$paths), simResults$allQuantityPaths)
 
   expect_equal(
     as.character(na.omit(unique(df2$paths))),
@@ -237,6 +242,8 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     )
   )
+
+  expect_equal(df2$name, df2$group)
 })
 
 # data transformations ---------------------------------
@@ -361,7 +368,7 @@ test_that("DataCombined with data transformations", {
   )
 })
 
-# data grouping works ---------------------------------
+# grouping works ---------------------------------
 
 test_that("DataCombined works with data grouping", {
   skip_if_not_installed("R6")
@@ -453,25 +460,16 @@ test_that("DataCombined works with data grouping", {
   expect_equal(
     names(df),
     c(
-      "group", "name", "dataType", "xValues", "yValues", "yErrorValues",
-      "xDimension", "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit",
-      "molWeight", "lloq", "Source", "Sheet", "Organ", "Compartment",
-      "Molecule", "Group Id", "IndividualId", "paths"
+      "group", "dataType", "name", "paths", "IndividualId", "Group Id", "xValues",
+      "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
+      "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
+      "Organ", "Compartment", "Molecule"
     )
   )
 
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
   expect_equal(dim(df2), c(1332L, 22L))
-  expect_equal(
-    names(df2),
-    c(
-      "group", "name", "dataType", "xValues", "yValues", "yErrorValues",
-      "xDimension", "xUnit", "yDimension", "yUnit", "yErrorType", "yErrorUnit",
-      "molWeight", "lloq", "Source", "Sheet", "Organ", "Compartment",
-      "Molecule", "Group Id", "IndividualId", "paths"
-    )
-  )
 })
 
 # population objects work ---------------------------------
@@ -515,15 +513,7 @@ test_that("DataCombined works with population", {
   df <- myDataComb$toDataFrame()
 
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1964L, 9L))
-
-  expect_equal(
-    names(df),
-    c(
-      "dataType", "IndividualId", "xValues", "paths", "yValues",
-      "yUnit", "yDimension", "xUnit", "name"
-    )
-  )
+  expect_equal(dim(df), c(1964L, 10L))
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)

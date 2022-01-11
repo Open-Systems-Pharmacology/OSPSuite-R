@@ -3,7 +3,12 @@
 #' @description
 #'
 #' A class for storage of simulated and/or observed data, which can be further
-#' used to extract as a dataframe or for visualization methods.
+#' used to extract as a dataframe for visualization methods. Additionally, it
+#' allows:
+#' - Grouping different (simulated and/or observed) datasets with unique
+#' grouping labels. If no grouping is specified, name of the dataset is used as
+#' a grouping column.
+#' - Transforming data (with given offsets and scale factors).
 #'
 #' @param simulationResults Object of type `SimulationResults` produced by
 #'   calling `runSimulation` on a `Simulation` object.
@@ -23,10 +28,10 @@
 #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
 #'   object(s).
 #' @param groups A string or a list of strings assigning the data set to a
-#'   group. If an entry within the list is `NULL`, the corresponding data set
-#'   is not assigned to any group. If `NULL` (default), all data sets are not
-#'   assigned to any group. If provided, `groups` must have the same length as
-#'   `dataSets`.
+#'   group. If an entry within the list is `NULL`, the corresponding data set is
+#'   not assigned to any group. If `NULL` (default), data sets are not assigned
+#'   to any group, instead their name is used as a grouping column. If provided,
+#'   `groups` must have the same length as `dataSets`.
 #' @param names A list of names specifying which observed datasets or paths in
 #'   simulated dataset to transform.
 #' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a numeric scalar
@@ -176,7 +181,7 @@ DataCombined <- R6::R6Class(
       private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.dataSetsDF)
 
       if (length(purrr::compact(private$.groups)) > 0L) {
-        private$.groupMap <-  private$.extractGroupMap(private$.dataCombinedDF)
+        private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
     },
 
@@ -204,6 +209,11 @@ DataCombined <- R6::R6Class(
       private$.xScaleFactors <- xScaleFactors
       private$.yScaleFactors <- yScaleFactors
       # styler: on
+
+      # transform data
+      if (!is.null(private$.dataCombinedDF)) {
+        private$.dataCombinedDF <- private$.dataTransform(private$.dataCombinedDF)
+      }
     },
 
     ## getter methods ---------------
@@ -211,109 +221,31 @@ DataCombined <- R6::R6Class(
     #' @description
     #' A dataframe of simulated and/or observed data (depending on instances of
     #' which objects have been added to the object).
+    #'
+    #' Note that the order in which you enter different object matters. If you
+    #' first enter observed data and simulated data later, the rows will also be
+    #' ordered in the same way.
+    #'
     #' @return A dataframe.
 
     toDataFrame = function() {
-      # data extraction ----------------
-
-      # if both not NULL, combine them
-      # if either is NULL, use the non-NULL one
-      if (!is.null(private$.dataSetsDF) && !is.null(private$.simulationResultsDF)) {
-        private$.dataCombinedDF <- dplyr::bind_rows(private$.dataSetsDF, private$.simulationResultsDF)
-      } else {
-        private$.dataCombinedDF <- private$.dataSetsDF %||% private$.simulationResultsDF
-      }
-
-      # data transformations ----------------
-
       if (!is.null(private$.dataCombinedDF)) {
-        # select only the selected dataset names and paths
-        if (!is.null(private$.names)) {
-          private$.dataCombinedDF <- dplyr::filter(private$.dataCombinedDF, name %in% private$.names)
-
-          # if separate offsets and scale factors are provided for each name, then store
-          # the respective values for each name, otherwise all rows gets the same value
-
-          # offset for x-axis
-          if (length(private$.xOffsets) > 1L) {
-            validateIsSameLength(private$.xOffsets, private$.names)
-
-            names(private$.xOffsets) <- private$.names
-            private$.dataCombinedDF <- private$.dataCombinedDF %>%
-              dplyr::group_by(name) %>%
-              dplyr::mutate(xOffsets = private$.xOffsets[match(name, private$.names)][[1]]) %>%
-              dplyr::ungroup()
-          } else {
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xOffsets = private$.xOffsets[[1]])
-          }
-
-          # offset for y-axis
-          if (length(private$.yOffsets) > 1L) {
-            validateIsSameLength(private$.yOffsets, private$.names)
-
-            private$.dataCombinedDF <- private$.dataCombinedDF %>%
-              dplyr::group_by(name) %>%
-              dplyr::mutate(yOffsets = private$.yOffsets[match(name, private$.names)][[1]]) %>%
-              dplyr::ungroup()
-          } else {
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yOffsets = private$.yOffsets[[1]])
-          }
-
-          # scale factor for x-axis
-          if (length(private$.xScaleFactors) > 1L) {
-            validateIsSameLength(private$.xScaleFactors, private$.names)
-
-            private$.dataCombinedDF <- private$.dataCombinedDF %>%
-              dplyr::group_by(name) %>%
-              dplyr::mutate(xScaleFactors = private$.xScaleFactors[match(name, private$.names)][[1]]) %>%
-              dplyr::ungroup()
-          } else {
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, xScaleFactors = private$.xScaleFactors[[1]])
-          }
-
-          if (length(private$.yScaleFactors) > 1L) {
-            validateIsSameLength(private$.yScaleFactors, private$.names)
-
-
-            # scale factor for y-axis
-            private$.dataCombinedDF <- private$.dataCombinedDF %>%
-              dplyr::group_by(name) %>%
-              dplyr::mutate(yScaleFactors = private$.yScaleFactors[match(name, private$.names)][[1]]) %>%
-              dplyr::ungroup()
-          } else {
-            private$.dataCombinedDF <- dplyr::mutate(private$.dataCombinedDF, yScaleFactors = private$.yScaleFactors[[1]])
-          }
-        } else {
-          private$.dataCombinedDF <- dplyr::mutate(
-            private$.dataCombinedDF,
-            xOffsets = private$.xOffsets[[1]],
-            yOffsets = private$.yOffsets[[1]],
-            xScaleFactors = private$.xScaleFactors[[1]],
-            yScaleFactors = private$.yScaleFactors[[1]]
-          )
-        }
-
-        # apply transformations
-        private$.dataCombinedDF <- dplyr::mutate(
+        # consistent column order
+        private$.dataCombinedDF <- dplyr::select(
           private$.dataCombinedDF,
-          xValues = (xValues + xOffsets) * xScaleFactors,
-          yValues = (yValues + yOffsets) * yScaleFactors
+          # all identifying columns
+          dplyr::matches("^group$"),
+          dataType,
+          name,
+          dplyr::matches("^paths$"),
+          dplyr::matches("id$"),
+          # everything related to X-variable
+          dplyr::matches("^x"),
+          # everything related to Y-variable
+          dplyr::matches("^y"),
+          # everything else goes after that
+          dplyr::everything()
         )
-
-        # applicable only if the error is available
-        if ("yErrorValues" %in% names(private$.dataCombinedDF)) {
-          private$.dataCombinedDF <- dplyr::mutate(
-            private$.dataCombinedDF,
-            yErrorValues = yErrorValues * yScaleFactors
-          )
-        }
-
-        # these columns are no longer necessary
-        # retaining them might confuse the user about whether the
-        # transformations are supposed to be carried out by the user using these
-        # values or these transformations have already been carried out by the
-        # method using these values
-        private$.dataCombinedDF <- dplyr::select(private$.dataCombinedDF, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
       }
 
       # final dataframe to return
@@ -376,23 +308,8 @@ DataCombined <- R6::R6Class(
       }
     },
 
-    #' @field groups A named `list` specifying which data sets should be grouped
-    #'   together.
-
-    # just a way to access whatever was specified
-    groups = function(value) {
-      if (missing(value)) {
-        private$.groups
-      } else {
-        stop(messages$errorPropertyReadOnly(
-          "groupings",
-          optionalMessage = "Data sets are assigned to groups when adding via `$addSimulationResults()` or `$addDataSets()` methods."
-        ))
-      }
-    },
-
     #' @field groupMap A dataframe specifying which data sets have been grouped
-    #'   together and the name of the dataset.
+    #'   together and the name and the nature of the dataset.
 
     # just a way to access whatever was specified
     groupMap = function(value) {
@@ -426,9 +343,8 @@ DataCombined <- R6::R6Class(
         dplyr::mutate(dataType = "observed", .before = 1L) %>%
         dplyr::as_tibble()
 
-      if (!is.null(groups)) {
-        data <- private$.addGroupCol(data, groups)
-      }
+      data <- private$.addGroupCol(data, groups)
+
 
       return(data)
     },
@@ -461,27 +377,32 @@ DataCombined <- R6::R6Class(
         data <- dplyr::mutate(data, name = paths)
       }
 
-      if (!is.null(groups)) {
-        data <- private$.addGroupCol(data, groups)
-      }
+      data <- private$.addGroupCol(data, groups)
 
       return(data)
     },
 
     # add a new group column
-    .addGroupCol = function(data, groups) {
-      data %>%
-        dplyr::group_by(name) %>%
-        tidyr::nest() %>%
-        dplyr::ungroup() %>%
-        dplyr::mutate(group = groups, .before = 1L) %>%
-        tidyr::unnest(cols = c(data)) %>%
-        dplyr::mutate(
-          group = dplyr::case_when(
-            is.na(group) ~ name,
-            TRUE ~ group
+    # if no grouping is specified, this is going to be same as name
+    .addGroupCol = function(data, groups = NULL) {
+      if (!is.null(groups)) {
+        data <- data %>%
+          dplyr::group_by(name) %>%
+          tidyr::nest() %>%
+          dplyr::ungroup() %>%
+          dplyr::mutate(group = groups, .before = 1L) %>%
+          tidyr::unnest(cols = c(data)) %>%
+          dplyr::mutate(
+            group = dplyr::case_when(
+              is.na(group) ~ name,
+              TRUE ~ group
+            )
           )
-        )
+      } else {
+        data <- data %>% dplyr::mutate(group = name)
+      }
+
+      return(data)
     },
 
     # update the combined dataframe in place
@@ -502,23 +423,116 @@ DataCombined <- R6::R6Class(
         dplyr::distinct() %>%
         dplyr::arrange(group, name)
     },
+    .dataTransform = function(data) {
+      # select only the selected dataset names and paths
+      if (!is.null(private$.names)) {
+        data <- dplyr::filter(data, name %in% private$.names)
+
+        # if separate offsets and scale factors are provided for each name, then store
+        # the respective values for each name, otherwise all rows gets the same value
+
+        # offset for x-axis
+        if (length(private$.xOffsets) > 1L) {
+          validateIsSameLength(private$.xOffsets, private$.names)
+
+          names(private$.xOffsets) <- private$.names
+          data <- data %>%
+            dplyr::group_by(name) %>%
+            dplyr::mutate(xOffsets = private$.xOffsets[match(name, private$.names)][[1]]) %>%
+            dplyr::ungroup()
+        } else {
+          data <- dplyr::mutate(data, xOffsets = private$.xOffsets[[1]])
+        }
+
+        # offset for y-axis
+        if (length(private$.yOffsets) > 1L) {
+          validateIsSameLength(private$.yOffsets, private$.names)
+
+          data <- data %>%
+            dplyr::group_by(name) %>%
+            dplyr::mutate(yOffsets = private$.yOffsets[match(name, private$.names)][[1]]) %>%
+            dplyr::ungroup()
+        } else {
+          data <- dplyr::mutate(data, yOffsets = private$.yOffsets[[1]])
+        }
+
+        # scale factor for x-axis
+        if (length(private$.xScaleFactors) > 1L) {
+          validateIsSameLength(private$.xScaleFactors, private$.names)
+
+          data <- data %>%
+            dplyr::group_by(name) %>%
+            dplyr::mutate(xScaleFactors = private$.xScaleFactors[match(name, private$.names)][[1]]) %>%
+            dplyr::ungroup()
+        } else {
+          data <- dplyr::mutate(data, xScaleFactors = private$.xScaleFactors[[1]])
+        }
+
+        if (length(private$.yScaleFactors) > 1L) {
+          validateIsSameLength(private$.yScaleFactors, private$.names)
+
+
+          # scale factor for y-axis
+          data <- data %>%
+            dplyr::group_by(name) %>%
+            dplyr::mutate(yScaleFactors = private$.yScaleFactors[match(name, private$.names)][[1]]) %>%
+            dplyr::ungroup()
+        } else {
+          data <- dplyr::mutate(data, yScaleFactors = private$.yScaleFactors[[1]])
+        }
+      } else {
+        data <- dplyr::mutate(
+          data,
+          xOffsets = private$.xOffsets[[1]],
+          yOffsets = private$.yOffsets[[1]],
+          xScaleFactors = private$.xScaleFactors[[1]],
+          yScaleFactors = private$.yScaleFactors[[1]]
+        )
+      }
+
+      # apply transformations
+      data <- dplyr::mutate(
+        data,
+        xValues = (xValues + xOffsets) * xScaleFactors,
+        yValues = (yValues + yOffsets) * yScaleFactors
+      )
+
+      # applicable only if the error is available
+      if ("yErrorValues" %in% names(data)) {
+        data <- dplyr::mutate(
+          data,
+          yErrorValues = yErrorValues * yScaleFactors
+        )
+      }
+
+      # these columns are no longer necessary
+      # retaining them might confuse the user about whether the
+      # transformations are supposed to be carried out by the user using these
+      # values or these transformations have already been carried out by the
+      # method using these values
+      data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
+
+      return(data)
+    },
 
     # fields
-    .dataSets = NULL,
-    .dataSetsDF = NULL,
-    .simulationResults = NULL,
+    # styler: off
+    .dataSets            = NULL,
+    .dataSetsDF          = NULL,
+    .simulationResults   = NULL,
     .simulationResultsDF = NULL,
-    .dataCombinedDF = NULL,
-    .groups = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
-    .groupMap = NULL,
-    .quantitiesOrPaths = NULL,
-    .population = NULL,
-    .individualIds = NULL,
-    .names = NULL,
-    .xOffsets = 0,
-    .yOffsets = 0,
-    .xScaleFactors = 1,
-    .yScaleFactors = 1
+    .dataCombinedDF      = NULL,
+    .groups              = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
+    .groupMap            = NULL,
+    .quantitiesOrPaths   = NULL,
+    .population          = NULL,
+    .individualIds       = NULL,
+    .names               = NULL,
+    .xOffsets            = 0,
+    .yOffsets            = 0,
+    .xScaleFactors       = 1,
+    .yScaleFactors       = 1
+    # styler: on
   ),
 
   # other object properties --------------------------------------
