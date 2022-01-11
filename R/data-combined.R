@@ -123,6 +123,13 @@ DataCombined <- R6::R6Class(
 
       # extract a dataframe and store it internally
       private$.simulationResultsDF <- private$.simResults2DF(private$.simulationResults, groups)
+
+      # add it to combined dataframe
+      private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.simulationResultsDF)
+
+      if (length(purrr::compact(private$.groups)) > 0L) {
+        private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
+      }
     },
 
     #' @description
@@ -164,6 +171,13 @@ DataCombined <- R6::R6Class(
 
       # extract a dataframe and store it internally
       private$.dataSetsDF <- private$.dataSet2DF(private$.dataSets, groups)
+
+      # add it to combined dataframe
+      private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.dataSetsDF)
+
+      if (length(purrr::compact(private$.groups)) > 0L) {
+        private$.groupMap <-  private$.extractGroupMap(private$.dataCombinedDF)
+      }
     },
 
     #' @description
@@ -208,17 +222,6 @@ DataCombined <- R6::R6Class(
         private$.dataCombinedDF <- dplyr::bind_rows(private$.dataSetsDF, private$.simulationResultsDF)
       } else {
         private$.dataCombinedDF <- private$.dataSetsDF %||% private$.simulationResultsDF
-      }
-
-      # data grouping ----------------
-
-      # compact will remove null lists
-      if (length(purrr::compact(private$.groups)) > 0L) {
-        # save mapping internally as a tibble
-        private$.groupMap <- private$.dataCombinedDF %>%
-          dplyr::select(group, name, dataType) %>%
-          dplyr::distinct() %>%
-          dplyr::arrange(group)
       }
 
       # data transformations ----------------
@@ -479,6 +482,25 @@ DataCombined <- R6::R6Class(
             TRUE ~ group
           )
         )
+    },
+
+    # update the combined dataframe in place
+    .updateDF = function(dataOld = NULL, dataNew = NULL) {
+      if (!is.null(dataOld)) {
+        dataOld <- dplyr::bind_rows(dataOld, dataNew)
+      } else {
+        dataOld <- dataNew
+      }
+
+      dataOld
+    },
+
+    # extract dataframe with group mappings
+    .extractGroupMap = function(data) {
+      data %>%
+        dplyr::select(group, name, dataType) %>%
+        dplyr::distinct() %>%
+        dplyr::arrange(group, name)
     },
 
     # fields

@@ -92,6 +92,9 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_equal(simResults, myCombDat$simulationResults)
   expect_error(myCombDat$simulationResults(simResults))
 
+  # not specified, so NULL
+  expect_null(myCombDat$groupMap)
+
   # with DataSet input ----------------------------
 
   # create object with datasets combined
@@ -106,6 +109,9 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
   expect_equal(dim(df2), c(1267L, 21L))
+
+  # not specified, so NULL
+  expect_null(myCombDat$groupMap)
 
   expect_equal(
     as.character(na.omit(unique(df2$paths))),
@@ -148,6 +154,9 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   df4 <- myCombDat4$toDataFrame()
   expect_equal(dim(df3), c(1255L, 9L))
   expect_equal(dim(df4), c(1267L, 21L))
+
+  # not specified, so NULL
+  expect_null(myCombDat$groupMap)
 })
 
 
@@ -386,7 +395,7 @@ test_that("DataCombined works with data grouping", {
     groups = list("total", "total", "proximal", "proximal", "distal", "distal")
   )
 
-  # order should not matter
+  # order should matter
   myCombDat2 <- DataCombined$new()
   myCombDat2$addDataSets(dataSet,
     groups = list("total", "total", "proximal", "proximal", "distal", "distal")
@@ -395,6 +404,47 @@ test_that("DataCombined works with data grouping", {
     simResults,
     groups = list(NULL, NULL, "distal", "proximal", "total")
   )
+
+  # check mapping
+  dfMap <- myCombDat$groupMap
+  dfMap2 <- myCombDat2$groupMap
+
+  expect_equal(
+    dfMap$group,
+    c(
+      "distal",
+      "distal",
+      "distal",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "proximal",
+      "proximal",
+      "proximal",
+      "total",
+      "total",
+      "total"
+    )
+  )
+
+  expect_equal(
+    dfMap$name,
+    c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total"
+    )
+  )
+
+  expect_equal(dfMap$group, dfMap2$group)
+  expect_equal(dfMap$name, dfMap2$name)
 
   # check dataframe
   df <- myCombDat$toDataFrame()
@@ -422,47 +472,6 @@ test_that("DataCombined works with data grouping", {
       "Molecule", "Group Id", "IndividualId", "paths"
     )
   )
-
-  # check mapping
-  dfMap <- myCombDat$groupMap
-  dfMap2 <- myCombDat2$groupMap
-
-  expect_equal(
-    dfMap$group,
-    c(
-      "distal",
-      "distal",
-      "distal",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "proximal",
-      "proximal",
-      "proximal",
-      "total",
-      "total",
-      "total"
-    )
-  )
-
-  expect_equal(
-    dfMap$name,
-    c(
-      "Stevens_2012_placebo.Placebo_distal",
-      "Stevens_2012_placebo.Sita_dist",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Stevens_2012_placebo.Placebo_proximal",
-      "Stevens_2012_placebo.Sita_proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Stevens_2012_placebo.Placebo_total",
-      "Stevens_2012_placebo.Sita_total",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
-    )
-  )
-
-  expect_equal(dfMap$group, dfMap2$group)
-  expect_equal(dfMap$name, dfMap2$name)
 })
 
 # population objects work ---------------------------------
