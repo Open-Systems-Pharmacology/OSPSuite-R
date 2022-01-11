@@ -411,6 +411,7 @@ DataCombined <- R6::R6Class(
 
     # add a new group column
     # if no grouping is specified, this is going to be same as name
+
     .addGroupCol = function(data, groups = NULL) {
       if (!is.null(groups)) {
         data <- data %>%
@@ -426,7 +427,7 @@ DataCombined <- R6::R6Class(
             )
           )
       } else {
-        data <- data %>% dplyr::mutate(group = name)
+        data <- data %>% dplyr::mutate(group = name, .before = 1L)
       }
 
       return(data)

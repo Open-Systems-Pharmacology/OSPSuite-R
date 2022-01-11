@@ -9,6 +9,7 @@ test_that("dataCombined - initialization", {
   expect_null(myCombDat$dataSets)
   expect_null(myCombDat$simulationResults)
   expect_null(myCombDat$groupMap)
+  expect_output(print(myCombDat), "DataCombined:")
 })
 
 # both `DataSet` and `SimulationResults` provided -------------
@@ -169,6 +170,13 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
 
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
+
+  # printing objects works
+  expect_output(print(myCombDat))
+  expect_output(print(myCombDat2))
+  expect_output(print(myCombDat3))
+  expect_output(print(myCombDat4))
+  expect_output(print(myCombDat5))
 })
 
 
@@ -292,13 +300,40 @@ test_that("DataCombined with data transformations", {
   dfOriginal <- dplyr::filter(dfOriginal, name %in% names_ls)
 
   # expect error since the lengths of argument are not the same
-  # TODO: make sure that this errors
-  # expect_error(
-  #   myCombDat$setDataTransforms(
-  #     names = names_ls,
-  #     xOffsets = list(2, 4, 5, 5, 6)
-  #   )
-  # )
+  expect_error(
+    myCombDat$setDataTransforms(
+      names = list(
+        "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+        "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+        "Stevens_2012_placebo.Sita_proximal",
+        "Stevens_2012_placebo.Placebo_distal"
+      ),
+      xOffsets = list(2, 4, 5, 5, 6)
+    )
+  )
+
+  expect_error(
+    myCombDat$setDataTransforms(
+      names = list(
+        "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+        "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
+      ),
+      yOffsets = list(2, 5, 6)
+    )
+  )
+
+  expect_error(
+    myCombDat$setDataTransforms(
+      names = list(
+        "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+        "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
+      ),
+      xOffsets = list(2, 3, 6, 7),
+      xScaleFactors = list(1.5, 2.4),
+      yOffsets = c(4, 7, 8),
+      yScaleFactors = c(1.1)
+    )
+  )
 
   myCombDat$setDataTransforms(
     names = names_ls,
@@ -425,9 +460,13 @@ test_that("DataCombined works with data grouping", {
   # create object with datasets combined
   myCombDat <- DataCombined$new()
 
-  # expect error when grouping length is inaccurate
+  # expect error when grouping length and data type are inaccurate
+  expect_error(myCombDat$addSimulationResults(simResults, groups = list("x", "y")))
   expect_error(myCombDat$addSimulationResults(simResults, groups = list(2, 4)))
+  expect_error(myCombDat$addSimulationResults(simResults, groups = list(1, 2, 3, 4, 5)))
+  expect_error(myCombDat$addDataSets(dataSet, groups = list("x")))
   expect_error(myCombDat$addDataSets(dataSet, groups = list(1)))
+  expect_error(myCombDat$addDataSets(dataSet, groups = list(1, 2, 3, 4, 5, 6)))
 
   # proper grouping
   myCombDat$addSimulationResults(
