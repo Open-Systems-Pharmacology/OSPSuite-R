@@ -45,6 +45,9 @@ object(s).}
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
+\item{\code{names}}{A vector listing collection of all names of \code{DataSet}
+objects and/or quantities or paths for \code{SimulationResuls} object.}
+
 \item{\code{groupMap}}{A dataframe specifying which data sets have been grouped
 together and the name and the nature of the dataset.}
 }
@@ -91,11 +94,11 @@ Add simulated data.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
   simulationResults,
-  groups = NULL,
-  names = NULL,
   quantitiesOrPaths = NULL,
   population = NULL,
-  individualIds = NULL
+  individualIds = NULL,
+  names = NULL,
+  groups = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -105,11 +108,21 @@ Add simulated data.
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group. If \code{NULL} (default), data sets are not assigned
-to any group, instead their name is used as a grouping column. If provided,
-\code{groups} must have the same length as \code{dataSets}.}
+\item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
+retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
+list of strings) for which the results are to be returned. (optional)
+When providing the paths, only absolute full paths are supported (i.e., no
+matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
+value), returns the results for all output defined in the results.}
+
+\item{\code{population}}{population used to calculate the \code{simulationResults}
+(optional). This is used only to add the population covariates to the
+resulting dataframe.}
+
+\item{\code{individualIds}}{Numeric IDs of individuals for which the results
+should be extracted. By default, all individuals from the results are
+considered. If the individual with the provided ID is not found, the ID is
+ignored.}
 
 \item{\code{names}}{This argument will be encountered across different methods:
 \itemize{
@@ -127,21 +140,11 @@ assigning new names to the list of instances of the \code{DataSet} object.
 Note that the datasets whose names you wish to not change should be specified
 as \code{NULL} in the list.}
 
-\item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
-retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
-list of strings) for which the results are to be returned. (optional)
-When providing the paths, only absolute full paths are supported (i.e., no
-matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
-value), returns the results for all output defined in the results.}
-
-\item{\code{population}}{population used to calculate the \code{simulationResults}
-(optional). This is used only to add the population covariates to the
-resulting dataframe.}
-
-\item{\code{individualIds}}{Numeric IDs of individuals for which the results
-should be extracted. By default, all individuals from the results are
-considered. If the individual with the provided ID is not found, the ID is
-ignored.}
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group. If \code{NULL} (default), data sets are not assigned
+to any group, instead their name is used as a grouping column. If provided,
+\code{groups} must have the same length as \code{dataSets}.}
 }
 \if{html}{\out{</div>}}
 }

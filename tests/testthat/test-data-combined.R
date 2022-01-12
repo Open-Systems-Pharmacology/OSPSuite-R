@@ -10,6 +10,11 @@ test_that("dataCombined - initialization", {
   expect_null(myCombDat$simulationResults)
   expect_null(myCombDat$groupMap)
   expect_output(print(myCombDat), "DataCombined:")
+
+  # can't use active bindings like this
+  expect_error(myCombDat$dataSets("x"))
+  expect_error(myCombDat$simulationResults("x"))
+  expect_error(myCombDat$groupMap("x"))
 })
 
 # both `DataSet` and `SimulationResults` provided -------------
@@ -98,6 +103,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "Stevens_2012_placebo.Sita_dist"
     )
   )
+  expect_equal(as.character(unique(df$name)),  myCombDat$names)
 
   # read-only
   expect_equal(dataSet, myCombDat$dataSets)

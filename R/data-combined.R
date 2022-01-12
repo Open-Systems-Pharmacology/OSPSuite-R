@@ -120,11 +120,11 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object containing simulated data.
 
     addSimulationResults = function(simulationResults,
-                                    groups = NULL,
-                                    names = NULL,
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
-                                    individualIds = NULL) {
+                                    individualIds = NULL,
+                                    names = NULL,
+                                    groups = NULL) {
       # fail fast; walk is needed because there is no output here
       purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
 
@@ -350,6 +350,25 @@ DataCombined <- R6::R6Class(
         private$.simulationResults
       } else {
         stop(messages$errorPropertyReadOnly("simulationResults"))
+      }
+    },
+
+    #' @field names A vector listing collection of all names of `DataSet`
+    #'   objects and/or quantities or paths for `SimulationResuls` object.
+
+    # just a way to access whatever was specified
+    names = function(value) {
+      if (missing(value)) {
+        if (!is.null(private$.dataCombinedDF)) {
+          unique(private$.dataCombinedDF$name)
+        } else {
+          NULL
+        }
+      } else {
+        stop(messages$errorPropertyReadOnly(
+          "names",
+          optionalMessage = "Names are assigned using `names` argument in `$addSimulationResults()` or `$addDataSets()` methods."
+        ))
       }
     },
 
