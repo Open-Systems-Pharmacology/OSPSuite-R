@@ -57,8 +57,8 @@ together and the name and the nature of the dataset.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{DataCombined$new()}}
-\item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
+\item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-setDataTransforms}{\code{DataCombined$setDataTransforms()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
@@ -84,6 +84,49 @@ The constructor is empty because we prefer that the users add
 
 \subsection{Returns}{
 A new instance of \code{DataCombined} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-addDataSets"></a>}}
+\if{latex}{\out{\hypertarget{method-addDataSets}{}}}
+\subsection{Method \code{addDataSets()}}{
+Add observed data.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
+object(s).}
+
+\item{\code{names}}{This argument will be encountered across different methods:
+\itemize{
+\item \verb{$setDataTransforms()}: In the context of this method, a list of names
+specifying which observed datasets and/or paths in simulated dataset to
+transform. Default is \code{NULL}, i.e., the transformations will be applied to
+all rows of the dataframe.
+\item \verb{$addSimulationResults()}: In the context of this method, a list of strings
+assigning new names to the quantities or paths present in the entered
+\code{SimulationResults} object.
+\item \verb{$addDataSets()}: In the context of this method, a list of strings
+assigning new names to the list of instances of the \code{DataSet} object.
+}
+
+Note that the datasets whose names you wish to not change should be specified
+as \code{NULL} in the list.}
+
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group. If \code{NULL} (default), data sets are not assigned
+to any group, instead their name is used as a grouping column. If provided,
+\code{groups} must have the same length as \code{dataSets}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{DataCombined} object containing observed data.
 }
 }
 \if{html}{\out{<hr>}}
@@ -150,49 +193,6 @@ to any group, instead their name is used as a grouping column. If provided,
 }
 \subsection{Returns}{
 \code{DataCombined} object containing simulated data.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDataSets"></a>}}
-\if{latex}{\out{\hypertarget{method-addDataSets}{}}}
-\subsection{Method \code{addDataSets()}}{
-Add observed data.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, groups = NULL, names = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
-object(s).}
-
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group. If \code{NULL} (default), data sets are not assigned
-to any group, instead their name is used as a grouping column. If provided,
-\code{groups} must have the same length as \code{dataSets}.}
-
-\item{\code{names}}{This argument will be encountered across different methods:
-\itemize{
-\item \verb{$setDataTransforms()}: In the context of this method, a list of names
-specifying which observed datasets and/or paths in simulated dataset to
-transform. Default is \code{NULL}, i.e., the transformations will be applied to
-all rows of the dataframe.
-\item \verb{$addSimulationResults()}: In the context of this method, a list of strings
-assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object.
-\item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} object.
-}
-
-Note that the datasets whose names you wish to not change should be specified
-as \code{NULL} in the list.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{DataCombined} object containing observed data.
 }
 }
 \if{html}{\out{<hr>}}

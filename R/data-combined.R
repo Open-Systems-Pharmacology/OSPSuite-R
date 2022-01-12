@@ -116,64 +116,10 @@ DataCombined <- R6::R6Class(
     ## setter methods ---------------
 
     #' @description
-    #' Add simulated data.
-    #' @return `DataCombined` object containing simulated data.
-
-    addSimulationResults = function(simulationResults,
-                                    quantitiesOrPaths = NULL,
-                                    population = NULL,
-                                    individualIds = NULL,
-                                    names = NULL,
-                                    groups = NULL) {
-      # fail fast; walk is needed because there is no output here
-      purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
-
-      # list of `SimulationResults` instances is not allowed
-      if (is.list(simulationResults)) {
-        stop(messages$errorWrongType("simulationResults", "list", "a scalar (vector of length 1)"))
-      }
-
-      # validate the object type
-      validateIsOfType(simulationResults, SimulationResults)
-
-      # make sure that length of groups and names is the same
-      # additionally since these lists are going to have strings as elements,
-      # convert NULLs to NAs
-      groups <- .validateListArgs(groups, length(simulationResults$allQuantityPaths))
-      names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
-
-      # save the original object as it is; useful for `$toDataFrame()` method
-      # styler: off
-      private$.simulationResults              <- simulationResults
-      private$.groups$groupsSimulationResults <- groups
-      private$.quantitiesOrPaths              <- quantitiesOrPaths
-      private$.population                     <- population
-      private$.individualIds                  <- individualIds
-      # styler: on
-
-      # extract a dataframe and store it internally
-      private$.simulationResultsDF <- private$.simResults2DF(
-        private$.simulationResults,
-        groups,
-        names
-      )
-
-      # add it to combined dataframe
-      private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.simulationResultsDF)
-
-      # group map can only be generated if at least one grouping is specified
-      if (length(purrr::compact(private$.groups)) > 0L) {
-        private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
-      }
-
-      invisible(self)
-    },
-
-    #' @description
     #' Add observed data.
     #' @return `DataCombined` object containing observed data.
 
-    addDataSets = function(dataSets, groups = NULL, names = NULL) {
+    addDataSets = function(dataSets, names = NULL, groups = NULL) {
       # fail fast if this is not correct
       validateIsString(groups, nullAllowed = TRUE)
 
@@ -214,7 +160,7 @@ DataCombined <- R6::R6Class(
       private$.groups$groupsDataSets <- groups
 
       # extract a dataframe and store it internally
-      private$.dataSetsDF <- private$.dataSet2DF(private$.dataSets, groups, names)
+      private$.dataSetsDF <- private$.dataSet2DF(private$.dataSets, names, groups)
 
       # add it to combined dataframe
       private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.dataSetsDF)
@@ -224,6 +170,56 @@ DataCombined <- R6::R6Class(
       }
 
       # for method chaining
+      invisible(self)
+    },
+
+    #' @description
+    #' Add simulated data.
+    #' @return `DataCombined` object containing simulated data.
+
+    addSimulationResults = function(simulationResults,
+                                    quantitiesOrPaths = NULL,
+                                    population = NULL,
+                                    individualIds = NULL,
+                                    names = NULL,
+                                    groups = NULL) {
+      # fail fast; walk is needed because there is no output here
+      purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
+
+      # list of `SimulationResults` instances is not allowed
+      if (is.list(simulationResults)) {
+        stop(messages$errorWrongType("simulationResults", "list", "a scalar (vector of length 1)"))
+      }
+
+      # validate the object type
+      validateIsOfType(simulationResults, SimulationResults)
+
+      # make sure that length of groups and names is the same
+      # additionally since these lists are going to have strings as elements,
+      # convert NULLs to NAs
+      groups <- .validateListArgs(groups, length(simulationResults$allQuantityPaths))
+      names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
+
+      # save the original object as it is; useful for `$toDataFrame()` method
+      # styler: off
+      private$.simulationResults              <- simulationResults
+      private$.groups$groupsSimulationResults <- groups
+      private$.quantitiesOrPaths              <- quantitiesOrPaths
+      private$.population                     <- population
+      private$.individualIds                  <- individualIds
+      # styler: on
+
+      # extract a dataframe and store it internally
+      private$.simulationResultsDF <- private$.simResults2DF(private$.simulationResults, groups, names)
+
+      # add it to combined dataframe
+      private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.simulationResultsDF)
+
+      # group map can only be generated if at least one grouping is specified
+      if (length(purrr::compact(private$.groups)) > 0L) {
+        private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
+      }
+
       invisible(self)
     },
 
@@ -282,15 +278,14 @@ DataCombined <- R6::R6Class(
           dplyr::matches("^group$"),
           dataType,
           name,
+          dplyr::matches("^paths$"),
           dplyr::matches("id$"),
           # everything related to X-variable
           dplyr::matches("^x"),
           # everything related to Y-variable
           dplyr::matches("^y"),
           # everything else goes after that
-          dplyr::everything(),
-          # columns to leave out of the final dataframe
-          -dplyr::matches("^paths$")
+          dplyr::everything()
         )
       }
 
@@ -396,7 +391,7 @@ DataCombined <- R6::R6Class(
     # methods --------------------
 
     # extract dataframe from DataSet objects
-    .dataSet2DF = function(object, groups = NULL, names = NULL) {
+    .dataSet2DF = function(object, names = NULL, groups = NULL) {
       # if a list of DataSet instances, merge iterated dataframes by rows
       if (is.list(object)) {
         data <- purrr::map_dfr(object, dataSetToDataFrame)
@@ -512,6 +507,20 @@ DataCombined <- R6::R6Class(
       }
 
       dataCurrent
+    },
+
+    # update the list containing original datasets in place
+    .updateList = function(listCurrent = NULL, listNew = NULL) {
+      if (!is.null(listCurrent)) {
+        listCurrent[length(listCurrent) + 1] <- listNew
+      } else {
+        if (is.null(listNew)) {
+          listCurrent <- NULL
+        } else {
+          listCurrent <- list(listNew)
+        }
+      }
+      listCurrent
     },
 
     # extract dataframe with group mappings
