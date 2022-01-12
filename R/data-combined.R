@@ -161,6 +161,7 @@ DataCombined <- R6::R6Class(
       # add it to combined dataframe
       private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.simulationResultsDF)
 
+      # group map can only be generated if at least one grouping is specified
       if (length(purrr::compact(private$.groups)) > 0L) {
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
@@ -281,14 +282,15 @@ DataCombined <- R6::R6Class(
           dplyr::matches("^group$"),
           dataType,
           name,
-          dplyr::matches("^paths$"),
           dplyr::matches("id$"),
           # everything related to X-variable
           dplyr::matches("^x"),
           # everything related to Y-variable
           dplyr::matches("^y"),
           # everything else goes after that
-          dplyr::everything()
+          dplyr::everything(),
+          # columns to leave out of the final dataframe
+          -dplyr::matches("^paths$")
         )
       }
 

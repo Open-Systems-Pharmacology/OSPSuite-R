@@ -18,6 +18,9 @@ test_that("dataCombined - initialization", {
 
   # can't enter a list of `SimulationResults` objects
   expect_error(myCombDat$addSimulationResults(list("x", "y")))
+
+  # can enter a list, but only of `DataSet` objects
+  expect_error(myCombDat$addDataSets(list("x", "y")))
 })
 
 # either `DataSet` and `SimulationResults` provided -------------
@@ -45,9 +48,6 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))
-
-  # no snapshot test for this object because DataSet objects print source file location
-  # this is not going to be the same on CI platforms and so the test will fail
 
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
@@ -77,19 +77,19 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 10L))
+  expect_equal(dim(df2), c(1255L, 9L))
 
   expect_equal(
     names(df2),
     c(
-      "group", "dataType", "name", "paths", "IndividualId", "xValues",  "xUnit", "yValues",
+      "group", "dataType", "name",  "IndividualId", "xValues",  "xUnit", "yValues",
       "yUnit", "yDimension"
     )
   )
-  expect_equal(unique(df2$paths), simResults$allQuantityPaths)
+  expect_equal(unique(df2$name), simResults$allQuantityPaths)
 
   expect_equal(
-    as.character(na.omit(unique(df2$paths))),
+    as.character(na.omit(unique(df2$name))),
     c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
@@ -143,27 +143,16 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(830L, 22L))
+  expect_equal(dim(df), c(830L, 21L))
 
   # check exact values
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "paths", "IndividualId", "Group Id", "xValues",
+      "group", "dataType", "name",  "IndividualId", "Group Id", "xValues",
       "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
       "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
       "Organ", "Compartment", "Molecule"
-    )
-  )
-
-  # There will be NAs because there will be no paths values for observed data
-
-  expect_equal(
-    as.character(na.omit(unique(df$paths))),
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
     )
   )
 
@@ -212,21 +201,10 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1267L, 22L))
+  expect_equal(dim(df2), c(1267L, 21L))
 
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
-
-  expect_equal(
-    as.character(na.omit(unique(df2$paths))),
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
-    )
-  )
 
   expect_equal(
     as.character(unique(df2$name)),
@@ -256,8 +234,8 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   df3 <- myCombDat4$toDataFrame()
   myCombDat4$addDataSets(dataSet[[1]])
   df4 <- myCombDat4$toDataFrame()
-  expect_equal(dim(df3), c(1255L, 10L))
-  expect_equal(dim(df4), c(1267L, 22L))
+  expect_equal(dim(df3), c(1255L, 9L))
+  expect_equal(dim(df4), c(1267L, 21L))
 
   # method chaining works ----------------------------
 
@@ -548,11 +526,11 @@ test_that("DataCombined works with data grouping", {
   # check dataframe
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1332L, 22L))
+  expect_equal(dim(df), c(1332L, 21L))
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "paths", "IndividualId", "Group Id", "xValues",
+      "group", "dataType", "name",  "IndividualId", "Group Id", "xValues",
       "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
       "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
       "Organ", "Compartment", "Molecule"
@@ -561,7 +539,7 @@ test_that("DataCombined works with data grouping", {
 
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1332L, 22L))
+  expect_equal(dim(df2), c(1332L, 21L))
 })
 
 
@@ -738,7 +716,7 @@ test_that("DataCombined works with population", {
   df <- myDataComb$toDataFrame()
 
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1964L, 10L))
+  expect_equal(dim(df), c(1964L, 9L))
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
