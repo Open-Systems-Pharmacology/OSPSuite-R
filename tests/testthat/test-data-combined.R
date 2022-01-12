@@ -15,11 +15,96 @@ test_that("dataCombined - initialization", {
   expect_error(myCombDat$dataSets("x"))
   expect_error(myCombDat$simulationResults("x"))
   expect_error(myCombDat$groupMap("x"))
+
+  # can't enter a list of `SimulationResults` objects
+  expect_error(myCombDat$addSimulationResults(list("x", "y")))
+})
+
+# either `DataSet` and `SimulationResults` provided -------------
+
+test_that("dataCombined - either dataSet or SimulationResults provided", {
+  skip_if_not_installed("R6")
+
+  # load the simulation
+  sim <- loadTestSimulation("MinimalModel")
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  )
+
+  # only DataSet input
+
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  expect_true(R6::is.R6(myCombDat))
+  expect_false(R6::is.R6Class(myCombDat))
+
+  # no snapshot test for this object because DataSet objects print source file location
+  # this is not going to be the same on CI platforms and so the test will fail
+
+  # checking dataframe methods
+  df <- myCombDat$toDataFrame()
+  expect_s3_class(df, "data.frame")
+  expect_equal(dim(df), c(12L, 20L))
+
+  expect_equal(
+    names(df),
+    c(
+      "group", "dataType", "name", "Group Id", "xValues", "xDimension",
+      "xUnit", "yValues", "yErrorValues", "yDimension", "yUnit", "yErrorType",
+      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Organ",
+      "Compartment", "Molecule"
+    )
+  )
+  expect_equal(df$name, df$group)
+  expect_equal(unique(df$name), names(dataSet)[[1]])
+
+  # only SimulationResults input
+
+  myCombDat2 <- DataCombined$new()
+  myCombDat2$addSimulationResults(simResults)
+
+  expect_true(R6::is.R6(myCombDat2))
+  expect_false(R6::is.R6Class(myCombDat2))
+
+  # checking dataframe methods
+  df2 <- myCombDat2$toDataFrame()
+  expect_s3_class(df2, "data.frame")
+  expect_equal(dim(df2), c(1255L, 10L))
+
+  expect_equal(
+    names(df2),
+    c(
+      "group", "dataType", "name", "paths", "IndividualId", "xValues",  "xUnit", "yValues",
+      "yUnit", "yDimension"
+    )
+  )
+  expect_equal(unique(df2$paths), simResults$allQuantityPaths)
+
+  expect_equal(
+    as.character(na.omit(unique(df2$paths))),
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )
+  )
+
+  expect_equal(df2$name, df2$group)
 })
 
 # both `DataSet` and `SimulationResults` provided -------------
 
-test_that("dataCombined - both dataSet and SimulationResults provided", {
+test_that("dataCombined - both DataSet and SimulationResults provided", {
   skip_if_not_installed("R6")
 
   expect_true(R6::is.R6Class(DataCombined))
@@ -191,86 +276,6 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_output(print(myCombDat5))
 })
 
-
-test_that("dataCombined - either dataSet or SimulationResults provided", {
-  skip_if_not_installed("R6")
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
-
-  # only DataSet input ----------------------------
-
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet[[1]])
-
-  expect_true(R6::is.R6(myCombDat))
-  expect_false(R6::is.R6Class(myCombDat))
-
-  # no snapshot test for this object because DataSet objects print source file location
-  # this is not going to be the same on CI platforms and so the test will fail
-
-  # checking dataframe methods
-  df <- myCombDat$toDataFrame()
-  expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(12L, 20L))
-
-  expect_equal(
-    names(df),
-    c(
-      "group", "dataType", "name", "Group Id", "xValues", "xDimension",
-      "xUnit", "yValues", "yErrorValues", "yDimension", "yUnit", "yErrorType",
-      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Organ",
-      "Compartment", "Molecule"
-    )
-  )
-  expect_equal(df$name, df$group)
-  expect_equal(unique(df$name), names(dataSet)[[1]])
-
-  # only SimulationResults input ----------------------------
-
-  myCombDat2 <- DataCombined$new()
-  myCombDat2$addSimulationResults(simResults)
-
-  expect_true(R6::is.R6(myCombDat2))
-  expect_false(R6::is.R6Class(myCombDat2))
-
-  # checking dataframe methods
-  df2 <- myCombDat2$toDataFrame()
-  expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 10L))
-
-  expect_equal(
-    names(df2),
-    c(
-      "group", "dataType", "name", "paths", "IndividualId", "xValues",  "xUnit", "yValues",
-      "yUnit", "yDimension"
-    )
-  )
-  expect_equal(unique(df2$paths), simResults$allQuantityPaths)
-
-  expect_equal(
-    as.character(na.omit(unique(df2$paths))),
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
-    )
-  )
-
-  expect_equal(df2$name, df2$group)
-})
 
 # data transformations ---------------------------------
 

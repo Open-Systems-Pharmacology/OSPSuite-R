@@ -130,10 +130,7 @@ DataCombined <- R6::R6Class(
 
       # list of `SimulationResults` instances is not allowed
       if (is.list(simulationResults)) {
-        stop(
-          "Only a single instance, and not a list, of `SimulationResults` objects is expected.",
-          call. = FALSE
-        )
+        stop(messages$errorWrongType("simulationResults", "list", "a scalar (vector of length 1)"))
       }
 
       # validate the object type
@@ -501,14 +498,18 @@ DataCombined <- R6::R6Class(
     },
 
     # update the combined dataframe in place
-    .updateDF = function(dataOld = NULL, dataNew = NULL) {
-      if (!is.null(dataOld)) {
-        dataOld <- dplyr::bind_rows(dataOld, dataNew)
+    .updateDF = function(dataCurrent = NULL, dataNew = NULL) {
+      # if there is already data, add new data at the bottom
+      # note that this introduces order effects, i.e.,
+      # whether `DataSet` is added `SimulationResults` or vice versa matters
+      # for how the corresponding data rows are ordered in the dataframe
+      if (!is.null(dataCurrent)) {
+        dataCurrent <- dplyr::bind_rows(dataCurrent, dataNew)
       } else {
-        dataOld <- dataNew
+        dataCurrent <- dataNew
       }
 
-      dataOld
+      dataCurrent
     },
 
     # extract dataframe with group mappings
