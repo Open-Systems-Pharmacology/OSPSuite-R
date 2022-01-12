@@ -43,9 +43,9 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    namesSimulationResults = list("x", "y", "z")
+    names = list("x", "y", "z")
   )
-  myCombDat$addDataSets(dataSet)
+  myCombDat$addDataSets(dataSet, names = list("a", NULL, "b", NULL, "c", NULL))
 
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))
@@ -78,16 +78,23 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   )
 
   expect_equal(df$name, df$group)
-  expect_equal(unique(dplyr::filter(df, dataType == "observed")$name), names(dataSet))
+
+  # unchanged names should be same as in the original object
+  expect_equal(
+    unique(dplyr::filter(df, dataType == "observed")$name)[c(2, 4, 6)],
+    names(myCombDat$dataSets)[c(2, 4, 6)]
+  )
+
+  # name changes have taken place for both types of data
   expect_equal(
     as.character(unique(df$name)),
     c(
       "x", "y", "z",
-      "Stevens_2012_placebo.Placebo_total",
+      "a",
       "Stevens_2012_placebo.Sita_total",
-      "Stevens_2012_placebo.Placebo_proximal",
+      "b",
       "Stevens_2012_placebo.Sita_proximal",
-      "Stevens_2012_placebo.Placebo_distal",
+      "c",
       "Stevens_2012_placebo.Sita_dist"
     )
   )
