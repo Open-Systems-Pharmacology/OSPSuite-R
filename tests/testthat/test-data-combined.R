@@ -25,16 +25,16 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
   expect_true(R6::is.R6Class(DataCombined))
 
   # load the simulation
-  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  sim <- loadTestSimulation("MinimalModel")
   simResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
   )
 
   # import observed data (will return a list of DataSet objects)
   dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
   # with list input ----------------------------
@@ -103,7 +103,7 @@ test_that("dataCombined - both dataSet and SimulationResults provided", {
       "Stevens_2012_placebo.Sita_dist"
     )
   )
-  expect_equal(as.character(unique(df$name)),  myCombDat$names)
+  expect_equal(as.character(unique(df$name)), myCombDat$names)
 
   # read-only
   expect_equal(dataSet, myCombDat$dataSets)
@@ -196,16 +196,16 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   skip_if_not_installed("R6")
 
   # load the simulation
-  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  sim <- loadTestSimulation("MinimalModel")
   simResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
   )
 
   # import observed data (will return a list of DataSet objects)
   dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
   # only DataSet input ----------------------------
@@ -278,16 +278,16 @@ test_that("DataCombined with data transformations", {
   skip_if_not_installed("R6")
 
   # load the simulation
-  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  sim <- loadTestSimulation("MinimalModel")
   simResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
   )
 
   # import observed data (will return a list of DataSet objects)
   dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
   # create object with datasets combined
@@ -457,16 +457,16 @@ test_that("DataCombined works with data grouping", {
   skip_if_not_installed("R6")
 
   # load the simulation
-  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  sim <- loadTestSimulation("MinimalModel")
   simResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
   )
 
   # import observed data (will return a list of DataSet objects)
   dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
   # create object with datasets combined
@@ -566,16 +566,16 @@ test_that("DataCombined works with sequential update", {
   skip_if_not_installed("R6")
 
   # load the simulation
-  sim <- loadSimulation(file.path(getwd(), "..", "data", "MinimalModel.pkml"))
+  sim <- loadTestSimulation("MinimalModel")
   simResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = file.path(getwd(), "..", "data", "Stevens_2012_placebo_indiv_results.csv")
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
   )
 
   # import observed data (will return a list of DataSet objects)
   dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = file.path(getwd(), "..", "data", "CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(file.path(getwd(), "..", "data", "ImporterConfiguration.xml"))
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
   # create object with datasets combined

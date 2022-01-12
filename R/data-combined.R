@@ -142,8 +142,8 @@ DataCombined <- R6::R6Class(
       # make sure that length of groups and names is the same
       # additionally since these lists are going to have strings as elements,
       # convert NULLs to NAs
-      groups <- .validateListArgs(groups, simulationResults$allQuantityPaths)
-      names <- .validateListArgs(names, quantitiesOrPaths %||% simulationResults$allQuantityPaths)
+      groups <- .validateListArgs(groups, length(simulationResults$allQuantityPaths))
+      names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
       # save the original object as it is; useful for `$toDataFrame()` method
       # styler: off
@@ -194,7 +194,7 @@ DataCombined <- R6::R6Class(
       # if alternate names are provided, change the names
       # for `NULL` elements, the original names will be retained
       if (!is.null(names) && is.list(dataSets)) {
-        names <- .validateListArgs(names, names(dataSets))
+        names <- .validateListArgs(names, length(names(dataSets)))
         names <- ifelse(is.na(names), names(dataSets), names)
       }
 
@@ -225,6 +225,7 @@ DataCombined <- R6::R6Class(
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
 
+      # for method chaining
       invisible(self)
     },
 
@@ -258,6 +259,7 @@ DataCombined <- R6::R6Class(
         private$.dataCombinedDF <- private$.dataTransform(private$.dataCombinedDF)
       }
 
+      # for method chaining
       invisible(self)
     },
 
@@ -319,6 +321,7 @@ DataCombined <- R6::R6Class(
         }
       }
 
+      # for method chaining
       invisible(self)
     }
   ),
@@ -631,7 +634,7 @@ DataCombined <- R6::R6Class(
 
 .validateListArgs <- function(arg = NULL, expectedLength) {
   if (!is.null(arg)) {
-    validateIsSameLength(expectedLength, arg)
+    validateIsOfLength(arg, expectedLength)
 
     # if a list is specified, convert NULL to NA
     # and then flatten list to a vector
