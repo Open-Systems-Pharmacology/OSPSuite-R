@@ -81,12 +81,12 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 10L))
+  expect_equal(dim(df2), c(1255L, 9L))
 
   expect_equal(
     names(df2),
     c(
-      "group", "dataType", "name", "paths",  "IndividualId", "xValues",  "xUnit", "yValues",
+      "group", "dataType", "name",  "IndividualId", "xValues",  "xUnit", "yValues",
       "yUnit", "yDimension"
     )
   )
@@ -147,13 +147,13 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(830L, 22L))
+  expect_equal(dim(df), c(830L, 21L))
 
   # check exact values
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "paths", "IndividualId", "Group Id", "xValues",
+      "group", "dataType", "name", "IndividualId", "Group Id", "xValues",
       "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
       "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
       "Organ", "Compartment", "Molecule"
@@ -205,7 +205,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1267L, 22L))
+  expect_equal(dim(df2), c(1267L, 21L))
 
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
@@ -238,8 +238,8 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   df3 <- myCombDat4$toDataFrame()
   myCombDat4$addDataSets(dataSet[[1]])
   df4 <- myCombDat4$toDataFrame()
-  expect_equal(dim(df3), c(1255L, 10L))
-  expect_equal(dim(df4), c(1267L, 22L))
+  expect_equal(dim(df3), c(1255L, 9L))
+  expect_equal(dim(df4), c(1267L, 21L))
 
   # method chaining works ----------------------------
 
@@ -590,11 +590,11 @@ test_that("DataCombined works with data grouping", {
   # check dataframe
   df <- myCombDat$toDataFrame()
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1332L, 22L))
+  expect_equal(dim(df), c(1332L, 21L))
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "paths", "IndividualId", "Group Id", "xValues",
+      "group", "dataType", "name", "IndividualId", "Group Id", "xValues",
       "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
       "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
       "Organ", "Compartment", "Molecule"
@@ -603,14 +603,16 @@ test_that("DataCombined works with data grouping", {
 
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1332L, 22L))
+  expect_equal(dim(df2), c(1332L, 21L))
 })
 
 
-# sequential update ---------------------------------
+# sequential update - same values ---------------------------------
 
-test_that("DataCombined works with sequential update", {
+test_that("DataCombined works with sequential update - same values", {
   skip_if_not_installed("R6")
+
+  # if the objects share the same datasets, then the one entered later will be used
 
   # load the simulation
   sim <- loadTestSimulation("MinimalModel")
@@ -655,11 +657,42 @@ test_that("DataCombined works with sequential update", {
   df2 <- myCombDat$toDataFrame()
 
   # should be twice the number of rows and same no. of columns
-  expect_equal(nrow(df2), 2 * nrow(df1))
+  expect_equal(nrow(df2), nrow(df1))
   expect_equal(length(df2), length(df1))
-  expect_equal(unique(df1$group), unique(df2$group)[1:length(unique(df1$group))])
+  expect_equal(head(df1$yValues), head(df2$yValues))
 
-  expect_equal(dim(myCombDat$groupMap), c(20L, 3L))
+  # names should also be the same since they are the same objects
+  expect_equal(unique(df1$name), unique(df2$name))
+
+  # but groupings should now be different
+  expect_equal(
+    unique(df1$group),
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "distal",
+      "proximal",
+      "total"
+    )
+  )
+
+  expect_equal(
+    unique(df2$group),
+    c(
+      "Dapagliflozin - emptying",
+      "Dapagliflozin - retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Sita_proximal",
+      "distal"
+    )
+  )
+
+  expect_equal(dim(myCombDat$groupMap), c(11L, 3L))
 
   # expect_equal(
   #   myCombDat$groupMap,
@@ -670,75 +703,118 @@ test_that("DataCombined works with sequential update", {
   #         "Dapagliflozin - retention",
   #         "distal",
   #         "distal",
-  #         "distal",
-  #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-  #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
   #         "Organism|Lumen|Stomach|Metformin|Gastric retention",
   #         "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
   #         "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-  #         "proximal",
-  #         "proximal",
-  #         "proximal",
   #         "Stevens_2012_placebo.Placebo_proximal",
   #         "Stevens_2012_placebo.Placebo_total",
   #         "Stevens_2012_placebo.Sita_proximal",
-  #         "Stevens_2012_placebo.Sita_total",
-  #         "total",
-  #         "total",
-  #         "total"
+  #         "Stevens_2012_placebo.Sita_total"
   #       ),
   #       name = c(
   #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
   #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
   #         "Stevens_2012_placebo.Placebo_distal",
   #         "Stevens_2012_placebo.Sita_dist",
-  #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-  #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
   #         "Organism|Lumen|Stomach|Metformin|Gastric retention",
   #         "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
   #         "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-  #         "Stevens_2012_placebo.Placebo_proximal",
-  #         "Stevens_2012_placebo.Sita_proximal",
   #         "Stevens_2012_placebo.Placebo_proximal",
   #         "Stevens_2012_placebo.Placebo_total",
   #         "Stevens_2012_placebo.Sita_proximal",
-  #         "Stevens_2012_placebo.Sita_total",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention",
-  #         "Stevens_2012_placebo.Placebo_total",
   #         "Stevens_2012_placebo.Sita_total"
   #       ),
   #       dataType = c(
   #         "simulated",
   #         "simulated",
-  #         "simulated",
   #         "observed",
   #         "observed",
   #         "simulated",
   #         "simulated",
   #         "simulated",
-  #         "simulated",
-  #         "simulated",
-  #         "simulated",
   #         "observed",
   #         "observed",
-  #         "observed",
-  #         "observed",
-  #         "observed",
-  #         "observed",
-  #         "simulated",
   #         "observed",
   #         "observed"
   #       )
   #     ),
-  #     row.names = c(
-  #       NA,
-  #       -20L
-  #     ),
+  #     row.names = c(NA, -11L),
   #     class = c("tbl_df", "tbl", "data.frame")
   #   )
   # )
+})
+
+
+# sequential update - different values ---------------------------------
+
+test_that("DataCombined works with sequential update - different values", {
+  skip_if_not_installed("R6")
+
+  # if the objects share the same datasets, then the one entered later will be used
+
+  # load the simulation
+  sim <- loadTestSimulation("MinimalModel")
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  )
+
+  dataSet2 <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  )
+
+  # create object with datasets combined
+  myCombDat <- DataCombined$new()
+
+  myCombDat$addDataSets(dataSet)
+
+  # let's focus only on the datasets which are going to be duplicated in the next update
+  df1 <- myCombDat$toDataFrame()
+  df1Filter <- dplyr::filter(
+    df1,
+    name %in% c("Stevens_2012_placebo.Placebo_total", "Stevens_2012_placebo.Sita_total")
+  )
+
+  # update object with another `DataSet` object which has common datasets
+  myCombDat$addDataSets(dataSet2)
+
+  df2 <- myCombDat$toDataFrame()
+  df2Filter <- dplyr::filter(
+    df2,
+    name %in% c("Stevens_2012_placebo.Placebo_total", "Stevens_2012_placebo.Sita_total")
+  )
+
+  # check dimensions and values
+
+  # they should be different since the new dataset that replaces the old one has
+  # deliberately different values and rows
+  expect_equal(dim(df1), c(77L, 20L))
+  expect_equal(dim(df2), c(76L, 20L))
+  expect_equal(dim(df1Filter), c(25L, 20L))
+  expect_equal(dim(df2Filter), c(24L, 20L))
+
+  expect_equal(
+    head(df1Filter$xValues),
+    c(
+      0, 13.1722688674927, 29.4033622741699, 44.6470603942871, 73.079833984375,
+      88.2731094360352
+    )
+  )
+
+  expect_equal(
+    head(df2Filter$xValues),
+    c(
+      0, 14.218487739563, 27.4033622741699, 43.6344528198242, 57.8403358459473,
+      74.0672302246094
+    )
+  )
 })
 
 # population objects work ---------------------------------

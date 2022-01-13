@@ -283,6 +283,14 @@ DataCombined <- R6::R6Class(
     #' @return A dataframe.
 
     toDataFrame = function() {
+      # It is deliberate that this "cleaning" happens every time the user calls
+      # this method. R6 has a reference semantics, i.e., the object will be
+      # modified in place and the combined data will be updated with it, but we
+      # do need to retain some of the information that is omitted during
+      # cleaning in the future. For example, we remove offset and scale factor
+      # columns while cleaning, but it needs to be retained in the private field
+      # because the additional datasets that might be added in the future will
+      # have their own parameters that will need to be added
       if (!is.null(private$.dataCombinedDF)) {
         return(private$.cleanDF(private$.dataCombinedDF))
       } else {
@@ -511,13 +519,22 @@ DataCombined <- R6::R6Class(
       # note that this introduces order effects, i.e.,
       # whether `DataSet` is added `SimulationResults` or vice versa matters
       # for how the corresponding data rows are ordered in the dataframe
-      if (!is.null(dataCurrent)) {
+      if (!is.null(dataCurrent) && !is.null(dataNew)) {
+        # check if there are duplicated datasets between these two dataframes
+        dupDatasets <- intersect(unique(dataCurrent$name), unique(dataNew$name))
+
+        # if there are duplicated datasets, then remove the older ones
+        if (length(dupDatasets) > 0L) {
+          dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
+        }
+
+        # append the new dataset at the bottom of the current one
         dataCurrent <- dplyr::bind_rows(dataCurrent, dataNew)
       } else {
         dataCurrent <- dataNew
       }
 
-      dataCurrent
+      return(dataCurrent)
     },
 
     # update the list containing original datasets in place
@@ -646,14 +663,15 @@ DataCombined <- R6::R6Class(
           dplyr::matches("^group$"),
           dataType,
           name,
-          dplyr::matches("^paths$"),
           dplyr::matches("id$"),
           # everything related to X-variable
           dplyr::matches("^x"),
           # everything related to Y-variable
           dplyr::matches("^y"),
           # everything else goes after that
-          dplyr::everything()
+          dplyr::everything(),
+          # columns to remove
+          -dplyr::matches("^paths$")
         ) %>%
         # these columns are no longer necessary
         # retaining them might confuse the user about whether the
