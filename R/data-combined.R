@@ -135,19 +135,20 @@ DataCombined <- R6::R6Class(
         validateIsOfType(dataSets, DataSet)
       }
 
-      # if alternate names are provided, change the names
-      # for `NULL` elements, the original names will be retained
+      # if alternate namesf or datasets are provided, use them instead
+      # for `NULL` elements, the original names will be used
       if (!is.null(names) && is.list(dataSets)) {
         names <- .validateListArgs(names, length(names(dataSets)))
         names <- ifelse(is.na(names), names(dataSets), names)
       }
 
-      # they should be of same length
+      # the grouping specification list and the number of datasets should have
+      # the same length
       if (!is.null(groups)) {
         validateIsSameLength(dataSets, groups)
 
-        # if a list is specified, convert NULL to NA
-        # and then flatten list to a vector
+        # if a list is specified, convert `NULL` to `NA`
+        # and then flatten it to a vector
         if (is.list(groups)) {
           groups <- purrr::flatten_chr(purrr::modify(groups, .null_to_na))
         }
@@ -162,7 +163,7 @@ DataCombined <- R6::R6Class(
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
-        private$.dataSet2DF(private$.dataSets, names, groups)
+        private$.dataSet2DF(dataSets, names, groups)
       )
 
       # update group map
@@ -205,16 +206,14 @@ DataCombined <- R6::R6Class(
       names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
       # save the original object as it is; useful for `$toDataFrame()` method
-      # styler: off
-      private$.simulationResults              <- simulationResults
+      private$.simulationResults <- simulationResults
       private$.groups$groupsSimulationResults <- groups
-      # styler: on
 
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
         private$.simResults2DF(
-          simulationResults = private$.simulationResults,
+          simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
           individualIds     = individualIds,
@@ -262,6 +261,9 @@ DataCombined <- R6::R6Class(
           xScaleFactors = xScaleFactors,
           yScaleFactors = yScaleFactors
         )
+
+        # extract a dataframe with data transformations values
+        private$.dataTransformations <- private$.extractTransforms(private$.dataCombinedDF)
       }
 
       # for method chaining
@@ -282,26 +284,10 @@ DataCombined <- R6::R6Class(
 
     toDataFrame = function() {
       if (!is.null(private$.dataCombinedDF)) {
-        # consistent column order
-        private$.dataCombinedDF <- dplyr::select(
-          private$.dataCombinedDF,
-          # all identifying columns
-          dplyr::matches("^group$"),
-          dataType,
-          name,
-          dplyr::matches("^paths$"),
-          dplyr::matches("id$"),
-          # everything related to X-variable
-          dplyr::matches("^x"),
-          # everything related to Y-variable
-          dplyr::matches("^y"),
-          # everything else goes after that
-          dplyr::everything()
-        )
+        return(private$.cleanDF(private$.dataCombinedDF))
+      } else {
+        return(NULL)
       }
-
-      # final dataframe to return
-      return(private$.dataCombinedDF)
     },
 
     ## print method -----------------
@@ -389,6 +375,17 @@ DataCombined <- R6::R6Class(
           optionalMessage = "Data sets are assigned to groups when adding via `$addSimulationResults()` or `$addDataSets()` methods."
         ))
       }
+    },
+
+    #' @field dataTransformations A dataframe specifying which offsets and scale factors values were used to transform data.
+
+    # just a way to access whatever was specified
+    dataTransformations = function(value) {
+      if (missing(value)) {
+        private$.dataTransformations
+      } else {
+        stop(messages$errorPropertyReadOnly("dataTransformations"))
+      }
     }
   ),
 
@@ -416,11 +413,12 @@ DataCombined <- R6::R6Class(
           tidyr::unnest(cols = c(data))
       }
 
-      # add column describing the type of data
+      # add a column describing the type of data
       data <- data %>%
         dplyr::mutate(dataType = "observed") %>%
         dplyr::as_tibble()
 
+      # add column with grouping information
       data <- private$.addGroupCol(data, groups)
 
       return(data)
@@ -476,7 +474,7 @@ DataCombined <- R6::R6Class(
         data <- dplyr::mutate(data, name = paths)
       }
 
-      # add group column
+      # add column with grouping information
       data <- private$.addGroupCol(data, groups)
 
       return(data)
@@ -507,6 +505,7 @@ DataCombined <- R6::R6Class(
     },
 
     # update the combined dataframe in place
+
     .updateDF = function(dataCurrent = NULL, dataNew = NULL) {
       # if there is already data, add new data at the bottom
       # note that this introduces order effects, i.e.,
@@ -535,24 +534,8 @@ DataCombined <- R6::R6Class(
       listCurrent
     },
 
-    # extract dataframe with group mappings
-    .extractGroupMap = function(data) {
-      data %>%
-        dplyr::select(group, name, dataType) %>%
-        dplyr::distinct() %>%
-        dplyr::arrange(group, name)
-    },
-
-    # extract unique dataset names from the combined dataframe
-    .extractNames = function(data = NULL) {
-      if (!is.null(data)) {
-        unique(data %>% dplyr::pull(name))
-      } else {
-        NULL
-      }
-    },
-
     # transform the dataset using specified offsets and scale factors
+
     .dataTransform = function(data,
                               names = NULL,
                               xOffsets = 0,
@@ -596,12 +579,6 @@ DataCombined <- R6::R6Class(
         data <- dplyr::mutate(data, yErrorValues = yErrorValues * yScaleFactors)
       }
 
-      # these columns are no longer necessary
-      # retaining them might confuse the user about whether the
-      # transformations are supposed to be carried out by the user using these
-      # values or these transformations have already been carried out
-      data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
-
       return(data)
     },
 
@@ -630,6 +607,61 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
+    # extract dataframe with group mappings
+
+    .extractGroupMap = function(data) {
+      data %>%
+        dplyr::select(group, name, dataType) %>%
+        dplyr::distinct() %>%
+        dplyr::arrange(group, name)
+    },
+
+    # extract unique dataset names from the combined dataframe
+
+    .extractNames = function(data = NULL) {
+      if (!is.null(data)) {
+        unique(data %>% dplyr::pull(name))
+      } else {
+        NULL
+      }
+    },
+
+    # extract offsets and scale factors used while data transformations
+
+    .extractTransforms = function(data = NULL) {
+      data %>%
+        dplyr::select(name, dataType, dplyr::matches("offset|scale")) %>%
+        dplyr::group_by(name) %>%
+        dplyr::distinct() %>%
+        dplyr::ungroup()
+    },
+
+    # clean dataframe before returning it to the user
+
+    .cleanDF = function(data = NULL) {
+      # consistent column order
+      data %>%
+        dplyr::select(
+          # all identifying columns
+          dplyr::matches("^group$"),
+          dataType,
+          name,
+          dplyr::matches("^paths$"),
+          dplyr::matches("id$"),
+          # everything related to X-variable
+          dplyr::matches("^x"),
+          # everything related to Y-variable
+          dplyr::matches("^y"),
+          # everything else goes after that
+          dplyr::everything()
+        ) %>%
+        # these columns are no longer necessary
+        # retaining them might confuse the user about whether the
+        # transformations are supposed to be carried out by the user using these
+        # values or these transformations have already been carried out
+        dplyr::select(-dplyr::ends_with(c("Offsets", "ScaleFactors")))
+    },
+
     # private fields --------------------
 
     # styler: off
@@ -638,7 +670,8 @@ DataCombined <- R6::R6Class(
     .dataCombinedDF         = NULL,
     .groups                 = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
     .groupMap               = NULL,
-    .names                  = NULL
+    .names                  = NULL,
+    .dataTransformations    = NULL
     # styler: on
   ),
 

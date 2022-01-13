@@ -10,6 +10,7 @@ test_that("dataCombined - initialization", {
   expect_null(myCombDat$simulationResults)
   expect_null(myCombDat$groupMap)
   expect_null(myCombDat$names)
+  expect_null(myCombDat$toDataFrame())
   expect_output(print(myCombDat), "DataCombined:")
 
   # can't use active bindings like this
@@ -17,6 +18,7 @@ test_that("dataCombined - initialization", {
   expect_error(myCombDat$simulationResults("x"))
   expect_error(myCombDat$groupMap("x"))
   expect_error(myCombDat$names("x"))
+  expect_error(myCombDat$dataTransformations("x"))
 
   # can't enter a list of `SimulationResults` objects
   expect_error(myCombDat$addSimulationResults(list("x", "y")))
@@ -355,6 +357,28 @@ test_that("DataCombined with data transformations", {
     yScaleFactors = 2.5
   )
 
+  # check data transformations are correctly saved inside the object
+  expect_equal(
+    myCombDat$dataTransformations,
+    structure(
+      list(
+        name = c(
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Stevens_2012_placebo.Sita_proximal",
+          "Stevens_2012_placebo.Placebo_distal"
+        ),
+        dataType = c("simulated", "simulated", "observed", "observed"),
+        xOffsets = c(2, 2, 2, 2),
+        xScaleFactors = c(1.5, 1.5, 1.5, 1.5),
+        yOffsets = c(4, 4, 4, 4),
+        yScaleFactors = c(2.5, 2.5, 2.5, 2.5)
+      ),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -4L)
+    )
+  )
+
   dfTransformed <- myCombDat$toDataFrame()
 
   expect_equal(dfTransformed$xValues, (dfOriginal$xValues + 2) * 1.5)
@@ -391,6 +415,26 @@ test_that("DataCombined with data transformations", {
     xScaleFactors = list(1.5, 2.4),
     yOffsets = c(4, 7),
     yScaleFactors = c(1.1, 2.2)
+  )
+
+  # check the transformation values are accurately saved
+  expect_equal(
+    myCombDat2$dataTransformations,
+    structure(
+      list(
+        name = c(
+          "Stevens_2012_placebo.Sita_proximal",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+        ),
+        dataType = c("observed", "simulated"),
+        xOffsets = c(3, 2),
+        xScaleFactors = c(2.4, 1.5),
+        yOffsets = c(7, 4),
+        yScaleFactors = c(2.2, 1.1)
+      ),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -2L)
+    )
   )
 
   df <- myCombDat2$toDataFrame()

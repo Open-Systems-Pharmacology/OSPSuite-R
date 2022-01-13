@@ -50,6 +50,8 @@ objects and/or quantities or paths for \code{SimulationResuls} object.}
 
 \item{\code{groupMap}}{A dataframe specifying which data sets have been grouped
 together and the name and the nature of the dataset.}
+
+\item{\code{dataTransformations}}{A dataframe specifying which offsets and scale factors values were used to transform data.}
 }
 \if{html}{\out{</div>}}
 }
