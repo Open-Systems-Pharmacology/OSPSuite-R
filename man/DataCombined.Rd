@@ -39,12 +39,6 @@ myCombDat
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
-object(s).}
-
-\item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulation} on a \code{Simulation} object.}
-
 \item{\code{names}}{A vector listing collection of all names of \code{DataSet}
 objects and/or quantities or paths for \code{SimulationResuls} object.}
 

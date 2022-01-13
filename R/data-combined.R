@@ -639,11 +639,11 @@ DataCombined <- R6::R6Class(
 
     # private fields --------------------
 
-    .dataCombinedDF         = NULL,
-    .groups                 = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
-    .groupMap               = NULL,
-    .names                  = NULL,
-    .dataTransformations    = NULL
+    .dataCombinedDF = NULL,
+    .groups = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
+    .groupMap = NULL,
+    .names = NULL,
+    .dataTransformations = NULL
   ),
 
   # other object properties --------------------------------------
