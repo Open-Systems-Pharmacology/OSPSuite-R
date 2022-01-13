@@ -154,9 +154,6 @@ DataCombined <- R6::R6Class(
         }
       }
 
-      # save the original object as it is; useful for `$toDataFrame()` method
-      private$.dataSets <- dataSets
-
       # save grouping information for observed data
       private$.groups$groupsDataSets <- groups
 
@@ -205,8 +202,7 @@ DataCombined <- R6::R6Class(
       groups <- .validateListArgs(groups, length(simulationResults$allQuantityPaths))
       names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
-      # save the original object as it is; useful for `$toDataFrame()` method
-      private$.simulationResults <- simulationResults
+      # save grouping information
       private$.groups$groupsSimulationResults <- groups
 
       # extract dataframe and append it to the combined dataframe
@@ -231,6 +227,7 @@ DataCombined <- R6::R6Class(
       # update dataset names
       private$.names <- private$.extractNames(private$.dataCombinedDF)
 
+      # for method chaining
       invisible(self)
     },
 
@@ -328,32 +325,6 @@ DataCombined <- R6::R6Class(
   # active bindings ---------------------------------------------------
 
   active = list(
-
-    #' @field dataSets Instance (or a `list` of instances) of the `DataSet`
-    #'   object(s).
-
-    # don't return `as.list()`, because it just returns a list of public members
-    # from the R6 object by calls `as.list.environment()`, which is not
-    # particularly useful for the users
-    dataSets = function(value) {
-      if (missing(value)) {
-        private$.dataSets
-      } else {
-        stop(messages$errorPropertyReadOnly("dataSets"))
-      }
-    },
-
-    #' @field simulationResults Object of type `SimulationResults` produced by
-    #'   calling `runSimulation` on a `Simulation` object.
-
-    # don't run `as.list()` for reasons mentioned above
-    simulationResults = function(value) {
-      if (missing(value)) {
-        private$.simulationResults
-      } else {
-        stop(messages$errorPropertyReadOnly("simulationResults"))
-      }
-    },
 
     #' @field names A vector listing collection of all names of `DataSet`
     #'   objects and/or quantities or paths for `SimulationResuls` object.
@@ -537,20 +508,6 @@ DataCombined <- R6::R6Class(
       return(dataCurrent)
     },
 
-    # update the list containing original datasets in place
-    .updateList = function(listCurrent = NULL, listNew = NULL) {
-      if (!is.null(listCurrent)) {
-        listCurrent[length(listCurrent) + 1L] <- listNew
-      } else {
-        if (is.null(listNew)) {
-          listCurrent <- NULL
-        } else {
-          listCurrent <- list(listNew)
-        }
-      }
-      listCurrent
-    },
-
     # transform the dataset using specified offsets and scale factors
 
     .dataTransform = function(data,
@@ -682,15 +639,11 @@ DataCombined <- R6::R6Class(
 
     # private fields --------------------
 
-    # styler: off
-    .dataSets               = NULL,
-    .simulationResults      = NULL,
     .dataCombinedDF         = NULL,
     .groups                 = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
     .groupMap               = NULL,
     .names                  = NULL,
     .dataTransformations    = NULL
-    # styler: on
   ),
 
   # other object properties --------------------------------------

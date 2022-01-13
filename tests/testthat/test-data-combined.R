@@ -6,16 +6,13 @@ test_that("dataCombined - initialization", {
   # initialize empty object
   myCombDat <- DataCombined$new()
 
-  expect_null(myCombDat$dataSets)
-  expect_null(myCombDat$simulationResults)
+  # the active bindings should all be NULL at this stage
   expect_null(myCombDat$groupMap)
   expect_null(myCombDat$names)
   expect_null(myCombDat$toDataFrame())
   expect_output(print(myCombDat), "DataCombined:")
 
   # can't use active bindings like this
-  expect_error(myCombDat$dataSets("x"))
-  expect_error(myCombDat$simulationResults("x"))
   expect_error(myCombDat$groupMap("x"))
   expect_error(myCombDat$names("x"))
   expect_error(myCombDat$dataTransformations("x"))
@@ -165,7 +162,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   # unchanged names should be same as in the original object
   expect_equal(
     unique(dplyr::filter(df, dataType == "observed")$name)[c(2, 4, 6)],
-    names(myCombDat$dataSets)[c(2, 4, 6)]
+    names(dataSet)[c(2, 4, 6)]
   )
 
   # name changes have taken place for both types of data
@@ -184,9 +181,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   expect_equal(as.character(unique(df$name)), myCombDat$names)
 
   # read-only
-  expect_equal(dataSet, myCombDat$dataSets)
   expect_error(myCombDat$dataSets(dataSet))
-  expect_equal(simResults, myCombDat$simulationResults)
   expect_error(myCombDat$simulationResults(simResults))
 
   # not specified, so NULL
@@ -858,7 +853,7 @@ test_that("DataCombined works with population", {
   df <- myDataComb$toDataFrame()
 
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1964L, 10L))
+  expect_equal(dim(df), c(1964L, 9L))
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
