@@ -171,7 +171,7 @@ DataCombined <- R6::R6Class(
       }
 
       # update dataset names
-      private$.names <- private$.extractNames()
+      private$.names <- private$.extractNames(private$.dataCombinedDF)
 
       # for method chaining
       invisible(self)
@@ -208,15 +208,19 @@ DataCombined <- R6::R6Class(
       # styler: off
       private$.simulationResults              <- simulationResults
       private$.groups$groupsSimulationResults <- groups
-      private$.quantitiesOrPaths              <- quantitiesOrPaths
-      private$.population                     <- population
-      private$.individualIds                  <- individualIds
       # styler: on
 
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
-        private$.simResults2DF(private$.simulationResults, names, groups)
+        private$.simResults2DF(
+          simulationResults = private$.simulationResults,
+          quantitiesOrPaths = quantitiesOrPaths,
+          population        = population,
+          individualIds     = individualIds,
+          names             = names,
+          groups            = groups
+        )
       )
 
       # update group map
@@ -226,7 +230,7 @@ DataCombined <- R6::R6Class(
       }
 
       # update dataset names
-      private$.names <- private$.extractNames()
+      private$.names <- private$.extractNames(private$.dataCombinedDF)
 
       invisible(self)
     },
@@ -248,16 +252,16 @@ DataCombined <- R6::R6Class(
       validateIsNumeric(xScaleFactors)
       validateIsNumeric(yScaleFactors)
 
-      # styler: off
-      private$.xOffsets      <- xOffsets
-      private$.yOffsets      <- yOffsets
-      private$.xScaleFactors <- xScaleFactors
-      private$.yScaleFactors <- yScaleFactors
-      # styler: on
-
       # transform data
       if (!is.null(private$.dataCombinedDF)) {
-        private$.dataCombinedDF <- private$.dataTransform(private$.dataCombinedDF, names)
+        private$.dataCombinedDF <- private$.dataTransform(
+          data          = private$.dataCombinedDF,
+          names         = names,
+          xOffsets      = xOffsets,
+          yOffsets      = yOffsets,
+          xScaleFactors = xScaleFactors,
+          yScaleFactors = yScaleFactors
+        )
       }
 
       # for method chaining
@@ -394,12 +398,12 @@ DataCombined <- R6::R6Class(
     # private methods --------------------
 
     # extract dataframe from DataSet objects
-    .dataSet2DF = function(object, names = NULL, groups = NULL) {
+    .dataSet2DF = function(dataSets, names = NULL, groups = NULL) {
       # if a list of DataSet instances, merge iterated dataframes by rows
-      if (is.list(object)) {
-        data <- purrr::map_dfr(object, dataSetToDataFrame)
+      if (is.list(dataSets)) {
+        data <- purrr::map_dfr(dataSets, dataSetToDataFrame)
       } else {
-        data <- dataSetToDataFrame(object)
+        data <- dataSetToDataFrame(dataSets)
       }
 
       # if alternative names are provided, use them
@@ -424,13 +428,18 @@ DataCombined <- R6::R6Class(
 
     # extract dataframe from `SimulationResults` objects
 
-    .simResults2DF = function(object, names = NULL, groups = NULL) {
+    .simResults2DF = function(simulationResults,
+                              quantitiesOrPaths = NULL,
+                              population = NULL,
+                              individualIds = NULL,
+                              names = NULL,
+                              groups = NULL) {
       # all input validation will take place in this function itself
       data <- simulationResultsToDataFrame(
-        simulationResults = object,
-        quantitiesOrPaths = private$.quantitiesOrPaths,
-        population        = private$.population,
-        individualIds     = private$.individualIds
+        simulationResults = simulationResults,
+        quantitiesOrPaths = quantitiesOrPaths,
+        population        = population,
+        individualIds     = individualIds
       )
 
       # add column describing the type of data
@@ -515,7 +524,7 @@ DataCombined <- R6::R6Class(
     # update the list containing original datasets in place
     .updateList = function(listCurrent = NULL, listNew = NULL) {
       if (!is.null(listCurrent)) {
-        listCurrent[length(listCurrent) + 1] <- listNew
+        listCurrent[length(listCurrent) + 1L] <- listNew
       } else {
         if (is.null(listNew)) {
           listCurrent <- NULL
@@ -534,35 +543,44 @@ DataCombined <- R6::R6Class(
         dplyr::arrange(group, name)
     },
 
-    # extract names from combined dataframe
-    .extractNames = function() {
-      if (!is.null(private$.dataCombinedDF)) {
-        unique(private$.dataCombinedDF$name)
+    # extract unique dataset names from the combined dataframe
+    .extractNames = function(data = NULL) {
+      if (!is.null(data)) {
+        unique(data %>% dplyr::pull(name))
       } else {
         NULL
       }
     },
 
     # transform the dataset using specified offsets and scale factors
-    .dataTransform = function(data, names = NULL) {
-      # select only the selected dataset names and paths
+    .dataTransform = function(data,
+                              names = NULL,
+                              xOffsets = 0,
+                              yOffsets = 0,
+                              xScaleFactors = 1,
+                              yScaleFactors = 1) {
+
       # if a list of names is provided then the list of other arguments must be
-      # checked to be of the same length as this list
+      # checked to be of the same length as this list and a separate
+      # transformation values needs to be stored for each dataset
       if (!is.null(names)) {
+        # filter out datasets with selected names
         data <- dplyr::filter(data, name %in% names)
 
         # offset and scale factor for x- and y-axes
-        data <- private$.colTransform(data, private$.xOffsets, xOffsets, names)
-        data <- private$.colTransform(data, private$.xScaleFactors, xScaleFactors, names)
-        data <- private$.colTransform(data, private$.yOffsets, yOffsets, names)
-        data <- private$.colTransform(data, private$.yScaleFactors, yScaleFactors, names)
+        data <- data %>%
+          private$.colTransform(xOffsets, "xOffsets", names) %>%
+          private$.colTransform(xScaleFactors, "xScaleFactors", names) %>%
+          private$.colTransform(yOffsets, "yOffsets", names) %>%
+          private$.colTransform(yScaleFactors, "yScaleFactors", names)
       } else {
+        # otherwise the same values are used for all datasets
         data <- dplyr::mutate(
           data,
-          xOffsets = private$.xOffsets[[1]],
-          yOffsets = private$.yOffsets[[1]],
-          xScaleFactors = private$.xScaleFactors[[1]],
-          yScaleFactors = private$.yScaleFactors[[1]]
+          xOffsets = xOffsets,
+          yOffsets = yOffsets,
+          xScaleFactors = xScaleFactors,
+          yScaleFactors = yScaleFactors
         )
       }
 
@@ -575,23 +593,28 @@ DataCombined <- R6::R6Class(
 
       # applicable only if the error is available
       if ("yErrorValues" %in% names(data)) {
-        data <- dplyr::mutate(
-          data,
-          yErrorValues = yErrorValues * yScaleFactors
-        )
+        data <- dplyr::mutate(data, yErrorValues = yErrorValues * yScaleFactors)
       }
 
       # these columns are no longer necessary
       # retaining them might confuse the user about whether the
       # transformations are supposed to be carried out by the user using these
-      # values or these transformations have already been carried out by the
-      # method using these values
+      # values or these transformations have already been carried out
       data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
 
       return(data)
     },
 
     # to transform a single column
+    #
+    # Although arguments to parameters `arg` and `colName` are going to be the
+    # same, they can't be represented by the same argument since one is
+    # providing values while the other is providing a name. Doing so will
+    # produce the following error:
+    #
+    # > promise already under evaluation: recursive default argument reference or
+    # > earlier problems?
+
     .colTransform = function(data, arg, colName, names) {
       if (length(arg) > 1L) {
         validateIsSameLength(arg, names)
@@ -615,14 +638,7 @@ DataCombined <- R6::R6Class(
     .dataCombinedDF         = NULL,
     .groups                 = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
     .groupMap               = NULL,
-    .names                  = NULL,
-    .quantitiesOrPaths      = NULL,
-    .population             = NULL,
-    .individualIds          = NULL,
-    .xOffsets               = 0,
-    .yOffsets               = 0,
-    .xScaleFactors          = 1,
-    .yScaleFactors          = 1
+    .names                  = NULL
     # styler: on
   ),
 

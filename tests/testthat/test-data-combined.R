@@ -9,12 +9,14 @@ test_that("dataCombined - initialization", {
   expect_null(myCombDat$dataSets)
   expect_null(myCombDat$simulationResults)
   expect_null(myCombDat$groupMap)
+  expect_null(myCombDat$names)
   expect_output(print(myCombDat), "DataCombined:")
 
   # can't use active bindings like this
   expect_error(myCombDat$dataSets("x"))
   expect_error(myCombDat$simulationResults("x"))
   expect_error(myCombDat$groupMap("x"))
+  expect_error(myCombDat$names("x"))
 
   # can't enter a list of `SimulationResults` objects
   expect_error(myCombDat$addSimulationResults(list("x", "y")))
