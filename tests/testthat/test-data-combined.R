@@ -243,6 +243,21 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   df5 <- myCombDat5$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$toDataFrame()
   expect_equal(dim(df4), dim(df5))
 
+  myCombDat6 <- DataCombined$new()
+  myCombDat6$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$addDataSets(dataSet[[2]])
+  expect_equal(
+    myCombDat6$names,
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total"
+    )
+  )
+
   # not specified, so NULL
   expect_null(myCombDat$groupMap)
 

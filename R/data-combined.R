@@ -159,15 +159,19 @@ DataCombined <- R6::R6Class(
       # save grouping information for observed data
       private$.groups$groupsDataSets <- groups
 
-      # extract a dataframe and store it internally
-      private$.dataSetsDF <- private$.dataSet2DF(private$.dataSets, names, groups)
+      # extract dataframe and append it to the combined dataframe
+      private$.dataCombinedDF <- private$.updateDF(
+        private$.dataCombinedDF,
+        private$.dataSet2DF(private$.dataSets, names, groups)
+      )
 
-      # add it to combined dataframe
-      private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.dataSetsDF)
-
+      # update group map
       if (length(purrr::compact(private$.groups)) > 0L) {
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
+
+      # update dataset names
+      private$.names <- private$.extractNames()
 
       # for method chaining
       invisible(self)
@@ -209,16 +213,20 @@ DataCombined <- R6::R6Class(
       private$.individualIds                  <- individualIds
       # styler: on
 
-      # extract a dataframe and store it internally
-      private$.simulationResultsDF <- private$.simResults2DF(private$.simulationResults, groups, names)
+      # extract dataframe and append it to the combined dataframe
+      private$.dataCombinedDF <- private$.updateDF(
+        private$.dataCombinedDF,
+        private$.simResults2DF(private$.simulationResults, names, groups)
+      )
 
-      # add it to combined dataframe
-      private$.dataCombinedDF <- private$.updateDF(private$.dataCombinedDF, private$.simulationResultsDF)
-
+      # update group map
       # group map can only be generated if at least one grouping is specified
       if (length(purrr::compact(private$.groups)) > 0L) {
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
       }
+
+      # update dataset names
+      private$.names <- private$.extractNames()
 
       invisible(self)
     },
@@ -241,7 +249,6 @@ DataCombined <- R6::R6Class(
       validateIsNumeric(yScaleFactors)
 
       # styler: off
-      private$.names         <- names
       private$.xOffsets      <- xOffsets
       private$.yOffsets      <- yOffsets
       private$.xScaleFactors <- xScaleFactors
@@ -250,7 +257,7 @@ DataCombined <- R6::R6Class(
 
       # transform data
       if (!is.null(private$.dataCombinedDF)) {
-        private$.dataCombinedDF <- private$.dataTransform(private$.dataCombinedDF)
+        private$.dataCombinedDF <- private$.dataTransform(private$.dataCombinedDF, names)
       }
 
       # for method chaining
@@ -356,11 +363,7 @@ DataCombined <- R6::R6Class(
     # just a way to access whatever was specified
     names = function(value) {
       if (missing(value)) {
-        if (!is.null(private$.dataCombinedDF)) {
-          unique(private$.dataCombinedDF$name)
-        } else {
-          NULL
-        }
+        private$.names
       } else {
         stop(messages$errorPropertyReadOnly(
           "names",
@@ -385,10 +388,10 @@ DataCombined <- R6::R6Class(
     }
   ),
 
-  # private methods and fields -----------------------------------
+  # private -----------------------------------
 
   private = list(
-    # methods --------------------
+    # private methods --------------------
 
     # extract dataframe from DataSet objects
     .dataSet2DF = function(object, names = NULL, groups = NULL) {
@@ -421,7 +424,7 @@ DataCombined <- R6::R6Class(
 
     # extract dataframe from `SimulationResults` objects
 
-    .simResults2DF = function(object, groups = NULL, names = NULL) {
+    .simResults2DF = function(object, names = NULL, groups = NULL) {
       # all input validation will take place in this function itself
       data <- simulationResultsToDataFrame(
         simulationResults = object,
@@ -531,19 +534,28 @@ DataCombined <- R6::R6Class(
         dplyr::arrange(group, name)
     },
 
+    # extract names from combined dataframe
+    .extractNames = function() {
+      if (!is.null(private$.dataCombinedDF)) {
+        unique(private$.dataCombinedDF$name)
+      } else {
+        NULL
+      }
+    },
+
     # transform the dataset using specified offsets and scale factors
-    .dataTransform = function(data) {
+    .dataTransform = function(data, names = NULL) {
       # select only the selected dataset names and paths
       # if a list of names is provided then the list of other arguments must be
       # checked to be of the same length as this list
-      if (!is.null(private$.names)) {
-        data <- dplyr::filter(data, name %in% private$.names)
+      if (!is.null(names)) {
+        data <- dplyr::filter(data, name %in% names)
 
         # offset and scale factor for x- and y-axes
-        data <- private$.colTransform(data, private$.xOffsets, xOffsets)
-        data <- private$.colTransform(data, private$.xScaleFactors, xScaleFactors)
-        data <- private$.colTransform(data, private$.yOffsets, yOffsets)
-        data <- private$.colTransform(data, private$.yScaleFactors, yScaleFactors)
+        data <- private$.colTransform(data, private$.xOffsets, xOffsets, names)
+        data <- private$.colTransform(data, private$.xScaleFactors, xScaleFactors, names)
+        data <- private$.colTransform(data, private$.yOffsets, yOffsets, names)
+        data <- private$.colTransform(data, private$.yScaleFactors, yScaleFactors, names)
       } else {
         data <- dplyr::mutate(
           data,
@@ -580,13 +592,13 @@ DataCombined <- R6::R6Class(
     },
 
     # to transform a single column
-    .colTransform = function(data, arg, colName) {
+    .colTransform = function(data, arg, colName, names) {
       if (length(arg) > 1L) {
-        validateIsSameLength(arg, private$.names)
+        validateIsSameLength(arg, names)
 
         data <- data %>%
           dplyr::group_by(name) %>%
-          dplyr::mutate({{ colName }} := arg[match(name, private$.names)][[1]]) %>%
+          dplyr::mutate({{ colName }} := arg[match(name, names)][[1]]) %>%
           dplyr::ungroup()
       } else {
         data <- dplyr::mutate(data, {{ colName }} := arg[[1]])
@@ -595,20 +607,18 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    # fields --------------------
+    # private fields --------------------
 
     # styler: off
     .dataSets               = NULL,
-    .dataSetsDF             = NULL,
     .simulationResults      = NULL,
-    .simulationResultsDF    = NULL,
     .dataCombinedDF         = NULL,
     .groups                 = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
     .groupMap               = NULL,
+    .names                  = NULL,
     .quantitiesOrPaths      = NULL,
     .population             = NULL,
     .individualIds          = NULL,
-    .names                  = NULL,
     .xOffsets               = 0,
     .yOffsets               = 0,
     .xScaleFactors          = 1,
