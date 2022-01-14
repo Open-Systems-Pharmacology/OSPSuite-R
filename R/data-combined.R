@@ -2,12 +2,15 @@
 #'
 #' @description
 #'
-#' A class for storage of simulated and/or observed data, which can be further
-#' used to extract as a dataframe for visualization methods. Additionally, it
-#' allows:
-#' - Grouping different (simulated and/or observed) datasets with unique
-#' grouping labels. If no grouping is specified, name of the dataset is used as
-#' a grouping column.
+#' A class for storing simulated and/or observed in a single dataframe, which
+#' can be further used for visualization methods.
+#'
+#' Additionally, it allows:
+#'
+#' - Grouping different (simulated and/or observed) datasets with grouping
+#' labels. If no grouping is specified, name of the dataset is used as a
+#' grouping label.
+#'
 #' - Transforming data (with given offsets and scale factors).
 #'
 #' @param simulationResults Object of type `SimulationResults` produced by
@@ -105,8 +108,11 @@ DataCombined <- R6::R6Class(
 
     #' @description
     #' Initialize a new instance of the class.
-    #' The constructor is empty because we prefer that the users add
-    #' `SimulationResults` and `DataSet` objects separately and individually.
+    #'
+    #' The constructor is empty because we prefer that the users add `DataSet`
+    #' and `SimulationResults` objects separately and individually using the
+    #' dedicated methods.
+    #'
     #' @return A new instance of `DataCombined` object.
 
     # empty constructor
@@ -116,26 +122,27 @@ DataCombined <- R6::R6Class(
     ## setter methods ---------------
 
     #' @description
-    #' Add observed data.
+    #' Adds observed data.
     #' @return `DataCombined` object containing observed data.
 
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
       # fail fast if this is not correct
       validateIsString(groups, nullAllowed = TRUE)
 
-      # if a list is provided, keep only elements which are of `DataSet` type
+      # if a list is provided, keep only elements which are `DataSet` instances
       if (is.list(dataSets)) {
         dataSets <- purrr::keep(dataSets, ~ inherits(.x, "DataSet"))
 
-        # if no object of `DataSet` type is retained, inform the user
+        # if no `DataSet` instance is retained, inform the user and stop
         if (length(dataSets) == 0L) {
           stop("No `DataSet` object detected.", call. = FALSE)
         }
       } else {
+        # if a single instance is entered instead, validate it
         validateIsOfType(dataSets, DataSet)
       }
 
-      # if alternate namesf or datasets are provided, use them instead
+      # if alternate names are provided for datasets, use them instead
       # for `NULL` elements, the original names will be used
       if (!is.null(names) && is.list(dataSets)) {
         # anticipate that although a list of `DataSet` objects might be entered,
@@ -147,21 +154,19 @@ DataCombined <- R6::R6Class(
           names(dataSets) <- purrr::map_chr(dataSets, .f = ~ purrr::pluck(.x, "name"))
         }
 
-        # lengths of specified names and objects should be same
+        # lengths of alternate names and objects should be same
         names <- private$.validateListArgs(names, length(names(dataSets)))
 
-        # if any of the elements in provided names list are NULL (which are
-        # converted to NA), use original name
+        # if any of the alternate names `NULL`, use original names
         names <- ifelse(is.na(names), names(dataSets), names)
       }
 
-      # the grouping specification list and the number of datasets should have
-      # the same length
+      # length of list with grouping specification and the number of datasets
+      # should be same
       if (!is.null(groups)) {
         validateIsOfLength(groups, private$.objCount(dataSets))
 
-        # if a list is specified, convert `NULL` to `NA`
-        # and then flatten it to a vector
+        # if a list is specified, convert `NULL` to `NA` and then flatten it to a vector
         if (is.list(groups)) {
           groups <- purrr::flatten_chr(purrr::modify(groups, private$.null_to_na))
         }
@@ -211,7 +216,7 @@ DataCombined <- R6::R6Class(
 
       # make sure that length of groups and names is the same
       # additionally since these lists are going to have strings as elements,
-      # convert NULLs to NAs
+      # convert `NULL`s to `NA`s
       groups <- private$.validateListArgs(groups, length(simulationResults$allQuantityPaths))
       names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
@@ -247,7 +252,8 @@ DataCombined <- R6::R6Class(
     #' @description
     #' Transform raw data with required offsets and scale factors.
     #' @return A dataframe with respective raw quantities plus offsets
-    #'   multiplied by the specified scale factors.
+    #'   multiplied by the specified scale factors. If error column is present,
+    #'   it will also be scaled.
 
     setDataTransforms = function(names = NULL,
                                  xOffsets = 0,
@@ -283,24 +289,63 @@ DataCombined <- R6::R6Class(
     ## getter methods ---------------
 
     #' @description
-    #' A dataframe of simulated and/or observed data (depending on instances of
-    #' which objects have been added to the object).
+    #' A method to extract a dataframe of simulated and/or observed data
+    #' (depending on instances of which objects have been added to the object).
     #'
     #' Note that the order in which you enter different object matters. If you
     #' first enter observed data and simulated data later, the rows will also be
-    #' ordered in the same way.
+    #' in the same order in the returned dataframe.
     #'
-    #' @return A dataframe.
+    #' @return
+    #'
+    #' A dataframe.
+    #'
+    #' The length (number of columns) and number of rows of a dataframe will
+    #' change depending on instances of which objects and how many objects have
+    #' been provided to the object. During the object's lifetime, this method
+    #' will return an updated version of a dataframe that combines observed and
+    #' simulated data contained in provided objects.
+    #'
+    #'   For the same reasons, the dataframe might contain some or all of the
+    #'   following columns:
+    #'
+    #'     group
+    #'     dataType
+    #'     name
+    #'     Group Id
+    #'     xValues
+    #'     xDimension
+    #'     xUnit
+    #'     yValues
+    #'     yErrorValues
+    #'     yDimension
+    #'     yUnit
+    #'     yErrorType
+    #'     yErrorUnit
+    #'     molWeight
+    #'     lloq
+    #'     Source
+    #'     Sheet
+    #'     Organ
+    #'     Compartment
+    #'     Molecule
+
 
     toDataFrame = function() {
       # It is deliberate that this "cleaning" happens every time the user calls
       # this method. R6 has a reference semantics, i.e., the object will be
-      # modified in place and the combined data will be updated with it, but we
-      # do need to retain some of the information that is omitted during
-      # cleaning in the future. For example, we remove offset and scale factor
-      # columns while cleaning, but it needs to be retained in the private field
-      # because the additional datasets that might be added in the future will
-      # have their own parameters that will need to be added
+      # modified in place and the combined data will be updated with it. But,
+      # for future updates, we do need to retain some information that is
+      # omitted during cleaning.
+      #
+      # For example, we remove offset and scale factor columns during cleaning,
+      # but they need to be retained in the private copy of the combined
+      # dataframe because the datasets that might be added in the future will
+      # have their own offsets and scale factors, which will need to be appended
+      # to the existing ones to be returned by the `dataTransformations()`
+      # active binding. If we were to clean the dataframe in place, this will
+      # not be possible since there won't be offset and scale factors columns to
+      # append to.
       if (!is.null(private$.dataCombinedDF)) {
         return(private$.cleanDF(private$.dataCombinedDF))
       } else {
@@ -316,6 +361,8 @@ DataCombined <- R6::R6Class(
     print = function() {
       private$printClass()
 
+      # TODO: what do we want to print here?!
+
       # for method chaining
       invisible(self)
     }
@@ -325,8 +372,8 @@ DataCombined <- R6::R6Class(
 
   active = list(
 
-    #' @field names A vector listing collection of all names of `DataSet`
-    #'   objects and/or quantities or paths for `SimulationResuls` object.
+    #' @field names A vector of unique names of `DataSet` objects and/or
+    #'   quantities or paths from `SimulationResuls` object.
 
     # just a way to access whatever was specified
     names = function(value) {
@@ -340,8 +387,8 @@ DataCombined <- R6::R6Class(
       }
     },
 
-    #' @field groupMap A dataframe specifying which data sets have been grouped
-    #'   together and the name and the nature of the dataset.
+    #' @field groupMap A dataframe specifying which datasets have been grouped
+    #'   together and the name and the nature (observed or simulated?) of the data.
 
     # just a way to access whatever was specified
     groupMap = function(value) {
@@ -355,7 +402,8 @@ DataCombined <- R6::R6Class(
       }
     },
 
-    #' @field dataTransformations A dataframe specifying which offsets and scale factors values were used to transform data.
+    #' @field dataTransformations A dataframe specifying which offsets and scale
+    #'   factor values were specified by the user for each dataset.
 
     # just a way to access whatever was specified
     dataTransformations = function(value) {
@@ -372,7 +420,7 @@ DataCombined <- R6::R6Class(
   private = list(
     ## private methods --------------------
 
-    ## object to data extractors ---------------------
+    ## dataframe extractors ---------------------
 
     # extract dataframe from DataSet objects
     .dataSet2DF = function(dataSets, names = NULL, groups = NULL) {
@@ -460,7 +508,7 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    ## column modifiers ---------------------
+    ## dataframe modifiers ---------------------
 
     # add a new group column
     # if no grouping is specified, this is going to be same as name
@@ -534,7 +582,7 @@ DataCombined <- R6::R6Class(
           private$.colTransform(yOffsets, "yOffsets", names) %>%
           private$.colTransform(yScaleFactors, "yScaleFactors", names)
       } else {
-        # otherwise the same values are used for all datasets
+        # if names are not provided, the same values are used for all datasets
         data <- dplyr::mutate(
           data,
           xOffsets = xOffsets,
@@ -551,7 +599,7 @@ DataCombined <- R6::R6Class(
         yValues = (yValues + yOffsets) * yScaleFactors
       )
 
-      # applicable only if the error is available
+      # applicable only if the error values are available
       if ("yErrorValues" %in% names(data)) {
         data <- dplyr::mutate(data, yErrorValues = yErrorValues * yScaleFactors)
       }
@@ -559,17 +607,18 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    # to transform a single column
+    # To transform a single column
     #
     # Although arguments to parameters `arg` and `colName` are going to be the
-    # same, they can't be represented by the same argument since one is
-    # providing values while the other is providing a name. Doing so will
-    # produce the following error:
+    # same, they can't be represented by the same parameter in method signature
+    # since one is providing values while the other is providing a name. Doing
+    # so will produce the following error:
     #
     # > promise already under evaluation: recursive default argument reference or
     # > earlier problems?
 
     .colTransform = function(data, arg, colName, names) {
+      # if a list is provided
       if (length(arg) > 1L) {
         validateIsSameLength(arg, names)
 
@@ -578,6 +627,7 @@ DataCombined <- R6::R6Class(
           dplyr::mutate({{ colName }} := arg[match(name, names)][[1]]) %>%
           dplyr::ungroup()
       } else {
+        # if a scalar is provided
         data <- dplyr::mutate(data, {{ colName }} := arg[[1]])
       }
 
@@ -589,6 +639,9 @@ DataCombined <- R6::R6Class(
     # extract dataframe with group mappings
 
     .extractGroupMap = function(data) {
+      # select only the unique identifier columns and then
+      # retain only the distinct combinations and then
+      # arrange the dataframe by grouping and names
       data %>%
         dplyr::select(group, name, dataType) %>%
         dplyr::distinct() %>%
@@ -605,20 +658,29 @@ DataCombined <- R6::R6Class(
       }
     },
 
-    # extract offsets and scale factors used while data transformations
+    # Extract offsets and scale factors used while data transformations
+    #
+    # Since the user might have entered distinct transformation parameters for
+    # each dataset, the combined dataframe needs to be grouped by dataset names.
 
     .extractTransforms = function(data = NULL) {
-      data %>%
+      # select the unique identifier and transformation parameter columns and then
+      # group the combined dataframe by unique datasets and then
+      # within each dataset retain distinct row combinations and then
+      # ungroup the dataframe
+      data <- data %>%
         dplyr::select(name, dataType, dplyr::matches("offset|scale")) %>%
         dplyr::group_by(name) %>%
         dplyr::distinct() %>%
         dplyr::ungroup()
+
+      return(data)
     },
 
     # clean dataframe before returning it to the user
 
     .cleanDF = function(data = NULL) {
-      # consistent column order
+      # having a consistent column order
       data %>%
         dplyr::select(
           # all identifying columns
@@ -626,16 +688,16 @@ DataCombined <- R6::R6Class(
           dataType,
           name,
           dplyr::matches("id$"),
-          # everything related to X-variable
+          # everything related to the X-variable
           dplyr::matches("^x"),
-          # everything related to Y-variable
+          # everything related to the Y-variable
           dplyr::matches("^y"),
-          # everything else goes after that
+          # all other columns go after that
           dplyr::everything(),
-          # columns to remove
+          # columns to remove (using -)
           -dplyr::matches("^paths$")
         ) %>%
-        # these columns are no longer necessary
+        # the following columns are no longer necessary
         # retaining them might confuse the user about whether the
         # transformations are supposed to be carried out by the user using these
         # values or these transformations have already been carried out
@@ -647,8 +709,7 @@ DataCombined <- R6::R6Class(
     # convert `NULL` values to `NA`s
     #
     # `NULL`s should be converted to `NA`, because otherwise flattening a list
-    # will drop them and the vector lengths will be shorter than argument list
-    # lengths
+    # will drop them and the resulting vectors will be shorter than argument lists
 
     .null_to_na = function(x) {
       if (is.null(x)) {
@@ -659,15 +720,17 @@ DataCombined <- R6::R6Class(
       }
     },
 
-    # extract how many objects were entered, which will be used to decide if
-    # the lengths of `names` and `groups` arguments
+    # Extract how many objects were entered, which will be used to decide if
+    # the lengths of `names`, `groups`, etc. arguments are acceptable.
+    #
     # for example,
     # - if `dataSet` is given a list of 5 `DataSet` objects, then 5
     # - if `dataSet` is given a single `DataSet` object, then 1
+    # - `SimulationResults` is always going to be a single object, then 1
     #
-    # Note that `length() won't work here as it will return the number of named
-    # objects named in the `DataSet` or `SimulationResults` environment, which
-    # is now what we want
+    # Note that `length()` won't work here as it will return the number of named
+    # objects in the `DataSet` or `SimulationResults` environments, which
+    # is not what we want
 
     .objCount = function(x) {
       if (is.list(x)) {
@@ -679,17 +742,27 @@ DataCombined <- R6::R6Class(
       return(l)
     },
 
-    # arguments like `names`, `groups`, etc. need to be of the same length
-    # as the entered datasets
+    # Serves two purposes while validating arguments that are entered as lists:
+    #
+    # - Arguments like `names`, `groups`, etc. need to be of the same length
+    # as the entered datasets. This is checked here.
+    #
+    # - We allow entering `NULL` for elements where the users don't expect any
+    # change. But, if a list with `NULL` is flattened to a vector, it will be
+    # dropped and the length of list of arguments will become shorter. This is
+    # taken care of using the private `.null_to_na()` method.
 
     .validateListArgs = function(arg = NULL, expectedLength) {
       if (!is.null(arg)) {
         validateIsOfLength(arg, expectedLength)
 
-        # if a list is specified, convert NULL to NA
-        # and then flatten list to a vector
+        # if a list is specified,
+        # modify it in place by converting `NULL` to `NA` and then
+        # flatten the list to an atomic vector of character type
         if (is.list(arg)) {
-          arg <- purrr::flatten_chr(purrr::modify(arg, private$.null_to_na))
+          arg <- arg %>%
+            purrr::modify(private$.null_to_na) %>%
+            purrr::flatten_chr(.)
         }
       }
 

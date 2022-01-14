@@ -5,13 +5,14 @@
 \alias{DataCombined}
 \title{Object combining simulated and observed data}
 \description{
-A class for storage of simulated and/or observed data, which can be further
-used to extract as a dataframe for visualization methods. Additionally, it
-allows:
+A class for storing simulated and/or observed in a single dataframe, which
+can be further used for visualization methods.
+
+Additionally, it allows:
 \itemize{
-\item Grouping different (simulated and/or observed) datasets with unique
-grouping labels. If no grouping is specified, name of the dataset is used as
-a grouping column.
+\item Grouping different (simulated and/or observed) datasets with grouping
+labels. If no grouping is specified, name of the dataset is used as a
+grouping label.
 \item Transforming data (with given offsets and scale factors).
 }
 }
@@ -39,13 +40,14 @@ myCombDat
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{names}}{A vector listing collection of all names of \code{DataSet}
-objects and/or quantities or paths for \code{SimulationResuls} object.}
+\item{\code{names}}{A vector of unique names of \code{DataSet} objects and/or
+quantities or paths from \code{SimulationResuls} object.}
 
-\item{\code{groupMap}}{A dataframe specifying which data sets have been grouped
-together and the name and the nature of the dataset.}
+\item{\code{groupMap}}{A dataframe specifying which datasets have been grouped
+together and the name and the nature (observed or simulated?) of the data.}
 
-\item{\code{dataTransformations}}{A dataframe specifying which offsets and scale factors values were used to transform data.}
+\item{\code{dataTransformations}}{A dataframe specifying which offsets and scale
+factor values were specified by the user for each dataset.}
 }
 \if{html}{\out{</div>}}
 }
@@ -72,8 +74,10 @@ together and the name and the nature of the dataset.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class.
-The constructor is empty because we prefer that the users add
-\code{SimulationResults} and \code{DataSet} objects separately and individually.
+
+The constructor is empty because we prefer that the users add \code{DataSet}
+and \code{SimulationResults} objects separately and individually using the
+dedicated methods.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$new()}\if{html}{\out{</div>}}
 }
@@ -86,7 +90,7 @@ A new instance of \code{DataCombined} object.
 \if{html}{\out{<a id="method-addDataSets"></a>}}
 \if{latex}{\out{\hypertarget{method-addDataSets}{}}}
 \subsection{Method \code{addDataSets()}}{
-Add observed data.
+Adds observed data.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL)}\if{html}{\out{</div>}}
 }
@@ -229,25 +233,55 @@ as \code{NULL} in the list.}
 }
 \subsection{Returns}{
 A dataframe with respective raw quantities plus offsets
-multiplied by the specified scale factors.
+multiplied by the specified scale factors. If error column is present,
+it will also be scaled.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-toDataFrame"></a>}}
 \if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
-A dataframe of simulated and/or observed data (depending on instances of
-which objects have been added to the object).
+A method to extract a dataframe of simulated and/or observed data
+(depending on instances of which objects have been added to the object).
 
 Note that the order in which you enter different object matters. If you
 first enter observed data and simulated data later, the rows will also be
-ordered in the same way.
+in the same order in the returned dataframe.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
 A dataframe.
+
+The length (number of columns) and number of rows of a dataframe will
+change depending on instances of which objects and how many objects have
+been provided to the object. During the object's lifetime, this method
+will return an updated version of a dataframe that combines observed and
+simulated data contained in provided objects.
+
+For the same reasons, the dataframe might contain some or all of the
+following columns:\preformatted{group
+dataType
+name
+Group Id
+xValues
+xDimension
+xUnit
+yValues
+yErrorValues
+yDimension
+yUnit
+yErrorType
+yErrorUnit
+molWeight
+lloq
+Source
+Sheet
+Organ
+Compartment
+Molecule
+}
 }
 }
 \if{html}{\out{<hr>}}
