@@ -624,39 +624,35 @@ test_that("DataCombined works with data grouping", {
   expect_equal(dim(dfMap), c(11L, 3L))
   expect_equal(dim(dfMap2), c(11L, 3L))
 
-  # expect_equal(
-  #   dfMap$group,
-  #   c(
-  #     "distal",
-  #     "distal",
-  #     "distal",
-  #     "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-  #     "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-  #     "proximal",
-  #     "proximal",
-  #     "proximal",
-  #     "total",
-  #     "total",
-  #     "total"
-  #   )
-  # )
-  #
-  # expect_equal(
-  #   dfMap$name,
-  #   c(
-  #     "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-  #     "Stevens_2012_placebo.Placebo_distal",
-  #     "Stevens_2012_placebo.Sita_dist",
-  #     "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-  #     "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-  #     "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-  #     "Stevens_2012_placebo.Placebo_proximal",
-  #     "Stevens_2012_placebo.Sita_proximal",
-  #     "Organism|Lumen|Stomach|Metformin|Gastric retention",
-  #     "Stevens_2012_placebo.Placebo_total",
-  #     "Stevens_2012_placebo.Sita_total"
-  #   )
-  # )
+  expect_equal(
+    dplyr::filter(dfMap, group == "distal", dataType == "simulated")$name,
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "distal", dataType == "observed")$name,
+    c("Stevens_2012_placebo.Placebo_distal", "Stevens_2012_placebo.Sita_dist")
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "proximal", dataType == "simulated")$name,
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "proximal", dataType == "observed")$name,
+    c("Stevens_2012_placebo.Placebo_proximal", "Stevens_2012_placebo.Sita_proximal")
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "total", dataType == "simulated")$name,
+    "Organism|Lumen|Stomach|Metformin|Gastric retention"
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "total", dataType == "observed")$name,
+    c("Stevens_2012_placebo.Placebo_total", "Stevens_2012_placebo.Sita_total")
+  )
 
   expect_equal(dfMap$group, dfMap2$group)
   expect_equal(dfMap$name, dfMap2$name)
