@@ -255,8 +255,6 @@ A dataframe.
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
-If \code{dataSets} is a list of \code{DataSet} objects, then the print output is
-going to be quite long.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$print()}\if{html}{\out{</div>}}
 }

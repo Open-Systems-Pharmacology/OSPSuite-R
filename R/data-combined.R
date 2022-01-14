@@ -148,7 +148,7 @@ DataCombined <- R6::R6Class(
         }
 
         # lengths of specified names and objects should be same
-        names <- .validateListArgs(names, length(names(dataSets)))
+        names <- private$.validateListArgs(names, length(names(dataSets)))
 
         # if any of the elements in provided names list are NULL (which are
         # converted to NA), use original name
@@ -158,12 +158,12 @@ DataCombined <- R6::R6Class(
       # the grouping specification list and the number of datasets should have
       # the same length
       if (!is.null(groups)) {
-        validateIsSameLength(dataSets, groups)
+        validateIsOfLength(groups, private$.objCount(dataSets))
 
         # if a list is specified, convert `NULL` to `NA`
         # and then flatten it to a vector
         if (is.list(groups)) {
-          groups <- purrr::flatten_chr(purrr::modify(groups, .null_to_na))
+          groups <- purrr::flatten_chr(purrr::modify(groups, private$.null_to_na))
         }
       }
 
@@ -212,8 +212,8 @@ DataCombined <- R6::R6Class(
       # make sure that length of groups and names is the same
       # additionally since these lists are going to have strings as elements,
       # convert NULLs to NAs
-      groups <- .validateListArgs(groups, length(simulationResults$allQuantityPaths))
-      names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
+      groups <- private$.validateListArgs(groups, length(simulationResults$allQuantityPaths))
+      names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
@@ -312,23 +312,9 @@ DataCombined <- R6::R6Class(
 
     #' @description
     #' Print the object to the console
-    #' If `dataSets` is a list of `DataSet` objects, then the print output is
-    #' going to be quite long.
 
     print = function() {
       private$printClass()
-
-      if (!is.null(private$.simulationResults)) {
-        private$.simulationResults$print()
-      }
-
-      if (!is.null(private$.dataSets)) {
-        if (is.list(private$.dataSets)) {
-          purrr::walk(private$.dataSets, print)
-        } else {
-          private$.dataSets$print()
-        }
-      }
 
       # for method chaining
       invisible(self)
@@ -384,7 +370,9 @@ DataCombined <- R6::R6Class(
   # private -----------------------------------
 
   private = list(
-    # private methods --------------------
+    ## private methods --------------------
+
+    ## object to data extractors ---------------------
 
     # extract dataframe from DataSet objects
     .dataSet2DF = function(dataSets, names = NULL, groups = NULL) {
@@ -405,13 +393,13 @@ DataCombined <- R6::R6Class(
           tidyr::unnest(cols = c(data))
       }
 
-      # add a column describing the type of data
+      # add column with grouping information and then
+      # add a column describing the type of data and then
+      # convert to tibble before returning the dataframe
       data <- data %>%
+        private$.addGroupCol(groups) %>%
         dplyr::mutate(dataType = "observed") %>%
         dplyr::as_tibble()
-
-      # add column with grouping information
-      data <- private$.addGroupCol(data, groups)
 
       return(data)
     },
@@ -430,19 +418,6 @@ DataCombined <- R6::R6Class(
         quantitiesOrPaths = quantitiesOrPaths,
         population        = population,
         individualIds     = individualIds
-      )
-
-      # add column describing the type of data
-      data <- dplyr::mutate(data, dataType = "simulated") %>%
-        dplyr::as_tibble()
-
-      # rename according to column naming conventions for DataSet
-      data <- dplyr::rename(data,
-        "xValues"    = "Time",
-        "xUnit"      = "TimeUnit",
-        "yValues"    = "simulationValues",
-        "yUnit"      = "unit",
-        "yDimension" = "dimension"
       )
 
       # if alternative names are provided, use them
@@ -466,11 +441,26 @@ DataCombined <- R6::R6Class(
         data <- dplyr::mutate(data, name = paths)
       }
 
-      # add column with grouping information
-      data <- private$.addGroupCol(data, groups)
+      # add column with grouping information and then
+      # add a column describing the type of data and then
+      # rename according to column naming conventions for `DataSet` and then
+      # convert to tibble before returning the dataframe
+      data <- data %>%
+        private$.addGroupCol(groups) %>%
+        dplyr::mutate(dataType = "simulated") %>%
+        dplyr::rename(
+          "xValues"    = "Time",
+          "xUnit"      = "TimeUnit",
+          "yValues"    = "simulationValues",
+          "yUnit"      = "unit",
+          "yDimension" = "dimension"
+        ) %>%
+        dplyr::as_tibble()
 
       return(data)
     },
+
+    ## column modifiers ---------------------
 
     # add a new group column
     # if no grouping is specified, this is going to be same as name
@@ -594,6 +584,8 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
+    ## extractor for active bindings ---------------------
+
     # extract dataframe with group mappings
 
     .extractGroupMap = function(data) {
@@ -650,7 +642,61 @@ DataCombined <- R6::R6Class(
         dplyr::select(-dplyr::ends_with(c("Offsets", "ScaleFactors")))
     },
 
-    # private fields --------------------
+    ## utilities ---------------------
+
+    # convert `NULL` values to `NA`s
+    #
+    # `NULL`s should be converted to `NA`, because otherwise flattening a list
+    # will drop them and the vector lengths will be shorter than argument list
+    # lengths
+
+    .null_to_na = function(x) {
+      if (is.null(x)) {
+        # since the groups are always going to be strings
+        x <- NA_character_
+      } else {
+        x
+      }
+    },
+
+    # extract how many objects were entered, which will be used to decide if
+    # the lengths of `names` and `groups` arguments
+    # for example,
+    # - if `dataSet` is given a list of 5 `DataSet` objects, then 5
+    # - if `dataSet` is given a single `DataSet` object, then 1
+    #
+    # Note that `length() won't work here as it will return the number of named
+    # objects named in the `DataSet` or `SimulationResults` environment, which
+    # is now what we want
+
+    .objCount = function(x) {
+      if (is.list(x)) {
+        l <- length(x)
+      } else {
+        l <- length(list(x))
+      }
+
+      return(l)
+    },
+
+    # arguments like `names`, `groups`, etc. need to be of the same length
+    # as the entered datasets
+
+    .validateListArgs = function(arg = NULL, expectedLength) {
+      if (!is.null(arg)) {
+        validateIsOfLength(arg, expectedLength)
+
+        # if a list is specified, convert NULL to NA
+        # and then flatten list to a vector
+        if (is.list(arg)) {
+          arg <- purrr::flatten_chr(purrr::modify(arg, private$.null_to_na))
+        }
+      }
+
+      return(arg)
+    },
+
+    ## private fields --------------------
 
     .dataCombinedDF = NULL,
     .groups = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
@@ -666,37 +712,3 @@ DataCombined <- R6::R6Class(
   cloneable = TRUE,
   portable = TRUE
 )
-
-
-# utils ---------------------------------------
-
-#' @title convert `NULL` values to `NA`s
-#'
-#' @description
-#' `NULL`s should be converted to `NA`, because otherwise flattening a list will
-#' drop them and the vector lengths will be shorter than argument list lengths
-#'
-#' @noRd
-
-.null_to_na <- function(x) {
-  if (is.null(x)) {
-    # since the groups are always going to be strings
-    x <- NA_character_
-  } else {
-    x
-  }
-}
-
-.validateListArgs <- function(arg = NULL, expectedLength) {
-  if (!is.null(arg)) {
-    validateIsOfLength(arg, expectedLength)
-
-    # if a list is specified, convert NULL to NA
-    # and then flatten list to a vector
-    if (is.list(arg)) {
-      arg <- purrr::flatten_chr(purrr::modify(arg, .null_to_na))
-    }
-  }
-
-  return(arg)
-}

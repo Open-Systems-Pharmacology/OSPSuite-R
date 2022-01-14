@@ -653,6 +653,17 @@ test_that("DataCombined works with data grouping", {
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
   expect_equal(dim(df2), c(1332L, 21L))
+
+  # single dataset can also be added with a group
+  myCombDat3 <- DataCombined$new()
+  myCombDat3$addDataSets(dataSet[[1]], groups = "x")
+  expect_equal(myCombDat3$groupMap$group[[1]], "x")
+  expect_equal(myCombDat3$groupMap$name[[1]], "Stevens_2012_placebo.Placebo_total")
+
+  # entering NA doesn't cause any problems
+  myCombDat4 <- DataCombined$new()
+  myCombDat4$addDataSets(dataSet[[1]], groups = NA_character_)
+  expect_equal(myCombDat4$groupMap$group[[1]], myCombDat4$groupMap$name[[1]])
 })
 
 
