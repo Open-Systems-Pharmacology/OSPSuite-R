@@ -123,7 +123,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
-  # with list input ----------------------------
+  # with list and name inputs ----------------------------
 
   # create object with datasets combined
   myCombDat <- DataCombined$new()
@@ -266,6 +266,60 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   expect_output(print(myCombDat3))
   expect_output(print(myCombDat4))
   expect_output(print(myCombDat5))
+})
+
+# same data order with or without `names` argument -------------
+
+test_that("dataCombined - same data order with or without `names` argument", {
+  skip_if_not_installed("R6")
+
+  # load the simulation
+  sim <- loadTestSimulation("MinimalModel")
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  )
+
+  # create object with datasets combined
+  myCombDat <- DataCombined$new()
+  myCombDat2 <- DataCombined$new()
+
+  # add a list of datasets without names in the container list
+  # don't specify names argument for one, while do for the other
+  myCombDat$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
+  myCombDat2$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]),
+    names = list("x", "y", NULL)
+  )
+
+  # extract dataframes
+  df1 <- myCombDat$toDataFrame()
+  df2 <- myCombDat2$toDataFrame()
+
+  # except for names column, everything should look the same across two objects
+  expect_equal(nrow(df1), nrow(df2))
+  expect_equal(length(df1), length(df2))
+  expect_equal(df1$xValues, df2$xValues)
+  expect_equal(df1$yValues, df2$yValues)
+
+  expect_equal(
+    unique(df1$name),
+    c(
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total",
+      "Stevens_2012_placebo.Placebo_proximal"
+    )
+  )
+
+  expect_equal(
+    unique(df2$name),
+    c("x", "y", "Stevens_2012_placebo.Placebo_proximal")
+  )
 })
 
 

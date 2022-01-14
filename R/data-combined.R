@@ -138,7 +138,20 @@ DataCombined <- R6::R6Class(
       # if alternate namesf or datasets are provided, use them instead
       # for `NULL` elements, the original names will be used
       if (!is.null(names) && is.list(dataSets)) {
+        # anticipate that although a list of `DataSet` objects might be entered,
+        # they might not have names associated with them in the container list
+        # in such cases, go inside each element of the list (purrr::map) and
+        # extract (purrr::pluck) the name from the object itself and use them
+        # instead and simplify to a character vector
+        if (is.null(names(dataSets))) {
+          names(dataSets) <- purrr::map_chr(dataSets, .f = ~ purrr::pluck(.x, "name"))
+        }
+
+        # lengths of specified names and objects should be same
         names <- .validateListArgs(names, length(names(dataSets)))
+
+        # if any of the elements in provided names list are NULL (which are
+        # converted to NA), use original name
         names <- ifelse(is.na(names), names(dataSets), names)
       }
 
@@ -202,9 +215,6 @@ DataCombined <- R6::R6Class(
       groups <- .validateListArgs(groups, length(simulationResults$allQuantityPaths))
       names <- .validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
-      # save grouping information
-      private$.groups$groupsSimulationResults <- groups
-
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
@@ -217,6 +227,9 @@ DataCombined <- R6::R6Class(
           groups            = groups
         )
       )
+
+      # save grouping information
+      private$.groups$groupsSimulationResults <- groups
 
       # update group map
       # group map can only be generated if at least one grouping is specified
