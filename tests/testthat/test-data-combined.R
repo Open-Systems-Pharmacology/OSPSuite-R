@@ -90,25 +90,11 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
     groups = c("a", NA_character_, "b")
   )
 
+  expect_equal(dplyr::filter(myCombDat3$groupMap, group == "a")$name[[1]], "x")
+  expect_equal(dplyr::filter(myCombDat3$groupMap, group == "b")$name[[1]], "y")
   expect_equal(
-    myCombDat3$groupMap,
-    structure(
-      list(
-        group = c(
-          "a",
-          "b",
-          "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
-        ),
-        name = c(
-          "x",
-          "y",
-          "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
-        ),
-        dataType = c("simulated", "simulated", "simulated")
-      ),
-      row.names = c(NA, -3L),
-      class = c("tbl_df", "tbl", "data.frame")
-    )
+    dplyr::filter(myCombDat3$groupMap, !group %in% c("a", "b"))$name[[1]],
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
   )
 
   expect_true(R6::is.R6(myCombDat2))
