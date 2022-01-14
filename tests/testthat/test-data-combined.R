@@ -22,6 +22,10 @@ test_that("dataCombined - initialization", {
 
   # can enter a list, but only of `DataSet` objects
   expect_error(myCombDat$addDataSets(list("x", "y")))
+
+  # NULLs now allowed
+  expect_error(myCombDat$addDataSets(list(NULL)))
+  expect_error(myCombDat$addSimulationResults(list(NULL)))
 })
 
 # either `DataSet` and `SimulationResults` provided -------------
@@ -125,7 +129,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
 
   # with list and name inputs ----------------------------
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -189,7 +193,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
 
   # with DataSet input ----------------------------
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
   myCombDat2$addDataSets(dataSet[[1]])
@@ -286,7 +290,7 @@ test_that("dataCombined - same data order with or without `names` argument", {
     importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat <- DataCombined$new()
   myCombDat2 <- DataCombined$new()
 
@@ -341,7 +345,7 @@ test_that("DataCombined with data transformations", {
     importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat <- DataCombined$new()
 
   # this should fail because of incorrect argument type
@@ -434,7 +438,7 @@ test_that("DataCombined with data transformations", {
   expect_equal(dfTransformed$yValues, (dfOriginal$yValues + 4) * 2.5)
   expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat2 <- DataCombined$new()
   myCombDat2$addDataSets(dataSet)
   myCombDat2$addSimulationResults(simResults)
@@ -562,7 +566,7 @@ test_that("DataCombined works with data grouping", {
     importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat <- DataCombined$new()
 
   # expect error when grouping length and data type are inaccurate
@@ -687,7 +691,7 @@ test_that("DataCombined works with sequential update - same values", {
     importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat <- DataCombined$new()
 
   # add grouping
@@ -830,7 +834,7 @@ test_that("DataCombined works with sequential update - different values", {
     importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
   )
 
-  # create object with datasets combined
+  # create a new instance of the object
   myCombDat <- DataCombined$new()
 
   myCombDat$addDataSets(dataSet)
@@ -925,4 +929,77 @@ test_that("DataCombined works with population", {
   expect_equal(unique(df$yUnit), "µmol/l")
   expect_equal(unique(df$yDimension), "Concentration (molar)")
   expect_equal(unique(df$xUnit), "min")
+})
+
+
+# edge cases ---------------------------------
+
+test_that("DataCombined works with edge cases", {
+  # load the simulation
+  sim <- loadTestSimulation("MinimalModel")
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+  )
+
+  # import observed data (will return a list of DataSet objects)
+  dataSet <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  )
+
+  ## groups name same as dataset name ---------------------------
+
+  # create a new instance of the object
+  myCombDat <- DataCombined$new()
+
+  # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
+  myCombDat$addDataSets(dataSet[[1]])
+
+  # dataset name is "Stevens_2012_placebo.Sita_total" but no grouping assigned is
+  # same as dataset name entered before
+  myCombDat$addDataSets(dataSet[[2]], groups = "Stevens_2012_placebo.Placebo_total")
+
+  # they shouldn't be collapsed together in the same group
+  # TODO: this is yet to be figured out
+  expect_true(myCombDat$groupMap$group[[1]] == myCombDat$groupMap$group[[2]])
+
+  # list/vector and NULL/NA ---------------------------
+
+  # create a new instance of the object
+  myCombDat2 <- DataCombined$new()
+  myCombDat3 <- DataCombined$new()
+
+  myCombDat2$addDataSets(
+    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
+    names = list(NULL, "x", NA_character_, "y"),
+    groups = c("a", NA_character_, "b", NA_character_)
+  )
+  myCombDat3$addDataSets(
+    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
+    names = c(NA_character_, "x", NA_character_, "y"),
+    groups = list("a", NULL, "b", NA_character_)
+  )
+
+  myCombDat2$setDataTransforms(
+    names = list(
+      "Stevens_2012_placebo.Placebo_total" ,
+      "x",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "y"
+    ),
+    xOffsets = list(1.2, 2, 2.3, 4.8),
+    yOffsets = c(3.1, 4.4, 3.5, 6.1),
+    xScaleFactors = c(1.2, 2, 2.3, 4.8),
+    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
+  )
+  myCombDat3$setDataTransforms(
+    xOffsets = list(1.2, 2, 2.3, 4.8),
+    yOffsets = c(3.1, 4.4, 3.5, 6.1),
+    xScaleFactors = c(1.2, 2, 2.3, 4.8),
+    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
+  )
+
+  expect_equal(myCombDat2$groupMap, myCombDat3$groupMap)
+  expect_equal(myCombDat2$dataTransformations, myCombDat3$dataTransformations)
 })

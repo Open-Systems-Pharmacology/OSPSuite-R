@@ -126,20 +126,19 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object containing observed data.
 
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
-      # fail fast if this is not correct
-      validateIsString(groups, nullAllowed = TRUE)
+      # fail fast if datatypes are incorrect
+      # purrr::walk is needed below because there is no output here
 
-      # if a list is provided, keep only elements which are `DataSet` instances
+      # groups are strings or characters
+      purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
+
+      # if a list is provided, check each element is a `DataSet` instance
+      # `NULL` elements are not accepted in argument list here
       if (is.list(dataSets)) {
-        dataSets <- purrr::keep(dataSets, ~ inherits(.x, "DataSet"))
-
-        # if no `DataSet` instance is retained, inform the user and stop
-        if (length(dataSets) == 0L) {
-          stop("No `DataSet` object detected.", call. = FALSE)
-        }
+        purrr::walk(.x = dataSets, .f = ~ validateIsOfType(.x, "DataSet", nullAllowed = FALSE))
       } else {
         # if a single instance is entered instead, validate it
-        validateIsOfType(dataSets, DataSet)
+        validateIsOfType(dataSets, DataSet, nullAllowed = FALSE)
       }
 
       # if alternate names are provided for datasets, use them instead
@@ -203,7 +202,8 @@ DataCombined <- R6::R6Class(
                                     individualIds = NULL,
                                     names = NULL,
                                     groups = NULL) {
-      # fail fast; walk is needed because there is no output here
+      # fail fast if datatypes are incorrect
+      # purrr::walk is needed below because there is no output here
       purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
 
       # list of `SimulationResults` instances is not allowed
@@ -212,6 +212,7 @@ DataCombined <- R6::R6Class(
       }
 
       # validate the object type
+      # `NULL` elements are not accepted here
       validateIsOfType(simulationResults, SimulationResults)
 
       # make sure that length of groups and names is the same
@@ -574,23 +575,21 @@ DataCombined <- R6::R6Class(
       if (!is.null(names)) {
         # filter out datasets with selected names
         data <- dplyr::filter(data, name %in% names)
-
-        # offset and scale factor for x- and y-axes
-        data <- data %>%
-          private$.colTransform(xOffsets, "xOffsets", names) %>%
-          private$.colTransform(xScaleFactors, "xScaleFactors", names) %>%
-          private$.colTransform(yOffsets, "yOffsets", names) %>%
-          private$.colTransform(yScaleFactors, "yScaleFactors", names)
       } else {
-        # if names are not provided, the same values are used for all datasets
-        data <- dplyr::mutate(
-          data,
-          xOffsets = xOffsets,
-          yOffsets = yOffsets,
-          xScaleFactors = xScaleFactors,
-          yScaleFactors = yScaleFactors
-        )
+        # if names are not provided then the entire dataframe will be used
+        names <- unique(data %>% dplyr::pull(name))
       }
+
+      # apply offset and scale factor for x- and y-axes
+      #
+      # The private `$.colTransform()`method internally takes care of applying
+      # transformation to each dataset separately if a list of parameters is
+      # provided, or use the same parameters for the entire dataframe otherwise
+      data <- data %>%
+        private$.colTransform(xOffsets, "xOffsets", names) %>%
+        private$.colTransform(xScaleFactors, "xScaleFactors", names) %>%
+        private$.colTransform(yOffsets, "yOffsets", names) %>%
+        private$.colTransform(yScaleFactors, "yScaleFactors", names)
 
       # apply transformations
       data <- dplyr::mutate(
@@ -617,7 +616,7 @@ DataCombined <- R6::R6Class(
     # > promise already under evaluation: recursive default argument reference or
     # > earlier problems?
 
-    .colTransform = function(data, arg, colName, names) {
+    .colTransform = function(data, arg, colName, names = NULL) {
       # if a list is provided
       if (length(arg) > 1L) {
         validateIsSameLength(arg, names)
