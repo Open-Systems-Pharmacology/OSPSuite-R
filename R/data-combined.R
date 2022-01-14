@@ -218,7 +218,7 @@ DataCombined <- R6::R6Class(
       # make sure that length of groups and names is the same
       # additionally since these lists are going to have strings as elements,
       # convert `NULL`s to `NA`s
-      groups <- private$.validateListArgs(groups, length(simulationResults$allQuantityPaths))
+      groups <- private$.validateListArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
       names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
 
       # extract dataframe and append it to the combined dataframe
@@ -469,25 +469,25 @@ DataCombined <- R6::R6Class(
         individualIds     = individualIds
       )
 
+      # if names are not present, use paths as unique names
+      if (!"name" %in% names(data)) {
+        data <- dplyr::mutate(data, name = paths)
+      }
+
       # if alternative names are provided, use them
       if (!is.null(names)) {
         data <- data %>%
-          dplyr::group_by(paths) %>%
+          dplyr::group_by(name) %>%
           tidyr::nest() %>%
           dplyr::ungroup() %>%
           dplyr::mutate(name = names) %>%
           tidyr::unnest(cols = c(data)) %>%
           dplyr::mutate(
-            group = dplyr::case_when(
+            name = dplyr::case_when(
               is.na(name) ~ paths,
               TRUE ~ name
             )
           )
-      }
-
-      # if names are not specified, use paths as unique names
-      if (!"name" %in% names(data)) {
-        data <- dplyr::mutate(data, name = paths)
       }
 
       # add column with grouping information and then

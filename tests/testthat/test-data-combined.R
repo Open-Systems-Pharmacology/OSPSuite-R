@@ -73,8 +73,43 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 
   # only SimulationResults input
 
+  # selecting all paths
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
+
+  # selecting a few paths
+  myCombDat3 <- DataCombined$new()
+  myCombDat3$addSimulationResults(
+    simResults,
+    quantitiesOrPaths = c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    ),
+    names = c("x", NA_character_, "y"),
+    groups = c("a", NA_character_, "b")
+  )
+
+  expect_equal(
+    myCombDat3$groupMap,
+    structure(
+      list(
+        group = c(
+          "a",
+          "b",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
+        ),
+        name = c(
+          "x",
+          "y",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
+        ),
+        dataType = c("simulated", "simulated", "simulated")
+      ),
+      row.names = c(NA, -3L),
+      class = c("tbl_df", "tbl", "data.frame")
+    )
+  )
 
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
@@ -983,7 +1018,7 @@ test_that("DataCombined works with edge cases", {
 
   myCombDat2$setDataTransforms(
     names = list(
-      "Stevens_2012_placebo.Placebo_total" ,
+      "Stevens_2012_placebo.Placebo_total",
       "x",
       "Stevens_2012_placebo.Placebo_proximal",
       "y"
