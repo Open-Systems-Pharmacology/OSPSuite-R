@@ -182,28 +182,33 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     )
   )
 
+  # no grouping, so all NA
   expect_equal(rep(NA_character_, length(df$group)), df$group)
 
-  # unchanged names should be same as in the original object
+  # these should be the same since it's the same dataset with a different name
   expect_equal(
-    unique(dplyr::filter(df, dataType == "observed")$name)[4:6],
-    sort(names(dataSet)[c(2, 4, 6)])
+    dplyr::filter(df, name == "x")$yValues,
+    simulationResultsToDataFrame(
+      simResults,
+      quantitiesOrPaths = "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+    )$simulationValues
   )
 
-  # name changes have taken place for both types of data
   expect_equal(
-    as.character(unique(df$name)),
-    c(
-      "a",
-      "b",
-      "c",
-      "Stevens_2012_placebo.Sita_dist",
-      "Stevens_2012_placebo.Sita_proximal",
-      "Stevens_2012_placebo.Sita_total",
-      "x", "y", "z"
-    )
+    dplyr::filter(df, name == "y")$yValues,
+    simulationResultsToDataFrame(
+      simResults,
+      quantitiesOrPaths = "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
+    )$simulationValues
   )
-  expect_equal(as.character(unique(df$name)), myCombDat$names)
+
+  expect_equal(
+    dplyr::filter(df, name == "z")$yValues,
+    simulationResultsToDataFrame(
+      simResults,
+      quantitiesOrPaths = "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    )$simulationValues
+  )
 
   # read-only
   expect_error(myCombDat$dataSets(dataSet))
