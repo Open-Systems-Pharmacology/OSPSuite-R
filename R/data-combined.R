@@ -127,7 +127,8 @@ DataCombined <- R6::R6Class(
 
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
       # fail fast if datatypes are incorrect
-      # purrr::walk is needed below because there is no output here
+      # purrr::walk is needed below because validation helper functions are
+      # called only for their side effects
 
       # groups are strings or characters
       purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
@@ -162,14 +163,7 @@ DataCombined <- R6::R6Class(
 
       # length of list with grouping specification and the number of datasets
       # should be same
-      if (!is.null(groups)) {
-        validateIsOfLength(groups, private$.objCount(dataSets))
-
-        # if a list is specified, convert `NULL` to `NA` and then flatten it to a vector
-        if (is.list(groups)) {
-          groups <- purrr::flatten_chr(purrr::modify(groups, private$.null_to_na))
-        }
-      }
+      groups <- private$.validateListArgs(groups, private$.objCount(dataSets))
 
       # save grouping information for observed data
       private$.groups$groupsDataSets <- groups
@@ -705,18 +699,22 @@ DataCombined <- R6::R6Class(
 
     ## utilities ---------------------
 
-    # convert `NULL` values to `NA`s
+    # Convert `NULL` and logical `NA` values to character `NA`s
     #
     # `NULL`s should be converted to `NA`, because otherwise flattening a list
-    # will drop them and the resulting vectors will be shorter than argument lists
+    # will drop them and the resulting vectors will be shorter than argument
+    # lists
+    #
+    # Additionally, if users instead enter a vector with character types and
+    # `NA`s, the default `NA` in R is of logical type, and thus therefore needs
+    # to be explicitly cast to `NA_character_`.
 
-    .null_to_na = function(x) {
-      if (is.null(x)) {
-        # since the groups are always going to be strings
+    .null_to_na_chr = function(x) {
+      if (is.null(x) || is.na(x)) {
         x <- NA_character_
-      } else {
-        x
       }
+
+      return(x)
     },
 
     # Extract how many objects were entered, which will be used to decide if
@@ -728,8 +726,9 @@ DataCombined <- R6::R6Class(
     # - `SimulationResults` is always going to be a single object, then 1
     #
     # Note that `length()` won't work here as it will return the number of named
-    # objects in the `DataSet` or `SimulationResults` environments, which
-    # is not what we want
+    # objects in the `DataSet` or `SimulationResults` environments, which is not
+    # what we want. For example, if `dataSet` is given a single `DataSet`
+    # object, then the length will be 22, and not 1.
 
     .objCount = function(x) {
       if (is.list(x)) {
@@ -741,7 +740,7 @@ DataCombined <- R6::R6Class(
       return(l)
     },
 
-    # Serves two purposes while validating arguments that are entered as lists:
+    # Serves following purposes while validating arguments entered as lists:
     #
     # - Arguments like `names`, `groups`, etc. need to be of the same length
     # as the entered datasets. This is checked here.
@@ -749,19 +748,22 @@ DataCombined <- R6::R6Class(
     # - We allow entering `NULL` for elements where the users don't expect any
     # change. But, if a list with `NULL` is flattened to a vector, it will be
     # dropped and the length of list of arguments will become shorter. This is
-    # taken care of using the private `.null_to_na()` method.
+    # taken care of using the private `.null_to_na_chr()` method.
 
     .validateListArgs = function(arg = NULL, expectedLength) {
       if (!is.null(arg)) {
+        # this will work irrespective of whether it's a list or not
         validateIsOfLength(arg, expectedLength)
 
-        # if a list is specified,
-        # modify it in place by converting `NULL` to `NA` and then
-        # flatten the list to an atomic vector of character type
+        # irrespective of whether a list or a vector is specified,
+        # modify it in place by converting `NULL` to `NA_character` and then
+        # if it's a list, flatten it to an atomic vector of character type
         if (is.list(arg)) {
           arg <- arg %>%
-            purrr::modify(private$.null_to_na) %>%
+            purrr::modify(private$.null_to_na_chr) %>%
             purrr::flatten_chr(.)
+        } else {
+          arg <- arg %>% purrr::modify(private$.null_to_na_chr)
         }
       }
 

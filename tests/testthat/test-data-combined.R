@@ -987,14 +987,15 @@ test_that("DataCombined works with edge cases", {
   myCombDat2 <- DataCombined$new()
   myCombDat3 <- DataCombined$new()
 
+  # make sure the default logical NA doesn't create any issues
   myCombDat2$addDataSets(
     list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
     names = list(NULL, "x", NA_character_, "y"),
-    groups = c("a", NA_character_, "b", NA_character_)
+    groups = c("a", NA_character_, "b", NA)
   )
   myCombDat3$addDataSets(
     list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    names = c(NA_character_, "x", NA_character_, "y"),
+    names = c(NA_character_, "x", NA, "y"),
     groups = list("a", NULL, "b", NA_character_)
   )
 
