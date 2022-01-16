@@ -41,10 +41,13 @@ myCombDat
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{names}}{A vector of unique names of \code{DataSet} objects and/or
-quantities or paths from \code{SimulationResuls} object.}
+quantities or paths from \code{SimulationResuls} object sorted
+alphabetically.}
 
 \item{\code{groupMap}}{A dataframe specifying which datasets have been grouped
-together and the name and the nature (observed or simulated?) of the data.}
+together and the name and the nature (observed or simulated?) of the
+data. If a dataset was not assigned to any group, this is denoted by
+\code{NA} in the dataframe.}
 
 \item{\code{dataTransformations}}{A dataframe specifying which offsets and scale
 factor values were specified by the user for each dataset.}
@@ -101,7 +104,8 @@ Adds observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 object(s).}
 
-\item{\code{names}}{This argument will be encountered across different methods:
+\item{\code{names}}{A string or a list of string. This argument will be encountered
+across different methods:
 \itemize{
 \item \verb{$setDataTransforms()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
@@ -119,9 +123,11 @@ as \code{NULL} in the list.}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
 group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group. If \code{NULL} (default), data sets are not assigned
-to any group, instead their name is used as a grouping column. If provided,
-\code{groups} must have the same length as \code{dataSets}.}
+not assigned to any group (and the corresponding entry in the dataframe
+will be an \code{NA}). If provided, \code{groups} must have the same length as
+\code{dataSets} and/or \code{simulationResults}. If no grouping is specified for any
+of the dataset, the column \code{group} in the dataframe output will be all
+\code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -167,7 +173,8 @@ should be extracted. By default, all individuals from the results are
 considered. If the individual with the provided ID is not found, the ID is
 ignored.}
 
-\item{\code{names}}{This argument will be encountered across different methods:
+\item{\code{names}}{A string or a list of string. This argument will be encountered
+across different methods:
 \itemize{
 \item \verb{$setDataTransforms()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
@@ -185,9 +192,11 @@ as \code{NULL} in the list.}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
 group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group. If \code{NULL} (default), data sets are not assigned
-to any group, instead their name is used as a grouping column. If provided,
-\code{groups} must have the same length as \code{dataSets}.}
+not assigned to any group (and the corresponding entry in the dataframe
+will be an \code{NA}). If provided, \code{groups} must have the same length as
+\code{dataSets} and/or \code{simulationResults}. If no grouping is specified for any
+of the dataset, the column \code{group} in the dataframe output will be all
+\code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -213,7 +222,8 @@ Transform raw data with required offsets and scale factors.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{names}}{This argument will be encountered across different methods:
+\item{\code{names}}{A string or a list of string. This argument will be encountered
+across different methods:
 \itemize{
 \item \verb{$setDataTransforms()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
@@ -228,6 +238,12 @@ assigning new names to the list of instances of the \code{DataSet} object.
 
 Note that the datasets whose names you wish to not change should be specified
 as \code{NULL} in the list.}
+
+\item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a numeric
+scalar or a list of numeric quantities specifying offsets and scale
+factors to apply to raw values. The default offset is \code{0}, while
+default scale factor is \code{1}, i.e., the data will not be modified. If a
+list is specified, it should be the same length as \code{names} argument.}
 }
 \if{html}{\out{</div>}}
 }
@@ -244,9 +260,9 @@ it will also be scaled.
 A method to extract a dataframe of simulated and/or observed data
 (depending on instances of which objects have been added to the object).
 
-Note that the order in which you enter different object matters. If you
-first enter observed data and simulated data later, the rows will also be
-in the same order in the returned dataframe.
+Note that the order in which you enter different object doesn't matter
+because the returned dataframe is arranged alphabetically by dataset
+name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}
 }

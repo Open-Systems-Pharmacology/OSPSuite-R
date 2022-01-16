@@ -32,11 +32,13 @@
 #'   object(s).
 #' @param groups A string or a list of strings assigning the data set to a
 #'   group. If an entry within the list is `NULL`, the corresponding data set is
-#'   not assigned to any group. If `NULL` (default), data sets are not assigned
-#'   to any group, instead their name is used as a grouping column. If provided,
-#'   `groups` must have the same length as `dataSets`.
-#' @param names This argument will be encountered across different methods:
-#'
+#'   not assigned to any group (and the corresponding entry in the dataframe
+#'   will be an `NA`). If provided, `groups` must have the same length as
+#'   `dataSets` and/or `simulationResults`. If no grouping is specified for any
+#'   of the dataset, the column `group` in the dataframe output will be all
+#'   `NA`.
+#' @param names A string or a list of string. This argument will be encountered
+#'   across different methods:
 #' - `$setDataTransforms()`: In the context of this method, a list of names
 #' specifying which observed datasets and/or paths in simulated dataset to
 #' transform. Default is `NULL`, i.e., the transformations will be applied to
@@ -49,11 +51,6 @@
 #'
 #' Note that the datasets whose names you wish to not change should be specified
 #' as `NULL` in the list.
-#' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a numeric scalar
-#'   or a list of numeric quantities specifying offsets and scale factors to
-#'   apply to raw values. The default offset is `0`, while default scale factor
-#'   is `1`, i.e., the data will not be modified. If a list is specified, it
-#'   should be the same length as `names` argument.
 #'
 #' @import tidyr
 #' @importFrom rlang ":=" "%||%"
@@ -162,9 +159,6 @@ DataCombined <- R6::R6Class(
 
       # update private fields
 
-      # save grouping information for observed data
-      private$.groups$groupsDataSets <- groups
-
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
@@ -172,9 +166,7 @@ DataCombined <- R6::R6Class(
       )
 
       # update group map
-      if (length(purrr::compact(private$.groups)) > 0L) {
-        private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
-      }
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
 
       # update dataset names
       private$.names <- private$.extractNames(private$.dataCombinedDF)
@@ -221,13 +213,8 @@ DataCombined <- R6::R6Class(
         )
       )
 
-      # save grouping information
-      private$.groups$groupsSimulationResults <- groups
-
       # group map can only be generated if at least one grouping is specified
-      if (length(purrr::compact(private$.groups)) > 0L) {
-        private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
-      }
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
 
       # update dataset names
       private$.names <- private$.extractNames(private$.dataCombinedDF)
@@ -237,7 +224,15 @@ DataCombined <- R6::R6Class(
     },
 
     #' @description
+    #'
     #' Transform raw data with required offsets and scale factors.
+    #'
+    #' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a numeric
+    #'   scalar or a list of numeric quantities specifying offsets and scale
+    #'   factors to apply to raw values. The default offset is `0`, while
+    #'   default scale factor is `1`, i.e., the data will not be modified. If a
+    #'   list is specified, it should be the same length as `names` argument.
+    #'
     #' @return A dataframe with respective raw quantities plus offsets
     #'   multiplied by the specified scale factors. If error column is present,
     #'   it will also be scaled.
@@ -279,9 +274,9 @@ DataCombined <- R6::R6Class(
     #' A method to extract a dataframe of simulated and/or observed data
     #' (depending on instances of which objects have been added to the object).
     #'
-    #' Note that the order in which you enter different object matters. If you
-    #' first enter observed data and simulated data later, the rows will also be
-    #' in the same order in the returned dataframe.
+    #' Note that the order in which you enter different object doesn't matter
+    #' because the returned dataframe is arranged alphabetically by dataset
+    #' name.
     #'
     #' @return
     #'
@@ -293,8 +288,8 @@ DataCombined <- R6::R6Class(
     #' will return an updated version of a dataframe that combines observed and
     #' simulated data contained in provided objects.
     #'
-    #'   For the same reasons, the dataframe might contain some or all of the
-    #'   following columns:
+    #' For the same reasons, the dataframe might contain some or all of the
+    #' following columns:
     #'
     #'     group
     #'     dataType
@@ -360,12 +355,13 @@ DataCombined <- R6::R6Class(
   active = list(
 
     #' @field names A vector of unique names of `DataSet` objects and/or
-    #'   quantities or paths from `SimulationResuls` object.
+    #'   quantities or paths from `SimulationResuls` object sorted
+    #'   alphabetically.
 
     # just a way to access whatever was specified
     names = function(value) {
       if (missing(value)) {
-        private$.names
+        sort(private$.names)
       } else {
         stop(messages$errorPropertyReadOnly(
           "names",
@@ -375,7 +371,9 @@ DataCombined <- R6::R6Class(
     },
 
     #' @field groupMap A dataframe specifying which datasets have been grouped
-    #'   together and the name and the nature (observed or simulated?) of the data.
+    #'   together and the name and the nature (observed or simulated?) of the
+    #'   data. If a dataset was not assigned to any group, this is denoted by
+    #'   `NA` in the dataframe.
 
     # just a way to access whatever was specified
     groupMap = function(value) {
@@ -497,8 +495,13 @@ DataCombined <- R6::R6Class(
 
     ## dataframe modifiers ---------------------
 
-    # add a new group column
-    # if no grouping is specified, this is going to be same as name
+    # Add a new group column
+    #
+    # If no grouping is specified for a dataset, the group will be `NA`.
+    #
+    # While visualizing such data, the datset name can instead be used as a
+    # grouping variable, but this association will happen in the plotting
+    # function itself, and not in the output produced by the current object.
 
     .addGroupCol = function(data, groups = NULL) {
       if (!is.null(groups)) {
@@ -507,15 +510,9 @@ DataCombined <- R6::R6Class(
           tidyr::nest() %>%
           dplyr::ungroup() %>%
           dplyr::mutate(group = groups) %>%
-          tidyr::unnest(cols = c(data)) %>%
-          dplyr::mutate(
-            group = dplyr::case_when(
-              is.na(group) ~ name,
-              TRUE ~ group
-            )
-          )
+          tidyr::unnest(cols = c(data))
       } else {
-        data <- data %>% dplyr::mutate(group = name)
+        data <- data %>% dplyr::mutate(group = NA_character_)
       }
 
       return(data)
@@ -525,9 +522,10 @@ DataCombined <- R6::R6Class(
 
     .updateDF = function(dataCurrent = NULL, dataNew = NULL) {
       # if there is already data, add new data at the bottom
-      # note that this introduces order effects, i.e.,
-      # whether `DataSet` is added `SimulationResults` or vice versa matters
-      # for how the corresponding data rows are ordered in the dataframe
+      # since the `toDataFrame()` method arranges the data by dataset name,
+      # this will not introduce any order effects, i.e., it doesn't matter
+      # if the user entered `DataSet` objects first and then `SimulationResults`
+      # objects, or vice versa
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
         # check if there are duplicated datasets between these two dataframes
         dupDatasets <- intersect(unique(dataCurrent$name), unique(dataNew$name))
@@ -686,7 +684,9 @@ DataCombined <- R6::R6Class(
         # retaining them might confuse the user about whether the
         # transformations are supposed to be carried out by the user using these
         # values or these transformations have already been carried out
-        dplyr::select(-dplyr::ends_with(c("Offsets", "ScaleFactors")))
+        dplyr::select(-dplyr::ends_with(c("Offsets", "ScaleFactors"))) %>%
+        # arrange data (alphabetically) by dataset name
+        dplyr::arrange(name)
     },
 
     ## utilities ---------------------
@@ -723,7 +723,9 @@ DataCombined <- R6::R6Class(
     # object, then the length will be 22, and not 1.
 
     .objCount = function(x) {
-      if (is.list(x)) {
+      # `is.vector()` will handle both atomic vectors and lists, i.e.
+      # both `is.vector(c(1, 2, 3))` and `is.vector(c(1, 2, 3))` will be `TRUE`
+      if (is.vector(x)) {
         l <- length(x)
       } else {
         l <- length(list(x))
@@ -780,7 +782,6 @@ DataCombined <- R6::R6Class(
     ## private fields --------------------
 
     .dataCombinedDF = NULL,
-    .groups = list(groupsDataSets = NULL, groupsSimulationResults = NULL),
     .groupMap = NULL,
     .names = NULL,
     .dataTransformations = NULL

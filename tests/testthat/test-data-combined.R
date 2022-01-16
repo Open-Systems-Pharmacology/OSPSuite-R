@@ -68,7 +68,7 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       "Compartment", "Molecule"
     )
   )
-  expect_equal(df$name, df$group)
+  expect_equal(rep(NA_character_, length(df$group)), df$group)
   expect_equal(unique(df$name), names(dataSet)[[1]])
 
   # only SimulationResults input
@@ -108,24 +108,24 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   expect_equal(
     names(df2),
     c(
-      "group", "dataType", "name",  "IndividualId", "xValues",  "xUnit", "yValues",
+      "group", "dataType", "name", "IndividualId", "xValues", "xUnit", "yValues",
       "yUnit", "yDimension"
     )
   )
-  expect_equal(unique(df2$name), simResults$allQuantityPaths)
+  expect_equal(unique(df2$name), sort(simResults$allQuantityPaths))
 
   expect_equal(
     as.character(na.omit(unique(df2$name))),
     c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
     )
   )
 
-  expect_equal(df2$name, df2$group)
+  expect_equal(rep(NA_character_, length(df2$group)), df2$group)
 })
 
 # both `DataSet` and `SimulationResults` provided -------------
@@ -182,25 +182,25 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     )
   )
 
-  expect_equal(df$name, df$group)
+  expect_equal(rep(NA_character_, length(df$group)), df$group)
 
   # unchanged names should be same as in the original object
   expect_equal(
-    unique(dplyr::filter(df, dataType == "observed")$name)[c(2, 4, 6)],
-    names(dataSet)[c(2, 4, 6)]
+    unique(dplyr::filter(df, dataType == "observed")$name)[4:6],
+    sort(names(dataSet)[c(2, 4, 6)])
   )
 
   # name changes have taken place for both types of data
   expect_equal(
     as.character(unique(df$name)),
     c(
-      "x", "y", "z",
       "a",
-      "Stevens_2012_placebo.Sita_total",
       "b",
-      "Stevens_2012_placebo.Sita_proximal",
       "c",
-      "Stevens_2012_placebo.Sita_dist"
+      "Stevens_2012_placebo.Sita_dist",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Stevens_2012_placebo.Sita_total",
+      "x", "y", "z"
     )
   )
   expect_equal(as.character(unique(df$name)), myCombDat$names)
@@ -209,8 +209,11 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   expect_error(myCombDat$dataSets(dataSet))
   expect_error(myCombDat$simulationResults(simResults))
 
-  # not specified, so NULL
-  expect_null(myCombDat$groupMap)
+  # not specified, so NA
+  expect_equal(
+    myCombDat$groupMap$group,
+    rep(NA_character_, length(myCombDat$groupMap$group))
+  )
 
   # with DataSet input ----------------------------
 
@@ -227,17 +230,20 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   expect_s3_class(df2, "data.frame")
   expect_equal(dim(df2), c(1267L, 21L))
 
-  # not specified, so NULL
-  expect_null(myCombDat$groupMap)
+  # not specified, so NA
+  expect_equal(
+    myCombDat$groupMap$group,
+    rep(NA_character_, length(myCombDat$groupMap$group))
+  )
 
   expect_equal(
     as.character(unique(df2$name)),
     c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Stevens_2012_placebo.Placebo_total"
     )
   )
@@ -274,16 +280,19 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Stevens_2012_placebo.Placebo_total",
       "Stevens_2012_placebo.Sita_total"
     )
   )
 
-  # not specified, so NULL
-  expect_null(myCombDat$groupMap)
+  # not specified, so NA
+  expect_equal(
+    myCombDat$groupMap$group,
+    rep(NA_character_, length(myCombDat$groupMap$group))
+  )
 
   # printing objects works
   expect_output(print(myCombDat))
@@ -335,15 +344,15 @@ test_that("dataCombined - same data order with or without `names` argument", {
   expect_equal(
     unique(df1$name),
     c(
+      "Stevens_2012_placebo.Placebo_proximal",
       "Stevens_2012_placebo.Placebo_total",
-      "Stevens_2012_placebo.Sita_total",
-      "Stevens_2012_placebo.Placebo_proximal"
+      "Stevens_2012_placebo.Sita_total"
     )
   )
 
   expect_equal(
     unique(df2$name),
-    c("x", "y", "Stevens_2012_placebo.Placebo_proximal")
+    c("Stevens_2012_placebo.Placebo_proximal", "x", "y")
   )
 })
 
@@ -541,32 +550,6 @@ test_that("DataCombined with data transformations", {
     dplyr::filter(df, name == "Stevens_2012_placebo.Sita_proximal")$yErrorValues,
     dplyr::filter(dfOriginal, name == "Stevens_2012_placebo.Sita_proximal")$yErrorValues * 2.2
   )
-
-  expect_equal(
-    head(df$xValues),
-    c(
-      9.52223539352417, 46.3355529785156, 80.7838302612305, 115.264205932617,
-      154.742211914062, 186.81474609375
-    )
-  )
-
-  expect_equal(
-    head(df$yValues),
-    c(
-      179.262065076828, 148.917247438431, 126.917242193222, 107.193100237846,
-      89.7448281288147, 75.3310338497162
-    )
-  )
-
-  expect_equal(
-    na.omit(df$yErrorValues),
-    structure(c(
-      10.6206896156073, 4.55172412097454, 6.82758618146181,
-      3.79310343414545, 6.06896549463272, 5.31034480780363, 5.31034480780363,
-      5.31034480780363, 6.06896549463272, 6.06896549463272, 4.55172412097454,
-      0, 0
-    ), na.action = structure(14:264, class = "omit"))
-  )
 })
 
 # grouping works ---------------------------------
@@ -684,7 +667,10 @@ test_that("DataCombined works with data grouping", {
   # entering NA doesn't cause any problems
   myCombDat4 <- DataCombined$new()
   myCombDat4$addDataSets(dataSet[[1]], groups = NA_character_)
-  expect_equal(myCombDat4$groupMap$group[[1]], myCombDat4$groupMap$name[[1]])
+  expect_equal(
+    myCombDat4$groupMap$group[[1]],
+    rep(NA_character_, length(myCombDat4$groupMap$group[[1]]))
+  )
 })
 
 
@@ -748,29 +734,12 @@ test_that("DataCombined works with sequential update - same values", {
   # but groupings should now be different
   expect_equal(
     unique(df1$group),
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "distal",
-      "proximal",
-      "total"
-    )
+    c(NA_character_, "total", "distal", "proximal")
   )
 
   expect_equal(
     unique(df2$group),
-    c(
-      "Dapagliflozin - emptying",
-      "Dapagliflozin - retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
-      "Stevens_2012_placebo.Placebo_total",
-      "Stevens_2012_placebo.Sita_total",
-      "Stevens_2012_placebo.Placebo_proximal",
-      "Stevens_2012_placebo.Sita_proximal",
-      "distal"
-    )
+    c("Dapagliflozin - emptying", "Dapagliflozin - retention", NA_character_, "distal")
   )
 
   expect_equal(dim(myCombDat$groupMap), c(11L, 3L))
@@ -978,8 +947,10 @@ test_that("DataCombined works with edge cases", {
   myCombDat$addDataSets(dataSet[[2]], groups = "Stevens_2012_placebo.Placebo_total")
 
   # they shouldn't be collapsed together in the same group
-  # TODO: this is yet to be figured out
-  expect_true(myCombDat$groupMap$group[[1]] == myCombDat$groupMap$group[[2]])
+  expect_equal(
+    myCombDat$groupMap$group,
+    c("Stevens_2012_placebo.Placebo_total", NA_character_)
+  )
 
   # list/vector and NULL/NA ---------------------------
 
