@@ -126,12 +126,8 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object containing observed data.
 
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
-      # fail fast if datatypes are incorrect
-      # purrr::walk is needed below because validation helper functions are
-      # called only for their side effects
-
-      # groups are strings or characters
-      purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
+      # validate argument type and length
+      groups <- private$.validateListArgs(groups, private$.objCount(dataSets), type = "character")
 
       # if a list is provided, check each element is a `DataSet` instance
       # `NULL` elements are not accepted in argument list here
@@ -139,31 +135,32 @@ DataCombined <- R6::R6Class(
         purrr::walk(.x = dataSets, .f = ~ validateIsOfType(.x, "DataSet", nullAllowed = FALSE))
       } else {
         # if a single instance is entered instead, validate it
-        validateIsOfType(dataSets, DataSet, nullAllowed = FALSE)
+        validateIsOfType(dataSets, "DataSet", nullAllowed = FALSE)
+      }
+
+      # anticipate that although a list of `DataSet` objects might be entered,
+      # they might not have names associated with them in the container list
+      # in such cases, go inside each element of the list (purrr::map) and
+      # extract (purrr::pluck) the name from the object itself and use them
+      # instead and simplify to a character vector
+      #
+      # since we don't allow entering a list of `SimulationResults` objects, we
+      # don't need to run a similar check in the relevant method
+      if (is.list(dataSets) && is.null(names(dataSets))) {
+        names(dataSets) <- purrr::map_chr(dataSets, .f = ~ purrr::pluck(.x, "name"))
       }
 
       # if alternate names are provided for datasets, use them instead
       # for `NULL` elements, the original names will be used
       if (!is.null(names) && is.list(dataSets)) {
-        # anticipate that although a list of `DataSet` objects might be entered,
-        # they might not have names associated with them in the container list
-        # in such cases, go inside each element of the list (purrr::map) and
-        # extract (purrr::pluck) the name from the object itself and use them
-        # instead and simplify to a character vector
-        if (is.null(names(dataSets))) {
-          names(dataSets) <- purrr::map_chr(dataSets, .f = ~ purrr::pluck(.x, "name"))
-        }
-
         # lengths of alternate names and objects should be same
-        names <- private$.validateListArgs(names, length(names(dataSets)))
+        names <- private$.validateListArgs(names, length(names(dataSets)), type = "character")
 
         # if any of the alternate names `NULL`, use original names
         names <- ifelse(is.na(names), names(dataSets), names)
       }
 
-      # length of list with grouping specification and the number of datasets
-      # should be same
-      groups <- private$.validateListArgs(groups, private$.objCount(dataSets))
+      # update private fields
 
       # save grouping information for observed data
       private$.groups$groupsDataSets <- groups
@@ -196,9 +193,9 @@ DataCombined <- R6::R6Class(
                                     individualIds = NULL,
                                     names = NULL,
                                     groups = NULL) {
-      # fail fast if datatypes are incorrect
-      # purrr::walk is needed below because there is no output here
-      purrr::walk(.x = groups, .f = ~ validateIsString(.x, nullAllowed = TRUE))
+      # validate argument type and length
+      groups <- private$.validateListArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
+      names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
 
       # list of `SimulationResults` instances is not allowed
       if (is.list(simulationResults)) {
@@ -207,13 +204,9 @@ DataCombined <- R6::R6Class(
 
       # validate the object type
       # `NULL` elements are not accepted here
-      validateIsOfType(simulationResults, SimulationResults)
+      validateIsOfType(simulationResults, SimulationResults, nullAllowed = FALSE)
 
-      # make sure that length of groups and names is the same
-      # additionally since these lists are going to have strings as elements,
-      # convert `NULL`s to `NA`s
-      groups <- private$.validateListArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
-      names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths))
+      # update private fields
 
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
@@ -231,7 +224,6 @@ DataCombined <- R6::R6Class(
       # save grouping information
       private$.groups$groupsSimulationResults <- groups
 
-      # update group map
       # group map can only be generated if at least one grouping is specified
       if (length(purrr::compact(private$.groups)) > 0L) {
         private$.groupMap <- private$.extractGroupMap(private$.dataCombinedDF)
@@ -745,16 +737,31 @@ DataCombined <- R6::R6Class(
     # - Arguments like `names`, `groups`, etc. need to be of the same length
     # as the entered datasets. This is checked here.
     #
+    # - Additionally, the function checks if the object is of the correct type.
+    #
     # - We allow entering `NULL` for elements where the users don't expect any
     # change. But, if a list with `NULL` is flattened to a vector, it will be
     # dropped and the length of list of arguments will become shorter. This is
     # taken care of using the private `.null_to_na_chr()` method.
 
-    .validateListArgs = function(arg = NULL, expectedLength) {
+    .validateListArgs = function(arg = NULL, expectedLength, type) {
       if (!is.null(arg)) {
-        # this will work irrespective of whether it's a list or not
+        # validate the length of arguments
+        # this will work irrespective of whether it's a list or a vector
         validateIsOfLength(arg, expectedLength)
 
+        # validate the type of arguments
+        # it is important to allow users to enter `NULL` in argument lists, so
+        # `nullAllowed = TRUE` is necessary
+        if (is.list(arg)) {
+          # `purrr::walk()` is needed below because validation helper functions
+          # are called only for their side effects
+          purrr::walk(.x = arg, .f = ~ validateIsOfType(.x, type, nullAllowed = TRUE))
+        } else {
+          validateIsOfType(arg, type, nullAllowed = TRUE)
+        }
+
+        # deal with `NULL`s and `NA`s
         # irrespective of whether a list or a vector is specified,
         # modify it in place by converting `NULL` to `NA_character` and then
         # if it's a list, flatten it to an atomic vector of character type
