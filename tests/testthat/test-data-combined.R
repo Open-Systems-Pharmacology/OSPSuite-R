@@ -747,56 +747,41 @@ test_that("DataCombined works with sequential update - same values", {
     c("Dapagliflozin - emptying", "Dapagliflozin - retention", NA_character_, "distal")
   )
 
-  expect_equal(dim(myCombDat$groupMap), c(11L, 3L))
+  # extract group map into a dataframe
+  dfMap <- myCombDat$groupMap
 
-  # expect_equal(
-  #   myCombDat$groupMap,
-  #   structure(
-  #     list(
-  #       group = c(
-  #         "Dapagliflozin - emptying",
-  #         "Dapagliflozin - retention",
-  #         "distal",
-  #         "distal",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-  #         "Stevens_2012_placebo.Placebo_proximal",
-  #         "Stevens_2012_placebo.Placebo_total",
-  #         "Stevens_2012_placebo.Sita_proximal",
-  #         "Stevens_2012_placebo.Sita_total"
-  #       ),
-  #       name = c(
-  #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-  #         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-  #         "Stevens_2012_placebo.Placebo_distal",
-  #         "Stevens_2012_placebo.Sita_dist",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-  #         "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-  #         "Stevens_2012_placebo.Placebo_proximal",
-  #         "Stevens_2012_placebo.Placebo_total",
-  #         "Stevens_2012_placebo.Sita_proximal",
-  #         "Stevens_2012_placebo.Sita_total"
-  #       ),
-  #       dataType = c(
-  #         "simulated",
-  #         "simulated",
-  #         "observed",
-  #         "observed",
-  #         "simulated",
-  #         "simulated",
-  #         "simulated",
-  #         "observed",
-  #         "observed",
-  #         "observed",
-  #         "observed"
-  #       )
-  #     ),
-  #     row.names = c(NA, -11L),
-  #     class = c("tbl_df", "tbl", "data.frame")
-  #   )
-  # )
+  expect_equal(dim(dfMap), c(11L, 3L))
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "Dapagliflozin - emptying")$name,
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "Dapagliflozin - retention")$name,
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, group == "distal")$name,
+    c(
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist"
+    )
+  )
+
+  expect_equal(
+    dplyr::filter(dfMap, is.na(group))$name,
+    c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Stevens_2012_placebo.Sita_total"
+    )
+  )
 })
 
 

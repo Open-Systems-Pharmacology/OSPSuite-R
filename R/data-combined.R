@@ -724,7 +724,7 @@ DataCombined <- R6::R6Class(
 
     .objCount = function(x) {
       # `is.vector()` will handle both atomic vectors and lists, i.e.
-      # both `is.vector(c(1, 2, 3))` and `is.vector(c(1, 2, 3))` will be `TRUE`
+      # both `is.vector(c(1, 2))` and `is.vector(list(1, 2))` will be `TRUE`
       if (is.vector(x)) {
         l <- length(x)
       } else {
