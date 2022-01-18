@@ -162,7 +162,7 @@ DataCombined <- R6::R6Class(
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
-        private$.dataSet2DF(dataSets, names, groups)
+        private$.dataSetToDF(dataSets, names, groups)
       )
 
       # update group map
@@ -203,7 +203,7 @@ DataCombined <- R6::R6Class(
       # extract dataframe and append it to the combined dataframe
       private$.dataCombinedDF <- private$.updateDF(
         private$.dataCombinedDF,
-        private$.simResults2DF(
+        private$.simResultsToDF(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
@@ -408,19 +408,14 @@ DataCombined <- R6::R6Class(
     ## dataframe extractors ---------------------
 
     # extract dataframe from DataSet objects
-    .dataSet2DF = function(dataSets, names = NULL, groups = NULL) {
+    .dataSetToDF = function(dataSets, names = NULL, groups = NULL) {
       # the dataframe function handles a vector, a list, or a single instance of
       # `DataSet` object(s)
-        data <- dataSetToDataFrame(dataSets)
+      data <- dataSetToDataFrame(dataSets)
 
       # if alternative names are provided, use them
       if (!is.null(names)) {
-        data <- data %>%
-          dplyr::group_by(name) %>%
-          tidyr::nest() %>%
-          dplyr::ungroup() %>%
-          dplyr::mutate(name = names) %>%
-          tidyr::unnest(cols = c(data))
+        data <- private$.renameDatasets(data, names)
       }
 
       # add column with grouping information and then
@@ -436,12 +431,12 @@ DataCombined <- R6::R6Class(
 
     # extract dataframe from `SimulationResults` objects
 
-    .simResults2DF = function(simulationResults,
-                              quantitiesOrPaths = NULL,
-                              population = NULL,
-                              individualIds = NULL,
-                              names = NULL,
-                              groups = NULL) {
+    .simResultsToDF = function(simulationResults,
+                               quantitiesOrPaths = NULL,
+                               population = NULL,
+                               individualIds = NULL,
+                               names = NULL,
+                               groups = NULL) {
       # all input validation will take place in this function itself
       data <- simulationResultsToDataFrame(
         simulationResults = simulationResults,
@@ -457,12 +452,7 @@ DataCombined <- R6::R6Class(
 
       # if alternative names are provided, use them
       if (!is.null(names)) {
-        data <- data %>%
-          dplyr::group_by(name) %>%
-          tidyr::nest() %>%
-          dplyr::ungroup() %>%
-          dplyr::mutate(name = names) %>%
-          tidyr::unnest(cols = c(data)) %>%
+        data <- private$.renameDatasets(data, names) %>%
           dplyr::mutate(
             name = dplyr::case_when(
               is.na(name) ~ paths,
@@ -610,6 +600,25 @@ DataCombined <- R6::R6Class(
         # if a scalar is provided
         data <- dplyr::mutate(data, {{ colName }} := arg[[1]])
       }
+
+      return(data)
+    },
+
+    # add a new column with alternate names
+    #
+    # first group the dataset by its unique identifier, which is name, and then
+    # nest the rest of the dataframe in a list column, and then
+    # ungroup the dataframe as mutating column is not going to be by group, and then
+    # assign new `names` vector to the existing `name` column, and then
+    # unnest the list column
+
+    .renameDatasets = function(data, names) {
+      data <- data %>%
+        dplyr::group_by(name) %>%
+        tidyr::nest() %>%
+        dplyr::ungroup() %>%
+        dplyr::mutate(name = names) %>%
+        tidyr::unnest(cols = c(data))
 
       return(data)
     },
