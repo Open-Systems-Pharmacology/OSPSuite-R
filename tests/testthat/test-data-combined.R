@@ -359,6 +359,18 @@ test_that("dataCombined - same data order with or without `names` argument", {
     unique(df2$name),
     c("Stevens_2012_placebo.Placebo_proximal", "x", "y")
   )
+
+
+  # create a new instance of the object
+  myCombDat3 <- DataCombined$new()
+  myCombDat4 <- DataCombined$new()
+
+  # both of these should provide the same result
+  myCombDat3$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
+  myCombDat4$addDataSets(c(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
+
+  expect_equal(myCombDat3$toDataFrame(), myCombDat4$toDataFrame())
+
 })
 
 

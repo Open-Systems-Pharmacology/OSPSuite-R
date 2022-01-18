@@ -409,12 +409,9 @@ DataCombined <- R6::R6Class(
 
     # extract dataframe from DataSet objects
     .dataSet2DF = function(dataSets, names = NULL, groups = NULL) {
-      # if a list of DataSet instances, merge iterated dataframes by rows
-      if (is.list(dataSets)) {
-        data <- purrr::map_dfr(dataSets, dataSetToDataFrame)
-      } else {
+      # the dataframe function handles a vector, a list, or a single instance of
+      # `DataSet` object(s)
         data <- dataSetToDataFrame(dataSets)
-      }
 
       # if alternative names are provided, use them
       if (!is.null(names)) {
