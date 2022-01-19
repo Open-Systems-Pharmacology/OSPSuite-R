@@ -39,7 +39,7 @@
 #'   `NA`.
 #' @param names A string or a list of string. This argument will be encountered
 #'   across different methods:
-#' - `$setDataTransforms()`: In the context of this method, a list of names
+#' - `$setDataTransformations()`: In the context of this method, a list of names
 #' specifying which observed datasets and/or paths in simulated dataset to
 #' transform. Default is `NULL`, i.e., the transformations will be applied to
 #' all rows of the dataframe.
@@ -106,11 +106,7 @@ DataCombined <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class.
     #'
-    #' The constructor is empty because we prefer that the users add `DataSet`
-    #' and `SimulationResults` objects separately and individually using the
-    #' dedicated methods.
-    #'
-    #' @return A new instance of `DataCombined` object.
+    #' @return A new (empty) instance of `DataCombined` object.
 
     # empty constructor
     initialize = function() {
@@ -184,9 +180,9 @@ DataCombined <- R6::R6Class(
                                     individualIds = NULL,
                                     names = NULL,
                                     groups = NULL) {
-      # list of `SimulationResults` instances is not allowed
-      if (is.list(simulationResults)) {
-        stop(messages$errorWrongType("simulationResults", "list", "a scalar (vector of length 1)"))
+      # list or a vector of `SimulationResults` instances is not allowed
+      if (is.vector(simulationResults)) {
+        stop(messages$errorOnlyOneSupported())
       }
 
       # validate the object type (`NULL` elements are not accepted)
@@ -235,11 +231,11 @@ DataCombined <- R6::R6Class(
     #'   multiplied by the specified scale factors. If error column is present,
     #'   it will also be scaled.
 
-    setDataTransforms = function(names = NULL,
-                                 xOffsets = 0,
-                                 yOffsets = 0,
-                                 xScaleFactors = 1,
-                                 yScaleFactors = 1) {
+    setDataTransformations = function(names = NULL,
+                                      xOffsets = 0,
+                                      yOffsets = 0,
+                                      xScaleFactors = 1,
+                                      yScaleFactors = 1) {
       # check that the arguments to parameters make sense
       validateIsString(names, nullAllowed = TRUE)
       validateIsNumeric(xOffsets)
@@ -269,6 +265,7 @@ DataCombined <- R6::R6Class(
     ## getter methods ---------------
 
     #' @description
+    #'
     #' A method to extract a dataframe of simulated and/or observed data
     #' (depending on instances of which objects have been added to the object).
     #'
@@ -278,21 +275,11 @@ DataCombined <- R6::R6Class(
     #'
     #' @return
     #'
-    #' A dataframe.
+    #' A dataframe with some or all of the following columns:
     #'
-    #' The length (number of columns) and number of rows of a dataframe will
-    #' change depending on instances of which objects and how many objects have
-    #' been provided to the object. During the object's lifetime, this method
-    #' will return an updated version of a dataframe that combines observed and
-    #' simulated data contained in provided objects.
-    #'
-    #' For the same reasons, the dataframe might contain some or all of the
-    #' following columns:
-    #'
+    #'     name
     #'     group
     #'     dataType
-    #'     name
-    #'     Group Id
     #'     xValues
     #'     xDimension
     #'     xUnit
@@ -303,6 +290,7 @@ DataCombined <- R6::R6Class(
     #'     yErrorType
     #'     yErrorUnit
     #'     molWeight
+    #'     Group Id
     #'     lloq
     #'     Source
     #'     Sheet
@@ -335,9 +323,11 @@ DataCombined <- R6::R6Class(
     #' Print the object to the console
 
     print = function() {
-      private$printClass()
-
-      # TODO: what do we want to print here?!
+      # group map contains names of the included datasets and grouping details
+      private$printLine("DataCombined", addTab = FALSE)
+      private$printLine("Datasets and groupings", addTab = FALSE)
+      private$printLine("", addTab = FALSE)
+      print(private$.groupMap)
 
       # for method chaining
       invisible(self)
@@ -675,15 +665,14 @@ DataCombined <- R6::R6Class(
       data <- data %>%
         dplyr::select(
           # all identifying columns
-          dplyr::matches("^group$"),
-          dataType,
           name,
-          dplyr::matches("id$"),
+          group,
+          dataType,
           # everything related to the X-variable
           dplyr::matches("^x"),
           # everything related to the Y-variable
           dplyr::matches("^y"),
-          # all other columns go after that
+          # all other columns go after that (meta data, etc.)
           dplyr::everything(),
           # columns to remove (using -)
           -dplyr::matches("^paths$")
@@ -724,11 +713,11 @@ DataCombined <- R6::R6Class(
     # the lengths of `names`, `groups`, etc. arguments are acceptable.
     #
     # for example,
-    # - if `dataSet` is given a list of 5 `DataSet` objects, then 5
-    # - if `dataSet` is given a single `DataSet` object, then 1
+    # - if `dataSet` is a list of 5 `DataSet` object instances, then 5
+    # - if `dataSet` is a single `DataSet` object instance, then 1
     # - `SimulationResults` is always going to be a single object, then 1
     #
-    # Note that `length()` won't work here as it will return the number of named
+    # Note that `length()` won't work here. It will return the number of named
     # objects in the `DataSet` or `SimulationResults` environments, which is not
     # what we want. For example, if `dataSet` is given a single `DataSet`
     # object, then the length will be 22, and not 1.

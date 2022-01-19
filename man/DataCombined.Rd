@@ -60,7 +60,7 @@ factor values were specified by the user for each dataset.}
 \item \href{#method-new}{\code{DataCombined$new()}}
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
-\item \href{#method-setDataTransforms}{\code{DataCombined$setDataTransforms()}}
+\item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
 \item \href{#method-clone}{\code{DataCombined$clone()}}
@@ -77,16 +77,12 @@ factor values were specified by the user for each dataset.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class.
-
-The constructor is empty because we prefer that the users add \code{DataSet}
-and \code{SimulationResults} objects separately and individually using the
-dedicated methods.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$new()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A new instance of \code{DataCombined} object.
+A new (empty) instance of \code{DataCombined} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -107,7 +103,7 @@ object(s).}
 \item{\code{names}}{A string or a list of string. This argument will be encountered
 across different methods:
 \itemize{
-\item \verb{$setDataTransforms()}: In the context of this method, a list of names
+\item \verb{$setDataTransformations()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
 transform. Default is \code{NULL}, i.e., the transformations will be applied to
 all rows of the dataframe.
@@ -176,7 +172,7 @@ ignored.}
 \item{\code{names}}{A string or a list of string. This argument will be encountered
 across different methods:
 \itemize{
-\item \verb{$setDataTransforms()}: In the context of this method, a list of names
+\item \verb{$setDataTransformations()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
 transform. Default is \code{NULL}, i.e., the transformations will be applied to
 all rows of the dataframe.
@@ -205,12 +201,12 @@ of the dataset, the column \code{group} in the dataframe output will be all
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setDataTransforms"></a>}}
-\if{latex}{\out{\hypertarget{method-setDataTransforms}{}}}
-\subsection{Method \code{setDataTransforms()}}{
+\if{html}{\out{<a id="method-setDataTransformations"></a>}}
+\if{latex}{\out{\hypertarget{method-setDataTransformations}{}}}
+\subsection{Method \code{setDataTransformations()}}{
 Transform raw data with required offsets and scale factors.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTransforms(
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTransformations(
   names = NULL,
   xOffsets = 0,
   yOffsets = 0,
@@ -225,7 +221,7 @@ Transform raw data with required offsets and scale factors.
 \item{\code{names}}{A string or a list of string. This argument will be encountered
 across different methods:
 \itemize{
-\item \verb{$setDataTransforms()}: In the context of this method, a list of names
+\item \verb{$setDataTransformations()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
 transform. Default is \code{NULL}, i.e., the transformations will be applied to
 all rows of the dataframe.
@@ -268,19 +264,9 @@ name.
 }
 
 \subsection{Returns}{
-A dataframe.
-
-The length (number of columns) and number of rows of a dataframe will
-change depending on instances of which objects and how many objects have
-been provided to the object. During the object's lifetime, this method
-will return an updated version of a dataframe that combines observed and
-simulated data contained in provided objects.
-
-For the same reasons, the dataframe might contain some or all of the
-following columns:\preformatted{group
+A dataframe with some or all of the following columns:\preformatted{name
+group
 dataType
-name
-Group Id
 xValues
 xDimension
 xUnit
@@ -291,6 +277,7 @@ yUnit
 yErrorType
 yErrorUnit
 molWeight
+Group Id
 lloq
 Source
 Sheet

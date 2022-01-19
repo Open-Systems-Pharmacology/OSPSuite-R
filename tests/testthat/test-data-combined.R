@@ -62,10 +62,10 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "Group Id", "xValues", "xDimension",
+      "name", "group", "dataType", "xValues", "xDimension",
       "xUnit", "yValues", "yErrorValues", "yDimension", "yUnit", "yErrorType",
       "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Organ",
-      "Compartment", "Molecule"
+      "Compartment", "Molecule", "Group Id"
     )
   )
   expect_equal(rep(NA_character_, length(df$group)), df$group)
@@ -108,8 +108,8 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   expect_equal(
     names(df2),
     c(
-      "group", "dataType", "name", "IndividualId", "xValues", "xUnit", "yValues",
-      "yUnit", "yDimension"
+      "name", "group", "dataType", "xValues", "xUnit", "yValues",
+      "yUnit", "yDimension", "IndividualId"
     )
   )
   expect_equal(unique(df2$name), sort(simResults$allQuantityPaths))
@@ -175,10 +175,10 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "IndividualId", "Group Id", "xValues",
-      "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
-      "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
-      "Organ", "Compartment", "Molecule"
+      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
+      "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
+      "IndividualId", "molWeight", "lloq", "Source", "Sheet",
+      "Organ", "Compartment", "Molecule", "Group Id"
     )
   )
 
@@ -370,7 +370,6 @@ test_that("dataCombined - same data order with or without `names` argument", {
   myCombDat4$addDataSets(c(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
 
   expect_equal(myCombDat3$toDataFrame(), myCombDat4$toDataFrame())
-
 })
 
 
@@ -415,7 +414,7 @@ test_that("DataCombined with data transformations", {
 
   # expect error since the lengths of argument are not the same
   expect_error(
-    myCombDat$setDataTransforms(
+    myCombDat$setDataTransformations(
       names = list(
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
@@ -427,7 +426,7 @@ test_that("DataCombined with data transformations", {
   )
 
   expect_error(
-    myCombDat$setDataTransforms(
+    myCombDat$setDataTransformations(
       names = list(
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
@@ -437,7 +436,7 @@ test_that("DataCombined with data transformations", {
   )
 
   expect_error(
-    myCombDat$setDataTransforms(
+    myCombDat$setDataTransformations(
       names = list(
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
@@ -449,7 +448,7 @@ test_that("DataCombined with data transformations", {
     )
   )
 
-  myCombDat$setDataTransforms(
+  myCombDat$setDataTransformations(
     names = names_ls,
     xOffsets = 2,
     yOffsets = 4,
@@ -491,12 +490,12 @@ test_that("DataCombined with data transformations", {
   myCombDat2$addSimulationResults(simResults)
 
   # should error with inappropriate arguments
-  expect_error(myCombDat2$setDataTransforms(
+  expect_error(myCombDat2$setDataTransformations(
     names = 2,
     xOffsets = "2"
   ))
 
-  expect_error(myCombDat2$setDataTransforms(
+  expect_error(myCombDat2$setDataTransformations(
     names = c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Stevens_2012_placebo.Sita_proximal"
@@ -505,7 +504,7 @@ test_that("DataCombined with data transformations", {
     xScaleFactors = c("1.5", 2.4)
   ))
 
-  myCombDat2$setDataTransforms(
+  myCombDat2$setDataTransformations(
     names = list(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Stevens_2012_placebo.Sita_proximal"
@@ -664,10 +663,10 @@ test_that("DataCombined works with data grouping", {
   expect_equal(
     names(df),
     c(
-      "group", "dataType", "name", "IndividualId", "Group Id", "xValues",
-      "xUnit", "xDimension", "yValues", "yUnit", "yDimension", "yErrorValues",
-      "yErrorType", "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
-      "Organ", "Compartment", "Molecule"
+      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
+      "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
+      "IndividualId", "molWeight", "lloq", "Source", "Sheet",
+      "Organ", "Compartment", "Molecule", "Group Id"
     )
   )
 
@@ -972,7 +971,7 @@ test_that("DataCombined works with edge cases", {
     groups = list("a", NULL, "b", NA_character_)
   )
 
-  myCombDat2$setDataTransforms(
+  myCombDat2$setDataTransformations(
     names = list(
       "Stevens_2012_placebo.Placebo_total",
       "x",
@@ -984,7 +983,7 @@ test_that("DataCombined works with edge cases", {
     xScaleFactors = c(1.2, 2, 2.3, 4.8),
     yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
   )
-  myCombDat3$setDataTransforms(
+  myCombDat3$setDataTransformations(
     xOffsets = list(1.2, 2, 2.3, 4.8),
     yOffsets = c(3.1, 4.4, 3.5, 6.1),
     xScaleFactors = c(1.2, 2, 2.3, 4.8),
