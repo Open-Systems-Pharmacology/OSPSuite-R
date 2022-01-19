@@ -123,17 +123,16 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object containing observed data.
 
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
-      # validate argument type and length
-      groups <- private$.validateListArgs(groups, private$.objCount(dataSets), type = "character")
-
-      # if a list is provided, check each element is a `DataSet` instance
-      # `NULL` elements are not accepted in argument list here
+      # validate the object type (`NULL` elements are not accepted)
+      # if list of instances is provided, `purrr::walk` will check each element
       if (is.list(dataSets)) {
         purrr::walk(.x = dataSets, .f = ~ validateIsOfType(.x, "DataSet", nullAllowed = FALSE))
       } else {
-        # if a single instance is entered instead, validate it
         validateIsOfType(dataSets, "DataSet", nullAllowed = FALSE)
       }
+
+      # validate argument type and length
+      groups <- private$.validateListArgs(groups, private$.objCount(dataSets), type = "character")
 
       # anticipate that although a list of `DataSet` objects might be entered,
       # they might not have names associated with them in the container list
@@ -185,18 +184,17 @@ DataCombined <- R6::R6Class(
                                     individualIds = NULL,
                                     names = NULL,
                                     groups = NULL) {
-      # validate argument type and length
-      groups <- private$.validateListArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
-      names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
-
       # list of `SimulationResults` instances is not allowed
       if (is.list(simulationResults)) {
         stop(messages$errorWrongType("simulationResults", "list", "a scalar (vector of length 1)"))
       }
 
-      # validate the object type
-      # `NULL` elements are not accepted here
+      # validate the object type (`NULL` elements are not accepted)
       validateIsOfType(simulationResults, SimulationResults, nullAllowed = FALSE)
+
+      # validate argument type and length
+      groups <- private$.validateListArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
+      names <- private$.validateListArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
 
       # update private fields
 
@@ -328,11 +326,7 @@ DataCombined <- R6::R6Class(
       # active binding. If we were to clean the dataframe in place, this will
       # not be possible since there won't be offset and scale factors columns to
       # append to.
-      if (!is.null(private$.dataCombinedDF)) {
-        return(private$.cleanDF(private$.dataCombinedDF))
-      } else {
-        return(NULL)
-      }
+      private$.cleanDF(private$.dataCombinedDF)
     },
 
     ## print method -----------------
@@ -361,7 +355,7 @@ DataCombined <- R6::R6Class(
     # just a way to access whatever was specified
     names = function(value) {
       if (missing(value)) {
-        sort(private$.names)
+        private$.names
       } else {
         stop(messages$errorPropertyReadOnly(
           "names",
@@ -414,9 +408,7 @@ DataCombined <- R6::R6Class(
       data <- dataSetToDataFrame(dataSets)
 
       # if alternative names are provided, use them
-      if (!is.null(names)) {
-        data <- private$.renameDatasets(data, names)
-      }
+      data <- private$.renameDatasets(data, names)
 
       # add column with grouping information and then
       # add a column describing the type of data and then
@@ -612,13 +604,15 @@ DataCombined <- R6::R6Class(
     # assign new `names` vector to the existing `name` column, and then
     # unnest the list column
 
-    .renameDatasets = function(data, names) {
-      data <- data %>%
-        dplyr::group_by(name) %>%
-        tidyr::nest() %>%
-        dplyr::ungroup() %>%
-        dplyr::mutate(name = names) %>%
-        tidyr::unnest(cols = c(data))
+    .renameDatasets = function(data, names = NULL) {
+      if (!is.null(names)) {
+        data <- data %>%
+          dplyr::group_by(name) %>%
+          tidyr::nest() %>%
+          dplyr::ungroup() %>%
+          dplyr::mutate(name = names) %>%
+          tidyr::unnest(cols = c(data))
+      }
 
       return(data)
     },
@@ -637,11 +631,14 @@ DataCombined <- R6::R6Class(
         dplyr::arrange(group, name)
     },
 
-    # extract unique dataset names from the combined dataframe
+    # extract unique and sorted dataset names from the combined dataframe
 
     .extractNames = function(data = NULL) {
       if (!is.null(data)) {
-        unique(data %>% dplyr::pull(name))
+        data %>%
+          dplyr::pull(name) %>%
+          unique() %>%
+          sort()
       } else {
         NULL
       }
@@ -669,8 +666,13 @@ DataCombined <- R6::R6Class(
     # clean dataframe before returning it to the user
 
     .cleanDF = function(data = NULL) {
+      # fail early if there is no data
+      if (is.null(data)) {
+        return(NULL)
+      }
+
       # having a consistent column order
-      data %>%
+      data <- data %>%
         dplyr::select(
           # all identifying columns
           dplyr::matches("^group$"),
@@ -693,6 +695,9 @@ DataCombined <- R6::R6Class(
         dplyr::select(-dplyr::ends_with(c("Offsets", "ScaleFactors"))) %>%
         # arrange data (alphabetically) by dataset name
         dplyr::arrange(name)
+
+      # return the cleaned dataframe
+      return(data)
     },
 
     ## utilities ---------------------
