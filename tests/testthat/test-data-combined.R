@@ -464,21 +464,41 @@ test_that("DataCombined with data transformations", {
         name = c(
           "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
           "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention",
+          "Stevens_2012_placebo.Placebo_total",
+          "Stevens_2012_placebo.Sita_total",
+          "Stevens_2012_placebo.Placebo_proximal",
           "Stevens_2012_placebo.Sita_proximal",
-          "Stevens_2012_placebo.Placebo_distal"
+          "Stevens_2012_placebo.Placebo_distal",
+          "Stevens_2012_placebo.Sita_dist"
         ),
-        dataType = c("simulated", "simulated", "observed", "observed"),
-        xOffsets = c(2, 2, 2, 2),
-        xScaleFactors = c(1.5, 1.5, 1.5, 1.5),
-        yOffsets = c(4, 4, 4, 4),
-        yScaleFactors = c(2.5, 2.5, 2.5, 2.5)
+        dataType = c(
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "observed"
+        ),
+        xOffsets = c(2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0),
+        yOffsets = c(4, 4, 0, 0, 0, 0, 0, 0, 4, 4, 0),
+        xScaleFactors = c(1.5, 1.5, 1, 1, 1, 1, 1, 1, 1.5, 1.5, 1),
+        yScaleFactors = c(2.5, 2.5, 1, 1, 1, 1, 1, 1, 2.5, 2.5, 1)
       ),
       class = c("tbl_df", "tbl", "data.frame"),
-      row.names = c(NA, -4L)
+      row.names = c(NA, -11L)
     )
   )
 
   dfTransformed <- myCombDat$toDataFrame()
+  dfTransformed <- dplyr::filter(dfTransformed, name %in% names_ls)
 
   expect_equal(dfTransformed$xValues, (dfOriginal$xValues + 2) * 1.5)
   expect_equal(dfTransformed$yValues, (dfOriginal$yValues + 4) * 2.5)
@@ -511,8 +531,8 @@ test_that("DataCombined with data transformations", {
     ),
     # mix atomic vectors and lists to make sure that both work
     xOffsets = list(2, 3),
-    xScaleFactors = list(1.5, 2.4),
     yOffsets = c(4, 7),
+    xScaleFactors = list(1.5, 2.4),
     yScaleFactors = c(1.1, 2.2)
   )
 
@@ -522,17 +542,38 @@ test_that("DataCombined with data transformations", {
     structure(
       list(
         name = c(
+          "Stevens_2012_placebo.Placebo_total",
+          "Stevens_2012_placebo.Sita_total",
+          "Stevens_2012_placebo.Placebo_proximal",
           "Stevens_2012_placebo.Sita_proximal",
-          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+          "Stevens_2012_placebo.Placebo_distal",
+          "Stevens_2012_placebo.Sita_dist",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention"
         ),
-        dataType = c("observed", "simulated"),
-        xOffsets = c(3, 2),
-        xScaleFactors = c(2.4, 1.5),
-        yOffsets = c(7, 4),
-        yScaleFactors = c(2.2, 1.1)
+        dataType = c(
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "observed",
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated",
+          "simulated"
+        ),
+        xOffsets = c(0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0),
+        yOffsets = c(0, 0, 0, 7, 0, 0, 0, 4, 0, 0, 0),
+        xScaleFactors = c(1, 1, 1, 2.4, 1, 1, 1, 1.5, 1, 1, 1),
+        yScaleFactors = c(1, 1, 1, 2.2, 1, 1, 1, 1.1, 1, 1, 1)
       ),
       class = c("tbl_df", "tbl", "data.frame"),
-      row.names = c(NA, -2L)
+      row.names = c(NA, -11L)
     )
   )
 

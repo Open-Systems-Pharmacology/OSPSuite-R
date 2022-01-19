@@ -41,8 +41,9 @@
 #'   across different methods:
 #' - `$setDataTransformations()`: In the context of this method, a list of names
 #' specifying which observed datasets and/or paths in simulated dataset to
-#' transform. Default is `NULL`, i.e., the transformations will be applied to
-#' all rows of the dataframe.
+#' transform with the specified transformations. Default is `NULL`, i.e., the
+#' transformations, if any specified, will be applied to all rows of the
+#' dataframe.
 #' - `$addSimulationResults()`: In the context of this method, a list of strings
 #' assigning new names to the quantities or paths present in the entered
 #' `SimulationResults` object.
@@ -243,6 +244,10 @@ DataCombined <- R6::R6Class(
       validateIsNumeric(xScaleFactors)
       validateIsNumeric(yScaleFactors)
 
+      if (!is.null(names)) {
+        names <- private$.validateListArgs(names, type = "character")
+      }
+
       # transform data
       if (!is.null(private$.dataCombinedDF)) {
         private$.dataCombinedDF <- private$.dataTransform(
@@ -326,7 +331,7 @@ DataCombined <- R6::R6Class(
       # group map contains names of the included datasets and grouping details
       private$printLine("DataCombined", addTab = FALSE)
       private$printLine("Datasets and groupings", addTab = FALSE)
-      private$printLine("", addTab = FALSE)
+      cat("\n")
       print(private$.groupMap)
 
       # for method chaining
@@ -522,27 +527,29 @@ DataCombined <- R6::R6Class(
                               xScaleFactors = 1,
                               yScaleFactors = 1) {
 
-      # if a list of names is provided then the list of other arguments must be
-      # checked to be of the same length as this list and a separate
-      # transformation values needs to be stored for each dataset
-      if (!is.null(names)) {
-        # filter out datasets with selected names
-        data <- dplyr::filter(data, name %in% names)
-      } else {
-        # if names are not provided then the entire dataframe will be used
-        names <- unique(data %>% dplyr::pull(name))
-      }
-
-      # apply offset and scale factor for x- and y-axes
+      # Keep all transformation parameters and their names linked together with
+      # dataframe data structure
       #
-      # The private `$.colTransform()`method internally takes care of applying
-      # transformation to each dataset separately if a list of parameters is
-      # provided, or use the same parameters for the entire dataframe otherwise
-      data <- data %>%
-        private$.colTransform(xOffsets, "xOffsets", names) %>%
-        private$.colTransform(xScaleFactors, "xScaleFactors", names) %>%
-        private$.colTransform(yOffsets, "yOffsets", names) %>%
-        private$.colTransform(yScaleFactors, "yScaleFactors", names)
+      # In case a list of parameters is specified, `flattenList()` will flatten
+      # it to an atomic vector of double type
+      #
+      # Additionally, if no names are provides, the transformations will apply
+      # to the entire dataframe, and thus dataset names can be placeholder just
+      # for the purpose of joining two dataframes
+      dataArg <- dplyr::tibble(
+        names         = names %||% unique(data$name),
+        xOffsets      = flattenList(xOffsets),
+        yOffsets      = flattenList(yOffsets),
+        xScaleFactors = flattenList(xScaleFactors),
+        yScaleFactors = flattenList(yScaleFactors)
+      )
+
+      # merge data with corresponding parameters and then
+      # replace NAs with default values for offsets (0) and scale factors (1)
+      # these defaults mean no change is made to the data
+      data <- dplyr::left_join(data, dataArg, by = c("name" = "names")) %>%
+        dplyr::mutate(across(matches("offsets$"), ~ tidyr::replace_na(.x, 0))) %>%
+        dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1)))
 
       # apply transformations
       data <- dplyr::mutate(
@@ -554,33 +561,6 @@ DataCombined <- R6::R6Class(
       # applicable only if the error values are available
       if ("yErrorValues" %in% names(data)) {
         data <- dplyr::mutate(data, yErrorValues = yErrorValues * yScaleFactors)
-      }
-
-      return(data)
-    },
-
-    # To transform a single column
-    #
-    # Although arguments to parameters `arg` and `colName` are going to be the
-    # same, they can't be represented by the same parameter in method signature
-    # since one is providing values while the other is providing a name. Doing
-    # so will produce the following error:
-    #
-    # > promise already under evaluation: recursive default argument reference or
-    # > earlier problems?
-
-    .colTransform = function(data, arg, colName, names = NULL) {
-      # if a list is provided
-      if (length(arg) > 1L) {
-        validateIsSameLength(arg, names)
-
-        data <- data %>%
-          dplyr::group_by(name) %>%
-          dplyr::mutate({{ colName }} := arg[match(name, names)][[1]]) %>%
-          dplyr::ungroup()
-      } else {
-        # if a scalar is provided
-        data <- dplyr::mutate(data, {{ colName }} := arg[[1]])
       }
 
       return(data)
@@ -734,6 +714,7 @@ DataCombined <- R6::R6Class(
       return(l)
     },
 
+
     # Serves following purposes while validating arguments entered as lists:
     #
     # - Arguments like `names`, `groups`, etc. need to be of the same length
@@ -746,11 +727,13 @@ DataCombined <- R6::R6Class(
     # dropped and the length of list of arguments will become shorter. This is
     # taken care of using the private `.null_to_na_chr()` method.
 
-    .validateListArgs = function(arg = NULL, expectedLength, type) {
+    .validateListArgs = function(arg = NULL, expectedLength = NULL, type) {
       if (!is.null(arg)) {
         # validate the length of arguments
         # this will work irrespective of whether it's a list or a vector
-        validateIsOfLength(arg, expectedLength)
+        if (!is.null(expectedLength)) {
+          validateIsOfLength(arg, expectedLength)
+        }
 
         # validate the type of arguments
         # it is important to allow users to enter `NULL` in argument lists, so
@@ -794,3 +777,10 @@ DataCombined <- R6::R6Class(
   cloneable = TRUE,
   portable = TRUE
 )
+
+#' @keywords internal
+
+flattenList <- function(x) {
+  if (is.list(x)) x <- purrr::flatten_dbl(x)
+  return(x)
+}

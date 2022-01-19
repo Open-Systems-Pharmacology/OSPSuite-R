@@ -105,8 +105,9 @@ across different methods:
 \itemize{
 \item \verb{$setDataTransformations()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
-transform. Default is \code{NULL}, i.e., the transformations will be applied to
-all rows of the dataframe.
+transform with the specified transformations. Default is \code{NULL}, i.e., the
+transformations, if any specified, will be applied to all rows of the
+dataframe.
 \item \verb{$addSimulationResults()}: In the context of this method, a list of strings
 assigning new names to the quantities or paths present in the entered
 \code{SimulationResults} object.
@@ -174,8 +175,9 @@ across different methods:
 \itemize{
 \item \verb{$setDataTransformations()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
-transform. Default is \code{NULL}, i.e., the transformations will be applied to
-all rows of the dataframe.
+transform with the specified transformations. Default is \code{NULL}, i.e., the
+transformations, if any specified, will be applied to all rows of the
+dataframe.
 \item \verb{$addSimulationResults()}: In the context of this method, a list of strings
 assigning new names to the quantities or paths present in the entered
 \code{SimulationResults} object.
@@ -223,8 +225,9 @@ across different methods:
 \itemize{
 \item \verb{$setDataTransformations()}: In the context of this method, a list of names
 specifying which observed datasets and/or paths in simulated dataset to
-transform. Default is \code{NULL}, i.e., the transformations will be applied to
-all rows of the dataframe.
+transform with the specified transformations. Default is \code{NULL}, i.e., the
+transformations, if any specified, will be applied to all rows of the
+dataframe.
 \item \verb{$addSimulationResults()}: In the context of this method, a list of strings
 assigning new names to the quantities or paths present in the entered
 \code{SimulationResults} object.
