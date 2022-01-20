@@ -153,22 +153,19 @@ DataCombined <- R6::R6Class(
         names <- ifelse(is.na(names), names(dataSets), names)
       }
 
-      # update private fields
+      # Update private fields for the new setter call
+      #
+      # - extract dataframe and append it to the combined dataframe
+      # - extract original XY data into separate columns
+      # - extract group map
+      # - extract dataset names
 
-      # extract dataframe and append it to the combined dataframe
-      private$.dataCombined <- private$.updateDF(
-        private$.dataCombined,
-        private$.dataSetToDF(dataSets, names, groups)
-      )
-
-      # extract original XY data into separate columns
+      # styler: off
+      private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, names, groups))
       private$.dataCombined <- private$.extractXYData(private$.dataCombined)
-
-      # update group map
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-
-      # update dataset names
-      private$.names <- private$.extractNames(private$.dataCombined)
+      private$.groupMap     <- private$.extractGroupMap(private$.dataCombined)
+      private$.names        <- private$.extractNames(private$.dataCombined)
+      # styler: on
 
       # for method chaining
       invisible(self)
@@ -196,11 +193,15 @@ DataCombined <- R6::R6Class(
       groups <- validateVectorArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
       names <- validateVectorArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
 
-      # update private fields
+      # Update private fields for the new setter call
+      #
+      # - extract dataframe and append it to the combined dataframe
+      # - extract original XY data into separate columns
+      # - extract group map
+      # - extract dataset names
 
-      # extract dataframe and append it to the combined dataframe
-      private$.dataCombined <- private$.updateDF(
-        private$.dataCombined,
+      # styler: off
+      private$.dataCombined <- private$.updateDF(private$.dataCombined,
         private$.simResultsToDF(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
@@ -210,15 +211,10 @@ DataCombined <- R6::R6Class(
           groups            = groups
         )
       )
-
-      # extract original XY data into separate columns
       private$.dataCombined <- private$.extractXYData(private$.dataCombined)
-
-      # group map can only be generated if at least one grouping is specified
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-
-      # update dataset names
-      private$.names <- private$.extractNames(private$.dataCombined)
+      private$.groupMap     <- private$.extractGroupMap(private$.dataCombined)
+      private$.names        <- private$.extractNames(private$.dataCombined)
+      # styler: on
 
       # for method chaining
       invisible(self)
