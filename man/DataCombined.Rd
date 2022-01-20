@@ -82,7 +82,7 @@ Initialize a new instance of the class.
 }
 
 \subsection{Returns}{
-A new (empty) instance of \code{DataCombined} object.
+A new (empty) instance of \code{DataCombined} class.
 }
 }
 \if{html}{\out{<hr>}}
@@ -98,7 +98,7 @@ Adds observed data.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
-object(s).}
+class.}
 
 \item{\code{names}}{A string or a list of string. This argument will be encountered
 across different methods:
@@ -112,7 +112,7 @@ dataframe.
 assigning new names to the quantities or paths present in the entered
 \code{SimulationResults} object.
 \item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} object.
+assigning new names to the list of instances of the \code{DataSet} class.
 }
 
 Note that the datasets whose names you wish to not change should be specified
@@ -161,7 +161,7 @@ When providing the paths, only absolute full paths are supported (i.e., no
 matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
 value), returns the results for all output defined in the results.}
 
-\item{\code{population}}{population used to calculate the \code{simulationResults}
+\item{\code{population}}{Population used to calculate the \code{simulationResults}
 (optional). This is used only to add the population covariates to the
 resulting dataframe.}
 
@@ -182,7 +182,7 @@ dataframe.
 assigning new names to the quantities or paths present in the entered
 \code{SimulationResults} object.
 \item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} object.
+assigning new names to the list of instances of the \code{DataSet} class.
 }
 
 Note that the datasets whose names you wish to not change should be specified
@@ -232,7 +232,7 @@ dataframe.
 assigning new names to the quantities or paths present in the entered
 \code{SimulationResults} object.
 \item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} object.
+assigning new names to the list of instances of the \code{DataSet} class.
 }
 
 Note that the datasets whose names you wish to not change should be specified
@@ -257,7 +257,7 @@ it will also be scaled.
 \if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
 A method to extract a dataframe of simulated and/or observed data
-(depending on instances of which objects have been added to the object).
+(depending on instances of which classes have been added to the object).
 
 Note that the order in which you enter different object doesn't matter
 because the returned dataframe is arranged alphabetically by dataset

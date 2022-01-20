@@ -474,19 +474,6 @@ test_that("DataCombined with data transformations", {
           "Stevens_2012_placebo.Placebo_distal",
           "Stevens_2012_placebo.Sita_dist"
         ),
-        dataType = c(
-          "simulated",
-          "simulated",
-          "simulated",
-          "simulated",
-          "simulated",
-          "observed",
-          "observed",
-          "observed",
-          "observed",
-          "observed",
-          "observed"
-        ),
         xOffsets = c(2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0),
         yOffsets = c(4, 4, 0, 0, 0, 0, 0, 0, 4, 4, 0),
         xScaleFactors = c(1.5, 1.5, 1, 1, 1, 1, 1, 1, 1.5, 1.5, 1),
@@ -554,19 +541,6 @@ test_that("DataCombined with data transformations", {
           "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
           "Organism|Lumen|Stomach|Metformin|Gastric retention"
         ),
-        dataType = c(
-          "observed",
-          "observed",
-          "observed",
-          "observed",
-          "observed",
-          "observed",
-          "simulated",
-          "simulated",
-          "simulated",
-          "simulated",
-          "simulated"
-        ),
         xOffsets = c(0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0),
         yOffsets = c(0, 0, 0, 7, 0, 0, 0, 4, 0, 0, 0),
         xScaleFactors = c(1, 1, 1, 2.4, 1, 1, 1, 1.5, 1, 1, 1),
@@ -607,6 +581,24 @@ test_that("DataCombined with data transformations", {
     dplyr::filter(df, name == "Stevens_2012_placebo.Sita_proximal")$yErrorValues,
     dplyr::filter(dfOriginal, name == "Stevens_2012_placebo.Sita_proximal")$yErrorValues * 2.2
   )
+
+  # each call to set transformations resets the previous parameters for the same
+  # dataset
+  myCombDat <- DataCombined$new()
+
+  myCombDat$addSimulationResults(simResults, quantitiesOrPaths = "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying")
+  myCombDat$setDataTransformations()
+  df1 <- myCombDat$dataTransformations
+
+  myCombDat$setDataTransformations(xOffsets = 3, yScaleFactors = 4)
+  df2 <- myCombDat$dataTransformations
+
+  myCombDat$setDataTransformations()
+  df3 <- myCombDat$dataTransformations
+
+  expect_equal(df1, df3)
+  expect_equal(df2$xOffsets, 3)
+  expect_equal(df2$yScaleFactors, 4)
 })
 
 # grouping works ---------------------------------
