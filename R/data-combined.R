@@ -8,8 +8,7 @@
 #' Additionally, it allows:
 #'
 #' - Grouping different (simulated and/or observed) datasets with grouping
-#' labels. If no grouping is specified, name of the dataset is used as a
-#' grouping label.
+#' labels.
 #'
 #' - Transforming data (with given offsets and scale factors).
 #'
@@ -39,19 +38,23 @@
 #'   `NA`.
 #' @param names A string or a list of string. This argument will be encountered
 #'   across different methods:
+#'
 #' - `$setDataTransformations()`: In the context of this method, a list of names
 #' specifying which observed datasets and/or paths in simulated dataset to
 #' transform with the specified transformations. Default is `NULL`, i.e., the
 #' transformations, if any specified, will be applied to all rows of the
 #' dataframe.
+#'
 #' - `$addSimulationResults()`: In the context of this method, a list of strings
 #' assigning new names to the quantities or paths present in the entered
-#' `SimulationResults` object.
-#' - `$addDataSets()`: In the context of this method, a list of strings
-#' assigning new names to the list of instances of the `DataSet` class.
+#' `SimulationResults` object. Note that the datasets whose names you wish to
+#' not change should be specified as `NULL` in the list.
 #'
-#' Note that the datasets whose names you wish to not change should be specified
-#' as `NULL` in the list.
+#' - `$addDataSets()`: In the context of this method, a list of strings
+#' assigning new names to the list of instances of the `DataSet` class. Note
+#' that the datasets whose names you wish to not change should be specified as
+#' `NULL` in the list.
+#'
 #'
 #' @import tidyr
 #' @import ospsuite.utils
@@ -114,19 +117,17 @@ DataCombined <- R6::R6Class(
       groups <- validateVectorArgs(groups, objCount(dataSets), type = "character")
 
       # anticipate that although a list of `DataSet` objects might be entered,
-      # they might not have names associated with them in the container list
-      # in such cases, go inside each element of the list (purrr::map) and
-      # extract (purrr::pluck) the name from the object itself and use them
-      # instead and simplify to a character vector
+      # they might not have names associated with them in the argument list
       #
-      # since we don't allow entering a list of `SimulationResults` objects, we
-      # don't need to run a similar check in the relevant method
+      # in such cases, go inside each element of the list (`purrr::map()`) and
+      # extract (`purrr::pluck()`) the name from the object itself and use them
+      # instead and simplify to a character vector
       if (is.list(dataSets) && is.null(names(dataSets))) {
         names(dataSets) <- purrr::map_chr(dataSets, .f = ~ purrr::pluck(.x, "name"))
       }
 
       # if alternate names are provided for datasets, use them instead
-      # for `NULL` elements, the original names will be used
+      # for `NULL` elements in a list, the original names will be used
       if (!is.null(names) && is.list(dataSets)) {
         # lengths of alternate names and objects should be same
         names <- validateVectorArgs(names, length(names(dataSets)), type = "character")
@@ -157,7 +158,9 @@ DataCombined <- R6::R6Class(
     },
 
     #' @description
-    #' Add simulated data.
+    #'
+    #' Add simulated data using instance of `SimulationResults` class.
+    #'
     #' @return `DataCombined` object containing simulated data.
 
     addSimulationResults = function(simulationResults,
@@ -218,9 +221,16 @@ DataCombined <- R6::R6Class(
     #'   default scale factor is `1`, i.e., the data will not be modified. If a
     #'   list is specified, it should be the same length as `names` argument.
     #'
-    #' @return A dataframe with respective raw quantities plus offsets
-    #'   multiplied by the specified scale factors. If error column is present,
-    #'   it will also be scaled.
+    #' @details
+    #'
+    #' A dataframe with respective raw quantities transformed using specified
+    #' offset and scale factor values.
+    #'
+    #' - For X and Y variables:
+    #'   `newValue = (rawValue + offset) * scaleFactor`
+    #'
+    #' - For error term:
+    #'   `newErrorValue = rawErrorValue * scaleFactor`
 
     setDataTransformations = function(names = NULL,
                                       xOffsets = 0,
@@ -309,9 +319,8 @@ DataCombined <- R6::R6Class(
 
   active = list(
 
-    #' @field names A vector of unique names of `DataSet` objects and/or
-    #'   quantities or paths from `SimulationResuls` object sorted
-    #'   alphabetically.
+    #' @field names A vector of unique names of datasets contained in the
+    #'   `DataCombined` class instance.
 
     # just a way to access whatever was specified
     names = function(value) {

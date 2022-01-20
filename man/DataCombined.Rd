@@ -11,8 +11,7 @@ can be further used for visualization methods.
 Additionally, it allows:
 \itemize{
 \item Grouping different (simulated and/or observed) datasets with grouping
-labels. If no grouping is specified, name of the dataset is used as a
-grouping label.
+labels.
 \item Transforming data (with given offsets and scale factors).
 }
 }
@@ -40,9 +39,8 @@ myCombDat
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{names}}{A vector of unique names of \code{DataSet} objects and/or
-quantities or paths from \code{SimulationResuls} object sorted
-alphabetically.}
+\item{\code{names}}{A vector of unique names of datasets contained in the
+\code{DataCombined} class instance.}
 
 \item{\code{groupMap}}{A dataframe specifying which datasets have been grouped
 together and the name and the nature (observed or simulated?) of the
@@ -110,13 +108,13 @@ transformations, if any specified, will be applied to all rows of the
 dataframe.
 \item \verb{$addSimulationResults()}: In the context of this method, a list of strings
 assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object.
+\code{SimulationResults} object. Note that the datasets whose names you wish to
+not change should be specified as \code{NULL} in the list.
 \item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} class.
-}
-
-Note that the datasets whose names you wish to not change should be specified
-as \code{NULL} in the list.}
+assigning new names to the list of instances of the \code{DataSet} class. Note
+that the datasets whose names you wish to not change should be specified as
+\code{NULL} in the list.
+}}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
 group. If an entry within the list is \code{NULL}, the corresponding data set is
@@ -136,7 +134,7 @@ of the dataset, the column \code{group} in the dataframe output will be all
 \if{html}{\out{<a id="method-addSimulationResults"></a>}}
 \if{latex}{\out{\hypertarget{method-addSimulationResults}{}}}
 \subsection{Method \code{addSimulationResults()}}{
-Add simulated data.
+Add simulated data using instance of \code{SimulationResults} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
   simulationResults,
@@ -180,13 +178,13 @@ transformations, if any specified, will be applied to all rows of the
 dataframe.
 \item \verb{$addSimulationResults()}: In the context of this method, a list of strings
 assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object.
+\code{SimulationResults} object. Note that the datasets whose names you wish to
+not change should be specified as \code{NULL} in the list.
 \item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} class.
-}
-
-Note that the datasets whose names you wish to not change should be specified
-as \code{NULL} in the list.}
+assigning new names to the list of instances of the \code{DataSet} class. Note
+that the datasets whose names you wish to not change should be specified as
+\code{NULL} in the list.
+}}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
 group. If an entry within the list is \code{NULL}, the corresponding data set is
@@ -230,13 +228,13 @@ transformations, if any specified, will be applied to all rows of the
 dataframe.
 \item \verb{$addSimulationResults()}: In the context of this method, a list of strings
 assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object.
+\code{SimulationResults} object. Note that the datasets whose names you wish to
+not change should be specified as \code{NULL} in the list.
 \item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} class.
-}
-
-Note that the datasets whose names you wish to not change should be specified
-as \code{NULL} in the list.}
+assigning new names to the list of instances of the \code{DataSet} class. Note
+that the datasets whose names you wish to not change should be specified as
+\code{NULL} in the list.
+}}
 
 \item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a numeric
 scalar or a list of numeric quantities specifying offsets and scale
@@ -246,11 +244,17 @@ list is specified, it should be the same length as \code{names} argument.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-A dataframe with respective raw quantities plus offsets
-multiplied by the specified scale factors. If error column is present,
-it will also be scaled.
+\subsection{Details}{
+A dataframe with respective raw quantities transformed using specified
+offset and scale factor values.
+\itemize{
+\item For X and Y variables:
+\code{newValue = (rawValue + offset) * scaleFactor}
+\item For error term:
+\code{newErrorValue = rawErrorValue * scaleFactor}
 }
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-toDataFrame"></a>}}
