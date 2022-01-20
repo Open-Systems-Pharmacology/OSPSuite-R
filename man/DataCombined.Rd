@@ -267,27 +267,10 @@ name.
 }
 
 \subsection{Returns}{
-A dataframe with some or all of the following columns:\preformatted{name
-group
-dataType
-xValues
-xDimension
-xUnit
-yValues
-yErrorValues
-yDimension
-yUnit
-yErrorType
-yErrorUnit
-molWeight
-Group Id
-lloq
-Source
-Sheet
-Organ
-Compartment
-Molecule
-}
+In the returned dataframe, the following columns will always be present:
+
+name - group - dataType - xValues - xDimension - xUnit - yValues -
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
 }
 }
 \if{html}{\out{<hr>}}

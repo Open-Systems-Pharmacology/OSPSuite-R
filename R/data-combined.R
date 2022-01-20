@@ -274,28 +274,10 @@ DataCombined <- R6::R6Class(
     #'
     #' @return
     #'
-    #' A dataframe with some or all of the following columns:
+    #' In the returned dataframe, the following columns will always be present:
     #'
-    #'     name
-    #'     group
-    #'     dataType
-    #'     xValues
-    #'     xDimension
-    #'     xUnit
-    #'     yValues
-    #'     yErrorValues
-    #'     yDimension
-    #'     yUnit
-    #'     yErrorType
-    #'     yErrorUnit
-    #'     molWeight
-    #'     Group Id
-    #'     lloq
-    #'     Source
-    #'     Sheet
-    #'     Organ
-    #'     Compartment
-    #'     Molecule
+    #' name - group - dataType - xValues - xDimension - xUnit - yValues -
+    #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
 
 
     toDataFrame = function() {
@@ -701,50 +683,29 @@ DataCombined <- R6::R6Class(
 
 # TODO: move these functions to the utilities package
 
-# Convert `NULL` or `NA` to `NA` of desired type
-#
-# `NULL`s should be converted to `NA`, because otherwise flattening a list
-# will drop them and the resulting vectors will be shorter than argument
-# lists
-#
-# Additionally, if users instead enter a vector with character types and
-# `NA`s, the default `NA` in R is of logical type, and therefore needs
-# to be explicitly cast to `NA_character_`.
-
+#' Count number of objects
+#'
+#' @details
+#'
+#' If the argument is not a vector, unlike `length()`, this function will not
+#' count the number of named bindings in an environment, but only the number of
+#' instances of a class.
+#'
+#' For example, `length(mtcars)` will return 11, but `objCount(mtcars)` will
+#' return 1.
+#'
+#' @param x An object (an atomic vector, a list, or instance(s) of a class).
+#'
+#' @examples
+#'
+#' objCount(c(1, 2, 3)) # 3
+#' objCount(list("a", "b")) # 2
+#' objCount(mtcars) # 1
+#'
+#' @return Integer representing the count of objects.
+#'
 #' @keywords internal
-
-toMissingOfType <- function(x, type) {
-  # everything other than value will be converted to `NA` of desire type
-  if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
-    x <- switch(type,
-      "character" = NA_character_,
-      "numeric" = ,
-      "real" = ,
-      "double" = NA_real_,
-      "integer" = NA_integer_,
-      "complex" = NA_complex_,
-      "logical" = NA,
-      stop("Incorrect type entered.")
-    )
-  }
-
-  return(x)
-}
-
-# Extract how many objects were entered, which will be used to decide if
-# the lengths of `names`, `groups`, etc. arguments are acceptable.
-#
-# for example,
-# - if `dataSet` is a list of 5 `DataSet` class instances, then 5
-# - if `dataSet` is a single `DataSet` class instance, then 1
-# - `SimulationResults` is allowed to be only a single instance, then 1
-#
-# Note that `length()` won't work here. It will return the number of named
-# objects in the `DataSet` or `SimulationResults` environments, which is not
-# what we want. For example, if `dataSet` is given a single `DataSet`
-# object, then the length will be 22, and not 1.
-
-#' @keywords internal
+#' @noRd
 
 objCount <- function(x) {
   # `is.vector()` can handle both atomic vectors and lists, i.e.
@@ -758,23 +719,36 @@ objCount <- function(x) {
   return(l)
 }
 
-
-# Serves following purposes while validating arguments entered as lists:
-#
-# - Arguments like `names`, `groups`, etc. need to be of the same length
-# as the entered datasets. This is checked here.
-#
-# - Additionally, the function checks if the object is of the correct type.
-#
-# - We allow entering `NULL` for elements where the users don't expect any
-# change. But, if a list with `NULL` is flattened to a vector, it will be
-# dropped and the length of list of arguments will become shorter. This is
-# taken care of using the `toMissingOfType()` function.
-
+#'  Validate arguments provided as vectors
+#'
+#' @details
+#'
+#' Validation of arguments provided as a vector involves:
+#'
+#' - Checking that it is of expected length.
+#' - Checking for `NULL` or other unexpected values (`NaN`, `Inf`, `NA` of the
+#'   wrong type) and standardizing them to `NA` of desired type.
+#' - Checking that each element in the vector is of expected type.
+#' - If a non-atomic list is provided, converting it to an atomic vector.
+#'
+#' @param x A vector of arguments.
+#' @param expectedLength An integer to denote the expected length of the vector.
+#' @inheritParams flattenList
+#'
+#' @return
+#'
+#' An atomic vector of desired type containing specified arguments.
+#'
+#' @examples
+#'
+#' validateVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
+#' validateVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
+#'
 #' @keywords internal
+#' @noRd
 
 validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
-  # return early if NULL
+  # return early if argument was not specified
   if (is.null(arg)) {
     return(NULL)
   }
@@ -785,10 +759,12 @@ validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   }
 
   # convert `NULL`s or logical `NA`s to `NA` of required type
-  # `purrr::map()` will return a list
+
+  # Note that `purrr::map()` will return a list
   arg <- purrr::map(arg, ~ toMissingOfType(.x, type))
 
   # validate the type of arguments
+
   # `nullAllowed = TRUE` is necessary because `NULL` in vector arguments is
   # used to specify no change for the corresponding dataset
   # `purrr::walk()` is needed below because validation helper functions
@@ -802,8 +778,25 @@ validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   return(arg)
 }
 
+#' Flatten a list to an atomic vector of desired type
+#'
+#' @param x A list or an atomic vector. If the latter, no change will be made.
+#' @param type Type of atomic vector to be returned.
+#'
+#' @details
+#'
+#' The `type` argument will decide which variant from `purrr::flatten()` family
+#' is used to flatten the list.
+#'
+#' @examples
+#'
+#' flattenList(list(1, 2, 3, NA), type = "numeric")
+#' flattenList(list(TRUE, FALSE, NA), type = "integer")
+#'
+#' @return An atomic vector of desired type.
 #'
 #' @keywords internal
+#' @noRd
 
 flattenList <- function(x, type) {
   if (is.list(x)) {
@@ -815,6 +808,38 @@ flattenList <- function(x, type) {
       "integer" = purrr::flatten_int(x),
       "logical" = purrr::flatten_lgl(x),
       purrr::flatten(x)
+    )
+  }
+
+  return(x)
+}
+
+
+#' Convert `NULL` or `NA`s to `NA` of desired type
+#'
+#' @param x A single element.
+#' @inheritParams flattenList
+#'
+#' @examples
+#'
+#' toMissingOfType(NA, type = "real")
+#' toMissingOfType(NULL, type = "integer")
+#'
+#' @keywords internal
+#' @noRd
+
+toMissingOfType <- function(x, type) {
+  # everything other than value will be converted to `NA` of desire type
+  if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
+    x <- switch(type,
+                "character" = NA_character_,
+                "numeric" = ,
+                "real" = ,
+                "double" = NA_real_,
+                "integer" = NA_integer_,
+                "complex" = NA_complex_,
+                "logical" = NA,
+                stop("Incorrect type entered.")
     )
   }
 
