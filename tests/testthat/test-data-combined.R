@@ -140,13 +140,13 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 9L))
+  expect_equal(dim(df2), c(1255L, 10L))
 
   expect_equal(
     names(df2),
     c(
       "name", "group", "dataType", "xValues", "xUnit", "yValues",
-      "yUnit", "yDimension", "IndividualId"
+      "yUnit", "yDimension", "yErrorValues", "IndividualId"
     )
   )
   expect_equal(unique(df2$name), sort(simResults$allQuantityPaths))
@@ -332,7 +332,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   df3 <- myCombDat4$toDataFrame()
   myCombDat4$addDataSets(dataSet[[1]])
   df4 <- myCombDat4$toDataFrame()
-  expect_equal(dim(df3), c(1255L, 9L))
+  expect_equal(dim(df3), c(1255L, 10L))
   expect_equal(dim(df4), c(1267L, 21L))
 
   # method chaining works ----------------------------
@@ -1054,7 +1054,7 @@ test_that("DataCombined works with population", {
   df <- myDataComb$toDataFrame()
 
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1964L, 9L))
+  expect_equal(dim(df), c(1964L, 10L))
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
