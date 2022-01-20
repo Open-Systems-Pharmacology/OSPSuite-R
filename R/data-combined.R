@@ -161,6 +161,9 @@ DataCombined <- R6::R6Class(
         private$.dataSetToDF(dataSets, names, groups)
       )
 
+      # extract original XY data into separate columns
+      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
+
       # update group map
       private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
 
@@ -208,6 +211,9 @@ DataCombined <- R6::R6Class(
         )
       )
 
+      # extract original XY data into separate columns
+      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
+
       # group map can only be generated if at least one grouping is specified
       private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
 
@@ -244,7 +250,7 @@ DataCombined <- R6::R6Class(
       yScaleFactors <- validateVectorArgs(yScaleFactors, type = "numeric")
       names <- validateVectorArgs(names, type = "character")
 
-      # transform data
+      # apply specified data transformations
       private$.dataCombined <- private$.dataTransform(
         data          = private$.dataCombined,
         names         = names,
@@ -543,13 +549,13 @@ DataCombined <- R6::R6Class(
       # apply transformations
       data <- dplyr::mutate(
         data,
-        xValues = (xValues + xOffsets) * xScaleFactors,
-        yValues = (yValues + yOffsets) * yScaleFactors
+        xValues = (xOriginalValues + xOffsets) * xScaleFactors,
+        yValues = (yOriginalValues + yOffsets) * yScaleFactors
       )
 
       # applicable only if the error values are available
       if ("yErrorValues" %in% names(data)) {
-        data <- dplyr::mutate(data, yErrorValues = yErrorValues * yScaleFactors)
+        data <- dplyr::mutate(data, yErrorValues = yOriginalErrorValues * yScaleFactors)
       }
 
       return(data)
@@ -603,6 +609,26 @@ DataCombined <- R6::R6Class(
       }
     },
 
+    # create copies of original data before changing the respective columns
+    # this helps to revert or change the applied transformations if needed
+
+    .extractXYData = function(data = NULL) {
+      if (is.null(data)) {
+        return(NULL)
+      }
+
+      data <- dplyr::mutate(data,
+        xOriginalValues = xValues,
+        yOriginalValues = yValues,
+      )
+
+      if ("yErrorValues" %in% names(data)) {
+        data <- dplyr::mutate(data, yOriginalErrorValues = yErrorValues)
+      }
+
+      return(data)
+    },
+
     # Extract offsets and scale factors used while data transformations
     #
     # Since the user might have entered distinct transformation parameters for
@@ -647,15 +673,18 @@ DataCombined <- R6::R6Class(
           # everything related to the Y-variable
           dplyr::matches("^y"),
           # all other columns go after that (meta data, etc.)
-          dplyr::everything(),
-          # columns to remove (using -)
-          -dplyr::matches("^paths$")
+          dplyr::everything()
         ) %>%
         # the following columns are no longer necessary
         # retaining them might confuse the user about whether the
         # transformations are supposed to be carried out by the user using these
         # values or these transformations have already been carried out
-        dplyr::select(-dplyr::ends_with(c("Offsets", "ScaleFactors"))) %>%
+        # additionally, leave out internal copies of original data
+        dplyr::select(
+          -dplyr::matches("^paths$"),
+          -dplyr::matches("offsets$|scalefactors$"),
+          -dplyr::contains("original")
+        ) %>%
         # arrange data (alphabetically) by dataset name
         dplyr::arrange(name)
 
@@ -832,14 +861,14 @@ toMissingOfType <- function(x, type) {
   # everything other than value will be converted to `NA` of desire type
   if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
     x <- switch(type,
-                "character" = NA_character_,
-                "numeric" = ,
-                "real" = ,
-                "double" = NA_real_,
-                "integer" = NA_integer_,
-                "complex" = NA_complex_,
-                "logical" = NA,
-                stop("Incorrect type entered.")
+      "character" = NA_character_,
+      "numeric" = ,
+      "real" = ,
+      "double" = NA_real_,
+      "integer" = NA_integer_,
+      "complex" = NA_complex_,
+      "logical" = NA,
+      stop("Incorrect type entered.")
     )
   }
 

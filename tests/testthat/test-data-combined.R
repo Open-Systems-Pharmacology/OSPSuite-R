@@ -589,16 +589,25 @@ test_that("DataCombined with data transformations", {
   myCombDat3$addSimulationResults(simResults, quantitiesOrPaths = "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying")
   myCombDat3$setDataTransformations()
   df1 <- myCombDat3$dataTransformations
+  dfDat1 <- myCombDat3$toDataFrame()
 
   myCombDat3$setDataTransformations(xOffsets = 3, yScaleFactors = 4)
   df2 <- myCombDat3$dataTransformations
+  dfDat2 <- myCombDat3$toDataFrame()
 
   myCombDat3$setDataTransformations()
   df3 <- myCombDat3$dataTransformations
+  dfDat3 <- myCombDat3$toDataFrame()
 
+  # transformation values used
   expect_equal(df1, df3)
   expect_equal(df2$xOffsets, 3)
   expect_equal(df2$yScaleFactors, 4)
+
+  # making sure transformations actually change values as expected
+  expect_equal(dfDat1, dfDat3)
+  expect_equal(dfDat1$xValues + 3, dfDat2$xValues)
+  expect_equal(dfDat1$yValues * 4, dfDat2$yValues)
 
   # make sure messy inputs for transformations don't cause any problems
   myCombDat4 <- DataCombined$new()
