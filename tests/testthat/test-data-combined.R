@@ -51,8 +51,22 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
 
-  expect_true(R6::is.R6(myCombDat))
-  expect_false(R6::is.R6Class(myCombDat))
+  # data transformations should already be setup with the defaults
+  expect_equal(
+    myCombDat$dataTransformations,
+    structure(
+      list(
+        name = "Stevens_2012_placebo.Placebo_total",
+        xOffsets = 0,
+        yOffsets = 0,
+        xScaleFactors = 1,
+        yScaleFactors = 1
+      ),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -1L)
+    )
+  )
+
 
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
@@ -76,6 +90,29 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   # selecting all paths
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
+
+  # data transformations should already be setup with the defaults
+  expect_equal(
+    myCombDat2$dataTransformations,
+    structure(
+      list(
+        name = c(
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention"
+        ),
+        xOffsets = c(0, 0, 0, 0, 0),
+        yOffsets = c(0, 0, 0, 0, 0),
+        xScaleFactors = c(1, 1, 1, 1, 1),
+        yScaleFactors = c(1, 1, 1, 1, 1)
+      ),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -5L)
+    )
+  )
+
 
   # selecting a few paths
   myCombDat3 <- DataCombined$new()
@@ -165,6 +202,32 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
 
   expect_true(R6::is.R6(myCombDat))
   expect_false(R6::is.R6Class(myCombDat))
+
+  # these should already be set
+  expect_equal(
+    myCombDat$dataTransformations,
+    structure(
+      list(
+        name = c(
+          "x",
+          "y",
+          "z",
+          "a",
+          "Stevens_2012_placebo.Sita_total",
+          "b",
+          "Stevens_2012_placebo.Sita_proximal",
+          "c",
+          "Stevens_2012_placebo.Sita_dist"
+        ),
+        xOffsets = c(0, 0, 0, 0, 0, 0, 0, 0, 0),
+        yOffsets = c(0, 0, 0, 0, 0, 0, 0, 0, 0),
+        xScaleFactors = c(1, 1, 1, 1, 1, 1, 1, 1, 1),
+        yScaleFactors = c(1, 1, 1, 1, 1, 1, 1, 1, 1)
+      ),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -9L)
+    )
+  )
 
   # checking dataframe methods
   df <- myCombDat$toDataFrame()

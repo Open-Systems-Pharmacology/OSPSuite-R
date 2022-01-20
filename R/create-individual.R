@@ -71,6 +71,8 @@ createDistributions <- function(individualCharacteristics) {
 #' and an `ontogeny` property (e.g. the name of the predefined ontogeny to use for this molecule). The list of all available ontogenies
 #' can be accessed programmatically using the enum `StandardOntogeny`
 #'
+#' @import ospsuite.utils
+#'
 #' @return An array of `ParameterValue` containing the value of each individual parameter
 #'
 #' @export

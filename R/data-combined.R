@@ -149,6 +149,9 @@ DataCombined <- R6::R6Class(
       private$.names        <- private$.extractNames(private$.dataCombined)
       # styler: on
 
+      # set up data transformations
+      self$setDataTransformations(names)
+
       # for method chaining
       invisible(self)
     },
@@ -197,6 +200,9 @@ DataCombined <- R6::R6Class(
       private$.groupMap     <- private$.extractGroupMap(private$.dataCombined)
       private$.names        <- private$.extractNames(private$.dataCombined)
       # styler: on
+
+      # set up data transformations
+      self$setDataTransformations(names)
 
       # for method chaining
       invisible(self)
