@@ -415,12 +415,20 @@ DataCombined <- R6::R6Class(
       }
 
       # add column with grouping information and then
-      # add a column describing the type of data and then
+      #
+      # add a column describing the type of data;
+      # simulation results never have errors, but this leads to inconsistent
+      # output, so also add a column for `yErrorValues` outputs and then
+      #
       # rename according to column naming conventions for `DataSet` and then
-      # convert to tibble before returning the dataframe
+      #
+      # convert to tibble before returning the data
       data <- data %>%
         private$.addGroupCol(groups) %>%
-        dplyr::mutate(dataType = "simulated") %>%
+        dplyr::mutate(
+          dataType     = "simulated",
+          yErrorValues = NA_real_
+        ) %>%
         dplyr::rename(
           "xValues"    = "Time",
           "xUnit"      = "TimeUnit",
@@ -531,16 +539,11 @@ DataCombined <- R6::R6Class(
         dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1)))
 
       # apply transformations
-      data <- dplyr::mutate(
-        data,
+      data <- dplyr::mutate(data,
         xValues = (xOriginalValues + xOffsets) * xScaleFactors,
-        yValues = (yOriginalValues + yOffsets) * yScaleFactors
+        yValues = (yOriginalValues + yOffsets) * yScaleFactors,
+        yErrorValues = yOriginalErrorValues * yScaleFactors
       )
-
-      # applicable only if the error values are available
-      if ("yErrorValues" %in% names(data)) {
-        data <- dplyr::mutate(data, yErrorValues = yOriginalErrorValues * yScaleFactors)
-      }
 
       return(data)
     },
@@ -602,13 +605,10 @@ DataCombined <- R6::R6Class(
       }
 
       data <- dplyr::mutate(data,
-        xOriginalValues = xValues,
-        yOriginalValues = yValues,
+        xOriginalValues      = xValues,
+        yOriginalValues      = yValues,
+        yOriginalErrorValues = yErrorValues
       )
-
-      if ("yErrorValues" %in% names(data)) {
-        data <- dplyr::mutate(data, yOriginalErrorValues = yErrorValues)
-      }
 
       return(data)
     },
@@ -842,7 +842,7 @@ flattenList <- function(x, type) {
 #' @noRd
 
 toMissingOfType <- function(x, type) {
-  # everything other than value will be converted to `NA` of desire type
+  # all unexpected values will be converted to `NA` of a desired type
   if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
     x <- switch(type,
       "character" = NA_character_,
