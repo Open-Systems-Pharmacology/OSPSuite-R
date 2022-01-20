@@ -129,7 +129,7 @@ DataCombined <- R6::R6Class(
       }
 
       # validate argument type and length
-      groups <- private$.validateVectorArgs(groups, private$.objCount(dataSets), type = "character")
+      groups <- validateVectorArgs(groups, objCount(dataSets), type = "character")
 
       # anticipate that although a list of `DataSet` objects might be entered,
       # they might not have names associated with them in the container list
@@ -147,7 +147,7 @@ DataCombined <- R6::R6Class(
       # for `NULL` elements, the original names will be used
       if (!is.null(names) && is.list(dataSets)) {
         # lengths of alternate names and objects should be same
-        names <- private$.validateVectorArgs(names, length(names(dataSets)), type = "character")
+        names <- validateVectorArgs(names, length(names(dataSets)), type = "character")
 
         # if any of the alternate names `NULL`, use original names
         names <- ifelse(is.na(names), names(dataSets), names)
@@ -190,8 +190,8 @@ DataCombined <- R6::R6Class(
       validateIsOfType(simulationResults, SimulationResults, nullAllowed = FALSE)
 
       # validate argument type and length
-      groups <- private$.validateVectorArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
-      names <- private$.validateVectorArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
+      groups <- validateVectorArgs(groups, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
+      names <- validateVectorArgs(names, length(quantitiesOrPaths %||% simulationResults$allQuantityPaths), type = "character")
 
       # update private fields
 
@@ -238,11 +238,11 @@ DataCombined <- R6::R6Class(
                                       xScaleFactors = 1,
                                       yScaleFactors = 1) {
       # check that the arguments to parameters make sense
-      validateIsNumeric(xOffsets)
-      validateIsNumeric(yOffsets)
-      validateIsNumeric(xScaleFactors)
-      validateIsNumeric(yScaleFactors)
-      names <- private$.validateVectorArgs(names, type = "character")
+      xOffsets <- validateVectorArgs(xOffsets, type = "numeric")
+      yOffsets <- validateVectorArgs(yOffsets, type = "numeric")
+      xScaleFactors <- validateVectorArgs(xScaleFactors, type = "numeric")
+      yScaleFactors <- validateVectorArgs(yScaleFactors, type = "numeric")
+      names <- validateVectorArgs(names, type = "character")
 
       # transform data
       private$.dataCombined <- private$.dataTransform(
@@ -537,10 +537,10 @@ DataCombined <- R6::R6Class(
       # for the purpose of joining two dataframes
       dataArg <- dplyr::tibble(
         name          = names %||% unique(data$name),
-        xOffsets      = flattenList(xOffsets),
-        yOffsets      = flattenList(yOffsets),
-        xScaleFactors = flattenList(xScaleFactors),
-        yScaleFactors = flattenList(yScaleFactors)
+        xOffsets      = xOffsets,
+        yOffsets      = yOffsets,
+        xScaleFactors = xScaleFactors,
+        yScaleFactors = yScaleFactors
       )
 
       # update dataframe with transformation parameters
@@ -681,102 +681,6 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    ## utilities ---------------------
-
-    # Convert `NULL` and logical `NA` values to character `NA`s
-    #
-    # `NULL`s should be converted to `NA`, because otherwise flattening a list
-    # will drop them and the resulting vectors will be shorter than argument
-    # lists
-    #
-    # Additionally, if users instead enter a vector with character types and
-    # `NA`s, the default `NA` in R is of logical type, and thus therefore needs
-    # to be explicitly cast to `NA_character_`.
-
-    .null_to_na_chr = function(x) {
-      if (is.null(x) || is.na(x)) {
-        x <- NA_character_
-      }
-
-      return(x)
-    },
-
-    # Extract how many objects were entered, which will be used to decide if
-    # the lengths of `names`, `groups`, etc. arguments are acceptable.
-    #
-    # for example,
-    # - if `dataSet` is a list of 5 `DataSet` class instances, then 5
-    # - if `dataSet` is a single `DataSet` class instance, then 1
-    # - `SimulationResults` is allowed to be only a single instance, then 1
-    #
-    # Note that `length()` won't work here. It will return the number of named
-    # objects in the `DataSet` or `SimulationResults` environments, which is not
-    # what we want. For example, if `dataSet` is given a single `DataSet`
-    # object, then the length will be 22, and not 1.
-
-    .objCount = function(x) {
-      # `is.vector()` will handle both atomic vectors and lists, i.e.
-      # both `is.vector(c(1, 2))` and `is.vector(list(1, 2))` will be `TRUE`
-      if (is.vector(x)) {
-        l <- length(x)
-      } else {
-        l <- length(list(x))
-      }
-
-      return(l)
-    },
-
-
-    # Serves following purposes while validating arguments entered as lists:
-    #
-    # - Arguments like `names`, `groups`, etc. need to be of the same length
-    # as the entered datasets. This is checked here.
-    #
-    # - Additionally, the function checks if the object is of the correct type.
-    #
-    # - We allow entering `NULL` for elements where the users don't expect any
-    # change. But, if a list with `NULL` is flattened to a vector, it will be
-    # dropped and the length of list of arguments will become shorter. This is
-    # taken care of using the private `.null_to_na_chr()` method.
-
-    .validateVectorArgs = function(arg = NULL, expectedLength = NULL, type) {
-      # return early if NULL
-      if (is.null(arg)) {
-        return(NULL)
-      }
-
-      # validate the length of arguments
-      # this will work irrespective of whether it's a list or a vector
-      if (!is.null(expectedLength)) {
-        validateIsOfLength(arg, expectedLength)
-      }
-
-      # validate the type of arguments
-      # it is important to allow users to enter `NULL` in argument lists, so
-      # `nullAllowed = TRUE` is necessary
-      if (is.list(arg)) {
-        # `purrr::walk()` is needed below because validation helper functions
-        # are called only for their side effects
-        purrr::walk(.x = arg, .f = ~ validateIsOfType(.x, type, nullAllowed = TRUE))
-      } else {
-        validateIsOfType(arg, type, nullAllowed = TRUE)
-      }
-
-      # deal with `NULL`s and `NA`s
-      # irrespective of whether a list or a vector is specified,
-      # modify it in place by converting `NULL` to `NA_character` and then
-      # if it's a list, flatten it to an atomic vector of character type
-      if (is.list(arg)) {
-        arg <- arg %>%
-          purrr::modify(private$.null_to_na_chr) %>%
-          purrr::flatten_chr(.)
-      } else {
-        arg <- arg %>% purrr::modify(private$.null_to_na_chr)
-      }
-
-      return(arg)
-    },
-
     ## private fields --------------------
 
     .dataCombined = NULL,
@@ -793,9 +697,126 @@ DataCombined <- R6::R6Class(
   portable = TRUE
 )
 
+# utilities ---------------------
+
+# TODO: move these functions to the utilities package
+
+# Convert `NULL` or `NA` to `NA` of desired type
+#
+# `NULL`s should be converted to `NA`, because otherwise flattening a list
+# will drop them and the resulting vectors will be shorter than argument
+# lists
+#
+# Additionally, if users instead enter a vector with character types and
+# `NA`s, the default `NA` in R is of logical type, and therefore needs
+# to be explicitly cast to `NA_character_`.
+
 #' @keywords internal
 
-flattenList <- function(x) {
-  if (is.list(x)) x <- purrr::flatten_dbl(x)
+toMissingOfType <- function(x, type) {
+  # everything other than value will be converted to `NA` of desire type
+  if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
+    x <- switch(type,
+      "character" = NA_character_,
+      "numeric" = ,
+      "real" = ,
+      "double" = NA_real_,
+      "integer" = NA_integer_,
+      "complex" = NA_complex_,
+      "logical" = NA,
+      stop("Incorrect type entered.")
+    )
+  }
+
+  return(x)
+}
+
+# Extract how many objects were entered, which will be used to decide if
+# the lengths of `names`, `groups`, etc. arguments are acceptable.
+#
+# for example,
+# - if `dataSet` is a list of 5 `DataSet` class instances, then 5
+# - if `dataSet` is a single `DataSet` class instance, then 1
+# - `SimulationResults` is allowed to be only a single instance, then 1
+#
+# Note that `length()` won't work here. It will return the number of named
+# objects in the `DataSet` or `SimulationResults` environments, which is not
+# what we want. For example, if `dataSet` is given a single `DataSet`
+# object, then the length will be 22, and not 1.
+
+#' @keywords internal
+
+objCount <- function(x) {
+  # `is.vector()` can handle both atomic vectors and lists, i.e.
+  # both `is.vector(c(1, 2))` and `is.vector(list(1, 2))` will be `TRUE`
+  if (is.vector(x)) {
+    l <- length(x)
+  } else {
+    l <- length(list(x))
+  }
+
+  return(l)
+}
+
+
+# Serves following purposes while validating arguments entered as lists:
+#
+# - Arguments like `names`, `groups`, etc. need to be of the same length
+# as the entered datasets. This is checked here.
+#
+# - Additionally, the function checks if the object is of the correct type.
+#
+# - We allow entering `NULL` for elements where the users don't expect any
+# change. But, if a list with `NULL` is flattened to a vector, it will be
+# dropped and the length of list of arguments will become shorter. This is
+# taken care of using the `toMissingOfType()` function.
+
+#' @keywords internal
+
+validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
+  # return early if NULL
+  if (is.null(arg)) {
+    return(NULL)
+  }
+
+  # validate the length of vector arguments
+  if (!is.null(expectedLength)) {
+    validateIsOfLength(arg, expectedLength)
+  }
+
+  # convert `NULL`s or logical `NA`s to `NA` of required type
+  # `purrr::map()` will return a list
+  arg <- purrr::map(arg, ~ toMissingOfType(.x, type))
+
+  # validate the type of arguments
+  # `nullAllowed = TRUE` is necessary because `NULL` in vector arguments is
+  # used to specify no change for the corresponding dataset
+  # `purrr::walk()` is needed below because validation helper functions
+  # are called only for their side effects
+  purrr::walk(.x = arg, .f = ~ validateIsOfType(.x, type, nullAllowed = TRUE))
+
+  # arguments are still in a list
+  # flatten them to an atomic vector of required type
+  arg <- flattenList(arg, type)
+
+  return(arg)
+}
+
+#'
+#' @keywords internal
+
+flattenList <- function(x, type) {
+  if (is.list(x)) {
+    x <- switch(type,
+      "character" = purrr::flatten_chr(x),
+      "numeric" = ,
+      "real" = ,
+      "double" = purrr::flatten_dbl(x),
+      "integer" = purrr::flatten_int(x),
+      "logical" = purrr::flatten_lgl(x),
+      purrr::flatten(x)
+    )
+  }
+
   return(x)
 }

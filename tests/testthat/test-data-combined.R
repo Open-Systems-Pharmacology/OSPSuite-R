@@ -584,21 +584,61 @@ test_that("DataCombined with data transformations", {
 
   # each call to set transformations resets the previous parameters for the same
   # dataset
-  myCombDat <- DataCombined$new()
+  myCombDat3 <- DataCombined$new()
 
-  myCombDat$addSimulationResults(simResults, quantitiesOrPaths = "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying")
-  myCombDat$setDataTransformations()
-  df1 <- myCombDat$dataTransformations
+  myCombDat3$addSimulationResults(simResults, quantitiesOrPaths = "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying")
+  myCombDat3$setDataTransformations()
+  df1 <- myCombDat3$dataTransformations
 
-  myCombDat$setDataTransformations(xOffsets = 3, yScaleFactors = 4)
-  df2 <- myCombDat$dataTransformations
+  myCombDat3$setDataTransformations(xOffsets = 3, yScaleFactors = 4)
+  df2 <- myCombDat3$dataTransformations
 
-  myCombDat$setDataTransformations()
-  df3 <- myCombDat$dataTransformations
+  myCombDat3$setDataTransformations()
+  df3 <- myCombDat3$dataTransformations
 
   expect_equal(df1, df3)
   expect_equal(df2$xOffsets, 3)
   expect_equal(df2$yScaleFactors, 4)
+
+  # make sure messy inputs for transformations don't cause any problems
+  myCombDat4 <- DataCombined$new()
+  myCombDat4$addDataSets(dataSet)
+  myCombDat4$addSimulationResults(simResults)
+
+  myCombDat4$setDataTransformations(
+    names = names_ls,
+    xOffsets = list(NULL, NA, NA_character_, NULL),
+    yOffsets = c(NA, NA_real_, NA, NaN),
+    xScaleFactors = c(NA, NA_integer_, NA, NA),
+    yScaleFactors = list(NULL, NaN, NA, NULL)
+  )
+
+  expect_equal(
+    myCombDat4$dataTransformations,
+    structure(
+      list(
+        name = c(
+          "Stevens_2012_placebo.Placebo_total",
+          "Stevens_2012_placebo.Sita_total",
+          "Stevens_2012_placebo.Placebo_proximal",
+          "Stevens_2012_placebo.Sita_proximal",
+          "Stevens_2012_placebo.Placebo_distal",
+          "Stevens_2012_placebo.Sita_dist",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+          "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+          "Organism|Lumen|Stomach|Metformin|Gastric retention"
+        ),
+        xOffsets = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        yOffsets = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        xScaleFactors = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+        yScaleFactors = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+      ),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -11L)
+    )
+  )
 })
 
 # grouping works ---------------------------------
@@ -646,7 +686,7 @@ test_that("DataCombined works with data grouping", {
   )
   myCombDat2$addSimulationResults(
     simResults,
-    groups = list(NULL, NULL, "distal", "proximal", "total")
+    groups = list(NULL, NA_complex_, "distal", "proximal", "total")
   )
 
   # check mapping
@@ -749,7 +789,7 @@ test_that("DataCombined works with sequential update - same values", {
   # add grouping
   myCombDat$addSimulationResults(
     simResults,
-    groups = list(NULL, NULL, "distal", "proximal", "total")
+    groups = list(NULL, NaN, "distal", "proximal", "total")
   )
   myCombDat$addDataSets(
     dataSet,
@@ -762,11 +802,11 @@ test_that("DataCombined works with sequential update - same values", {
   # now add same object but with different groupings just to check the behavior
   myCombDat$addSimulationResults(
     simResults,
-    groups = list("Dapagliflozin - emptying", "Dapagliflozin - retention", NULL, NULL, NULL)
+    groups = list("Dapagliflozin - emptying", "Dapagliflozin - retention", NaN, NULL, NA_real_)
   )
   myCombDat$addDataSets(
     dataSet,
-    groups = list(NULL, NULL, NULL, NULL, "distal", "distal")
+    groups = list(NULL, NA_integer_, NA, NaN, "distal", "distal")
   )
 
   # second dataframe
