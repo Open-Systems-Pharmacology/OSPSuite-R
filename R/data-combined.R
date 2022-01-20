@@ -54,25 +54,7 @@
 #' as `NULL` in the list.
 #'
 #' @import tidyr
-#' @importFrom rlang ":=" "%||%"
-#' @importFrom ospsuite.utils Printable
-#' @importFrom ospsuite.utils enum enumGetValue enumHasKey enumKeys enumPut enumRemove enumValues
-#' @importFrom ospsuite.utils formatNumerics
-#' @importFrom ospsuite.utils getEnumKey
-#' @importFrom ospsuite.utils hasUniqueValues
-#' @importFrom ospsuite.utils ifNotNull
-#' @importFrom ospsuite.utils isFileExtension isIncluded isOfLength isOfType isSameLength
-#' @importFrom ospsuite.utils toList
-#' @importFrom ospsuite.utils validateEnumValue
-#' @importFrom ospsuite.utils validateIsIncluded
-#' @importFrom ospsuite.utils validateIsInteger
-#' @importFrom ospsuite.utils validateIsLogical
-#' @importFrom ospsuite.utils validateIsNumeric
-#' @importFrom ospsuite.utils validateIsOfLength
-#' @importFrom ospsuite.utils validateIsOfType
-#' @importFrom ospsuite.utils validateIsSameLength
-#' @importFrom ospsuite.utils validateIsString
-#' @importFrom ospsuite.utils validatePathIsAbsolute
+#' @import ospsuite.utils
 #'
 #' @examples
 #'
