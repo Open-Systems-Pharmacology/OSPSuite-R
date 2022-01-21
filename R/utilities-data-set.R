@@ -8,7 +8,7 @@
     }
 
     if (len == 0) {
-      rep(NA, length(dataSet$xValues))
+      rep(NA_real_, length(dataSet$xValues))
     } else if (len == 1) {
       if (is.null(metaDataName)) {
         rep(dataSet[[property]], length(dataSet$xValues))

@@ -57,7 +57,7 @@ SimulationResults <- R6::R6Class(
         stop(messages$errorResultNotFound(path, individualIds))
       }
 
-      values[is.nan(values)] <- NA
+      values[is.nan(values)] <- NA_real_
       return(values)
     },
     #' @description
