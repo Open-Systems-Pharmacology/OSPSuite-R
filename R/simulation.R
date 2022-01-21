@@ -82,7 +82,7 @@ Simulation <- R6::R6Class(
     molWeightFor = function(quantityPath) {
       ospsuite.utils::validateIsString(quantityPath)
       mw <- rClr::clrCall(self$ref, "MolWeightFor", quantityPath)
-      mw %||% NA
+      mw %||% NA_real_
     },
     #' @description
     #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an empty list if not found
