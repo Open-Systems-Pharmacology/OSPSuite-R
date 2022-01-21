@@ -15,10 +15,10 @@ test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = character(0), xValues = logical(0), yValues = logical(0), yErrorValues = logical(0),
+      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
       xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = logical(0), yErrorUnit = logical(0), molWeight = logical(0),
-      lloq = logical(0)
+      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
+      lloq = numeric(0)
     )
   )
 })
@@ -28,10 +28,10 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep("", 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA, 5),
+      name = rep("", 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA, 5), yErrorUnit = rep(NA, 5), molWeight = rep(NA, 5), lloq = rep(NA, 5)
+      yErrorType = rep(NA_real_, 5), yErrorUnit = rep(NA_real_, 5), molWeight = rep(NA_real_, 5), lloq = rep(NA_real_, 5)
     )
   )
 })
