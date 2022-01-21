@@ -76,8 +76,8 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   expect_equal(
     names(df),
     c(
-      "name", "group", "dataType", "xValues", "xDimension",
-      "xUnit", "yValues", "yErrorValues", "yDimension", "yUnit", "yErrorType",
+      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
+      "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
       "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Organ",
       "Compartment", "Molecule", "Group Id"
     )
@@ -134,19 +134,21 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
     "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
   )
 
+  expect_equal(unique(df$molWeight), c(408.8730, 129.1636, NA))
+
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
 
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 10L))
+  expect_equal(dim(df2), c(1255L, 12L))
 
   expect_equal(
     names(df2),
     c(
-      "name", "group", "dataType", "xValues", "xUnit", "yValues",
-      "yUnit", "yDimension", "yErrorValues", "IndividualId"
+      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
+      "yValues", "yUnit", "yDimension", "yErrorValues", "IndividualId", "molWeight"
     )
   )
   expect_equal(unique(df2$name), sort(simResults$allQuantityPaths))
@@ -332,7 +334,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   df3 <- myCombDat4$toDataFrame()
   myCombDat4$addDataSets(dataSet[[1]])
   df4 <- myCombDat4$toDataFrame()
-  expect_equal(dim(df3), c(1255L, 10L))
+  expect_equal(dim(df3), c(1255L, 12L))
   expect_equal(dim(df4), c(1267L, 21L))
 
   # method chaining works ----------------------------
@@ -402,6 +404,10 @@ test_that("dataCombined - same data order with or without `names` argument", {
   # extract dataframes
   df1 <- myCombDat$toDataFrame()
   df2 <- myCombDat2$toDataFrame()
+
+  # shpuld not be grouped
+  expect_false(dplyr::is_grouped_df(df1))
+  expect_false(dplyr::is_grouped_df(df2))
 
   # except for names column, everything should look the same across two objects
   expect_equal(nrow(df1), nrow(df2))
@@ -1054,7 +1060,7 @@ test_that("DataCombined works with population", {
   df <- myDataComb$toDataFrame()
 
   expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1964L, 10L))
+  expect_equal(dim(df), c(1964L, 12L))
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)

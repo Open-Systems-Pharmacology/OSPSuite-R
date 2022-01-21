@@ -9,8 +9,12 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   df1 <- simulationResultsToDataFrame(results)
   df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
 
+  # should not be grouped
+  expect_false(dplyr::is_grouped_df(df1))
+  expect_false(dplyr::is_grouped_df(df2))
+
   # with all paths
-  expect_equal(dim(df1), c(84L, 7L))
+  expect_equal(dim(df1), c(84L, 9L))
   expect_equal(
     unique(df1$paths),
     c("Organism|Liver|A", "Organism|Liver|B", "Organism|A", "Organism|B")
@@ -19,10 +23,20 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   expect_equal(unique(df1$unit), "µmol")
   expect_equal(unique(df1$dimension), "Amount")
   expect_equal(unique(df1$TimeUnit), "min")
+  expect_equal(unique(df1$TimeDimension), "Time")
 
   # certain path
-  expect_equal(dim(df2), c(21L, 7L))
+  expect_equal(dim(df2), c(21L, 9L))
   expect_equal(unique(df2$paths), "Organism|A")
+
+  # names
+  expect_equal(
+    names(df1),
+    c(
+      "paths", "IndividualId", "Time", "simulationValues", "unit",
+      "dimension", "TimeUnit", "TimeDimension", "molWeight"
+    )
+  )
 })
 
 test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
@@ -36,7 +50,7 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
   df1 <- simulationResultsToDataFrame(results)
 
   # with all paths
-  expect_equal(dim(df1), c(491L, 7L))
+  expect_equal(dim(df1), c(491L, 9L))
   expect_equal(
     unique(df1$paths),
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
@@ -100,7 +114,7 @@ test_that("simulationResultsToDataFrame with population", {
 
   df1 <- simulationResultsToDataFrame(populationResults)
 
-  expect_equal(dim(df1), c(24550L, 7L))
+  expect_equal(dim(df1), c(24550L, 9L))
   expect_equal(
     unique(df1$paths),
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
@@ -113,7 +127,7 @@ test_that("simulationResultsToDataFrame with population", {
 
   df2 <- simulationResultsToDataFrame(populationResults, individualIds = c(1, 4, 5))
 
-  expect_equal(dim(df2), c(1473L, 7L))
+  expect_equal(dim(df2), c(1473L, 9L))
   expect_equal(
     unique(df2$paths),
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"

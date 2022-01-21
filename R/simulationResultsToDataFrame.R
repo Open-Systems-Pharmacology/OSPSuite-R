@@ -30,14 +30,14 @@ simulationResultsToDataFrame <- function(simulationResults,
   simList <- getOutputValues(
     simulationResults = simulationResults,
     quantitiesOrPaths = quantitiesOrPaths,
-    population = population,
-    individualIds = individualIds
+    population        = population,
+    individualIds     = individualIds
   )
 
   # convert data to long format with a new column for paths
-  df_data <- .convert_to_long(
+  df_data <- tidyr::pivot_longer(
     simList$data,
-    cols = setdiff(names(simList$data), c("IndividualId", "Time")),
+    cols = -c("IndividualId", "Time"),
     names_to = "paths",
     values_to = "simulationValues"
   )
@@ -54,83 +54,50 @@ simulationResultsToDataFrame <- function(simulationResults,
   )
 
   # leave out time units and dimensions since it is not a path
+  # they will be added at a later stage
   df_meta <- dplyr::filter(df_meta, paths != "Time")
 
   # combine dataframe with simulated data and meta data
   df <- dplyr::left_join(df_data, df_meta, by = "paths")
 
-  # add time unit to the this combined dataframe
-  # the time dimension is "Time", which is redundant and is thus left out
+  # now add previously left out time meta data to the combined dataframe
   df <- dplyr::bind_cols(
     df,
-    data.frame("TimeUnit" = simList$metaData$Time$unit[[1]])
+    data.frame(
+      "TimeUnit" = simList$metaData$Time$unit[[1]],
+      "TimeDimension" = simList$metaData$Time$dimension[[1]]
+    )
   )
+
+  # if molecular weight is not present, extract it and add as a new column
+  if (!"molWeight" %in% names(df)) {
+    # For each path, extract the molecular weight based on that path string
+    #
+    # This involves first grouping and nesting the data by path. Note that
+    # `nest()` here will have a better performance than `rowwise()`. E.g., if
+    # there are 100 rows, `rowwise()` will run the compuation 100 times, while
+    # with `nest()`, the computation only be carried for the same number of
+    # times as the number of `paths` present.
+    #
+    # And then adding a new column for molecular weight.
+    #
+    # When you call `molWeightFor()`, it returns the value in the base unit -
+    # which is `kg/µmol`. This is not the unit the user would expect, so we
+    # convert it first to the common unit `g/mol`
+    df <- df %>%
+      dplyr::group_by(paths) %>%
+      tidyr::nest() %>%
+      dplyr::mutate(
+        molWeight = ospsuite::toUnit(
+          quantityOrDimension = ospDimensions$`Molecular weight`,
+          values              = simulationResults$simulation$molWeightFor(paths),
+          targetUnit          = ospUnits$`Molecular weight`$`g/mol`
+        )
+      ) %>%
+      tidyr::unnest(cols = c(data)) %>%
+      dplyr::ungroup()
+  }
 
   # return the combined dataframe
   return(df)
-}
-
-# custom function to convert dataframe from wide to long format
-# simplified version of
-# https://github.com/easystats/datawizard/blob/master/R/data_reshape.R
-# IP is author on this package
-
-.convert_to_long <- function(data,
-                             cols = "all",
-                             names_to = "Name",
-                             values_to = "Value") {
-  if (is.character(cols) && length(cols) == 1) {
-    if (cols == "all") {
-      # If all, take all
-      cols <- names(data)
-    } else {
-      # Surely, a regex
-      cols <- grep(cols, names(data), value = TRUE)
-    }
-  }
-
-  # If numeric, surely the index of the cols
-  if (is.numeric(cols)) {
-    cols <- names(data)[cols]
-  }
-
-  # Compatibility with tidyr
-  if (names_to != names_to) names_to <- names_to
-
-  # save attribute of each variable
-  variable_attr <- lapply(data, attributes)
-
-  # Create Index column as needed by reshape
-  data[["_Row"]] <- as.numeric(row.names(data))
-
-  # Reshape
-  long <- stats::reshape(data,
-    varying = cols,
-    idvar = "_Row",
-    v.names = values_to,
-    timevar = names_to,
-    direction = "long"
-  )
-
-  # Sort the dataframe (to match pivot_longer's output)
-  long <- long[order(long[["_Row"]], long[[names_to]]), ]
-
-  # Remove or rename the row index
-  long[["_Row"]] <- NULL
-
-  # Re-insert col names as levels
-  long[[names_to]] <- cols[long[[names_to]]]
-
-  # Reset row names
-  row.names(long) <- NULL
-
-  # Remove reshape attributes
-  attributes(long)$reshapeLong <- NULL
-
-  # add back attributes where possible
-  for (i in colnames(long)) {
-    attributes(long[[i]]) <- variable_attr[[i]]
-  }
-
-  long
 }

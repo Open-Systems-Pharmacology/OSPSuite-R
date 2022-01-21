@@ -430,8 +430,6 @@ DataCombined <- R6::R6Class(
       # output, so also add a column for `yErrorValues` outputs and then
       #
       # rename according to column naming conventions for `DataSet` and then
-      #
-      # convert to tibble before returning the data
       data <- data %>%
         private$.addGroupCol(groups) %>%
         dplyr::mutate(
@@ -441,11 +439,11 @@ DataCombined <- R6::R6Class(
         dplyr::rename(
           "xValues"    = "Time",
           "xUnit"      = "TimeUnit",
+          "xDimension" = "TimeDimension",
           "yValues"    = "simulationValues",
           "yUnit"      = "unit",
           "yDimension" = "dimension"
-        ) %>%
-        dplyr::as_tibble()
+        )
 
       return(data)
     },
@@ -662,9 +660,9 @@ DataCombined <- R6::R6Class(
           group,
           dataType,
           # everything related to the X-variable
-          dplyr::matches("^x"),
+          "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
           # everything related to the Y-variable
-          dplyr::matches("^y"),
+          "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
           # all other columns go after that (meta data, etc.)
           dplyr::everything()
         ) %>%
