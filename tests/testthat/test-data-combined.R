@@ -1,7 +1,7 @@
 # empty initialization ----------------------------
 
 test_that("dataCombined - initialization", {
-  skip_if_not_installed("R6")
+
 
   # initialize empty object
   myCombDat <- DataCombined$new()
@@ -31,7 +31,7 @@ test_that("dataCombined - initialization", {
 # either `DataSet` and `SimulationResults` provided -------------
 
 test_that("dataCombined - either dataSet or SimulationResults provided", {
-  skip_if_not_installed("R6")
+
 
   # load the simulation
   sim <- loadTestSimulation("MinimalModel")
@@ -173,8 +173,6 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 # both `DataSet` and `SimulationResults` provided -------------
 
 test_that("dataCombined - both DataSet and SimulationResults provided", {
-  skip_if_not_installed("R6")
-
   expect_true(R6::is.R6Class(DataCombined))
 
   # load the simulation
@@ -378,7 +376,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
 # same data order with or without `names` argument -------------
 
 test_that("dataCombined - same data order with or without `names` argument", {
-  skip_if_not_installed("R6")
+
 
   # load the simulation
   sim <- loadTestSimulation("MinimalModel")
@@ -448,7 +446,7 @@ test_that("dataCombined - same data order with or without `names` argument", {
 # data transformations ---------------------------------
 
 test_that("DataCombined with data transformations", {
-  skip_if_not_installed("R6")
+
 
   # load the simulation
   sim <- loadTestSimulation("MinimalModel")
@@ -725,7 +723,7 @@ test_that("DataCombined with data transformations", {
 # grouping works ---------------------------------
 
 test_that("DataCombined works with data grouping", {
-  skip_if_not_installed("R6")
+
 
   # load the simulation
   sim <- loadTestSimulation("MinimalModel")
@@ -847,7 +845,7 @@ test_that("DataCombined works with data grouping", {
 # sequential update - same values ---------------------------------
 
 test_that("DataCombined works with sequential update - same values", {
-  skip_if_not_installed("R6")
+
 
   # if the objects share the same datasets, then the one entered later will be used
 
@@ -953,7 +951,7 @@ test_that("DataCombined works with sequential update - same values", {
 # sequential update - different values ---------------------------------
 
 test_that("DataCombined works with sequential update - different values", {
-  skip_if_not_installed("R6")
+
 
   # if the objects share the same datasets, then the one entered later will be used
 

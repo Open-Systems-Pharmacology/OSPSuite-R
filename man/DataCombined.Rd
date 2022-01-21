@@ -15,6 +15,9 @@ labels.
 \item Transforming data (with given offsets and scale factors).
 }
 }
+\note{
+The molecular weight (in \code{molWeight} column) is in \code{g/mol} units.
+}
 \examples{
 
 # load the simulation
@@ -55,7 +58,6 @@ factor values were specified by the user for each dataset.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DataCombined$new()}}
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
@@ -69,19 +71,6 @@ factor values were specified by the user for each dataset.}
 \itemize{
 }
 \out{</details>}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$new()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A new (empty) instance of \code{DataCombined} class.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-addDataSets"></a>}}
@@ -236,9 +225,9 @@ that the datasets whose names you wish to not change should be specified as
 \code{NULL} in the list.
 }}
 
-\item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a numeric
-scalar or a list of numeric quantities specifying offsets and scale
-factors to apply to raw values. The default offset is \code{0}, while
+\item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a single
+numeric value or a list of numeric quantities specifying offsets and
+scale factors to apply to raw values. The default offset is \code{0}, while
 default scale factor is \code{1}, i.e., the data will not be modified. If a
 list is specified, it should be the same length as \code{names} argument.}
 }
