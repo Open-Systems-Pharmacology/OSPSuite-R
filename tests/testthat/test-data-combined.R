@@ -134,9 +134,6 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
     "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
   )
 
-  # molecular weights should be NA
-  expect_equal(unique(df$molWeight), NA)
-
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
 

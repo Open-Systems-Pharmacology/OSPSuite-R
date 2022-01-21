@@ -446,9 +446,7 @@ DataCombined <- R6::R6Class(
         data <- data %>% dplyr::mutate(group = NA_character_)
       } else {
         data <- data %>%
-          dplyr::group_by(name) %>%
-          tidyr::nest() %>%
-          dplyr::ungroup() %>%
+          tidyr::nest(data = !name) %>%
           dplyr::mutate(group = groups) %>%
           tidyr::unnest(cols = c(data))
       }
@@ -534,14 +532,12 @@ DataCombined <- R6::R6Class(
       # these default values mean raw data will not be changed
       data <- dplyr::left_join(data, private$.dataTransformations, by = "name") %>%
         dplyr::mutate(across(matches("offsets$"), ~ tidyr::replace_na(.x, 0))) %>%
-        dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1)))
-
-      # apply transformations
-      data <- dplyr::mutate(data,
-        xValues = (xOriginalValues + xOffsets) * xScaleFactors,
-        yValues = (yOriginalValues + yOffsets) * yScaleFactors,
-        yErrorValues = yOriginalErrorValues * yScaleFactors
-      )
+        dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1))) %>%
+        dplyr::mutate(
+          xValues      = (xOriginalValues + xOffsets) * xScaleFactors,
+          yValues      = (yOriginalValues + yOffsets) * yScaleFactors,
+          yErrorValues = yOriginalErrorValues * yScaleFactors
+        )
 
       return(data)
     },
@@ -560,14 +556,10 @@ DataCombined <- R6::R6Class(
         return(data)
       }
 
-      data <- data %>%
-        dplyr::group_by(name) %>%
-        tidyr::nest() %>%
-        dplyr::ungroup() %>%
+      data %>%
+        tidyr::nest(data = !name) %>%
         dplyr::mutate(name = names) %>%
         tidyr::unnest(cols = c(data))
-
-      return(data)
     },
 
     ## extractor for active bindings ---------------------
@@ -607,13 +599,12 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      data <- dplyr::mutate(data,
-        xOriginalValues      = xValues,
-        yOriginalValues      = yValues,
-        yOriginalErrorValues = yErrorValues
-      )
-
-      return(data)
+      data %>%
+        dplyr::mutate(
+          xOriginalValues      = xValues,
+          yOriginalValues      = yValues,
+          yOriginalErrorValues = yErrorValues
+        )
     },
 
     # Extract offsets and scale factors used while data transformations
@@ -631,13 +622,11 @@ DataCombined <- R6::R6Class(
       # group the combined dataframe by unique datasets and then
       # within each dataset retain distinct row combinations and then
       # ungroup the dataframe
-      data <- data %>%
+      data %>%
         dplyr::select(name, dplyr::matches("offset|scale")) %>%
         dplyr::group_by(name) %>%
         dplyr::distinct() %>%
         dplyr::ungroup()
-
-      return(data)
     },
 
     # clean dataframe before returning it to the user
