@@ -134,7 +134,8 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
     "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
   )
 
-  expect_equal(unique(df$molWeight), c(408.8730, 129.1636, NA))
+  # molecular weights should be NA
+  expect_equal(unique(df$molWeight), NA)
 
   expect_true(R6::is.R6(myCombDat2))
   expect_false(R6::is.R6Class(myCombDat2))
@@ -143,6 +144,8 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
   expect_equal(dim(df2), c(1255L, 12L))
+
+  expect_equal(unique(df2$molWeight), c(408.8730, 129.1636))
 
   expect_equal(
     names(df2),
