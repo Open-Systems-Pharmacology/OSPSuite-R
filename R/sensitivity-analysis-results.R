@@ -62,7 +62,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @param parameterName Name of the sensitivity parameter for which the sensitivity should be retrieved
     pkParameterSensitivityValueFor = function(pkParameterName, outputPath, parameterName) {
       value <- rClr::clrCall(self$ref, "PKParameterSensitivityValueFor", pkParameterName, outputPath, parameterName)
-      value[is.nan(value)] <- NA
+      value[is.nan(value)] <- NA_real_
       return(value)
     },
     #' @description
