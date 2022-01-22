@@ -3,7 +3,7 @@
 #'
 #' 
 #' @export
-StandardContainer <- ospsuite.utils::enum(c(
+StandardContainer <- enum(c(
   Organism = "Organism",
   Applications = "Applications",
   Neighborhoods = "Neighborhoods",
@@ -15,7 +15,7 @@ StandardContainer <- ospsuite.utils::enum(c(
 #' 
 #' @include utilities-path.R
 #' @export
-StandardPath <- ospsuite.utils::enum(c(
+StandardPath <- enum(c(
   Age = toPathString(StandardContainer$Organism, "Age"),
   Height = toPathString(StandardContainer$Organism, "Height"),
   Weight = toPathString(StandardContainer$Organism, "Weight"),
@@ -30,7 +30,7 @@ StandardPath <- ospsuite.utils::enum(c(
 #'
 #' 
 #' @export
-MoleculeParameter <- ospsuite.utils::enum(c(
+MoleculeParameter <- enum(c(
   ReferenceConcentration = "Reference concentration",
   THalfLiver = "t1/2 (liver)",
   THalfIntestine = "t1/2 (intestine)",

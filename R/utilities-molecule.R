@@ -85,7 +85,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #' setMoleculeInitialValues(molecules, c(2, 3), units = c("pmol", "mmol"))
 #' @export
 setMoleculeInitialValues <- function(molecules, values, units = NULL) {
-  ospsuite.utils::validateIsOfType(molecules, Molecule)
+  validateIsOfType(molecules, Molecule)
   setQuantityValues(molecules, values, units)
 }
 
@@ -141,9 +141,9 @@ setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = N
 #' @export
 setMoleculeScaleDivisors <- function(molecules, values) {
   molecules <- toList(molecules)
-  ospsuite.utils::validateIsOfType(molecules, Molecule)
-  ospsuite.utils::validateIsNumeric(values)
-  ospsuite.utils::validateIsSameLength(molecules, values)
+  validateIsOfType(molecules, Molecule)
+  validateIsNumeric(values)
+  validateIsSameLength(molecules, values)
 
   for (i in seq_along(molecules)) {
     molecule <- molecules[[i]]

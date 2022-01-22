@@ -14,7 +14,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(rClr::clrGet(column, "ColumnName"))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
@@ -31,7 +31,7 @@ DataImporterConfiguration <- R6::R6Class(
         }
         return(rClr::clrGet(unit, "SelectedUnit"))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
     },
 
@@ -43,7 +43,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.isUnitFromColumn(column))
       }
-      ospsuite.utils::validateIsLogical(value)
+      validateIsLogical(value)
       rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
     },
 
@@ -53,7 +53,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(rClr::clrGet(column, "ColumnName"))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
@@ -72,7 +72,7 @@ DataImporterConfiguration <- R6::R6Class(
         dimension <- rClr::clrGet(mappedColumn, "Dimension")
         return(rClr::clrGet(dimension, "DisplayName"))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       # Fixed unit or from column?
       if (private$.isUnitFromColumn(column)) {
         # do nothing as it should be NULL
@@ -106,7 +106,7 @@ DataImporterConfiguration <- R6::R6Class(
         }
         return(rClr::clrGet(unit, "SelectedUnit"))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
     },
 
@@ -118,7 +118,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.isUnitFromColumn(column))
       }
-      ospsuite.utils::validateIsLogical(value)
+      validateIsLogical(value)
       rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
       # Also change isUnitFromColumn for error column
       if (!is.null(private$.errorColumn)) {
@@ -139,7 +139,7 @@ DataImporterConfiguration <- R6::R6Class(
         rClr::clrCall(private$.dataImporterTask, "RemoveError", self$ref)
         private$.errorColumn <- NULL
       } else {
-        ospsuite.utils::validateIsString(value)
+        validateIsString(value)
         # Create an error column if none is present in the configuration
         if (is.null(column)) {
           private$.addErrorColumn()
@@ -169,7 +169,7 @@ DataImporterConfiguration <- R6::R6Class(
         }
         return(rClr::clrGet(unit, "SelectedUnit"))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
     },
 
@@ -217,7 +217,7 @@ DataImporterConfiguration <- R6::R6Class(
         rClr::clrCall(self$ref, "ClearLoadedSheets")
         return(invisible(self))
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       rClr::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)
     },
     #' @field namingPattern Regular expression used for naming of loaded data sets.
@@ -234,7 +234,7 @@ DataImporterConfiguration <- R6::R6Class(
         }
         return(pattern)
       }
-      ospsuite.utils::validateIsString(value)
+      validateIsString(value)
       rClr::clrSet(self$ref, "NamingConventions", enc2utf8(value))
     }
   ),
@@ -252,7 +252,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (is.null(configurationFilePath)) {
         ref <- rClr::clrCall(importerTask, "CreateConfiguration")
       } else {
-        ospsuite.utils::validateIsString(configurationFilePath)
+        validateIsString(configurationFilePath)
         ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
       }
       super$initialize(ref)
@@ -268,7 +268,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param filePath Path (incl. file name) to the location where the configuration
     #' will be exported to.
     saveConfiguration = function(filePath) {
-      ospsuite.utils::validateIsString(filePath)
+      validateIsString(filePath)
       filePath <- expandPath(filePath)
 
       rClr::clrCall(private$.dataImporterTask, "SaveConfiguration", self$ref, filePath)
@@ -279,7 +279,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' Add a column for grouping the data sets
     #' @param column Name of the column
     addGroupingColumn = function(column) {
-      ospsuite.utils::validateIsString(column)
+      validateIsString(column)
       rClr::clrCall(private$.dataImporterTask, "AddGroupingColumn", self$ref, enc2utf8(column))
       invisible(self)
     },
@@ -288,7 +288,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' Remove a column for grouping the data sets
     #' @param column Name of the column
     removeGroupingColumn = function(column) {
-      ospsuite.utils::validateIsString(column)
+      validateIsString(column)
       rClr::clrCall(private$.dataImporterTask, "RemoveGroupingColumn", self$ref, enc2utf8(column))
       invisible(self)
     },
@@ -354,7 +354,7 @@ DataImporterConfiguration <- R6::R6Class(
 #' to the values supported in the importer configuration
 #'
 #' @keywords internal
-.ImporterErrorTypeToDataSetErrorType <- ospsuite.utils::enum(c(
+.ImporterErrorTypeToDataSetErrorType <- enum(c(
   "Arithmetic Standard Deviation" = "ArithmeticStdDev",
   "Geometric Standard Deviation" = "GeometricStdDev"
 ))

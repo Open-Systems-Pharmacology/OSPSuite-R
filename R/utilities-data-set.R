@@ -54,8 +54,8 @@ loadDataSetFromPKML <- function(filePath) {
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
 saveDataSetToPKML <- function(dataSet, filePath) {
-  ospsuite.utils::validateIsString(filePath)
-  ospsuite.utils::validateIsOfType(dataSet, DataSet)
+  validateIsString(filePath)
+  validateIsOfType(dataSet, DataSet)
   filePath <- expandPath(filePath)
   dataRepositoryTask <- getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
@@ -76,7 +76,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
-  ospsuite.utils::validateIsOfType(dataSets, DataSet)
+  validateIsOfType(dataSets, DataSet)
 
   # styler: off
   name         <- .makeDataFrameColumn(dataSets, "name")
@@ -141,9 +141,9 @@ dataSetToDataFrame <- function(dataSets) {
 #' )
 #' }
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
-  ospsuite.utils::validateIsString(xlsFilePath)
-  ospsuite.utils::validateIsOfType(importerConfiguration, DataImporterConfiguration)
-  ospsuite.utils::validateIsLogical(importAllSheets)
+  validateIsString(xlsFilePath)
+  validateIsOfType(importerConfiguration, DataImporterConfiguration)
+  validateIsLogical(importAllSheets)
 
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)

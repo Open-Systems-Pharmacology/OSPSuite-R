@@ -39,7 +39,7 @@ Population <- R6::R6Class(
     #' @param values double vector containing the value to set for the `parameterOrPath`
     setParameterValues = function(parameterOrPath, values) {
       parameterPath <- private$getPathFrom(parameterOrPath)
-      ospsuite.utils::validateIsNumeric(values)
+      validateIsNumeric(values)
       rClr::clrCall(self$ref, "SetValues", parameterPath, values)
       invisible(self)
     },
@@ -86,8 +86,8 @@ Population <- R6::R6Class(
   ),
   private = list(
     getPathFrom = function(parameterOrPath) {
-      ospsuite.utils::validateIsOfType(parameterOrPath, c("character", Parameter))
-      if (ospsuite.utils::isOfType(parameterOrPath, Parameter)) {
+      validateIsOfType(parameterOrPath, c("character", Parameter))
+      if (isOfType(parameterOrPath, Parameter)) {
         return(parameterOrPath$path)
       }
       parameterOrPath

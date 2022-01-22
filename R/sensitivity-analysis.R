@@ -36,8 +36,8 @@ SensitivityAnalysis <- R6::R6Class(
                           parameterPaths = NULL,
                           numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
                           variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
-      ospsuite.utils::validateIsOfType(simulation, Simulation)
-      ospsuite.utils::validateIsString(parameterPaths, nullAllowed = TRUE)
+      validateIsOfType(simulation, Simulation)
+      validateIsString(parameterPaths, nullAllowed = TRUE)
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
       super$initialize(ref)
       private$.simulation <- simulation
@@ -52,7 +52,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' If no parameters were specified during creating of a `SensitivityAnalysis` (all constant parameters are considered),
     #' calling `addParameterPaths` will make only the manually added parameters being varied.
     addParameterPaths = function(parameterPaths) {
-      ospsuite.utils::validateIsString(parameterPaths)
+      validateIsString(parameterPaths)
       parameterPaths <- c(parameterPaths)
       private$.parameterPaths <- c(private$.parameterPaths, parameterPaths)
       private$.addParameterPaths(parameterPaths)

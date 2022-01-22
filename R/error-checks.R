@@ -1,6 +1,6 @@
 validateHasUnit <- function(quantity, unit) {
-  ospsuite.utils::validateIsOfType(quantity, Quantity)
-  ospsuite.utils::validateIsString(unit)
+  validateIsOfType(quantity, Quantity)
+  validateIsString(unit)
   if (quantity$hasUnit(unit)) {
     return()
   }

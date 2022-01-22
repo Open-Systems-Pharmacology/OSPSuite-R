@@ -14,7 +14,7 @@
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {
-  ospsuite.utils::validateIsOfType(results, SimulationResults)
+  validateIsOfType(results, SimulationResults)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
@@ -30,8 +30,8 @@ calculatePKAnalyses <- function(results) {
 #'
 #' @export
 exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
-  ospsuite.utils::validateIsOfType(pkAnalyses, SimulationPKAnalyses)
-  ospsuite.utils::validateIsString(filePath)
+  validateIsOfType(pkAnalyses, SimulationPKAnalyses)
+  validateIsString(filePath)
   filePath <- expandPath(filePath)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
@@ -51,8 +51,8 @@ savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
 #'
 #' @export
 importPKAnalysesFromCSV <- function(filePath, simulation) {
-  ospsuite.utils::validateIsOfType(simulation, Simulation)
-  ospsuite.utils::validateIsString(filePath)
+  validateIsOfType(simulation, Simulation)
+  validateIsString(filePath)
   filePath <- expandPath(filePath)
   pkAnalysisTask <- getNetTask("PKAnalysisTask")
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
@@ -66,7 +66,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 #'
 #' @export
 pkAnalysesAsDataFrame <- function(pkAnalyses) {
-  ospsuite.utils::validateIsOfType(pkAnalyses, SimulationPKAnalyses)
+  validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   pkParameterResultsFilePath <- tempfile()
   dataFrame <- tryCatch(
     {

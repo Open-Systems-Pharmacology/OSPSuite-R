@@ -12,7 +12,7 @@ SimulationResults <- R6::R6Class(
     .simulation = NULL,
     .individualResultsCache = NULL,
     getResultsForIndividual = function(individualId) {
-      ospsuite.utils::validateIsNumeric(individualId)
+      validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "ResultsFor", as.integer(individualId))
     },
     allIndividualResults = function(value) {
@@ -30,7 +30,7 @@ SimulationResults <- R6::R6Class(
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SimulationResults` object.
     initialize = function(ref, simulation) {
-      ospsuite.utils::validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
       private$.individualResultsCache <- Cache$new()
       super$initialize(ref)
@@ -39,7 +39,7 @@ SimulationResults <- R6::R6Class(
     #' Returns `TRUE` if results are available for the individual with id `individualId` otherwise `FALSE`
     #' @param individualId Id of the individual
     hasResultsForIndividual = function(individualId) {
-      ospsuite.utils::validateIsNumeric(individualId)
+      validateIsNumeric(individualId)
       rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
     #' @description
@@ -49,7 +49,7 @@ SimulationResults <- R6::R6Class(
     #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no values could be found for the `path`/
     #' If `FALSE`, a list of `NA` values is returned
     getValuesByPath = function(path, individualIds, stopIfNotFound = TRUE) {
-      ospsuite.utils::validateIsNumeric(individualIds)
+      validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
       values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
 
@@ -64,7 +64,7 @@ SimulationResults <- R6::R6Class(
     #' Returns all available results for the individual with id `individualId`
     #' @param individualId Id for which the results should be returned
     resultsForIndividual = function(individualId) {
-      ospsuite.utils::validateIsNumeric(individualId)
+      validateIsNumeric(individualId)
       if (!private$.individualResultsCache$hasKey(individualId)) {
         individualResult <- private$getResultsForIndividual(individualId)
         private$.individualResultsCache$set(individualId, individualResult)
