@@ -90,7 +90,7 @@ Cache <- R6::R6Class(
       if (is.null(self$type)) {
         return()
       }
-      if (ospsuite.utils::isOfType(object, self$type)) {
+      if (isOfType(object, self$type)) {
         return()
       }
       # Name of the variable in the calling function

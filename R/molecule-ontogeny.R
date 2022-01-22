@@ -21,7 +21,7 @@ MoleculeOntogeny <- R6::R6Class(
     #' @param ontogeny ontogeny to use for the Molecule (one of StandardOntogeny)
     #' @return A new `MoleculeOntogeny` object.
     initialize = function(molecule, ontogeny) {
-      ospsuite.utils::validateIsString(molecule)
+      validateIsString(molecule)
       validateEnumValue(ontogeny, StandardOntogeny)
       self$molecule <- molecule
       self$ontogeny <- ontogeny

@@ -2,7 +2,7 @@
 #' This is only used to defined how a user defined PK Parameter should be calculated
 #' 
 #' @export
-StandardPKParameter <- ospsuite.utils::enum(c(
+StandardPKParameter <- enum(c(
   Unknown = 0,
   C_max = 1,
   C_max_norm = 2,

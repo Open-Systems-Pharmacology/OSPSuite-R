@@ -9,7 +9,7 @@
 #' array <- toPathArray("Organism|Organ|Liver")
 #' @export
 toPathArray <- function(path) {
-  ospsuite.utils::validateIsString(path)
+  validateIsString(path)
   unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)), use.names = FALSE)
 }
 
@@ -23,6 +23,6 @@ toPathArray <- function(path) {
 #' @export
 toPathString <- function(...) {
   pathStrings <- c(...)
-  ospsuite.utils::validateIsString(pathStrings)
+  validateIsString(pathStrings)
   paste(pathStrings, collapse = ospsuiteEnv$pathSeparator)
 }

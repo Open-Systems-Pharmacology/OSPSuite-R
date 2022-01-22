@@ -4,7 +4,7 @@ test_that("It can load a valid observed data file and create a DataSet object", 
   file <- getTestDataFilePath("obs_data.pkml")
   dataSet <- loadDataSetFromPKML(file)
 
-  expect_true(ospsuite.utils::isOfType(dataSet, DataSet))
+  expect_true(isOfType(dataSet, DataSet))
 })
 
 context("dataSetToDataFrame")
@@ -165,7 +165,7 @@ test_that("it can load when loading from file with one sheet without
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
-  expect_true(ospsuite.utils::isOfType(dataSets, DataSet))
+  expect_true(isOfType(dataSets, DataSet))
   expect_equal(length(dataSets), 4)
 })
 

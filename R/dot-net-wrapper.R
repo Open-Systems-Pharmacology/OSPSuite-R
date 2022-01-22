@@ -39,8 +39,8 @@ DotNetWrapper <- R6::R6Class(
         if (is.null(value) && !shouldSetNull) {
           return()
         }
-        if (ospsuite.utils::isOfType(type = "character", object = value)) {
-          # ospsuite.utils::isOfType returns TRUE for empty `object` and enc2utf8(value) fails
+        if (isOfType(type = "character", object = value)) {
+          # isOfType returns TRUE for empty `object` and enc2utf8(value) fails
           if (length(value) > 0) {
             value <- enc2utf8(value)
           }

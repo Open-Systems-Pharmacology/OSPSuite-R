@@ -1,7 +1,7 @@
 #' Supported types of the error
 #' 
 #' @export
-DataErrorType <- ospsuite.utils::enum(c(
+DataErrorType <- enum(c(
   "ArithmeticStdDev",
   "GeometricStdDev"
 ))
@@ -235,12 +235,12 @@ DataSet <- R6::R6Class(
     #' @param yErrorValues Optional error values associated with yValues
 
     setValues = function(xValues, yValues, yErrorValues = NULL) {
-      ospsuite.utils::validateIsNumeric(xValues)
-      ospsuite.utils::validateIsNumeric(yValues)
-      ospsuite.utils::validateIsNumeric(yErrorValues, nullAllowed = TRUE)
-      ospsuite.utils::validateIsSameLength(xValues, yValues)
+      validateIsNumeric(xValues)
+      validateIsNumeric(yValues)
+      validateIsNumeric(yErrorValues, nullAllowed = TRUE)
+      validateIsSameLength(xValues, yValues)
       if (!is.null(yErrorValues)) {
-        ospsuite.utils::validateIsSameLength(xValues, yErrorValues)
+        validateIsSameLength(xValues, yErrorValues)
       }
 
       private$.setColumnValues(column = private$.xColumn, xValues)

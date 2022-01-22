@@ -8,7 +8,7 @@
 #' @keywords internal
 toObjectType <- function(netObject, class) {
   if (!is.list(netObject)) {
-    return(ospsuite.utils::ifNotNull(netObject, class$new(ref = netObject)))
+    return(ifNotNull(netObject, class$new(ref = netObject)))
   }
   sapply(c(netObject), function(x) {
     class$new(ref = x)
