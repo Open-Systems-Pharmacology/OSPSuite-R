@@ -277,10 +277,7 @@ DataCombined <- R6::R6Class(
       # but they need to be retained in the private copy of the combined
       # dataframe because the datasets that might be added in the future will
       # have their own offsets and scale factors, which will need to be appended
-      # to the existing ones to be returned by the `dataTransformations()`
-      # active binding. If we were to clean the dataframe in place, this will
-      # not be possible since there won't be offset and scale factors columns to
-      # append to.
+      # to the existing ones.
       private$.cleanDF(private$.dataCombined)
     },
 
@@ -290,7 +287,7 @@ DataCombined <- R6::R6Class(
     #' Print the object to the console
 
     print = function() {
-      # group map contains names of the included datasets and grouping details
+      # group map contains names and nature of the datasets and grouping details
       private$printLine("DataCombined", addTab = FALSE)
       private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
@@ -305,17 +302,17 @@ DataCombined <- R6::R6Class(
 
   active = list(
 
+    # all of the following functions are read-only
+
     #' @field names A vector of unique names of datasets contained in the
     #'   `DataCombined` class instance.
+
     names = function(value) {
       if (missing(value)) {
         return(private$.names)
       }
 
-      stop(messages$errorPropertyReadOnly(
-        "names",
-        optionalMessage = "Names are assigned using `names` argument in `$addSimulationResults()` or `$addDataSets()` methods."
-      ))
+      stop(messages$errorPropertyReadOnly("names"))
     },
 
     #' @field groupMap A dataframe specifying which datasets have been grouped
@@ -328,14 +325,11 @@ DataCombined <- R6::R6Class(
         return(private$.groupMap)
       }
 
-      stop(messages$errorPropertyReadOnly(
-        "groupMap",
-        optionalMessage = "Data sets are assigned to groups when adding via `$addSimulationResults()` or `$addDataSets()` methods."
-      ))
+      stop(messages$errorPropertyReadOnly("groupMap"))
     },
 
-    #' @field dataTransformations A dataframe specifying which offsets and scale
-    #'   factor values were specified by the user for each dataset.
+    #' @field dataTransformations A dataframe with offset and scale factor
+    #'   values were specified by the user for each dataset.
 
     dataTransformations = function(value) {
       if (missing(value)) {
@@ -353,7 +347,7 @@ DataCombined <- R6::R6Class(
 
     ## dataframe extractors ---------------------
 
-    # extract dataframe from DataSet objects
+    # extract dataframe from `DataSet` objects
     .dataSetToDF = function(dataSets, names = NULL, groups = NULL) {
       # `dataSetToDataFrame()` function can handle a vector, a list, or a scalar
       # of `DataSet` class, so use to extract a dataframe, and then
@@ -439,26 +433,51 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
+    # add a new column with alternate names
+    #
+    # first group the dataset by its unique identifier, which is name, and then
+    # nest the rest of the dataframe in a list column, and then
+    # ungroup the dataframe as mutating column is not going to be by group, and then
+    # assign new `names` vector to the existing `name` column, and then
+    # unnest the list column
+
+    .renameDatasets = function(data, names = NULL) {
+      # return early if there is no data
+      if (is.null(names)) {
+        return(data)
+      }
+
+      data %>%
+        tidyr::nest(data = -name) %>%
+        dplyr::mutate(name = names) %>%
+        tidyr::unnest(cols = c(data))
+    },
+
     # update the combined dataframe in place
 
     .updateDF = function(dataCurrent = NULL, dataNew = NULL) {
-      # if there is already data, add new data at the bottom
-      # since the `toDataFrame()` method arranges the data by dataset name,
-      # this will not introduce any order effects, i.e., it doesn't matter
-      # if the user entered `DataSet` objects first and then `SimulationResults`
-      # objects, or vice versa
+      # If there is already data, add new data at the bottom
+      #
+      # Since the `toDataFrame()` method arranges the data by dataset name,
+      # this will not introduce any order effects.
+      #
+      # For example, it doesn't matter if the user entered `DataSet` objects
+      # first and then `SimulationResults` objects, or vice versa
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
-        # check if the new dataset(s) entered are already present in the
-        # internal combined dataframe
+        # by comparing names, check if the new dataset(s) entered are already
+        # present in the internal combined dataframe
         dupDatasets <- intersect(unique(dataCurrent$name), unique(dataNew$name))
 
-        # if this is the case, then replace the older datasets with the newer
-        # versions of the same datasets
+        # if this is the case, then replace the older dataset(s) with the newer
+        # version(s) of the same dataset(s)
         #
-        # e.g. someone can all `$addSimulationResults(dataSet1)` and then again
-        # call `$addSimulationResults(dataSet1)` with the same class instance.
-        # In this case, dataframe created in the latter call will replace the
-        # one created in the former call
+        # For example, someone can all `$addSimulationResults(dataSet1)` and
+        # then again call `$addSimulationResults(dataSet1)` with the same class
+        # instance because they realized that the first time they created the
+        # DataSet object, they had made a mistake. In this case, dataframe
+        # created in the latter call will replace the one created in the former
+        # call. If we were not to allow this, the user will need to restart
+        # their work with a new instance of this class.
         if (length(dupDatasets) > 0L) {
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
         }
@@ -480,7 +499,6 @@ DataCombined <- R6::R6Class(
                               yOffsets = 0,
                               xScaleFactors = 1,
                               yScaleFactors = 1) {
-
       # return early if there is no data
       if (is.null(data)) {
         return(NULL)
@@ -508,13 +526,14 @@ DataCombined <- R6::R6Class(
       data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
 
       # merge data with corresponding parameters and then
+      #
       # replace `NA`s (which will be present for datasets for which no
       # transformations were specified) with default values:
       #
       #  - for offsets: 0
       #  - for scale factors: 1
       #
-      # these default values mean raw data will not be changed
+      # these default values signify that raw data will not be changed
       data <- dplyr::left_join(data, private$.dataTransformations, by = "name") %>%
         dplyr::mutate(across(matches("offsets$"), ~ tidyr::replace_na(.x, 0))) %>%
         dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1))) %>%
@@ -525,26 +544,6 @@ DataCombined <- R6::R6Class(
         )
 
       return(data)
-    },
-
-    # add a new column with alternate names
-    #
-    # first group the dataset by its unique identifier, which is name, and then
-    # nest the rest of the dataframe in a list column, and then
-    # ungroup the dataframe as mutating column is not going to be by group, and then
-    # assign new `names` vector to the existing `name` column, and then
-    # unnest the list column
-
-    .renameDatasets = function(data, names = NULL) {
-      # return early if there is no data
-      if (is.null(names)) {
-        return(data)
-      }
-
-      data %>%
-        tidyr::nest(data = -name) %>%
-        dplyr::mutate(name = names) %>%
-        tidyr::unnest(cols = c(data))
     },
 
     ## extractor for active bindings ---------------------
@@ -575,8 +574,11 @@ DataCombined <- R6::R6Class(
         sort()
     },
 
-    # keep internal copies of the raw values before changing them using
-    # transformations with given offsets and scale factors
+    # Keep internal copies of the raw values before changing them using
+    # transformations with given offsets and scale factors.
+    #
+    # This way, when transformation parameter values are updated, the raw data
+    # is still there to be transformed with these new parameters.
 
     .extractXYData = function(data = NULL) {
       # return early if there is no data

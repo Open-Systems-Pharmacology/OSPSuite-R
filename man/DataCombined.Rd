@@ -50,8 +50,8 @@ together and the name and the nature (observed or simulated?) of the
 data. If a dataset was not assigned to any group, this is denoted by
 \code{NA} in the dataframe.}
 
-\item{\code{dataTransformations}}{A dataframe specifying which offsets and scale
-factor values were specified by the user for each dataset.}
+\item{\code{dataTransformations}}{A dataframe with offset and scale factor
+values were specified by the user for each dataset.}
 }
 \if{html}{\out{</div>}}
 }
