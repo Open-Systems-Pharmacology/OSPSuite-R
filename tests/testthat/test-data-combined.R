@@ -15,6 +15,7 @@ dataSet <- loadDataSetsFromExcel(
   importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
+# same as dataSet, but with deliberately changed entries for testing
 dataSet2 <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
   importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
@@ -23,7 +24,8 @@ dataSet2 <- loadDataSetsFromExcel(
 # empty initialization ----------------------------
 
 test_that("dataCombined - initialization", {
-
+  # check class generator
+  expect_true(R6::is.R6Class(DataCombined))
 
   # initialize empty object
   myCombDat <- DataCombined$new()
@@ -45,7 +47,7 @@ test_that("dataCombined - initialization", {
   # can enter a list, but only of `DataSet` objects
   expect_error(myCombDat$addDataSets(list("x", "y")))
 
-  # NULLs now allowed
+  # `NULL`s not allowed
   expect_error(myCombDat$addDataSets(list(NULL)))
   expect_error(myCombDat$addSimulationResults(list(NULL)))
 })
@@ -140,9 +142,6 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
     "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
   )
 
-  expect_true(R6::is.R6(myCombDat2))
-  expect_false(R6::is.R6Class(myCombDat2))
-
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
   expect_s3_class(df2, "data.frame")
@@ -176,7 +175,6 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 # both `DataSet` and `SimulationResults` provided -------------
 
 test_that("dataCombined - both DataSet and SimulationResults provided", {
-  expect_true(R6::is.R6Class(DataCombined))
 
   # with list and name inputs ----------------------------
 
@@ -192,9 +190,6 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     names = list("x", "y", "z")
   )
   myCombDat$addDataSets(dataSet, names = list("a", NULL, "b", NULL, "c", NULL))
-
-  expect_true(R6::is.R6(myCombDat))
-  expect_false(R6::is.R6Class(myCombDat))
 
   # these should already be set
   expect_equal(
@@ -276,15 +271,22 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     rep(NA_character_, length(myCombDat$groupMap$group))
   )
 
+  # renaming only a single dataset also works
+
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(
+    simResults,
+    quantitiesOrPaths = c("Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"),
+    names = list("m")
+  )
+  expect_equal(myCombDat$names, "m")
+
   # with DataSet input ----------------------------
 
   # create a new instance of the object
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
   myCombDat2$addDataSets(dataSet[[1]])
-
-  expect_true(R6::is.R6(myCombDat2))
-  expect_false(R6::is.R6Class(myCombDat2))
 
   # checking dataframe methods
   df2 <- myCombDat2$toDataFrame()
@@ -641,7 +643,8 @@ test_that("DataCombined with data transformations", {
   expect_equal(dfDat1$xValues + 3, dfDat2$xValues)
   expect_equal(dfDat1$yValues * 4, dfDat2$yValues)
 
-  # make sure messy inputs for transformations don't cause any problems
+  # make sure messy inputs (with special constants) for transformations don't
+  # cause any problems
   myCombDat4 <- DataCombined$new()
   myCombDat4$addDataSets(dataSet)
   myCombDat4$addSimulationResults(simResults)
@@ -797,10 +800,14 @@ test_that("DataCombined works with sequential update - same values", {
   myCombDat <- DataCombined$new()
 
   # add grouping
+
+  # deliberately try with different special constants (NaN, NULL, etc.) and
+  # check that this doesn't create any issues
   myCombDat$addSimulationResults(
     simResults,
     groups = list(NULL, NaN, "distal", "proximal", "total")
   )
+
   myCombDat$addDataSets(
     dataSet,
     groups = list("total", "total", "proximal", "proximal", "distal", "distal")
@@ -810,19 +817,33 @@ test_that("DataCombined works with sequential update - same values", {
   df1 <- myCombDat$toDataFrame()
 
   # now add same object but with different groupings just to check the behavior
+  # is as expected
   myCombDat$addSimulationResults(
     simResults,
-    groups = list("Dapagliflozin - emptying", "Dapagliflozin - retention", NaN, NULL, NA_real_)
+    groups = list(
+      "Dapagliflozin - emptying",
+      "Dapagliflozin - retention",
+      NaN,
+      NULL,
+      NA_real_
+    )
   )
   myCombDat$addDataSets(
     dataSet,
-    groups = list(NULL, NA_integer_, NA, NaN, "distal", "distal")
+    groups = list(
+      NULL,
+      NA_integer_,
+      NA,
+      NaN,
+      "distal",
+      "distal"
+    )
   )
 
   # second dataframe
   df2 <- myCombDat$toDataFrame()
 
-  # should be twice the number of rows and same no. of columns
+  # should be the same number of rows and columns, and same raw data
   expect_equal(nrow(df2), nrow(df1))
   expect_equal(length(df2), length(df1))
   expect_equal(head(df1$yValues), head(df2$yValues))
@@ -1003,6 +1024,7 @@ test_that("DataCombined works with edge cases", {
     c("Stevens_2012_placebo.Placebo_total", NA_character_)
   )
 
+  # with single datasets the renaming should still work
   expect_equal(myCombDat$groupMap$name, c("b", "a"))
 
 
@@ -1012,7 +1034,8 @@ test_that("DataCombined works with edge cases", {
   myCombDat2 <- DataCombined$new()
   myCombDat3 <- DataCombined$new()
 
-  # make sure the default logical NA doesn't create any issues
+  # make sure the default logical or any other type of `NA`s don't create any
+  # issues
   myCombDat2$addDataSets(
     list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
     names = list(NULL, "x", NA_character_, "y"),
@@ -1024,6 +1047,7 @@ test_that("DataCombined works with edge cases", {
     groups = list("a", NULL, "b", NA_character_)
   )
 
+  # it shouldn't matter if parameters were provided as a list or an atomic vector
   myCombDat2$setDataTransformations(
     names = list(
       "Stevens_2012_placebo.Placebo_total",

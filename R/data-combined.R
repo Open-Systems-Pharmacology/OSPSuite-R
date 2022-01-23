@@ -152,11 +152,22 @@ DataCombined <- R6::R6Class(
         stop(messages$errorOnlyOneSupported())
       }
 
+      # helper variables (since they are referred to more than once)
+      pathsLength <- length(quantitiesOrPaths %||% simulationResults$allQuantityPaths)
+      pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
+
       # validate vector arguments' type and length
       validateIsOfType(simulationResults, SimulationResults, FALSE)
-      lengthPaths <- length(quantitiesOrPaths %||% simulationResults$allQuantityPaths)
-      names <- validateVectorArgs(names, lengthPaths, type = "character")
-      groups <- validateVectorArgs(groups, lengthPaths, type = "character")
+      names <- validateVectorArgs(names, pathsLength, type = "character")
+      groups <- validateVectorArgs(groups, pathsLength, type = "character")
+
+      # if alternate names are provided for datasets, use them instead
+      #
+      # for `NULL` elements in a list, the original dataset names will be used,
+      # which are nothing but path names
+      if (!is.null(names)) {
+        names <- ifelse(is.na(names), pathsNames, names)
+      }
 
       # Update private fields for the new setter call
 
@@ -344,22 +355,17 @@ DataCombined <- R6::R6Class(
 
     # extract dataframe from DataSet objects
     .dataSetToDF = function(dataSets, names = NULL, groups = NULL) {
-      # the dataframe function handles a vector, a list, or a single instance of
-      # `DataSet` class
-      data <- dataSetToDataFrame(dataSets)
-
-      # if alternative names are provided, use them
-      data <- private$.renameDatasets(data, names)
-
-      # add column with grouping information and then
-      # add a column describing the type of data and then
-      # convert to tibble before returning the dataframe
-      data <- data %>%
-        private$.addGroupCol(groups) %>%
+      # `dataSetToDataFrame()` function can handle a vector, a list, or a scalar
+      # of `DataSet` class, so use to extract a dataframe, and then
+      #
+      # add columns with grouping information and additional meta data
+      #
+      # replace dataset names with alternative names (if provided)
+      dataSetToDataFrame(dataSets) %>%
         dplyr::mutate(dataType = "observed") %>%
+        private$.renameDatasets(names) %>%
+        private$.addGroupCol(groups) %>%
         dplyr::as_tibble()
-
-      return(data)
     },
 
     # extract dataframe from `SimulationResults` objects
@@ -371,42 +377,33 @@ DataCombined <- R6::R6Class(
                                names = NULL,
                                groups = NULL) {
       # all input validation will take place in this function itself
-      data <- simulationResultsToDataFrame(
+      # `simulationResultsToDataFrame()` can handle only a single class instance
+      # extract a dataframe with is help, and then
+      #
+      # add a new identifier column with unique names for datasets, which, for
+      # these objects, would be `paths` column, and then
+      #
+      # add column with grouping information, and then
+      #
+      # add a column describing the type of data;
+      # simulation results never have errors, but this leads to inconsistent
+      # output, so also add a column for `yErrorValues` outputs, and then
+      #
+      # rename according to column naming conventions for `DataSet`
+
+      simulationResultsToDataFrame(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
         population        = population,
         individualIds     = individualIds
-      )
-
-      # if `name` column is not present, use `paths` column as unique names
-      if (!"name" %in% names(data)) {
-        data <- dplyr::mutate(data, name = paths)
-      }
-
-      # if alternative names are provided, replace current names with them
-      if (!is.null(names)) {
-        data <- private$.renameDatasets(data, names) %>%
-          dplyr::mutate(
-            name = dplyr::case_when(
-              is.na(name) ~ paths,
-              TRUE ~ name
-            )
-          )
-      }
-
-      # add column with grouping information and then
-      #
-      # add a column describing the type of data;
-      # simulation results never have errors, but this leads to inconsistent
-      # output, so also add a column for `yErrorValues` outputs and then
-      #
-      # rename according to column naming conventions for `DataSet` and then
-      data <- data %>%
-        private$.addGroupCol(groups) %>%
+      ) %>%
         dplyr::mutate(
+          name         = paths,
           dataType     = "simulated",
           yErrorValues = NA_real_
         ) %>%
+        private$.renameDatasets(names) %>%
+        private$.addGroupCol(groups) %>%
         dplyr::rename(
           "xValues"    = "Time",
           "xUnit"      = "TimeUnit",
@@ -415,8 +412,6 @@ DataCombined <- R6::R6Class(
           "yUnit"      = "unit",
           "yDimension" = "dimension"
         )
-
-      return(data)
     },
 
     ## dataframe modifiers ---------------------
@@ -670,7 +665,7 @@ DataCombined <- R6::R6Class(
     .dataTransformations = NULL
   ),
 
-  # other object properties --------------------------------------
+  # other class properties --------------------------------------
 
   lock_objects = TRUE,
   lock_class = FALSE,
