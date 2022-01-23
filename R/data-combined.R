@@ -80,8 +80,6 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object containing observed data.
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
-      # validate argument types and lengths
-
       # if list of instances is provided, `purrr::walk()` will check each element
       # `purrr::walk()` will in no way modify objects provided to it
       if (is.list(dataSets)) {
@@ -90,28 +88,20 @@ DataCombined <- R6::R6Class(
         validateIsOfType(dataSets, "DataSet", FALSE)
       }
 
-      # anticipate that although a list of `DataSet` objects might be entered,
-      # they might not have names associated with them in the argument list
-      #
-      # in such cases, go inside each element of the list (`purrr::map_chr()`)
-      # and extract (`purrr::pluck()`) the name from the object itself and use
-      # them instead and simplify to a character vector
-      if (is.list(dataSets) && is.null(names(dataSets))) {
-        names(dataSets) <- purrr::map_chr(dataSets, .f = ~ purrr::pluck(.x, "name"))
-      }
+      # validate vector arguments' type and length
+      groups <- validateVectorArgs(groups, objCount(dataSets), type = "character")
+      names <- validateVectorArgs(names, objCount(dataSets), type = "character")
 
       # if alternate names are provided for datasets, use them instead
-      # for `NULL` elements in a list, the original names will be used
+      #
+      # for `NULL` elements in a list, the original dataset names will be used
+      #
+      # to get these names, go inside each element of the list and extract
+      # (`purrr::pluck()`) the name from the object itself and use them instead
+      # and simplify to a character vector (using `purrr::map_chr()`)
       if (!is.null(names) && is.list(dataSets)) {
-        # lengths of alternate names and objects should be same
-        names <- validateVectorArgs(names, length(names(dataSets)), type = "character")
-
-        # if any of the alternate names `NULL`, use original names
-        names <- ifelse(is.na(names), names(dataSets), names)
+        names <- ifelse(is.na(names), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), names)
       }
-
-      # validate argument type and length
-      groups <- validateVectorArgs(groups, objCount(dataSets), type = "character")
 
       # Update private fields for the new setter call
 
@@ -162,7 +152,7 @@ DataCombined <- R6::R6Class(
         stop(messages$errorOnlyOneSupported())
       }
 
-      # validate argument types and lengths
+      # validate vector arguments' type and length
       validateIsOfType(simulationResults, SimulationResults, FALSE)
       lengthPaths <- length(quantitiesOrPaths %||% simulationResults$allQuantityPaths)
       names <- validateVectorArgs(names, lengthPaths, type = "character")
@@ -446,7 +436,7 @@ DataCombined <- R6::R6Class(
         data <- data %>% dplyr::mutate(group = NA_character_)
       } else {
         data <- data %>%
-          tidyr::nest(data = !name) %>%
+          tidyr::nest(data = -name) %>%
           dplyr::mutate(group = groups) %>%
           tidyr::unnest(cols = c(data))
       }
@@ -557,7 +547,7 @@ DataCombined <- R6::R6Class(
       }
 
       data %>%
-        tidyr::nest(data = !name) %>%
+        tidyr::nest(data = -name) %>%
         dplyr::mutate(name = names) %>%
         tidyr::unnest(cols = c(data))
     },

@@ -1090,17 +1090,20 @@ test_that("DataCombined works with edge cases", {
   myCombDat <- DataCombined$new()
 
   # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
-  myCombDat$addDataSets(dataSet[[1]])
+  myCombDat$addDataSets(dataSet[[1]], names = "a")
 
   # dataset name is "Stevens_2012_placebo.Sita_total" but no grouping assigned is
   # same as dataset name entered before
-  myCombDat$addDataSets(dataSet[[2]], groups = "Stevens_2012_placebo.Placebo_total")
+  myCombDat$addDataSets(dataSet[[2]], names = "b", groups = "Stevens_2012_placebo.Placebo_total")
 
   # they shouldn't be collapsed together in the same group
   expect_equal(
     myCombDat$groupMap$group,
     c("Stevens_2012_placebo.Placebo_total", NA_character_)
   )
+
+  expect_equal(myCombDat$groupMap$name, c("b", "a"))
+
 
   # list/vector and NULL/NA ---------------------------
 
