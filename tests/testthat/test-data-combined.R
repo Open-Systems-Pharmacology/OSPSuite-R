@@ -1,3 +1,25 @@
+# data needed for tests ----------------------------
+
+# will be used across all tests in this file
+
+# load the simulation
+sim <- loadTestSimulation("MinimalModel")
+simResults <- importResultsFromCSV(
+  simulation = sim,
+  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+)
+
+# import observed data (will return a list of DataSet objects)
+dataSet <- loadDataSetsFromExcel(
+  xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+  importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+)
+
+dataSet2 <- loadDataSetsFromExcel(
+  xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
+  importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+)
+
 # empty initialization ----------------------------
 
 test_that("dataCombined - initialization", {
@@ -31,23 +53,7 @@ test_that("dataCombined - initialization", {
 # either `DataSet` and `SimulationResults` provided -------------
 
 test_that("dataCombined - either dataSet or SimulationResults provided", {
-
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
-
   # only DataSet input
-
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
 
@@ -171,19 +177,6 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
 
 test_that("dataCombined - both DataSet and SimulationResults provided", {
   expect_true(R6::is.R6Class(DataCombined))
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
 
   # with list and name inputs ----------------------------
 
@@ -374,20 +367,6 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
 
 test_that("dataCombined - same data order with or without `names` argument", {
 
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
-
   # create a new instance of the object
   myCombDat <- DataCombined$new()
   myCombDat2 <- DataCombined$new()
@@ -443,20 +422,6 @@ test_that("dataCombined - same data order with or without `names` argument", {
 # data transformations ---------------------------------
 
 test_that("DataCombined with data transformations", {
-
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
 
   # create a new instance of the object
   myCombDat <- DataCombined$new()
@@ -721,20 +686,6 @@ test_that("DataCombined with data transformations", {
 
 test_that("DataCombined works with data grouping", {
 
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
-
   # create a new instance of the object
   myCombDat <- DataCombined$new()
 
@@ -842,23 +793,6 @@ test_that("DataCombined works with data grouping", {
 # sequential update - same values ---------------------------------
 
 test_that("DataCombined works with sequential update - same values", {
-
-
-  # if the objects share the same datasets, then the one entered later will be used
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
-
   # create a new instance of the object
   myCombDat <- DataCombined$new()
 
@@ -948,27 +882,6 @@ test_that("DataCombined works with sequential update - same values", {
 # sequential update - different values ---------------------------------
 
 test_that("DataCombined works with sequential update - different values", {
-
-
-  # if the objects share the same datasets, then the one entered later will be used
-
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
-
-  dataSet2 <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
 
   # create a new instance of the object
   myCombDat <- DataCombined$new()
@@ -1071,18 +984,6 @@ test_that("DataCombined works with population", {
 # edge cases ---------------------------------
 
 test_that("DataCombined works with edge cases", {
-  # load the simulation
-  sim <- loadTestSimulation("MinimalModel")
-  simResults <- importResultsFromCSV(
-    simulation = sim,
-    filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-  )
-
-  # import observed data (will return a list of DataSet objects)
-  dataSet <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-    importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
-  )
 
   ## groups name same as dataset name ---------------------------
 
