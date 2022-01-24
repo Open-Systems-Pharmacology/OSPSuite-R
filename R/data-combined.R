@@ -80,15 +80,8 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object containing observed data.
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
-      # if list of instances is provided, `purrr::walk()` will check each element
-      # `purrr::walk()` will in no way modify objects provided to it
-      if (is.list(dataSets)) {
-        purrr::walk(.x = dataSets, .f = ~ validateIsOfType(.x, "DataSet", FALSE))
-      } else {
-        validateIsOfType(dataSets, "DataSet", FALSE)
-      }
-
       # validate vector arguments' type and length
+      validateIsOfType(dataSets, "DataSet", FALSE)
       groups <- validateVectorArgs(groups, objCount(dataSets), type = "character")
       names <- validateVectorArgs(names, objCount(dataSets), type = "character")
 
@@ -146,25 +139,36 @@ DataCombined <- R6::R6Class(
                                     names = NULL,
                                     groups = NULL) {
       # list or a vector of `SimulationResults` class instances is not allowed
+      #
+      # if we were to allow this, `quantitiesOrPaths`, `population`, and
+      # `individualIds ` could be different for every `SimulationResult`, and
+      # those arguments should also be lists (i.e., lists of lists), which makes
+      # for a complicated API
+      #
+      # Additionally, if two different `SimulationResults` are added using the
+      # same paths, the user **must** provide `names`, otherwise the data will
+      # be overwritten (as the default names are the paths)
+
       # `is.vector()` will cover both `c(simResults1, simResults2, ...)` and
       # `list(simResults1, simResults2, ...)` possibilities
       if (is.vector(simulationResults)) {
         stop(messages$errorOnlyOneSupported())
       }
 
-      # helper variables (since they are referred to more than once)
-      pathsLength <- length(quantitiesOrPaths %||% simulationResults$allQuantityPaths)
+      # summary variables (created since they are referred to more than once)
       pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
+      pathsLength <- length(pathsNames)
 
       # validate vector arguments' type and length
-      validateIsOfType(simulationResults, SimulationResults, FALSE)
+      validateIsOfType(simulationResults, "SimulationResults", FALSE)
       names <- validateVectorArgs(names, pathsLength, type = "character")
       groups <- validateVectorArgs(groups, pathsLength, type = "character")
 
       # if alternate names are provided for datasets, use them instead
       #
-      # for `NULL` elements in a list, the original dataset names will be used,
-      # which are nothing but path names
+      # for `NULL` elements in a list, which will be converted to `NA`s by
+      # `validateVectorArgs()`, the original dataset names will be used, which
+      # are nothing but path names for `SimulationResults` objects
       if (!is.null(names)) {
         names <- ifelse(is.na(names), pathsNames, names)
       }
