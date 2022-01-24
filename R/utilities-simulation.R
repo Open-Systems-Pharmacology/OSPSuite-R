@@ -216,30 +216,38 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 }
 
 .runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE) {
-  validateIsOfType(simulations, Simulation)
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
-  rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+  tryCatch(
+    {
+      validateIsOfType(simulations, Simulation)
+      rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
-  # Map of simulations ids to simulations objects
-  simulationIdSimulationMap <- vector("list", length(simulations))
+      # Map of simulations ids to simulations objects
+      simulationIdSimulationMap <- vector("list", length(simulations))
 
-  # Add simulations
-  for (simulationIdx in seq_along(simulations)) {
-    simulation <- simulations[[simulationIdx]]
-    simulationIdSimulationMap[[simulationIdx]] <- simulation
-    names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
+      # Add simulations
+      for (simulationIdx in seq_along(simulations)) {
+        simulation <- simulations[[simulationIdx]]
+        simulationIdSimulationMap[[simulationIdx]] <- simulation
+        names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 
-    rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
-  }
-  # Run all simulations
-  results <- rClr::clrCall(simulationRunner, "RunConcurrently")
+        rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
+      }
+      # Run all simulations
+      results <- rClr::clrCall(simulationRunner, "RunConcurrently")
 
-  # Ids of the results are Ids of the simulations
-  resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
-  names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
-  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
+      # Ids of the results are Ids of the simulations
+      resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
+      names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
+      simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
 
-  return(simulationResults)
+      return(simulationResults)
+    },
+    finally = {
+      # Dispose of the runner to release any possible instances still in memory (.NET side)
+      rClr::clrCall(simulationRunner, "Dispose")
+    }
+  )
 }
 
 #' @title  Creates and returns an instance of a `SimulationBatch` that can be used to efficiently vary parameters and initial values in a simulation
