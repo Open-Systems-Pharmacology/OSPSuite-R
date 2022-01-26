@@ -65,12 +65,7 @@
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
   inherit = Printable,
-
-  # public fields and methods ------------------------------------
-
   public = list(
-
-    ## setter methods ---------------
 
     #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
     #'   class.
@@ -131,7 +126,6 @@ DataCombined <- R6::R6Class(
     #' Add simulated data using instance of `SimulationResults` class.
     #'
     #' @return `DataCombined` object containing simulated data.
-
     addSimulationResults = function(simulationResults,
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
@@ -173,8 +167,7 @@ DataCombined <- R6::R6Class(
         names <- ifelse(is.na(names), pathsNames, names)
       }
 
-      # Update private fields for the new setter call
-
+      # Update private fields for the new setter calls
       private$.dataCombined <- private$.updateDF(
         private$.dataCombined,
         private$.simResultsToDF(
@@ -217,7 +210,6 @@ DataCombined <- R6::R6Class(
     #'
     #' - For error term:
     #'   `newErrorValue = rawErrorValue * scaleFactor`
-
     setDataTransformations = function(names = NULL,
                                       xOffsets = 0,
                                       yOffsets = 0,
@@ -247,8 +239,6 @@ DataCombined <- R6::R6Class(
       invisible(self)
     },
 
-    ## getter methods ---------------
-
     #' @description
     #'
     #' A method to extract a dataframe of simulated and/or observed data
@@ -268,8 +258,6 @@ DataCombined <- R6::R6Class(
     #' @note
     #'
     #' The molecular weight (in `molWeight` column) is in `g/mol` units.
-
-
     toDataFrame = function() {
       # It is deliberate that this "cleaning" happens every time the user calls
       # this method. R6 has a reference semantics, i.e., the object will be
@@ -285,11 +273,8 @@ DataCombined <- R6::R6Class(
       private$.cleanDF(private$.dataCombined)
     },
 
-    ## print method -----------------
-
     #' @description
     #' Print the object to the console
-
     print = function() {
       # group map contains names and nature of the datasets and grouping details
       private$printLine("DataCombined", addTab = FALSE)
@@ -301,16 +286,9 @@ DataCombined <- R6::R6Class(
       invisible(self)
     }
   ),
-
-  # active bindings ---------------------------------------------------
-
   active = list(
-
-    # all of the following functions are read-only
-
     #' @field names A vector of unique names of datasets contained in the
     #'   `DataCombined` class instance.
-
     names = function(value) {
       if (missing(value)) {
         return(private$.names)
@@ -323,7 +301,6 @@ DataCombined <- R6::R6Class(
     #'   together and the name and the nature (observed or simulated?) of the
     #'   data. If a dataset was not assigned to any group, this is denoted by
     #'   `NA` in the dataframe.
-
     groupMap = function(value) {
       if (missing(value)) {
         return(private$.groupMap)
@@ -334,7 +311,6 @@ DataCombined <- R6::R6Class(
 
     #' @field dataTransformations A dataframe with offset and scale factor
     #'   values were specified by the user for each dataset.
-
     dataTransformations = function(value) {
       if (missing(value)) {
         return(private$.dataTransformations)
@@ -343,14 +319,7 @@ DataCombined <- R6::R6Class(
       stop(messages$errorPropertyReadOnly("dataTransformations"))
     }
   ),
-
-  # private -----------------------------------
-
   private = list(
-    ## private methods --------------------
-
-    ## dataframe extractors ---------------------
-
     # extract dataframe from `DataSet` objects
     .dataSetToDF = function(dataSets, names = NULL, groups = NULL) {
       # `dataSetToDataFrame()` function can handle a vector, a list, or a scalar
@@ -367,7 +336,6 @@ DataCombined <- R6::R6Class(
     },
 
     # extract dataframe from `SimulationResults` objects
-
     .simResultsToDF = function(simulationResults,
                                quantitiesOrPaths = NULL,
                                population = NULL,
@@ -388,7 +356,6 @@ DataCombined <- R6::R6Class(
       # output, so also add a column for `yErrorValues` outputs, and then
       #
       # rename according to column naming conventions for `DataSet`
-
       simulationResultsToDataFrame(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
@@ -412,8 +379,6 @@ DataCombined <- R6::R6Class(
         )
     },
 
-    ## dataframe modifiers ---------------------
-
     # Add a new group column
     #
     # If no grouping is specified for a dataset, the group will be `NA`.
@@ -423,7 +388,6 @@ DataCombined <- R6::R6Class(
     # instead be used as a dummy grouping. But this will be taken care of in the
     # plotting function itself. This is why this function doesn't replace `NA`s
     # in the grouping column with dataset names.
-
     .addGroupCol = function(data, groups = NULL) {
       if (is.null(groups)) {
         data <- data %>% dplyr::mutate(group = NA_character_)
@@ -444,7 +408,6 @@ DataCombined <- R6::R6Class(
     # ungroup the dataframe as mutating column is not going to be by group, and then
     # assign new `names` vector to the existing `name` column, and then
     # unnest the list column
-
     .renameDatasets = function(data, names = NULL) {
       # return early if there is no data
       if (is.null(names)) {
@@ -458,7 +421,6 @@ DataCombined <- R6::R6Class(
     },
 
     # update the combined dataframe in place
-
     .updateDF = function(dataCurrent = NULL, dataNew = NULL) {
       # If there is already data, add new data at the bottom
       #
@@ -496,7 +458,6 @@ DataCombined <- R6::R6Class(
     },
 
     # transform the dataset using specified offsets and scale factors
-
     .dataTransform = function(data,
                               names = NULL,
                               xOffsets = 0,
@@ -550,10 +511,7 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    ## extractor for active bindings ---------------------
-
     # extract dataframe with group mappings
-
     .extractGroupMap = function(data) {
       # select only the unique identifier columns and then
       # retain only the distinct combinations and then
@@ -565,7 +523,6 @@ DataCombined <- R6::R6Class(
     },
 
     # extract unique and sorted dataset names from the combined dataframe
-
     .extractNames = function(data = NULL) {
       # return early if there is no data
       if (is.null(data)) {
@@ -583,7 +540,6 @@ DataCombined <- R6::R6Class(
     #
     # This way, when transformation parameter values are updated, the raw data
     # is still there to be transformed with these new parameters.
-
     .extractXYData = function(data = NULL) {
       # return early if there is no data
       if (is.null(data)) {
@@ -602,7 +558,6 @@ DataCombined <- R6::R6Class(
     #
     # Since the user might have entered distinct transformation parameters for
     # each dataset, the combined dataframe needs to be grouped by dataset names.
-
     .extractTransforms = function(data = NULL) {
       # return early if there is no data
       if (is.null(data)) {
@@ -621,7 +576,6 @@ DataCombined <- R6::R6Class(
     },
 
     # clean dataframe before returning it to the user
-
     .cleanDF = function(data = NULL) {
       # return early if there is no data
       if (is.null(data)) {
@@ -662,17 +616,11 @@ DataCombined <- R6::R6Class(
       # return the cleaned dataframe
       return(data)
     },
-
-    ## private fields --------------------
-
     .dataCombined = NULL,
     .groupMap = NULL,
     .names = NULL,
     .dataTransformations = NULL
   ),
-
-  # other class properties --------------------------------------
-
   lock_objects = TRUE,
   lock_class = FALSE,
   cloneable = TRUE,
