@@ -294,7 +294,7 @@ test_that("it can load a data importer configuration with units from columns", {
   expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
-test_that("it can change naming patter", {
+test_that("it can change naming pattern", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux
 
   importerConfiguration <- DataImporterConfiguration$new()
