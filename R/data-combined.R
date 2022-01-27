@@ -16,9 +16,9 @@
 #'   group. If an entry within the list is `NULL`, the corresponding data set is
 #'   not assigned to any group (and the corresponding entry in the dataframe
 #'   will be an `NA`). If provided, `groups` must have the same length as
-#'   `dataSets` and/or `simulationResults`. If no grouping is specified for any
-#'   of the dataset, the column `group` in the dataframe output will be all
-#'   `NA`.
+#'   `dataSets` and/or `simulationResults$quantityPath`. If no grouping is
+#'   specified for any of the dataset, the column `group` in the dataframe
+#'   output will be all `NA`.
 #' @param names A string or a list of string. This argument will be encountered
 #'   across different methods:
 #'
@@ -65,6 +65,9 @@
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
   inherit = Printable,
+
+  # public fields and methods ------------------------------------
+
   public = list(
 
     #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
@@ -286,6 +289,9 @@ DataCombined <- R6::R6Class(
       invisible(self)
     }
   ),
+
+  # active bindings ---------------------------------------------------
+
   active = list(
     #' @field names A vector of unique names of datasets contained in the
     #'   `DataCombined` class instance.
@@ -319,6 +325,9 @@ DataCombined <- R6::R6Class(
       stop(messages$errorPropertyReadOnly("dataTransformations"))
     }
   ),
+
+  # private methods -----------------------------------
+
   private = list(
     # extract dataframe from `DataSet` objects
     .dataSetToDF = function(dataSets, names = NULL, groups = NULL) {
@@ -616,11 +625,17 @@ DataCombined <- R6::R6Class(
       # return the cleaned dataframe
       return(data)
     },
+
+    # private fields ----------------------------------------
+
     .dataCombined = NULL,
     .groupMap = NULL,
     .names = NULL,
     .dataTransformations = NULL
   ),
+
+  # class default properties ---------------------------------
+
   lock_objects = TRUE,
   lock_class = FALSE,
   cloneable = TRUE,

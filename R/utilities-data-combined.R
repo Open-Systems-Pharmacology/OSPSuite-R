@@ -27,13 +27,13 @@
 objCount <- function(x) {
   # `is.vector()` can handle both atomic vectors and lists, i.e.
   # both `is.vector(c(1, 2))` and `is.vector(list(1, 2))` will be `TRUE`
-  if (is.vector(x)) {
-    l <- length(x)
-  } else {
-    l <- length(list(x))
+  #
+  # For anything other than a vector, the object count should be 1
+  if (!is.vector(x)) {
+    return(1L)
   }
 
-  return(l)
+  return(length(x))
 }
 
 #'  Validate arguments provided as vectors
@@ -84,9 +84,7 @@ validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 
   # `nullAllowed = TRUE` is necessary because `NULL` in vector arguments is
   # used to specify no change for the corresponding dataset
-  # `purrr::walk()` is needed below because validation helper functions
-  # are called only for their side effects
-  purrr::walk(.x = arg, .f = ~ validateIsOfType(.x, type, nullAllowed = TRUE))
+  validateIsOfType(arg, type, nullAllowed = TRUE)
 
   # arguments are still in a list
   # flatten them to an atomic vector of required type
@@ -116,15 +114,19 @@ validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 #' @noRd
 
 flattenList <- function(x, type) {
+  if (!is.vector(x)) {
+    stop("`x` argument can only be a vector.", call. = FALSE)
+  }
+
   if (is.list(x)) {
     x <- switch(type,
-                "character" = purrr::flatten_chr(x),
-                "numeric" = ,
-                "real" = ,
-                "double" = purrr::flatten_dbl(x),
-                "integer" = purrr::flatten_int(x),
-                "logical" = purrr::flatten_lgl(x),
-                purrr::flatten(x)
+      "character" = purrr::flatten_chr(x),
+      "numeric" = ,
+      "real" = ,
+      "double" = purrr::flatten_dbl(x),
+      "integer" = purrr::flatten_int(x),
+      "logical" = purrr::flatten_lgl(x),
+      purrr::flatten(x)
     )
   }
 
@@ -149,14 +151,14 @@ toMissingOfType <- function(x, type) {
   # all unexpected values will be converted to `NA` of a desired type
   if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
     x <- switch(type,
-                "character" = NA_character_,
-                "numeric" = ,
-                "real" = ,
-                "double" = NA_real_,
-                "integer" = NA_integer_,
-                "complex" = NA_complex_,
-                "logical" = NA,
-                stop("Incorrect type entered.")
+      "character" = NA_character_,
+      "numeric" = ,
+      "real" = ,
+      "double" = NA_real_,
+      "integer" = NA_integer_,
+      "complex" = NA_complex_,
+      "logical" = NA,
+      stop("Incorrect type entered.")
     )
   }
 

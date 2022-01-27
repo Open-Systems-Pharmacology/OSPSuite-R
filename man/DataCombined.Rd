@@ -109,9 +109,9 @@ that the datasets whose names you wish to not change should be specified as
 group. If an entry within the list is \code{NULL}, the corresponding data set is
 not assigned to any group (and the corresponding entry in the dataframe
 will be an \code{NA}). If provided, \code{groups} must have the same length as
-\code{dataSets} and/or \code{simulationResults}. If no grouping is specified for any
-of the dataset, the column \code{group} in the dataframe output will be all
-\code{NA}.}
+\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
+specified for any of the dataset, the column \code{group} in the dataframe
+output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -179,9 +179,9 @@ that the datasets whose names you wish to not change should be specified as
 group. If an entry within the list is \code{NULL}, the corresponding data set is
 not assigned to any group (and the corresponding entry in the dataframe
 will be an \code{NA}). If provided, \code{groups} must have the same length as
-\code{dataSets} and/or \code{simulationResults}. If no grouping is specified for any
-of the dataset, the column \code{group} in the dataframe output will be all
-\code{NA}.}
+\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
+specified for any of the dataset, the column \code{group} in the dataframe
+output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
