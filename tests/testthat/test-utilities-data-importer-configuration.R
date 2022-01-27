@@ -2,6 +2,8 @@ context("createConfigurationForFile")
 filePath <- getTestDataFilePath("CompiledDataSet.xlsx")
 
 test_that("It can create a DataImporterConfiguration from a XLS file", {
+  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+
   importerConfiguration <- createConfigurationForFile(filePath, "TestSheet_1")
   expect_equal(importerConfiguration$timeColumn, "Time [h]")
   expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
