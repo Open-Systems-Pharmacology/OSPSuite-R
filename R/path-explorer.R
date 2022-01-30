@@ -35,7 +35,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #'  allowing for intuitive navigation in the simulation tree
 #
 #' @param simulationOrFilePath Full path of the simulation to load or instance of a simulation
-#' @param returnParameterTree when set to `TRUE`, the function returns a tree of parameter paths only.  If `FALSE` (as default), the tree includes all available quantities.
+#' @param parameterPathsOnly when set to `TRUE`, the function returns a tree of parameter paths only.  If `FALSE` (as default), the tree includes all available quantities.
 #' @return A list with a branched structure representing the path tree of Quantities in the simulation file.
 #' At the end of each branch is a string called 'path' that is the path of the quantity represented by the branch.
 #'
@@ -48,7 +48,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #'
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
 #' @export
-getSimulationTree <- function(simulationOrFilePath, returnParameterTree = FALSE) {
+getSimulationTree <- function(simulationOrFilePath, parameterPathsOnly = FALSE) {
   validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
 
   simulation <- simulationOrFilePath
@@ -58,7 +58,7 @@ getSimulationTree <- function(simulationOrFilePath, returnParameterTree = FALSE)
 
 
   pathGetterFunction <- getAllQuantityPathsIn
-  if(returnParameterTree){
+  if(parameterPathsOnly){
     pathGetterFunction <- getAllParameterPathsIn
   }
 
