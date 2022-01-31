@@ -80,11 +80,11 @@ pkAnalysesAsDataFrame <- function(pkAnalyses) {
       )
 
       pkResultsDataFrame <- readr::read_csv(
-          pkParameterResultsFilePath,
-          locale = readr::locale(encoding = "UTF-8"),
-          comment = "#",
-          col_types = colTypes
-        )
+        pkParameterResultsFilePath,
+        locale = readr::locale(encoding = "UTF-8"),
+        comment = "#",
+        col_types = colTypes
+      )
 
       return(pkResultsDataFrame)
     },

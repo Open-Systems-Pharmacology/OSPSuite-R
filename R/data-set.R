@@ -1,5 +1,5 @@
 #' Supported types of the error
-#' 
+#'
 #' @export
 DataErrorType <- enum(c(
   "ArithmeticStdDev",

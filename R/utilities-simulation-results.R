@@ -48,7 +48,6 @@
 #' results <- runSimulations(sim)
 #'
 #' getOutputValues(results)
-#'
 #' @export
 getOutputValues <- function(simulationResults,
                             quantitiesOrPaths = NULL,

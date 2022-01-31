@@ -48,8 +48,8 @@ simulationResultsToDataFrame <- function(simulationResults,
   # the result will be a list of dataframes, which will be bound into
   # a single dataframe with the _dfr variant of this function
   df_meta <- purrr::imap_dfr(
-    .x  = simList$metaData,
-    .f  = ~ as.data.frame(.x, row.names = NULL),
+    .x = simList$metaData,
+    .f = ~ as.data.frame(.x, row.names = NULL),
     .id = "paths"
   )
 
