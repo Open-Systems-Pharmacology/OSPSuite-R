@@ -65,7 +65,7 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
     simulation <- loadSimulation(simulationOrFilePath)
   }
 
-  # Build a vector, with no duplicated entries, of all paths corresponding to entities in `simulation` that fall under the types specified in allPaths
+  # Build a vector, with no duplicated entries, of all paths corresponding to entities in `simulation` that fall under the types specified in quantityType
   allPaths <- sapply(quantityType,function(type){quantityTypeList[[type]](simulation)}) %>% unname %>% unlist %>% unique
 
   # Initiate list to be returned as a null list.
