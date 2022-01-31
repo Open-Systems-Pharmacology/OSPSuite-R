@@ -28,7 +28,6 @@
 #'
 #' # Returns all `Volume` quantities defined in `Organism` and all its subcontainers
 #' quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
-#'
 #' @export
 getAllQuantitiesMatching <- function(paths, container) {
   getAllEntitiesMatching(paths, container, Quantity)
@@ -228,7 +227,9 @@ getQuantityDisplayPaths <- function(paths, simulation) {
 #' # Returns the path of all quantities defined in the simulation
 #' observerPaths <- getAllObserverPathsIn(sim)
 #' @export
-getAllObserverPathsIn <- function(container){
-  return(setdiff(x = getAllQuantityPathsIn(container),
-                 y = c(getAllParameterPathsIn(container),getAllMoleculePathsIn(container))))
+getAllObserverPathsIn <- function(container) {
+  return(setdiff(
+    x = getAllQuantityPathsIn(container),
+    y = c(getAllParameterPathsIn(container), getAllMoleculePathsIn(container))
+  ))
 }

@@ -53,12 +53,14 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
   validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
 
-  quantityTypeList <- list("Quantity" = getAllQuantityPathsIn,
-                           "Molecule" = getAllMoleculePathsIn,
-                           "Parameter" = getAllParameterPathsIn,
-                           "Observer" = getAllObserverPathsIn)
+  quantityTypeList <- list(
+    "Quantity" = getAllQuantityPathsIn,
+    "Molecule" = getAllMoleculePathsIn,
+    "Parameter" = getAllParameterPathsIn,
+    "Observer" = getAllObserverPathsIn
+  )
 
-  validateIsIncluded(values = quantityType,parentValues = names(quantityTypeList))
+  validateIsIncluded(values = quantityType, parentValues = names(quantityTypeList))
 
   simulation <- simulationOrFilePath
   if (isOfType(simulationOrFilePath, "character")) {
@@ -66,7 +68,12 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
   }
 
   # Build a vector, with no duplicated entries, of all paths corresponding to entities in `simulation` that fall under the types specified in quantityType
-  allPaths <- sapply(quantityType,function(type){quantityTypeList[[type]](simulation)}) %>% unname %>% unlist %>% unique
+  allPaths <- sapply(quantityType, function(type) {
+    quantityTypeList[[type]](simulation)
+  }) %>%
+    unname() %>%
+    unlist() %>%
+    unique()
 
   # Initiate list to be returned as a null list.
   pathEnumList <- list()

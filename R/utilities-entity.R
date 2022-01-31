@@ -1,6 +1,6 @@
 #' How should comparison of entities be performed
 #'
-#' 
+#'
 #' @export
 CompareBy <- enum(c(
   "id",
@@ -10,7 +10,7 @@ CompareBy <- enum(c(
 
 #' Names of the .NET container tasks of the type "AllXXXMatching"
 #'
-#' 
+#'
 #' @keywords internal
 AllMatchingMethod <- enum(c(
   Container = "AllContainersMatching",
@@ -21,7 +21,7 @@ AllMatchingMethod <- enum(c(
 
 #' Names of the .NET container tasks of the type "AllXXXPathsIn"
 #'
-#' 
+#'
 #' @keywords internal
 AllPathsInMethod <- enum(c(
   Container = "AllContainerPathsIn",
