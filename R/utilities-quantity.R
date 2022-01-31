@@ -212,3 +212,23 @@ getQuantityDisplayPaths <- function(paths, simulation) {
 
   return(unlist(displayPaths, use.names = FALSE))
 }
+
+
+#' Retrieves the path of all observers defined in the container and all its children
+#'
+#' @param container A Container or Simulation used to find the observers
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
+#'
+#' @return An array with one entry per observer defined in the container
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' # Returns the path of all quantities defined in the simulation
+#' observerPaths <- getAllObserverPathsIn(sim)
+#' @export
+getAllObserverPathsIn <- function(container){
+  return(setdiff(x = getAllQuantityPathsIn(container),
+                 y = c(getAllParameterPathsIn(container),getAllMoleculePathsIn(container))))
+}

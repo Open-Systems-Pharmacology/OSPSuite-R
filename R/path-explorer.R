@@ -31,12 +31,14 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
   return(listSoFar)
 }
 
+
+
 #'  Given a simulation file path or an instance of a simulation, traverses the simulation structure and returns a tree like structure
 #'  allowing for intuitive navigation in the simulation tree
 #
 #' @param simulationOrFilePath Full path of the simulation to load or instance of a simulation
-#' @param parameterPathsOnly when set to `TRUE`, the function returns a tree of parameter paths only.  If `FALSE` (as default), the tree includes all available quantities.
-#' @return A list with a branched structure representing the path tree of Quantities in the simulation file.
+#' @param quantityType A vector of strings that specify the types of the entities to be included in the tree.  The types can be any combination of "Quantity", "Molecule", "Parameter" and "Observer"
+#' @return A list with a branched structure representing the path tree of entities in the simulation file that fall under the types specified in `quantityType`.
 #' At the end of each branch is a string called 'path' that is the path of the quantity represented by the branch.
 #'
 #' @importFrom utils tail
@@ -48,25 +50,27 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #'
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
 #' @export
-getSimulationTree <- function(simulationOrFilePath, parameterPathsOnly = FALSE) {
+getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
   validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
+
+  quantityTypeList <- list("Quantity" = getAllQuantityPathsIn,
+                           "Molecule" = getAllMoleculePathsIn,
+                           "Parameter" = getAllParameterPathsIn,
+                           "Observer" = getAllObserverPathsIn)
+
+  validateIsIncluded(values = quantityType,parentValues = names(quantityTypeList))
 
   simulation <- simulationOrFilePath
   if (isOfType(simulationOrFilePath, "character")) {
     simulation <- loadSimulation(simulationOrFilePath)
   }
 
-
-  pathGetterFunction <- getAllQuantityPathsIn
-  if(parameterPathsOnly){
-    pathGetterFunction <- getAllParameterPathsIn
-  }
-
-  allQuantityPaths <- pathGetterFunction(simulation)
+  # Build a vector, with no duplicated entries, of all paths corresponding to entities in `simulation` that fall under the types specified in allPaths
+  allPaths <- sapply(quantityType,function(type){quantityTypeList[[type]](simulation)}) %>% unname %>% unlist %>% unique
 
   # Initiate list to be returned as a null list.
   pathEnumList <- list()
-  for (path in allQuantityPaths) {
+  for (path in allPaths) {
     # Convert the path string to a vector of strings, each representing a branch portion.
     pathArray <- toPathArray(path)
 
