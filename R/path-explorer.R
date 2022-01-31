@@ -66,7 +66,7 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
   }
 
   # Build a vector, with no duplicated entries, of all paths corresponding to entities in `simulation` that fall under the types specified in quantityType
-  allPaths <- unique(unlist(unname(sapply(quantityType,function(type){quantityTypeList[[type]](simulation)}))))
+  allPaths <- sapply(quantityType,function(type){quantityTypeList[[type]](simulation)}) %>% unname %>% unlist %>% unique
 
   # Initiate list to be returned as a null list.
   pathEnumList <- list()
