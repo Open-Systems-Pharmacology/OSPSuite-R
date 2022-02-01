@@ -22,7 +22,6 @@ DotNetWrapper <- R6::R6Class(
       private$.ref <- ref
     }
   ),
-
   active = list(
     #' @field ref Underlying .NET reference (read-only)
     ref = function(value) {

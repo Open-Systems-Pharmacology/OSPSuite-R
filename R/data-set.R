@@ -26,7 +26,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field dataRepository The underlying DataRepository object
-
     dataRepository = function(value) {
       if (missing(value)) {
         return(private$.dataRepository)
@@ -35,7 +34,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field xDimension Dimension in which the xValues are defined
-
     xDimension = function(value) {
       if (missing(value)) {
         return(private$.xColumn$dimension)
@@ -44,7 +42,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field xUnit Unit in which the xValues are defined
-
     xUnit = function(value) {
       if (missing(value)) {
         return(private$.xColumn$displayUnit)
@@ -54,7 +51,6 @@ DataSet <- R6::R6Class(
 
     #' @field xValues Values stored in the xUnit. This field is read-only.
     #' Use `$setValues()` to change the values.
-
     xValues = function(values) {
       if (missing(values)) {
         return(private$.getColumnValues(private$.xColumn))
@@ -63,7 +59,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field yDimension Dimension in which the yValues are defined
-
     yDimension = function(value) {
       if (missing(value)) {
         return(private$.yColumn$dimension)
@@ -76,7 +71,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field yUnit Unit in which the yValues are defined
-
     yUnit = function(value) {
       if (missing(value)) {
         return(private$.yColumn$displayUnit)
@@ -86,7 +80,6 @@ DataSet <- R6::R6Class(
 
     #' @field yValues Values stored in the yUnit. This field is read-only.
     #' Use `$setValues()` to change the values.
-
     yValues = function(values) {
       if (missing(values)) {
         return(private$.getColumnValues(private$.yColumn))
@@ -100,7 +93,6 @@ DataSet <- R6::R6Class(
     #' When changing from geometric to arithmetic, the values are set to the
     #' same unit as `yErrorUnit`.
     #' In case no yError is defined, the value is `NULL` and cannot be changed
-
     yErrorType = function(value) {
       if (missing(value)) {
         if (is.null(private$.yErrorColumn)) {
@@ -118,7 +110,6 @@ DataSet <- R6::R6Class(
     #'   arithmetic error, the unit must be valid for `yDimension`. For
     #'   geometric error, the unit must be valid for `Dimensionless`.
     #'   In case no yError is defined, the value is `NULL` and cannot be changed
-
     yErrorUnit = function(value) {
       if (missing(value)) {
         # Do not have to check for NULL here becase NULL$something is NULL
@@ -135,7 +126,6 @@ DataSet <- R6::R6Class(
     #' Use `$setValues()` to change the values.
     #' In case no yError is defined, the value is `NULL` and cannot be changed.
     #' Use `$setValues()` to change the values.
-
     yErrorValues = function(values) {
       if (missing(values)) {
         if (is.null(private$.yErrorColumn)) {
@@ -148,7 +138,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field molWeight Molecular weight of the yValues in g/mol
-
     molWeight = function(value) {
       if (missing(value)) {
         molWeight <- private$.yColumn$molWeight
@@ -165,9 +154,8 @@ DataSet <- R6::R6Class(
       )
     },
 
-    #' @field LLOQ LLOQ Lower Limit Of Quantification.
+    #' @field LLOQ Lower Limit Of Quantification.
     #' Value in yUnit associated with the yValues
-
     LLOQ = function(value) {
       if (missing(value)) {
         # Value in base unit
@@ -187,7 +175,6 @@ DataSet <- R6::R6Class(
     },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
-
     metaData = function(value) {
       if (missing(value)) {
         return(private$.dataRepository$metaData)
@@ -196,15 +183,28 @@ DataSet <- R6::R6Class(
     }
   ),
   public = list(
-
     #' @description
-    #' Initialize a new instance of the class
+    #' Initialize a new instance of the class.
+    #' Either create a `DataSet` from a `DataRepository` (e.g. loaded from a PKML)
+    #' or an empty `DataSet`. In case of an empty `DataSet`, a `name` must be
+    #' provided.
+    #'
     #' @param dataRepository Instance of the `DataRepository` object to wrap.
     #' If `NULL`, an empty `DataRepository` is created.
+    #' @param name Name of the `DataSet` if created from scratch (no `dataRepository`)
+    #' provided. Ignored if `dataRepository` is not `NULL`.
     #' @return A new `DataSet` object.
-    initialize = function(dataRepository = NULL) {
+    initialize = function(dataRepository = NULL, name = NULL) {
+      if (is.null(dataRepository) && is.null(name)) {
+        stop(messages$errorDataSetNameMissing)
+      }
       private$.dataRepository <- dataRepository %||% private$.createDataRepository()
       private$.initializeCache()
+
+      # Set the name if no `dataRepository` provided
+      if (is.null(dataRepository)) {
+        self$name <- name
+      }
     },
 
     #' @description
@@ -213,7 +213,6 @@ DataSet <- R6::R6Class(
     #'
     #' @param name Name of new meta data list entry
     #' @param value Value of new meta data list entry
-
     addMetaData = function(name, value) {
       private$.dataRepository$addMetaData(name, value)
     },
@@ -222,7 +221,6 @@ DataSet <- R6::R6Class(
     #' Removes the meta data entry in the list if one is defined with this name
     #'
     #' @param name Name of meta data entry to delete
-
     removeMetaData = function(name) {
       private$.dataRepository$removeMetaData(name)
     },
@@ -233,7 +231,6 @@ DataSet <- R6::R6Class(
     #' @param xValues xValues to use
     #' @param yValues yValues to use
     #' @param yErrorValues Optional error values associated with yValues
-
     setValues = function(xValues, yValues, yErrorValues = NULL) {
       validateIsNumeric(xValues)
       validateIsNumeric(yValues)
@@ -268,7 +265,6 @@ DataSet <- R6::R6Class(
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
-
     print = function(...) {
       private$printClass()
       private$printLine("Name", self$name)
@@ -291,7 +287,8 @@ DataSet <- R6::R6Class(
     .yColumn = NULL,
     .yErrorColumn = NULL,
     .setColumnValues = function(column, values) {
-      # values are set in the display unit. We need to make sure we convert them to the base unit
+      # values are set in the display unit. We need to make sure we convert them
+      # to the base unit
       valuesInBaseUnit <- toBaseUnit(
         quantityOrDimension = column$dimension,
         values = values,

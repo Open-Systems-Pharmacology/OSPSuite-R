@@ -9,7 +9,8 @@ test_that("It can load a valid observed data file and create a DataSet object", 
 
 context("dataSetToDataFrame")
 
-dataSet <- DataSet$new()
+dataSetName <- "NewDataSet"
+dataSet <- DataSet$new(name = dataSetName)
 
 test_that("It can convert an empty data set", {
   expect_equal(
@@ -28,7 +29,7 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep("", 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
+      name = rep(dataSetName, 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
       yErrorType = rep(NA_real_, 5), yErrorUnit = rep(NA_real_, 5), molWeight = rep(NA_real_, 5), lloq = rep(NA_real_, 5)
@@ -75,7 +76,7 @@ test_that("It can convert a data set with metaData", {
 test_that("It can convert a list of data sets", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSet2 <- DataSet$new()
+  dataSet2 <- DataSet$new(name = "SecondDataSet")
   dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
   dataSet2$molWeight <- 456
   dataSet2$addMetaData("Compartment", "Plasma")
@@ -83,7 +84,7 @@ test_that("It can convert a list of data sets", {
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
     data.frame(
-      name = c(rep(dataSet$name, 5), rep("", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
+      name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
       yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
       xUnit = c(rep(dataSet$xUnit, 5), rep(dataSet2$xUnit, 3)),
