@@ -8,7 +8,7 @@
 Supports Sensitivity Analysis workflow to assess the impact of input parameters on the simulation outputs
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysis}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysis}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

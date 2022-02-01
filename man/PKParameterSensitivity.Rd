@@ -8,7 +8,7 @@
 Sensitivity of a PK Parameter for one output for a given parameter
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{PKParameterSensitivity}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{PKParameterSensitivity}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

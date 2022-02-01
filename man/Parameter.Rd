@@ -12,7 +12,7 @@ Derived from \link{Quantity}, please see base class documentation.
 }
 \keyword{Parameter}
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Parameter}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Parameter}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

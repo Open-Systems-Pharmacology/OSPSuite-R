@@ -8,7 +8,7 @@
 List of individuals used in a population simulation
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
