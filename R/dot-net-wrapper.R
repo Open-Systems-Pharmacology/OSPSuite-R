@@ -1,7 +1,6 @@
 #' @title DotNetRwapper
 #' @docType class
 #' @description  Wrapper class for .net Object
-#' @field ref The actual .NET object instanced being wrapped
 #'
 #' @section Methods:
 #' \describe{
