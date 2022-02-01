@@ -36,7 +36,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SensitivityAnalysisResults` object.
     initialize = function(ref, simulation) {
-      ospsuite.utils::validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, Simulation)
       private$.simulation <- simulation
       super$initialize(ref)
     },
@@ -49,9 +49,9 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     allPKParameterSensitivitiesFor = function(pkParameterName,
                                               outputPath,
                                               totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold) {
-      ospsuite.utils::validateIsString(pkParameterName)
-      ospsuite.utils::validateIsString(outputPath)
-      ospsuite.utils::validateIsNumeric(totalSensitivityThreshold)
+      validateIsString(pkParameterName)
+      validateIsString(outputPath)
+      validateIsNumeric(totalSensitivityThreshold)
       pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
       toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
@@ -62,7 +62,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @param parameterName Name of the sensitivity parameter for which the sensitivity should be retrieved
     pkParameterSensitivityValueFor = function(pkParameterName, outputPath, parameterName) {
       value <- rClr::clrCall(self$ref, "PKParameterSensitivityValueFor", pkParameterName, outputPath, parameterName)
-      value[is.nan(value)] <- NA
+      value[is.nan(value)] <- NA_real_
       return(value)
     },
     #' @description

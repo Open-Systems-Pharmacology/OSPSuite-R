@@ -24,7 +24,7 @@ SimulationBatch <- R6::R6Class(
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
     initialize = function(ref, simulation) {
-      ospsuite.utils::validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, Simulation)
       super$initialize(ref)
       private$.simulation <- simulation
     },
@@ -61,8 +61,8 @@ SimulationBatch <- R6::R6Class(
     #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
     #' }
     addRunValues = function(parameterValues = NULL, initialValues = NULL) {
-      ospsuite.utils::validateIsNumeric(parameterValues, nullAllowed = TRUE)
-      ospsuite.utils::validateIsNumeric(initialValues, nullAllowed = TRUE)
+      validateIsNumeric(parameterValues, nullAllowed = TRUE)
+      validateIsNumeric(initialValues, nullAllowed = TRUE)
       # Only one values set is allowed - no lists of values
       if (is.list(parameterValues) || is.list(initialValues)) {
         stop(messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))

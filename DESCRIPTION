@@ -19,12 +19,13 @@ Depends:
     R (>= 3.6),
     rClr (>= 0.9.1)
 Imports: 
-    dplyr,
+    dplyr (>= 1.0.0),
     ospsuite.utils,
     purrr,
     R6,
     readr,
-    stringr
+    stringr,
+    tidyr
 Suggests: 
     knitr,
     rmarkdown,
@@ -43,6 +44,7 @@ Collate:
     'create-individual.R'
     'create-population.R'
     'data-column.R'
+    'data-combined.R'
     'data-importer-configuration.R'
     'data-repository.R'
     'data-set.R'
@@ -84,7 +86,6 @@ Collate:
     'simulation-run-options.R'
     'simulation-settings.R'
     'simulation.R'
-    'simulationResultsToDataFrame.R'
     'snapshot-parameter.R'
     'solver-settings.R'
     'utilities-path.R'
@@ -92,6 +93,7 @@ Collate:
     'table-formula.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
+    'utilities-data-combined.R'
     'utilities-data-repository.R'
     'utilities-data-set.R'
     'utilities-dot-net.R'

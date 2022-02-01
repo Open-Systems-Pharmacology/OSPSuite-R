@@ -1,9 +1,9 @@
 
 #' Standard containers typically available in a PBPK simulation
 #'
-#' 
+#'
 #' @export
-StandardContainer <- ospsuite.utils::enum(c(
+StandardContainer <- enum(c(
   Organism = "Organism",
   Applications = "Applications",
   Neighborhoods = "Neighborhoods",
@@ -12,10 +12,10 @@ StandardContainer <- ospsuite.utils::enum(c(
 
 #' Standard parameter paths typically available in a PBPK simulation
 #'
-#' 
+#'
 #' @include utilities-path.R
 #' @export
-StandardPath <- ospsuite.utils::enum(c(
+StandardPath <- enum(c(
   Age = toPathString(StandardContainer$Organism, "Age"),
   Height = toPathString(StandardContainer$Organism, "Height"),
   Weight = toPathString(StandardContainer$Organism, "Weight"),
@@ -28,9 +28,9 @@ StandardPath <- ospsuite.utils::enum(c(
 
 #' Standard molecule parameter names typically available in an endogenous molecule (enzyme, transporter etc...) coming from PK-Sim
 #'
-#' 
+#'
 #' @export
-MoleculeParameter <- ospsuite.utils::enum(c(
+MoleculeParameter <- enum(c(
   ReferenceConcentration = "Reference concentration",
   THalfLiver = "t1/2 (liver)",
   THalfIntestine = "t1/2 (intestine)",

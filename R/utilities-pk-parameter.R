@@ -28,10 +28,10 @@
 #' myCMax$endApplicationIndex <- 5
 #' @export
 addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = NULL, displayUnit = NULL) {
-  ospsuite.utils::validateIsString(name)
+  validateIsString(name)
   validateEnumValue(standardPKParameter, StandardPKParameter)
-  ospsuite.utils::validateIsString(displayName, nullAllowed = TRUE)
-  ospsuite.utils::validateIsString(displayUnit, nullAllowed = TRUE)
+  validateIsString(displayName, nullAllowed = TRUE)
+  validateIsString(displayUnit, nullAllowed = TRUE)
 
   displayUnit <- encodeUnit(displayUnit %||% "")
   displayName <- enc2utf8(displayName %||% "")

@@ -1,9 +1,9 @@
 
 #' Default species defined in PK-Sim
 #'
-#' 
+#'
 #' @export
-Species <- ospsuite.utils::enum(c(
+Species <- enum(c(
   "Beagle",
   "Dog",
   "Human",
@@ -16,9 +16,9 @@ Species <- ospsuite.utils::enum(c(
 
 #' Default human population defined in PK-Sim
 #'
-#' 
+#'
 #' @export
-HumanPopulation <- ospsuite.utils::enum(c(
+HumanPopulation <- enum(c(
   "Asian_Tanaka_1996",
   "BlackAmerican_NHANES_1997",
   "European_ICRP_2002",
@@ -31,9 +31,9 @@ HumanPopulation <- ospsuite.utils::enum(c(
 
 #' Default genders  defined in PK-Sim
 #'
-#' 
+#'
 #' @export
-Gender <- ospsuite.utils::enum(c(
+Gender <- enum(c(
   Female = "FEMALE",
   Male = "MALE",
   Unknown = "UNKNOWN"
@@ -41,9 +41,9 @@ Gender <- ospsuite.utils::enum(c(
 
 #' List of ontogeny supported in PK-Sim
 #'
-#' 
+#'
 #' @export
-StandardOntogeny <- ospsuite.utils::enum(c(
+StandardOntogeny <- enum(c(
   "CYP1A2",
   "CYP2C18",
   "CYP2C19",

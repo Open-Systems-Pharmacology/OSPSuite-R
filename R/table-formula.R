@@ -34,9 +34,9 @@ TableFormula <- R6::R6Class(
     addPoints = function(xValues, yValues) {
       xValues <- c(xValues)
       yValues <- c(yValues)
-      ospsuite.utils::validateIsNumeric(xValues)
-      ospsuite.utils::validateIsNumeric(yValues)
-      ospsuite.utils::validateIsSameLength(xValues, yValues)
+      validateIsNumeric(xValues)
+      validateIsNumeric(yValues)
+      validateIsSameLength(xValues, yValues)
       for (i in seq_along(xValues)) {
         rClr::clrCall(self$ref, "AddPoint", xValues[i], yValues[i])
       }

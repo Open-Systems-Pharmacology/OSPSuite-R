@@ -1,7 +1,7 @@
 # Returns a consistent base-R flavored path
 .homogenizePath <- function(winPath) {
   if (is.na(winPath) || !nzchar(winPath)) {
-    return(NA)
+    return(NA_character_)
   }
 
   # get consistency (unix separators) with R-base

@@ -4,21 +4,22 @@ test_that("It can load a valid observed data file and create a DataSet object", 
   file <- getTestDataFilePath("obs_data.pkml")
   dataSet <- loadDataSetFromPKML(file)
 
-  expect_true(ospsuite.utils::isOfType(dataSet, DataSet))
+  expect_true(isOfType(dataSet, DataSet))
 })
 
 context("dataSetToDataFrame")
 
-dataSet <- DataSet$new()
+dataSetName <- "NewDataSet"
+dataSet <- DataSet$new(name = dataSetName)
 
 test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = character(0), xValues = logical(0), yValues = logical(0), yErrorValues = logical(0),
+      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
       xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = logical(0), yErrorUnit = logical(0), molWeight = logical(0),
-      lloq = logical(0)
+      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
+      lloq = numeric(0)
     )
   )
 })
@@ -28,10 +29,10 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep("", 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA, 5),
+      name = rep(dataSetName, 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA, 5), yErrorUnit = rep(NA, 5), molWeight = rep(NA, 5), lloq = rep(NA, 5)
+      yErrorType = rep(NA_real_, 5), yErrorUnit = rep(NA_real_, 5), molWeight = rep(NA_real_, 5), lloq = rep(NA_real_, 5)
     )
   )
 })
@@ -75,7 +76,7 @@ test_that("It can convert a data set with metaData", {
 test_that("It can convert a list of data sets", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSet2 <- DataSet$new()
+  dataSet2 <- DataSet$new(name = "SecondDataSet")
   dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
   dataSet2$molWeight <- 456
   dataSet2$addMetaData("Compartment", "Plasma")
@@ -83,7 +84,7 @@ test_that("It can convert a list of data sets", {
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
     data.frame(
-      name = c(rep(dataSet$name, 5), rep("", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
+      name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
       yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
       xUnit = c(rep(dataSet$xUnit, 5), rep(dataSet2$xUnit, 3)),
@@ -165,7 +166,7 @@ test_that("it can load when loading from file with one sheet without
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
-  expect_true(ospsuite.utils::isOfType(dataSets, DataSet))
+  expect_true(isOfType(dataSets, DataSet))
   expect_equal(length(dataSets), 4)
 })
 

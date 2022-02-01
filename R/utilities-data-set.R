@@ -8,7 +8,7 @@
     }
 
     if (len == 0) {
-      rep(NA, length(dataSet$xValues))
+      rep(NA_real_, length(dataSet$xValues))
     } else if (len == 1) {
       if (is.null(metaDataName)) {
         rep(dataSet[[property]], length(dataSet$xValues))
@@ -49,13 +49,13 @@ loadDataSetFromPKML <- function(filePath) {
 #'
 #' @examples
 #' \dontrun{
-#' dataSet <- DataSet$new()
+#' dataSet <- DataSet$new(name = "NewDataSet")
 #' dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
 saveDataSetToPKML <- function(dataSet, filePath) {
-  ospsuite.utils::validateIsString(filePath)
-  ospsuite.utils::validateIsOfType(dataSet, DataSet)
+  validateIsString(filePath)
+  validateIsOfType(dataSet, DataSet)
   filePath <- expandPath(filePath)
   dataRepositoryTask <- getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
@@ -76,7 +76,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
-  ospsuite.utils::validateIsOfType(dataSets, DataSet)
+  validateIsOfType(dataSets, DataSet)
 
   # styler: off
   name         <- .makeDataFrameColumn(dataSets, "name")
@@ -141,16 +141,16 @@ dataSetToDataFrame <- function(dataSets) {
 #' )
 #' }
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
-  ospsuite.utils::validateIsString(xlsFilePath)
-  ospsuite.utils::validateIsOfType(importerConfiguration, DataImporterConfiguration)
-  ospsuite.utils::validateIsLogical(importAllSheets)
+  validateIsString(xlsFilePath)
+  validateIsOfType(importerConfiguration, DataImporterConfiguration)
+  validateIsLogical(importAllSheets)
 
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
-    DataSet$new(repository)
+    DataSet$new(dataRepository = repository)
   })
   names(dataSets) <- lapply(dataSets, function(x) {
     x$name

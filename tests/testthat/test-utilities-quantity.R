@@ -26,6 +26,19 @@ test_that("It can retrieve all quantity paths defined in a container", {
 })
 
 
+context("getAllObserverPathsIn")
+
+test_that("It can retrieve all quantity paths defined in the simulation", {
+  paths <- getAllObserverPathsIn(sim)
+  expect_gt(length(paths), 0)
+})
+
+test_that("It can retrieve all quantity paths defined in a container", {
+  paths <- getAllObserverPathsIn(sim$root)
+  expect_gt(length(paths), 0)
+})
+
+
 context("getQuantity")
 
 test_that("It can retrieve a single quantity by path if it exists", {

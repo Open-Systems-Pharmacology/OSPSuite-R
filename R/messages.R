@@ -92,7 +92,12 @@ messages <- list(
   errorMultipleMetaDataEntries = function(optionalMessage = NULL) {
     paste("Can only add a single meta data entry at once", optionalMessage)
   },
-  errorMultipleSimulationsCannotBeUsedWithPopulation = "Multiple simulations cannot be run concurrently with a population."
+  errorOnlyOneSupported = function(optionalMessage = NULL) {
+    paste("Can only add a single instance of this object", optionalMessage)
+  },
+  errorMultipleSimulationsCannotBeUsedWithPopulation = "Multiple simulations cannot be run concurrently with a population.",
+  errorDataSetNameMissing = "Argument `name` is missing, must be provided when
+  creating an empty `DataSet`!"
 )
 
 formatNumerics <- function(numerics, digits = ospsuiteEnv$formatNumericsDigits,

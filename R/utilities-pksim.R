@@ -9,7 +9,7 @@
 #' @export
 initPKSim <- function(pksimFolderPath = NULL) {
 
-  # pksimFolderPath <- "C:/projects/PK-Sim/src/PKSim/bin/Debug/net472"
+  # pksimFolderPath <- "C:/dev/PK-Sim/src/PKSim/bin/Debug/net472"
 
   if (ospsuiteEnv$isPKSimLoaded) {
     return(invisible())
@@ -62,7 +62,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     fsep = "\\"
   )
 
-  reg.entry <- NA
+  reg.entry <- NA_character_
   try(reg.entry <- utils::readRegistry(reg.path, hive = "HLM", maxdepth = 1, view = "64-bit"),
     silent = TRUE
   )
@@ -71,7 +71,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     return(.homogenizePath(reg.entry$InstallDir))
   }
 
-  return(NA)
+  return(NA_character_)
 }
 
 #' Tries to find the installation path for a specific version of PK-Sim via the filesystem.
@@ -104,7 +104,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
   }
 
   if (!nzchar(base.search.folder)) {
-    return(NA)
+    return(NA_character_)
   }
 
   # First guess: OSP/PK-Sim folder
@@ -137,7 +137,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     return(.homogenizePath(full.match[1]))
   }
 
-  return(NA)
+  return(NA_character_)
 }
 
 #' Tries to find the installation path for a specific version of PK-Sim.
@@ -171,5 +171,5 @@ initPKSim <- function(pksimFolderPath = NULL) {
     return(pksim.path)
   }
 
-  return(NA)
+  return(NA_character_)
 }

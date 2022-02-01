@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImporterConfiguration fileName="D:\Work\OSPS\Repos\esqlabsR\tests\data\CompiledDataSet.xlsx" namingConventions="{Sheet}.{Group Id}" version="15">
+  <Parameters>
+    <MappingDataFormatParameter columnName="Time [min]">
+      <MappedColumn name="Time" dimension="Time">
+        <Unit selectedUnit="min" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
+    <MappingDataFormatParameter columnName="Error [%]">
+      <MappedColumn errorStdDev="Arithmetic Standard Deviation" name="Error" dimension="Fraction">
+        <Unit selectedUnit="%" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
+    <MetaDataFormatParameter columnName="Organ" metaDataId="Organ" isColumn="1" />
+    <MetaDataFormatParameter columnName="Compartment" metaDataId="Compartment" isColumn="1" />
+    <MetaDataFormatParameter columnName="Molecule" metaDataId="Molecule" isColumn="1" />
+    <MappingDataFormatParameter columnName="Fraction [%]">
+      <MappedColumn name="Measurement" dimension="Fraction">
+        <Unit selectedUnit="%" />
+      </MappedColumn>
+    </MappingDataFormatParameter>
+    <GroupByDataFormatParameter columnName="Group Id" />
+  </Parameters>
+  <LoadedSheets>
+    <LoadedSheetsChild>Stevens_2012_placebo</LoadedSheetsChild>
+  </LoadedSheets>
+</ImporterConfiguration>

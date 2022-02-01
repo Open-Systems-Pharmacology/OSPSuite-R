@@ -62,7 +62,7 @@ DataRepository <- R6::R6Class(
     #' Adds a column to the data repository
     #' @param column Column to add
     addColumn = function(column) {
-      ospsuite.utils::validateIsOfType(column, DataColumn)
+      validateIsOfType(column, DataColumn)
       rClr::clrCall(self$ref, "Add", column$ref)
       # we need to reset the cache when adding a new column
       private$.columns <- NULL
@@ -91,8 +91,8 @@ DataRepository <- R6::R6Class(
       if (length(name) != 1) {
         stop(messages$errorMultipleMetaDataEntries())
       }
-      ospsuite.utils::validateIsString(name)
-      ospsuite.utils::validateIsString(value)
+      validateIsString(name)
+      validateIsString(value)
       dataRepositoryTask <- getNetTask("DataRepositoryTask")
       rClr::clrCall(dataRepositoryTask, "AddMetaData", self$ref, name, value)
       # we need to reset the cache when adding a new meta data
@@ -106,7 +106,7 @@ DataRepository <- R6::R6Class(
       if (length(name) != 1) {
         stop(messages$errorMultipleMetaDataEntries())
       }
-      ospsuite.utils::validateIsString(name)
+      validateIsString(name)
       dataRepositoryTask <- getNetTask("DataRepositoryTask")
       rClr::clrCall(dataRepositoryTask, "RemoveMetaData", self$ref, name)
       # we need to reset the cache when adding a new meta data

@@ -14,7 +14,7 @@
 #'
 #' @export
 createIndividual <- function(individualCharacteristics) {
-  ospsuite.utils::validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   createIndividualResults <- rClr::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
@@ -37,7 +37,7 @@ createIndividual <- function(individualCharacteristics) {
 #'
 #' @export
 createDistributions <- function(individualCharacteristics) {
-  ospsuite.utils::validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   distributedParameters <- rClr::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
@@ -94,19 +94,19 @@ createIndividualCharacteristics <- function(species,
   # or should be initialized automatically
   initPKSim()
 
-  ospsuite.utils::validateIsString(species)
-  ospsuite.utils::validateIsString(population, nullAllowed = TRUE)
-  ospsuite.utils::validateIsString(gender, nullAllowed = TRUE)
-  ospsuite.utils::validateIsNumeric(weight, nullAllowed = TRUE)
-  ospsuite.utils::validateIsString(weightUnit)
-  ospsuite.utils::validateIsNumeric(height, nullAllowed = TRUE)
-  ospsuite.utils::validateIsString(heightUnit)
-  ospsuite.utils::validateIsNumeric(age, nullAllowed = TRUE)
-  ospsuite.utils::validateIsString(ageUnit)
-  ospsuite.utils::validateIsNumeric(gestationalAge)
-  ospsuite.utils::validateIsString(gestationalAgeUnit)
-  ospsuite.utils::validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
-  ospsuite.utils::validateIsNumeric(seed, nullAllowed = TRUE)
+  validateIsString(species)
+  validateIsString(population, nullAllowed = TRUE)
+  validateIsString(gender, nullAllowed = TRUE)
+  validateIsNumeric(weight, nullAllowed = TRUE)
+  validateIsString(weightUnit)
+  validateIsNumeric(height, nullAllowed = TRUE)
+  validateIsString(heightUnit)
+  validateIsNumeric(age, nullAllowed = TRUE)
+  validateIsString(ageUnit)
+  validateIsNumeric(gestationalAge)
+  validateIsString(gestationalAgeUnit)
+  validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  validateIsNumeric(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)
   individualCharacteristics <- IndividualCharacteristics$new()

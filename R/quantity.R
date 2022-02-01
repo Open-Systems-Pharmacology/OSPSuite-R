@@ -125,8 +125,8 @@ Quantity <- R6::R6Class(
     #' @param value Value to set. If unit is null, we assume that the value is in base unit
     #' @param unit Optional unit in which the value is given.
     setValue = function(value, unit = NULL) {
-      ospsuite.utils::validateIsNumeric(value)
-      ospsuite.utils::validateIsString(unit, nullAllowed = TRUE)
+      validateIsNumeric(value)
+      validateIsString(unit, nullAllowed = TRUE)
       if (!is.null(unit)) {
         unit <- encodeUnit(unit)
         validateHasUnit(self, unit)
@@ -139,7 +139,7 @@ Quantity <- R6::R6Class(
     #' For the list of supported units, use `allUnits`
     #' @param unit Unit to check
     hasUnit = function(unit) {
-      ospsuite.utils::validateIsString(unit)
+      validateIsString(unit)
       any(self$allUnits == unit)
     },
     #' @description

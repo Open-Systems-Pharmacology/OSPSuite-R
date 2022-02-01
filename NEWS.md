@@ -2,9 +2,13 @@
 
 ## New features
 
+* Adds new `DataCombined` class that combines observed data (`DataSet`) and simulated data (`SimulationResults`) into a single object. Especially important is the `$toDataFrame()` method of this object that returns a dataframe containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.
+
 * Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
 
 ## Breaking changes
+
+* The consturctor for `DataSet` objects requires a `name` argument.
 
 * All `validate*()` helper functions and `"%||%"` infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <https://www.open-systems-pharmacology.org/OSPSuite.RUtils/>.
 

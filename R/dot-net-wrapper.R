@@ -14,16 +14,22 @@ DotNetWrapper <- R6::R6Class(
   inherit = Printable,
   cloneable = FALSE,
   public = list(
-    ref = NULL,
     #' @description
     #' Initialize a new instance of the class
     #' @param ref Instance of the .NET object to wrap.
     #' @return A new `DotNetWrapper` object.
     initialize = function(ref) {
-      self$ref <- ref
+      private$.ref <- ref
+    }
+  ),
+  active = list(
+    #' @field ref Underlying .NET reference (read-only)
+    ref = function(value) {
+      private$readOnlyProperty("ref", value, private$.ref)
     }
   ),
   private = list(
+    .ref = NULL,
     wrapProperty = function(propertyName, value, shouldSetNull = TRUE) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
@@ -32,8 +38,8 @@ DotNetWrapper <- R6::R6Class(
         if (is.null(value) && !shouldSetNull) {
           return()
         }
-        if (ospsuite.utils::isOfType(type = "character", object = value)) {
-          # ospsuite.utils::isOfType returns TRUE for empty `object` and enc2utf8(value) fails
+        if (isOfType(type = "character", object = value)) {
+          # isOfType returns TRUE for empty `object` and enc2utf8(value) fails
           if (length(value) > 0) {
             value <- enc2utf8(value)
           }
@@ -116,7 +122,7 @@ DotNetWrapper <- R6::R6Class(
     },
     finalize = function() {
       # maybe dispose should be called to if available.
-      self$ref <- NULL
+      private$.ref <- NULL
     }
   )
 )
