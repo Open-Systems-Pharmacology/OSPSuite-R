@@ -8,7 +8,7 @@
 List of quantities selected as output for a given simulation
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{QuantitySelection}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{QuantitySelection}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

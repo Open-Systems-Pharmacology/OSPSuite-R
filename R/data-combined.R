@@ -45,7 +45,7 @@
 
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
-  inherit = Printable,
+  inherit = ospsuite.utils::Printable,
 
   # public fields and methods ------------------------------------
 

@@ -8,7 +8,7 @@
 pK-Parameter values for all individuals of a simulation (1 or more) calculated for a specific quantity with path \code{quantityPath}
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{QuantityPKParameter}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{QuantityPKParameter}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

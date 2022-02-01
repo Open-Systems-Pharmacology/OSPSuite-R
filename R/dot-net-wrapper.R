@@ -11,7 +11,7 @@
 #' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
-  inherit = Printable,
+  inherit = ospsuite.utils::Printable,
   cloneable = FALSE,
   public = list(
     #' @description
