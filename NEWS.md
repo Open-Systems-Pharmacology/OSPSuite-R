@@ -8,7 +8,7 @@
 
 ## Breaking changes
 
-* The consturctor for `DatSet` objects requires a `name` argument.
+* The consturctor for `DataSet` objects requires a `name` argument.
 
 * All `validate*()` helper functions and `"%||%"` infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <https://www.open-systems-pharmacology.org/OSPSuite.RUtils/>.
 
