@@ -87,15 +87,14 @@ DataCombined <- R6::R6Class(
       #
       # for `NULL` elements in a list, the original dataset names will be used
       #
-      # to get these names, go inside each element of the list and extract
-      # (`purrr::pluck()`) the name from the object itself and use them instead
-      # and simplify to a character vector (using `purrr::map_chr()`)
+      # to get these names, go inside each element of the list and extract the
+      # name (using `purrr::pluck()`) from the object itself and use them
+      # instead and simplify to a character vector (using `purrr::map_chr()`)
       if (!is.null(names) && is.list(dataSets)) {
         names <- ifelse(is.na(names), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), names)
       }
 
-      # Update private fields for the new setter call
-
+      # update private fields for the new setter call
       private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, names, groups))
       private$.dataCombined <- private$.extractXYData(private$.dataCombined)
       private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
@@ -108,18 +107,22 @@ DataCombined <- R6::R6Class(
       invisible(self)
     },
 
+    # TODO: if and when this is supported by `{roxygen2}`, inherit parameters
+    # from `ospsuite::getOutputValues()` to avoid repetition.
+
     #' @param simulationResults Object of type `SimulationResults` produced by
     #'   calling `runSimulation` on a `Simulation` object.
     #' @param quantitiesOrPaths Quantity instances (element or list) typically
     #'   retrieved using `getAllQuantitiesMatching` or quantity path (element or
     #'   list of strings) for which the results are to be returned. (optional)
-    #'   When providing the paths, only absolute full paths are supported (i.e., no
-    #'   matching with '*' possible). If `quantitiesOrPaths` is `NULL` (default
-    #'   value), returns the results for all output defined in the results.
+    #'   When providing the paths, only absolute full paths are supported (i.e.,
+    #'   no matching with '*' possible). If `quantitiesOrPaths` is `NULL`
+    #'   (default value), returns the results for all output defined in the
+    #'   results.
     #' @param individualIds Numeric IDs of individuals for which the results
     #'   should be extracted. By default, all individuals from the results are
-    #'   considered. If the individual with the provided ID is not found, the ID is
-    #'   ignored.
+    #'   considered. If the individual with the provided ID is not found, the ID
+    #'   is ignored.
     #' @param population Population used to calculate the `simulationResults`
     #'   (optional). This is used only to add the population covariates to the
     #'   resulting dataframe.
@@ -135,20 +138,21 @@ DataCombined <- R6::R6Class(
                                     individualIds = NULL,
                                     names = NULL,
                                     groups = NULL) {
-      # list or a vector of `SimulationResults` class instances is not allowed
+      # A list or a vector of `SimulationResults` class instances is not allowed
       #
-      # if we were to allow this, `quantitiesOrPaths`, `population`, and
+      # If we were to allow this, `quantitiesOrPaths`, `population`, and
       # `individualIds ` could be different for every `SimulationResult`, and
       # those arguments should also be lists (i.e., lists of lists), which makes
-      # for a complicated API
+      # for a complicated API.
       #
       # Additionally, if two different `SimulationResults` are added using the
       # same paths, the user **must** provide `names`, otherwise the data will
-      # be overwritten (as the default names are the paths)
-
-      # `is.vector()` will cover both `c(simResults1, simResults2, ...)` and
-      # `list(simResults1, simResults2, ...)` possibilities
-      if (is.vector(simulationResults)) {
+      # be overwritten (as the default names are the paths).
+      #
+      # `is.vector()` is not needed since `simResults` are lists, and so both
+      # `c(simResults1, simResults2, ...)` and `as.list(simResults1,
+      # simResults2, ...)` will return the same result
+      if (is.list(simulationResults)) {
         stop(messages$errorOnlyOneSupported())
       }
 
@@ -165,7 +169,8 @@ DataCombined <- R6::R6Class(
       #
       # for `NULL` elements in a list, which will be converted to `NA`s by
       # `validateVectorArgs()`, the original dataset names will be used, which
-      # are nothing but path names for `SimulationResults` objects
+      # are nothing but path names for `SimulationResults` objects (i.e.
+      # `simulationResults$allQuantityPaths`)
       if (!is.null(names)) {
         names <- ifelse(is.na(names), pathsNames, names)
       }
@@ -390,39 +395,45 @@ DataCombined <- R6::R6Class(
 
     # Add a new group column
     #
-    # If no grouping is specified for a dataset, the group will be `NA`.
+    # If no grouping is specified for a dataset, the value for `group` column
+    # will be `NA`.
     #
-    # Looking ahead at the bridge with the {tlf} package, while visualizing
+    # Looking ahead to the bridge with the `{tlf}` package, while visualizing
     # datasets that don't belong to any grouping, the datset's own name can
-    # instead be used as a dummy grouping. But this will be taken care of in the
-    # plotting function itself. This is why this function doesn't replace `NA`s
-    # in the grouping column with dataset names.
+    # instead be used as a dummy grouping variable. But this will be taken care
+    # of in the plotting function itself.
+    #
+    # This is why this function doesn't replace `NA`s in the grouping column
+    # with dataset names.
     .addGroupCol = function(data, groups = NULL) {
       if (is.null(groups)) {
-        data <- data %>% dplyr::mutate(group = NA_character_)
-      } else {
-        data <- data %>%
+        return(data %>% dplyr::mutate(group = NA_character_))
+      }
+
+      # Nest the dataset by its unique identifier, which is `name`, and then
+      # assign new `groups` vector to the new `group` column, and then
+      # unnest the list column.
+      #
+      # Note that `group` column is based on lexical order of quantity paths
+      data %>%
           tidyr::nest(data = -name) %>%
           dplyr::mutate(group = groups) %>%
           tidyr::unnest(cols = c(data))
-      }
 
-      return(data)
     },
 
-    # add a new column with alternate names
-    #
-    # first group the dataset by its unique identifier, which is name, and then
-    # nest the rest of the dataframe in a list column, and then
-    # ungroup the dataframe as mutating column is not going to be by group, and then
-    # assign new `names` vector to the existing `name` column, and then
-    # unnest the list column
+    # Add a new column with alternate names
     .renameDatasets = function(data, names = NULL) {
       # return early if there is no data
       if (is.null(names)) {
         return(data)
       }
 
+      # Nest the dataset by its unique identifier, which is `name`, and then
+      # assign new `names` vector to the existing `name` column, and then
+      # unnest the list column.
+      #
+      # Note that `name` column is based on lexical order of names.
       data %>%
         tidyr::nest(data = -name) %>%
         dplyr::mutate(name = names) %>%
@@ -592,7 +603,7 @@ DataCombined <- R6::R6Class(
       }
 
       # having a consistent column order
-      data <- data %>%
+      data %>%
         dplyr::select(
           # all identifying columns
           name,
@@ -621,9 +632,6 @@ DataCombined <- R6::R6Class(
         ) %>%
         # arrange data (alphabetically) by dataset name
         dplyr::arrange(name)
-
-      # return the cleaned dataframe
-      return(data)
     },
 
     # private fields ----------------------------------------

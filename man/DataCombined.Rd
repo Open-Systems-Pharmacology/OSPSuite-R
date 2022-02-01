@@ -144,9 +144,10 @@ calling \code{runSimulation} on a \code{Simulation} object.}
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
 list of strings) for which the results are to be returned. (optional)
-When providing the paths, only absolute full paths are supported (i.e., no
-matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL} (default
-value), returns the results for all output defined in the results.}
+When providing the paths, only absolute full paths are supported (i.e.,
+no matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL}
+(default value), returns the results for all output defined in the
+results.}
 
 \item{\code{population}}{Population used to calculate the \code{simulationResults}
 (optional). This is used only to add the population covariates to the
@@ -154,8 +155,8 @@ resulting dataframe.}
 
 \item{\code{individualIds}}{Numeric IDs of individuals for which the results
 should be extracted. By default, all individuals from the results are
-considered. If the individual with the provided ID is not found, the ID is
-ignored.}
+considered. If the individual with the provided ID is not found, the ID
+is ignored.}
 
 \item{\code{names}}{A string or a list of string. This argument will be encountered
 across different methods:
