@@ -21,8 +21,6 @@ Wrapper class for .net Object
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{ref}}{The actual .NET object instanced being wrapped}
-
 \item{\code{ref}}{Underlying .NET reference (read-only)}
 }
 \if{html}{\out{</div>}}
