@@ -78,7 +78,7 @@ values were specified by the user for each dataset.}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, newNames = NULL, groups = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -87,23 +87,9 @@ Adds observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 class.}
 
-\item{\code{names}}{A string or a list of string. This argument will be encountered
-across different methods:
-\itemize{
-\item \verb{$setDataTransformations()}: In the context of this method, a list of names
-specifying which observed datasets and/or paths in simulated dataset to
-transform with the specified transformations. Default is \code{NULL}, i.e., the
-transformations, if any specified, will be applied to all rows of the
-dataframe.
-\item \verb{$addSimulationResults()}: In the context of this method, a list of strings
-assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object. Note that the datasets whose names you wish to
-not change should be specified as \code{NULL} in the list.
-\item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} class. Note
-that the datasets whose names you wish to not change should be specified as
-\code{NULL} in the list.
-}}
+\item{\code{newNames}}{A string or a list of strings  assigning new names to the
+list of instances of the \code{DataSet} class. Note that the datasets whose
+names you wish to not change should be specified as \code{NULL} in the list.}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
 group. If an entry within the list is \code{NULL}, the corresponding data set is
@@ -130,7 +116,7 @@ Add simulated data using instance of \code{SimulationResults} class.
   quantitiesOrPaths = NULL,
   population = NULL,
   individualIds = NULL,
-  names = NULL,
+  newNames = NULL,
   groups = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -158,23 +144,10 @@ should be extracted. By default, all individuals from the results are
 considered. If the individual with the provided ID is not found, the ID
 is ignored.}
 
-\item{\code{names}}{A string or a list of string. This argument will be encountered
-across different methods:
-\itemize{
-\item \verb{$setDataTransformations()}: In the context of this method, a list of names
-specifying which observed datasets and/or paths in simulated dataset to
-transform with the specified transformations. Default is \code{NULL}, i.e., the
-transformations, if any specified, will be applied to all rows of the
-dataframe.
-\item \verb{$addSimulationResults()}: In the context of this method, a list of strings
-assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object. Note that the datasets whose names you wish to
-not change should be specified as \code{NULL} in the list.
-\item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} class. Note
-that the datasets whose names you wish to not change should be specified as
-\code{NULL} in the list.
-}}
+\item{\code{newNames}}{A string or a list of strings assigning new names to the
+quantities or paths present in the entered \code{SimulationResults} object.
+Note that the datasets whose names you wish to not change should be
+specified as \code{NULL} in the list.}
 
 \item{\code{groups}}{A string or a list of strings assigning the data set to a
 group. If an entry within the list is \code{NULL}, the corresponding data set is
@@ -197,7 +170,7 @@ output will be all \code{NA}.}
 Transform raw data with required offsets and scale factors.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTransformations(
-  names = NULL,
+  forNames = NULL,
   xOffsets = 0,
   yOffsets = 0,
   xScaleFactors = 1,
@@ -208,23 +181,10 @@ Transform raw data with required offsets and scale factors.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{names}}{A string or a list of string. This argument will be encountered
-across different methods:
-\itemize{
-\item \verb{$setDataTransformations()}: In the context of this method, a list of names
-specifying which observed datasets and/or paths in simulated dataset to
-transform with the specified transformations. Default is \code{NULL}, i.e., the
-transformations, if any specified, will be applied to all rows of the
-dataframe.
-\item \verb{$addSimulationResults()}: In the context of this method, a list of strings
-assigning new names to the quantities or paths present in the entered
-\code{SimulationResults} object. Note that the datasets whose names you wish to
-not change should be specified as \code{NULL} in the list.
-\item \verb{$addDataSets()}: In the context of this method, a list of strings
-assigning new names to the list of instances of the \code{DataSet} class. Note
-that the datasets whose names you wish to not change should be specified as
-\code{NULL} in the list.
-}}
+\item{\code{forNames}}{A list of names specifying which observed datasets and/or
+paths in simulated dataset to transform with the specified
+transformations. Default is \code{NULL}, i.e., the transformations, if any
+specified, will be applied to all rows of the dataframe.}
 
 \item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a single
 numeric value or a list of numeric quantities specifying offsets and

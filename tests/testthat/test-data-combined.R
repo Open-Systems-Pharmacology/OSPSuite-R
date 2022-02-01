@@ -24,9 +24,6 @@ dataSet2 <- loadDataSetsFromExcel(
 # empty initialization ----------------------------
 
 test_that("dataCombined - initialization", {
-  # check class generator
-  expect_true(R6::is.R6Class(DataCombined))
-
   # initialize empty object
   myCombDat <- DataCombined$new()
 
@@ -131,7 +128,7 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    names = c("x", NA_character_, "y"),
+    newNames = c("x", NA_character_, "y"),
     groups = c("a", NA_character_, "b")
   )
 
@@ -187,9 +184,9 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    names = list("x", "y", "z")
+    newNames = list("x", "y", "z")
   )
-  myCombDat$addDataSets(dataSet, names = list("a", NULL, "b", NULL, "c", NULL))
+  myCombDat$addDataSets(dataSet, newNames = list("a", NULL, "b", NULL, "c", NULL))
 
   # these should already be set
   expect_equal(
@@ -277,7 +274,7 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   myCombDat$addSimulationResults(
     simResults,
     quantitiesOrPaths = c("Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"),
-    names = list("m")
+    newNames = list("m")
   )
   expect_equal(myCombDat$names, "m")
 
@@ -377,7 +374,7 @@ test_that("dataCombined - same data order with or without `names` argument", {
   # don't specify names argument for one, while do for the other
   myCombDat$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
   myCombDat2$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]),
-    names = list("x", "y", NULL)
+    newNames = list("x", "y", NULL)
   )
 
   # extract dataframes
@@ -449,7 +446,7 @@ test_that("DataCombined with data transformations", {
   # expect error since the lengths of argument are not the same
   expect_error(
     myCombDat$setDataTransformations(
-      names = list(
+      forNames = list(
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
         "Stevens_2012_placebo.Sita_proximal",
@@ -461,7 +458,7 @@ test_that("DataCombined with data transformations", {
 
   expect_error(
     myCombDat$setDataTransformations(
-      names = list(
+      forNames = list(
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
       ),
@@ -471,7 +468,7 @@ test_that("DataCombined with data transformations", {
 
   expect_error(
     myCombDat$setDataTransformations(
-      names = list(
+      forNames = list(
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
         "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"
       ),
@@ -483,7 +480,7 @@ test_that("DataCombined with data transformations", {
   )
 
   myCombDat$setDataTransformations(
-    names = names_ls,
+    forNames = names_ls,
     xOffsets = 2,
     yOffsets = 4,
     xScaleFactors = 1.5,
@@ -532,12 +529,12 @@ test_that("DataCombined with data transformations", {
 
   # should error with inappropriate arguments
   expect_error(myCombDat2$setDataTransformations(
-    names = 2,
+    forNames = 2,
     xOffsets = "2"
   ))
 
   expect_error(myCombDat2$setDataTransformations(
-    names = c(
+    forNames = c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Stevens_2012_placebo.Sita_proximal"
     ),
@@ -546,7 +543,7 @@ test_that("DataCombined with data transformations", {
   ))
 
   myCombDat2$setDataTransformations(
-    names = list(
+    forNames = list(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Stevens_2012_placebo.Sita_proximal"
     ),
@@ -650,7 +647,7 @@ test_that("DataCombined with data transformations", {
   myCombDat4$addSimulationResults(simResults)
 
   myCombDat4$setDataTransformations(
-    names = names_ls,
+    forNames = names_ls,
     xOffsets = list(NULL, NA, NA_character_, NULL),
     yOffsets = c(NA, NA_real_, NA, NaN),
     xScaleFactors = c(NA, NA_integer_, NA, NA),
@@ -1012,11 +1009,11 @@ test_that("DataCombined works with edge cases", {
   myCombDat <- DataCombined$new()
 
   # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
-  myCombDat$addDataSets(dataSet[[1]], names = "a")
+  myCombDat$addDataSets(dataSet[[1]], newNames = "a")
 
   # dataset name is "Stevens_2012_placebo.Sita_total" but no grouping assigned is
   # same as dataset name entered before
-  myCombDat$addDataSets(dataSet[[2]], names = "b", groups = "Stevens_2012_placebo.Placebo_total")
+  myCombDat$addDataSets(dataSet[[2]], newNames = "b", groups = "Stevens_2012_placebo.Placebo_total")
 
   # they shouldn't be collapsed together in the same group
   expect_equal(
@@ -1038,18 +1035,18 @@ test_that("DataCombined works with edge cases", {
   # issues
   myCombDat2$addDataSets(
     list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    names = list(NULL, "x", NA_character_, "y"),
+    newNames = list(NULL, "x", NA_character_, "y"),
     groups = c("a", NA_character_, "b", NA)
   )
   myCombDat3$addDataSets(
     list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    names = c(NA_character_, "x", NA, "y"),
+    newNames = c(NA_character_, "x", NA, "y"),
     groups = list("a", NULL, "b", NA_character_)
   )
 
   # it shouldn't matter if parameters were provided as a list or an atomic vector
   myCombDat2$setDataTransformations(
-    names = list(
+    forNames = list(
       "Stevens_2012_placebo.Placebo_total",
       "x",
       "Stevens_2012_placebo.Placebo_proximal",

@@ -58,13 +58,13 @@ objCount <- function(x) {
 #'
 #' @examples
 #'
-#' validateVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
-#' validateVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
+#' cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
+#' cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
 #'
 #' @keywords internal
 #' @noRd
 
-validateVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
+cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # return early if argument was not specified
   if (is.null(arg)) {
     return(NULL)

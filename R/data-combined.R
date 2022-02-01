@@ -19,25 +19,6 @@
 #'   `dataSets` and/or `simulationResults$quantityPath`. If no grouping is
 #'   specified for any of the dataset, the column `group` in the dataframe
 #'   output will be all `NA`.
-#' @param names A string or a list of string. This argument will be encountered
-#'   across different methods:
-#'
-#' - `$setDataTransformations()`: In the context of this method, a list of names
-#' specifying which observed datasets and/or paths in simulated dataset to
-#' transform with the specified transformations. Default is `NULL`, i.e., the
-#' transformations, if any specified, will be applied to all rows of the
-#' dataframe.
-#'
-#' - `$addSimulationResults()`: In the context of this method, a list of strings
-#' assigning new names to the quantities or paths present in the entered
-#' `SimulationResults` object. Note that the datasets whose names you wish to
-#' not change should be specified as `NULL` in the list.
-#'
-#' - `$addDataSets()`: In the context of this method, a list of strings
-#' assigning new names to the list of instances of the `DataSet` class. Note
-#' that the datasets whose names you wish to not change should be specified as
-#' `NULL` in the list.
-#'
 #'
 #' @import tidyr
 #' @import ospsuite.utils
@@ -72,16 +53,19 @@ DataCombined <- R6::R6Class(
 
     #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
     #'   class.
+    #' @param newNames A string or a list of strings  assigning new names to the
+    #'   list of instances of the `DataSet` class. Note that the datasets whose
+    #'   names you wish to not change should be specified as `NULL` in the list.
     #'
     #' @description
     #' Adds observed data.
     #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, names = NULL, groups = NULL) {
+    addDataSets = function(dataSets, newNames = NULL, groups = NULL) {
       # validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
-      groups <- validateVectorArgs(groups, objCount(dataSets), type = "character")
-      names <- validateVectorArgs(names, objCount(dataSets), type = "character")
+      groups <- cleanVectorArgs(groups, objCount(dataSets), type = "character")
+      newNames <- cleanVectorArgs(newNames, objCount(dataSets), type = "character")
 
       # if alternate names are provided for datasets, use them instead
       #
@@ -90,18 +74,18 @@ DataCombined <- R6::R6Class(
       # to get these names, go inside each element of the list and extract the
       # name (using `purrr::pluck()`) from the object itself and use them
       # instead and simplify to a character vector (using `purrr::map_chr()`)
-      if (!is.null(names) && is.list(dataSets)) {
-        names <- ifelse(is.na(names), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), names)
+      if (!is.null(newNames) && is.list(dataSets)) {
+        newNames <- ifelse(is.na(newNames), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), newNames)
       }
 
       # update private fields for the new setter call
-      private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, names, groups))
+      private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, newNames, groups))
       private$.dataCombined <- private$.extractXYData(private$.dataCombined)
       private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
       private$.names <- private$.extractNames(private$.dataCombined)
 
       # set up data transformations
-      self$setDataTransformations(names)
+      self$setDataTransformations(newNames)
 
       # for method chaining
       invisible(self)
@@ -126,6 +110,10 @@ DataCombined <- R6::R6Class(
     #' @param population Population used to calculate the `simulationResults`
     #'   (optional). This is used only to add the population covariates to the
     #'   resulting dataframe.
+    #' @param newNames A string or a list of strings assigning new names to the
+    #'   quantities or paths present in the entered `SimulationResults` object.
+    #'   Note that the datasets whose names you wish to not change should be
+    #'   specified as `NULL` in the list.
     #'
     #' @description
     #'
@@ -136,7 +124,7 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL,
-                                    names = NULL,
+                                    newNames = NULL,
                                     groups = NULL) {
       # A list or a vector of `SimulationResults` class instances is not allowed
       #
@@ -162,17 +150,17 @@ DataCombined <- R6::R6Class(
 
       # validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
-      names <- validateVectorArgs(names, pathsLength, type = "character")
-      groups <- validateVectorArgs(groups, pathsLength, type = "character")
+      newNames <- cleanVectorArgs(newNames, pathsLength, type = "character")
+      groups <- cleanVectorArgs(groups, pathsLength, type = "character")
 
       # if alternate names are provided for datasets, use them instead
       #
       # for `NULL` elements in a list, which will be converted to `NA`s by
-      # `validateVectorArgs()`, the original dataset names will be used, which
+      # `cleanVectorArgs()`, the original dataset names will be used, which
       # are nothing but path names for `SimulationResults` objects (i.e.
       # `simulationResults$allQuantityPaths`)
-      if (!is.null(names)) {
-        names <- ifelse(is.na(names), pathsNames, names)
+      if (!is.null(newNames)) {
+        newNames <- ifelse(is.na(newNames), pathsNames, newNames)
       }
 
       # Update private fields for the new setter calls
@@ -183,7 +171,7 @@ DataCombined <- R6::R6Class(
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
           individualIds     = individualIds,
-          names             = names,
+          names             = newNames,
           groups            = groups
         )
       )
@@ -192,7 +180,7 @@ DataCombined <- R6::R6Class(
       private$.names <- private$.extractNames(private$.dataCombined)
 
       # set up data transformations
-      self$setDataTransformations(names)
+      self$setDataTransformations(newNames)
 
       # for method chaining
       invisible(self)
@@ -202,6 +190,10 @@ DataCombined <- R6::R6Class(
     #'
     #' Transform raw data with required offsets and scale factors.
     #'
+    #' @param forNames A list of names specifying which observed datasets and/or
+    #'   paths in simulated dataset to transform with the specified
+    #'   transformations. Default is `NULL`, i.e., the transformations, if any
+    #'   specified, will be applied to all rows of the dataframe.
     #' @param xOffsets,yOffsets,xScaleFactors,yScaleFactors Either a single
     #'   numeric value or a list of numeric quantities specifying offsets and
     #'   scale factors to apply to raw values. The default offset is `0`, while
@@ -218,22 +210,22 @@ DataCombined <- R6::R6Class(
     #'
     #' - For error term:
     #'   `newErrorValue = rawErrorValue * scaleFactor`
-    setDataTransformations = function(names = NULL,
+    setDataTransformations = function(forNames = NULL,
                                       xOffsets = 0,
                                       yOffsets = 0,
                                       xScaleFactors = 1,
                                       yScaleFactors = 1) {
       # check that the arguments to parameters make sense
-      xOffsets <- validateVectorArgs(xOffsets, type = "numeric")
-      yOffsets <- validateVectorArgs(yOffsets, type = "numeric")
-      xScaleFactors <- validateVectorArgs(xScaleFactors, type = "numeric")
-      yScaleFactors <- validateVectorArgs(yScaleFactors, type = "numeric")
-      names <- validateVectorArgs(names, type = "character")
+      xOffsets <- cleanVectorArgs(xOffsets, type = "numeric")
+      yOffsets <- cleanVectorArgs(yOffsets, type = "numeric")
+      xScaleFactors <- cleanVectorArgs(xScaleFactors, type = "numeric")
+      yScaleFactors <- cleanVectorArgs(yScaleFactors, type = "numeric")
+      forNames <- cleanVectorArgs(forNames, type = "character")
 
       # apply specified data transformations
       private$.dataCombined <- private$.dataTransform(
         data          = private$.dataCombined,
-        names         = names,
+        names         = forNames,
         xOffsets      = xOffsets,
         yOffsets      = yOffsets,
         xScaleFactors = xScaleFactors,
@@ -416,10 +408,9 @@ DataCombined <- R6::R6Class(
       #
       # Note that `group` column is based on lexical order of quantity paths
       data %>%
-          tidyr::nest(data = -name) %>%
-          dplyr::mutate(group = groups) %>%
-          tidyr::unnest(cols = c(data))
-
+        tidyr::nest(data = -name) %>%
+        dplyr::mutate(group = groups) %>%
+        tidyr::unnest(cols = c(data))
     },
 
     # Add a new column with alternate names
@@ -628,7 +619,11 @@ DataCombined <- R6::R6Class(
         dplyr::select(
           -dplyr::matches("^paths$"),
           -dplyr::matches("offsets$|scalefactors$"),
-          -dplyr::contains("original")
+          # to remove columns containing original data (`xOriginalValues`,
+          # `yOriginalValues`, `yOriginalErrorValues`), but retaining other
+          # custom metadata users might have specified containing the string
+          # `original`
+          -(dplyr::contains("original") & dplyr::matches("values$"))
         ) %>%
         # arrange data (alphabetically) by dataset name
         dplyr::arrange(name)
