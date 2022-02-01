@@ -195,14 +195,14 @@ DataSet <- R6::R6Class(
     #' provided. Ignored if `dataRepository` is not `NULL`.
     #' @return A new `DataSet` object.
     initialize = function(dataRepository = NULL, name = NULL) {
-      if (is.null(dataRepository) && is.null(name)){
+      if (is.null(dataRepository) && is.null(name)) {
         stop(messages$errorDataSetNameMissing)
       }
       private$.dataRepository <- dataRepository %||% private$.createDataRepository()
       private$.initializeCache()
 
-      #Set the name if no `dataRepository` provided
-      if (is.null(dataRepository)){
+      # Set the name if no `dataRepository` provided
+      if (is.null(dataRepository)) {
         self$name <- name
       }
     },
@@ -297,12 +297,10 @@ DataSet <- R6::R6Class(
       column$values <- valuesInBaseUnit
       invisible(self)
     },
-
     .getColumnValues = function(column) {
       # we need to convert the values in the display unit
       toUnit(quantityOrDimension = column$dimension, values = column$values, targetUnit = column$displayUnit)
     },
-
     .setColumnDimension = function(column, value) {
       # no need to update anything if we are setting the same values
       if (column$dimension == value) {
@@ -317,7 +315,6 @@ DataSet <- R6::R6Class(
 
       private$.setColumnValues(column, values)
     },
-
     .setColumnUnit = function(column, unit) {
       # no need to update anything if we are setting the same values
       if (column$displayUnit == unit) {
@@ -332,7 +329,6 @@ DataSet <- R6::R6Class(
 
       private$.setColumnValues(column, values)
     },
-
     .setErrorType = function(errorType) {
       if (is.null(private$.yErrorColumn)) {
         return(invisible(self))
@@ -366,7 +362,6 @@ DataSet <- R6::R6Class(
       private$.setColumnValues(column, values)
       invisible(self)
     },
-
     .createDataRepository = function() {
       # Create an empty data repository with a base grid and columns
       dataRepository <- DataRepository$new()
@@ -394,7 +389,6 @@ DataSet <- R6::R6Class(
       dataRepository$addColumn(yColumn)
       return(dataRepository)
     },
-
     .initializeCache = function() {
       private$.xColumn <- private$.dataRepository$baseGrid
       # We assume for now that the first column not base grid in the data column
@@ -406,7 +400,6 @@ DataSet <- R6::R6Class(
         private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
       }
     },
-
     .createErrorColumnIfMissing = function() {
       if (!is.null(private$.yErrorColumn)) {
         return()

@@ -93,7 +93,6 @@ messages <- list(
     paste("Can only add a single meta data entry at once", optionalMessage)
   },
   errorMultipleSimulationsCannotBeUsedWithPopulation = "Multiple simulations cannot be run concurrently with a population.",
-
   errorDataSetNameMissing = "Argument `name` is missing, must be provided when
   creating an empty `DataSet`!"
 )

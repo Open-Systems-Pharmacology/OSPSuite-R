@@ -6,4 +6,3 @@ validateHasUnit <- function(quantity, unit) {
   }
   stop(messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
 }
-
