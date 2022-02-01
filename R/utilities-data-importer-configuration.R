@@ -11,7 +11,7 @@
 #' `loadDataSetsFromExcel()`.
 #' @examples
 #' xlsFilePath <- "../CompiledDataSet.xlsx"
-#' importerConfiguration <- createConfigurationForFile(xlsFilePath)
+#' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 #' importerConfiguration$sheets <- "TestSheet_1"
 #'
 #' dataSets <- loadDataSetsFromExcel(
@@ -20,7 +20,7 @@
 #'   importAllSheets = TRUE
 #' )
 #' @export
-createConfigurationForFile <- function(filePath, sheet = NULL) {
+createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   validateIsString(filePath)
 
   importerConfiguration <- DataImporterConfiguration$new()
