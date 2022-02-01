@@ -49,7 +49,7 @@ loadDataSetFromPKML <- function(filePath) {
 #'
 #' @examples
 #' \dontrun{
-#' dataSet <- DataSet$new()
+#' dataSet <- DataSet$new(name = "NewDataSet")
 #' dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
@@ -150,7 +150,7 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllS
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
-    DataSet$new(repository)
+    DataSet$new(dataRepository = repository)
   })
   names(dataSets) <- lapply(dataSets, function(x) {
     x$name

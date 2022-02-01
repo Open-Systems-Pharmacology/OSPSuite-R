@@ -18,10 +18,12 @@ Wrapper class for .net Object
 \section{Super class}{
 \code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DotNetWrapper}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{ref}}{The actual .NET object instanced being wrapped}
+
+\item{\code{ref}}{Underlying .NET reference (read-only)}
 }
 \if{html}{\out{</div>}}
 }
