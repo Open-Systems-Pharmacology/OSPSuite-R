@@ -86,7 +86,6 @@ Collate:
     'simulation-run-options.R'
     'simulation-settings.R'
     'simulation.R'
-    'simulationResultsToDataFrame.R'
     'snapshot-parameter.R'
     'solver-settings.R'
     'utilities-path.R'

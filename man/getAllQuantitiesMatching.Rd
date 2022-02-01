@@ -35,7 +35,6 @@ quantities <- getAllQuantitiesMatching(paths, sim)
 
 # Returns all `Volume` quantities defined in `Organism` and all its subcontainers
 quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
-
 }
 \seealso{
 \code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and
