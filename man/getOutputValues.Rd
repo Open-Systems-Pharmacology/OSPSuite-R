@@ -63,5 +63,4 @@ sim <- loadSimulation(simPath)
 results <- runSimulations(sim)
 
 getOutputValues(results)
-
 }
