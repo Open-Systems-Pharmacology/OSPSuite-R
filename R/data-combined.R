@@ -31,7 +31,7 @@
 #' simulationResults <- runSimulations(simulations = sim)
 #'
 #' # create a new dataset object
-#' dataSet <- DataSet$new(name="DS")
+#' dataSet <- DataSet$new(name = "DS")
 #'
 #' # created object with datasets combined
 #' myCombDat <- DataCombined$new()
@@ -80,9 +80,9 @@ DataCombined <- R6::R6Class(
 
       # update private fields for the new setter call
       private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, newNames, groups))
-      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.names <- private$.extractNames(private$.dataCombined)
+
+      # update active bindings
+      private$.extractBindings()
 
       # set up data transformations
       self$setDataTransformations(newNames)
@@ -175,9 +175,9 @@ DataCombined <- R6::R6Class(
           groups            = groups
         )
       )
-      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.names <- private$.extractNames(private$.dataCombined)
+
+      # update active bindings
+      private$.extractBindings()
 
       # set up data transformations
       self$setDataTransformations(newNames)
@@ -277,7 +277,7 @@ DataCombined <- R6::R6Class(
     #' Print the object to the console
     print = function() {
       # group map contains names and nature of the datasets and grouping details
-      private$printLine("DataCombined", addTab = FALSE)
+      private$printClass()
       private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
       print(private$.groupMap)
@@ -520,6 +520,13 @@ DataCombined <- R6::R6Class(
         )
 
       return(data)
+    },
+
+    # extract all active bindings
+    .extractBindings = function() {
+      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
+      private$.names <- private$.extractNames(private$.dataCombined)
     },
 
     # extract dataframe with group mappings
