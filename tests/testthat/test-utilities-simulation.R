@@ -193,12 +193,19 @@ test_that("It does not show a warning if one of simulations fails in silent mode
 })
 
 test_that("It throws an error when running multiple simulations with a population", {
-  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  sim1 <- loadTestSimulation("simple", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("simple", loadFromCache = FALSE)
   populationFileName <- getTestDataFilePath(fileName = "pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
-  expect_that(runSimulations(simulations = c(sim, sim), population = population), throws_error())
+  expect_that(runSimulations(simulations = c(sim1, sim2), population = population), throws_error())
 })
 
+test_that("It throws an error when running the same instance of a simulation multiple time", {
+  resetSimulationCache()
+  sim1 <- loadTestSimulation("simple", loadFromCache = TRUE)
+  sim2 <- loadTestSimulation("simple", loadFromCache = TRUE)
+  expect_that(runSimulations(simulations = c(sim1, sim2)), throws_error())
+})
 
 context("getStandardMoleculeParameters")
 test_that("It returns all molecule parameters for an existing molecule in a simulation", {
