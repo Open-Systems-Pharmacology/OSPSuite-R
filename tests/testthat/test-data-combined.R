@@ -1,6 +1,4 @@
-# data needed for tests ----------------------------
-
-# will be used across all tests in this file
+# data to be used across all tests in this file
 
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")
@@ -21,38 +19,35 @@ dataSet2 <- loadDataSetsFromExcel(
   importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
-# empty initialization ----------------------------
-
-test_that("dataCombined - initialization", {
-  # initialize empty object
+test_that("active bindings should all be NULL for empty initialization", {
   myCombDat <- DataCombined$new()
 
-  # the active bindings should all be NULL at this stage
   expect_null(myCombDat$groupMap)
   expect_null(myCombDat$names)
   expect_null(myCombDat$toDataFrame())
   expect_output(print(myCombDat), "DataCombined:")
+})
 
-  # can't use active bindings like this
+test_that("active bindings are read-only", {
+  myCombDat <- DataCombined$new()
+
   expect_error(myCombDat$groupMap("x"))
   expect_error(myCombDat$names("x"))
   expect_error(myCombDat$dataTransformations("x"))
-
-  # can't enter a list of `SimulationResults` objects
-  expect_error(myCombDat$addSimulationResults(list("x", "y")))
-
-  # can enter a list, but only of `DataSet` objects
-  expect_error(myCombDat$addDataSets(list("x", "y")))
-
-  # `NULL`s not allowed
-  expect_error(myCombDat$addDataSets(list(NULL)))
-  expect_error(myCombDat$addSimulationResults(list(NULL)))
 })
 
-# either `DataSet` and `SimulationResults` provided -------------
+test_that("add* methods error if anything but expected data types are entered", {
+  myCombDat <- DataCombined$new()
 
-test_that("dataCombined - either dataSet or SimulationResults provided", {
-  # only DataSet input
+  expect_error(myCombDat$addSimulationResults(list("x", "y")))
+  expect_error(myCombDat$addSimulationResults(list(NULL)))
+
+  expect_error(myCombDat$addDataSets(list(1, 2)))
+  expect_error(myCombDat$addDataSets(list(NULL)))
+})
+
+
+test_that("data transformations work as expected when only `DataSet` is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
 
@@ -71,11 +66,15 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       row.names = c(NA, -1L)
     )
   )
+})
 
+test_that("data frame output is as expected when only `DataSet` is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
 
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
-  expect_s3_class(df, "data.frame")
+
   expect_equal(dim(df), c(12L, 20L))
 
   expect_equal(
@@ -89,16 +88,15 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
   )
   expect_equal(rep(NA_character_, length(df$group)), df$group)
   expect_equal(unique(df$name), names(dataSet)[[1]])
+})
 
-  # only SimulationResults input
-
-  # selecting all paths
-  myCombDat2 <- DataCombined$new()
-  myCombDat2$addSimulationResults(simResults)
+test_that("data transformations work as expected when only `SimulationResults` is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
 
   # data transformations should already be setup with the defaults
   expect_equal(
-    myCombDat2$dataTransformations,
+    myCombDat$dataTransformations,
     structure(
       list(
         name = c(
@@ -117,11 +115,13 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       row.names = c(NA, -5L)
     )
   )
+})
 
+test_that("groupings and new names as expected when only few paths from `SimulationResults` are selected", {
+  myCombDat <- DataCombined$new()
 
   # selecting a few paths
-  myCombDat3 <- DataCombined$new()
-  myCombDat3$addSimulationResults(
+  myCombDat$addSimulationResults(
     simResults,
     quantitiesOrPaths = c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
@@ -132,31 +132,32 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
     groups = c("a", NA_character_, "b")
   )
 
-  expect_equal(dplyr::filter(myCombDat3$groupMap, group == "a")$name[[1]], "x")
-  expect_equal(dplyr::filter(myCombDat3$groupMap, group == "b")$name[[1]], "y")
+  expect_equal(dplyr::filter(myCombDat$groupMap, group == "a")$name[[1]], "x")
+  expect_equal(dplyr::filter(myCombDat$groupMap, group == "b")$name[[1]], "y")
   expect_equal(
-    dplyr::filter(myCombDat3$groupMap, !group %in% c("a", "b"))$name[[1]],
+    dplyr::filter(myCombDat$groupMap, !group %in% c("a", "b"))$name[[1]],
     "Organism|Lumen|Stomach|Metformin|Gastric retention distal"
   )
+})
 
-  # checking dataframe methods
-  df2 <- myCombDat2$toDataFrame()
-  expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1255L, 12L))
+test_that("data frame output as expected when only `SimulationResults` is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
 
-  expect_equal(unique(df2$molWeight), c(408.8730, 129.1636))
+  df <- myCombDat$toDataFrame()
 
+  expect_equal(dim(df), c(1255L, 12L))
+  expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
   expect_equal(
-    names(df2),
+    names(df),
     c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "IndividualId", "molWeight"
     )
   )
-  expect_equal(unique(df2$name), sort(simResults$allQuantityPaths))
-
+  expect_equal(unique(df$name), sort(simResults$allQuantityPaths))
   expect_equal(
-    as.character(na.omit(unique(df2$name))),
+    as.character(na.omit(unique(df$name))),
     c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
@@ -165,17 +166,10 @@ test_that("dataCombined - either dataSet or SimulationResults provided", {
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
     )
   )
-
-  expect_equal(rep(NA_character_, length(df2$group)), df2$group)
+  expect_equal(rep(NA_character_, length(df$group)), df$group)
 })
 
-# both `DataSet` and `SimulationResults` provided -------------
-
-test_that("dataCombined - both DataSet and SimulationResults provided", {
-
-  # with list and name inputs ----------------------------
-
-  # create a new instance of the object
+test_that("data transformations as expected when both DataSet and SimulationResults provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -188,7 +182,6 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
   )
   myCombDat$addDataSets(dataSet, newNames = list("a", NULL, "b", NULL, "c", NULL))
 
-  # these should already be set
   expect_equal(
     myCombDat$dataTransformations,
     structure(
@@ -213,10 +206,22 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
       row.names = c(NA, -9L)
     )
   )
+})
 
-  # checking dataframe methods
+test_that("data transformations as expected when both DataSet and SimulationResults provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(
+    simResults,
+    quantitiesOrPaths = c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    ),
+    newNames = list("x", "y", "z")
+  )
+  myCombDat$addDataSets(dataSet, newNames = list("a", NULL, "b", NULL, "c", NULL))
+
   df <- myCombDat$toDataFrame()
-  expect_s3_class(df, "data.frame")
   expect_equal(dim(df), c(830L, 21L))
 
   # check exact values
@@ -258,18 +263,14 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     )$simulationValues
   )
 
-  # read-only
-  expect_error(myCombDat$dataSets(dataSet))
-  expect_error(myCombDat$simulationResults(simResults))
-
   # not specified, so NA
   expect_equal(
     myCombDat$groupMap$group,
     rep(NA_character_, length(myCombDat$groupMap$group))
   )
+})
 
-  # renaming only a single dataset also works
-
+test_that("renaming only a single dataset works", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -277,96 +278,18 @@ test_that("dataCombined - both DataSet and SimulationResults provided", {
     newNames = list("m")
   )
   expect_equal(myCombDat$names, "m")
-
-  # with DataSet input ----------------------------
-
-  # create a new instance of the object
-  myCombDat2 <- DataCombined$new()
-  myCombDat2$addSimulationResults(simResults)
-  myCombDat2$addDataSets(dataSet[[1]])
-
-  # checking dataframe methods
-  df2 <- myCombDat2$toDataFrame()
-  expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1267L, 21L))
-
-  # not specified, so NA
-  expect_equal(
-    myCombDat$groupMap$group,
-    rep(NA_character_, length(myCombDat$groupMap$group))
-  )
-
-  expect_equal(
-    as.character(unique(df2$name)),
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Stevens_2012_placebo.Placebo_total"
-    )
-  )
-
-  # with nonsense list inputs ----------------------------
-
-  myCombDat3 <- DataCombined$new()
-  expect_error(myCombDat3$addDataSets(list("x" = 1, "y" = 2)))
-
-  expect_error(myCombDat3$addSimulationResults(list(simResults, simResults)))
-
-  # order should not matter ----------------------------
-
-  # you can use one add method, extract a dataframe, and then add another add method
-  # and then extract again; the dataframe method should then combine
-  myCombDat4 <- DataCombined$new()
-  myCombDat4$addSimulationResults(simResults)
-  df3 <- myCombDat4$toDataFrame()
-  myCombDat4$addDataSets(dataSet[[1]])
-  df4 <- myCombDat4$toDataFrame()
-  expect_equal(dim(df3), c(1255L, 12L))
-  expect_equal(dim(df4), c(1267L, 21L))
-
-  # method chaining works ----------------------------
-
-  myCombDat5 <- DataCombined$new()
-  df5 <- myCombDat5$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$toDataFrame()
-  expect_equal(dim(df4), dim(df5))
-
-  myCombDat6 <- DataCombined$new()
-  myCombDat6$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$addDataSets(dataSet[[2]])
-  expect_equal(
-    myCombDat6$names,
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
-      "Stevens_2012_placebo.Placebo_total",
-      "Stevens_2012_placebo.Sita_total"
-    )
-  )
-
-  # not specified, so NA
-  expect_equal(
-    myCombDat$groupMap$group,
-    rep(NA_character_, length(myCombDat$groupMap$group))
-  )
-
-  # printing objects works
-  expect_output(print(myCombDat))
-  expect_output(print(myCombDat2))
-  expect_output(print(myCombDat3))
-  expect_output(print(myCombDat4))
-  expect_output(print(myCombDat5))
 })
 
-# same data order with or without `names` argument -------------
+test_that("order in which objects are entered should not matter and method chaining works", {
+  myCombDat <- DataCombined$new()
 
-test_that("dataCombined - same data order with or without `names` argument", {
+  df1 <- myCombDat$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$toDataFrame()
+  df2 <- myCombDat$addDataSets(dataSet[[1]])$addSimulationResults(simResults)$toDataFrame()
 
-  # create a new instance of the object
+  expect_equal(df1, df2)
+})
+
+test_that("data order with or without `newNames` argument should be same", {
   myCombDat <- DataCombined$new()
   myCombDat2 <- DataCombined$new()
 
@@ -380,10 +303,6 @@ test_that("dataCombined - same data order with or without `names` argument", {
   # extract dataframes
   df1 <- myCombDat$toDataFrame()
   df2 <- myCombDat2$toDataFrame()
-
-  # shpuld not be grouped
-  expect_false(dplyr::is_grouped_df(df1))
-  expect_false(dplyr::is_grouped_df(df2))
 
   # except for names column, everything should look the same across two objects
   expect_equal(nrow(df1), nrow(df2))
@@ -404,31 +323,29 @@ test_that("dataCombined - same data order with or without `names` argument", {
     unique(df2$name),
     c("Stevens_2012_placebo.Placebo_proximal", "x", "y")
   )
-
-
-  # create a new instance of the object
-  myCombDat3 <- DataCombined$new()
-  myCombDat4 <- DataCombined$new()
-
-  # both of these should provide the same result
-  myCombDat3$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
-  myCombDat4$addDataSets(c(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
-
-  expect_equal(myCombDat3$toDataFrame(), myCombDat4$toDataFrame())
 })
 
+test_that("dataframe should be same when objects are entered either as a list or a vector", {
+  myCombDat1 <- DataCombined$new()
+  myCombDat2 <- DataCombined$new()
 
-# data transformations ---------------------------------
+  # both of these should provide the same result
+  myCombDat1$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
+  myCombDat2$addDataSets(c(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
 
-test_that("DataCombined with data transformations", {
+  expect_equal(myCombDat1$toDataFrame(), myCombDat2$toDataFrame())
+})
 
-  # create a new instance of the object
+test_that("data transformations fail when argument data types are incorrect", {
   myCombDat <- DataCombined$new()
 
-  # this should fail because of incorrect argument type
-  expect_error(myCombDat$addSimulationResults(simResults, groups = 2))
+  expect_error(myCombDat$addSimulationResults(simResults, groups = "2"))
   expect_error(myCombDat$addDataSets(dataSet, groups = c(2, 4)))
+  expect_error(myCombDat$addDataSets(dataSet, groups = list(2, 4)))
+})
 
+test_that("DataCombined with data transformations", {
+  myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
   myCombDat$addDataSets(dataSet)
 
@@ -522,7 +439,7 @@ test_that("DataCombined with data transformations", {
   expect_equal(dfTransformed$yValues, (dfOriginal$yValues + 4) * 2.5)
   expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
 
-  # create a new instance of the object
+
   myCombDat2 <- DataCombined$new()
   myCombDat2$addDataSets(dataSet)
   myCombDat2$addSimulationResults(simResults)
@@ -682,46 +599,34 @@ test_that("DataCombined with data transformations", {
   )
 })
 
-# grouping works ---------------------------------
-
-test_that("DataCombined works with data grouping", {
-
-  # create a new instance of the object
+test_that("error when grouping length and data type are inaccurate", {
   myCombDat <- DataCombined$new()
 
-  # expect error when grouping length and data type are inaccurate
   expect_error(myCombDat$addSimulationResults(simResults, groups = list("x", "y")))
   expect_error(myCombDat$addSimulationResults(simResults, groups = list(2, 4)))
   expect_error(myCombDat$addSimulationResults(simResults, groups = list(1, 2, 3, 4, 5)))
   expect_error(myCombDat$addDataSets(dataSet, groups = list("x")))
   expect_error(myCombDat$addDataSets(dataSet, groups = list(1)))
   expect_error(myCombDat$addDataSets(dataSet, groups = list(1, 2, 3, 4, 5, 6)))
+})
 
-  # proper grouping
+
+test_that("data grouping works as expected - multiple datasets", {
+  myCombDat <- DataCombined$new()
+
   myCombDat$addSimulationResults(
     simResults,
     groups = list(NULL, NULL, "distal", "proximal", "total")
   )
-  myCombDat$addDataSets(dataSet,
+  myCombDat$addDataSets(
+    dataSet,
     groups = list("total", "total", "proximal", "proximal", "distal", "distal")
-  )
-
-  # order should matter
-  myCombDat2 <- DataCombined$new()
-  myCombDat2$addDataSets(dataSet,
-    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
-  )
-  myCombDat2$addSimulationResults(
-    simResults,
-    groups = list(NULL, NA_complex_, "distal", "proximal", "total")
   )
 
   # check mapping
   dfMap <- myCombDat$groupMap
-  dfMap2 <- myCombDat2$groupMap
 
   expect_equal(dim(dfMap), c(11L, 3L))
-  expect_equal(dim(dfMap2), c(11L, 3L))
 
   expect_equal(
     dplyr::filter(dfMap, group == "distal", dataType == "simulated")$name,
@@ -752,57 +657,33 @@ test_that("DataCombined works with data grouping", {
     dplyr::filter(dfMap, group == "total", dataType == "observed")$name,
     c("Stevens_2012_placebo.Placebo_total", "Stevens_2012_placebo.Sita_total")
   )
+})
 
-  expect_equal(dfMap$group, dfMap2$group)
-  expect_equal(dfMap$name, dfMap2$name)
+test_that("data grouping works as expected - single dataset", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "x")
 
-  # check dataframe
-  df <- myCombDat$toDataFrame()
-  expect_s3_class(df, "data.frame")
-  expect_equal(dim(df), c(1332L, 21L))
+  expect_equal(myCombDat$groupMap$group[[1]], "x")
+  expect_equal(myCombDat$groupMap$name[[1]], "Stevens_2012_placebo.Placebo_total")
+})
+
+test_that("data grouping - entering NA doesn't cause any problems", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = NA_character_)
+
   expect_equal(
-    names(df),
-    c(
-      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
-      "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
-      "IndividualId", "molWeight", "lloq", "Source", "Sheet",
-      "Organ", "Compartment", "Molecule", "Group Id"
-    )
-  )
-
-  df2 <- myCombDat2$toDataFrame()
-  expect_s3_class(df2, "data.frame")
-  expect_equal(dim(df2), c(1332L, 21L))
-
-  # single dataset can also be added with a group
-  myCombDat3 <- DataCombined$new()
-  myCombDat3$addDataSets(dataSet[[1]], groups = "x")
-  expect_equal(myCombDat3$groupMap$group[[1]], "x")
-  expect_equal(myCombDat3$groupMap$name[[1]], "Stevens_2012_placebo.Placebo_total")
-
-  # entering NA doesn't cause any problems
-  myCombDat4 <- DataCombined$new()
-  myCombDat4$addDataSets(dataSet[[1]], groups = NA_character_)
-  expect_equal(
-    myCombDat4$groupMap$group[[1]],
-    rep(NA_character_, length(myCombDat4$groupMap$group[[1]]))
+    myCombDat$groupMap$group[[1]],
+    rep(NA_character_, length(myCombDat$groupMap$group[[1]]))
   )
 })
 
-
-# sequential update - same values ---------------------------------
-
-test_that("DataCombined works with sequential update - same values", {
-  # create a new instance of the object
+test_that("sequential update when objects have same values", {
   myCombDat <- DataCombined$new()
 
-  # add grouping
-
-  # deliberately try with different special constants (NaN, NULL, etc.) and
-  # check that this doesn't create any issues
+  # first run
   myCombDat$addSimulationResults(
     simResults,
-    groups = list(NULL, NaN, "distal", "proximal", "total")
+    groups = list(NULL, NULL, "distal", "proximal", "total")
   )
 
   myCombDat$addDataSets(
@@ -810,34 +691,31 @@ test_that("DataCombined works with sequential update - same values", {
     groups = list("total", "total", "proximal", "proximal", "distal", "distal")
   )
 
-  # first dataframe
   df1 <- myCombDat$toDataFrame()
 
-  # now add same object but with different groupings just to check the behavior
-  # is as expected
+  # second run but with different grouping
   myCombDat$addSimulationResults(
     simResults,
     groups = list(
       "Dapagliflozin - emptying",
       "Dapagliflozin - retention",
-      NaN,
       NULL,
-      NA_real_
+      NULL,
+      NULL
     )
   )
   myCombDat$addDataSets(
     dataSet,
     groups = list(
       NULL,
-      NA_integer_,
-      NA,
-      NaN,
+      NULL,
+      NULL,
+      NULL,
       "distal",
       "distal"
     )
   )
 
-  # second dataframe
   df2 <- myCombDat$toDataFrame()
 
   # should be the same number of rows and columns, and same raw data
@@ -848,7 +726,7 @@ test_that("DataCombined works with sequential update - same values", {
   # names should also be the same since they are the same objects
   expect_equal(unique(df1$name), unique(df2$name))
 
-  # but groupings should now be different
+  # but groupings should be different
   expect_equal(
     unique(df1$group),
     c(NA_character_, "total", "distal", "proximal")
@@ -896,12 +774,7 @@ test_that("DataCombined works with sequential update - same values", {
   )
 })
 
-
-# sequential update - different values ---------------------------------
-
-test_that("DataCombined works with sequential update - different values", {
-
-  # create a new instance of the object
+test_that("sequential update when objects have different values", {
   myCombDat <- DataCombined$new()
 
   myCombDat$addDataSets(dataSet)
@@ -948,9 +821,48 @@ test_that("DataCombined works with sequential update - different values", {
   )
 })
 
-# population objects work ---------------------------------
+test_that("list/vector and special constants in arguments don't make a difference", {
+  myCombDat1 <- DataCombined$new()
+  myCombDat2 <- DataCombined$new()
 
-test_that("DataCombined works with population", {
+  # make sure the default logical or any other type of `NA`s don't create any
+  # issues
+  myCombDat1$addDataSets(
+    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
+    newNames = list(NULL, "x", NA_character_, "y"),
+    groups = c("a", NA_real_, "b", NA)
+  )
+  myCombDat2$addDataSets(
+    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
+    newNames = c(NA_character_, "x", NA, "y"),
+    groups = list("a", NA, "b", NA_complex_)
+  )
+
+  # it shouldn't matter if parameters were provided as a list or an atomic vector
+  myCombDat1$setDataTransformations(
+    forNames = list(
+      "Stevens_2012_placebo.Placebo_total",
+      "x",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "y"
+    ),
+    xOffsets = list(1.2, 2, 2.3, 4.8),
+    yOffsets = c(3.1, 4.4, 3.5, 6.1),
+    xScaleFactors = c(1.2, 2, 2.3, 4.8),
+    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
+  )
+  myCombDat2$setDataTransformations(
+    xOffsets = list(1.2, 2, 2.3, 4.8),
+    yOffsets = c(3.1, 4.4, 3.5, 6.1),
+    xScaleFactors = c(1.2, 2, 2.3, 4.8),
+    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
+  )
+
+  expect_equal(myCombDat1$groupMap, myCombDat2$groupMap)
+  expect_equal(myCombDat1$dataTransformations, myCombDat2$dataTransformations)
+})
+
+test_that("dataframe is as expected when population objects are used", {
   skip_if(.Platform$OS.type != "windows")
   # ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
 
@@ -988,7 +900,6 @@ test_that("DataCombined works with population", {
   myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
   df <- myDataComb$toDataFrame()
 
-  expect_s3_class(df, "data.frame")
   expect_equal(dim(df), c(1964L, 12L))
 
   expect_equal(min(df$IndividualId), 1)
@@ -999,13 +910,7 @@ test_that("DataCombined works with population", {
 })
 
 
-# edge cases ---------------------------------
-
-test_that("DataCombined works with edge cases", {
-
-  ## groups name same as dataset name ---------------------------
-
-  # create a new instance of the object
+test_that("edge cases - groups name same as dataset name", {
   myCombDat <- DataCombined$new()
 
   # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
@@ -1023,47 +928,4 @@ test_that("DataCombined works with edge cases", {
 
   # with single datasets the renaming should still work
   expect_equal(myCombDat$groupMap$name, c("b", "a"))
-
-
-  # list/vector and NULL/NA ---------------------------
-
-  # create a new instance of the object
-  myCombDat2 <- DataCombined$new()
-  myCombDat3 <- DataCombined$new()
-
-  # make sure the default logical or any other type of `NA`s don't create any
-  # issues
-  myCombDat2$addDataSets(
-    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    newNames = list(NULL, "x", NA_character_, "y"),
-    groups = c("a", NA_character_, "b", NA)
-  )
-  myCombDat3$addDataSets(
-    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    newNames = c(NA_character_, "x", NA, "y"),
-    groups = list("a", NULL, "b", NA_character_)
-  )
-
-  # it shouldn't matter if parameters were provided as a list or an atomic vector
-  myCombDat2$setDataTransformations(
-    forNames = list(
-      "Stevens_2012_placebo.Placebo_total",
-      "x",
-      "Stevens_2012_placebo.Placebo_proximal",
-      "y"
-    ),
-    xOffsets = list(1.2, 2, 2.3, 4.8),
-    yOffsets = c(3.1, 4.4, 3.5, 6.1),
-    xScaleFactors = c(1.2, 2, 2.3, 4.8),
-    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
-  )
-  myCombDat3$setDataTransformations(
-    xOffsets = list(1.2, 2, 2.3, 4.8),
-    yOffsets = c(3.1, 4.4, 3.5, 6.1),
-    xScaleFactors = c(1.2, 2, 2.3, 4.8),
-    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
-  )
-
-  expect_equal(myCombDat2$groupMap, myCombDat3$groupMap)
-  expect_equal(myCombDat2$dataTransformations, myCombDat3$dataTransformations)
 })

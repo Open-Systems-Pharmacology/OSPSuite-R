@@ -337,8 +337,7 @@ DataCombined <- R6::R6Class(
       dataSetToDataFrame(dataSets) %>%
         dplyr::mutate(dataType = "observed") %>%
         private$.renameDatasets(names) %>%
-        private$.addGroupCol(groups) %>%
-        dplyr::as_tibble()
+        private$.addGroupCol(groups)
     },
 
     # extract dataframe from `SimulationResults` objects
@@ -633,7 +632,9 @@ DataCombined <- R6::R6Class(
           -(dplyr::contains("original") & dplyr::matches("values$"))
         ) %>%
         # arrange data (alphabetically) by dataset name
-        dplyr::arrange(name)
+        dplyr::arrange(name) %>%
+        # always return a tibble
+        dplyr::as_tibble()
     },
 
     # private fields ----------------------------------------
