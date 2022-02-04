@@ -35,7 +35,7 @@ before_build:
   - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
   - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
   - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
-  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%, ckd-population-feature]"
+  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
 build_script:
   - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
