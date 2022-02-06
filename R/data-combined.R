@@ -207,19 +207,8 @@ DataCombined <- R6::R6Class(
         )
       }
 
-      # vector depths:
-      #
-      # 1 = atomic vector (or empty list)
-      # 2 = non-nested list
-      # > 2 = nested list
-      #
-      # this is unlikely to be encountered in most circumstances
-      if (purrr::vec_depth(groups) > 2L) {
-        stop(
-          "Setting groups using a nested list is not allowed.",
-          call. = FALSE
-        )
-      }
+      # validate depth of the argument vector
+      validateVecDepth(groups)
 
       # existing grouping can be removed by setting dataset name to `NA`, but
       # the default `NA` type in R is `logical`, so it needs to be converted to
