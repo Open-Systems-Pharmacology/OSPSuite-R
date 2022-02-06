@@ -132,6 +132,13 @@ test_that("setting groups fails when group specification is invalid", {
   expect_error(myCombDat$setGroups(list("x" = 2, "y" = 4)))
 })
 
+test_that("setting groups fails when group specification is in a nested list", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet)
+
+  expect_error(myCombDat$setGroups(list("m" = list("x" = "2", "y" = "4"))))
+})
+
 test_that("assigned group can be removed using NA", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
