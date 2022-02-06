@@ -60,6 +60,7 @@ values were specified by the user for each dataset.}
 \itemize{
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
+\item \href{#method-setGroups}{\code{DataCombined$setGroups()}}
 \item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
@@ -78,7 +79,7 @@ values were specified by the user for each dataset.}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, newNames = NULL, groups = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, newNames = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -90,14 +91,6 @@ class.}
 \item{\code{newNames}}{A string or a list of strings  assigning new names to the
 list of instances of the \code{DataSet} class. Note that the datasets whose
 names you wish to not change should be specified as \code{NULL} in the list.}
-
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group (and the corresponding entry in the dataframe
-will be an \code{NA}). If provided, \code{groups} must have the same length as
-\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
-specified for any of the dataset, the column \code{group} in the dataframe
-output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -116,8 +109,7 @@ Add simulated data using instance of \code{SimulationResults} class.
   quantitiesOrPaths = NULL,
   population = NULL,
   individualIds = NULL,
-  newNames = NULL,
-  groups = NULL
+  newNames = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -148,19 +140,42 @@ is ignored.}
 quantities or paths present in the entered \code{SimulationResults} object.
 Note that the datasets whose names you wish to not change should be
 specified as \code{NULL} in the list.}
-
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group (and the corresponding entry in the dataframe
-will be an \code{NA}). If provided, \code{groups} must have the same length as
-\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
-specified for any of the dataset, the column \code{group} in the dataframe
-output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 \code{DataCombined} object containing simulated data.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setGroups"></a>}}
+\if{latex}{\out{\hypertarget{method-setGroups}{}}}
+\subsection{Method \code{setGroups()}}{
+Adds grouping information to datasets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setGroups(groups)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{groups}}{A named list specifying which datasets belong to which
+group. For example, if datsets names are \code{"x"}, \code{"y"}, \code{"z"}, and the
+desired groupings for them are respectively \code{"a"} and \code{"b"}, this
+argument would be \code{list("x" = "a", "y" = "b")}. Datasets for which no
+grouping is to be specified, can be left out of the \code{groups} argument.
+The column \code{group} in the dataframe output will be \code{NA} for such
+datasets. If you wish to remove already specified grouping for a
+dataset, you can specify it as following: \code{list("x" = NA)}. This will
+not change any of the other (previously specified) groupings. Note that
+if you have specified \code{newNames} while adding datasets using respective
+methods, you will need to use these new names to specify group
+assignment.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{DataCombined} object with grouped datasets.
 }
 }
 \if{html}{\out{<hr>}}

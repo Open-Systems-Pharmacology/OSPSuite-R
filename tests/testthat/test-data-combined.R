@@ -117,7 +117,53 @@ test_that("data transformations work as expected when only `SimulationResults` i
   )
 })
 
-test_that("groupings and new names as expected when only few paths from `SimulationResults` are selected", {
+test_that("empty grouping specification fails", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
+
+  expect_error(myCombDat$setGroups(list()))
+})
+
+test_that("setting groups fails when group specification is invalid", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet)
+
+  expect_error(myCombDat$setGroups(c(2, 4)))
+  expect_error(myCombDat$setGroups(list("x" = 2, "y" = 4)))
+})
+
+test_that("assigned group can be removed using NA", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = "m"))
+
+  expect_equal(myCombDat$groupMap$group, "m")
+
+  myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = NA))
+  expect_equal(myCombDat$groupMap$group, NA_character_)
+})
+
+test_that("setting groups with atomic vector or a list shouldn't make a difference", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$setGroups(c(
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"  = "x",
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention" = "y"
+  ))
+
+  myCombDat2 <- DataCombined$new()
+  myCombDat2$addSimulationResults(simResults)
+  myCombDat2$setGroups(list(
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"  = "x",
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention" = "y"
+  ))
+
+  expect_equal(myCombDat$groupMap, myCombDat2$groupMap)
+  expect_equal(myCombDat$toDataFrame(), myCombDat2$toDataFrame())
+})
+
+
+test_that("specifying groupings and new names for only few paths in `SimulationResults`", {
   myCombDat <- DataCombined$new()
 
   # selecting a few paths
@@ -128,9 +174,10 @@ test_that("groupings and new names as expected when only few paths from `Simulat
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    newNames = c("x", NA_character_, "y"),
-    groups = c("a", NA_character_, "b")
+    newNames = c("x", NA_character_, "y")
   )
+
+  myCombDat$setGroups(list("x" = "a", "y" = "b"))
 
   expect_equal(dplyr::filter(myCombDat$groupMap, group == "a")$name[[1]], "x")
   expect_equal(dplyr::filter(myCombDat$groupMap, group == "b")$name[[1]], "y")
@@ -334,14 +381,6 @@ test_that("dataframe should be same when objects are entered either as a list or
   myCombDat2$addDataSets(c(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
 
   expect_equal(myCombDat1$toDataFrame(), myCombDat2$toDataFrame())
-})
-
-test_that("data transformations fail when argument data types are incorrect", {
-  myCombDat <- DataCombined$new()
-
-  expect_error(myCombDat$addSimulationResults(simResults, groups = "2"))
-  expect_error(myCombDat$addDataSets(dataSet, groups = c(2, 4)))
-  expect_error(myCombDat$addDataSets(dataSet, groups = list(2, 4)))
 })
 
 test_that("DataCombined with data transformations", {
@@ -599,29 +638,27 @@ test_that("DataCombined with data transformations", {
   )
 })
 
-test_that("error when grouping length and data type are inaccurate", {
-  myCombDat <- DataCombined$new()
-
-  expect_error(myCombDat$addSimulationResults(simResults, groups = list("x", "y")))
-  expect_error(myCombDat$addSimulationResults(simResults, groups = list(2, 4)))
-  expect_error(myCombDat$addSimulationResults(simResults, groups = list(1, 2, 3, 4, 5)))
-  expect_error(myCombDat$addDataSets(dataSet, groups = list("x")))
-  expect_error(myCombDat$addDataSets(dataSet, groups = list(1)))
-  expect_error(myCombDat$addDataSets(dataSet, groups = list(1, 2, 3, 4, 5, 6)))
-})
-
 
 test_that("data grouping works as expected - multiple datasets", {
   myCombDat <- DataCombined$new()
 
-  myCombDat$addSimulationResults(
-    simResults,
-    groups = list(NULL, NULL, "distal", "proximal", "total")
-  )
-  myCombDat$addDataSets(
-    dataSet,
-    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
-  )
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$setGroups(groups = list(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal" = "distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal" = "proximal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention" = "total"
+  ))
+
+
+  myCombDat$addDataSets(dataSet)
+  myCombDat$setGroups(groups = list(
+    "Stevens_2012_placebo.Placebo_total" = "total",
+    "Stevens_2012_placebo.Sita_total" = "total",
+    "Stevens_2012_placebo.Placebo_proximal" = "proximal",
+    "Stevens_2012_placebo.Sita_proximal" = "proximal",
+    "Stevens_2012_placebo.Placebo_distal" = "distal",
+    "Stevens_2012_placebo.Sita_dist" = "distal"
+  ))
 
   # check mapping
   dfMap <- myCombDat$groupMap
@@ -661,60 +698,51 @@ test_that("data grouping works as expected - multiple datasets", {
 
 test_that("data grouping works as expected - single dataset", {
   myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet[[1]], groups = "x")
+  myCombDat$addDataSets(dataSet[[1]])
+  myCombDat$setGroups(groups = list("Stevens_2012_placebo.Placebo_total" = "x"))
 
   expect_equal(myCombDat$groupMap$group[[1]], "x")
   expect_equal(myCombDat$groupMap$name[[1]], "Stevens_2012_placebo.Placebo_total")
 })
 
-test_that("data grouping - entering NA doesn't cause any problems", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet[[1]], groups = NA_character_)
-
-  expect_equal(
-    myCombDat$groupMap$group[[1]],
-    rep(NA_character_, length(myCombDat$groupMap$group[[1]]))
-  )
-})
 
 test_that("sequential update when objects have same values", {
   myCombDat <- DataCombined$new()
 
   # first run
-  myCombDat$addSimulationResults(
-    simResults,
-    groups = list(NULL, NULL, "distal", "proximal", "total")
-  )
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$setGroups(groups = list(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal" = "distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal" = "proximal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention" = "total"
+  ))
 
-  myCombDat$addDataSets(
-    dataSet,
-    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
-  )
+
+  myCombDat$addDataSets(dataSet)
+  myCombDat$setGroups(groups = list(
+    "Stevens_2012_placebo.Placebo_total" = "total",
+    "Stevens_2012_placebo.Sita_total" = "total",
+    "Stevens_2012_placebo.Placebo_proximal" = "proximal",
+    "Stevens_2012_placebo.Sita_proximal" = "proximal",
+    "Stevens_2012_placebo.Placebo_distal" = "distal",
+    "Stevens_2012_placebo.Sita_dist" = "distal"
+  ))
 
   df1 <- myCombDat$toDataFrame()
 
   # second run but with different grouping
-  myCombDat$addSimulationResults(
-    simResults,
-    groups = list(
-      "Dapagliflozin - emptying",
-      "Dapagliflozin - retention",
-      NULL,
-      NULL,
-      NULL
-    )
-  )
-  myCombDat$addDataSets(
-    dataSet,
-    groups = list(
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-      "distal",
-      "distal"
-    )
-  )
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$setGroups(groups = list(
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying" = "Dapagliflozin - emptying",
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention" = "Dapagliflozin - retention"
+  ))
+
+
+  myCombDat$addDataSets(dataSet)
+  myCombDat$setGroups(groups = list(
+    "Stevens_2012_placebo.Placebo_distal" = "distal",
+    "Stevens_2012_placebo.Sita_dist" = "distal"
+  ))
 
   df2 <- myCombDat$toDataFrame()
 
@@ -821,47 +849,6 @@ test_that("sequential update when objects have different values", {
   )
 })
 
-test_that("list/vector and special constants in arguments don't make a difference", {
-  myCombDat1 <- DataCombined$new()
-  myCombDat2 <- DataCombined$new()
-
-  # make sure the default logical or any other type of `NA`s don't create any
-  # issues
-  myCombDat1$addDataSets(
-    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    newNames = list(NULL, "x", NA_character_, "y"),
-    groups = c("a", NA_real_, "b", NA)
-  )
-  myCombDat2$addDataSets(
-    list(dataSet[[1]], dataSet[[2]], dataSet[[3]], dataSet[[4]]),
-    newNames = c(NA_character_, "x", NA, "y"),
-    groups = list("a", NA, "b", NA_complex_)
-  )
-
-  # it shouldn't matter if parameters were provided as a list or an atomic vector
-  myCombDat1$setDataTransformations(
-    forNames = list(
-      "Stevens_2012_placebo.Placebo_total",
-      "x",
-      "Stevens_2012_placebo.Placebo_proximal",
-      "y"
-    ),
-    xOffsets = list(1.2, 2, 2.3, 4.8),
-    yOffsets = c(3.1, 4.4, 3.5, 6.1),
-    xScaleFactors = c(1.2, 2, 2.3, 4.8),
-    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
-  )
-  myCombDat2$setDataTransformations(
-    xOffsets = list(1.2, 2, 2.3, 4.8),
-    yOffsets = c(3.1, 4.4, 3.5, 6.1),
-    xScaleFactors = c(1.2, 2, 2.3, 4.8),
-    yScaleFactors = list(3.1, 4.4, 3.5, 6.1)
-  )
-
-  expect_equal(myCombDat1$groupMap, myCombDat2$groupMap)
-  expect_equal(myCombDat1$dataTransformations, myCombDat2$dataTransformations)
-})
-
 test_that("dataframe is as expected when population objects are used", {
   skip_if(.Platform$OS.type != "windows")
   # ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
@@ -916,9 +903,10 @@ test_that("edge cases - groups name same as dataset name", {
   # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
   myCombDat$addDataSets(dataSet[[1]], newNames = "a")
 
-  # dataset name is "Stevens_2012_placebo.Sita_total" but no grouping assigned is
+  # dataset name is "Stevens_2012_placebo.Sita_total" but grouping assigned is
   # same as dataset name entered before
-  myCombDat$addDataSets(dataSet[[2]], newNames = "b", groups = "Stevens_2012_placebo.Placebo_total")
+  myCombDat$addDataSets(dataSet[[2]], newNames = "b")
+  myCombDat$setGroups(groups = list("b" = "Stevens_2012_placebo.Placebo_total"))
 
   # they shouldn't be collapsed together in the same group
   expect_equal(
