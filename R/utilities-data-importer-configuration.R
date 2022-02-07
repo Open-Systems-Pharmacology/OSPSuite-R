@@ -31,6 +31,13 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
     ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath, sheet)
   }
   importerConfiguration$ref <- ref
+  # set timeColumn dimension and unit to default ("Time" and "h") if it could not be read from file
+  if (importerConfiguration$timeUnit == "?") {
+    column <- rClr::clrCall(importerTask, "GetTime", importerConfiguration$ref)
+    mappedColumn <- rClr::clrGet(column, "MappedColumn")
+    rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(ospDimensions$Time)))
+    importerConfiguration$timeUnit <- ospUnits$Time$h
+  }
 
   return(importerConfiguration)
 }

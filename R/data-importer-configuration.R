@@ -8,6 +8,14 @@ DataImporterConfiguration <- R6::R6Class(
   inherit = DotNetWrapper,
   cloneable = TRUE,
   active = list(
+    #' @field ref Underlying .NET reference
+    ref = function(value) {
+      if (missing(value)){
+        return(private$.ref)
+      }
+      private$.ref <- value
+    },
+
     #' @field timeColumn Name of the column for time values
     timeColumn = function(value) {
       column <- private$.timeColumn()
@@ -257,12 +265,6 @@ DataImporterConfiguration <- R6::R6Class(
       }
       super$initialize(ref)
       private$.dataImporterTask <- importerTask
-
-      # private$.timeColumn()
-      # private$.measurementColumn()
-      # private$.timeColumn <- rClr::clrCall(importerTask, "GetTime", ref)
-      # private$.measurementColumn <- rClr::clrCall(importerTask, "GetMeasurement", ref)
-      # private$.errorColumn <- rClr::clrCall(importerTask, "GetError", ref)
     },
 
     #' @description
@@ -329,9 +331,6 @@ DataImporterConfiguration <- R6::R6Class(
     },
     .addErrorColumn = function() {
       rClr::clrCall(private$.dataImporterTask, "AddError", self$ref)
-      # column <- rClr::clrCall(private$.dataImporterTask, "GetError", self$ref)
-      # private$.errorColumn <- column
-      # mappedColumn <- rClr::clrGet(column, "MappedColumn")
       mappedColumn <- rClr::clrGet(private$.errorColumn(), "MappedColumn")
       rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(self$measurementDimension)))
     },

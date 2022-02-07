@@ -13,6 +13,8 @@ Configuration of data import from excel or csv files. To be used with #TODO
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{ref}}{Underlying .NET reference}
+
 \item{\code{timeColumn}}{Name of the column for time values}
 
 \item{\code{timeUnit}}{If \code{timeUnitFromColumn} is \code{FALSE}, unit of the values in time column
