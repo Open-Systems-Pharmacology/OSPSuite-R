@@ -1,4 +1,4 @@
-#' Create a DataImporterConfiguration object for an XLS sheet
+#' Create a `DataImporterConfiguration` for an XLS sheet
 #' @details The function tries to parse the structure of the excel sheet and
 #' creates a default configuration for this sheet. It is advised to check the
 #' configuration and adjust if necessary before using with `loadDataSetsFromExcel()`.

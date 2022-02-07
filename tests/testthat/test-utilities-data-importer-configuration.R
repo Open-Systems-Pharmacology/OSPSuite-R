@@ -4,7 +4,7 @@ filePath <- getTestDataFilePath("CompiledDataSet.xlsx")
 test_that("It can create a DataImporterConfiguration from a XLS file", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux
 
-  importerConfiguration <- createImporterConfigurationForFile(filePath, "TestSheet_1")
+  importerConfiguration <- createImporterConfigurationForFile(filePath = filePath, sheet = "TestSheet_1")
   expect_equal(importerConfiguration$timeColumn, "Time [h]")
   expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")
   expect_equal(importerConfiguration$measurementColumn, "Concentration (mass)[ng/ml]")
@@ -22,7 +22,7 @@ test_that("It can create a DataImporterConfiguration from a XLS file when dimens
           and units can not be retrieved, they can be set afterwards", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux
 
-  importerConfiguration <- createImporterConfigurationForFile(filePath, "DefaultConfig")
+  importerConfiguration <- createImporterConfigurationForFile(filePath = filePath, sheet = "DefaultConfig")
   expect_equal(importerConfiguration$timeColumn, "Time")
   expect_equal(importerConfiguration$errorColumn, "Error")
   expect_equal(importerConfiguration$measurementColumn, "Measurement")
