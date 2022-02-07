@@ -145,7 +145,6 @@ DataImporterConfiguration <- R6::R6Class(
       # If value is NULL, remove the error column
       if (is.null(value)) {
         rClr::clrCall(private$.dataImporterTask, "RemoveError", self$ref)
-        # private$.errorColumn <- NULL
       } else {
         validateIsString(value)
         # Create an error column if none is present in the configuration
