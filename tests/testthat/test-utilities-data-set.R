@@ -56,9 +56,8 @@ test_that("It can convert a data set with only non-empty fields, except for meta
 })
 
 test_that("It can convert a data set with metaData", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
-
   dataSet$addMetaData("Organ", "Blood")
+
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
