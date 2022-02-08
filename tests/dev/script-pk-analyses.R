@@ -17,7 +17,8 @@ quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Veno
 sim <- loadSimulation("tests/data/S1.pkml")
 toto <- sim$molWeightFor(quantityPath)
 
-population <- loadPopulation("tests/data/pop_10.csv")
+popFile <- getExtDataFilePath("pop.csv")
+population <- loadPopulation(popFile)
 simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
 populationResults <- runSimulation(sim, population, simRunOptions)
 populationPkAnalyses <- calculatePKAnalyses(populationResults)

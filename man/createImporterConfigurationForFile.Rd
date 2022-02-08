@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-data-importer-configuration.R
 \name{createImporterConfigurationForFile}
 \alias{createImporterConfigurationForFile}
-\title{Create a DataImporterConfiguration object for an XLS sheet}
+\title{Create a \code{DataImporterConfiguration} for an XLS sheet}
 \usage{
 createImporterConfigurationForFile(filePath, sheet = NULL)
 }
@@ -17,7 +17,7 @@ sheet of the XLS file is used.}
 \code{loadDataSetsFromExcel()}.
 }
 \description{
-Create a DataImporterConfiguration object for an XLS sheet
+Create a \code{DataImporterConfiguration} for an XLS sheet
 }
 \details{
 The function tries to parse the structure of the excel sheet and
@@ -25,7 +25,7 @@ creates a default configuration for this sheet. It is advised to check the
 configuration and adjust if necessary before using with \code{loadDataSetsFromExcel()}.
 }
 \examples{
-xlsFilePath <- "../CompiledDataSet.xlsx"
+xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 importerConfiguration$sheets <- "TestSheet_1"
 

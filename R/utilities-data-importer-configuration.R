@@ -10,7 +10,7 @@
 #' @return `DataImporterConfiguration` object for XLS file to be used in
 #' `loadDataSetsFromExcel()`.
 #' @examples
-#' xlsFilePath <- "../CompiledDataSet.xlsx"
+#' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 #' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 #' importerConfiguration$sheets <- "TestSheet_1"
 #'

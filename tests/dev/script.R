@@ -11,7 +11,7 @@ distributedParameter <- getParameter("Organism|Liver|Volume", sim)
 formulaParameter <- getParameter("Organism|Weight", sim)
 constantParameter <- getParameter("Organism|Age", sim)
 
-# sim2 <- loadSimulation("tests/data/simple.pkml")
+# sim2 <- loadSimulation("inst/extdata/simple.pkml")
 # tableParameter <- getParameter("Organism|TableParameter", sim2)
 # #
 # print(distributedParameter)
@@ -60,8 +60,8 @@ constantParameter <- getParameter("Organism|Age", sim)
 # parameter <- getParameter("Organism|Liver|Volume", sim)
 # print(parameter)
 
-
-population <- loadPopulation("tests/data/pop_10.csv")
+popFile <- getExtDataFilePath("pop.csv")
+population <- loadPopulation(popFile)
 
 exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget", sim)
 # population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")

@@ -1,7 +1,7 @@
 context("exportIndividualSimulations")
 
 test_that("It can export the simulation for file for given individual in a population", {
-  populationFileName <- getTestDataFilePath(fileName = "pop_10.csv")
+  populationFileName <- getExtDataFilePath(fileName = "pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
   paths <- exportIndividualSimulations(population = population, individualIds = c(1, 2), outputFolder = tempdir(), simulation = sim)
@@ -13,7 +13,7 @@ test_that("It can export the simulation for file for given individual in a popul
 
 
 test_that("It throws an exception when trying to export for an individual id that does not exist in the population", {
-  populationFileName <- getTestDataFilePath(fileName = "pop_10.csv")
+  populationFileName <- getExtDataFilePath(fileName = "pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
   expect_that(exportIndividualSimulations(population = population, individualIds = c(50, 2), outputFolder = tempdir(), simulation = sim), throws_error())
@@ -105,7 +105,7 @@ test_that("It can run a valid individual simulation and returns results", {
 })
 
 test_that("It can run a valid population simulation and returns results", {
-  populationFileName <- getTestDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   results <- runSimulation(simulation = sim, population = population)
@@ -124,7 +124,7 @@ test_that("It can run a valid population simulation with aging data and returns 
 })
 
 test_that("It can run a valid population simulation created directly from create population", {
-  populationFileName <- getTestDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   list <- list(population = population)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
@@ -133,7 +133,7 @@ test_that("It can run a valid population simulation created directly from create
 })
 
 test_that("It throws an exception when running a population simulation with the wrong arguments", {
-  populationFileName <- getTestDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   expect_that(runSimulation(simulation = population, population = simulation), throws_error())
@@ -195,7 +195,7 @@ test_that("It does not show a warning if one of simulations fails in silent mode
 test_that("It throws an error when running multiple simulations with a population", {
   sim1 <- loadTestSimulation("simple", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("simple", loadFromCache = FALSE)
-  populationFileName <- getTestDataFilePath(fileName = "pop_10.csv")
+  populationFileName <- getExtDataFilePath(fileName = "pop_10.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   expect_that(runSimulations(simulations = c(sim1, sim2), population = population), throws_error())
 })

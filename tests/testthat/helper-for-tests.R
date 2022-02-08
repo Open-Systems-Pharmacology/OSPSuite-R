@@ -4,6 +4,11 @@ getTestDataFilePath <- function(fileName) {
   file.path(dataPath, fileName, fsep = .Platform$file.sep)
 }
 
+getExtDataFilePath <- function(fileName) {
+  dataPath <- file.path(getwd(), "..", "..", "inst", "extdata", fsep = .Platform$file.sep)
+  file.path(dataPath, fileName, fsep = .Platform$file.sep)
+}
+
 getSimulationFilePath <- function(simulationName) {
   getTestDataFilePath(paste0(simulationName, ".pkml"))
 }

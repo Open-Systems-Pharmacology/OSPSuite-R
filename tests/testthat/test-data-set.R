@@ -214,7 +214,7 @@ test_that("it does not overwrite a name when creating from an existing repositor
 })
 
 context("DataSet from pkml with error")
-obsDataFile <- getTestDataFilePath("obs_data.pkml")
+obsDataFile <- getExtDataFilePath("obs_data.pkml")
 
 xValues <- c(
   1.79999995231628, 4.86999988555908, 10.1999998092651,

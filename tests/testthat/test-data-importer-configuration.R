@@ -251,7 +251,7 @@ context("DataImporterConfiguration from file")
 test_that("it can load a data importer configuration", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux
 
-  configurationPath <- getTestDataFilePath("dataImporterConfiguration.xml")
+  configurationPath <- getExtDataFilePath("dataImporterConfiguration.xml")
   importerConfiguration <- DataImporterConfiguration$new(configurationPath)
   expect_equal(importerConfiguration$timeColumn, "Time [h]")
   expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")

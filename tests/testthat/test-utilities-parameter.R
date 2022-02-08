@@ -175,7 +175,7 @@ test_that("It throws an exception when setting values for a parameter that does 
 })
 
 test_that("It can get the value of an individual from a population and set them into a simulation", {
-  populationFileName <- getTestDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop_10.csv")
   population <- loadPopulation(populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   individualValues <- population$getParameterValuesForIndividual(8)
