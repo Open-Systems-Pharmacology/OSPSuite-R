@@ -26,7 +26,7 @@ sim <- loadSimulation(simFilePath)
 simulationResults <- runSimulations(simulations = sim)
 
 # create a new dataset object
-dataSet <- DataSet$new()
+dataSet <- DataSet$new(name="DS")
 
 # created object with datasets combined
 myCombDat <- DataCombined$new()
@@ -37,7 +37,7 @@ myCombDat$addDataSets(dataSet)
 myCombDat
 }
 \section{Super class}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DataCombined}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

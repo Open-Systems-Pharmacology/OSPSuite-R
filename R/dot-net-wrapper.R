@@ -1,7 +1,6 @@
 #' @title DotNetRwapper
 #' @docType class
 #' @description  Wrapper class for .net Object
-#' @field ref The actual .NET object instanced being wrapped
 #'
 #' @section Methods:
 #' \describe{
@@ -11,7 +10,7 @@
 #' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
-  inherit = Printable,
+  inherit = ospsuite.utils::Printable,
   cloneable = FALSE,
   public = list(
     #' @description

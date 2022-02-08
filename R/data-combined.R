@@ -31,7 +31,7 @@
 #' simulationResults <- runSimulations(simulations = sim)
 #'
 #' # create a new dataset object
-#' dataSet <- DataSet$new()
+#' dataSet <- DataSet$new(name="DS")
 #'
 #' # created object with datasets combined
 #' myCombDat <- DataCombined$new()
@@ -45,7 +45,7 @@
 
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
-  inherit = Printable,
+  inherit = ospsuite.utils::Printable,
 
   # public fields and methods ------------------------------------
 
