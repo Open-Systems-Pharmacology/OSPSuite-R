@@ -2,7 +2,7 @@ sim <- loadTestSimulation("S1")
 individualResults <- runSimulation(sim)
 resultsPaths <- individualResults$allQuantityPaths
 
-population <- loadPopulation(getExtDataFilePath("pop_10.csv"))
+population <- loadPopulation(getExtDataFilePath("pop.csv"))
 populationResults <- runSimulation(sim, population)
 
 
