@@ -136,7 +136,7 @@ dataSetToDataFrame <- function(dataSets) {
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
 #'   importerConfiguration = importerConfiguration,
-#'   importAllSheets = TRUE
+#'   importAllSheets = FALSE
 #' )
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
