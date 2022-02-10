@@ -13,36 +13,34 @@ Configuration of data import from excel or csv files. To be used with #TODO
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{ref}}{Underlying .NET reference}
-
 \item{\code{timeColumn}}{Name of the column for time values}
 
-\item{\code{timeUnit}}{If \code{timeUnitFromColumn} is \code{FALSE}, unit of the values in time column
-If \code{timeUnitFromColumn} is \code{TRUE}, name of the column with units of the values in time column}
+\item{\code{timeUnit}}{If \code{isTimeUnitFromColumn} is \code{FALSE}, unit of the values in time column
+If \code{isTimeUnitFromColumn} is \code{TRUE}, name of the column with units of the values in time column}
 
-\item{\code{timeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
+\item{\code{isTimeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
 are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined by
-\code{timeUnit}.}
+the value of \code{timeUnit}.}
 
 \item{\code{measurementColumn}}{Name of the column for measurement values}
 
-\item{\code{measurementDimension}}{If \code{measurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
-If \code{measurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \verb{$measurementDimension} is \code{NULL}.
+\item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
+If \code{isMeasurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \verb{$measurementDimension} is \code{NULL}.
 When changing dimension, the unit is set to the base unit of this dimension.}
 
-\item{\code{measurementUnit}}{If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
-If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column}
+\item{\code{measurementUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
+If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column}
 
-\item{\code{measurementUnitFromColumn}}{If \code{TRUE}, units of the values in measurement column
+\item{\code{isMeasurementUnitFromColumn}}{If \code{TRUE}, units of the values in measurement column
 are defined in the column \code{measurementUnit}. If \code{FALSE}, the unit is defined by
-\code{measurementUnit}.}
+the value of \code{measurementUnit}.}
 
 \item{\code{errorColumn}}{Name of the column for measurement error values
 If no error column is defined, the value is \code{NULL}. Setting the value
 to \code{NULL} removes an existing error column.}
 
-\item{\code{errorUnit}}{If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
-If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in error column
+\item{\code{errorUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
+If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in error column
 If no error column is present, the value is \code{NULL}}
 
 \item{\code{errorType}}{Type of the measurement error values. See enum \code{DataErrorType}
@@ -84,14 +82,13 @@ and \code{{Sheet}} for sheet name.}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(configurationFilePath = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(ref = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{configurationFilePath}}{Path to the XML file with stored configuration
-(e.g. create in PK-Sim or MoBi).
+\item{\code{ref}}{Reference to .NET DataImporterConfiguration object
 If \code{NULL} (default), an empty configuration with columns "Time" and
 "Measurement" is created.}
 }

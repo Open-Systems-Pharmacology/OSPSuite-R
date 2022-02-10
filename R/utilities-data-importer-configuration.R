@@ -17,27 +17,43 @@
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
 #'   importerConfiguration = importerConfiguration,
-#'   importAllSheets = TRUE
+#'   importAllSheets = FALSE
 #' )
 #' @export
 createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   validateIsString(filePath)
-
-  importerConfiguration <- DataImporterConfiguration$new()
   importerTask <- getNetTask("DataImporterTask")
   if (is.null(sheet)) {
     ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath)
   } else {
     ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath, sheet)
   }
-  importerConfiguration$ref <- ref
-  # set timeColumn dimension and unit to default ("Time" and "h") if it could not be read from file
-  if (importerConfiguration$timeUnit == "?") {
-    column <- rClr::clrCall(importerTask, "GetTime", importerConfiguration$ref)
-    mappedColumn <- rClr::clrGet(column, "MappedColumn")
-    rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(ospDimensions$Time)))
-    importerConfiguration$timeUnit <- ospUnits$Time$h
-  }
+  return(DataImporterConfiguration$new(ref))
+}
 
-  return(importerConfiguration)
+#' Load `DataImporterConfiguration` from XML file.
+#'
+#' @param configurationFilePath Path to the XML file with stored configuration
+#' (e.g. created in PK-Sim or MoBi).
+#'
+#' @return A new `DataImporterConfiguration` object to be used with
+#' `loadDataSetsFromExcel()`.
+#' @export
+#'
+#' @examples
+#' configurationFilePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
+#' importerConfiguration <- loadImporterConfiguratoin(configurationFilePath)
+#' #Specifyin which sheet to load
+#' importerConfiguration$sheets <- "TestSheet_1"
+#' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfiguration = importerConfiguration,
+#'   importAllSheets = FALSE
+#' )
+loadDataImporterConfiguration <- function(configurationFilePath){
+  ospsuite.utils::validateIsString(configurationFilePath)
+  importerTask <- getNetTask("DataImporterTask")
+  ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
+  return(DataImporterConfiguration$new(ref))
 }

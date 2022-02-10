@@ -152,7 +152,7 @@ test_that("it can save the data set as pkml", {
 context("loadDataSetsFromExcel")
 configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
-importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+importerConfiguration <- loadDataImporterConfiguration(configurationPath)
 
 test_that("it returns an empty list when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
