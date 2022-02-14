@@ -23,14 +23,14 @@
 createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   validateIsString(filePath)
 
-  importerConfiguration <- DataImporterConfiguration$new()
   importerTask <- getNetTask("DataImporterTask")
   if (is.null(sheet)) {
     ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath)
   } else {
     ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath, sheet)
   }
-  importerConfiguration$ref <- ref
+  importerConfiguration <- DataImporterConfiguration$new(ref = ref)
+
   # set timeColumn dimension and unit to default ("Time" and "h") if it could not be read from file
   if (importerConfiguration$timeUnit == "?") {
     column <- rClr::clrCall(importerTask, "GetTime", importerConfiguration$ref)

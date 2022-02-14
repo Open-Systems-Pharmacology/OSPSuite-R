@@ -8,14 +8,6 @@ DataImporterConfiguration <- R6::R6Class(
   inherit = DotNetWrapper,
   cloneable = TRUE,
   active = list(
-    #' @field ref Underlying .NET reference
-    ref = function(value) {
-      if (missing(value)){
-        return(private$.ref)
-      }
-      private$.ref <- value
-    },
-
     #' @field timeColumn Name of the column for time values
     timeColumn = function(value) {
       column <- private$.timeColumn()
@@ -252,15 +244,18 @@ DataImporterConfiguration <- R6::R6Class(
     #' (e.g. create in PK-Sim or MoBi).
     #' If `NULL` (default), an empty configuration with columns "Time" and
     #' "Measurement" is created.
+    #' @param ref Optional reference to underlying .NET object
     #' @return A new `DataImporterConfiguration` object.
-    initialize = function(configurationFilePath = NULL) {
+    initialize = function(configurationFilePath = NULL, ref = NULL) {
       importerTask <- getNetTask("DataImporterTask")
 
-      if (is.null(configurationFilePath)) {
-        ref <- rClr::clrCall(importerTask, "CreateConfiguration")
-      } else {
-        validateIsString(configurationFilePath)
-        ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
+      if (is.null(ref)) {
+        if (is.null(configurationFilePath)) {
+          ref <- rClr::clrCall(importerTask, "CreateConfiguration")
+        } else {
+          validateIsString(configurationFilePath)
+          ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
+        }
       }
       super$initialize(ref)
       private$.dataImporterTask <- importerTask

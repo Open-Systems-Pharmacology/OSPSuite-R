@@ -13,8 +13,6 @@ Configuration of data import from excel or csv files. To be used with #TODO
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{ref}}{Underlying .NET reference}
-
 \item{\code{timeColumn}}{Name of the column for time values}
 
 \item{\code{timeUnit}}{If \code{timeUnitFromColumn} is \code{FALSE}, unit of the values in time column
@@ -84,7 +82,7 @@ and \code{{Sheet}} for sheet name.}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(configurationFilePath = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(configurationFilePath = NULL, ref = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -94,6 +92,8 @@ Initialize a new instance of the class
 (e.g. create in PK-Sim or MoBi).
 If \code{NULL} (default), an empty configuration with columns "Time" and
 "Measurement" is created.}
+
+\item{\code{ref}}{Optional reference to underlying .NET object}
 }
 \if{html}{\out{</div>}}
 }
