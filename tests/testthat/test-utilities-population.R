@@ -1,7 +1,7 @@
 context("loadPopulation")
 
 test_that("It can load a valid csv population file", {
-  populationFileName <- getExtDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
   expect_true(!is.null(population))
 })
@@ -14,7 +14,7 @@ test_that("It throws an exception when loading an invalid population file", {
 
 context("splitPopulationFile")
 test_that("It can split a valid csv file to split files", {
-  populationFileName <- getExtDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop.csv")
   splitFiles <- splitPopulationFile(populationFileName, 3, tempdir(), "SplitFile")
   expect_equal(length(splitFiles), 3)
 })
@@ -22,7 +22,7 @@ test_that("It can split a valid csv file to split files", {
 
 context("populationAsDataFrame")
 test_that("It can convert a population to data frame", {
-  populationFileName <- getExtDataFilePath("pop_10.csv")
+  populationFileName <- getExtDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
   df <- populationAsDataFrame(population)
   expect_equal(nrow(df), 10)
