@@ -30,15 +30,13 @@ Load data sets from excel
 Load observed data from an excel file using an importer configuration
 }
 \examples{
-\dontrun{
-configurationPath <- "../dataImporterConfiguration_noSheets.xml"
-xlsFilePath <- "../CompiledDataSet_oneSheet.xlsx"
-importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
+importerConfiguration$sheets <- "TestSheet_1"
 
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
   importerConfiguration = importerConfiguration,
-  importAllSheets = TRUE
+  importAllSheets = FALSE
 )
-}
 }

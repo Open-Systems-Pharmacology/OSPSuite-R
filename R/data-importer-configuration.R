@@ -10,7 +10,7 @@ DataImporterConfiguration <- R6::R6Class(
   active = list(
     #' @field timeColumn Name of the column for time values
     timeColumn = function(value) {
-      column <- private$.timeColumn
+      column <- private$.timeColumn()
       if (missing(value)) {
         return(rClr::clrGet(column, "ColumnName"))
       }
@@ -18,10 +18,10 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
-    #' @field timeUnit If `timeUnitFromColumn` is `FALSE`, unit of the values in time column
-    #' If `timeUnitFromColumn` is `TRUE`, name of the column with units of the values in time column
+    #' @field timeUnit If `isTimeUnitFromColumn` is `FALSE`, unit of the values in time column
+    #' If `isTimeUnitFromColumn` is `TRUE`, name of the column with units of the values in time column
     timeUnit = function(value) {
-      column <- private$.timeColumn
+      column <- private$.timeColumn()
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       unit <- rClr::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
@@ -35,11 +35,11 @@ DataImporterConfiguration <- R6::R6Class(
       private$.setColumnUnit(column = column, value = value)
     },
 
-    #' @field timeUnitFromColumn If `TRUE`, units of the values in time column
+    #' @field isTimeUnitFromColumn If `TRUE`, units of the values in time column
     #' are defined in the column `timeUnit`. If `FALSE`, the unit is defined by
-    #' `timeUnit`.
-    timeUnitFromColumn = function(value) {
-      column <- private$.timeColumn
+    #' the value of `timeUnit`.
+    isTimeUnitFromColumn = function(value) {
+      column <- private$.timeColumn()
       if (missing(value)) {
         return(private$.isUnitFromColumn(column))
       }
@@ -49,7 +49,7 @@ DataImporterConfiguration <- R6::R6Class(
 
     #' @field measurementColumn Name of the column for measurement values
     measurementColumn = function(value) {
-      column <- private$.measurementColumn
+      column <- private$.measurementColumn()
       if (missing(value)) {
         return(rClr::clrGet(column, "ColumnName"))
       }
@@ -57,11 +57,11 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
-    #' @field measurementDimension If `measurementUnitFromColumn` is `FALSE`, dimension of the values in measurement column
-    #' If `measurementUnitFromColumn` is `TRUE`, the dimension is guessed from the unit defined in the column `measurementUnit` during import process and `$measurementDimension` is `NULL`.
+    #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`, dimension of the values in measurement column
+    #' If `isMeasurementUnitFromColumn` is `TRUE`, the dimension is guessed from the unit defined in the column `measurementUnit` during import process and `$measurementDimension` is `NULL`.
     #' When changing dimension, the unit is set to the base unit of this dimension.
     measurementDimension = function(value) {
-      column <- private$.measurementColumn
+      column <- private$.measurementColumn()
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       unit <- rClr::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
@@ -70,7 +70,7 @@ DataImporterConfiguration <- R6::R6Class(
           return(NULL)
         }
         dimension <- rClr::clrGet(mappedColumn, "Dimension")
-        return(rClr::clrGet(dimension, "DisplayName"))
+        return(ospsuite.utils::ifNotNull(dimension, rClr::clrGet(dimension, "DisplayName")))
       }
       validateIsString(value)
       # Fixed unit or from column?
@@ -84,7 +84,7 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(unit, "SelectedUnit", getBaseUnit(value))
 
       # also change dimension of the error
-      column <- private$.errorColumn
+      column <- private$.errorColumn()
       if (!is.null(column)) {
         mappedColumn <- rClr::clrGet(column, "MappedColumn")
         unit <- rClr::clrGet(mappedColumn, "Unit")
@@ -93,10 +93,10 @@ DataImporterConfiguration <- R6::R6Class(
       }
     },
 
-    #' @field measurementUnit If `measurementUnitFromColumn` is `FALSE`, unit of the values in measurement column
-    #' If `measurementUnitFromColumn` is `TRUE`, name of the column with units of the values in measurement column
+    #' @field measurementUnit If `isMeasurementUnitFromColumn` is `FALSE`, unit of the values in measurement column
+    #' If `isMeasurementUnitFromColumn` is `TRUE`, name of the column with units of the values in measurement column
     measurementUnit = function(value) {
-      column <- private$.measurementColumn
+      column <- private$.measurementColumn()
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
       unit <- rClr::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
@@ -110,19 +110,19 @@ DataImporterConfiguration <- R6::R6Class(
       private$.setColumnUnit(column = column, value = value)
     },
 
-    #' @field measurementUnitFromColumn If `TRUE`, units of the values in measurement column
+    #' @field isMeasurementUnitFromColumn If `TRUE`, units of the values in measurement column
     #' are defined in the column `measurementUnit`. If `FALSE`, the unit is defined by
-    #' `measurementUnit`.
-    measurementUnitFromColumn = function(value) {
-      column <- private$.measurementColumn
+    #' the value of `measurementUnit`.
+    isMeasurementUnitFromColumn = function(value) {
+      column <- private$.measurementColumn()
       if (missing(value)) {
         return(private$.isUnitFromColumn(column))
       }
       validateIsLogical(value)
       rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
       # Also change isUnitFromColumn for error column
-      if (!is.null(private$.errorColumn)) {
-        rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", private$.errorColumn, value)
+      if (!is.null(private$.errorColumn())) {
+        rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", private$.errorColumn(), value)
       }
     },
 
@@ -130,29 +130,28 @@ DataImporterConfiguration <- R6::R6Class(
     #' If no error column is defined, the value is `NULL`. Setting the value
     #' to `NULL` removes an existing error column.
     errorColumn = function(value) {
-      column <- private$.errorColumn
+      column <- private$.errorColumn()
       if (missing(value)) {
         return(ifNotNull(column, rClr::clrGet(column, "ColumnName")))
       }
       # If value is NULL, remove the error column
       if (is.null(value)) {
         rClr::clrCall(private$.dataImporterTask, "RemoveError", self$ref)
-        private$.errorColumn <- NULL
       } else {
         validateIsString(value)
         # Create an error column if none is present in the configuration
         if (is.null(column)) {
           private$.addErrorColumn()
         }
-        rClr::clrSet(private$.errorColumn, "ColumnName", enc2utf8(value))
+        rClr::clrSet(private$.errorColumn(), "ColumnName", enc2utf8(value))
       }
     },
 
-    #' @field errorUnit If `measurementUnitFromColumn` is `FALSE`, unit of the values in the error column
-    #' If `measurementUnitFromColumn` is `TRUE`, name of the column with units of the values in error column
+    #' @field errorUnit If `isMeasurementUnitFromColumn` is `FALSE`, unit of the values in the error column
+    #' If `isMeasurementUnitFromColumn` is `TRUE`, name of the column with units of the values in error column
     #' If no error column is present, the value is `NULL`
     errorUnit = function(value) {
-      column <- private$.errorColumn
+      column <- private$.errorColumn()
       if (is.null(column)) {
         if (missing(value)) {
           return(NULL)
@@ -177,7 +176,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' for possible values
     #' If no error column is present, the value is `NULL`
     errorType = function(value) {
-      column <- private$.errorColumn
+      column <- private$.errorColumn()
 
       if (is.null(column)) {
         if (missing(value)) {
@@ -239,28 +238,31 @@ DataImporterConfiguration <- R6::R6Class(
     }
   ),
   public = list(
-    #' @description
-    #' Initialize a new instance of the class
-    #' @param configurationFilePath Path to the XML file with stored configuration
-    #' (e.g. create in PK-Sim or MoBi).
+    #' @param ref Reference to .NET DataImporterConfiguration object
     #' If `NULL` (default), an empty configuration with columns "Time" and
     #' "Measurement" is created.
+    #' @description
+    #' Initialize a new instance of the class
     #' @return A new `DataImporterConfiguration` object.
-    initialize = function(configurationFilePath = NULL) {
+    initialize = function(ref = NULL) {
       importerTask <- getNetTask("DataImporterTask")
-
-      if (is.null(configurationFilePath)) {
+      if (is.null(ref)) {
         ref <- rClr::clrCall(importerTask, "CreateConfiguration")
-      } else {
-        validateIsString(configurationFilePath)
-        ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
       }
       super$initialize(ref)
       private$.dataImporterTask <- importerTask
 
-      private$.timeColumn <- rClr::clrCall(importerTask, "GetTime", ref)
-      private$.measurementColumn <- rClr::clrCall(importerTask, "GetMeasurement", ref)
-      private$.errorColumn <- rClr::clrCall(importerTask, "GetError", ref)
+      # set timeColumn dimension and unit to default ("Time" and "h") if it is
+      # not set properyl in the .NET object. This could happen when creating
+      # a configuration for a xls-sheet and the unit could not be recognized.
+      # Because the user cannot set the Dimension if time values, this must be
+      # done during initialization phase.
+      if (self$timeUnit == "?") {
+        column <- rClr::clrCall(importerTask, "GetTime", ref)
+        mappedColumn <- rClr::clrGet(column, "MappedColumn")
+        rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(ospDimensions$Time)))
+        self$timeUnit <- ospUnits$Time$h
+      }
     },
 
     #' @description
@@ -300,10 +302,10 @@ DataImporterConfiguration <- R6::R6Class(
       private$printClass()
       private$printLine("Time column", self$timeColumn)
       private$printLine("Time unit", self$timeUnit)
-      private$printLine("Time unit from column", self$timeUnitFromColumn)
+      private$printLine("Time unit from column", self$isTimeUnitFromColumn)
       private$printLine("Measurement column", self$measurementColumn)
       private$printLine("Measurement unit", self$measurementUnit)
-      private$printLine("Measurement unit from column", self$measurementUnitFromColumn)
+      private$printLine("Measurement unit from column", self$isMeasurementUnitFromColumn)
       private$printLine("Error column", self$errorColumn)
       private$printLine("Error type", self$errorType)
       private$printLine("Error unit", self$errorUnit)
@@ -316,14 +318,18 @@ DataImporterConfiguration <- R6::R6Class(
   ),
   private = list(
     .dataImporterTask = NULL,
-    .timeColumn = NULL,
-    .measurementColumn = NULL,
-    .errorColumn = NULL,
+    .timeColumn = function() {
+      return(rClr::clrCall(private$.dataImporterTask, "GetTime", self$ref))
+    },
+    .measurementColumn = function() {
+      return(rClr::clrCall(private$.dataImporterTask, "GetMeasurement", self$ref))
+    },
+    .errorColumn = function() {
+      return(rClr::clrCall(private$.dataImporterTask, "GetError", self$ref))
+    },
     .addErrorColumn = function() {
       rClr::clrCall(private$.dataImporterTask, "AddError", self$ref)
-      column <- rClr::clrCall(private$.dataImporterTask, "GetError", self$ref)
-      private$.errorColumn <- column
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
+      mappedColumn <- rClr::clrGet(private$.errorColumn(), "MappedColumn")
       rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(self$measurementDimension)))
     },
     .setColumnUnit = function(column, value) {

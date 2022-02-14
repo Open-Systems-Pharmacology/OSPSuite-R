@@ -10,13 +10,13 @@ simResults <- importResultsFromCSV(
 # import observed data (will return a list of DataSet objects)
 dataSet <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
 # same as dataSet, but with deliberately changed entries for testing
 dataSet2 <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
-  importerConfiguration = DataImporterConfiguration$new(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
 test_that("active bindings should all be NULL for empty initialization", {

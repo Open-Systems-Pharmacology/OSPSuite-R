@@ -12,4 +12,4 @@
 *.Rmd	text
 *.R     text eol=crlf
 *.Rproj text
-*.[Rr]md   linguist-detectable 
+*.[Rr]md   linguist-detectable
