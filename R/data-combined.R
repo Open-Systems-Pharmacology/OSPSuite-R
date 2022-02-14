@@ -12,14 +12,6 @@
 #'
 #' - Transforming data (with given offsets and scale factors).
 #'
-#' @param groups A string or a list of strings assigning the data set to a
-#'   group. If an entry within the list is `NULL`, the corresponding data set is
-#'   not assigned to any group (and the corresponding entry in the dataframe
-#'   will be an `NA`). If provided, `groups` must have the same length as
-#'   `dataSets` and/or `simulationResults$quantityPath`. If no grouping is
-#'   specified for any of the dataset, the column `group` in the dataframe
-#'   output will be all `NA`.
-#'
 #' @import tidyr
 #' @import ospsuite.utils
 #'
@@ -31,7 +23,7 @@
 #' simulationResults <- runSimulations(simulations = sim)
 #'
 #' # create a new dataset object
-#' dataSet <- DataSet$new(name = "MyDataSet")
+#' dataSet <- DataSet$new(name = "DS")
 #'
 #' # created object with datasets combined
 #' myCombDat <- DataCombined$new()
@@ -61,10 +53,9 @@ DataCombined <- R6::R6Class(
     #' Adds observed data.
     #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, newNames = NULL, groups = NULL) {
+    addDataSets = function(dataSets, newNames = NULL) {
       # validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
-      groups <- cleanVectorArgs(groups, objCount(dataSets), type = "character")
       newNames <- cleanVectorArgs(newNames, objCount(dataSets), type = "character")
 
       # if alternate names are provided for datasets, use them instead
@@ -79,10 +70,10 @@ DataCombined <- R6::R6Class(
       }
 
       # update private fields for the new setter call
-      private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, newNames, groups))
-      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.names <- private$.extractNames(private$.dataCombined)
+      private$.dataCombined <- private$.updateDF(private$.dataCombined, private$.dataSetToDF(dataSets, newNames))
+
+      # update active bindings
+      private$.extractBindings()
 
       # set up data transformations
       self$setDataTransformations(newNames)
@@ -124,8 +115,7 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL,
-                                    newNames = NULL,
-                                    groups = NULL) {
+                                    newNames = NULL) {
       # A list or a vector of `SimulationResults` class instances is not allowed
       #
       # If we were to allow this, `quantitiesOrPaths`, `population`, and
@@ -151,7 +141,6 @@ DataCombined <- R6::R6Class(
       # validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
       newNames <- cleanVectorArgs(newNames, pathsLength, type = "character")
-      groups <- cleanVectorArgs(groups, pathsLength, type = "character")
 
       # if alternate names are provided for datasets, use them instead
       #
@@ -171,16 +160,102 @@ DataCombined <- R6::R6Class(
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
           individualIds     = individualIds,
-          names             = newNames,
-          groups            = groups
+          names             = newNames
         )
       )
-      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.names <- private$.extractNames(private$.dataCombined)
+
+      # update active bindings
+      private$.extractBindings()
 
       # set up data transformations
       self$setDataTransformations(newNames)
+
+      # for method chaining
+      invisible(self)
+    },
+
+    #' @param groups A named list specifying which datasets belong to which
+    #'   group. For example, if datsets names are `"x"`, `"y"`, `"z"`, and the
+    #'   desired groupings for them are respectively `"a"` and `"b"`, this
+    #'   argument would be `list("x" = "a", "y" = "b")`. Datasets for which no
+    #'   grouping is to be specified, can be left out of the `groups` argument.
+    #'   The column `group` in the dataframe output will be `NA` for such
+    #'   datasets. If you wish to remove already specified grouping for a
+    #'   dataset, you can specify it as following: `list("x" = NA)`. This will
+    #'   not change any of the other (previously specified) groupings. Note that
+    #'   if you have specified `newNames` while adding datasets using respective
+    #'   methods, you will need to use these new names to specify group
+    #'   assignment.
+    #'
+    #' @description
+    #' Adds grouping information to datasets.
+    #'
+    #' @return `DataCombined` object with grouped datasets.
+    setGroups = function(groups) {
+      if (is.null(private$.dataCombined)) {
+        stop(
+          "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
+          call. = FALSE
+        )
+      }
+
+      # handle empty lists or lists without names
+      if (length(groups) == 0L || is.null(names(groups))) {
+        stop(
+          "You need to provide a named list with at least one valid grouping.",
+          call. = FALSE
+        )
+      }
+
+      # validate depth of the argument vector
+      validateVecDepth(groups)
+
+      # existing grouping can be removed by setting dataset name to `NA`, but
+      # the default `NA` type in R is `logical`, so it needs to be converted to
+      # `character` type
+      groups <- purrr::modify_if(groups, is.na, as.character)
+
+      # if there are any non-`character` type elements in the list, stop
+      #
+      # we need to check only elements of the list and not the names since names
+      # won't ever be anything but of `character` type
+      if (length(purrr::keep(groups, ~ !is.character(.))) > 0L) {
+        stop(
+          "Names for groups can only be of `character` type.",
+          call. = FALSE
+        )
+      }
+
+      # extract groupings and dataset names in a dataframe
+      # `as.list()` will make sure that atomic vector will also work
+      groupData <- dplyr::as_tibble(as.list(groups)) %>%
+        tidyr::pivot_longer(
+          cols      = dplyr::everything(),
+          names_to  = "name",
+          values_to = "group"
+        ) %>%
+        # it is important to coerce `group` column to `character` type because
+        # if the only column entry is `NA`, it will be of `logical` type, which
+        # would cause problems downstream if this column is to be row-bound with
+        # another column that is of `character` type
+        dplyr::mutate(group = as.character(group))
+
+      # update the specified groupings with what already exists, i.e. groupings
+      # which have been specified previously in object's lifetime
+      groupData <- private$.updateDF(
+        dplyr::select(private$.groupMap, -dataType),
+        groupData
+      )
+
+      # update grouping information in the combined data
+      private$.dataCombined <- dplyr::left_join(
+        x  = dplyr::select(private$.dataCombined, -group),
+        y  = groupData,
+        by = "name"
+      )
+
+      # update active binding with the new grouping specification
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
 
       # for method chaining
       invisible(self)
@@ -277,7 +352,7 @@ DataCombined <- R6::R6Class(
     #' Print the object to the console
     print = function() {
       # group map contains names and nature of the datasets and grouping details
-      private$printLine("DataCombined", addTab = FALSE)
+      private$printClass()
       private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
       print(private$.groupMap)
@@ -327,7 +402,7 @@ DataCombined <- R6::R6Class(
 
   private = list(
     # extract dataframe from `DataSet` objects
-    .dataSetToDF = function(dataSets, names = NULL, groups = NULL) {
+    .dataSetToDF = function(dataSets, names = NULL) {
       # `dataSetToDataFrame()` function can handle a vector, a list, or a scalar
       # of `DataSet` class, so use to extract a dataframe, and then
       #
@@ -335,9 +410,11 @@ DataCombined <- R6::R6Class(
       #
       # replace dataset names with alternative names (if provided)
       dataSetToDataFrame(dataSets) %>%
-        dplyr::mutate(dataType = "observed") %>%
+        dplyr::mutate(
+          dataType = "observed",
+          group    = NA_character_
+        ) %>%
         private$.renameDatasets(names) %>%
-        private$.addGroupCol(groups) %>%
         dplyr::as_tibble()
     },
 
@@ -346,8 +423,7 @@ DataCombined <- R6::R6Class(
                                quantitiesOrPaths = NULL,
                                population = NULL,
                                individualIds = NULL,
-                               names = NULL,
-                               groups = NULL) {
+                               names = NULL) {
       # all input validation will take place in this function itself
       # `simulationResultsToDataFrame()` can handle only a single class instance
       # extract a dataframe with is help, and then
@@ -370,11 +446,11 @@ DataCombined <- R6::R6Class(
       ) %>%
         dplyr::mutate(
           name         = paths,
+          group        = NA_character_,
           dataType     = "simulated",
           yErrorValues = NA_real_
         ) %>%
         private$.renameDatasets(names) %>%
-        private$.addGroupCol(groups) %>%
         dplyr::rename(
           "xValues"    = "Time",
           "xUnit"      = "TimeUnit",
@@ -382,35 +458,8 @@ DataCombined <- R6::R6Class(
           "yValues"    = "simulationValues",
           "yUnit"      = "unit",
           "yDimension" = "dimension"
-        )
-    },
-
-    # Add a new group column
-    #
-    # If no grouping is specified for a dataset, the value for `group` column
-    # will be `NA`.
-    #
-    # Looking ahead to the bridge with the `{tlf}` package, while visualizing
-    # datasets that don't belong to any grouping, the datset's own name can
-    # instead be used as a dummy grouping variable. But this will be taken care
-    # of in the plotting function itself.
-    #
-    # This is why this function doesn't replace `NA`s in the grouping column
-    # with dataset names.
-    .addGroupCol = function(data, groups = NULL) {
-      if (is.null(groups)) {
-        return(data %>% dplyr::mutate(group = NA_character_))
-      }
-
-      # Nest the dataset by its unique identifier, which is `name`, and then
-      # assign new `groups` vector to the new `group` column, and then
-      # unnest the list column.
-      #
-      # Note that `group` column is based on lexical order of quantity paths
-      data %>%
-        tidyr::nest(data = -name) %>%
-        dplyr::mutate(group = groups) %>%
-        tidyr::unnest(cols = c(data))
+        ) %>%
+        dplyr::as_tibble()
     },
 
     # Add a new column with alternate names
@@ -522,6 +571,13 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
+    # extract all active bindings
+    .extractBindings = function() {
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
+      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
+      private$.names <- private$.extractNames(private$.dataCombined)
+    },
+
     # extract dataframe with group mappings
     .extractGroupMap = function(data) {
       # select only the unique identifier columns and then
@@ -626,7 +682,9 @@ DataCombined <- R6::R6Class(
           -(dplyr::contains("original") & dplyr::matches("values$"))
         ) %>%
         # arrange data (alphabetically) by dataset name
-        dplyr::arrange(name)
+        dplyr::arrange(name) %>%
+        # always return a tibble
+        dplyr::as_tibble()
     },
 
     # private fields ----------------------------------------
