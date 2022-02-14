@@ -37,7 +37,7 @@
 #' @export
 loadDataSetFromPKML <- function(filePath) {
   dataRepository <- .loadDataRepositoryFromPKML(filePath)
-  return(DataSet$new(dataRepository))
+  return(DataSet$new(dataRepository = dataRepository))
 }
 
 #' Save the `DataSet` to pkml
