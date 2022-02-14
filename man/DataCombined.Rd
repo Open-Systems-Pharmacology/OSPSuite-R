@@ -37,7 +37,7 @@ myCombDat$addDataSets(dataSet)
 myCombDat
 }
 \section{Super class}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{DataCombined}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

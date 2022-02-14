@@ -10,7 +10,7 @@
 #' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
-  inherit = ospsuite.utils::Printable,
+  inherit = Printable,
   cloneable = FALSE,
   public = list(
     #' @description

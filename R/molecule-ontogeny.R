@@ -7,7 +7,7 @@
 #' @export
 MoleculeOntogeny <- R6::R6Class(
   "MoleculeOntogeny",
-  inherit = ospsuite.utils::Printable,
+  inherit = Printable,
   public = list(
     #' @field molecule Name of the molecule in the model
     molecule = NULL,
