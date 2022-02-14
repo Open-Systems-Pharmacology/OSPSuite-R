@@ -70,7 +70,6 @@ SimulationBatch <- R6::R6Class(
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
       rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
-      return(batchRunValues$id)
     }
   ),
   active = list(

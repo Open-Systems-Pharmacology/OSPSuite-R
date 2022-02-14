@@ -9,7 +9,7 @@ Use when retrieving individual values using the createIndividualAlgorithm. This 
 allowing the user to retrieve potential ontogeny values.
 }
 \section{Super class}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{MoleculeOntogeny}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{MoleculeOntogeny}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

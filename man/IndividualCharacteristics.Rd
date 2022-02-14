@@ -8,7 +8,7 @@
 Characteristics of an individual describing its origin
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{IndividualCharacteristics}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{IndividualCharacteristics}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

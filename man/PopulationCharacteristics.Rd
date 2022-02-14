@@ -8,7 +8,7 @@
 Characteristics of a population used for population creation
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{PopulationCharacteristics}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{PopulationCharacteristics}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

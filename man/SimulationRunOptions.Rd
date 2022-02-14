@@ -8,7 +8,7 @@
 Options to be passed to the simulation engine
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationRunOptions}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationRunOptions}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

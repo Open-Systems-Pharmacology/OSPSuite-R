@@ -8,7 +8,7 @@
 Results of a sensitivity analysis run (either individual or population simulation)
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{AgingData}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{AgingData}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

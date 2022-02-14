@@ -8,7 +8,7 @@
 Options to be passed to the SimulationBatch run
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchRunValues}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchRunValues}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -16,8 +16,6 @@ Options to be passed to the SimulationBatch run
 \item{\code{parameterValues}}{Vector of parameter values used in a batch run}
 
 \item{\code{initialValues}}{Vector of initial values used in a batch run}
-
-\item{\code{id}}{Internal id of the batch run value}
 }
 \if{html}{\out{</div>}}
 }

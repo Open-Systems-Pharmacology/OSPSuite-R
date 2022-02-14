@@ -194,7 +194,7 @@ DataSet <- R6::R6Class(
     #' @param name Name of the `DataSet` if created from scratch (no `dataRepository`)
     #' provided. Ignored if `dataRepository` is not `NULL`.
     #' @return A new `DataSet` object.
-    initialize = function(dataRepository = NULL, name = NULL) {
+    initialize = function(name = NULL, dataRepository = NULL) {
       if (is.null(dataRepository) && is.null(name)) {
         stop(messages$errorDataSetNameMissing)
       }
