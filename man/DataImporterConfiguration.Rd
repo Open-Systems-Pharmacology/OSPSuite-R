@@ -8,7 +8,7 @@
 Configuration of data import from excel or csv files. To be used with #TODO
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataImporterConfiguration}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataImporterConfiguration}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

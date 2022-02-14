@@ -8,7 +8,7 @@
 An entry (x, y) in a table formula
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ValuePoint}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ValuePoint}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

@@ -8,7 +8,7 @@
 A class for storage of numerical x- and y-value pairs and optional error for y-values.
 }
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
+\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -82,17 +82,17 @@ Either create a \code{DataSet} from a \code{DataRepository} (e.g. loaded from a 
 or an empty \code{DataSet}. In case of an empty \code{DataSet}, a \code{name} must be
 provided.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$new(dataRepository = NULL, name = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataSet$new(name = NULL, dataRepository = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap.
-If \code{NULL}, an empty \code{DataRepository} is created.}
-
 \item{\code{name}}{Name of the \code{DataSet} if created from scratch (no \code{dataRepository})
 provided. Ignored if \code{dataRepository} is not \code{NULL}.}
+
+\item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap.
+If \code{NULL}, an empty \code{DataRepository} is created.}
 }
 \if{html}{\out{</div>}}
 }
