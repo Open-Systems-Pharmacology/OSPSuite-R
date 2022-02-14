@@ -1,5 +1,5 @@
 context("createImporterConfigurationForFile")
-filePath <- getExtDataFilePath("CompiledDataSet.xlsx")
+filePath <- getTestDataFilePath("CompiledDataSet.xlsx")
 
 test_that("It can create a DataImporterConfiguration from a XLS file", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux
@@ -51,7 +51,7 @@ context("DataImporterConfiguration from file")
 test_that("it can load a data importer configuration", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux
 
-  configurationPath <- getExtDataFilePath("dataImporterConfiguration.xml")
+  configurationPath <- getTestDataFilePath("dataImporterConfiguration.xml")
   importerConfiguration <- loadDataImporterConfiguration(configurationPath)
   expect_equal(importerConfiguration$timeColumn, "Time [h]")
   expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")

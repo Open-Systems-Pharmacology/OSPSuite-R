@@ -1,7 +1,7 @@
 context("loadDataSetFromPKML")
 
 test_that("It can load a valid observed data file and create a DataSet object", {
-  file <- getExtDataFilePath("obs_data.pkml")
+  file <- getTestDataFilePath("obs_data.pkml")
   dataSet <- loadDataSetFromPKML(file)
 
   expect_true(isOfType(dataSet, DataSet))
@@ -101,7 +101,7 @@ test_that("It can convert a list of data sets", {
 
 context("saveDataSetToPKML")
 
-obsDataFile <- getExtDataFilePath("obs_data.pkml")
+obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
   1.79999995231628, 4.86999988555908, 10.1999998092651,

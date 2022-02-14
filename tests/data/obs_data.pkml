@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<McDataRepository id="9b45834f-825f-42ea-b0d6-b54b3f2b6eb6" name="ObservedData" icon="ObservedData" version="14">
+  <Columns>
+    <McBaseGrid id="34614cf4-2a08-4574-9b52-4070a5a5eca7" name="Time" dimension="Time" isInternal="0" baseGrid="34614cf4-2a08-4574-9b52-4070a5a5eca7">
+      <DataInfo origin="BaseGrid" auxiliaryType="Undefined" displayUnitName="min" date="-8585855074602791495" source="C:\temp\RanorexTestData\ObservedData.xlsx" />
+      <QuantityInfo name="Time" type="Time" orderIndex="0" Path="ObservedData|Time" />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAAcAAAALZmbmPwrXm0AzMyNBAADwQQAAcEIAAPBCAABwQws=</Values>
+      <RelatedColumnsCache />
+    </McBaseGrid>
+    <McDataColumn id="ff65bf6d-6bfd-440a-9d94-65482ba8a71a" name="Measurement" dimension="Concentration (mass)" isInternal="0" baseGrid="34614cf4-2a08-4574-9b52-4070a5a5eca7">
+      <DataInfo origin="Observation" auxiliaryType="Undefined" displayUnitName="mg/l" date="-8585855074602791495" source="C:\temp\RanorexTestData\ObservedData.xlsx" />
+      <QuantityInfo name="Measurement" type="Undefined" orderIndex="0" Path="ObservedData|Measurement" />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAAcAAAALN9CKMA8mZDAvqUgwf+6ZL//wAy/yIwYusaTQLAs=</Values>
+      <RelatedColumnsCache>
+        <ColumnId>330731a9-2567-44aa-a3ca-1e0db3300a55</ColumnId>
+      </RelatedColumnsCache>
+    </McDataColumn>
+    <McDataColumn id="330731a9-2567-44aa-a3ca-1e0db3300a55" name="Error" dimension="Concentration (mass)" isInternal="0" baseGrid="34614cf4-2a08-4574-9b52-4070a5a5eca7">
+      <DataInfo origin="ObservationAuxiliary" auxiliaryType="ArithmeticStdDev" displayUnitName="mg/l" date="-8585855074602791495" source="C:\temp\RanorexTestData\ObservedData.xlsx" />
+      <QuantityInfo name="Error" type="Undefined" orderIndex="0" Path="ObservedData|Error" />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAAcAAAALs1maNR1MkjWBqpc14b6jNTs/vTV+YJ41aqTGNQs=</Values>
+      <RelatedColumnsCache />
+    </McDataColumn>
+  </Columns>
+  <ExtendedProperties>
+    <StringExtendedProperty name="Source" readOnly="0" value="C:\temp\RanorexTestData\ObservedData.xlsx" />
+    <StringExtendedProperty name="Sheet" readOnly="0" value="Tabelle1" />
+    <DoubleExtendedProperty name="DoubleValue" readOnly="0" value="5.0" />
+    <StringExtendedProperty name="StringValues" readOnly="0" value="hello" />
+    <Int32ExtendedProperty name="IntegerValue" readOnly="0" value="4" />
+  </ExtendedProperties>
+</McDataRepository>
