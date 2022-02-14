@@ -86,7 +86,7 @@ exportPopulationToCSV <- function(population, filePath) {
   validateIsString(filePath)
   filePath <- expandPath(filePath)
   df <- populationAsDataFrame(population)
-  write.csv(df, file = filePath, row.names = FALSE)
+  write.csv(df, file = filePath, row.names = FALSE, fileEncoding = "UTF-8")
   invisible()
 }
 
