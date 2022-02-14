@@ -1,5 +1,5 @@
 context("Population")
-populationFileName <- getExtDataFilePath("pop.csv")
+populationFileName <- getTestDataFilePath("pop.csv")
 simuation <- loadTestSimulation("S1")
 venousBloodVolume <- getParameter("Organism|VenousBlood|Volume", simuation)
 values <- c(1:10) * 2.5
