@@ -2,7 +2,7 @@
 library(ospsuite)
 
 sim <- loadSimulation("tests/data/S1.pkml")
-popFile <- getExtDataFilePath("pop.csv")
+popFile <- getTestDataFilePath("pop.csv")
 pop <- loadPopulation(popFile)
 
 demographyParameters <- getAllParametersMatching(StandardPath$BMI, sim)

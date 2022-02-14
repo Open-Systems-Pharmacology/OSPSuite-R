@@ -1,6 +1,6 @@
 library(ospsuite)
 
-popFile <- getExtDataFilePath("pop.csv")
+popFile <- getTestDataFilePath("pop.csv")
 population <- loadPopulation(popFile)
 sim <- loadSimulation("tests/data/S1.pkml")
 

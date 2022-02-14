@@ -1,7 +1,7 @@
 context("exportIndividualSimulations")
 
 test_that("It can export the simulation for file for given individual in a population", {
-  populationFileName <- getExtDataFilePath(fileName = "pop.csv")
+  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
   paths <- exportIndividualSimulations(population = population, individualIds = c(1, 2), outputFolder = tempdir(), simulation = sim)
@@ -13,7 +13,7 @@ test_that("It can export the simulation for file for given individual in a popul
 
 
 test_that("It throws an exception when trying to export for an individual id that does not exist in the population", {
-  populationFileName <- getExtDataFilePath(fileName = "pop.csv")
+  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
   expect_that(exportIndividualSimulations(population = population, individualIds = c(50, 2), outputFolder = tempdir(), simulation = sim), throws_error())

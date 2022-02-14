@@ -60,7 +60,7 @@ constantParameter <- getParameter("Organism|Age", sim)
 # parameter <- getParameter("Organism|Liver|Volume", sim)
 # print(parameter)
 
-popFile <- getExtDataFilePath("pop.csv")
+popFile <- getTestDataFilePath("pop.csv")
 population <- loadPopulation(popFile)
 
 exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget", sim)

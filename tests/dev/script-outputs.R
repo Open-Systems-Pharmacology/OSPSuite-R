@@ -9,7 +9,7 @@ resultsPaths <- individualResults$allQuantityPaths
 tlf <- getOutputValues(individualResults)
 print(tlf)
 
-popFile <- getExtDataFilePath("pop.csv")
+popFile <- getTestDataFilePath("pop.csv")
 population <- loadPopulation(popFile)
 populationResults <- runSimulation(sim, population)
 resultsPaths <- populationResults$allQuantityPaths
