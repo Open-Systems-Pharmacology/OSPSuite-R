@@ -12,7 +12,7 @@ OutputSelections <- R6::R6Class(
       if (missing(value)) {
         toObjectType(rClr::clrGet(self$ref, "OutputsAsArray"), QuantitySelection)
       } else {
-        stop(messages$errorPropertyReadOnly("allOutputs"), call. = FALSE)
+        stop(ospsuite.utils::messages$errorPropertyReadOnly("allOutputs"), call. = FALSE)
       }
     }
   ),

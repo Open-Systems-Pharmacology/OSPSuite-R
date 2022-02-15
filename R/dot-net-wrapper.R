@@ -117,7 +117,7 @@ DotNetWrapper <- R6::R6Class(
       }
     },
     throwPropertyIsReadonly = function(propertyName) {
-      stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
+      stop(ospsuite.utils::messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     },
     finalize = function() {
       # maybe dispose should be called to if available.

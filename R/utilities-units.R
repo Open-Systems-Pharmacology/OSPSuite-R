@@ -17,7 +17,7 @@ hasDimension <- function(dimension) {
 validateDimension <- function(dimension) {
   validateIsString(dimension)
   if (!hasDimension(dimension)) {
-    stop(messages$errorDimensionNotSupported(dimension))
+    stop(ospsuite.utils::messages$errorDimensionNotSupported(dimension))
   }
 }
 
@@ -42,7 +42,7 @@ hasUnit <- function(unit, dimension) {
 #' @export
 validateUnit <- function(unit, dimension) {
   if (!hasUnit(unit, dimension)) {
-    stop(messages$errorUnitNotSupported(unit, dimension))
+    stop(ospsuite.utils::messages$errorUnitNotSupported(unit, dimension))
   }
 }
 

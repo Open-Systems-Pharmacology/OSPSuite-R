@@ -89,7 +89,7 @@ DataRepository <- R6::R6Class(
     #' @param value Value of new meta data list entry
     addMetaData = function(name, value) {
       if (length(name) != 1) {
-        stop(messages$errorMultipleMetaDataEntries())
+        stop(ospsuite.utils::messages$errorMultipleMetaDataEntries())
       }
       validateIsString(name)
       validateIsString(value)
@@ -104,7 +104,7 @@ DataRepository <- R6::R6Class(
     #' @param name Name of meta data entry to delete
     removeMetaData = function(name) {
       if (length(name) != 1) {
-        stop(messages$errorMultipleMetaDataEntries())
+        stop(ospsuite.utils::messages$errorMultipleMetaDataEntries())
       }
       validateIsString(name)
       dataRepositoryTask <- getNetTask("DataRepositoryTask")

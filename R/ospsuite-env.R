@@ -72,7 +72,7 @@ ospsuiteEnv$dimensionTask <- NULL
 #' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 getOSPSuiteSetting <- function(settingName) {
   if (!(any(names(ospsuiteEnv) == settingName))) {
-    stop(messages$errorOSPSuiteSettingNotFound(settingName))
+    stop(ospsuite.utils::messages$errorPackageSettingNotFound(settingName, ospsuiteEnv))
   }
 
   obj <- ospsuiteEnv[[settingName]]

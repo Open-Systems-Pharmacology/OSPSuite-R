@@ -4,5 +4,5 @@ validateHasUnit <- function(quantity, unit) {
   if (quantity$hasUnit(unit)) {
     return()
   }
-  stop(messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
+  stop(ospsuite.utils::messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
 }

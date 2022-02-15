@@ -4,7 +4,7 @@ dataSetName <- "MyDataSet"
 context("DataSet from scratch")
 
 test_that("it cannot create a new data set from scratch without a name", {
-  expect_error(capture.output(DataSet$new()), regexp = messages$errorDataSetNameMissing)
+  expect_error(capture.output(DataSet$new()), regexp = ospsuite.utils::messages$errorDataSetNameMissing)
 })
 
 test_that("it can create a new data set from scratch", {

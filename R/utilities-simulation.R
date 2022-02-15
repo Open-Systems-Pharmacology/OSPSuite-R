@@ -175,7 +175,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 
   # more than one simulation? This is a concurrent run. We do not allow population variation
   if (!is.null(population)) {
-    stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+    stop(ospsuite.utils::messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
   }
 
   # we are now running the simulations concurrently
@@ -286,15 +286,15 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
   validateIsOfType(moleculesOrPaths, c(Molecule, "character"), nullAllowed = TRUE)
 
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
-    stop(messages$errorSimulationBatchNothingToVary)
+    stop(ospsuite.utils::messages$errorSimulationBatchNothingToVary)
   }
   variableParameters <- c(parametersOrPaths)
-  if (isOfType(variableParameters, Parameter)) {
+  if (ospsuite.utils::isOfType(variableParameters, Parameter)) {
     variableParameters <- unlist(lapply(variableParameters, function(x) x$path))
   }
 
   variableMolecules <- c(moleculesOrPaths)
-  if (isOfType(variableMolecules, Molecule)) {
+  if (ospsuite.utils::isOfType(variableMolecules, Molecule)) {
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path))
   }
 

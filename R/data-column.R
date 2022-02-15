@@ -36,7 +36,7 @@ DataColumn <- R6::R6Class(
       # we use the ignore case parameter set  to true so that we do not have to worry about casing when set via scripts
       unit <- rClr::clrCall(dimension, "FindUnit", value, TRUE)
       if (is.null(unit)) {
-        stop(messages$errorUnitNotSupported(unit = value, dimension = self$dimension))
+        stop(ospsuite.utils::messages$errorUnitNotSupported(unit = value, dimension = self$dimension))
       }
       rClr::clrSet(self$ref, "DisplayUnit", unit)
     },
