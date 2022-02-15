@@ -49,6 +49,7 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 ospsuiteEnv$dimensionTask <- NULL
 
 #' Names of the settings stored in ospsuiteEnv. Can be used with `getOSPSuiteSetting()`
+#' @include utilities.R
 #' @export
 ospsuiteSettingNames <- enum(names(ospsuiteEnv))
 
