@@ -46,6 +46,24 @@ validateUnit <- function(unit, dimension) {
   }
 }
 
+#' Check if quantity can be represented in the unit
+#'
+#' @param quantity `Quantity` object
+#' @param unit Unit name to check for
+#'
+#' @return
+#' If validations are successful, `NULL` is returned. Otherwise, error is
+#' signaled.
+#' @export
+validateHasUnit <- function(quantity, unit) {
+  validateIsOfType(quantity, "Quantity")
+  validateIsString(unit)
+  if (quantity$hasUnit(unit)) {
+    return()
+  }
+  stop(ospsuite.utils::messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
+}
+
 #' Get base unit of a dimension
 #'
 #' @param dimension Dimension (string name) for which the base unit is returned.
