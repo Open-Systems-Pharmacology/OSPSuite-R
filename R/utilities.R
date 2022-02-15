@@ -29,7 +29,6 @@ encodeUnit <- function(unit) {
   unit <- str_replace(unit, rawToChar(as.raw(0xb5)), mu)
 }
 
-
 #' Retrieves the name of the constant in the specified enumeration that has the specified value.
 #'
 #' @inheritParams rClr::clrGetEnumNames
