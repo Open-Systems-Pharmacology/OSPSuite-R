@@ -9,8 +9,8 @@
 #' array <- toPathArray("Organism|Organ|Liver")
 #' @export
 toPathArray <- function(path) {
-  validateIsString(path)
-  unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)), use.names = FALSE)
+  ospsuite.utils::validateIsString(path)
+  unlist(strsplit(path, paste0("\\", ospsuite.utils::getOSPSuiteUtilsSetting("pathSeparator"))), use.names = FALSE)
 }
 
 #' Convert a path array to a path as string with entries separated by '|'
@@ -23,6 +23,6 @@ toPathArray <- function(path) {
 #' @export
 toPathString <- function(...) {
   pathStrings <- c(...)
-  validateIsString(pathStrings)
-  paste(pathStrings, collapse = ospsuiteEnv$pathSeparator)
+  ospsuite.utils::validateIsString(pathStrings)
+  paste(pathStrings, collapse = ospsuite.utils::getOSPSuiteUtilsSetting("pathSeparator"))
 }

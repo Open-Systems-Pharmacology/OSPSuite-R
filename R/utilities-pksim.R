@@ -53,7 +53,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     stop("Only Windows platforms are supported")
   }
 
-  suite.name <- ospsuiteEnv$suiteName
+  suite.name <- ospsuite.utils::getOSPSuiteUtilsSetting("suiteName")
   product.name <- "PK-Sim"
   reg.path <- file.path("SOFTWARE",
     suite.name,
@@ -108,7 +108,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
   }
 
   # First guess: OSP/PK-Sim folder
-  suite.name <- ospsuiteEnv$suiteName
+  suite.name <- ospsuite.utils::getOSPSuiteUtilsSetting("suiteName")
   product.name <- "PK-Sim"
 
   full.guess <- file.path(base.search.folder, suite.name, fsep = "\\")

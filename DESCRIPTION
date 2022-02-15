@@ -50,7 +50,6 @@ Collate:
     'data-set.R'
     'dot-net-wrapper.R'
     'entity.R'
-    'error-checks.R'
     'formula.R'
     'get-net-task.R'
     'individual-characteristics.R'
