@@ -20,14 +20,12 @@ Depends:
     rClr (>= 0.9.1)
 Imports: 
     dplyr (>= 1.0.0),
-    ospsuite.utils (>= 1.1.0.9000),
+    ospsuite.utils (>= 1.2.0),
     purrr,
     R6,
     readr,
     stringr,
     tidyr
-Remotes:
-    Open-Systems-Pharmacology/OSPSuite.RUtils@develop
 Suggests: 
     knitr,
     rmarkdown,
