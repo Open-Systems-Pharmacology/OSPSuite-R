@@ -22,7 +22,7 @@ toObjectType <- function(netObject, class) {
 #' @import stringr
 #' @keywords internal
 encodeUnit <- function(unit) {
-  mu <- ospsuite.utils::getOSPSuiteUtilsSetting("muSymbol")
+  mu <- ospsuiteEnv$muSymbol
   unit <- enc2utf8(unit)
   unit <- str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)
   unit <- str_replace(unit, rawToChar(as.raw(c(0xc2, 0xb5))), mu)

@@ -18,6 +18,9 @@ ospsuiteEnv$suiteVersion <- .getSuiteVersion()
 # Reference to container task for optimization purposes only
 ospsuiteEnv$containerTask <- NULL
 
+# Separator defined in OSPSuite.Core.
+ospsuiteEnv$pathSeparator <- "|"
+
 # Number of cores to use for simulations and sensitivity. Default to number of cores on the machine - 1
 ospsuiteEnv$numberOfCores <- function() {
   parallel::detectCores() - 1
@@ -25,6 +28,9 @@ ospsuiteEnv$numberOfCores <- function() {
 
 # Specifies the default behavior fo progress visualization. By default FALSE
 ospsuiteEnv$showProgress <- FALSE
+
+# Specifies the symbol used for µ. This will be set by the .NET layer
+ospsuiteEnv$muSymbol <- "µ"
 
 # Cache of the so far loaded simulations. The keys are the paths to the pkml file.
 ospsuiteEnv$loadedSimulationsCache <- Cache$new("Simulation")

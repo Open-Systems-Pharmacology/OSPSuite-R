@@ -10,7 +10,7 @@
 #' @export
 toPathArray <- function(path) {
   ospsuite.utils::validateIsString(path)
-  unlist(strsplit(path, paste0("\\", ospsuite.utils::getOSPSuiteUtilsSetting("pathSeparator"))), use.names = FALSE)
+  unlist(strsplit(path, paste0("\\", ospsuiteEnv$pathSeparator)), use.names = FALSE)
 }
 
 #' Convert a path array to a path as string with entries separated by '|'
@@ -24,5 +24,5 @@ toPathArray <- function(path) {
 toPathString <- function(...) {
   pathStrings <- c(...)
   ospsuite.utils::validateIsString(pathStrings)
-  paste(pathStrings, collapse = ospsuite.utils::getOSPSuiteUtilsSetting("pathSeparator"))
+  paste(pathStrings, collapse = ospsuiteEnv$pathSeparator)
 }
