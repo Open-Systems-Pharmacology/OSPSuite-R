@@ -128,15 +128,61 @@ test_that("setting groups fails when group specification is invalid", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
 
-  expect_error(myCombDat$setGroups(c(2, 4)))
-  expect_error(myCombDat$setGroups(list("x" = 2, "y" = 4)))
+  expect_error(
+    myCombDat$setGroups(c(2, 4)),
+    "You need to provide a named list with at least one valid grouping."
+  )
+
+  expect_error(
+    myCombDat$setGroups(list("x" = 2, "y" = 4)),
+    "Names for groups can only be of `character` type."
+  )
 })
 
 test_that("setting groups fails when group specification is in a nested list", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
 
-  expect_error(myCombDat$setGroups(list("m" = list("x" = "2", "y" = "4"))))
+  expect_error(
+    myCombDat$setGroups(list("m" = list("x" = "2", "y" = "4"))),
+    "A nested list is not a valid argument here."
+  )
+})
+
+test_that("setting groups fails when group specification is same for multiple datsets", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet)
+
+  expect_error(
+    myCombDat$setGroups(list("x" = "2", "x" = "4")),
+    "Duplicated dataset names detected."
+  )
+})
+
+test_that("assigning groups produces a message if dataset name is not found", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  expect_output(
+    myCombDat$setGroups(list(
+      "Stevens_2012_placebo.Placebo_total" = "m",
+      "x" = "a",
+      "y" = "b"
+    )),
+    cat(
+      "Following datasets were specified to be grouped but not found:",
+      c("x", "y"),
+      sep = "\n"
+    )
+  )
+
+  myCombDat$setGroups(list(
+    "Stevens_2012_placebo.Placebo_total" = "m",
+    "x" = "a",
+    "y" = "b"
+  ))
+
+  expect_equal(myCombDat$groupMap$group, "m")
 })
 
 test_that("assigned group can be removed using NA", {
