@@ -6,13 +6,19 @@
 
 * Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
 
+## Major Changes
+
+* Following functions are marked for deprecation and will be removed in future releases:
+    - `pkAnalysesAsDataFrame()` is now `pkAnalysesToDataFrame()`
+    - `populationAsDataFrame()` is now `populationToDataFrame()`
+
 ## Breaking changes
 
 * `DataImporterConfiguration`: fields `timeUnitFromColumn` and `measurementUnitFromColumn` are renamed to `isTimeUnitFromColumn` and `isMeasurementUnitFromColumn` 
 
 * The constructor for `DataImporterConfiguration` does not accept a path to a configuration file any more. Use the function `loadDataImporterConfiguration()` to create a configuration object from a file.
 
-* The consturctor for `DataSet` objects requires a `name` argument.
+* The constructor for `DataSet` objects requires a `name` argument.
 
 * All `validate*()` helper functions and `"%||%"` infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <https://www.open-systems-pharmacology.org/OSPSuite.RUtils/>.
 

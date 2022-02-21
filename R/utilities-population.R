@@ -49,9 +49,9 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
 #' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #'
 #' population <- loadPopulation(csvPath)
-#' df <- populationAsDataFrame(population)
+#' df <- populationToDataFrame(population)
 #' @export
-populationAsDataFrame <- function(population) {
+populationToDataFrame <- function(population) {
   validateIsOfType(population, "Population")
   columns <- list()
   columns$IndividualId <- population$allIndividualIds
@@ -85,7 +85,7 @@ exportPopulationToCSV <- function(population, filePath) {
   validateIsOfType(population, "Population")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  df <- populationAsDataFrame(population)
+  df <- populationToDataFrame(population)
   write.csv(df, file = filePath, row.names = FALSE, fileEncoding = "UTF-8")
   invisible()
 }
