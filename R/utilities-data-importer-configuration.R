@@ -43,7 +43,7 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #' @examples
 #' configurationFilePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
 #' importerConfiguration <- loadDataImporterConfiguration(configurationFilePath)
-#' #Specifyin which sheet to load
+#' # Specifyin which sheet to load
 #' importerConfiguration$sheets <- "TestSheet_1"
 #' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 #' dataSets <- loadDataSetsFromExcel(
@@ -51,8 +51,8 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #'   importerConfiguration = importerConfiguration,
 #'   importAllSheets = FALSE
 #' )
-loadDataImporterConfiguration <- function(configurationFilePath){
-  ospsuite.utils::validateIsString(configurationFilePath)
+loadDataImporterConfiguration <- function(configurationFilePath) {
+  validateIsString(configurationFilePath)
   importerTask <- getNetTask("DataImporterTask")
   ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
   return(DataImporterConfiguration$new(ref))

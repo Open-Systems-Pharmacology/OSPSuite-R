@@ -16,7 +16,6 @@
 #' objCount(c(1, 2, 3)) # 3
 #' objCount(list("a", "b")) # 2
 #' objCount(mtcars) # 1
-#'
 #' @return Integer representing the count of objects.
 #'
 #' @keywords internal
@@ -58,7 +57,6 @@ objCount <- function(x) {
 #'
 #' cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
 #' cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
-#'
 #' @keywords internal
 #' @noRd
 
@@ -108,7 +106,6 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 #'
 #' flattenList(list(1, 2, 3, NA), type = "numeric")
 #' flattenList(list(TRUE, FALSE, NA), type = "integer")
-#'
 #' @return An atomic vector of desired type.
 #'
 #' @keywords internal
@@ -144,7 +141,6 @@ flattenList <- function(x, type) {
 #'
 #' toMissingOfType(NA, type = "real")
 #' toMissingOfType(NULL, type = "integer")
-#'
 #' @keywords internal
 #' @noRd
 
@@ -190,7 +186,6 @@ toMissingOfType <- function(x, type) {
 #'
 #' # this will produce an error
 #' # validateVecDepth(list(list(1))) # depth is 3
-#'
 #' @keywords internal
 #' @noRd
 

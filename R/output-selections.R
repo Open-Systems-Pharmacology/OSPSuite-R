@@ -26,14 +26,14 @@ OutputSelections <- R6::R6Class(
     #' Adds a quantity as selected
     #' @param quantity Quantity to add to the selection
     addQuantity = function(quantity) {
-      validateIsOfType(quantity, Quantity)
+      validateIsOfType(quantity, "Quantity")
       rClr::clrCall(self$ref, "AddQuantity", quantity$ref)
     },
     #' @description
     #' Removes a quantity from the selection
     #' @param quantity Quantity to remove from the selection
     removeQuantity = function(quantity) {
-      validateIsOfType(quantity, Quantity)
+      validateIsOfType(quantity, "Quantity")
       rClr::clrCall(self$ref, "RemoveQuantity", quantity$ref)
     },
     #' @description

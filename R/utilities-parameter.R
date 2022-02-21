@@ -100,7 +100,7 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' setParameterValues(params, c(2, 3), units = c("ml", "l"))
 #' @export
 setParameterValues <- function(parameters, values, units = NULL) {
-  validateIsOfType(parameters, Parameter)
+  validateIsOfType(parameters, "Parameter")
   setQuantityValues(parameters, values, units)
 }
 
@@ -151,6 +151,6 @@ setParameterValuesByPath <- function(parameterPaths, values, simulation, units =
 #' scaleParameterValues(params, 1.5)
 #' @export
 scaleParameterValues <- function(parameters, factor) {
-  validateIsOfType(parameters, Parameter)
+  validateIsOfType(parameters, "Parameter")
   scaleQuantityValues(parameters, factor)
 }

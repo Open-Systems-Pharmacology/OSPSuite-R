@@ -74,7 +74,7 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
 #'
 #' @export
 saveSimulation <- function(simulation, filePath) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
   simulationPersister <- getNetTask("SimulationPersister")
@@ -160,7 +160,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' @export
 runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
   simulations <- c(simulations)
-  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
+  validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
   # only one simulation? We allow population run
@@ -187,16 +187,16 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 }
 
 .runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   if (is.list(population)) {
     # if a list was given as parameter, we assume that the user wants to run a population simulation
     # The population object must be present otherwise, this is an error => nullAllowed is FALSE
     population <- population$population
-    validateIsOfType(population, Population)
+    validateIsOfType(population, "Population")
   } else {
-    validateIsOfType(population, Population, nullAllowed = TRUE)
+    validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
-  validateIsOfType(agingData, AgingData, nullAllowed = TRUE)
+  validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
   simulationRunner <- getNetTask("SimulationRunner")
   simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
   rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
@@ -219,7 +219,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
   tryCatch(
     {
-      validateIsOfType(simulations, Simulation)
+      validateIsOfType(simulations, "Simulation")
       rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
       # Map of simulations ids to simulations objects
@@ -281,20 +281,20 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 #' )
 #' @export
 createSimulationBatch <- function(simulation, parametersOrPaths = NULL, moleculesOrPaths = NULL) {
-  validateIsOfType(simulation, Simulation)
-  validateIsOfType(parametersOrPaths, c(Parameter, "character"), nullAllowed = TRUE)
-  validateIsOfType(moleculesOrPaths, c(Molecule, "character"), nullAllowed = TRUE)
+  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(parametersOrPaths, c("Parameter", "character"), nullAllowed = TRUE)
+  validateIsOfType(moleculesOrPaths, c("Molecule", "character"), nullAllowed = TRUE)
 
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
     stop(messages$errorSimulationBatchNothingToVary)
   }
   variableParameters <- c(parametersOrPaths)
-  if (isOfType(variableParameters, Parameter)) {
+  if (isOfType(variableParameters, "Parameter")) {
     variableParameters <- unlist(lapply(variableParameters, function(x) x$path))
   }
 
   variableMolecules <- c(moleculesOrPaths)
-  if (isOfType(variableMolecules, Molecule)) {
+  if (isOfType(variableMolecules, "Molecule")) {
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path))
   }
 
@@ -346,10 +346,10 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 #' }
 runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE) {
-  validateIsOfType(simulationBatches, SimulationBatch)
+  validateIsOfType(simulationBatches, "SimulationBatch")
   simulationRunner <- getNetTask("ConcurrentSimulationRunner")
   if (!is.null(simulationRunOptions)) {
-    validateIsOfType(simulationRunOptions, SimulationRunOptions)
+    validateIsOfType(simulationRunOptions, "SimulationRunOptions")
     rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
   }
 
@@ -412,7 +412,7 @@ resetSimulationCache <- function() {
 #' removeSimulationFromCache(sim1) # returns TRUE
 #' removeSimulationFromCache(sim2) # returns FALSE
 removeSimulationFromCache <- function(simulation) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
 
   simulationFilePath <- simulation$sourceFile
 
@@ -452,7 +452,7 @@ removeSimulationFromCache <- function(simulation) {
 #'
 #' parameters <- getStandardMoleculeParameters("CYP3A4", sim1)
 getStandardMoleculeParameters <- function(moleculeName, simulation) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   validateIsString(moleculeName)
   paths <- sapply(MoleculeParameter, function(p) toPathString(moleculeName, p))
   getAllParametersMatching(paths = paths, container = simulation)
@@ -476,7 +476,7 @@ getStandardMoleculeParameters <- function(moleculeName, simulation) {
 #' params <- getAllParametersForSensitivityAnalysisMatching("Organism|*|Volume", sim)
 #' @export
 getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   getAllEntitiesMatching(
     paths = paths,
     container = simulation,
@@ -494,7 +494,7 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 #' @return A list of paths
 #' @export
 getAllStateVariablesPaths <- function(simulation) {
-  validateIsOfType(simulation, type = Simulation)
+  validateIsOfType(simulation, type = "Simulation")
   allMoleculesPaths <- getAllMoleculePathsIn(container = simulation)
   allStateVariableParamsPaths <- getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
   allQantitiesPaths <- append(allMoleculesPaths, allStateVariableParamsPaths)
@@ -522,8 +522,8 @@ getAllStateVariablesPaths <- function(simulation) {
 exportIndividualSimulations <- function(population, individualIds, outputFolder, simulation) {
   validateIsString(outputFolder)
   validateIsNumeric(individualIds)
-  validateIsOfType(simulation, Simulation)
-  validateIsOfType(population, Population)
+  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(population, "Population")
   individualIds <- c(individualIds)
   outputFolder <- expandPath(outputFolder)
 

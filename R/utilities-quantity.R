@@ -93,7 +93,7 @@ setQuantityValues <- function(quantities, values, units = NULL) {
   values <- c(values)
 
   # Test for correct inputs
-  validateIsOfType(quantities, Quantity)
+  validateIsOfType(quantities, "Quantity")
   validateIsNumeric(values)
 
   if (length(values) > 1) {
@@ -143,7 +143,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
   validateIsString(quantityPaths)
   validateIsNumeric(values)
   validateIsSameLength(quantityPaths, values)
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
 
   if (!is.null(units)) {
     validateIsSameLength(quantityPaths, units)
@@ -179,7 +179,7 @@ scaleQuantityValues <- function(quantities, factor) {
   quantities <- c(quantities)
 
   # Test for correct inputs
-  validateIsOfType(quantities, Quantity)
+  validateIsOfType(quantities, "Quantity")
   validateIsNumeric(factor)
 
   lapply(quantities, function(q) q$value <- q$value * factor)
@@ -196,7 +196,7 @@ scaleQuantityValues <- function(quantities, factor) {
 #'
 getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   displayResolver <- getNetTask("FullPathDisplayResolver")
   paths <- c(paths)
 

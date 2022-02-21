@@ -8,7 +8,7 @@
 A class for storage of numerical x- and y-value pairs and optional error for y-values.
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

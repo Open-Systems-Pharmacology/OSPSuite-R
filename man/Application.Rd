@@ -8,7 +8,7 @@
 Application representing one instance of an application in a Simulation
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Application}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Application}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

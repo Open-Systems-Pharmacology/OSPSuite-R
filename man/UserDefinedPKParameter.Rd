@@ -8,7 +8,7 @@
 Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:PKParameter]{ospsuite::PKParameter}} -> \code{UserDefinedPKParameter}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:PKParameter]{ospsuite::PKParameter}} -> \code{UserDefinedPKParameter}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

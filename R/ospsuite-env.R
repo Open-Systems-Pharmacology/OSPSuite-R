@@ -12,9 +12,7 @@ ospsuiteEnv <- new.env(parent = emptyenv())
 # name of the package. This will be used to retrieve information on the package at run time
 ospsuiteEnv$packageName <- "ospsuite"
 
-ospsuiteEnv$suiteName <- "Open Systems Pharmacology"
-
-# Major version of the suite
+# Major version of the suite. Corresponds to the version of installed `ospsuite-r`
 ospsuiteEnv$suiteVersion <- .getSuiteVersion()
 
 # Reference to container task for optimization purposes only
@@ -22,10 +20,6 @@ ospsuiteEnv$containerTask <- NULL
 
 # Separator defined in OSPSuite.Core.
 ospsuiteEnv$pathSeparator <- "|"
-
-# Default values for the formatNumerics() helper function
-ospsuiteEnv$formatNumericsDigits <- 5
-ospsuiteEnv$formatNumericsSmall <- 2
 
 # Number of cores to use for simulations and sensitivity. Default to number of cores on the machine - 1
 ospsuiteEnv$numberOfCores <- function() {
@@ -60,6 +54,11 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 # NetTask `DimensionTask` cached for performance benefits. Created the first time it is requested.
 ospsuiteEnv$dimensionTask <- NULL
 
+#' Names of the settings stored in ospsuiteEnv. Can be used with `getOSPSuiteSetting()`
+#' @include utilities.R
+#' @export
+ospsuiteSettingNames <- enum(names(ospsuiteEnv))
+
 #' Get the value of a global ospsuite-R setting.
 #'
 #' @param settingName String name of the setting
@@ -72,7 +71,7 @@ ospsuiteEnv$dimensionTask <- NULL
 #' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 getOSPSuiteSetting <- function(settingName) {
   if (!(any(names(ospsuiteEnv) == settingName))) {
-    stop(messages$errorOSPSuiteSettingNotFound(settingName))
+    stop(messages$errorPackageSettingNotFound(settingName, ospsuiteEnv))
   }
 
   obj <- ospsuiteEnv[[settingName]]

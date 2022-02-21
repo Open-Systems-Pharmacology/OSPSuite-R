@@ -36,7 +36,7 @@ SensitivityAnalysis <- R6::R6Class(
                           parameterPaths = NULL,
                           numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
                           variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       validateIsString(parameterPaths, nullAllowed = TRUE)
       ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
       super$initialize(ref)

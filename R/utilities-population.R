@@ -52,7 +52,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
 #' df <- populationToDataFrame(population)
 #' @export
 populationToDataFrame <- function(population) {
-  validateIsOfType(population, Population)
+  validateIsOfType(population, "Population")
   columns <- list()
   columns$IndividualId <- population$allIndividualIds
 
@@ -82,7 +82,7 @@ populationToDataFrame <- function(population) {
 #' exportPopulationToCSV(population, tempfile())
 #' @export
 exportPopulationToCSV <- function(population, filePath) {
-  validateIsOfType(population, Population)
+  validateIsOfType(population, "Population")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
   df <- populationToDataFrame(population)

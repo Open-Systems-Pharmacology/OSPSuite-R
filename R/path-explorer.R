@@ -51,7 +51,7 @@ nextStep <- function(listSoFar, originalString, arrayToGo) {
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
 #' @export
 getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
-  validateIsOfType(simulationOrFilePath, c(Simulation, "character"))
+  validateIsOfType(simulationOrFilePath, c("Simulation", "character"))
 
   quantityTypeList <- list(
     "Quantity" = getAllQuantityPathsIn,

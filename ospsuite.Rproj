@@ -18,7 +18,7 @@ StripTrailingWhitespace: Yes
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
-PackageRoxygenize: rd,namespace
+PackageRoxygenize: rd,collate,namespace
 
 QuitChildProcessesOnExit: Yes
 DisableExecuteRprofile: Yes

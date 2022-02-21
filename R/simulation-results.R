@@ -30,7 +30,7 @@ SimulationResults <- R6::R6Class(
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SimulationResults` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
       private$.individualResultsCache <- Cache$new()
       super$initialize(ref)

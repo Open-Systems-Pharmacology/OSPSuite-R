@@ -36,7 +36,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SensitivityAnalysisResults` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
       super$initialize(ref)
     },

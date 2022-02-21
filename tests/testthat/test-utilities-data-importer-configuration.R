@@ -36,7 +36,7 @@ test_that("It can create a DataImporterConfiguration from a XLS file when dimens
   expect_equal(importerConfiguration$sheets, character())
 
   importerConfiguration$measurementDimension <- ospDimensions$Hertz
-  importerConfiguration$measurementUnit<- ospUnits$Hertz$`1/s`
+  importerConfiguration$measurementUnit <- ospUnits$Hertz$`1/s`
   expect_equal(importerConfiguration$measurementDimension, ospDimensions$Hertz)
   expect_equal(importerConfiguration$measurementUnit, ospUnits$Hertz$`1/s`)
 })

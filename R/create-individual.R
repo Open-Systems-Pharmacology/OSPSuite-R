@@ -14,7 +14,7 @@
 #'
 #' @export
 createIndividual <- function(individualCharacteristics) {
-  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+  validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   createIndividualResults <- rClr::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
@@ -37,7 +37,7 @@ createIndividual <- function(individualCharacteristics) {
 #'
 #' @export
 createDistributions <- function(individualCharacteristics) {
-  validateIsOfType(individualCharacteristics, IndividualCharacteristics)
+  validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   distributedParameters <- rClr::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
@@ -105,7 +105,7 @@ createIndividualCharacteristics <- function(species,
   validateIsString(ageUnit)
   validateIsNumeric(gestationalAge)
   validateIsString(gestationalAgeUnit)
-  validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  validateIsOfType(moleculeOntogenies, "MoleculeOntogeny", nullAllowed = TRUE)
   validateIsNumeric(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)

@@ -8,7 +8,7 @@
 Options to be passed to the SimulationBatch run
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchRunValues}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchRunValues}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

@@ -10,7 +10,7 @@
 #'
 #' @export
 createPopulation <- function(populationCharacteristics) {
-  validateIsOfType(populationCharacteristics, PopulationCharacteristics)
+  validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
   populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
   results <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
@@ -133,7 +133,7 @@ createPopulationCharacteristics <- function(species,
   validateIsInteger(gestationalAgeMax, nullAllowed = TRUE)
   validateIsString(gestationalAgeUnit)
 
-  validateIsOfType(moleculeOntogenies, MoleculeOntogeny, nullAllowed = TRUE)
+  validateIsOfType(moleculeOntogenies, "MoleculeOntogeny", nullAllowed = TRUE)
   validateIsInteger(seed, nullAllowed = TRUE)
 
   moleculeOntogenies <- c(moleculeOntogenies)
