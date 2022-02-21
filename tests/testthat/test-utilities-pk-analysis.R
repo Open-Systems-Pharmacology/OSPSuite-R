@@ -43,9 +43,9 @@ test_that("It can export valid pk-analyses results to CSV", {
   })
 })
 
-context("pkAnalysesAsDataFrame")
+context("pkAnalysesToDataFrame")
 
 test_that("It can convert valid pk-analysis results to data frame", {
-  df <- pkAnalysesAsDataFrame(pkAnalyses = pkAnalyses)
+  df <- pkAnalysesToDataFrame(pkAnalyses = pkAnalyses)
   expect_length(colnames(df), 5)
 })

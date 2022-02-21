@@ -1,6 +1,7 @@
 #' @title Calculates the pkAnalyses for all output values available in `results`.
 #'
-#' @param results Results of simulation. Typically the `results` are calculated using `runSimulation` or imported from csv file via `importResults`
+#' @param results Results of simulation. Typically the `results` are calculated
+#'   using `runSimulation` or imported from csv file via `importResults`.
 #'
 #' @return An instance of `SimulationPKAnalyses` class.
 #'
@@ -62,10 +63,11 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 
 #' @title Convert the pk-Analysis to data frame
 #'
-#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using `calculatePKAnalyses` or imported from file)
+#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated
+#'   using `calculatePKAnalyses` or imported from file).
 #'
 #' @export
-pkAnalysesAsDataFrame <- function(pkAnalyses) {
+pkAnalysesToDataFrame <- function(pkAnalyses) {
   validateIsOfType(pkAnalyses, SimulationPKAnalyses)
   pkParameterResultsFilePath <- tempfile()
   dataFrame <- tryCatch(

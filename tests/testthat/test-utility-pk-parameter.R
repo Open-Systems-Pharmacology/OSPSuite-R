@@ -29,7 +29,7 @@ test_that("It calculates the pk parameters in the expected units", {
   pkAnalyses <- calculatePKAnalyses(results)
   c_max_base_value <- pkAnalyses$pKParameterFor(quantityPath, c_max_base$name)$values[1]
   c_max_mg_l_value <- c_max_base_value * mw * 1E6
-  df <- pkAnalysesAsDataFrame(pkAnalyses)
+  df <- pkAnalysesToDataFrame(pkAnalyses)
   df_c_max <- df[df$Parameter == myCmax$name & df$QuantityPath == quantityPath, ]
   expect_equal(c_max_mg_l_value, df_c_max$Value)
   removeAllUserDefinedPKParameters()
