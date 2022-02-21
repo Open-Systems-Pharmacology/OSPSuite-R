@@ -34,7 +34,6 @@
 #' myCombDat
 #' @docType class
 #' @export
-
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
   inherit = Printable,
@@ -226,6 +225,17 @@ DataCombined <- R6::R6Class(
         )
       }
 
+      # the same dataset can't be assigned to two different groupings in the same
+      # `$setGroups` call
+      #
+      # this is possible because lists can have elements with non-unique names
+      if (!hasOnlyDistinctValues(names(groups))) {
+        stop(
+          "Duplicated dataset names detected. All dataset names must be unique because the same dataset can't be assigned to more than one grouping.",
+          call. = FALSE
+        )
+      }
+
       # extract groupings and dataset names in a dataframe
       # `as.list()` will make sure that atomic vector will also work
       groupData <- dplyr::as_tibble(as.list(groups)) %>%
@@ -239,6 +249,26 @@ DataCombined <- R6::R6Class(
         # would cause problems downstream if this column is to be row-bound with
         # another column that is of `character` type
         dplyr::mutate(group = as.character(group))
+
+      # check if any of the specified dataset names are currently not present
+      # in the combined dataframe
+      #
+      # this can happen when users make spelling mistakes in writing dataset
+      # names while specifying gropings
+      specifiedNames <- unique(groupData$name)
+      currentNames <- unique(private$.dataCombined$name)
+
+      if (!isIncluded(specifiedNames, currentNames)) {
+        missingNames <- specifiedNames[!specifiedNames %in% currentNames]
+
+        message(
+          cat(
+            "Following datasets were specified to be grouped but not found:",
+            missingNames,
+            sep = "\n"
+          )
+        )
+      }
 
       # update the specified groupings with what already exists, i.e. groupings
       # which have been specified previously in object's lifetime
