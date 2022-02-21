@@ -20,10 +20,10 @@ test_that("It can split a valid csv file to split files", {
 })
 
 
-context("populationAsDataFrame")
+context("populationToDataFrame")
 test_that("It can convert a population to data frame", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
-  df <- populationAsDataFrame(population)
+  df <- populationToDataFrame(population)
   expect_equal(nrow(df), 10)
 })

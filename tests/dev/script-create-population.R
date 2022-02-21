@@ -60,4 +60,4 @@ populationPreterm$allParameterPaths
 populationPreterm$getParameterValues("Organism|Age")
 populationPreterm$getParameterValues("Organism|Gestational age")
 
-df <- populationAsDataFrame(population = populationPreterm)
+df <- populationToDataFrame(population = populationPreterm)

@@ -11,7 +11,7 @@ population$setParameterValues("Organism|Lung|Volume", values)
 population$getParameterValuesForIndividual(individualId = 0)
 ids <- population$allIndividualIds
 
-df <- populationAsDataFrame(population = population)
+df <- populationToDataFrame(population = population)
 
 
 res <- runSimulation(simulation = sim, population = population)

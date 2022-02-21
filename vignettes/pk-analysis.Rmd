@@ -67,7 +67,7 @@ In case of a population simulation, `$values` return a list of values calculated
 Sometimes it is desirable to have the calculated parameters in a dataframe for working with them further in other workflows (e.g. data wrangling), and the package provides a convenient helper to extract it:
 
 ```{r}
-pkAnalysesAsDataFrame(pkAnalysis)
+pkAnalysesToDataFrame(pkAnalysis)
 ```
 
 ## Import and export of PK-analyses
