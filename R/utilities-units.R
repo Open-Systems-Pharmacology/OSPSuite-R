@@ -54,7 +54,6 @@ validateUnit <- function(unit, dimension) {
 #' @return
 #' If validations are successful, `NULL` is returned. Otherwise, error is
 #' signaled.
-#' @export
 validateHasUnit <- function(quantity, unit) {
   validateIsOfType(quantity, "Quantity")
   validateIsString(unit)
