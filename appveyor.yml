@@ -42,6 +42,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages('ospsuite.utils', repos = 'http://cran.us.r-project.org', type = 'source')"
 
 before_test:
   - cinst pandoc
