@@ -196,7 +196,7 @@ DataSet <- R6::R6Class(
     #' @return A new `DataSet` object.
     initialize = function(name = NULL, dataRepository = NULL) {
       if (is.null(dataRepository) && is.null(name)) {
-        stop(ospsuite.utils::messages$errorDataSetNameMissing)
+        stop(messages$errorDataSetNameMissing)
       }
       private$.dataRepository <- dataRepository %||% private$.createDataRepository()
       private$.initializeCache()

@@ -54,7 +54,7 @@ SimulationResults <- R6::R6Class(
       values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
 
       if (all(is.nan(values)) && stopIfNotFound) {
-        stop(ospsuite.utils::messages$errorResultNotFound(path, individualIds))
+        stop(messages$errorResultNotFound(path, individualIds))
       }
 
       values[is.nan(values)] <- NA_real_

@@ -70,7 +70,7 @@ DataImporterConfiguration <- R6::R6Class(
           return(NULL)
         }
         dimension <- rClr::clrGet(mappedColumn, "Dimension")
-        return(ospsuite.utils::ifNotNull(dimension, rClr::clrGet(dimension, "DisplayName")))
+        return(ifNotNull(dimension, rClr::clrGet(dimension, "DisplayName")))
       }
       validateIsString(value)
       # Fixed unit or from column?

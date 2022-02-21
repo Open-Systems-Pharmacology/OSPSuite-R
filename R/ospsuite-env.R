@@ -71,7 +71,7 @@ ospsuiteSettingNames <- enum(names(ospsuiteEnv))
 #' getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 getOSPSuiteSetting <- function(settingName) {
   if (!(any(names(ospsuiteEnv) == settingName))) {
-    stop(ospsuite.utils::messages$errorPackageSettingNotFound(settingName, ospsuiteEnv))
+    stop(messages$errorPackageSettingNotFound(settingName, ospsuiteEnv))
   }
 
   obj <- ospsuiteEnv[[settingName]]

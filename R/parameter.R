@@ -33,7 +33,7 @@ Parameter <- R6::R6Class(
 
       # Set to true and no RHS => error
       if (value) {
-        stop(ospsuite.utils::messages$errorCannotSetRHSFormula, call. = FALSE)
+        stop(messages$errorCannotSetRHSFormula, call. = FALSE)
       }
 
       # we are deleting the RHS Formula

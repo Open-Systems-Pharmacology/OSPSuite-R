@@ -166,7 +166,7 @@ context("validateDimension")
 test_that("It returns NULL when the dimension exists,
           or throws an error otherwise", {
   expect_null(validateDimension("Amount"))
-  expect_error(validateDimension("AAmount"), regexp = ospsuite.utils::messages$errorDimensionNotSupported("AAmount"))
+  expect_error(validateDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
 })
 
 context("hasUnit")
@@ -179,7 +179,7 @@ context("validateUnit")
 test_that("It returns NULL when the unit exists in the dimension,
           or throws an error otherwise", {
   expect_null(validateUnit(unit = "µmol", dimension = "Amount"))
-  expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = ospsuite.utils::messages$errorUnitNotSupported("g", "Amount"))
+  expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
 })
 
 context("getBaseUnit")

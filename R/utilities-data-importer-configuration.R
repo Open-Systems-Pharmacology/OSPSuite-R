@@ -52,7 +52,7 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #'   importAllSheets = FALSE
 #' )
 loadDataImporterConfiguration <- function(configurationFilePath) {
-  ospsuite.utils::validateIsString(configurationFilePath)
+  validateIsString(configurationFilePath)
   importerTask <- getNetTask("DataImporterTask")
   ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
   return(DataImporterConfiguration$new(ref))

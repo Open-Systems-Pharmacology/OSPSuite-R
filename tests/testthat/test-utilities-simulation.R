@@ -316,7 +316,7 @@ test_that("It throws an error when multiple values sets are added", {
   simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameters)
   ids <- c()
   ids[[1]] <- simulationBatch$addRunValues(parameterValues = c(1, 2), initialValues = 1)
-  expect_error(simulationBatch$addRunValues(parameterValues = list(c(1, 2), c(2, 3)), initialValues = 1), regexp = ospsuite.utils::messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
+  expect_error(simulationBatch$addRunValues(parameterValues = list(c(1, 2), c(2, 3)), initialValues = 1), regexp = messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
 })
 
 test_that("It can run a simulation batch with multiple parameters and molecules values sets", {

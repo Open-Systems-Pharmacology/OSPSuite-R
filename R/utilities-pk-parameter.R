@@ -99,7 +99,7 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
     return(pkParameter)
   }
 
-  stop(ospsuite.utils::messages$errorPKParameterNotFound(name, allPKParameterNames()))
+  stop(messages$errorPKParameterNotFound(name, allPKParameterNames()))
 }
 
 

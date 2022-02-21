@@ -131,7 +131,7 @@ DataCombined <- R6::R6Class(
       # `c(simResults1, simResults2, ...)` and `as.list(simResults1,
       # simResults2, ...)` will return the same result
       if (is.list(simulationResults)) {
-        stop(ospsuite.utils::messages$errorOnlyOneSupported())
+        stop(messages$errorOnlyOneSupported())
       }
 
       # summary variables (created since they are referred to more than once)
@@ -372,7 +372,7 @@ DataCombined <- R6::R6Class(
         return(private$.names)
       }
 
-      stop(ospsuite.utils::messages$errorPropertyReadOnly("names"))
+      stop(messages$errorPropertyReadOnly("names"))
     },
 
     #' @field groupMap A dataframe specifying which datasets have been grouped
@@ -384,7 +384,7 @@ DataCombined <- R6::R6Class(
         return(private$.groupMap)
       }
 
-      stop(ospsuite.utils::messages$errorPropertyReadOnly("groupMap"))
+      stop(messages$errorPropertyReadOnly("groupMap"))
     },
 
     #' @field dataTransformations A dataframe with offset and scale factor
@@ -394,7 +394,7 @@ DataCombined <- R6::R6Class(
         return(private$.dataTransformations)
       }
 
-      stop(ospsuite.utils::messages$errorPropertyReadOnly("dataTransformations"))
+      stop(messages$errorPropertyReadOnly("dataTransformations"))
     }
   ),
 

@@ -17,13 +17,13 @@ initPKSim <- function(pksimFolderPath = NULL) {
 
   pksimFolderPath <- pksimFolderPath %||% .getPathToPKSimInstallDir()
   if (is.na(pksimFolderPath)) {
-    stop(ospsuite.utils::messages$pkSimInstallPathNotFound)
+    stop(messages$pkSimInstallPathNotFound)
   }
 
   .addPathToSystemPath(pksimFolderPath)
   pksimR <- file.path(pksimFolderPath, "PKSim.R.dll")
   if (!file.exists(pksimR)) {
-    stop(ospsuite.utils::messages$pkSimRPathInvalid(pksimR))
+    stop(messages$pkSimRPathInvalid(pksimR))
   }
   rClr::clrLoadAssembly(pksimR)
   rClr::clrCallStatic("PKSim.R.Api", "InitializeOnce")

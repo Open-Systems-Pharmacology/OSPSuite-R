@@ -77,7 +77,7 @@ Cache <- R6::R6Class(
       if (missing(value)) {
         ls(private$cachedObjects)
       } else {
-        stop(ospsuite.utils::messages$errorPropertyReadOnly("keys"), call. = FALSE)
+        stop(messages$errorPropertyReadOnly("keys"), call. = FALSE)
       }
     }
   ),
@@ -95,7 +95,7 @@ Cache <- R6::R6Class(
       }
       # Name of the variable in the calling function
       objectName <- deparse(substitute(object))
-      stop(ospsuite.utils::messages$errorWrongCacheType(objectName, self$type))
+      stop(messages$errorWrongCacheType(objectName, self$type))
     }
   )
 )

@@ -111,7 +111,7 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllMatchingMethod) == className)) == 0) {
-    stop(ospsuite.utils::messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
+    stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
   }
 
   task <- getContainerTask()
@@ -138,7 +138,7 @@ getAllEntityPathsIn <- function(container, entityType, method = NULL) {
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllPathsInMethod) == className)) == 0) {
-    stop(ospsuite.utils::messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
+    stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
   }
 
   task <- getContainerTask()
@@ -162,12 +162,12 @@ getAllEntityPathsIn <- function(container, entityType, method = NULL) {
 getEntity <- function(path, container, entityType, stopIfNotFound = TRUE) {
   entities <- getAllEntitiesMatching(path, container, entityType)
   if (length(entities) > 1) {
-    stop(ospsuite.utils::messages$errorGetEntityMultipleOutputs(path, container))
+    stop(messages$errorGetEntityMultipleOutputs(path, container))
   }
 
   if (length(entities) == 0) {
     if (stopIfNotFound) {
-      stop(ospsuite.utils::messages$errorEntityNotFound(path, container))
+      stop(messages$errorEntityNotFound(path, container))
     }
     return(NULL)
   }

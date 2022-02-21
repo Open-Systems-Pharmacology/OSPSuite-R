@@ -65,7 +65,7 @@ SimulationBatch <- R6::R6Class(
       validateIsNumeric(initialValues, nullAllowed = TRUE)
       # Only one values set is allowed - no lists of values
       if (is.list(parameterValues) || is.list(initialValues)) {
-        stop(ospsuite.utils::messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
+        stop(messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
       }
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)

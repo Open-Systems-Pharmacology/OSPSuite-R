@@ -4,7 +4,7 @@
 #' @details Returns `TRUE` if the provided dimension is supported otherwise `FALSE`
 #' @export
 hasDimension <- function(dimension) {
-  ospsuite.utils::validateIsString(dimension)
+  validateIsString(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "HasDimension", enc2utf8(dimension))
 }
@@ -15,9 +15,9 @@ hasDimension <- function(dimension) {
 #' @details Check if the provided dimension is supported. If not, throw an error
 #' @export
 validateDimension <- function(dimension) {
-  ospsuite.utils::validateIsString(dimension)
+  validateIsString(dimension)
   if (!hasDimension(dimension)) {
-    stop(ospsuite.utils::messages$errorDimensionNotSupported(dimension))
+    stop(messages$errorDimensionNotSupported(dimension))
   }
 }
 
@@ -28,7 +28,7 @@ validateDimension <- function(dimension) {
 #' @details Check if the unit is valid for the dimension.
 #' @export
 hasUnit <- function(unit, dimension) {
-  ospsuite.utils::validateIsString(unit)
+  validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), encodeUnit(unit))
@@ -42,7 +42,7 @@ hasUnit <- function(unit, dimension) {
 #' @export
 validateUnit <- function(unit, dimension) {
   if (!hasUnit(unit, dimension)) {
-    stop(ospsuite.utils::messages$errorUnitNotSupported(unit, dimension))
+    stop(messages$errorUnitNotSupported(unit, dimension))
   }
 }
 
@@ -60,7 +60,7 @@ validateHasUnit <- function(quantity, unit) {
   if (quantity$hasUnit(unit)) {
     return()
   }
-  stop(ospsuite.utils::messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
+  stop(messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
 }
 
 #' Get base unit of a dimension
@@ -94,9 +94,9 @@ getBaseUnit <- function(dimension) {
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
 toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
-  ospsuite.utils::validateIsOfType(quantityOrDimension, c(Quantity, "character"))
-  ospsuite.utils::validateIsNumeric(values, nullAllowed = TRUE)
-  ospsuite.utils::validateIsNumeric(molWeight, nullAllowed = TRUE)
+  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
+  validateIsNumeric(values, nullAllowed = TRUE)
+  validateIsNumeric(molWeight, nullAllowed = TRUE)
   unit <- encodeUnit(unit)
   dimension <- quantityOrDimension
   dimensionTask <- getNetTask("DimensionTask")
@@ -109,7 +109,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   # ensure that we are dealing with an list of values seen as number (and not integer)
   values <- as.numeric(c(values))
 
-  if (ospsuite.utils::isOfType(quantityOrDimension, Quantity)) {
+  if (isOfType(quantityOrDimension, Quantity)) {
     dimension <- quantityOrDimension$dimension
   }
 
@@ -155,9 +155,9 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #' )
 #' @export
 toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL, molWeightUnit = NULL) {
-  ospsuite.utils::validateIsOfType(quantityOrDimension, c(Quantity, "character"))
-  ospsuite.utils::validateIsNumeric(values, nullAllowed = TRUE)
-  ospsuite.utils::validateIsNumeric(molWeight, nullAllowed = TRUE)
+  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
+  validateIsNumeric(values, nullAllowed = TRUE)
+  validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- encodeUnit(targetUnit)
   dimension <- quantityOrDimension
   dimensionTask <- getNetTask("DimensionTask")
@@ -219,7 +219,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
 #' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
 #' @export
 toDisplayUnit <- function(quantity, values) {
-  ospsuite.utils::validateIsOfType(quantity, Quantity)
+  validateIsOfType(quantity, Quantity)
   toUnit(quantity, values, quantity$displayUnit)
 }
 
@@ -241,7 +241,7 @@ allAvailableDimensions <- function() {
 #' dim <- getDimensionForUnit("mg")
 #' @export
 getDimensionForUnit <- function(unit) {
-  ospsuite.utils::validateIsString(unit)
+  validateIsString(unit)
   unit <- encodeUnit(unit)
   dimensionTask <- getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
@@ -256,7 +256,7 @@ getDimensionForUnit <- function(unit) {
 #' units <- getUnitsForDimension("Mass")
 #' @export
 getUnitsForDimension <- function(dimension) {
-  ospsuite.utils::validateIsString(dimension)
+  validateIsString(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
@@ -282,7 +282,7 @@ getDimensionTask <- function() {
 #' dim <- getDimensionByName("Time")
 #' @export
 getDimensionByName <- function(name) {
-  ospsuite.utils::validateIsString(name)
+  validateIsString(name)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(name))
 }
