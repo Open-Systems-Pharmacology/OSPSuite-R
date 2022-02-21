@@ -62,7 +62,7 @@ DataRepository <- R6::R6Class(
     #' Adds a column to the data repository
     #' @param column Column to add
     addColumn = function(column) {
-      validateIsOfType(column, DataColumn)
+      validateIsOfType(column, "DataColumn")
       rClr::clrCall(self$ref, "Add", column$ref)
       # we need to reset the cache when adding a new column
       private$.columns <- NULL

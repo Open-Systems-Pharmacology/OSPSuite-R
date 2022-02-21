@@ -94,7 +94,7 @@ getBaseUnit <- function(dimension) {
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
 toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
-  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
+  validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   unit <- encodeUnit(unit)
@@ -109,7 +109,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   # ensure that we are dealing with an list of values seen as number (and not integer)
   values <- as.numeric(c(values))
 
-  if (isOfType(quantityOrDimension, Quantity)) {
+  if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
   }
 
@@ -155,7 +155,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #' )
 #' @export
 toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL, molWeightUnit = NULL) {
-  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
+  validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- encodeUnit(targetUnit)
@@ -172,7 +172,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
     sourceUnit <- encodeUnit(sourceUnit)
   }
 
-  if (isOfType(quantityOrDimension, Quantity)) {
+  if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
   }
 
@@ -219,7 +219,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
 #' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
 #' @export
 toDisplayUnit <- function(quantity, values) {
-  validateIsOfType(quantity, Quantity)
+  validateIsOfType(quantity, "Quantity")
   toUnit(quantity, values, quantity$displayUnit)
 }
 

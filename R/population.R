@@ -86,8 +86,8 @@ Population <- R6::R6Class(
   ),
   private = list(
     getPathFrom = function(parameterOrPath) {
-      validateIsOfType(parameterOrPath, c("character", Parameter))
-      if (isOfType(parameterOrPath, Parameter)) {
+      validateIsOfType(parameterOrPath, c("character", "Parameter"))
+      if (isOfType(parameterOrPath, "Parameter")) {
         return(parameterOrPath$path)
       }
       parameterOrPath

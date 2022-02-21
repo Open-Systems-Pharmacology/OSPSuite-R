@@ -85,7 +85,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #' setMoleculeInitialValues(molecules, c(2, 3), units = c("pmol", "mmol"))
 #' @export
 setMoleculeInitialValues <- function(molecules, values, units = NULL) {
-  validateIsOfType(molecules, Molecule)
+  validateIsOfType(molecules, "Molecule")
   setQuantityValues(molecules, values, units)
 }
 
@@ -141,7 +141,7 @@ setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = N
 #' @export
 setMoleculeScaleDivisors <- function(molecules, values) {
   molecules <- toList(molecules)
-  validateIsOfType(molecules, Molecule)
+  validateIsOfType(molecules, "Molecule")
   validateIsNumeric(values)
   validateIsSameLength(molecules, values)
 

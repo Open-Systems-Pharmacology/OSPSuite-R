@@ -24,7 +24,7 @@ SimulationBatch <- R6::R6Class(
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       super$initialize(ref)
       private$.simulation <- simulation
     },

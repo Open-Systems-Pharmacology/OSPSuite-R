@@ -55,10 +55,10 @@ getOutputValues <- function(simulationResults,
                             individualIds = NULL,
                             stopIfNotFound = TRUE,
                             addMetaData = TRUE) {
-  validateIsOfType(simulationResults, SimulationResults)
-  validateIsOfType(population, Population, nullAllowed = TRUE)
+  validateIsOfType(simulationResults, "SimulationResults")
+  validateIsOfType(population, "Population", nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
-  validateIsOfType(quantitiesOrPaths, c(Quantity, "character"), nullAllowed = TRUE)
+  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"), nullAllowed = TRUE)
 
   quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
   quantitiesOrPaths <- c(quantitiesOrPaths)
@@ -69,7 +69,7 @@ getOutputValues <- function(simulationResults,
 
   # If quantities are provided, get their paths
   paths <- vector("character", length(quantitiesOrPaths))
-  if (isOfType(quantitiesOrPaths, Quantity)) {
+  if (isOfType(quantitiesOrPaths, "Quantity")) {
     for (idx in seq_along(quantitiesOrPaths)) {
       paths[[idx]] <- quantitiesOrPaths[[idx]]$path
     }
@@ -155,7 +155,7 @@ getOutputValues <- function(simulationResults,
 #' exportResultsToCSV(results, tempfile())
 #' @export
 exportResultsToCSV <- function(results, filePath) {
-  validateIsOfType(results, SimulationResults)
+  validateIsOfType(results, "SimulationResults")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
@@ -186,7 +186,7 @@ saveResultsToCSV <- function(results, filePath) {
 #' results <- importResultsFromCSV(sim, resultPath)
 #' @export
 importResultsFromCSV <- function(simulation, filePaths) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
   simulationResultsTask <- getNetTask("SimulationResultsTask")
   filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)

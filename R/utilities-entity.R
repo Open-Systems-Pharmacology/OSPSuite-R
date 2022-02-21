@@ -60,7 +60,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   }
 
   entities <- toList(entities)
-  validateIsOfType(entities, Entity)
+  validateIsOfType(entities, "Entity")
   validateEnumValue(compareBy, CompareBy)
 
   uniqueEntities <- new.env(parent = emptyenv())
@@ -106,7 +106,7 @@ unify <- function(groupEntitiesByPathFunc, paths) {
 #'
 getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) {
   # Test for correct inputs
-  validateIsOfType(container, c(Simulation, Container, Molecule))
+  validateIsOfType(container, c("Simulation", "Container", "Molecule"))
   validateIsString(paths)
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
@@ -134,7 +134,7 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
 #' The list is empty if no entities matching were found.
 #'
 getAllEntityPathsIn <- function(container, entityType, method = NULL) {
-  validateIsOfType(container, c(Simulation, Container, Molecule))
+  validateIsOfType(container, c("Simulation", "Container", "Molecule"))
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllPathsInMethod) == className)) == 0) {

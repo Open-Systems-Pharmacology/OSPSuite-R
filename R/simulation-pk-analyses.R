@@ -20,7 +20,7 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param simulation Simulation for which the pkParameters were calculated
     #' @return A new `SimulationPKAnalyses` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
       super$initialize(ref)
     },
