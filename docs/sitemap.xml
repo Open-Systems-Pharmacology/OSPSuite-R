@@ -103,6 +103,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createDistributions.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createImporterConfigurationForFile.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createIndividual.html</loc>
   </url>
   <url>
@@ -119,6 +122,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DataColumn.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DataCombined.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DataErrorType.html</loc>
@@ -224,6 +230,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllMoleculesMatching.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllObserverPathsIn.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllParameterPathsIn.html</loc>
@@ -352,6 +361,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadAgingDataFromCSV.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadDataImporterConfiguration.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadDataSetFromPKML.html</loc>
   </url>
   <url>
@@ -382,6 +394,12 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ospDimensions.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ospsuiteSettingNames.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ospsuite_deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ospUnits.html</loc>
   </url>
   <url>
@@ -403,6 +421,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/pkAnalysesAsDataFrame.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/pkAnalysesToDataFrame.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/PKParameter.html</loc>
   </url>
   <url>
@@ -421,6 +442,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/PopulationCharacteristics.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationToDataFrame.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/potentialVariableParameterPathsFor.html</loc>
   </url>
   <url>
@@ -434,6 +458,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/QuantitySelection.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/removeAllUserDefinedPKParameters.html</loc>
@@ -532,6 +559,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/SimulationResults.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/simulationResultsToDataFrame.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/SimulationRunOptions.html</loc>
   </url>
   <url>
@@ -596,6 +626,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateEnumValue.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateHasUnit.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateIsOfType.html</loc>

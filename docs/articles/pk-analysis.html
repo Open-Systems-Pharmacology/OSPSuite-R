@@ -19,19 +19,21 @@
 <![endif]-->
 </head>
 <body>
-    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">11.0.0</small>
 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../articles/ospsuite.html">Get started</a>
@@ -74,12 +76,16 @@
 </li>
       </ul>
 </div>
+
+    
   </div>
-</nav><div class="container template-article" id="container">
+</nav><div class="container template-article">
+
+
+
 
 <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
+  <main id="main"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Calculating PK parameters of simulation outputs</h1>
             
       
@@ -89,6 +95,9 @@
 
     
     
+<div class="section level2">
+<h2 id="calculating-pk-parameters">Calculating PK parameters<a class="anchor" aria-label="anchor" href="#calculating-pk-parameters"></a>
+</h2>
 <p>PK parameters such as AUC, C_max, etc., can be calculated for all outputs of a simulation. First, simulation results must be calculated, and the <code>SimulationResults</code> object is then passed to the method <code>calculatePKAnalyses</code>. For the list of calculated PK parameters and their description, please refer to <a href="https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-analysis-view" class="external-link">OSPS documentation</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
@@ -115,71 +124,85 @@
 <span class="va">allPkParams</span>       <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">allPKParametersFor</span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">allPkParams</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max </span>
 <span class="co">#&gt;    Dimension: Concentration (molar) </span>
 <span class="co">#&gt;    Unit: µmol/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max_norm </span>
 <span class="co">#&gt;    Dimension: Concentration (mass) </span>
 <span class="co">#&gt;    Unit: kg/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): t_max </span>
 <span class="co">#&gt;    Dimension: Time </span>
 <span class="co">#&gt;    Unit: min </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[4]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_tEnd </span>
 <span class="co">#&gt;    Dimension: Concentration (molar) </span>
 <span class="co">#&gt;    Unit: µmol/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[5]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_tEnd </span>
 <span class="co">#&gt;    Dimension: AUC (molar) </span>
 <span class="co">#&gt;    Unit: µmol*min/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[6]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_tEnd_norm </span>
 <span class="co">#&gt;    Dimension: AUC (mass) </span>
 <span class="co">#&gt;    Unit: kg*min/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[7]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_inf </span>
 <span class="co">#&gt;    Dimension: AUC (molar) </span>
 <span class="co">#&gt;    Unit: µmol*min/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[8]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_inf_norm </span>
 <span class="co">#&gt;    Dimension: AUC (mass) </span>
 <span class="co">#&gt;    Unit: kg*min/l </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[9]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): MRT </span>
 <span class="co">#&gt;    Dimension: Time </span>
 <span class="co">#&gt;    Unit: min </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[10]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Thalf </span>
 <span class="co">#&gt;    Dimension: Time </span>
 <span class="co">#&gt;    Unit: min </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[11]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): FractionAucLastToInf </span>
 <span class="co">#&gt;    Dimension: Fraction </span>
 <span class="co">#&gt;    Unit:  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[12]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): CL </span>
 <span class="co">#&gt;    Dimension: Flow per weight </span>
 <span class="co">#&gt;    Unit: l/min/kg </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[13]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Vss </span>
 <span class="co">#&gt;    Dimension: Volume per body weight </span>
 <span class="co">#&gt;    Unit: l/kg </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[14]]</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Vd </span>
 <span class="co">#&gt;    Dimension: Volume per body weight </span>
 <span class="co">#&gt;    Unit: l/kg</span>
@@ -187,6 +210,7 @@
 <span class="co"># Get C_max parameter</span>
 <span class="va">c_max</span>             <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">pKParameterFor</span><span class="op">(</span>quantityPath <span class="op">=</span> <span class="va">outputPath</span>, pkParameter <span class="op">=</span> <span class="st">"C_max"</span><span class="op">)</span>
 <span class="va">c_max</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max </span>
 <span class="co">#&gt;    Dimension: Concentration (molar) </span>
 <span class="co">#&gt;    Unit: µmol/l</span></code></pre></div>
@@ -197,6 +221,7 @@
 <span class="va">c_max</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">pKParameterFor</span><span class="op">(</span>quantityPath <span class="op">=</span> <span class="va">outputPath</span>, pkParameter <span class="op">=</span> <span class="st">"C_max"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">c_max</span><span class="op">)</span>
+<span class="co">#&gt; QuantityPKParameter: </span>
 <span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max </span>
 <span class="co">#&gt;    Dimension: Concentration (molar) </span>
 <span class="co">#&gt;    Unit: µmol/l</span>
@@ -208,11 +233,36 @@
 <span class="va">c_max</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt; [1] 50.25272</span></code></pre></div>
 <p>In case of a population simulation, <code>$values</code> return a list of values calculated for each individual.</p>
+</div>
+<div class="section level2">
+<h2 id="extracting-a-dataframe">Extracting a dataframe<a class="anchor" aria-label="anchor" href="#extracting-a-dataframe"></a>
+</h2>
+<p>Sometimes it is desirable to have the calculated parameters in a dataframe for working with them further in other workflows (e.g. data wrangling), and the package provides a convenient helper to extract it:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame</a></span><span class="op">(</span><span class="va">pkAnalysis</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 x 5</span></span>
+<span class="co">#&gt;    IndividualId QuantityPath                       Parameter        Value Unit  </span>
+<span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            0 Organism|PeripheralVenousBlood|Ac~ C_max         5.03<span style="color: #949494;">e</span>+ 1 µmol/l</span>l
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            0 Organism|PeripheralVenousBlood|Ac~ C_max_norm    3.07<span style="color: #949494;">e</span>+ 6 mg/l  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            0 Organism|PeripheralVenousBlood|Ac~ t_max         1.83<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span> h     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            0 Organism|PeripheralVenousBlood|Ac~ C_tEnd        3.25<span style="color: #949494;">e</span><span style="color: #BB0000;">- 2</span> µmol/l</span>l
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            0 Organism|PeripheralVenousBlood|Ac~ AUC_tEnd      4.06<span style="color: #949494;">e</span>+ 3 µmol*~</span>~
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            0 Organism|PeripheralVenousBlood|Ac~ AUC_tEnd_norm 2.48<span style="color: #949494;">e</span>+11 µg*mi~</span>~
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            0 Organism|PeripheralVenousBlood|Ac~ AUC_inf       4.07<span style="color: #949494;">e</span>+ 3 µmol*~</span>~
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            0 Organism|PeripheralVenousBlood|Ac~ AUC_inf_norm  2.48<span style="color: #949494;">e</span>+11 µg*mi~</span>~
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            0 Organism|PeripheralVenousBlood|Ac~ MRT           3.22<span style="color: #949494;">e</span>+ 0 h     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            0 Organism|PeripheralVenousBlood|Ac~ Thalf         3.02<span style="color: #949494;">e</span>+ 0 h     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            0 Organism|PeripheralVenousBlood|Ac~ FractionAucL~ 2.09<span style="color: #949494;">e</span><span style="color: #BB0000;">- 3</span> <span style="color: #BB0000;">NA</span>    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span>            0 Organism|PeripheralVenousBlood|Ac~ CL            4.02<span style="color: #949494;">e</span>+ 0 ml/mi~</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            0 Organism|PeripheralVenousBlood|Ac~ Vss           7.78<span style="color: #949494;">e</span>+ 2 ml/kg </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            0 Organism|PeripheralVenousBlood|Ac~ Vd            1.05<span style="color: #949494;">e</span>+ 3 ml/kg</span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="import-and-export-of-pk-analyses">Import and export of PK-analyses<a class="anchor" aria-label="anchor" href="#import-and-export-of-pk-analyses"></a>
 </h2>
 <p>Population analysis calculated in R can be exported to a *.csv file and loaded in PK-Sim, and vice versa.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load and run the simulation</span>
 <span class="va">simFilePath</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="va">sim</span>               <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
@@ -228,21 +278,20 @@
 <span class="co"># Load from csv</span>
 <span class="va">pkAnalysisLoaded</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importPKAnalysesFromCSV.html">importPKAnalysesFromCSV</a></span><span class="op">(</span>filePath <span class="op">=</span> <span class="va">csvPKAnalysisPath</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></code></pre></div>
 </div>
-  </div>
- 
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

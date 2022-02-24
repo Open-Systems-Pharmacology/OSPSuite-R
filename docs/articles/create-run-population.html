@@ -19,19 +19,21 @@
 <![endif]-->
 </head>
 <body>
-    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">11.0.0</small>
 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../articles/ospsuite.html">Get started</a>
@@ -74,12 +76,16 @@
 </li>
       </ul>
 </div>
+
+    
   </div>
-</nav><div class="container template-article" id="container">
+</nav><div class="container template-article">
+
+
+
 
 <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
+  <main id="main"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Population simulations</h1>
             
       
@@ -132,18 +138,24 @@
   ageMax              <span class="op">=</span> <span class="fl">80</span>,
   ageUnit             <span class="op">=</span> <span class="st">"year(s)"</span>
 <span class="op">)</span>
-<span class="co">#&gt; Error in rClr::clrLoadAssembly(pksimR): Failure in rclr_ms_call_static_method, but could not retrieve an error message</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">populationCharacteristics</span><span class="op">)</span>
-<span class="co">#&gt; Error in print(populationCharacteristics): object 'populationCharacteristics' not found</span>
+<span class="co">#&gt; PopulationCharacteristics: </span>
+<span class="co">#&gt;    Species: Human </span>
+<span class="co">#&gt;    Population: Asian_Tanaka_1996 </span>
+<span class="co">#&gt;    Number of individuals: 50 </span>
+<span class="co">#&gt;    Proportion of females: 50 </span>
+<span class="co">#&gt;    Age: [0.00 year(s)..80.00 year(s)] </span>
+<span class="co">#&gt;    Gestational age: ]-Inf..+Inf[ </span>
+<span class="co">#&gt;    Weight: [30.00 kg..98.00 kg] </span>
+<span class="co">#&gt;    Height: ]-Inf..+Inf[ </span>
+<span class="co">#&gt;    BMI: ]-Inf..+Inf[</span>
 
 <span class="co"># Create population from population characteristics</span>
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createPopulation.html">createPopulation</a></span><span class="op">(</span>populationCharacteristics <span class="op">=</span> <span class="va">populationCharacteristics</span><span class="op">)</span>
-<span class="co">#&gt; Error in isOfType(object, type, nullAllowed): object 'populationCharacteristics' not found</span>
 <span class="va">myPopulation</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">population</span>
-<span class="co">#&gt; Error in eval(expr, envir, enclos): object 'result' not found</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span>
 <span class="co">#&gt; Population: </span>
-<span class="co">#&gt;    Number of Individuals: 10</span></code></pre></div>
+<span class="co">#&gt;    Number of Individuals: 50</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="running-population-simulation">Running population simulation<a class="anchor" aria-label="anchor" href="#running-population-simulation"></a>
@@ -160,7 +172,7 @@
 <span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, population <span class="op">=</span> <span class="va">myPopulation</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span>
 <span class="co">#&gt; SimulationResults: </span>
-<span class="co">#&gt;    Number of individuals: 10</span></code></pre></div>
+<span class="co">#&gt;    Number of individuals: 50</span></code></pre></div>
 <p>Population simulations are run in parallel on multi-core machines - one core simulates a subset of all individuals defined in the population. By default, the number of cores used equals the maximal number of logical cores available minus one.</p>
 <p>The user can change the default behavior by providing custom <code><a href="../reference/SimulationRunOptions.html">SimulationRunOptions()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -184,7 +196,7 @@
 <span class="va">populationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, population <span class="op">=</span> <span class="va">myPopulation</span>, simulationRunOptions <span class="op">=</span> <span class="va">simRunOptions</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">populationResults</span><span class="op">)</span>
 <span class="co">#&gt; SimulationResults: </span>
-<span class="co">#&gt;    Number of individuals: 10</span></code></pre></div>
+<span class="co">#&gt;    Number of individuals: 50</span></code></pre></div>
 <p>Simulated time-value pairs for a specific output from the <code>SimulationResults</code>-object returned by the <code>runSimulation</code> method can be accessed with the method <code>getOutputValues</code>. The user can provide either the path(s) of the output (which can be a molecule, a parameter, or an observer), or the object(s) of the type <code>Molecule</code>, <code>Parameter</code>, or <code>Quantity</code> (for observers) with the argument <code>quantitiesOrPaths</code>. If no output is specified, all outputs available in the simulation results are returned.</p>
 <p>The paths of all available outputs can be accessed via</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -233,24 +245,20 @@
 <p><img src="create-run-population_files/figure-html/getOutputValuesForIndividual-1.png" width="700"></p>
 <p>For more information about running simulations, please refer to <a href="run-simulation.html">Running simulations and retrieving the results</a>.</p>
 </div>
-  </div>
- <div class="col-md-3" id="pkgdown-sidebar">
-        <nav id="toc"><h2>On this page</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>
