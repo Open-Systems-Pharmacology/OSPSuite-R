@@ -984,8 +984,8 @@ test_that("dataframe output is as expected when only `DataSet` with metadata is 
     c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
-      "Organ", "Compartment", "Molecule", "Group Id"
+      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Group Id",
+      "Organ", "Compartment", "Species"
     )
   )
 
