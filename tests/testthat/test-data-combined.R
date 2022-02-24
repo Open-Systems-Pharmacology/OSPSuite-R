@@ -75,15 +75,13 @@ test_that("data frame output is as expected when only `DataSet` is provided", {
   # checking dataframe methods
   df <- myCombDat$toDataFrame()
 
-  expect_equal(dim(df), c(12L, 20L))
-
+  expect_equal(dim(df), c(12L, 17L))
   expect_equal(
     names(df),
     c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Organ",
-      "Compartment", "Molecule", "Group Id"
+      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Group Id"
     )
   )
   expect_equal(rep(NA_character_, length(df$group)), df$group)
@@ -322,7 +320,7 @@ test_that("data transformations as expected when both DataSet and SimulationResu
   myCombDat$addDataSets(dataSet, newNames = list("a", NULL, "b", NULL, "c", NULL))
 
   df <- myCombDat$toDataFrame()
-  expect_equal(dim(df), c(830L, 21L))
+  expect_equal(dim(df), c(830L, 18L))
 
   # check exact values
   expect_equal(
@@ -330,8 +328,7 @@ test_that("data transformations as expected when both DataSet and SimulationResu
     c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
-      "IndividualId", "molWeight", "lloq", "Source", "Sheet",
-      "Organ", "Compartment", "Molecule", "Group Id"
+      "IndividualId", "molWeight", "lloq", "Source", "Sheet", "Group Id"
     )
   )
 
@@ -880,10 +877,10 @@ test_that("sequential update when objects have different values", {
 
   # they should be different since the new dataset that replaces the old one has
   # deliberately different values and rows
-  expect_equal(dim(df1), c(77L, 20L))
-  expect_equal(dim(df2), c(76L, 20L))
-  expect_equal(dim(df1Filter), c(25L, 20L))
-  expect_equal(dim(df2Filter), c(24L, 20L))
+  expect_equal(dim(df1), c(77L, 17L))
+  expect_equal(dim(df2), c(76L, 17L))
+  expect_equal(dim(df1Filter), c(25L, 17L))
+  expect_equal(dim(df2Filter), c(24L, 17L))
 
   expect_equal(
     head(df1Filter$xValues),
@@ -904,7 +901,6 @@ test_that("sequential update when objects have different values", {
 
 test_that("dataframe is as expected when population objects are used", {
   skip_if(.Platform$OS.type != "windows")
-  # ospsuite::initPKSim("C:\\Program Files\\Open Systems Pharmacology\\PK-Sim 10.0")
 
   # If no unit is specified, the default units are used. For "height" it is "dm",
   # for "weight" it is "kg", for "age" it is "year(s)".
