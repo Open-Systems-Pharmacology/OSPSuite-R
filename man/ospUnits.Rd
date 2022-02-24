@@ -5,7 +5,7 @@
 \alias{ospUnits}
 \title{Supported units defined as a named list of lists}
 \format{
-An object of class \code{list} of length 90.
+An object of class \code{list} of length 91.
 }
 \usage{
 ospUnits
