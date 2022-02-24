@@ -35,28 +35,32 @@ test_that("active bindings are read-only", {
 
   expect_error(
     myCombDat$groupMap <- "x", "readonly"
-    #messages$errorPropertyReadOnly("groupMap")
+    # messages$errorPropertyReadOnly("groupMap")
   )
 
   expect_error(
     myCombDat$names <- "x", "readonly"
-    #messages$errorPropertyReadOnly("names")
+    # messages$errorPropertyReadOnly("names")
   )
 
   expect_error(
     myCombDat$dataTransformations <- "x", "readonly"
-    #messages$errorPropertyReadOnly("dataTransformations")
+    # messages$errorPropertyReadOnly("dataTransformations")
   )
 })
 
 test_that("add* methods error if anything but expected data types are entered", {
   myCombDat <- DataCombined$new()
 
-  expect_error(myCombDat$addSimulationResults(list("x", "y")))
-  expect_error(myCombDat$addSimulationResults(list(NULL)))
+  expect_error(
+    myCombDat$addSimulationResults(list("x", "y")),
+    "argument 'simulationResults' is of type 'list', but expected 'SimulationResults'"
+  )
 
-  expect_error(myCombDat$addDataSets(list(1, 2)))
-  expect_error(myCombDat$addDataSets(list(NULL)))
+  expect_error(
+    myCombDat$addDataSets(list(1, 2)),
+    "argument 'dataSets' is of type 'list', but expected 'DataSet'"
+  )
 })
 
 # only `DataSet` ---------------------------------------
@@ -187,21 +191,31 @@ test_that("with no grouping specified, group column in dataframe is `NA`", {
   expect_equal(rep(NA_character_, length(df$group)), df$group)
 })
 
+
+test_that("grouping specification fails when there are no datasets present", {
+  myCombDat <- DataCombined$new()
+
+  expect_error(
+    myCombDat$setGroups(list()),
+    "There are currently no datasets to be grouped."
+  )
+})
+
 test_that("empty grouping specification fails", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
 
-  expect_error(myCombDat$setGroups(list()))
+  expect_error(
+    myCombDat$setGroups(list()),
+    "You need to provide a named list with at least one valid grouping."
+  )
 })
 
 test_that("setting groups fails when group specification is invalid", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
 
-  expect_error(
-    myCombDat$setGroups(c(2, 4)),
-    "You need to provide a named list with at least one valid grouping."
-  )
+  expect_error(myCombDat$setGroups(c(2, 4)))
 
   expect_error(
     myCombDat$setGroups(list("x" = 2, "y" = 4)),

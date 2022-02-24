@@ -115,6 +115,9 @@ DataCombined <- R6::R6Class(
                                     population = NULL,
                                     individualIds = NULL,
                                     newNames = NULL) {
+      # validate vector arguments' type and length
+      validateIsOfType(simulationResults, "SimulationResults", FALSE)
+
       # A list or a vector of `SimulationResults` class instances is not allowed
       #
       # If we were to allow this, `quantitiesOrPaths`, `population`, and
@@ -137,8 +140,7 @@ DataCombined <- R6::R6Class(
       pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
       pathsLength <- length(pathsNames)
 
-      # validate vector arguments' type and length
-      validateIsOfType(simulationResults, "SimulationResults", FALSE)
+      # validate alternative names for their length and type
       newNames <- cleanVectorArgs(newNames, pathsLength, type = "character")
 
       # if alternate names are provided for datasets, use them instead
