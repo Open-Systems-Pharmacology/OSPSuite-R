@@ -20,7 +20,7 @@ dataSet2 <- loadDataSetsFromExcel(
 )
 
 # dataset with metadata
-myDataSet <- dataSet$Stevens_2012_placebo.Placebo_total
+myDataSet <- dataSet$Stevens_2012_placebo.Placebo_total$clone(deep = TRUE)
 myDataSet$addMetaData("Organ", "Liver")
 myDataSet$addMetaData("Compartment", "Intracellular")
 myDataSet$addMetaData("Species", "Human")
