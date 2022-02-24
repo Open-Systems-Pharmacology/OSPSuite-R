@@ -363,36 +363,9 @@ DataSet <- R6::R6Class(
       invisible(self)
     },
     .createDataRepository = function() {
-      # Create an empty data repository with a base grid and columns
-      dataRepository <- DataRepository$new()
-
-      # Passing time for dimension for now
-      xColumn <- DataColumn$new(
-        rClr::clrNew(
-          "OSPSuite.Core.Domain.Data.BaseGrid",
-          "xValues",
-          getDimensionByName(ospDimensions$Time)
-        )
-      )
-
-      # Passing concentration (mass) for dimension for now
-      yColumn <- DataColumn$new(
-        rClr::clrNew(
-          "OSPSuite.Core.Domain.Data.DataColumn",
-          "yValues",
-          getDimensionByName(ospDimensions$`Concentration (mass)`),
-          xColumn$ref
-        )
-      )
-
-      #ensuring that the data type is set to observation (or default use case)
-      dataInfo <- rClr::clrGet(yColumn$ref, "DataInfo")
-      #3 is the value of observation origin
-      rClr::clrSet(dataInfo, "Origin", 3)
-
-      dataRepository$addColumn(xColumn)
-      dataRepository$addColumn(yColumn)
-      return(dataRepository)
+      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      dataRepository = rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues" );
+      return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
       private$.xColumn <- private$.dataRepository$baseGrid
