@@ -1,4 +1,4 @@
-# data to be used across all tests in this file
+# data to be used ---------------------------------------
 
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")
@@ -18,6 +18,8 @@ dataSet2 <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
   importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
+
+# active bindings ---------------------------------------
 
 test_that("active bindings should all be NULL for empty initialization", {
   myCombDat <- DataCombined$new()
@@ -46,6 +48,7 @@ test_that("add* methods error if anything but expected data types are entered", 
   expect_error(myCombDat$addDataSets(list(NULL)))
 })
 
+# only `DataSet` ---------------------------------------
 
 test_that("data transformations work as expected when only `DataSet` is provided", {
   myCombDat <- DataCombined$new()
@@ -68,14 +71,19 @@ test_that("data transformations work as expected when only `DataSet` is provided
   )
 })
 
-test_that("dataframe output is as expected when only `DataSet` is provided", {
+test_that("dataframe dimensions are as expected when only `DataSet` is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
-
-  # checking dataframe methods
   df <- myCombDat$toDataFrame()
 
   expect_equal(dim(df), c(12L, 17L))
+})
+
+test_that("dataframe column and dataset names are as expected when only `DataSet` is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  df <- myCombDat$toDataFrame()
+
   expect_equal(
     names(df),
     c(
@@ -84,9 +92,11 @@ test_that("dataframe output is as expected when only `DataSet` is provided", {
       "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Group Id"
     )
   )
-  expect_equal(rep(NA_character_, length(df$group)), df$group)
+
   expect_equal(unique(df$name), names(dataSet)[[1]])
 })
+
+# only `SimulationResults` ---------------------------------------
 
 test_that("data transformations work as expected when only `SimulationResults` is provided", {
   myCombDat <- DataCombined$new()
@@ -113,6 +123,45 @@ test_that("data transformations work as expected when only `SimulationResults` i
       row.names = c(NA, -5L)
     )
   )
+})
+
+test_that("dataframe output as expected when only `SimulationResults` is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
+
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(dim(df), c(1255L, 12L))
+  expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
+  expect_equal(
+    names(df),
+    c(
+      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
+      "yValues", "yUnit", "yDimension", "yErrorValues", "IndividualId", "molWeight"
+    )
+  )
+  expect_equal(unique(df$name), sort(simResults$allQuantityPaths))
+  expect_equal(
+    as.character(na.omit(unique(df$name))),
+    c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
+    )
+  )
+  expect_equal(rep(NA_character_, length(df$group)), df$group)
+})
+
+# grouping specification ---------------------------------------
+
+test_that("with no grouping specified, group column in dataframe is NA", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(rep(NA_character_, length(df$group)), df$group)
 })
 
 test_that("empty grouping specification fails", {
@@ -238,36 +287,9 @@ test_that("specifying groupings and new names for only few paths in `SimulationR
   )
 })
 
-test_that("dataframe output as expected when only `SimulationResults` is provided", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addSimulationResults(simResults)
+# both `DataSet` and `SimulationResults` ---------------------------------------
 
-  df <- myCombDat$toDataFrame()
-
-  expect_equal(dim(df), c(1255L, 12L))
-  expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
-  expect_equal(
-    names(df),
-    c(
-      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
-      "yValues", "yUnit", "yDimension", "yErrorValues", "IndividualId", "molWeight"
-    )
-  )
-  expect_equal(unique(df$name), sort(simResults$allQuantityPaths))
-  expect_equal(
-    as.character(na.omit(unique(df$name))),
-    c(
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
-      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
-    )
-  )
-  expect_equal(rep(NA_character_, length(df$group)), df$group)
-})
-
-test_that("data transformations as expected when both DataSet and SimulationResults provided", {
+test_that("data transformations as expected when both `DataSet` and `SimulationResults` provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -366,6 +388,8 @@ test_that("data transformations as expected when both DataSet and SimulationResu
     rep(NA_character_, length(myCombDat$groupMap$group))
   )
 })
+
+# order and renaming -----------------------------
 
 test_that("renaming only a single dataset works", {
   myCombDat <- DataCombined$new()
@@ -899,7 +923,9 @@ test_that("sequential update when objects have different values", {
   )
 })
 
-test_that("dataframe is as expected when population objects are used", {
+# `Population` objects -----------------------------
+
+test_that("dataframe is as expected when `Population` objects are used", {
   skip_if(.Platform$OS.type != "windows")
 
   # If no unit is specified, the default units are used. For "height" it is "dm",
@@ -945,8 +971,9 @@ test_that("dataframe is as expected when population objects are used", {
   expect_equal(unique(df$xUnit), "min")
 })
 
+# edge cases -----------------------------
 
-test_that("edge cases - groups name same as dataset name", {
+test_that("grouping is not same when groups name is same as dataset name", {
   myCombDat <- DataCombined$new()
 
   # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
@@ -967,18 +994,26 @@ test_that("edge cases - groups name same as dataset name", {
   expect_equal(myCombDat$groupMap$name, c("b", "a"))
 })
 
-# dataset with metadata
+# `DataSet` with metadata -----------------------------
+
 myDataSet <- dataSet$Stevens_2012_placebo.Placebo_total
 myDataSet$addMetaData("Organ", "Liver")
 myDataSet$addMetaData("Compartment", "Intracellular")
 myDataSet$addMetaData("Species", "Human")
 
-test_that("dataframe output is as expected when only `DataSet` with metadata is provided", {
+test_that("dataframe dimensions are as expected when `DataSet` with metadata is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(myDataSet)
   df <- myCombDat$toDataFrame()
 
-  expect_equal(dim(df), c(12L, 21L))
+  expect_equal(dim(df), c(12L, 20L))
+})
+
+test_that("dataframe column names are as expected when `DataSet` with metadata is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(myDataSet)
+  df <- myCombDat$toDataFrame()
+
   expect_equal(
     names(df),
     c(
@@ -988,6 +1023,12 @@ test_that("dataframe output is as expected when only `DataSet` with metadata is 
       "Organ", "Compartment", "Species"
     )
   )
+})
+
+test_that("dataframe metadata column entries are as expected when `DataSet` with metadata is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(myDataSet)
+  df <- myCombDat$toDataFrame()
 
   expect_equal(unique(df$Organ), "Liver")
   expect_equal(unique(df$Compartment), "Intracellular")
