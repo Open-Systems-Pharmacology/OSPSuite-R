@@ -364,7 +364,7 @@ DataSet <- R6::R6Class(
     },
     .createDataRepository = function() {
       dataRepositoryTask <- getNetTask("DataRepositoryTask")
-      dataRepository = rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues" );
+      dataRepository <- rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues")
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
