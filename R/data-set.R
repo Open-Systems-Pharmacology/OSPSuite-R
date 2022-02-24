@@ -385,6 +385,11 @@ DataSet <- R6::R6Class(
         )
       )
 
+      #ensuring that the data type is set to observation (or default use case)
+      dataInfo <- rClr::clrGet(yColumn$ref, "DataInfo")
+      #3 is the value of observation origin
+      rClr::clrSet(dataInfo, "Origin", 3)
+
       dataRepository$addColumn(xColumn)
       dataRepository$addColumn(yColumn)
       return(dataRepository)
