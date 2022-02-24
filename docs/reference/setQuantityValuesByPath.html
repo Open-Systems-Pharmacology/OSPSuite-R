@@ -3,19 +3,21 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
-    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">11.0.0</small>
 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
   <a class="nav-link" href="../articles/ospsuite.html">Get started</a>
 </li>
@@ -53,11 +55,12 @@
   </a>
 </li>
       </ul></div>
+
+    
   </div>
-</nav><div class="container template-reference-topic" id="container">
+</nav><div class="container template-reference-topic">
 <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Set the values of parameters in the simulation by path</h1>
       <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/HEAD/R/utilities-quantity.R" class="external-link"><code>R/utilities-quantity.R</code></a></small>
       <div class="d-none name"><code>setQuantityValuesByPath.Rd</code></div>
@@ -67,40 +70,41 @@
     <p>Set the values of parameters in the simulation by path</p>
     </div>
 
-    <div class="ref-usage section level2 sourceCode">
-    <h2>Usage</h2>
-    <pre class="sourceCode r"><code><span class="fu">setQuantityValuesByPath</span><span class="op">(</span>
+    <div class="section level2">
+    <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">setQuantityValuesByPath</span><span class="op">(</span>
   <span class="va">quantityPaths</span>,
   <span class="va">values</span>,
   <span class="va">simulation</span>,
   units <span class="op">=</span> <span class="cn">NULL</span>,
   stopIfNotFound <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre>
+<span class="op">)</span></code></pre></div>
     </div>
 
-    <div id="ref-sections">
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>quantityPaths</dt>
 <dd><p>A single or a list of absolute quantity path</p></dd>
 <dt>values</dt>
-<dd><p>A numeric value that should be assigned to the quantities or a vector
-of numeric values, if the value of more than one quantity should be changed. Must have the same
-length as 'quantityPaths'</p></dd>
+<dd><p>A numeric value that should be assigned to the quantities or a
+vector of numeric values, if the value of more than one quantity should be
+changed. Must have the same length as 'quantityPaths'.</p></dd>
 <dt>simulation</dt>
-<dd><p>Simulation uses to retrieve quantity instances from given paths.</p></dd>
+<dd><p>Simulation uses to retrieve quantity instances from given
+paths.</p></dd>
 <dt>units</dt>
-<dd><p>A string or a list of strings defining the units of the <code>values</code>. If <code>NULL</code> (default), values
-are assumed to be in base units. If not <code>NULL</code>, must have the same length as <code>quantityPaths</code>.</p></dd>
+<dd><p>A string or a list of strings defining the units of the
+<code>values</code>. If <code>NULL</code> (default), values are assumed to be in base units. If
+not <code>NULL</code>, must have the same length as <code>quantityPaths</code>.</p></dd>
 <dt>stopIfNotFound</dt>
-<dd><p>Boolean. If <code>TRUE</code> (default) and no quantity exists for the given path,
-an error is thrown. If <code>FALSE</code>, a warning is shown to the user</p></dd>
+<dd><p>Boolean. If <code>TRUE</code> (default) and no quantity exists for
+the given path, an error is thrown. If <code>FALSE</code>, a warning is shown to the
+user.</p></dd>
 </dl></div>
-    </div>
 
-    <div id="examples">
-    <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="va">simPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simPath</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">setQuantityValuesByPath</span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="fl">1</span>, <span class="va">sim</span><span class="op">)</span></span>
@@ -108,19 +112,16 @@ an error is thrown. If <code>FALSE</code>, a warning is shown to the user</p></d
 <span class="r-in"><span class="fu"><a href="setParameterValuesByPath.html">setParameterValuesByPath</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="st">"Organism|Liver|A"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="va">sim</span><span class="op">)</span></span>
 </code></pre></div>
     </div>
-  </div>
-  <div class="col-md-3" id="pkgdown-sidebar">
-    <nav id="toc"><h2>On this page</h2>
-    </nav></div>
-</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko.</p>
+  <p></p><p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer></div>

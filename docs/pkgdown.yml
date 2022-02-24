@@ -1,6 +1,6 @@
-pandoc: 2.16.1
-pkgdown: 1.9000.9000.9000
-pkgdown_sha: 8122179c440692487eda000d6542d7734a37d36d
+pandoc: 2.14.0.3
+pkgdown: 2.0.2
+pkgdown_sha: ~
 articles:
   create-individual: create-individual.html
   create-run-population: create-run-population.html
@@ -13,7 +13,7 @@ articles:
   set-values: set-values.html
   table-parameters: table-parameters.html
   unit-conversion: unit-conversion.html
-last_built: 2021-11-17T11:08Z
+last_built: 2022-02-23T23:23Z
 urls:
   reference: https://www.open-systems-pharmacology.org/OSPSuite-R/reference
   article: https://www.open-systems-pharmacology.org/OSPSuite-R/articles
