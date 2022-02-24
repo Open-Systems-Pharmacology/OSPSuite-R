@@ -175,6 +175,7 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
+  print(names(dataSetsFrame))
   expect_equal(names(dataSetsFrame), c(
     "name",
     "xValues",
@@ -198,7 +199,6 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
     "Molecule",
     "Route",
     "Subject Id",
-    "Dose",
-    "Group Id"
+    "Dose"
   ))
 })
