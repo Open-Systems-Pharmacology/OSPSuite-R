@@ -34,18 +34,21 @@ test_that("active bindings are read-only", {
   myCombDat <- DataCombined$new()
 
   expect_error(
-    myCombDat$groupMap <- "x", "readonly"
-    # messages$errorPropertyReadOnly("groupMap")
+    myCombDat$groupMap <- "x",
+    messages$errorPropertyReadOnly("groupMap"),
+    fixed = TRUE
   )
 
   expect_error(
-    myCombDat$names <- "x", "readonly"
-    # messages$errorPropertyReadOnly("names")
+    myCombDat$names <- "x",
+    messages$errorPropertyReadOnly("names"),
+    fixed = TRUE
   )
 
   expect_error(
-    myCombDat$dataTransformations <- "x", "readonly"
-    # messages$errorPropertyReadOnly("dataTransformations")
+    myCombDat$dataTransformations <- "x",
+    messages$errorPropertyReadOnly("dataTransformations"),
+    fixed = TRUE
   )
 })
 
