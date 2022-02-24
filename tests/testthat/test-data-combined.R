@@ -19,12 +19,6 @@ dataSet2 <- loadDataSetsFromExcel(
   importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
-# dataset with metadata
-myDataSet <- dataSet$Stevens_2012_placebo.Placebo_total$clone(deep = TRUE)
-myDataSet$addMetaData("Organ", "Liver")
-myDataSet$addMetaData("Compartment", "Intracellular")
-myDataSet$addMetaData("Species", "Human")
-
 test_that("active bindings should all be NULL for empty initialization", {
   myCombDat <- DataCombined$new()
 
@@ -92,23 +86,6 @@ test_that("dataframe output is as expected when only `DataSet` is provided", {
   )
   expect_equal(rep(NA_character_, length(df$group)), df$group)
   expect_equal(unique(df$name), names(dataSet)[[1]])
-})
-
-test_that("dataframe output is as expected when only `DataSet` with metadata is provided", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(myDataSet)
-  df <- myCombDat$toDataFrame()
-
-  expect_equal(dim(df), c(12L, 21L))
-  expect_equal(
-    names(df),
-    c(
-      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
-      "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
-      "Organ", "Compartment", "Molecule", "Group Id"
-    )
-  )
 })
 
 test_that("data transformations work as expected when only `SimulationResults` is provided", {
@@ -988,4 +965,31 @@ test_that("edge cases - groups name same as dataset name", {
 
   # with single datasets the renaming should still work
   expect_equal(myCombDat$groupMap$name, c("b", "a"))
+})
+
+# dataset with metadata
+myDataSet <- dataSet$Stevens_2012_placebo.Placebo_total
+myDataSet$addMetaData("Organ", "Liver")
+myDataSet$addMetaData("Compartment", "Intracellular")
+myDataSet$addMetaData("Species", "Human")
+
+test_that("dataframe output is as expected when only `DataSet` with metadata is provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(myDataSet)
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(dim(df), c(12L, 21L))
+  expect_equal(
+    names(df),
+    c(
+      "name", "group", "dataType", "xValues", "xUnit", "xDimension",
+      "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
+      "yErrorUnit", "molWeight", "lloq", "Source", "Sheet",
+      "Organ", "Compartment", "Molecule", "Group Id"
+    )
+  )
+
+  expect_equal(unique(df$Organ), "Liver")
+  expect_equal(unique(df$Compartment), "Intracellular")
+  expect_equal(unique(df$Species), "Human")
 })
