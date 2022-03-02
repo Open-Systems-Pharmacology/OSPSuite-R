@@ -53,9 +53,9 @@ If no error column is present, the value is \code{NULL}}
 configuration will be applied.}
 
 \item{\code{namingPattern}}{Regular expression used for naming of loaded data sets.
-Words between curly brackets (e.g. \verb{Group Id} will be replaced by the value
-in the corresponding column. Further keywords are \code{Source} for the file name
-and \code{Sheet} for sheet name.}
+Words between curly brackets (e.g. \verb{\{Group Id\}} will be replaced by the value
+in the corresponding column. Further keywords are \code{{Source}} for the file name
+and \code{{Sheet}} for sheet name.}
 }
 \if{html}{\out{</div>}}
 }
