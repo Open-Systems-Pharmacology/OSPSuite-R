@@ -53,9 +53,9 @@ If no error column is present, the value is \code{NULL}}
 configuration will be applied.}
 
 \item{\code{namingPattern}}{Regular expression used for naming of loaded data sets.
-Words between curly brackets (e.g. \code{{Group Id}}) will be replaced by the value
-in the corresponding column. Further keywords are \code{{Source}} for the file name
-and \code{{Sheet}} for sheet name.}
+Words between curly brackets (e.g. \verb{Group Id} will be replaced by the value
+in the corresponding column. Further keywords are \code{Source} for the file name
+and \code{Sheet} for sheet name.}
 }
 \if{html}{\out{</div>}}
 }
@@ -67,7 +67,6 @@ and \code{{Sheet}} for sheet name.}
 \item \href{#method-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
 \item \href{#method-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
 \item \href{#method-print}{\code{DataImporterConfiguration$print()}}
-\item \href{#method-clone}{\code{DataImporterConfiguration$clone()}}
 }
 }
 \if{html}{
@@ -163,23 +162,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

@@ -6,7 +6,7 @@
 DataImporterConfiguration <- R6::R6Class(
   "DataImporterConfiguration",
   inherit = DotNetWrapper,
-  cloneable = TRUE,
+  cloneable = FALSE,
   active = list(
     #' @field timeColumn Name of the column for time values
     timeColumn = function(value) {
@@ -220,9 +220,9 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)
     },
     #' @field namingPattern Regular expression used for naming of loaded data sets.
-    #' Words between curly brackets (e.g. \code{{Group Id}}) will be replaced by the value
-    #' in the corresponding column. Further keywords are \code{{Source}} for the file name
-    #' and \code{{Sheet}} for sheet name.
+    #' Words between curly brackets (e.g. `Group Id` will be replaced by the value
+    #' in the corresponding column. Further keywords are `Source` for the file name
+    #' and `Sheet` for sheet name.
     namingPattern = function(value) {
       if (missing(value)) {
         pattern <- rClr::clrGet(self$ref, "NamingConventions")
