@@ -6,7 +6,7 @@
 DataImporterConfiguration <- R6::R6Class(
   "DataImporterConfiguration",
   inherit = DotNetWrapper,
-  cloneable = TRUE,
+  cloneable = FALSE,
   active = list(
     #' @field timeColumn Name of the column for time values
     timeColumn = function(value) {

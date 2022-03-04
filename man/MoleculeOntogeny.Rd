@@ -26,7 +26,6 @@ allowing the user to retrieve potential ontogeny values.
 \item \href{#method-new}{\code{MoleculeOntogeny$new()}}
 \item \href{#method-print}{\code{MoleculeOntogeny$print()}}
 \item \href{#method-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
-\item \href{#method-clone}{\code{MoleculeOntogeny$clone()}}
 }
 }
 \if{html}{
@@ -83,22 +82,5 @@ Print the \code{MoleculeOntogeny} on one line
 \if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$printMoleculeOntogeny()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

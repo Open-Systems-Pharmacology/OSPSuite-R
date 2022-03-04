@@ -27,7 +27,6 @@ A parameter range typically used in the definition of \code{PopulationCharacteri
 \item \href{#method-new}{\code{ParameterRange$new()}}
 \item \href{#method-print}{\code{ParameterRange$print()}}
 \item \href{#method-printValue}{\code{ParameterRange$printValue()}}
-\item \href{#method-clone}{\code{ParameterRange$clone()}}
 }
 }
 \if{html}{
@@ -92,23 +91,6 @@ Print the the parameter in one line
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{caption}}{Caption to display before the value of the parameter}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterRange$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }
