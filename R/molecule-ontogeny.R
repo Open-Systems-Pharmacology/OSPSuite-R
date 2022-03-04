@@ -8,6 +8,7 @@
 MoleculeOntogeny <- R6::R6Class(
   "MoleculeOntogeny",
   inherit = Printable,
+  cloneable = FALSE,
   public = list(
     #' @field molecule Name of the molecule in the model
     molecule = NULL,

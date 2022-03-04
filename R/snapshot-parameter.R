@@ -7,6 +7,7 @@
 SnapshotParameter <- R6::R6Class(
   "SnapshotParameter",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field value Parameter value
     value = function(value) {

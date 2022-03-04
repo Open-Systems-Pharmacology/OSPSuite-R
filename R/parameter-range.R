@@ -7,6 +7,7 @@
 ParameterRange <- R6::R6Class(
   "ParameterRange",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field min Minimum value for the parameter range
     min = function(value) {

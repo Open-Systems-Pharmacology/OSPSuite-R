@@ -33,6 +33,7 @@ StandardPKParameter <- enum(c(
 #' @description Standard PK Parameters defined in the OSPSuite
 PKParameter <- R6::R6Class("PKParameter",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field name Name of the PK-Parameter
     name = function(value) {

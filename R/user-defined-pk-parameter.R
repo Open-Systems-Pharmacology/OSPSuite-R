@@ -3,6 +3,7 @@
 #' @description  Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
 UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
   inherit = PKParameter,
+  cloneable = FALSE,
   active = list(
     #' @field startTime Start time for the calculation of the PK-Parameter.
     #' If not specified, the time will start at the first time point of the simulation (optional)
