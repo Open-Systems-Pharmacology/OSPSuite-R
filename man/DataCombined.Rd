@@ -13,6 +13,7 @@ Additionally, it allows:
 \item Grouping different (simulated and/or observed) datasets with grouping
 labels.
 \item Transforming data (with given offsets and scale factors).
+\item Getting necessary dataframes for visualizations.
 }
 }
 \note{
@@ -62,6 +63,7 @@ values were specified by the user for each dataset.}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-setGroups}{\code{DataCombined$setGroups()}}
 \item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
+\item \href{#method-toObsVsPredDataFrame}{\code{DataCombined$toObsVsPredDataFrame()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
 \item \href{#method-clone}{\code{DataCombined$clone()}}
@@ -218,6 +220,47 @@ offset and scale factor values.
 \item For error term:
 \code{newErrorValue = rawErrorValue * scaleFactor}
 }
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-toObsVsPredDataFrame"></a>}}
+\if{latex}{\out{\hypertarget{method-toObsVsPredDataFrame}{}}}
+\subsection{Method \code{toObsVsPredDataFrame()}}{
+Get a dataframe for Predicted versus Observed plot
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$toObsVsPredDataFrame(threshold = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{threshold}}{Absolute numerical distance by which the closest
+\code{xValue} (time, i.e.) in the observed data may differ from \code{xValue} in
+simulated data to be accepted as \emph{equal}. If no threshold is specified
+(default), then the square root of smallest positive floating-point
+number on your machine will be used (\code{.Machine$double.eps^0.5}) as a
+threshold. For all intents and purposes, this amounts to an \strong{exact}
+match between two values being compared.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+The \code{threshold} argument can make a big difference to the returned
+dataframe. This argument specifies the tolerance for comparing equality
+of observed and simulated time values (usually found under \code{xValues}
+column).
+
+Specifically, there are two possibilities to consider:
+
+If the threshold is too \strong{liberal}, multiple simulated values will be
+selected. In such cases, only the first of these is retained. For
+example, if observed value is \code{2} and the simulated values are \code{c(1.4, 2.2, 3.8, 4.0)}, with \code{threshold = 1}, two simulated values (\verb{c(1.4, 2.2}) are selected and only the first one (\code{1.4}) is retained.
+
+On the other hand, if the threshold is too stringent, no simulated
+\code{xValues} might be selected. For example, if observed value is \code{2} and
+the simulated values are \code{c(1.4, 2.2, 3.8, 4.0)}, with \code{threshold = 0.1},
+no simulated values (\verb{c(1.4, 2.2}) are selected.
 }
 
 }

@@ -12,6 +12,8 @@
 #'
 #' - Transforming data (with given offsets and scale factors).
 #'
+#' - Getting necessary dataframes for visualizations.
+#'
 #' @import tidyr
 #' @import ospsuite.utils
 #'
@@ -344,6 +346,105 @@ DataCombined <- R6::R6Class(
 
       # for method chaining
       invisible(self)
+    },
+
+    #' @description
+    #'
+    #' Get a dataframe for Predicted versus Observed plot
+    #'
+    #' @details
+    #'
+    #' The `threshold` argument can make a big difference to the returned
+    #' dataframe. This argument specifies the tolerance for comparing equality
+    #' of observed and simulated time values (usually found under `xValues`
+    #' column).
+    #'
+    #' Specifically, there are two possibilities to consider:
+    #'
+    #' If the threshold is too **liberal**, multiple simulated values will be
+    #' selected. In such cases, only the first of these is retained. For
+    #' example, if observed value is `2` and the simulated values are `c(1.4,
+    #' 2.2, 3.8, 4.0)`, with `threshold = 1`, two simulated values (`c(1.4,
+    #' 2.2`) are selected and only the first one (`1.4`) is retained.
+    #'
+    #' On the other hand, if the threshold is too stringent, no simulated
+    #' `xValues` might be selected. For example, if observed value is `2` and
+    #' the simulated values are `c(1.4, 2.2, 3.8, 4.0)`, with `threshold = 0.1`,
+    #' no simulated values (`c(1.4, 2.2`) are selected.
+    #'
+    #' @param threshold Absolute numerical distance by which the closest
+    #'   `xValue` (time, i.e.) in the observed data may differ from `xValue` in
+    #'   simulated data to be accepted as *equal*. If no threshold is specified
+    #'   (default), then the square root of smallest positive floating-point
+    #'   number on your machine will be used (`.Machine$double.eps^0.5`) as a
+    #'   threshold. For all intents and purposes, this amounts to an **exact**
+    #'   match between two values being compared.
+    toObsVsPredDataFrame = function(threshold = NULL) {
+      # We don't want this function to tamper with combined dataframe, so
+      # make an internal copy for this function scope.
+      df <- private$.dataCombined
+
+      if (is.null(df)) {
+        stop(
+          "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
+          call. = FALSE
+        )
+      }
+
+      if (length(unique(df$group) == 0L)) {
+        stop(
+          "There are currently no grouping specified. You can set them with `$setGroups()` method.",
+          call. = FALSE
+        )
+      }
+
+      # Datasets which are not grouped can't be paired.
+      df <- dplyr::filter(df, !is.na(group))
+
+      # In order to compare proximity of `xValues` in observed data with the `xValues`
+      # in simulated data, the dataframes need to be extracted to wide format.
+      #
+      # Also, the respective columns need to be renamed so that they can be distinguished.
+      obsData <- df %>%
+        dplyr::filter(dataType == "observed") %>%
+        dplyr::select("group", "xObsValues" = "xValues", "yObsValues" = "yValues")
+
+      simData <- df %>%
+        dplyr::filter(dataType == "simulated") %>%
+        dplyr::select("group", "xSimValues" = "xValues", "ySimValues" = "yValues", dplyr::everything())
+
+      # Get the selected simulated dataframe to be in the same format as the one in
+      # the `private$.dataCombined`
+      simDataPaired <- dplyr::full_join(obsData, simData, by = "group") %>%
+        dplyr::filter(dplyr::near(xObsValues, xSimValues, tol = threshold %||% .Machine$double.eps^0.5)) %>%
+        dplyr::group_by(group, xObsValues) %>%
+        dplyr::slice_sample(n = 1L) %>%
+        dplyr::ungroup() %>%
+        dplyr::select(
+          -dplyr::matches("ObsValues"),
+          "xValues" = "xSimValues",
+          "yValues" = "ySimValues"
+        )
+
+      # There must be as many simulated data points as there are observed ones
+      # If not, something is wrong, and better inform the user.
+      #
+      # More likely than not, this is going to be due to too stringent of a
+      # threshold, which can result in loss of *paired* data.
+      if (nrow(obsData) == nrow(simDataPaired)) {
+        warning(
+          "The number of simulated and observed data points is not equal. Check if `threshold` is approprite.",
+          call. = FALSE
+        )
+      }
+
+      # Append the new simulated data with only filtered `xValues` to observed data
+      dplyr::bind_rows(
+        dplyr::filter(df, dataType == "observed"),
+        simDataPaired
+      ) %>%
+        # To be consistent with `$toDataFrame()` method, arrange by dataset name
+        dplyr::arrange(name)
     },
 
     #' @description
