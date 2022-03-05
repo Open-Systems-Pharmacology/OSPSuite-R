@@ -380,6 +380,8 @@ DataCombined <- R6::R6Class(
     #'   threshold. For all intents and purposes, this amounts to an **exact**
     #'   match between two values being compared.
     toObsVsPredDataFrame = function(threshold = NULL) {
+      validateIsNumeric(threshold, nullAllowed = TRUE)
+
       # We don't want this function to tamper with combined dataframe, so
       # make an internal copy for this function scope.
       df <- private$.dataCombined
@@ -391,9 +393,23 @@ DataCombined <- R6::R6Class(
         )
       }
 
-      if (length(unique(df$group) == 0L)) {
+      if (length(unique(df$group)) == 0L) {
         stop(
           "There are currently no grouping specified. You can set them with `$setGroups()` method.",
+          call. = FALSE
+        )
+      }
+
+      if (length(unique(df$dataType)) == 1L && unique(df$dataType) == "simulated") {
+        stop(
+          "Both observed and simulated data needed, but only simulated data is present.",
+          call. = FALSE
+        )
+      }
+
+      if (length(unique(df$dataType)) == 1L && unique(df$dataType) == "observed") {
+        stop(
+          "Both observed and simulated data needed, but only observed data is present.",
           call. = FALSE
         )
       }
@@ -401,50 +417,28 @@ DataCombined <- R6::R6Class(
       # Datasets which are not grouped can't be paired.
       df <- dplyr::filter(df, !is.na(group))
 
-      # In order to compare proximity of `xValues` in observed data with the `xValues`
-      # in simulated data, the dataframes need to be extracted to wide format.
-      #
-      # Also, the respective columns need to be renamed so that they can be distinguished.
       obsData <- df %>%
         dplyr::filter(dataType == "observed") %>%
-        dplyr::select("group", "xObsValues" = "xValues", "yObsValues" = "yValues")
+        dplyr::rename_with(~paste0(.x, "Obs"))
 
       simData <- df %>%
         dplyr::filter(dataType == "simulated") %>%
-        dplyr::select("group", "xSimValues" = "xValues", "ySimValues" = "yValues", dplyr::everything())
+        dplyr::rename_with(~paste0(.x, "Sim"))
 
-      # Get the selected simulated dataframe to be in the same format as the one in
-      # the `private$.dataCombined`
-      simDataPaired <- dplyr::full_join(obsData, simData, by = "group") %>%
-        dplyr::filter(dplyr::near(xObsValues, xSimValues, tol = threshold %||% .Machine$double.eps^0.5)) %>%
-        dplyr::group_by(group, xObsValues) %>%
-        dplyr::slice_sample(n = 1L) %>%
-        dplyr::ungroup() %>%
-        dplyr::select(
-          -dplyr::matches("ObsValues"),
-          "xValues" = "xSimValues",
-          "yValues" = "ySimValues"
-        )
+      dataPaired <- dplyr::left_join(simData,  obsData, by = c("groupSim" = "groupObs")) %>%
+        dplyr::filter(dplyr::near(xValuesObs, xValuesSim, tol = threshold %||% .Machine$double.eps^0.5))
 
-      # There must be as many simulated data points as there are observed ones
-      # If not, something is wrong, and better inform the user.
-      #
-      # More likely than not, this is going to be due to too stringent of a
-      # threshold, which can result in loss of *paired* data.
-      if (nrow(obsData) == nrow(simDataPaired)) {
-        warning(
-          "The number of simulated and observed data points is not equal. Check if `threshold` is approprite.",
-          call. = FALSE
-        )
-      }
+      obsData <- dataPaired %>%
+        dplyr::select(dplyr::matches("Obs$")) %>%
+        dplyr::rename_with(~stringr::str_remove(.x, "Obs"))
 
-      # Append the new simulated data with only filtered `xValues` to observed data
-      dplyr::bind_rows(
-        dplyr::filter(df, dataType == "observed"),
-        simDataPaired
-      ) %>%
-        # To be consistent with `$toDataFrame()` method, arrange by dataset name
-        dplyr::arrange(name)
+      simData <- dataPaired %>%
+        dplyr::select(dplyr::matches("Sim$")) %>%
+        dplyr::rename_with(~stringr::str_remove(.x, "Sim"))
+
+      # To be consistent with `$toDataFrame()` method
+      dplyr::bind_rows(obsData, simData) %>%
+        private$.cleanDF(.)
     },
 
     #' @description
