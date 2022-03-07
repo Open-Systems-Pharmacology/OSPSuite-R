@@ -15,6 +15,7 @@
 #' - Getting necessary dataframes for visualizations.
 #'
 #' @import tidyr
+#' @import dplyr
 #' @import ospsuite.utils
 #'
 #' @examples
@@ -414,31 +415,46 @@ DataCombined <- R6::R6Class(
         )
       }
 
-      # Datasets which are not grouped can't be paired.
+      # Datasets which are not part of any grouping can't be paired
       df <- dplyr::filter(df, !is.na(group))
 
       obsData <- df %>%
         dplyr::filter(dataType == "observed") %>%
-        dplyr::rename_with(~paste0(.x, "Obs"))
+        dplyr::rename_with(~ paste0(.x, "Observed"), -dplyr::matches("^group$"))
 
       simData <- df %>%
         dplyr::filter(dataType == "simulated") %>%
-        dplyr::rename_with(~paste0(.x, "Sim"))
+        dplyr::rename_with(~ paste0(.x, "Predicted"), -dplyr::matches("^group$"))
 
-      dataPaired <- dplyr::left_join(simData,  obsData, by = c("groupSim" = "groupObs")) %>%
-        dplyr::filter(dplyr::near(xValuesObs, xValuesSim, tol = threshold %||% .Machine$double.eps^0.5))
+      pairedData <- dplyr::left_join(obsData, simData, by = c("group")) %>%
+        dplyr::group_by(group) %>%
+        dplyr::filter(dplyr::near(
+          x = xValuesObserved,
+          y = xValuesPredicted,
+          tol = threshold %||% .Machine$double.eps^0.5
+        )) %>%
+        dplyr::ungroup()
 
-      obsData <- dataPaired %>%
-        dplyr::select(dplyr::matches("Obs$")) %>%
-        dplyr::rename_with(~stringr::str_remove(.x, "Obs"))
 
-      simData <- dataPaired %>%
-        dplyr::select(dplyr::matches("Sim$")) %>%
-        dplyr::rename_with(~stringr::str_remove(.x, "Sim"))
+      pairedData <- pairedData %>%
+        dplyr::group_by(group, nameObserved, namePredicted, xValuesObserved) %>%
+        dplyr::slice_sample(n = 1L) %>%
+        dplyr::ungroup()
 
-      # To be consistent with `$toDataFrame()` method
-      dplyr::bind_rows(obsData, simData) %>%
-        private$.cleanDF(.)
+
+      # Not all details are either needed or useful for the user, so
+      # reorder and clean paired data accordingly
+      pairedData %>%
+        # remove columns where *all* rows are `NA`s
+        dplyr::select(where(~ !all(is.na(.x)))) %>%
+        dplyr::select(
+          # important details upfront
+          dplyr::matches("group", ignore.case = FALSE),
+          dplyr::matches("xValues"),
+          dplyr::matches("yValues"),
+          # all other details after that
+          dplyr::everything()
+        )
     },
 
     #' @description
