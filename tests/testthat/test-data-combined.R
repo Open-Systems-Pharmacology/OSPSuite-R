@@ -1175,4 +1175,3 @@ test_that("dataframe metadata column entries are as expected when `DataSet` with
   expect_equal(unique(df$Compartment), "Intracellular")
   expect_equal(unique(df$Species), "Human")
 })
-

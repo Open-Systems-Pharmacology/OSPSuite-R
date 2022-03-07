@@ -251,16 +251,18 @@ dataframe. This argument specifies the tolerance for comparing equality
 of observed and simulated time values (usually found under \code{xValues}
 column).
 
-Specifically, there are two possibilities to consider:
+Specifically, there are two possibilities to consider. To illustrate
+them, let's say the observed \code{xValue} is \code{2} and the simulated values are
+\code{c(1.4, 2.2, 3.8, 4.0)}.
 
 If the threshold is too \strong{liberal}, multiple simulated values will be
 selected. In such cases, only the first of these is retained. For
-example, if observed value is \code{2} and the simulated values are \code{c(1.4, 2.2, 3.8, 4.0)}, with \code{threshold = 1}, two simulated values (\verb{c(1.4, 2.2}) are selected and only the first one (\code{1.4}) is retained.
+example, with \code{threshold = 1}, two simulated values (\verb{c(1.4, 2.2}) are
+selected and only the first one (\code{1.4}) is retained.
 
-On the other hand, if the threshold is too stringent, no simulated
-\code{xValues} might be selected. For example, if observed value is \code{2} and
-the simulated values are \code{c(1.4, 2.2, 3.8, 4.0)}, with \code{threshold = 0.1},
-no simulated values (\verb{c(1.4, 2.2}) are selected.
+On the other hand, if the threshold is too \strong{stringent}, no simulated
+values might be selected. With a \code{threshold = 0.1}, no simulated values
+will be selected for out example data.
 }
 
 }

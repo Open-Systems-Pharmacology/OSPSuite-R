@@ -369,9 +369,9 @@ DataCombined <- R6::R6Class(
     #' example, with `threshold = 1`, two simulated values (`c(1.4, 2.2`) are
     #' selected and only the first one (`1.4`) is retained.
     #'
-    #' On the other hand, if the threshold is too stringent, no simulated values
-    #' might be selected. With a `threshold = 0.1`, no simulated values will be
-    #' selected for out example data.
+    #' On the other hand, if the threshold is too **stringent**, no simulated
+    #' values might be selected. With a `threshold = 0.1`, no simulated values
+    #' will be selected for out example data.
     #'
     #' @param threshold Absolute numerical distance by which the closest
     #'   `xValue` (time, i.e.) in the observed data may differ from `xValue` in
