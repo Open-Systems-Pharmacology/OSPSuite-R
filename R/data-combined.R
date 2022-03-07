@@ -476,9 +476,9 @@ DataCombined <- R6::R6Class(
           dplyr::matches("group", ignore.case = FALSE),
           dplyr::matches("xValues"),
           dplyr::matches("yValues"),
+          # all other relevant details after that
           dplyr::matches("unit|dimension|error"),
-          # all other details after that
-          dplyr::everything(),
+          dplyr::matches("name"),
           # remove columns unnecessary for plotting
           -dplyr::matches(
             "molWeight|Group Id|IndividualId|Source|Sheet|dataType",
