@@ -198,16 +198,14 @@ DataCombined <- R6::R6Class(
     setGroups = function(groups) {
       if (is.null(private$.dataCombined)) {
         stop(
-          "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
-          call. = FALSE
+          "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
         )
       }
 
       # handle empty lists or lists without names
       if (length(groups) == 0L || is.null(names(groups))) {
         stop(
-          "You need to provide a named list with at least one valid grouping.",
-          call. = FALSE
+          "You need to provide a named list with at least one valid grouping."
         )
       }
 
@@ -225,8 +223,7 @@ DataCombined <- R6::R6Class(
       # won't ever be anything but of `character` type
       if (length(purrr::keep(groups, ~ !is.character(.))) > 0L) {
         stop(
-          "Names for groups can only be of `character` type.",
-          call. = FALSE
+          "Names for groups can only be of `character` type."
         )
       }
 
@@ -236,8 +233,7 @@ DataCombined <- R6::R6Class(
       # this is possible because lists can have elements with non-unique names
       if (!hasOnlyDistinctValues(names(groups))) {
         stop(
-          "Duplicated dataset names detected. All dataset names must be unique because the same dataset can't be assigned to more than one grouping.",
-          call. = FALSE
+          "Duplicated dataset names detected. All dataset names must be unique because the same dataset can't be assigned to more than one grouping."
         )
       }
 
@@ -383,6 +379,12 @@ DataCombined <- R6::R6Class(
     toObsVsPredDataFrame = function(threshold = NULL) {
       validateIsNumeric(threshold, nullAllowed = TRUE)
 
+      if (is.null(private$.dataCombined)) {
+        stop(
+          "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
+        )
+      }
+
       # We don't want this function to tamper with combined dataframe, so
       # make an internal copy for this function scope.
       df <- private$.dataCombined %>%
@@ -391,31 +393,21 @@ DataCombined <- R6::R6Class(
         # Datasets which are not part of any grouping can't be paired
         dplyr::filter(!is.na(group))
 
-      if (is.null(df)) {
-        stop(
-          "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
-          call. = FALSE
-        )
-      }
-
       if (length(unique(df$group)) == 0L) {
         stop(
-          "There are currently no grouping specified. You can set them with `$setGroups()` method.",
-          call. = FALSE
+          "There are currently no grouping specified. You can set them with `$setGroups()` method."
         )
       }
 
       if (length(unique(df$dataType)) == 1L && unique(df$dataType) == "simulated") {
         stop(
-          "Both observed and simulated data needed, but only simulated data is present.",
-          call. = FALSE
+          "Both observed and simulated data needed, but only simulated data is present."
         )
       }
 
       if (length(unique(df$dataType)) == 1L && unique(df$dataType) == "observed") {
         stop(
-          "Both observed and simulated data needed, but only observed data is present.",
-          call. = FALSE
+          "Both observed and simulated data needed, but only observed data is present."
         )
       }
 
