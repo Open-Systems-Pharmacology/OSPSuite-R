@@ -1021,6 +1021,49 @@ test_that("sequential update when first and second datasets have same names but 
   )
 })
 
+# `toObsVsPredDataFrame` works -----------------------------
+
+test_that("dataframe column dimensions and names are as expected for `toObsVsPredDataFrame`", {
+  myCombDat <- DataCombined$new()
+
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$setGroups(groups = list(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal" = "distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal" = "proximal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention" = "total"
+  ))
+
+
+  myCombDat$addDataSets(dataSet)
+  myCombDat$setGroups(groups = list(
+    "Stevens_2012_placebo.Placebo_total" = "total",
+    "Stevens_2012_placebo.Sita_total" = "total",
+    "Stevens_2012_placebo.Placebo_proximal" = "proximal",
+    "Stevens_2012_placebo.Sita_proximal" = "proximal",
+    "Stevens_2012_placebo.Placebo_distal" = "distal",
+    "Stevens_2012_placebo.Sita_dist" = "distal"
+  ))
+
+  df <- myCombDat$toObsVsPredDataFrame(threshold = 1)
+
+  expect_equal(dim(df), c(77L, 18L))
+
+  expect_equal(
+    names(df),
+    c(
+      "group", "xValuesObserved", "xValuesPredicted", "yValuesObserved",
+      "yValuesPredicted", "xUnitObserved", "xDimensionObserved",
+      "yUnitObserved",
+      "yDimensionObserved", "yErrorValuesObserved", "yErrorTypeObserved",
+      "yErrorUnitObserved", "xUnitPredicted", "xDimensionPredicted",
+      "yUnitPredicted", "yDimensionPredicted", "nameObserved", "namePredicted"
+    )
+  )
+
+  expect_true(all(df$xValuesObserved - df$xValuesPredicted < 1))
+})
+
+
 # `Population` objects -----------------------------
 
 test_that("dataframe is as expected when `Population` objects are used", {
@@ -1133,51 +1176,3 @@ test_that("dataframe metadata column entries are as expected when `DataSet` with
   expect_equal(unique(df$Species), "Human")
 })
 
-# `toObsVsPredDataFrame` works -----------------------------
-
-test_that("dataframe column dimensions and names are as expected for `toObsVsPredDataFrame`", {
-  myCombDat <- DataCombined$new()
-
-  myCombDat$addSimulationResults(simResults)
-  myCombDat$setGroups(groups = list(
-    "Organism|Lumen|Stomach|Metformin|Gastric retention distal" = "distal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal" = "proximal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention" = "total"
-  ))
-
-
-  myCombDat$addDataSets(dataSet)
-  myCombDat$setGroups(groups = list(
-    "Stevens_2012_placebo.Placebo_total" = "total",
-    "Stevens_2012_placebo.Sita_total" = "total",
-    "Stevens_2012_placebo.Placebo_proximal" = "proximal",
-    "Stevens_2012_placebo.Sita_proximal" = "proximal",
-    "Stevens_2012_placebo.Placebo_distal" = "distal",
-    "Stevens_2012_placebo.Sita_dist" = "distal"
-  ))
-
-
-  obsData <- dplyr::filter(myCombDat$toDataFrame(), dataType == "observed")
-
-  obsData %>%
-    dplyr::nest_by(group)
-
-  df <- myCombDat$toObsVsPredDataFrame(threshold = 1)
-
-  df %>%
-    arrange(xValuesObserved, group)
-
-  df$xValuesObserved
-
-  # expect_equal(dim(df), c(288L, 18L))
-  #
-  # expect_equal(
-  #   names(df),
-  #   c(
-  #     "name", "group", "dataType", "xValues", "xUnit", "xDimension",
-  #     "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-  #     "yErrorUnit", "IndividualId", "molWeight", "lloq", "Source",
-  #     "Sheet", "Group Id"
-  #   )
-  # )
-})

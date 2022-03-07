@@ -461,6 +461,11 @@ DataCombined <- R6::R6Class(
         dplyr::slice_sample(n = 1L) %>%
         dplyr::ungroup()
 
+      if (unique(pairedData$yUnitObserved) == "%") {
+        pairedData <- pairedData %>%
+          dplyr::mutate(yValuesPredicted = yValuesPredicted * 100)
+      }
+
       # Not all details are either needed or useful for the user, so
       # reorder and clean paired data accordingly
       pairedData %>%
@@ -471,6 +476,7 @@ DataCombined <- R6::R6Class(
           dplyr::matches("group", ignore.case = FALSE),
           dplyr::matches("xValues"),
           dplyr::matches("yValues"),
+          dplyr::matches("unit|dimension|error"),
           # all other details after that
           dplyr::everything(),
           # remove columns unnecessary for plotting
