@@ -385,7 +385,11 @@ DataCombined <- R6::R6Class(
 
       # We don't want this function to tamper with combined dataframe, so
       # make an internal copy for this function scope.
-      df <- private$.dataCombined
+      df <- private$.dataCombined %>%
+        # Remove unnecessary columns
+        private$.cleanDF(.) %>%
+        # Datasets which are not part of any grouping can't be paired
+        dplyr::filter(!is.na(group))
 
       if (is.null(df)) {
         stop(
@@ -415,9 +419,15 @@ DataCombined <- R6::R6Class(
         )
       }
 
-      # Datasets which are not part of any grouping can't be paired
-      df <- dplyr::filter(df, !is.na(group))
-
+      # Unlike the dataframe returned by `$toDataFrame()` method, this dataframe
+      # needs to be in wide - and not tidy - format because the `xValues` for
+      # observed versus simulated datasets need to be paired for plotting.
+      #
+      # Additionally, the used plotting library (`{tlf}`) also expects a data in
+      # the wide format.
+      #
+      # This entails that if both of these wide dataframes need to be joined at
+      # some point, they should also have unique names.
       obsData <- df %>%
         dplyr::filter(dataType == "observed") %>%
         dplyr::rename_with(~ paste0(.x, "Observed"), -dplyr::matches("^group$"))
@@ -426,6 +436,15 @@ DataCombined <- R6::R6Class(
         dplyr::filter(dataType == "simulated") %>%
         dplyr::rename_with(~ paste0(.x, "Predicted"), -dplyr::matches("^group$"))
 
+      # *WARNING*: don't set tolerance to 0 or to `.Machine$double.eps`.
+      #
+      # Why?
+      #
+      # dplyr::near(sqrt(2) ^ 2, 2, .Machine$double.eps^0.5) returns `TRUE`
+      # dplyr::near(sqrt(2) ^ 2, 2, .Machine$double.eps) returns `FALSE`
+      # dplyr::near(sqrt(2) ^ 2, 2, 0) returns `FALSE`
+      #
+      # Default chosen by {dplyr} is quite sensible.
       pairedData <- dplyr::left_join(obsData, simData, by = c("group")) %>%
         dplyr::group_by(group) %>%
         dplyr::filter(dplyr::near(
@@ -435,25 +454,30 @@ DataCombined <- R6::R6Class(
         )) %>%
         dplyr::ungroup()
 
-
+      # There can only be one pair plotted on the graph for every combination of
+      # grouping and dataset within that grouping.
       pairedData <- pairedData %>%
         dplyr::group_by(group, nameObserved, namePredicted, xValuesObserved) %>%
         dplyr::slice_sample(n = 1L) %>%
         dplyr::ungroup()
 
-
       # Not all details are either needed or useful for the user, so
       # reorder and clean paired data accordingly
       pairedData %>%
-        # remove columns where *all* rows are `NA`s
+        # remove columns where *all* rows are `NA`s (empty columns, i.e.)
         dplyr::select(where(~ !all(is.na(.x)))) %>%
         dplyr::select(
-          # important details upfront
+          # keep important details needed for plotting upfront
           dplyr::matches("group", ignore.case = FALSE),
           dplyr::matches("xValues"),
           dplyr::matches("yValues"),
           # all other details after that
-          dplyr::everything()
+          dplyr::everything(),
+          # remove columns unnecessary for plotting
+          -dplyr::matches(
+            "molWeight|Group Id|IndividualId|Source|Sheet|dataType",
+            ignore.case = FALSE
+          )
         )
     },
 
