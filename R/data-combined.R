@@ -360,18 +360,18 @@ DataCombined <- R6::R6Class(
     #' of observed and simulated time values (usually found under `xValues`
     #' column).
     #'
-    #' Specifically, there are two possibilities to consider:
+    #' Specifically, there are two possibilities to consider. To illustrate
+    #' them, let's say the observed `xValue` is `2` and the simulated values are
+    #' `c(1.4, 2.2, 3.8, 4.0)`.
     #'
     #' If the threshold is too **liberal**, multiple simulated values will be
     #' selected. In such cases, only the first of these is retained. For
-    #' example, if observed value is `2` and the simulated values are `c(1.4,
-    #' 2.2, 3.8, 4.0)`, with `threshold = 1`, two simulated values (`c(1.4,
-    #' 2.2`) are selected and only the first one (`1.4`) is retained.
+    #' example, with `threshold = 1`, two simulated values (`c(1.4, 2.2`) are
+    #' selected and only the first one (`1.4`) is retained.
     #'
-    #' On the other hand, if the threshold is too stringent, no simulated
-    #' `xValues` might be selected. For example, if observed value is `2` and
-    #' the simulated values are `c(1.4, 2.2, 3.8, 4.0)`, with `threshold = 0.1`,
-    #' no simulated values (`c(1.4, 2.2`) are selected.
+    #' On the other hand, if the threshold is too stringent, no simulated values
+    #' might be selected. With a `threshold = 0.1`, no simulated values will be
+    #' selected for out example data.
     #'
     #' @param threshold Absolute numerical distance by which the closest
     #'   `xValue` (time, i.e.) in the observed data may differ from `xValue` in
