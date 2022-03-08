@@ -56,7 +56,7 @@ test_that("It returns null if the quantity by path does not exist and stopIfNotF
 })
 
 test_that("It throws an error when trying to retrieve a quantity by path that would result in multiple quantities", {
-  expect_that(getQuantity(toPathString(c("Organism", "Liver", "*")), sim), throws_error())
+  expect_error(getQuantity(toPathString(c("Organism", "Liver", "*")), sim))
 })
 
 
@@ -102,17 +102,21 @@ test_that("It can set multiple quantity values with units", {
 
 test_that("It throws an exception when setting values for a quantity that does not exist", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_that(setQuantityValuesByPath(parameterPath, 100, sim), throws_error())
+  expect_error(setQuantityValuesByPath(parameterPath, 100, sim))
+})
+
+test_that("It does not throw an exception when setting values for a quantity that does not exist with unit", {
+  parameterPath <- "Organism|Liver|NOPE|Volume"
+  expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "ml", stopIfNotFound = FALSE), NA)
 })
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist and the stopIfnotFound flag is set to false", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, stopIfNotFound = FALSE)
-  expect_false(is.null(sim))
+  expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, stopIfNotFound = FALSE), NA)
 })
 
 test_that("It throws an error when the number of quantity paths differs from the number units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
-  expect_that(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"), throws_error())
+  expect_error(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"))
 })
