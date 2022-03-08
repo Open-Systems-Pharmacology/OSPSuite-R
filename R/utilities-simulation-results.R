@@ -27,8 +27,6 @@
 #' @param population population used to calculate the `simulationResults`
 #'   (optional). This is used only to add the population covariates to the
 #'   resulting data table.
-#' @param stopIfNotFound Boolean. If `TRUE` and no result exist for the given
-#'   path, an error is thrown. Default is `TRUE`.
 #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results
 #'   exist for any `path`. If `FALSE`, a list of `NA` values is returned for the
 #'   respective path.
@@ -120,8 +118,8 @@ getOutputValues <- function(simulationResults,
       # Get the dimension and unit from path if the results are obtained. If the results
       # are NA, the entity with such path does not exist
       if (!all(is.na(values[[path]]))) {
-        unit <- rClr::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path))
-        dimension <- rClr::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path))
+        unit <- rClr::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
+        dimension <- rClr::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
       }
       list(unit = unit, dimension = dimension)
     })

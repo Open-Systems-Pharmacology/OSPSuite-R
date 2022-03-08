@@ -155,7 +155,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     path <- enc2utf8(quantityPaths[[i]])
     value <- values[[i]]
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path)
+      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
       value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
     }
 
