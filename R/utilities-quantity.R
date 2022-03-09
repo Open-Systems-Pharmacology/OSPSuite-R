@@ -156,10 +156,11 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     value <- values[[i]]
     if (!is.null(units)) {
       dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
-      # Dimension ca be be empty if the path was not found and stopIfNotFound is false
-      if (dimension != "" || stopIfNotFound) {
-        value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
+      # Dimension ca be be empty if the path was not found
+      if (dimension == "") {
+        next
       }
+      value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
     }
 
     rClr::clrCall(
