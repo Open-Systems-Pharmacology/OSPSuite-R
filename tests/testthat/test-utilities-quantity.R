@@ -56,7 +56,8 @@ test_that("It returns null if the quantity by path does not exist and stopIfNotF
 })
 
 test_that("It throws an error when trying to retrieve a quantity by path that would result in multiple quantities", {
-  expect_error(getQuantity(toPathString(c("Organism", "Liver", "*")), sim))
+  path <- toPathString(c("Organism", "Liver", "*"))
+  expect_error(getQuantity(path, sim), regexp = messages$errorGetEntityMultipleOutputs(path, sim))
 })
 
 
@@ -118,5 +119,25 @@ test_that("It does not throw an exception when setting values for a quantity tha
 test_that("It throws an error when the number of quantity paths differs from the number units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
-  expect_error(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"))
+  expect_error(setQuantityValuesByPath(quantityPaths = c(quantityPath1, quantityPath2), values = c(40, 50),simulation =  sim, units = "ml"),
+               regexp = messages$errorDifferentLength("quantityPaths, units"))
+})
+
+test_that("It throws an error when setting values for a set of quantities with units and one path does not exist", {
+  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
+  quantityPath2 <- "Organism|VenousBlood|NOPE|CYP3A4"
+  quantityPath3 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  expect_error(setQuantityValuesByPath(c(quantityPath1, quantityPath2, quantityPath3), c(40, 50, 60), sim, units = c("ml", "µmol", "nmol")))
+})
+
+test_that("It ignores invalid paths when setting values for a set of quantities with units and one path does not exist and stoIfNotFound = FALSE", {
+  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
+  quantityPath2 <- "Organism|VenousBlood|NOPE|CYP3A4"
+  quantityPath3 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  setQuantityValuesByPath(c(quantityPath1, quantityPath2, quantityPath3), c(40, 50, 60), sim, units = c("ml", "µmol", "nmol"),
+               stopIfNotFound = FALSE)
+  quantity1 <- getQuantity(quantityPath1, sim)
+  quantity3 <- getQuantity(quantityPath3, sim)
+  expect_equal(quantity1$value, 40e-3)
+  expect_equal(quantity3$value, 60e-3)
 })
