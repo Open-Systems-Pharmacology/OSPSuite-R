@@ -189,18 +189,12 @@ DataCombined <- R6::R6Class(
     #' @return `DataCombined` object with grouped datasets.
     setGroups = function(groups) {
       if (is.null(private$.dataCombined)) {
-        stop(
-          "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
-          call. = FALSE
-        )
+        stop("There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.")
       }
 
       # handle empty lists or lists without names
       if (length(groups) == 0L || is.null(names(groups))) {
-        stop(
-          "You need to provide a named list with at least one valid grouping.",
-          call. = FALSE
-        )
+        stop("You need to provide a named list with at least one valid grouping.")
       }
 
       # validate depth of the argument vector
@@ -231,8 +225,8 @@ DataCombined <- R6::R6Class(
       # Extract groupings and dataset names in a dataframe.
       #
       # `as.list()` makes sure that both forms of the following specification
-      # - groups = c(...)
-      # - groups = list(...)
+      # - `groups = c(...)`
+      # - `groups = list(...)`
       # will work.
       groupData <- dplyr::as_tibble(as.list(groups)) %>%
         tidyr::pivot_longer(
