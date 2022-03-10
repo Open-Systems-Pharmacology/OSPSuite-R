@@ -158,7 +158,7 @@ DataCombined <- R6::R6Class(
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
           individualIds     = individualIds,
-          names             = newNames
+          newNames          = newNames
         )
       )
 
@@ -327,7 +327,7 @@ DataCombined <- R6::R6Class(
       # Apply specified data transformations
       private$.dataCombined <- private$.dataTransform(
         data          = private$.dataCombined,
-        names         = forNames,
+        forNames      = forNames,
         xOffsets      = xOffsets,
         yOffsets      = yOffsets,
         xScaleFactors = xScaleFactors,
@@ -432,20 +432,20 @@ DataCombined <- R6::R6Class(
   # private methods -----------------------------------
 
   private = list(
-    # extract dataframe from `DataSet` objects
-    .dataSetToDataFrame = function(dataSets, names = NULL) {
-      # `dataSetToDataFrame()` function can handle a vector, a list, or a scalar
-      # of `DataSet` class, so use to extract a dataframe, and then
+    # Extract dataframe from `DataSet` object(s)
+    .dataSetToDataFrame = function(dataSets, newNames = NULL) {
+      # `dataSetToDataFrame()` function can extract dataframe from a scalar, a
+      # vector, or a list of `DataSet` class instances.
       #
-      # add columns with grouping information and additional meta data
-      #
-      # replace dataset names with alternative names (if provided)
+      # Irrespective of whether groups are specified or not, the dataframes
+      # always start out with an empty `group` column, which is later modified
+      # in `$setGroups()` call.
       dataSetToDataFrame(dataSets) %>%
         dplyr::mutate(
           dataType = "observed",
           group    = NA_character_
         ) %>%
-        private$.renameDatasets(names) %>%
+        private$.renameDatasets(newNames) %>%
         dplyr::as_tibble()
     },
 
@@ -454,21 +454,20 @@ DataCombined <- R6::R6Class(
                                       quantitiesOrPaths = NULL,
                                       population = NULL,
                                       individualIds = NULL,
-                                      names = NULL) {
-      # all input validation will take place in this function itself
-      # `simulationResultsToDataFrame()` can handle only a single class instance
-      # extract a dataframe with is help, and then
+                                      newNames = NULL) {
+      # `simulationResultsToDataFrame()` can extract dataframe only from a
+      # single `SimulationResults` class instance, but this is not a problem
+      # because the `$addSimulationResults()` method treats only a single
+      # instance as a valid input.
       #
-      # add a new identifier column with unique names for datasets, which, for
-      # these objects, would be `paths` column, and then
+      # Irrespective of whether groups are specified or not, the dataframes
+      # always start out with an empty `group` column, which is later modified
+      # in `$setGroups()` call.
       #
-      # add column with grouping information, and then
-      #
-      # add a column describing the type of data;
-      # simulation results never have errors, but this leads to inconsistent
-      # output, so also add a column for `yErrorValues` outputs, and then
-      #
-      # rename according to column naming conventions for `DataSet`
+      # Simulated datasets and observed datasets are glued row-wise when a
+      # combined dataframe is prepared, and therefore it is necessary that the
+      # same kind of quantities have the same column names so that they are
+      # glued appropriately. This requires renaming few columns.
       simulationResultsToDataFrame(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
@@ -481,7 +480,7 @@ DataCombined <- R6::R6Class(
           dataType     = "simulated",
           yErrorValues = NA_real_
         ) %>%
-        private$.renameDatasets(names) %>%
+        private$.renameDatasets(newNames) %>%
         dplyr::rename(
           "xValues"    = "Time",
           "xUnit"      = "TimeUnit",
@@ -494,9 +493,9 @@ DataCombined <- R6::R6Class(
     },
 
     # Add a new column with alternate names
-    .renameDatasets = function(data, names = NULL) {
+    .renameDatasets = function(data, newNames = NULL) {
       # return early if there is no data
-      if (is.null(names)) {
+      if (is.null(newNames)) {
         return(data)
       }
 
@@ -507,19 +506,19 @@ DataCombined <- R6::R6Class(
       # Note that `name` column is based on lexical order of names.
       data %>%
         tidyr::nest(data = -name) %>%
-        dplyr::mutate(name = names) %>%
+        dplyr::mutate(name = newNames) %>%
         tidyr::unnest(cols = c(data))
     },
 
-    # update the combined dataframe in place
+    # Update the combined dataframe "in place"
     .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL) {
-      # If there is already data, add new data at the bottom
+      # If there is existing data, update it by appending new data at the
+      # bottom.
       #
-      # Since the `toDataFrame()` method arranges the data by dataset name,
-      # this will not introduce any order effects.
-      #
-      # For example, it doesn't matter if the user entered `DataSet` objects
-      # first and then `SimulationResults` objects, or vice versa
+      # Since the `$toDataFrame()` method returns combined dataframe sorted by
+      # dataset name, this will *not* introduce any order effects. That is, it
+      # doesn't matter if the user entered `DataSet` objects first and then
+      # `SimulationResults` objects, or vice versa.
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
         # by comparing names, check if the new dataset(s) entered are already
         # present in the internal combined dataframe
@@ -550,7 +549,7 @@ DataCombined <- R6::R6Class(
 
     # transform the dataset using specified offsets and scale factors
     .dataTransform = function(data,
-                              names = NULL,
+                              forNames = NULL,
                               xOffsets = 0,
                               yOffsets = 0,
                               xScaleFactors = 1,
@@ -568,7 +567,7 @@ DataCombined <- R6::R6Class(
       # the purpose of joining of dataframe with arguments and dataframe with
       # raw data that needs to be transformed
       dataArg <- dplyr::tibble(
-        name          = names %||% unique(data$name),
+        name          = forNames %||% unique(data$name),
         xOffsets      = xOffsets,
         yOffsets      = yOffsets,
         xScaleFactors = xScaleFactors,
