@@ -494,16 +494,15 @@ DataCombined <- R6::R6Class(
 
     # Add a new column with alternate names
     .renameDatasets = function(data, newNames = NULL) {
-      # return early if there is no data
+      # Return early if there is no data
       if (is.null(newNames)) {
         return(data)
       }
 
-      # Nest the dataset by its unique identifier, which is `name`, and then
-      # assign new `names` vector to the existing `name` column, and then
-      # unnest the list column.
-      #
       # Note that `name` column is based on lexical order of names.
+      #
+      # This always works because the order of dataframe (and thus the `name`
+      # column) returned by `*ToDataFrame()` functions is never changed.
       data %>%
         tidyr::nest(data = -name) %>%
         dplyr::mutate(name = newNames) %>%
@@ -512,33 +511,29 @@ DataCombined <- R6::R6Class(
 
     # Update the combined dataframe "in place"
     .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL) {
-      # If there is existing data, update it by appending new data at the
-      # bottom.
-      #
-      # Since the `$toDataFrame()` method returns combined dataframe sorted by
-      # dataset name, this will *not* introduce any order effects. That is, it
-      # doesn't matter if the user entered `DataSet` objects first and then
-      # `SimulationResults` objects, or vice versa.
+      # If there is existing data, it will be updated with the new data appended
+      # at the bottom.
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
-        # by comparing names, check if the new dataset(s) entered are already
-        # present in the internal combined dataframe
+        # The unique identifier for each dataset is its name. Thus, by comparing
+        # names, it is checked if the newly entered dataset(s) are already
+        # present in the internal combined dataframe.
         dupDatasets <- intersect(unique(dataCurrent$name), unique(dataNew$name))
 
-        # if this is the case, then replace the older dataset(s) with the newer
-        # version(s) of the same dataset(s)
+        # If the newly entered dataset(s) are already present, then replace the
+        # existing ones with the new ones.
         #
         # For example, someone can all `$addSimulationResults(dataSet1)` and
         # then again call `$addSimulationResults(dataSet1)` with the same class
         # instance because they realized that the first time they created the
         # DataSet object, they had made a mistake. In this case, dataframe
-        # created in the latter call will replace the one created in the former
-        # call. If we were not to allow this, the user will need to restart
-        # their work with a new instance of this class.
+        # created in the latter call should replace the one created in the
+        # former call. If we were not to allow this, the user will need to
+        # restart their work with a new instance of this class.
         if (length(dupDatasets) > 0L) {
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
         }
 
-        # append the new dataset at the bottom of the current one
+        # Append the new dataset at the bottom of the current one
         dataCurrent <- dplyr::bind_rows(dataCurrent, dataNew)
       } else {
         dataCurrent <- dataNew
@@ -547,20 +542,20 @@ DataCombined <- R6::R6Class(
       return(dataCurrent)
     },
 
-    # transform the dataset using specified offsets and scale factors
+    # Transform the dataset using specified offsets and scale factors
     .dataTransform = function(data,
                               forNames = NULL,
                               xOffsets = 0,
                               yOffsets = 0,
                               xScaleFactors = 1,
                               yScaleFactors = 1) {
-      # return early if there is no data
+      # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
 
       # Keep all transformation parameters and their names linked together in a
-      # dataframe data structure
+      # dataframe data structure.
       #
       # Additionally, if no names are provides, the transformations will apply
       # to the entire dataframe, and thus dataset names can be a placeholder for
@@ -574,54 +569,50 @@ DataCombined <- R6::R6Class(
         yScaleFactors = yScaleFactors
       )
 
-      # update dataframe using given transformation parameters
+      # Update dataframe using given transformation parameters
       private$.dataTransformations <- private$.updateDataFrame(private$.dataTransformations, dataArg)
 
-      # if present, remove old parameter columns
+      # Every call to method to set transformations refreshes these parameters.
+      #
+      # Thus, if there are any existing parameters from object's lifecycle,
+      # they should be removed.
       data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
 
-      # merge data with corresponding parameters and then
-      #
-      # replace `NA`s (which will be present for datasets for which no
-      # transformations were specified) with default values:
-      #
-      #  - for offsets: 0
-      #  - for scale factors: 1
-      #
-      # these default values signify that raw data will not be changed
+      # Datasets for which no data transformations were specified, there will be
+      # missing values, which need to be replaced by values representing no
+      # change.
+      #  - For offsets: 0
+      #  - For scale factors: 1
       data <- dplyr::left_join(data, private$.dataTransformations, by = "name") %>%
         dplyr::mutate(across(matches("offsets$"), ~ tidyr::replace_na(.x, 0))) %>%
         dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1))) %>%
         dplyr::mutate(
-          xValues      = (xOriginalValues + xOffsets) * xScaleFactors,
-          yValues      = (yOriginalValues + yOffsets) * yScaleFactors,
-          yErrorValues = yOriginalErrorValues * yScaleFactors
+          xValues      = (xRawValues + xOffsets) * xScaleFactors,
+          yValues      = (yRawValues + yOffsets) * yScaleFactors,
+          yErrorValues = yRawErrorValues * yScaleFactors
         )
 
       return(data)
     },
 
-    # extract all active bindings
+    # Extract all active bindings
     .extractBindings = function() {
       private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.dataCombined <- private$.extractXYData(private$.dataCombined)
+      private$.dataCombined <- private$.addRawDataColumns(private$.dataCombined)
       private$.names <- private$.extractNames(private$.dataCombined)
     },
 
-    # extract dataframe with group mappings
+    # Extract dataframe with group mappings
     .extractGroupMap = function(data) {
-      # select only the unique identifier columns and then
-      # retain only the distinct combinations and then
-      # arrange the dataframe by grouping and names
       data %>%
         dplyr::select(group, name, dataType) %>%
         dplyr::distinct() %>%
         dplyr::arrange(group, name)
     },
 
-    # extract unique and sorted dataset names from the combined dataframe
+    # Extract unique and sorted dataset names from the combined dataframe
     .extractNames = function(data = NULL) {
-      # return early if there is no data
+      # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
@@ -632,39 +623,33 @@ DataCombined <- R6::R6Class(
         sort()
     },
 
-    # Keep internal copies of the raw values before changing them using
-    # transformations with given offsets and scale factors.
+    # During object's lifecycle, the applied data transformations can change,
+    # and therefore internal copies of raw data should be retained.
     #
     # This way, when transformation parameter values are updated, the raw data
-    # is still there to be transformed with these new parameters.
-    .extractXYData = function(data = NULL) {
-      # return early if there is no data
+    # can be re-transformed with the new parameters.
+    .addRawDataColumns = function(data = NULL) {
+      # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
 
       data %>%
         dplyr::mutate(
-          xOriginalValues      = xValues,
-          yOriginalValues      = yValues,
-          yOriginalErrorValues = yErrorValues
+          xRawValues      = xValues,
+          yRawValues      = yValues,
+          yRawErrorValues = yErrorValues
         )
     },
 
-    # Extract offsets and scale factors used while data transformations
-    #
-    # Since the user might have entered distinct transformation parameters for
-    # each dataset, the combined dataframe needs to be grouped by dataset names.
+    # Extract offsets and scale factors used for data transformations for each
+    # dataset
     .extractTransforms = function(data = NULL) {
-      # return early if there is no data
+      # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
 
-      # select the unique identifier and transformation parameter columns and then
-      # group the combined dataframe by unique datasets and then
-      # within each dataset retain distinct row combinations and then
-      # ungroup the dataframe
       data %>%
         dplyr::select(name, dplyr::matches("offset|scale")) %>%
         dplyr::group_by(name) %>%
@@ -672,48 +657,39 @@ DataCombined <- R6::R6Class(
         dplyr::ungroup()
     },
 
-    # clean dataframe before returning it to the user
+    # Clean dataframe before returning it to the user
     .cleanDataFrame = function(data = NULL) {
-      # return early if there is no data
+      # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
 
-      # having a consistent column order
+      # Returned dataframe should always have a consistent column order
       data %>%
         dplyr::select(
-          # all identifying columns
+          # All data identifier columns
           name,
           group,
           dataType,
-          # everything related to the X-variable
+          # Everything related to the X-variable
           "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
-          # everything related to the Y-variable
+          # Everything related to the Y-variable
           "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
-          # all other columns go after that (meta data, etc.)
+          # All other columns go after that (meta data, etc.)
           dplyr::everything()
         ) %>%
-        # the following columns are no longer necessary
+        # The following columns are no longer necessary
         #
-        # retaining the offset and scale factor parameters might confuse the
+        # Retaining the offset and scale factor parameters might confuse the
         # user about whether the transformations are supposed to be carried out
-        # by the user using these values or these transformations have already
-        # been carried out
-        #
-        # internal copies of raw data and redundant paths columns also need to
-        # be left out
+        # by the user using these values, or these transformations have already
+        # been carried out.
         dplyr::select(
           -dplyr::matches("^paths$"),
           -dplyr::matches("offsets$|scalefactors$"),
-          # to remove columns containing original data (`xOriginalValues`,
-          # `yOriginalValues`, `yOriginalErrorValues`), but retaining other
-          # custom metadata users might have specified containing the string
-          # `original`
-          -(dplyr::contains("original") & dplyr::matches("values$"))
+          -(dplyr::contains("raw") & dplyr::matches("values$"))
         ) %>%
-        # arrange data (alphabetically) by dataset name
         dplyr::arrange(name) %>%
-        # always return a tibble
         dplyr::as_tibble()
     },
 
