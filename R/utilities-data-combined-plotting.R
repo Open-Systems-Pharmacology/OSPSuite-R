@@ -49,7 +49,7 @@ dataCombinedToObsVsPredDataFrame <- function(dataCombined) {
     dplyr::group_by(group) %>%
     dplyr::arrange(xValuesObserved, xValuesPredicted) %>%
     dplyr::mutate(
-      yValuesPredictedNew = dplyr::case_when(
+      yValuesPredicted = dplyr::case_when(
         # exact match
         dplyr::near(xValuesObserved, xValuesPredicted) ~ yValuesPredicted,
         # interpolation otherwise
