@@ -92,6 +92,7 @@ Collate:
     'table-formula.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
+    'utilities-data-combined-plotting.R'
     'utilities-data-combined.R'
     'utilities-data-importer-configuration.R'
     'utilities-data-repository.R'
