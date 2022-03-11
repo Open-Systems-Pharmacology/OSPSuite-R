@@ -62,7 +62,7 @@ dataCombinedToObsVsPredDataFrame <- function(dataCombined) {
   # the first observation should be selected.
   pairedData <- pairedData %>%
     dplyr::group_by(group, xValuesObserved) %>%
-    dplyr::slice_sample(n = 1L) %>%
+    dplyr::slice_head(n = 1L) %>%
     dplyr::ungroup()
 
   # Not all columns are either needed or useful for the user (at least in the
