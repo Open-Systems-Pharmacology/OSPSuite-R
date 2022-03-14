@@ -9,17 +9,23 @@ test_that("It does not throw an error when species is not human and no populatio
 test_that("It throws an error when species is Human and no population is provided", {
   skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
 
-  expect_error(individualCharacteristics <- createIndividualCharacteristics(species = Species$Human, height = NULL),
-               messages$errorWrongPopulation(Species$Human, NULL))
+  expect_error(
+    individualCharacteristics <- createIndividualCharacteristics(species = Species$Human, height = NULL),
+    messages$errorWrongPopulation(Species$Human, NULL)
+  )
 })
 
 test_that("It throws an error when species is Human and wrong is provided", {
   skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
 
-  expect_error(individualCharacteristics <- createIndividualCharacteristics(species = Species$Human,
-                                                                            population = "NAN",
-                                                                            height = NULL),
-               messages$errorWrongPopulation(Species$Human, "NAN"))
+  expect_error(
+    individualCharacteristics <- createIndividualCharacteristics(
+      species = Species$Human,
+      population = "NAN",
+      height = NULL
+    ),
+    messages$errorWrongPopulation(Species$Human, "NAN")
+  )
 })
 
 
@@ -91,18 +97,6 @@ test_that("It sets a random seed if not specified", {
   human_values <- createIndividual(individualCharacteristics = human)
   expect_false(is.null((human_values)))
   expect_gt(human_values$seed, 0)
-})
-
-test_that("It throwns an error when creating a human with population missing", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
-  human <- createIndividualCharacteristics(
-    species = Species$Human,
-    weight = 60,
-    age = 15,
-    gender = Gender$Female
-  )
-  expect_that(createIndividual(individualCharacteristics = human), throws_error())
 })
 
 test_that("It can create reating a human with weight missing", {
