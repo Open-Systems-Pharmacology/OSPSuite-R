@@ -6,13 +6,12 @@
 \title{Object combining simulated and observed data}
 \description{
 A class for storing simulated and/or observed in a single dataframe, which
-can be further used for visualization methods.
+can be further used in data wrangling or data visualization pipelines.
 
 Additionally, it allows:
 \itemize{
-\item Grouping different (simulated and/or observed) datasets with grouping
-labels.
-\item Transforming data (with given offsets and scale factors).
+\item Grouping different simulated and/or observed datasets.
+\item Transforming data with given offsets and scale factors.
 }
 }
 \note{
@@ -35,6 +34,7 @@ myCombDat$addDataSets(dataSet)
 
 # print the object
 myCombDat
+
 }
 \section{Super class}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
@@ -88,9 +88,11 @@ Adds observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 class.}
 
-\item{\code{newNames}}{A string or a list of strings  assigning new names to the
-list of instances of the \code{DataSet} class. Note that the datasets whose
-names you wish to not change should be specified as \code{NULL} in the list.}
+\item{\code{newNames}}{A string or a list of strings assigning new names to the
+list of instances of the \code{DataSet} class. If a dataset is not to be
+renamed, this can be specified as \code{NULL} in the list. For example, in
+\code{newNames = list("dataName" = "dataNewName", "dataName2" = NULL)}),
+dataset with name \code{"dataName2"} will not be renamed.}
 }
 \if{html}{\out{</div>}}
 }
@@ -117,10 +119,10 @@ Add simulated data using instance of \code{SimulationResults} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulation} on a \code{Simulation} object.}
+calling \code{runSimulation()} on a \code{Simulation} object.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
-retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
+retrieved using \code{getAllQuantitiesMatching()} or quantity path (element or
 list of strings) for which the results are to be returned. (optional)
 When providing the paths, only absolute full paths are supported (i.e.,
 no matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL}
@@ -138,8 +140,9 @@ is ignored.}
 
 \item{\code{newNames}}{A string or a list of strings assigning new names to the
 quantities or paths present in the entered \code{SimulationResults} object.
-Note that the datasets whose names you wish to not change should be
-specified as \code{NULL} in the list.}
+If a dataset is not to be renamed, this can be specified as \code{NULL} in
+the list. For example, in \code{newNames = list("dataName" = "dataNewName", "dataName2" = NULL)}), dataset with name \code{"dataName2"} will not be
+renamed.}
 }
 \if{html}{\out{</div>}}
 }
@@ -151,7 +154,7 @@ specified as \code{NULL} in the list.}
 \if{html}{\out{<a id="method-setGroups"></a>}}
 \if{latex}{\out{\hypertarget{method-setGroups}{}}}
 \subsection{Method \code{setGroups()}}{
-Adds grouping information to datasets.
+Adds grouping information to (observed and/or simulated) datasets.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$setGroups(groups)}\if{html}{\out{</div>}}
 }
@@ -160,12 +163,12 @@ Adds grouping information to datasets.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{groups}}{A named list specifying which datasets belong to which
-group. For example, if datsets names are \code{"x"}, \code{"y"}, \code{"z"}, and the
-desired groupings for them are respectively \code{"a"} and \code{"b"}, this
-argument would be \code{list("x" = "a", "y" = "b")}. Datasets for which no
-grouping is to be specified, can be left out of the \code{groups} argument.
-The column \code{group} in the dataframe output will be \code{NA} for such
-datasets. If you wish to remove already specified grouping for a
+group(s). For example, if datsets are named \code{"x"}, \code{"y"}, \code{"z"}, and
+the desired groupings for them are, respectively, \code{"a"} and \code{"b"}, this
+can be specified as \code{groups = list("x" = "a", "y" = "b")}. Datasets for
+which no grouping is to be specified, can be left out of the \code{groups}
+argument. The column \code{group} in the dataframe output will be \code{NA} for
+such datasets. If you wish to remove existing grouping for a given
 dataset, you can specify it as following: \code{list("x" = NA)}. This will
 not change any of the other (previously specified) groupings. Note that
 if you have specified \code{newNames} while adding datasets using respective
@@ -202,7 +205,7 @@ transformations. Default is \code{NULL}, i.e., the transformations, if any
 specified, will be applied to all rows of the dataframe.}
 
 \item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a single
-numeric value or a list of numeric quantities specifying offsets and
+numeric value or a list of numeric values specifying offsets and
 scale factors to apply to raw values. The default offset is \code{0}, while
 default scale factor is \code{1}, i.e., the data will not be modified. If a
 list is specified, it should be the same length as \code{names} argument.}
@@ -246,7 +249,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
-Print the object to the console
+Print the object to the console.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$print()}\if{html}{\out{</div>}}
 }
