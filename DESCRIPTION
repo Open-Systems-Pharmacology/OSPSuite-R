@@ -25,7 +25,8 @@ Imports:
     R6,
     readr,
     stringr,
-    tidyr
+    tidyr,
+    tlf
 Suggests: 
     knitr,
     rmarkdown,
