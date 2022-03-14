@@ -3,7 +3,7 @@
 #' @description
 #'
 #' A class for storing simulated and/or observed in a single dataframe, which
-#' can be further used data wrangling or data visualization pipelines.
+#' can be further used in data wrangling or data visualization pipelines.
 #'
 #' Additionally, it allows:
 #'
