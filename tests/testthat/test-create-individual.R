@@ -1,3 +1,28 @@
+context("createIndividualCharacteristics")
+
+test_that("It does not throw an error when species is not human and no population is provided", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  expect_output(individualCharacteristics <- createIndividualCharacteristics(species = Species$Beagle, height = NULL), NA)
+})
+
+test_that("It throws an error when species is Human and no population is provided", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  expect_error(individualCharacteristics <- createIndividualCharacteristics(species = Species$Human, height = NULL),
+               messages$errorWrongPopulation(Species$Human, NULL))
+})
+
+test_that("It throws an error when species is Human and wrong is provided", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  expect_error(individualCharacteristics <- createIndividualCharacteristics(species = Species$Human,
+                                                                            population = "NAN",
+                                                                            height = NULL),
+               messages$errorWrongPopulation(Species$Human, "NAN"))
+})
+
+
 context("createIndividual")
 
 # initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")

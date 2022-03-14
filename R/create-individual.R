@@ -111,6 +111,10 @@ createIndividualCharacteristics <- function(species,
   moleculeOntogenies <- c(moleculeOntogenies)
   individualCharacteristics <- IndividualCharacteristics$new()
   individualCharacteristics$species <- species
+  #Check for correct population if the species is `Human`
+  if (species == Species$Human && !enumHasKey(key = population, enum = HumanPopulation)){
+    stop(messages$errorWrongPopulation(species, population))
+  }
   individualCharacteristics$population <- population
   individualCharacteristics$gender <- gender
   individualCharacteristics$age <- createSnapshotParameter(age, ageUnit)
