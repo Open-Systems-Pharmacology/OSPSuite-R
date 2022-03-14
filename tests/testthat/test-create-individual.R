@@ -1,3 +1,33 @@
+context("createIndividualCharacteristics")
+
+test_that("It does not throw an error when species is not human and no population is provided", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  expect_output(individualCharacteristics <- createIndividualCharacteristics(species = Species$Beagle, height = NULL), NA)
+})
+
+test_that("It throws an error when species is Human and no population is provided", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  expect_error(
+    individualCharacteristics <- createIndividualCharacteristics(species = Species$Human, height = NULL),
+    messages$errorWrongPopulation(Species$Human, NULL)
+  )
+})
+
+test_that("It throws an error when species is Human and wrong is provided", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  expect_error(
+    individualCharacteristics <- createIndividualCharacteristics(
+      species = Species$Human,
+      population = "NAN",
+      height = NULL
+    ),
+    messages$errorWrongPopulation(Species$Human, "NAN")
+  )
+})
+
 context("createIndividual")
 
 # initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
@@ -41,6 +71,23 @@ test_that("It does not throw an error when creating a human with age missing", {
   expect_false(is.null((human_values)))
 })
 
+test_that("It creates a human individual when age, weight, height, or gestational age are `NA`", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  human <- createIndividualCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$BlackAmerican_NHANES_1997,
+    weight = NA,
+    height = NA,
+    age = NA,
+    gestationalAge = NA,
+    gender = Gender$Female
+  )
+
+  human_values <- createIndividual(individualCharacteristics = human)
+  expect_false(is.null((human_values)))
+})
+
 test_that("It returns the given seed if passed as parameter", {
   skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
 
@@ -66,18 +113,6 @@ test_that("It sets a random seed if not specified", {
   human_values <- createIndividual(individualCharacteristics = human)
   expect_false(is.null((human_values)))
   expect_gt(human_values$seed, 0)
-})
-
-test_that("It throwns an error when creating a human with population missing", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
-  human <- createIndividualCharacteristics(
-    species = Species$Human,
-    weight = 60,
-    age = 15,
-    gender = Gender$Female
-  )
-  expect_that(createIndividual(individualCharacteristics = human), throws_error())
 })
 
 test_that("It can create reating a human with weight missing", {
