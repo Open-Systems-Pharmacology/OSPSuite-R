@@ -43,7 +43,7 @@ SimulationBatchRunValues <- R6::R6Class(
       private$wrapVectorProperty("InitialValue", "InitialValues", value, "MoleculeValues")
     },
     #' @field id Internal id of the batch run value
-    id = function(value){
+    id = function(value) {
       private$wrapReadOnlyProperty("Id", value)
     }
   )
