@@ -117,10 +117,10 @@ createIndividualCharacteristics <- function(species,
   }
   individualCharacteristics$population <- population
   individualCharacteristics$gender <- gender
-  individualCharacteristics$age <- createSnapshotParameter(age, ageUnit)
-  individualCharacteristics$weight <- createSnapshotParameter(weight, weightUnit)
-  individualCharacteristics$height <- createSnapshotParameter(height, heightUnit)
-  individualCharacteristics$gestationalAge <- createSnapshotParameter(gestationalAge, gestationalAgeUnit)
+  individualCharacteristics$age <- .createSnapshotParameter(age, ageUnit)
+  individualCharacteristics$weight <- .createSnapshotParameter(weight, weightUnit)
+  individualCharacteristics$height <- .createSnapshotParameter(height, heightUnit)
+  individualCharacteristics$gestationalAge <- .createSnapshotParameter(gestationalAge, gestationalAgeUnit)
   individualCharacteristics$seed <- seed
   for (moleculeOntogeny in moleculeOntogenies) {
     individualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)
