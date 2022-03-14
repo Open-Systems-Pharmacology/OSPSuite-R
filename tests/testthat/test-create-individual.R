@@ -28,7 +28,6 @@ test_that("It throws an error when species is Human and wrong is provided", {
   )
 })
 
-
 context("createIndividual")
 
 # initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
@@ -65,6 +64,23 @@ test_that("It does not throw an error when creating a human with age missing", {
     species = Species$Human,
     population = HumanPopulation$BlackAmerican_NHANES_1997,
     weight = 60,
+    gender = Gender$Female
+  )
+
+  human_values <- createIndividual(individualCharacteristics = human)
+  expect_false(is.null((human_values)))
+})
+
+test_that("It creates a human individual when age, weight, height, or gestational age are `NA`", {
+  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+
+  human <- createIndividualCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$BlackAmerican_NHANES_1997,
+    weight = NA,
+    height = NA,
+    age = NA,
+    gestationalAge = NA,
     gender = Gender$Female
   )
 
