@@ -107,6 +107,7 @@ Collate:
     'utilities-pk-analysis.R'
     'utilities-pk-parameter.R'
     'utilities-pksim.R'
+    'utilities-plotting-functions.R'
     'utilities-population.R'
     'utilities-quantity.R'
     'utilities-sensitivity-analysis.R'
