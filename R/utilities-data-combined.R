@@ -20,7 +20,6 @@
 #'
 #' @keywords internal
 #' @noRd
-
 objCount <- function(x) {
   # `is.vector()` can handle both atomic vectors and lists, i.e.
   # both `is.vector(c(1, 2))` and `is.vector(list(1, 2))` will be `TRUE`
@@ -59,7 +58,6 @@ objCount <- function(x) {
 #' cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
 #' @keywords internal
 #' @noRd
-
 cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # return early if argument was not specified
   if (is.null(arg)) {
@@ -110,7 +108,6 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 #'
 #' @keywords internal
 #' @noRd
-
 flattenList <- function(x, type) {
   if (!is.vector(x)) {
     stop("`x` argument can only be a vector.", call. = FALSE)
@@ -143,7 +140,6 @@ flattenList <- function(x, type) {
 #' toMissingOfType(NULL, type = "integer")
 #' @keywords internal
 #' @noRd
-
 toMissingOfType <- function(x, type) {
   # all unexpected values will be converted to `NA` of a desired type
   if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
@@ -188,7 +184,6 @@ toMissingOfType <- function(x, type) {
 #' # validateVecDepth(list(list(1))) # depth is 3
 #' @keywords internal
 #' @noRd
-
 validateVecDepth <- function(x) {
   if (purrr::vec_depth(x) > 2L) {
     stop(
