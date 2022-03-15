@@ -79,7 +79,7 @@ values were specified by the user for each dataset.}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, newNames = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -88,10 +88,10 @@ Adds observed data.
 \item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
 class.}
 
-\item{\code{newNames}}{A string or a list of strings assigning new names to the
+\item{\code{names}}{A string or a list of strings assigning new names to the
 list of instances of the \code{DataSet} class. If a dataset is not to be
 renamed, this can be specified as \code{NULL} in the list. For example, in
-\code{newNames = list("dataName" = "dataNewName", "dataName2" = NULL)}),
+\code{names = list("dataName" = "dataNewName", "dataName2" = NULL)}),
 dataset with name \code{"dataName2"} will not be renamed.}
 }
 \if{html}{\out{</div>}}
@@ -111,7 +111,7 @@ Add simulated data using instance of \code{SimulationResults} class.
   quantitiesOrPaths = NULL,
   population = NULL,
   individualIds = NULL,
-  newNames = NULL
+  names = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -138,10 +138,10 @@ should be extracted. By default, all individuals from the results are
 considered. If the individual with the provided ID is not found, the ID
 is ignored.}
 
-\item{\code{newNames}}{A string or a list of strings assigning new names to the
+\item{\code{names}}{A string or a list of strings assigning new names to the
 quantities or paths present in the entered \code{SimulationResults} object.
 If a dataset is not to be renamed, this can be specified as \code{NULL} in
-the list. For example, in \code{newNames = list("dataName" = "dataNewName", "dataName2" = NULL)}), dataset with name \code{"dataName2"} will not be
+the list. For example, in \code{names = list("dataName" = "dataNewName", "dataName2" = NULL)}), dataset with name \code{"dataName2"} will not be
 renamed.}
 }
 \if{html}{\out{</div>}}
@@ -171,7 +171,7 @@ argument. The column \code{group} in the dataframe output will be \code{NA} for
 such datasets. If you wish to remove existing grouping for a given
 dataset, you can specify it as following: \code{list("x" = NA)}. This will
 not change any of the other (previously specified) groupings. Note that
-if you have specified \code{newNames} while adding datasets using respective
+if you have specified \code{names} while adding datasets using respective
 methods, you will need to use these new names to specify group
 assignment.}
 }
