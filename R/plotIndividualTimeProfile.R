@@ -2,7 +2,8 @@
 #'
 #' @param dataCombined A `DataCombined` object.
 #' @inheritParams tlf::useTheme
-#' @inheritParams PlotConfiguration$new
+#' @param title,subtitle,xlabel,ylabel,legendTitle A character/string defining
+#'   plot title, subtitle, axes labels, legend title, respectively.
 #'
 #' @import tlf
 #'

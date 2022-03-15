@@ -18,6 +18,9 @@ plotIndividualTimeProfile(
 \item{dataCombined}{A \code{DataCombined} object.}
 
 \item{theme}{Theme to be used as default of the tlf environment}
+
+\item{title, subtitle, xlabel, ylabel, legendTitle}{A character/string defining
+plot title, subtitle, axes labels, legend title, respectively.}
 }
 \description{
 Concentration time profile plot
