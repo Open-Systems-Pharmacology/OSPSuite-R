@@ -1,7 +1,15 @@
 #' Concentration time profile plot
 #'
 #' @param dataCombined A `DataCombined` object.
-#' @inheritParams tlf::useTheme
+#' @param tlfTheme A path to JSON file containing
+#'   [`Theme`](https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html)
+#'    object for `{tlf}` library.
+#' @param xAxisScale,yAxisScale A character/string that decides transformations
+#'   for axes (Default: `"lin"` (for continuous linear scale)).
+#'   Other available options are:
+#'   - `"log"` (for continuous log10 scale (i.e., with base 10))
+#'   - `"ln"` (for continuous natural logarithm (ln) scale (i.e., with base *e*))
+#'   - `"sqrt"` (for continusous square root scale)
 #' @param title,subtitle,xlabel,ylabel,legendTitle A character/string defining
 #'   plot title, subtitle, axes labels, legend title, respectively.
 #'
@@ -9,12 +17,14 @@
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
-                                      theme = NULL,
+                                      xAxisScale = "lin",
+                                      yAxisScale = "lin",
                                       title = NULL,
                                       subtitle = NULL,
                                       xlabel = NULL,
                                       ylabel = NULL,
-                                      legendTitle = NULL) {
+                                      legendTitle = NULL,
+                                      tlfTheme = NULL) {
   validateIsOfType(dataCombined, "DataCombined")
 
   df <- dataCombined$toDataFrame()
@@ -33,7 +43,21 @@ plotIndividualTimeProfile <- function(dataCombined,
     simData <- simData %>% dplyr::mutate(yValues = yValues * 100)
   }
 
-  useTheme(loadThemeFromJson(system.file("themes", "ospsuiteTheme.json", package = "ospsuite")))
+
+  tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
+
+  useTheme(loadThemeFromJson(tlfTheme))
+
+  ospsuiteTimeProfilePlotConfiguration <- TimeProfilePlotConfiguration$new(
+    title = title,
+    subtitle = subtitle,
+    xlabel = xlabel,
+    ylabel = ylabel,
+    legendTitle = legendTitle
+  )
+
+  ospsuiteTimeProfilePlotConfiguration$xAxis$scale <- xAxisScale
+  ospsuiteTimeProfilePlotConfiguration$yAxis$scale <- yAxisScale
 
   plotTimeProfile(
     data = as.data.frame(simData),
@@ -49,12 +73,6 @@ plotIndividualTimeProfile <- function(dataCombined,
       group = "group",
       uncertainty = "yErrorValues"
     ),
-    plotConfiguration = TimeProfilePlotConfiguration$new(
-      title = title,
-      subtitle = subtitle,
-      xlabel = xlabel,
-      ylabel = ylabel,
-      legendTitle = legendTitle
-    )
+    plotConfiguration = ospsuiteTimeProfilePlotConfiguration
   )
 }
