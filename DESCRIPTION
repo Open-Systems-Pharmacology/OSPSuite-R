@@ -55,6 +55,7 @@ Collate:
     'individual-characteristics.R'
     'init-package.R'
     'interval.R'
+    'messages.R'
     'molecule-ontogeny.R'
     'molecule.R'
     'object-base.R'
