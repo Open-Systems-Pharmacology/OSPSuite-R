@@ -341,13 +341,9 @@ DataSet <- R6::R6Class(
       validateEnumValue(errorType, DataErrorType)
       column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
-
       dataInfo <- rClr::clrGet(column$ref, "DataInfo")
-      rClr::clrSet(
-        dataInfo,
-        "AuxiliaryType",
-        rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
-      )
+      auxType <- rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
+      rClr::clrSet(dataInfo, "AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
       if (errorType == DataErrorType$ArithmeticStdDev) {
@@ -368,12 +364,13 @@ DataSet <- R6::R6Class(
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
-      private$.xColumn <- private$.dataRepository$baseGrid
-      # We assume for now that the first column not base grid in the data column
-      private$.yColumn <- private$.dataRepository$allButBaseGrid[[1]]
-
       dataRepositoryTask <- getNetTask("DataRepositoryTask")
-      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", private$.yColumn$ref)
+      private$.xColumn <- private$.dataRepository$baseGrid
+
+      netYColumn <- rClr::clrCall(dataRepositoryTask, "GetMeasurementColumn", private$.dataRepository$ref)
+      private$.yColumn <- DataColumn$new(netYColumn)
+      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", netYColumn)
+
       if (!is.null(netYErrorColumn)) {
         private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
       }
