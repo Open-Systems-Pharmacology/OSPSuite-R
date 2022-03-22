@@ -49,52 +49,35 @@
   targetXUnit <- xUnit %||% unique(data$xUnit)[[1]]
   targetYUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
-  xList <- split(data, data$xUnit)
-  data <- purrr::map_dfr(xList, ~.groupwiseXConvert(.x, targetXUnit))
-
-  yList <- split(data, data$yUnit)
-  data <- purrr::map_dfr(yList, ~.groupwiseYConvert(.x, targetYUnit))
-
-  return(data)
-}
-
-# helpers ---------------------------
-
-#' @keywords internal
-#' @noRd
-.groupwiseXConvert <- function(data, targetUnit) {
-  dimension <- data$xDimension[[1]]
-  sourceUnit <- data$xUnit[[1]]
-
+  # *WARNING*: Do not change the order of two `mutate()` statements.
+  #
+  # Since the old `xUnit` and `yUnit` columns are need for unit conversion,
+  # those columns can be updated only after conversions have taken place.
   data %>%
     dplyr::mutate(
-      xValues = toUnit(
-        quantityOrDimension = dimension,
-        values              = xValues,
-        targetUnit          = targetUnit,
-        sourceUnit          = sourceUnit
+      xValues = purrr::pmap_dbl(
+        .l = list(
+          quantityOrDimension = xDimension,
+          values              = xValues,
+          targetUnit          = targetXUnit,
+          sourceUnit          = xUnit
+        ),
+        .f = toUnit
       ),
-      xUnit = targetUnit
-    )
-}
-
-#' @keywords internal
-#' @noRd
-.groupwiseYConvert <- function(data, targetUnit) {
-  dimension <- data$yDimension[[1]]
-  sourceUnit <- data$yUnit[[1]]
-  molecularWeight <- data$molWeight[[1]]
-
-  data %>%
+      yValues = purrr::pmap_dbl(
+        .l = list(
+          quantityOrDimension = yDimension,
+          values              = yValues,
+          targetUnit          = targetYUnit,
+          sourceUnit          = yUnit,
+          molWeight           = molWeight,
+          molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
+        ),
+        .f = toUnit
+      )
+    ) %>% # update the columns with common units
     dplyr::mutate(
-      yValues = toUnit(
-        quantityOrDimension = dimension,
-        values              = yValues,
-        targetUnit          = targetUnit,
-        sourceUnit          = sourceUnit,
-        molWeight           = molecularWeight,
-        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
-      ),
-      yUnit = targetUnit
+      xUnit = targetXUnit,
+      yUnit = targetYUnit
     )
 }
