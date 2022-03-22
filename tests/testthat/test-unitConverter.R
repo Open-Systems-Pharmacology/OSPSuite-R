@@ -1,16 +1,34 @@
 context("unitConverter")
 
-# small dataframe to illustrate the conversion
+# data -------------------
+
+# small data frame to illustrate the conversion
 df <- dplyr::tibble(
   xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
   yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
   molWeight = c(12.5, 10, 5)
 )
 
+# edge case: data frame with no valid unit
+dfXEmpty <- dplyr::tibble(
+  xValues = c(15, 30, 60), xUnit = NA_character_, xDimension = "Time",
+  yValues = c(0.25, 45, 78), yUnit =  c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
+  molWeight = c(12.5, 10, 5)
+)
+
+dfYEmpty <- dplyr::tibble(
+  xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
+  yValues = c(0.25, 45, 78), yUnit = NA_character_, yDimension = c("Fraction", "Fraction", "Fraction"),
+  molWeight = c(12.5, 10, 5)
+)
+
 # validation input -------------------
 
 test_that("unitConverter fails with incorrect data arguments", {
-  expect_error(unitConverter(as.matrix(table(mtcars$cyl))), messages$errorWrongType("data", "matrix", "data.frame"))
+  expect_error(
+    unitConverter(as.matrix(table(mtcars$cyl))),
+    messages$errorWrongType("data", "matrix", "data.frame")
+  )
 })
 
 test_that("unitConverter fails with incorrect unit arguments", {
@@ -82,4 +100,14 @@ test_that("unitConverter converts both xValues and yValues column as expected", 
 test_that("unitConverter updates xUnit and yUnit column as expected", {
   expect_equal(unique(dfXYConvert$xUnit), ospUnits$Time$h)
   expect_equal(unique(dfXYConvert$yUnit), ospUnits$Fraction$`%`)
+})
+
+# edge case: no valid unit -------------------
+
+test_that("unitConverter errors when no valid xUnit is found", {
+  expect_error(unitConverter(dfXEmpty), "No valid unit found in `data$xUnit`.", fixed = TRUE)
+})
+
+test_that("unitConverter errors when no valid yUnit is found", {
+  expect_error(unitConverter(dfYEmpty), "No valid unit found in `data$yUnit`.", fixed = TRUE)
 })

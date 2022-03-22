@@ -50,8 +50,8 @@ unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
   # Therefore, if target units are not specified, we need to choose one for
   # consistency. For no special reason, the first non-missing units will be
   # used.
-  targetXUnit <- xUnit %||% unique(data$xUnit)[[1]]
-  targetYUnit <- yUnit %||% unique(data$yUnit[!is.na(data$yUnit)])[[1]]
+  targetXUnit <- xUnit %||% .selectFirstLevel(data$xUnit)
+  targetYUnit <- yUnit %||% .selectFirstLevel(data$yUnit)
 
   # *WARNING*: Do not change the order of two `mutate()` statements.
   #
@@ -80,4 +80,20 @@ unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
       yUnit = targetYUnit
     ) %>%
     dplyr::ungroup()
+}
+
+# utilities --------------
+
+#' @keywords internal
+#' @noRd
+.selectFirstLevel <- function(x) {
+  argName <- deparse(substitute(x))
+  xFirstLevel <- unique(x[!is.na(x)])
+
+  # It is possible that there may not be any unit left after `NA` removal.
+  if (length(xFirstLevel) == 0L) {
+    stop(paste0("No valid unit found in `", argName, "`."))
+  }
+
+  return(xFirstLevel[[1]])
 }
