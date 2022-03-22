@@ -30,20 +30,19 @@
 #'   molWeight = c(12.5, 10, 5)
 #' ))
 #'
-#' unitConverter(df)
+#' .unitConverter(df)
 #'
-#' unitConverter(df, xUnit = ospUnits$Time$h)
+#' .unitConverter(df, xUnit = ospUnits$Time$h)
 #'
-#' unitConverter(df, yUnit = ospUnits$Fraction$`%`)
+#' .unitConverter(df, yUnit = ospUnits$Fraction$`%`)
 #'
-#' unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
+#' .unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
 #'
-#' @export
-unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
-  # validate inputs
-  validateIsOfType(data, "data.frame")
-  validateIsCharacter(xUnit, nullAllowed = TRUE)
-  validateIsCharacter(yUnit, nullAllowed = TRUE)
+#' @keywords internal
+#' @noRd
+.unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+  # No validation of inputs for this non-exported function.
+  # All validation will take place in the `DataCombined` class itself.
 
   # The observed and simulated data should have same units.
   #
@@ -82,18 +81,18 @@ unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
     dplyr::ungroup()
 }
 
-# utilities --------------
+# input validation helper --------------
 
 #' @keywords internal
 #' @noRd
 .selectFirstLevel <- function(x) {
   argName <- deparse(substitute(x))
-  xFirstLevel <- unique(x[!is.na(x)])
+  xLevels <- unique(x)
 
-  # It is possible that there may not be any unit left after `NA` removal.
-  if (length(xFirstLevel) == 0L) {
-    stop(paste0("No valid unit found in `", argName, "`."))
+  # `toUnit` can't carry out conversion if source unit is `NA`
+  if (any(is.na(xLevels))) {
+    stop(paste0("Source units in `", argName, "` can't be missing (`NA`)."))
   }
 
-  return(xFirstLevel[[1]])
+  return(xLevels[[1]])
 }
