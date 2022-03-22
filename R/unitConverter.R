@@ -14,9 +14,9 @@
 #'
 #' @param data A data frame (or a tibble).
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), one of the existing units in the respective columns
-#'   (`xUnit` and `yUnit`) will be selected as the common unit. For available
-#'   dimensions and units, see `ospsuite::ospDimensions` and
+#'   not specified (`NULL`), first of the existing units in the respective
+#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
+#'   available dimensions and units, see `ospsuite::ospDimensions` and
 #'   `ospsuite::ospUnits`, respectively.
 #'
 #' @seealso toUnit
@@ -30,13 +30,10 @@
 #'   molWeight = c(12.5, 10, 5)
 #' ))
 #'
-#' .unitConverter(df)
-#'
-#' .unitConverter(df, xUnit = ospUnits$Time$h)
-#'
-#' .unitConverter(df, yUnit = ospUnits$Fraction$`%`)
-#'
-#' .unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
+#' ospsuite:::.unitConverter(df)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
+#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Fraction$`%`)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
 #'
 #' @keywords internal
 #' @noRd
@@ -49,8 +46,8 @@
   # Therefore, if target units are not specified, we need to choose one for
   # consistency. For no special reason, the first non-missing units will be
   # used.
-  targetXUnit <- xUnit %||% .selectFirstLevel(data$xUnit)
-  targetYUnit <- yUnit %||% .selectFirstLevel(data$yUnit)
+  targetXUnit <- xUnit %||% .selectDefaultTargetUnit(data$xUnit)
+  targetYUnit <- yUnit %||% .selectDefaultTargetUnit(data$yUnit)
 
   # *WARNING*: Do not change the order of two `mutate()` statements.
   #
@@ -81,11 +78,22 @@
     dplyr::ungroup()
 }
 
-# input validation helper --------------
+# helper -----------------------
 
+#' Select target unit
+#'
+#' @description
+#'
+#' Select appropriate target unit from the existing ones if none was specified
+#' by the user.
+#'
+#' @details
+#'
+#' First element from a vector of unique units will be selected.
+#'
 #' @keywords internal
 #' @noRd
-.selectFirstLevel <- function(x) {
+.selectDefaultTargetUnit <- function(x) {
   argName <- deparse(substitute(x))
   xLevels <- unique(x)
 
