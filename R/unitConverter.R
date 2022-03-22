@@ -46,8 +46,8 @@
   # Therefore, if target units are not specified, we need to choose one for
   # consistency. For no special reason, first element from a vector of unique
   # units will be selected.
-  targetXUnit <- xUnit %||% .selectDefaultTargetUnit(data$xUnit)
-  targetYUnit <- yUnit %||% .selectDefaultTargetUnit(data$yUnit)
+  targetXUnit <- xUnit %||% unique(data$xUnit)[[1]]
+  targetYUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
   # *WARNING*: Do not change the order of two `mutate()` statements.
   #
@@ -76,28 +76,4 @@
       yUnit = targetYUnit
     ) %>%
     dplyr::ungroup()
-}
-
-# helper -----------------------
-
-#' Select target unit
-#'
-#' @description
-#'
-#' Select appropriate target unit from the existing source units if no target
-#' unit was specified by the user.
-#'
-#' @keywords internal
-#' @noRd
-.selectDefaultTargetUnit <- function(sourceUnit) {
-  argName <- deparse(substitute(sourceUnit))
-  sourceUnitLevels <- unique(sourceUnit)
-
-  # `toUnit` can't carry out conversion if source unit is `NA`
-  if (any(is.na(sourceUnitLevels))) {
-    stop(paste0("Source units in `", argName, "` can't be missing (`NA`)."))
-  }
-
-  # for no special reason, the first one is selected as the target unit
-  return(sourceUnitLevels[[1]])
 }

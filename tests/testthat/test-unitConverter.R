@@ -9,33 +9,6 @@ df <- dplyr::tibble(
   molWeight = c(12.5, 10, 5)
 )
 
-# small data frame with `NA` but other valid units present
-dfNAx <- dplyr::tibble(
-  xValues = c(15, 30, 60), xUnit = c("min", "h", NA), xDimension = "Time",
-  yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
-  molWeight = c(12.5, 10, 5)
-)
-
-dfNAy <- dplyr::tibble(
-  xValues = c(15, 30, 60), xUnit = c("min", "h", "min"), xDimension = "Time",
-  yValues = c(0.25, 45, 78), yUnit = c("", NA, "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
-  molWeight = c(12.5, 10, 5)
-)
-
-# `NA` input -------------------
-
-test_that(".unitConverter fails in presence of `NA` in unit columns", {
-  expect_error(
-    .unitConverter(dfNAx),
-    "Source units in `data$xUnit` can't be missing (`NA`).",
-    fixed = TRUE
-  )
-  expect_error(
-    .unitConverter(dfNAy),
-    "Source units in `data$yUnit` can't be missing (`NA`).",
-    fixed = TRUE
-  )
-})
 # default conversion -------------------
 
 dfConvert <- .unitConverter(df)
