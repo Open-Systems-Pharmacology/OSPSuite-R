@@ -83,6 +83,7 @@
 .groupwiseYConvert <- function(data, targetUnit) {
   dimension <- data$yDimension[[1]]
   sourceUnit <- data$yUnit[[1]]
+  molecularWeight <- data$molWeight[[1]]
 
   data %>%
     dplyr::mutate(
@@ -90,7 +91,9 @@
         quantityOrDimension = dimension,
         values              = yValues,
         targetUnit          = targetUnit,
-        sourceUnit          = sourceUnit
+        sourceUnit          = sourceUnit,
+        molWeight           = molecularWeight,
+        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
       ),
       yUnit = targetUnit
     )
