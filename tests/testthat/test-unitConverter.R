@@ -6,7 +6,7 @@ context(".unitConverter")
 df <- dplyr::tibble(
   xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
   yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
-  molWeight = c(12.5, 10, 5)
+  molWeight = c(12.5, 10, 10)
 )
 
 # default conversion -------------------
@@ -33,6 +33,10 @@ test_that("defaults for .unitConverter update xUnit and yUnit column as expected
 test_that("defaults for .unitConverter leaves dimension columns untouched", {
   expect_equal(unique(dfConvert$xDimension), "Time")
   expect_equal(unique(dfConvert$yDimension), "Fraction")
+})
+
+test_that("defaults for .unitConverter leaves molWeight columns untouched", {
+  expect_equal(dfConvert$molWeight, df$molWeight)
 })
 
 # only `xUnit` -------------------

@@ -49,35 +49,46 @@
   targetXUnit <- xUnit %||% unique(data$xUnit)[[1]]
   targetYUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
-  # *WARNING*: Do not change the order of two `mutate()` statements.
-  #
-  # Since the old `xUnit` and `yUnit` columns are need for unit conversion,
-  # those columns can be updated only after conversions have taken place.
-  data %>%
-    dplyr::mutate(
-      xValues = purrr::pmap_dbl(
-        .l = list(
-          quantityOrDimension = xDimension,
-          values              = xValues,
-          targetUnit          = targetXUnit,
-          sourceUnit          = xUnit
-        ),
-        .f = toUnit
-      ),
-      yValues = purrr::pmap_dbl(
-        .l = list(
-          quantityOrDimension = yDimension,
-          values              = yValues,
-          targetUnit          = targetYUnit,
-          sourceUnit          = yUnit,
-          molWeight           = molWeight,
-          molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
-        ),
-        .f = toUnit
+  # xUnit ----------------
+
+  dataXUnit <- data %>%
+    dplyr::select(dplyr::matches("^x")) %>%
+    tidyr::nest(data = xValues) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(xValues = list(
+      toUnit(
+        quantityOrDimension = xDimension,
+        values              = purrr::pluck(data, 1L),
+        targetUnit          = targetXUnit,
+        sourceUnit          = xUnit
       )
-    ) %>% # update the columns with common units
-    dplyr::mutate(
-      xUnit = targetXUnit,
-      yUnit = targetYUnit
-    )
+    )) %>%
+    dplyr::ungroup() %>%
+    tidyr::unnest(cols = c(xValues)) %>%
+    dplyr::mutate(xUnit = targetXUnit) %>%
+    dplyr::select(-data)
+
+  # yUnit ----------------
+
+  dataYUnit <- data %>%
+    dplyr::select(-dplyr::matches("^x")) %>%
+    tidyr::nest(data = c(yValues, molWeight)) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(yValues = list(
+      toUnit(
+        quantityOrDimension = yDimension,
+        values              = purrr::pluck(data, 1L),
+        targetUnit          = targetYUnit,
+        sourceUnit          = yUnit,
+        molWeight           = purrr::pluck(data, 1L, 2L),
+        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
+      )
+    )) %>%
+    dplyr::ungroup() %>%
+    tidyr::unnest(cols = c(yValues)) %>%
+    dplyr::mutate(yUnit = targetYUnit) %>%
+    dplyr::select(-data)
+
+  # combine them
+  dplyr::bind_cols(dataXUnit, dataYUnit, dplyr::select(data, molWeight))
 }
