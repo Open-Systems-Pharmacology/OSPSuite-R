@@ -49,31 +49,49 @@
   targetXUnit <- xUnit %||% unique(data$xUnit)[[1]]
   targetYUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
-  # *WARNING*: Do not change the order of two `mutate()` statements.
-  #
-  # Since the old `xUnit` and `yUnit` columns are need for unit conversion,
-  # those columns must be updated only *after* the conversions have taken place.
+  xList <- split(data, data$xUnit)
+  data <- purrr::map_dfr(xList, ~.groupwiseXConvert(.x, targetXUnit))
+
+  yList <- split(data, data$yUnit)
+  data <- purrr::map_dfr(yList, ~.groupwiseYConvert(.x, targetYUnit))
+
+  return(data)
+}
+
+# helpers ---------------------------
+
+#' @keywords internal
+#' @noRd
+.groupwiseXConvert <- function(data, targetUnit) {
+  dimension <- data$xDimension[[1]]
+  sourceUnit <- data$xUnit[[1]]
+
   data %>%
-    dplyr::rowwise() %>% # transform values to common units
     dplyr::mutate(
       xValues = toUnit(
-        quantityOrDimension = xDimension,
+        quantityOrDimension = dimension,
         values              = xValues,
-        targetUnit          = targetXUnit,
-        sourceUnit          = xUnit
+        targetUnit          = targetUnit,
+        sourceUnit          = sourceUnit
       ),
-      yValues = toUnit(
-        quantityOrDimension = yDimension,
-        values              = yValues,
-        targetUnit          = targetYUnit,
-        sourceUnit          = yUnit,
-        molWeight           = molWeight,
-        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
-      )
-    ) %>% # update the columns with chosen target units
+      xUnit = targetUnit
+    )
+}
+
+#' @keywords internal
+#' @noRd
+.groupwiseYConvert <- function(data, targetUnit) {
+  dimension <- data$yDimension[[1]]
+  sourceUnit <- data$yUnit[[1]]
+
+  data %>%
     dplyr::mutate(
-      xUnit = targetXUnit,
-      yUnit = targetYUnit
-    ) %>%
-    dplyr::ungroup()
+      yValues = toUnit(
+        quantityOrDimension = dimension,
+        values              = yValues,
+        targetUnit          = targetUnit,
+        sourceUnit          = sourceUnit
+      ),
+      yUnit = targetUnit
+    )
 }
