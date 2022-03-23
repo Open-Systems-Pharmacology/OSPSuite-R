@@ -14,7 +14,7 @@
 
 ## Breaking changes
 
-* Signature for `toUnit` function has changed. `molWeight` is now the fifth, instead of fourth, parameter (#837).
+* Signature for `toUnit` function has changed. `molWeight` is now the fifth, while `sourceUnit` is the fourth parameter (#837).
 
 * `DataImporterConfiguration`: fields `timeUnitFromColumn` and `measurementUnitFromColumn` are renamed to `isTimeUnitFromColumn` and `isMeasurementUnitFromColumn` 
 
