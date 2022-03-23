@@ -40,7 +40,7 @@ test_that("It can convert from a value in base unit to a target unit using the d
 
 test_that("It can convert from a value in mass to a value in mol using a molweight parameter", {
   molWeight <- 50 # 50kg/umol
-  expect_equal(toUnit("Amount", 10, "kg", molWeight), 500)
+  expect_equal(toUnit("Amount", 10, "kg", molWeight = molWeight), 500)
 })
 
 test_that("It can convert from an array of values in base unit to a target unit", {

@@ -194,6 +194,7 @@ toUnit <- function(quantityOrDimension,
     if (!is.null(sourceUnit)) {
       values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values)
     }
+
     return(rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values))
   }
 
@@ -201,10 +202,12 @@ toUnit <- function(quantityOrDimension,
   if (!is.null(molWeightUnit)) {
     molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
   }
+
   # Convert values to base unit first if the source unit is provided
   if (!is.null(sourceUnit)) {
     values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
   }
+
   rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
