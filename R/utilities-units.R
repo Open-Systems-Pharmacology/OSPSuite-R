@@ -54,6 +54,7 @@ validateUnit <- function(unit, dimension) {
 #' @return
 #' If validations are successful, `NULL` is returned. Otherwise, error is
 #' signaled.
+#' @export
 validateHasUnit <- function(quantity, unit) {
   validateIsOfType(quantity, "Quantity")
   validateIsString(unit)
@@ -287,6 +288,21 @@ getDimensionByName <- function(name) {
   rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(name))
 }
 
+#' Returns a named list with two entries (name, unit) corresponding to the name and unit
+#' extracted out of the `text` provided as parameter
+#'
+#' @examples
+#' res <- extractNameAndUnit("Value [mg]")
+#' # res$name == "Value", res$unit == "mg"
+#'
+#' res <- extractNameAndUnit("Value")
+#' # res$name == "Value", res$unit == ""
+#' @export
+extractNameAndUnit <- function(text) {
+  dimensionTask <- getDimensionTask()
+  res <- rClr::clrCall(dimensionTask, "ExtractNameAndUnit", enc2utf8(text))
+  list(name = res[1], unit = res[2])
+}
 
 #' Loop through dimensions and build a list containing an enum of all units available for each dimension
 #' @return enum of all units for each dimension

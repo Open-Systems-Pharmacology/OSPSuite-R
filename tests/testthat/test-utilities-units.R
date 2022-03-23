@@ -137,8 +137,39 @@ test_that("It returns null if the dimension is not found for the unit", {
   expect_null(getDimensionForUnit("toto"))
 })
 
-context("getUnitsForDimension")
 
+context("extractNameAndUnit")
+test_that("It can extract name and unit when no unit is present", {
+  res <- extractNameAndUnit("Value")
+  expect_equal(res$name, "Value")
+  expect_equal(res$unit, "")
+})
+
+test_that("It can extract name and unit when a unit is present", {
+  res <- extractNameAndUnit("Value [unit]")
+  expect_equal(res$name, "Value")
+  expect_equal(res$unit, "unit")
+})
+
+test_that("It can extract name and unit when there are multiple brackets in the name", {
+  res <- extractNameAndUnit("Value [raw] [unit]")
+  expect_equal(res$name, "Value [raw]")
+  expect_equal(res$unit, "unit")
+})
+
+test_that("It can extract name and unit when there are empty spaces before and after the unit", {
+  res <- extractNameAndUnit("Value [raw] [  unit]  ")
+  expect_equal(res$name, "Value [raw]")
+  expect_equal(res$unit, "unit")
+})
+
+test_that("It does not crash when provided with a string not formatted for the exctraction", {
+  res <- extractNameAndUnit("Value [raw] rest")
+  expect_equal(res$name, "Value [raw] rest")
+  expect_equal(res$unit, "")
+})
+
+context("getUnitsForDimension")
 test_that("It can return the expected dimension for a given unit", {
   expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", "µg", "ng", "pg"))
 })

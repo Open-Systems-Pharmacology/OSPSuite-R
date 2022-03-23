@@ -6,6 +6,8 @@
 
 * Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
 
+* Adds `extractNameAndUnit()` function to extract `name` and `unit` from a given text (typically csv or excel file column headers such as `Concentration [mg/l]`
+
 ## Major Changes
 
 * Following functions are marked for deprecation and will be removed in future releases:
