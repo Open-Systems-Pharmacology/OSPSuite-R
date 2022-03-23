@@ -177,28 +177,29 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
   dataSetsFrame <- dataSetToDataFrame(dataSets)
   expect_equal(
     names(dataSetsFrame), c(
-    "name",
-    "xValues",
-    "yValues",
-    "yErrorValues",
-    "xDimension",
-    "xUnit",
-    "yDimension",
-    "yUnit",
-    "yErrorType",
-    "yErrorUnit",
-    "molWeight",
-    "lloq",
-    "Source",
-    "Sheet",
-    "Study Id",
-    "Organ",
-    "Compartment",
-    "Species",
-    "Gender",
-    "Molecule",
-    "Route",
-    "Subject Id",
-    "Dose"
-  ))
+      "name",
+      "xValues",
+      "yValues",
+      "yErrorValues",
+      "xDimension",
+      "xUnit",
+      "yDimension",
+      "yUnit",
+      "yErrorType",
+      "yErrorUnit",
+      "molWeight",
+      "lloq",
+      "Source",
+      "Sheet",
+      "Study Id",
+      "Organ",
+      "Compartment",
+      "Species",
+      "Gender",
+      "Molecule",
+      "Route",
+      "Subject Id",
+      "Dose"
+    )
+  )
 })
