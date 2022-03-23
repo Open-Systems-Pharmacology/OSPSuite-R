@@ -88,7 +88,8 @@ dfMW <- dplyr::tibble(
   yValues = c(1, 2, 3),
   yUnit = c("mol", "mol", "mol"),
   yDimension = ospDimensions$Amount,
-  molWeight = 10
+  molWeight = 10,
+  random = "bla" # only for testing that the function doesn't remove other columns
 )
 
 dfMWConvert <- .unitConverter(dfMW, yUnit = ospUnits$Mass$g)
@@ -109,4 +110,15 @@ test_that(".unitConverter updates yValues with molecular weight when dimension i
 
 test_that(".unitConverter updates yUnit correctly when dimension is amount", {
   expect_equal(unique(dfMWConvert$yUnit), ospUnits$Mass$g)
+})
+
+# dimensions don't change -------------------
+
+test_that(".unitConverter doesn't change dimensions under any circumstances", {
+  expect_equal(dim(dfConvert), dim(df))
+  expect_equal(dim(dfXConvert), dim(df))
+  expect_equal(dim(dfYConvert), dim(df))
+  expect_equal(dim(dfXYConvert), dim(df))
+
+  expect_equal(dim(dfMWConvert), dim(dfMW))
 })
