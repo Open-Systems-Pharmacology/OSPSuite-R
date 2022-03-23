@@ -154,7 +154,12 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #'   sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
 #' )
 #' @export
-toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL, molWeightUnit = NULL) {
+toUnit <- function(quantityOrDimension,
+                   values,
+                   targetUnit,
+                   sourceUnit = NULL,
+                   molWeight = NULL,
+                   molWeightUnit = NULL) {
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
@@ -189,6 +194,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
     if (!is.null(sourceUnit)) {
       values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values)
     }
+
     return(rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values))
   }
 
@@ -196,10 +202,12 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
   if (!is.null(molWeightUnit)) {
     molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
   }
+
   # Convert values to base unit first if the source unit is provided
   if (!is.null(sourceUnit)) {
     values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
   }
+
   rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
