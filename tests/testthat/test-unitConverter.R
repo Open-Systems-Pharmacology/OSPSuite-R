@@ -6,7 +6,7 @@ context(".unitConverter")
 df <- dplyr::tibble(
   xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
   yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
-  molWeight = c(12.5, 10, 10)
+  molWeight = c(10, 10, 10)
 )
 
 # default conversion -------------------
@@ -77,4 +77,36 @@ test_that(".unitConverter converts both xValues and yValues columns as expected"
 test_that(".unitConverter updates xUnit and yUnit columns as expected", {
   expect_equal(unique(dfXYConvert$xUnit), ospUnits$Time$h)
   expect_equal(unique(dfXYConvert$yUnit), ospUnits$Fraction$`%`)
+})
+
+# molecular weight is used properly -------------------
+
+dfMW <- dplyr::tibble(
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(1, 2, 3),
+  yUnit = c("mol", "mol", "mol"),
+  yDimension = ospDimensions$Amount,
+  molWeight = 10
+)
+
+dfMWConvert <- .unitConverter(dfMW, yUnit = ospUnits$Mass$g)
+
+test_that(".unitConverter updates yValues with molecular weight when dimension is amount", {
+  expect_equal(
+    unique(dfMWConvert$yValues),
+    toUnit(
+      ospDimensions$Amount,
+      values = dfMW$yValues,
+      targetUnit = "g",
+      sourceUnit = "mol",
+      molWeight = dfMW$molWeight[[1]],
+      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+    )
+  )
+})
+
+test_that(".unitConverter updates yUnit correctly when dimension is amount", {
+  expect_equal(unique(dfMWConvert$yUnit), ospUnits$Mass$g)
 })

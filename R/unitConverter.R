@@ -46,49 +46,46 @@
   # Therefore, if target units are not specified, we need to choose one for
   # consistency. For no special reason, first element from a vector of unique
   # units will be selected.
-  targetXUnit <- xUnit %||% unique(data$xUnit)[[1]]
-  targetYUnit <- yUnit %||% unique(data$yUnit)[[1]]
+  xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
+  yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
-  # xUnit ----------------
-
-  dataXUnit <- data %>%
-    dplyr::select(dplyr::matches("^x")) %>%
-    tidyr::nest(data = xValues) %>%
+  data %>%
+    dplyr::mutate(.rowid = dplyr::row_number()) %>%
+    dplyr::mutate(
+      xTargetUnit = xTargetUnit,
+      yTargetUnit = yTargetUnit
+    ) %>%
+    tidyr::pivot_longer(
+      dplyr::matches("^x|^y"),
+      names_pattern  = "([xy])([A-Z].+)",
+      names_to       = c("Variable", ".value"),
+      values_to      = "Values",
+      values_drop_na = TRUE
+    ) %>%
+    tidyr::nest(data = c(Values)) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(xValues = list(
+    dplyr::mutate(Values = list(
       toUnit(
-        quantityOrDimension = xDimension,
+        quantityOrDimension = Dimension,
         values              = purrr::pluck(data, 1L),
-        targetUnit          = targetXUnit,
-        sourceUnit          = xUnit
-      )
-    )) %>%
-    dplyr::ungroup() %>%
-    tidyr::unnest(cols = c(xValues)) %>%
-    dplyr::mutate(xUnit = targetXUnit) %>%
-    dplyr::select(-data)
-
-  # yUnit ----------------
-
-  dataYUnit <- data %>%
-    dplyr::select(-dplyr::matches("^x")) %>%
-    tidyr::nest(data = c(yValues, molWeight)) %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(yValues = list(
-      toUnit(
-        quantityOrDimension = yDimension,
-        values              = purrr::pluck(data, 1L),
-        targetUnit          = targetYUnit,
-        sourceUnit          = yUnit,
-        molWeight           = purrr::pluck(data, 1L, 2L),
+        targetUnit          = TargetUnit,
+        sourceUnit          = Unit,
+        molWeight           = molWeight,
         molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
       )
     )) %>%
     dplyr::ungroup() %>%
-    tidyr::unnest(cols = c(yValues)) %>%
-    dplyr::mutate(yUnit = targetYUnit) %>%
-    dplyr::select(-data)
-
-  # combine them
-  dplyr::bind_cols(dataXUnit, dataYUnit, dplyr::select(data, molWeight))
+    tidyr::unnest(cols = c(Values)) %>%
+    dplyr::select(-data, -Unit) %>%
+    dplyr::rename(Unit = TargetUnit) %>%
+    tidyr::pivot_wider(
+      names_from  = Variable,
+      values_from = dplyr::matches("Values|Unit|Dimension"),
+      names_glue  = "{Variable}{.value}"
+    ) %>%
+    dplyr::select(
+      dplyr::matches("Values|Unit|Dimension"),
+      dplyr::everything(),
+      -c(".rowid")
+    )
 }
