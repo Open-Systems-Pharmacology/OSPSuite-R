@@ -299,6 +299,7 @@ getDimensionByName <- function(name) {
 #' # res$name == "Value", res$unit == ""
 #' @export
 extractNameAndUnit <- function(text) {
+  validateIsString(text)
   dimensionTask <- getDimensionTask()
   res <- rClr::clrCall(dimensionTask, "ExtractNameAndUnit", enc2utf8(text))
   list(name = res[1], unit = res[2])

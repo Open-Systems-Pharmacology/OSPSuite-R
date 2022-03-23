@@ -169,6 +169,12 @@ test_that("It does not crash when provided with a string not formatted for the e
   expect_equal(res$unit, "")
 })
 
+test_that("It does not crash when with an empty string", {
+  res <- extractNameAndUnit("")
+  expect_equal(res$name, "")
+  expect_equal(res$unit, "")
+})
+
 context("getUnitsForDimension")
 test_that("It can return the expected dimension for a given unit", {
   expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", "µg", "ng", "pg"))
