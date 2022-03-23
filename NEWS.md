@@ -14,6 +14,8 @@
 
 ## Breaking changes
 
+* Signature for `toUnit` function has changed. `molWeight` is now the fifth, instead of fourth, parameter (#837).
+
 * `DataImporterConfiguration`: fields `timeUnitFromColumn` and `measurementUnitFromColumn` are renamed to `isTimeUnitFromColumn` and `isMeasurementUnitFromColumn` 
 
 * The constructor for `DataImporterConfiguration` does not accept a path to a configuration file any more. Use the function `loadDataImporterConfiguration()` to create a configuration object from a file.
