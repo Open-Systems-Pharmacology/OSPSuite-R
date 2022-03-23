@@ -8,8 +8,8 @@ toUnit(
   quantityOrDimension,
   values,
   targetUnit,
-  molWeight = NULL,
   sourceUnit = NULL,
+  molWeight = NULL,
   molWeightUnit = NULL
 )
 }
@@ -20,9 +20,9 @@ toUnit(
 
 \item{targetUnit}{Unit to convert to}
 
-\item{molWeight}{Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol}
-
 \item{sourceUnit}{Optional Name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.}
+
+\item{molWeight}{Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol}
 
 \item{molWeightUnit}{Optional Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.}
 }
