@@ -7,7 +7,7 @@
 #' convert them to a common unit specified by the user.
 #'
 #' This is especially helpful while plotting since the quantities from different
-#' datasets to be plotted on the x-and y-axis need to have same units to be
+#' datasets to be plotted on the X-and Y-axis need to have same units to be
 #' meaningfully compared.
 #'
 #' @return A data frame with measurement columns transformed to have common units.
@@ -41,11 +41,12 @@
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
 
-  # The observed and simulated data should have same units.
+  # The observed and simulated data should have the same units for
+  # visual/graphical comparison.
   #
-  # Therefore, if target units are not specified, we need to choose one for
-  # consistency. For no special reason, first element from a vector of unique
-  # units will be selected.
+  # Therefore, if target units are not specified by the user, we need to choose
+  # one ourselves. For no special reason, the first element from a vector of
+  # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
@@ -67,10 +68,9 @@
     ) %>%
     # Calling `.NET` methods from R is expensive and such calls should be
     # minimized. The best way to do so is to call this method for each unique
-    # unit present in the data frame, doesn't matter `xUnit` or `yUnit`. The
-    # natural data format to carry out this operation then is tidy or long data
-    # format, which wouldn't distinguish if `xUnit` or `yUnit`, but just care
-    # that it's *a* unit.
+    # unit present in the data frame, doesn't matter if it is `xUnit` or
+    # `yUnit`. The natural data format to carry out this operation then is tidy
+    # or long data format, which would have all unit columns in the same column.
     #
     # Note that `molWeight` and `molWeightUnit` arguments are ignored by
     # `toUnit()` when they are not relevant for the `quantityOrDimension` in
