@@ -14,13 +14,13 @@ NULL
 #' @rdname ospsuite_deprecated
 #' @export
 pkAnalysesAsDataFrame <- function(...) {
-  .Deprecated("pkAnalysesAsDataFrame")
+  .Deprecated("pkAnalysesToDataFrame")
   pkAnalysesToDataFrame(...)
 }
 
 #' @rdname ospsuite_deprecated
 #' @export
 populationAsDataFrame <- function(...) {
-  .Deprecated("populationAsDataFrame")
+  .Deprecated("populationToDataFrame")
   populationToDataFrame(...)
 }
