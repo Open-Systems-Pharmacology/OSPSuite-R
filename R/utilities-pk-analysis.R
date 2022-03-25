@@ -94,5 +94,6 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
       file.remove(pkParameterResultsFilePath)
     }
   )
-  return(dataFrame)
+
+  return(dplyr::as_tibble(dataFrame))
 }

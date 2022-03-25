@@ -216,7 +216,6 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #' simulationValues, unit, dimension, TimeUnit.
 #'
 #' @export
-
 simulationResultsToDataFrame <- function(simulationResults,
                                          quantitiesOrPaths = NULL,
                                          population = NULL,
