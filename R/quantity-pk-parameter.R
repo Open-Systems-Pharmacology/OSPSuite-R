@@ -12,7 +12,7 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
   active = list(
     #' @field values All values for `quantityPath` and `name`
     values = function(value) {
-      private$wrapReadOnlyProperty("Values", value)
+      private$wrapReadOnlyProperty("ValuesAsArray", value)
     },
     #' @field quantityPath The path of the quantity for which the values were calculated
     quantityPath = function(value) {
