@@ -13,7 +13,8 @@ loadDataSetsFromExcel(
 \arguments{
 \item{xlsFilePath}{Path to the excel file with the data}
 
-\item{importerConfiguration}{An object of type \code{DataImporterConfiguration} that is valid for the excel file}
+\item{importerConfiguration}{An object of type \code{DataImporterConfiguration} that is valid
+for the excel file or a path to a XML file with stored configuration}
 
 \item{importAllSheets}{If \code{FALSE} (default), only sheets specified in the
 \code{importerConfiguration} will be loaded. If \code{TRUE}, an attempt to load all sheets
@@ -33,6 +34,14 @@ Load observed data from an excel file using an importer configuration
 xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 importerConfiguration$sheets <- "TestSheet_1"
+
+dataSets <- loadDataSetsFromExcel(
+  xlsFilePath = xlsFilePath,
+  importerConfiguration = importerConfiguration,
+  importAllSheets = FALSE
+)
+
+importerConfigurationFilePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
 
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,

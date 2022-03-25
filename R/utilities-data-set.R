@@ -119,7 +119,8 @@ dataSetToDataFrame <- function(dataSets) {
 #' @details Load observed data from an excel file using an importer configuration
 #'
 #' @param xlsFilePath Path to the excel file with the data
-#' @param importerConfiguration An object of type `DataImporterConfiguration` that is valid for the excel file
+#' @param importerConfiguration An object of type `DataImporterConfiguration` that is valid
+#'  for the excel file or a path to a XML file with stored configuration
 #' @param importAllSheets If `FALSE` (default), only sheets specified in the
 #' `importerConfiguration` will be loaded. If `TRUE`, an attempt to load all sheets
 #' is performed. If any sheet does not comply with the configuration, an error is thrown.
@@ -138,8 +139,19 @@ dataSetToDataFrame <- function(dataSets) {
 #'   importerConfiguration = importerConfiguration,
 #'   importAllSheets = FALSE
 #' )
+#'
+#' importerConfigurationFilePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
+#'
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfiguration = importerConfiguration,
+#'   importAllSheets = FALSE
+#' )
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
+  if (is.character(importerConfiguration)) {
+    importerConfiguration <- loadDataImporterConfiguration(importerConfiguration)
+  }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 

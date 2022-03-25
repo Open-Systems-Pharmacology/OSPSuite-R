@@ -159,6 +159,7 @@ test_that("it returns an empty list when loading from file with one sheet withou
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
   expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = configurationPath), character())
 })
 
 test_that("it can load when loading from file with one sheet without
@@ -166,6 +167,9 @@ test_that("it can load when loading from file with one sheet without
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = configurationPath, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
 })
