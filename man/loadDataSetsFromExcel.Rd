@@ -45,7 +45,7 @@ importerConfigurationFilePath <- system.file("extdata", "dataImporterConfigurati
 
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
-  importerConfiguration = importerConfiguration,
+  importerConfiguration = importerConfigurationFilePath,
   importAllSheets = FALSE
 )
 }

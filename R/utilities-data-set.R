@@ -144,7 +144,7 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfiguration = importerConfiguration,
+#'   importerConfiguration = importerConfigurationFilePath,
 #'   importAllSheets = FALSE
 #' )
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
