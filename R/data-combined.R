@@ -58,7 +58,7 @@ DataCombined <- R6::R6Class(
     addDataSets = function(dataSets, names = NULL) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
-      names <- cleanVectorArgs(names, objCount(dataSets), type = "character")
+      names <- cleanVectorArgs(names, objectCount(dataSets), type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
