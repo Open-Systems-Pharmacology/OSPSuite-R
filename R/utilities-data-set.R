@@ -73,7 +73,6 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 #' `DataSet`.
 #'
 #' @export
-
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, "DataSet")
@@ -110,7 +109,7 @@ dataSetToDataFrame <- function(dataSets) {
     df[[name]] <- col
   }
 
-  return(df)
+  return(dplyr::as_tibble(df))
 }
 
 
