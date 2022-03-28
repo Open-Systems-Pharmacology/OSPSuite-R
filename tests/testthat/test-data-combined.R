@@ -280,6 +280,10 @@ test_that("assigned group can be removed using `NULL` or `NA` (logical or other 
   myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = NA_real_))
   expect_equal(myCombDat$groupMap$group, NA_character_)
 
+  myCombDat$setGroups(c("Stevens_2012_placebo.Placebo_total" = "m"))
+  myCombDat$setGroups(c("Stevens_2012_placebo.Placebo_total" = NA_real_))
+  expect_equal(myCombDat$groupMap$group, NA_character_)
+
   myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = "a"))
   myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = NULL))
   expect_equal(myCombDat$groupMap$group, NA_character_)

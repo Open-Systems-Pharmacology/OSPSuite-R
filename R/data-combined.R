@@ -202,7 +202,7 @@ DataCombined <- R6::R6Class(
 
       # To be consistent with other methods, `NULL` is accepted and should be
       # explicitly cast to `NA` of `character` type.
-      groups <- purrr::modify_if(groups, is.null, NA_character_)
+      groups <- ifelse(is.null(groups), groups, NA_character_)
 
       # Existing grouping can be removed by setting dataset name to `NA`, but
       # since the default `NA` type in R is `logical`, it needs to be converted
