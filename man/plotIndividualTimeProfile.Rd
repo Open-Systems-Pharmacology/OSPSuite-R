@@ -6,30 +6,16 @@
 \usage{
 plotIndividualTimeProfile(
   dataCombined,
-  xAxisScale = "lin",
-  yAxisScale = "lin",
-  title = NULL,
-  subtitle = NULL,
-  xlabel = NULL,
-  ylabel = NULL,
-  legendTitle = NULL,
+  individualTimeProfilePlotConfiguration = TimeProfilePlotConfiguration$new(),
   tlfTheme = NULL
 )
 }
 \arguments{
 \item{dataCombined}{A \code{DataCombined} object.}
 
-\item{xAxisScale, yAxisScale}{A character/string that decides transformations
-for axes (Default: \code{"lin"} (for continuous linear scale)).
-Other available options are:
-\itemize{
-\item \code{"log"} (for continuous log10 scale (i.e., with base 10))
-\item \code{"ln"} (for continuous natural logarithm (ln) scale (i.e., with base \emph{e}))
-\item \code{"sqrt"} (for continusous square root scale)
-}}
-
-\item{title, subtitle, xlabel, ylabel, legendTitle}{A character/string defining
-plot title, subtitle, axes labels, legend title, respectively.}
+\item{individualTimeProfilePlotConfiguration}{A \code{PlotConfiguration} object.
+For more, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}.}
 
 \item{tlfTheme}{A path to JSON file containing
 \href{https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html}{\code{Theme}}
