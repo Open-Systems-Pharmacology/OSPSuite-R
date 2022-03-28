@@ -50,65 +50,45 @@
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
-  data %>%
-    # The `...rowid` column is mostly an internal safety feature:
-    #
-    # While going from wide to long to wide, this column protects against edge
-    # cases where there may not be any column (other than `[xy]*` columns) that
-    # can act as an identifier column. If such a column is not present, tidyr
-    # will just collapse everything into a list column.
-    #
-    # This column deliberately has `...` in its name to protect against the
-    # possibility of overwriting an existing column called `rowid` (base-R
-    # idiom) or `.rowid` (tidyverse idiom).
-    dplyr::mutate(
-      ...rowid    = dplyr::row_number(),
-      xTargetUnit = xTargetUnit,
-      yTargetUnit = yTargetUnit
-    ) %>%
-    # Calling `.NET` methods from R is expensive and such calls should be
-    # minimized. The best way to do so is to call this method for each unique
-    # unit present in the data frame, doesn't matter if it is `xUnit` or
-    # `yUnit`. The natural data format to carry out this operation then is tidy
-    # or long data format, which would have all unit columns in the same column.
-    #
-    # Note that `molWeight` and `molWeightUnit` arguments are ignored by
-    # `toUnit()` when they are not relevant for the `quantityOrDimension` in
-    # question.
-    tidyr::pivot_longer(
-      cols           = dplyr::matches("^x|^y"),
-      names_pattern  = "([xy])([A-Z].+)", # captures `xUnit`, `yDimension`, etc.
-      names_to       = c("Variable", ".value"),
-      values_to      = "Values",
-      values_drop_na = TRUE
-    ) %>%
-    tidyr::nest(data = c(Values)) %>%
+  # xUnit ----------------
+
+  dataXUnit <- data %>%
+    dplyr::select(dplyr::matches("^x")) %>%
+    tidyr::nest(data = xValues) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(Values = list(
+    dplyr::mutate(xValues = list(
       toUnit(
-        quantityOrDimension = Dimension,
+        quantityOrDimension = xDimension,
         values              = purrr::pluck(data, 1L),
-        targetUnit          = TargetUnit,
-        sourceUnit          = Unit,
-        molWeight           = molWeight,
-        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
+        targetUnit          = xTargetUnit,
+        sourceUnit          = xUnit
       )
     )) %>%
     dplyr::ungroup() %>%
-    tidyr::unnest(cols = c(Values)) %>%
-    dplyr::select(-data, -Unit) %>%
-    dplyr::rename(Unit = TargetUnit) %>%
-    # Now that unit conversions have taken place, the data needs to be pivoted
-    # back to its original wide format.
-    tidyr::pivot_wider(
-      names_from  = Variable,
-      values_from = dplyr::matches("Values|Unit|Dimension"),
-      names_glue  = "{Variable}{.value}"
-    ) %>%
-    # Arrange columns in a more sensible order
-    dplyr::select(
-      dplyr::matches("Values|Unit|Dimension"), # key columns upfront
-      dplyr::everything(), # everything else afterwards
-      -c("...rowid") # remove internal-only columns
-    )
+    tidyr::unnest(cols = c(xValues)) %>%
+    dplyr::mutate(xUnit = xTargetUnit) %>%
+    dplyr::select(-data)
+
+  # yUnit ----------------
+
+  dataYUnit <- data %>%
+    dplyr::select(-dplyr::matches("^x")) %>%
+    tidyr::nest(data = c(yValues)) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(yValues = list(
+      toUnit(
+        quantityOrDimension = yDimension,
+        values              = purrr::pluck(data, 1L),
+        targetUnit          = yTargetUnit,
+        sourceUnit          = yUnit,
+        molWeight           = molWeight,
+        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
+      ))) %>%
+        dplyr::ungroup() %>%
+        tidyr::unnest(cols = c(yValues)) %>%
+        dplyr::mutate(yUnit = yTargetUnit) %>%
+        dplyr::select(-data)
+
+      # combine them
+      dplyr::bind_cols(dataXUnit, dataYUnit)
 }
