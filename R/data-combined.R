@@ -197,9 +197,6 @@ DataCombined <- R6::R6Class(
         stop("You need to provide a named list with at least one valid grouping.")
       }
 
-      # validate depth of the argument vector
-      validateVecDepth(groups)
-
       # To be consistent with other methods, `NULL` is accepted and should be
       # explicitly cast to `NA` of `character` type.
       groups <- ifelse(is.null(groups), NA_character_, groups)

@@ -226,16 +226,6 @@ test_that("setting groups fails when group specification is invalid", {
   )
 })
 
-test_that("setting groups fails when group specification is in a nested list", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet)
-
-  expect_error(
-    myCombDat$setGroups(list("m" = list("x" = "2", "y" = "4"))),
-    "A nested list is not a valid argument here."
-  )
-})
-
 test_that("setting groups fails when group specification is same for multiple datsets", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
