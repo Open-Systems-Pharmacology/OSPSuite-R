@@ -6,20 +6,24 @@
 \usage{
 plotIndividualTimeProfile(
   dataCombined,
-  individualTimeProfilePlotConfiguration = TimeProfilePlotConfiguration$new(),
-  tlfTheme = NULL
+  tlfTheme = NULL,
+  individualTimeProfilePlotConfiguration = tlf::PlotConfiguration$new(xlabel =
+    "xValues", ylabel = "yValues", legendTitle = "group")
 )
 }
 \arguments{
 \item{dataCombined}{A \code{DataCombined} object.}
 
-\item{individualTimeProfilePlotConfiguration}{A \code{PlotConfiguration} object.
-For more, see:
-\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}.}
-
 \item{tlfTheme}{A path to JSON file containing
 \href{https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html}{\code{Theme}}
 object for \code{{tlf}} library.}
+
+\item{individualTimeProfilePlotConfiguration}{A \code{PlotConfiguration} object,
+which is an \code{R6} class object that defines plot properties (like labels,
+axes scaling and limits, legend position, etc.). All available options for
+constructor method of this object can be found by running
+\code{?tlf::PlotConfiguration}. To learn more about this object, see:
+\url{https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html}.}
 }
 \description{
 Concentration time profile plot

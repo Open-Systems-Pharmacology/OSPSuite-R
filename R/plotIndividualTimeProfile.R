@@ -4,16 +4,23 @@
 #' @param tlfTheme A path to JSON file containing
 #'   [`Theme`](https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html)
 #'    object for `{tlf}` library.
-#' @param individualTimeProfilePlotConfiguration A `PlotConfiguration` object.
-#'   For more, see:
+#' @param individualTimeProfilePlotConfiguration A `PlotConfiguration` object,
+#'   which is an `R6` class object that defines plot properties (like labels,
+#'   axes scaling and limits, legend position, etc.). All available options for
+#'   constructor method of this object can be found by running
+#'   `?tlf::PlotConfiguration`. To learn more about this object, see:
 #'   <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>.
 #'
 #' @import tlf
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
-                                      individualTimeProfilePlotConfiguration = TimeProfilePlotConfiguration$new(),
-                                      tlfTheme = NULL) {
+                                      tlfTheme = NULL,
+                                      individualTimeProfilePlotConfiguration = tlf::PlotConfiguration$new(
+                                        xlabel = "xValues",
+                                        ylabel = "yValues",
+                                        legendTitle = "group"
+                                      )) {
   validateIsOfType(dataCombined, "DataCombined")
 
   df <- dataCombined$toDataFrame()
@@ -29,17 +36,6 @@ plotIndividualTimeProfile <- function(dataCombined,
   tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
 
   useTheme(loadThemeFromJson(tlfTheme))
-
-  # ospsuiteTimeProfilePlotConfiguration <- TimeProfilePlotConfiguration$new(
-  #   title = title,
-  #   subtitle = subtitle,
-  #   xlabel = xlabel,
-  #   ylabel = ylabel,
-  #   legendTitle = legendTitle
-  # )
-  #
-  # ospsuiteTimeProfilePlotConfiguration$xAxis$scale <- xAxisScale
-  # ospsuiteTimeProfilePlotConfiguration$yAxis$scale <- yAxisScale
 
   plotTimeProfile(
     data = as.data.frame(simData),
