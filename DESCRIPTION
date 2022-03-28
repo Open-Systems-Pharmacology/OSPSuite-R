@@ -93,6 +93,7 @@ Collate:
     'utilities-path.R'
     'standard-path.R'
     'table-formula.R'
+    'unitConverter.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
     'utilities-data-combined.R'
