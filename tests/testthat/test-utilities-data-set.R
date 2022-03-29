@@ -15,7 +15,7 @@ dataSet <- DataSet$new(name = dataSetName)
 test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
-    data.frame(
+    dplyr::tibble(
       name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
       xDimension = character(0), xUnit = character(0), yDimension = character(0),
       yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
@@ -28,7 +28,7 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
   expect_equal(
     dataSetToDataFrame(dataSet),
-    data.frame(
+    dplyr::tibble(
       name = rep(dataSetName, 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
@@ -44,7 +44,7 @@ test_that("It can convert a data set with only non-empty fields, except for meta
   dataSet$LLOQ <- 0.2
   expect_equal(
     dataSetToDataFrame(dataSet),
-    data.frame(
+    dplyr::tibble(
       name = rep(dataSet$name, 5), xValues = dataSet$xValues,
       yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
@@ -61,7 +61,7 @@ test_that("It can convert a data set with metaData", {
   dataSet$addMetaData("Organ", "Blood")
   expect_equal(
     dataSetToDataFrame(dataSet),
-    data.frame(
+    dplyr::tibble(
       name = rep(dataSet$name, 5), xValues = dataSet$xValues,
       yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
@@ -83,7 +83,7 @@ test_that("It can convert a list of data sets", {
 
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
-    data.frame(
+    dplyr::tibble(
       name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
       yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
@@ -179,30 +179,31 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
-  print(names(dataSetsFrame))
-  expect_equal(names(dataSetsFrame), c(
-    "name",
-    "xValues",
-    "yValues",
-    "yErrorValues",
-    "xDimension",
-    "xUnit",
-    "yDimension",
-    "yUnit",
-    "yErrorType",
-    "yErrorUnit",
-    "molWeight",
-    "lloq",
-    "Source",
-    "Sheet",
-    "Study Id",
-    "Organ",
-    "Compartment",
-    "Species",
-    "Gender",
-    "Molecule",
-    "Route",
-    "Subject Id",
-    "Dose"
-  ))
+  expect_equal(
+    names(dataSetsFrame), c(
+      "name",
+      "xValues",
+      "yValues",
+      "yErrorValues",
+      "xDimension",
+      "xUnit",
+      "yDimension",
+      "yUnit",
+      "yErrorType",
+      "yErrorUnit",
+      "molWeight",
+      "lloq",
+      "Source",
+      "Sheet",
+      "Study Id",
+      "Organ",
+      "Compartment",
+      "Species",
+      "Gender",
+      "Molecule",
+      "Route",
+      "Subject Id",
+      "Dose"
+    )
+  )
 })

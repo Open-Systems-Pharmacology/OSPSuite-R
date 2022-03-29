@@ -69,9 +69,6 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
     validateIsOfLength(arg, expectedLength)
   }
 
-  # validate depth of the vector
-  validateVecDepth(arg)
-
   # convert `NULL`s or logical `NA`s to `NA` of required type
 
   # Note that `purrr::map()` will return a list
@@ -156,39 +153,4 @@ toMissingOfType <- function(x, type) {
   }
 
   return(x)
-}
-
-#' Check if the vector depth is as expected
-#'
-#' @param x A vector whose depth needs to be checked.
-#'
-#' @description
-#'
-#' For function arguments that accept a vector, a vector with depth greater than
-#' 2 is rarely acceptable. This function will produce an error if this is the
-#' case.
-#'
-#' Vector depths:
-#
-# 1 = atomic vector (or empty list)
-# 2 = non-nested list
-# > 2 = nested list
-#'
-#' @examples
-#'
-#' validateVecDepth(c(1)) # depth is 1
-#' validateVecDepth(list()) # depth is 1
-#' validateVecDepth(list(1)) # depth is 2
-#'
-#' # this will produce an error
-#' # validateVecDepth(list(list(1))) # depth is 3
-#' @keywords internal
-#' @noRd
-validateVecDepth <- function(x) {
-  if (purrr::vec_depth(x) > 2L) {
-    stop(
-      "A nested list is not a valid argument here.",
-      call. = FALSE
-    )
-  }
 }
