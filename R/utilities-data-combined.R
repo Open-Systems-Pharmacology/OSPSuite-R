@@ -1,68 +1,39 @@
-#' Count number of objects
-#'
-#' @details
-#'
-#' If the argument is not a vector, unlike `length()`, this function will not
-#' count the number of named bindings in an environment, but only the number of
-#' instances of a class.
-#'
-#' For example, `length(mtcars)` will return 11, but `objCount(mtcars)` will
-#' return 1.
-#'
-#' @param x An object (an atomic vector, a list, or instance(s) of a class).
-#'
-#' @examples
-#'
-#' objCount(c(1, 2, 3)) # 3
-#' objCount(list("a", "b")) # 2
-#' objCount(mtcars) # 1
-#' @return Integer representing the count of objects.
-#'
-#' @keywords internal
-#' @noRd
-objCount <- function(x) {
-  # `is.vector()` can handle both atomic vectors and lists, i.e.
-  # both `is.vector(c(1, 2))` and `is.vector(list(1, 2))` will be `TRUE`
-  #
-  # For anything other than a vector, the object count should be 1
-  if (!is.vector(x)) {
-    return(1L)
-  }
-
-  return(length(x))
-}
-
 #'  Validate arguments provided as vectors
 #'
 #' @details
 #'
-#' Validation of arguments provided as a vector involves:
+#' Cleaning an argument provided as (atomic or generic) vector involves:
 #'
 #' - Checking that it is of expected length.
-#' - Checking for `NULL` or other unexpected values (`NaN`, `Inf`, `NA` of the
-#'   wrong type) and standardizing them to `NA` of desired type.
-#' - Checking that each element in the vector is of expected type.
-#' - If a non-atomic list is provided, converting it to an atomic vector.
+#' - Checking for `NULL` or other special constants (`NaN`, `Inf`, `NA` of the
+#'   wrong type) and standardizing them to `NA` of desired data type.
+#' - Checking that each element in the vector is of expected data type.
+#' - Making sure that an atomic vector is always returned, irrespective of if
+#'   the input was a list or an atomic vector.
 #'
 #' @param x A vector of arguments.
 #' @param expectedLength An integer to denote the expected length of the vector.
-#' @inheritParams flattenList
+#' @inheritParams ospsuite.utils::validateIsOfType
 #'
 #' @return
 #'
-#' An atomic vector of desired type containing specified arguments.
+#' An atomic vector of desired data type.
 #'
 #' @examples
 #'
 #' cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
 #' cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
+#'
 #' @keywords internal
 #' @noRd
 cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
-  # return early if argument was not specified
+  # Return early if no argument was specified
   if (is.null(arg)) {
     return(NULL)
   }
+
+  # Check that the argument is not empty
+  validateIsNotEmpty(arg)
 
   # validate the length of vector arguments
   if (!is.null(expectedLength)) {
@@ -101,13 +72,14 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 #'
 #' flattenList(list(1, 2, 3, NA), type = "numeric")
 #' flattenList(list(TRUE, FALSE, NA), type = "integer")
+#'
 #' @return An atomic vector of desired type.
 #'
 #' @keywords internal
 #' @noRd
 flattenList <- function(x, type) {
-  if (!is.vector(x)) {
-    stop("`x` argument can only be a vector.", call. = FALSE)
+  if (!is.null(dim(x))) {
+    stop("Argument to parameter `x` can only be a vector.")
   }
 
   if (is.list(x)) {
@@ -135,6 +107,7 @@ flattenList <- function(x, type) {
 #'
 #' toMissingOfType(NA, type = "real")
 #' toMissingOfType(NULL, type = "integer")
+#'
 #' @keywords internal
 #' @noRd
 toMissingOfType <- function(x, type) {
