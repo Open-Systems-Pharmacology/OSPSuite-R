@@ -218,42 +218,42 @@ DataCombined <- R6::R6Class(
         group = purrr::simplify(groups)
       )
 
-      # Check if any of the specified dataset names are currently not present
-      # in the combined data frame.
-      #
-      # This can happen when users make spelling mistakes in writing dataset
-      # names while specifying groupings, and failing silently will mean that
-      # such a mistake will not be brought to the user's attention.
-      specifiedNames <- unique(groupData$name)
-      currentNames <- unique(private$.dataCombined$name)
+      # Update group map data frame
+      private$.updateGroupMap(groupData)
 
-      if (!isIncluded(specifiedNames, currentNames)) {
-        missingNames <- specifiedNames[!specifiedNames %in% currentNames]
+      # for method chaining
+      invisible(self)
+    },
 
-        message(
-          "Following datasets were specified to be grouped but not found:\n",
-          paste0(missingNames, collapse = "\n")
-        )
+    #' @param names A list of dataset names whose group assignment needs to be
+    #'   removed. Note that if you have specified new `names` while adding
+    #'   datasets (using `$addDataSets()` and `$addSimulationResults()`
+    #'   methods), you will need to use these new names to specify group
+    #'   assignment. The elements of `names` argument should be unique.
+    #'
+    #' @description
+    #' Remove existing groupings for (observed and/or simulated) datasets.
+    #'
+    #' @return `DataCombined` object with updated group assignments.
+    removeGroupAssignment = function(names) {
+      # Return early if no datasets are present
+      if (is.null(private$.dataCombined)) {
+        stop("There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.")
       }
 
-      # Update the specified groupings with what already exists
-      #
-      # The object could already have gathered some groupings during its
-      # lifetime, and they need to be updated after each `$setGroups()` call.
-      groupData <- private$.updateDataFrame(
-        dplyr::select(private$.groupMap, -dataType),
-        groupData
+      # Sanitize vector arguments of `character` type
+      names <- cleanVectorArgs(names, type = "character")
+      validateHasOnlyDistinctValues(names)
+
+      # Extract dataset names in a data frame. Groupings for all of them are
+      # going to be `NA`, so make avail of tibble's recycling rule.
+      groupData <- dplyr::tibble(
+        name = purrr::simplify(names),
+        group = NA_character_
       )
 
-      # Update grouping information column in the combined data frame
-      private$.dataCombined <- dplyr::left_join(
-        x  = dplyr::select(private$.dataCombined, -group),
-        y  = groupData,
-        by = "name"
-      )
-
-      # Update active binding with the new grouping specification
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
+      # Update group map data frame
+      private$.updateGroupMap(groupData)
 
       # for method chaining
       invisible(self)
@@ -513,6 +513,47 @@ DataCombined <- R6::R6Class(
       }
 
       return(dataCurrent)
+    },
+
+    # Update group map data frame
+    .updateGroupMap = function(groupData) {
+      # Check if any of the specified dataset names are currently not present
+      # in the combined data frame.
+      #
+      # This can happen when users make spelling mistakes in writing dataset
+      # names while specifying groupings, and failing silently will mean that
+      # such a mistake will not be brought to the user's attention.
+      specifiedNames <- unique(groupData$name)
+      currentNames <- unique(private$.dataCombined$name)
+
+      # Inform the user about which datasets are missing
+      if (!isIncluded(specifiedNames, currentNames)) {
+        missingNames <- specifiedNames[!specifiedNames %in% currentNames]
+
+        message(
+          "Following datasets were specified to be grouped but not found:\n",
+          paste0(missingNames, collapse = "\n")
+        )
+      }
+
+      # Update the specified groupings with what already exists
+      #
+      # The object could already have gathered some groupings during its
+      # lifetime, and they need to be updated after each `$setGroups()` call.
+      groupData <- private$.updateDataFrame(
+        dplyr::select(private$.groupMap, -dataType),
+        groupData
+      )
+
+      # Update grouping information column in the combined data frame
+      private$.dataCombined <- dplyr::left_join(
+        x  = dplyr::select(private$.dataCombined, -group),
+        y  = groupData,
+        by = "name"
+      )
+
+      # Update active binding with the new grouping specification
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
     },
 
     # Transform the dataset using specified offsets and scale factors

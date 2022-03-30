@@ -282,6 +282,25 @@ test_that("assigned group can be removed using `NA` or `NULL`", {
   expect_equal(myCombDat$groupMap$group, NA_character_)
 })
 
+test_that("`$removeGroupAssignment()` produces error if there are no datasets", {
+  myCombDat <- DataCombined$new()
+
+  expect_error(
+    myCombDat$removeGroupAssignment(names = "Stevens_2012_placebo.Placebo_total"),
+    "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
+    fixed = TRUE
+  )
+})
+
+test_that("existing grouping can be removed using `$removeGroupAssignment()` method", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  myCombDat$removeGroupAssignment(names = "Stevens_2012_placebo.Placebo_total")
+  expect_equal(myCombDat$groupMap$group, NA_character_)
+})
+
 test_that("setting groups with atomic vector or list shouldn't make a difference", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)

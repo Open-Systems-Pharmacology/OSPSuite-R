@@ -61,6 +61,7 @@ values were specified by the user for each dataset.}
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-setGroups}{\code{DataCombined$setGroups()}}
+\item \href{#method-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
 \item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
@@ -186,6 +187,30 @@ any of the other (previously specified) groupings.}
 }
 \subsection{Returns}{
 \code{DataCombined} object with grouped datasets.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removeGroupAssignment"></a>}}
+\if{latex}{\out{\hypertarget{method-removeGroupAssignment}{}}}
+\subsection{Method \code{removeGroupAssignment()}}{
+Remove existing groupings for (observed and/or simulated) datasets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$removeGroupAssignment(names)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{A list of dataset names whose group assignment needs to be
+removed. Note that if you have specified new \code{names} while adding
+datasets (using \verb{$addDataSets()} and \verb{$addSimulationResults()}
+methods), you will need to use these new names to specify group
+assignment. The elements of \code{names} argument should be unique.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{DataCombined} object with updated group assignments.
 }
 }
 \if{html}{\out{<hr>}}
