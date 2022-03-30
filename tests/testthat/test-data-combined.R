@@ -257,16 +257,15 @@ test_that("assigning groups produces a message if dataset name is not found", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
 
-  expect_output(
+  expect_message(
     myCombDat$setGroups(
       names = list("Stevens_2012_placebo.Placebo_total", "x", "y"),
       groups = list("m", "a", "b")
     ),
-    cat(
-      "Following datasets were specified to be grouped but not found:",
-      c("x", "y"),
-      sep = "\n"
-    )
+    "Following datasets were specified to be grouped but not found:
+x
+y
+"
   )
 })
 

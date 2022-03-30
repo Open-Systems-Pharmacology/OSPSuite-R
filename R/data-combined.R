@@ -231,11 +231,8 @@ DataCombined <- R6::R6Class(
         missingNames <- specifiedNames[!specifiedNames %in% currentNames]
 
         message(
-          cat(
-            "Following datasets were specified to be grouped but not found:",
-            missingNames,
-            sep = "\n"
-          )
+          "Following datasets were specified to be grouped but not found:\n",
+          paste0(missingNames, collapse = "\n")
         )
       }
 
