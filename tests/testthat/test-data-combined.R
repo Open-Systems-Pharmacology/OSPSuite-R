@@ -226,16 +226,6 @@ test_that("setting groups fails when group specification is invalid", {
   )
 })
 
-test_that("setting groups fails when group specification is in a nested list", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet)
-
-  expect_error(
-    myCombDat$setGroups(list("m" = list("x" = "2", "y" = "4"))),
-    "A nested list is not a valid argument here."
-  )
-})
-
 test_that("setting groups fails when group specification is same for multiple datsets", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
@@ -314,7 +304,7 @@ test_that("specifying groupings and new names for only few paths in `SimulationR
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    newNames = c("x", NA_character_, "y")
+    names = c("x", NA_character_, "y")
   )
   myCombDat$setGroups(list("x" = "a", "y" = "b"))
 
@@ -337,9 +327,9 @@ test_that("data transformations as expected when both `DataSet` and `SimulationR
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    newNames = list("x", "y", "z")
+    names = list("x", "y", "z")
   )
-  myCombDat$addDataSets(dataSet, newNames = list("a", NULL, "b", NULL, "c", NULL))
+  myCombDat$addDataSets(dataSet, names = list("a", NULL, "b", NULL, "c", NULL))
 
   expect_equal(
     myCombDat$dataTransformations,
@@ -376,12 +366,12 @@ test_that("dataframe dimensions as expected when both `DataSet` and `SimulationR
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    newNames = list("x", "y", "z")
+    names = list("x", "y", "z")
   )
 
   myCombDat$addDataSets(
     dataSet,
-    newNames = list("a", NULL, "b", NULL, "c", NULL)
+    names = list("a", NULL, "b", NULL, "c", NULL)
   )
 
   df <- myCombDat$toDataFrame()
@@ -397,12 +387,12 @@ test_that("dataframe column names are as expected when both `DataSet` and `Simul
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    newNames = list("x", "y", "z")
+    names = list("x", "y", "z")
   )
 
   myCombDat$addDataSets(
     dataSet,
-    newNames = list("a", NULL, "b", NULL, "c", NULL)
+    names = list("a", NULL, "b", NULL, "c", NULL)
   )
 
   df <- myCombDat$toDataFrame()
@@ -426,12 +416,12 @@ test_that("dataframes for selected output paths match with outputs from `simulat
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Metformin|Gastric retention"
     ),
-    newNames = list("x", "y", "z")
+    names = list("x", "y", "z")
   )
 
   myCombDat$addDataSets(
     dataSet,
-    newNames = list("a", NULL, "b", NULL, "c", NULL)
+    names = list("a", NULL, "b", NULL, "c", NULL)
   )
 
   df <- myCombDat$toDataFrame()
@@ -468,7 +458,7 @@ test_that("renaming only a single dataset works", {
   myCombDat$addSimulationResults(
     simResults,
     quantitiesOrPaths = c("Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"),
-    newNames = list("m")
+    names = list("m")
   )
   expect_equal(myCombDat$names, "m")
 })
@@ -482,7 +472,7 @@ test_that("order in which objects are entered should not matter and method chain
   expect_equal(df1, df2)
 })
 
-test_that("data order with or without `newNames` argument should be same", {
+test_that("data order with or without `names` argument should be same", {
   myCombDat <- DataCombined$new()
   myCombDat2 <- DataCombined$new()
 
@@ -490,7 +480,7 @@ test_that("data order with or without `newNames` argument should be same", {
   # don't specify names argument for one, while do for the other
   myCombDat$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
   myCombDat2$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]),
-    newNames = list("x", "y", NULL)
+    names = list("x", "y", NULL)
   )
 
   # extract dataframes
@@ -1075,11 +1065,11 @@ test_that("grouping is not same when groups name is same as dataset name", {
   myCombDat <- DataCombined$new()
 
   # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
-  myCombDat$addDataSets(dataSet[[1]], newNames = "a")
+  myCombDat$addDataSets(dataSet[[1]], names = "a")
 
   # dataset name is "Stevens_2012_placebo.Sita_total" but grouping assigned is
   # same as dataset name entered before
-  myCombDat$addDataSets(dataSet[[2]], newNames = "b")
+  myCombDat$addDataSets(dataSet[[2]], names = "b")
   myCombDat$setGroups(groups = list("b" = "Stevens_2012_placebo.Placebo_total"))
 
   # they shouldn't be collapsed together in the same group

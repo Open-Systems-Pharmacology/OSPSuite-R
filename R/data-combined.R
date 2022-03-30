@@ -45,20 +45,20 @@ DataCombined <- R6::R6Class(
 
     #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
     #'   class.
-    #' @param newNames A string or a list of strings assigning new names to the
+    #' @param names A string or a list of strings assigning new names to the
     #'   list of instances of the `DataSet` class. If a dataset is not to be
     #'   renamed, this can be specified as `NULL` in the list. For example, in
-    #'   `newNames = list("dataName" = "dataNewName", "dataName2" = NULL)`),
+    #'   `names = list("dataName" = "dataNewName", "dataName2" = NULL)`),
     #'   dataset with name `"dataName2"` will not be renamed.
     #'
     #' @description
     #' Adds observed data.
     #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, newNames = NULL) {
+    addDataSets = function(dataSets, names = NULL) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
-      newNames <- cleanVectorArgs(newNames, objCount(dataSets), type = "character")
+      names <- cleanVectorArgs(names, objCount(dataSets), type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -66,20 +66,20 @@ DataCombined <- R6::R6Class(
       # be used instead.
       #
       # The original names for datasets can be "plucked" from respective objects.
-      if (!is.null(newNames) && is.list(dataSets)) {
-        newNames <- ifelse(is.na(newNames), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), newNames)
+      if (!is.null(names) && is.list(dataSets)) {
+        names <- ifelse(is.na(names), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), names)
       }
 
       # Update private fields and bindings for the new setter call
 
       private$.dataCombined <- private$.updateDataFrame(
         private$.dataCombined,
-        private$.dataSetToDataFrame(dataSets, newNames)
+        private$.dataSetToDataFrame(dataSets, names)
       )
 
       private$.extractBindings()
 
-      self$setDataTransformations(newNames)
+      self$setDataTransformations(names)
 
       # for method chaining
       invisible(self)
@@ -104,10 +104,10 @@ DataCombined <- R6::R6Class(
     #' @param population Population used to calculate the `simulationResults`
     #'   (optional). This is used only to add the population covariates to the
     #'   resulting dataframe.
-    #' @param newNames A string or a list of strings assigning new names to the
+    #' @param names A string or a list of strings assigning new names to the
     #'   quantities or paths present in the entered `SimulationResults` object.
     #'   If a dataset is not to be renamed, this can be specified as `NULL` in
-    #'   the list. For example, in `newNames = list("dataName" = "dataNewName",
+    #'   the list. For example, in `names = list("dataName" = "dataNewName",
     #'   "dataName2" = NULL)`), dataset with name `"dataName2"` will not be
     #'   renamed.
     #'
@@ -120,7 +120,7 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL,
-                                    newNames = NULL) {
+                                    names = NULL) {
       # validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -139,14 +139,14 @@ DataCombined <- R6::R6Class(
       pathsLength <- length(pathsNames)
 
       # validate alternative names for their length and type
-      newNames <- cleanVectorArgs(newNames, pathsLength, type = "character")
+      names <- cleanVectorArgs(names, pathsLength, type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
       # If any of the alternate names are missing, then the original name should
       # be used instead.
-      if (!is.null(newNames)) {
-        newNames <- ifelse(is.na(newNames), pathsNames, newNames)
+      if (!is.null(names)) {
+        names <- ifelse(is.na(names), pathsNames, names)
       }
 
       # Update private fields and bindings for the new setter call
@@ -156,15 +156,15 @@ DataCombined <- R6::R6Class(
         private$.simResultsToDataFrame(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
-          population        = population,
-          individualIds     = individualIds,
-          newNames          = newNames
+          population = population,
+          individualIds = individualIds,
+          names = names
         )
       )
 
       private$.extractBindings()
 
-      self$setDataTransformations(newNames)
+      self$setDataTransformations(names)
 
       # for method chaining
       invisible(self)
@@ -179,7 +179,7 @@ DataCombined <- R6::R6Class(
     #'   such datasets. If you wish to remove existing grouping for a given
     #'   dataset, you can specify it as following: `list("x" = NA)`. This will
     #'   not change any of the other (previously specified) groupings. Note that
-    #'   if you have specified `newNames` while adding datasets using respective
+    #'   if you have specified `names` while adding datasets using respective
     #'   methods, you will need to use these new names to specify group
     #'   assignment.
     #'
@@ -196,9 +196,6 @@ DataCombined <- R6::R6Class(
       if (length(groups) == 0L || is.null(names(groups))) {
         stop("You need to provide a named list with at least one valid grouping.")
       }
-
-      # validate depth of the argument vector
-      validateVecDepth(groups)
 
       # Existing grouping can be removed by setting dataset name to `NA`, but
       # since the default `NA` type in R is `logical`, it needs to be converted
@@ -433,7 +430,7 @@ DataCombined <- R6::R6Class(
 
   private = list(
     # Extract dataframe from `DataSet` object(s)
-    .dataSetToDataFrame = function(dataSets, newNames = NULL) {
+    .dataSetToDataFrame = function(dataSets, names = NULL) {
       # `dataSetToDataFrame()` function can extract dataframe from a scalar, a
       # vector, or a list of `DataSet` class instances.
       #
@@ -445,7 +442,7 @@ DataCombined <- R6::R6Class(
           dataType = "observed",
           group    = NA_character_
         ) %>%
-        private$.renameDatasets(newNames) %>%
+        private$.renameDatasets(names) %>%
         dplyr::as_tibble()
     },
 
@@ -454,7 +451,7 @@ DataCombined <- R6::R6Class(
                                       quantitiesOrPaths = NULL,
                                       population = NULL,
                                       individualIds = NULL,
-                                      newNames = NULL) {
+                                      names = NULL) {
       # `simulationResultsToDataFrame()` can extract dataframe only from a
       # single `SimulationResults` class instance, but this is not a problem
       # because the `$addSimulationResults()` method treats only a single
@@ -480,7 +477,7 @@ DataCombined <- R6::R6Class(
           dataType     = "simulated",
           yErrorValues = NA_real_
         ) %>%
-        private$.renameDatasets(newNames) %>%
+        private$.renameDatasets(names) %>%
         dplyr::rename(
           "xValues"    = "Time",
           "xUnit"      = "TimeUnit",
@@ -493,9 +490,9 @@ DataCombined <- R6::R6Class(
     },
 
     # Add a new column with alternate names
-    .renameDatasets = function(data, newNames = NULL) {
+    .renameDatasets = function(data, names = NULL) {
       # Return early if there is no data
-      if (is.null(newNames)) {
+      if (is.null(names)) {
         return(data)
       }
 
@@ -505,7 +502,7 @@ DataCombined <- R6::R6Class(
       # column) returned by `*ToDataFrame()` functions is never changed.
       data %>%
         tidyr::nest(data = -name) %>%
-        dplyr::mutate(name = newNames) %>%
+        dplyr::mutate(name = names) %>%
         tidyr::unnest(cols = c(data))
     },
 
