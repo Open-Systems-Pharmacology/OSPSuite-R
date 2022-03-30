@@ -265,7 +265,8 @@ test_that("assigning groups produces a message if dataset name is not found", {
     "Following datasets were specified to be grouped but not found:
 x
 y
-"
+",
+    fixed = TRUE
   )
 })
 
@@ -299,6 +300,42 @@ test_that("existing grouping can be removed using `$removeGroupAssignment()` met
   myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
   myCombDat$removeGroupAssignment(names = "Stevens_2012_placebo.Placebo_total")
   expect_equal(myCombDat$groupMap$group, NA_character_)
+
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  myCombDat$removeGroupAssignment(names = list("Stevens_2012_placebo.Placebo_total"))
+  expect_equal(myCombDat$groupMap$group, NA_character_)
+})
+
+test_that("`$removeGroupAssignment()` produces a message if dataset names are not found", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+
+  expect_message(
+    myCombDat$removeGroupAssignment(names = list("Stevens_2012_placebo.Placebo_total", "x", "y")),
+    "Following datasets were specified to be grouped but not found:
+x
+y
+",
+    fixed = TRUE
+  )
+})
+
+test_that("`$removeGroupAssignment()` produces error if names are not unique", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  expect_error(
+    myCombDat$removeGroupAssignment(
+      names = c(
+        "Stevens_2012_placebo.Placebo_total",
+        "Stevens_2012_placebo.Placebo_total"
+      )
+    ),
+    "Object has duplicated values; only unique values are allowed.",
+    fixed = TRUE
+  )
 })
 
 test_that("setting groups with atomic vector or list shouldn't make a difference", {
