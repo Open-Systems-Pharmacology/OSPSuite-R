@@ -118,7 +118,7 @@ dataSetToDataFrame <- function(dataSets) {
 #' @details Load observed data from an excel file using an importer configuration
 #'
 #' @param xlsFilePath Path to the excel file with the data
-#' @param importerConfiguration An object of type `DataImporterConfiguration` that is valid
+#' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
 #'  for the excel file or a path to a XML file with stored configuration
 #' @param importAllSheets If `FALSE` (default), only sheets specified in the
 #' `importerConfiguration` will be loaded. If `TRUE`, an attempt to load all sheets
@@ -135,7 +135,7 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfiguration = importerConfiguration,
+#'   importerConfigurationOrPath = importerConfiguration,
 #'   importAllSheets = FALSE
 #' )
 #'
@@ -143,20 +143,20 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfiguration = importerConfigurationFilePath,
+#'   importerConfigurationOrPath = importerConfigurationFilePath,
 #'   importAllSheets = FALSE
 #' )
-loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
+loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
-  if (is.character(importerConfiguration)) {
-    importerConfiguration <- loadDataImporterConfiguration(importerConfiguration)
+  if (is.character(importerConfigurationOrPath)) {
+    importerConfigurationOrPath <- loadDataImporterConfiguration(importerConfigurationOrPath)
   }
-  validateIsOfType(importerConfiguration, "DataImporterConfiguration")
+  validateIsOfType(importerConfigurationOrPath, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
-  dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
+  dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfigurationOrPath$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)
