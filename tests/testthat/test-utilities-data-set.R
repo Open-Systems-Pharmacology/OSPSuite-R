@@ -7,6 +7,14 @@ test_that("It can load a valid observed data file and create a DataSet object", 
   expect_true(isOfType(dataSet, "DataSet"))
 })
 
+
+test_that("It correctly gets the yValues column for a certain type of DataRepository", {
+  file <- system.file("extdata", "ObsDataAciclovir_2.pkml", package = "ospsuite")
+  dataSet <- loadDataSetFromPKML(file)
+
+  expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
+})
+
 context("dataSetToDataFrame")
 
 dataSetName <- "NewDataSet"

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<McDataRepository id="229fb5a1-09b7-4c6c-9e24-698814532368" name="Laskin 1982.Group D" icon="ObservedData" version="15">
+  <Columns>
+    <McBaseGrid id="5e9dc0ab-56cf-4df5-b7d1-28ef0b370639" name="Time " dimension="Time" isInternal="0" baseGrid="5e9dc0ab-56cf-4df5-b7d1-28ef0b370639">
+      <DataInfo origin="BaseGrid" auxiliaryType="Undefined" displayUnitName="h" date="-8587551250219137634" source="Rohdaten_Acyclovir.Laskin 1982 15.0 mg per kg.Time [h]" />
+      <QuantityInfo name="Time " type="Time" orderIndex="0" Path="Laskin 1982.Group D|Time " />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAA4AAAALQBJmQUZqAUJoH0JCaHN0QiEzjELVxKFC90/JQiDb8EJCvjNDD+KXQ8My00MRdyRE061gRIa5nUQL</Values>
+      <RelatedColumnsCache />
+    </McBaseGrid>
+    <McDataColumn id="b8be8fd8-1944-4859-882b-385d32bf8b84" name="SD" isInternal="0" baseGrid="5e9dc0ab-56cf-4df5-b7d1-28ef0b370639">
+      <DataInfo origin="ObservationAuxiliary" auxiliaryType="GeometricStdDev" date="-8587551250219137634" source="Rohdaten_Acyclovir.Laskin 1982 15.0 mg per kg.SD" molWeight="2.2521E-07" />
+      <QuantityInfo name="SD" type="Undefined" orderIndex="0" Path="Laskin 1982.Group D|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|SD" />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAA4AAAALi1T+QHicrEDu/DpBUF8rQfzjL0DQfhZAyAYNQMh5E0AAAMD/AADA/wAAwP8AAMD/AADA/wAAwP8L</Values>
+      <RelatedColumnsCache />
+    </McDataColumn>
+    <McDataColumn id="5bead729-fdbf-41fc-ba2a-4290a5a5df43" name="conc " dimension="Concentration (mass)" isInternal="0" baseGrid="5e9dc0ab-56cf-4df5-b7d1-28ef0b370639">
+      <DataInfo origin="Observation" auxiliaryType="Undefined" displayUnitName="µmol/l" date="-8587551250219137634" source="Rohdaten_Acyclovir.Laskin 1982 15.0 mg per kg.conc [µg/mL]" molWeight="2.2521E-07" />
+      <QuantityInfo name="conc " type="Undefined" orderIndex="0" Path="Laskin 1982.Group D|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|conc " />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAA4AAAALytZvN6FUbDdw3Lc3cNy3N3IBgze98ks3nQgLN1KJ/jYzEYc233gRNgNjmjUJm9I0MO73M/NDPjML</Values>
+      <RelatedColumnsCache>
+        <ColumnId>b8be8fd8-1944-4859-882b-385d32bf8b84</ColumnId>
+      </RelatedColumnsCache>
+    </McDataColumn>
+  </Columns>
+  <ExtendedProperties>
+    <StringExtendedProperty name="Source" readOnly="0" value="X:\Orga\BTS-TD\ET\TP CSB\Projects\Internal Projects\MagenDarm\TestSubstanzen\Acyclovir\Rohdaten_Acyclovir.xls.Laskin 1982 15.0 mg per kg" />
+    <StringExtendedProperty name="File" readOnly="0" value="Rohdaten_Acyclovir" />
+    <StringExtendedProperty name="Sheet" readOnly="0" value="Laskin 1982 15.0 mg per kg" />
+    <StringExtendedProperty name="Molecule" readOnly="0" value="Aciclovir" />
+    <StringExtendedProperty name="Species" readOnly="0" value="Human" />
+    <StringExtendedProperty name="Organ" readOnly="0" value="Peripheral Venous Blood" />
+    <StringExtendedProperty name="Compartment" readOnly="0" value="Plasma" />
+    <StringExtendedProperty name="Study Id" readOnly="0" value="Laskin 1982" />
+    <StringExtendedProperty name="Gender" readOnly="0" value="Undefined" />
+    <StringExtendedProperty name="Dose" readOnly="0" value="15 mg/kg" />
+    <StringExtendedProperty name="Route" readOnly="0" value="IV" />
+    <StringExtendedProperty name="Patient Id" readOnly="0" value="Group D" />
+  </ExtendedProperties>
+</McDataRepository>
