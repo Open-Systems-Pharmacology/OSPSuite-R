@@ -37,11 +37,7 @@ Create a new \code{ospPlotConfiguration} object
   points = NULL,
   ribbons = NULL,
   errorbars = NULL,
-  export = NULL,
-  format = NULL,
-  width = NULL,
-  height = NULL,
-  units = NULL
+  export = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -83,14 +79,6 @@ Create a new \code{ospPlotConfiguration} object
 \item{\code{errorbars}}{\code{ThemeAestheticSelections} object or list defining how errorbars are plotted}
 
 \item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
-
-\item{\code{format}}{character defining the format of the file to be saved}
-
-\item{\code{width}}{numeric values defining the width in \code{units} of the plot dimensions after saving}
-
-\item{\code{height}}{numeric values defining the height in \code{units} of the plot dimensions after saving}
-
-\item{\code{units}}{character defining the unit of the saving dimension}
 }
 \if{html}{\out{</div>}}
 }

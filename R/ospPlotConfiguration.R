@@ -62,10 +62,6 @@ ospPlotConfiguration <- R6::R6Class(
 
     # Export configuration
     export = NULL,
-    format = NULL,
-    width = NULL,
-    height = NULL,
-    units = NULL,
 
     #' @description Create a new `ospPlotConfiguration` object
     #'
@@ -87,12 +83,8 @@ ospPlotConfiguration <- R6::R6Class(
                           points = NULL,
                           ribbons = NULL,
                           errorbars = NULL,
-                          export = NULL,
-                          format = NULL,
-                          width = NULL,
-                          height = NULL,
-                          units = NULL) {
-      # annotations
+                          export = NULL) {
+      # Annotations
       self$title <- title
       self$subtitle <- subtitle
       self$xlabel <- xlabel
@@ -100,8 +92,6 @@ ospPlotConfiguration <- R6::R6Class(
 
       # Legend Configuration
       self$legend <- legend
-      self$legendTitle <- legendTitle
-      self$legendPosition <- legendPosition
 
       # X-Axis configuration
       self$xAxis <- xAxis
@@ -117,7 +107,7 @@ ospPlotConfiguration <- R6::R6Class(
       self$yGrid <- yGrid
       self$watermark <- watermark
 
-      # configuration of how objects are plotted
+      # Configurations for aesthetics
       self$lines <- lines
       self$points <- points
       self$ribbons <- ribbons
@@ -125,10 +115,6 @@ ospPlotConfiguration <- R6::R6Class(
 
       # Export configuration
       self$export <- export
-      self$format <- format
-      self$width <- width
-      self$height <- height
-      self$units <- units
     }
   )
 )

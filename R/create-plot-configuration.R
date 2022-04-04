@@ -26,6 +26,8 @@
 #' @param pointsColor,pointsFill,pointsShape,pointsSize,pointsLinetype,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @param ribbonsColor,ribbonsFill,ribbonsShape,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @param errorbarsColor,errorbarsFill,errorbarsShape,errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
+#' @param plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits File format to which the plot needs to be saved, and the units and dimensions for saving the plot.
+#'
 #' @export
 createPlotConfiguration <- function(title = NULL,
                                     subtitle = NULL,
@@ -104,11 +106,11 @@ createPlotConfiguration <- function(title = NULL,
                                     errorbarsSize = NULL,
                                     errorbarsLinetype = NULL,
                                     errorbarsAlpha = NULL,
-                                    export = NULL,
-                                    format = NULL,
-                                    width = NULL,
-                                    height = NULL,
-                                    units = NULL) {
+                                    # export
+                                    plotSaveFileFormat = NULL,
+                                    plotSaveFileWidth = NULL,
+                                    plotSaveFileHeight = NULL,
+                                    plotSaveFileDimensionUnits = NULL) {
 
   # legend objects ---------------------------------------
 
@@ -229,30 +231,35 @@ createPlotConfiguration <- function(title = NULL,
     alpha = errorbarsAlpha
   )
 
+  # export -------------------------------------------------------
+
+  exportConfiguration <- tlf::ExportConfiguration$new(
+    format = plotSaveFileFormat,
+    width = plotSaveFileWidth,
+    height = plotSaveFileHeight,
+    units = plotSaveFileDimensionUnits
+  )
+
   # ospPlotConfiguration object -----------------------------------
 
   ospPlotConfiguration$new(
-    title          = title,
-    subtitle       = subtitle,
-    xlabel         = xlabel,
-    ylabel         = ylabel,
-    legend         = legendConfig,
-    xAxis          = xAxisConfiguration,
-    yAxis          = yAxisConfiguration,
-    background     = background,
-    plotArea       = plotArea,
-    panelArea      = panelArea,
-    xGrid          = xGrid,
-    yGrid          = yGrid,
-    watermark      = labelWatermark,
-    lines          = linesConfiguration,
-    points         = pointsConfiguration,
-    ribbons        = ribbonsConfiguration,
-    errorbars      = errorbarsConfiguration,
-    export         = export,
-    format         = format,
-    width          = width,
-    height         = height,
-    units          = units
+    title = title,
+    subtitle = subtitle,
+    xlabel = xlabel,
+    ylabel = ylabel,
+    legend = legendConfig,
+    xAxis = xAxisConfiguration,
+    yAxis = yAxisConfiguration,
+    background = background,
+    plotArea = plotArea,
+    panelArea = panelArea,
+    xGrid = xGrid,
+    yGrid = yGrid,
+    watermark = labelWatermark,
+    lines = linesConfiguration,
+    points = pointsConfiguration,
+    ribbons = ribbonsConfiguration,
+    errorbars = errorbarsConfiguration,
+    export = exportConfiguration
   )
 }

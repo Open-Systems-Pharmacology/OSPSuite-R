@@ -50,15 +50,34 @@ createPlotConfiguration(
   watermarkFontFamily = NULL,
   watermarkFontFace = NULL,
   watermarkAngle = NULL,
-  lines = NULL,
-  points = NULL,
-  ribbons = NULL,
-  errorbars = NULL,
-  export = NULL,
-  format = NULL,
-  width = NULL,
-  height = NULL,
-  units = NULL
+  linesColor = NULL,
+  linesFill = NULL,
+  linesShape = NULL,
+  linesSize = NULL,
+  linesLinetype = NULL,
+  linesAlpha = NULL,
+  pointsColor = NULL,
+  pointsFill = NULL,
+  pointsShape = NULL,
+  pointsSize = NULL,
+  pointsLinetype = NULL,
+  pointsAlpha = NULL,
+  ribbonsColor = NULL,
+  ribbonsFill = NULL,
+  ribbonsShape = NULL,
+  ribbonsSize = NULL,
+  ribbonsLinetype = NULL,
+  ribbonsAlpha = NULL,
+  errorbarsColor = NULL,
+  errorbarsFill = NULL,
+  errorbarsShape = NULL,
+  errorbarsSize = NULL,
+  errorbarsLinetype = NULL,
+  errorbarsAlpha = NULL,
+  plotSaveFileFormat = NULL,
+  plotSaveFileWidth = NULL,
+  plotSaveFileHeight = NULL,
+  plotSaveFileDimensionUnits = NULL
 )
 }
 \arguments{
@@ -93,6 +112,16 @@ position x-and y-axis ticks, respectively.}
 \item{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}{Aesthetic properties for the y-axis label.}
 
 \item{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}{Aesthetic properties for the watermark.}
+
+\item{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+
+\item{pointsColor, pointsFill, pointsShape, pointsSize, pointsLinetype, pointsAlpha}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+
+\item{ribbonsColor, ribbonsFill, ribbonsShape, ribbonsSize, ribbonsLinetype, ribbonsAlpha}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+
+\item{errorbarsColor, errorbarsFill, errorbarsShape, errorbarsSize, errorbarsLinetype, errorbarsAlpha}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+
+\item{plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits}{File format to which the plot needs to be saved, and the units and dimensions for saving the plot.}
 }
 \description{
 Create an instance of \code{ospPlotConfiguration} class
