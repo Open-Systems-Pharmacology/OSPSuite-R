@@ -58,7 +58,7 @@ DataCombined <- R6::R6Class(
     addDataSets = function(dataSets, names = NULL) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
-      names <- cleanVectorArgs(names, objectCount(dataSets), type = "character")
+      names <- .cleanVectorArgs(names, objectCount(dataSets), type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -139,7 +139,7 @@ DataCombined <- R6::R6Class(
       pathsLength <- length(pathsNames)
 
       # validate alternative names for their length and type
-      names <- cleanVectorArgs(names, pathsLength, type = "character")
+      names <- .cleanVectorArgs(names, pathsLength, type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -201,8 +201,8 @@ DataCombined <- R6::R6Class(
       }
 
       # Sanitize vector arguments of `character` type
-      names <- cleanVectorArgs(names, type = "character")
-      groups <- cleanVectorArgs(groups, type = "character")
+      names <- .cleanVectorArgs(names, type = "character")
+      groups <- .cleanVectorArgs(groups, type = "character")
       validateIsSameLength(names, groups)
       validateHasOnlyDistinctValues(names)
 
@@ -242,7 +242,7 @@ DataCombined <- R6::R6Class(
       }
 
       # Sanitize vector arguments of `character` type
-      names <- cleanVectorArgs(names, type = "character")
+      names <- .cleanVectorArgs(names, type = "character")
       validateHasOnlyDistinctValues(names)
 
       # Extract dataset names in a data frame. Groupings for all of them are
@@ -290,12 +290,12 @@ DataCombined <- R6::R6Class(
                                       yScaleFactors = 1) {
 
       # Check that the arguments to parameters make sense
-      xOffsets <- cleanVectorArgs(xOffsets, type = "numeric")
-      yOffsets <- cleanVectorArgs(yOffsets, type = "numeric")
-      xScaleFactors <- cleanVectorArgs(xScaleFactors, type = "numeric")
-      yScaleFactors <- cleanVectorArgs(yScaleFactors, type = "numeric")
+      xOffsets <- .cleanVectorArgs(xOffsets, type = "numeric")
+      yOffsets <- .cleanVectorArgs(yOffsets, type = "numeric")
+      xScaleFactors <- .cleanVectorArgs(xScaleFactors, type = "numeric")
+      yScaleFactors <- .cleanVectorArgs(yScaleFactors, type = "numeric")
 
-      forNames <- cleanVectorArgs(forNames, type = "character")
+      forNames <- .cleanVectorArgs(forNames, type = "character")
 
       # Apply specified data transformations
       private$.dataCombined <- private$.dataTransform(

@@ -21,12 +21,12 @@
 #'
 #' @examples
 #'
-#' cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
-#' cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
+#' ospsuite:::.cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
+#' ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
 #'
 #' @keywords internal
 #' @noRd
-cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
+.cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # Return early if no argument was specified
   if (is.null(arg)) {
     return(NULL)
@@ -43,7 +43,7 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # convert `NULL`s or logical `NA`s to `NA` of required type
 
   # Note that `purrr::map()` will return a list
-  arg <- purrr::map(arg, ~ toMissingOfType(.x, type))
+  arg <- purrr::map(arg, ~ .toMissingOfType(.x, type))
 
   # validate the type of arguments
 
@@ -53,7 +53,7 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 
   # arguments are still in a list
   # flatten them to an atomic vector of required type
-  arg <- flattenList(arg, type)
+  arg <- .flattenList(arg, type)
 
   return(arg)
 }
@@ -70,14 +70,14 @@ cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
 #'
 #' @examples
 #'
-#' flattenList(list(1, 2, 3, NA), type = "numeric")
-#' flattenList(list(TRUE, FALSE, NA), type = "integer")
+#' ospsuite:::.flattenList(list(1, 2, 3, NA), type = "numeric")
+#' ospsuite:::.flattenList(list(TRUE, FALSE, NA), type = "integer")
 #'
 #' @return An atomic vector of desired type.
 #'
 #' @keywords internal
 #' @noRd
-flattenList <- function(x, type) {
+.flattenList <- function(x, type) {
   if (!is.null(dim(x))) {
     stop("Argument to parameter `x` can only be a vector.")
   }
@@ -101,16 +101,16 @@ flattenList <- function(x, type) {
 #' Convert `NULL` or `NA`s to `NA` of desired type
 #'
 #' @param x A single element.
-#' @inheritParams flattenList
+#' @inheritParams .flattenList
 #'
 #' @examples
 #'
-#' toMissingOfType(NA, type = "real")
-#' toMissingOfType(NULL, type = "integer")
+#' ospsuite:::.toMissingOfType(NA, type = "real")
+#' ospsuite:::.toMissingOfType(NULL, type = "integer")
 #'
 #' @keywords internal
 #' @noRd
-toMissingOfType <- function(x, type) {
+.toMissingOfType <- function(x, type) {
   # all unexpected values will be converted to `NA` of a desired type
   if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
     x <- switch(type,
