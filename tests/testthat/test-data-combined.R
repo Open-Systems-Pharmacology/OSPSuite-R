@@ -10,13 +10,13 @@ simResults <- importResultsFromCSV(
 # import observed data (will return a list of DataSet objects)
 dataSet <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfigurationOrPath = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
 # same as dataSet, but with deliberately changed entries for testing
 dataSet2 <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
-  importerConfigurationOrPath = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
 # active bindings ---------------------------------------

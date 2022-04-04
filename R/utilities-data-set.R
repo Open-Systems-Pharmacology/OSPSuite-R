@@ -148,15 +148,16 @@ dataSetToDataFrame <- function(dataSets) {
 #' )
 loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
+  importerConfiguration <- importerConfigurationOrPath
   if (is.character(importerConfigurationOrPath)) {
-    importerConfigurationOrPath <- loadDataImporterConfiguration(importerConfigurationOrPath)
+    importerConfiguration <- loadDataImporterConfiguration(importerConfigurationOrPath)
   }
-  validateIsOfType(importerConfigurationOrPath, "DataImporterConfiguration")
+  validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
-  dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfigurationOrPath$ref, xlsFilePath)
+  dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)
