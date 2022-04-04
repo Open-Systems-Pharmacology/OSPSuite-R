@@ -22,6 +22,10 @@
 #'   `"lin"`). Available options are: `"lin"`, `"log"`, `"ln"`, `"discrete"`,
 #'   `"reverse"`, `"sqrt"`, `"time"`, `"date"`.
 #' @param watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle Aesthetic properties for the watermark.
+#' @param linesColor,linesFill,linesShape,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
+#' @param pointsColor,pointsFill,pointsShape,pointsSize,pointsLinetype,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
+#' @param ribbonsColor,ribbonsFill,ribbonsShape,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
+#' @param errorbarsColor,errorbarsFill,errorbarsShape,errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
 #' @export
 createPlotConfiguration <- function(title = NULL,
                                     subtitle = NULL,
@@ -73,13 +77,33 @@ createPlotConfiguration <- function(title = NULL,
                                     watermarkFontFace = NULL,
                                     watermarkAngle = NULL,
                                     # lines
-                                    lines = NULL,
+                                    linesColor = NULL,
+                                    linesFill = NULL,
+                                    linesShape = NULL,
+                                    linesSize = NULL,
+                                    linesLinetype = NULL,
+                                    linesAlpha = NULL,
                                     # points
-                                    points = NULL,
+                                    pointsColor = NULL,
+                                    pointsFill = NULL,
+                                    pointsShape = NULL,
+                                    pointsSize = NULL,
+                                    pointsLinetype = NULL,
+                                    pointsAlpha = NULL,
                                     # ribbons
-                                    ribbons = NULL,
+                                    ribbonsColor = NULL,
+                                    ribbonsFill = NULL,
+                                    ribbonsShape = NULL,
+                                    ribbonsSize = NULL,
+                                    ribbonsLinetype = NULL,
+                                    ribbonsAlpha = NULL,
                                     # errorbars
-                                    errorbars = NULL,
+                                    errorbarsColor = NULL,
+                                    errorbarsFill = NULL,
+                                    errorbarsShape = NULL,
+                                    errorbarsSize = NULL,
+                                    errorbarsLinetype = NULL,
+                                    errorbarsAlpha = NULL,
                                     export = NULL,
                                     format = NULL,
                                     width = NULL,
@@ -153,12 +177,56 @@ createPlotConfiguration <- function(title = NULL,
     angle = yAxisLabelAngle
   )
 
-  yAxisConfiguration <- AxisConfiguration$new(
+  yAxisConfiguration <- tlf::AxisConfiguration$new(
     limits = yAxisLimits,
     scale = yAxisScale,
     ticks = yAxisTicks,
     ticklabels = yAxisTickLabels,
     font = yAxisFont
+  )
+
+  # lines -------------------------------------------------------
+
+  linesConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = linesColor,
+    fill = linesFill,
+    shape = linesShape,
+    size = linesSize,
+    linetype = linesLinetype,
+    alpha = linesAlpha
+  )
+
+  # points -------------------------------------------------------
+
+  pointsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = pointsColor,
+    fill = pointsFill,
+    shape = pointsShape,
+    size = pointsSize,
+    linetype = pointsLinetype,
+    alpha = pointsAlpha
+  )
+
+  # ribbons -------------------------------------------------------
+
+  ribbonsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = ribbonsColor,
+    fill = ribbonsFill,
+    shape = ribbonsShape,
+    size = ribbonsSize,
+    linetype = ribbonsLinetype,
+    alpha = ribbonsAlpha
+  )
+
+  # errorbars -------------------------------------------------------
+
+  errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = errorbarsColor,
+    fill = errorbarsFill,
+    shape = errorbarsShape,
+    size = errorbarsSize,
+    linetype = errorbarsLinetype,
+    alpha = errorbarsAlpha
   )
 
   # ospPlotConfiguration object -----------------------------------
@@ -177,10 +245,10 @@ createPlotConfiguration <- function(title = NULL,
     xGrid          = xGrid,
     yGrid          = yGrid,
     watermark      = labelWatermark,
-    lines          = lines,
-    points         = points,
-    ribbons        = ribbons,
-    errorbars      = errorbars,
+    lines          = linesConfiguration,
+    points         = pointsConfiguration,
+    ribbons        = ribbonsConfiguration,
+    errorbars      = errorbarsConfiguration,
     export         = export,
     format         = format,
     width          = width,
