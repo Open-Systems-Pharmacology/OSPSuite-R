@@ -27,11 +27,6 @@ Create a new \code{ospPlotConfiguration} object
   legend = NULL,
   xAxis = NULL,
   yAxis = NULL,
-  background = NULL,
-  plotArea = NULL,
-  panelArea = NULL,
-  xGrid = NULL,
-  yGrid = NULL,
   watermark = NULL,
   lines = NULL,
   points = NULL,
@@ -57,16 +52,6 @@ Create a new \code{ospPlotConfiguration} object
 \item{\code{xAxis}}{\code{XAxisConfiguration} object defining x-axis properties}
 
 \item{\code{yAxis}}{\code{YAxisConfiguration} object defining y-axis properties}
-
-\item{\code{background}}{\code{BackgroundConfiguration} object defining background properties}
-
-\item{\code{plotArea}}{\code{BackgroundElement} object defining properties of plot area}
-
-\item{\code{panelArea}}{\code{BackgroundElement} object defining properties of panel area}
-
-\item{\code{xGrid}}{\code{LineElement} object defining properties of x-grid background}
-
-\item{\code{yGrid}}{\code{LineElement} object defining properties of y-grid background}
 
 \item{\code{watermark}}{\code{Label} object defining watermark}
 
