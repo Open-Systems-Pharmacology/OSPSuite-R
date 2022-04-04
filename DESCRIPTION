@@ -32,7 +32,7 @@ Suggests:
     testthat (>= 2.1.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.1.2.9000
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
@@ -42,6 +42,7 @@ Collate:
     'cache.R'
     'container.R'
     'create-individual.R'
+    'create-plot-configuration.R'
     'create-population.R'
     'data-column.R'
     'data-combined.R'
@@ -59,6 +60,7 @@ Collate:
     'molecule-ontogeny.R'
     'molecule.R'
     'object-base.R'
+    'ospPlotConfiguration.R'
     'utilities.R'
     'ospsuite-env.R'
     'output-schema.R'
