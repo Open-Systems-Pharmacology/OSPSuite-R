@@ -47,12 +47,12 @@ ospPlotConfiguration <- R6::R6Class(
     yAxis = NULL,
 
     # Background configuration
-    background = NULL,
-    plotArea = NULL,
-    panelArea = NULL,
-    xGrid = NULL,
-    yGrid = NULL,
-    watermark = NULL,
+    # background = NULL,
+    # plotArea = NULL,
+    # panelArea = NULL,
+    # xGrid = NULL,
+    # yGrid = NULL,
+    # watermark = NULL,
 
     # configuration of how objects are plotted
     lines = NULL,
@@ -73,11 +73,11 @@ ospPlotConfiguration <- R6::R6Class(
                           legend = NULL,
                           xAxis = NULL,
                           yAxis = NULL,
-                          background = NULL,
-                          plotArea = NULL,
-                          panelArea = NULL,
-                          xGrid = NULL,
-                          yGrid = NULL,
+                          # background = NULL,
+                          # plotArea = NULL,
+                          # panelArea = NULL,
+                          # xGrid = NULL,
+                          # yGrid = NULL,
                           watermark = NULL,
                           lines = NULL,
                           points = NULL,
@@ -100,12 +100,12 @@ ospPlotConfiguration <- R6::R6Class(
       self$yAxis <- yAxis
 
       # Background configuration
-      self$background <- background
-      self$plotArea <- plotArea
-      self$panelArea <- panelArea
-      self$xGrid <- xGrid
-      self$yGrid <- yGrid
-      self$watermark <- watermark
+      # self$background <- background
+      # self$plotArea <- plotArea
+      # self$panelArea <- panelArea
+      # self$xGrid <- xGrid
+      # self$yGrid <- yGrid
+      # self$watermark <- watermark
 
       # Configurations for aesthetics
       self$lines <- lines
