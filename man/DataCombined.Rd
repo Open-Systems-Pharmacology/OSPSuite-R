@@ -5,7 +5,7 @@
 \alias{DataCombined}
 \title{Object combining simulated and observed data}
 \description{
-A class for storing simulated and/or observed in a single dataframe, which
+A class for storing simulated and/or observed in a single data frame, which
 can be further used in data wrangling or data visualization pipelines.
 
 Additionally, it allows:
@@ -45,12 +45,12 @@ myCombDat
 \item{\code{names}}{A vector of unique names of datasets contained in the
 \code{DataCombined} class instance.}
 
-\item{\code{groupMap}}{A dataframe specifying which datasets have been grouped
+\item{\code{groupMap}}{A data frame specifying which datasets have been grouped
 together and the name and the nature (observed or simulated?) of the
 data. If a dataset was not assigned to any group, this is denoted by
-\code{NA} in the dataframe.}
+\code{NA} in the data frame.}
 
-\item{\code{dataTransformations}}{A dataframe with offset and scale factor
+\item{\code{dataTransformations}}{A data frame with offset and scale factor
 values were specified by the user for each dataset.}
 }
 \if{html}{\out{</div>}}
@@ -61,6 +61,7 @@ values were specified by the user for each dataset.}
 \item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-setGroups}{\code{DataCombined$setGroups()}}
+\item \href{#method-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
 \item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
 \item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
 \item \href{#method-print}{\code{DataCombined$print()}}
@@ -131,7 +132,7 @@ results.}
 
 \item{\code{population}}{Population used to calculate the \code{simulationResults}
 (optional). This is used only to add the population covariates to the
-resulting dataframe.}
+resulting data frame.}
 
 \item{\code{individualIds}}{Numeric IDs of individuals for which the results
 should be extracted. By default, all individuals from the results are
@@ -156,29 +157,60 @@ renamed.}
 \subsection{Method \code{setGroups()}}{
 Adds grouping information to (observed and/or simulated) datasets.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setGroups(groups)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setGroups(names, groups)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{groups}}{A named list specifying which datasets belong to which
-group(s). For example, if datsets are named \code{"x"}, \code{"y"}, \code{"z"}, and
-the desired groupings for them are, respectively, \code{"a"} and \code{"b"}, this
-can be specified as \code{groups = list("x" = "a", "y" = "b")}. Datasets for
-which no grouping is to be specified, can be left out of the \code{groups}
-argument. The column \code{group} in the dataframe output will be \code{NA} for
-such datasets. If you wish to remove existing grouping for a given
-dataset, you can specify it as following: \code{list("x" = NA)}. This will
-not change any of the other (previously specified) groupings. Note that
-if you have specified \code{names} while adding datasets using respective
-methods, you will need to use these new names to specify group
-assignment.}
+\item{\code{names}}{A list of dataset names which need to be grouped. Note that
+if you have specified new \code{names} while adding datasets (using
+\verb{$addDataSets()} and \verb{$addSimulationResults()} methods), you will need
+to use these new names to specify group assignment. The same dataset
+can't be assigned to two different groupings in the \emph{same}
+\verb{$setGroups()} call. In other words, elements of \code{names} argument
+should be unique.}
+
+\item{\code{groups}}{A list specifying which datasets belong to which group(s).
+Please note that the order in which groups are specified should match
+the order in which datasets were specified for \code{names} parameter. For
+example, if datsets are named \code{"x"}, \code{"y"}, \code{"z"}, and the desired
+groupings for them are, respectively, \code{"a"}, \code{"b"}, and no grouping,
+this can be specified as \verb{names = list("x", "y"), groups = list("a", "b")}. Datasets for which no grouping is to be specified, can be left
+out of the \code{groups} argument. The column \code{group} in the data frame
+output will be \code{NA} for such datasets. If you wish to remove \emph{existing}
+grouping assignment for a given dataset, you can specify it as
+following: \code{list("x" = NA)} or \code{list("x" = NULL)}. This will not change
+any of the other (previously specified) groupings.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 \code{DataCombined} object with grouped datasets.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-removeGroupAssignment"></a>}}
+\if{latex}{\out{\hypertarget{method-removeGroupAssignment}{}}}
+\subsection{Method \code{removeGroupAssignment()}}{
+Remove existing groupings for (observed and/or simulated) datasets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$removeGroupAssignment(names)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{A list of dataset names whose group assignment needs to be
+removed. Note that if you have specified new \code{names} while adding
+datasets (using \verb{$addDataSets()} and \verb{$addSimulationResults()}
+methods), you will need to use these new names to specify group
+assignment. The elements of \code{names} argument should be unique.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{DataCombined} object with updated group assignments.
 }
 }
 \if{html}{\out{<hr>}}
@@ -202,7 +234,7 @@ Transform raw data with required offsets and scale factors.
 \item{\code{forNames}}{A list of names specifying which observed datasets and/or
 paths in simulated dataset to transform with the specified
 transformations. Default is \code{NULL}, i.e., the transformations, if any
-specified, will be applied to all rows of the dataframe.}
+specified, will be applied to all rows of the data frame.}
 
 \item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a single
 numeric value or a list of numeric values specifying offsets and
@@ -213,7 +245,7 @@ list is specified, it should be the same length as \code{names} argument.}
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-A dataframe with respective raw quantities transformed using specified
+A data frame with respective raw quantities transformed using specified
 offset and scale factor values.
 \itemize{
 \item For X and Y variables:
@@ -228,18 +260,18 @@ offset and scale factor values.
 \if{html}{\out{<a id="method-toDataFrame"></a>}}
 \if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
-A method to extract a dataframe of simulated and/or observed data
+A method to extract a data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).
 
 Note that the order in which you enter different object doesn't matter
-because the returned dataframe is arranged alphabetically by dataset
+because the returned data frame is arranged alphabetically by dataset
 name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-In the returned dataframe, the following columns will always be present:
+In the returned data frame, the following columns will always be present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
