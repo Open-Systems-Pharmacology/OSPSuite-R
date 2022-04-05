@@ -102,10 +102,10 @@ createPlotConfiguration <- function(title = NULL,
                                     errorbarsLinetype = NULL,
                                     errorbarsAlpha = NULL,
                                     # export
-                                    plotSaveFileFormat = NULL,
-                                    plotSaveFileWidth = NULL,
-                                    plotSaveFileHeight = NULL,
-                                    plotSaveFileDimensionUnits = NULL) {
+                                    plotSaveFileFormat = "png",
+                                    plotSaveFileWidth = 16,
+                                    plotSaveFileHeight = 9,
+                                    plotSaveFileDimensionUnits = "cm") {
 
   # legend objects ---------------------------------------
 
@@ -156,7 +156,7 @@ createPlotConfiguration <- function(title = NULL,
     angle = xAxisLabelAngle
   )
 
-  xAxisConfiguration <- AxisConfiguration$new(
+  xAxisConfiguration <- tlf::AxisConfiguration$new(
     limits = xAxisLimits,
     scale = xAxisScale,
     ticks = xAxisTicks,
@@ -245,11 +245,11 @@ createPlotConfiguration <- function(title = NULL,
     legend = legendConfig,
     xAxis = xAxisConfiguration,
     yAxis = yAxisConfiguration,
-    background = background,
-    plotArea = plotArea,
-    panelArea = panelArea,
-    xGrid = xGrid,
-    yGrid = yGrid,
+    # background = background,
+    # plotArea = plotArea,
+    # panelArea = panelArea,
+    # xGrid = xGrid,
+    # yGrid = yGrid,
     watermark = labelWatermark,
     lines = linesConfiguration,
     points = pointsConfiguration,
