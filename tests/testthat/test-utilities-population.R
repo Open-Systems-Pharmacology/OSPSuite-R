@@ -25,5 +25,16 @@ test_that("It can convert a population to data frame", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
   df <- populationToDataFrame(population)
+  expect_s3_class(df, "data.frame")
+  expect_equal(nrow(df), 10)
+})
+
+
+context("populationToTibble")
+test_that("It can convert a population to tibble data frame", {
+  populationFileName <- getTestDataFilePath("pop.csv")
+  population <- loadPopulation(populationFileName)
+  df <- populationToTibble(population)
+  expect_s3_class(df, "tbl_df")
   expect_equal(nrow(df), 10)
 })

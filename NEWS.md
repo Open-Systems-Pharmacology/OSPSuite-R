@@ -2,9 +2,11 @@
 
 ## New features
 
-* Adds new `DataCombined` class that combines observed data (`DataSet`) and simulated data (`SimulationResults`) into a single object. Especially important is the `$toDataFrame()` method of this object that returns a dataframe containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.
+* Adds new `DataCombined` class that combines observed data (`DataSet`) and simulated data (`SimulationResults`) into a single object. Especially important is the `$toDataFrame()` method of this object that returns a data frame containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.
 
-* Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a dataframe.
+* Adds `simulationResultsToDataFrame()` function to convert `SimulationResults` objects into a data frame.
+
+* All `*ToDataFrame()` functions also get `*ToTibble()` variants to extract a tibble data frame instead of a classical data frame.
 
 ## Major Changes
 

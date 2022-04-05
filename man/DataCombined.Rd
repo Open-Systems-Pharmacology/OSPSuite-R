@@ -228,11 +228,11 @@ offset and scale factor values.
 \if{html}{\out{<a id="method-toDataFrame"></a>}}
 \if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
-A method to extract a dataframe of simulated and/or observed data
+A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).
 
 Note that the order in which you enter different object doesn't matter
-because the returned dataframe is arranged alphabetically by dataset
+because the returned data frame is arranged alphabetically by dataset
 name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}

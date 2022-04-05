@@ -2,9 +2,17 @@
 % Please edit documentation in R/utilities-simulation-results.R
 \name{simulationResultsToDataFrame}
 \alias{simulationResultsToDataFrame}
+\alias{simulationResultsToTibble}
 \title{Converts a \code{SimulationResults} objects to a data.frame}
 \usage{
 simulationResultsToDataFrame(
+  simulationResults,
+  quantitiesOrPaths = NULL,
+  population = NULL,
+  individualIds = NULL
+)
+
+simulationResultsToTibble(
   simulationResults,
   quantitiesOrPaths = NULL,
   population = NULL,
@@ -50,4 +58,5 @@ results <- runSimulations(sim)
 
 # convert to a dataframe
 simulationResultsToDataFrame(results)
+
 }

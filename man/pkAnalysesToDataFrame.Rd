@@ -2,9 +2,12 @@
 % Please edit documentation in R/utilities-pk-analysis.R
 \name{pkAnalysesToDataFrame}
 \alias{pkAnalysesToDataFrame}
+\alias{pkAnalysesToTibble}
 \title{Convert the pk-Analysis to data frame}
 \usage{
 pkAnalysesToDataFrame(pkAnalyses)
+
+pkAnalysesToTibble(pkAnalysess)
 }
 \arguments{
 \item{pkAnalyses}{pK-Analyses to convert to data frame (typically calculated

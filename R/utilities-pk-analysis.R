@@ -95,5 +95,16 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
     }
   )
 
-  return(dplyr::as_tibble(dataFrame))
+  # consistently return a (classical) data frame
+  return(as.data.frame(df))
+}
+
+#' @rdname pkAnalysesToDataFrame
+#'
+#' @export
+pkAnalysesToTibble <- function(pkAnalysess) {
+  df <- pkAnalysesToDataFrame(pkAnalysess)
+
+  # consistently return a tibble data frame
+  return(dplyr::as_tibble(df))
 }
