@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<McDataRepository id="eb50fea4-9967-4928-87c6-121bd2871911" name="Vergin 1995.Iv" icon="ObservedData" version="15">
+  <Columns>
+    <McBaseGrid id="7cfd9b9c-f56f-4db4-b49c-e711d37752e6" name="time " dimension="Time" isInternal="0" baseGrid="7cfd9b9c-f56f-4db4-b49c-e711d37752e6">
+      <DataInfo origin="BaseGrid" auxiliaryType="Undefined" displayUnitName="h" date="-8587551232251541634" source="Rohdaten_Acyclovir.Vergin 1995 250 mg iv.time [h]" />
+      <QuantityInfo name="time " type="Time" orderIndex="0" Path="Vergin 1995.Iv|time " />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAA0AAAALjahWQeuL6EHK4TJC7YtoQvForkLDBO1CyOEyQzNBb0MAALRDjkcHRAAANESKR2FEAAC0RAs=</Values>
+      <RelatedColumnsCache />
+    </McBaseGrid>
+    <McDataColumn id="3a1cae9f-4ea7-4a5e-a4ad-b274289abfbe" name="SD" dimension="Concentration (mass)" isInternal="0" baseGrid="7cfd9b9c-f56f-4db4-b49c-e711d37752e6">
+      <DataInfo origin="ObservationAuxiliary" auxiliaryType="ArithmeticStdDev" date="-8587551232251541634" source="Rohdaten_Acyclovir.Vergin 1995 250 mg iv.SD" molWeight="2.2521E-07" />
+      <QuantityInfo name="SD" type="Undefined" orderIndex="0" Path="Vergin 1995.Iv|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|SD" />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAA0AAAALLavINYZGZjXVDys1VCoKNYOJ0jSkvpA02tpsNDfnHTSfidIzn4lSMzfnnTM0550zN+edMws=</Values>
+      <RelatedColumnsCache />
+    </McDataColumn>
+    <McDataColumn id="1247b9b9-af99-4d11-b5e7-59b532a2efde" name="conc " dimension="Concentration (mass)" isInternal="0" baseGrid="7cfd9b9c-f56f-4db4-b49c-e711d37752e6">
+      <DataInfo origin="Observation" auxiliaryType="Undefined" displayUnitName="µmol/l" date="-8587551232251541634" source="Rohdaten_Acyclovir.Vergin 1995 250 mg iv.conc [ng/mL]" molWeight="2.2521E-07" />
+      <QuantityInfo name="conc " type="Undefined" orderIndex="0" Path="Vergin 1995.Iv|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|conc " />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAA0AAAALjmgEN+xSlzbF01U2mCAmNmb84jUcpLE1IW9zNW04ODUIYcU0n4lSNAOWAzSiidIzOOedMws=</Values>
+      <RelatedColumnsCache>
+        <ColumnId>3a1cae9f-4ea7-4a5e-a4ad-b274289abfbe</ColumnId>
+      </RelatedColumnsCache>
+    </McDataColumn>
+  </Columns>
+  <ExtendedProperties>
+    <StringExtendedProperty name="Source" readOnly="0" value="X:\Orga\BTS-TD\ET\TP CSB\Projects\Internal Projects\MagenDarm\TestSubstanzen\Acyclovir\Rohdaten_Acyclovir.xls.Vergin 1995 250 mg iv" />
+    <StringExtendedProperty name="File" readOnly="0" value="Rohdaten_Acyclovir" />
+    <StringExtendedProperty name="Sheet" readOnly="0" value="Vergin 1995 250 mg iv" />
+    <StringExtendedProperty name="Molecule" readOnly="0" value="Aciclovir" />
+    <StringExtendedProperty name="Species" readOnly="0" value="Human" />
+    <StringExtendedProperty name="Organ" readOnly="0" value="Peripheral Venous Blood" />
+    <StringExtendedProperty name="Compartment" readOnly="0" value="Plasma" />
+    <StringExtendedProperty name="Study Id" readOnly="0" value="Vergin 1995" />
+    <StringExtendedProperty name="Gender" readOnly="0" value="Undefined" />
+    <StringExtendedProperty name="Dose" readOnly="0" value="250 mg" />
+    <StringExtendedProperty name="Route" readOnly="0" value="IV" />
+    <StringExtendedProperty name="Patient Id" readOnly="0" value="Iv" />
+  </ExtendedProperties>
+</McDataRepository>

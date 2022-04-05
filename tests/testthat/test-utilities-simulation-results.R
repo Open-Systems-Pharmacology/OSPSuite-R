@@ -187,6 +187,7 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
 
   # with all paths
   expect_equal(dim(df1), c(491L, 9L))
+  expect_s3_class(df1, "data.frame")
   expect_equal(
     unique(df1$paths),
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
@@ -195,6 +196,21 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
   expect_equal(unique(df1$unit), "µmol/l")
   expect_equal(unique(df1$dimension), "Concentration (molar)")
   expect_equal(unique(df1$TimeUnit), "min")
+})
+
+test_that("simulationResultsToTibble works as expected - Aciclovir", {
+  simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simPath)
+
+  # Running an individual simulation
+  # results is an instance of `SimulationResults`
+  results <- runSimulations(sim)
+
+  df1 <- simulationResultsToTibble(results)
+
+  # with all paths
+  expect_equal(dim(df1), c(491L, 9L))
+  expect_s3_class(df1, "tbl_df")
 })
 
 test_that("simulationResultsToDataFrame with lists", {

@@ -7,6 +7,14 @@ test_that("It can load a valid observed data file and create a DataSet object", 
   expect_true(isOfType(dataSet, "DataSet"))
 })
 
+
+test_that("It correctly gets the yValues column for a certain type of DataRepository", {
+  file <- system.file("extdata", "ObsDataAciclovir_2.pkml", package = "ospsuite")
+  dataSet <- loadDataSetFromPKML(file)
+
+  expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
+})
+
 context("dataSetToDataFrame")
 
 dataSetName <- "NewDataSet"
@@ -15,7 +23,7 @@ dataSet <- DataSet$new(name = dataSetName)
 test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
-    dplyr::tibble(
+    data.frame(
       name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
       xDimension = character(0), xUnit = character(0), yDimension = character(0),
       yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
@@ -28,7 +36,7 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
   expect_equal(
     dataSetToDataFrame(dataSet),
-    dplyr::tibble(
+    data.frame(
       name = rep(dataSetName, 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
@@ -44,7 +52,7 @@ test_that("It can convert a data set with only non-empty fields, except for meta
   dataSet$LLOQ <- 0.2
   expect_equal(
     dataSetToDataFrame(dataSet),
-    dplyr::tibble(
+    data.frame(
       name = rep(dataSet$name, 5), xValues = dataSet$xValues,
       yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
@@ -61,7 +69,7 @@ test_that("It can convert a data set with metaData", {
   dataSet$addMetaData("Organ", "Blood")
   expect_equal(
     dataSetToDataFrame(dataSet),
-    dplyr::tibble(
+    data.frame(
       name = rep(dataSet$name, 5), xValues = dataSet$xValues,
       yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
       xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
@@ -83,7 +91,7 @@ test_that("It can convert a list of data sets", {
 
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
-    dplyr::tibble(
+    data.frame(
       name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
       yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
@@ -158,14 +166,18 @@ test_that("it returns an empty list when loading from file with one sheet withou
           sheet definition in configuration and importAllSheets == FALSE", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath), character())
 })
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
 })
@@ -173,7 +185,7 @@ test_that("it can load when loading from file with one sheet without
 test_that("it can convert DataSets loaded from excel to data.frame", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
   expect_equal(
     names(dataSetsFrame), c(
@@ -200,6 +212,23 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
       "Route",
       "Subject Id",
       "Dose"
+    )
+  )
+})
+
+context("dataSetToTibble")
+
+dataSetName <- "NewDataSet"
+dataSet <- DataSet$new(name = dataSetName)
+
+test_that("It can convert an empty data set", {
+  expect_equal(
+    dataSetToTibble(dataSet),
+    dplyr::tibble(
+      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
+      xDimension = character(0), xUnit = character(0), yDimension = character(0),
+      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
+      lloq = numeric(0)
     )
   )
 })

@@ -199,40 +199,44 @@ test_that("grouping specification fails when there are no datasets present", {
   myCombDat <- DataCombined$new()
 
   expect_error(
-    myCombDat$setGroups(list()),
+    myCombDat$setGroups(names = c("x", "y"), groups = c("a", "b")),
     "There are currently no datasets to be grouped."
   )
 })
 
-test_that("empty grouping specification fails", {
+test_that("grouping specification fails when arguments are empty", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
 
   expect_error(
-    myCombDat$setGroups(list()),
-    "You need to provide a named list with at least one valid grouping."
+    myCombDat$setGroups(names = character(), groups = c("a", "b")),
+    "argument 'arg' is empty"
+  )
+
+  expect_error(
+    myCombDat$setGroups(names = c("a", "b"), groups = character()),
+    "argument 'arg' is empty"
   )
 })
 
-test_that("setting groups fails when group specification is invalid", {
+test_that("setting groups fails when arguments are not of `character` type", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
 
-  expect_error(myCombDat$setGroups(c(2, 4)))
+  # TODO: Include full error messages in the following tests once
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/issues/77
+  # has been resolved
+
+  x <- list(2, 4)
 
   expect_error(
-    myCombDat$setGroups(list("x" = 2, "y" = 4)),
-    "Names for groups can only be of `character` type."
+    myCombDat$setGroups(x, list("a", "b")),
+    "but expected 'character'"
   )
-})
-
-test_that("setting groups fails when group specification is in a nested list", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet)
 
   expect_error(
-    myCombDat$setGroups(list("m" = list("x" = "2", "y" = "4"))),
-    "A nested list is not a valid argument here."
+    myCombDat$setGroups(list(names = "a", "b"), x),
+    "but expected 'character'"
   )
 })
 
@@ -241,8 +245,11 @@ test_that("setting groups fails when group specification is same for multiple da
   myCombDat$addDataSets(dataSet)
 
   expect_error(
-    myCombDat$setGroups(list("x" = "2", "x" = "4")),
-    "Duplicated dataset names detected."
+    myCombDat$setGroups(
+      names = c("Stevens_2012_placebo.Placebo_distal", "Stevens_2012_placebo.Placebo_distal"),
+      groups = c("a", "b")
+    ),
+    "Object has duplicated values; only unique values are allowed."
   )
 })
 
@@ -250,55 +257,107 @@ test_that("assigning groups produces a message if dataset name is not found", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
 
-  expect_output(
-    myCombDat$setGroups(list(
-      "Stevens_2012_placebo.Placebo_total" = "m",
-      "x" = "a",
-      "y" = "b"
-    )),
-    cat(
-      "Following datasets were specified to be grouped but not found:",
-      c("x", "y"),
-      sep = "\n"
-    )
+  expect_message(
+    myCombDat$setGroups(
+      names = list("Stevens_2012_placebo.Placebo_total", "x", "y"),
+      groups = list("m", "a", "b")
+    ),
+    "Following datasets were specified to be grouped but not found:
+x
+y
+",
+    fixed = TRUE
   )
-
-  myCombDat$setGroups(list(
-    "Stevens_2012_placebo.Placebo_total" = "m",
-    "x" = "a",
-    "y" = "b"
-  ))
-
-  expect_equal(myCombDat$groupMap$group, "m")
 })
 
-test_that("assigned group can be removed using `NA`- logical or other type", {
+test_that("assigned group can be removed using `NA` or `NULL`", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
 
-  myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = "m"))
-  myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = NA))
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = NA_real_)
   expect_equal(myCombDat$groupMap$group, NA_character_)
 
-  myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = "a"))
-  myCombDat$setGroups(list("Stevens_2012_placebo.Placebo_total" = NA_real_))
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = list(NULL))
   expect_equal(myCombDat$groupMap$group, NA_character_)
+})
+
+test_that("`$removeGroupAssignment()` produces error if there are no datasets", {
+  myCombDat <- DataCombined$new()
+
+  expect_error(
+    myCombDat$removeGroupAssignment(names = "Stevens_2012_placebo.Placebo_total"),
+    "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
+    fixed = TRUE
+  )
+})
+
+test_that("existing grouping can be removed using `$removeGroupAssignment()` method", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  myCombDat$removeGroupAssignment(names = "Stevens_2012_placebo.Placebo_total")
+  expect_equal(myCombDat$groupMap$group, NA_character_)
+
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  myCombDat$removeGroupAssignment(names = list("Stevens_2012_placebo.Placebo_total"))
+  expect_equal(myCombDat$groupMap$group, NA_character_)
+})
+
+test_that("`$removeGroupAssignment()` produces a message if dataset names are not found", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+
+  expect_message(
+    myCombDat$removeGroupAssignment(names = list("Stevens_2012_placebo.Placebo_total", "x", "y")),
+    "Following datasets were specified to be grouped but not found:
+x
+y
+",
+    fixed = TRUE
+  )
+})
+
+test_that("`$removeGroupAssignment()` produces error if names are not unique", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
+  expect_error(
+    myCombDat$removeGroupAssignment(
+      names = c(
+        "Stevens_2012_placebo.Placebo_total",
+        "Stevens_2012_placebo.Placebo_total"
+      )
+    ),
+    "Object has duplicated values; only unique values are allowed.",
+    fixed = TRUE
+  )
 })
 
 test_that("setting groups with atomic vector or list shouldn't make a difference", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
-  myCombDat$setGroups(c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"  = "x",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention" = "y"
-  ))
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+    ),
+    groups = c("x", "y")
+  )
 
   myCombDat2 <- DataCombined$new()
   myCombDat2$addSimulationResults(simResults)
-  myCombDat2$setGroups(list(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying"  = "x",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention" = "y"
-  ))
+  myCombDat2$setGroups(
+    names = list(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+    ),
+    groups = list("x", "y")
+  )
 
   expect_equal(myCombDat$groupMap, myCombDat2$groupMap)
   expect_equal(myCombDat$toDataFrame(), myCombDat2$toDataFrame())
@@ -316,7 +375,7 @@ test_that("specifying groupings and new names for only few paths in `SimulationR
     ),
     names = c("x", NA_character_, "y")
   )
-  myCombDat$setGroups(list("x" = "a", "y" = "b"))
+  myCombDat$setGroups(names = list("x", "y"), groups = list("a", "b"))
 
   expect_equal(dplyr::filter(myCombDat$groupMap, group == "a")$name[[1]], "x")
   expect_equal(dplyr::filter(myCombDat$groupMap, group == "b")$name[[1]], "y")
@@ -816,22 +875,27 @@ test_that("data grouping works as expected - multiple datasets", {
   myCombDat <- DataCombined$new()
 
   myCombDat$addSimulationResults(simResults)
-  myCombDat$setGroups(groups = list(
-    "Organism|Lumen|Stomach|Metformin|Gastric retention distal" = "distal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal" = "proximal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention" = "total"
-  ))
-
+  myCombDat$setGroups(
+    names = list(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    ),
+    groups = list("distal", "proximal", "total")
+  )
 
   myCombDat$addDataSets(dataSet)
-  myCombDat$setGroups(groups = list(
-    "Stevens_2012_placebo.Placebo_total" = "total",
-    "Stevens_2012_placebo.Sita_total" = "total",
-    "Stevens_2012_placebo.Placebo_proximal" = "proximal",
-    "Stevens_2012_placebo.Sita_proximal" = "proximal",
-    "Stevens_2012_placebo.Placebo_distal" = "distal",
-    "Stevens_2012_placebo.Sita_dist" = "distal"
-  ))
+  myCombDat$setGroups(
+    names = list(
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist"
+    ),
+    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
+  )
 
   # check mapping
   dfMap <- myCombDat$groupMap
@@ -872,7 +936,7 @@ test_that("data grouping works as expected - multiple datasets", {
 test_that("data grouping works as expected - single dataset", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
-  myCombDat$setGroups(groups = list("Stevens_2012_placebo.Placebo_total" = "x"))
+  myCombDat$setGroups(names = list("Stevens_2012_placebo.Placebo_total"), groups = list("x"))
 
   expect_equal(myCombDat$groupMap$group[[1]], "x")
   expect_equal(myCombDat$groupMap$name[[1]], "Stevens_2012_placebo.Placebo_total")
@@ -883,38 +947,50 @@ test_that("sequential update when first and second datasets have same names and 
   myCombDat <- DataCombined$new()
 
   # first run
-  myCombDat$addSimulationResults(simResults)
-  myCombDat$setGroups(groups = list(
-    "Organism|Lumen|Stomach|Metformin|Gastric retention distal" = "distal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal" = "proximal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention" = "total"
-  ))
-
 
   myCombDat$addDataSets(dataSet)
-  myCombDat$setGroups(groups = list(
-    "Stevens_2012_placebo.Placebo_total" = "total",
-    "Stevens_2012_placebo.Sita_total" = "total",
-    "Stevens_2012_placebo.Placebo_proximal" = "proximal",
-    "Stevens_2012_placebo.Sita_proximal" = "proximal",
-    "Stevens_2012_placebo.Placebo_distal" = "distal",
-    "Stevens_2012_placebo.Sita_dist" = "distal"
-  ))
+  myCombDat$setGroups(
+    names = list(
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_total",
+      "Stevens_2012_placebo.Placebo_proximal",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist"
+    ),
+    groups = list("total", "total", "proximal", "proximal", "distal", "distal")
+  )
+
+  myCombDat$addSimulationResults(simResults)
+  myCombDat$setGroups(
+    names = list(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    ),
+    groups = list("distal", "proximal", "total")
+  )
 
   df1 <- myCombDat$toDataFrame()
 
   # second run but with different grouping
   myCombDat$addSimulationResults(simResults)
-  myCombDat$setGroups(groups = list(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying" = "Dapagliflozin - emptying",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention" = "Dapagliflozin - retention"
-  ))
+  myCombDat$setGroups(
+    names = list(
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+      "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention"
+    ),
+    groups = list("Dapagliflozin - emptying", "Dapagliflozin - retention")
+  )
 
   myCombDat$addDataSets(dataSet)
-  myCombDat$setGroups(groups = list(
-    "Stevens_2012_placebo.Placebo_distal" = "distal",
-    "Stevens_2012_placebo.Sita_dist" = "distal"
-  ))
+  myCombDat$setGroups(
+    names = list(
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Sita_dist"
+    ),
+    groups = list("distal", "distal")
+  )
 
   df2 <- myCombDat$toDataFrame()
 
@@ -1067,29 +1143,6 @@ test_that("dataframe is as expected when `Population` objects are used", {
   expect_equal(unique(df$yUnit), "µmol/l")
   expect_equal(unique(df$yDimension), "Concentration (molar)")
   expect_equal(unique(df$xUnit), "min")
-})
-
-# edge cases -----------------------------
-
-test_that("grouping is not same when groups name is same as dataset name", {
-  myCombDat <- DataCombined$new()
-
-  # dataset name is "Stevens_2012_placebo.Placebo_total" but no group
-  myCombDat$addDataSets(dataSet[[1]], names = "a")
-
-  # dataset name is "Stevens_2012_placebo.Sita_total" but grouping assigned is
-  # same as dataset name entered before
-  myCombDat$addDataSets(dataSet[[2]], names = "b")
-  myCombDat$setGroups(groups = list("b" = "Stevens_2012_placebo.Placebo_total"))
-
-  # they shouldn't be collapsed together in the same group
-  expect_equal(
-    myCombDat$groupMap$group,
-    c("Stevens_2012_placebo.Placebo_total", NA_character_)
-  )
-
-  # with single datasets the renaming should still work
-  expect_equal(myCombDat$groupMap$name, c("b", "a"))
 })
 
 # `DataSet` with metadata -----------------------------
