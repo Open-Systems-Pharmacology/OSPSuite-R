@@ -70,7 +70,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 pkAnalysesToDataFrame <- function(pkAnalyses) {
   validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   pkParameterResultsFilePath <- tempfile()
-  dataFrame <- tryCatch(
+  df <- tryCatch(
     {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
       colTypes <- list(
