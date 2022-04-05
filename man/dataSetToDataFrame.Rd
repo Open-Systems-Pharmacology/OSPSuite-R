@@ -2,9 +2,12 @@
 % Please edit documentation in R/utilities-data-set.R
 \name{dataSetToDataFrame}
 \alias{dataSetToDataFrame}
+\alias{dataSetToTibble}
 \title{Converts a list of \code{DataSet} objects to a data.frame}
 \usage{
 dataSetToDataFrame(dataSets)
+
+dataSetToTibble(dataSets)
 }
 \arguments{
 \item{dataSets}{A list of \code{DataSet} objects or a single \code{DataSet}}
