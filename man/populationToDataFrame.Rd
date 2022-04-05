@@ -2,9 +2,12 @@
 % Please edit documentation in R/utilities-population.R
 \name{populationToDataFrame}
 \alias{populationToDataFrame}
+\alias{populationToTibble}
 \title{Creates a data.frame containing one column for each parameter defined in the population}
 \usage{
 populationToDataFrame(population)
+
+populationToTibble(populations)
 }
 \arguments{
 \item{population}{Population to convert to data frame (typically imported from file using \code{loadPopulation})}
