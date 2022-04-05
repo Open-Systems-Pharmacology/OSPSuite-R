@@ -5,17 +5,8 @@
 ospPlotConfiguration <- R6::R6Class(
   "ospPlotConfiguration",
   public = list(
-    #' @field title A character string providing plot title.
-    title = NULL,
-
-    #' @field subtitle A character string providing plot subtitle.
-    subtitle = NULL,
-
-    #' @field xlabel A character string providing plot x-axis label.
-    xlabel = NULL,
-
-    #' @field ylabel A character string providing plot y-axis label.
-    ylabel = NULL,
+    #' @field labels `tlf::LabelConfiguration` object defining properties of labels.
+    labels = NULL,
 
     #' @field legend `tlf::LegendConfiguration` object defining legend properties.
     legend = NULL,
@@ -50,9 +41,7 @@ ospPlotConfiguration <- R6::R6Class(
 
     #' @description Create a new `ospPlotConfiguration` object
     #'
-    #' @param title,subtitle,xlabel,ylabel A character string providing plot
-    #'   annotations for plot title, subtitle, x-axis label, y-axis label, plot
-    #'   legend, watermark, respectively.
+    #' @param labels `tlf::LabelConfiguration` object defining properties of labels.
     #' @param legend `tlf::LegendConfiguration` object defining legend properties.
     #' @param xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
     #' @param yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
@@ -69,10 +58,7 @@ ospPlotConfiguration <- R6::R6Class(
     #'   properties.
     #'
     #' @return A new `PlotConfiguration` object
-    initialize = function(title = NULL,
-                          subtitle = NULL,
-                          xlabel = NULL,
-                          ylabel = NULL,
+    initialize = function(labels = NULL,
                           legend = NULL,
                           xAxis = NULL,
                           yAxis = NULL,
@@ -83,10 +69,7 @@ ospPlotConfiguration <- R6::R6Class(
                           errorbars = NULL,
                           export = NULL) {
       # Annotations
-      self$title <- title
-      self$subtitle <- subtitle
-      self$xlabel <- xlabel
-      self$ylabel <- ylabel
+      self$labels <- labels
 
       # Legend Configuration
       self$legend <- legend

@@ -9,13 +9,7 @@ R6 class defining the configuration of a \code{{ospsuite}} plots.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{title}}{A character string providing plot title.}
-
-\item{\code{subtitle}}{A character string providing plot subtitle.}
-
-\item{\code{xlabel}}{A character string providing plot x-axis label.}
-
-\item{\code{ylabel}}{A character string providing plot y-axis label.}
+\item{\code{labels}}{\code{tlf::LabelConfiguration} object defining properties of labels.}
 
 \item{\code{legend}}{\code{tlf::LegendConfiguration} object defining legend properties.}
 
@@ -55,10 +49,7 @@ how errorbars are plotted.}
 Create a new \code{ospPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ospPlotConfiguration$new(
-  title = NULL,
-  subtitle = NULL,
-  xlabel = NULL,
-  ylabel = NULL,
+  labels = NULL,
   legend = NULL,
   xAxis = NULL,
   yAxis = NULL,
@@ -74,9 +65,7 @@ Create a new \code{ospPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{title, subtitle, xlabel, ylabel}}{A character string providing plot
-annotations for plot title, subtitle, x-axis label, y-axis label, plot
-legend, watermark, respectively.}
+\item{\code{labels}}{\code{tlf::LabelConfiguration} object defining properties of labels.}
 
 \item{\code{legend}}{\code{tlf::LegendConfiguration} object defining legend properties.}
 

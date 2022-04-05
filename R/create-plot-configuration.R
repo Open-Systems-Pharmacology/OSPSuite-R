@@ -107,7 +107,16 @@ createPlotConfiguration <- function(title = NULL,
                                     plotSaveFileHeight = 9,
                                     plotSaveFileDimensionUnits = "cm") {
 
-  # legend objects ---------------------------------------
+  # labels object ---------------------------------------
+
+  labels <- tlf::LabelConfiguration$new(
+    title = title,
+    subtitle = subtitle,
+    xlabel = xlabel,
+    ylabel = ylabel
+  )
+
+  # legend object ---------------------------------------
 
   legendTitleFont <- tlf::Font$new(
     size = legendTitleSize,
@@ -238,10 +247,7 @@ createPlotConfiguration <- function(title = NULL,
   # ospPlotConfiguration object -----------------------------------
 
   ospPlotConfiguration$new(
-    title = title,
-    subtitle = subtitle,
-    xlabel = xlabel,
-    ylabel = ylabel,
+    labels = labels,
     legend = legendConfig,
     xAxis = xAxisConfiguration,
     yAxis = yAxisConfiguration,
