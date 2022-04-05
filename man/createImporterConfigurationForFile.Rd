@@ -31,7 +31,7 @@ importerConfiguration$sheets <- "TestSheet_1"
 
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
-  importerConfiguration = importerConfiguration,
+  importerConfigurationOrPath = importerConfiguration,
   importAllSheets = FALSE
 )
 }

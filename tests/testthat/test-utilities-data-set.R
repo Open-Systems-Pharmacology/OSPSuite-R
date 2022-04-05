@@ -7,6 +7,14 @@ test_that("It can load a valid observed data file and create a DataSet object", 
   expect_true(isOfType(dataSet, "DataSet"))
 })
 
+
+test_that("It correctly gets the yValues column for a certain type of DataRepository", {
+  file <- system.file("extdata", "ObsDataAciclovir_2.pkml", package = "ospsuite")
+  dataSet <- loadDataSetFromPKML(file)
+
+  expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
+})
+
 context("dataSetToDataFrame")
 
 dataSetName <- "NewDataSet"
@@ -158,14 +166,18 @@ test_that("it returns an empty list when loading from file with one sheet withou
           sheet definition in configuration and importAllSheets == FALSE", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath), character())
 })
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
 })
@@ -173,32 +185,50 @@ test_that("it can load when loading from file with one sheet without
 test_that("it can convert DataSets loaded from excel to data.frame", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
-  print(names(dataSetsFrame))
-  expect_equal(names(dataSetsFrame), c(
-    "name",
-    "xValues",
-    "yValues",
-    "yErrorValues",
-    "xDimension",
-    "xUnit",
-    "yDimension",
-    "yUnit",
-    "yErrorType",
-    "yErrorUnit",
-    "molWeight",
-    "lloq",
-    "Source",
-    "Sheet",
-    "Study Id",
-    "Organ",
-    "Compartment",
-    "Species",
-    "Gender",
-    "Molecule",
-    "Route",
-    "Subject Id",
-    "Dose"
-  ))
+  expect_equal(
+    names(dataSetsFrame), c(
+      "name",
+      "xValues",
+      "yValues",
+      "yErrorValues",
+      "xDimension",
+      "xUnit",
+      "yDimension",
+      "yUnit",
+      "yErrorType",
+      "yErrorUnit",
+      "molWeight",
+      "lloq",
+      "Source",
+      "Sheet",
+      "Study Id",
+      "Organ",
+      "Compartment",
+      "Species",
+      "Gender",
+      "Molecule",
+      "Route",
+      "Subject Id",
+      "Dose"
+    )
+  )
+})
+
+context("dataSetToTibble")
+
+dataSetName <- "NewDataSet"
+dataSet <- DataSet$new(name = dataSetName)
+
+test_that("It can convert an empty data set", {
+  expect_equal(
+    dataSetToTibble(dataSet),
+    dplyr::tibble(
+      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
+      xDimension = character(0), xUnit = character(0), yDimension = character(0),
+      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
+      lloq = numeric(0)
+    )
+  )
 })

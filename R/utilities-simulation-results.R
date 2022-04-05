@@ -210,13 +210,13 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #'
 #' # convert to a dataframe
 #' simulationResultsToDataFrame(results)
+#'
 #' @return
 #'
 #' SimulationResults object as data.frame with columns IndividualId, Time, paths,
 #' simulationValues, unit, dimension, TimeUnit.
 #'
 #' @export
-
 simulationResultsToDataFrame <- function(simulationResults,
                                          quantitiesOrPaths = NULL,
                                          population = NULL,
@@ -291,6 +291,24 @@ simulationResultsToDataFrame <- function(simulationResults,
     tidyr::unnest(cols = c(data)) %>%
     dplyr::ungroup()
 
-  # return the combined dataframe
-  return(df)
+  # consistently return a (classical) data frame
+  return(as.data.frame(df))
+}
+
+#' @rdname simulationResultsToDataFrame
+#'
+#' @export
+simulationResultsToTibble <- function(simulationResults,
+                                      quantitiesOrPaths = NULL,
+                                      population = NULL,
+                                      individualIds = NULL) {
+  df <- simulationResultsToDataFrame(
+    simulationResults = simulationResults,
+    quantitiesOrPaths = quantitiesOrPaths,
+    population = population,
+    individualIds = individualIds
+  )
+
+  # consistently return a tibble data frame
+  return(dplyr::as_tibble(df))
 }

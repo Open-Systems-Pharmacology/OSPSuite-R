@@ -25,7 +25,7 @@ importerConfiguration$sheets <- "TestSheet_1"
 xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
-  importerConfiguration = importerConfiguration,
+  importerConfigurationOrPath = importerConfiguration,
   importAllSheets = FALSE
 )
 }

@@ -16,7 +16,7 @@
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfiguration = importerConfiguration,
+#'   importerConfigurationOrPath = importerConfiguration,
 #'   importAllSheets = FALSE
 #' )
 #' @export
@@ -48,7 +48,7 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfiguration = importerConfiguration,
+#'   importerConfigurationOrPath = importerConfiguration,
 #'   importAllSheets = FALSE
 #' )
 loadDataImporterConfiguration <- function(configurationFilePath) {
