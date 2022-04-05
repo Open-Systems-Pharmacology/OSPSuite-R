@@ -4,37 +4,69 @@
 #' @param tlfTheme A path to JSON file containing
 #'   [`Theme`](https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html)
 #'    object for `{tlf}` library.
-#' @param individualTimeProfilePlotConfiguration A `PlotConfiguration` object,
+#' @param ospPlotConfiguration A `ospPlotConfiguration` object,
 #'   which is an `R6` class object that defines plot properties (like labels,
-#'   axes scaling and limits, legend position, etc.). All available options for
-#'   constructor method of this object can be found by running
-#'   `?tlf::PlotConfiguration`. To learn more about this object, see:
-#'   <https://www.open-systems-pharmacology.org/TLF-Library/articles/plot-configuration.html>.
+#'   axes scaling and limits, legend position, etc.). You can create instance of this object using `createPlotConfiguration()` function.
+#' @param xUnit,yUnit Units for x- and y-axes, respectively.
 #'
 #' @import tlf
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
-                                      tlfTheme = NULL,
-                                      individualTimeProfilePlotConfiguration = tlf::PlotConfiguration$new(
-                                        xlabel = "xValues",
-                                        ylabel = "yValues",
-                                        legendTitle = "group"
-                                      )) {
+                                      ospPlotConfiguration,
+                                      xUnit = NULL,
+                                      yUnit = NULL,
+                                      tlfTheme = NULL) {
+
+  # validation -----------------------------
+
   validateIsOfType(dataCombined, "DataCombined")
+  validateIsOfType(ospPlotConfiguration, "ospPlotConfiguration")
+
+  # data frames -----------------------------
 
   df <- dataCombined$toDataFrame()
-
+  df <- .unitConverter(df, xUnit, yUnit)
   obsData <- dplyr::filter(df, dataType == "observed")
   simData <- dplyr::filter(df, dataType == "simulated")
 
-  # TODO: remove once `unitConverter()` function is available
-  if (unique(obsData$yUnit) == "%" && unique(simData$yUnit) == "") {
-    simData <- simData %>% dplyr::mutate(yValues = yValues * 100)
-  }
+  # TimeProfilePlotConfiguration object -----------------------------
+
+  # Create an instance of `TimeProfilePlotConfiguration` object
+  individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
+
+  # Annotations
+  individualTimeProfilePlotConfiguration$labels$title$text <- ospPlotConfiguration$title
+  individualTimeProfilePlotConfiguration$labels$subtitle$text <- ospPlotConfiguration$subtitle
+  individualTimeProfilePlotConfiguration$labels$xlabel$text <- ospPlotConfiguration$xlabel
+  individualTimeProfilePlotConfiguration$labels$ylabel$text <- ospPlotConfiguration$ylabel
+
+  # Legend Configuration
+  individualTimeProfilePlotConfiguration$legend <- ospPlotConfiguration$legend
+
+  # X-Axis configuration
+  individualTimeProfilePlotConfiguration$xAxis <- ospPlotConfiguration$xAxis
+
+  # Y-Axis configuration
+  individualTimeProfilePlotConfiguration$yAxis <- ospPlotConfiguration$yAxis
+
+  # Watermark
+  # individualTimeProfilePlotConfiguration$watermark <- ospPlotConfiguration$watermark
+
+  # Configurations for aesthetics
+  individualTimeProfilePlotConfiguration$lines <- ospPlotConfiguration$lines
+  individualTimeProfilePlotConfiguration$points <- ospPlotConfiguration$points
+  individualTimeProfilePlotConfiguration$ribbons <- ospPlotConfiguration$ribbons
+  individualTimeProfilePlotConfiguration$errorbars <- ospPlotConfiguration$errorbars
+
+  # Export configuration
+  individualTimeProfilePlotConfiguration$export <- ospPlotConfiguration$export
+
+  print(individualTimeProfilePlotConfiguration)
+
+  # plot -----------------------------
 
   tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
-
   useTheme(loadThemeFromJson(tlfTheme))
 
   plotTimeProfile(
