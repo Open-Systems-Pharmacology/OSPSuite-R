@@ -1,49 +1,29 @@
 #' @title Plot configuration for OSP plots
 #' @description R6 class defining the configuration of a `{ospsuite}` plots.
 #'
-#' @param title character or `Label` object defining plot title
-#' @param subtitle character or `Label` object defining plot subtitle
-#' @param xlabel character or `Label` object defining plot xlabel
-#' @param ylabel character or `Label` object defining plot ylabel
-#' @param legend `LegendConfiguration` object defining legend properties
-#' @param legendTitle character defining legend title
-#' @param legendPosition character defining legend position. Use Enum
-#'   `LegendPositions` to get a list of available to legend positions.
-#' @param xAxis `XAxisConfiguration` object defining x-axis properties
-#' @param yAxis `YAxisConfiguration` object defining y-axis properties
-#' @param background `BackgroundConfiguration` object defining background properties
-#' @param plotArea `BackgroundElement` object defining properties of plot area
-#' @param panelArea `BackgroundElement` object defining properties of panel area
-#' @param xGrid `LineElement` object defining properties of x-grid background
-#' @param yGrid `LineElement` object defining properties of y-grid background
-#' @param watermark `Label` object defining watermark
-#' @param export R6 class `SaveConfiguration` defining saving properties
-#' @param format character defining the format of the file to be saved
-#' @param width numeric values defining the width in `units` of the plot dimensions after saving
-#' @param height numeric values defining the height in `units` of the plot dimensions after saving
-#' @param units character defining the unit of the saving dimension
-#' @param lines `ThemeAestheticSelections` object or list defining how lines are plotted
-#' @param points `ThemeAestheticSelections` object or list defining how points are plotted
-#' @param ribbons `ThemeAestheticSelections` object or list defining how ribbons are plotted
-#' @param errorbars `ThemeAestheticSelections` object or list defining how errorbars are plotted
-#'
 #' @export
 ospPlotConfiguration <- R6::R6Class(
   "ospPlotConfiguration",
   public = list(
-    # annotations
+    #' @field title A character string providing plot title.
     title = NULL,
+
+    #' @field subtitle A character string providing plot subtitle.
     subtitle = NULL,
+
+    #' @field xlabel A character string providing plot x-axis label.
     xlabel = NULL,
+
+    #' @field ylabel A character string providing plot y-axis label.
     ylabel = NULL,
 
-    # Legend Configuration
+    #' @field legend `tlf::LegendConfiguration` object defining legend properties.
     legend = NULL,
 
-    # X-Axis configuration
+    #' @field xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
     xAxis = NULL,
 
-    # Y-Axis configuration
+    #' @field yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
     yAxis = NULL,
 
     # Background configuration
@@ -52,18 +32,53 @@ ospPlotConfiguration <- R6::R6Class(
     # panelArea = NULL,
     # xGrid = NULL,
     # yGrid = NULL,
-    # watermark = NULL,
 
-    # configuration of how objects are plotted
+    #' @field watermark `tlf::Label` object defining watermark.
+    watermark = NULL,
+
+    #' @field lines `tlf::ThemeAestheticSelections` object or list defining how
+    #'   lines are plotted.
     lines = NULL,
+
+    #' @field points `tlf::ThemeAestheticSelections` object or list defining how
+    #'   points are plotted.
     points = NULL,
+
+    #' @field ribbons `tlf::ThemeAestheticSelections` object or list defining
+    #'   how ribbons are plotted.
     ribbons = NULL,
+
+    #' @field errorbars `tlf::ThemeAestheticSelections` object or list defining
+    #'   how errorbars are plotted.
     errorbars = NULL,
 
-    # Export configuration
+    #' @field export R6 class `tlf::SaveConfiguration` defining saving properties.
     export = NULL,
 
     #' @description Create a new `ospPlotConfiguration` object
+    #'
+    #' @param title,subtitle,xlabel,ylabel A character string providing plot
+    #'   annotations for plot title, subtitle, x-axis label, y-axis label, plot
+    #'   legend, watermark, respectively.
+    #' @param legend `tlf::LegendConfiguration` object defining legend properties.
+    #' @param xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
+    #' @param yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
+    # @param background `tlf::BackgroundConfiguration` object defining background properties.
+    # @param plotArea `tlf::BackgroundElement` object defining properties of plot area.
+    # @param panelArea `tlf::BackgroundElement` object defining properties of panel area.
+    # @param xGrid `tlf::LineElement` object defining properties of x-grid background.
+    # @param yGrid `tlf::LineElement` object defining properties of y-grid background.
+    #' @param watermark `tlf::Label` object defining watermark.
+    #' @param lines `tlf::ThemeAestheticSelections` object or list defining how
+    #'   lines are plotted.
+    #' @param points `tlf::ThemeAestheticSelections` object or list defining how
+    #'   points are plotted.
+    #' @param ribbons `tlf::ThemeAestheticSelections` object or list defining
+    #'   how ribbons are plotted.
+    #' @param errorbars `tlf::ThemeAestheticSelections` object or list defining
+    #'   how errorbars are plotted.
+    #' @param export R6 class `tlf::SaveConfiguration` defining saving
+    #'   properties.
     #'
     #' @return A new `PlotConfiguration` object
     initialize = function(title = NULL,
@@ -105,7 +120,9 @@ ospPlotConfiguration <- R6::R6Class(
       # self$panelArea <- panelArea
       # self$xGrid <- xGrid
       # self$yGrid <- yGrid
-      # self$watermark <- watermark
+
+      # Watermark
+      self$watermark <- watermark
 
       # Configurations for aesthetics
       self$lines <- lines

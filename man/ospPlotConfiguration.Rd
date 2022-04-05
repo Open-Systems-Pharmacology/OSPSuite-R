@@ -6,6 +6,41 @@
 \description{
 R6 class defining the configuration of a \code{{ospsuite}} plots.
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{title}}{A character string providing plot title.}
+
+\item{\code{subtitle}}{A character string providing plot subtitle.}
+
+\item{\code{xlabel}}{A character string providing plot x-axis label.}
+
+\item{\code{ylabel}}{A character string providing plot y-axis label.}
+
+\item{\code{legend}}{\code{tlf::LegendConfiguration} object defining legend properties.}
+
+\item{\code{xAxis}}{\code{tlf::XAxisConfiguration} object defining x-axis properties.}
+
+\item{\code{yAxis}}{\code{tlf::YAxisConfiguration} object defining y-axis properties.}
+
+\item{\code{watermark}}{\code{tlf::Label} object defining watermark.}
+
+\item{\code{lines}}{\code{tlf::ThemeAestheticSelections} object or list defining how
+lines are plotted.}
+
+\item{\code{points}}{\code{tlf::ThemeAestheticSelections} object or list defining how
+points are plotted.}
+
+\item{\code{ribbons}}{\code{tlf::ThemeAestheticSelections} object or list defining
+how ribbons are plotted.}
+
+\item{\code{errorbars}}{\code{tlf::ThemeAestheticSelections} object or list defining
+how errorbars are plotted.}
+
+\item{\code{export}}{R6 class \code{tlf::SaveConfiguration} defining saving properties.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -39,31 +74,32 @@ Create a new \code{ospPlotConfiguration} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{title}}{character or \code{Label} object defining plot title}
+\item{\code{title, subtitle, xlabel, ylabel}}{A character string providing plot
+annotations for plot title, subtitle, x-axis label, y-axis label, plot
+legend, watermark, respectively.}
 
-\item{\code{subtitle}}{character or \code{Label} object defining plot subtitle}
+\item{\code{legend}}{\code{tlf::LegendConfiguration} object defining legend properties.}
 
-\item{\code{xlabel}}{character or \code{Label} object defining plot xlabel}
+\item{\code{xAxis}}{\code{tlf::XAxisConfiguration} object defining x-axis properties.}
 
-\item{\code{ylabel}}{character or \code{Label} object defining plot ylabel}
+\item{\code{yAxis}}{\code{tlf::YAxisConfiguration} object defining y-axis properties.}
 
-\item{\code{legend}}{\code{LegendConfiguration} object defining legend properties}
+\item{\code{watermark}}{\code{tlf::Label} object defining watermark.}
 
-\item{\code{xAxis}}{\code{XAxisConfiguration} object defining x-axis properties}
+\item{\code{lines}}{\code{tlf::ThemeAestheticSelections} object or list defining how
+lines are plotted.}
 
-\item{\code{yAxis}}{\code{YAxisConfiguration} object defining y-axis properties}
+\item{\code{points}}{\code{tlf::ThemeAestheticSelections} object or list defining how
+points are plotted.}
 
-\item{\code{watermark}}{\code{Label} object defining watermark}
+\item{\code{ribbons}}{\code{tlf::ThemeAestheticSelections} object or list defining
+how ribbons are plotted.}
 
-\item{\code{lines}}{\code{ThemeAestheticSelections} object or list defining how lines are plotted}
+\item{\code{errorbars}}{\code{tlf::ThemeAestheticSelections} object or list defining
+how errorbars are plotted.}
 
-\item{\code{points}}{\code{ThemeAestheticSelections} object or list defining how points are plotted}
-
-\item{\code{ribbons}}{\code{ThemeAestheticSelections} object or list defining how ribbons are plotted}
-
-\item{\code{errorbars}}{\code{ThemeAestheticSelections} object or list defining how errorbars are plotted}
-
-\item{\code{export}}{R6 class \code{SaveConfiguration} defining saving properties}
+\item{\code{export}}{R6 class \code{tlf::SaveConfiguration} defining saving
+properties.}
 }
 \if{html}{\out{</div>}}
 }
