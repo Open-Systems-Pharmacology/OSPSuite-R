@@ -156,7 +156,7 @@ createPlotConfiguration <- function(title = NULL,
     angle = xAxisLabelAngle
   )
 
-  xAxisConfiguration <- tlf::AxisConfiguration$new(
+  xAxisConfiguration <- tlf::XAxisConfiguration$new(
     limits = xAxisLimits,
     scale = xAxisScale,
     ticks = xAxisTicks,
@@ -174,7 +174,7 @@ createPlotConfiguration <- function(title = NULL,
     angle = yAxisLabelAngle
   )
 
-  yAxisConfiguration <- tlf::AxisConfiguration$new(
+  yAxisConfiguration <- tlf::YAxisConfiguration$new(
     limits = yAxisLimits,
     scale = yAxisScale,
     ticks = yAxisTicks,
