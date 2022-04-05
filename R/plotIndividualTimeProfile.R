@@ -62,8 +62,6 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Export configuration
   individualTimeProfilePlotConfiguration$export <- ospPlotConfiguration$export
 
-  print(individualTimeProfilePlotConfiguration)
-
   # plot -----------------------------
 
   tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
