@@ -96,7 +96,7 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
   )
 
   # consistently return a (classical) data frame
-  return(as.data.frame(df))
+  return(df)
 }
 
 #' @rdname pkAnalysesToDataFrame

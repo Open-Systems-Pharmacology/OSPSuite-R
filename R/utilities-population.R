@@ -67,7 +67,7 @@ populationToDataFrame <- function(population) {
   df <- data.frame(columns, stringsAsFactors = FALSE, check.names = FALSE)
 
   # consistently return a (classical) data frame
-  return(as.data.frame(df))
+  return(df)
 }
 
 #' @rdname populationToDataFrame
