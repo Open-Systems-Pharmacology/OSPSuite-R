@@ -72,6 +72,7 @@ Collate:
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'
+    'plotGrid.R'
     'population-characteristics.R'
     'population.R'
     'quantity-pk-parameter.R'
