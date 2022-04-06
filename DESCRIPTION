@@ -25,7 +25,8 @@ Imports:
     R6,
     readr,
     stringr,
-    tidyr
+    tidyr,
+    tlf
 Suggests: 
     knitr,
     rmarkdown,
@@ -42,6 +43,7 @@ Collate:
     'cache.R'
     'container.R'
     'create-individual.R'
+    'create-internal-plot-configuration.R'
     'create-plot-configuration.R'
     'create-population.R'
     'data-column.R'
@@ -60,6 +62,7 @@ Collate:
     'molecule-ontogeny.R'
     'molecule.R'
     'object-base.R'
+    'ospInternalPlotConfiguration.R'
     'ospPlotConfiguration.R'
     'utilities.R'
     'ospsuite-env.R'
@@ -71,6 +74,7 @@ Collate:
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'
+    'plotIndividualTimeProfile.R'
     'population-characteristics.R'
     'population.R'
     'quantity-pk-parameter.R'

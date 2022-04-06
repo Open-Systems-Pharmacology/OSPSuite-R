@@ -134,203 +134,94 @@ createPlotConfiguration <- function( # labels
                                     plotSaveFileHeight = 9,
                                     plotSaveFileDimensionUnits = "cm") {
 
-  # labels object ---------------------------------------
-
-  labels <- tlf::LabelConfiguration$new(
+  ospPlotConfiguration$new(
     title = title,
     subtitle = subtitle,
     xlabel = xlabel,
-    ylabel = ylabel
-  )
-
-  # legend object ---------------------------------------
-
-  legendTitleFont <- tlf::Font$new(
-    size = legendTitleSize,
-    color = legendTitleColor,
-    fontFamily = legendTitleFontFamily,
-    fontFace = legendTitleFontFace,
-    angle = legendTitleAngle
-  )
-
-  legendCaptionFont <- tlf::Font$new(
-    size = legendCaptionSize,
-    color = legendCaptionColor,
-    fontFamily = legendCaptionFontFamily,
-    fontFace = legendCaptionFontFace,
-    angle = legendCaptionAngle
-  )
-
-  legendConfig <- tlf::LegendConfiguration$new(
-    position = legendPosition,
-    caption = NULL,
-    title = legendTitle,
-    titleFont = legendTitleFont,
-    font = legendCaptionFont,
-    background = NULL
-  )
-
-  # background objects -----------------------------------
-
-  labelWatermark <- tlf::Label$new(
-    text = watermark,
-    font = NULL,
-    color = watermarkColor,
-    size = watermarkSize,
-    fontFace = watermarkFontFace,
-    fontFamily = watermarkFontFamily,
-    angle = watermarkAngle
-  )
-
-  plotBackground <- tlf::BackgroundElement$new(
-    fill = plotBackgroundFill,
-    color = plotBackgroundColor,
-    size = plotBackgroundSize,
-    linetype = plotBackgroundLinetype
-  )
-
-  plotPanelBackground <- tlf::BackgroundElement$new(
-    fill = plotPanelBackgroundFill,
-    color = plotPanelBackgroundColor,
-    size = plotPanelBackgroundSize,
-    linetype = plotPanelBackgroundLinetype
-  )
-
-  xAxis <- tlf::LineElement$new(
-    color = xAxisColor,
-    size = xAxisSize,
-    linetype = xAxisLinetype
-  )
-
-  yAxis <- tlf::LineElement$new(
-    color = yAxisColor,
-    size = yAxisSize,
-    linetype = yAxisLinetype
-  )
-
-  xGrid <- tlf::LineElement$new(
-    color = xGridColor,
-    size = xGridSize,
-    linetype = xGridLinetype
-  )
-
-  yGrid <- tlf::LineElement$new(
-    color = yGridColor,
-    size = yGridSize,
-    linetype = yGridLinetype
-  )
-
-  background <- tlf::BackgroundConfiguration$new(
-    watermark = labelWatermark,
-    plot = plotBackground,
-    panel = plotPanelBackground,
-    xAxis = xAxis,
-    yAxis = yAxis,
-    xGrid = xGrid,
-    yGrid = yGrid
-  )
-
-  # xAxis objects -----------------------------------
-
-  xAxisFont <- tlf::Font$new(
-    size = xAxisLabelSize,
-    color = xAxisLabelColor,
-    fontFamily = xAxisLabelFontFamily,
-    fontFace = xAxisLabelFontFace,
-    angle = xAxisLabelAngle
-  )
-
-  xAxisConfiguration <- tlf::XAxisConfiguration$new(
-    limits = xAxisLimits,
-    scale = xAxisScale,
-    ticks = xAxisTicks,
-    ticklabels = xAxisTickLabels,
-    font = xAxisFont
-  )
-
-  # yAxis objects -----------------------------------
-
-  yAxisFont <- tlf::Font$new(
-    size = yAxisLabelSize,
-    color = yAxisLabelColor,
-    fontFamily = yAxisLabelFontFamily,
-    fontFace = yAxisLabelFontFace,
-    angle = yAxisLabelAngle
-  )
-
-  yAxisConfiguration <- tlf::YAxisConfiguration$new(
-    limits = yAxisLimits,
-    scale = yAxisScale,
-    ticks = yAxisTicks,
-    ticklabels = yAxisTickLabels,
-    font = yAxisFont
-  )
-
-  # lines -------------------------------------------------------
-
-  linesConfiguration <- tlf::ThemeAestheticSelections$new(
-    color = linesColor,
-    fill = linesFill,
-    shape = linesShape,
-    size = linesSize,
-    linetype = linesLinetype,
-    alpha = linesAlpha
-  )
-
-  # points -------------------------------------------------------
-
-  pointsConfiguration <- tlf::ThemeAestheticSelections$new(
-    color = pointsColor,
-    fill = pointsFill,
-    shape = pointsShape,
-    size = pointsSize,
-    linetype = pointsLinetype,
-    alpha = pointsAlpha
-  )
-
-  # ribbons -------------------------------------------------------
-
-  ribbonsConfiguration <- tlf::ThemeAestheticSelections$new(
-    color = ribbonsColor,
-    fill = ribbonsFill,
-    shape = ribbonsShape,
-    size = ribbonsSize,
-    linetype = ribbonsLinetype,
-    alpha = ribbonsAlpha
-  )
-
-  # errorbars -------------------------------------------------------
-
-  errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
-    color = errorbarsColor,
-    fill = errorbarsFill,
-    shape = errorbarsShape,
-    size = errorbarsSize,
-    linetype = errorbarsLinetype,
-    alpha = errorbarsAlpha
-  )
-
-  # export -------------------------------------------------------
-
-  exportConfiguration <- tlf::ExportConfiguration$new(
-    format = plotSaveFileFormat,
-    width = plotSaveFileWidth,
-    height = plotSaveFileHeight,
-    units = plotSaveFileDimensionUnits
-  )
-
-  # ospPlotConfiguration object -----------------------------------
-
-  ospPlotConfiguration$new(
-    labels = labels,
-    legend = legendConfig,
-    xAxis = xAxisConfiguration,
-    yAxis = yAxisConfiguration,
-    background = background,
-    lines = linesConfiguration,
-    points = pointsConfiguration,
-    ribbons = ribbonsConfiguration,
-    errorbars = errorbarsConfiguration,
-    export = exportConfiguration
+    ylabel = ylabel,
+    legendPosition = legendPosition,
+    legendTitle = legendTitle,
+    legendTitleSize = legendTitleSize,
+    legendTitleColor = legendTitleColor,
+    legendTitleFontFamily = legendTitleFontFamily,
+    legendTitleFontFace = legendTitleFontFace,
+    legendTitleAngle = legendTitleAngle,
+    legendCaptionSize = legendCaptionSize,
+    legendCaptionColor = legendCaptionColor,
+    legendCaptionFontFamily = legendCaptionFontFamily,
+    legendCaptionFontFace = legendCaptionFontFace,
+    legendCaptionAngle = legendCaptionAngle,
+    xAxisLimits = xAxisLimits,
+    xAxisScale = xAxisScale,
+    xAxisTicks = xAxisTicks,
+    xAxisTickLabels = xAxisTickLabels,
+    xAxisLabelSize = xAxisLabelSize,
+    xAxisLabelColor = xAxisLabelColor,
+    xAxisLabelFontFamily = xAxisLabelFontFamily,
+    xAxisLabelFontFace = xAxisLabelFontFace,
+    xAxisLabelAngle = xAxisLabelAngle,
+    yAxisLimits = yAxisLimits,
+    yAxisScale = yAxisScale,
+    yAxisTicks = yAxisTicks,
+    yAxisTickLabels = yAxisTickLabels,
+    yAxisLabelSize = yAxisLabelSize,
+    yAxisLabelColor = yAxisLabelColor,
+    yAxisLabelFontFamily = yAxisLabelFontFamily,
+    yAxisLabelFontFace = yAxisLabelFontFace,
+    yAxisLabelAngle = yAxisLabelAngle,
+    watermark = watermark,
+    watermarkSize = watermarkSize,
+    watermarkColor = watermarkColor,
+    watermarkFontFamily = watermarkFontFamily,
+    watermarkFontFace = watermarkFontFace,
+    watermarkAngle = watermarkAngle,
+    plotBackgroundFill = plotBackgroundFill,
+    plotBackgroundColor = plotBackgroundColor,
+    plotBackgroundSize = plotBackgroundSize,
+    plotBackgroundLinetype = plotBackgroundLinetype,
+    plotPanelBackgroundFill = plotPanelBackgroundFill,
+    plotPanelBackgroundColor = plotPanelBackgroundColor,
+    plotPanelBackgroundSize = plotPanelBackgroundSize,
+    plotPanelBackgroundLinetype = plotPanelBackgroundLinetype,
+    xAxisColor = xAxisColor,
+    xAxisSize = xAxisSize,
+    xAxisLinetype = xAxisLinetype,
+    yAxisColor = yAxisColor,
+    yAxisSize = yAxisSize,
+    yAxisLinetype = yAxisLinetype,
+    xGridColor = xGridColor,
+    xGridSize = xGridSize,
+    xGridLinetype = xGridLinetype,
+    yGridColor = yGridColor,
+    yGridSize = yGridSize,
+    yGridLinetype = yGridLinetype,
+    linesColor = linesColor,
+    linesFill = linesFill,
+    linesShape = linesShape,
+    linesSize = linesSize,
+    linesLinetype = linesLinetype,
+    linesAlpha = linesAlpha,
+    pointsColor = pointsColor,
+    pointsFill = pointsFill,
+    pointsShape = pointsShape,
+    pointsSize = pointsSize,
+    pointsLinetype = pointsLinetype,
+    pointsAlpha = pointsAlpha,
+    ribbonsColor = ribbonsColor,
+    ribbonsFill = ribbonsFill,
+    ribbonsShape = ribbonsShape,
+    ribbonsSize = ribbonsSize,
+    ribbonsLinetype = ribbonsLinetype,
+    ribbonsAlpha = ribbonsAlpha,
+    errorbarsColor = errorbarsColor,
+    errorbarsFill = errorbarsFill,
+    errorbarsShape = errorbarsShape,
+    errorbarsSize = errorbarsSize,
+    errorbarsLinetype = errorbarsLinetype,
+    errorbarsAlpha = errorbarsAlpha,
+    plotSaveFileFormat = plotSaveFileFormat,
+    plotSaveFileWidth = plotSaveFileWidth,
+    plotSaveFileHeight = plotSaveFileHeight,
+    plotSaveFileDimensionUnits = plotSaveFileDimensionUnits
   )
 }

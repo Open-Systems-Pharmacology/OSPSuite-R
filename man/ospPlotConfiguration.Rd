@@ -2,37 +2,123 @@
 % Please edit documentation in R/ospPlotConfiguration.R
 \name{ospPlotConfiguration}
 \alias{ospPlotConfiguration}
-\title{Plot configuration for OSP plots}
+\title{Convenience class for plot configuration for OSP plots}
 \description{
-R6 class defining the configuration of a \code{{ospsuite}} plots.
+R6 class defining the configuration for \code{{ospsuite}} plots. It holds values
+for all relevant plot properties. The recommended way to create this object
+is by using the \code{createPlotConfiguration()} function.
+
+Note that the values this objects contains are of general-purpose utility. In
+other words, the public members of this class instance can be used to specify
+arguments for base plots, ggplot plots, or any other plotting framework.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{labels}}{\code{tlf::LabelConfiguration} object defining properties of labels.}
+\item{\code{title, subtitle, xlabel, ylabel, legendTitle, watermark}}{A character string
+providing plot annotations for plot title, subtitle, x-axis label, y-axis
+label, plot legend, watermark, respectively.}
 
-\item{\code{legend}}{\code{tlf::LegendConfiguration} object defining legend properties.}
+\item{\code{legendPosition}}{A character string defining the legend position
+(default: \code{"outsideRight"}). Available options
+are:\code{"none"},\code{"insideTop"},\code{"insideTopLeft"},
+\code{"insideLeft"},\code{"insideBottomLeft"},\code{"insideBottom"},\code{"insideBottomRight"},
+\code{"insideRight"},\code{"insideTopRight"},\code{"outsideTop"},\code{"outsideTopLeft"},
+\code{"outsideLeft"},\code{"outsideBottomLeft"},\code{"outsideBottom"},\code{"outsideBottomRight"},
+\code{"outsideRight"},\code{"outsideTopRight"}.}
 
-\item{\code{xAxis}}{\code{tlf::XAxisConfiguration} object defining x-axis properties.}
+\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendCaptionSize}}{Aesthetic properties for the legend title.}
 
-\item{\code{yAxis}}{\code{tlf::YAxisConfiguration} object defining y-axis properties.}
+\item{\code{legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle}}{Aesthetic properties for the legend caption.}
 
-\item{\code{background}}{\code{tlf::BackgroundConfiguration} object defining the
-configuration of background.}
+\item{\code{xAxisTickLabels, xAxisLabelSize, xAxisLabelColor, xAxisLabelFontFamily, xAxisLabelFontFace, xAxisLabelAngle}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{lines}}{\code{tlf::ThemeAestheticSelections} object or list defining how
-lines are plotted.}
+\item{\code{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}}{Aesthetic properties for the y-axis label.}
 
-\item{\code{points}}{\code{tlf::ThemeAestheticSelections} object or list defining how
-points are plotted.}
+\item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
+y-axis, respectively.}
 
-\item{\code{ribbons}}{\code{tlf::ThemeAestheticSelections} object or list defining
-how ribbons are plotted.}
+\item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
+position x-and y-axis ticks, respectively.}
 
-\item{\code{errorbars}}{\code{tlf::ThemeAestheticSelections} object or list defining
-how errorbars are plotted.}
+\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale (default:
+\code{"lin"}). Available options are: \code{"lin"}, \code{"log"}, \code{"ln"}, \code{"discrete"},
+\code{"reverse"}, \code{"sqrt"}, \code{"time"}, \code{"date"}.}
 
-\item{\code{export}}{R6 class \code{tlf::SaveConfiguration} defining saving properties.}
+\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}}{A character string specifying the aesthetic properties for the watermark.}
+
+\item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
+
+\item{\code{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
+
+\item{\code{xAxisColor, xAxisSize, xAxisLinetype}}{A character string specifying the aesthetic properties for the x-axis.}
+
+\item{\code{yAxisColor, yAxisSize, yAxisLinetype}}{A character string specifying the aesthetic properties for the y-axis.}
+
+\item{\code{xGridColor, xGridSize, xGridLinetype}}{A character string specifying the aesthetic properties for the x-axis grid.}
+
+\item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
+
+\item{\code{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+
+\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsLinetype, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+
+\item{\code{ribbonsColor, ribbonsFill, ribbonsShape, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+
+\item{\code{errorbarsColor, errorbarsFill, errorbarsShape, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+
+\item{\code{plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits}}{File format to which the plot needs to be saved, and the units and dimensions for saving the plot.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{title, subtitle, xlabel, ylabel, legendTitle, watermark}}{A character string
+providing plot annotations for plot title, subtitle, x-axis label, y-axis
+label, plot legend, watermark, respectively.}
+
+\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendCaptionSize}}{Aesthetic properties for the legend title.}
+
+\item{\code{legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle}}{Aesthetic properties for the legend caption.}
+
+\item{\code{xAxisTickLabels, xAxisLabelSize, xAxisLabelColor, xAxisLabelFontFamily, xAxisLabelFontFace, xAxisLabelAngle}}{Aesthetic properties for the x-axis label.}
+
+\item{\code{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}}{Aesthetic properties for the y-axis label.}
+
+\item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
+y-axis, respectively.}
+
+\item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
+position x-and y-axis ticks, respectively.}
+
+\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale (default:
+\code{"lin"}). Available options are: \code{"lin"}, \code{"log"}, \code{"ln"}, \code{"discrete"},
+\code{"reverse"}, \code{"sqrt"}, \code{"time"}, \code{"date"}.}
+
+\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}}{A character string specifying the aesthetic properties for the watermark.}
+
+\item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
+
+\item{\code{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
+
+\item{\code{xAxisColor, xAxisSize, xAxisLinetype}}{A character string specifying the aesthetic properties for the x-axis.}
+
+\item{\code{yAxisColor, yAxisSize, yAxisLinetype}}{A character string specifying the aesthetic properties for the y-axis.}
+
+\item{\code{xGridColor, xGridSize, xGridLinetype}}{A character string specifying the aesthetic properties for the x-axis grid.}
+
+\item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
+
+\item{\code{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+
+\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsLinetype, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+
+\item{\code{ribbonsColor, ribbonsFill, ribbonsShape, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+
+\item{\code{errorbarsColor, errorbarsFill, errorbarsShape, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+
+\item{\code{plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits}}{File format to which the plot needs to be saved, and the units and dimensions for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }
@@ -47,55 +133,161 @@ how errorbars are plotted.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{ospPlotConfiguration} object
+Create a new \code{ospInternalPlotConfiguration} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ospPlotConfiguration$new(
-  labels = NULL,
-  legend = NULL,
-  xAxis = NULL,
-  yAxis = NULL,
-  background = NULL,
-  lines = NULL,
-  points = NULL,
-  ribbons = NULL,
-  errorbars = NULL,
-  export = NULL
+  title = NULL,
+  subtitle = NULL,
+  xlabel = NULL,
+  ylabel = NULL,
+  legendPosition = NULL,
+  legendTitle = NULL,
+  legendTitleSize = NULL,
+  legendTitleColor = NULL,
+  legendTitleFontFamily = NULL,
+  legendTitleFontFace = NULL,
+  legendTitleAngle = NULL,
+  legendCaptionSize = NULL,
+  legendCaptionColor = NULL,
+  legendCaptionFontFamily = NULL,
+  legendCaptionFontFace = NULL,
+  legendCaptionAngle = NULL,
+  xAxisLimits = NULL,
+  xAxisScale = NULL,
+  xAxisTicks = NULL,
+  xAxisTickLabels = NULL,
+  xAxisLabelSize = NULL,
+  xAxisLabelColor = NULL,
+  xAxisLabelFontFamily = NULL,
+  xAxisLabelFontFace = NULL,
+  xAxisLabelAngle = NULL,
+  yAxisLimits = NULL,
+  yAxisScale = NULL,
+  yAxisTicks = NULL,
+  yAxisTickLabels = NULL,
+  yAxisLabelSize = NULL,
+  yAxisLabelColor = NULL,
+  yAxisLabelFontFamily = NULL,
+  yAxisLabelFontFace = NULL,
+  yAxisLabelAngle = NULL,
+  watermark = NULL,
+  watermarkSize = NULL,
+  watermarkColor = NULL,
+  watermarkFontFamily = NULL,
+  watermarkFontFace = NULL,
+  watermarkAngle = NULL,
+  plotBackgroundFill = NULL,
+  plotBackgroundColor = NULL,
+  plotBackgroundSize = NULL,
+  plotBackgroundLinetype = NULL,
+  plotPanelBackgroundFill = NULL,
+  plotPanelBackgroundColor = NULL,
+  plotPanelBackgroundSize = NULL,
+  plotPanelBackgroundLinetype = NULL,
+  xAxisColor = NULL,
+  xAxisSize = NULL,
+  xAxisLinetype = NULL,
+  yAxisColor = NULL,
+  yAxisSize = NULL,
+  yAxisLinetype = NULL,
+  xGridColor = NULL,
+  xGridSize = NULL,
+  xGridLinetype = NULL,
+  yGridColor = NULL,
+  yGridSize = NULL,
+  yGridLinetype = NULL,
+  linesColor = NULL,
+  linesFill = NULL,
+  linesShape = NULL,
+  linesSize = NULL,
+  linesLinetype = NULL,
+  linesAlpha = NULL,
+  pointsColor = NULL,
+  pointsFill = NULL,
+  pointsShape = NULL,
+  pointsSize = NULL,
+  pointsLinetype = NULL,
+  pointsAlpha = NULL,
+  ribbonsColor = NULL,
+  ribbonsFill = NULL,
+  ribbonsShape = NULL,
+  ribbonsSize = NULL,
+  ribbonsLinetype = NULL,
+  ribbonsAlpha = NULL,
+  errorbarsColor = NULL,
+  errorbarsFill = NULL,
+  errorbarsShape = NULL,
+  errorbarsSize = NULL,
+  errorbarsLinetype = NULL,
+  errorbarsAlpha = NULL,
+  plotSaveFileFormat = NULL,
+  plotSaveFileWidth = NULL,
+  plotSaveFileHeight = NULL,
+  plotSaveFileDimensionUnits = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{labels}}{\code{tlf::LabelConfiguration} object defining properties of labels.}
+\item{\code{title, subtitle, xlabel, ylabel, legendTitle, watermark}}{A character string
+providing plot annotations for plot title, subtitle, x-axis label, y-axis
+label, plot legend, watermark, respectively.}
 
-\item{\code{legend}}{\code{tlf::LegendConfiguration} object defining legend properties.}
+\item{\code{legendPosition}}{A character string defining the legend position
+(default: \code{"outsideRight"}). Available options
+are:\code{"none"},\code{"insideTop"},\code{"insideTopLeft"},
+\code{"insideLeft"},\code{"insideBottomLeft"},\code{"insideBottom"},\code{"insideBottomRight"},
+\code{"insideRight"},\code{"insideTopRight"},\code{"outsideTop"},\code{"outsideTopLeft"},
+\code{"outsideLeft"},\code{"outsideBottomLeft"},\code{"outsideBottom"},\code{"outsideBottomRight"},
+\code{"outsideRight"},\code{"outsideTopRight"}.}
 
-\item{\code{xAxis}}{\code{tlf::XAxisConfiguration} object defining x-axis properties.}
+\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendCaptionSize}}{Aesthetic properties for the legend title.}
 
-\item{\code{yAxis}}{\code{tlf::YAxisConfiguration} object defining y-axis properties.}
+\item{\code{legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle}}{Aesthetic properties for the legend caption.}
 
-\item{\code{background}}{\code{tlf::BackgroundConfiguration} object defining the
-configuration of background.}
+\item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
+y-axis, respectively.}
 
-\item{\code{lines}}{\code{tlf::ThemeAestheticSelections} object or list defining how
-lines are plotted.}
+\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale (default:
+\code{"lin"}). Available options are: \code{"lin"}, \code{"log"}, \code{"ln"}, \code{"discrete"},
+\code{"reverse"}, \code{"sqrt"}, \code{"time"}, \code{"date"}.}
 
-\item{\code{points}}{\code{tlf::ThemeAestheticSelections} object or list defining how
-points are plotted.}
+\item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
+position x-and y-axis ticks, respectively.}
 
-\item{\code{ribbons}}{\code{tlf::ThemeAestheticSelections} object or list defining
-how ribbons are plotted.}
+\item{\code{xAxisTickLabels, xAxisLabelSize, xAxisLabelColor, xAxisLabelFontFamily, xAxisLabelFontFace, xAxisLabelAngle}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{errorbars}}{\code{tlf::ThemeAestheticSelections} object or list defining
-how errorbars are plotted.}
+\item{\code{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}}{Aesthetic properties for the y-axis label.}
 
-\item{\code{export}}{R6 class \code{tlf::SaveConfiguration} defining saving
-properties.}
+\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}}{A character string specifying the aesthetic properties for the watermark.}
+
+\item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
+
+\item{\code{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
+
+\item{\code{xAxisColor, xAxisSize, xAxisLinetype}}{A character string specifying the aesthetic properties for the x-axis.}
+
+\item{\code{yAxisColor, yAxisSize, yAxisLinetype}}{A character string specifying the aesthetic properties for the y-axis.}
+
+\item{\code{xGridColor, xGridSize, xGridLinetype}}{A character string specifying the aesthetic properties for the x-axis grid.}
+
+\item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
+
+\item{\code{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+
+\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsLinetype, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+
+\item{\code{ribbonsColor, ribbonsFill, ribbonsShape, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+
+\item{\code{errorbarsColor, errorbarsFill, errorbarsShape, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+
+\item{\code{plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits}}{File format to which the plot needs to be saved, and the units and dimensions for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{PlotConfiguration} object
+A new \code{ospPlotConfiguration} object
 }
 }
 \if{html}{\out{<hr>}}
