@@ -3,8 +3,7 @@
 #' @description
 #'
 #' R6 class defining the configuration for `{ospsuite}` plots. It holds values
-#' for all relevant plot properties. The recommended way to create this object
-#' is by using the `createPlotConfiguration()` function.
+#' for all relevant plot properties.
 #'
 #' Note that the values this objects contains are of general-purpose utility. In
 #' other words, the public members of this class instance can be used to specify

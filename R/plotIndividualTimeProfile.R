@@ -6,8 +6,7 @@
 #'    object for `{tlf}` library.
 #' @param ospPlotConfiguration A `ospPlotConfiguration` object, which is an `R6`
 #'   class object that defines plot properties (like labels, axes scaling and
-#'   limits, legend position, etc.). You can create instance of this object
-#'   using `createPlotConfiguration()` function.
+#'   limits, legend position, etc.).
 #' @param xUnit,yUnit Units for x- and y-axes, respectively.
 #'
 #' @import tlf

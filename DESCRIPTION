@@ -44,7 +44,6 @@ Collate:
     'container.R'
     'create-individual.R'
     'create-internal-plot-configuration.R'
-    'create-plot-configuration.R'
     'create-population.R'
     'data-column.R'
     'data-combined.R'

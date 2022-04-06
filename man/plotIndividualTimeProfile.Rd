@@ -17,8 +17,7 @@ plotIndividualTimeProfile(
 
 \item{ospPlotConfiguration}{A \code{ospPlotConfiguration} object, which is an \code{R6}
 class object that defines plot properties (like labels, axes scaling and
-limits, legend position, etc.). You can create instance of this object
-using \code{createPlotConfiguration()} function.}
+limits, legend position, etc.).}
 
 \item{xUnit, yUnit}{Units for x- and y-axes, respectively.}
 
