@@ -17,7 +17,8 @@ R6 class defining the configuration of a \code{{ospsuite}} plots.
 
 \item{\code{yAxis}}{\code{tlf::YAxisConfiguration} object defining y-axis properties.}
 
-\item{\code{watermark}}{\code{tlf::Label} object defining watermark.}
+\item{\code{background}}{\code{tlf::BackgroundConfiguration} object defining the
+configuration of background.}
 
 \item{\code{lines}}{\code{tlf::ThemeAestheticSelections} object or list defining how
 lines are plotted.}
@@ -53,7 +54,7 @@ Create a new \code{ospPlotConfiguration} object
   legend = NULL,
   xAxis = NULL,
   yAxis = NULL,
-  watermark = NULL,
+  background = NULL,
   lines = NULL,
   points = NULL,
   ribbons = NULL,
@@ -73,7 +74,8 @@ Create a new \code{ospPlotConfiguration} object
 
 \item{\code{yAxis}}{\code{tlf::YAxisConfiguration} object defining y-axis properties.}
 
-\item{\code{watermark}}{\code{tlf::Label} object defining watermark.}
+\item{\code{background}}{\code{tlf::BackgroundConfiguration} object defining the
+configuration of background.}
 
 \item{\code{lines}}{\code{tlf::ThemeAestheticSelections} object or list defining how
 lines are plotted.}

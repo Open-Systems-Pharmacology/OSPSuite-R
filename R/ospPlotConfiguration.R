@@ -17,8 +17,9 @@ ospPlotConfiguration <- R6::R6Class(
     #' @field yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
     yAxis = NULL,
 
-    #' @field watermark `tlf::Label` object defining watermark.
-    watermark = NULL,
+    #' @field background `tlf::BackgroundConfiguration` object defining the
+    #'   configuration of background.
+    background = NULL,
 
     #' @field lines `tlf::ThemeAestheticSelections` object or list defining how
     #'   lines are plotted.
@@ -45,7 +46,8 @@ ospPlotConfiguration <- R6::R6Class(
     #' @param legend `tlf::LegendConfiguration` object defining legend properties.
     #' @param xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
     #' @param yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
-    #' @param watermark `tlf::Label` object defining watermark.
+    #' @param background `tlf::BackgroundConfiguration` object defining the
+    #'   configuration of background.
     #' @param lines `tlf::ThemeAestheticSelections` object or list defining how
     #'   lines are plotted.
     #' @param points `tlf::ThemeAestheticSelections` object or list defining how
@@ -62,7 +64,7 @@ ospPlotConfiguration <- R6::R6Class(
                           legend = NULL,
                           xAxis = NULL,
                           yAxis = NULL,
-                          watermark = NULL,
+                          background = NULL,
                           lines = NULL,
                           points = NULL,
                           ribbons = NULL,
@@ -80,8 +82,8 @@ ospPlotConfiguration <- R6::R6Class(
       # Y-Axis configuration
       self$yAxis <- yAxis
 
-      # Watermark
-      self$watermark <- watermark
+      # Background configuration
+      self$background <- background
 
       # Configurations for aesthetics
       self$lines <- lines

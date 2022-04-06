@@ -45,6 +45,26 @@ createPlotConfiguration(
   watermarkFontFamily = NULL,
   watermarkFontFace = NULL,
   watermarkAngle = NULL,
+  plotBackgroundFill = NULL,
+  plotBackgroundColor = NULL,
+  plotBackgroundSize = NULL,
+  plotBackgroundLinetype = NULL,
+  plotPanelBackgroundFill = NULL,
+  plotPanelBackgroundColor = NULL,
+  plotPanelBackgroundSize = NULL,
+  plotPanelBackgroundLinetype = NULL,
+  xAxisColor = NULL,
+  xAxisSize = NULL,
+  xAxisLinetype = NULL,
+  yAxisColor = NULL,
+  yAxisSize = NULL,
+  yAxisLinetype = NULL,
+  xGridColor = NULL,
+  xGridSize = NULL,
+  xGridLinetype = NULL,
+  yGridColor = NULL,
+  yGridSize = NULL,
+  yGridLinetype = NULL,
   linesColor = NULL,
   linesFill = NULL,
   linesShape = NULL,
@@ -106,7 +126,19 @@ position x-and y-axis ticks, respectively.}
 
 \item{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}{Aesthetic properties for the y-axis label.}
 
-\item{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}{Aesthetic properties for the watermark.}
+\item{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}{A character string specifying the aesthetic properties for the watermark.}
+
+\item{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}{A character string specifying the aesthetic properties for the plot background.}
+
+\item{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
+
+\item{xAxisColor, xAxisSize, xAxisLinetype}{A character string specifying the aesthetic properties for the x-axis.}
+
+\item{yAxisColor, yAxisSize, yAxisLinetype}{A character string specifying the aesthetic properties for the y-axis.}
+
+\item{xGridColor, xGridSize, xGridLinetype}{A character string specifying the aesthetic properties for the x-axis grid.}
+
+\item{yGridColor, yGridSize, yGridLinetype}{A character string specifying the aesthetic properties for the y-axis grid.}
 
 \item{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 

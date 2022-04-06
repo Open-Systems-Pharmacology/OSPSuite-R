@@ -21,7 +21,13 @@
 #' @param xAxisScale,yAxisScale A character string defining axis scale (default:
 #'   `"lin"`). Available options are: `"lin"`, `"log"`, `"ln"`, `"discrete"`,
 #'   `"reverse"`, `"sqrt"`, `"time"`, `"date"`.
-#' @param watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle Aesthetic properties for the watermark.
+#' @param watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle A character string specifying the aesthetic properties for the watermark.
+#' @param plotBackgroundFill,plotBackgroundColor,plotBackgroundSize,plotBackgroundLinetype A character string specifying the aesthetic properties for the plot background.
+#' @param plotPanelBackgroundFill,plotPanelBackgroundColor,plotPanelBackgroundSize,plotPanelBackgroundLinetype A character string specifying the aesthetic properties for the plot panel (inside of plot) background.
+#' @param xAxisColor,xAxisSize,xAxisLinetype A character string specifying the aesthetic properties for the x-axis.
+#' @param yAxisColor,yAxisSize,yAxisLinetype A character string specifying the aesthetic properties for the y-axis.
+#' @param xGridColor,xGridSize,xGridLinetype A character string specifying the aesthetic properties for the x-axis grid.
+#' @param yGridColor,yGridSize,yGridLinetype A character string specifying the aesthetic properties for the y-axis grid.
 #' @param linesColor,linesFill,linesShape,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
 #' @param pointsColor,pointsFill,pointsShape,pointsSize,pointsLinetype,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @param ribbonsColor,ribbonsFill,ribbonsShape,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
@@ -29,7 +35,8 @@
 #' @param plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits File format to which the plot needs to be saved, and the units and dimensions for saving the plot.
 #'
 #' @export
-createPlotConfiguration <- function(title = NULL,
+createPlotConfiguration <- function( # labels
+                                    title = NULL,
                                     subtitle = NULL,
                                     xlabel = NULL,
                                     ylabel = NULL,
@@ -66,13 +73,33 @@ createPlotConfiguration <- function(title = NULL,
                                     yAxisLabelFontFamily = NULL,
                                     yAxisLabelFontFace = NULL,
                                     yAxisLabelAngle = NULL,
-                                    # watermark
+                                    # background configuration
                                     watermark = NULL,
                                     watermarkSize = NULL,
                                     watermarkColor = NULL,
                                     watermarkFontFamily = NULL,
                                     watermarkFontFace = NULL,
                                     watermarkAngle = NULL,
+                                    plotBackgroundFill = NULL,
+                                    plotBackgroundColor = NULL,
+                                    plotBackgroundSize = NULL,
+                                    plotBackgroundLinetype = NULL,
+                                    plotPanelBackgroundFill = NULL,
+                                    plotPanelBackgroundColor = NULL,
+                                    plotPanelBackgroundSize = NULL,
+                                    plotPanelBackgroundLinetype = NULL,
+                                    xAxisColor = NULL,
+                                    xAxisSize = NULL,
+                                    xAxisLinetype = NULL,
+                                    yAxisColor = NULL,
+                                    yAxisSize = NULL,
+                                    yAxisLinetype = NULL,
+                                    xGridColor = NULL,
+                                    xGridSize = NULL,
+                                    xGridLinetype = NULL,
+                                    yGridColor = NULL,
+                                    yGridSize = NULL,
+                                    yGridLinetype = NULL,
                                     # lines
                                     linesColor = NULL,
                                     linesFill = NULL,
@@ -143,7 +170,7 @@ createPlotConfiguration <- function(title = NULL,
     background = NULL
   )
 
-  # watermark objects -----------------------------------
+  # background objects -----------------------------------
 
   labelWatermark <- tlf::Label$new(
     text = watermark,
@@ -153,6 +180,54 @@ createPlotConfiguration <- function(title = NULL,
     fontFace = watermarkFontFace,
     fontFamily = watermarkFontFamily,
     angle = watermarkAngle
+  )
+
+  plotBackground <- tlf::BackgroundElement$new(
+    fill = plotBackgroundFill,
+    color = plotBackgroundColor,
+    size = plotBackgroundSize,
+    linetype = plotBackgroundLinetype
+  )
+
+  plotPanelBackground <- tlf::BackgroundElement$new(
+    fill = plotPanelBackgroundFill,
+    color = plotPanelBackgroundColor,
+    size = plotPanelBackgroundSize,
+    linetype = plotPanelBackgroundLinetype
+  )
+
+  xAxis <- tlf::LineElement$new(
+    color = xAxisColor,
+    size = xAxisSize,
+    linetype = xAxisLinetype
+  )
+
+  yAxis <- tlf::LineElement$new(
+    color = yAxisColor,
+    size = yAxisSize,
+    linetype = yAxisLinetype
+  )
+
+  xGrid <- tlf::LineElement$new(
+    color = xGridColor,
+    size = xGridSize,
+    linetype = xGridLinetype
+  )
+
+  yGrid <- tlf::LineElement$new(
+    color = yGridColor,
+    size = yGridSize,
+    linetype = yGridLinetype
+  )
+
+  background <- tlf::BackgroundConfiguration$new(
+    watermark = labelWatermark,
+    plot = plotBackground,
+    panel = plotPanelBackground,
+    xAxis = xAxis,
+    yAxis = yAxis,
+    xGrid = xGrid,
+    yGrid = yGrid
   )
 
   # xAxis objects -----------------------------------
@@ -251,7 +326,7 @@ createPlotConfiguration <- function(title = NULL,
     legend = legendConfig,
     xAxis = xAxisConfiguration,
     yAxis = yAxisConfiguration,
-    watermark = labelWatermark,
+    background = background,
     lines = linesConfiguration,
     points = pointsConfiguration,
     ribbons = ribbonsConfiguration,
