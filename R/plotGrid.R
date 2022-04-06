@@ -10,6 +10,26 @@
 #' Create a plot grid using the `patchwork::wrap_plots()` function. The required
 #' arguments are supplied through the `ospPlotGridConfiguration` object.
 #'
+#' @examples
+#'
+#' library(tlf)
+#' library(ospsuite)
+#'
+#' ls_plots <- list(
+#'   plotHistogram(x = rnorm(100)),
+#'   plotHistogram(x = rnorm(100, mean = 3)),
+#'   plotHistogram(x = rnorm(100, mean = 10))
+#' )
+#'
+#' plotGridObj <- createPlotGridConfiguration(
+#'   plotList = ls_plots,
+#'   title = "my combined plot",
+#'   subtitle = "something clever",
+#'   caption = "something dumb"
+#' )
+#'
+#' plotGrid(plotGridObj)
+#'
 #' @export
 plotGrid <- function(ospPlotGridConfiguration) {
   patchwork::wrap_plots(

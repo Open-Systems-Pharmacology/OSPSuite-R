@@ -16,3 +16,24 @@ using \code{createPlotGridConfiguration()} function.}
 Create a plot grid using the \code{patchwork::wrap_plots()} function. The required
 arguments are supplied through the \code{ospPlotGridConfiguration} object.
 }
+\examples{
+
+library(tlf)
+library(ospsuite)
+
+ls_plots <- list(
+  plotHistogram(x = rnorm(100)),
+  plotHistogram(x = rnorm(100, mean = 3)),
+  plotHistogram(x = rnorm(100, mean = 10))
+)
+
+plotGridObj <- createPlotGridConfiguration(
+  plotList = ls_plots,
+  title = "my combined plot",
+  subtitle = "something clever",
+  caption = "something dumb"
+)
+
+plotGrid(plotGridObj)
+
+}
