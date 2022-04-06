@@ -26,7 +26,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   # data frames -----------------------------
 
   df <- dataCombined$toDataFrame()
-  df <- .unitConverter(df, xUnit, yUnit)
+  df <- ospsuite:::.unitConverter(df, xUnit, yUnit)
   obsData <- dplyr::filter(df, dataType == "observed")
   simData <- dplyr::filter(df, dataType == "simulated")
 
@@ -50,8 +50,8 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Y-Axis configuration
   individualTimeProfilePlotConfiguration$yAxis <- ospPlotConfiguration$yAxis
 
-  # Watermark
-  # individualTimeProfilePlotConfiguration$watermark <- ospPlotConfiguration$watermark
+  # Background configuration
+  individualTimeProfilePlotConfiguration$background <- ospPlotConfiguration$background
 
   # Configurations for aesthetics
   individualTimeProfilePlotConfiguration$lines <- ospPlotConfiguration$lines
