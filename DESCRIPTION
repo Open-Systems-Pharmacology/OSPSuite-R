@@ -21,6 +21,7 @@ Depends:
 Imports: 
     dplyr (>= 1.0.0),
     ospsuite.utils (>= 1.2.0.9000),
+    patchwork,
     purrr,
     R6,
     readr,
@@ -42,6 +43,7 @@ Collate:
     'cache.R'
     'container.R'
     'create-individual.R'
+    'create-plot-grid-configuration.R'
     'create-population.R'
     'data-column.R'
     'data-combined.R'
@@ -59,6 +61,7 @@ Collate:
     'molecule-ontogeny.R'
     'molecule.R'
     'object-base.R'
+    'ospPlotGridConfiguration.R'
     'utilities.R'
     'ospsuite-env.R'
     'output-schema.R'
