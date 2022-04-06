@@ -91,73 +91,13 @@ in the grid. Will get repeated to match the dimensions of the grid.}
 \subsection{Method \code{new()}}{
 Create an instance of \code{PlotGridConfiguration} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PlotGridConfiguration$new(
-  plotList = NULL,
-  title = NULL,
-  subtitle = NULL,
-  caption = NULL,
-  tagLevels = NULL,
-  tagPrefix = NULL,
-  tagSuffix = NULL,
-  tagSeparator = NULL,
-  theme = NULL,
-  nColumns = NULL,
-  nRows = NULL,
-  byRow = NULL,
-  widths = NULL,
-  heights = NULL,
-  guides = NULL,
-  design = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PlotGridConfiguration$new(plotList = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{plotList}}{A list containing \code{ggplot} objects.}
-
-\item{\code{title, subtitle, caption}}{Text strings to use for the various plot
-annotations, where plot refers to the grid of plots as a whole.}
-
-\item{\code{tagLevels}}{A character vector defining the enumeration format to
-use at each level. Possible values are \code{'a'} for lowercase letters,
-\code{'A'} for uppercase letters, \code{'1'} for numbers, \code{'i'} for lowercase
-Roman numerals, and \code{'I'} for uppercase Roman numerals. It can also be
-a list containing character vectors defining arbitrary tag sequences.
-If any element in the list is a scalar and one of \code{'a'}, \code{'A'}, \code{'1'},
-\verb{'i}, or \code{'I'}, this level will be expanded to the expected sequence.}
-
-\item{\code{tagPrefix, tagSuffix}}{Strings that should appear before or after the
-tag.}
-
-\item{\code{tagSeparator}}{A separator between different tag levels.}
-
-\item{\code{theme}}{A ggplot theme specification to use for the plot. Only
-elements related to the titles as well as plot margin and background
-will be used.}
-
-\item{\code{nColumns, nRows}}{The dimensions of the grid to create - if both are
-\code{NULL} it will use the same logic as
-\link[ggplot2:facet_wrap]{facet_wrap()} to set the dimensions.}
-
-\item{\code{byRow}}{Analogous to \code{byrow} in \link[base:matrix]{matrix()}. If \code{FALSE}
-the plots will be filled in in column-major order.}
-
-\item{\code{widths, heights}}{The relative widths and heights of each column and
-row in the grid. Will get repeated to match the dimensions of the grid.}
-
-\item{\code{guides}}{A string specifying how guides should be treated in the layout.
-\code{'collect'} will collect guides below to the given nesting level, removing
-duplicates. \code{'keep'} will stop collection at this level and let guides be
-placed alongside their plot. \code{auto} will allow guides to be collected if a
-upper level tries, but place them alongside the plot if not. If you modify
-default guide "position" with \link[ggplot2:theme]{theme(legend.position=...)}
-while also collecting guides you must apply that change to the overall
-patchwork/plot grid.}
-
-\item{\code{design}}{Specification of the location of areas in the layout. Can
-either be specified as a text string or by concatenating calls to
-\code{\link[=area]{area()}} together. See the examples for further information on use.}
 }
 \if{html}{\out{</div>}}
 }

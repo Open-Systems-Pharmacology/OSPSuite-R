@@ -14,9 +14,8 @@ test_that("plots grid is rendered correctly", {
     tlf::plotHistogram(x = rnorm(100, mean = 10))
   )
 
-  plotGridObj <- PlotGridConfiguration$new()
+  plotGridObj <- PlotGridConfiguration$new(ls_plots)
 
-  plotGridObj$plotList <- ls_plots
   plotGridObj$title <- "my combined plot"
   plotGridObj$subtitle <- "something clever"
   plotGridObj$caption <- "something dumb"
@@ -40,9 +39,8 @@ test_that("plots grid is rendered correctly", {
   p2 <- ggplot(mtcars, aes(wt, mpg)) +
     geom_point()
 
-  plotGridObj2 <- PlotGridConfiguration$new()
+  plotGridObj2 <- PlotGridConfiguration$new(list(p1, p2))
 
-  plotGridObj2$plotList <- list(p1, p2)
   plotGridObj2$nColumns <- 1L
   plotGridObj2$tagLevels <- "i"
 

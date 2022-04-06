@@ -17,22 +17,31 @@ arguments are supplied through the \code{PlotGridConfiguration} object.
 }
 \examples{
 
-library(tlf)
 library(ospsuite)
+library(ggplot2)
+library(tlf)
 
+# plots to be arranged in a grid
+set.seed(123)
 ls_plots <- list(
-  plotHistogram(x = rnorm(100)),
-  plotHistogram(x = rnorm(100, mean = 3)),
-  plotHistogram(x = rnorm(100, mean = 10))
+  tlf::plotHistogram(x = rnorm(100)),
+  tlf::plotHistogram(x = rnorm(100, mean = 3)),
+  tlf::plotHistogram(x = rnorm(100, mean = 10))
 )
 
-plotGridObj <- createPlotGridConfiguration(
-  plotList = ls_plots,
-  title = "my combined plot",
-  subtitle = "something clever",
-  caption = "something dumb"
-)
+# create an instance of plot configuration class
+plotGridObj <- PlotGridConfiguration$new(plotList = ls_plots)
 
+# specify further customizations for the plot grid
+plotGridObj$title <- "my combined plot"
+plotGridObj$subtitle <- "something clever"
+plotGridObj$caption <- "my sources"
+plotGridObj$nColumns <- 2L
+plotGridObj$tagLevels <- "A"
+plotGridObj$tagPrefix <- "Plot ("
+plotGridObj$tagSuffix <- ")"
+
+# plot the grid
 plotGrid(plotGridObj)
 
 }
