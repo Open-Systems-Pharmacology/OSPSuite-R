@@ -4,17 +4,16 @@
 \alias{plotGrid}
 \title{Create a plot grid}
 \usage{
-plotGrid(ospPlotGridConfiguration)
+plotGrid(PlotGridConfiguration)
 }
 \arguments{
-\item{ospPlotGridConfiguration}{A \code{ospPlotGridConfiguration} object, which
+\item{PlotGridConfiguration}{A \code{PlotGridConfiguration} object, which
 is an \code{R6} class object that defines properties of a plot grid (like number
-of rows, columns, labels, etc.). You can create instance of this object
-using \code{createPlotGridConfiguration()} function.}
+of rows, columns, labels, etc.).}
 }
 \description{
 Create a plot grid using the \code{patchwork::wrap_plots()} function. The required
-arguments are supplied through the \code{ospPlotGridConfiguration} object.
+arguments are supplied through the \code{PlotGridConfiguration} object.
 }
 \examples{
 

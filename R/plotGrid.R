@@ -1,14 +1,13 @@
 #' Create a plot grid
 #'
-#' @param ospPlotGridConfiguration  A `ospPlotGridConfiguration` object, which
+#' @param PlotGridConfiguration  A `PlotGridConfiguration` object, which
 #'   is an `R6` class object that defines properties of a plot grid (like number
-#'   of rows, columns, labels, etc.). You can create instance of this object
-#'   using `createPlotGridConfiguration()` function.
+#'   of rows, columns, labels, etc.).
 #'
 #' @description
 #'
 #' Create a plot grid using the `patchwork::wrap_plots()` function. The required
-#' arguments are supplied through the `ospPlotGridConfiguration` object.
+#' arguments are supplied through the `PlotGridConfiguration` object.
 #'
 #' @examples
 #'
@@ -34,25 +33,25 @@
 #' For more, see: <https://patchwork.data-imaginist.com/articles/patchwork.html>
 #'
 #' @export
-plotGrid <- function(ospPlotGridConfiguration) {
+plotGrid <- function(PlotGridConfiguration) {
   patchwork::wrap_plots(
-    ospPlotGridConfiguration$plotList,
-    ncol = ospPlotGridConfiguration$nColumns,
-    nrow = ospPlotGridConfiguration$nRows,
-    byrow = ospPlotGridConfiguration$byRow,
-    widths = ospPlotGridConfiguration$widths,
-    heights = ospPlotGridConfiguration$heights,
-    guides = ospPlotGridConfiguration$guides,
-    design = ospPlotGridConfiguration$design
+    PlotGridConfiguration$plotList,
+    ncol = PlotGridConfiguration$nColumns,
+    nrow = PlotGridConfiguration$nRows,
+    byrow = PlotGridConfiguration$byRow,
+    widths = PlotGridConfiguration$widths,
+    heights = PlotGridConfiguration$heights,
+    guides = PlotGridConfiguration$guides,
+    design = PlotGridConfiguration$design
   ) +
     patchwork::plot_annotation(
-      title = ospPlotGridConfiguration$title,
-      subtitle = ospPlotGridConfiguration$subtitle,
-      caption = ospPlotGridConfiguration$caption,
-      tag_levels = ospPlotGridConfiguration$tagLevels,
-      tag_prefix = ospPlotGridConfiguration$tagPrefix,
-      tag_suffix = ospPlotGridConfiguration$tagSuffix,
-      tag_sep = ospPlotGridConfiguration$tagSeparator,
-      theme = ospPlotGridConfiguration$theme
+      title = PlotGridConfiguration$title,
+      subtitle = PlotGridConfiguration$subtitle,
+      caption = PlotGridConfiguration$caption,
+      tag_levels = PlotGridConfiguration$tagLevels,
+      tag_prefix = PlotGridConfiguration$tagPrefix,
+      tag_suffix = PlotGridConfiguration$tagSuffix,
+      tag_sep = PlotGridConfiguration$tagSeparator,
+      theme = PlotGridConfiguration$theme
     )
 }

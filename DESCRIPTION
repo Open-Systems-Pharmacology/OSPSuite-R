@@ -26,7 +26,8 @@ Imports:
     R6,
     readr,
     stringr,
-    tidyr
+    tidyr,
+    tlf
 Suggests: 
     knitr,
     rmarkdown,
@@ -38,13 +39,13 @@ RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
+    'PlotGridConfiguration.R'
     'aging-data.R'
     'api-config.R'
     'application.R'
     'cache.R'
     'container.R'
     'create-individual.R'
-    'create-plot-grid-configuration.R'
     'create-population.R'
     'data-column.R'
     'data-combined.R'
@@ -62,7 +63,6 @@ Collate:
     'molecule-ontogeny.R'
     'molecule.R'
     'object-base.R'
-    'ospPlotGridConfiguration.R'
     'utilities.R'
     'ospsuite-env.R'
     'output-schema.R'

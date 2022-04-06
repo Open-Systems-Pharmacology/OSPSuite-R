@@ -4,8 +4,7 @@
 #'
 #' R6 class defining the configuration for `{patchwork}` plot grid used to
 #' create a grid of plots from `{ospsuite}`. It holds values for all relevant
-#' plot properties. The recommended way to create this object is by using the
-#' `createPlotGridConfiguration()` function.
+#' plot properties.
 #'
 #' @field plotList A list containing `ggplot` objects.
 #' @field title,subtitle,caption Text strings to use for the various plot
@@ -41,11 +40,11 @@
 #'   either be specified as a text string or by concatenating calls to [area()]
 #'   together. See the examples for further information on use.
 #'
-#' @return A `ospPlotGridConfiguration` object.
+#' @return A `PlotGridConfiguration` object.
 #'
 #' @export
-ospPlotGridConfiguration <- R6::R6Class(
-  "ospPlotGridConfiguration",
+PlotGridConfiguration <- R6::R6Class(
+  "PlotGridConfiguration",
   public = list(
     plotList = NULL,
     title = NULL,
@@ -64,7 +63,7 @@ ospPlotGridConfiguration <- R6::R6Class(
     guides = NULL,
     design = NULL,
 
-    #' @description Create an instance of `ospPlotGridConfiguration` class.
+    #' @description Create an instance of `PlotGridConfiguration` class.
     #'
     #' @param plotList A list containing `ggplot` objects.
     #' @param title,subtitle,caption Text strings to use for the various plot
@@ -101,7 +100,7 @@ ospPlotGridConfiguration <- R6::R6Class(
     #'   either be specified as a text string or by concatenating calls to
     #'   [area()] together. See the examples for further information on use.
     #'
-    #' @return A `ospPlotGridConfiguration` object.
+    #' @return A `PlotGridConfiguration` object.
     initialize = function(plotList = NULL,
                           title = NULL,
                           subtitle = NULL,
