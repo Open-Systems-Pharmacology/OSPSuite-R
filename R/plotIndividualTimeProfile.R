@@ -40,10 +40,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
 
   # Annotations
-  individualTimeProfilePlotConfiguration$labels$title$text <- ospInternalPlotConfiguration$title
-  individualTimeProfilePlotConfiguration$labels$subtitle$text <- ospInternalPlotConfiguration$subtitle
-  individualTimeProfilePlotConfiguration$labels$xlabel$text <- ospInternalPlotConfiguration$xlabel
-  individualTimeProfilePlotConfiguration$labels$ylabel$text <- ospInternalPlotConfiguration$ylabel
+  individualTimeProfilePlotConfiguration$labels <- ospInternalPlotConfiguration$labels
 
   # Legend Configuration
   individualTimeProfilePlotConfiguration$legend <- ospInternalPlotConfiguration$legend
