@@ -44,6 +44,7 @@ build_script:
   - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
 
 before_test:
   - cinst pandoc
