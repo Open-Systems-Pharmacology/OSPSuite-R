@@ -33,10 +33,10 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # TimeProfilePlotConfiguration object -----------------------------
 
-  # Create an instance of `ospInternalPlotConfiguration` object
+  # Create an instance of `ospInternalPlotConfiguration` class
   ospInternalPlotConfiguration <- .createOSPInternalPlotConfiguration(ospPlotConfiguration)
 
-  # Create an instance of `TimeProfilePlotConfiguration` object
+  # Create an instance of `TimeProfilePlotConfiguration` class
   individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
 
   # Annotations
