@@ -12,12 +12,12 @@
 #' will be expanded to the expected sequence.
 #' @param tagPrefix,tagSuffix Strings that should appear before or after the
 #' tag.
-#' @param tagSeparator A separator between different tag levels
+#' @param tagSeparator A separator between different tag levels.
 #' @param theme A ggplot theme specification to use for the plot. Only elements
 #' related to the titles as well as plot margin and background will be used.
-#' @param nColumns,nRows The dimensions of the grid to create - if both are `NULL` it
-#' will use the same logic as [facet_wrap()][ggplot2::facet_wrap] to set the
-#' dimensions
+#' @param nColumns,nRows The dimensions of the grid to create - if both are
+#'   `NULL` it will use the same logic as [facet_wrap()][ggplot2::facet_wrap] to
+#'   set the dimensions.
 #' @param byRow Analogous to `byrow` in [matrix()][base::matrix]. If `FALSE` the
 #' plots will be filled in in column-major order.
 #' @param widths,heights The relative widths and heights of each column and row
@@ -30,9 +30,14 @@
 #' default guide "position" with [theme(legend.position=...)][ggplot2::theme]
 #' while also collecting guides you must apply that change to the overall
 #' patchwork.
-#' @param design Specification of the location of areas in the layout. Can either
-#' be specified as a text string or by concatenating calls to [area()] together.
-#' See the examples for further information on use.
+#' @param design Specification of the location of areas in the layout. Can
+#'   either be specified as a text string or by concatenating calls to [area()]
+#'   together. See the examples for further information on use.
+#'
+#' @references
+#'
+#' For more on how to create plot designs, see:
+#' <https://patchwork.data-imaginist.com/articles/patchwork.html>
 #'
 #' @export
 createPlotGridConfiguration <- function(plotList,

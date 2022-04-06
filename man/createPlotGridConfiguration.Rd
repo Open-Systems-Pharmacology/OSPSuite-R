@@ -40,14 +40,14 @@ will be expanded to the expected sequence.}
 \item{tagPrefix, tagSuffix}{Strings that should appear before or after the
 tag.}
 
-\item{tagSeparator}{A separator between different tag levels}
+\item{tagSeparator}{A separator between different tag levels.}
 
 \item{theme}{A ggplot theme specification to use for the plot. Only elements
 related to the titles as well as plot margin and background will be used.}
 
-\item{nColumns, nRows}{The dimensions of the grid to create - if both are \code{NULL} it
-will use the same logic as \link[ggplot2:facet_wrap]{facet_wrap()} to set the
-dimensions}
+\item{nColumns, nRows}{The dimensions of the grid to create - if both are
+\code{NULL} it will use the same logic as \link[ggplot2:facet_wrap]{facet_wrap()} to
+set the dimensions.}
 
 \item{byRow}{Analogous to \code{byrow} in \link[base:matrix]{matrix()}. If \code{FALSE} the
 plots will be filled in in column-major order.}
@@ -64,10 +64,14 @@ default guide "position" with \link[ggplot2:theme]{theme(legend.position=...)}
 while also collecting guides you must apply that change to the overall
 patchwork.}
 
-\item{design}{Specification of the location of areas in the layout. Can either
-be specified as a text string or by concatenating calls to \code{\link[=area]{area()}} together.
-See the examples for further information on use.}
+\item{design}{Specification of the location of areas in the layout. Can
+either be specified as a text string or by concatenating calls to \code{\link[=area]{area()}}
+together. See the examples for further information on use.}
 }
 \description{
 Create \code{ospPlotGridConfiguration} class object
+}
+\references{
+For more on how to create plot designs, see:
+\url{https://patchwork.data-imaginist.com/articles/patchwork.html}
 }

@@ -37,3 +37,6 @@ plotGridObj <- createPlotGridConfiguration(
 plotGrid(plotGridObj)
 
 }
+\references{
+For more, see: \url{https://patchwork.data-imaginist.com/articles/patchwork.html}
+}

@@ -30,6 +30,9 @@
 #'
 #' plotGrid(plotGridObj)
 #'
+#' @references
+#' For more, see: <https://patchwork.data-imaginist.com/articles/patchwork.html>
+#'
 #' @export
 plotGrid <- function(ospPlotGridConfiguration) {
   patchwork::wrap_plots(
