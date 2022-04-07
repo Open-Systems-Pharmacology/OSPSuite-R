@@ -1,4 +1,4 @@
-#' Create an instance of `ospInternalPlotConfiguration` class for convenience.
+#' Create an instance of `ospInternalPlotConfiguration` class
 #' @keywords internal
 #' @noRd
 .createOSPInternalPlotConfiguration <- function(ospPlotConfiguration) {
