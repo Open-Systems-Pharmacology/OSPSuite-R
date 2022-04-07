@@ -4,10 +4,10 @@
 \alias{plotGrid}
 \title{Create a plot grid}
 \usage{
-plotGrid(PlotGridConfiguration)
+plotGrid(plotGridConfiguration)
 }
 \arguments{
-\item{PlotGridConfiguration}{A \code{PlotGridConfiguration} object, which
+\item{plotGridConfiguration}{A \code{PlotGridConfiguration} object, which
 is an \code{R6} class object that defines properties of a plot grid (like number
 of rows, columns, labels, etc.).}
 }

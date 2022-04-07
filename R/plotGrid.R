@@ -1,6 +1,6 @@
 #' Create a plot grid
 #'
-#' @param PlotGridConfiguration  A `PlotGridConfiguration` object, which
+#' @param plotGridConfiguration  A `PlotGridConfiguration` object, which
 #'   is an `R6` class object that defines properties of a plot grid (like number
 #'   of rows, columns, labels, etc.).
 #'
@@ -42,7 +42,7 @@
 #' For more, see: <https://patchwork.data-imaginist.com/articles/patchwork.html>
 #'
 #' @export
-plotGrid <- function(PlotGridConfiguration) {
+plotGrid <- function(plotGridConfiguration) {
   patchwork::wrap_plots(
     PlotGridConfiguration$plotList,
     ncol = PlotGridConfiguration$nColumns,
