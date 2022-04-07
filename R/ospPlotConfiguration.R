@@ -12,13 +12,8 @@
 #' @field title,subtitle,xlabel,ylabel,legendTitle,watermark A character string
 #'   providing plot annotations for plot title, subtitle, x-axis label, y-axis
 #'   label, plot legend, watermark, respectively.
-#' @field legendPosition A character string defining the legend position
-#'   (default: `"outsideRight"`). Available options
-#'   are:`"none"`,`"insideTop"`,`"insideTopLeft"`,
-#'   `"insideLeft"`,`"insideBottomLeft"`,`"insideBottom"`,`"insideBottomRight"`,
-#'   `"insideRight"`,`"insideTopRight"`,`"outsideTop"`,`"outsideTopLeft"`,
-#'   `"outsideLeft"`,`"outsideBottomLeft"`,`"outsideBottom"`,`"outsideBottomRight"`,
-#'    `"outsideRight"`,`"outsideTopRight"`.
+#' @field legendPosition A character string defining the legend position.
+#'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendCaptionSize Aesthetic properties for the legend title.
 #' @field legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle Aesthetic properties for the legend caption.
 #' @field xAxisTickLabels,xAxisLabelSize,xAxisLabelColor,xAxisLabelFontFamily,xAxisLabelFontFace,xAxisLabelAngle Aesthetic properties for the x-axis label.
@@ -27,9 +22,8 @@
 #'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
-#' @field xAxisScale,yAxisScale A character string defining axis scale (default:
-#'   `"lin"`). Available options are: `"lin"`, `"log"`, `"ln"`, `"discrete"`,
-#'   `"reverse"`, `"sqrt"`, `"time"`, `"date"`.
+#' @field xAxisScale,yAxisScale A character string defining axis scale.
+#'   Available options can be seen using `tlf::Scaling` list.
 #' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle A character string specifying the aesthetic properties for the watermark.
 #' @field plotBackgroundFill,plotBackgroundColor,plotBackgroundSize,plotBackgroundLinetype A character string specifying the aesthetic properties for the plot background.
 #' @field plotPanelBackgroundFill,plotPanelBackgroundColor,plotPanelBackgroundSize,plotPanelBackgroundLinetype A character string specifying the aesthetic properties for the plot panel (inside of plot) background.
@@ -160,13 +154,8 @@ ospPlotConfiguration <- R6::R6Class(
     #' @param title,subtitle,xlabel,ylabel,legendTitle,watermark A character string
     #'   providing plot annotations for plot title, subtitle, x-axis label, y-axis
     #'   label, plot legend, watermark, respectively.
-    #' @param legendPosition A character string defining the legend position
-    #'   (default: `"outsideRight"`). Available options
-    #'   are:`"none"`,`"insideTop"`,`"insideTopLeft"`,
-    #'   `"insideLeft"`,`"insideBottomLeft"`,`"insideBottom"`,`"insideBottomRight"`,
-    #'   `"insideRight"`,`"insideTopRight"`,`"outsideTop"`,`"outsideTopLeft"`,
-    #'   `"outsideLeft"`,`"outsideBottomLeft"`,`"outsideBottom"`,`"outsideBottomRight"`,
-    #'    `"outsideRight"`,`"outsideTopRight"`.
+    #' @param legendPosition A character string defining the legend position.
+    #'   Available options can be seen using `tlf::LegendPositions` list.
     #' @param legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendCaptionSize Aesthetic properties for the legend title.
     #' @param legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle Aesthetic properties for the legend caption.
     #' @param xAxisTickLabels,xAxisLabelSize,xAxisLabelColor,xAxisLabelFontFamily,xAxisLabelFontFace,xAxisLabelAngle Aesthetic properties for the x-axis label.
@@ -175,9 +164,8 @@ ospPlotConfiguration <- R6::R6Class(
     #'   y-axis, respectively.
     #' @param xAxisTicks,yAxisTicks A numeric vector or a function defining where to
     #'   position x-and y-axis ticks, respectively.
-    #' @param xAxisScale,yAxisScale A character string defining axis scale (default:
-    #'   `"lin"`). Available options are: `"lin"`, `"log"`, `"ln"`, `"discrete"`,
-    #'   `"reverse"`, `"sqrt"`, `"time"`, `"date"`.
+    #' @param xAxisScale,yAxisScale A character string defining axis scale.
+    #'   Available options can be seen using `tlf::Scaling` list.
     #' @param watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle A character string specifying the aesthetic properties for the watermark.
     #' @param plotBackgroundFill,plotBackgroundColor,plotBackgroundSize,plotBackgroundLinetype A character string specifying the aesthetic properties for the plot background.
     #' @param plotPanelBackgroundFill,plotPanelBackgroundColor,plotPanelBackgroundSize,plotPanelBackgroundLinetype A character string specifying the aesthetic properties for the plot panel (inside of plot) background.

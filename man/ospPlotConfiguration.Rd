@@ -18,13 +18,8 @@ arguments for base plots, ggplot plots, or any other plotting framework.
 providing plot annotations for plot title, subtitle, x-axis label, y-axis
 label, plot legend, watermark, respectively.}
 
-\item{\code{legendPosition}}{A character string defining the legend position
-(default: \code{"outsideRight"}). Available options
-are:\code{"none"},\code{"insideTop"},\code{"insideTopLeft"},
-\code{"insideLeft"},\code{"insideBottomLeft"},\code{"insideBottom"},\code{"insideBottomRight"},
-\code{"insideRight"},\code{"insideTopRight"},\code{"outsideTop"},\code{"outsideTopLeft"},
-\code{"outsideLeft"},\code{"outsideBottomLeft"},\code{"outsideBottom"},\code{"outsideBottomRight"},
-\code{"outsideRight"},\code{"outsideTopRight"}.}
+\item{\code{legendPosition}}{A character string defining the legend position.
+Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendCaptionSize}}{Aesthetic properties for the legend title.}
 
@@ -40,9 +35,8 @@ y-axis, respectively.}
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
 position x-and y-axis ticks, respectively.}
 
-\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale (default:
-\code{"lin"}). Available options are: \code{"lin"}, \code{"log"}, \code{"ln"}, \code{"discrete"},
-\code{"reverse"}, \code{"sqrt"}, \code{"time"}, \code{"date"}.}
+\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
+Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}}{A character string specifying the aesthetic properties for the watermark.}
 
@@ -91,9 +85,8 @@ y-axis, respectively.}
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
 position x-and y-axis ticks, respectively.}
 
-\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale (default:
-\code{"lin"}). Available options are: \code{"lin"}, \code{"log"}, \code{"ln"}, \code{"discrete"},
-\code{"reverse"}, \code{"sqrt"}, \code{"time"}, \code{"date"}.}
+\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
+Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle}}{A character string specifying the aesthetic properties for the watermark.}
 
@@ -233,13 +226,8 @@ Create a new \code{ospInternalPlotConfiguration} object
 providing plot annotations for plot title, subtitle, x-axis label, y-axis
 label, plot legend, watermark, respectively.}
 
-\item{\code{legendPosition}}{A character string defining the legend position
-(default: \code{"outsideRight"}). Available options
-are:\code{"none"},\code{"insideTop"},\code{"insideTopLeft"},
-\code{"insideLeft"},\code{"insideBottomLeft"},\code{"insideBottom"},\code{"insideBottomRight"},
-\code{"insideRight"},\code{"insideTopRight"},\code{"outsideTop"},\code{"outsideTopLeft"},
-\code{"outsideLeft"},\code{"outsideBottomLeft"},\code{"outsideBottom"},\code{"outsideBottomRight"},
-\code{"outsideRight"},\code{"outsideTopRight"}.}
+\item{\code{legendPosition}}{A character string defining the legend position.
+Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendCaptionSize}}{Aesthetic properties for the legend title.}
 
@@ -248,9 +236,8 @@ are:\code{"none"},\code{"insideTop"},\code{"insideTopLeft"},
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
 
-\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale (default:
-\code{"lin"}). Available options are: \code{"lin"}, \code{"log"}, \code{"ln"}, \code{"discrete"},
-\code{"reverse"}, \code{"sqrt"}, \code{"time"}, \code{"date"}.}
+\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
+Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
 position x-and y-axis ticks, respectively.}
