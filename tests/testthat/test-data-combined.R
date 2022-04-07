@@ -89,7 +89,7 @@ test_that("data transformations work as expected when only `DataSet` is provided
   )
 })
 
-test_that("dataframe dimensions are as expected when only `DataSet` is provided", {
+test_that("data frame dimensions are as expected when only `DataSet` is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
   df <- myCombDat$toDataFrame()
@@ -97,7 +97,7 @@ test_that("dataframe dimensions are as expected when only `DataSet` is provided"
   expect_equal(dim(df), c(12L, 17L))
 })
 
-test_that("dataframe column and dataset names are as expected when only `DataSet` is provided", {
+test_that("data frame column and dataset names are as expected when only `DataSet` is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
   df <- myCombDat$toDataFrame()
@@ -143,7 +143,7 @@ test_that("data transformations work as expected when only `SimulationResults` i
   )
 })
 
-test_that("dataframe dimensions are as expected when only `SimulationResults` is provided", {
+test_that("data frame dimensions are as expected when only `SimulationResults` is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
   df <- myCombDat$toDataFrame()
@@ -151,7 +151,7 @@ test_that("dataframe dimensions are as expected when only `SimulationResults` is
   expect_equal(dim(df), c(1255L, 12L))
 })
 
-test_that("dataframe column names and datset names are as expected when only `SimulationResults` is provided", {
+test_that("data frame column names and datset names are as expected when only `SimulationResults` is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
   df <- myCombDat$toDataFrame()
@@ -176,7 +176,7 @@ test_that("dataframe column names and datset names are as expected when only `Si
   )
 })
 
-test_that("dataframe molecular weight column values are as expected", {
+test_that("data frame molecular weight column values are as expected", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)
   df <- myCombDat$toDataFrame()
@@ -186,7 +186,7 @@ test_that("dataframe molecular weight column values are as expected", {
 
 # grouping specification ---------------------------------------
 
-test_that("with no grouping specified, group column in dataframe is `NA`", {
+test_that("with no grouping specified, group column in data frame is `NA`", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
   df <- myCombDat$toDataFrame()
@@ -426,7 +426,7 @@ test_that("data transformations as expected when both `DataSet` and `SimulationR
   )
 })
 
-test_that("dataframe dimensions as expected when both `DataSet` and `SimulationResults` provided", {
+test_that("data frame dimensions as expected when both `DataSet` and `SimulationResults` provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -447,7 +447,7 @@ test_that("dataframe dimensions as expected when both `DataSet` and `SimulationR
   expect_equal(dim(df), c(830L, 18L))
 })
 
-test_that("dataframe column names are as expected when both `DataSet` and `SimulationResults` provided", {
+test_that("data frame column names are as expected when both `DataSet` and `SimulationResults` provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -476,7 +476,7 @@ test_that("dataframe column names are as expected when both `DataSet` and `Simul
   )
 })
 
-test_that("dataframes for selected output paths match with outputs from `simulationResultsToDataFrame()` function", {
+test_that("data frames for selected output paths match with outputs from `simulationResultsToDataFrame()` function", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(
     simResults,
@@ -552,7 +552,7 @@ test_that("data order with or without `names` argument should be same", {
     names = list("x", "y", NULL)
   )
 
-  # extract dataframes
+  # extract data frames
   df1 <- myCombDat$toDataFrame()
   df2 <- myCombDat2$toDataFrame()
 
@@ -577,7 +577,7 @@ test_that("data order with or without `names` argument should be same", {
   )
 })
 
-test_that("dataframe should be same when objects are entered either as a list or a vector", {
+test_that("data frame should be same when objects are entered either as a list or a vector", {
   myCombDat1 <- DataCombined$new()
   myCombDat2 <- DataCombined$new()
 
@@ -674,7 +674,7 @@ test_that("transformed values are equal to raw values times scale factor plus of
   myCombDat$addSimulationResults(simResults)
   myCombDat$addDataSets(dataSet)
 
-  # original dataframe
+  # original data frame
   dfOriginal <- myCombDat$toDataFrame()
   dfOriginal <- dplyr::filter(dfOriginal, name %in% names_ls)
 
@@ -943,7 +943,7 @@ test_that("data grouping works as expected - single dataset", {
 })
 
 
-test_that("sequential update when first and second datasets have same names and same data - dataframes and bindings should be identical", {
+test_that("sequential update when first and second datasets have same names and same data - data frames and bindings should be identical", {
   myCombDat <- DataCombined$new()
 
   # first run
@@ -1013,7 +1013,7 @@ test_that("sequential update when first and second datasets have same names and 
     c("Dapagliflozin - emptying", "Dapagliflozin - retention", NA_character_, "distal")
   )
 
-  # extract group map into a dataframe
+  # extract group map into a data frame
   dfMap <- myCombDat$groupMap
 
   expect_equal(dim(dfMap), c(11L, 3L))
@@ -1099,7 +1099,7 @@ test_that("sequential update when first and second datasets have same names but 
 
 # `Population` objects -----------------------------
 
-test_that("dataframe is as expected when `Population` objects are used", {
+test_that("data frame is as expected when `Population` objects are used", {
   skip_if(.Platform$OS.type != "windows")
 
   # If no unit is specified, the default units are used. For "height" it is "dm",
@@ -1152,7 +1152,7 @@ myDataSet$addMetaData("Organ", "Liver")
 myDataSet$addMetaData("Compartment", "Intracellular")
 myDataSet$addMetaData("Species", "Human")
 
-test_that("dataframe dimensions are as expected when `DataSet` with metadata is provided", {
+test_that("data frame dimensions are as expected when `DataSet` with metadata is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(myDataSet)
   df <- myCombDat$toDataFrame()
@@ -1160,7 +1160,7 @@ test_that("dataframe dimensions are as expected when `DataSet` with metadata is 
   expect_equal(dim(df), c(12L, 20L))
 })
 
-test_that("dataframe column names are as expected when `DataSet` with metadata is provided", {
+test_that("data frame column names are as expected when `DataSet` with metadata is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(myDataSet)
   df <- myCombDat$toDataFrame()
@@ -1176,7 +1176,7 @@ test_that("dataframe column names are as expected when `DataSet` with metadata i
   )
 })
 
-test_that("dataframe metadata column entries are as expected when `DataSet` with metadata is provided", {
+test_that("data frame metadata column entries are as expected when `DataSet` with metadata is provided", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(myDataSet)
   df <- myCombDat$toDataFrame()
