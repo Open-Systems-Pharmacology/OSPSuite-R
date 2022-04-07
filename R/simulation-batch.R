@@ -71,6 +71,25 @@ SimulationBatch <- R6::R6Class(
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
       rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
       return(batchRunValues$id)
+    },
+
+    #' @description
+    #' Print the object to the console
+    #' @param ... Rest arguments.
+    print = function(...) {
+      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
+      private$printClass()
+      writeLines(paste0("   ", capture.output(self$simulation)))
+      private$printLine("runValuesIds", self$runValuesIds)
+      private$printLine("Parameters",
+        rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
+          rClr::clrGet(simulationBatchOptions, "VariableParameter")
+      )
+      private$printLine("Molecules",
+        rClr::clrGet(simulationBatchOptions, "VariableMolecules") %||%
+          rClr::clrGet(simulationBatchOptions, "VariableMolecule")
+      )
+      invisible(self)
     }
   ),
   active = list(
