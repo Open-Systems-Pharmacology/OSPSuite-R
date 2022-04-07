@@ -1,3 +1,7 @@
+test_that("plots grid produces error with wrong input type", {
+  expect_error(plotGrid(DataSet$new(name = "DS")))
+})
+
 test_that("plots grid is rendered correctly", {
   skip_if_not_installed("vdiffr")
   skip_if_not_installed("tlf")

@@ -43,6 +43,8 @@
 #'
 #' @export
 plotGrid <- function(plotGridConfiguration) {
+  validateIsOfType(plotGridConfiguration, "PlotGridConfiguration")
+
   patchwork::wrap_plots(
     plotGridConfiguration$plotList,
     ncol = plotGridConfiguration$nColumns,
