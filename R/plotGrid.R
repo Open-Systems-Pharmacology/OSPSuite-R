@@ -44,23 +44,23 @@
 #' @export
 plotGrid <- function(plotGridConfiguration) {
   patchwork::wrap_plots(
-    PlotGridConfiguration$plotList,
-    ncol = PlotGridConfiguration$nColumns,
-    nrow = PlotGridConfiguration$nRows,
-    byrow = PlotGridConfiguration$byRow,
-    widths = PlotGridConfiguration$widths,
-    heights = PlotGridConfiguration$heights,
-    guides = PlotGridConfiguration$guides,
-    design = PlotGridConfiguration$design
+    plotGridConfiguration$plotList,
+    ncol = plotGridConfiguration$nColumns,
+    nrow = plotGridConfiguration$nRows,
+    byrow = plotGridConfiguration$byRow,
+    widths = plotGridConfiguration$widths,
+    heights = plotGridConfiguration$heights,
+    guides = plotGridConfiguration$guides,
+    design = plotGridConfiguration$design
   ) +
     patchwork::plot_annotation(
-      title = PlotGridConfiguration$title,
-      subtitle = PlotGridConfiguration$subtitle,
-      caption = PlotGridConfiguration$caption,
-      tag_levels = PlotGridConfiguration$tagLevels,
-      tag_prefix = PlotGridConfiguration$tagPrefix,
-      tag_suffix = PlotGridConfiguration$tagSuffix,
-      tag_sep = PlotGridConfiguration$tagSeparator,
-      theme = PlotGridConfiguration$theme
+      title = plotGridConfiguration$title,
+      subtitle = plotGridConfiguration$subtitle,
+      caption = plotGridConfiguration$caption,
+      tag_levels = plotGridConfiguration$tagLevels,
+      tag_prefix = plotGridConfiguration$tagPrefix,
+      tag_suffix = plotGridConfiguration$tagSuffix,
+      tag_sep = plotGridConfiguration$tagSeparator,
+      theme = plotGridConfiguration$theme
     )
 }
