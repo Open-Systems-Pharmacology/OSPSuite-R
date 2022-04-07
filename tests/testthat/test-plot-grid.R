@@ -1,10 +1,8 @@
 test_that("plots grid is rendered correctly", {
   skip_if_not_installed("vdiffr")
-  skip_if_not_installed("ggplot2")
   skip_if_not_installed("tlf")
   skip_if(getRversion() < "4.1")
 
-  library(ggplot2)
   library(tlf)
 
   set.seed(123)
@@ -29,6 +27,9 @@ test_that("plots grid is rendered correctly", {
     title = "plotGrid works as expected",
     fig = plotGrid(plotGridObj)
   )
+
+  # needed to create a custom plot
+  library(ggplot2)
 
   # `{tlf}` plot
   set.seed(123)
