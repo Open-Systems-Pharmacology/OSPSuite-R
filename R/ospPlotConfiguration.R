@@ -144,10 +144,10 @@ ospPlotConfiguration <- R6::R6Class(
     errorbarsAlpha = NULL,
 
     # export
-    plotSaveFileFormat = "png",
-    plotSaveFileWidth = 16,
-    plotSaveFileHeight = 9,
-    plotSaveFileDimensionUnits = "cm",
+    plotSaveFileFormat = NULL,
+    plotSaveFileWidth = NULL,
+    plotSaveFileHeight = NULL,
+    plotSaveFileDimensionUnits = NULL,
 
     #' @description Create a new `ospInternalPlotConfiguration` object
     #'
@@ -274,10 +274,10 @@ ospPlotConfiguration <- R6::R6Class(
                           errorbarsLinetype = NULL,
                           errorbarsAlpha = NULL,
                           # export
-                          plotSaveFileFormat = NULL,
-                          plotSaveFileWidth = NULL,
-                          plotSaveFileHeight = NULL,
-                          plotSaveFileDimensionUnits = NULL) {
+                          plotSaveFileFormat = "png",
+                          plotSaveFileWidth = 16,
+                          plotSaveFileHeight = 9,
+                          plotSaveFileDimensionUnits = "cm") {
 
       # labels
       self$title <- title

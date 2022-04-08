@@ -212,10 +212,10 @@ Create a new \code{ospInternalPlotConfiguration} object
   errorbarsSize = NULL,
   errorbarsLinetype = NULL,
   errorbarsAlpha = NULL,
-  plotSaveFileFormat = NULL,
-  plotSaveFileWidth = NULL,
-  plotSaveFileHeight = NULL,
-  plotSaveFileDimensionUnits = NULL
+  plotSaveFileFormat = "png",
+  plotSaveFileWidth = 16,
+  plotSaveFileHeight = 9,
+  plotSaveFileDimensionUnits = "cm"
 )}\if{html}{\out{</div>}}
 }
 
