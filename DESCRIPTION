@@ -21,6 +21,7 @@ Depends:
 Imports: 
     dplyr (>= 1.0.0),
     ospsuite.utils (>= 1.3.0),
+    patchwork,
     purrr,
     R6,
     readr,
@@ -30,13 +31,15 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    vdiffr (>= 1.0.0)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
+    'PlotGridConfiguration.R'
     'aging-data.R'
     'api-config.R'
     'application.R'
@@ -73,6 +76,7 @@ Collate:
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'
+    'plotGrid.R'
     'plotIndividualTimeProfile.R'
     'population-characteristics.R'
     'population.R'
