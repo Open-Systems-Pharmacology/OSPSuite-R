@@ -59,7 +59,7 @@ test_that("It can override a formula with a value", {
 })
 
 test_that("It throws an error when trying to set the name of a parameter", {
-  expect_that(volumeParameter$name <- "TOTO", throws_error())
+  expect_error(volumeParameter$name <- "TOTO")
 })
 
 test_that("It can retrieve the id of a parameter", {
@@ -75,11 +75,11 @@ test_that("It can retrieve the path of a parameter", {
 })
 
 test_that("It throws an error when trying to set the path of a parameter", {
-  expect_that(volumeParameter$path <- "TOTO", throws_error())
+  expect_error(volumeParameter$path <- "TOTO")
 })
 
 test_that("It throws an error when trying to set the id of a parameter", {
-  expect_that(volumeParameter$id <- "id", throws_error())
+  expect_error(volumeParameter$id <- "id")
 })
 
 test_that("It can retrieve a value and update a value of a parameter", {
@@ -97,7 +97,7 @@ test_that("It can retrieve the unit of a parameter", {
 })
 
 test_that("It throws an error when setting the unit of a parameter", {
-  expect_that(volumeParameter$unit <- "ml", throws_error())
+  expect_error(volumeParameter$unit <- "ml")
 })
 
 test_that("It can retrieve the display unit of a parameter", {
@@ -105,7 +105,7 @@ test_that("It can retrieve the display unit of a parameter", {
 })
 
 test_that("It throws an error when setting the display unit of a parameter", {
-  expect_that(volumeParameter$displayUnit <- "ml", throws_error())
+  expect_error(volumeParameter$displayUnit <- "ml")
 })
 
 test_that("It can set a value in another unit and the value will be updated as expected", {
@@ -126,7 +126,7 @@ test_that("It can set a value without the unit specified, thus using the default
 })
 
 test_that("It throws an exception when setting a value in a unit that does not exists", {
-  expect_that(volumeParameter$setValue(1, "kg"), throws_error())
+  expect_error(volumeParameter$setValue(1, "kg"))
 })
 
 test_that("it can retrieve all units defined for a quantity", {
@@ -161,7 +161,7 @@ test_that("It can set the isStateVariable to false for a parameter without RHS",
 
 test_that("It throws an exception when setting the isStateVariable to true for a parameter that has no state variable", {
   par <- getParameter(volumePath, sim)
-  expect_that(par$isStateVariable <- TRUE, throws_error())
+  expect_error(par$isStateVariable <- TRUE)
 })
 
 test_that("It can set the isStateVariable to true for a parameter with RHS", {

@@ -17,7 +17,7 @@ test_that("It can create a sensitivity analysis for a given simulation with parm
 
 test_that("The parameter paths property is readonly", {
   sa <- SensitivityAnalysis$new(simple, parameterPaths = c("A", "B"))
-  expect_that(sa$parameterPaths <- c("D"), throws_error())
+  expect_error(sa$parameterPaths <- c("D"))
 })
 
 test_that("It can add a single parameter path", {
