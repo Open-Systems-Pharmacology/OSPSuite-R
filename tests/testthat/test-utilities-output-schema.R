@@ -33,7 +33,7 @@ test_that("It uses the property specified to create the interval", {
 test_that("It throws an exception when adding two intervals with the same name", {
   clearOutputIntervals(sim)
   int1 <- addOutputInterval(sim, 10, 20, 1, intervalName = "int")
-  expect_that(addOutputInterval(sim, 10, 20, 1, intervalName = "int"), throws_error())
+  expect_error(addOutputInterval(sim, 10, 20, 1, intervalName = "int"))
 })
 
 

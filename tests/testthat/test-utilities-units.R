@@ -48,7 +48,7 @@ test_that("It can convert from an array of values in base unit to a target unit"
 })
 
 test_that("It throws an exception when converting to a unit that is not suppored", {
-  expect_that(toUnit(par, 1000, "kg"), throws_error())
+  expect_error(toUnit(par, 1000, "kg"))
 })
 
 test_that("It does not change the value of the quantity when converting to another unit", {
@@ -93,7 +93,7 @@ test_that("It can convert from an array of values in a unit to base unit", {
 })
 
 test_that("It throws an exception when converting to a unit that is not suppored", {
-  expect_that(toBaseUnit(par, 1000, "kg"), throws_error())
+  expect_error(toBaseUnit(par, 1000, "kg"))
 })
 
 test_that("It can convert NULL in unit to NULL", {
@@ -153,7 +153,7 @@ test_that("It can return the expected set of units for a given dimension", {
 })
 
 test_that("It throws an error if the dimension is not found", {
-  expect_that(getUnitsForDimension("toto"), throws_error())
+  expect_error(getUnitsForDimension("toto"))
 })
 
 context("hasDimension")

@@ -43,11 +43,11 @@ test_that("It returns an empty list when no container was found", {
 })
 
 test_that("It throws an error when no valid container is provided", {
-  expect_that(containers <- getAllContainersMatching(toPathString(c("Organism", "**", "Interstitial")), NULL), throws_error())
+  expect_error(containers <- getAllContainersMatching(toPathString(c("Organism", "**", "Interstitial")), NULL))
 })
 
 test_that("It throws an error when no valid path is provided", {
-  expect_that(containers <- getAllContainersMatching(NULL, sim), throws_error())
+  expect_error(containers <- getAllContainersMatching(NULL, sim))
 })
 
 context("getAllContainerPathsIn")
@@ -79,9 +79,9 @@ test_that("It throws an error if the container by path does not exist", {
 })
 
 test_that("It throws an error when trying to retrieve a container by path that would result in multiple containers", {
-  expect_that(getContainer(toPathString(c("Organism", "*")), sim), throws_error())
+  expect_error(getContainer(toPathString(c("Organism", "*")), sim))
 })
 
 test_that("It throws an error when no valid container is provided", {
-  expect_that(getContainer(toPathString(c("Organism", "*")), "sim"), throws_error())
+  expect_error(getContainer(toPathString(c("Organism", "*")), "sim"))
 })
