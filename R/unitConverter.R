@@ -57,17 +57,17 @@
 
   # yUnit ----------------
 
-  yDataList <- split(data, data$yUnit)
+  yDataList <- split(data, yUnit ~ molWeight)
   data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
 
   # yUnit error ----------------
 
   if ("yErrorValues" %in% names(data)) {
-    yErrorDataList <- split(data, data$yErrorUnit)
+    yErrorDataList <- split(data, yErrorUnit ~ molWeight)
     data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
   }
 
-  data
+  return(data)
 }
 
 #' @keywords internal
@@ -82,7 +82,7 @@
 
   xData$xUnit <- xTargetUnit
 
-  xData
+  return(xData)
 }
 
 #' @keywords internal
@@ -99,7 +99,7 @@
 
   yData$yUnit <- yTargetUnit
 
-  yData
+  return(yData)
 }
 
 #' @keywords internal
@@ -116,5 +116,5 @@
 
   yData$yErrorUnit <- yTargetUnit
 
-  yData
+  return(yData)
 }

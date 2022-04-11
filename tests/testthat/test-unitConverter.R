@@ -148,7 +148,7 @@ test_that(".unitConverter changes error units as well - defaults", {
   expect_equal(dfYErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
 })
 
-# Same yUnit but different mw
+# different molecular weights handled properly -------------------
 
 test_that("Correct conversion for yValues having the same unit but different MW", {
   df <- dplyr::tibble(
