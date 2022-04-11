@@ -4,16 +4,15 @@
 #' @param tlfTheme A path to JSON file containing
 #'   [`Theme`](https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html)
 #'    object for `{tlf}` library.
-#' @param ospPlotConfiguration A `ospPlotConfiguration` object, which is an `R6`
-#'   class object that defines plot properties (like labels, axes scaling and
-#'   limits, legend position, etc.).
+#' @param PlotLabelConfiguration A `PlotLabelConfiguration` object, which is an `R6`
+#'   class object that defines plot labels.
 #' @param xUnit,yUnit Units for x- and y-axes, respectively.
 #'
 #' @import tlf
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
-                                      ospPlotConfiguration,
+                                      plotLabelConfiguration,
                                       xUnit = NULL,
                                       yUnit = NULL,
                                       tlfTheme = NULL) {
@@ -21,7 +20,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   # validation -----------------------------
 
   validateIsOfType(dataCombined, "DataCombined")
-  validateIsOfType(ospPlotConfiguration, "ospPlotConfiguration")
+  validateIsOfType(plotLabelConfiguration, "PlotLabelConfiguration")
 
   # data frames -----------------------------
 
@@ -37,13 +36,13 @@ plotIndividualTimeProfile <- function(dataCombined,
   individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
 
   # Annotations
-  individualTimeProfilePlotConfiguration$labels$title$text <- ospPlotConfiguration$title
-  individualTimeProfilePlotConfiguration$labels$subtitle$text <- ospPlotConfiguration$subtitle
-  individualTimeProfilePlotConfiguration$labels$xlabel$text <- ospPlotConfiguration$xlabel
-  individualTimeProfilePlotConfiguration$labels$ylabel$text <- ospPlotConfiguration$ylabel
+  individualTimeProfilePlotConfiguration$labels$title$text <- plotLabelConfiguration$title
+  individualTimeProfilePlotConfiguration$labels$subtitle$text <- plotLabelConfiguration$subtitle
+  individualTimeProfilePlotConfiguration$labels$xlabel$text <- plotLabelConfiguration$xlabel
+  individualTimeProfilePlotConfiguration$labels$ylabel$text <- plotLabelConfiguration$ylabel
 
   # Legend Configuration
-  individualTimeProfilePlotConfiguration$legend$title <- ospPlotConfiguration$legendTitle
+  individualTimeProfilePlotConfiguration$legend$title <- plotLabelConfiguration$legendTitle
 
   # plot -----------------------------
 
