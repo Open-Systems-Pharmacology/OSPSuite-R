@@ -11,10 +11,11 @@
 #' @field title,subtitle,xlabel,ylabel,legendTitle A character string
 #'   providing plot annotations for plot title, subtitle, x-axis label, y-axis
 #'   label, plot legend, respectively.
+#' @field xUnit,yUnit Units for x- and y-axes, respectively.
 #'
 #' @export
-PlotLabelConfiguration <- R6::R6Class(
-  "PlotLabelConfiguration",
+ospPlotConfiguration <- R6::R6Class(
+  "ospPlotConfiguration",
   public = list(
     # labels
     title = NULL,
@@ -23,6 +24,10 @@ PlotLabelConfiguration <- R6::R6Class(
     ylabel = NULL,
 
     # legend
-    legendTitle = NULL
+    legendTitle = NULL,
+
+    # units
+    xUnit = NULL,
+    yUnit = NULL
   )
 )

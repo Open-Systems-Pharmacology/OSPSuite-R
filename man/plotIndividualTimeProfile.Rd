@@ -4,25 +4,17 @@
 \alias{plotIndividualTimeProfile}
 \title{Concentration time profile plot}
 \usage{
-plotIndividualTimeProfile(
-  dataCombined,
-  plotLabelConfiguration,
-  xUnit = NULL,
-  yUnit = NULL,
-  tlfTheme = NULL
-)
+plotIndividualTimeProfile(dataCombined, ospPlotConfiguration, tlfTheme = NULL)
 }
 \arguments{
 \item{dataCombined}{A \code{DataCombined} object.}
 
-\item{xUnit, yUnit}{Units for x- and y-axes, respectively.}
+\item{ospPlotConfiguration}{A \code{ospPlotConfiguration} object, which is an \code{R6}
+class object that defines plot labels and units for quantities.}
 
 \item{tlfTheme}{A path to JSON file containing
 \href{https://www.open-systems-pharmacology.org/TLF-Library/reference/Theme.html}{\code{Theme}}
 object for \code{{tlf}} library.}
-
-\item{PlotLabelConfiguration}{A \code{PlotLabelConfiguration} object, which is an \code{R6}
-class object that defines plot labels.}
 }
 \description{
 Concentration time profile plot
