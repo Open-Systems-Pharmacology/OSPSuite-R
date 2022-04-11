@@ -122,3 +122,16 @@ test_that(".unitConverter doesn't change dimensions under any circumstances", {
 
   expect_equal(dim(dfMWConvert), dim(dfMW))
 })
+
+# Same yUnit but different mw
+
+test_that("Correct conversion for yValues having the same unit but different MW", {
+  df <- dplyr::tibble(
+    xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
+    yValues = c(1, 1, 1), yUnit = c("mol", "mol", "mol"), yDimension = c(ospDimensions$Amount, ospDimensions$Amount, ospDimensions$Amount),
+    molWeight = c(10, 10, 20)
+  )
+  dfConvert <- .unitConverter(df, yUnit = "g")
+
+  expect_equal(dfConvert$yValues, c(10, 10, 20))
+})
