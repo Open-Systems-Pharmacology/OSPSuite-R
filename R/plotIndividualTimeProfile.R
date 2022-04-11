@@ -26,41 +26,24 @@ plotIndividualTimeProfile <- function(dataCombined,
   # data frames -----------------------------
 
   df <- dataCombined$toDataFrame()
-  df <- ospsuite:::.unitConverter(df, xUnit, yUnit)
+  df <- .unitConverter(df, xUnit, yUnit)
+
   obsData <- dplyr::filter(df, dataType == "observed")
   simData <- dplyr::filter(df, dataType == "simulated")
 
   # TimeProfilePlotConfiguration object -----------------------------
 
-  # Create an instance of `ospInternalPlotConfiguration` class
-  ospInternalPlotConfiguration <- .createOSPInternalPlotConfiguration(ospPlotConfiguration)
-
   # Create an instance of `TimeProfilePlotConfiguration` class
   individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
 
   # Annotations
-  individualTimeProfilePlotConfiguration$labels <- ospInternalPlotConfiguration$labels
+  individualTimeProfilePlotConfiguration$labels$title$text <- ospPlotConfiguration$title
+  individualTimeProfilePlotConfiguration$labels$subtitle$text <- ospPlotConfiguration$subtitle
+  individualTimeProfilePlotConfiguration$labels$xlabel$text <- ospPlotConfiguration$xlabel
+  individualTimeProfilePlotConfiguration$labels$ylabel$text <- ospPlotConfiguration$ylabel
 
   # Legend Configuration
-  individualTimeProfilePlotConfiguration$legend <- ospInternalPlotConfiguration$legend
-
-  # X-Axis configuration
-  individualTimeProfilePlotConfiguration$xAxis <- ospInternalPlotConfiguration$xAxis
-
-  # Y-Axis configuration
-  individualTimeProfilePlotConfiguration$yAxis <- ospInternalPlotConfiguration$yAxis
-
-  # Background configuration
-  individualTimeProfilePlotConfiguration$background <- ospInternalPlotConfiguration$background
-
-  # Configurations for aesthetics
-  individualTimeProfilePlotConfiguration$lines <- ospInternalPlotConfiguration$lines
-  individualTimeProfilePlotConfiguration$points <- ospInternalPlotConfiguration$points
-  individualTimeProfilePlotConfiguration$ribbons <- ospInternalPlotConfiguration$ribbons
-  individualTimeProfilePlotConfiguration$errorbars <- ospInternalPlotConfiguration$errorbars
-
-  # Export configuration
-  individualTimeProfilePlotConfiguration$export <- ospInternalPlotConfiguration$export
+  individualTimeProfilePlotConfiguration$legend$title <- ospPlotConfiguration$legendTitle
 
   # plot -----------------------------
 
