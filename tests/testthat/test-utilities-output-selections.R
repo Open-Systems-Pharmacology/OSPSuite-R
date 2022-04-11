@@ -36,10 +36,10 @@ test_that("It can add single output by reference", {
 test_that("It throws an exception if the parameters do not have the expect type", {
   parameter <- getParameter("Organism|Liver|Volume", sim)
   container <- getContainer("Organism|Liver", sim)
-  expect_that(addOutputs(sim, parameter), throws_error())
-  expect_that(addOutputs(parameter, container), throws_error())
-  expect_that(addOutputs(parameter, null), throws_error())
-  expect_that(addOutputs(null, sim), throws_error())
+  expect_error(addOutputs(sim, parameter))
+  expect_error(addOutputs(parameter, container))
+  expect_error(addOutputs(parameter, null))
+  expect_error(addOutputs(null, sim))
 })
 
 
