@@ -57,13 +57,13 @@
 
   # yUnit ----------------
 
-  yDataList <- split(data, yUnit ~ molWeight)
+  yDataList <- split(data, list(data$yUnit, data$molWeight))
   data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
 
   # yUnit error ----------------
 
   if ("yErrorValues" %in% names(data)) {
-    yErrorDataList <- split(data, yErrorUnit ~ molWeight)
+    yErrorDataList <- split(data, list(data$yErrorUnit, data$molWeight))
     data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
   }
 
