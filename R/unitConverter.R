@@ -55,10 +55,17 @@
   xDataList <- split(data, data$xUnit)
   data <- dplyr::bind_rows(lapply(xDataList, .xUnitConverter, xTargetUnit))
 
-  # yUnit and error ----------------
+  # yUnit ----------------
 
   yDataList <- split(data, data$yUnit)
   data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
+
+  # yUnit error ----------------
+
+  if ("yErrorValues" %in% names(data)) {
+    yErrorDataList <- split(data, data$yErrorUnit)
+    data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
+  }
 
   data
 }
@@ -92,16 +99,22 @@
 
   yData$yUnit <- yTargetUnit
 
-  if ("yErrorValues" %in% names(yData)) {
-    yData$yErrorValues <- toUnit(
-      quantityOrDimension = yData$yDimension[[1]],
-      values = yData$yErrorValues,
-      targetUnit = yData$yUnit[[1]],
-      sourceUnit = yData$yErrorUnit[[1]],
-      molWeight = yData$molWeight[[1]],
-      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-    )
-  }
+  yData
+}
+
+#' @keywords internal
+#' @noRd
+.yErrorUnitConverter <- function(yData, yTargetUnit) {
+  yData$yErrorValues <- toUnit(
+    quantityOrDimension = yData$yDimension[[1]],
+    values = yData$yErrorValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yErrorUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yErrorUnit <- yTargetUnit
 
   yData
 }

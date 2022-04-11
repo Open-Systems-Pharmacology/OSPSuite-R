@@ -9,6 +9,14 @@ df <- dplyr::tibble(
   molWeight = c(10, 10, 10)
 )
 
+# also contains error columns
+dfError <- dplyr::tibble(
+  xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
+  yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
+  yErrorValues = c(0.01, 5, 8), yErrorUnit = c("", "%", "%"),
+  molWeight = c(10, 10, 10)
+)
+
 # default conversion -------------------
 
 dfConvert <- .unitConverter(df)
@@ -121,6 +129,23 @@ test_that(".unitConverter doesn't change dimensions under any circumstances", {
   expect_equal(dim(dfXYConvert), dim(df))
 
   expect_equal(dim(dfMWConvert), dim(dfMW))
+})
+
+# error units -------------------
+
+dfErrorConvert <- .unitConverter(dfError)
+dfYErrorConvert <- .unitConverter(dfError, yUnit = ospUnits$Fraction$`%`)
+
+test_that(".unitConverter changes error units as well - defaults", {
+  expect_equal(unique(dfErrorConvert$yErrorUnit), "")
+  expect_equal(dfErrorConvert$yErrorValues[1], dfError$yErrorValues[1])
+  expect_equal(dfErrorConvert$yErrorValues[2:3] * 100, dfError$yErrorValues[2:3])
+})
+
+test_that(".unitConverter changes error units as well - defaults", {
+  expect_equal(unique(dfYErrorConvert$yErrorUnit), "%")
+  expect_equal(dfYErrorConvert$yErrorValues[1] / 100, dfError$yErrorValues[1])
+  expect_equal(dfYErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
 })
 
 # Same yUnit but different mw
