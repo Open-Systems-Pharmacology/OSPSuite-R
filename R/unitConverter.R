@@ -34,7 +34,6 @@
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
 #' ospsuite:::.unitConverter(df, yUnit = ospUnits$Fraction$`%`)
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
-#'
 #' @keywords internal
 #' @noRd
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
@@ -83,12 +82,13 @@
         sourceUnit          = yUnit,
         molWeight           = molWeight,
         molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
-      ))) %>%
-        dplyr::ungroup() %>%
-        tidyr::unnest(cols = c(yValues)) %>%
-        dplyr::mutate(yUnit = yTargetUnit) %>%
-        dplyr::select(-data)
+      )
+    )) %>%
+    dplyr::ungroup() %>%
+    tidyr::unnest(cols = c(yValues)) %>%
+    dplyr::mutate(yUnit = yTargetUnit) %>%
+    dplyr::select(-data)
 
-      # combine them
-      dplyr::bind_cols(dataXUnit, dataYUnit)
+  # combine them
+  dplyr::bind_cols(dataXUnit, dataYUnit)
 }

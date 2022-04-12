@@ -23,7 +23,6 @@
 #'
 #' ospsuite:::.cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
 #' ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
-#'
 #' @keywords internal
 #' @noRd
 .cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
@@ -72,7 +71,6 @@
 #'
 #' ospsuite:::.flattenList(list(1, 2, 3, NA), type = "numeric")
 #' ospsuite:::.flattenList(list(TRUE, FALSE, NA), type = "integer")
-#'
 #' @return An atomic vector of desired type.
 #'
 #' @keywords internal
@@ -107,7 +105,6 @@
 #'
 #' ospsuite:::.toMissingOfType(NA, type = "real")
 #' ospsuite:::.toMissingOfType(NULL, type = "integer")
-#'
 #' @keywords internal
 #' @noRd
 .toMissingOfType <- function(x, type) {

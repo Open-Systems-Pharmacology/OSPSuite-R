@@ -210,7 +210,6 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #'
 #' # convert to a dataframe
 #' simulationResultsToDataFrame(results)
-#'
 #' @return
 #'
 #' SimulationResults object as data.frame with columns IndividualId, Time, paths,

@@ -37,7 +37,6 @@
 #'
 #' # plot the grid
 #' plotGrid(plotGridObj)
-#'
 #' @references
 #' For more, see: <https://patchwork.data-imaginist.com/articles/patchwork.html>
 #'
