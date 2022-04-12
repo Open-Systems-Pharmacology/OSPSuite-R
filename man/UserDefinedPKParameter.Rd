@@ -13,15 +13,17 @@ Definition of a user defined PKParameter that can be calculated on top of the st
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{startTime}}{Start time for the calculation of the PK-Parameter.
+\item{\code{startTime}}{Start time in minutes for the calculation of the PK-Parameter.
 If not specified, the time will start at the first time point of the simulation (optional)}
 
-\item{\code{startTimeOffset}}{Offset in \link{min} to apply to the start time (0 by default).}
+\item{\code{startTimeOffset}}{Offset in minutes to apply to the start time or
+to the start time of the application identified by  \code{startApplicationIndex}. (0 by default).}
 
-\item{\code{endTime}}{End time for the calculation of the PK-Parameter.
+\item{\code{endTime}}{End time in minutes for the calculation of the PK-Parameter.
 If not specified, the time will end at the last time point of the simulation (optional)}
 
-\item{\code{endTimeOffset}}{Offset in \link{min} to apply to the end time (0 by default).}
+\item{\code{endTimeOffset}}{Offset in minutes to apply to the end time or
+to the start time of the application identified by \code{endApplicationIndex}. (0 by default).}
 
 \item{\code{startApplicationIndex}}{1-based Index of the application to use to determine the start time for the calculation of the PK-Parameter.
 If not specified, the time will start at the first time point of the simulation (optional)}

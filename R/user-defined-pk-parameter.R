@@ -5,21 +5,23 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
   inherit = PKParameter,
   cloneable = FALSE,
   active = list(
-    #' @field startTime Start time for the calculation of the PK-Parameter.
+    #' @field startTime Start time in minutes for the calculation of the PK-Parameter.
     #' If not specified, the time will start at the first time point of the simulation (optional)
     startTime = function(value) {
       private$wrapProperty("StartTime", value)
     },
-    #' @field startTimeOffset Offset in [min] to apply to the start time (0 by default).
+    #' @field startTimeOffset Offset in minutes to apply to the start time or
+    #' to the start time of the application identified by  `startApplicationIndex`. (0 by default).
     startTimeOffset = function(value) {
       private$wrapProperty("StartTimeOffset", value)
     },
-    #' @field endTime End time for the calculation of the PK-Parameter.
+    #' @field endTime End time in minutes for the calculation of the PK-Parameter.
     #' If not specified, the time will end at the last time point of the simulation (optional)
     endTime = function(value) {
       private$wrapProperty("EndTime", value)
     },
-    #' @field endTimeOffset Offset in [min] to apply to the end time (0 by default).
+    #' @field endTimeOffset Offset in minutes to apply to the end time or
+    #' to the start time of the application identified by `endApplicationIndex`. (0 by default).
     endTimeOffset = function(value) {
       private$wrapProperty("EndTimeOffset", value)
     },

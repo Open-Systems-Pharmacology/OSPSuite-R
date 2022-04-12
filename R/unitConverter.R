@@ -34,7 +34,6 @@
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
 #' ospsuite:::.unitConverter(df, yUnit = ospUnits$Fraction$`%`)
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
-#'
 #' @keywords internal
 #' @noRd
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {

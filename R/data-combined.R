@@ -31,7 +31,6 @@
 #'
 #' # print the object
 #' myCombDat
-#'
 #' @docType class
 #'
 #' @export
