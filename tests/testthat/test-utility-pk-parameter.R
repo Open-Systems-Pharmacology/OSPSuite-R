@@ -68,5 +68,5 @@ test_that("It should return null When returning a pk parameter by name that does
 })
 
 test_that("It should throw an exception When returning a pk parameter by name that does not exist and an exception should be thrown", {
-  expect_that(pkParameterByName("MyTmax", stopIfNotFound = TRUE), throws_error())
+  expect_error(pkParameterByName("MyTmax", stopIfNotFound = TRUE))
 })

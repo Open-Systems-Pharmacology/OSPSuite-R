@@ -43,11 +43,11 @@ test_that("It returns an empty list when no parameter was found", {
 })
 
 test_that("It throws an error when no valid container is provided", {
-  expect_that(parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), NULL), throws_error())
+  expect_error(parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), NULL))
 })
 
 test_that("It throws an error when no valid path is provided", {
-  expect_that(parameters <- getAllParametersMatching(NULL, sim), throws_error())
+  expect_error(parameters <- getAllParametersMatching(NULL, sim))
 })
 
 context("getAllParameterPathsIn")
@@ -79,33 +79,33 @@ test_that("It throws an error if the parameter by path does not exist", {
 })
 
 test_that("It throws an error when trying to retrieve a parameter by path that would result in multiple parameters", {
-  expect_that(getParameter(toPathString(c("Organism", "Liver", "*")), sim), throws_error())
+  expect_error(getParameter(toPathString(c("Organism", "Liver", "*")), sim))
 })
 
 context("setParameterValues")
 
 test_that("It throws an error when no valid parameter objects are provided", {
-  expect_that(setParameterValues("parameter", 1), throws_error())
+  expect_error(setParameterValues("parameter", 1))
   parameters <- c(getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim), "1")
-  expect_that(setParameterValues(parameters, 1), throws_error())
+  expect_error(setParameterValues(parameters, 1))
 })
 
 test_that("It throws an error when no valid values are provided", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
-  expect_that(setParameterValues(parameter, "s"), throws_error())
+  expect_error(setParameterValues(parameter, "s"))
 })
 
 test_that("It throws an error when the number of parameters differs from the number of values", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
   parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
-  expect_that(setParameterValues(parameter, c(1, 2)), throws_error())
-  expect_that(setParameterValues(parameters, c(1:5)), throws_error())
+  expect_error(setParameterValues(parameter, c(1, 2)))
+  expect_error(setParameterValues(parameters, c(1:5)))
 })
 
 test_that("It throws an error when the number of parameters differs from the number units", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
   parameters <- getAllParametersMatching(toPathString(c("Organism", "Liver", "*", "Volume")), sim)
-  expect_that(setParameterValues(parameters = parameters, values = c(1:6), units = c("l", "ml")), throws_error())
+  expect_error(setParameterValues(parameters = parameters, values = c(1:6), units = c("l", "ml")))
 })
 
 test_that("It can set the value of a single parameter", {
@@ -171,7 +171,7 @@ test_that("It can set multiple parameter values", {
 test_that("It throws an exception when setting values for a parameter that does not exist", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath1 <- "Organism|Liver|NOPE|Volume"
-  expect_that(setParameterValuesByPath(parameterPath, 100, sim), throws_error())
+  expect_error(setParameterValuesByPath(parameterPath, 100, sim))
 })
 
 test_that("It can get the value of an individual from a population and set them into a simulation", {

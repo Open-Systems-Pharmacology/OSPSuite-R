@@ -1,4 +1,4 @@
-#' Convert to common units
+#' Convert data frame to common units
 #'
 #' @description
 #'
@@ -34,7 +34,6 @@
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
 #' ospsuite:::.unitConverter(df, yUnit = ospUnits$Fraction$`%`)
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
-#'
 #' @keywords internal
 #' @noRd
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
@@ -50,45 +49,71 @@
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
-  # xUnit ----------------
+  # xUnit --------------------------
 
-  dataXUnit <- data %>%
-    dplyr::select(dplyr::matches("^x")) %>%
-    tidyr::nest(data = xValues) %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(xValues = list(
-      toUnit(
-        quantityOrDimension = xDimension,
-        values              = purrr::pluck(data, 1L),
-        targetUnit          = xTargetUnit,
-        sourceUnit          = xUnit
-      )
-    )) %>%
-    dplyr::ungroup() %>%
-    tidyr::unnest(cols = c(xValues)) %>%
-    dplyr::mutate(xUnit = xTargetUnit) %>%
-    dplyr::select(-data)
+  xDataList <- split(data, data$xUnit)
+  data <- dplyr::bind_rows(lapply(xDataList, .xUnitConverter, xTargetUnit))
 
   # yUnit ----------------
 
-  dataYUnit <- data %>%
-    dplyr::select(-dplyr::matches("^x")) %>%
-    tidyr::nest(data = c(yValues)) %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(yValues = list(
-      toUnit(
-        quantityOrDimension = yDimension,
-        values              = purrr::pluck(data, 1L),
-        targetUnit          = yTargetUnit,
-        sourceUnit          = yUnit,
-        molWeight           = molWeight,
-        molWeightUnit       = ospUnits$`Molecular weight`$`g/mol`
-      ))) %>%
-        dplyr::ungroup() %>%
-        tidyr::unnest(cols = c(yValues)) %>%
-        dplyr::mutate(yUnit = yTargetUnit) %>%
-        dplyr::select(-data)
+  yDataList <- split(data, list(data$yUnit, data$molWeight))
+  data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
 
-      # combine them
-      dplyr::bind_cols(dataXUnit, dataYUnit)
+  # yUnit error ----------------
+
+  if ("yErrorValues" %in% names(data)) {
+    yErrorDataList <- split(data, list(data$yErrorUnit, data$molWeight))
+    data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
+  }
+
+  return(data)
+}
+
+#' @keywords internal
+#' @noRd
+.xUnitConverter <- function(xData, xTargetUnit) {
+  xData$xValues <- ospsuite::toUnit(
+    quantityOrDimension = xData$xDimension[[1]],
+    values = xData$xValues,
+    targetUnit = xTargetUnit,
+    sourceUnit = xData$xUnit[[1]]
+  )
+
+  xData$xUnit <- xTargetUnit
+
+  return(xData)
+}
+
+#' @keywords internal
+#' @noRd
+.yUnitConverter <- function(yData, yTargetUnit) {
+  yData$yValues <- toUnit(
+    quantityOrDimension = yData$yDimension[[1]],
+    values = yData$yValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yUnit <- yTargetUnit
+
+  return(yData)
+}
+
+#' @keywords internal
+#' @noRd
+.yErrorUnitConverter <- function(yData, yTargetUnit) {
+  yData$yErrorValues <- toUnit(
+    quantityOrDimension = yData$yDimension[[1]],
+    values = yData$yErrorValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yErrorUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yErrorUnit <- yTargetUnit
+
+  return(yData)
 }
