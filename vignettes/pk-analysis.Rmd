@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Calculating PK   parameters
+## Calculating PK parameters
 
 The `{ospsuite}` package gives you access to the standard PK Parameters calculated by PK-Sim such as AUC, Cmax etc.
 For the complete list of PK Parameters supported out of the box, please refer to the [online documentaton](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-parameters).
@@ -105,8 +105,7 @@ the dimension `Concentration`.
 A User-Defined PK Parameter is always based on an existing PK-Parameter and simply extends the way the output is calcualted.
 It is not possible at the moment to define your own `formula`.
 
-The utility `addUserDefinedPKParameter` creates and returns an instance of the `UserDefinedPKParameter` which can then be parameterized
-for specific requirements.
+The utility [`addUserDefinedPKParameter`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addUserDefinedPKParameter.html) creates and returns an instance of the [`UserDefinedPKParameter`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/UserDefinedPKParameter.html) which can then be parameterized for specific requirements.
 
 ### Examples
 
@@ -142,10 +141,33 @@ myAUC$endTime <- 80
  myCMax$endApplicationIndex <- 5
 ```
 
+#### Calculate CMax between the 4th and 5th application of a multiple applications simulation and apply a time offset
+
+```{r UserDefinedApplicationIntervalWithOffset}
+# Adds a user defined parameter named `MyCMax` that will calculate the value of Cmax between the 4th application start time + 10 min and 
+# the 5th application start time + 20min
+
+# Create a new parameter based on the standard C_max parameter
+ myCMax <- addUserDefinedPKParameter(
+   name = "MyCMax",
+   standardPKParameter = StandardPKParameter$C_max
+)
+
+# Specifies start application (4th) and end applicaiton (5th)
+ myCMax$startApplicationIndex <- 4
+ myCMax$endApplicationIndex <- 5
+
+# Specifies start time offset. The PK calculations wil effectively start at StartTime of 4th Application + 10 min
+ myCMax$startTimeOffset <- 10
+
+# Specifies end time offset . The PK calculations wil effectively ends at StartTime of 5th Application + 20 min
+ myCMax$endTimeOffset <- 20
+```
+
 #### Update Dimension of a standard parameter for correct visualization
 
 PK parameters currently always assume that the underlying quantity is a concentration and do not check for units.
-If the quantity of interest has another dimension, creating a user-defined PK paramter `AND` set its display unit to any valid unit of the target dimension can do the trick 
+If the quantity of interest has another dimension, creating a user-defined PK parameter `AND` setting its display unit to any valid unit of the target dimension can do the trick 
 
 
 ```{r UserDefinedDimensionChange}
