@@ -42,10 +42,10 @@ test_that("It can import valid simulation results from multiple CSV files", {
 
 test_that("It throws an exception if the file imported are not valid results file", {
   junkFile <- getTestDataFilePath("pop.csv")
-  expect_that(importSensitivityAnalysisResultsFromCSV(sim, junkFile), throws_error())
+  expect_error(importSensitivityAnalysisResultsFromCSV(sim, junkFile))
 })
 
 test_that("It throws an exception when importing a valid result file that would result in duplicated results", {
   sa1_file <- getTestDataFilePath("sa_1.csv")
-  expect_that(importSensitivityAnalysisResultsFromCSV(sim, c(sa1_file, sa1_file)), throws_error())
+  expect_error(importSensitivityAnalysisResultsFromCSV(sim, c(sa1_file, sa1_file)))
 })

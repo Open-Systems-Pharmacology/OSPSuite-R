@@ -6,5 +6,5 @@ test_that("It can create a molecule ontogeny for a predefined ontogeny", {
 })
 
 test_that("It throws an error when creating a molecule ontogeny for an unknown ontogeny", {
-  expect_that(MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = "Unknown"), throws_error())
+  expect_error(MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = "Unknown"))
 })

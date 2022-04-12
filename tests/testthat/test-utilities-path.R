@@ -5,7 +5,7 @@ test_that("It should convert a valid path to array", {
 })
 
 test_that("It should throw an error if the argument is not a string ", {
-  expect_that(toPathArray(function() {}), throws_error())
+  expect_error(toPathArray(function() {}))
 })
 
 
@@ -17,5 +17,5 @@ test_that("It should convert a valid path array to string", {
 })
 
 test_that("It should throw an error if the argument is not a string ", {
-  expect_that(toPathString(function() {}), throws_error())
+  expect_error(toPathString(function() {}))
 })
