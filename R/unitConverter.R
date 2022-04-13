@@ -51,18 +51,49 @@
 
   # xUnit --------------------------
 
+  # Calls to `toUnit` should equal the number of unique source units.
+  #
+  # So create a separate data frame for each source unit, make sure that the
+  # data frame is not empty, and then carry out unit conversion.
   xDataList <- split(data, data$xUnit)
+
+  # Re-combine data frames for each converted source unit.
   data <- dplyr::bind_rows(lapply(xDataList, .xUnitConverter, xTargetUnit))
 
   # yUnit ----------------
 
-  yDataList <- split(data, list(data$yUnit, data$molWeight))
+  # Same logic as `xUnit`. The only additional wrinkle is that, in addition to
+  # source units, molecular weight can also be different.
+  #
+  # So create a separate data frame for each source unit and molecular weight
+  # combination present, make sure that the data frame is not empty, and then
+  # carry out unit conversion.
+  #
+  # If molecular weights are missing, don't use it for splitting to prevent
+  # creating empty data frames in the list.
+  if (any(is.na(data$molWeight))) {
+    yDataList <- split(data, list(data$yUnit))
+  } else {
+    yDataList <- split(data, list(data$yUnit, data$molWeight))
+  }
+
   data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
 
   # yUnit error ----------------
 
+  # Follows the same logic as `yUnit`.
   if ("yErrorValues" %in% names(data)) {
-    yErrorDataList <- split(data, list(data$yErrorUnit, data$molWeight))
+    # Because `split()` will drop missing values from splitting variable, this
+    # can lead to loss of data. In such case, a splitting variable which doesn't
+    # have missing values needs to be used, which in this case is `yUnit.`
+    if (any(is.na(data$molWeight)) && any(is.na(data$yErrorUnit))) {
+      yErrorDataList <- split(data, list(data$yUnit))
+    } else if (any(is.na(data$molWeight)) && !any(is.na(data$yErrorUnit))) {
+      yErrorDataList <- split(data, list(data$yErrorUnit))
+    } else {
+      yErrorDataList <- split(data, list(data$yErrorUnit, data$molWeight))
+    }
+
     data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
   }
 
@@ -72,6 +103,11 @@
 #' @keywords internal
 #' @noRd
 .xUnitConverter <- function(xData, xTargetUnit) {
+  # no unit conversion possible if source unit is missing
+  if (is.na(xData$xUnit[[1]])) {
+    return(xData)
+  }
+
   xData$xValues <- ospsuite::toUnit(
     quantityOrDimension = xData$xDimension[[1]],
     values = xData$xValues,
@@ -87,6 +123,11 @@
 #' @keywords internal
 #' @noRd
 .yUnitConverter <- function(yData, yTargetUnit) {
+  # no unit conversion possible if source unit is missing
+  if (is.na(yData$yUnit[[1]])) {
+    return(yData)
+  }
+
   yData$yValues <- toUnit(
     quantityOrDimension = yData$yDimension[[1]],
     values = yData$yValues,
@@ -104,6 +145,11 @@
 #' @keywords internal
 #' @noRd
 .yErrorUnitConverter <- function(yData, yTargetUnit) {
+  # no unit conversion possible if source unit is missing
+  if (is.na(yData$yErrorUnit[[1]])) {
+    return(yData)
+  }
+
   yData$yErrorValues <- toUnit(
     quantityOrDimension = yData$yDimension[[1]],
     values = yData$yErrorValues,

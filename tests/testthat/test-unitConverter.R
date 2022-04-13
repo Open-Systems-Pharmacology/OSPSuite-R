@@ -160,3 +160,80 @@ test_that("Correct conversion for yValues having the same unit but different MW"
 
   expect_equal(dfConvert$yValues, c(10, 10, 20))
 })
+
+# missing values handled properly -------------------
+
+dfNA <- dplyr::tibble(
+  dataType = c(rep("simulated", 3), rep("observed", 3)),
+  xValues = c(0, 14.482, 28.965, 0, 1, 2),
+  xUnit = "min", xDimension = "Time",
+  yValues = c(25.579, 32.446, 32.103, 0, 0.995, 0.991),
+  yUnit = c("%", "%", "%", "", "", ""),
+  yDimension = "Fraction",
+  yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+  yErrorUnit = c("%", "%", "%", NA, NA, NA),
+  molWeight = c(NA, NA, NA, 129.1636, 129.1636, 129.1636)
+)
+
+dfNAConvert <- .unitConverter(dfNA)
+dfNAXYConvert <- .unitConverter(dfNA, xUnit = "h", yUnit = "")
+
+test_that("simulated data is as expected in presence of missing values - default units", {
+  # because of the missing values, no conversion should have taken place and so these two
+  # data frames should be identical
+  expect_equal(
+    dplyr::filter(dfNAConvert, dataType == "simulated"),
+    dplyr::filter(dfNA, dataType == "simulated")
+  )
+})
+
+test_that("observed data is as expected in presence of missing values - default units", {
+  # only `yValues` should change; everything else should remain the same
+  expect_equal(
+    dplyr::filter(dfNAConvert, dataType == "observed"),
+    dplyr::filter(dfNA, dataType == "observed") %>%
+      dplyr::mutate(yValues = 100 * yValues, yUnit = "%")
+  )
+})
+
+test_that("data have expected units in presence of missing values - custom units", {
+  expect_equal(unique(dfNAXYConvert$xUnit), "h")
+  expect_equal(unique(dfNAXYConvert$yUnit), "")
+})
+
+test_that("data have expected dimensions in presence of missing values - custom units", {
+  expect_equal(unique(dfNAXYConvert$xDimension), "Time")
+  expect_equal(unique(dfNAXYConvert$yDimension), "Fraction")
+})
+
+test_that("simulated xValues are converted as expected in presence of missing values - custom units", {
+  expect_equal(
+    dfNAXYConvert[dfNAXYConvert$dataType == "simulated", ]$xValues,
+    c(0.0000000, 0.2413667, 0.4827500),
+    tolerance = 0.001
+  )
+})
+
+test_that("observed xValues are converted as expected in presence of missing values - custom units", {
+  expect_equal(
+    dfNAXYConvert[dfNAXYConvert$dataType == "observed", ]$xValues,
+    c(0, 0.0166667, 0.0333333),
+    tolerance = 0.001
+  )
+})
+
+test_that("simulated yValues are converted as expected in presence of missing values - custom units", {
+  expect_equal(
+    dfNAXYConvert[dfNAXYConvert$dataType == "simulated", ]$yValues,
+    c(0.25579, 0.32446, 0.32103),
+    tolerance = 0.001
+  )
+})
+
+test_that("observed yValues are converted as expected in presence of missing values - custom units", {
+  expect_equal(
+    dfNAXYConvert[dfNAXYConvert$dataType == "observed", ]$yValues,
+    c(0, 0.995, 0.991),
+    tolerance = 0.001
+  )
+})
