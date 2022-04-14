@@ -39,7 +39,6 @@ RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
-    'PlotGridConfiguration.R'
     'aging-data.R'
     'api-config.R'
     'application.R'
@@ -73,7 +72,7 @@ Collate:
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'
-    'plotGrid.R'
+    'plot-grid.R'
     'population-characteristics.R'
     'population.R'
     'quantity-pk-parameter.R'
