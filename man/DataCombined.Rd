@@ -261,7 +261,6 @@ offset and scale factor values.
 \if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
 A method to extract a tibble data frame of simulated and/or observed data
-
 (depending on instances of which classes have been added to the object).
 
 Note that the order in which you enter different object doesn't matter

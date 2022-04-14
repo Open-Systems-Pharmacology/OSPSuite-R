@@ -75,7 +75,7 @@ SimulationBatch <- R6::R6Class(
 
     #' @description
     #' Print the object to the console
-    #' @param ... Rest arguments.
+    #' @param ... Additional arguments.
     print = function(...) {
       simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
       private$printClass()
