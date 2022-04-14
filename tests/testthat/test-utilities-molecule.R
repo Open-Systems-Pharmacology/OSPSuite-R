@@ -42,19 +42,19 @@ test_that("It can retrieve all molecule paths defined in a container", {
 context("setMoleculeInitialValues")
 
 test_that("It throws an error when no valid molecule objects are provided", {
-  expect_that(setMoleculeInitialValues("quantity", 1), throws_error())
+  expect_error(setMoleculeInitialValues("quantity", 1))
 })
 
 test_that("It throws an error when no valid values are provided", {
   molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
-  expect_that(setMoleculeInitialValues(molecules, "s"), throws_error())
+  expect_error(setMoleculeInitialValues(molecules, "s"))
 })
 
 test_that("It throws an error when the number of quantity differs from the number of values", {
   molecule <- getMolecule("Organism|VenousBlood|Plasma|Caffeine", sim)
   molecules <- getAllMoleculesMatching("Organism|VenousBlood|*|Caffeine", sim)
-  expect_that(setMoleculeInitialValues(molecule, c(1, 2)), throws_error())
-  expect_that(setMoleculeInitialValues(molecules, c(1:5)), throws_error())
+  expect_error(setMoleculeInitialValues(molecule, c(1, 2)))
+  expect_error(setMoleculeInitialValues(molecules, c(1:5)))
 })
 
 test_that("It can set the value of a single quantity", {
@@ -75,19 +75,19 @@ test_that("It can set the values of multiple molecules", {
 context("setMoleculeScaleDivisors")
 
 test_that("It throws an error when no valid molecule objects are provided", {
-  expect_that(setMoleculeScaleDivisors("quantity", 1), throws_error())
+  expect_error(setMoleculeScaleDivisors("quantity", 1))
 })
 
 test_that("It throws an error when no valid values are provided", {
   molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
-  expect_that(setMoleculeScaleDivisors(molecules, "s"), throws_error())
+  expect_error(setMoleculeScaleDivisors(molecules, "s"))
 })
 
 test_that("It throws an error when the number of molecules differs from the number of values", {
   molecule <- getMolecule("Organism|VenousBlood|Plasma|Caffeine", sim)
   molecules <- getAllMoleculesMatching("Organism|VenousBlood|*|Caffeine", sim)
-  expect_that(setMoleculeScaleDivisors(molecule, c(1, 2)), throws_error())
-  expect_that(setMoleculeScaleDivisors(molecules, c(1:5)), throws_error())
+  expect_error(setMoleculeScaleDivisors(molecule, c(1, 2)))
+  expect_error(setMoleculeScaleDivisors(molecules, c(1:5)))
 })
 
 test_that("It can set the scale divisor of a single quantity", {

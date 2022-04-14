@@ -62,7 +62,7 @@ test_that("It throwns an error when creating a human with population missing", {
     species = Species$Human,
     numberOfIndividuals = 10,
   )
-  expect_that(createPopulation(populationCharacteristics = human), throws_error())
+  expect_error(createPopulation(populationCharacteristics = human))
 })
 
 

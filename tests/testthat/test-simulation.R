@@ -9,7 +9,7 @@ test_that("It can retrieve the file source of the simulation", {
 })
 
 test_that("It throws an error when trying to set file source", {
-  expect_that(sim$sourceFile <- "TOTO", throws_error())
+  expect_error(sim$sourceFile <- "TOTO")
 })
 
 test_that("It can print the simulation", {

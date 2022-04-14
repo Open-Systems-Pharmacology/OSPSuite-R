@@ -8,7 +8,7 @@ test_that("It can load a valid csv population file", {
 
 test_that("It throws an exception when loading an invalid population file", {
   populationFileName <- getTestDataFilePath("junk.csv")
-  expect_that(loadPopulation(populationFileName), throws_error())
+  expect_error(loadPopulation(populationFileName))
 })
 
 

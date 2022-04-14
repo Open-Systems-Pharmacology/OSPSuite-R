@@ -30,19 +30,19 @@ test_that("It can retrieve the fullPath of a container", {
 
 test_that("It throws an error when trying to set the path of a container", {
   container <- getContainer(liverPath, sim)
-  expect_that(container$path <- "TOTO", throws_error())
+  expect_error(container$path <- "TOTO")
 })
 
 
 test_that("It throws an error when trying to set the id of a container", {
   container <- getContainer(liverPath, sim)
-  expect_that(container$id <- "id", throws_error())
+  expect_error(container$id <- "id")
 })
 
 
 test_that("It throws an error when trying to set the name of a container", {
   container <- getContainer(liverPath, sim)
-  expect_that(container$name <- "name", throws_error())
+  expect_error(container$name <- "name")
 })
 
 test_that("It can print container", {

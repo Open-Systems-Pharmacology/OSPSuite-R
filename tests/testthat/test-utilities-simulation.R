@@ -16,7 +16,7 @@ test_that("It throws an exception when trying to export for an individual id tha
   populationFileName <- getTestDataFilePath(fileName = "pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
-  expect_that(exportIndividualSimulations(population = population, individualIds = c(50, 2), outputFolder = tempdir(), simulation = sim), throws_error())
+  expect_error(exportIndividualSimulations(population = population, individualIds = c(50, 2), outputFolder = tempdir(), simulation = sim))
 })
 
 context("loadSimulation")
@@ -136,7 +136,7 @@ test_that("It throws an exception when running a population simulation with the 
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  expect_that(runSimulation(simulation = population, population = simulation), throws_error())
+  expect_error(runSimulation(simulation = population, population = simulation))
 })
 
 test_that("It runs one individual simulation without simulationRunOptions", {
@@ -197,14 +197,14 @@ test_that("It throws an error when running multiple simulations with a populatio
   sim2 <- loadTestSimulation("simple", loadFromCache = FALSE)
   populationFileName <- getTestDataFilePath(fileName = "pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
-  expect_that(runSimulations(simulations = c(sim1, sim2), population = population), throws_error())
+  expect_error(runSimulations(simulations = c(sim1, sim2), population = population))
 })
 
 test_that("It throws an error when running the same instance of a simulation multiple time", {
   resetSimulationCache()
   sim1 <- loadTestSimulation("simple", loadFromCache = TRUE)
   sim2 <- loadTestSimulation("simple", loadFromCache = TRUE)
-  expect_that(runSimulations(simulations = c(sim1, sim2)), throws_error())
+  expect_error(runSimulations(simulations = c(sim1, sim2)))
 })
 
 context("getStandardMoleculeParameters")
@@ -231,7 +231,7 @@ test_that("It returns all parameter potentially interesting for sensitivity anal
 context("createSimulationBatch")
 test_that("It throws an error when initializing a simulation batch without any variable parameter or molecule", {
   sim <- loadTestSimulation("simple", loadFromCache = TRUE)
-  expect_that(createSimulationBatch(simulation = sim), throws_error())
+  expect_error(createSimulationBatch(simulation = sim))
 })
 
 test_that("It creates a simulation batch when using only parameter paths", {
