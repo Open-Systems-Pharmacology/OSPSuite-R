@@ -7,8 +7,7 @@
 #' @import tlf
 #'
 #' @export
-plotIndividualTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration) {
+plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration) {
 
   # validation -----------------------------
 
@@ -30,34 +29,18 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Create an instance of `TimeProfilePlotConfiguration` class
   individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
 
-  # Annotations
   individualTimeProfilePlotConfiguration$labels <- defaultInternalPlotConfiguration$labels
-
-  # Legend Configuration
   individualTimeProfilePlotConfiguration$legend <- defaultInternalPlotConfiguration$legend
-
-  # X-Axis configuration
   individualTimeProfilePlotConfiguration$xAxis <- defaultInternalPlotConfiguration$xAxis
-
-  # Y-Axis configuration
   individualTimeProfilePlotConfiguration$yAxis <- defaultInternalPlotConfiguration$yAxis
-
-  # Background configuration
   individualTimeProfilePlotConfiguration$background <- defaultInternalPlotConfiguration$background
-
-  # Configurations for aesthetics
   individualTimeProfilePlotConfiguration$lines <- defaultInternalPlotConfiguration$lines
   individualTimeProfilePlotConfiguration$points <- defaultInternalPlotConfiguration$points
   individualTimeProfilePlotConfiguration$ribbons <- defaultInternalPlotConfiguration$ribbons
   individualTimeProfilePlotConfiguration$errorbars <- defaultInternalPlotConfiguration$errorbars
-
-  # Export configuration
   individualTimeProfilePlotConfiguration$export <- defaultInternalPlotConfiguration$export
 
   # plot -----------------------------
-  #
-  #   tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
-  #   useTheme(loadThemeFromJson(tlfTheme))
 
   plotTimeProfile(
     data = as.data.frame(simData),

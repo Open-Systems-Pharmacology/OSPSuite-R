@@ -27,8 +27,8 @@
 #'
 #' @keywords internal
 #' @noRd
-defaultInternalPlotConfiguration <- R6::R6Class(
-  "defaultInternalPlotConfiguration",
+DefaultInternalPlotConfiguration <- R6::R6Class(
+  "DefaultInternalPlotConfiguration",
   public = list(
     labels = NULL,
     legend = NULL,
@@ -39,62 +39,7 @@ defaultInternalPlotConfiguration <- R6::R6Class(
     points = NULL,
     ribbons = NULL,
     errorbars = NULL,
-    export = NULL,
-
-    #' @description Create a new `defaultInternalPlotConfiguration` object
-    #'
-    #' @param labels `tlf::LabelConfiguration` object defining properties of labels.
-    #' @param legend `tlf::LegendConfiguration` object defining legend properties.
-    #' @param xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
-    #' @param yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
-    #' @param background `tlf::BackgroundConfiguration` object defining the
-    #'   configuration of background.
-    #' @param lines `tlf::ThemeAestheticSelections` object or list defining how
-    #'   lines are plotted.
-    #' @param points `tlf::ThemeAestheticSelections` object or list defining how
-    #'   points are plotted.
-    #' @param ribbons `tlf::ThemeAestheticSelections` object or list defining
-    #'   how ribbons are plotted.
-    #' @param errorbars `tlf::ThemeAestheticSelections` object or list defining
-    #'   how errorbars are plotted.
-    #' @param export R6 class `tlf::SaveConfiguration` defining saving
-    #'   properties.
-    #'
-    #' @return A new `PlotConfiguration` object
-    initialize = function(labels = NULL,
-                          legend = NULL,
-                          xAxis = NULL,
-                          yAxis = NULL,
-                          background = NULL,
-                          lines = NULL,
-                          points = NULL,
-                          ribbons = NULL,
-                          errorbars = NULL,
-                          export = NULL) {
-      # Annotations
-      self$labels <- labels
-
-      # Legend Configuration
-      self$legend <- legend
-
-      # X-Axis configuration
-      self$xAxis <- xAxis
-
-      # Y-Axis configuration
-      self$yAxis <- yAxis
-
-      # Background configuration
-      self$background <- background
-
-      # Configurations for aesthetics
-      self$lines <- lines
-      self$points <- points
-      self$ribbons <- ribbons
-      self$errorbars <- errorbars
-
-      # Export configuration
-      self$export <- export
-    }
+    export = NULL
   )
 )
 
@@ -334,16 +279,18 @@ defaultInternalPlotConfiguration <- R6::R6Class(
 
   # defaultInternalPlotConfiguration object -----------------------------------
 
-  defaultInternalPlotConfiguration$new(
-    labels = labels,
-    legend = legendConfig,
-    xAxis = xAxisConfiguration,
-    yAxis = yAxisConfiguration,
-    background = background,
-    lines = linesConfiguration,
-    points = pointsConfiguration,
-    ribbons = ribbonsConfiguration,
-    errorbars = errorbarsConfiguration,
-    export = exportConfiguration
-  )
+  defaultInternalPlotConfiguration <- DefaultInternalPlotConfiguration$new()
+
+  defaultInternalPlotConfiguration$labels <- labels
+  defaultInternalPlotConfiguration$legend <- legendConfig
+  defaultInternalPlotConfiguration$xAxis <- xAxisConfiguration
+  defaultInternalPlotConfiguration$yAxis <- yAxisConfiguration
+  defaultInternalPlotConfiguration$background <- background
+  defaultInternalPlotConfiguration$lines <- linesConfiguration
+  defaultInternalPlotConfiguration$points <- pointsConfiguration
+  defaultInternalPlotConfiguration$ribbons <- ribbonsConfiguration
+  defaultInternalPlotConfiguration$errorbars <- errorbarsConfiguration
+  defaultInternalPlotConfiguration$export <- exportConfiguration
+
+  return(defaultInternalPlotConfiguration)
 }
