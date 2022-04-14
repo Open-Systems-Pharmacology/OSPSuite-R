@@ -161,36 +161,36 @@ DefaultPlotConfiguration <- R6::R6Class(
     yGridLinetype = "blank",
 
     # lines
-    linesColor = colorDefaultValues,
-    linesFill = fillDefaultValues,
-    linesShape = shapeDefaultValues,
-    linesSize = sizeDefaultValues,
-    linesLinetype = linetypeDefaultValues,
-    linesAlpha = alphaDefaultValues,
+    linesColor = tlf::ColorMaps$default,
+    linesFill = tlf::ColorMaps$default,
+    linesShape = names(tlf::Shapes),
+    linesSize = c(1, 2, 3, 4, 5),
+    linesLinetype = tlf::Linetypes,
+    linesAlpha = 0.75,
 
     # points
-    pointsColor = colorDefaultValues,
-    pointsFill = fillDefaultValues,
-    pointsShape = shapeDefaultValues,
-    pointsSize = sizeDefaultValues,
-    pointsLinetype = linetypeDefaultValues,
-    pointsAlpha = alphaDefaultValues,
+    pointsColor = tlf::ColorMaps$default,
+    pointsFill = tlf::ColorMaps$default,
+    pointsShape = names(tlf::Shapes),
+    pointsSize = c(1, 2, 3, 4, 5),
+    pointsLinetype = tlf::Linetypes,
+    pointsAlpha = 0.75,
 
     # ribbons
-    ribbonsColor = colorDefaultValues,
-    ribbonsFill = fillDefaultValues,
-    ribbonsShape = shapeDefaultValues,
-    ribbonsSize = sizeDefaultValues,
-    ribbonsLinetype = linetypeDefaultValues,
-    ribbonsAlpha = alphaDefaultValues,
+    ribbonsColor = tlf::ColorMaps$default,
+    ribbonsFill = tlf::ColorMaps$default,
+    ribbonsShape = names(tlf::Shapes),
+    ribbonsSize = c(1, 2, 3, 4, 5),
+    ribbonsLinetype = tlf::Linetypes,
+    ribbonsAlpha = 0.75,
 
     # errorbars
-    errorbarsColor = colorDefaultValues,
-    errorbarsFill = fillDefaultValues,
-    errorbarsShape = shapeDefaultValues,
-    errorbarsSize = sizeDefaultValues,
-    errorbarsLinetype = linetypeDefaultValues,
-    errorbarsAlpha = alphaDefaultValues,
+    errorbarsColor = tlf::ColorMaps$default,
+    errorbarsFill = tlf::ColorMaps$default,
+    errorbarsShape = names(tlf::Shapes),
+    errorbarsSize = c(1, 2, 3, 4, 5),
+    errorbarsLinetype = tlf::Linetypes,
+    errorbarsAlpha = 0.75,
 
     # export
     plotSaveFileFormat = "png",
@@ -198,63 +198,4 @@ DefaultPlotConfiguration <- R6::R6Class(
     plotSaveFileHeight = 9,
     plotSaveFileDimensionUnits = "cm"
   )
-)
-
-#' @keywords internal
-#' @noRd
-colorDefaultValues <- c(
-  "#E41A1C",
-  "#377EB8",
-  "#4DAF4A",
-  "#984EA3",
-  "#FF7F00",
-  "#FFFF33",
-  "#A65628",
-  "#F781BF"
-)
-
-#' @keywords internal
-#' @noRd
-fillDefaultValues <- colorDefaultValues
-
-#' @keywords internal
-#' @noRd
-shapeDefaultValues <- c(
-  "circle",
-  "triangle",
-  "plus",
-  "dot",
-  "square",
-  "cross",
-  "diamond",
-  "star"
-)
-
-#' @keywords internal
-#' @noRd
-linetypeDefaultValues <- c(
-  "solid",
-  "longdash",
-  "dotted",
-  "dashed",
-  "twodash",
-  "dotdash"
-)
-
-#' @keywords internal
-#' @noRd
-sizeDefaultValues <- c(
-  1,
-  2,
-  3,
-  4,
-  5
-)
-
-#' @keywords internal
-#' @noRd
-alphaDefaultValues <- c(
-  0.75,
-  0.5,
-  0.25
 )
