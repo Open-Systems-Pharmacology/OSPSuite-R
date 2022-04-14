@@ -79,7 +79,7 @@ SimulationBatch <- R6::R6Class(
     print = function(...) {
       simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
       private$printClass()
-      writeLines(paste0("   ", capture.output(self$simulation)))
+      private$printLine("Simulation", self$simulation$name)
       private$printLine("runValuesIds", self$runValuesIds)
       private$printLine("Parameters",
         rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
