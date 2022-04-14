@@ -52,35 +52,35 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # title
     title = NULL,
-    titleColor = NULL,
-    titleSize = NULL,
-    titleFontFace = NULL,
-    titleFontFamily = NULL,
-    titleAngle = NULL,
+    titleColor = "black",
+    titleSize = 12,
+    titleFontFace = "plain",
+    titleFontFamily = "",
+    titleAngle = 0,
 
     # subtitle
     subtitle = NULL,
-    subtitleColor = NULL,
-    subtitleSize = NULL,
-    subtitleFontFace = NULL,
-    subtitleFontFamily = NULL,
-    subtitleAngle = NULL,
+    subtitleColor = "black",
+    subtitleSize = 10,
+    subtitleFontFace = "plain",
+    subtitleFontFamily = "",
+    subtitleAngle = 0,
 
     # xLabel
     xLabel = "xValues",
-    xLabelColor = NULL,
-    xLabelSize = NULL,
-    xLabelFontFace = NULL,
-    xLabelFontFamily = NULL,
-    xLabelAngle = NULL,
+    xLabelColor = "black",
+    xLabelSize = 12,
+    xLabelFontFace = "plain",
+    xLabelFontFamily = "",
+    xLabelAngle = 0,
 
     # yLabel
     yLabel = "yValues",
-    yLabelColor = NULL,
-    yLabelSize = NULL,
-    yLabelFontFace = NULL,
-    yLabelFontFamily = NULL,
-    yLabelAngle = NULL,
+    yLabelColor = "black",
+    yLabelSize = 12,
+    yLabelFontFace = "plain",
+    yLabelFontFamily = "",
+    yLabelAngle = 0,
 
     # legend
     legendPosition = "insideTopRight",
@@ -92,105 +92,105 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleAngle = 0,
 
     # legend caption
-    legendCaptionSize = NULL,
-    legendCaptionColor = NULL,
-    legendCaptionFontFamily = NULL,
-    legendCaptionFontFace = NULL,
-    legendCaptionAngle = NULL,
+    legendCaptionSize = 10,
+    legendCaptionColor = "black",
+    legendCaptionFontFamily = "",
+    legendCaptionFontFace = "plain",
+    legendCaptionAngle = 0,
 
     # XAxisConfiguration
     xAxisLimits = NULL,
-    xAxisScale = NULL,
+    xAxisScale = tlf::Scaling$lin,
     xAxisTicks = NULL,
     xAxisTickLabels = NULL,
     xAxisLabelSize = NULL,
-    xAxisLabelColor = NULL,
-    xAxisLabelFontFamily = NULL,
-    xAxisLabelFontFace = NULL,
-    xAxisLabelAngle = NULL,
+    xAxisLabelColor = "black",
+    xAxisLabelFontFamily = "",
+    xAxisLabelFontFace = "plain",
+    xAxisLabelAngle = 0,
 
     # YAxisConfiguration
     yAxisLimits = NULL,
-    yAxisScale = NULL,
+    yAxisScale = tlf::Scaling$lin,
     yAxisTicks = NULL,
     yAxisTickLabels = NULL,
     yAxisLabelSize = NULL,
-    yAxisLabelColor = NULL,
-    yAxisLabelFontFamily = NULL,
-    yAxisLabelFontFace = NULL,
-    yAxisLabelAngle = NULL,
+    yAxisLabelColor = "black",
+    yAxisLabelFontFamily = "",
+    yAxisLabelFontFace = "plain",
+    yAxisLabelAngle = 90,
 
     # watermark
     watermark = NULL,
-    watermarkSize = NULL,
-    watermarkColor = NULL,
-    watermarkFontFamily = NULL,
-    watermarkFontFace = NULL,
-    watermarkAngle = NULL,
+    watermarkSize = 20,
+    watermarkColor = "grey40",
+    watermarkFontFamily = "",
+    watermarkFontFace = "plain",
+    watermarkAngle = 30,
 
     # plot background
-    plotBackgroundFill = NULL,
-    plotBackgroundColor = NULL,
-    plotBackgroundSize = NULL,
-    plotBackgroundLinetype = NULL,
+    plotBackgroundFill = "white",
+    plotBackgroundColor = "black",
+    plotBackgroundSize = 0.5,
+    plotBackgroundLinetype = "blank",
 
     # plot panel background
-    plotPanelBackgroundFill = NULL,
-    plotPanelBackgroundColor = NULL,
-    plotPanelBackgroundSize = NULL,
-    plotPanelBackgroundLinetype = NULL,
+    plotPanelBackgroundFill = "white",
+    plotPanelBackgroundColor = "black",
+    plotPanelBackgroundSize = 0.5,
+    plotPanelBackgroundLinetype = "solid",
 
     # xAxis
     xAxisColor = "black",
     xAxisSize = 0.5,
-    xAxisLinetype = NULL,
+    xAxisLinetype = "solid",
 
     # yAxis
-    yAxisColor = NULL,
-    yAxisSize = NULL,
-    yAxisLinetype = NULL,
+    yAxisColor = "black",
+    yAxisSize = 0.5,
+    yAxisLinetype = "solid",
 
     # xGrid
-    xGridColor = NULL,
-    xGridSize = NULL,
-    xGridLinetype = NULL,
+    xGridColor = "grey",
+    xGridSize = 0.25,
+    xGridLinetype = "blank",
 
     # yGrid
-    yGridColor = NULL,
-    yGridSize = NULL,
-    yGridLinetype = NULL,
+    yGridColor = "grey",
+    yGridSize = 0.25,
+    yGridLinetype = "blank",
 
     # lines
-    linesColor = NULL,
-    linesFill = NULL,
-    linesShape = NULL,
-    linesSize = NULL,
-    linesLinetype = NULL,
-    linesAlpha = NULL,
+    linesColor = colorDefaultValues,
+    linesFill = fillDefaultValues,
+    linesShape = shapeDefaultValues,
+    linesSize = sizeDefaultValues,
+    linesLinetype = linetypeDefaultValues,
+    linesAlpha = alphaDefaultValues,
 
     # points
-    pointsColor = NULL,
-    pointsFill = NULL,
-    pointsShape = NULL,
-    pointsSize = NULL,
-    pointsLinetype = NULL,
-    pointsAlpha = NULL,
+    pointsColor = colorDefaultValues,
+    pointsFill = fillDefaultValues,
+    pointsShape = shapeDefaultValues,
+    pointsSize = sizeDefaultValues,
+    pointsLinetype = linetypeDefaultValues,
+    pointsAlpha = alphaDefaultValues,
 
     # ribbons
-    ribbonsColor = NULL,
-    ribbonsFill = NULL,
-    ribbonsShape = NULL,
-    ribbonsSize = NULL,
-    ribbonsLinetype = NULL,
-    ribbonsAlpha = NULL,
+    ribbonsColor = colorDefaultValues,
+    ribbonsFill = fillDefaultValues,
+    ribbonsShape = shapeDefaultValues,
+    ribbonsSize = sizeDefaultValues,
+    ribbonsLinetype = linetypeDefaultValues,
+    ribbonsAlpha = alphaDefaultValues,
 
     # errorbars
-    errorbarsColor = NULL,
-    errorbarsFill = NULL,
-    errorbarsShape = NULL,
-    errorbarsSize = NULL,
-    errorbarsLinetype = NULL,
-    errorbarsAlpha = NULL,
+    errorbarsColor = colorDefaultValues,
+    errorbarsFill = fillDefaultValues,
+    errorbarsShape = shapeDefaultValues,
+    errorbarsSize = sizeDefaultValues,
+    errorbarsLinetype = linetypeDefaultValues,
+    errorbarsAlpha = alphaDefaultValues,
 
     # export
     plotSaveFileFormat = "png",
@@ -198,4 +198,63 @@ DefaultPlotConfiguration <- R6::R6Class(
     plotSaveFileHeight = 9,
     plotSaveFileDimensionUnits = "cm"
   )
+)
+
+#' @keywords internal
+#' @noRd
+colorDefaultValues <- c(
+  "#E41A1C",
+  "#377EB8",
+  "#4DAF4A",
+  "#984EA3",
+  "#FF7F00",
+  "#FFFF33",
+  "#A65628",
+  "#F781BF"
+)
+
+#' @keywords internal
+#' @noRd
+fillDefaultValues <- colorDefaultValues
+
+#' @keywords internal
+#' @noRd
+shapeDefaultValues <- c(
+  "circle",
+  "triangle",
+  "plus",
+  "dot",
+  "square",
+  "cross",
+  "diamond",
+  "star"
+)
+
+#' @keywords internal
+#' @noRd
+linetypeDefaultValues <- c(
+  "solid",
+  "longdash",
+  "dotted",
+  "dashed",
+  "twodash",
+  "dotdash"
+)
+
+#' @keywords internal
+#' @noRd
+sizeDefaultValues <- c(
+  1,
+  2,
+  3,
+  4,
+  5
+)
+
+#' @keywords internal
+#' @noRd
+alphaDefaultValues <- c(
+  0.75,
+  0.5,
+  0.25
 )
