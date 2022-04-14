@@ -119,7 +119,7 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     angle = ospPlotConfiguration$legendCaptionAngle
   )
 
-  legendConfig <- tlf::LegendConfiguration$new(
+  legendConfiguration <- tlf::LegendConfiguration$new(
     position = ospPlotConfiguration$legendPosition,
     caption = NULL,
     title = ospPlotConfiguration$legendTitle,
@@ -282,7 +282,7 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   defaultInternalPlotConfiguration <- DefaultInternalPlotConfiguration$new()
 
   defaultInternalPlotConfiguration$labels <- labels
-  defaultInternalPlotConfiguration$legend <- legendConfig
+  defaultInternalPlotConfiguration$legend <- legendConfiguration
   defaultInternalPlotConfiguration$xAxis <- xAxisConfiguration
   defaultInternalPlotConfiguration$yAxis <- yAxisConfiguration
   defaultInternalPlotConfiguration$background <- background
