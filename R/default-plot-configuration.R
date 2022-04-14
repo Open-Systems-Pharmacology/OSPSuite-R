@@ -43,8 +43,8 @@
 #' @field plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits File format to which the plot needs to be saved, and the units and dimensions for saving the plot.
 #'
 #' @export
-ospPlotConfiguration <- R6::R6Class(
-  "ospPlotConfiguration",
+DefaultPlotConfiguration <- R6::R6Class(
+  "DefaultPlotConfiguration",
   public = list(
     # units
     xUnit = NULL,

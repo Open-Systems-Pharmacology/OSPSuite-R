@@ -1,0 +1,349 @@
+# class definition ---------------------------------
+
+#' @title Convenience class for plot configuration for OSP plots
+#'
+#' @description
+#'
+#' An intermediary R6 class that provides a single portal to prepare the
+#' `PlotConfiguration` object needed by `{tlf}` plotting functions. The specific
+#' type of `PlotConfiguration` objects can access all necessary objects formed
+#' from user inputs using this internal object.
+#'
+#' @field labels `tlf::LabelConfiguration` object defining properties of labels.
+#' @field legend `tlf::LegendConfiguration` object defining legend properties.
+#' @field xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
+#' @field yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
+#' @field background `tlf::BackgroundConfiguration` object defining the
+#'   configuration of background.
+#' @field lines `tlf::ThemeAestheticSelections` object or list defining how
+#'   lines are plotted.
+#' @field points `tlf::ThemeAestheticSelections` object or list defining how
+#'   points are plotted.
+#' @field ribbons `tlf::ThemeAestheticSelections` object or list defining
+#'   how ribbons are plotted.
+#' @field errorbars `tlf::ThemeAestheticSelections` object or list defining
+#'   how errorbars are plotted.
+#' @field export R6 class `tlf::SaveConfiguration` defining saving properties.
+#'
+#' @keywords internal
+#' @noRd
+defaultInternalPlotConfiguration <- R6::R6Class(
+  "defaultInternalPlotConfiguration",
+  public = list(
+    labels = NULL,
+    legend = NULL,
+    xAxis = NULL,
+    yAxis = NULL,
+    background = NULL,
+    lines = NULL,
+    points = NULL,
+    ribbons = NULL,
+    errorbars = NULL,
+    export = NULL,
+
+    #' @description Create a new `defaultInternalPlotConfiguration` object
+    #'
+    #' @param labels `tlf::LabelConfiguration` object defining properties of labels.
+    #' @param legend `tlf::LegendConfiguration` object defining legend properties.
+    #' @param xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
+    #' @param yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
+    #' @param background `tlf::BackgroundConfiguration` object defining the
+    #'   configuration of background.
+    #' @param lines `tlf::ThemeAestheticSelections` object or list defining how
+    #'   lines are plotted.
+    #' @param points `tlf::ThemeAestheticSelections` object or list defining how
+    #'   points are plotted.
+    #' @param ribbons `tlf::ThemeAestheticSelections` object or list defining
+    #'   how ribbons are plotted.
+    #' @param errorbars `tlf::ThemeAestheticSelections` object or list defining
+    #'   how errorbars are plotted.
+    #' @param export R6 class `tlf::SaveConfiguration` defining saving
+    #'   properties.
+    #'
+    #' @return A new `PlotConfiguration` object
+    initialize = function(labels = NULL,
+                          legend = NULL,
+                          xAxis = NULL,
+                          yAxis = NULL,
+                          background = NULL,
+                          lines = NULL,
+                          points = NULL,
+                          ribbons = NULL,
+                          errorbars = NULL,
+                          export = NULL) {
+      # Annotations
+      self$labels <- labels
+
+      # Legend Configuration
+      self$legend <- legend
+
+      # X-Axis configuration
+      self$xAxis <- xAxis
+
+      # Y-Axis configuration
+      self$yAxis <- yAxis
+
+      # Background configuration
+      self$background <- background
+
+      # Configurations for aesthetics
+      self$lines <- lines
+      self$points <- points
+      self$ribbons <- ribbons
+      self$errorbars <- errorbars
+
+      # Export configuration
+      self$export <- export
+    }
+  )
+)
+
+
+# function to create instance ---------------------------------
+
+#' Create an instance of `defaultInternalPlotConfiguration` class
+#'
+#' @keywords internal
+#' @noRd
+.createDefaultInternalPlotConfiguration <- function(defaultPlotConfiguration) {
+
+  # labels object ---------------------------------------
+
+  labelTitle <- tlf::Label$new(
+    text = defaultPlotConfiguration$title,
+    font = NULL,
+    color = defaultPlotConfiguration$titleColor,
+    size = defaultPlotConfiguration$titleSize,
+    fontFace = defaultPlotConfiguration$titleFontFace,
+    fontFamily = defaultPlotConfiguration$titleFontFamily,
+    angle = defaultPlotConfiguration$titleAngle
+  )
+
+  labelSubtitle <- tlf::Label$new(
+    text = defaultPlotConfiguration$subtitle,
+    font = NULL,
+    color = defaultPlotConfiguration$subtitleColor,
+    size = defaultPlotConfiguration$subtitleSize,
+    fontFace = defaultPlotConfiguration$subtitleFontFace,
+    fontFamily = defaultPlotConfiguration$subtitleFontFamily,
+    angle = defaultPlotConfiguration$subtitleAngle
+  )
+
+  labelXLabel <- tlf::Label$new(
+    text = defaultPlotConfiguration$xLabel,
+    font = NULL,
+    color = defaultPlotConfiguration$xLabelColor,
+    size = defaultPlotConfiguration$xLabelSize,
+    fontFace = defaultPlotConfiguration$xLabelFontFace,
+    fontFamily = defaultPlotConfiguration$xLabelFontFamily,
+    angle = defaultPlotConfiguration$xLabelAngle
+  )
+
+  labelYLabel <- tlf::Label$new(
+    text = defaultPlotConfiguration$yLabel,
+    font = NULL,
+    color = defaultPlotConfiguration$yLabelColor,
+    size = defaultPlotConfiguration$yLabelSize,
+    fontFace = defaultPlotConfiguration$yLabelFontFace,
+    fontFamily = defaultPlotConfiguration$yLabelFontFamily,
+    angle = defaultPlotConfiguration$yLabelAngle
+  )
+
+  labels <- tlf::LabelConfiguration$new(
+    title = labelTitle,
+    subtitle = labelSubtitle,
+    xlabel = labelXLabel,
+    ylabel = labelYLabel
+  )
+
+  # legend object ---------------------------------------
+
+  legendTitleFont <- tlf::Font$new(
+    size = defaultPlotConfiguration$legendTitleSize,
+    color = defaultPlotConfiguration$legendTitleColor,
+    fontFamily = ospPlotConfiguration$legendTitleFontFamily,
+    fontFace = ospPlotConfiguration$legendTitleFontFace,
+    angle = ospPlotConfiguration$legendTitleAngle
+  )
+
+  legendCaptionFont <- tlf::Font$new(
+    size = ospPlotConfiguration$legendCaptionSize,
+    color = ospPlotConfiguration$legendCaptionColor,
+    fontFamily = ospPlotConfiguration$legendCaptionFontFamily,
+    fontFace = ospPlotConfiguration$legendCaptionFontFace,
+    angle = ospPlotConfiguration$legendCaptionAngle
+  )
+
+  legendConfig <- tlf::LegendConfiguration$new(
+    position = ospPlotConfiguration$legendPosition,
+    caption = NULL,
+    title = ospPlotConfiguration$legendTitle,
+    titleFont = ospPlotConfiguration$legendTitleFont,
+    font = ospPlotConfiguration$legendCaptionFont,
+    background = NULL
+  )
+
+  # background objects -----------------------------------
+
+  labelWatermark <- tlf::Label$new(
+    text = ospPlotConfiguration$watermark,
+    font = NULL,
+    color = ospPlotConfiguration$watermarkColor,
+    size = ospPlotConfiguration$watermarkSize,
+    fontFace = ospPlotConfiguration$watermarkFontFace,
+    fontFamily = ospPlotConfiguration$watermarkFontFamily,
+    angle = ospPlotConfiguration$watermarkAngle
+  )
+
+  plotBackground <- tlf::BackgroundElement$new(
+    fill = ospPlotConfiguration$plotBackgroundFill,
+    color = ospPlotConfiguration$plotBackgroundColor,
+    size = ospPlotConfiguration$plotBackgroundSize,
+    linetype = ospPlotConfiguration$plotBackgroundLinetype
+  )
+
+  plotPanelBackground <- tlf::BackgroundElement$new(
+    fill = ospPlotConfiguration$plotPanelBackgroundFill,
+    color = ospPlotConfiguration$plotPanelBackgroundColor,
+    size = ospPlotConfiguration$plotPanelBackgroundSize,
+    linetype = ospPlotConfiguration$plotPanelBackgroundLinetype
+  )
+
+  xAxis <- tlf::LineElement$new(
+    color = defaultPlotConfiguration$xAxisColor,
+    size = defaultPlotConfiguration$xAxisSize,
+    linetype = defaultPlotConfiguration$xAxisLinetype
+  )
+
+  yAxis <- tlf::LineElement$new(
+    color = defaultPlotConfiguration$yAxisColor,
+    size = defaultPlotConfiguration$yAxisSize,
+    linetype = defaultPlotConfiguration$yAxisLinetype
+  )
+
+  xGrid <- tlf::LineElement$new(
+    color = defaultPlotConfiguration$xGridColor,
+    size = defaultPlotConfiguration$xGridSize,
+    linetype = defaultPlotConfiguration$xGridLinetype
+  )
+
+  yGrid <- tlf::LineElement$new(
+    color = defaultPlotConfiguration$yGridColor,
+    size = defaultPlotConfiguration$yGridSize,
+    linetype = defaultPlotConfiguration$yGridLinetype
+  )
+
+  background <- tlf::BackgroundConfiguration$new(
+    watermark = defaultPlotConfiguration$labelWatermark,
+    plot = defaultPlotConfiguration$plotBackground,
+    panel = defaultPlotConfiguration$plotPanelBackground,
+    xAxis = defaultPlotConfiguration$xAxis,
+    yAxis = defaultPlotConfiguration$yAxis,
+    xGrid = defaultPlotConfiguration$xGrid,
+    yGrid = defaultPlotConfiguration$yGrid
+  )
+
+  # xAxis objects -----------------------------------
+
+  xAxisFont <- tlf::Font$new(
+    size = defaultPlotConfiguration$xAxisLabelSize,
+    color = defaultPlotConfiguration$xAxisLabelColor,
+    fontFamily = defaultPlotConfiguration$xAxisLabelFontFamily,
+    fontFace = defaultPlotConfiguration$xAxisLabelFontFace,
+    angle = defaultPlotConfiguration$xAxisLabelAngle
+  )
+
+  xAxisConfiguration <- tlf::XAxisConfiguration$new(
+    limits = defaultPlotConfiguration$xAxisLimits,
+    scale = defaultPlotConfiguration$xAxisScale,
+    ticks = defaultPlotConfiguration$xAxisTicks,
+    ticklabels = defaultPlotConfiguration$xAxisTickLabels,
+    font = defaultPlotConfiguration$xAxisFont
+  )
+
+  # yAxis objects -----------------------------------
+
+  yAxisFont <- tlf::Font$new(
+    size = defaultPlotConfiguration$yAxisLabelSize,
+    color = defaultPlotConfiguration$yAxisLabelColor,
+    fontFamily = defaultPlotConfiguration$yAxisLabelFontFamily,
+    fontFace = defaultPlotConfiguration$yAxisLabelFontFace,
+    angle = defaultPlotConfiguration$yAxisLabelAngle
+  )
+
+  yAxisConfiguration <- tlf::YAxisConfiguration$new(
+    limits = defaultPlotConfiguration$yAxisLimits,
+    scale = defaultPlotConfiguration$yAxisScale,
+    ticks = defaultPlotConfiguration$yAxisTicks,
+    ticklabels = defaultPlotConfiguration$yAxisTickLabels,
+    font = defaultPlotConfiguration$yAxisFont
+  )
+
+  # lines -------------------------------------------------------
+
+  linesConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = defaultPlotConfiguration$linesColor,
+    fill = defaultPlotConfiguration$linesFill,
+    shape = defaultPlotConfiguration$linesShape,
+    size = defaultPlotConfiguration$linesSize,
+    linetype = defaultPlotConfiguration$linesLinetype,
+    alpha = defaultPlotConfiguration$linesAlpha
+  )
+
+  # points -------------------------------------------------------
+
+  pointsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = defaultPlotConfiguration$pointsColor,
+    fill = defaultPlotConfiguration$pointsFill,
+    shape = defaultPlotConfiguration$pointsShape,
+    size = defaultPlotConfiguration$pointsSize,
+    linetype = defaultPlotConfiguration$pointsLinetype,
+    alpha = defaultPlotConfiguration$pointsAlpha
+  )
+
+  # ribbons -------------------------------------------------------
+
+  ribbonsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = defaultPlotConfiguration$ribbonsColor,
+    fill = defaultPlotConfiguration$ribbonsFill,
+    shape = defaultPlotConfiguration$ribbonsShape,
+    size = defaultPlotConfiguration$ribbonsSize,
+    linetype = defaultPlotConfiguration$ribbonsLinetype,
+    alpha = defaultPlotConfiguration$ribbonsAlpha
+  )
+
+  # errorbars -------------------------------------------------------
+
+  errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = defaultPlotConfiguration$errorbarsColor,
+    fill = defaultPlotConfiguration$errorbarsFill,
+    shape = defaultPlotConfiguration$errorbarsShape,
+    size = defaultPlotConfiguration$errorbarsSize,
+    linetype = defaultPlotConfiguration$errorbarsLinetype,
+    alpha = defaultPlotConfiguration$errorbarsAlpha
+  )
+
+  # export -------------------------------------------------------
+
+  exportConfiguration <- tlf::ExportConfiguration$new(
+    format = defaultPlotConfiguration$plotSaveFileFormat,
+    width = defaultPlotConfiguration$plotSaveFileWidth,
+    height = defaultPlotConfiguration$plotSaveFileHeight,
+    units = defaultPlotConfiguration$plotSaveFileDimensionUnits
+  )
+
+  # defaultInternalPlotConfiguration object -----------------------------------
+
+  defaultInternalPlotConfiguration$new(
+    labels = labels,
+    legend = legendConfig,
+    xAxis = xAxisConfiguration,
+    yAxis = yAxisConfiguration,
+    background = background,
+    lines = linesConfiguration,
+    points = pointsConfiguration,
+    ribbons = ribbonsConfiguration,
+    errorbars = errorbarsConfiguration,
+    export = exportConfiguration
+  )
+}
