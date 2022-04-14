@@ -63,9 +63,9 @@ plotIndividualTimeProfile <- function(dataCombined,
   individualTimeProfilePlotConfiguration$export <- ospInternalPlotConfiguration$export
 
   # plot -----------------------------
-
-  tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
-  useTheme(loadThemeFromJson(tlfTheme))
+#
+#   tlfTheme <- tlfTheme %||% system.file("themes", "ospsuiteTLFTheme.json", package = "ospsuite")
+#   useTheme(loadThemeFromJson(tlfTheme))
 
   plotTimeProfile(
     data = as.data.frame(simData),

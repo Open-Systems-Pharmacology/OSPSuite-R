@@ -5,11 +5,51 @@
 
   # labels object ---------------------------------------
 
+  labelTitle <- tlf::Label$new(
+    text = ospPlotConfiguration$title,
+    font = NULL,
+    color = ospPlotConfiguration$titleColor,
+    size = ospPlotConfiguration$titleSize,
+    fontFace = ospPlotConfiguration$titleFontFace,
+    fontFamily = ospPlotConfiguration$titleFontFamily,
+    angle = ospPlotConfiguration$titleAngle
+  )
+
+  labelSubtitle <- tlf::Label$new(
+    text = ospPlotConfiguration$subtitle,
+    font = NULL,
+    color = ospPlotConfiguration$subtitleColor,
+    size = ospPlotConfiguration$subtitleSize,
+    fontFace = ospPlotConfiguration$subtitleFontFace,
+    fontFamily = ospPlotConfiguration$subtitleFontFamily,
+    angle = ospPlotConfiguration$subtitleAngle
+  )
+
+  labelXLabel <- tlf::Label$new(
+    text = ospPlotConfiguration$xLabel,
+    font = NULL,
+    color = ospPlotConfiguration$xLabelColor,
+    size = ospPlotConfiguration$xLabelSize,
+    fontFace = ospPlotConfiguration$xLabelFontFace,
+    fontFamily = ospPlotConfiguration$xLabelFontFamily,
+    angle = ospPlotConfiguration$xLabelAngle
+  )
+
+  labelYLabel <- tlf::Label$new(
+    text = ospPlotConfiguration$yLabel,
+    font = NULL,
+    color = ospPlotConfiguration$yLabelColor,
+    size = ospPlotConfiguration$yLabelSize,
+    fontFace = ospPlotConfiguration$yLabelFontFace,
+    fontFamily = ospPlotConfiguration$yLabelFontFamily,
+    angle = ospPlotConfiguration$yLabelAngle
+  )
+
   labels <- tlf::LabelConfiguration$new(
-    title = ospPlotConfiguration$title,
-    subtitle = ospPlotConfiguration$subtitle,
-    xlabel = ospPlotConfiguration$xlabel,
-    ylabel = ospPlotConfiguration$ylabel
+    title = labelTitle,
+    subtitle = labelSubtitle,
+    xlabel = labelXLabel,
+    ylabel = labelYLabel
   )
 
   # legend object ---------------------------------------
