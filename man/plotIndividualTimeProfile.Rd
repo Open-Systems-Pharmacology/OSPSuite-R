@@ -4,7 +4,10 @@
 \alias{plotIndividualTimeProfile}
 \title{Concentration time profile plot}
 \usage{
-plotIndividualTimeProfile(dataCombined, defaultPlotConfiguration)
+plotIndividualTimeProfile(
+  dataCombined,
+  defaultPlotConfiguration = DefaultPlotConfiguration$new()
+)
 }
 \arguments{
 \item{dataCombined}{A \code{DataCombined} object.}

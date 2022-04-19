@@ -106,52 +106,52 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   legendTitleFont <- tlf::Font$new(
     size = defaultPlotConfiguration$legendTitleSize,
     color = defaultPlotConfiguration$legendTitleColor,
-    fontFamily = ospPlotConfiguration$legendTitleFontFamily,
-    fontFace = ospPlotConfiguration$legendTitleFontFace,
-    angle = ospPlotConfiguration$legendTitleAngle
+    fontFamily = defaultPlotConfiguration$legendTitleFontFamily,
+    fontFace = defaultPlotConfiguration$legendTitleFontFace,
+    angle = defaultPlotConfiguration$legendTitleAngle
   )
 
   legendCaptionFont <- tlf::Font$new(
-    size = ospPlotConfiguration$legendCaptionSize,
-    color = ospPlotConfiguration$legendCaptionColor,
-    fontFamily = ospPlotConfiguration$legendCaptionFontFamily,
-    fontFace = ospPlotConfiguration$legendCaptionFontFace,
-    angle = ospPlotConfiguration$legendCaptionAngle
+    size = defaultPlotConfiguration$legendCaptionSize,
+    color = defaultPlotConfiguration$legendCaptionColor,
+    fontFamily = defaultPlotConfiguration$legendCaptionFontFamily,
+    fontFace = defaultPlotConfiguration$legendCaptionFontFace,
+    angle = defaultPlotConfiguration$legendCaptionAngle
   )
 
   legendConfiguration <- tlf::LegendConfiguration$new(
-    position = ospPlotConfiguration$legendPosition,
+    position = defaultPlotConfiguration$legendPosition,
     caption = NULL,
-    title = ospPlotConfiguration$legendTitle,
-    titleFont = ospPlotConfiguration$legendTitleFont,
-    font = ospPlotConfiguration$legendCaptionFont,
+    title = defaultPlotConfiguration$legendTitle,
+    titleFont = defaultPlotConfiguration$legendTitleFont,
+    font = defaultPlotConfiguration$legendCaptionFont,
     background = NULL
   )
 
   # background objects -----------------------------------
 
   labelWatermark <- tlf::Label$new(
-    text = ospPlotConfiguration$watermark,
+    text = defaultPlotConfiguration$watermark,
     font = NULL,
-    color = ospPlotConfiguration$watermarkColor,
-    size = ospPlotConfiguration$watermarkSize,
-    fontFace = ospPlotConfiguration$watermarkFontFace,
-    fontFamily = ospPlotConfiguration$watermarkFontFamily,
-    angle = ospPlotConfiguration$watermarkAngle
+    color = defaultPlotConfiguration$watermarkColor,
+    size = defaultPlotConfiguration$watermarkSize,
+    fontFace = defaultPlotConfiguration$watermarkFontFace,
+    fontFamily = defaultPlotConfiguration$watermarkFontFamily,
+    angle = defaultPlotConfiguration$watermarkAngle
   )
 
   plotBackground <- tlf::BackgroundElement$new(
-    fill = ospPlotConfiguration$plotBackgroundFill,
-    color = ospPlotConfiguration$plotBackgroundColor,
-    size = ospPlotConfiguration$plotBackgroundSize,
-    linetype = ospPlotConfiguration$plotBackgroundLinetype
+    fill = defaultPlotConfiguration$plotBackgroundFill,
+    color = defaultPlotConfiguration$plotBackgroundColor,
+    size = defaultPlotConfiguration$plotBackgroundSize,
+    linetype = defaultPlotConfiguration$plotBackgroundLinetype
   )
 
   plotPanelBackground <- tlf::BackgroundElement$new(
-    fill = ospPlotConfiguration$plotPanelBackgroundFill,
-    color = ospPlotConfiguration$plotPanelBackgroundColor,
-    size = ospPlotConfiguration$plotPanelBackgroundSize,
-    linetype = ospPlotConfiguration$plotPanelBackgroundLinetype
+    fill = defaultPlotConfiguration$plotPanelBackgroundFill,
+    color = defaultPlotConfiguration$plotPanelBackgroundColor,
+    size = defaultPlotConfiguration$plotPanelBackgroundSize,
+    linetype = defaultPlotConfiguration$plotPanelBackgroundLinetype
   )
 
   xAxis <- tlf::LineElement$new(

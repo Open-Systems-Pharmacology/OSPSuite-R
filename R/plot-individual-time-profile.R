@@ -7,7 +7,8 @@
 #' @import tlf
 #'
 #' @export
-plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration) {
+plotIndividualTimeProfile <- function(dataCombined,
+                                      defaultPlotConfiguration = DefaultPlotConfiguration$new()) {
 
   # validation -----------------------------
 
