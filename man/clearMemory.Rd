@@ -23,5 +23,4 @@ process
 # This will clear the memory and also clear the simulations cache but leave
 # the environment intact.
 clearMemory(clearSimulationsCache = TRUE)
-
 }

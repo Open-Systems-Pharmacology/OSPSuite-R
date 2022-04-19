@@ -52,6 +52,7 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \itemize{
 \item \href{#method-new}{\code{SimulationBatch$new()}}
 \item \href{#method-addRunValues}{\code{SimulationBatch$addRunValues()}}
+\item \href{#method-print}{\code{SimulationBatch$print()}}
 }
 }
 \if{html}{
@@ -135,5 +136,22 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Print the object to the console
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Additional arguments.}
+}
+\if{html}{\out{</div>}}
+}
 }
 }
