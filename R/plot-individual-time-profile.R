@@ -7,11 +7,11 @@
 #' @import tlf
 #'
 #' @export
-plotIndividualTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration = DefaultPlotConfiguration$new()) {
+plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = NULL) {
 
   # validation -----------------------------
 
+  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(dataCombined, "DataCombined")
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
