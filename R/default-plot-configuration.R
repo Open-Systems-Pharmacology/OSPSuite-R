@@ -163,33 +163,33 @@ DefaultPlotConfiguration <- R6::R6Class(
     # lines
     linesColor = tlf::ColorMaps$default,
     linesFill = tlf::ColorMaps$default,
-    linesShape = names(tlf::Shapes),
+    #linesShape = names(tlf::Shapes),
     linesSize = c(1, 2, 3, 4, 5),
-    linesLinetype = tlf::Linetypes,
+    linesLinetype = "dashed",
     linesAlpha = 0.75,
 
     # points
     pointsColor = tlf::ColorMaps$default,
     pointsFill = tlf::ColorMaps$default,
     pointsShape = names(tlf::Shapes),
-    pointsSize = c(1, 2, 3, 4, 5),
-    pointsLinetype = tlf::Linetypes,
+    pointsSize = 3,
+    #pointsLinetype = "longdash",
     pointsAlpha = 0.75,
 
     # ribbons
     ribbonsColor = tlf::ColorMaps$default,
     ribbonsFill = tlf::ColorMaps$default,
-    ribbonsShape = names(tlf::Shapes),
+    #ribbonsShape = names(tlf::Shapes),
     ribbonsSize = c(1, 2, 3, 4, 5),
-    ribbonsLinetype = tlf::Linetypes,
+    ribbonsLinetype = "solid",
     ribbonsAlpha = 0.75,
 
     # errorbars
     errorbarsColor = tlf::ColorMaps$default,
     errorbarsFill = tlf::ColorMaps$default,
-    errorbarsShape = names(tlf::Shapes),
+    #errorbarsShape = names(tlf::Shapes),
     errorbarsSize = c(1, 2, 3, 4, 5),
-    errorbarsLinetype = tlf::Linetypes,
+    errorbarsLinetype = "solid",
     errorbarsAlpha = 0.75,
 
     # export
