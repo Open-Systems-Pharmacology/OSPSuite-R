@@ -350,6 +350,13 @@ initializeDimensionAndUnitLists <- function() {
 #' datasets to be plotted on the X-and Y-axis need to have same units to be
 #' meaningfully compared.
 #'
+#' @note
+#'
+#' Molecular weight is **required** for the conversion between certain
+#' dimensions (`Amount`, `Mass`, `Concentration (molar)`, and `Concentration
+#' (mass)`). Therefore, if molecular weight is missing for these dimension, the
+#' unit conversion will fail.
+#'
 #' @return A data frame with measurement columns transformed to have common units.
 #'
 #' @param data A data frame (or a tibble).
@@ -365,18 +372,30 @@ initializeDimensionAndUnitLists <- function() {
 #'
 #' # small dataframe to illustrate the conversion
 #' (df <- dplyr::tibble(
-#'   xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
-#'   yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
-#'   molWeight = c(10, 10, 10)
+#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
+#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
+#'   xUnit = "min", xDimension = "Time",
+#'   yValues = c(1, 1, 1, 1, 1, 1),
+#'   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
+#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+#'   yErrorUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   molWeight = c(10, 10, 20, 20, 20, 10)
 #' ))
 #'
+#' # default conversion
 #' ospsuite:::.unitConverter(df)
+#'
+#' # customizing conversion with specified unit(s)
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
-#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Fraction$`%`)
-#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
+#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
+#'
 #' @keywords internal
 #' @noRd
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+  # target units --------------------------
+
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
 
@@ -389,65 +408,87 @@ initializeDimensionAndUnitLists <- function() {
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
 
+  # internal --------------------------
+
+  # The strategy is to split the data frame for each source unit and carry out
+  # conversion separately per data frame. This is the most performant options
+  # since there can only be as many expensive calls to `toUnit()`/`rClr` as
+  # there are source units.
+  #
+  # The problem occurs when source units are missing (`NA`). The `toUnit`
+  # function can handle them but not `split()`, which would drop the entire
+  # section of the data frame corresponding to `NA` and thus there will be loss
+  # of data when a data frame is split into a list of data frames.
+  #
+  # The trick is to create copies of source unit and molecular weight columns
+  # and fill in the missing values with something other than `NA`. Using these
+  # new columns with `split()` makes sure that parts of a data frame where
+  # source units are missing won't be dropped. Note that the original columns
+  # containing source units remain untouched.
+  #
+  # These newly created columns are removed before the converted data frame is
+  # returned to the user.
+  data <- data %>%
+    dplyr::mutate(
+      dplyr::across(
+        .cols = dplyr::matches("Unit$|Weight$"),
+        .fns = as.character,
+        .names = "{.col}Split"
+      )
+    ) %>%
+    dplyr::mutate(
+      dplyr::across(
+        .cols = dplyr::matches("Split$"),
+        .fns = ~ tidyr::replace_na(.x, "missing")
+      )
+    ) %>%
+    # `split()` will change the row order of the data frame depending on the
+    # alphabetical order of the levels of the variable used to split the data
+    # frame into a list.
+    #
+    # Therefore, an internal row identifier is kept to restore the original
+    # data frame row order before data is returned.
+    dplyr::mutate(.rowidInternal = dplyr::row_number())
+
   # xUnit --------------------------
 
-  # Calls to `toUnit` should equal the number of unique source units.
-  #
-  # So create a separate data frame for each source unit, make sure that the
-  # data frame is not empty, and then carry out unit conversion.
-  xDataList <- split(data, data$xUnit)
-
-  # Re-combine data frames for each converted source unit.
+  xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
   data <- dplyr::bind_rows(lapply(xDataList, .xUnitConverter, xTargetUnit))
 
   # yUnit ----------------
 
-  # Same logic as `xUnit`. The only additional wrinkle is that, in addition to
-  # source units, molecular weight can also be different.
-  #
-  # So create a separate data frame for each source unit and molecular weight
-  # combination present, make sure that the data frame is not empty, and then
-  # carry out unit conversion.
-  #
-  # If molecular weights are missing, don't use it for splitting to prevent
-  # creating empty data frames in the list.
-  if (any(is.na(data$molWeight))) {
-    yDataList <- split(data, list(data$yUnit))
-  } else {
-    yDataList <- split(data, list(data$yUnit, data$molWeight))
-  }
-
+  yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
   data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
 
   # yUnit error ----------------
 
-  # Follows the same logic as `yUnit`.
   if ("yErrorValues" %in% names(data)) {
-    # Because `split()` will drop missing values from splitting variable, this
-    # can lead to loss of data. In such case, a splitting variable which doesn't
-    # have missing values needs to be used, which in this case is `yUnit.`
-    if (any(is.na(data$molWeight)) && any(is.na(data$yErrorUnit))) {
-      yErrorDataList <- split(data, list(data$yUnit))
-    } else if (any(is.na(data$molWeight)) && !any(is.na(data$yErrorUnit))) {
-      yErrorDataList <- split(data, list(data$yErrorUnit))
-    } else {
-      yErrorDataList <- split(data, list(data$yErrorUnit, data$molWeight))
-    }
-
+    yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
     data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
   }
 
+  # Restore the original row order using the internal row id
+  data <- dplyr::arrange(data, .rowidInternal)
+
+  # Remove all columns that were added only for internal workings of the function.
+  data <- dplyr::select(data, -dplyr::matches("Split$|.rowidInternal"))
+
   return(data)
+}
+
+#' Remove empty data frames sometimes produced due to the non-existent
+#' combination of source unit and molecular unit.
+#'
+#' @keywords internal
+#' @noRd
+.removeEmptyDataFrame <- function(x) {
+  x <- purrr::keep(x, ~ nrow(.x) > 0L)
+  x
 }
 
 #' @keywords internal
 #' @noRd
 .xUnitConverter <- function(xData, xTargetUnit) {
-  # no unit conversion possible if source unit is missing
-  if (is.na(xData$xUnit[[1]])) {
-    return(xData)
-  }
-
   xData$xValues <- ospsuite::toUnit(
     quantityOrDimension = xData$xDimension[[1]],
     values = xData$xValues,
@@ -463,11 +504,6 @@ initializeDimensionAndUnitLists <- function() {
 #' @keywords internal
 #' @noRd
 .yUnitConverter <- function(yData, yTargetUnit) {
-  # no unit conversion possible if source unit is missing
-  if (is.na(yData$yUnit[[1]])) {
-    return(yData)
-  }
-
   yData$yValues <- toUnit(
     quantityOrDimension = yData$yDimension[[1]],
     values = yData$yValues,
@@ -485,11 +521,6 @@ initializeDimensionAndUnitLists <- function() {
 #' @keywords internal
 #' @noRd
 .yErrorUnitConverter <- function(yData, yTargetUnit) {
-  # no unit conversion possible if source unit is missing
-  if (is.na(yData$yErrorUnit[[1]])) {
-    return(yData)
-  }
-
   yData$yErrorValues <- toUnit(
     quantityOrDimension = yData$yDimension[[1]],
     values = yData$yErrorValues,

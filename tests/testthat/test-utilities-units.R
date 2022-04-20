@@ -366,6 +366,16 @@ dfNA <- dplyr::tibble(
 dfNAConvert <- .unitConverter(dfNA)
 dfNAXYConvert <- .unitConverter(dfNA, xUnit = "h", yUnit = "")
 
+test_that("the order of rows is not changed", {
+  expect_equal(dfNA$dataType, dfNAConvert$dataType)
+  expect_equal(dfNA$dataType, dfNAXYConvert$dataType)
+})
+
+test_that("the order of columns is not changed", {
+  expect_equal(names(dfNA), names(dfNAConvert))
+  expect_equal(names(dfNA), names(dfNAXYConvert))
+})
+
 test_that("simulated data is as expected in presence of missing values - default units", {
   # because of the missing values, no conversion should have taken place and so these two
   # data frames should be identical
@@ -376,11 +386,11 @@ test_that("simulated data is as expected in presence of missing values - default
 })
 
 test_that("observed data is as expected in presence of missing values - default units", {
-  # only `yValues` should change; everything else should remain the same
+  # only `yValues` and unit columns should change; everything else should remain the same
   expect_equal(
     dplyr::filter(dfNAConvert, dataType == "observed"),
     dplyr::filter(dfNA, dataType == "observed") %>%
-      dplyr::mutate(yValues = 100 * yValues, yUnit = "%")
+      dplyr::mutate(yValues = 100 * yValues, yUnit = "%", yErrorUnit = "%")
   )
 })
 
@@ -423,5 +433,26 @@ test_that("observed yValues are converted as expected in presence of missing val
     dfNAXYConvert[dfNAXYConvert$dataType == "observed", ]$yValues,
     c(0, 0.995, 0.991),
     tolerance = 0.001
+  )
+})
+
+# missing molecular weight -------------------
+
+dfMolWeightNA <- dplyr::tibble(
+  dataType = c(rep("simulated", 3), rep("observed", 3)),
+  xValues = c(0, 14.482, 28.965, 0, 1, 2),
+  xUnit = "min", xDimension = "Time",
+  yValues = c(1, 1, 1, 1, 1, 1),
+  yUnit = c("mol", "mol", "mol", "g", "g", "g"),
+  yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
+  yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+  yErrorUnit = c("mol", "mol", "mol", "g", "g", "g"),
+  molWeight = c(10, 10, 20, 20, NA, 10)
+)
+
+test_that("if molWeight is missing, an error is signaled if dimensions require them", {
+  expect_error(
+    .unitConverter(dfMolWeightNA),
+    "Molecular Weight not available."
   )
 })
