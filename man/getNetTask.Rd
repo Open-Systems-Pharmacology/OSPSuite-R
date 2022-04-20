@@ -2,20 +2,33 @@
 % Please edit documentation in R/get-net-task.R
 \name{getNetTask}
 \alias{getNetTask}
-\title{Returns an instance of the specified .NET Task}
+\alias{getContainerTask}
+\title{Get an Instance of the Specified \code{.NET} Task}
 \usage{
 getNetTask(taskName)
+
+getContainerTask()
 }
 \arguments{
-\item{taskName}{The name of the task to retrieve (without the Get)}
+\item{taskName}{The name of the task to retrieve (\strong{without} \code{Get} prefix).}
 }
 \value{
-An instance of the Task
+\itemize{
+\item \code{getNetTask()} returns an instance of of the specified \code{.NET} task.
+\item \code{getContainerTask()} returns a reference to the container task for
+optimization purposes only.
+}
 }
 \description{
-Returns an instance of the specified .NET Task
+Get an Instance of the Specified \code{.NET} Task
 }
-\details{
-simulationLoader <- getNetTask("SimulationLoader")
+\examples{
+
+if (FALSE) {
+  simulationLoader <- getNetTask("SimulationLoader")
+}
+
+ospsuite:::getContainerTask()
+
 }
 \keyword{internal}
