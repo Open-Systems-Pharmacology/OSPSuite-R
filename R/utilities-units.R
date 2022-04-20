@@ -392,7 +392,6 @@ initializeDimensionAndUnitLists <- function() {
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #'
 #' @keywords internal
-#' @noRd
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
   # target units --------------------------
 
