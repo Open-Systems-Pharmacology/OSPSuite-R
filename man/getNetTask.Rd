@@ -3,7 +3,7 @@
 \name{getNetTask}
 \alias{getNetTask}
 \alias{getContainerTask}
-\title{Get an Instance of the Specified \code{.NET} Task}
+\title{Returns an instance of the specified \code{.NET} Task}
 \usage{
 getNetTask(taskName)
 
@@ -20,13 +20,11 @@ optimization purposes only.
 }
 }
 \description{
-Get an Instance of the Specified \code{.NET} Task
+Returns an instance of the specified \code{.NET} Task
 }
 \examples{
 
-if (FALSE) {
-  simulationLoader <- getNetTask("SimulationLoader")
-}
+ospsuite:::getNetTask("SimulationRunner")
 
 ospsuite:::getContainerTask()
 

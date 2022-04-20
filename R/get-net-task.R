@@ -1,4 +1,4 @@
-#' Get an Instance of the Specified `.NET` Task
+#' Returns an instance of the specified `.NET` Task
 #'
 #' @param taskName The name of the task to retrieve (**without** `Get` prefix).
 #'
@@ -10,9 +10,7 @@
 #'
 #' @examples
 #'
-#' if (FALSE) {
-#'   simulationLoader <- getNetTask("SimulationLoader")
-#' }
+#' ospsuite:::getNetTask("SimulationRunner")
 #'
 #' ospsuite:::getContainerTask()
 #'
@@ -24,5 +22,9 @@ getNetTask <- function(taskName) {
 #' @rdname getNetTask
 #' @keywords internal
 getContainerTask <- function() {
-    ospsuiteEnv$containerTask %||% getNetTask("ContainerTask")
+  if (is.null(ospsuiteEnv$containerTask)) {
+    ospsuiteEnv$containerTask <- getNetTask("ContainerTask")
+  }
+
+  ospsuiteEnv$containerTask
 }
