@@ -1,12 +1,16 @@
-#' @title DotNetRwapper
+#' @title Wrapper class for `.NET` objects
 #' @docType class
-#' @description  Wrapper class for .net Object
 #'
-#' @section Methods:
-#' \describe{
-#'   \item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-#'   \item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET Read-Only property}
-#'   }
+#' @examples
+#'
+#' sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+#'
+#' # looking at a reference to `.NET` simulation object
+#' sim$ref
+#'
+#' # create a new instance of `DotNetWrapper` class using this reference
+#' DotNetWrapper$new(sim$ref)
+#'
 #' @export
 DotNetWrapper <- R6::R6Class(
   "DotNetWrapper",
@@ -15,20 +19,22 @@ DotNetWrapper <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref Instance of the .NET object to wrap.
+    #' @param ref Instance of the `.NET` object to wrap.
     #' @return A new `DotNetWrapper` object.
     initialize = function(ref) {
       private$.ref <- ref
     }
   ),
   active = list(
-    #' @field ref Underlying .NET reference (read-only)
+    #' @field ref Underlying `.NET` reference (read-only)
     ref = function(value) {
       private$readOnlyProperty("ref", value, private$.ref)
     }
   ),
   private = list(
     .ref = NULL,
+
+    # Simple way to wrap a get;set; .NET property
     wrapProperty = function(propertyName, value, shouldSetNull = TRUE) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
@@ -48,6 +54,8 @@ DotNetWrapper <- R6::R6Class(
         }
       }
     },
+
+    # Simple way to wrap a get; .NET Read-Only property
     wrapReadOnlyProperty = function(propertyName, value) {
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
@@ -80,7 +88,7 @@ DotNetWrapper <- R6::R6Class(
       }
     },
     wrapIntegerProperty = function(propertyName, value) {
-      # Special method needed because of double to int conversion issues between R and .NET
+      # Special method needed because of double to int conversion issues between R and `.NET`
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
       } else {
@@ -98,7 +106,7 @@ DotNetWrapper <- R6::R6Class(
       }
     },
     wrapIndexProperty = function(propertyName, value) {
-      # Special method needed because Index are 0-based in .NET but 1-based in R
+      # Special method needed because Index are 0-based in `.NET` but 1-based in R
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName) + 1
       } else {

@@ -109,7 +109,7 @@ getOutputValues <- function(simulationResults,
   names(values) <- paths
 
   # Use low-level methods to get unit and dimension
-  task <- getContainerTask()
+  task <- .getContainerTask()
   metaData <- NULL
   if (addMetaData) {
     metaData <- lapply(paths, function(path) {
@@ -156,7 +156,7 @@ exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SimulationResults")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  simulationResultsTask <- getNetTask("SimulationResultsTask")
+  simulationResultsTask <- .getNetTask("SimulationResultsTask")
   rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
@@ -186,7 +186,7 @@ saveResultsToCSV <- function(results, filePath) {
 importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
-  simulationResultsTask <- getNetTask("SimulationResultsTask")
+  simulationResultsTask <- .getNetTask("SimulationResultsTask")
   filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)

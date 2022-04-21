@@ -12,7 +12,7 @@ OutputSchema <- R6::R6Class(
     intervals = function(value) {
       if (missing(value)) {
         intervals <- rClr::clrGet(self$ref, "IntervalsAsArray")
-        toObjectType(intervals, Interval)
+        .toObjectType(intervals, Interval)
       } else {
         private$throwPropertyIsReadonly("intervals")
       }

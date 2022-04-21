@@ -57,7 +57,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, "DataSet")
   filePath <- expandPath(filePath)
-  dataRepositoryTask <- getNetTask("DataRepositoryTask")
+  dataRepositoryTask <- .getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }
 
@@ -162,7 +162,7 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, impo
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- getNetTask("DataImporterTask")
+  dataImporterTask <- .getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {

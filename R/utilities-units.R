@@ -99,7 +99,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   unit <- encodeUnit(unit)
   dimension <- quantityOrDimension
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
 
   # covers all NULL or NA
   if (all(is.na(values))) {
@@ -165,7 +165,7 @@ toUnit <- function(quantityOrDimension,
   validateIsNumeric(molWeight, nullAllowed = TRUE)
   targetUnit <- encodeUnit(targetUnit)
   dimension <- quantityOrDimension
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
 
 
   # covers all NULL or NA
@@ -237,7 +237,7 @@ toDisplayUnit <- function(quantity, values) {
 #' dims <- allAvailableDimensions()
 #' @export
 allAvailableDimensions <- function() {
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
   rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }
 
@@ -276,7 +276,7 @@ getUnitsForDimension <- function(dimension) {
 getDimensionTask <- function() {
   dimensionTask <- ospsuiteEnv$dimensionTask
   if (is.null(dimensionTask)) {
-    dimensionTask <- getNetTask("DimensionTask")
+    dimensionTask <- .getNetTask("DimensionTask")
     ospsuiteEnv$dimensionTask <- dimensionTask
   }
   return(dimensionTask)

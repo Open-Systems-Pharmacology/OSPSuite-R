@@ -10,7 +10,7 @@ SimulationPKAnalyses <- R6::R6Class(
   private = list(
     .simulation = NULL,
     toPKParameter = function(netPKParameters) {
-      toObjectType(netPKParameters, QuantityPKParameter)
+      .toObjectType(netPKParameters, QuantityPKParameter)
     }
   ),
   public = list(

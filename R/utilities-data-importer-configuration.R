@@ -22,7 +22,7 @@
 #' @export
 createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   validateIsString(filePath)
-  importerTask <- getNetTask("DataImporterTask")
+  importerTask <- .getNetTask("DataImporterTask")
   if (is.null(sheet)) {
     ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath)
   } else {
@@ -53,7 +53,7 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #' )
 loadDataImporterConfiguration <- function(configurationFilePath) {
   validateIsString(configurationFilePath)
-  importerTask <- getNetTask("DataImporterTask")
+  importerTask <- .getNetTask("DataImporterTask")
   ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
   return(DataImporterConfiguration$new(ref))
 }
