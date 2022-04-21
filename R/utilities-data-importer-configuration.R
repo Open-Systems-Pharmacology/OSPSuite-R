@@ -38,7 +38,6 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #'
 #' @return A new `DataImporterConfiguration` object to be used with
 #' `loadDataSetsFromExcel()`.
-#' @export
 #'
 #' @examples
 #'
@@ -57,6 +56,8 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #'   importerConfigurationOrPath = importerConfiguration,
 #'   importAllSheets = FALSE
 #' )
+#'
+#' @export
 loadDataImporterConfiguration <- function(configurationFilePath) {
   validateIsString(configurationFilePath)
   importerTask <- getNetTask("DataImporterTask")

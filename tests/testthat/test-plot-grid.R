@@ -11,9 +11,14 @@ test_that("plots grid is rendered correctly", {
 
   set.seed(123)
   ls_plots <- list(
-    tlf::plotHistogram(x = rnorm(100)),
-    tlf::plotHistogram(x = rnorm(100, mean = 3)),
-    tlf::plotHistogram(x = rnorm(100, mean = 10))
+    # first plot
+    tlf::plotBoxWhisker(mtcars,
+      dataMapping = tlf::BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+    ),
+    # second plot
+    tlf::plotBoxWhisker(ToothGrowth,
+      dataMapping = tlf::BoxWhiskerDataMapping$new(x = "supp", y = "len")
+    )
   )
 
   plotGridObj <- PlotGridConfiguration$new(ls_plots)
@@ -37,11 +42,14 @@ test_that("plots grid is rendered correctly", {
 
   # `{tlf}` plot
   set.seed(123)
-  p1 <- tlf::plotBoxWhisker(data = mtcars, dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"))
+  p1 <- tlf::plotBoxWhisker(mtcars,
+    dataMapping = tlf::BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+  )
 
   # custom `{ggplot2}` plot
   set.seed(123)
-  p2 <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+  p2 <- ggplot(mtcars, aes(wt, mpg)) +
+    geom_point()
 
   plotGridObj2 <- PlotGridConfiguration$new(list(p1, p2))
 

@@ -28,7 +28,8 @@ Imports:
     stringr,
     tidyr,
     tlf
-Suggests: 
+Suggests:
+    ggplot2,
     knitr,
     rmarkdown,
     testthat (>= 3.1.0),
