@@ -222,6 +222,7 @@ dataSetName <- "NewDataSet"
 dataSet <- DataSet$new(name = dataSetName)
 
 test_that("It can convert an empty data set", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
   expect_equal(
     dataSetToTibble(dataSet),
     dplyr::tibble(

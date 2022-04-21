@@ -136,7 +136,12 @@ dataSetToTibble <- function(dataSets) {
 #' @export
 #'
 #' @examples
-#' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+#'
+#' xlsFilePath <- system.file(
+#'   "extdata", "CompiledDataSet.xlsx",
+#'   package = "ospsuite"
+#' )
+#'
 #' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 #' importerConfiguration$sheets <- "TestSheet_1"
 #'
@@ -146,7 +151,10 @@ dataSetToTibble <- function(dataSets) {
 #'   importAllSheets = FALSE
 #' )
 #'
-#' importerConfigurationFilePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
+#' importerConfigurationFilePath <- system.file(
+#'   "extdata", "dataImporterConfiguration.xml",
+#'   package = "ospsuite"
+#' )
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,

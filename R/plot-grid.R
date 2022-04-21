@@ -15,6 +15,8 @@
 #' library(ggplot2)
 #' library(tlf)
 #'
+#' # only `{tlf}` ---------------------
+#'
 #' # plots to be arranged in a grid
 #' set.seed(123)
 #' ls_plots <- list(
@@ -37,6 +39,30 @@
 #'
 #' # plot the grid
 #' plotGrid(plotGridObj)
+#'
+#' #  `{tlf}` and `{ggplot2}` ---------------------
+#'
+#' # `{tlf}` plot
+#' set.seed(123)
+#' p1 <- tlf::plotBoxWhisker(mtcars,
+#'   dataMapping = tlf::BoxWhiskerDataMapping$new(x = "am", y = "wt"), outliers = FALSE
+#' )
+#'
+#' # custom `{ggplot2}` plot
+#' set.seed(123)
+#' p2 <- ggplot(mtcars, aes(wt, mpg)) +
+#'   geom_point()
+#'
+#' # create an instance of plot configuration class
+#' plotGridObj2 <- PlotGridConfiguration$new(list(p1, p2))
+#'
+#' # specify further customizations for the plot grid
+#' plotGridObj2$nColumns <- 1L
+#' plotGridObj2$tagLevels <- "i"
+#'
+#' # plot the grid
+#' plotGrid(plotGridObj2)
+#'
 #' @references
 #' For more, see: <https://patchwork.data-imaginist.com/articles/patchwork.html>
 #'

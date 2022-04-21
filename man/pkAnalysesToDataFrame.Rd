@@ -7,7 +7,7 @@
 \usage{
 pkAnalysesToDataFrame(pkAnalyses)
 
-pkAnalysesToTibble(pkAnalysess)
+pkAnalysesToTibble(pkAnalyses)
 }
 \arguments{
 \item{pkAnalyses}{pK-Analyses to convert to data frame (typically calculated
