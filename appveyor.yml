@@ -25,7 +25,6 @@ environment:
 
   matrix:
   - R_VERSION: 3.6.3
-    RTOOLS_VERSION: 36
   - R_VERSION: 4.0.5
   - R_VERSION: 4.1.0
 
