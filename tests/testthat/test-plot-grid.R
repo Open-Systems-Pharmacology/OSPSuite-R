@@ -37,12 +37,11 @@ test_that("plots grid is rendered correctly", {
 
   # `{tlf}` plot
   set.seed(123)
-  boxData <- data.frame(x = c(rep("A", 500), rep("B", 500)), y = rlnorm(1000))
-  p1 <- tlf::plotBoxWhisker(data = boxData, dataMapping = BoxWhiskerDataMapping$new(x = "x", y = "y"))
+  p1 <- tlf::plotBoxWhisker(data = mtcars, dataMapping = BoxWhiskerDataMapping$new(x = "am", y = "wt"))
 
   # custom `{ggplot2}` plot
-  p2 <- ggplot(mtcars, aes(wt, mpg)) +
-    geom_point()
+  set.seed(123)
+  p2 <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 
   plotGridObj2 <- PlotGridConfiguration$new(list(p1, p2))
 
