@@ -271,10 +271,12 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   # export -------------------------------------------------------
 
   exportConfiguration <- tlf::ExportConfiguration$new(
+    name = plotSaveFileName,
     format = defaultPlotConfiguration$plotSaveFileFormat,
     width = defaultPlotConfiguration$plotSaveFileWidth,
     height = defaultPlotConfiguration$plotSaveFileHeight,
-    units = defaultPlotConfiguration$plotSaveFileDimensionUnits
+    units = defaultPlotConfiguration$plotSaveFileDimensionUnits,
+    dpi = plotSaveFileDpi
   )
 
   # defaultInternalPlotConfiguration object -----------------------------------

@@ -62,15 +62,15 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
 
-\item{\code{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+\item{\code{linesColor, linesFill, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
-\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsLinetype, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 
-\item{\code{ribbonsColor, ribbonsFill, ribbonsShape, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+\item{\code{ribbonsColor, ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsColor, errorbarsFill, errorbarsShape, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsColor, errorbarsFill, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
-\item{\code{plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits}}{File format to which the plot needs to be saved, and the units and dimensions for saving the plot.}
+\item{\code{plotSaveFileName, plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits, plotSaveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }
@@ -122,15 +122,15 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
 
-\item{\code{linesColor, linesFill, linesShape, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+\item{\code{linesColor, linesFill, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
-\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsLinetype, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 
-\item{\code{ribbonsColor, ribbonsFill, ribbonsShape, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+\item{\code{ribbonsColor, ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsColor, errorbarsFill, errorbarsShape, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsColor, errorbarsFill, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
-\item{\code{plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits}}{File format to which the plot needs to be saved, and the units and dimensions for saving the plot.}
+\item{\code{plotSaveFileName, plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits, plotSaveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }

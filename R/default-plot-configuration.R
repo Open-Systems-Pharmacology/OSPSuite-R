@@ -36,11 +36,11 @@
 #' @field yAxisColor,yAxisSize,yAxisLinetype A character string specifying the aesthetic properties for the y-axis.
 #' @field xGridColor,xGridSize,xGridLinetype A character string specifying the aesthetic properties for the x-axis grid.
 #' @field yGridColor,yGridSize,yGridLinetype A character string specifying the aesthetic properties for the y-axis grid.
-#' @field linesColor,linesFill,linesShape,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
-#' @field pointsColor,pointsFill,pointsShape,pointsSize,pointsLinetype,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
-#' @field ribbonsColor,ribbonsFill,ribbonsShape,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
-#' @field errorbarsColor,errorbarsFill,errorbarsShape,errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
-#' @field plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits File format to which the plot needs to be saved, and the units and dimensions for saving the plot.
+#' @field linesColor,linesFill,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
+#' @field pointsColor,pointsFill,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
+#' @field ribbonsColor,ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
+#' @field errorbarsColor,errorbarsFill,errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
+#' @field plotSaveFileName,plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits,plotSaveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
 #'
 #' @export
 DefaultPlotConfiguration <- R6::R6Class(
@@ -163,7 +163,6 @@ DefaultPlotConfiguration <- R6::R6Class(
     # lines
     linesColor = tlf::ColorMaps$default,
     linesFill = tlf::ColorMaps$default,
-    #linesShape = names(tlf::Shapes),
     linesSize = c(1, 2, 3, 4, 5),
     linesLinetype = "dashed",
     linesAlpha = 0.75,
@@ -173,13 +172,11 @@ DefaultPlotConfiguration <- R6::R6Class(
     pointsFill = tlf::ColorMaps$default,
     pointsShape = names(tlf::Shapes),
     pointsSize = 3,
-    #pointsLinetype = "longdash",
     pointsAlpha = 0.75,
 
     # ribbons
     ribbonsColor = tlf::ColorMaps$default,
     ribbonsFill = tlf::ColorMaps$default,
-    #ribbonsShape = names(tlf::Shapes),
     ribbonsSize = c(1, 2, 3, 4, 5),
     ribbonsLinetype = "solid",
     ribbonsAlpha = 0.75,
@@ -187,15 +184,16 @@ DefaultPlotConfiguration <- R6::R6Class(
     # errorbars
     errorbarsColor = tlf::ColorMaps$default,
     errorbarsFill = tlf::ColorMaps$default,
-    #errorbarsShape = names(tlf::Shapes),
     errorbarsSize = c(1, 2, 3, 4, 5),
     errorbarsLinetype = "solid",
     errorbarsAlpha = 0.75,
 
     # export
+    plotSaveFileName = "figure",
     plotSaveFileFormat = "png",
     plotSaveFileWidth = 16,
     plotSaveFileHeight = 9,
-    plotSaveFileDimensionUnits = "cm"
+    plotSaveFileDimensionUnits = "cm",
+    plotSaveFileDpi = 300
   )
 )
