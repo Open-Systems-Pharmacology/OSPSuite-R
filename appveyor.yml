@@ -20,11 +20,16 @@ environment:
   NOT_CRAN: true
   KEEP_VIGNETTES: true
   R_ARCH: x64
-  R_VERSION: "4.0.5"
   COVERALLS_TOKEN:
     secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
 
+  matrix:
+  - R_VERSION: 4.1.0
 
+  - R_VERSION: 4.0.0
+
+  - R_VERSION: 3.6.3
+    RTOOLS_VERSION: 36
 
 before_build:
   - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
