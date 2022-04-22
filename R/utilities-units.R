@@ -431,7 +431,7 @@ initializeDimensionAndUnitLists <- function() {
   # returned to the user.
 
   # Add suffix `Split` to the following columns:
-  # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
+  # `xUnit`, `yUnit`, `yErrorUnit`, and `molWeight`
   data <- dplyr::mutate(
     data,
     dplyr::across(
