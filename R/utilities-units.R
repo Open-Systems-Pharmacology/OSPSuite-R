@@ -484,17 +484,24 @@ initializeDimensionAndUnitLists <- function() {
   return(data)
 }
 
-#' Remove empty data frames from a list
+#' Remove empty data frames from a list of data frames
 #'
 #' @description
 #'
 #' Remove empty data frames sometimes produced due to the non-existent
 #' combination of source unit and molecular weight.
 #'
-#' @param x A list.
+#' @param x A list of data frames.
+#'
+#' @examples
+#'
+#' # Create a list of data frames
+#' (ls <- split(mtcars, list(mtcars$vs, mtcars$cyl)))
+#'
+#' # Remove element data frames with 0 rows
+#' ospsuite:::.removeEmptyDataFrame(ls)
 #'
 #' @keywords internal
-#' @noRd
 .removeEmptyDataFrame <- function(x) purrr::keep(x, ~ nrow(.x) > 0L)
 
 
