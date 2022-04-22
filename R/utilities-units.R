@@ -506,7 +506,7 @@ initializeDimensionAndUnitLists <- function() {
 #' ospsuite:::.removeEmptyDataFrame(ls)
 #'
 #' @keywords internal
-.removeEmptyDataFrame <- function(x) purrr::keep(x, ~ nrow(.x) > 0L)
+.removeEmptyDataFrame <- function(x) Filter(function(data) nrow(data) > 0L, x)
 
 
 #' @keywords internal
