@@ -394,6 +394,7 @@ initializeDimensionAndUnitLists <- function() {
 #'
 #' @keywords internal
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+
   # target units --------------------------
 
   # No validation of inputs for this non-exported function.
@@ -454,7 +455,7 @@ initializeDimensionAndUnitLists <- function() {
     # data frame row order before data is returned.
     dplyr::mutate(.rowidInternal = dplyr::row_number())
 
-  # unit conversion --------------------------
+  # splitting data frames and unit conversions --------------------------
 
   # Split data frame to a list, mutate the unit column, and rebind.
 
@@ -500,7 +501,7 @@ initializeDimensionAndUnitLists <- function() {
 #' @keywords internal
 #' @noRd
 .xUnitConverter <- function(xData, xTargetUnit) {
-  xData$xValues <- ospsuite::toUnit(
+  xData$xValues <- toUnit(
     quantityOrDimension = xData$xDimension[[1]],
     values = xData$xValues,
     targetUnit = xTargetUnit,

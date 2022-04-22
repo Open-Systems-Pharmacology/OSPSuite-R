@@ -188,20 +188,31 @@ test_that("It returns the correct base unit", {
 })
 
 
+# .unitConverter -------------------------------------------
+
 context(".unitConverter")
 
 # small data frame to illustrate the conversion
 df <- dplyr::tibble(
-  xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
-  yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(0.25, 45, 78),
+  yUnit = c("", "%", "%"),
+  yDimension = c("Fraction", "Fraction", "Fraction"),
   molWeight = c(10, 10, 10)
 )
 
 # also contains error columns
 dfError <- dplyr::tibble(
-  xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
-  yValues = c(0.25, 45, 78), yUnit = c("", "%", "%"), yDimension = c("Fraction", "Fraction", "Fraction"),
-  yErrorValues = c(0.01, 5, 8), yErrorUnit = c("", "%", "%"),
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(0.25, 45, 78),
+  yUnit = c("", "%", "%"),
+  yDimension = c("Fraction", "Fraction", "Fraction"),
+  yErrorValues = c(0.01, 5, 8),
+  yErrorUnit = c("", "%", "%"),
   molWeight = c(10, 10, 10)
 )
 
