@@ -428,6 +428,8 @@ initializeDimensionAndUnitLists <- function() {
   # These newly created columns are removed before the converted data frame is
   # returned to the user.
   data <- data %>%
+    # Add suffix `Split` to the following columns:
+    # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
     dplyr::mutate(
       dplyr::across(
         .cols = dplyr::matches("Unit$|Weight$"),
@@ -435,6 +437,8 @@ initializeDimensionAndUnitLists <- function() {
         .names = "{.col}Split"
       )
     ) %>%
+    # Replace missing values in these new columns with `"missing"`, so that
+    # `split()` won't remove the corresponding portion of the data frame.
     dplyr::mutate(
       dplyr::across(
         .cols = dplyr::matches("Split$"),
@@ -478,12 +482,12 @@ initializeDimensionAndUnitLists <- function() {
 #' Remove empty data frames sometimes produced due to the non-existent
 #' combination of source unit and molecular unit.
 #'
+#' @param x A list
+#'
 #' @keywords internal
 #' @noRd
-.removeEmptyDataFrame <- function(x) {
-  x <- purrr::keep(x, ~ nrow(.x) > 0L)
-  x
-}
+.removeEmptyDataFrame <- function(x) purrr::keep(x, ~ nrow(.x) > 0L)
+
 
 #' @keywords internal
 #' @noRd
