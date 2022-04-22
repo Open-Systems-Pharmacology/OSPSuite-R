@@ -362,7 +362,7 @@ test_that("Correct conversion for yValues having the same unit but different MW"
 
 # missing values handled properly -------------------
 
-dfNA <- dplyr::tibble(
+dfNA <- data.frame(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
   xValues = c(0, 14.482, 28.965, 0, 1, 2),
   xUnit = "min", xDimension = "Time",

@@ -432,24 +432,25 @@ initializeDimensionAndUnitLists <- function() {
 
   # Add suffix `Split` to the following columns:
   # `xUnit`, `yUnit`, `yErrorUnit`, and `molWeight`
-  data <- dplyr::mutate(
+  data <- transform(
     data,
-    dplyr::across(
-      .cols = dplyr::matches("Unit$|Weight$"),
-      .fns = as.character,
-      .names = "{.col}Split"
-    )
+    xUnitSplit = as.character(data$xUnit),
+    yUnitSplit = as.character(data$yUnit),
+    molWeightSplit = as.character(data$molWeight)
   )
 
   # Replace missing values in these new columns with `"missing"`, so that
   # `split()` won't remove the corresponding portion of the data frame.
-  data <- dplyr::mutate(
-    data,
-    dplyr::across(
-      .cols = dplyr::matches("Split$"),
-      .fns = ~ tidyr::replace_na(.x, "missing")
-    )
-  )
+  data$xUnitSplit[is.na(data$xUnitSplit)] <- "missing"
+  data$yUnitSplit[is.na(data$yUnitSplit)] <- "missing"
+  data$molWeightSplit[is.na(data$molWeightSplit)] <- "missing"
+
+  # Do the same if errors are present
+  if ("yErrorValues" %in% names(data)) {
+    data <- transform(data, yErrorUnitSplit = as.character(data$yErrorUnit))
+    data$yErrorUnitSplit[is.na(data$yErrorUnitSplit)] <- "missing"
+  }
+
 
   # `split()` will change the row order of the data frame depending on the
   # alphabetical order of the levels of the variable used to split the data
