@@ -102,8 +102,8 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
 #' @rdname pkAnalysesToDataFrame
 #'
 #' @export
-pkAnalysesToTibble <- function(pkAnalysess) {
-  df <- pkAnalysesToDataFrame(pkAnalysess)
+pkAnalysesToTibble <- function(pkAnalyses) {
+  df <- pkAnalysesToDataFrame(pkAnalyses)
 
   # consistently return a tibble data frame
   return(dplyr::as_tibble(df))
