@@ -18,8 +18,9 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
-    #' @field timeUnit If `isTimeUnitFromColumn` is `FALSE`, unit of the values in time column
-    #' If `isTimeUnitFromColumn` is `TRUE`, name of the column with units of the values in time column
+    #' @field timeUnit If `isTimeUnitFromColumn` is `FALSE`, unit of the values
+    #'   in time column If `isTimeUnitFromColumn` is `TRUE`, name of the column
+    #'   with units of the values in time column.
     timeUnit = function(value) {
       column <- private$.timeColumn()
       mappedColumn <- rClr::clrGet(column, "MappedColumn")
@@ -57,9 +58,12 @@ DataImporterConfiguration <- R6::R6Class(
       rClr::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
-    #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`, dimension of the values in measurement column
-    #' If `isMeasurementUnitFromColumn` is `TRUE`, the dimension is guessed from the unit defined in the column `measurementUnit` during import process and `$measurementDimension` is `NULL`.
-    #' When changing dimension, the unit is set to the base unit of this dimension.
+    #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`,
+    #'   dimension of the values in measurement column If
+    #'   `isMeasurementUnitFromColumn` is `TRUE`, the dimension is guessed from
+    #'   the unit defined in the column `measurementUnit` during import process
+    #'   and `$measurementDimension` is `NULL`. When changing dimension, the
+    #'   unit is set to the base unit of this dimension.
     measurementDimension = function(value) {
       column <- private$.measurementColumn()
       mappedColumn <- rClr::clrGet(column, "MappedColumn")

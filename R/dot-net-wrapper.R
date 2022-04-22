@@ -39,10 +39,11 @@ DotNetWrapper <- R6::R6Class(
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName)
       } else {
-        # Problem converting reference object to NULL.
+        # Problem converting reference object to `NULL`
         if (is.null(value) && !shouldSetNull) {
           return()
         }
+
         if (isOfType(type = "character", object = value)) {
           # isOfType returns TRUE for empty `object` and enc2utf8(value) fails
           if (length(value) > 0) {
@@ -105,8 +106,9 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value))
       }
     },
+
+    # Special method needed because Index are 0-based in `.NET` but 1-based in R
     wrapIndexProperty = function(propertyName, value) {
-      # Special method needed because Index are 0-based in `.NET` but 1-based in R
       if (missing(value)) {
         rClr::clrGet(self$ref, propertyName) + 1
       } else {
@@ -127,8 +129,9 @@ DotNetWrapper <- R6::R6Class(
     throwPropertyIsReadonly = function(propertyName) {
       stop(messages$errorPropertyReadOnly(propertyName), call. = FALSE)
     },
+
+    # maybe dispose should be called to if available
     finalize = function() {
-      # maybe dispose should be called to if available.
       private$.ref <- NULL
     }
   )
