@@ -429,31 +429,35 @@ initializeDimensionAndUnitLists <- function() {
   #
   # These newly created columns are removed before the converted data frame is
   # returned to the user.
-  data <- data %>%
-    # Add suffix `Split` to the following columns:
-    # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
-    dplyr::mutate(
-      dplyr::across(
-        .cols = dplyr::matches("Unit$|Weight$"),
-        .fns = as.character,
-        .names = "{.col}Split"
-      )
-    ) %>%
-    # Replace missing values in these new columns with `"missing"`, so that
-    # `split()` won't remove the corresponding portion of the data frame.
-    dplyr::mutate(
-      dplyr::across(
-        .cols = dplyr::matches("Split$"),
-        .fns = ~ tidyr::replace_na(.x, "missing")
-      )
-    ) %>%
-    # `split()` will change the row order of the data frame depending on the
-    # alphabetical order of the levels of the variable used to split the data
-    # frame into a list.
-    #
-    # Therefore, an internal row identifier is kept to restore the original
-    # data frame row order before data is returned.
-    dplyr::mutate(.rowidInternal = dplyr::row_number())
+
+  # Add suffix `Split` to the following columns:
+  # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      .cols = dplyr::matches("Unit$|Weight$"),
+      .fns = as.character,
+      .names = "{.col}Split"
+    )
+  )
+
+  # Replace missing values in these new columns with `"missing"`, so that
+  # `split()` won't remove the corresponding portion of the data frame.
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      .cols = dplyr::matches("Split$"),
+      .fns = ~ tidyr::replace_na(.x, "missing")
+    )
+  )
+
+  # `split()` will change the row order of the data frame depending on the
+  # alphabetical order of the levels of the variable used to split the data
+  # frame into a list.
+  #
+  # Therefore, an internal row identifier is kept to restore the original
+  # data frame row order before data is returned.
+  data <- dplyr::mutate(data, .rowidInternal = dplyr::row_number())
 
   # splitting data frames and unit conversions --------------------------
 
