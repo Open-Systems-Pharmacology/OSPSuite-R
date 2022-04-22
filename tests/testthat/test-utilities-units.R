@@ -193,18 +193,19 @@ test_that("It returns the correct base unit", {
 context(".unitConverter")
 
 # small data frame to illustrate the conversion
-df <- dplyr::tibble(
+df <- data.frame(
   xValues = c(15, 30, 60),
   xUnit = "min",
   xDimension = "Time",
   yValues = c(0.25, 45, 78),
   yUnit = c("", "%", "%"),
   yDimension = c("Fraction", "Fraction", "Fraction"),
-  molWeight = c(10, 10, 10)
+  molWeight = c(10, 10, 10),
+  stringsAsFactors = FALSE
 )
 
 # also contains error columns
-dfError <- dplyr::tibble(
+dfError <- data.frame(
   xValues = c(15, 30, 60),
   xUnit = "min",
   xDimension = "Time",
@@ -213,7 +214,8 @@ dfError <- dplyr::tibble(
   yDimension = c("Fraction", "Fraction", "Fraction"),
   yErrorValues = c(0.01, 5, 8),
   yErrorUnit = c("", "%", "%"),
-  molWeight = c(10, 10, 10)
+  molWeight = c(10, 10, 10),
+  stringsAsFactors = FALSE
 )
 
 # default conversion -------------------
@@ -288,7 +290,7 @@ test_that(".unitConverter updates xUnit and yUnit columns as expected", {
 
 # molecular weight is used properly -------------------
 
-dfMW <- dplyr::tibble(
+dfMW <- data.frame(
   xValues = c(15, 30, 60),
   xUnit = "min",
   xDimension = "Time",
@@ -296,7 +298,8 @@ dfMW <- dplyr::tibble(
   yUnit = c("mol", "mol", "mol"),
   yDimension = ospDimensions$Amount,
   molWeight = 10,
-  random = "bla" # only for testing that the function doesn't remove other columns
+  random = "bla", # only for testing that the function doesn't remove other columns
+  stringsAsFactors = FALSE
 )
 
 dfMWConvert <- .unitConverter(dfMW, yUnit = ospUnits$Mass$g)
@@ -350,10 +353,19 @@ test_that(".unitConverter changes error units as well - defaults", {
 # different molecular weights handled properly -------------------
 
 test_that("Correct conversion for yValues having the same unit but different MW", {
-  df <- dplyr::tibble(
-    xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
-    yValues = c(1, 1, 1), yUnit = c("mol", "mol", "mol"), yDimension = c(ospDimensions$Amount, ospDimensions$Amount, ospDimensions$Amount),
-    molWeight = c(10, 10, 20)
+  df <- data.frame(
+    xValues = c(15, 30, 60),
+    xUnit = "min",
+    xDimension = "Time",
+    yValues = c(1, 1, 1),
+    yUnit = c("mol", "mol", "mol"),
+    yDimension = c(
+      ospDimensions$Amount,
+      ospDimensions$Amount,
+      ospDimensions$Amount
+    ),
+    molWeight = c(10, 10, 20),
+    stringsAsFactors = FALSE
   )
   dfConvert <- .unitConverter(df, yUnit = "g")
 
@@ -371,7 +383,8 @@ dfNA <- data.frame(
   yDimension = "Fraction",
   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
   yErrorUnit = c("%", "%", "%", NA, NA, NA),
-  molWeight = c(NA, NA, NA, 129.1636, 129.1636, 129.1636)
+  molWeight = c(NA, NA, NA, 129.1636, 129.1636, 129.1636),
+  stringsAsFactors = FALSE
 )
 
 dfNAConvert <- .unitConverter(dfNA)

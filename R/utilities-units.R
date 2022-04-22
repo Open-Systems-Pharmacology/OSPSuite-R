@@ -475,6 +475,7 @@ initializeDimensionAndUnitLists <- function() {
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
     data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
+    data <- subset(data, select = -c(yErrorUnitSplit))
   }
 
   # clean up and return --------------------------
@@ -483,7 +484,7 @@ initializeDimensionAndUnitLists <- function() {
   data <- data[order(data$.rowidInternal), , drop = FALSE]
 
   # Remove all columns that were added only for internal workings of the function.
-  data <- dplyr::select(data, -dplyr::matches("Split$|.rowidInternal"))
+  data <- subset(data, select = -c(xUnitSplit, yUnitSplit, molWeightSplit, .rowidInternal))
 
   return(data)
 }
