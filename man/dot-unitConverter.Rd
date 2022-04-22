@@ -38,7 +38,8 @@ unit conversion will fail.
 (df <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
   xValues = c(0, 14.482, 28.965, 0, 1, 2),
-  xUnit = "min", xDimension = "Time",
+  xUnit = "min",
+  xDimension = "Time",
   yValues = c(1, 1, 1, 1, 1, 1),
   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),

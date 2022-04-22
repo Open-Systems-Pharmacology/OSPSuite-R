@@ -374,7 +374,8 @@ initializeDimensionAndUnitLists <- function() {
 #' (df <- dplyr::tibble(
 #'   dataType = c(rep("simulated", 3), rep("observed", 3)),
 #'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
-#'   xUnit = "min", xDimension = "Time",
+#'   xUnit = "min",
+#'   xDimension = "Time",
 #'   yValues = c(1, 1, 1, 1, 1, 1),
 #'   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
 #'   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
@@ -409,21 +410,21 @@ initializeDimensionAndUnitLists <- function() {
 
   # internal --------------------------
 
-  # The strategy is to split the data frame for each source unit and carry out
-  # conversion separately per data frame. This is the most performant options
-  # since there can only be as many expensive calls to `toUnit()`/`rClr` as
-  # there are source units.
+  # The strategy is to split the data frame (using `split()`) for each source
+  # unit and carry out conversion separately per data frame. This is the most
+  # performant options since there can only be as many expensive calls to
+  # `toUnit()`/`{rClr}` as there are source units.
   #
-  # The problem occurs when source units are missing (`NA`). The `toUnit`
+  # The problem occurs when source units are missing (`NA`). The `toUnit()`
   # function can handle them but not `split()`, which would drop the entire
   # section of the data frame corresponding to `NA` and thus there will be loss
   # of data when a data frame is split into a list of data frames.
   #
   # The trick is to create copies of source unit and molecular weight columns
   # and fill in the missing values with something other than `NA`. Using these
-  # new columns with `split()` makes sure that parts of a data frame where
+  # new columns with `split()` makes sure that the parts of a data frame where
   # source units are missing won't be dropped. Note that the original columns
-  # containing source units remain untouched.
+  # containing source units remain unchanged.
   #
   # These newly created columns are removed before the converted data frame is
   # returned to the user.
@@ -453,22 +454,25 @@ initializeDimensionAndUnitLists <- function() {
     # data frame row order before data is returned.
     dplyr::mutate(.rowidInternal = dplyr::row_number())
 
-  # xUnit --------------------------
+  # unit conversion --------------------------
 
+  # Split data frame to a list, mutate the unit column, and rebind.
+
+  # xUnit
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
   data <- dplyr::bind_rows(lapply(xDataList, .xUnitConverter, xTargetUnit))
 
-  # yUnit ----------------
-
+  # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
   data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
 
-  # yUnit error ----------------
-
+  # yUnit error
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
     data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
   }
+
+  # clean up and return --------------------------
 
   # Restore the original row order using the internal row id
   data <- dplyr::arrange(data, .rowidInternal)
@@ -479,10 +483,14 @@ initializeDimensionAndUnitLists <- function() {
   return(data)
 }
 
-#' Remove empty data frames sometimes produced due to the non-existent
-#' combination of source unit and molecular unit.
+#' Remove empty data frames from a list
 #'
-#' @param x A list
+#' @description
+#'
+#' Remove empty data frames sometimes produced due to the non-existent
+#' combination of source unit and molecular weight.
+#'
+#' @param x A list.
 #'
 #' @keywords internal
 #' @noRd
