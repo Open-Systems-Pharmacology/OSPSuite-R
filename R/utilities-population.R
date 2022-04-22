@@ -73,8 +73,8 @@ populationToDataFrame <- function(population) {
 #' @rdname populationToDataFrame
 #'
 #' @export
-populationToTibble <- function(populations) {
-  df <- populationToDataFrame(populations)
+populationToTibble <- function(population) {
+  df <- populationToDataFrame(population)
 
   # consistently return a tibble data frame
   return(dplyr::as_tibble(df))

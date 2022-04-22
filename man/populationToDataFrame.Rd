@@ -7,7 +7,7 @@
 \usage{
 populationToDataFrame(population)
 
-populationToTibble(populations)
+populationToTibble(population)
 }
 \arguments{
 \item{population}{Population to convert to data frame (typically imported from file using \code{loadPopulation})}
