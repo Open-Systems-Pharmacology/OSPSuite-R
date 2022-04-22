@@ -457,7 +457,7 @@ initializeDimensionAndUnitLists <- function() {
   #
   # Therefore, an internal row identifier is kept to restore the original
   # data frame row order before data is returned.
-  data <- dplyr::mutate(data, .rowidInternal = dplyr::row_number())
+  data <- transform(data, .rowidInternal = seq_along(1:nrow(data)))
 
   # splitting data frames and unit conversions --------------------------
 
