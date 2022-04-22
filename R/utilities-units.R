@@ -451,7 +451,6 @@ initializeDimensionAndUnitLists <- function() {
     data$yErrorUnitSplit[is.na(data$yErrorUnitSplit)] <- "missing"
   }
 
-
   # `split()` will change the row order of the data frame depending on the
   # alphabetical order of the levels of the variable used to split the data
   # frame into a list.
@@ -481,7 +480,7 @@ initializeDimensionAndUnitLists <- function() {
   # clean up and return --------------------------
 
   # Restore the original row order using the internal row id
-  data <- dplyr::arrange(data, .rowidInternal)
+  data <- data[order(data$.rowidInternal), , drop = FALSE]
 
   # Remove all columns that were added only for internal workings of the function.
   data <- dplyr::select(data, -dplyr::matches("Split$|.rowidInternal"))
