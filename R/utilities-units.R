@@ -461,20 +461,25 @@ initializeDimensionAndUnitLists <- function() {
 
   # splitting data frames and unit conversions --------------------------
 
-  # Split data frame to a list, mutate the unit column, and rebind.
+  # Split data frame to a list, mutate the unit column using the corresponding
+  # `*UnitConverter()`, and the rebind.
+  #
+  # The `_dfr` variant of `purrr::map()` signals this intent: It will return a
+  # single data frame, which is created by rowwise binding resulting data frames
+  # of mapping a given function `.f` to each element of the list in `.x`.
 
   # xUnit
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
-  data <- purrr::map_dfr(xDataList, ~ .xUnitConverter(.x, xTargetUnit))
+  data <- purrr::map_dfr(.x = xDataList, .f = ~ .xUnitConverter(.x, xTargetUnit))
 
   # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
-  data <- purrr::map_dfr(yDataList, ~ .yUnitConverter(.x, yTargetUnit))
+  data <- purrr::map_dfr(.x = yDataList, .f = ~ .yUnitConverter(.x, yTargetUnit))
 
   # yUnit error
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
-    data <- purrr::map_dfr(yErrorDataList, ~ .yErrorUnitConverter(.x, yTargetUnit))
+    data <- purrr::map_dfr(.x = yErrorDataList, .f = ~ .yErrorUnitConverter(.x, yTargetUnit))
   }
 
   # clean up and return --------------------------
