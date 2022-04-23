@@ -465,16 +465,16 @@ initializeDimensionAndUnitLists <- function() {
 
   # xUnit
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
-  data <- dplyr::bind_rows(lapply(xDataList, .xUnitConverter, xTargetUnit))
+  data <- purrr::map_dfr(xDataList, ~ .xUnitConverter(.x, xTargetUnit))
 
   # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
-  data <- dplyr::bind_rows(lapply(yDataList, .yUnitConverter, yTargetUnit))
+  data <- purrr::map_dfr(yDataList, ~ .yUnitConverter(.x, yTargetUnit))
 
   # yUnit error
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
-    data <- dplyr::bind_rows(lapply(yErrorDataList, .yErrorUnitConverter, yTargetUnit))
+    data <- purrr::map_dfr(yErrorDataList, ~ .yErrorUnitConverter(.x, yTargetUnit))
   }
 
   # clean up and return --------------------------
