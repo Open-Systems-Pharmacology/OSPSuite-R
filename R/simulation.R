@@ -90,7 +90,7 @@ Simulation <- R6::R6Class(
     allApplicationsFor = function(quantityPath) {
       validateIsString(quantityPath)
       netApplicationParameters <- rClr::clrCallStatic(MODEL_CORE_SIMULATION_EXTENSIONS, "AllApplicationParametersOrderedByStartTimeForQuantityPath", self$ref, quantityPath)
-      toObjectType(netApplicationParameters, Application)
+      .toObjectType(netApplicationParameters, Application)
     },
     #' @description
     #' Print the object to the console

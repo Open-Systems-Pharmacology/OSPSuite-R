@@ -53,7 +53,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       validateIsString(outputPath)
       validateIsNumeric(totalSensitivityThreshold)
       pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
-      toObjectType(pkParameterSentitivities, PKParameterSensitivity)
+      .toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
     #' @description
     #' Returns the sensitivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns `NaN`

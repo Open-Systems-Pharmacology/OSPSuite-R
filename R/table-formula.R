@@ -11,7 +11,7 @@ TableFormula <- R6::R6Class(
     #' @field allPoints Returns all points defined in the table formulafor a `TableFormula` or `NULL`  otherwise (Read-Only).
     allPoints = function(value) {
       if (missing(value)) {
-        toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
+        .toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
       } else {
         private$throwPropertyIsReadonly("allPoints")
       }

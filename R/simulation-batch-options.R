@@ -1,6 +1,6 @@
 #' @title SimulationBatchOptions
 #' @docType class
-#' @description  Options to be passed to the SimulationBatch
+#' @description Options to be passed to the `SimulationBatch`.
 #' @export
 #' @format NULL
 SimulationBatchOptions <- R6::R6Class(
@@ -16,6 +16,7 @@ SimulationBatchOptions <- R6::R6Class(
     initialize = function(variableParameters = NULL, variableMolecules = NULL) {
       ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationBatchOptions")
       super$initialize(ref)
+
       if (!is.null(variableMolecules)) {
         self$variableMolecules <- variableMolecules
       }

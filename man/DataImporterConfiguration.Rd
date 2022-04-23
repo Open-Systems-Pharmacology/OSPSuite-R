@@ -15,8 +15,9 @@ Configuration of data import from excel or csv files. To be used with #TODO
 \describe{
 \item{\code{timeColumn}}{Name of the column for time values}
 
-\item{\code{timeUnit}}{If \code{isTimeUnitFromColumn} is \code{FALSE}, unit of the values in time column
-If \code{isTimeUnitFromColumn} is \code{TRUE}, name of the column with units of the values in time column}
+\item{\code{timeUnit}}{If \code{isTimeUnitFromColumn} is \code{FALSE}, unit of the values
+in time column If \code{isTimeUnitFromColumn} is \code{TRUE}, name of the column
+with units of the values in time column.}
 
 \item{\code{isTimeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
 are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined by
@@ -24,9 +25,12 @@ the value of \code{timeUnit}.}
 
 \item{\code{measurementColumn}}{Name of the column for measurement values}
 
-\item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
-If \code{isMeasurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \verb{$measurementDimension} is \code{NULL}.
-When changing dimension, the unit is set to the base unit of this dimension.}
+\item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE},
+dimension of the values in measurement column If
+\code{isMeasurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from
+the unit defined in the column \code{measurementUnit} during import process
+and \verb{$measurementDimension} is \code{NULL}. When changing dimension, the
+unit is set to the base unit of this dimension.}
 
 \item{\code{measurementUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
 If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column}

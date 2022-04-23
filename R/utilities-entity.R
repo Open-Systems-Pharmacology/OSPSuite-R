@@ -114,11 +114,11 @@ getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) 
     stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
   }
 
-  task <- getContainerTask()
+  task <- .getContainerTask()
   method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
-    toObjectType(rClr::clrCall(task, method, container$ref, enc2utf8(path)), entityType)
+    .toObjectType(rClr::clrCall(task, method, container$ref, enc2utf8(path)), entityType)
   }
 
   return(unify(findEntitiesByPath, paths))
@@ -141,7 +141,7 @@ getAllEntityPathsIn <- function(container, entityType, method = NULL) {
     stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
   }
 
-  task <- getContainerTask()
+  task <- .getContainerTask()
   method <- method %||% AllPathsInMethod[[className]]
 
   rClr::clrCall(task, method, container$ref)

@@ -3,7 +3,7 @@
 \name{encodeUnit}
 \alias{encodeUnit}
 \title{This is required to ensure that we have no issue using the mu symbol in different OS
-See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details}
+See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details.}
 \usage{
 encodeUnit(unit)
 }
@@ -12,6 +12,6 @@ encodeUnit(unit)
 }
 \description{
 This is required to ensure that we have no issue using the mu symbol in different OS
-See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details
+See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details.
 }
 \keyword{internal}
