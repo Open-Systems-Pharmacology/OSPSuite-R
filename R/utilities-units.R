@@ -435,9 +435,9 @@ initializeDimensionAndUnitLists <- function() {
   data <- dplyr::mutate(
     data,
     dplyr::across(
-      .cols = dplyr::matches("Unit$|Weight$"),
+      .cols = dplyr::matches("Unit$|Weight$"), # use pattern matching
       .fns = as.character,
-      .names = "{.col}Split"
+      .names = "{.col}Split" # = original column name + Split suffix
     )
   )
 
@@ -446,7 +446,7 @@ initializeDimensionAndUnitLists <- function() {
   data <- dplyr::mutate(
     data,
     dplyr::across(
-      .cols = dplyr::matches("Split$"),
+      .cols = dplyr::matches("Split$"), # use pattern matching
       .fns = ~ tidyr::replace_na(.x, "missing")
     )
   )
@@ -456,7 +456,7 @@ initializeDimensionAndUnitLists <- function() {
   # frame into a list.
   #
   # Therefore, an internal row identifier is kept to restore the original
-  # data frame row order before data is returned.
+  # data frame row order before the data is returned.
   data <- dplyr::mutate(data, .rowidInternal = dplyr::row_number())
 
   # splitting data frames and unit conversions --------------------------
@@ -464,9 +464,10 @@ initializeDimensionAndUnitLists <- function() {
   # Split data frame to a list, mutate the unit column using the corresponding
   # `*UnitConverter()`, and the rebind.
   #
-  # The `_dfr` variant of `purrr::map()` signals this intent: It will return a
-  # single data frame, which is created by rowwise binding resulting data frames
-  # of mapping a given function `.f` to each element of the list in `.x`.
+  # The `_dfr` variant of `purrr::map()` signals this intent:
+  # It will return a single data frame. This is created by taking resulting data
+  # frames from mapping the given function `.f` to each element data frame of
+  # the list in `.x`, and then mapping them rowwise.
 
   # xUnit
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
