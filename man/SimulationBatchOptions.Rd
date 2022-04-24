@@ -5,7 +5,7 @@
 \alias{SimulationBatchOptions}
 \title{SimulationBatchOptions}
 \description{
-Options to be passed to the SimulationBatch
+Options to be passed to the \code{SimulationBatch}.
 }
 \section{Super classes}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchOptions}

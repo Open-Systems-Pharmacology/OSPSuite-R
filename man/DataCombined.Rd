@@ -34,7 +34,6 @@ myCombDat$addDataSets(dataSet)
 
 # print the object
 myCombDat
-
 }
 \section{Super class}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
