@@ -1,3 +1,5 @@
+# ospsuite.utils -----------------------------
+
 #' @export
 #' @importFrom ospsuite.utils "%||%"
 ospsuite.utils::`%||%`
@@ -33,3 +35,13 @@ ospsuite.utils::enumValues
 #' @export
 #' @importFrom ospsuite.utils enumGetKey
 ospsuite.utils::enumGetKey
+
+# tlf -----------------------------
+
+#' @export
+#' @importFrom tlf plotGrid
+tlf::plotGrid
+
+#' @export
+#' @importFrom tlf PlotGridConfiguration
+tlf::PlotGridConfiguration
