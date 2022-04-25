@@ -408,12 +408,14 @@ initializeDimensionAndUnitLists <- function() {
   # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
+  xTargetDim <- getDimensionForUnit(xTargetUnit)
+  yTargetDim <- getDimensionForUnit(yTargetUnit)
 
-  # internal --------------------------
+  # Strategy --------------------------
 
   # The strategy is to split the data frame (using `split()`) for each source
   # unit and carry out conversion separately per data frame. This is the most
-  # performant options since there can only be as many expensive calls to
+  # performant option since there can only be as many expensive calls to
   # `toUnit()`/`{rClr}` as there are source units.
   #
   # The problem occurs when source units are missing (`NA`). The `toUnit()`
@@ -429,6 +431,8 @@ initializeDimensionAndUnitLists <- function() {
   #
   # These newly created columns are removed before the converted data frame is
   # returned to the user.
+
+  # internal --------------------------
 
   # Add suffix `Split` to the following columns:
   # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
@@ -462,25 +466,25 @@ initializeDimensionAndUnitLists <- function() {
   # splitting data frames and unit conversions --------------------------
 
   # Split data frame to a list, mutate the unit column using the corresponding
-  # `*UnitConverter()`, and the rebind.
+  # `*UnitConverter()`, and then rebind.
   #
   # The `_dfr` variant of `purrr::map()` signals this intent:
-  # It will return a single data frame. This is created by taking resulting data
-  # frames from mapping the given function `.f` to each element data frame of
-  # the list in `.x`, and then mapping them rowwise.
+  # It will return a single data frame. This data frame is created by binding
+  # row-wise resulting data frames from mapping the given function `.f` to each
+  # element data frame in the list provided to `.x`.
 
   # xUnit
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
-  data <- purrr::map_dfr(.x = xDataList, .f = ~ .xUnitConverter(.x, xTargetUnit))
+  data <- purrr::map_dfr(.x = xDataList, .f = ~ .xUnitConverter(.x, xTargetUnit, xTargetDim))
 
   # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
-  data <- purrr::map_dfr(.x = yDataList, .f = ~ .yUnitConverter(.x, yTargetUnit))
+  data <- purrr::map_dfr(.x = yDataList, .f = ~ .yUnitConverter(.x, yTargetUnit, yTargetDim))
 
   # yUnit error
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
-    data <- purrr::map_dfr(.x = yErrorDataList, .f = ~ .yErrorUnitConverter(.x, yTargetUnit))
+    data <- purrr::map_dfr(.x = yErrorDataList, .f = ~ .yErrorUnitConverter(.x, yTargetUnit, yTargetDim))
   }
 
   # clean up and return --------------------------
@@ -517,9 +521,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.xUnitConverter <- function(xData, xTargetUnit) {
+.xUnitConverter <- function(xData, xTargetUnit, xTargetDim) {
   xData$xValues <- toUnit(
-    quantityOrDimension = xData$xDimension[[1]],
+    quantityOrDimension = xTargetDim,
     values = xData$xValues,
     targetUnit = xTargetUnit,
     sourceUnit = xData$xUnit[[1]]
@@ -532,9 +536,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.yUnitConverter <- function(yData, yTargetUnit) {
+.yUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
   yData$yValues <- toUnit(
-    quantityOrDimension = yData$yDimension[[1]],
+    quantityOrDimension = yTargetDim,
     values = yData$yValues,
     targetUnit = yTargetUnit,
     sourceUnit = yData$yUnit[[1]],
@@ -549,9 +553,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.yErrorUnitConverter <- function(yData, yTargetUnit) {
+.yErrorUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
   yData$yErrorValues <- toUnit(
-    quantityOrDimension = yData$yDimension[[1]],
+    quantityOrDimension = yTargetDim,
     values = yData$yErrorValues,
     targetUnit = yTargetUnit,
     sourceUnit = yData$yErrorUnit[[1]],
