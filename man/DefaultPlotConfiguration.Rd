@@ -35,9 +35,9 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisTickLabels, xAxisLabelSize, xAxisLabelColor, xAxisLabelFontFamily, xAxisLabelFontFace, xAxisLabelAngle}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -68,7 +68,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{ribbonsColor, ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsColor, errorbarsFill, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
 \item{\code{plotSaveFileName, plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits, plotSaveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
@@ -95,9 +95,9 @@ label, plot legend, watermark, respectively.}
 
 \item{\code{legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisTickLabels, xAxisLabelSize, xAxisLabelColor, xAxisLabelFontFamily, xAxisLabelFontFace, xAxisLabelAngle}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTickLabels, yAxisLabelSize, yAxisLabelColor, yAxisLabelFontFamily, yAxisLabelFontFace, yAxisLabelAngle}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -128,7 +128,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{ribbonsColor, ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsColor, errorbarsFill, errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
 \item{\code{plotSaveFileName, plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits, plotSaveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }

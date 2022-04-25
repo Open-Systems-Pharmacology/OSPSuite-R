@@ -21,8 +21,8 @@
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendCaptionSize Aesthetic properties for the legend title.
 #' @field legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle Aesthetic properties for the legend caption.
-#' @field xAxisTickLabels,xAxisLabelSize,xAxisLabelColor,xAxisLabelFontFamily,xAxisLabelFontFace,xAxisLabelAngle Aesthetic properties for the x-axis label.
-#' @field yAxisTickLabels,yAxisLabelSize,yAxisLabelColor,yAxisLabelFontFamily,yAxisLabelFontFace,yAxisLabelAngle Aesthetic properties for the y-axis label.
+#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle Aesthetic properties for the x-axis label.
+#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
@@ -39,7 +39,7 @@
 #' @field linesColor,linesFill,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
 #' @field pointsColor,pointsFill,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsColor,ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
-#' @field errorbarsColor,errorbarsFill,errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
+#' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
 #' @field plotSaveFileName,plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits,plotSaveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
 #'
 #' @export
@@ -80,7 +80,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelSize = 12,
     yLabelFontFace = "plain",
     yLabelFontFamily = "",
-    yLabelAngle = 0,
+    yLabelAngle = 90,
 
     # legend
     legendPosition = "insideTopRight",
@@ -102,23 +102,23 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLimits = NULL,
     xAxisScale = tlf::Scaling$lin,
     xAxisTicks = NULL,
-    xAxisTickLabels = NULL,
-    xAxisLabelSize = NULL,
-    xAxisLabelColor = "black",
-    xAxisLabelFontFamily = "",
-    xAxisLabelFontFace = "plain",
-    xAxisLabelAngle = 0,
+    xAxisTicksLabels = NULL,
+    xAxisLabelTicksSize = NULL,
+    xAxisLabelTicksColor = "black",
+    xAxisLabelTicksFontFamily = "",
+    xAxisLabelTicksFontFace = "plain",
+    xAxisLabelTicksAngle = 0,
 
     # YAxisConfiguration
     yAxisLimits = NULL,
     yAxisScale = tlf::Scaling$lin,
     yAxisTicks = NULL,
-    yAxisTickLabels = NULL,
-    yAxisLabelSize = NULL,
-    yAxisLabelColor = "black",
-    yAxisLabelFontFamily = "",
-    yAxisLabelFontFace = "plain",
-    yAxisLabelAngle = 90,
+    yAxisTicksLabels = NULL,
+    yAxisLabelTicksSize = NULL,
+    yAxisLabelTicksColor = "black",
+    yAxisLabelTicksFontFamily = "",
+    yAxisLabelTicksFontFace = "plain",
+    yAxisLabelTicksAngle = 90,
 
     # watermark
     watermark = NULL,
@@ -163,7 +163,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # lines
     linesColor = tlf::ColorMaps$default,
     linesFill = tlf::ColorMaps$default,
-    linesSize = c(1, 2, 3, 4, 5),
+    linesSize = 1,
     linesLinetype = "dashed",
     linesAlpha = 0.75,
 
@@ -177,14 +177,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     # ribbons
     ribbonsColor = tlf::ColorMaps$default,
     ribbonsFill = tlf::ColorMaps$default,
-    ribbonsSize = c(1, 2, 3, 4, 5),
+    ribbonsSize = 1,
     ribbonsLinetype = "solid",
     ribbonsAlpha = 0.75,
 
     # errorbars
-    errorbarsColor = tlf::ColorMaps$default,
-    errorbarsFill = tlf::ColorMaps$default,
-    errorbarsSize = c(1, 2, 3, 4, 5),
+    # Color and fill are taken from point mapping, therefore no
+    # `errorbarsColor`, `errorbarsFill` parameters
+    errorbarsSize = 1,
     errorbarsLinetype = "solid",
     errorbarsAlpha = 0.75,
 

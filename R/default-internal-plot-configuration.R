@@ -191,36 +191,36 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   # xAxis objects -----------------------------------
 
   xAxisFont <- tlf::Font$new(
-    size = defaultPlotConfiguration$xAxisLabelSize,
-    color = defaultPlotConfiguration$xAxisLabelColor,
-    fontFamily = defaultPlotConfiguration$xAxisLabelFontFamily,
-    fontFace = defaultPlotConfiguration$xAxisLabelFontFace,
-    angle = defaultPlotConfiguration$xAxisLabelAngle
+    size = defaultPlotConfiguration$xAxisLabelTicksSize,
+    color = defaultPlotConfiguration$xAxisLabelTicksColor,
+    fontFamily = defaultPlotConfiguration$xAxisLabelTicksFontFamily,
+    fontFace = defaultPlotConfiguration$xAxisLabelTicksFontFace,
+    angle = defaultPlotConfiguration$xAxisLabelTicksAngle
   )
 
   xAxisConfiguration <- tlf::XAxisConfiguration$new(
     limits = defaultPlotConfiguration$xAxisLimits,
     scale = defaultPlotConfiguration$xAxisScale,
     ticks = defaultPlotConfiguration$xAxisTicks,
-    ticklabels = defaultPlotConfiguration$xAxisTickLabels,
+    ticklabels = defaultPlotConfiguration$xAxisTicksLabels,
     font = defaultPlotConfiguration$xAxisFont
   )
 
   # yAxis objects -----------------------------------
 
   yAxisFont <- tlf::Font$new(
-    size = defaultPlotConfiguration$yAxisLabelSize,
-    color = defaultPlotConfiguration$yAxisLabelColor,
-    fontFamily = defaultPlotConfiguration$yAxisLabelFontFamily,
-    fontFace = defaultPlotConfiguration$yAxisLabelFontFace,
-    angle = defaultPlotConfiguration$yAxisLabelAngle
+    size = defaultPlotConfiguration$yAxisLabelTicksSize,
+    color = defaultPlotConfiguration$yAxisLabelTicksColor,
+    fontFamily = defaultPlotConfiguration$yAxisLabelTicksFontFamily,
+    fontFace = defaultPlotConfiguration$yAxisLabelTicksFontFace,
+    angle = defaultPlotConfiguration$yAxisLabelTicksAngle
   )
 
   yAxisConfiguration <- tlf::YAxisConfiguration$new(
     limits = defaultPlotConfiguration$yAxisLimits,
     scale = defaultPlotConfiguration$yAxisScale,
     ticks = defaultPlotConfiguration$yAxisTicks,
-    ticklabels = defaultPlotConfiguration$yAxisTickLabels,
+    ticklabels = defaultPlotConfiguration$yAxisTicksLabels,
     font = defaultPlotConfiguration$yAxisFont
   )
 
@@ -260,8 +260,6 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   # errorbars -------------------------------------------------------
 
   errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
-    color = defaultPlotConfiguration$errorbarsColor,
-    fill = defaultPlotConfiguration$errorbarsFill,
     shape = defaultPlotConfiguration$errorbarsShape,
     size = defaultPlotConfiguration$errorbarsSize,
     linetype = defaultPlotConfiguration$errorbarsLinetype,
@@ -271,12 +269,12 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   # export -------------------------------------------------------
 
   exportConfiguration <- tlf::ExportConfiguration$new(
-    name = plotSaveFileName,
+    name = defaultPlotConfiguration$plotSaveFileName,
     format = defaultPlotConfiguration$plotSaveFileFormat,
     width = defaultPlotConfiguration$plotSaveFileWidth,
     height = defaultPlotConfiguration$plotSaveFileHeight,
     units = defaultPlotConfiguration$plotSaveFileDimensionUnits,
-    dpi = plotSaveFileDpi
+    dpi = defaultPlotConfiguration$plotSaveFileDpi
   )
 
   # defaultInternalPlotConfiguration object -----------------------------------
