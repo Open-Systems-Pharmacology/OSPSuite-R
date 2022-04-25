@@ -57,7 +57,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, "DataSet")
   filePath <- expandPath(filePath)
-  dataRepositoryTask <- getNetTask("DataRepositoryTask")
+  dataRepositoryTask <- .getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }
 
@@ -136,7 +136,12 @@ dataSetToTibble <- function(dataSets) {
 #' @export
 #'
 #' @examples
-#' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+#'
+#' xlsFilePath <- system.file(
+#'   "extdata", "CompiledDataSet.xlsx",
+#'   package = "ospsuite"
+#' )
+#'
 #' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 #' importerConfiguration$sheets <- "TestSheet_1"
 #'
@@ -146,7 +151,10 @@ dataSetToTibble <- function(dataSets) {
 #'   importAllSheets = FALSE
 #' )
 #'
-#' importerConfigurationFilePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
+#' importerConfigurationFilePath <- system.file(
+#'   "extdata", "dataImporterConfiguration.xml",
+#'   package = "ospsuite"
+#' )
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
@@ -162,7 +170,7 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, impo
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- getNetTask("DataImporterTask")
+  dataImporterTask <- .getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {

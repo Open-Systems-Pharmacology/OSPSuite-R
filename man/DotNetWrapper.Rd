@@ -3,25 +3,30 @@
 \docType{class}
 \name{DotNetWrapper}
 \alias{DotNetWrapper}
-\title{DotNetRwapper}
+\title{Wrapper class for \code{.NET} objects}
 \description{
-Wrapper class for .net Object
-}
-\section{Methods}{
+Wrapper class for \code{.NET} objects
 
-\describe{
-\item{wrapProperty}{Simple way to wrap a get;set; .NET property}
-\item{wrapReadOnlyProperty}{Simple way to wrap a get; .NET Read-Only property}
+Wrapper class for \code{.NET} objects
 }
-}
+\examples{
 
+sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+
+# looking at a reference to `.NET` simulation object
+sim$ref
+
+# create a new instance of `DotNetWrapper` class using this reference
+DotNetWrapper$new(sim$ref)
+
+}
 \section{Super class}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DotNetWrapper}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{ref}}{Underlying .NET reference (read-only)}
+\item{\code{ref}}{Underlying \code{.NET} reference (read-only)}
 }
 \if{html}{\out{</div>}}
 }
@@ -49,7 +54,7 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ref}}{Instance of the .NET object to wrap.}
+\item{\code{ref}}{Instance of the \code{.NET} object to wrap.}
 }
 \if{html}{\out{</div>}}
 }

@@ -150,7 +150,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     validateIsString(units)
   }
 
-  task <- getContainerTask()
+  task <- .getContainerTask()
   for (i in seq_along(quantityPaths)) {
     path <- enc2utf8(quantityPaths[[i]])
     value <- values[[i]]
@@ -201,7 +201,7 @@ scaleQuantityValues <- function(quantities, factor) {
 getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
   validateIsOfType(simulation, "Simulation")
-  displayResolver <- getNetTask("FullPathDisplayResolver")
+  displayResolver <- .getNetTask("FullPathDisplayResolver")
   paths <- c(paths)
 
   displayPaths <- lapply(paths, function(path) {

@@ -34,7 +34,7 @@ DataRepository <- R6::R6Class(
     allButBaseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.allButBaseGrid)) {
-          private$.allButBaseGrid <- toObjectType(private$wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
+          private$.allButBaseGrid <- .toObjectType(private$wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
         }
         return(private$.allButBaseGrid)
       }
@@ -93,7 +93,7 @@ DataRepository <- R6::R6Class(
       }
       validateIsString(name)
       validateIsString(value)
-      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
       rClr::clrCall(dataRepositoryTask, "AddMetaData", self$ref, name, value)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
@@ -107,7 +107,7 @@ DataRepository <- R6::R6Class(
         stop(messages$errorMultipleMetaDataEntries())
       }
       validateIsString(name)
-      dataRepositoryTask <- getNetTask("DataRepositoryTask")
+      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
       rClr::clrCall(dataRepositoryTask, "RemoveMetaData", self$ref, name)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL

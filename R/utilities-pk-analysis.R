@@ -16,7 +16,7 @@
 #' @export
 calculatePKAnalyses <- function(results) {
   validateIsOfType(results, "SimulationResults")
-  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
   rClr::clrSet(calculatePKAnalysisArgs, "SimulationResults", results$ref)
@@ -34,7 +34,7 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
 }
@@ -55,7 +55,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
   SimulationPKAnalyses$new(pkAnalyses, simulation)
 }
@@ -102,8 +102,8 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
 #' @rdname pkAnalysesToDataFrame
 #'
 #' @export
-pkAnalysesToTibble <- function(pkAnalysess) {
-  df <- pkAnalysesToDataFrame(pkAnalysess)
+pkAnalysesToTibble <- function(pkAnalyses) {
+  df <- pkAnalysesToDataFrame(pkAnalyses)
 
   # consistently return a tibble data frame
   return(dplyr::as_tibble(df))

@@ -10,7 +10,7 @@
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
   csvPopulationFile <- expandPath(csvPopulationFile)
-  populationTask <- getNetTask("PopulationTask")
+  populationTask <- .getNetTask("PopulationTask")
   population <- rClr::clrCall(populationTask, "ImportPopulation", csvPopulationFile)
   Population$new(population)
 }
@@ -36,7 +36,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsString(outputFileName)
   csvPopulationFile <- expandPath(csvPopulationFile)
   outputFileName <- enc2utf8(outputFileName)
-  populationTask <- getNetTask("PopulationTask")
+  populationTask <- .getNetTask("PopulationTask")
   rClr::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }
 
@@ -73,8 +73,8 @@ populationToDataFrame <- function(population) {
 #' @rdname populationToDataFrame
 #'
 #' @export
-populationToTibble <- function(populations) {
-  df <- populationToDataFrame(populations)
+populationToTibble <- function(population) {
+  df <- populationToDataFrame(population)
 
   # consistently return a tibble data frame
   return(dplyr::as_tibble(df))
