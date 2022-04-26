@@ -140,7 +140,7 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)
+  results <- runSimulation(sim)
 
   df1 <- simulationResultsToDataFrame(results)
   df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
@@ -181,7 +181,7 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)
+  results <- runSimulation(sim)
 
   df1 <- simulationResultsToDataFrame(results)
 
@@ -204,7 +204,7 @@ test_that("simulationResultsToTibble works as expected - Aciclovir", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)
+  results <- runSimulation(sim)
 
   df1 <- simulationResultsToTibble(results)
 
