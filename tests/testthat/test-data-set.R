@@ -32,6 +32,18 @@ test_that("it can set the name of the data set", {
   expect_equal(dataSet$name, "TOTO")
 })
 
+test_that("it can work when setting a single value", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$setValues(xValues = 1, yValues = 10)
+  expect_equal(dataSet$xValues, 1, tolerance)
+  expect_equal(dataSet$yValues, 10, tolerance)
+
+  dataSet2 <- DataSet$new(name = dataSetName)
+  dataSet2$setValues(xValues = c(1), yValues = c(10))
+  expect_equal(dataSet2$xValues, 1, tolerance)
+  expect_equal(dataSet2$yValues, 10, tolerance)
+})
+
 test_that("it can update the dimension of the xValues when no values are set", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$xDimension <- ospDimensions$Ampere

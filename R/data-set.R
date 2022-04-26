@@ -8,7 +8,8 @@ DataErrorType <- enum(c(
 
 #' @title DataSet
 #' @docType class
-#' @description A class for storage of numerical x- and y-value pairs and optional error for y-values.
+#' @description A class for storage of numerical x- and y-value pairs and
+#'   optional error for y-values.
 #' @export
 #' @format NULL
 DataSet <- R6::R6Class(
@@ -299,7 +300,11 @@ DataSet <- R6::R6Class(
     },
     .getColumnValues = function(column) {
       # we need to convert the values in the display unit
-      toUnit(quantityOrDimension = column$dimension, values = column$values, targetUnit = column$displayUnit)
+      toUnit(
+        quantityOrDimension = column$dimension,
+        values = column$values,
+        targetUnit = column$displayUnit
+      )
     },
     .setColumnDimension = function(column, value) {
       # no need to update anything if we are setting the same values

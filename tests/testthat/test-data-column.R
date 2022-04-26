@@ -32,6 +32,16 @@ test_that("it can set and retrieve the display unit of a data column", {
   expect_equal(baseGrid$displayUnit, ospUnits$Time$`day(s)`)
 })
 
+test_that("it can set and retrieve single value of the column", {
+  baseGrid <- createBaseGrid()
+  baseGrid$values <- 1
+  expect_equal(baseGrid$values, 1)
+
+  baseGrid2 <- createBaseGrid()
+  baseGrid2$values <- c(1)
+  expect_equal(baseGrid2$values, 1)
+})
+
 test_that("it can set and retrieve the values of the column", {
   baseGrid <- createBaseGrid()
   baseGrid$values <- c(1, 2, 3)
