@@ -5,7 +5,8 @@
 \alias{SensitivityAnalysisResults}
 \title{SensitivityAnalysisResults}
 \description{
-Results of a sensitivity analysis run (either individual or population simulation)
+Results of a sensitivity analysis run (either individual or
+population simulation)
 }
 \section{Super classes}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysisResults}
@@ -65,7 +66,9 @@ A new \code{SensitivityAnalysisResults} object.
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
 \if{latex}{\out{\hypertarget{method-allPKParameterSensitivitiesFor}{}}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
-Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to \code{totalSensitivityThreshold}
+Returns the PKParameterSensitivity for a given pkParameter and output
+participating to a total sensitivity greater or equal to
+\code{totalSensitivityThreshold}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
@@ -78,12 +81,16 @@ Returns the PKParameterSensitivity for a given pkParameter and output participat
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should be retrieved}
+\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should
+be retrieved.}
 
-\item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
+\item{\code{outputPath}}{Path of the output for which the sensitivity should be
+retrieved}
 
-\item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most sensitive parameter. A threshold of 0.9 means that only
-parameter participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters.}
+\item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most
+sensitive parameter. A threshold of 0.9 means that only parameter
+participating to a total of 90 percent of the sensitivity would be
+returned. A value of 1 would return the sensitivity for all parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -92,23 +99,32 @@ parameter participating to a total of 90 percent of the sensitivity would be ret
 \if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
 \if{latex}{\out{\hypertarget{method-pkParameterSensitivityValueFor}{}}}
 \subsection{Method \code{pkParameterSensitivityValueFor()}}{
-Returns the sensitivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns \code{NaN}
+Returns the sensitivity value for a given pkParameter, output and
+parameter (either by path or by name). If the sensitivity result does not
+exist, returns \code{NaN}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$pkParameterSensitivityValueFor(
   pkParameterName,
   outputPath,
-  parameterName
+  parameterName = NULL,
+  parameterPath = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should be retrieved}
+\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should
+be retrieved.}
 
-\item{\code{outputPath}}{Path of the output for which the sensitivity should be retrieved}
+\item{\code{outputPath}}{Path of the output for which the sensitivity should be
+retrieved.}
 
-\item{\code{parameterName}}{Name of the sensitivity parameter for which the sensitivity should be retrieved}
+\item{\code{parameterName}}{Name of the sensitivity parameter for which the
+sensitivity should be retrieved.}
+
+\item{\code{parameterPath}}{Path of the sensitivity parameter for which the
+sensitivity should be retrieved. Wildcards (*) not accepted.}
 }
 \if{html}{\out{</div>}}
 }
