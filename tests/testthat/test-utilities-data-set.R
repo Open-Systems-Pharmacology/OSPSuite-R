@@ -201,7 +201,6 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
       "yErrorUnit",
       "molWeight",
       "lloq",
-      "Source",
       "Sheet",
       "Study Id",
       "Organ",
