@@ -119,10 +119,10 @@ DotNetWrapper <- R6::R6Class(
       if (missing(value)) {
         rClr::clrGet(self$ref, returnPropertyName)
       } else {
-        if (length(value) > 1) {
-          rClr::clrSet(self$ref, propertyNamePlural, value)
-        } else {
+        if (length(value) == 1L) {
           rClr::clrSet(self$ref, propertyNameSingular, value)
+        } else {
+          rClr::clrSet(self$ref, propertyNamePlural, value)
         }
       }
     },
