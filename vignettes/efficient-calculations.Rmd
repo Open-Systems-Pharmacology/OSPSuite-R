@@ -120,8 +120,8 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 # We load the simulation for which the batches will be created
 sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE)
 
-# define the list of parameter that will be varied between the runs. 
-# For the first batch, we will vary 2 parameters: Lipophilicity and Permeability 
+# define the list of parameter that will be varied between the runs.
+# For the first batch, we will vary 2 parameters: Lipophilicity and Permeability
 parameterPaths <- c("Aciclovir|Lipophilicity", "Aciclovir|Permeability")
 
 # define a first simulation batch
@@ -129,9 +129,9 @@ simBatch1 <- createSimulationBatch(simulation = sim1, parametersOrPaths = parame
 
 # for the second batch, we will vary Molecular Weight
 simBatch2 <- createSimulationBatch(
-  simulation = sim1, 
+  simulation = sim1,
   parametersOrPaths = c("Aciclovir|Molecular weight")
-  )
+)
 
 simulationBatches <- list(simBatch1, simBatch2)
 ```
@@ -140,7 +140,7 @@ In the next step, we define multiple runs of the simulation batch by adding diff
 parameter (and/or species start) values set. Each set of values correspond to one run. The benefit of this approach is that the initialization steps (1 and 4) are only performed once. After that, only the execution time (step 5) will have an impact on the total performance.
 
 ```{r BatchRunEnque, eval=TRUE}
-# now setting some parameter run values (the size of the array should match 
+# now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
 simBatch1$addRunValues(parameterValues = c(3, 4))
@@ -159,8 +159,8 @@ other one with 4. That means that 3 runs will be enqueued for simBatch1 and
 to correctly assign simulation results to the simulated set of parameters.
 
 ```{r BatchRunRun, eval=TRUE}
-# Now we run the simulation batches. 
-# By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel. 
+# Now we run the simulation batches.
+# By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel.
 # Please see documentation of runSimulationBatches for more details.
 # The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
@@ -180,12 +180,12 @@ simBatch1$addRunValues(parameterValues = c(30, 40))
 simBatch2$addRunValues(parameterValues = 500)
 simBatch2$addRunValues(parameterValues = 200)
 
-# this run will be much faster as the simulation won't be initialized again. 
+# this run will be much faster as the simulation won't be initialized again.
 # Only the new value will be set as specified when adding new run values with addRunValues
 results2 <- runSimulationBatches(simulationBatches)
 
-# Once the simulation batches instances are not needed anymore, they can be removed 
-# from the environment and the allocated memory cleared. 
+# Once the simulation batches instances are not needed anymore, they can be removed
+# from the environment and the allocated memory cleared.
 # This will be done automatically when the R session is terminated.
 rm(simBatch1)
 rm(simBatch2)

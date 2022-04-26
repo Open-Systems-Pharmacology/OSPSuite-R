@@ -1,5 +1,5 @@
-pandoc: 2.14.0.3
-pkgdown: 2.0.2
+pandoc: '2.18'
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   create-individual: create-individual.html
@@ -13,7 +13,7 @@ articles:
   set-values: set-values.html
   table-parameters: table-parameters.html
   unit-conversion: unit-conversion.html
-last_built: 2022-02-24T14:27Z
+last_built: 2022-04-26T10:59Z
 urls:
   reference: https://www.open-systems-pharmacology.org/OSPSuite-R/reference
   article: https://www.open-systems-pharmacology.org/OSPSuite-R/articles

@@ -81,11 +81,13 @@ SimulationBatch <- R6::R6Class(
       private$printClass()
       private$printLine("Simulation", self$simulation$name)
       private$printLine("runValuesIds", self$runValuesIds)
-      private$printLine("Parameters",
+      private$printLine(
+        "Parameters",
         rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
           rClr::clrGet(simulationBatchOptions, "VariableParameter")
       )
-      private$printLine("Molecules",
+      private$printLine(
+        "Molecules",
         rClr::clrGet(simulationBatchOptions, "VariableMolecules") %||%
           rClr::clrGet(simulationBatchOptions, "VariableMolecule")
       )
