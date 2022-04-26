@@ -32,7 +32,7 @@ test_that("It calculates the pk parameters in the expected units", {
   df <- pkAnalysesToDataFrame(pkAnalyses)
   df2 <- pkAnalysesToTibble(pkAnalyses)
   df_c_max <- df[df$Parameter == myCmax$name & df$QuantityPath == quantityPath, ]
-  expect_equal(c_max_mg_l_value, df_c_max$Value)
+  expect_equal(c_max_mg_l_value, df_c_max$Value, tolerance = 0.001)
   expect_s3_class(df, "data.frame")
   expect_s3_class(df, "tbl_df")
   removeAllUserDefinedPKParameters()
