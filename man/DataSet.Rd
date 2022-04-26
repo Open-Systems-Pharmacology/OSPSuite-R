@@ -5,7 +5,8 @@
 \alias{DataSet}
 \title{DataSet}
 \description{
-A class for storage of numerical x- and y-value pairs and optional error for y-values.
+A class for storage of numerical x- and y-value pairs and
+optional error for y-values.
 }
 \section{Super classes}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}

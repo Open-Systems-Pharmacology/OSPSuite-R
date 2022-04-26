@@ -67,7 +67,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     },
     #' @description
     #'
-    #' Returns the sensitivity value for a given pkParameter, output and
+    #' Returns the sensitivity value for a given pkParameter, output and model
     #' parameter (either by path or by name). If the sensitivity result does not
     #' exist, returns `NaN`.
     #'

@@ -99,7 +99,7 @@ returned. A value of 1 would return the sensitivity for all parameters.}
 \if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
 \if{latex}{\out{\hypertarget{method-pkParameterSensitivityValueFor}{}}}
 \subsection{Method \code{pkParameterSensitivityValueFor()}}{
-Returns the sensitivity value for a given pkParameter, output and
+Returns the sensitivity value for a given pkParameter, output and model
 parameter (either by path or by name). If the sensitivity result does not
 exist, returns \code{NaN}.
 \subsection{Usage}{
