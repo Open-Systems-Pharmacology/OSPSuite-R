@@ -98,6 +98,7 @@
 
 <ul><li><p><a href="#method-new"><code>SimulationBatch$new()</code></a></p></li>
 <li><p><a href="#method-addRunValues"><code>SimulationBatch$addRunValues()</code></a></p></li>
+<li><p><a href="#method-print"><code>SimulationBatch$print()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
@@ -177,6 +178,22 @@ res &lt;- runSimulationBatches(simulationBatches = list(simulationBatch1, simula
 </div>
 
 
+</div><p></p><hr><a id="method-print"></a><div class="section">
+<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+<p>Print the object to the console</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">SimulationBatch</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>...</code></dt>
+<dd><p>Additional arguments.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
 </div>
 
     </div>
@@ -188,26 +205,55 @@ res &lt;- runSimulationBatches(simulationBatches = list(simulationBatch1, simula
 <span class="r-in"><span class="co">## Method `SimulationBatch$addRunValues`</span></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># \dontrun{</span></span>
 <span class="r-in"><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="st">"sim1"</span>, loadFromCache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rClr::clrCall(simulationPersister, "LoadSimulation", expandPath(filePath),     resetIds):</span> Type:    System.IO.FileNotFoundException</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> Message: Could not find file 'C:\Users\IndrajeetPatil\Documents\GitHub\OSPSuite-R\docs\reference\sim1'.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> Method:  Void WinIOError(Int32, System.String)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> Stack trace:</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlTextReaderImpl.FinishInitUriString()</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlReaderSettings.CreateReader(S</span>
 <span class="r-in"><span class="va">sim2</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="st">"sim2"</span>, loadFromCache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rClr::clrCall(simulationPersister, "LoadSimulation", expandPath(filePath),     resetIds):</span> Type:    System.IO.FileNotFoundException</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> Message: Could not find file 'C:\Users\IndrajeetPatil\Documents\GitHub\OSPSuite-R\docs\reference\sim2'.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> Method:  Void WinIOError(Int32, System.String)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> Stack trace:</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlDownloadManager.GetStream(Uri uri, ICredentials credentials, IWebProxy proxy, RequestCachePolicy cachePolicy)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlUrlResolver.GetEntity(Uri absoluteUri, String role, Type ofObjectToReturn)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlTextReaderImpl.FinishInitUriString()</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>    at System.Xml.XmlReaderSettings.CreateReader(S</span>
 <span class="r-in"><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="st">"R1|k1"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">molecules</span> <span class="op">&lt;-</span> <span class="st">"Organism|Liver|A"</span></span>
 <span class="r-in"><span class="co"># Create two simulation batches.</span></span>
 <span class="r-in"><span class="va">simulationBatch1</span> <span class="op">&lt;-</span> <span class="fu"><a href="createSimulationBatch.html">createSimulationBatch</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim1</span>,</span>
 <span class="r-in">parametersOrPaths <span class="op">=</span> <span class="va">parameters</span>,</span>
 <span class="r-in">moleculesOrPaths <span class="op">=</span> <span class="va">molecules</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in isOfType(object, type, nullAllowed):</span> object 'sim1' not found</span>
 <span class="r-in"><span class="va">simulationBatch2</span> <span class="op">&lt;-</span> <span class="fu"><a href="createSimulationBatch.html">createSimulationBatch</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim2</span>,</span>
 <span class="r-in">parametersOrPaths <span class="op">=</span> <span class="va">parameters</span>,</span>
 <span class="r-in">moleculesOrPaths <span class="op">=</span> <span class="va">molecules</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in isOfType(object, type, nullAllowed):</span> object 'sim2' not found</span>
 <span class="r-in"><span class="co">#Ids of run values</span></span>
 <span class="r-in"><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ids</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'simulationBatch1' not found</span>
 <span class="r-in"><span class="va">ids</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.6</span>, <span class="fl">2.4</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'simulationBatch1' not found</span>
 <span class="r-in"><span class="va">ids</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'simulationBatch2' not found</span>
 <span class="r-in"><span class="va">ids</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">4.4</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'simulationBatch2' not found</span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span>simulationBatches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simulationBatch1</span>, <span class="va">simulationBatch2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in isOfType(object, type, nullAllowed):</span> object 'simulationBatch1' not found</span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -219,7 +265,7 @@ res &lt;- runSimulationBatches(simulationBatches = list(simulationBatch1, simula
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

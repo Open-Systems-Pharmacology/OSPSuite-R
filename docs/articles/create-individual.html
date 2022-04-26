@@ -95,13 +95,39 @@
 
     
     
-<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package provides an interface to the PK-Sim physiology database to create parameter sets describing a certain <strong>individual</strong>. By applying these parameter values to a simulation, it is possible to simulate different individuals based on one exported *.pkml simulation. This functionality is only available when PK-Sim is installed on the system.</p>
-<p>The easier way to get started is to install the <a href="https://github.com/Open-Systems-Pharmacology/Suite/releases/" class="external-link">OSPSuite Setup</a>. This will link PK-Sim to your <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> installation automatically. If the portable version of PK-Sim is used instead, one must specify the path to the PK-Sim folder by calling the function <code><a href="../reference/initPKSim.html">initPKSim()</a></code>.</p>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package provides an interface to the
+PK-Sim physiology database to create parameter sets describing a certain
+<strong>individual</strong>. By applying these parameter values to a
+simulation, it is possible to simulate different individuals based on
+one exported *.pkml simulation. This functionality is only available
+when PK-Sim is installed on the system.</p>
+<p>The easier way to get started is to install the <a href="https://github.com/Open-Systems-Pharmacology/Suite/releases/" class="external-link">OSPSuite
+Setup</a>. This will link PK-Sim to your <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a>
+installation automatically. If the portable version of PK-Sim is used
+instead, one must specify the path to the PK-Sim folder by calling the
+function <code><a href="../reference/initPKSim.html">initPKSim()</a></code>.</p>
 <div class="section level2">
 <h2 id="creating-individuals">Creating individuals<a class="anchor" aria-label="anchor" href="#creating-individuals"></a>
 </h2>
-<p>The physiology of an individual is defined by the values of the simulation parameters. To simulate a specific individual, one has to generate a set of parameter values and apply these values to the model. <strong>NOTE</strong>: Currently, only individuals of the <em>same</em> species as in the original *.pkml simulation can be applied. I.e., if the simulation exported from PK-Sim represents a human individual, it is possible to simulate another human individual of different race, gender, etc., but it is not possible to simulate a rat. Though it is technically possible, and the simulation will produce some results, these will not valid.</p>
-<p>The first step is creating an object describing <em>individual characteristics</em>. To see the list of available values for the arguments <code>species</code>, <code>population</code> (only for human), and <code>gender</code> (only for human), use the <a href="https://en.wikipedia.org/wiki/Enumerated_type" class="external-link">enums</a> <code>Species</code>, <code>HumanPopulation</code>, and <code>Gender</code>, respectively. This object is then passed to the function <code>createIndividual</code> to generate a set of parameter values. The algorithm behind is the same used in PK-Sim when creating an Individual-Building Block.</p>
+<p>The physiology of an individual is defined by the values of the
+simulation parameters. To simulate a specific individual, one has to
+generate a set of parameter values and apply these values to the model.
+<strong>NOTE</strong>: Currently, only individuals of the <em>same</em>
+species as in the original *.pkml simulation can be applied. I.e., if
+the simulation exported from PK-Sim represents a human individual, it is
+possible to simulate another human individual of different race, gender,
+etc., but it is not possible to simulate a rat. Though it is technically
+possible, and the simulation will produce some results, these will not
+valid.</p>
+<p>The first step is creating an object describing <em>individual
+characteristics</em>. To see the list of available values for the
+arguments <code>species</code>, <code>population</code> (only for
+human), and <code>gender</code> (only for human), use the <a href="https://en.wikipedia.org/wiki/Enumerated_type" class="external-link">enums</a>
+<code>Species</code>, <code>HumanPopulation</code>, and
+<code>Gender</code>, respectively. This object is then passed to the
+function <code>createIndividual</code> to generate a set of parameter
+values. The algorithm behind is the same used in PK-Sim when creating an
+Individual-Building Block.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
@@ -136,18 +162,24 @@
 <p>The output contains two lists of parameters:</p>
 <ul>
 <li>
-<code>distributedParameters</code>: parameters that differ between the individuals of the selected species</li>
+<code>distributedParameters</code>: parameters that differ between
+the individuals of the selected species</li>
 <li>
-<code>derivedParameters</code>: parameters defined by formulas in the simulation</li>
+<code>derivedParameters</code>: parameters defined by formulas in
+the simulation</li>
 </ul>
-<p>When applying the generated individual parameter set to a simulation in R, only parameters from the <code>distributedParameters</code> should be overwritten, otherwise formula dependencies may be destroyed. Generated parameter values can be conveniently applied using the <code>setParameterValuesByPath</code> method:</p>
+<p>When applying the generated individual parameter set to a simulation
+in R, only parameters from the <code>distributedParameters</code> should
+be overwritten, otherwise formula dependencies may be destroyed.
+Generated parameter values can be conveniently applied using the
+<code>setParameterValuesByPath</code> method:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 
 <span class="co"># Load simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
-<span class="co">#&gt; [1] "C:/Users/Michael/AppData/Local/Temp/RtmpW0rRAT/temp_libpath6f3447c8131c/ospsuite/extdata/Aciclovir.pkml"</span>
+<span class="co">#&gt; [1] "C:/Users/IndrajeetPatil/Documents/R/win-library/4.1/ospsuite/extdata/Aciclovir.pkml"</span>
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span>
 
 <span class="co"># Apply individual parameters</span>
@@ -160,7 +192,14 @@
 <div class="section level2">
 <h2 id="adding-enzyme-ontogenies">Adding enzyme ontogenies<a class="anchor" aria-label="anchor" href="#adding-enzyme-ontogenies"></a>
 </h2>
-<p>The PK-Sim database includes ontogeny information for some proteins (see (PK-Sim Ontogeny Database)[<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf</a>]). For a protein molecule present in the simulation, it is possible to add the ontogeny information on one of the pre-defined proteins. For example, it is possible to set the ontogeny of the protein <code>MyProtein</code> to the value of the ontogeny of a CYP3A4 enzyme for the specified individual. The list of supported ontogenies is stored in the <code>StandardOntogeny</code>-list.</p>
+<p>The PK-Sim database includes ontogeny information for some proteins
+(see (PK-Sim Ontogeny Database)[<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf</a>]).
+For a protein molecule present in the simulation, it is possible to add
+the ontogeny information on one of the pre-defined proteins. For
+example, it is possible to set the ontogeny of the protein
+<code>MyProtein</code> to the value of the ontogeny of a CYP3A4 enzyme
+for the specified individual. The list of supported ontogenies is stored
+in the <code>StandardOntogeny</code>-list.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 
@@ -258,7 +297,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>
