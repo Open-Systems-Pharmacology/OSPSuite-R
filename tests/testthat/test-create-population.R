@@ -1,10 +1,9 @@
+skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
+skip_on_ci()
+
 context("createPopulation")
 
-# initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
-
 test_that("It can create a standard dog population", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
   dog <- createPopulationCharacteristics(
     species = Species$Dog,
     numberOfIndividuals = 10,
@@ -16,8 +15,6 @@ test_that("It can create a standard dog population", {
 })
 
 test_that("It can create a standard human populaiton", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
   human <- createPopulationCharacteristics(
     species = Species$Human,
     population = HumanPopulation$BlackAmerican_NHANES_1997,
@@ -30,8 +27,6 @@ test_that("It can create a standard human populaiton", {
 })
 
 test_that("It returns the random seed used if not specified", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
   human <- createPopulationCharacteristics(
     species = Species$Human,
     population = HumanPopulation$BlackAmerican_NHANES_1997,
@@ -42,8 +37,6 @@ test_that("It returns the random seed used if not specified", {
 })
 
 test_that("It can create a standard human populaiton with weight constraints", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
   human <- createPopulationCharacteristics(
     species = Species$Human,
     population = HumanPopulation$BlackAmerican_NHANES_1997,
@@ -56,8 +49,6 @@ test_that("It can create a standard human populaiton with weight constraints", {
 })
 
 test_that("It throwns an error when creating a human with population missing", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
   human <- createPopulationCharacteristics(
     species = Species$Human,
     numberOfIndividuals = 10,
@@ -67,8 +58,6 @@ test_that("It throwns an error when creating a human with population missing", {
 
 
 test_that("It can create a standard human population  with predefined ontogenies", {
-  skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
-
   moleculeOntogeny1 <- MoleculeOntogeny$new(molecule = "MyMolecule1", ontogeny = StandardOntogeny$CYP3A4)
   moleculeOntogeny2 <- MoleculeOntogeny$new(molecule = "MyMolecule2", ontogeny = StandardOntogeny$CYP2C19)
 
