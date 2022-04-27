@@ -110,7 +110,7 @@ if (.Platform$OS.type == "windows") {
       c(
         "name", "group", "dataType", "xValues", "xUnit", "xDimension",
         "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-        "yErrorUnit", "molWeight", "lloq",  "Sheet", "Group Id"
+        "yErrorUnit", "molWeight", "lloq", "Sheet", "Group Id"
       )
     )
 
@@ -474,7 +474,7 @@ y
       c(
         "name", "group", "dataType", "xValues", "xUnit", "xDimension",
         "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
-        "IndividualId", "molWeight", "lloq",  "Sheet", "Group Id"
+        "IndividualId", "molWeight", "lloq", "Sheet", "Group Id"
       )
     )
   })
@@ -1171,7 +1171,7 @@ y
       c(
         "name", "group", "dataType", "xValues", "xUnit", "xDimension",
         "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-        "yErrorUnit", "molWeight", "lloq",  "Sheet", "Group Id",
+        "yErrorUnit", "molWeight", "lloq", "Sheet", "Group Id",
         "Organ", "Compartment", "Species"
       )
     )

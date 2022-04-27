@@ -91,8 +91,19 @@ dataSetToDataFrame <- function(dataSets) {
   lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
 
   df <- data.frame(
-    name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
-    yUnit, yErrorType, yErrorUnit, molWeight, lloq
+    name,
+    xValues,
+    yValues,
+    yErrorValues,
+    xDimension,
+    xUnit,
+    yDimension,
+    yUnit,
+    yErrorType,
+    yErrorUnit,
+    molWeight,
+    lloq,
+    stringsAsFactors = FALSE
   )
 
   # get all names of meta data entries from all data sets

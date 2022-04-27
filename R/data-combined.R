@@ -19,7 +19,7 @@
 #' # load the simulation
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
-#' simulationResults <- runSimulations(simulations = sim)
+#' simulationResults <- runSimulation(simulation = sim)
 #'
 #' # create a new dataset object
 #' dataSet <- DataSet$new(name = "DS")

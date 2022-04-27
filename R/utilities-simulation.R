@@ -84,8 +84,6 @@ saveSimulation <- function(simulation, filePath) {
 
 #' @title
 #'
-#' DEPRECATED
-#'  `runSimulations` should be used in favor of  `runSimulation`. The latter will be removed in future releases
 #' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
 #'
 #' @param simulation One `Simulation` to simulate.
@@ -116,28 +114,41 @@ saveSimulation <- function(simulation, filePath) {
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' @export
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
-  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)
+  #Check that only one simulation is passed
+  simulation <- c(simulation)
+  validateIsOfLength(simulation, 1)
+  #Returning the first element of `runSimulations` output, as the latter returns
+  #a named list with ID of the simulation as element name.
+  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)[[1]]
 }
 
-#' @title  Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
-#' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
+#' @title  Runs multiple simulations concurrently.
 #'
-#' @param simulations One `Simulation` or list of `Simulation`  to simulate.
-#' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
-#' Alternatively, you can also pass the result of `createPopulation` directly. In this case, the population will be extracted
-#' @param agingData Optional instance of `AgingData` to use for the simulation. This is only used with a population simulation
+#' @details For multiple simulations, only individual simulations are possible.
+#' For single simulatio, either individual or population simulations can be
+#' performed.
+#'
+#' @param simulations One `Simulation` or list of `Simulation` objects
+#' to simulate.
+#' @param population Optional instance of a `Population` to use for the simulation.
+#' Only allowed when simulating one simulation.
+#' Alternatively, you can also pass the result of `createPopulation` directly.
+#' In this case, the population will be extracted.
+#' @param agingData Optional instance of `AgingData` to use for the simulation.
+#' This is only used with a population simulation
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
 #' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`
 #'
-#' @return SimulationResults (one entry per Individual) for a single simulation or
-#' a list of `SimulationResults` objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is `NULL`
+#' @return A named list of `SimulationResults` objects with names being the IDs
+#' of the respective simulations. If a simulation fails, the result for this
+#' simulation is `NULL`
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
-#' # Results is an instance of `SimulationResults`
+#' # Results is a list with one object `SimulationResults`
 #' results <- runSimulations(sim)
 #'
 #' # Creating custom simulation run options
@@ -165,12 +176,15 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 
   # only one simulation? We allow population run
   if (length(simulations) == 1) {
-    return(.runSingleSimulation(
+    results <- .runSingleSimulation(
       simulation = simulations[[1]],
       simulationRunOptions = simulationRunOptions,
       population = population,
       agingData = agingData
-    ))
+    )
+    outputList <- list()
+    outputList[[simulations[[1]]$id]] <-  results
+    return(outputList)
   }
 
   # more than one simulation? This is a concurrent run. We do not allow population variation

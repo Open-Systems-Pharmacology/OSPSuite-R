@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Running individual simulation and retrieving the results
 
-Once the simulation is loaded (see [Loading a simulation and accessing entities](load-get.html)), it can be run using `runSimulations()` to produce an object of the class `SimulationResults`.
+Once the simulation is loaded (see [Loading a simulation and accessing entities](load-get.html)), it can be run using `runSimulations()` to produce an object of the class `SimulationResults`. Keep in mind that `runSimulations()` produces a list of `SimulationResults` objects.
 
 ```{r runSim}
 library(ospsuite)
@@ -26,6 +26,8 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 simulationResults <- runSimulations(simulations = sim)
+# Extract `SimulationResults` by simulation id
+simulationResults <- simulationResults[[sim$id]]
 print(simulationResults)
 ```
 
@@ -69,7 +71,9 @@ The results can be stored in and imported from a *.csv file with the methods `ex
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simulationResults <- runSimulations(simulations = sim)
+# `runSimulations` returns a list of `SimulationResults`. For single simulation,
+# we directly extract the first element, as only one object is created.
+simulationResults <- runSimulations(simulations = sim)[[1]]
 
 # Export to csv
 csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")

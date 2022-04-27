@@ -155,6 +155,22 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   expect_true(isOfType(results, "SimulationResults"))
 })
 
+test_that("It throws an error when trying to run multiple simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_error(results <- runSimulation(simulation = c(sim, sim2)))
+})
+
+test_that("runSimulations returns a named list for one simulation", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  results <- runSimulations(simulations = sim)
+  # Check the ids
+  expect_equal(names(results)[[1]], sim$id)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
 test_that("It runs multiple individual simulations", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)

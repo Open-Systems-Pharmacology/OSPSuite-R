@@ -54,7 +54,7 @@ sim <- loadSimulation(simPath)
 
 # Running an individual simulation
 # results is an instance of `SimulationResults`
-results <- runSimulations(sim)
+results <- runSimulation(sim)
 
 # convert to a dataframe
 simulationResultsToDataFrame(results)
