@@ -12,7 +12,7 @@ DataColumn <- R6::R6Class(
   active = list(
     #' @field values Returns the values defined in the column
     values = function(value) {
-      private$wrapProperty("ValuesAsArray", value)
+      private$wrapVectorProperty("Value", "ValuesAsArray", value, "ValuesAsArray")
     },
     #' @field name Returns the name of the column  (Read-Only)
     name = function(value) {

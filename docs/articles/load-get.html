@@ -98,7 +98,11 @@
 <div class="section level2">
 <h2 id="loading-a-simulation">Loading a simulation<a class="anchor" aria-label="anchor" href="#loading-a-simulation"></a>
 </h2>
-<p>In general, every workflow starts with loading a simulation by calling the <code><a href="../reference/loadSimulation.html">loadSimulation()</a></code> function. The function receives the full path to the <strong>*.pkml</strong> file format exported from PK-Sim or MoBi, and returns the corresponding simulation object.</p>
+<p>In general, every workflow starts with loading a simulation by
+calling the <code><a href="../reference/loadSimulation.html">loadSimulation()</a></code> function. The function
+receives the full path to the <strong>*.pkml</strong> file format
+exported from PK-Sim or MoBi, and returns the corresponding simulation
+object.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: rClr</span>
@@ -110,9 +114,22 @@
 <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="accessing-entities-of-the-model-and-their-properties---the-path-concept">Accessing entities of the model and their properties - the path concept<a class="anchor" aria-label="anchor" href="#accessing-entities-of-the-model-and-their-properties---the-path-concept"></a>
+<h2 id="accessing-entities-of-the-model-and-their-properties---the-path-concept">Accessing entities of the model and their properties - the path
+concept<a class="anchor" aria-label="anchor" href="#accessing-entities-of-the-model-and-their-properties---the-path-concept"></a>
 </h2>
-<p>Once the simulation is loaded, it is possible to retrieve various entities of the model. The most important entities are <strong>containers</strong>, <strong>molecules</strong>, and <strong>parameters</strong>. The methods <code>getContainer</code>, <code>getMolecule</code>, and <code>getParameter</code> search for the respective entity with the given <code>path</code> located under a <code>container</code>. <code>path</code> is a string where the elements of the path (i.e., containers in the hierarchy of the simulation) are separated by <code>|</code>. <code>container</code> is an instance of the <code>Container</code>-class within the model structure the path is <em>relative</em> to. In most cases, <code>container</code> is the <code>Simulation</code> object created by calling <code>loadSimulation(pkmlSimulationFile)</code>.</p>
+<p>Once the simulation is loaded, it is possible to retrieve various
+entities of the model. The most important entities are
+<strong>containers</strong>, <strong>molecules</strong>, and
+<strong>parameters</strong>. The methods <code>getContainer</code>,
+<code>getMolecule</code>, and <code>getParameter</code> search for the
+respective entity with the given <code>path</code> located under a
+<code>container</code>. <code>path</code> is a string where the elements
+of the path (i.e., containers in the hierarchy of the simulation) are
+separated by <code>|</code>. <code>container</code> is an instance of
+the <code>Container</code>-class within the model structure the path is
+<em>relative</em> to. In most cases, <code>container</code> is the
+<code>Simulation</code> object created by calling
+<code>loadSimulation(pkmlSimulationFile)</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the molecule Aciclovir located in kidney intracellular space</span>
 <span class="va">moleculeInKid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getMolecule.html">getMolecule</a></span><span class="op">(</span><span class="st">"Organism|Kidney|Intracellular|Aciclovir"</span>, <span class="va">sim</span><span class="op">)</span>
@@ -122,7 +139,7 @@
 <span class="co">#&gt;    Initial Value: 0.00 [µmol]</span>
 
 <span class="co"># Get the container "Liver"</span>
-<span class="va">livContainer</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getContainer.html">getContainer</a></span><span class="op">(</span><span class="st">"Organism|Liver"</span>, <span class="va">sim</span><span class="op">)</span>
+<span class="va">livContainer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getContainer.html">getContainer</a></span><span class="op">(</span><span class="st">"Organism|Liver"</span>, <span class="va">sim</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">livContainer</span><span class="op">)</span>
 <span class="co">#&gt; Container: </span>
 <span class="co">#&gt;    Container type: Organ </span>
@@ -130,7 +147,7 @@
 
 <span class="co"># Get the parameter volume of the liver interstitial space</span>
 <span class="co"># Note that the path used is relative to the liver container</span>
-<span class="va">livParam</span>      <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Interstitial|Volume"</span>, <span class="va">livContainer</span><span class="op">)</span>
+<span class="va">livParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Interstitial|Volume"</span>, <span class="va">livContainer</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">livParam</span><span class="op">)</span>
 <span class="co">#&gt; Parameter: </span>
 <span class="co">#&gt;    Path: Organism|Liver|Interstitial|Volume </span>
@@ -139,7 +156,14 @@
 <span class="co">#&gt;    formula: f_int*V </span>
 <span class="co">#&gt;    Value overrides formula: FALSE </span>
 <span class="co">#&gt;    isStateVariable: FALSE</span></code></pre></div>
-<p>The functions <code><a href="../reference/getAllContainersMatching.html">getAllContainersMatching()</a></code>, <code><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching()</a></code>, and <code><a href="../reference/getAllParametersMatching.html">getAllParametersMatching()</a></code> return a list of objects representing all entities whose paths match the generic paths provided in the list <code>paths</code> located under <code>container</code>. Generic paths are constructed by using the wildcard symbols <code>*</code> (exactly one occurrence of any element) or <code>**</code> (zero or more occurrences of any element).</p>
+<p>The functions <code><a href="../reference/getAllContainersMatching.html">getAllContainersMatching()</a></code>,
+<code><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching()</a></code>, and
+<code><a href="../reference/getAllParametersMatching.html">getAllParametersMatching()</a></code> return a list of objects
+representing all entities whose paths match the generic paths provided
+in the list <code>paths</code> located under <code>container</code>.
+Generic paths are constructed by using the wildcard symbols
+<code>*</code> (exactly one occurrence of any element) or
+<code>**</code> (zero or more occurrences of any element).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the parameter `Volume` of the intracellular space of all organs,</span>
 <span class="co"># with exactly one path element before `Intracellular`</span>
@@ -155,23 +179,34 @@
 <span class="co">#&gt; [1] 28</span>
 <span class="co"># The list also includes parameters of organs like "Liver|Periportal",</span>
 <span class="co"># or the mucosal compartments of the intestine.</span></code></pre></div>
-<p>Note that the path <code>"Organism|Kidney|*|Intracellular|Volume"</code> will return no parameters in the standard models, as there are no sub-containers between <code>Kidney</code> and <code>Intracellular</code>. In contrast, <code>"Organism|Kidney|**|Intracellular|Volume"</code> is a valid path.</p>
-<p>The functions <code><a href="../reference/getAllContainersMatching.html">getAllContainersMatching()</a></code>, <code><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching()</a></code>, and <code><a href="../reference/getAllParametersMatching.html">getAllParametersMatching()</a></code> can also be used to retrieve entities from multiple paths:</p>
+<p>Note that the path
+<code>"Organism|Kidney|*|Intracellular|Volume"</code> will return no
+parameters in the standard models, as there are no sub-containers
+between <code>Kidney</code> and <code>Intracellular</code>. In contrast,
+<code>"Organism|Kidney|**|Intracellular|Volume"</code> is a valid
+path.</p>
+<p>The functions <code><a href="../reference/getAllContainersMatching.html">getAllContainersMatching()</a></code>,
+<code><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching()</a></code>, and
+<code><a href="../reference/getAllParametersMatching.html">getAllParametersMatching()</a></code> can also be used to retrieve
+entities from multiple paths:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`</span>
-<span class="va">molecules</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|VenousBlood|Plasma|Aciclovir"</span>,
-                                       <span class="st">"Organism|Liver|Periportal|Intracellular|Aciclovir"</span><span class="op">)</span>, <span class="va">sim</span><span class="op">)</span>
+<span class="va">molecules</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
+  <span class="st">"Organism|VenousBlood|Plasma|Aciclovir"</span>,
+  <span class="st">"Organism|Liver|Periportal|Intracellular|Aciclovir"</span>
+<span class="op">)</span>, <span class="va">sim</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">molecules</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; Molecule: </span>
-<span class="co">#&gt;    Path: Organism|VenousBlood|Plasma|Aciclovir </span>
+<span class="co">#&gt;    Path: Organism|Liver|Periportal|Intracellular|Aciclovir </span>
 <span class="co">#&gt;    Initial Value: 0.00 [µmol] </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; Molecule: </span>
-<span class="co">#&gt;    Path: Organism|Liver|Periportal|Intracellular|Aciclovir </span>
+<span class="co">#&gt;    Path: Organism|VenousBlood|Plasma|Aciclovir </span>
 <span class="co">#&gt;    Initial Value: 0.00 [µmol]</span></code></pre></div>
-<p>The entities possess various properties that can be accessed through their objects. The most important properties for a container are:</p>
+<p>The entities possess various properties that can be accessed through
+their objects. The most important properties for a container are:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Path of the container</span>
 <span class="va">livContainer</span><span class="op">$</span><span class="va">path</span>
@@ -227,7 +262,11 @@
 <div class="section level2">
 <h2 id="loading-simulation-tree">Loading simulation tree<a class="anchor" aria-label="anchor" href="#loading-simulation-tree"></a>
 </h2>
-<p>A convenient way to traverse the simulation structure is given by the method <code>getSimulationTree</code>. The method generates a tree-like list of all paths within the simulation. Each element of the tree contains all the sub-containers of the element. The final elements are strings representing the path to the entity.</p>
+<p>A convenient way to traverse the simulation structure is given by the
+method <code>getSimulationTree</code>. The method generates a tree-like
+list of all paths within the simulation. Each element of the tree
+contains all the sub-containers of the element. The final elements are
+strings representing the path to the entity.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load simulation</span>
 <span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span>
@@ -235,7 +274,7 @@
 
 <span class="co"># Create simulation tree</span>
 <span class="va">simTree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getSimulationTree.html">getSimulationTree</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span>
- 
+
 <span class="co"># Calling simTree would list all entities within the simulation</span>
 <span class="co"># (given how long this tree can be, we will skip it here, but you can try</span>
 <span class="co"># running the following command in your console)</span>
@@ -295,7 +334,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>

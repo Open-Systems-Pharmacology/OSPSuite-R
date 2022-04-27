@@ -338,6 +338,8 @@
       <Units>
         <Unit name="mg/m²" factor="1E-8" />
         <Unit name="kg/dm²" factor="1" visible="0" />
+        <Unit name="µg/cm²" factor="1E-7" />
+        <Unit name="mg/cm²" factor="1E-4" />
       </Units>
     </Dimension>
     <Dimension name="Elastance" baseUnit="(kg/(dm*min²))/l" defaultUnit="mmHg/ml">
@@ -790,7 +792,7 @@
       <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="1" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="°C" factor="1" offset="273.15" />
-        <Unit name="°F" factor="5/9" offset="255.37" />
+        <Unit name="°F" factor="5/9" offset="459.67" />
         <Unit name="K" factor="1" />
       </Units>
     </Dimension>

@@ -118,12 +118,12 @@ The values of `IndividualId`, `Time`, and the simulated outputs, are appended fo
 
 ```{r getOutputValues}
 # Get simulated results by path
-resultsPath   <- populationResults$allQuantityPaths[[1]]
+resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
 
-resultsData   <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath)
 
-resultsTime   <- resultsData$data$Time
+resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
 
 plot(resultsTime, resultsValues, type = "l")
@@ -133,13 +133,13 @@ To get the results for a specific individual or a set of individuals, the argume
 
 ```{r getOutputValuesForIndividual}
 # Get simulated results by path
-resultsPath   <- populationResults$allQuantityPaths[[1]]
+resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
 
 # Get only the results for individuals with IDs 1 and 2
-resultsData   <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath, individualIds = c(1, 2))
+resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath, individualIds = c(1, 2))
 
-resultsTime   <- resultsData$data$Time
+resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
 
 plot(resultsTime, resultsValues, type = "l")

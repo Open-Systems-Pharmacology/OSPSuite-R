@@ -97,7 +97,7 @@ if (.Platform$OS.type == "windows") {
     myCombDat$addDataSets(dataSet[[1]])
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df), c(12L, 17L))
+    expect_equal(dim(df), c(12L, 16L))
   })
 
   test_that("data frame column and dataset names are as expected when only `DataSet` is provided", {
@@ -110,7 +110,7 @@ if (.Platform$OS.type == "windows") {
       c(
         "name", "group", "dataType", "xValues", "xUnit", "xDimension",
         "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-        "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Group Id"
+        "yErrorUnit", "molWeight", "lloq",  "Sheet", "Group Id"
       )
     )
 
@@ -447,7 +447,7 @@ y
     )
 
     df <- myCombDat$toDataFrame()
-    expect_equal(dim(df), c(830L, 18L))
+    expect_equal(dim(df), c(830L, 17L))
   })
 
   test_that("data frame column names are as expected when both `DataSet` and `SimulationResults` provided", {
@@ -474,7 +474,7 @@ y
       c(
         "name", "group", "dataType", "xValues", "xUnit", "xDimension",
         "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
-        "IndividualId", "molWeight", "lloq", "Source", "Sheet", "Group Id"
+        "IndividualId", "molWeight", "lloq",  "Sheet", "Group Id"
       )
     )
   })
@@ -1078,10 +1078,10 @@ y
 
     # they should be different since the new dataset that replaces the old one has
     # deliberately different values and rows
-    expect_equal(dim(df1), c(77L, 17L))
-    expect_equal(dim(df2), c(76L, 17L))
-    expect_equal(dim(df1Filter), c(25L, 17L))
-    expect_equal(dim(df2Filter), c(24L, 17L))
+    expect_equal(dim(df1), c(77L, 16L))
+    expect_equal(dim(df2), c(76L, 16L))
+    expect_equal(dim(df1Filter), c(25L, 16L))
+    expect_equal(dim(df2Filter), c(24L, 16L))
 
     expect_equal(
       head(df1Filter$xValues),
@@ -1160,7 +1160,7 @@ y
     myCombDat$addDataSets(myDataSet)
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df), c(12L, 20L))
+    expect_equal(dim(df), c(12L, 19L))
   })
 
   test_that("data frame column names are as expected when `DataSet` with metadata is provided", {
@@ -1173,7 +1173,7 @@ y
       c(
         "name", "group", "dataType", "xValues", "xUnit", "xDimension",
         "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
-        "yErrorUnit", "molWeight", "lloq", "Source", "Sheet", "Group Id",
+        "yErrorUnit", "molWeight", "lloq",  "Sheet", "Group Id",
         "Organ", "Compartment", "Species"
       )
     )

@@ -336,3 +336,234 @@ initializeDimensionAndUnitLists <- function() {
   ospDimensions <<- getDimensionsEnum()
   ospUnits <<- getUnitsEnum()
 }
+
+
+#' Convert data frame to common units
+#'
+#' @description
+#'
+#' When multiple (observed and/or simulated) datasets are present in a data
+#' frame, they are likely to have different units. This function helps to
+#' convert them to a common unit specified by the user.
+#'
+#' This is especially helpful while plotting since the quantities from different
+#' datasets to be plotted on the X-and Y-axis need to have same units to be
+#' meaningfully compared.
+#'
+#' @note
+#'
+#' Molecular weight is **required** for the conversion between certain
+#' dimensions (`Amount`, `Mass`, `Concentration (molar)`, and `Concentration
+#' (mass)`). Therefore, if molecular weight is missing for these dimension, the
+#' unit conversion will fail.
+#'
+#' @return A data frame with measurement columns transformed to have common units.
+#'
+#' @param data A data frame (or a tibble).
+#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
+#'   not specified (`NULL`), first of the existing units in the respective
+#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
+#'   available dimensions and units, see `ospsuite::ospDimensions` and
+#'   `ospsuite::ospUnits`, respectively.
+#'
+#' @seealso toUnit
+#'
+#' @examples
+#'
+#' # small dataframe to illustrate the conversion
+#' (df <- dplyr::tibble(
+#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
+#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(1, 1, 1, 1, 1, 1),
+#'   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
+#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+#'   yErrorUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   molWeight = c(10, 10, 20, 20, 20, 10)
+#' ))
+#'
+#' # default conversion
+#' ospsuite:::.unitConverter(df)
+#'
+#' # customizing conversion with specified unit(s)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
+#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
+#'
+#' @keywords internal
+.unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+
+  # target units --------------------------
+
+  # No validation of inputs for this non-exported function.
+  # All validation will take place in the `DataCombined` class itself.
+
+  # The observed and simulated data should have the same units for
+  # visual/graphical comparison.
+  #
+  # Therefore, if target units are not specified by the user, we need to choose
+  # one ourselves. For no special reason, the first element from a vector of
+  # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
+  xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
+  yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
+  xTargetDim <- getDimensionForUnit(xTargetUnit)
+  yTargetDim <- getDimensionForUnit(yTargetUnit)
+
+  # Strategy --------------------------
+
+  # The strategy is to split the data frame (using `split()`) for each source
+  # unit and carry out conversion separately per data frame. This is the most
+  # performant option since there can only be as many expensive calls to
+  # `toUnit()`/`{rClr}` as there are source units.
+  #
+  # The problem occurs when source units are missing (`NA`). The `toUnit()`
+  # function can handle them but not `split()`, which would drop the entire
+  # section of the data frame corresponding to `NA` and thus there will be loss
+  # of data when a data frame is split into a list of data frames.
+  #
+  # The trick is to create copies of source unit and molecular weight columns
+  # and fill in the missing values with something other than `NA`. Using these
+  # new columns with `split()` makes sure that the parts of a data frame where
+  # source units are missing won't be dropped. Note that the original columns
+  # containing source units remain unchanged.
+  #
+  # These newly created columns are removed before the converted data frame is
+  # returned to the user.
+
+  # internal --------------------------
+
+  # Add suffix `Split` to the following columns:
+  # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      .cols = dplyr::matches("Unit$|Weight$"), # use pattern matching
+      .fns = as.character,
+      .names = "{.col}Split" # = original column name + Split suffix
+    )
+  )
+
+  # Replace missing values in these new columns with `"missing"`, so that
+  # `split()` won't remove the corresponding portion of the data frame.
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      .cols = dplyr::matches("Split$"), # use pattern matching
+      .fns = ~ tidyr::replace_na(.x, "missing")
+    )
+  )
+
+  # `split()` will change the row order of the data frame depending on the
+  # alphabetical order of the levels of the variable used to split the data
+  # frame into a list.
+  #
+  # Therefore, an internal row identifier is kept to restore the original
+  # data frame row order before the data is returned.
+  data <- dplyr::mutate(data, .rowidInternal = dplyr::row_number())
+
+  # splitting data frames and unit conversions --------------------------
+
+  # Split data frame to a list, mutate the unit column using the corresponding
+  # `*UnitConverter()`, and then rebind.
+  #
+  # The `_dfr` variant of `purrr::map()` signals this intent:
+  # It will return a single data frame. This data frame is created by binding
+  # row-wise resulting data frames from mapping the given function `.f` to each
+  # element data frame in the list provided to `.x`.
+
+  # xUnit
+  xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
+  data <- purrr::map_dfr(.x = xDataList, .f = ~ .xUnitConverter(.x, xTargetUnit, xTargetDim))
+
+  # yUnit
+  yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
+  data <- purrr::map_dfr(.x = yDataList, .f = ~ .yUnitConverter(.x, yTargetUnit, yTargetDim))
+
+  # yUnit error
+  if ("yErrorValues" %in% names(data)) {
+    yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
+    data <- purrr::map_dfr(.x = yErrorDataList, .f = ~ .yErrorUnitConverter(.x, yTargetUnit, yTargetDim))
+  }
+
+  # clean up and return --------------------------
+
+  # Restore the original row order using the internal row id
+  data <- dplyr::arrange(data, .rowidInternal)
+
+  # Remove all columns that were added only for internal workings of the function.
+  data <- dplyr::select(data, -dplyr::matches("Split$|.rowidInternal"))
+
+  return(data)
+}
+
+#' Remove empty data frames from a list of data frames
+#'
+#' @description
+#'
+#' Remove empty data frames sometimes produced due to the non-existent
+#' combination of source unit and molecular weight.
+#'
+#' @param x A list of data frames.
+#'
+#' @examples
+#'
+#' # Create a list of data frames
+#' (ls <- split(mtcars, list(mtcars$vs, mtcars$cyl)))
+#'
+#' # Remove element data frames with 0 rows
+#' ospsuite:::.removeEmptyDataFrame(ls)
+#'
+#' @keywords internal
+.removeEmptyDataFrame <- function(x) purrr::keep(x, ~ nrow(.x) > 0L)
+
+
+#' @keywords internal
+#' @noRd
+.xUnitConverter <- function(xData, xTargetUnit, xTargetDim) {
+  xData$xValues <- toUnit(
+    quantityOrDimension = xTargetDim,
+    values = xData$xValues,
+    targetUnit = xTargetUnit,
+    sourceUnit = xData$xUnit[[1]]
+  )
+
+  xData$xUnit <- xTargetUnit
+
+  return(xData)
+}
+
+#' @keywords internal
+#' @noRd
+.yUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
+  yData$yValues <- toUnit(
+    quantityOrDimension = yTargetDim,
+    values = yData$yValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yUnit <- yTargetUnit
+
+  return(yData)
+}
+
+#' @keywords internal
+#' @noRd
+.yErrorUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
+  yData$yErrorValues <- toUnit(
+    quantityOrDimension = yTargetDim,
+    values = yData$yErrorValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yErrorUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yErrorUnit <- yTargetUnit
+
+  return(yData)
+}

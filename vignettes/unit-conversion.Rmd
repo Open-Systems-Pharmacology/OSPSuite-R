@@ -23,10 +23,10 @@ library(ospsuite)
 
 # Load a simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim         <- loadSimulation(simFilePath)
+sim <- loadSimulation(simFilePath)
 
 # Get the parameter volume of the liver.
-livParam    <- getParameter("Organism|Liver|Volume", sim)
+livParam <- getParameter("Organism|Liver|Volume", sim)
 print(livParam)
 
 # Dimension of the parameter
