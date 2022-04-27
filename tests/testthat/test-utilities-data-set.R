@@ -24,10 +24,19 @@ test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
-      xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
-      lloq = numeric(0)
+      name = character(0),
+      xValues = numeric(0),
+      yValues = numeric(0),
+      yErrorValues = numeric(0),
+      xDimension = character(0),
+      xUnit = character(0),
+      yDimension = character(0),
+      yUnit = character(0),
+      yErrorType = numeric(0),
+      yErrorUnit = numeric(0),
+      molWeight = numeric(0),
+      lloq = numeric(0),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -37,10 +46,19 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep(dataSetName, 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA_real_, 5),
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA_real_, 5), yErrorUnit = rep(NA_real_, 5), molWeight = rep(NA_real_, 5), lloq = rep(NA_real_, 5)
+      name = rep(dataSetName, 5),
+      xValues = dataSet$xValues,
+      yValues = dataSet$yValues,
+      yErrorValues = rep(NA_real_, 5),
+      xDimension = rep(dataSet$xDimension, 5),
+      xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5),
+      yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(NA_real_, 5),
+      yErrorUnit = rep(NA_real_, 5),
+      molWeight = rep(NA_real_, 5),
+      lloq = rep(NA_real_, 5),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -53,12 +71,19 @@ test_that("It can convert a data set with only non-empty fields, except for meta
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep(dataSet$name, 5), xValues = dataSet$xValues,
-      yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(dataSet$yErrorType, 5), yErrorUnit = rep(dataSet$yErrorUnit, 5),
-      molWeight = rep(dataSet$molWeight, 5), lloq = rep(dataSet$LLOQ, 5)
+      name = rep(dataSet$name, 5),
+      xValues = dataSet$xValues,
+      yValues = dataSet$yValues,
+      yErrorValues = dataSet$yErrorValues,
+      xDimension = rep(dataSet$xDimension, 5),
+      xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5),
+      yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(dataSet$yErrorType, 5),
+      yErrorUnit = rep(dataSet$yErrorUnit, 5),
+      molWeight = rep(dataSet$molWeight, 5),
+      lloq = rep(dataSet$LLOQ, 5),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -70,13 +95,20 @@ test_that("It can convert a data set with metaData", {
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep(dataSet$name, 5), xValues = dataSet$xValues,
-      yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(dataSet$yErrorType, 5), yErrorUnit = rep(dataSet$yErrorUnit, 5),
-      molWeight = rep(dataSet$molWeight, 5), lloq = rep(dataSet$LLOQ, 5),
-      Organ = rep("Blood", 5)
+      name = rep(dataSet$name, 5),
+      xValues = dataSet$xValues,
+      yValues = dataSet$yValues,
+      yErrorValues = dataSet$yErrorValues,
+      xDimension = rep(dataSet$xDimension, 5),
+      xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5),
+      yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(dataSet$yErrorType, 5),
+      yErrorUnit = rep(dataSet$yErrorUnit, 5),
+      molWeight = rep(dataSet$molWeight, 5),
+      lloq = rep(dataSet$LLOQ, 5),
+      Organ = rep("Blood", 5),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -92,8 +124,10 @@ test_that("It can convert a list of data sets", {
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
     data.frame(
-      name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
-      yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
+      name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)),
+      xValues = c(dataSet$xValues, dataSet2$xValues),
+      yValues = c(dataSet$yValues, dataSet2$yValues),
+      yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
       xUnit = c(rep(dataSet$xUnit, 5), rep(dataSet2$xUnit, 3)),
       yDimension = c(rep(dataSet$yDimension, 5), rep(dataSet2$yDimension, 3)),
@@ -102,7 +136,9 @@ test_that("It can convert a list of data sets", {
       yErrorUnit = c(rep(dataSet$yErrorUnit, 5), rep(NA_character_, 3)),
       molWeight = c(rep(dataSet$molWeight, 5), rep(dataSet2$molWeight, 3)),
       lloq = c(rep(dataSet$LLOQ, 5), rep(NA, 3)),
-      Organ = c(rep("Blood", 5), rep(NA, 3)), Compartment = c(rep(NA, 5), rep("Plasma", 3))
+      Organ = c(rep("Blood", 5), rep(NA, 3)),
+      Compartment = c(rep(NA, 5), rep("Plasma", 3)),
+      stringsAsFactors = FALSE
     )
   )
 })

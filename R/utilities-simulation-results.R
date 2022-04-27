@@ -237,28 +237,29 @@ simulationResultsToDataFrame <- function(simulationResults,
     values_to = "simulationValues"
   )
 
-  # extract units and dimensions for paths in a separate dataframe
-  # iterate over the list (in .x) using index (names for list elements)
-  # and apply function in .f to each elements
-  # the result will be a list of dataframes, which will be bound into
-  # a single dataframe with the _dfr variant of this function
+  # Extract units and dimensions for paths in a separate data frame
+  # iterate over the list (in `.x`) using index (names for list elements)
+  # and apply function in `.f` to each element.
+  #
+  # The result will be a list of data frames, which will be row-wise glued into
+  # a single data frame with the `_dfr` variant of this function.
   df_meta <- purrr::imap_dfr(
     .x = simList$metaData,
-    .f = ~ as.data.frame(.x, row.names = NULL),
+    .f = ~ as.data.frame(.x, row.names = NULL, stringsAsFactors = FALSE),
     .id = "paths"
   )
 
-  # leave out time units and dimensions since it is not a path
-  # they will be added at a later stage
+  # Leave out time units and dimensions since time is not a path; they will be
+  # added at a later stage.
   df_meta <- dplyr::filter(df_meta, paths != "Time")
 
-  # combine dataframe with simulated data and meta data
+  # Combine data frame with simulated data and meta data.
   df <- dplyr::left_join(df_data, df_meta, by = "paths")
 
-  # now add previously left out time meta data to the combined dataframe
+  # Add back in the previously left out time meta data to the combined data frame.
   df <- dplyr::bind_cols(
     df,
-    data.frame(
+    dplyr::tibble(
       "TimeUnit" = simList$metaData$Time$unit[[1]],
       "TimeDimension" = simList$metaData$Time$dimension[[1]]
     )
@@ -268,18 +269,16 @@ simulationResultsToDataFrame <- function(simulationResults,
   #
   # This involves first grouping and nesting the data by path. Note that
   # `nest()` here will have a better performance than `rowwise()`. E.g., if
-  # there are 100 rows, `rowwise()` will run the compuation 100 times, while
+  # there are 100 rows, `rowwise()` will run the computation 100 times, while
   # with `nest()`, the computation only be carried for the same number of
   # times as the number of `paths` present.
-  #
-  # And then adding a new column for molecular weight.
-  #
-  # When you call `molWeightFor()`, it returns the value in the base unit -
-  # which is `kg/µmol`. This is not the unit the user would expect, so we
-  # convert it first to the common unit `g/mol`
   df <- df %>%
     dplyr::group_by(paths) %>%
     tidyr::nest() %>%
+    # Add a new column for molecular weight.
+    # When you call `molWeightFor()`, it returns the value in the base unit -
+    # which is `kg/µmol`. This is not the unit the user would expect, so we
+    # convert it first to the common unit `g/mol`.
     dplyr::mutate(
       molWeight = ospsuite::toUnit(
         quantityOrDimension = ospDimensions$`Molecular weight`,
@@ -291,7 +290,7 @@ simulationResultsToDataFrame <- function(simulationResults,
     dplyr::ungroup()
 
   # consistently return a (classical) data frame
-  return(as.data.frame(df))
+  return(as.data.frame(df, stringsAsFactors = FALSE))
 }
 
 #' @rdname simulationResultsToDataFrame
