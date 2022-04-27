@@ -88,6 +88,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/calculatePKAnalyses.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/clearMemory.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/clearOutputIntervals.html</loc>
   </url>
   <url>
@@ -145,6 +148,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getConcurrentSimulationRunnerResults.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getNetTask.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getPathToPKSimInstallDir.html</loc>
   </url>
   <url>
@@ -160,6 +166,12 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-loadDataRepositoryFromPKML.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-netEnumName.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-toObjectType.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DotNetWrapper.html</loc>
   </url>
   <url>
@@ -167,27 +179,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Entity.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enum.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enumGetValue.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enumHasKey.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enumKeys.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enumPut.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enumRemove.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/enumValues.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/expandPath.html</loc>
@@ -274,13 +265,7 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getEntity.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getEnumKey.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getMolecule.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getNetTask.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getOSPSuiteSetting.html</loc>
@@ -328,9 +313,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/HumanPopulation.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ifNotNull.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/importPKAnalysesFromCSV.html</loc>
   </url>
   <url>
@@ -355,9 +337,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Interval.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/isOfType.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadAgingDataFromCSV.html</loc>
   </url>
   <url>
@@ -376,6 +355,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadSimulation.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/messages.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Molecule.html</loc>
   </url>
   <url>
@@ -383,9 +365,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/MoleculeParameter.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/netEnumName.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ObjectBase.html</loc>
@@ -418,9 +397,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/parameterValueListFrom.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/pkAnalysesAsDataFrame.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/pkAnalysesToDataFrame.html</loc>
   </url>
   <url>
@@ -436,9 +412,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Population.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationAsDataFrame.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/PopulationCharacteristics.html</loc>
   </url>
   <url>
@@ -446,9 +419,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/potentialVariableParameterPathsFor.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Printable.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Quantity.html</loc>
@@ -598,12 +568,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/toDisplayUnit.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/toList.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/toObjectType.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/toPathArray.html</loc>
   </url>
   <url>
@@ -625,13 +589,7 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateDimension.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateEnumValue.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateHasUnit.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateIsOfType.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateUnit.html</loc>

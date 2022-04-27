@@ -69,23 +69,22 @@
 <h2 class="pkg-version" data-toc-text="11.0" id="ospsuite-110-development-version">ospsuite 11.0 (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-110-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-11-0">New features<a class="anchor" aria-label="anchor" href="#new-features-11-0"></a></h3>
-<ul><li><p>Adds new <code>DataCombined</code> class that combines observed data (<code>DataSet</code>) and simulated data (<code>SimulationResults</code>) into a single object. Especially important is the <code>$toDataFrame()</code> method of this object that returns a dataframe containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.</p></li>
-<li><p>Adds <code><a href="../reference/simulationResultsToDataFrame.html">simulationResultsToDataFrame()</a></code> function to convert <code>SimulationResults</code> objects into a dataframe.</p></li>
+<ul><li><p>Adds new <code>DataCombined</code> class that combines observed data (<code>DataSet</code>) and simulated data (<code>SimulationResults</code>) into a single object. Especially important is the <code>$toDataFrame()</code> method of this object that returns a data frame containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.</p></li>
+<li><p>Adds <code><a href="../reference/simulationResultsToDataFrame.html">simulationResultsToDataFrame()</a></code> function to convert <code>SimulationResults</code> objects into a data frame.</p></li>
+<li><p>All <code>*ToDataFrame()</code> functions also get <code>*ToTibble()</code> variants to extract a tibble data frame instead of a classical data frame.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="major-changes-11-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-0"></a></h3>
-<ul><li>Following functions are marked for deprecation and will be removed in future releases:
 <ul><li>
-<code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> is now <code><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame()</a></code>
-</li>
-<li>
-<code><a href="../reference/ospsuite_deprecated.html">populationAsDataFrame()</a></code> is now <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>
-</li>
+<p>Following functions are marked for deprecation and will be removed in future releases:</p>
+<ul><li><p><code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> is now <code><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame()</a></code></p></li>
+<li><p><code><a href="../reference/ospsuite_deprecated.html">populationAsDataFrame()</a></code> is now <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code></p></li>
 </ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-11-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-11-0"></a></h3>
-<ul><li><p><code>DataImporterConfiguration</code>: fields <code>timeUnitFromColumn</code> and <code>measurementUnitFromColumn</code> are renamed to <code>isTimeUnitFromColumn</code> and <code>isMeasurementUnitFromColumn</code></p></li>
+<ul><li><p>Signature for <code>toUnit</code> function has changed. <code>molWeight</code> is now the fifth, while <code>sourceUnit</code> is the fourth parameter (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/837" class="external-link">#837</a>).</p></li>
+<li><p><code>DataImporterConfiguration</code>: fields <code>timeUnitFromColumn</code> and <code>measurementUnitFromColumn</code> are renamed to <code>isTimeUnitFromColumn</code> and <code>isMeasurementUnitFromColumn</code></p></li>
 <li><p>The constructor for <code>DataImporterConfiguration</code> does not accept a path to a configuration file any more. Use the function <code><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration()</a></code> to create a configuration object from a file.</p></li>
 <li><p>The constructor for <code>DataSet</code> objects requires a <code>name</code> argument.</p></li>
 <li><p>All <code>validate*()</code> helper functions and <code>"%||%"</code> infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/" class="external-link uri">https://www.open-systems-pharmacology.org/OSPSuite.RUtils/</a>.</p></li>
@@ -133,7 +132,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

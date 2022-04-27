@@ -36,12 +36,12 @@ moleculeInKid <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
 print(moleculeInKid)
 
 # Get the container "Liver"
-livContainer  <- getContainer("Organism|Liver", sim)
+livContainer <- getContainer("Organism|Liver", sim)
 print(livContainer)
 
 # Get the parameter volume of the liver interstitial space
 # Note that the path used is relative to the liver container
-livParam      <- getParameter("Interstitial|Volume", livContainer)
+livParam <- getParameter("Interstitial|Volume", livContainer)
 print(livParam)
 ```
 
@@ -69,8 +69,10 @@ The functions `getAllContainersMatching()`, `getAllMoleculesMatching()`, and `ge
 
 ```{r getAllEntitiesMatching_multiplePaths}
 # Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`
-molecules <- getAllMoleculesMatching(c("Organism|VenousBlood|Plasma|Aciclovir",
-                                       "Organism|Liver|Periportal|Intracellular|Aciclovir"), sim)
+molecules <- getAllMoleculesMatching(c(
+  "Organism|VenousBlood|Plasma|Aciclovir",
+  "Organism|Liver|Periportal|Intracellular|Aciclovir"
+), sim)
 print(molecules)
 ```
 
@@ -130,7 +132,7 @@ sim <- loadSimulation(simFilePath)
 
 # Create simulation tree
 simTree <- getSimulationTree(sim)
- 
+
 # Calling simTree would list all entities within the simulation
 # (given how long this tree can be, we will skip it here, but you can try
 # running the following command in your console)

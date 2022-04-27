@@ -1,7 +1,8 @@
 
 #' @title SensitivityAnalysisResults
 #' @docType class
-#' @description  Results of a sensitivity analysis run (either individual or population simulation)
+#' @description Results of a sensitivity analysis run (either individual or
+#'   population simulation)
 #'
 #' @format NULL
 SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
@@ -41,27 +42,72 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       super$initialize(ref)
     },
     #' @description
-    #' Returns the PKParameterSensitivity for a given pkParameter and output participating to a total sensitivity greater or equal to `totalSensitivityThreshold`
-    #' @param pkParameterName Name of pkParameter for which sensitivity should be retrieved
-    #' @param outputPath Path of the output for which the sensitivity should be retrieved
-    #' @param totalSensitivityThreshold Threshold used to filter out the most sensitive parameter. A threshold of 0.9 means that only
-    #' parameter participating to a total of 90 percent of the sensitivity would be returned. A value of 1 would return the sensitivity for all parameters.
+    #' Returns the PKParameterSensitivity for a given pkParameter and output
+    #' participating to a total sensitivity greater or equal to
+    #' `totalSensitivityThreshold`.
+    #'
+    #' @param pkParameterName Name of pkParameter for which sensitivity should
+    #'   be retrieved.
+    #' @param outputPath Path of the output for which the sensitivity should be
+    #'   retrieved
+    #' @param totalSensitivityThreshold Threshold used to filter out the most
+    #'   sensitive parameter. A threshold of 0.9 means that only parameter
+    #'   participating to a total of 90 percent of the sensitivity would be
+    #'   returned. A value of 1 would return the sensitivity for all parameters.
     allPKParameterSensitivitiesFor = function(pkParameterName,
                                               outputPath,
                                               totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold) {
       validateIsString(pkParameterName)
       validateIsString(outputPath)
       validateIsNumeric(totalSensitivityThreshold)
+
       pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
+
       .toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
     #' @description
-    #' Returns the sensitivity value for a given pkParameter, output and parameter. If the sensitivity result does not exist, returns `NaN`
-    #' @param pkParameterName Name of pkParameter for which sensitivity should be retrieved
-    #' @param outputPath Path of the output for which the sensitivity should be retrieved
-    #' @param parameterName Name of the sensitivity parameter for which the sensitivity should be retrieved
-    pkParameterSensitivityValueFor = function(pkParameterName, outputPath, parameterName) {
-      value <- rClr::clrCall(self$ref, "PKParameterSensitivityValueFor", pkParameterName, outputPath, parameterName)
+    #'
+    #' Returns the sensitivity value for a given pkParameter, output and model
+    #' parameter (either by path or by name). If the sensitivity result does not
+    #' exist, returns `NaN`.
+    #'
+    #' @param pkParameterName Name of pkParameter for which sensitivity should
+    #'   be retrieved.
+    #' @param outputPath Path of the output for which the sensitivity should be
+    #'   retrieved.
+    #' @param parameterName Name of the sensitivity parameter for which the
+    #'   sensitivity should be retrieved.
+    #' @param parameterPath Path of the sensitivity parameter for which the
+    #'   sensitivity should be retrieved. Wildcards (*) not accepted.
+    pkParameterSensitivityValueFor = function(pkParameterName,
+                                              outputPath,
+                                              parameterName = NULL,
+                                              parameterPath = NULL) {
+      if ((!is.null(parameterName) && !is.null(parameterPath)) ||
+        (is.null(parameterName) && is.null(parameterPath))) {
+        stop(messages$errorOneOfNameAndPathMustBeSpecified())
+      }
+
+      if (!is.null(parameterName)) {
+        value <- rClr::clrCall(
+          self$ref,
+          "PKParameterSensitivityValueBySensitivityParameterName",
+          pkParameterName,
+          outputPath,
+          parameterName
+        )
+      }
+
+      if (!is.null(parameterPath)) {
+        value <- rClr::clrCall(
+          self$ref,
+          "PKParameterSensitivityValueByParameterPath",
+          pkParameterName,
+          outputPath,
+          parameterPath
+        )
+      }
+
       value[is.nan(value)] <- NA_real_
       return(value)
     },
