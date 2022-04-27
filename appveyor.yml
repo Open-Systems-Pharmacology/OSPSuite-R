@@ -19,6 +19,7 @@ environment:
   USE_RTOOLS: true
   NOT_CRAN: true
   KEEP_VIGNETTES: false
+  R_BUILD_ARGS: "--no-vignettes"
   R_ARCH: x64
   R_VERSION: 4.1.0
 
