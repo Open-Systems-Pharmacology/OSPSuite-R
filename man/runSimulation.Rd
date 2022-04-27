@@ -2,9 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulation}
 \alias{runSimulation}
-\title{DEPRECATED
-\code{runSimulations} should be used in favor of  \code{runSimulation}. The latter will be removed in future releases
-Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.}
+\title{Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.}
 \usage{
 runSimulation(
   simulation,
@@ -27,8 +25,6 @@ Alternatively, you can also pass the result of \code{createPopulation} directly.
 SimulationResults (one entry per Individual) for a single simulation
 }
 \description{
-DEPRECATED
-\code{runSimulations} should be used in favor of  \code{runSimulation}. The latter will be removed in future releases
 Runs one  simulation (individual or population) and returns a \code{SimulationResults} object containing all results of the simulation.
 }
 \examples{

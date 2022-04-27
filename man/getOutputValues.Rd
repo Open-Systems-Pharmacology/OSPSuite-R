@@ -60,7 +60,7 @@ sim <- loadSimulation(simPath)
 
 # Running an individual simulation
 # results is an instance of `SimulationResults`
-results <- runSimulations(sim)
+results <- runSimulation(sim)
 
 getOutputValues(results)
 }
