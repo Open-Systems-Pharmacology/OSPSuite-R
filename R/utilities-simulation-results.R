@@ -43,7 +43,7 @@
 #'
 #' # Running an individual simulation
 #' # results is an instance of `SimulationResults`
-#' results <- runSimulations(sim)
+#' results <- runSimulation(sim)
 #'
 #' getOutputValues(results)
 #' @export
@@ -206,7 +206,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #'
 #' # Running an individual simulation
 #' # results is an instance of `SimulationResults`
-#' results <- runSimulations(sim)
+#' results <- runSimulation(sim)
 #'
 #' # convert to a dataframe
 #' simulationResultsToDataFrame(results)
