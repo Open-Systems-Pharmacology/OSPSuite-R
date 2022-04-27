@@ -484,14 +484,20 @@ DataCombined <- R6::R6Class(
         return(data)
       }
 
-      # Note that `name` column is based on lexical order of names.
-      #
-      # This always works because the order of data frame (and thus the `name`
+      # Create a nested data frame where all columns except `name` are collapsed
+      # into a single column named `data`, which will contain these columns in a
+      # list data frame.
+      data <- tidyr::nest(data, data = -name)
+
+      # Note that `name` column is based on lexical order of `names`. This
+      # always works because the order of data frame (and thus the `name`
       # column) returned by `*ToTibble()` functions never changes.
-      data %>%
-        tidyr::nest(data = -name) %>%
-        dplyr::mutate(name = names) %>%
-        tidyr::unnest(cols = c(data))
+      data <- dplyr::mutate(data, name = names)
+
+      # Unnest the nested data frame.
+      data <- tidyr::unnest(data, cols = c(data))
+
+      return(data)
     },
 
     # Update the combined data frame "in place"

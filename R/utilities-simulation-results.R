@@ -269,18 +269,16 @@ simulationResultsToDataFrame <- function(simulationResults,
   #
   # This involves first grouping and nesting the data by path. Note that
   # `nest()` here will have a better performance than `rowwise()`. E.g., if
-  # there are 100 rows, `rowwise()` will run the compuation 100 times, while
+  # there are 100 rows, `rowwise()` will run the computation 100 times, while
   # with `nest()`, the computation only be carried for the same number of
   # times as the number of `paths` present.
-  #
-  # Add a new column for molecular weight.
-  #
-  # When you call `molWeightFor()`, it returns the value in the base unit -
-  # which is `kg/µmol`. This is not the unit the user would expect, so we
-  # convert it first to the common unit `g/mol`
   df <- df %>%
     dplyr::group_by(paths) %>%
     tidyr::nest() %>%
+    # Add a new column for molecular weight.
+    # When you call `molWeightFor()`, it returns the value in the base unit -
+    # which is `kg/µmol`. This is not the unit the user would expect, so we
+    # convert it first to the common unit `g/mol`.
     dplyr::mutate(
       molWeight = ospsuite::toUnit(
         quantityOrDimension = ospDimensions$`Molecular weight`,
