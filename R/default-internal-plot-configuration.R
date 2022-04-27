@@ -123,7 +123,6 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     position = defaultPlotConfiguration$legendPosition,
     caption = NULL,
     title = defaultPlotConfiguration$legendTitle,
-    titleFont = defaultPlotConfiguration$legendTitleFont,
     font = defaultPlotConfiguration$legendCaptionFont,
     background = NULL
   )
