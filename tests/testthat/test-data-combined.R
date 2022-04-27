@@ -92,12 +92,12 @@ if (.Platform$OS.type == "windows") {
     )
   })
 
-  test_that("data frame dimensions are as expected when only `DataSet` is provided", {
+  test_that("data frame rows are as expected when only `DataSet` is provided", {
     myCombDat <- DataCombined$new()
     myCombDat$addDataSets(dataSet[[1]])
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df), c(12L, 16L))
+    expect_equal(dim(df)[[1]], 12L)
   })
 
   test_that("data frame column and dataset names are as expected when only `DataSet` is provided", {
@@ -146,12 +146,12 @@ if (.Platform$OS.type == "windows") {
     )
   })
 
-  test_that("data frame dimensions are as expected when only `SimulationResults` is provided", {
+  test_that("data frame rows are as expected when only `SimulationResults` is provided", {
     myCombDat <- DataCombined$new()
     myCombDat$addSimulationResults(simResults)
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df), c(1255L, 12L))
+    expect_equal(dim(df)[[1]], 1255L)
   })
 
   test_that("data frame column names and datset names are as expected when only `SimulationResults` is provided", {
@@ -429,7 +429,7 @@ y
     )
   })
 
-  test_that("data frame dimensions as expected when both `DataSet` and `SimulationResults` provided", {
+  test_that("data frame rows as expected when both `DataSet` and `SimulationResults` provided", {
     myCombDat <- DataCombined$new()
     myCombDat$addSimulationResults(
       simResults,
@@ -447,7 +447,7 @@ y
     )
 
     df <- myCombDat$toDataFrame()
-    expect_equal(dim(df), c(830L, 17L))
+    expect_equal(dim(df)[[1]], 830L)
   })
 
   test_that("data frame column names are as expected when both `DataSet` and `SimulationResults` provided", {
@@ -1078,10 +1078,10 @@ y
 
     # they should be different since the new dataset that replaces the old one has
     # deliberately different values and rows
-    expect_equal(dim(df1), c(77L, 16L))
-    expect_equal(dim(df2), c(76L, 16L))
-    expect_equal(dim(df1Filter), c(25L, 16L))
-    expect_equal(dim(df2Filter), c(24L, 16L))
+    expect_equal(dim(df1)[[1]], 77L)
+    expect_equal(dim(df2)[[1]], 76L)
+    expect_equal(dim(df1Filter)[[1]], 25L)
+    expect_equal(dim(df2Filter)[[1]], 24L)
 
     expect_equal(
       head(df1Filter$xValues),
@@ -1103,8 +1103,6 @@ y
   # `Population` objects -----------------------------
 
   test_that("data frame is as expected when `Population` objects are used", {
-
-
     # If no unit is specified, the default units are used. For "height" it is "dm",
     # for "weight" it is "kg", for "age" it is "year(s)".
     populationCharacteristics <- createPopulationCharacteristics(
@@ -1139,7 +1137,7 @@ y
     myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
     df <- myDataComb$toDataFrame()
 
-    expect_equal(dim(df), c(1964L, 12L))
+    expect_equal(dim(df)[[1]], 1964L)
 
     expect_equal(min(df$IndividualId), 1)
     expect_equal(max(df$IndividualId), 44)
@@ -1155,12 +1153,12 @@ y
   myDataSet$addMetaData("Compartment", "Intracellular")
   myDataSet$addMetaData("Species", "Human")
 
-  test_that("data frame dimensions are as expected when `DataSet` with metadata is provided", {
+  test_that("data frame rows are as expected when `DataSet` with metadata is provided", {
     myCombDat <- DataCombined$new()
     myCombDat$addDataSets(myDataSet)
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df), c(12L, 19L))
+    expect_equal(dim(df)[[1]], 12L)
   })
 
   test_that("data frame column names are as expected when `DataSet` with metadata is provided", {

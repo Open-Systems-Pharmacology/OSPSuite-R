@@ -31,6 +31,18 @@ test_that("It produces error when both parameter path and name are missing", {
   )
 })
 
+test_that("It produces error when either parameter path or name are not character", {
+  expect_error(
+    results$pkParameterSensitivityValueFor("C_max", "Organism|B", parameterName = 0),
+    messages$errorWrongType("parameterName", "numeric", "character")
+  )
+
+  expect_error(
+    results$pkParameterSensitivityValueFor("C_max", "Organism|B", parameterPath = TRUE),
+    messages$errorWrongType("parameterPath", "logical", "character")
+  )
+})
+
 test_that("It returns the sensitivity value of an existing parameter by name", {
   value <- results$pkParameterSensitivityValueFor("C_max", "Organism|B", parameterName = "R1-k1")
   expect_gt(value, 0)
