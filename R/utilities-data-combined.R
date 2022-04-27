@@ -42,7 +42,7 @@
   # convert `NULL`s or logical `NA`s to `NA` of required type
 
   # Note that `purrr::map()` will return a list
-  arg <- purrr::map(arg, ~ .toMissingOfType(.x, type))
+  arg <- purrr::map(arg, function(x) .toMissingOfType(x, type))
 
   # validate the type of arguments
 

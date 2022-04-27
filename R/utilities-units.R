@@ -439,7 +439,7 @@ initializeDimensionAndUnitLists <- function() {
   data <- dplyr::mutate(
     data,
     dplyr::across(
-      .cols = dplyr::matches("Unit$|Weight$"), # use pattern matching
+      .cols = dplyr::matches("Unit$|Weight$"), # use pattern matching to select columns
       .fns = as.character,
       .names = "{.col}Split" # = original column name + Split suffix
     )
@@ -450,8 +450,8 @@ initializeDimensionAndUnitLists <- function() {
   data <- dplyr::mutate(
     data,
     dplyr::across(
-      .cols = dplyr::matches("Split$"), # use pattern matching
-      .fns = ~ tidyr::replace_na(.x, "missing")
+      .cols = dplyr::matches("Split$"), # use pattern matching to select columns
+      .fns = function(x) tidyr::replace_na(x, "missing")
     )
   )
 
@@ -475,16 +475,25 @@ initializeDimensionAndUnitLists <- function() {
 
   # xUnit
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
-  data <- purrr::map_dfr(.x = xDataList, .f = ~ .xUnitConverter(.x, xTargetUnit, xTargetDim))
+  data <- purrr::map_dfr(
+    .x = xDataList,
+    .f = function(data) .xUnitConverter(data, xTargetUnit, xTargetDim)
+  )
 
   # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
-  data <- purrr::map_dfr(.x = yDataList, .f = ~ .yUnitConverter(.x, yTargetUnit, yTargetDim))
+  data <- purrr::map_dfr(
+    .x = yDataList,
+    .f = function(data) .yUnitConverter(data, yTargetUnit, yTargetDim)
+  )
 
   # yUnit error
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
-    data <- purrr::map_dfr(.x = yErrorDataList, .f = ~ .yErrorUnitConverter(.x, yTargetUnit, yTargetDim))
+    data <- purrr::map_dfr(
+      .x = yErrorDataList,
+      .f = function(data) .yErrorUnitConverter(data, yTargetUnit, yTargetDim)
+    )
   }
 
   # clean up and return --------------------------
@@ -516,7 +525,7 @@ initializeDimensionAndUnitLists <- function() {
 #' ospsuite:::.removeEmptyDataFrame(ls)
 #'
 #' @keywords internal
-.removeEmptyDataFrame <- function(x) purrr::keep(x, ~ nrow(.x) > 0L)
+.removeEmptyDataFrame <- function(x) purrr::keep(x, function(data) nrow(data) > 0L)
 
 
 #' @keywords internal

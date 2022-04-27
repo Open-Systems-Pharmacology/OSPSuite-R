@@ -64,9 +64,16 @@ DataCombined <- R6::R6Class(
       # If any of the alternate names are missing, then the original name should
       # be used instead.
       #
-      # The original names for datasets can be "plucked" from respective objects.
+      # The original names for datasets can be "plucked" from respective
+      # objects. `purrr::map()` is used to iterate over the vector and the
+      # anonymous function is used to pluck an object. The `map_chr()` variant
+      # clarifies that we are always expcting a character type in return.
       if (!is.null(names) && is.list(dataSets)) {
-        names <- ifelse(is.na(names), purrr::map_chr(dataSets, ~ purrr::pluck(.x, "name")), names)
+        names <- ifelse(
+          test = is.na(names),
+          yes = purrr::map_chr(dataSets, function(x) purrr::pluck(x, "name")),
+          no = names
+        )
       }
 
       # Update private fields and bindings for the new setter call
@@ -406,19 +413,22 @@ DataCombined <- R6::R6Class(
   private = list(
     # Extract data frame from `DataSet` object(s)
     .dataSetToDataFrame = function(dataSets, names = NULL) {
-      # `dataSetToDataFrame()` function can extract data frame from a scalar, a
-      # vector, or a list of `DataSet` class instances.
-      #
+      # `dataSetToTibble()` function can extract a tibble data frame from a
+      # scalar, a vector, or a list of `DataSet` class instances.
+      obsData <- dataSetToTibble(dataSets)
+
       # Irrespective of whether groups are specified or not, the data frames
       # always start out with an empty `group` column, which is later modified
       # in `$setGroups()` call.
-      dataSetToDataFrame(dataSets) %>%
-        dplyr::mutate(
-          dataType = "observed",
-          group    = NA_character_
-        ) %>%
-        private$.renameDatasets(names) %>%
-        dplyr::as_tibble()
+      obsData <- dplyr::mutate(obsData,
+        dataType = "observed",
+        group    = NA_character_
+      )
+
+      # Use the user-defined new names for datasets
+      obsData <- private$.renameDatasets(obsData, names)
+
+      return(obsData)
     },
 
     # extract data frame from `SimulationResults` objects
@@ -427,41 +437,44 @@ DataCombined <- R6::R6Class(
                                       population = NULL,
                                       individualIds = NULL,
                                       names = NULL) {
-      # `simulationResultsToDataFrame()` can extract data frame only from a
+      # `simulationResultsToTibble()` can extract data frame only from a
       # single `SimulationResults` class instance, but this is not a problem
       # because the `$addSimulationResults()` method treats only a single
       # instance as a valid input.
-      #
-      # Irrespective of whether groups are specified or not, the data frames
-      # always start out with an empty `group` column, which is later modified
-      # in `$setGroups()` call.
-      #
-      # Simulated datasets and observed datasets are glued row-wise when a
-      # combined data frame is prepared, and therefore it is necessary that the
-      # same kind of quantities have the same column names so that they are
-      # glued appropriately. This requires renaming few columns.
-      simulationResultsToDataFrame(
+      simData <- simulationResultsToTibble(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
         population        = population,
         individualIds     = individualIds
-      ) %>%
-        dplyr::mutate(
-          name         = paths,
-          group        = NA_character_,
-          dataType     = "simulated",
-          yErrorValues = NA_real_
-        ) %>%
-        private$.renameDatasets(names) %>%
-        dplyr::rename(
-          "xValues"    = "Time",
-          "xUnit"      = "TimeUnit",
-          "xDimension" = "TimeDimension",
-          "yValues"    = "simulationValues",
-          "yUnit"      = "unit",
-          "yDimension" = "dimension"
-        ) %>%
-        dplyr::as_tibble()
+      )
+
+      # Irrespective of whether groups are specified or not, the data frames
+      # always start out with an empty `group` column, which is later modified
+      # in `$setGroups()` call.
+      simData <- dplyr::mutate(simData,
+        name         = paths,
+        group        = NA_character_,
+        dataType     = "simulated",
+        yErrorValues = NA_real_
+      )
+
+      # Use the user-defined new names for datasets
+      simData <- private$.renameDatasets(simData, names)
+
+      # Simulated datasets and observed datasets are glued row-wise when a
+      # combined data frame is prepared, and therefore it is necessary that the
+      # same kind of quantities have the same column names so that they are
+      # glued appropriately. This requires renaming a few columns.
+      simData <- dplyr::rename(simData,
+        "xValues"    = "Time",
+        "xUnit"      = "TimeUnit",
+        "xDimension" = "TimeDimension",
+        "yValues"    = "simulationValues",
+        "yUnit"      = "unit",
+        "yDimension" = "dimension"
+      )
+
+      return(simData)
     },
 
     # Add a new column with alternate names
@@ -471,14 +484,20 @@ DataCombined <- R6::R6Class(
         return(data)
       }
 
-      # Note that `name` column is based on lexical order of names.
-      #
-      # This always works because the order of data frame (and thus the `name`
-      # column) returned by `*ToDataFrame()` functions is never changed.
-      data %>%
-        tidyr::nest(data = -name) %>%
-        dplyr::mutate(name = names) %>%
-        tidyr::unnest(cols = c(data))
+      # Create a nested data frame where all columns except `name` are collapsed
+      # into a single column named `data`, which will contain these columns in a
+      # list data frame.
+      data <- tidyr::nest(data, data = -name)
+
+      # Note that `name` column is based on lexical order of `names`. This
+      # always works because the order of data frame (and thus the `name`
+      # column) returned by `*ToTibble()` functions never changes.
+      data <- dplyr::mutate(data, name = names)
+
+      # Unnest the nested data frame.
+      data <- tidyr::unnest(data, cols = c(data))
+
+      return(data)
     },
 
     # Update the combined data frame "in place"
@@ -573,7 +592,7 @@ DataCombined <- R6::R6Class(
       # Additionally, if no names are provides, the transformations will apply
       # to the entire data frame, and thus dataset names can be a placeholder for
       # the purpose of joining of data frame with arguments and data frame with
-      # raw data that needs to be transformed
+      # raw data that needs to be transformed.
       dataArg <- dplyr::tibble(
         name          = forNames %||% unique(data$name),
         xOffsets      = xOffsets,
@@ -594,16 +613,32 @@ DataCombined <- R6::R6Class(
       # Datasets for which no data transformations were specified, there will be
       # missing values, which need to be replaced by values representing no
       # change.
-      #  - For offsets: 0
-      #  - For scale factors: 1
-      data <- dplyr::left_join(data, private$.dataTransformations, by = "name") %>%
-        dplyr::mutate(across(matches("offsets$"), ~ tidyr::replace_na(.x, 0))) %>%
-        dplyr::mutate(across(matches("scalefactors$"), ~ tidyr::replace_na(.x, 1))) %>%
-        dplyr::mutate(
-          xValues      = (xRawValues + xOffsets) * xScaleFactors,
-          yValues      = (yRawValues + yOffsets) * yScaleFactors,
-          yErrorValues = yRawErrorValues * yScaleFactors
+      data <- dplyr::left_join(data, private$.dataTransformations, by = "name")
+
+      # For offsets: 0
+      data <- dplyr::mutate(
+        data,
+        dplyr::across(
+          .cols = matches("offsets$"), # relevant only for columns matching this pattern
+          .fns = function(x) tidyr::replace_na(x, 0)
         )
+      )
+
+      # For scale factors: 1
+      data <- dplyr::mutate(
+        data,
+        dplyr::across(
+          .cols = matches("scalefactors$"), # relevant only for columns matching this pattern
+          .fns = function(x) tidyr::replace_na(x, 1)
+        )
+      )
+
+      # Apply the specified transformations to the columns of interest
+      data <- dplyr::mutate(data,
+        xValues      = (xRawValues + xOffsets) * xScaleFactors,
+        yValues      = (yRawValues + yOffsets) * yScaleFactors,
+        yErrorValues = yRawErrorValues * yScaleFactors
+      )
 
       return(data)
     },
@@ -617,10 +652,17 @@ DataCombined <- R6::R6Class(
 
     # Extract data frame with group mappings
     .extractGroupMap = function(data) {
-      data %>%
-        dplyr::select(group, name, dataType) %>%
-        dplyr::distinct() %>%
-        dplyr::arrange(group, name)
+      # Retain only the columns that have relevant information for group mapping.
+      data <- dplyr::select(data, group, name, dataType)
+
+      # Keep only distinct combinations.
+      data <- dplyr::distinct(data)
+
+      # Arrange the dataframe alphabetically:
+      # first by group name column and then by dataset name column
+      data <- dplyr::arrange(data, group, name)
+
+      return(data)
     },
 
     # Extract unique and sorted dataset names from the combined data frame
@@ -630,10 +672,7 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      data %>%
-        dplyr::pull(name) %>%
-        unique() %>%
-        sort()
+      return(sort(unique(dplyr::pull(data, name))))
     },
 
     # During object's lifecycle, the applied data transformations can change,
@@ -647,12 +686,14 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      data %>%
-        dplyr::mutate(
-          xRawValues      = xValues,
-          yRawValues      = yValues,
-          yRawErrorValues = yErrorValues
-        )
+      # Create new columns with internal copies of raw data
+      data <- dplyr::mutate(data,
+        xRawValues      = xValues,
+        yRawValues      = yValues,
+        yRawErrorValues = yErrorValues
+      )
+
+      return(data)
     },
 
     # Extract offsets and scale factors used for data transformations for each
@@ -663,11 +704,15 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      data %>%
-        dplyr::select(name, dplyr::matches("offset|scale")) %>%
-        dplyr::group_by(name) %>%
+      # Retain only the columns that have relevant information for group mapping.
+      data <- dplyr::select(data, name, dplyr::matches("offset|scale"))
+
+      # Keep only distinct combinations *for each dataset (name)*.
+      data <- dplyr::group_by(data, name) %>%
         dplyr::distinct() %>%
         dplyr::ungroup()
+
+      return(data)
     },
 
     # Clean data frame before returning it to the user
@@ -678,32 +723,38 @@ DataCombined <- R6::R6Class(
       }
 
       # Returned data frame should always have a consistent column order
-      data %>%
-        dplyr::select(
-          # All data identifier columns
-          name,
-          group,
-          dataType,
-          # Everything related to the X-variable
-          "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
-          # Everything related to the Y-variable
-          "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
-          # All other columns go after that (meta data, etc.)
-          dplyr::everything()
-        ) %>%
-        # The following columns are no longer necessary
-        #
-        # Retaining the offset and scale factor parameters might confuse the
-        # user about whether the transformations are supposed to be carried out
-        # by the user using these values, or these transformations have already
-        # been carried out.
-        dplyr::select(
-          -dplyr::matches("^paths$"),
-          -dplyr::matches("offsets$|scalefactors$"),
-          -(dplyr::contains("raw") & dplyr::matches("values$"))
-        ) %>%
-        dplyr::arrange(name) %>%
-        dplyr::as_tibble()
+      data <- dplyr::select(
+        data,
+        # All data identifier columns
+        name,
+        group,
+        dataType,
+        # Everything related to the X-variable
+        "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+        # Everything related to the Y-variable
+        "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
+        # All other columns go after that (meta data, etc.)
+        dplyr::everything()
+      )
+
+      # The following columns are no longer necessary
+      #
+      # Retaining the offset and scale factor parameters might confuse the
+      # user about whether the transformations are supposed to be carried out
+      # by the user using these values, or these transformations have already
+      # been carried out.
+      data <- dplyr::select(
+        data,
+        -dplyr::matches("^paths$"),
+        -dplyr::matches("offsets$|scalefactors$"),
+        -(dplyr::contains("raw") & dplyr::matches("values$"))
+      )
+
+      # Arrange the data frame in alphabetical order of the dataset name.
+      data <- dplyr::arrange(data, name)
+
+      # Always a return a tibble data frame
+      return(dplyr::as_tibble(data))
     },
 
     # private fields ----------------------------------------

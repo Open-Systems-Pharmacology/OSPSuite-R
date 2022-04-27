@@ -67,7 +67,8 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
     simulation <- loadSimulation(simulationOrFilePath)
   }
 
-  # Build a vector, with no duplicated entries, of all paths corresponding to entities in `simulation` that fall under the types specified in quantityType
+  # Build a vector, with no duplicated entries, of all paths corresponding to
+  # entities in `simulation` that fall under the types specified in quantityType
   allPaths <- sapply(quantityType, function(type) {
     quantityTypeList[[type]](simulation)
   }) %>%
@@ -77,6 +78,7 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 
   # Initiate list to be returned as a null list.
   pathEnumList <- list()
+
   for (path in allPaths) {
     # Convert the path string to a vector of strings, each representing a branch portion.
     pathArray <- toPathArray(path)
