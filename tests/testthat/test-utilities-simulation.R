@@ -155,7 +155,7 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   expect_true(isOfType(results, "SimulationResults"))
 })
 
-test_that("It throws an erro when trying to run multiple simulations", {
+test_that("It throws an error when trying to run multiple simulations", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
