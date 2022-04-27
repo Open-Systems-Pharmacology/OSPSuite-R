@@ -13,7 +13,6 @@ APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
   update_package_version(args.build_version, description_file)
-  copy_files_to_lib_folder
   install_pksim(args.pksim_branch)
 end
 
