@@ -161,22 +161,22 @@ DefaultPlotConfiguration <- R6::R6Class(
     yGridLinetype = "blank",
 
     # lines
-    linesColor = tlf::ColorMaps$default,
-    linesFill = tlf::ColorMaps$default,
+    linesColor = tlf::ColorMaps$ospDefault,
+    linesFill = tlf::ColorMaps$ospDefault,
     linesSize = 1,
     linesLinetype = "dashed",
     linesAlpha = 0.75,
 
     # points
-    pointsColor = tlf::ColorMaps$default,
-    pointsFill = tlf::ColorMaps$default,
+    pointsColor = tlf::ColorMaps$ospDefault,
+    pointsFill = tlf::ColorMaps$ospDefault,
     pointsShape = names(tlf::Shapes),
     pointsSize = 3,
     pointsAlpha = 0.75,
 
     # ribbons
-    ribbonsColor = tlf::ColorMaps$default,
-    ribbonsFill = tlf::ColorMaps$default,
+    ribbonsColor = tlf::ColorMaps$ospDefault,
+    ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
     ribbonsLinetype = "solid",
     ribbonsAlpha = 0.75,
