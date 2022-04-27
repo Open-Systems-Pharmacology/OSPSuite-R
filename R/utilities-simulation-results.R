@@ -244,7 +244,7 @@ simulationResultsToDataFrame <- function(simulationResults,
   # a single dataframe with the _dfr variant of this function
   df_meta <- purrr::imap_dfr(
     .x = simList$metaData,
-    .f = ~ as.data.frame(.x, row.names = NULL),
+    .f = ~ as.data.frame(.x, row.names = NULL, stringsAsFactors = FALSE),
     .id = "paths"
   )
 
@@ -258,7 +258,7 @@ simulationResultsToDataFrame <- function(simulationResults,
   # now add previously left out time meta data to the combined dataframe
   df <- dplyr::bind_cols(
     df,
-    data.frame(
+    dplyr::tibble(
       "TimeUnit" = simList$metaData$Time$unit[[1]],
       "TimeDimension" = simList$metaData$Time$dimension[[1]]
     )
@@ -291,7 +291,7 @@ simulationResultsToDataFrame <- function(simulationResults,
     dplyr::ungroup()
 
   # consistently return a (classical) data frame
-  return(as.data.frame(df))
+  return(as.data.frame(df, stringsAsFactors = FALSE))
 }
 
 #' @rdname simulationResultsToDataFrame
