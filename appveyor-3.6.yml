@@ -66,28 +66,6 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
-artifacts:
-  - path: '*.Rcheck\**\*.log'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.out'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.fail'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.Rout'
-    name: Logs
-
-  - path: "ospsuite_*ubuntu18.tar.gz"
-    name: Ubuntu18
-
-  - path: "ospsuite_*centOS7.tar.gz"
-    name: CentOS7
-
-  - path: '\ospsuite*.zip'
-    name: Win
-
 platform: x64
 
 skip_commits:
