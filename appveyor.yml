@@ -61,9 +61,6 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\ospsuite*.zip'
-    name: Win
-
 platform: x64
 
 skip_commits:
