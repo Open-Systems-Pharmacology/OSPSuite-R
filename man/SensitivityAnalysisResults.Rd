@@ -6,7 +6,7 @@
 \title{SensitivityAnalysisResults}
 \description{
 Results of a sensitivity analysis run (either individual or
-population simulation)
+population simulation).
 }
 \section{Super classes}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysisResults}
@@ -14,14 +14,17 @@ population simulation)
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
+\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or
+import the sensitivity analysis results (Read-Only).}
 
 \item{\code{count}}{the number of pk parameter sensitivity entries}
 
-\item{\code{allPKParameterNames}}{Returns the name of all PK-Parameters available in this results.
-This will be a subset of all potential PK-Parameters available in the system}
+\item{\code{allPKParameterNames}}{Returns the name of all PK-Parameters
+available in this results. This will be a subset of all potential
+PK-Parameters available in the system.}
 
-\item{\code{allQuantityPaths}}{Returns the path of all outputs available in this results.}
+\item{\code{allQuantityPaths}}{Returns the path of all outputs available in this
+results.}
 }
 \if{html}{\out{</div>}}
 }
@@ -52,9 +55,10 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ref}}{.NET Instance}
+\item{\code{ref}}{A \code{.NET} Instance.}
 
-\item{\code{simulation}}{Reference to the simulation object used to calculated the results}
+\item{\code{simulation}}{Reference to the simulation object used to calculated
+the results.}
 }
 \if{html}{\out{</div>}}
 }
@@ -66,7 +70,7 @@ A new \code{SensitivityAnalysisResults} object.
 \if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
 \if{latex}{\out{\hypertarget{method-allPKParameterSensitivitiesFor}{}}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
-Returns the PKParameterSensitivity for a given pkParameter and output
+Returns the \code{PKParameterSensitivity} for a given \code{pkParameter} and output
 participating to a total sensitivity greater or equal to
 \code{totalSensitivityThreshold}.
 \subsection{Usage}{
@@ -81,16 +85,17 @@ participating to a total sensitivity greater or equal to
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should
+\item{\code{pkParameterName}}{Name of \code{pkParameter} for which sensitivity should
 be retrieved.}
 
 \item{\code{outputPath}}{Path of the output for which the sensitivity should be
 retrieved}
 
 \item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most
-sensitive parameter. A threshold of 0.9 means that only parameter
-participating to a total of 90 percent of the sensitivity would be
-returned. A value of 1 would return the sensitivity for all parameters.}
+sensitive parameter. A threshold of \code{0.9} means that only parameter
+participating to a total of \code{90} percent of the sensitivity would be
+returned. A value of \code{1} would return the sensitivity for all
+parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -99,7 +104,7 @@ returned. A value of 1 would return the sensitivity for all parameters.}
 \if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
 \if{latex}{\out{\hypertarget{method-pkParameterSensitivityValueFor}{}}}
 \subsection{Method \code{pkParameterSensitivityValueFor()}}{
-Returns the sensitivity value for a given pkParameter, output and model
+Returns the sensitivity value for a given \code{pkParameter}, output and model
 parameter (either by path or by name). If the sensitivity result does not
 exist, returns \code{NaN}.
 \subsection{Usage}{
@@ -114,7 +119,7 @@ exist, returns \code{NaN}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pkParameterName}}{Name of pkParameter for which sensitivity should
+\item{\code{pkParameterName}}{Name of \code{pkParameter} for which sensitivity should
 be retrieved.}
 
 \item{\code{outputPath}}{Path of the output for which the sensitivity should be

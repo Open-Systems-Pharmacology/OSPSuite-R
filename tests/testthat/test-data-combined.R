@@ -98,7 +98,7 @@ test_that("data frame dimensions are as expected when only `DataSet` is provided
   myCombDat$addDataSets(dataSet[[1]])
   df <- myCombDat$toDataFrame()
 
-  expect_equal(dim(df), c(12L, 16L))
+  expect_equal(nrow(df), 12L)
 })
 
 test_that("data frame column and dataset names are as expected when only `DataSet` is provided", {
@@ -152,7 +152,7 @@ test_that("data frame dimensions are as expected when only `SimulationResults` i
   myCombDat$addSimulationResults(simResults)
   df <- myCombDat$toDataFrame()
 
-  expect_equal(dim(df), c(1255L, 12L))
+  expect_equal(nrow(df), 1255L)
 })
 
 test_that("data frame column names and datset names are as expected when only `SimulationResults` is provided", {
@@ -448,7 +448,7 @@ test_that("data frame dimensions as expected when both `DataSet` and `Simulation
   )
 
   df <- myCombDat$toDataFrame()
-  expect_equal(dim(df), c(830L, 17L))
+  expect_equal(nrow(df), 830L)
 })
 
 test_that("data frame column names are as expected when both `DataSet` and `SimulationResults` provided", {
@@ -1140,7 +1140,7 @@ test_that("data frame is as expected when `Population` objects are used", {
   myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
   df <- myDataComb$toDataFrame()
 
-  expect_equal(dim(df), c(1964L, 12L))
+  expect_equal(nrow(df), 1964L)
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
@@ -1161,7 +1161,7 @@ test_that("data frame dimensions are as expected when `DataSet` with metadata is
   myCombDat$addDataSets(myDataSet)
   df <- myCombDat$toDataFrame()
 
-  expect_equal(dim(df), c(12L, 19L))
+  expect_equal(nrow(df), 12L)
 })
 
 test_that("data frame column names are as expected when `DataSet` with metadata is provided", {

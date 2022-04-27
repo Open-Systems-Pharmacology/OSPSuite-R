@@ -115,6 +115,13 @@ DotNetWrapper <- R6::R6Class(
         rClr::clrSet(self$ref, propertyName, as.integer(value - 1))
       }
     },
+
+    # There is no concept of a scalar in R. A single value is still a vector of
+    # length 1, which can trip up `.NET`, which *does* distinguish between a
+    # scalar and an array.
+    #
+    # This method makes sure that the correct `.NET` method is called depending
+    # on whether R vector (for `value`) is of length 1 or higher.
     wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName) {
       if (missing(value)) {
         rClr::clrGet(self$ref, returnPropertyName)
