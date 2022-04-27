@@ -97,7 +97,7 @@ if (.Platform$OS.type == "windows") {
     myCombDat$addDataSets(dataSet[[1]])
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df)[[1]], 12L)
+    expect_equal(nrow(df), 12L)
   })
 
   test_that("data frame column and dataset names are as expected when only `DataSet` is provided", {
@@ -151,7 +151,7 @@ if (.Platform$OS.type == "windows") {
     myCombDat$addSimulationResults(simResults)
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df)[[1]], 1255L)
+    expect_equal(nrow(df), 1255L)
   })
 
   test_that("data frame column names and datset names are as expected when only `SimulationResults` is provided", {
@@ -447,7 +447,7 @@ y
     )
 
     df <- myCombDat$toDataFrame()
-    expect_equal(dim(df)[[1]], 830L)
+    expect_equal(nrow(df), 830L)
   })
 
   test_that("data frame column names are as expected when both `DataSet` and `SimulationResults` provided", {
@@ -1137,7 +1137,7 @@ y
     myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
     df <- myDataComb$toDataFrame()
 
-    expect_equal(dim(df)[[1]], 1964L)
+    expect_equal(nrow(df), 1964L)
 
     expect_equal(min(df$IndividualId), 1)
     expect_equal(max(df$IndividualId), 44)
@@ -1158,7 +1158,7 @@ y
     myCombDat$addDataSets(myDataSet)
     df <- myCombDat$toDataFrame()
 
-    expect_equal(dim(df)[[1]], 12L)
+    expect_equal(nrow(df), 12L)
   })
 
   test_that("data frame column names are as expected when `DataSet` with metadata is provided", {
