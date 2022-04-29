@@ -69,7 +69,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleAlign = "left",
 
     # xLabel
-    xLabel = "xValues",
+    xLabel = NULL,
     xLabelColor = "black",
     xLabelSize = 12,
     xLabelFontFace = "plain",
@@ -78,7 +78,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelAlign = "center",
 
     # yLabel
-    yLabel = "yValues",
+    yLabel = NULL,
     yLabelColor = "black",
     yLabelSize = 12,
     yLabelFontFace = "plain",

@@ -49,6 +49,15 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
   individualTimeProfilePlotConfiguration$errorbars <- defaultInternalPlotConfiguration$errorbars
   individualTimeProfilePlotConfiguration$export <- defaultInternalPlotConfiguration$export
 
+  # If axes labels haven't been specified, create them using dimensions and units.
+  individualTimeProfilePlotConfiguration$labels$xlabel$text <-
+    individualTimeProfilePlotConfiguration$labels$xlabel$text %||%
+    paste0(unique(df$xDimension), " [", unique(df$xUnit), "]")
+
+  individualTimeProfilePlotConfiguration$labels$ylabel$text <-
+    individualTimeProfilePlotConfiguration$labels$ylabel$text %||%
+    paste0(unique(df$yDimension), " [", unique(df$yUnit), "]")
+
   # plot -----------------------------
 
   p <- plotTimeProfile(
