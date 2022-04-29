@@ -18,7 +18,15 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
   # data frames -----------------------------
 
   df <- dataCombined$toDataFrame()
+
+  # Getting all units on the same scale
   df <- .unitConverter(df, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+
+  # Datasets which haven't been assigned to any group will be plotted as a group
+  # on its own. That is, the `group` column entries for them will be their names.
+  df <- .addMissingGroupings(df)
+
+  # Extracting observed vs simulated datasets to their own data frames for convenience
   obsData <- dplyr::filter(df, dataType == "observed")
   simData <- dplyr::filter(df, dataType == "simulated")
 
@@ -30,16 +38,16 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
   # Create an instance of `TimeProfilePlotConfiguration` class
   individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
 
-  individualTimeProfilePlotConfiguration$labels     <- defaultInternalPlotConfiguration$labels
-  individualTimeProfilePlotConfiguration$legend     <- defaultInternalPlotConfiguration$legend
-  individualTimeProfilePlotConfiguration$xAxis      <- defaultInternalPlotConfiguration$xAxis
-  individualTimeProfilePlotConfiguration$yAxis      <- defaultInternalPlotConfiguration$yAxis
+  individualTimeProfilePlotConfiguration$labels <- defaultInternalPlotConfiguration$labels
+  individualTimeProfilePlotConfiguration$legend <- defaultInternalPlotConfiguration$legend
+  individualTimeProfilePlotConfiguration$xAxis <- defaultInternalPlotConfiguration$xAxis
+  individualTimeProfilePlotConfiguration$yAxis <- defaultInternalPlotConfiguration$yAxis
   individualTimeProfilePlotConfiguration$background <- defaultInternalPlotConfiguration$background
-  individualTimeProfilePlotConfiguration$lines      <- defaultInternalPlotConfiguration$lines
-  individualTimeProfilePlotConfiguration$points     <- defaultInternalPlotConfiguration$points
-  individualTimeProfilePlotConfiguration$ribbons    <- defaultInternalPlotConfiguration$ribbons
-  individualTimeProfilePlotConfiguration$errorbars  <- defaultInternalPlotConfiguration$errorbars
-  individualTimeProfilePlotConfiguration$export     <- defaultInternalPlotConfiguration$export
+  individualTimeProfilePlotConfiguration$lines <- defaultInternalPlotConfiguration$lines
+  individualTimeProfilePlotConfiguration$points <- defaultInternalPlotConfiguration$points
+  individualTimeProfilePlotConfiguration$ribbons <- defaultInternalPlotConfiguration$ribbons
+  individualTimeProfilePlotConfiguration$errorbars <- defaultInternalPlotConfiguration$errorbars
+  individualTimeProfilePlotConfiguration$export <- defaultInternalPlotConfiguration$export
 
   # plot -----------------------------
 
@@ -59,4 +67,61 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
     ),
     plotConfiguration = individualTimeProfilePlotConfiguration
   )
+}
+
+
+#' Replace missing groupings with dataset names
+#'
+#' @description
+#'
+#' Datasets which haven't been assigned to any group will be plotted as a group
+#' on its own. That is, the `group` column entries for them will be their names.
+#'
+#' @param data A data frame returned by `DataCombined$toDataFrame()`.
+#'
+#' @examples
+#'
+#' df <- dplyr::tibble(
+#'   group = c(
+#'     "Stevens 2012 solid total",
+#'     "Stevens 2012 solid total",
+#'     NA,
+#'     NA,
+#'     NA
+#'   ),
+#'   name = c(
+#'     "Organism|Lumen|Stomach|Metformin|Gastric retention",
+#'     "Stevens_2012_placebo.Placebo_total",
+#'     "Stevens_2012_placebo.Sita_dist",
+#'     "Stevens_2012_placebo.Sita_proximal",
+#'     "Stevens_2012_placebo.Sita_total"
+#'   ),
+#'   dataType = c(
+#'     "simulated",
+#'     "observed",
+#'     "observed",
+#'     "observed",
+#'     "observed"
+#'   )
+#' )
+#'
+#' # original
+#' df
+#'
+#' # transformed
+#' ospsuite:::.addMissingGroupings(df)
+#'
+#' @keywords internal
+.addMissingGroupings <- function(data) {
+  data <- dplyr::mutate(
+    data,
+    group = dplyr::case_when(
+      # If grouping is missing, then use dataset name as its own grouping.
+      is.na(group) ~ name,
+      # Otherwise, no change.
+      TRUE ~ group
+    )
+  )
+
+  return(data)
 }
