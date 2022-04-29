@@ -85,7 +85,7 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
     plotObject = p,
     caption = dplyr::mutate(
       legendCaptionData,
-      color = tlf::ColorMaps$ospDefault[1:nrow(legendCaptionData)]
+      color = defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
     )
   )
 }
