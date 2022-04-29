@@ -61,7 +61,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     size = defaultPlotConfiguration$titleSize,
     fontFace = defaultPlotConfiguration$titleFontFace,
     fontFamily = defaultPlotConfiguration$titleFontFamily,
-    angle = defaultPlotConfiguration$titleAngle
+    angle = defaultPlotConfiguration$titleAngle,
+    align = defaultPlotConfiguration$titleAlign
   )
 
   labelSubtitle <- tlf::Label$new(
@@ -71,7 +72,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     size = defaultPlotConfiguration$subtitleSize,
     fontFace = defaultPlotConfiguration$subtitleFontFace,
     fontFamily = defaultPlotConfiguration$subtitleFontFamily,
-    angle = defaultPlotConfiguration$subtitleAngle
+    angle = defaultPlotConfiguration$subtitleAngle,
+    align = defaultPlotConfiguration$subtitleAlign
   )
 
   labelXLabel <- tlf::Label$new(
@@ -81,7 +83,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     size = defaultPlotConfiguration$xLabelSize,
     fontFace = defaultPlotConfiguration$xLabelFontFace,
     fontFamily = defaultPlotConfiguration$xLabelFontFamily,
-    angle = defaultPlotConfiguration$xLabelAngle
+    angle = defaultPlotConfiguration$xLabelAngle,
+    align = defaultPlotConfiguration$xLabelAlign
   )
 
   labelYLabel <- tlf::Label$new(
@@ -91,7 +94,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     size = defaultPlotConfiguration$yLabelSize,
     fontFace = defaultPlotConfiguration$yLabelFontFace,
     fontFamily = defaultPlotConfiguration$yLabelFontFamily,
-    angle = defaultPlotConfiguration$yLabelAngle
+    angle = defaultPlotConfiguration$yLabelAngle,
+    align = defaultPlotConfiguration$yLabelAlign
   )
 
   labels <- tlf::LabelConfiguration$new(
@@ -108,7 +112,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     color = defaultPlotConfiguration$legendTitleColor,
     fontFamily = defaultPlotConfiguration$legendTitleFontFamily,
     fontFace = defaultPlotConfiguration$legendTitleFontFace,
-    angle = defaultPlotConfiguration$legendTitleAngle
+    angle = defaultPlotConfiguration$legendTitleAngle,
+    align = defaultPlotConfiguration$legendTitleAlign
   )
 
   legendCaptionFont <- tlf::Font$new(
@@ -116,7 +121,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     color = defaultPlotConfiguration$legendCaptionColor,
     fontFamily = defaultPlotConfiguration$legendCaptionFontFamily,
     fontFace = defaultPlotConfiguration$legendCaptionFontFace,
-    angle = defaultPlotConfiguration$legendCaptionAngle
+    angle = defaultPlotConfiguration$legendCaptionAngle,
+    align = defaultPlotConfiguration$legendCaptionAlign
   )
 
   legendConfiguration <- tlf::LegendConfiguration$new(
@@ -136,7 +142,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     size = defaultPlotConfiguration$watermarkSize,
     fontFace = defaultPlotConfiguration$watermarkFontFace,
     fontFamily = defaultPlotConfiguration$watermarkFontFamily,
-    angle = defaultPlotConfiguration$watermarkAngle
+    angle = defaultPlotConfiguration$watermarkAngle,
+    align = defaultPlotConfiguration$watermarkAlign
   )
 
   plotBackground <- tlf::BackgroundElement$new(
@@ -194,7 +201,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     color = defaultPlotConfiguration$xAxisLabelTicksColor,
     fontFamily = defaultPlotConfiguration$xAxisLabelTicksFontFamily,
     fontFace = defaultPlotConfiguration$xAxisLabelTicksFontFace,
-    angle = defaultPlotConfiguration$xAxisLabelTicksAngle
+    angle = defaultPlotConfiguration$xAxisLabelTicksAngle,
+    align = defaultPlotConfiguration$xAxisLabelTicksAlign
   )
 
   xAxisConfiguration <- tlf::XAxisConfiguration$new(
@@ -212,7 +220,8 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     color = defaultPlotConfiguration$yAxisLabelTicksColor,
     fontFamily = defaultPlotConfiguration$yAxisLabelTicksFontFamily,
     fontFace = defaultPlotConfiguration$yAxisLabelTicksFontFace,
-    angle = defaultPlotConfiguration$yAxisLabelTicksAngle
+    angle = defaultPlotConfiguration$yAxisLabelTicksAngle,
+    align = defaultPlotConfiguration$yAxisLabelTicksAlign
   )
 
   yAxisConfiguration <- tlf::YAxisConfiguration$new(

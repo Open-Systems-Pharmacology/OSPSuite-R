@@ -13,23 +13,23 @@
 #' @field title,subtitle,xLabel,yLabel,legendTitle,watermark A character string
 #'   providing plot annotations for plot title, subtitle, x-axis label, y-axis
 #'   label, plot legend, watermark, respectively.
-#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle Aesthetic properties for the plot title.
-#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle Aesthetic properties for the plot subtitle.
-#' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle Aesthetic properties for the plot xLabel.
-#' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle Aesthetic properties for the plot yLabel.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle,titleAlign Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle,subtitleAlign Aesthetic properties for the plot subtitle.
+#' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle,xLabelAlign Aesthetic properties for the plot xLabel.
+#' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle,yLabelAlign Aesthetic properties for the plot yLabel.
 #' @field legendPosition A character string defining the legend position.
 #'   Available options can be seen using `tlf::LegendPositions` list.
-#' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendCaptionSize Aesthetic properties for the legend title.
-#' @field legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle Aesthetic properties for the legend caption.
-#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle Aesthetic properties for the x-axis label.
-#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle Aesthetic properties for the y-axis label.
+#' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
+#' @field legendCaptionSize,legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle,legendCaptionAlign Aesthetic properties for the legend caption.
+#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign Aesthetic properties for the x-axis label.
+#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
 #' @field xAxisScale,yAxisScale A character string defining axis scale.
 #'   Available options can be seen using `tlf::Scaling` list.
-#' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle A character string specifying the aesthetic properties for the watermark.
+#' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle,watermarkAlign A character string specifying the aesthetic properties for the watermark.
 #' @field plotBackgroundFill,plotBackgroundColor,plotBackgroundSize,plotBackgroundLinetype A character string specifying the aesthetic properties for the plot background.
 #' @field plotPanelBackgroundFill,plotPanelBackgroundColor,plotPanelBackgroundSize,plotPanelBackgroundLinetype A character string specifying the aesthetic properties for the plot panel (inside of plot) background.
 #' @field xAxisColor,xAxisSize,xAxisLinetype A character string specifying the aesthetic properties for the x-axis.
@@ -57,6 +57,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     titleFontFace = "plain",
     titleFontFamily = "",
     titleAngle = 0,
+    titleAlign = "left",
 
     # subtitle
     subtitle = NULL,
@@ -65,6 +66,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleFontFace = "plain",
     subtitleFontFamily = "",
     subtitleAngle = 0,
+    subtitleAlign = "left",
 
     # xLabel
     xLabel = "xValues",
@@ -73,6 +75,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelFontFace = "plain",
     xLabelFontFamily = "",
     xLabelAngle = 0,
+    xLabelAlign = "center",
 
     # yLabel
     yLabel = "yValues",
@@ -81,6 +84,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelFontFace = "plain",
     yLabelFontFamily = "",
     yLabelAngle = 90,
+    yLabelAlign = "center",
 
     # legend
     legendPosition = "insideTopRight",
@@ -90,6 +94,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFamily = "",
     legendTitleFontFace = "plain",
     legendTitleAngle = 0,
+    legendTitleAlign = "center",
 
     # legend caption
     legendCaptionSize = 10,
@@ -97,6 +102,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendCaptionFontFamily = "",
     legendCaptionFontFace = "plain",
     legendCaptionAngle = 0,
+    legendCaptionAlign = "center",
 
     # XAxisConfiguration
     xAxisLimits = NULL,
@@ -108,6 +114,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLabelTicksFontFamily = "",
     xAxisLabelTicksFontFace = "plain",
     xAxisLabelTicksAngle = 0,
+    xAxisLabelTicksAlign = "center",
 
     # YAxisConfiguration
     yAxisLimits = NULL,
@@ -119,6 +126,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLabelTicksFontFamily = "",
     yAxisLabelTicksFontFace = "plain",
     yAxisLabelTicksAngle = 90,
+    yAxisLabelTicksAlign = "center",
 
     # watermark
     watermark = NULL,
@@ -127,6 +135,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     watermarkFontFamily = "",
     watermarkFontFace = "plain",
     watermarkAngle = 30,
+    watermarkAlign = "center",
 
     # plot background
     plotBackgroundFill = "white",
