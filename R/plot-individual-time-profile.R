@@ -51,7 +51,7 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
 
   # plot -----------------------------
 
-  plotTimeProfile(
+  p <- plotTimeProfile(
     data = as.data.frame(simData),
     dataMapping = tlf::TimeProfileDataMapping$new(
       x = "xValues",
@@ -66,6 +66,18 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
       error = "yErrorValues"
     ),
     plotConfiguration = individualTimeProfilePlotConfiguration
+  )
+
+  # Extract color and shape mappings
+  legendCaptionData <- tlf::getLegendCaption(p)
+
+  # Update plot to have as many colors as there are datasets.
+  tlf::updateTimeProfileLegend(
+    plotObject = p,
+    caption = dplyr::mutate(
+      legendCaptionData,
+      color = tlf::ColorMaps$ospDefault[1:nrow(legendCaptionData)]
+    )
   )
 }
 
