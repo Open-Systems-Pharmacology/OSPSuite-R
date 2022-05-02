@@ -35,13 +35,3 @@ ospsuite.utils::enumValues
 #' @export
 #' @importFrom ospsuite.utils enumGetKey
 ospsuite.utils::enumGetKey
-
-# tlf -----------------------------
-
-#' @export
-#' @importFrom tlf plotGrid
-tlf::plotGrid
-
-#' @export
-#' @importFrom tlf PlotGridConfiguration
-tlf::PlotGridConfiguration
