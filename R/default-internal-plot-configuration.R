@@ -48,9 +48,19 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
 
 #' Create an instance of `defaultInternalPlotConfiguration` class
 #'
+#' @examples
+#'
+#' if (requireNamespace("tlf")) {
+#'   ospsuite:::.createDefaultInternalPlotConfiguration(DefaultPlotConfiguration$new())
+#' }
+#'
 #' @keywords internal
 #' @noRd
 .createDefaultInternalPlotConfiguration <- function(defaultPlotConfiguration) {
+  # check if `{tlf}` is installed; will produce an error if the package is not installed
+  requireNamespace("tlf", quietly = TRUE)
+
+  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
   # labels object ---------------------------------------
 
