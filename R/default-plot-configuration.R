@@ -44,19 +44,22 @@
 #'
 #' @examples
 #'
-#'# Create a new instance of this class
-#' myPlotConfiguration <- DefaultPlotConfiguration$new()
+#' if (requireNamespace("tlf")) {
 #'
-#' # Change defaults
-#' myPlotConfiguration$title <- "My Plot Title"
-#' myPlotConfiguration$pointsSize <- 2.5
-#' myPlotConfiguration$legendTitle <- "My Legend Title"
+#'   # Create a new instance of this class
+#'   myPlotConfiguration <- DefaultPlotConfiguration$new()
 #'
-#' # Checking new values
-#' myPlotConfiguration$pointsSize
+#'   # Change defaults
+#'   myPlotConfiguration$title <- "My Plot Title"
+#'   myPlotConfiguration$pointsSize <- 2.5
+#'   myPlotConfiguration$legendTitle <- "My Legend Title"
 #'
-#' # To check all default values, you can print the object
-#' myPlotConfiguration
+#'   # Checking new values
+#'   myPlotConfiguration$pointsSize
+#'
+#'   # To check all default values, you can print the object
+#'   myPlotConfiguration
+#' }
 #'
 #' @family plotting
 #'

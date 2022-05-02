@@ -8,6 +8,13 @@
   frame containing combined data from observed and simulated data, which can be
   further used for visualizations or other analysis.
 
+* Adds new visualization functions:
+
+    - `plotIndividualTimeProfile()` to create a time-profile plot.
+
+* Adds a new class `DefaultPlotConfiguration` to provide plot configurations for 
+  plotting functions.
+
 * Adds `simulationResultsToDataFrame()` function to convert `SimulationResults`
   objects into a data frame.
 
