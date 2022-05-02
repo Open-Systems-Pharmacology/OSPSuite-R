@@ -15,3 +15,8 @@ an \code{R6} class object that defines plot properties.}
 \description{
 Concentration time profile plot
 }
+\seealso{
+Other plotting: 
+\code{\link{DefaultPlotConfiguration}}
+}
+\concept{plotting}

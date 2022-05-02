@@ -6,6 +6,8 @@
 #'
 #' @import tlf
 #'
+#' @family plotting
+#'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = NULL) {
 

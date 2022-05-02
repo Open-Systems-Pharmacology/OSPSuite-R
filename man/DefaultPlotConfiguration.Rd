@@ -11,6 +11,28 @@ Note that the values this objects contains are of general-purpose utility. In
 other words, the public members of this class instance can be used to specify
 arguments for base plots, ggplot plots, or any other plotting framework.
 }
+\examples{
+
+# Create a new instance of this class
+myPlotConfiguration <- DefaultPlotConfiguration$new()
+
+# Change defaults
+myPlotConfiguration$title <- "My Plot Title"
+myPlotConfiguration$pointsSize <- 2.5
+myPlotConfiguration$legendTitle <- "My Legend Title"
+
+# Checking new values
+myPlotConfiguration$pointsSize
+
+# To check all default values, you can print the object
+myPlotConfiguration
+
+}
+\seealso{
+Other plotting: 
+\code{\link{plotIndividualTimeProfile}()}
+}
+\concept{plotting}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

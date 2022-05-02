@@ -42,6 +42,24 @@
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
 #' @field plotSaveFileName,plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits,plotSaveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
 #'
+#' @examples
+#'
+#'# Create a new instance of this class
+#' myPlotConfiguration <- DefaultPlotConfiguration$new()
+#'
+#' # Change defaults
+#' myPlotConfiguration$title <- "My Plot Title"
+#' myPlotConfiguration$pointsSize <- 2.5
+#' myPlotConfiguration$legendTitle <- "My Legend Title"
+#'
+#' # Checking new values
+#' myPlotConfiguration$pointsSize
+#'
+#' # To check all default values, you can print the object
+#' myPlotConfiguration
+#'
+#' @family plotting
+#'
 #' @export
 DefaultPlotConfiguration <- R6::R6Class(
   "DefaultPlotConfiguration",
@@ -71,7 +89,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # xLabel
     xLabel = NULL,
     xLabelColor = "black",
-    xLabelSize = 12,
+    xLabelSize = 10,
     xLabelFontFace = "plain",
     xLabelFontFamily = "",
     xLabelAngle = 0,
@@ -80,7 +98,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # yLabel
     yLabel = NULL,
     yLabelColor = "black",
-    yLabelSize = 12,
+    yLabelSize = 10,
     yLabelFontFace = "plain",
     yLabelFontFamily = "",
     yLabelAngle = 90,
