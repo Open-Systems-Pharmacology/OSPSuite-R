@@ -388,7 +388,7 @@
 <rect x='499.45' y='286.06' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <polygon points='508.09,290.00 512.16,297.05 504.02,297.05 ' style='stroke-width: 0.71; stroke: none; fill: #F0E685; fill-opacity: 0.75;' />
 <rect x='499.45' y='303.34' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polygon points='508.09,316.68 512.16,309.63 504.02,309.63 ' style='stroke-width: 0.71; stroke: #466983; stroke-opacity: 0.75; fill: #466983; fill-opacity: 0.75;' />
+<polygon points='508.09,316.68 512.16,309.63 504.02,309.63 ' style='stroke-width: 0.71; stroke: #466983; stroke-opacity: 0.75; fill: none;' />
 <rect x='499.45' y='320.62' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='505.07' y1='332.28' x2='511.12' y2='326.24' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75;' />
 <line x1='505.07' y1='326.24' x2='511.12' y2='332.28' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75;' />

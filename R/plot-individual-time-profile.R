@@ -1,4 +1,4 @@
-#' Concentration time profile plot
+#' Concentration time profile plot for individual
 #'
 #' @param dataCombined A `DataCombined` object.
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
@@ -88,15 +88,13 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
   # Extract as many colors as there are datasets from the specified color palette.
   colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
 
+  # New version of legend mappings.
+  newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
+
   # Update plot with these colors.
-  tlf::updateTimeProfileLegend(
-    plotObject = profilePlot,
-    caption = dplyr::mutate(
-      legendCaptionData,
-      color = colorPalette,
-      fill = colorPalette
-    )
-  )
+  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+
+  return(profilePlot)
 }
 
 
