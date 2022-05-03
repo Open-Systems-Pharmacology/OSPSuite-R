@@ -243,7 +243,6 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
 
   linesConfiguration <- tlf::ThemeAestheticSelections$new(
     color = defaultPlotConfiguration$linesColor,
-    fill = defaultPlotConfiguration$linesFill,
     shape = defaultPlotConfiguration$linesShape,
     size = defaultPlotConfiguration$linesSize,
     linetype = defaultPlotConfiguration$linesLinetype,

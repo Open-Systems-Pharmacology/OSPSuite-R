@@ -10,7 +10,8 @@
 
 * Adds new visualization functions:
 
-    - `plotIndividualTimeProfile()` to create a time-profile plot.
+    - `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()` to create 
+      time-profile plots.
 
 * Adds a new class `DefaultPlotConfiguration` to provide plot configurations for 
   plotting functions.

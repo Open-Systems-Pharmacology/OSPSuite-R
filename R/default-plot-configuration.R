@@ -54,7 +54,7 @@
 #' @field yAxisColor,yAxisSize,yAxisLinetype A character string specifying the aesthetic properties for the y-axis.
 #' @field xGridColor,xGridSize,xGridLinetype A character string specifying the aesthetic properties for the x-axis grid.
 #' @field yGridColor,yGridSize,yGridLinetype A character string specifying the aesthetic properties for the y-axis grid.
-#' @field linesColor,linesFill,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
+#' @field linesColor,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
 #' @field pointsColor,pointsFill,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsColor,ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
@@ -206,8 +206,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     yGridLinetype = tlf::Linetypes$blank,
 
     # lines
+    # There is no `linesFill` because it doesn't make sense to "fill" a line
+    # with color. There is already `linesColor` for that.
     linesColor = tlf::ColorMaps$ospDefault,
-    linesFill = tlf::ColorMaps$ospDefault,
     linesSize = 1,
     linesLinetype = tlf::Linetypes$dashed,
     linesAlpha = 0.75,
@@ -220,7 +221,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     pointsAlpha = 0.75,
 
     # ribbons
-    #ribbonsColor = tlf::ColorMaps$ospDefault,
+    ribbonsColor = tlf::ColorMaps$ospDefault, # colors for edgelines of a ribbon
     ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
     ribbonsLinetype = tlf::Linetypes$solid,
@@ -231,7 +232,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
     errorbarsLinetype = tlf::Linetypes$solid,
-    errorbarsAlpha = 0.75,
+    errorbarsAlpha = 0.5,
 
     # export
     plotSaveFileName = "figure",

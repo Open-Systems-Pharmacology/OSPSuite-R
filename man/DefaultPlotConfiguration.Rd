@@ -103,7 +103,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
 
-\item{\code{linesColor, linesFill, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+\item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
 \item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 
@@ -163,7 +163,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
 
-\item{\code{linesColor, linesFill, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+\item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
 \item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 

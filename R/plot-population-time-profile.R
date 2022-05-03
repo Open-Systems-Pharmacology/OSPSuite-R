@@ -89,22 +89,12 @@ plotPopulationTimeProfile <- function(dataCombined,
       y = "yValuesCentral",
       ymin = "yValuesLower",
       ymax = "yValuesHigher",
-      group = "group"
+      #fill = "name",
+      #color = "name",
+      group = "name"
     ),
     plotConfiguration = individualTimeProfilePlotConfiguration
   )
-
-  # # Extract color and shape mappings
-  # legendCaptionData <- tlf::getLegendCaption(profilePlot)
-  #
-  # # Extract as many colors as there are datasets from the specified color palette.
-  # colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
-  #
-  # # New version of legend mappings.
-  # newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette, fill = colorPalette)
-  #
-  # # Update plot with these colors.
-  # profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
 
   return(profilePlot)
 }
