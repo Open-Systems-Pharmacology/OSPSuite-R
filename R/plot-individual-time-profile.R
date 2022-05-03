@@ -4,6 +4,8 @@
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
 #'   an `R6` class object that defines plot properties.
 #'
+#' @import tlf
+#'
 #' @family plotting
 #'
 #' @examples
@@ -63,7 +65,7 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
 
   # plot -----------------------------
 
-  p <- plotTimeProfile(
+  profilePlot <- tlf::plotTimeProfile(
     data = as.data.frame(simData),
     dataMapping = tlf::TimeProfileDataMapping$new(
       x = "xValues",
@@ -81,11 +83,11 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
   )
 
   # Extract color and shape mappings
-  legendCaptionData <- tlf::getLegendCaption(p)
+  legendCaptionData <- tlf::getLegendCaption(profilePlot)
 
   # Update plot to have as many colors as there are datasets.
   tlf::updateTimeProfileLegend(
-    plotObject = p,
+    plotObject = profilePlot,
     caption = dplyr::mutate(
       legendCaptionData,
       color = defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
