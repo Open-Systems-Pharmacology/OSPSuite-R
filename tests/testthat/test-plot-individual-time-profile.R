@@ -4,6 +4,7 @@ context("plotIndividualTimeProfile")
 
 # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 skip_on_os("linux")
+skip_on_ci() # TODO: run on Appveyor
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
 
