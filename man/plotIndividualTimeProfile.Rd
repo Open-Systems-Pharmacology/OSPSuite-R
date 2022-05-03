@@ -17,9 +17,7 @@ Concentration time profile plot
 }
 \examples{
 
-if (requireNamespace("tlf")) {
-  # TODO: add example
-}
+# TODO: add example
 
 }
 \seealso{

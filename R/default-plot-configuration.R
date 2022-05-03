@@ -9,6 +9,20 @@
 #' other words, the public members of this class instance can be used to specify
 #' arguments for base plots, ggplot plots, or any other plotting framework.
 #'
+#' @details
+#'
+#' Aesthetic mappings describe how variables are mapped to visual properties of
+#' geometric layers. In the current class, the default values for these
+#' properties are derived from `{tlf}` lists:
+#'
+#' - color, fill: `tlf::ColorMaps$ospDefault`
+#' - shape: `names(tlf::Shapes)`
+#' - scaling: `tlf::Scaling`
+#'
+#' The available units for `x`-and `y`-axes variables depend on the dimensions
+#' of these quantities (`ospsuite::ospDimensions`). Available options can be
+#' seen with `ospsuite::ospUnits`.
+#'
 #' @field xUnit,yUnit Units for quantities plotted on x- and y-axes, respectively.
 #' @field title,subtitle,xLabel,yLabel,legendTitle,watermark A character string
 #'   providing plot annotations for plot title, subtitle, x-axis label, y-axis
@@ -44,22 +58,19 @@
 #'
 #' @examples
 #'
-#' if (requireNamespace("tlf")) {
+#' # Create a new instance of this class
+#' myPlotConfiguration <- DefaultPlotConfiguration$new()
 #'
-#'   # Create a new instance of this class
-#'   myPlotConfiguration <- DefaultPlotConfiguration$new()
+#' # Change defaults
+#' myPlotConfiguration$title <- "My Plot Title"
+#' myPlotConfiguration$pointsSize <- 2.5
+#' myPlotConfiguration$legendTitle <- "My Legend Title"
 #'
-#'   # Change defaults
-#'   myPlotConfiguration$title <- "My Plot Title"
-#'   myPlotConfiguration$pointsSize <- 2.5
-#'   myPlotConfiguration$legendTitle <- "My Legend Title"
+#' # Checking new values
+#' myPlotConfiguration$pointsSize
 #'
-#'   # Checking new values
-#'   myPlotConfiguration$pointsSize
-#'
-#'   # To check all default values, you can print the object
-#'   myPlotConfiguration
-#' }
+#' # To check all default values, you can print the object
+#' myPlotConfiguration
 #'
 #' @family plotting
 #'

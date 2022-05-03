@@ -8,15 +8,10 @@
 #'
 #' @examples
 #'
-#' if (requireNamespace("tlf")) {
-#'   # TODO: add example
-#' }
+#' # TODO: add example
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = NULL) {
-  # check if `{tlf}` is installed; will produce an error if the package is not installed
-  requireNamespace("tlf", quietly = TRUE)
-
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()

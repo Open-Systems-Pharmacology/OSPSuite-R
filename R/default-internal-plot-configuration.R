@@ -11,8 +11,8 @@
 #'
 #' @field labels `tlf::LabelConfiguration` object defining properties of labels.
 #' @field legend `tlf::LegendConfiguration` object defining legend properties.
-#' @field xAxis `tlf::XAxisConfiguration` object defining x-axis properties.
-#' @field yAxis `tlf::YAxisConfiguration` object defining y-axis properties.
+#' @field xAxis `tlf::XAxisConfiguration` object defining `x`-axis properties.
+#' @field yAxis `tlf::YAxisConfiguration` object defining `y`-axis properties.
 #' @field background `tlf::BackgroundConfiguration` object defining the
 #'   configuration of background.
 #' @field lines `tlf::ThemeAestheticSelections` object or list defining how
@@ -23,10 +23,9 @@
 #'   how ribbons are plotted.
 #' @field errorbars `tlf::ThemeAestheticSelections` object or list defining
 #'   how errorbars are plotted.
-#' @field export R6 class `tlf::SaveConfiguration` defining saving properties.
+#' @field export `tlf::SaveConfiguration` object defining saving properties.
 #'
 #' @keywords internal
-#' @noRd
 DefaultInternalPlotConfiguration <- R6::R6Class(
   "DefaultInternalPlotConfiguration",
   public = list(
@@ -50,9 +49,7 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
 #'
 #' @examples
 #'
-#' if (requireNamespace("tlf")) {
-#'   ospsuite:::.createDefaultInternalPlotConfiguration(DefaultPlotConfiguration$new())
-#' }
+#' ospsuite:::.createDefaultInternalPlotConfiguration(DefaultPlotConfiguration$new())
 #'
 #' @keywords internal
 #' @noRd
