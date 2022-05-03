@@ -17,8 +17,12 @@ geometric layers. In the current class, the default values for these
 properties are derived from \code{{tlf}} lists:
 \itemize{
 \item color, fill: \code{tlf::ColorMaps$ospDefault}
-\item shape: \code{names(tlf::Shapes)}
+\item shape: \code{tlf::Shapes}
 \item scaling: \code{tlf::Scaling}
+\item legend position: \code{tlf::LegendPositions}
+\item alignments: \code{tlf::Alignments}
+\item font face: \code{tlf::FontFaces}
+\item linetype: \code{tlf::Linetypes}
 }
 
 The available units for \code{x}-and \code{y}-axes variables depend on the dimensions

@@ -16,8 +16,12 @@
 #' properties are derived from `{tlf}` lists:
 #'
 #' - color, fill: `tlf::ColorMaps$ospDefault`
-#' - shape: `names(tlf::Shapes)`
+#' - shape: `tlf::Shapes`
 #' - scaling: `tlf::Scaling`
+#' - legend position: `tlf::LegendPositions`
+#' - alignments: `tlf::Alignments`
+#' - font face: `tlf::FontFaces`
+#' - linetype: `tlf::Linetypes`
 #'
 #' The available units for `x`-and `y`-axes variables depend on the dimensions
 #' of these quantities (`ospsuite::ospDimensions`). Available options can be
@@ -86,55 +90,55 @@ DefaultPlotConfiguration <- R6::R6Class(
     title = NULL,
     titleColor = "black",
     titleSize = 12,
-    titleFontFace = "plain",
+    titleFontFace = tlf::FontFaces$plain,
     titleFontFamily = "",
     titleAngle = 0,
-    titleAlign = "left",
+    titleAlign = tlf::Alignments$left,
 
     # subtitle
     subtitle = NULL,
     subtitleColor = "black",
     subtitleSize = 10,
-    subtitleFontFace = "plain",
+    subtitleFontFace = tlf::FontFaces$plain,
     subtitleFontFamily = "",
     subtitleAngle = 0,
-    subtitleAlign = "left",
+    subtitleAlign = tlf::Alignments$left,
 
     # xLabel
     xLabel = NULL,
     xLabelColor = "black",
     xLabelSize = 10,
-    xLabelFontFace = "plain",
+    xLabelFontFace = tlf::FontFaces$plain,
     xLabelFontFamily = "",
     xLabelAngle = 0,
-    xLabelAlign = "center",
+    xLabelAlign = tlf::Alignments$center,
 
     # yLabel
     yLabel = NULL,
     yLabelColor = "black",
     yLabelSize = 10,
-    yLabelFontFace = "plain",
+    yLabelFontFace = tlf::FontFaces$plain,
     yLabelFontFamily = "",
     yLabelAngle = 90,
-    yLabelAlign = "center",
+    yLabelAlign = tlf::Alignments$center,
 
     # legend
-    legendPosition = "insideTopRight",
+    legendPosition = tlf::LegendPositions$insideTopRight,
     legendTitle = NULL,
     legendTitleSize = 10,
     legendTitleColor = "black",
     legendTitleFontFamily = "",
-    legendTitleFontFace = "plain",
+    legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
-    legendTitleAlign = "center",
+    legendTitleAlign = tlf::Alignments$center,
 
     # legend caption
     legendCaptionSize = 10,
     legendCaptionColor = "black",
     legendCaptionFontFamily = "",
-    legendCaptionFontFace = "plain",
+    legendCaptionFontFace = tlf::FontFaces$plain,
     legendCaptionAngle = 0,
-    legendCaptionAlign = "center",
+    legendCaptionAlign = tlf::Alignments$center,
 
     # XAxisConfiguration
     xAxisLimits = NULL,
@@ -144,9 +148,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLabelTicksSize = NULL,
     xAxisLabelTicksColor = "black",
     xAxisLabelTicksFontFamily = "",
-    xAxisLabelTicksFontFace = "plain",
+    xAxisLabelTicksFontFace = tlf::FontFaces$plain,
     xAxisLabelTicksAngle = 0,
-    xAxisLabelTicksAlign = "center",
+    xAxisLabelTicksAlign = tlf::Alignments$center,
 
     # YAxisConfiguration
     yAxisLimits = NULL,
@@ -156,56 +160,56 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLabelTicksSize = NULL,
     yAxisLabelTicksColor = "black",
     yAxisLabelTicksFontFamily = "",
-    yAxisLabelTicksFontFace = "plain",
+    yAxisLabelTicksFontFace = tlf::FontFaces$plain,
     yAxisLabelTicksAngle = 90,
-    yAxisLabelTicksAlign = "center",
+    yAxisLabelTicksAlign = tlf::Alignments$center,
 
     # watermark
     watermark = NULL,
     watermarkSize = 20,
     watermarkColor = "grey40",
     watermarkFontFamily = "",
-    watermarkFontFace = "plain",
+    watermarkFontFace = tlf::FontFaces$plain,
     watermarkAngle = 30,
-    watermarkAlign = "center",
+    watermarkAlign = tlf::Alignments$center,
 
     # plot background
     plotBackgroundFill = "white",
     plotBackgroundColor = "black",
     plotBackgroundSize = 0.5,
-    plotBackgroundLinetype = "blank",
+    plotBackgroundLinetype = tlf::Linetypes$blank,
 
     # plot panel background
     plotPanelBackgroundFill = "white",
     plotPanelBackgroundColor = "black",
     plotPanelBackgroundSize = 0.5,
-    plotPanelBackgroundLinetype = "solid",
+    plotPanelBackgroundLinetype = tlf::Linetypes$solid,
 
     # xAxis
     xAxisColor = "black",
     xAxisSize = 0.5,
-    xAxisLinetype = "solid",
+    xAxisLinetype = tlf::Linetypes$solid,
 
     # yAxis
     yAxisColor = "black",
     yAxisSize = 0.5,
-    yAxisLinetype = "solid",
+    yAxisLinetype = tlf::Linetypes$solid,
 
     # xGrid
     xGridColor = "grey",
     xGridSize = 0.25,
-    xGridLinetype = "blank",
+    xGridLinetype = tlf::Linetypes$blank,
 
     # yGrid
     yGridColor = "grey",
     yGridSize = 0.25,
-    yGridLinetype = "blank",
+    yGridLinetype = tlf::Linetypes$blank,
 
     # lines
     linesColor = tlf::ColorMaps$ospDefault,
     linesFill = tlf::ColorMaps$ospDefault,
     linesSize = 1,
-    linesLinetype = "dashed",
+    linesLinetype = tlf::Linetypes$dashed,
     linesAlpha = 0.75,
 
     # points
@@ -219,14 +223,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     ribbonsColor = tlf::ColorMaps$ospDefault,
     ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
-    ribbonsLinetype = "solid",
+    ribbonsLinetype = tlf::Linetypes$solid,
     ribbonsAlpha = 0.75,
 
     # errorbars
     # Color and fill are taken from point mapping, therefore no
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
-    errorbarsLinetype = "solid",
+    errorbarsLinetype = tlf::Linetypes$solid,
     errorbarsAlpha = 0.75,
 
     # export

@@ -85,12 +85,16 @@ plotIndividualTimeProfile <- function(dataCombined, defaultPlotConfiguration = N
   # Extract color and shape mappings
   legendCaptionData <- tlf::getLegendCaption(profilePlot)
 
-  # Update plot to have as many colors as there are datasets.
+  # Extract as many colors as there are datasets from the specified color palette.
+  colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+
+  # Update plot with these colors.
   tlf::updateTimeProfileLegend(
     plotObject = profilePlot,
     caption = dplyr::mutate(
       legendCaptionData,
-      color = defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+      color = colorPalette,
+      fill = colorPalette
     )
   )
 }
