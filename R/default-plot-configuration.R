@@ -220,7 +220,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     pointsAlpha = 0.75,
 
     # ribbons
-    ribbonsColor = tlf::ColorMaps$ospDefault,
+    #ribbonsColor = tlf::ColorMaps$ospDefault,
     ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
     ribbonsLinetype = tlf::Linetypes$solid,

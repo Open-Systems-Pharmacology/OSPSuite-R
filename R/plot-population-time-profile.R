@@ -1,8 +1,9 @@
-#' Concentration time profile plot for individual
+#' Concentration time profile plot for population
 #'
-#' @param dataCombined A `DataCombined` object.
-#' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
-#'   an `R6` class object that defines plot properties.
+#' @inheritParams plotIndividualTimeProfile
+#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
+#'   0.50, 0.95)`). In the profile plot, the middle value will be used to draw a
+#'   line, while the lower and upper values will be used to create a ribbon.
 #'
 #' @import tlf
 #'
@@ -13,13 +14,16 @@
 #' # TODO: add example
 #'
 #' @export
-plotIndividualTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration = NULL) {
+plotPopulationTimeProfile <- function(dataCombined,
+                                      defaultPlotConfiguration = NULL,
+                                      quantiles = c(0.05, 0.5, 0.95)) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(dataCombined, "DataCombined")
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
+  validateIsNumeric(quantiles, nullAllowed = FALSE)
+  validateIsOfLength(quantiles, 3L)
 
   # data frames -----------------------------
 
@@ -35,6 +39,18 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Extracting observed vs simulated datasets to their own data frames for convenience
   obsData <- dplyr::filter(df, dataType == "observed")
   simData <- dplyr::filter(df, dataType == "simulated")
+
+  # Compute quantiles
+  simData <- simData %>%
+    # Compute across all individuals for each time point
+    dplyr::group_by(xValues) %>% #
+    dplyr::mutate(
+      yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
+      yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
+      yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
+      .after = yValues # place the newly created columns after this column
+    ) %>%
+    dplyr::ungroup()
 
   # TimeProfilePlotConfiguration object -----------------------------
 
@@ -70,87 +86,25 @@ plotIndividualTimeProfile <- function(dataCombined,
     data = as.data.frame(simData),
     dataMapping = tlf::TimeProfileDataMapping$new(
       x = "xValues",
-      y = "yValues",
+      y = "yValuesCentral",
+      ymin = "yValuesLower",
+      ymax = "yValuesHigher",
       group = "group"
-    ),
-    observedData = as.data.frame(obsData),
-    observedDataMapping = tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group",
-      error = "yErrorValues"
     ),
     plotConfiguration = individualTimeProfilePlotConfiguration
   )
 
-  # Extract color and shape mappings
-  legendCaptionData <- tlf::getLegendCaption(profilePlot)
-
-  # Extract as many colors as there are datasets from the specified color palette.
-  colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
-
-  # New version of legend mappings.
-  newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
-
-  # Update plot with these colors.
-  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+  # # Extract color and shape mappings
+  # legendCaptionData <- tlf::getLegendCaption(profilePlot)
+  #
+  # # Extract as many colors as there are datasets from the specified color palette.
+  # colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+  #
+  # # New version of legend mappings.
+  # newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette, fill = colorPalette)
+  #
+  # # Update plot with these colors.
+  # profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
 
   return(profilePlot)
-}
-
-
-#' Replace missing groupings with dataset names
-#'
-#' @description
-#'
-#' Datasets which haven't been assigned to any group will be plotted as a group
-#' on its own. That is, the `group` column entries for them will be their names.
-#'
-#' @param data A data frame returned by `DataCombined$toDataFrame()`.
-#'
-#' @examples
-#'
-#' df <- dplyr::tibble(
-#'   group = c(
-#'     "Stevens 2012 solid total",
-#'     "Stevens 2012 solid total",
-#'     NA,
-#'     NA,
-#'     NA
-#'   ),
-#'   name = c(
-#'     "Organism|Lumen|Stomach|Metformin|Gastric retention",
-#'     "Stevens_2012_placebo.Placebo_total",
-#'     "Stevens_2012_placebo.Sita_dist",
-#'     "Stevens_2012_placebo.Sita_proximal",
-#'     "Stevens_2012_placebo.Sita_total"
-#'   ),
-#'   dataType = c(
-#'     "simulated",
-#'     "observed",
-#'     "observed",
-#'     "observed",
-#'     "observed"
-#'   )
-#' )
-#'
-#' # original
-#' df
-#'
-#' # transformed
-#' ospsuite:::.addMissingGroupings(df)
-#'
-#' @keywords internal
-.addMissingGroupings <- function(data) {
-  data <- dplyr::mutate(
-    data,
-    group = dplyr::case_when(
-      # If grouping is missing, then use dataset name as its own grouping.
-      is.na(group) ~ name,
-      # Otherwise, no change.
-      TRUE ~ group
-    )
-  )
-
-  return(data)
 }

@@ -74,6 +74,7 @@ Collate:
     'pk-parameter.R'
     'pk-sim.R'
     'plot-individual-time-profile.R'
+    'plot-population-time-profile.R'
     'population-characteristics.R'
     'population.R'
     'quantity-pk-parameter.R'

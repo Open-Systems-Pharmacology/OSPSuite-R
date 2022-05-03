@@ -22,6 +22,7 @@ Concentration time profile plot for individual
 }
 \seealso{
 Other plotting: 
-\code{\link{DefaultPlotConfiguration}}
+\code{\link{DefaultPlotConfiguration}},
+\code{\link{plotPopulationTimeProfile}()}
 }
 \concept{plotting}

@@ -48,7 +48,8 @@ myPlotConfiguration
 }
 \seealso{
 Other plotting: 
-\code{\link{plotIndividualTimeProfile}()}
+\code{\link{plotIndividualTimeProfile}()},
+\code{\link{plotPopulationTimeProfile}()}
 }
 \concept{plotting}
 \section{Public fields}{
