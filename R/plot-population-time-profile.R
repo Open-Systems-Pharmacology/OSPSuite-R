@@ -21,6 +21,7 @@ plotPopulationTimeProfile <- function(dataCombined,
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(dataCombined, "DataCombined")
+  validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
   validateIsNumeric(quantiles, nullAllowed = FALSE)
   validateIsOfLength(quantiles, 3L)
@@ -35,22 +36,6 @@ plotPopulationTimeProfile <- function(dataCombined,
   # Datasets which haven't been assigned to any group will be plotted as a group
   # on its own. That is, the `group` column entries for them will be their names.
   df <- .addMissingGroupings(df)
-
-  # Extracting simulated datasets to its own data frame for convenience
-  # Observed datasets won't be visualized in this function.
-  obsData <- dplyr::filter(df, dataType == "observed")
-  simData <- dplyr::filter(df, dataType == "simulated")
-
-  # Compute quantiles
-  simAggregatedData <- simData %>%
-    # For each dataset, compute across all individuals for each time point
-    dplyr::group_by(group, xValues) %>% #
-    dplyr::summarise(
-      yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
-      yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
-      yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
-      .groups = "drop" # drop grouping information from the summary data frame
-    )
 
   # TimeProfilePlotConfiguration object -----------------------------
 
@@ -82,36 +67,84 @@ plotPopulationTimeProfile <- function(dataCombined,
 
   # plot -----------------------------
 
-  profilePlot <- tlf::plotTimeProfile(
-    data = as.data.frame(simAggregatedData),
-    dataMapping = tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValuesCentral",
-      ymin = "yValuesLower",
-      ymax = "yValuesHigher",
-      group = "group"
-    ),
-    observedData = as.data.frame(obsData),
-    observedDataMapping = tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group",
-      error = "yErrorValues"
-    ),
-    plotConfiguration = individualTimeProfilePlotConfiguration
-  )
+  # Which dataset types are present?
+  datasetTypePresent <- .extractPresentDatasetTypes(dataCombined)
 
-  # Extract color and shape mappings
-  legendCaptionData <- tlf::getLegendCaption(profilePlot)
+  # both observed and simulated
+  if (datasetTypePresent == .presentDataTypes$Both) {
+    obsData <- dplyr::filter(df, dataType == "observed")
+    simData <- dplyr::filter(df, dataType == "simulated")
 
-  # Extract as many colors as there are datasets from the specified color palette.
-  colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+    # Extract aggregated simulated data
+    simAggregatedData <- .extractAggregatedSimulatedData(simData, quantiles)
 
-  # New version of legend mappings.
-  newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
+    profilePlot <- tlf::plotTimeProfile(
+      data = as.data.frame(simAggregatedData),
+      dataMapping = tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValuesCentral",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher",
+        group = "group"
+      ),
+      observedData = as.data.frame(obsData),
+      observedDataMapping = tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group",
+        error = "yErrorValues"
+      ),
+      plotConfiguration = individualTimeProfilePlotConfiguration
+    )
 
-  # Update plot with these colors.
-  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+    # Extract color and shape mappings
+    legendCaptionData <- tlf::getLegendCaption(profilePlot)
+
+    # Extract as many colors as there are datasets from the specified color palette.
+    colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+
+    # New version of legend mappings.
+    newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
+
+    # Update plot with these colors.
+    profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+  }
+
+  # only observed
+  if (datasetTypePresent == .presentDataTypes$Observed) {
+    obsData <- dplyr::filter(df, dataType == "observed")
+
+    profilePlot <- tlf::plotTimeProfile(
+      observedData = as.data.frame(obsData),
+      observedDataMapping = tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group",
+        error = "yErrorValues"
+      ),
+      plotConfiguration = individualTimeProfilePlotConfiguration
+    )
+  }
+
+  # only simulated
+  if (datasetTypePresent == .presentDataTypes$Simulated) {
+    simData <- dplyr::filter(df, dataType == "simulated")
+
+    # Extract aggregated simulated data
+    simAggregatedData <- .extractAggregatedSimulatedData(simData, quantiles)
+
+    profilePlot <- tlf::plotTimeProfile(
+      data = as.data.frame(simAggregatedData),
+      dataMapping = tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValuesCentral",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher",
+        group = "group"
+      ),
+      plotConfiguration = individualTimeProfilePlotConfiguration
+    )
+  }
 
   return(profilePlot)
 }

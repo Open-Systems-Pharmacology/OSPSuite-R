@@ -19,6 +19,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(dataCombined, "DataCombined")
+  validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
   # data frames -----------------------------
@@ -31,10 +32,6 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Datasets which haven't been assigned to any group will be plotted as a group
   # on its own. That is, the `group` column entries for them will be their names.
   df <- .addMissingGroupings(df)
-
-  # Extracting observed vs simulated datasets to their own data frames for convenience
-  obsData <- dplyr::filter(df, dataType == "observed")
-  simData <- dplyr::filter(df, dataType == "simulated")
 
   # TimeProfilePlotConfiguration object -----------------------------
 
@@ -66,91 +63,74 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # plot -----------------------------
 
-  profilePlot <- tlf::plotTimeProfile(
-    data = as.data.frame(simData),
-    dataMapping = tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group"
-    ),
-    observedData = as.data.frame(obsData),
-    observedDataMapping = tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group",
-      error = "yErrorValues"
-    ),
-    plotConfiguration = individualTimeProfilePlotConfiguration
-  )
+  # Which dataset types are present?
+  datasetTypePresent <- .extractPresentDatasetTypes(dataCombined)
 
-  # Extract color and shape mappings
-  legendCaptionData <- tlf::getLegendCaption(profilePlot)
+  # both observed and simulated
+  if (datasetTypePresent == .presentDataTypes$Both) {
+    obsData <- dplyr::filter(df, dataType == "observed")
+    simData <- dplyr::filter(df, dataType == "simulated")
 
-  # Extract as many colors as there are datasets from the specified color palette.
-  colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+    profilePlot <- tlf::plotTimeProfile(
+      data = as.data.frame(simData),
+      dataMapping = tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group"
+      ),
+      observedData = as.data.frame(obsData),
+      observedDataMapping = tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group",
+        error = "yErrorValues"
+      ),
+      plotConfiguration = individualTimeProfilePlotConfiguration
+    )
 
-  # New version of legend mappings.
-  newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
+    # Extract color and shape mappings
+    legendCaptionData <- tlf::getLegendCaption(profilePlot)
 
-  # Update plot with these colors.
-  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+    # Extract as many colors as there are datasets from the specified color palette.
+    colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+
+    # New version of legend mappings.
+    newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
+
+    # Update plot with these colors.
+    profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+  }
+
+  # only observed
+  if (datasetTypePresent == .presentDataTypes$Observed) {
+    obsData <- dplyr::filter(df, dataType == "observed")
+
+    profilePlot <- tlf::plotTimeProfile(
+      observedData = as.data.frame(obsData),
+      observedDataMapping = tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group",
+        error = "yErrorValues"
+      ),
+      plotConfiguration = individualTimeProfilePlotConfiguration
+    )
+  }
+
+  # only simulated
+  if (datasetTypePresent == .presentDataTypes$Simulated) {
+    simData <- dplyr::filter(df, dataType == "simulated")
+
+    profilePlot <- tlf::plotTimeProfile(
+      data = as.data.frame(simData),
+      dataMapping = tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group"
+      ),
+      plotConfiguration = individualTimeProfilePlotConfiguration
+    )
+  }
 
   return(profilePlot)
-}
-
-
-#' Replace missing groupings with dataset names
-#'
-#' @description
-#'
-#' Datasets which haven't been assigned to any group will be plotted as a group
-#' on its own. That is, the `group` column entries for them will be their names.
-#'
-#' @param data A data frame returned by `DataCombined$toDataFrame()`.
-#'
-#' @examples
-#'
-#' df <- dplyr::tibble(
-#'   group = c(
-#'     "Stevens 2012 solid total",
-#'     "Stevens 2012 solid total",
-#'     NA,
-#'     NA,
-#'     NA
-#'   ),
-#'   name = c(
-#'     "Organism|Lumen|Stomach|Metformin|Gastric retention",
-#'     "Stevens_2012_placebo.Placebo_total",
-#'     "Stevens_2012_placebo.Sita_dist",
-#'     "Stevens_2012_placebo.Sita_proximal",
-#'     "Stevens_2012_placebo.Sita_total"
-#'   ),
-#'   dataType = c(
-#'     "simulated",
-#'     "observed",
-#'     "observed",
-#'     "observed",
-#'     "observed"
-#'   )
-#' )
-#'
-#' # original
-#' df
-#'
-#' # transformed
-#' ospsuite:::.addMissingGroupings(df)
-#'
-#' @keywords internal
-.addMissingGroupings <- function(data) {
-  data <- dplyr::mutate(
-    data,
-    group = dplyr::case_when(
-      # If grouping is missing, then use dataset name as its own grouping.
-      is.na(group) ~ name,
-      # Otherwise, no change.
-      TRUE ~ group
-    )
-  )
-
-  return(data)
 }
