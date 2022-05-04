@@ -434,6 +434,12 @@ initializeDimensionAndUnitLists <- function() {
 
   # internal --------------------------
 
+  # `yErrorUnit` column won't be present when only simulated datasets are
+  # entered, but it can be assumed to be the same as `yUnit`.
+  if (!"yErrorUnit" %in% names(data)) {
+    data <- dplyr::mutate(data, yErrorUnit = yUnit)
+  }
+
   # Add suffix `Split` to the following columns:
   # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
   data <- dplyr::mutate(
@@ -490,6 +496,7 @@ initializeDimensionAndUnitLists <- function() {
   # yUnit error
   if ("yErrorValues" %in% names(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
+
     data <- purrr::map_dfr(
       .x = yErrorDataList,
       .f = function(data) .yErrorUnitConverter(data, yTargetUnit, yTargetDim)
