@@ -36,21 +36,21 @@ plotPopulationTimeProfile <- function(dataCombined,
   # on its own. That is, the `group` column entries for them will be their names.
   df <- .addMissingGroupings(df)
 
-  # Extracting observed vs simulated datasets to their own data frames for convenience
+  # Extracting simulated datasets to its own data frame for convenience
+  # Observed datasets won't be visualized in this function.
   obsData <- dplyr::filter(df, dataType == "observed")
   simData <- dplyr::filter(df, dataType == "simulated")
 
   # Compute quantiles
-  simData <- simData %>%
-    # Compute across all individuals for each time point
-    dplyr::group_by(xValues) %>% #
-    dplyr::mutate(
+  simAggregatedData <- simData %>%
+    # For each dataset, compute across all individuals for each time point
+    dplyr::group_by(group, xValues) %>% #
+    dplyr::summarise(
       yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
       yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
       yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
-      .after = yValues # place the newly created columns after this column
-    ) %>%
-    dplyr::ungroup()
+      .groups = "drop" # drop grouping information from the summary data frame
+    )
 
   # TimeProfilePlotConfiguration object -----------------------------
 
@@ -83,18 +83,35 @@ plotPopulationTimeProfile <- function(dataCombined,
   # plot -----------------------------
 
   profilePlot <- tlf::plotTimeProfile(
-    data = as.data.frame(simData),
+    data = as.data.frame(simAggregatedData),
     dataMapping = tlf::TimeProfileDataMapping$new(
       x = "xValues",
       y = "yValuesCentral",
       ymin = "yValuesLower",
       ymax = "yValuesHigher",
-      #fill = "name",
-      #color = "name",
-      group = "name"
+      group = "group"
+    ),
+    observedData = as.data.frame(obsData),
+    observedDataMapping = tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group",
+      error = "yErrorValues"
     ),
     plotConfiguration = individualTimeProfilePlotConfiguration
   )
+
+  # Extract color and shape mappings
+  legendCaptionData <- tlf::getLegendCaption(profilePlot)
+
+  # Extract as many colors as there are datasets from the specified color palette.
+  colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+
+  # New version of legend mappings.
+  newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
+
+  # Update plot with these colors.
+  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
 
   return(profilePlot)
 }

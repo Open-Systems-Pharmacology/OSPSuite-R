@@ -225,14 +225,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
     ribbonsLinetype = tlf::Linetypes$solid,
-    ribbonsAlpha = 0.75,
+    ribbonsAlpha = 0.50,
 
     # errorbars
     # Color and fill are taken from point mapping, therefore no
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
     errorbarsLinetype = tlf::Linetypes$solid,
-    errorbarsAlpha = 0.5,
+    errorbarsAlpha = 0.75,
 
     # export
     plotSaveFileName = "figure",
