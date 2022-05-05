@@ -4,7 +4,6 @@ context("plotIndividualTimeProfile")
 
 # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 skip_on_os("linux")
-# skip_on_ci() # TODO: run on Appveyor
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
 
@@ -62,7 +61,6 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
   myPlotConfiguration$pointsSize <- 2.5
-  myPlotConfiguration$legendTitle <- "My Groupings"
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
   myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
 

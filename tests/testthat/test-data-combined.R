@@ -1104,8 +1104,6 @@ test_that("sequential update when first and second datasets have same names but 
 # `Population` objects -----------------------------
 
 test_that("data frame is as expected when `Population` objects are used", {
-
-
   # If no unit is specified, the default units are used. For "height" it is "dm",
   # for "weight" it is "kg", for "age" it is "year(s)".
   populationCharacteristics <- createPopulationCharacteristics(
