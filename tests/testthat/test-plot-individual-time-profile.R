@@ -21,6 +21,8 @@ dataSet <- loadDataSetsFromExcel(
   importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
+# both observed and simulated ------------------------
+
 # create a new instance and add datasets
 myCombDat <- DataCombined$new()
 myCombDat$addSimulationResults(
@@ -45,10 +47,10 @@ myCombDat$setGroups(
   groups = c("distal", "distal", "proximal", "proximal", "total", "total")
 )
 
-test_that("It creates default plots as expected", {
+test_that("It creates default plots as expected for both observed and simulated", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot and units",
+    title = "default plot - both",
     fig = plotIndividualTimeProfile(myCombDat)
   )
 })
@@ -68,5 +70,39 @@ test_that("It respects custom plot configuration", {
   vdiffr::expect_doppelganger(
     title = "custom plot config",
     fig = plotIndividualTimeProfile(myCombDat, myPlotConfiguration)
+  )
+})
+
+
+# only observed ------------------------
+
+myCombDat2 <- DataCombined$new()
+myCombDat2$addDataSets(dataSet)
+
+test_that("It creates default plots as expected for only observed", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "default plot - observed",
+    fig = plotIndividualTimeProfile(myCombDat2)
+  )
+})
+
+# only simulated ------------------------
+
+myCombDat3 <- DataCombined$new()
+myCombDat3$addSimulationResults(
+  simResults,
+  quantitiesOrPaths = c(
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
+    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention"
+  )
+)
+
+test_that("It creates default plots as expected for only simulated", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "default plot - simulated",
+    fig = plotIndividualTimeProfile(myCombDat3)
   )
 })
