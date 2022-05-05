@@ -57,13 +57,15 @@ Other plotting:
 \describe{
 \item{\code{xUnit, yUnit}}{Units for quantities plotted on x- and y-axes, respectively.}
 
-\item{\code{title, subtitle, xLabel, yLabel, legendTitle, watermark}}{A character string
-providing plot annotations for plot title, subtitle, x-axis label, y-axis
-label, plot legend, watermark, respectively.}
+\item{\code{title, subtitle, caption, xLabel, yLabel, legendTitle, watermark}}{A character
+string providing plot annotations for plot title, subtitle, caption, x-axis
+label, y-axis label, plot legend, watermark, respectively.}
 
 \item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign}}{Aesthetic properties for the plot title.}
 
 \item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign}}{Aesthetic properties for the plot subtitle.}
+
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign}}{Aesthetic properties for the plot caption.}
 
 \item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign}}{Aesthetic properties for the plot xLabel.}
 
@@ -120,13 +122,15 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \describe{
 \item{\code{xUnit, yUnit}}{Units for quantities plotted on x- and y-axes, respectively.}
 
-\item{\code{title, subtitle, xLabel, yLabel, legendTitle, watermark}}{A character string
-providing plot annotations for plot title, subtitle, x-axis label, y-axis
-label, plot legend, watermark, respectively.}
+\item{\code{title, subtitle, caption, xLabel, yLabel, legendTitle, watermark}}{A character
+string providing plot annotations for plot title, subtitle, caption, x-axis
+label, y-axis label, plot legend, watermark, respectively.}
 
 \item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign}}{Aesthetic properties for the plot title.}
 
 \item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign}}{Aesthetic properties for the plot subtitle.}
+
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign}}{Aesthetic properties for the plot caption.}
 
 \item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign}}{Aesthetic properties for the plot xLabel.}
 

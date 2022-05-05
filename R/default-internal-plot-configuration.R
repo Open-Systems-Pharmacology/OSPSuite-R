@@ -83,6 +83,17 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
     align = defaultPlotConfiguration$subtitleAlign
   )
 
+  labelCaption <- tlf::Label$new(
+    text = defaultPlotConfiguration$caption,
+    font = NULL,
+    color = defaultPlotConfiguration$captionColor,
+    size = defaultPlotConfiguration$captionSize,
+    fontFace = defaultPlotConfiguration$captionFontFace,
+    fontFamily = defaultPlotConfiguration$captionFontFamily,
+    angle = defaultPlotConfiguration$captionAngle,
+    align = defaultPlotConfiguration$captionAlign
+  )
+
   labelXLabel <- tlf::Label$new(
     text = defaultPlotConfiguration$xLabel,
     font = NULL,
@@ -108,6 +119,7 @@ DefaultInternalPlotConfiguration <- R6::R6Class(
   labels <- tlf::LabelConfiguration$new(
     title = labelTitle,
     subtitle = labelSubtitle,
+    caption = labelCaption,
     xlabel = labelXLabel,
     ylabel = labelYLabel
   )

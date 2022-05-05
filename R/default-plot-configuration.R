@@ -28,11 +28,12 @@
 #' seen with `ospsuite::ospUnits`.
 #'
 #' @field xUnit,yUnit Units for quantities plotted on x- and y-axes, respectively.
-#' @field title,subtitle,xLabel,yLabel,legendTitle,watermark A character string
-#'   providing plot annotations for plot title, subtitle, x-axis label, y-axis
-#'   label, plot legend, watermark, respectively.
+#' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character
+#'   string providing plot annotations for plot title, subtitle, caption, x-axis
+#'   label, y-axis label, plot legend, watermark, respectively.
 #' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle,titleAlign Aesthetic properties for the plot title.
 #' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle,subtitleAlign Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionAngle,captionAlign Aesthetic properties for the plot caption.
 #' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle,xLabelAlign Aesthetic properties for the plot xLabel.
 #' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle,yLabelAlign Aesthetic properties for the plot yLabel.
 #' @field legendPosition A character string defining the legend position.
@@ -103,6 +104,15 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleFontFamily = "",
     subtitleAngle = 0,
     subtitleAlign = tlf::Alignments$left,
+
+    # caption
+    caption = NULL,
+    captionColor = "black",
+    captionSize = 8,
+    captionFontFace = tlf::FontFaces$plain,
+    captionFontFamily = "",
+    captionAngle = 0,
+    captionAlign = tlf::Alignments$right,
 
     # xLabel
     xLabel = NULL,

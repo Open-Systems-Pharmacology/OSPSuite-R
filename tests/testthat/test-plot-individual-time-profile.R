@@ -4,7 +4,7 @@ context("plotIndividualTimeProfile")
 
 # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 skip_on_os("linux")
-skip_on_ci() # TODO: run on Appveyor
+# skip_on_ci() # TODO: run on Appveyor
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
 
@@ -46,8 +46,6 @@ myCombDat$setGroups(
 )
 
 test_that("It creates default plots as expected", {
-  # TODO:
-  # - legend doesn't match with colors and shapes
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "default plot and units",
@@ -59,14 +57,12 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
   myPlotConfiguration$title <- "My Plot Title"
+  myPlotConfiguration$subtitle <- "My Plot Subtitle"
+  myPlotConfiguration$caption <- "My Sources"
   myPlotConfiguration$pointsSize <- 2.5
   myPlotConfiguration$legendTitle <- "My Groupings"
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-
-  # TODO:
-  # - why are custom colors not mapped?
-  # - legend title not present
-  # myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
+  myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
 
   set.seed(123)
   vdiffr::expect_doppelganger(
