@@ -38,31 +38,13 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Create an instance of `defaultInternalPlotConfiguration` class
   defaultInternalPlotConfiguration <- .createDefaultInternalPlotConfiguration(defaultPlotConfiguration)
 
-  # Create an instance of `TimeProfilePlotConfiguration` class
-  individualTimeProfilePlotConfiguration <- tlf::TimeProfilePlotConfiguration$new()
-
-  individualTimeProfilePlotConfiguration$labels <- defaultInternalPlotConfiguration$labels
-  individualTimeProfilePlotConfiguration$legend <- defaultInternalPlotConfiguration$legend
-  individualTimeProfilePlotConfiguration$xAxis <- defaultInternalPlotConfiguration$xAxis
-  individualTimeProfilePlotConfiguration$yAxis <- defaultInternalPlotConfiguration$yAxis
-  individualTimeProfilePlotConfiguration$background <- defaultInternalPlotConfiguration$background
-  individualTimeProfilePlotConfiguration$lines <- defaultInternalPlotConfiguration$lines
-  individualTimeProfilePlotConfiguration$points <- defaultInternalPlotConfiguration$points
-  individualTimeProfilePlotConfiguration$ribbons <- defaultInternalPlotConfiguration$ribbons
-  individualTimeProfilePlotConfiguration$errorbars <- defaultInternalPlotConfiguration$errorbars
-  individualTimeProfilePlotConfiguration$export <- defaultInternalPlotConfiguration$export
-
-  # If axes labels haven't been specified, create them using dimensions and units.
-  xUnitString <- ifelse(unique(df$xUnit) == "", unique(df$xUnit), paste0(" [", unique(df$xUnit), "]"))
-  yUnitString <- ifelse(unique(df$yUnit) == "", unique(df$yUnit), paste0(" [", unique(df$yUnit), "]"))
-
-  individualTimeProfilePlotConfiguration$labels$xlabel$text <-
-    individualTimeProfilePlotConfiguration$labels$xlabel$text %||%
-    paste0(unique(df$xDimension), xUnitString)
-
-  individualTimeProfilePlotConfiguration$labels$ylabel$text <-
-    individualTimeProfilePlotConfiguration$labels$ylabel$text %||%
-    paste0(unique(df$yDimension), yUnitString)
+  # Create an instance of `TimeProfilePlotConfiguration` class by doing a
+  # one-to-one mapping of internal plot configuration object's public fields
+  populationTimeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
+    data = df,
+    specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
+    generalPlotConfiguration = defaultInternalPlotConfiguration
+  )
 
   # plot -----------------------------
 
@@ -88,7 +70,7 @@ plotIndividualTimeProfile <- function(dataCombined,
         group = "group",
         error = "yErrorValues"
       ),
-      plotConfiguration = individualTimeProfilePlotConfiguration
+      plotConfiguration = populationTimeProfilePlotConfiguration
     )
 
     # Extract color and shape mappings
@@ -116,7 +98,7 @@ plotIndividualTimeProfile <- function(dataCombined,
         group = "group",
         error = "yErrorValues"
       ),
-      plotConfiguration = individualTimeProfilePlotConfiguration
+      plotConfiguration = populationTimeProfilePlotConfiguration
     )
   }
 
@@ -131,7 +113,7 @@ plotIndividualTimeProfile <- function(dataCombined,
         y = "yValues",
         group = "group"
       ),
-      plotConfiguration = individualTimeProfilePlotConfiguration
+      plotConfiguration = populationTimeProfilePlotConfiguration
     )
   }
 

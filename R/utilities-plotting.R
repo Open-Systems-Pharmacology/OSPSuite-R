@@ -106,3 +106,37 @@
 
   return(simAggregatedData)
 }
+
+#' Create plot-specific `tlf::PlotConfiguration` object
+#'
+#' @keywords internal
+#' @noRd
+.convertGeneralToSpecificPlotConfiguration <- function(data,
+                                                       specificPlotConfiguration,
+                                                       generalPlotConfiguration) {
+  # Do one-to-one mappings of public fields
+  specificPlotConfiguration$labels <- generalPlotConfiguration$labels
+  specificPlotConfiguration$legend <- generalPlotConfiguration$legend
+  specificPlotConfiguration$xAxis <- generalPlotConfiguration$xAxis
+  specificPlotConfiguration$yAxis <- generalPlotConfiguration$yAxis
+  specificPlotConfiguration$background <- generalPlotConfiguration$background
+  specificPlotConfiguration$lines <- generalPlotConfiguration$lines
+  specificPlotConfiguration$points <- generalPlotConfiguration$points
+  specificPlotConfiguration$ribbons <- generalPlotConfiguration$ribbons
+  specificPlotConfiguration$errorbars <- generalPlotConfiguration$errorbars
+  specificPlotConfiguration$export <- generalPlotConfiguration$export
+
+  # If axes labels haven't been specified, create them using dimensions and units.
+  xUnitString <- ifelse(unique(data$xUnit) == "", unique(data$xUnit), paste0(" [", unique(data$xUnit), "]"))
+  yUnitString <- ifelse(unique(data$yUnit) == "", unique(data$yUnit), paste0(" [", unique(data$yUnit), "]"))
+
+  specificPlotConfiguration$labels$xlabel$text <-
+    specificPlotConfiguration$labels$xlabel$text %||%
+    paste0(unique(data$xDimension), xUnitString)
+
+  specificPlotConfiguration$labels$ylabel$text <-
+    specificPlotConfiguration$labels$ylabel$text %||%
+    paste0(unique(data$yDimension), yUnitString)
+
+  return(specificPlotConfiguration)
+}
