@@ -126,9 +126,17 @@
   specificPlotConfiguration$errorbars <- generalPlotConfiguration$errorbars
   specificPlotConfiguration$export <- generalPlotConfiguration$export
 
+  # In the code below, `.unitConverter()` has already ensured that there is only
+  # a single unit for x and y quantities, so we can safely take the unique unit
+  # to prepare axes labels.
+
   # If axes labels haven't been specified, create them using dimensions and units.
-  xUnitString <- ifelse(unique(data$xUnit) == "", unique(data$xUnit), paste0(" [", unique(data$xUnit), "]"))
-  yUnitString <- ifelse(unique(data$yUnit) == "", unique(data$yUnit), paste0(" [", unique(data$yUnit), "]"))
+  # If quantities are unitless, no unit information will be displayed, otherwise
+  # `Dimension [Unit]` pattern will be followed.
+  xUnitString <- unique(data$xUnit)
+  yUnitString <- unique(data$yUnit)
+  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
+  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
 
   specificPlotConfiguration$labels$xlabel$text <-
     specificPlotConfiguration$labels$xlabel$text %||%

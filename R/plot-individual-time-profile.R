@@ -33,17 +33,14 @@ plotIndividualTimeProfile <- function(dataCombined,
   # on its own. That is, the `group` column entries for them will be their names.
   df <- .addMissingGroupings(df)
 
-  # TimeProfilePlotConfiguration object -----------------------------
-
-  # Create an instance of `defaultInternalPlotConfiguration` class
-  defaultInternalPlotConfiguration <- .createDefaultInternalPlotConfiguration(defaultPlotConfiguration)
+  # `TimeProfilePlotConfiguration` object -----------------------------
 
   # Create an instance of `TimeProfilePlotConfiguration` class by doing a
   # one-to-one mapping of internal plot configuration object's public fields
   populationTimeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     data = df,
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
-    generalPlotConfiguration = defaultInternalPlotConfiguration
+    generalPlotConfiguration = .createDefaultInternalPlotConfiguration(defaultPlotConfiguration)
   )
 
   # plot -----------------------------
