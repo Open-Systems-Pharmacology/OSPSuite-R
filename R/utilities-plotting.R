@@ -98,9 +98,9 @@
     # For each dataset, compute across all individuals for each time point
     dplyr::group_by(group, xValues) %>% #
     dplyr::summarise(
-      yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
+      yValuesLower = stats::quantile(yValues, quantiles[[1]]),
       yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
-      yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
+      yValuesHigher = stats::quantile(yValues, quantiles[[3]]),
       .groups = "drop" # drop grouping information from the summary data frame
     )
 
@@ -114,17 +114,263 @@
 .convertGeneralToSpecificPlotConfiguration <- function(data,
                                                        specificPlotConfiguration,
                                                        generalPlotConfiguration) {
+  # labels object ---------------------------------------
+
+  labelTitle <- tlf::Label$new(
+    text = generalPlotConfiguration$title,
+    font = NULL,
+    color = generalPlotConfiguration$titleColor,
+    size = generalPlotConfiguration$titleSize,
+    fontFace = generalPlotConfiguration$titleFontFace,
+    fontFamily = generalPlotConfiguration$titleFontFamily,
+    angle = generalPlotConfiguration$titleAngle,
+    align = generalPlotConfiguration$titleAlign
+  )
+
+  labelSubtitle <- tlf::Label$new(
+    text = generalPlotConfiguration$subtitle,
+    font = NULL,
+    color = generalPlotConfiguration$subtitleColor,
+    size = generalPlotConfiguration$subtitleSize,
+    fontFace = generalPlotConfiguration$subtitleFontFace,
+    fontFamily = generalPlotConfiguration$subtitleFontFamily,
+    angle = generalPlotConfiguration$subtitleAngle,
+    align = generalPlotConfiguration$subtitleAlign
+  )
+
+  labelCaption <- tlf::Label$new(
+    text = generalPlotConfiguration$caption,
+    font = NULL,
+    color = generalPlotConfiguration$captionColor,
+    size = generalPlotConfiguration$captionSize,
+    fontFace = generalPlotConfiguration$captionFontFace,
+    fontFamily = generalPlotConfiguration$captionFontFamily,
+    angle = generalPlotConfiguration$captionAngle,
+    align = generalPlotConfiguration$captionAlign
+  )
+
+  labelXLabel <- tlf::Label$new(
+    text = generalPlotConfiguration$xLabel,
+    font = NULL,
+    color = generalPlotConfiguration$xLabelColor,
+    size = generalPlotConfiguration$xLabelSize,
+    fontFace = generalPlotConfiguration$xLabelFontFace,
+    fontFamily = generalPlotConfiguration$xLabelFontFamily,
+    angle = generalPlotConfiguration$xLabelAngle,
+    align = generalPlotConfiguration$xLabelAlign
+  )
+
+  labelYLabel <- tlf::Label$new(
+    text = generalPlotConfiguration$yLabel,
+    font = NULL,
+    color = generalPlotConfiguration$yLabelColor,
+    size = generalPlotConfiguration$yLabelSize,
+    fontFace = generalPlotConfiguration$yLabelFontFace,
+    fontFamily = generalPlotConfiguration$yLabelFontFamily,
+    angle = generalPlotConfiguration$yLabelAngle,
+    align = generalPlotConfiguration$yLabelAlign
+  )
+
+  labels <- tlf::LabelConfiguration$new(
+    title = labelTitle,
+    subtitle = labelSubtitle,
+    caption = labelCaption,
+    xlabel = labelXLabel,
+    ylabel = labelYLabel
+  )
+
+  # legend object ---------------------------------------
+
+  legendTitleFont <- tlf::Font$new(
+    size = generalPlotConfiguration$legendTitleSize,
+    color = generalPlotConfiguration$legendTitleColor,
+    fontFamily = generalPlotConfiguration$legendTitleFontFamily,
+    fontFace = generalPlotConfiguration$legendTitleFontFace,
+    angle = generalPlotConfiguration$legendTitleAngle,
+    align = generalPlotConfiguration$legendTitleAlign
+  )
+
+  legendCaptionFont <- tlf::Font$new(
+    size = generalPlotConfiguration$legendCaptionSize,
+    color = generalPlotConfiguration$legendCaptionColor,
+    fontFamily = generalPlotConfiguration$legendCaptionFontFamily,
+    fontFace = generalPlotConfiguration$legendCaptionFontFace,
+    angle = generalPlotConfiguration$legendCaptionAngle,
+    align = generalPlotConfiguration$legendCaptionAlign
+  )
+
+  legendConfiguration <- tlf::LegendConfiguration$new(
+    position = generalPlotConfiguration$legendPosition,
+    caption = NULL,
+    title = generalPlotConfiguration$legendTitle,
+    font = generalPlotConfiguration$legendCaptionFont,
+    background = NULL
+  )
+
+  # background objects -----------------------------------
+
+  labelWatermark <- tlf::Label$new(
+    text = generalPlotConfiguration$watermark,
+    font = NULL,
+    color = generalPlotConfiguration$watermarkColor,
+    size = generalPlotConfiguration$watermarkSize,
+    fontFace = generalPlotConfiguration$watermarkFontFace,
+    fontFamily = generalPlotConfiguration$watermarkFontFamily,
+    angle = generalPlotConfiguration$watermarkAngle,
+    align = generalPlotConfiguration$watermarkAlign
+  )
+
+  plotBackground <- tlf::BackgroundElement$new(
+    fill = generalPlotConfiguration$plotBackgroundFill,
+    color = generalPlotConfiguration$plotBackgroundColor,
+    size = generalPlotConfiguration$plotBackgroundSize,
+    linetype = generalPlotConfiguration$plotBackgroundLinetype
+  )
+
+  plotPanelBackground <- tlf::BackgroundElement$new(
+    fill = generalPlotConfiguration$plotPanelBackgroundFill,
+    color = generalPlotConfiguration$plotPanelBackgroundColor,
+    size = generalPlotConfiguration$plotPanelBackgroundSize,
+    linetype = generalPlotConfiguration$plotPanelBackgroundLinetype
+  )
+
+  xAxis <- tlf::LineElement$new(
+    color = generalPlotConfiguration$xAxisColor,
+    size = generalPlotConfiguration$xAxisSize,
+    linetype = generalPlotConfiguration$xAxisLinetype
+  )
+
+  yAxis <- tlf::LineElement$new(
+    color = generalPlotConfiguration$yAxisColor,
+    size = generalPlotConfiguration$yAxisSize,
+    linetype = generalPlotConfiguration$yAxisLinetype
+  )
+
+  xGrid <- tlf::LineElement$new(
+    color = generalPlotConfiguration$xGridColor,
+    size = generalPlotConfiguration$xGridSize,
+    linetype = generalPlotConfiguration$xGridLinetype
+  )
+
+  yGrid <- tlf::LineElement$new(
+    color = generalPlotConfiguration$yGridColor,
+    size = generalPlotConfiguration$yGridSize,
+    linetype = generalPlotConfiguration$yGridLinetype
+  )
+
+  background <- tlf::BackgroundConfiguration$new(
+    watermark = generalPlotConfiguration$labelWatermark,
+    plot = generalPlotConfiguration$plotBackground,
+    panel = generalPlotConfiguration$plotPanelBackground,
+    xAxis = generalPlotConfiguration$xAxis,
+    yAxis = generalPlotConfiguration$yAxis,
+    xGrid = generalPlotConfiguration$xGrid,
+    yGrid = generalPlotConfiguration$yGrid
+  )
+
+  # xAxis objects -----------------------------------
+
+  xAxisFont <- tlf::Font$new(
+    size = generalPlotConfiguration$xAxisLabelTicksSize,
+    color = generalPlotConfiguration$xAxisLabelTicksColor,
+    fontFamily = generalPlotConfiguration$xAxisLabelTicksFontFamily,
+    fontFace = generalPlotConfiguration$xAxisLabelTicksFontFace,
+    angle = generalPlotConfiguration$xAxisLabelTicksAngle,
+    align = generalPlotConfiguration$xAxisLabelTicksAlign
+  )
+
+  xAxisConfiguration <- tlf::XAxisConfiguration$new(
+    limits = generalPlotConfiguration$xAxisLimits,
+    scale = generalPlotConfiguration$xAxisScale,
+    ticks = generalPlotConfiguration$xAxisTicks,
+    ticklabels = generalPlotConfiguration$xAxisTicksLabels,
+    font = generalPlotConfiguration$xAxisFont
+  )
+
+  # yAxis objects -----------------------------------
+
+  yAxisFont <- tlf::Font$new(
+    size = generalPlotConfiguration$yAxisLabelTicksSize,
+    color = generalPlotConfiguration$yAxisLabelTicksColor,
+    fontFamily = generalPlotConfiguration$yAxisLabelTicksFontFamily,
+    fontFace = generalPlotConfiguration$yAxisLabelTicksFontFace,
+    angle = generalPlotConfiguration$yAxisLabelTicksAngle,
+    align = generalPlotConfiguration$yAxisLabelTicksAlign
+  )
+
+  yAxisConfiguration <- tlf::YAxisConfiguration$new(
+    limits = generalPlotConfiguration$yAxisLimits,
+    scale = generalPlotConfiguration$yAxisScale,
+    ticks = generalPlotConfiguration$yAxisTicks,
+    ticklabels = generalPlotConfiguration$yAxisTicksLabels,
+    font = generalPlotConfiguration$yAxisFont
+  )
+
+  # lines -------------------------------------------------------
+
+  linesConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = generalPlotConfiguration$linesColor,
+    shape = generalPlotConfiguration$linesShape,
+    size = generalPlotConfiguration$linesSize,
+    linetype = generalPlotConfiguration$linesLinetype,
+    alpha = generalPlotConfiguration$linesAlpha
+  )
+
+  # points -------------------------------------------------------
+
+  pointsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = generalPlotConfiguration$pointsColor,
+    fill = generalPlotConfiguration$pointsFill,
+    shape = generalPlotConfiguration$pointsShape,
+    size = generalPlotConfiguration$pointsSize,
+    linetype = generalPlotConfiguration$pointsLinetype,
+    alpha = generalPlotConfiguration$pointsAlpha
+  )
+
+  # ribbons -------------------------------------------------------
+
+  ribbonsConfiguration <- tlf::ThemeAestheticSelections$new(
+    color = generalPlotConfiguration$ribbonsColor,
+    fill = generalPlotConfiguration$ribbonsFill,
+    shape = generalPlotConfiguration$ribbonsShape,
+    size = generalPlotConfiguration$ribbonsSize,
+    linetype = generalPlotConfiguration$ribbonsLinetype,
+    alpha = generalPlotConfiguration$ribbonsAlpha
+  )
+
+  # errorbars -------------------------------------------------------
+
+  errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
+    shape = generalPlotConfiguration$errorbarsShape,
+    size = generalPlotConfiguration$errorbarsSize,
+    linetype = generalPlotConfiguration$errorbarsLinetype,
+    alpha = generalPlotConfiguration$errorbarsAlpha
+  )
+
+  # export -------------------------------------------------------
+
+  exportConfiguration <- tlf::ExportConfiguration$new(
+    name = generalPlotConfiguration$plotSaveFileName,
+    format = generalPlotConfiguration$plotSaveFileFormat,
+    width = generalPlotConfiguration$plotSaveFileWidth,
+    height = generalPlotConfiguration$plotSaveFileHeight,
+    units = generalPlotConfiguration$plotSaveFileDimensionUnits,
+    dpi = generalPlotConfiguration$plotSaveFileDpi
+  )
+
+  # Update specific plot configuration object ----------------------
+
   # Do one-to-one mappings of public fields
-  specificPlotConfiguration$labels <- generalPlotConfiguration$labels
-  specificPlotConfiguration$legend <- generalPlotConfiguration$legend
-  specificPlotConfiguration$xAxis <- generalPlotConfiguration$xAxis
-  specificPlotConfiguration$yAxis <- generalPlotConfiguration$yAxis
-  specificPlotConfiguration$background <- generalPlotConfiguration$background
-  specificPlotConfiguration$lines <- generalPlotConfiguration$lines
-  specificPlotConfiguration$points <- generalPlotConfiguration$points
-  specificPlotConfiguration$ribbons <- generalPlotConfiguration$ribbons
-  specificPlotConfiguration$errorbars <- generalPlotConfiguration$errorbars
-  specificPlotConfiguration$export <- generalPlotConfiguration$export
+  specificPlotConfiguration$labels <- labels
+  specificPlotConfiguration$legend <- legendConfiguration
+  specificPlotConfiguration$xAxis <- xAxisConfiguration
+  specificPlotConfiguration$yAxis <- yAxisConfiguration
+  specificPlotConfiguration$background <- background
+  specificPlotConfiguration$lines <- linesConfiguration
+  specificPlotConfiguration$points <- pointsConfiguration
+  specificPlotConfiguration$ribbons <- ribbonsConfiguration
+  specificPlotConfiguration$errorbars <- errorbarsConfiguration
+  specificPlotConfiguration$export <- exportConfiguration
 
   # In the code below, `.unitConverter()` has already ensured that there is only
   # a single unit for x and y quantities, so we can safely take the unique unit

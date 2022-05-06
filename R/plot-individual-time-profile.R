@@ -40,7 +40,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   populationTimeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     data = df,
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
-    generalPlotConfiguration = .createDefaultInternalPlotConfiguration(defaultPlotConfiguration)
+    generalPlotConfiguration = defaultPlotConfiguration
   )
 
   # plot -----------------------------

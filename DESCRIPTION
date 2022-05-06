@@ -50,7 +50,6 @@ Collate:
     'data-importer-configuration.R'
     'data-repository.R'
     'data-set.R'
-    'default-internal-plot-configuration.R'
     'default-plot-configuration.R'
     'dot-net-wrapper.R'
     'entity.R'
