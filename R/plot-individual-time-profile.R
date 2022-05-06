@@ -53,13 +53,16 @@ plotIndividualTimeProfile <- function(dataCombined,
   individualTimeProfilePlotConfiguration$export <- defaultInternalPlotConfiguration$export
 
   # If axes labels haven't been specified, create them using dimensions and units.
+  xUnitString <- ifelse(unique(df$xUnit) == "", unique(df$xUnit), paste0(" [", unique(df$xUnit), "]"))
+  yUnitString <- ifelse(unique(df$yUnit) == "", unique(df$yUnit), paste0(" [", unique(df$yUnit), "]"))
+
   individualTimeProfilePlotConfiguration$labels$xlabel$text <-
     individualTimeProfilePlotConfiguration$labels$xlabel$text %||%
-    paste0(unique(df$xDimension), " [", unique(df$xUnit), "]")
+    paste0(unique(df$xDimension), xUnitString)
 
   individualTimeProfilePlotConfiguration$labels$ylabel$text <-
     individualTimeProfilePlotConfiguration$labels$ylabel$text %||%
-    paste0(unique(df$yDimension), " [", unique(df$yUnit), "]")
+    paste0(unique(df$yDimension), yUnitString)
 
   # plot -----------------------------
 

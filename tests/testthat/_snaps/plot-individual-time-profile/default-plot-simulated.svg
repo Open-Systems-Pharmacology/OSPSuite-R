@@ -130,7 +130,7 @@
 <text x='561.58' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='16.69px' lengthAdjust='spacingAndGlyphs'>200</text>
 <text x='683.93' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='16.69px' lengthAdjust='spacingAndGlyphs'>250</text>
 <text x='378.05' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='46.67px' lengthAdjust='spacingAndGlyphs'>Time [min]</text>
-<text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='44.46px' lengthAdjust='spacingAndGlyphs'>Fraction []</text>
+<text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='36.13px' lengthAdjust='spacingAndGlyphs'>Fraction</text>
 <rect x='407.87' y='18.97' width='289.82' height='68.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='413.35' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='415.08' y1='38.56' x2='428.91' y2='38.56' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />

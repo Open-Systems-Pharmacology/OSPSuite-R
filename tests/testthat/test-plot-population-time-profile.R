@@ -42,7 +42,6 @@ myDataComb$addSimulationResults(populationResults)
 
 test_that("It respects custom plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
-  myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
@@ -53,7 +52,7 @@ test_that("It respects custom plot configuration", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "custom plot config",
-    fig = plotPopulationTimeProfile(myCombDat, myPlotConfiguration, quantiles = c(0.1, 0.5, 0.9))
+    fig = plotPopulationTimeProfile(myDataComb, myPlotConfiguration, quantiles = c(0.1, 0.5, 0.9))
   )
 })
 
