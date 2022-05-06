@@ -171,7 +171,7 @@
     align = generalPlotConfiguration$yLabelAlign
   )
 
-  labels <- tlf::LabelConfiguration$new(
+  labelConfiguration <- tlf::LabelConfiguration$new(
     title = labelTitle,
     subtitle = labelSubtitle,
     caption = labelCaption,
@@ -258,7 +258,7 @@
     linetype = generalPlotConfiguration$yGridLinetype
   )
 
-  background <- tlf::BackgroundConfiguration$new(
+  backgroundConfiguration <- tlf::BackgroundConfiguration$new(
     watermark = generalPlotConfiguration$labelWatermark,
     plot = generalPlotConfiguration$plotBackground,
     panel = generalPlotConfiguration$plotPanelBackground,
@@ -361,11 +361,11 @@
   # Update specific plot configuration object ----------------------
 
   # Do one-to-one mappings of public fields
-  specificPlotConfiguration$labels <- labels
+  specificPlotConfiguration$labels <- labelConfiguration
   specificPlotConfiguration$legend <- legendConfiguration
   specificPlotConfiguration$xAxis <- xAxisConfiguration
   specificPlotConfiguration$yAxis <- yAxisConfiguration
-  specificPlotConfiguration$background <- background
+  specificPlotConfiguration$background <- backgroundConfiguration
   specificPlotConfiguration$lines <- linesConfiguration
   specificPlotConfiguration$points <- pointsConfiguration
   specificPlotConfiguration$ribbons <- ribbonsConfiguration
@@ -375,15 +375,16 @@
   # In the code below, `.unitConverter()` has already ensured that there is only
   # a single unit for x and y quantities, so we can safely take the unique unit
   # to prepare axes labels.
-
-  # If axes labels haven't been specified, create them using dimensions and units.
-  # If quantities are unitless, no unit information will be displayed, otherwise
-  # `Dimension [Unit]` pattern will be followed.
   xUnitString <- unique(data$xUnit)
   yUnitString <- unique(data$yUnit)
+
+  # If quantities are unitless, no unit information will be displayed, otherwise
+  # `Dimension [Unit]` pattern will be followed.
   xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
   yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
 
+
+  # If axes labels haven't been specified, create them using dimensions and units.
   specificPlotConfiguration$labels$xlabel$text <-
     specificPlotConfiguration$labels$xlabel$text %||%
     paste0(unique(data$xDimension), xUnitString)

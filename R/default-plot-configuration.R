@@ -220,7 +220,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # with color. There is already `linesColor` for that.
     linesColor = tlf::ColorMaps$ospDefault,
     linesSize = 1,
-    linesLinetype = tlf::Linetypes$dashed,
+    linesLinetype = names(tlf::Linetypes),
     linesAlpha = 0.75,
 
     # points
@@ -234,7 +234,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     ribbonsColor = tlf::ColorMaps$ospDefault, # colors for edgelines of a ribbon
     ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
-    ribbonsLinetype = tlf::Linetypes$solid,
+    ribbonsLinetype = names(tlf::Linetypes),
     ribbonsAlpha = 0.50,
 
     # errorbars
