@@ -107,9 +107,9 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
-\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+\item{\code{pointsColor, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 
-\item{\code{ribbonsColor, ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+\item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
@@ -169,9 +169,9 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
-\item{\code{pointsColor, pointsFill, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+\item{\code{pointsColor, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 
-\item{\code{ribbonsColor, ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+\item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 

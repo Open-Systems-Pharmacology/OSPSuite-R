@@ -56,8 +56,8 @@
 #' @field xGridColor,xGridSize,xGridLinetype A character string specifying the aesthetic properties for the x-axis grid.
 #' @field yGridColor,yGridSize,yGridLinetype A character string specifying the aesthetic properties for the y-axis grid.
 #' @field linesColor,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
-#' @field pointsColor,pointsFill,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
-#' @field ribbonsColor,ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
+#' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
+#' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
 #' @field plotSaveFileName,plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits,plotSaveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
 #'
@@ -220,18 +220,20 @@ DefaultPlotConfiguration <- R6::R6Class(
     # with color. There is already `linesColor` for that.
     linesColor = tlf::ColorMaps$ospDefault,
     linesSize = 1,
-    linesLinetype = names(tlf::Linetypes),
+    linesLinetype = tlf::Linetypes$dashed,
     linesAlpha = 0.75,
 
     # points
+    # There is no `pointsFill` because it doesn't make sense to "fill" a line
+    # with color. There is already `pointsColor` for that.
     pointsColor = tlf::ColorMaps$ospDefault,
-    pointsFill = tlf::ColorMaps$ospDefault,
     pointsShape = names(tlf::Shapes),
     pointsSize = 3,
     pointsAlpha = 0.75,
 
     # ribbons
-    ribbonsColor = tlf::ColorMaps$ospDefault, # colors for edgelines of a ribbon
+    # There is no `ribbonsColor` because it doesn't make sense to color a
+    # ribbon. There is already `ribbonsFill` for that.
     ribbonsFill = tlf::ColorMaps$ospDefault,
     ribbonsSize = 1,
     ribbonsLinetype = names(tlf::Linetypes),

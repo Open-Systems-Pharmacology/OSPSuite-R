@@ -109,16 +109,23 @@
 
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
+#' @param data A data frame containing information about dimensions and units
+#'   for the x-and y-axes quantities.
+#' @param specificPlotConfiguration A specific subclass of
+#'   `tlf::PlotConfiguration` needed for the given plot.
+#' @param generalPlotConfiguration A `DefaultPlotConfiguration` object.
+#'
 #' @keywords internal
 #' @noRd
 .convertGeneralToSpecificPlotConfiguration <- function(data,
                                                        specificPlotConfiguration,
                                                        generalPlotConfiguration) {
+  validateIsOfType(generalPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
+
   # labels object ---------------------------------------
 
   labelTitle <- tlf::Label$new(
     text = generalPlotConfiguration$title,
-    font = NULL,
     color = generalPlotConfiguration$titleColor,
     size = generalPlotConfiguration$titleSize,
     fontFace = generalPlotConfiguration$titleFontFace,
@@ -129,7 +136,6 @@
 
   labelSubtitle <- tlf::Label$new(
     text = generalPlotConfiguration$subtitle,
-    font = NULL,
     color = generalPlotConfiguration$subtitleColor,
     size = generalPlotConfiguration$subtitleSize,
     fontFace = generalPlotConfiguration$subtitleFontFace,
@@ -140,7 +146,6 @@
 
   labelCaption <- tlf::Label$new(
     text = generalPlotConfiguration$caption,
-    font = NULL,
     color = generalPlotConfiguration$captionColor,
     size = generalPlotConfiguration$captionSize,
     fontFace = generalPlotConfiguration$captionFontFace,
@@ -151,7 +156,6 @@
 
   labelXLabel <- tlf::Label$new(
     text = generalPlotConfiguration$xLabel,
-    font = NULL,
     color = generalPlotConfiguration$xLabelColor,
     size = generalPlotConfiguration$xLabelSize,
     fontFace = generalPlotConfiguration$xLabelFontFace,
@@ -162,7 +166,6 @@
 
   labelYLabel <- tlf::Label$new(
     text = generalPlotConfiguration$yLabel,
-    font = NULL,
     color = generalPlotConfiguration$yLabelColor,
     size = generalPlotConfiguration$yLabelSize,
     fontFace = generalPlotConfiguration$yLabelFontFace,
@@ -211,7 +214,6 @@
 
   labelWatermark <- tlf::Label$new(
     text = generalPlotConfiguration$watermark,
-    font = NULL,
     color = generalPlotConfiguration$watermarkColor,
     size = generalPlotConfiguration$watermarkSize,
     fontFace = generalPlotConfiguration$watermarkFontFace,
@@ -320,7 +322,6 @@
 
   pointsConfiguration <- tlf::ThemeAestheticSelections$new(
     color = generalPlotConfiguration$pointsColor,
-    fill = generalPlotConfiguration$pointsFill,
     shape = generalPlotConfiguration$pointsShape,
     size = generalPlotConfiguration$pointsSize,
     linetype = generalPlotConfiguration$pointsLinetype,
@@ -330,7 +331,6 @@
   # ribbons -------------------------------------------------------
 
   ribbonsConfiguration <- tlf::ThemeAestheticSelections$new(
-    color = generalPlotConfiguration$ribbonsColor,
     fill = generalPlotConfiguration$ribbonsFill,
     shape = generalPlotConfiguration$ribbonsShape,
     size = generalPlotConfiguration$ribbonsSize,
@@ -372,26 +372,55 @@
   specificPlotConfiguration$errorbars <- errorbarsConfiguration
   specificPlotConfiguration$export <- exportConfiguration
 
+  # Axes labels -----------------------------------
+
+  # If axes labels haven't been specified, create them using dimensions and units.
+
   # In the code below, `.unitConverter()` has already ensured that there is only
   # a single unit for x and y quantities, so we can safely take the unique unit
   # to prepare axes labels.
   xUnitString <- unique(data$xUnit)
   yUnitString <- unique(data$yUnit)
 
-  # If quantities are unitless, no unit information will be displayed, otherwise
-  # `Dimension [Unit]` pattern will be followed.
+  # If quantities are unitless, no unit information will be displayed.
+  # Otherwise, `Dimension [Unit]` pattern will be followed.
   xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
   yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
 
 
-  # If axes labels haven't been specified, create them using dimensions and units.
-  specificPlotConfiguration$labels$xlabel$text <-
-    specificPlotConfiguration$labels$xlabel$text %||%
-    paste0(unique(data$xDimension), xUnitString)
+  # The exact axis label will depend on the type of the plot, and the type
+  # of the plot can be guessed using the specific `PlotConfiguration` object
+  # entered in this function.
+  #
+  # If the specific `PlotConfiguration` object is not any of the cases included
+  # in the `switch` below, the result will be no change; i.e., the labels will
+  # continue to be `NULL`.
 
-  specificPlotConfiguration$labels$ylabel$text <-
-    specificPlotConfiguration$labels$ylabel$text %||%
-    paste0(unique(data$yDimension), yUnitString)
+  # x-axis label
+  if (is.null(specificPlotConfiguration$labels$xlabel$text)) {
+    xUnitString <- paste0(unique(data$xDimension), xUnitString)
+
+    xUnitString <- switch(class(specificPlotConfiguration)[[1]],
+      "TimeProfilePlotConfiguration" = xUnitString,
+      "ResVsPredPlotConfiguration" = xUnitString,
+      "ObsVsPredPlotConfiguration" = paste0("Observed values (", xUnitString, ")")
+    )
+
+    specificPlotConfiguration$labels$xlabel$text <- xUnitString
+  }
+
+  # y-axis label
+  if (is.null(specificPlotConfiguration$labels$ylabel$text)) {
+    yUnitString <- paste0(unique(data$yDimension), yUnitString)
+
+    yUnitString <- switch(class(specificPlotConfiguration)[[1]],
+      "TimeProfilePlotConfiguration" = yUnitString,
+      "ResVsPredPlotConfiguration" = "Residuals",
+      "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    )
+
+    specificPlotConfiguration$labels$ylabel$text <- yUnitString
+  }
 
   return(specificPlotConfiguration)
 }
