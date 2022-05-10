@@ -122,6 +122,84 @@
                                                        generalPlotConfiguration) {
   validateIsOfType(generalPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
+  # Plot-specific configuration defaults -----------------------------------
+
+  # The default plot configuration and the labels will vary from plot-to-plot.
+  #
+  # For example, although the axes labels for profile plots will be (e.g.) "Time
+  # vs Fraction", it will be "observed vs simulated values" with the same unit
+  # for scatter plot. Additionally, mapping group to line colors might be
+  # desirable for a profile plot, it is not so for scatter plots.
+
+  # The type of plot can be guessed from the specific `PlotConfiguration` object
+  # used, since each plot has a unique corresponding class.
+  plotType <- class(specificPlotConfiguration)[[1]]
+
+  # For `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`
+  if (plotType == "TimeProfilePlotConfiguration") {
+    generalPlotConfiguration$pointsColor <- generalPlotConfiguration$pointsColor %||% tlf::ColorMaps$ospDefault
+    generalPlotConfiguration$pointsShape <- generalPlotConfiguration$pointsShape %||% names(tlf::Shapes)
+
+    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
+
+    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideTopRight
+  }
+
+  # For `plotObservedVsSimulated()`
+  if (plotType == "ObsVsPredPlotConfiguration") {
+    generalPlotConfiguration$pointsColor <- generalPlotConfiguration$pointsColor %||% tlf::ColorMaps$ospDefault
+    generalPlotConfiguration$pointsShape <- generalPlotConfiguration$pointsShape %||% names(tlf::Shapes)
+
+    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
+
+    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
+  }
+
+  # Axes labels -----------------------------------
+
+  # If axes labels haven't been specified, create them using dimensions and units.
+
+  # In the code below, `.unitConverter()` has already ensured that there is only
+  # a single unit for x and y quantities, so we can safely take the unique unit
+  # to prepare axes labels.
+  xUnitString <- unique(data$xUnit)
+  yUnitString <- unique(data$yUnit)
+
+  # If quantities are unitless, no unit information will be displayed.
+  # Otherwise, `Dimension [Unit]` pattern will be followed.
+  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
+  xUnitString <- paste0(unique(data$xDimension), xUnitString)
+  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
+  yUnitString <- paste0(unique(data$yDimension), yUnitString)
+
+  # The exact axis label will depend on the type of the plot, and the type
+  # of the plot can be guessed using the specific `PlotConfiguration` object
+  # entered in this function.
+  #
+  # If the specific `PlotConfiguration` object is not any of the cases included
+  # in the `switch` below, the result will be no change; i.e., the labels will
+  # continue to be `NULL`.
+
+  # x-axis label
+  if (is.null(generalPlotConfiguration$xLabel)) {
+    generalPlotConfiguration$xLabel <- switch(plotType,
+      "TimeProfilePlotConfiguration" = xUnitString,
+      "ResVsPredPlotConfiguration" = xUnitString,
+      "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
+    )
+  }
+
+  # y-axis label
+  if (is.null(generalPlotConfiguration$yLabel)) {
+    generalPlotConfiguration$yLabel <- switch(plotType,
+      "TimeProfilePlotConfiguration" = yUnitString,
+      "ResVsPredPlotConfiguration" = "Residuals",
+      "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    )
+  }
+
   # labels object ---------------------------------------
 
   labelTitle <- tlf::Label$new(
@@ -324,7 +402,6 @@
     color = generalPlotConfiguration$pointsColor,
     shape = generalPlotConfiguration$pointsShape,
     size = generalPlotConfiguration$pointsSize,
-    linetype = generalPlotConfiguration$pointsLinetype,
     alpha = generalPlotConfiguration$pointsAlpha
   )
 
@@ -371,56 +448,6 @@
   specificPlotConfiguration$ribbons <- ribbonsConfiguration
   specificPlotConfiguration$errorbars <- errorbarsConfiguration
   specificPlotConfiguration$export <- exportConfiguration
-
-  # Axes labels -----------------------------------
-
-  # If axes labels haven't been specified, create them using dimensions and units.
-
-  # In the code below, `.unitConverter()` has already ensured that there is only
-  # a single unit for x and y quantities, so we can safely take the unique unit
-  # to prepare axes labels.
-  xUnitString <- unique(data$xUnit)
-  yUnitString <- unique(data$yUnit)
-
-  # If quantities are unitless, no unit information will be displayed.
-  # Otherwise, `Dimension [Unit]` pattern will be followed.
-  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
-  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
-
-
-  # The exact axis label will depend on the type of the plot, and the type
-  # of the plot can be guessed using the specific `PlotConfiguration` object
-  # entered in this function.
-  #
-  # If the specific `PlotConfiguration` object is not any of the cases included
-  # in the `switch` below, the result will be no change; i.e., the labels will
-  # continue to be `NULL`.
-
-  # x-axis label
-  if (is.null(specificPlotConfiguration$labels$xlabel$text)) {
-    xUnitString <- paste0(unique(data$xDimension), xUnitString)
-
-    xUnitString <- switch(class(specificPlotConfiguration)[[1]],
-      "TimeProfilePlotConfiguration" = xUnitString,
-      "ResVsPredPlotConfiguration" = xUnitString,
-      "ObsVsPredPlotConfiguration" = paste0("Observed values (", xUnitString, ")")
-    )
-
-    specificPlotConfiguration$labels$xlabel$text <- xUnitString
-  }
-
-  # y-axis label
-  if (is.null(specificPlotConfiguration$labels$ylabel$text)) {
-    yUnitString <- paste0(unique(data$yDimension), yUnitString)
-
-    yUnitString <- switch(class(specificPlotConfiguration)[[1]],
-      "TimeProfilePlotConfiguration" = yUnitString,
-      "ResVsPredPlotConfiguration" = "Residuals",
-      "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
-    )
-
-    specificPlotConfiguration$labels$ylabel$text <- yUnitString
-  }
 
   return(specificPlotConfiguration)
 }

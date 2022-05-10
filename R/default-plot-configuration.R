@@ -83,11 +83,13 @@
 DefaultPlotConfiguration <- R6::R6Class(
   "DefaultPlotConfiguration",
   public = list(
-    # units
+    # units ------------------------------------
+
     xUnit = NULL,
     yUnit = NULL,
 
-    # title
+    # title ------------------------------------
+
     title = NULL,
     titleColor = "black",
     titleSize = 12,
@@ -96,7 +98,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     titleAngle = 0,
     titleAlign = tlf::Alignments$left,
 
-    # subtitle
+    # subtitle ------------------------------------
+
     subtitle = NULL,
     subtitleColor = "black",
     subtitleSize = 10,
@@ -105,7 +108,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleAngle = 0,
     subtitleAlign = tlf::Alignments$left,
 
-    # caption
+    # caption ------------------------------------
+
     caption = NULL,
     captionColor = "black",
     captionSize = 8,
@@ -114,7 +118,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     captionAngle = 0,
     captionAlign = tlf::Alignments$right,
 
-    # xLabel
+    # xLabel ------------------------------------
+
     xLabel = NULL,
     xLabelColor = "black",
     xLabelSize = 10,
@@ -123,7 +128,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelAngle = 0,
     xLabelAlign = tlf::Alignments$center,
 
-    # yLabel
+    # yLabel ------------------------------------
+
     yLabel = NULL,
     yLabelColor = "black",
     yLabelSize = 10,
@@ -132,8 +138,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelAngle = 90,
     yLabelAlign = tlf::Alignments$center,
 
-    # legend
-    legendPosition = tlf::LegendPositions$insideTopRight,
+    # legend ------------------------------------
+
+    legendPosition = NULL,
     legendTitle = NULL,
     legendTitleSize = 10,
     legendTitleColor = "black",
@@ -142,7 +149,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$center,
 
-    # legend caption
+    # legendCaption ------------------------------------
+
     legendCaptionSize = 10,
     legendCaptionColor = "black",
     legendCaptionFontFamily = "",
@@ -150,7 +158,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendCaptionAngle = 0,
     legendCaptionAlign = tlf::Alignments$center,
 
-    # XAxisConfiguration
+    # XAxisConfiguration ------------------------------------
+
     xAxisLimits = NULL,
     xAxisScale = tlf::Scaling$lin,
     xAxisTicks = NULL,
@@ -162,7 +171,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLabelTicksAngle = 0,
     xAxisLabelTicksAlign = tlf::Alignments$center,
 
-    # YAxisConfiguration
+    # YAxisConfiguration ------------------------------------
+
     yAxisLimits = NULL,
     yAxisScale = tlf::Scaling$lin,
     yAxisTicks = NULL,
@@ -174,7 +184,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLabelTicksAngle = 90,
     yAxisLabelTicksAlign = tlf::Alignments$center,
 
-    # watermark
+    # watermark ------------------------------------
+
     watermark = NULL,
     watermarkSize = 20,
     watermarkColor = "grey40",
@@ -183,55 +194,64 @@ DefaultPlotConfiguration <- R6::R6Class(
     watermarkAngle = 30,
     watermarkAlign = tlf::Alignments$center,
 
-    # plot background
+    # plotBackground ------------------------------------
+
     plotBackgroundFill = "white",
     plotBackgroundColor = "black",
     plotBackgroundSize = 0.5,
     plotBackgroundLinetype = tlf::Linetypes$blank,
 
-    # plot panel background
+    # plotPanelBackground ------------------------------------
+
     plotPanelBackgroundFill = "white",
     plotPanelBackgroundColor = "black",
     plotPanelBackgroundSize = 0.5,
     plotPanelBackgroundLinetype = tlf::Linetypes$solid,
 
-    # xAxis
+    # xAxis ------------------------------------
+
     xAxisColor = "black",
     xAxisSize = 0.5,
     xAxisLinetype = tlf::Linetypes$solid,
 
-    # yAxis
+    # yAxis ------------------------------------
+
     yAxisColor = "black",
     yAxisSize = 0.5,
     yAxisLinetype = tlf::Linetypes$solid,
 
-    # xGrid
+    # xGrid ------------------------------------
+
     xGridColor = "grey",
     xGridSize = 0.25,
     xGridLinetype = tlf::Linetypes$blank,
 
-    # yGrid
+    # yGrid ------------------------------------
+
     yGridColor = "grey",
     yGridSize = 0.25,
     yGridLinetype = tlf::Linetypes$blank,
 
-    # lines
+    # lines ------------------------------------
+
     # There is no `linesFill` because it doesn't make sense to "fill" a line
     # with color. There is already `linesColor` for that.
-    linesColor = tlf::ColorMaps$ospDefault,
+    linesColor = NULL,
     linesSize = 1,
-    linesLinetype = tlf::Linetypes$dashed,
+    linesLinetype = NULL,
     linesAlpha = 0.75,
 
-    # points
+    # points ------------------------------------
+
     # There is no `pointsFill` because it doesn't make sense to "fill" a line
     # with color. There is already `pointsColor` for that.
-    pointsColor = tlf::ColorMaps$ospDefault,
-    pointsShape = names(tlf::Shapes),
+    pointsColor = NULL,
+    pointsShape = NULL,
     pointsSize = 3,
     pointsAlpha = 0.75,
 
-    # ribbons
+    # ribbons ------------------------------------
+
     # There is no `ribbonsColor` because it doesn't make sense to color a
     # ribbon. There is already `ribbonsFill` for that.
     ribbonsFill = tlf::ColorMaps$ospDefault,
@@ -239,7 +259,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     ribbonsLinetype = names(tlf::Linetypes),
     ribbonsAlpha = 0.50,
 
-    # errorbars
+    # errorbars ------------------------------------
+
     # Color and fill are taken from point mapping, therefore no
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,

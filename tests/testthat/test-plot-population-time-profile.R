@@ -30,6 +30,7 @@ myPopulation <- result$population
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
+set.seed(123)
 populationResults <- runSimulation(
   simulation = sim,
   population = myPopulation
@@ -45,14 +46,22 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
-  myPlotConfiguration$pointsSize <- 2.5
-  myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-  myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
 
   set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "custom plot config",
-    fig = plotPopulationTimeProfile(myDataComb, myPlotConfiguration, quantiles = c(0.1, 0.5, 0.9))
-  )
+  p <- plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
+  df <- tlf::getLegendCaption(p)
+
+  expect_equal(df$name, "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)")
+
+  expect_equal(p$labels$title, myPlotConfiguration$title)
+  expect_equal(p$labels$subtitle, myPlotConfiguration$subtitle)
+  expect_equal(p$labels$caption, myPlotConfiguration$caption)
+
+  # Can't be run because the test is stochastic
+  # set.seed(123)
+  # vdiffr::expect_doppelganger(
+  #   title = "custom plot config",
+  #   fig = p
+  # )
 })
 
