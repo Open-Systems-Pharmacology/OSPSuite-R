@@ -50,81 +50,43 @@ plotPopulationTimeProfile <- function(dataCombined,
 
   # plot -----------------------------
 
-  # Which dataset types are present?
-  datasetTypePresent <- .extractPresentDatasetTypes(dataCombined)
+  obsData <- as.data.frame(dplyr::filter(df, dataType == "observed"))
 
-  # both observed and simulated
-  if (datasetTypePresent == .presentDataTypes$Both) {
-    obsData <- dplyr::filter(df, dataType == "observed")
-    simData <- dplyr::filter(df, dataType == "simulated")
-
-    # Extract aggregated simulated data
-    simAggregatedData <- .extractAggregatedSimulatedData(simData, quantiles)
-
-    profilePlot <- tlf::plotTimeProfile(
-      data = as.data.frame(simAggregatedData),
-      dataMapping = tlf::TimeProfileDataMapping$new(
-        x = "xValues",
-        y = "yValuesCentral",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        group = "group"
-      ),
-      observedData = as.data.frame(obsData),
-      observedDataMapping = tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        group = "group",
-        error = "yErrorValues"
-      ),
-      plotConfiguration = populationTimeProfilePlotConfiguration
-    )
-
-    # Extract current mappings in the legend (which are going to be incorrect).
-    legendCaptionData <- tlf::getLegendCaption(profilePlot)
-
-    # Update the legend data frame to have the correct mappings.
-    newLegendCaptionData <- .updateLegendCaptionData(legendCaptionData, populationTimeProfilePlotConfiguration)
-
-    # Update plot legend using this new data frame.
-    profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
+  if (nrow(obsData) == 0) {
+    obsData <- NULL
   }
 
-  # only observed
-  if (datasetTypePresent == .presentDataTypes$Observed) {
-    obsData <- dplyr::filter(df, dataType == "observed")
+  simData <- as.data.frame(dplyr::filter(df, dataType == "simulated"))
 
-    profilePlot <- tlf::plotTimeProfile(
-      observedData = as.data.frame(obsData),
-      observedDataMapping = tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        group = "group",
-        error = "yErrorValues"
-      ),
-      plotConfiguration = populationTimeProfilePlotConfiguration
-    )
+  if (nrow(simData) == 0) {
+    simData <- NULL
   }
 
-  # only simulated
-  if (datasetTypePresent == .presentDataTypes$Simulated) {
-    simData <- dplyr::filter(df, dataType == "simulated")
+  profilePlot <- tlf::plotTimeProfile(
+    data = simData,
+    dataMapping = tlf::TimeProfileDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group"
+    ),
+    observedData = obsData,
+    observedDataMapping = tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group",
+      error = "yErrorValues"
+    ),
+    plotConfiguration = populationTimeProfilePlotConfiguration
+  )
 
-    # Extract aggregated simulated data
-    simAggregatedData <- .extractAggregatedSimulatedData(simData, quantiles)
+  # Extract current mappings in the legend (which are going to be incorrect).
+  legendCaptionData <- tlf::getLegendCaption(profilePlot)
 
-    profilePlot <- tlf::plotTimeProfile(
-      data = as.data.frame(simAggregatedData),
-      dataMapping = tlf::TimeProfileDataMapping$new(
-        x = "xValues",
-        y = "yValuesCentral",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        group = "group"
-      ),
-      plotConfiguration = populationTimeProfilePlotConfiguration
-    )
-  }
+  # Update the legend data frame to have the correct mappings.
+  newLegendCaptionData <- .updateLegendCaptionData(legendCaptionData, populationTimeProfilePlotConfiguration)
+
+  # Update plot legend using this new data frame.
+  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
 
   return(profilePlot)
 }

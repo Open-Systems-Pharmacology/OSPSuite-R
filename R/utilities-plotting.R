@@ -1,37 +1,3 @@
-#' An enum representing dataset types present in `DataCombined`
-#' @keywords internal
-.presentDataTypes <- enum(c(
-  Observed = "only observed",
-  Simulated = "only simulated",
-  Both = "both observed and simulated"
-))
-
-#' Extracting dataset types present in `DataCombined`
-#'
-#' @description
-#'
-#' While creating plots, different code needs to be used depending on whether
-#' only simulated, only observed, or both dataset types are present in the
-#' `DataCombined`.
-#'
-#' @keywords internal
-.extractPresentDatasetTypes <- function(dataCombined) {
-  validateIsOfType(dataCombined, "DataCombined")
-
-  dataTypeUnique <- unique(dataCombined$groupMap$dataType)
-
-  if (length(dataTypeUnique) == 2L && all(dataTypeUnique %in% c("observed", "simulated"))) {
-    datasetTypePresent <- .presentDataTypes$Both
-  } else if (length(dataTypeUnique) == 1L && dataTypeUnique == "observed") {
-    datasetTypePresent <- .presentDataTypes$Observed
-  } else if (length(dataTypeUnique) == 1L && dataTypeUnique == "simulated") {
-    datasetTypePresent <- .presentDataTypes$Simulated
-  }
-
-  return(datasetTypePresent)
-}
-
-
 #' Replace missing groupings with dataset names
 #'
 #' @description
