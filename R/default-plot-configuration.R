@@ -18,7 +18,6 @@
 #'
 #' - color, fill: `tlf::ColorMaps$ospDefault`
 #' - shape: `tlf::Shapes`
-#' - scaling: `tlf::Scaling`
 #' - legend position: `tlf::LegendPositions`
 #' - alignments: `tlf::Alignments`
 #' - linetype: `tlf::Linetypes`
@@ -51,26 +50,36 @@
 #' code:
 #'
 #' ```
+#' # install.packages("systemfonts")
 #' library(systemfonts)
 #' system_fonts()
 #' ```
+#'
+#' # Specifying scaling
+#'
+#' Transformations for both x- and y-axes can be (independently) specified. The
+#' default is linear for both axes.
+#'
+#' The available transformations can be seen in the `tlf::Scaling` list.
 #'
 #' # Saving plot
 #'
 #' The plots can be saved using `tlf::exportPlot()` function. Once you pass a
 #' plot object to this function, it will use the `save*` public members
-#' specified in the plot configuration object to save the plot.
+#' of the plot configuration object to save the plot.
 #'
 #' ```
-#' # save plot to an object
 #' myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
 #' tlf::exportPlot(myPlot)
 #' ```
-#' The plot will be saved in the current working directory. The default
-#' dimensions with which the plot will be saved are 16 cm x 9 cm.
 #'
-#' The available file formats to save the plot are: "eps", "ps", "tex" (pictex),
-#' "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
+#' By default, the plot will be saved in the current working directory and the
+#' file will be named `"figure.png"`.
+#'
+#' The default dimensions with which the plot will be saved are 16 cm x 9 cm.
+#'
+#' The available file formats (default: "png") to save the plot are: "eps",
+#' "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
 #'
 #' @field xUnit,yUnit Units for quantities plotted on x- and y-axes, respectively.
 #' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character

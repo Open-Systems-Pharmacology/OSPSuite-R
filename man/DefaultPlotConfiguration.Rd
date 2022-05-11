@@ -17,7 +17,6 @@ The supported values for each property can be seen using \code{{tlf}} lists:
 \itemize{
 \item color, fill: \code{tlf::ColorMaps$ospDefault}
 \item shape: \code{tlf::Shapes}
-\item scaling: \code{tlf::Scaling}
 \item legend position: \code{tlf::LegendPositions}
 \item alignments: \code{tlf::Alignments}
 \item linetype: \code{tlf::Linetypes}
@@ -48,24 +47,33 @@ A font family is a grouping of fonts defined by shared design styles.
 
 The available font families will depend on which fonts have been installed on
 your computer. This information can be extracted by running the following
-code:\preformatted{library(systemfonts)
+code:\preformatted{# install.packages("systemfonts")
+library(systemfonts)
 system_fonts()
 }
+}
+
+\section{Specifying scaling}{
+Transformations for both x- and y-axes can be (independently) specified. The
+default is linear for both axes.
+
+The available transformations can be seen in the \code{tlf::Scaling} list.
 }
 
 \section{Saving plot}{
 The plots can be saved using \code{tlf::exportPlot()} function. Once you pass a
 plot object to this function, it will use the \verb{save*} public members
-specified in the plot configuration object to save the plot.\preformatted{# save plot to an object
-myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
+of the plot configuration object to save the plot.\preformatted{myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
 tlf::exportPlot(myPlot)
 }
 
-The plot will be saved in the current working directory. The default
-dimensions with which the plot will be saved are 16 cm x 9 cm.
+By default, the plot will be saved in the current working directory and the
+file will be named \code{"figure.png"}.
 
-The available file formats to save the plot are: "eps", "ps", "tex" (pictex),
-"pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
+The default dimensions with which the plot will be saved are 16 cm x 9 cm.
+
+The available file formats (default: "png") to save the plot are: "eps",
+"ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
 }
 
 \examples{
