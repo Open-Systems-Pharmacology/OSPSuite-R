@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-individual-time-profile.R
 \name{plotIndividualTimeProfile}
 \alias{plotIndividualTimeProfile}
-\title{Concentration time profile plot for individual}
+\title{Time-profile plot of individual data}
 \usage{
 plotIndividualTimeProfile(dataCombined, defaultPlotConfiguration = NULL)
 }
@@ -13,7 +13,7 @@ plotIndividualTimeProfile(dataCombined, defaultPlotConfiguration = NULL)
 an \code{R6} class object that defines plot properties.}
 }
 \description{
-Concentration time profile plot for individual
+Time-profile plot of individual data
 }
 \examples{
 

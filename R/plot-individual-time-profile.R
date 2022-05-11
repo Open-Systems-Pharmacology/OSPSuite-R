@@ -1,4 +1,4 @@
-#' Concentration time profile plot for individual
+#' Time-profile plot of individual data
 #'
 #' @param dataCombined A `DataCombined` object.
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is

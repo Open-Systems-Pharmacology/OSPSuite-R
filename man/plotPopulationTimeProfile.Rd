@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-population-time-profile.R
 \name{plotPopulationTimeProfile}
 \alias{plotPopulationTimeProfile}
-\title{Concentration time profile plot for population}
+\title{Time-values profile plot for population simulations}
 \usage{
 plotPopulationTimeProfile(
   dataCombined,
@@ -16,11 +16,12 @@ plotPopulationTimeProfile(
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
 
-\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}). In the profile plot, the middle value will be used to draw a
-line, while the lower and upper values will be used to create a ribbon.}
+\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}), with the quantile values defining the aggregation of
+individual data. In the profile plot, the middle value will be used to draw
+a line, while the lower and upper values will be used to create a ribbon.}
 }
 \description{
-Concentration time profile plot for population
+Time-values profile plot for population simulations
 }
 \examples{
 
