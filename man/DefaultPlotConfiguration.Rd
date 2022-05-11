@@ -15,7 +15,7 @@ point, line, ribbon, etc.).
 
 The supported values for each property can be seen using \code{{tlf}} lists:
 \itemize{
-\item color, fill: \code{tlf::ColorMaps$ospDefault}
+\item color, fill: \code{tlf::ColorMaps}
 \item shape: \code{tlf::Shapes}
 \item legend position: \code{tlf::LegendPositions}
 \item alignments: \code{tlf::Alignments}
@@ -25,6 +25,26 @@ The supported values for each property can be seen using \code{{tlf}} lists:
 For example, all parameters related to color (\code{titleColor},
 \code{yAxisLabelTicksColor}, etc.) accept any of the palettes available in
 ``tlf::ColorMaps\verb{(e.g.}tlf::ColorMaps$ospDefault`).
+
+Note that these are named lists, and, therefore, if you want to assign a
+specific element from a list to an object's public field, you will have to
+extract that element first.
+
+For example, if you want to specify that the
+legend position should be outside the plot to the left and at bottom, you
+will have to do the following:\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
+myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideBottomLeft
+}
+
+Of course, the extracted element doesn't have to be a single value, and can
+also be an atomic vector. For example, if you want to assign a different line
+type to each group in a profile plot, you will have to assign a vector of
+line types.\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
+myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
+}
+
+If there are more number of elements in the vector than the number of groups,
+the additional elements will be ignored.
 }
 
 \section{Specifying units}{

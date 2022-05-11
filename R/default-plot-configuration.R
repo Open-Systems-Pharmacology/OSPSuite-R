@@ -16,7 +16,7 @@
 #'
 #' The supported values for each property can be seen using `{tlf}` lists:
 #'
-#' - color, fill: `tlf::ColorMaps$ospDefault`
+#' - color, fill: `tlf::ColorMaps`
 #' - shape: `tlf::Shapes`
 #' - legend position: `tlf::LegendPositions`
 #' - alignments: `tlf::Alignments`
@@ -25,6 +25,32 @@
 #' For example, all parameters related to color (`titleColor`,
 #' `yAxisLabelTicksColor`, etc.) accept any of the palettes available in
 #' ``tlf::ColorMaps` (e.g. `tlf::ColorMaps$ospDefault`).
+#'
+#' Note that these are named lists, and, therefore, if you want to assign a
+#' specific element from a list to an object's public field, you will have to
+#' extract that element first.
+#'
+#' For example, if you want to specify that the
+#' legend position should be outside the plot to the left and at bottom, you
+#' will have to do the following:
+#'
+#' ```
+#' myPlotConfiguration <- DefaultPlotConfiguration$new()
+#' myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideBottomLeft
+#' ```
+#'
+#' Of course, the extracted element doesn't have to be a single value, and can
+#' also be an atomic vector. For example, if you want to assign a different line
+#' type to each group in a profile plot, you will have to assign a vector of
+#' line types.
+#'
+#' ```
+#' myPlotConfiguration <- DefaultPlotConfiguration$new()
+#' myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
+#' ```
+#'
+#' If there are more number of elements in the vector than the number of groups,
+#' the additional elements will be ignored.
 #'
 #' # Specifying units
 #'
@@ -139,7 +165,6 @@ DefaultPlotConfiguration <- R6::R6Class(
   "DefaultPlotConfiguration",
   public = list(
     # units ------------------------------------
-
     xUnit = NULL,
     yUnit = NULL,
 
