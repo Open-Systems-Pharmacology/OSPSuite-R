@@ -2,33 +2,72 @@
 % Please edit documentation in R/default-plot-configuration.R
 \name{DefaultPlotConfiguration}
 \alias{DefaultPlotConfiguration}
-\title{Convenience class for plot configuration for OSP plots}
+\title{Plot configuration for OSP plots}
 \description{
-R6 class defining the configuration for \code{{ospsuite}} plots. It holds values
-for all relevant plot properties.
-
-Note that the values this objects contains are of general-purpose utility. In
-other words, the public members of this class instance can be used to specify
-arguments for base plots, ggplot plots, or any other plotting framework.
+R6 configuration class defining properties of plots that can be created with
+\code{plotIndividualTimeProfile()}, \code{plotPopulationTimeProfile()},
+\code{plotObservedVsSimulated()}, and \code{plotResidualsVsTime()}.
 }
-\details{
-Aesthetic mappings describe how variables are mapped to visual properties of
-geometric layers. In the current class, the default values for these
-properties are derived from \code{{tlf}} lists:
+\section{Specifying aesthetic properties}{
+Aesthetic mappings describe how groups are mapped to visual properties
+(color, shape, size, etc.) of the geometries included in the plot (e.g.
+point, line, ribbon, etc.).
+
+The supported values for each property can be seen using \code{{tlf}} lists:
 \itemize{
 \item color, fill: \code{tlf::ColorMaps$ospDefault}
 \item shape: \code{tlf::Shapes}
 \item scaling: \code{tlf::Scaling}
 \item legend position: \code{tlf::LegendPositions}
 \item alignments: \code{tlf::Alignments}
-\item font face: \code{tlf::FontFaces}
 \item linetype: \code{tlf::Linetypes}
 }
 
-The available units for \code{x}-and \code{y}-axes variables depend on the dimensions
-of these quantities (\code{ospsuite::ospDimensions}). Available options can be
-seen with \code{ospsuite::ospUnits}.
+For example, all parameters related to color (\code{titleColor},
+\code{yAxisLabelTicksColor}, etc.) accept any of the palettes available in
+``tlf::ColorMaps\verb{(e.g.}tlf::ColorMaps$ospDefault`).
 }
+
+\section{Specifying units}{
+The available units for \code{x}-and \code{y}-axes depend on the dimensions of these
+quantities (\code{ospsuite::ospDimensions}). Supported units can be seen with
+\code{ospsuite::ospUnits}.
+}
+
+\section{Specifying fonts}{
+A font is a particular set of glyphs (character shapes), differentiated from
+other fonts in the same family by additional properties such as stroke
+weight, slant, relative width, etc.
+
+A font face (aka typeface) is the design of lettering, characterized by
+variations in size, weight (e.g. bold), slope (e.g. italic), width (e.g.
+condensed), and so on. The available font faces can seen using
+\code{tlf::FontFaces} list.
+
+A font family is a grouping of fonts defined by shared design styles.
+
+The available font families will depend on which fonts have been installed on
+your computer. This information can be extracted by running the following
+code:\preformatted{library(systemfonts)
+system_fonts()
+}
+}
+
+\section{Saving plot}{
+The plots can be saved using \code{tlf::exportPlot()} function. Once you pass a
+plot object to this function, it will use the \verb{save*} public members
+specified in the plot configuration object to save the plot.\preformatted{# save plot to an object
+myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
+tlf::exportPlot(myPlot)
+}
+
+The plot will be saved in the current working directory. The default
+dimensions with which the plot will be saved are 16 cm x 9 cm.
+
+The available file formats to save the plot are: "eps", "ps", "tex" (pictex),
+"pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
+}
+
 \examples{
 
 # Create a new instance of this class
@@ -113,7 +152,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
-\item{\code{plotSaveFileName, plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits, plotSaveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
+\item{\code{saveFileName, saveFileFormat, saveFileWidth, saveFileHeight, saveFileDimensionUnits, saveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }
@@ -175,7 +214,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 
-\item{\code{plotSaveFileName, plotSaveFileFormat, plotSaveFileWidth, plotSaveFileHeight, plotSaveFileDimensionUnits, plotSaveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
+\item{\code{saveFileName, saveFileFormat, saveFileWidth, saveFileHeight, saveFileDimensionUnits, saveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }

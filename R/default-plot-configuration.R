@@ -1,31 +1,76 @@
-#' @title Convenience class for plot configuration for OSP plots
+#' @title Plot configuration for OSP plots
 #'
 #' @description
 #'
-#' R6 class defining the configuration for `{ospsuite}` plots. It holds values
-#' for all relevant plot properties.
-#'
-#' Note that the values this objects contains are of general-purpose utility. In
-#' other words, the public members of this class instance can be used to specify
-#' arguments for base plots, ggplot plots, or any other plotting framework.
+#' R6 configuration class defining properties of plots that can be created with
+#' `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
+#' `plotObservedVsSimulated()`, and `plotResidualsVsTime()`.
 #'
 #' @details
 #'
-#' Aesthetic mappings describe how variables are mapped to visual properties of
-#' geometric layers. In the current class, the default values for these
-#' properties are derived from `{tlf}` lists:
+#' # Specifying aesthetic properties
+#'
+#' Aesthetic mappings describe how groups are mapped to visual properties
+#' (color, shape, size, etc.) of the geometries included in the plot (e.g.
+#' point, line, ribbon, etc.).
+#'
+#' The supported values for each property can be seen using `{tlf}` lists:
 #'
 #' - color, fill: `tlf::ColorMaps$ospDefault`
 #' - shape: `tlf::Shapes`
 #' - scaling: `tlf::Scaling`
 #' - legend position: `tlf::LegendPositions`
 #' - alignments: `tlf::Alignments`
-#' - font face: `tlf::FontFaces`
 #' - linetype: `tlf::Linetypes`
 #'
-#' The available units for `x`-and `y`-axes variables depend on the dimensions
-#' of these quantities (`ospsuite::ospDimensions`). Available options can be
-#' seen with `ospsuite::ospUnits`.
+#' For example, all parameters related to color (`titleColor`,
+#' `yAxisLabelTicksColor`, etc.) accept any of the palettes available in
+#' ``tlf::ColorMaps` (e.g. `tlf::ColorMaps$ospDefault`).
+#'
+#' # Specifying units
+#'
+#' The available units for `x`-and `y`-axes depend on the dimensions of these
+#' quantities (`ospsuite::ospDimensions`). Supported units can be seen with
+#' `ospsuite::ospUnits`.
+#'
+#' # Specifying fonts
+#'
+#' A font is a particular set of glyphs (character shapes), differentiated from
+#' other fonts in the same family by additional properties such as stroke
+#' weight, slant, relative width, etc.
+#'
+#' A font face (aka typeface) is the design of lettering, characterized by
+#' variations in size, weight (e.g. bold), slope (e.g. italic), width (e.g.
+#' condensed), and so on. The available font faces can seen using
+#' `tlf::FontFaces` list.
+#'
+#' A font family is a grouping of fonts defined by shared design styles.
+#'
+#' The available font families will depend on which fonts have been installed on
+#' your computer. This information can be extracted by running the following
+#' code:
+#'
+#' ```
+#' library(systemfonts)
+#' system_fonts()
+#' ```
+#'
+#' # Saving plot
+#'
+#' The plots can be saved using `tlf::exportPlot()` function. Once you pass a
+#' plot object to this function, it will use the `save*` public members
+#' specified in the plot configuration object to save the plot.
+#'
+#' ```
+#' # save plot to an object
+#' myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
+#' tlf::exportPlot(myPlot)
+#' ```
+#' The plot will be saved in the current working directory. The default
+#' dimensions with which the plot will be saved are 16 cm x 9 cm.
+#'
+#' The available file formats to save the plot are: "eps", "ps", "tex" (pictex),
+#' "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
 #'
 #' @field xUnit,yUnit Units for quantities plotted on x- and y-axes, respectively.
 #' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character
@@ -59,7 +104,7 @@
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
-#' @field plotSaveFileName,plotSaveFileFormat,plotSaveFileWidth,plotSaveFileHeight,plotSaveFileDimensionUnits,plotSaveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
+#' @field saveFileName,saveFileFormat,saveFileWidth,saveFileHeight,saveFileDimensionUnits,saveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
 #'
 #' @examples
 #'
@@ -267,12 +312,13 @@ DefaultPlotConfiguration <- R6::R6Class(
     errorbarsLinetype = tlf::Linetypes$solid,
     errorbarsAlpha = 0.75,
 
-    # export
-    plotSaveFileName = "figure",
-    plotSaveFileFormat = "png",
-    plotSaveFileWidth = 16,
-    plotSaveFileHeight = 9,
-    plotSaveFileDimensionUnits = "cm",
-    plotSaveFileDpi = 300
+    # export ------------------------------------
+
+    saveFileName = "figure",
+    saveFileFormat = "png",
+    saveFileWidth = 16,
+    saveFileHeight = 9,
+    saveFileDimensionUnits = "cm",
+    saveFileDpi = 300
   )
 )

@@ -427,12 +427,12 @@
   # export -------------------------------------------------------
 
   exportConfiguration <- tlf::ExportConfiguration$new(
-    name = generalPlotConfiguration$plotSaveFileName,
-    format = generalPlotConfiguration$plotSaveFileFormat,
-    width = generalPlotConfiguration$plotSaveFileWidth,
-    height = generalPlotConfiguration$plotSaveFileHeight,
-    units = generalPlotConfiguration$plotSaveFileDimensionUnits,
-    dpi = generalPlotConfiguration$plotSaveFileDpi
+    name = generalPlotConfiguration$saveFileName,
+    format = generalPlotConfiguration$saveFileFormat,
+    width = generalPlotConfiguration$saveFileWidth,
+    height = generalPlotConfiguration$saveFileHeight,
+    units = generalPlotConfiguration$saveFileDimensionUnits,
+    dpi = generalPlotConfiguration$saveFileDpi
   )
 
   # Update specific plot configuration object ----------------------
