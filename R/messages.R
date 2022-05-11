@@ -9,3 +9,7 @@ messages$errorWrongPopulation <- function(species, population) {
 messages$errorOneOfNameAndPathMustBeSpecified <- function() {
   "One of the `parameterName` or `parameterPath` must be specified, but not both."
 }
+
+messages$messageAboutDatasets <- function(messageText, datasetNames) {
+  message(messageText, paste0(datasetNames, collapse = "\n"))
+}

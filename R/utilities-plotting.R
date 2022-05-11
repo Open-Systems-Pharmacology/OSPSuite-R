@@ -115,10 +115,10 @@
   if (length(finalDatasets) < length(originalDatasets)) {
     missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
 
-    message(
-      "Following non-grouped or unpairable datasets have been removed:\n",
-      paste0(missingDatasets, collapse = "\n")
-    )
+    message(messages$messageAboutDatasets(
+      messageText = "Following non-grouped or unpairable datasets have been removed:\n",
+      datasetNames = missingDatasets
+    ))
   }
 
   return(data)

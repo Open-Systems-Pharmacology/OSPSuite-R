@@ -548,10 +548,10 @@ DataCombined <- R6::R6Class(
       if (!isIncluded(specifiedNames, currentNames)) {
         missingNames <- specifiedNames[!specifiedNames %in% currentNames]
 
-        message(
-          "Following datasets were specified to be grouped but not found:\n",
-          paste0(missingNames, collapse = "\n")
-        )
+        message(messages$messageAboutDatasets(
+          messageText = "Following datasets were specified to be grouped but not found:\n",
+          datasetNames = missingNames
+        ))
       }
 
       # Update the specified groupings with what already exists
