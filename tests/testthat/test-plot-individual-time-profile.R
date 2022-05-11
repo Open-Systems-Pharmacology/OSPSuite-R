@@ -63,6 +63,7 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$pointsSize <- 2.5
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
   myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
+  myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
 
   set.seed(123)
   vdiffr::expect_doppelganger(
