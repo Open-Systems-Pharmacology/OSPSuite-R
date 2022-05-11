@@ -64,8 +64,9 @@
 #'
 #' # Saving plot
 #'
-#' The plots can be saved using `tlf::exportPlot()` function. Once you pass a
-#' plot object to this function, it will use the `save*` public members
+#' By default, the plots will be shown in plot pane of your IDE, but the plots
+#' can also be saved to a file using the `tlf::exportPlot()` function. Once you
+#' pass a plot object to this function, it will use the `save*` public members
 #' of the plot configuration object to save the plot.
 #'
 #' ```
