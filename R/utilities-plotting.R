@@ -54,6 +54,77 @@
   return(data)
 }
 
+#' Remove unpairable datasets for scatter plots
+#'
+#' @description
+#'
+#' Datasets which haven't been assigned to any group will be removed from the
+#' combined data frame.
+#'
+#' @param data A data frame returned by `DataCombined$toDataFrame()`.
+#'
+#' @examples
+#'
+#' df <- dplyr::tribble(
+#'   ~name, ~dataType, ~group,
+#'   "Sim1", "Simulated", "GroupA",
+#'   "Sim2", "Simulated", "GroupA",
+#'   "Obs1", "Observed", "GroupB",
+#'   "Obs2", "Observed", "GroupB",
+#'   "Sim3", "Simulated", "GroupC",
+#'   "Obs3", "Observed", "GroupC",
+#'   "Sim4", "Simulated", "GroupD",
+#'   "Obs4", "Observed", "GroupD",
+#'   "Obs5", "Observed", "GroupD",
+#'   "Sim5", "Simulated", "GroupE",
+#'   "Sim6", "Simulated", "GroupE",
+#'   "Obs7", "Observed", "GroupE",
+#'   "Sim7", "Simulated", "GroupF",
+#'   "Sim8", "Simulated", "GroupF",
+#'   "Obs8", "Observed", "GroupF",
+#'   "Obs9", "Observed", "GroupF",
+#'   "Sim9", "Simulated", NA,
+#'   "Obs10", "Observed", NA
+#' )
+#'
+#' # original
+#' df
+#'
+#' # transformed
+#' ospsuite:::.removeUnpairableDatasets(df)
+#'
+#' @keywords internal
+.removeUnpairableDatasets <- function(data) {
+  # How many rows were originally present
+  originalDatasets <- unique(data$name)
+
+  # Remove datasets that don't belong to any group.
+  data <- dplyr::filter(data, !is.na(group))
+
+  # Remove groups (and the datasets therein) with only one type (either only
+  # observed or only simulated) of dataset.
+  data <- data %>%
+    dplyr::group_by(group) %>%
+    dplyr::filter(length(unique(dataType)) > 1L) %>%
+    dplyr::ungroup()
+
+  # How many rows are present after filtering
+  finalDatasets <- unique(data$name)
+
+  # Warn the user about the filtering if it took place
+  if (length(finalDatasets) < length(originalDatasets)) {
+    missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
+
+    message(
+      "Following non-grouped or unpairable datasets have been removed:\n",
+      paste0(missingDatasets, collapse = "\n")
+    )
+  }
+
+  return(data)
+}
+
+
 #' Extract aggregated simulated data
 #'
 #' @keywords internal
