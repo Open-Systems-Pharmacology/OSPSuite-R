@@ -15,12 +15,24 @@
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL) {
+
+  .plotTimeProfile(dataCombined, defaultPlotConfiguration)
+}
+
+
+#' Common plotting function for creating time-profile plot
+#'
+#' @keywords internal
+#' @noRd
+.plotTimeProfile <- function(dataCombined,
+                             defaultPlotConfiguration = NULL,
+                             quantiles = NULL) {
   # validation -----------------------------
 
+  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = TRUE)
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(dataCombined, "DataCombined")
   validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
-  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
   # data frames -----------------------------
 
@@ -37,7 +49,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # Create an instance of `TimeProfilePlotConfiguration` class by doing a
   # one-to-one mapping of internal plot configuration object's public fields
-  individualTimeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
+  timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     data = df,
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
@@ -55,15 +67,30 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   if (nrow(simData) == 0) {
     simData <- NULL
+  } else if (!is.null(quantiles)) {
+    # Extract aggregated simulated data
+    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
+  }
+
+  if (!is.null(quantiles)) {
+    dataMapping <- tlf::TimeProfileDataMapping$new(
+      x = "xValues",
+      y = "yValuesCentral",
+      ymin = "yValuesLower",
+      ymax = "yValuesHigher",
+      group = "group"
+    )
+  } else {
+    dataMapping <- tlf::TimeProfileDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group"
+    )
   }
 
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
-    dataMapping = tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group"
-    ),
+    dataMapping = dataMapping,
     observedData = obsData,
     observedDataMapping = tlf::ObservedDataMapping$new(
       x = "xValues",
@@ -71,14 +98,14 @@ plotIndividualTimeProfile <- function(dataCombined,
       group = "group",
       error = "yErrorValues"
     ),
-    plotConfiguration = individualTimeProfilePlotConfiguration
+    plotConfiguration = timeProfilePlotConfiguration
   )
 
   # Extract current mappings in the legend (which are going to be incorrect).
   legendCaptionData <- tlf::getLegendCaption(profilePlot)
 
   # Update the legend data frame to have the correct mappings.
-  newLegendCaptionData <- .updateLegendCaptionData(legendCaptionData, individualTimeProfilePlotConfiguration)
+  newLegendCaptionData <- .updateLegendCaptionData(legendCaptionData, timeProfilePlotConfiguration)
 
   # Update plot legend using this new data frame.
   profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
