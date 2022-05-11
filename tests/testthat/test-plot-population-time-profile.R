@@ -57,11 +57,10 @@ test_that("It respects custom plot configuration", {
   expect_equal(p$labels$subtitle, myPlotConfiguration$subtitle)
   expect_equal(p$labels$caption, myPlotConfiguration$caption)
 
-  # Can't be run because the test is stochastic
-  # set.seed(123)
-  # vdiffr::expect_doppelganger(
-  #   title = "custom plot config",
-  #   fig = p
-  # )
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "custom plot config",
+    fig = p
+  )
 })
 
