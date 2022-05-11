@@ -41,7 +41,7 @@ plotPopulationTimeProfile <- function(dataCombined,
 
   # Create an instance of `TimeProfilePlotConfiguration` class by doing a
   # one-to-one mapping of internal plot configuration object's public fields
-  individualTimeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
+  populationTimeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     data = df,
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
@@ -76,19 +76,16 @@ plotPopulationTimeProfile <- function(dataCombined,
         group = "group",
         error = "yErrorValues"
       ),
-      plotConfiguration = individualTimeProfilePlotConfiguration
+      plotConfiguration = populationTimeProfilePlotConfiguration
     )
 
-    # Extract color and shape mappings
+    # Extract current mappings in the legend (which are going to be incorrect).
     legendCaptionData <- tlf::getLegendCaption(profilePlot)
 
-    # Extract as many colors as there are datasets from the specified color palette.
-    colorPalette <- defaultPlotConfiguration$pointsColor[1:nrow(legendCaptionData)]
+    # Update the legend data frame to have the correct mappings.
+    newLegendCaptionData <- .updateLegendCaptionData(legendCaptionData, populationTimeProfilePlotConfiguration)
 
-    # New version of legend mappings.
-    newLegendCaptionData <- dplyr::mutate(legendCaptionData, color = colorPalette)
-
-    # Update plot with these colors.
+    # Update plot legend using this new data frame.
     profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
   }
 
@@ -104,7 +101,7 @@ plotPopulationTimeProfile <- function(dataCombined,
         group = "group",
         error = "yErrorValues"
       ),
-      plotConfiguration = individualTimeProfilePlotConfiguration
+      plotConfiguration = populationTimeProfilePlotConfiguration
     )
   }
 
@@ -124,7 +121,7 @@ plotPopulationTimeProfile <- function(dataCombined,
         ymax = "yValuesHigher",
         group = "group"
       ),
-      plotConfiguration = individualTimeProfilePlotConfiguration
+      plotConfiguration = populationTimeProfilePlotConfiguration
     )
   }
 

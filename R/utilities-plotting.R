@@ -141,7 +141,7 @@
     generalPlotConfiguration$pointsShape <- generalPlotConfiguration$pointsShape %||% names(tlf::Shapes)
 
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$solid
 
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideTopRight
   }
@@ -450,4 +450,51 @@
   specificPlotConfiguration$export <- exportConfiguration
 
   return(specificPlotConfiguration)
+}
+
+
+#' Update legend with specified mappings
+#'
+#' @details
+#'
+#' Relevant only in the context of profile plots.
+#'
+#' @param legendCaptionData Data frame extracted using `tlf::getLegendCaption()`.
+#' @param timeProfilePlotConfiguration An instance of
+#'   `TimeProfilePlotConfiguration` class.
+#'
+#' @keywords internal
+#' @noRd
+.updateLegendCaptionData <- function(legendCaptionData, timeProfilePlotConfiguration) {
+  # For convenience, assign object properties to vectors
+  #
+  # Note that the exact shapes need to be saved in the data frame, and not the
+  # name for that shape in `tlf::Shapes` list.
+  pointsColor <- timeProfilePlotConfiguration$points$color
+  pointsShape <- unname(unlist(tlf::Shapes)[timeProfilePlotConfiguration$points$shape])
+  lineTypes <- timeProfilePlotConfiguration$lines$linetype
+
+  # Extract as many properties as there are datasets from the specified config
+  # object fields.
+  if (length(pointsColor) > 1L) {
+    pointsColor <- pointsColor[1:nrow(legendCaptionData)]
+  }
+
+  if (length(pointsShape) > 1L) {
+    pointsShape <- pointsShape[1:nrow(legendCaptionData)]
+  }
+
+  if (length(lineTypes) > 1L) {
+    lineTypes <- lineTypes[1:nrow(legendCaptionData)]
+  }
+
+  # New version of legend mappings.
+  newLegendCaptionData <- dplyr::mutate(
+    legendCaptionData,
+    color = pointsColor,
+    shape = pointsShape,
+    linetype = lineTypes
+  )
+
+  return(newLegendCaptionData)
 }
