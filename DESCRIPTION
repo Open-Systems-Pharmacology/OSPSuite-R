@@ -30,7 +30,8 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.3),
+    vdiffr (>= 1.0.0)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
@@ -49,6 +50,7 @@ Collate:
     'data-importer-configuration.R'
     'data-repository.R'
     'data-set.R'
+    'default-plot-configuration.R'
     'dot-net-wrapper.R'
     'entity.R'
     'formula.R'
@@ -70,6 +72,8 @@ Collate:
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'
+    'plot-individual-time-profile.R'
+    'plot-population-time-profile.R'
     'population-characteristics.R'
     'population.R'
     'quantity-pk-parameter.R'
@@ -109,6 +113,7 @@ Collate:
     'utilities-pk-analysis.R'
     'utilities-pk-parameter.R'
     'utilities-pksim.R'
+    'utilities-plotting.R'
     'utilities-population.R'
     'utilities-quantity.R'
     'utilities-sensitivity-analysis.R'

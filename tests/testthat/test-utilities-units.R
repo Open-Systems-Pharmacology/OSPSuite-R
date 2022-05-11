@@ -199,6 +199,7 @@ df <- dplyr::tibble(
   xDimension = "Time",
   yValues = c(0.25, 45, 78),
   yUnit = c("", "%", "%"),
+  yErrorUnit = c("", "%", "%"),
   yDimension = c("Fraction", "Fraction", "Fraction"),
   molWeight = c(10, 10, 10)
 )
@@ -293,7 +294,8 @@ dfMW <- dplyr::tibble(
   xUnit = "min",
   xDimension = "Time",
   yValues = c(1, 2, 3),
-  yUnit = c("mol", "mol", "mol"),
+  yUnit = "mol",
+  yErrorUnit = "mol",
   yDimension = ospDimensions$Amount,
   molWeight = 10,
   random = "bla" # only for testing that the function doesn't remove other columns
@@ -465,5 +467,31 @@ test_that("if molWeight is missing, an error is signaled if dimensions require t
   expect_error(
     .unitConverter(dfMolWeightNA),
     "Molecular Weight not available."
+  )
+})
+
+# missing error unit column --------------------------------
+
+dfErrorUnitMissing <- dplyr::tibble(
+  dataType = "simulated",
+  xValues = c(0, 14.482, 28.965),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(25.579, 32.446, 32.103),
+  yUnit = "%",
+  yDimension = "Fraction",
+  yErrorValues = c(2.747, 2.918, 2.746),
+  molWeight = c(NA, NA, NA)
+)
+
+test_that("if yErrorUnit is missing, error values are converted correctly", {
+  expect_equal(
+    .unitConverter(dfErrorUnitMissing)$yErrorValues,
+    dfErrorUnitMissing$yErrorValues
+  )
+
+  expect_equal(
+    .unitConverter(dfErrorUnitMissing, yUnit = "")$yErrorValues,
+    dfErrorUnitMissing$yErrorValues / 100
   )
 })
