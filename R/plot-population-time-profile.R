@@ -60,13 +60,18 @@ plotPopulationTimeProfile <- function(dataCombined,
 
   if (nrow(simData) == 0) {
     simData <- NULL
+  } else {
+    # Extract aggregated simulated data
+    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
   }
 
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
     dataMapping = tlf::TimeProfileDataMapping$new(
       x = "xValues",
-      y = "yValues",
+      y = "yValuesCentral",
+      ymin = "yValuesLower",
+      ymax = "yValuesHigher",
       group = "group"
     ),
     observedData = obsData,
