@@ -11,6 +11,9 @@ An object of class \code{list} of length 91.
 ospDimensions
 }
 \description{
+Supported dimensions defined as a named list
+}
+\details{
 ospDimensions$Mass => "Mass"
 }
 \keyword{datasets}

@@ -2,16 +2,22 @@
 % Please edit documentation in R/utilities-units.R
 \name{getDimensionByName}
 \alias{getDimensionByName}
-\title{Returns the an instance of the dimension with the given name if found or NULL otherwise}
+\title{Get dimension by name}
 \usage{
 getDimensionByName(name)
 }
 \arguments{
 \item{name}{Name of dimension that should be retrieved}
 }
+\value{
+Returns the an instance of the dimension with the given name if found or \code{NULL}
+otherwise.
+}
 \description{
-Returns the an instance of the dimension with the given name if found or NULL otherwise
+Get dimension by name
 }
 \examples{
-dim <- getDimensionByName("Time")
+
+getDimensionByName("Time")
+
 }

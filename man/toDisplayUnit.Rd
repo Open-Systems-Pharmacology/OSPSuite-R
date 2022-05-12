@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{toDisplayUnit}
 \alias{toDisplayUnit}
-\title{Converts a value given in base unit of a quantity into the display unit of a quantity}
+\title{Convert base unit to display unit}
 \usage{
 toDisplayUnit(quantity, values)
 }
