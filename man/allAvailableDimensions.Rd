@@ -2,13 +2,19 @@
 % Please edit documentation in R/utilities-units.R
 \name{allAvailableDimensions}
 \alias{allAvailableDimensions}
-\title{Returns the name of all available dimensions defined in the OSPSuite platform}
+\title{List all available dimensions in the \code{OSPSuite} platform}
 \usage{
 allAvailableDimensions()
 }
+\value{
+Returns the names of all available dimensions defined in the \code{OSPSuite}
+platform.
+}
 \description{
-Returns the name of all available dimensions defined in the OSPSuite platform
+List all available dimensions in the \code{OSPSuite} platform
 }
 \examples{
-dims <- allAvailableDimensions()
+
+allAvailableDimensions()
+
 }

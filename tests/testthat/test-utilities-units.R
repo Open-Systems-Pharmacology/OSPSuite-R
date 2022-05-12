@@ -495,3 +495,25 @@ test_that("if yErrorUnit is missing, error values are converted correctly", {
     dfErrorUnitMissing$yErrorValues / 100
   )
 })
+
+# conversion to weeks --------------------------------
+
+dfWeek <- dplyr::tibble(
+  xValues = c(15, 0.5, 60),
+  xUnit = c("min", "h", "min"),
+  xDimension = "Time",
+  yValues = c(0.25, 45, 78),
+  yUnit = c("", "%", "%"),
+  yDimension = c("Fraction", "Fraction", "Fraction"),
+  yErrorValues = c(0.01, 5, 8),
+  yErrorUnit = c("", "%", "%"),
+  molWeight = c(10, 10, 10)
+)
+
+dfWeekConvert <- .unitConverter(dfWeek, xUnit = ospsuite::ospUnits$Time$`week(s)`)
+
+test_that("it can convert time to weeks", {
+  expect_equal(unique(dfWeekConvert$xUnit), ospsuite::ospUnits$Time$`week(s)`)
+  expect_equal(unique(dfWeekConvert$xDimension), unique(dfWeek$xDimension))
+  expect_equal(dfWeekConvert$xValues, c(0.001488, 0.002976, 0.005952), tolerance = 0.0001)
+})
