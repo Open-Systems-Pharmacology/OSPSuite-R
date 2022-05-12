@@ -116,7 +116,7 @@
     missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
 
     message(messages$printMultipleEntries(
-      header = "Following non-grouped or unpairable datasets have been removed:\n",
+      header = messages$datasetsToGroupNotFound(),
       entries = missingDatasets
     ))
   }

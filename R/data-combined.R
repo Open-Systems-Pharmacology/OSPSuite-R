@@ -203,7 +203,7 @@ DataCombined <- R6::R6Class(
     setGroups = function(names, groups) {
       # Return early if no datasets are present
       if (is.null(private$.dataCombined)) {
-        stop("There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.")
+        stop(messages$noDatasetsToGroup())
       }
 
       # Sanitize vector arguments of `character` type
@@ -244,7 +244,7 @@ DataCombined <- R6::R6Class(
     removeGroupAssignment = function(names) {
       # Return early if no datasets are present
       if (is.null(private$.dataCombined)) {
-        stop("There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.")
+        stop(messages$noDatasetsPresentInDataCombined())
       }
 
       # Sanitize vector arguments of `character` type
@@ -549,7 +549,7 @@ DataCombined <- R6::R6Class(
         missingNames <- specifiedNames[!specifiedNames %in% currentNames]
 
         message(messages$printMultipleEntries(
-          header = "Following datasets were specified to be grouped but not found:\n",
+          header = messages$datasetsToGroupNotFound(),
           entries = missingNames
         ))
       }
