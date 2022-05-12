@@ -408,8 +408,6 @@ initializeDimensionAndUnitLists <- function() {
   # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
-  xTargetDim <- getDimensionForUnit(xTargetUnit)
-  yTargetDim <- getDimensionForUnit(yTargetUnit)
 
   # Strategy --------------------------
 
@@ -483,14 +481,14 @@ initializeDimensionAndUnitLists <- function() {
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
   data <- purrr::map_dfr(
     .x = xDataList,
-    .f = function(data) .xUnitConverter(data, xTargetUnit, xTargetDim)
+    .f = function(data) .xUnitConverter(data, xTargetUnit)
   )
 
   # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
   data <- purrr::map_dfr(
     .x = yDataList,
-    .f = function(data) .yUnitConverter(data, yTargetUnit, yTargetDim)
+    .f = function(data) .yUnitConverter(data, yTargetUnit)
   )
 
   # yUnit error
@@ -499,7 +497,7 @@ initializeDimensionAndUnitLists <- function() {
 
     data <- purrr::map_dfr(
       .x = yErrorDataList,
-      .f = function(data) .yErrorUnitConverter(data, yTargetUnit, yTargetDim)
+      .f = function(data) .yErrorUnitConverter(data, yTargetUnit)
     )
   }
 
@@ -537,9 +535,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.xUnitConverter <- function(xData, xTargetUnit, xTargetDim) {
+.xUnitConverter <- function(xData, xTargetUnit) {
   xData$xValues <- toUnit(
-    quantityOrDimension = xTargetDim,
+    quantityOrDimension = xData$xDimension[[1]],
     values = xData$xValues,
     targetUnit = xTargetUnit,
     sourceUnit = xData$xUnit[[1]]
@@ -552,9 +550,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.yUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
+.yUnitConverter <- function(yData, yTargetUnit) {
   yData$yValues <- toUnit(
-    quantityOrDimension = yTargetDim,
+    quantityOrDimension = yData$yDimension[[1]],
     values = yData$yValues,
     targetUnit = yTargetUnit,
     sourceUnit = yData$yUnit[[1]],
@@ -569,9 +567,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.yErrorUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
+.yErrorUnitConverter <- function(yData, yTargetUnit) {
   yData$yErrorValues <- toUnit(
-    quantityOrDimension = yTargetDim,
+    quantityOrDimension = yData$yDimension[[1]],
     values = yData$yErrorValues,
     targetUnit = yTargetUnit,
     sourceUnit = yData$yErrorUnit[[1]],
