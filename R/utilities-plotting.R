@@ -425,7 +425,8 @@
 #'
 #' Relevant only in the context of profile plots.
 #'
-#' By default
+#' By default, every grouping won't get a unique aesthetic mapping. Therefore,
+#' the current function uses brute force method to update them afterwards.
 #'
 #' @param legendCaptionData Data frame extracted using `tlf::getLegendCaption()`.
 #' @param timeProfilePlotConfiguration An instance of
