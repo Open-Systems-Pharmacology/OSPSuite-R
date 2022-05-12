@@ -390,17 +390,6 @@
     alpha = generalPlotConfiguration$errorbarsAlpha
   )
 
-  # export -------------------------------------------------------
-
-  exportConfiguration <- tlf::ExportConfiguration$new(
-    name = generalPlotConfiguration$saveFileName,
-    format = generalPlotConfiguration$saveFileFormat,
-    width = generalPlotConfiguration$saveFileWidth,
-    height = generalPlotConfiguration$saveFileHeight,
-    units = generalPlotConfiguration$saveFileDimensionUnits,
-    dpi = generalPlotConfiguration$saveFileDpi
-  )
-
   # Update specific plot configuration object ----------------------
 
   # Do one-to-one mappings of public fields
@@ -413,7 +402,6 @@
   specificPlotConfiguration$points <- pointsConfiguration
   specificPlotConfiguration$ribbons <- ribbonsConfiguration
   specificPlotConfiguration$errorbars <- errorbarsConfiguration
-  specificPlotConfiguration$export <- exportConfiguration
 
   return(specificPlotConfiguration)
 }
