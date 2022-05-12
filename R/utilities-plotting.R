@@ -447,7 +447,7 @@
   numberOfColorsNeeded <- numberOfShapesNeeded <- nrow(legendCaptionData)
 
   # Number of needed line types would be equal to only non-blank line types.
-  numberOfLinetypesNeeded <- nrow(legendCaptionData[legendCaptionData$linetype != "blank", ])
+  numberOfLinetypesNeeded <- nrow(legendCaptionData[legendCaptionData$linetype != tlf::Linetypes$blank, ])
 
   # Extract as many color, shape, and line type values as there are datasets
   # from the specified plot configuration object.
