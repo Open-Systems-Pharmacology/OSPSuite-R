@@ -471,10 +471,10 @@
     shape = pointsShape
   )
 
-  # New version of legend mappings for linetype: only non-blank line rows are replaced.
+  # New version of legend mappings for line type: only non-blank line rows are replaced.
   # Relevant only if there were any blank lines in the original legend data frame.
   if (numberOfLinetypesNeeded > 0L) {
-    newLegendCaptionData[newLegendCaptionData$linetype != "blank", ]$linetype <- lineTypes
+    newLegendCaptionData[newLegendCaptionData$linetype != tlf::Linetypes$blank, ]$linetype <- lineTypes
   }
 
   return(newLegendCaptionData)
