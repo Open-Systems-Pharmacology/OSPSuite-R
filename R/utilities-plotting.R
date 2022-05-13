@@ -78,9 +78,10 @@
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has
 #'   additionally been cleaned using `.unitConverter()` to have the same units
 #'   across datasets.
-#' @param plotType The nature of labels will change depending on the type of
-#' plot, which can be guessed from the specific `PlotConfiguration` object used,
-#' since each plot has a unique corresponding class.
+#' @param specificPlotConfiguration The nature of labels will change depending
+#'   on the type of plot, which can be guessed from the specific
+#'   `PlotConfiguration` object used, since each plot has a unique corresponding
+#'   class.
 #'
 #' @examples
 #'
@@ -103,7 +104,11 @@
 #' If axes labels haven't been specified, create them using dimensions and units.
 #'
 #' @keywords internal
-.createAxesLabels <- function(data, plotType) {
+.createAxesLabels <- function(data, specificPlotConfiguration) {
+  # The type of plot can be guessed from the specific `PlotConfiguration` object
+  # used, since each plot has a unique corresponding class.
+  plotType <- class(specificPlotConfiguration)[[1]]
+
   # If empty data frame is entered or plot type is not specified, return early
   if (nrow(data) == 0L || missing(plotType)) {
     return(NULL)
@@ -155,6 +160,11 @@
   xLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = xUnitString,
     "ResVsPredPlotConfiguration" = xUnitString,
+    # Note that `yUnitString` here is deliberate.
+    #
+    # In case of an observed versus simulated plot, `yValues` are plotted on
+    # both x- and y-axes, and therefore the units strings are going to be the
+    # same for both axes.
     "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
   )
 
