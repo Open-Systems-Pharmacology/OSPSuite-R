@@ -26,6 +26,10 @@ messages$unpairableDatasetsRemoved <- function() {
   "Following non-grouped or unpairable datasets have been removed"
 }
 
+messages$valuesNotInterpolated <- function() {
+"Predicted values couldn't be interpolated at following time points"
+}
+
 messages$printMultipleEntries <- function(header, entries) {
   message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
 }

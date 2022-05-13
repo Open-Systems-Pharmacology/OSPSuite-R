@@ -252,6 +252,85 @@
 }
 
 
+#' Created observed versus simulated paired data
+#'
+#' @param data A data frame from `DataCombined$toDataFrame()`, which has been
+#'   further tidied using `.removeUnpairableDatasets()` and then
+#'   `.unitConverter()` functions.
+#'
+#' @keywords internal
+.createPairedData <- function(data) {
+  # Extract time and values to raw vectors. Working with a single data frame is
+  # not an option since the dimensions of observed and simulated data frames are
+  # different.
+  obsTime <- data$xValues[data$dataType == "observed"]
+  obsValue <- data$yValues[data$dataType == "observed"]
+  simTime <- data$xValues[data$dataType == "simulated"]
+  simValue <- data$yValues[data$dataType == "simulated"]
+
+  # Initialize to `NA`, and not 0.
+  predValue <- rep(NA_real_, length(obsTime))
+
+  # Figure out time points where both observed and simulated data were sampled.
+  obsExactMatchIndices <- which(obsTime %in% simTime)
+  simExactMatchIndices <- which(simTime %in% obsTime)
+  obsNoExactMatchIndices <- which(!obsTime %in% simTime)
+
+  # For exactly matched time points, there is no need for interpolation.
+  predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
+
+  # For time points that are not matched, the simulated data needs to be
+  # interpolated. This is because simulated data is typically sampled at a
+  # higher frequency than the observed data.
+  #
+  # Interpolation is carried out using the Newton–Raphson method.
+  for (idx in obsNoExactMatchIndices) {
+    # If index is the same as the length of the vector, then `idx + 1` will be
+    # out-of-bounds. So loop only if the index is less than the length of the
+    # vector.
+    #
+    # Note that this does *not* mean that the value at the last index
+    # in `predValue` vector is always going to be `NA`. It is also possible
+    # that there is an exact match at this time point.
+    if (idx < length(predValue)) {
+      # f(x) =
+      predValue[idx] <-
+        # f0 * ((x1 - x) / (x1 - x0)) +
+        simValue[idx] * ((simTime[idx + 1] - obsTime[idx]) / (simTime[idx + 1] - simTime[idx])) +
+        # f1 * ((x - x0) / (x1 - x0))
+        simValue[idx + 1] * ((obsTime[idx] - simTime[idx]) / (simTime[idx + 1] - simTime[idx]))
+    }
+  }
+
+  # Time points at which predicted values can't be interpolated, and need to be
+  # extrapolated.
+  #
+  # This will happen in rare case scenarios where simulated data is sampled at a
+  # lower frequency than observed data.
+  predValueMissingIndices <- which(is.na(predValue))
+
+  # Warn the user about failure to interpolate.
+  if (length(predValueMissingIndices) > 0) {
+    warning(
+      messages$printMultipleEntries(
+        header = messages$valuesNotInterpolated,
+        entries = obsTime[predValueMissingIndices]
+      ),
+      call. = FALSE
+    )
+  }
+
+  # Link observed and interpolated predicted for each observed time point using
+  # a data frame.
+  pairedData <- dplyr::tibble(
+    "obsTime" = obsTime,
+    "obsValue" = obsValue,
+    "predValue" = predValue
+  )
+
+  return(pairedData)
+}
+
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
 #' @param data A data frame containing information about dimensions and units

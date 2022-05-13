@@ -82,9 +82,12 @@ saveSimulation <- function(simulation, filePath) {
   invisible()
 }
 
-#' @title
+#' @title Run a single simulation
 #'
-#' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
+#' @details
+#'
+#' Runs one simulation (individual or population) and returns a
+#' `SimulationResults` object containing all results of the simulation.
 #'
 #' @param simulation One `Simulation` to simulate.
 #' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
