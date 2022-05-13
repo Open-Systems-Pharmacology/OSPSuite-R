@@ -73,6 +73,80 @@
   return(simAggregatedData)
 }
 
+#' Create axes labels
+#'
+#' @details
+#'
+#' If axes labels haven't been specified, create them using dimensions and units.
+#'
+#' @keywords internal
+.createAxesLabels <- function(data, plotType) {
+  # If empty data frame is entered or plot type is not specified, return early
+  if (nrow(data) == 0L || missing(plotType)) {
+    return(NULL)
+  }
+
+  # Initialize strings with unique values for units and dimensions.
+  #
+  # The`.unitConverter()` has already ensured that there is only a single unit
+  # for x and y quantities, so we can safely take the unique unit to prepare
+  # axes labels.
+  xUnitString <- unique(data$xUnit)
+  yUnitString <- unique(data$yUnit)
+  xDimensionString <- unique(data$xDimension)
+  yDimensionString <- unique(data$yDimension)
+
+  # Currently, hard code any of the different concentration dimensions to just
+  # one dimension: "Concentration"
+  #
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
+  concDimensions <- c(
+    ospDimensions$`Concentration (mass)`,
+    ospDimensions$`Concentration (molar)`,
+    ospDimensions$`Concentration (molar) per time`
+  )
+
+  if (xDimensionString %in% concDimensions) {
+    xDimensionString <- "Concentration"
+  }
+
+  if (yDimensionString %in% concDimensions) {
+    yDimensionString <- "Concentration"
+  }
+
+  # If quantities are unitless, no unit information will be displayed.
+  # Otherwise, `Dimension [Unit]` pattern will be followed.
+  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
+  xUnitString <- paste0(xDimensionString, xUnitString)
+  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
+  yUnitString <- paste0(yDimensionString, yUnitString)
+
+  # The exact axis label will depend on the type of the plot, and the type
+  # of the plot can be guessed using the specific `PlotConfiguration` object
+  # entered in this function.
+  #
+  # If the specific `PlotConfiguration` object is not any of the cases included
+  # in the `switch` below, the result will be no change; i.e., the labels will
+  # continue to be `NULL`.
+
+  # x-axis label
+  xLabel <- switch(plotType,
+    "TimeProfilePlotConfiguration" = xUnitString,
+    "ResVsPredPlotConfiguration" = xUnitString,
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
+  )
+
+  # y-axis label
+  yLabel <- switch(plotType,
+    "TimeProfilePlotConfiguration" = yUnitString,
+    "ResVsPredPlotConfiguration" = "Residuals",
+    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+  )
+
+  return(list("xLabel" = xLabel, "yLabel" = yLabel))
+}
+
+
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
 #' @param data A data frame containing information about dimensions and units
@@ -123,48 +197,6 @@
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
   }
 
-  # Axes labels -----------------------------------
-
-  # If axes labels haven't been specified, create them using dimensions and units.
-
-  # In the code below, `.unitConverter()` has already ensured that there is only
-  # a single unit for x and y quantities, so we can safely take the unique unit
-  # to prepare axes labels.
-  xUnitString <- unique(data$xUnit)
-  yUnitString <- unique(data$yUnit)
-
-  # If quantities are unitless, no unit information will be displayed.
-  # Otherwise, `Dimension [Unit]` pattern will be followed.
-  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
-  xUnitString <- paste0(unique(data$xDimension), xUnitString)
-  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
-  yUnitString <- paste0(unique(data$yDimension), yUnitString)
-
-  # The exact axis label will depend on the type of the plot, and the type
-  # of the plot can be guessed using the specific `PlotConfiguration` object
-  # entered in this function.
-  #
-  # If the specific `PlotConfiguration` object is not any of the cases included
-  # in the `switch` below, the result will be no change; i.e., the labels will
-  # continue to be `NULL`.
-
-  # x-axis label
-  if (is.null(generalPlotConfiguration$xLabel)) {
-    generalPlotConfiguration$xLabel <- switch(plotType,
-      "TimeProfilePlotConfiguration" = xUnitString,
-      "ResVsPredPlotConfiguration" = xUnitString,
-      "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
-    )
-  }
-
-  # y-axis label
-  if (is.null(generalPlotConfiguration$yLabel)) {
-    generalPlotConfiguration$yLabel <- switch(plotType,
-      "TimeProfilePlotConfiguration" = yUnitString,
-      "ResVsPredPlotConfiguration" = "Residuals",
-      "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
-    )
-  }
 
   # labels object ---------------------------------------
 
