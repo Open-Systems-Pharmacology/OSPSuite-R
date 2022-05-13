@@ -97,7 +97,9 @@
 #'   molWeight = c(10, 10, 20, 20, 10, 10)
 #' )
 #'
-#' ospsuite:::.createAxesLabels(.unitConverter(df), TimeProfilePlotConfiguration$new())
+#' df <- ospsuite:::.unitConverter(df)
+#'
+#' ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 #'
 #' @details
 #'
