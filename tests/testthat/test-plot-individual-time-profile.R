@@ -70,6 +70,11 @@ test_that("It respects custom plot configuration", {
     title = "custom plot config",
     fig = plotIndividualTimeProfile(myCombDat, myPlotConfiguration)
   )
+
+  # Since these were not specified by the user, they should not be updated
+  # after plotting function is done with it.
+  expect_null(myPlotConfiguration$xLabel)
+  expect_null(myPlotConfiguration$yLabel)
 })
 
 
@@ -104,4 +109,23 @@ test_that("It creates default plots as expected for only simulated", {
     title = "default plot - simulated",
     fig = plotIndividualTimeProfile(myCombDat3)
   )
+})
+
+test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Concentration' in plot axis labels", {
+  df <- dplyr::tibble(
+    dataType = c(rep("simulated", 3), rep("observed", 3)),
+    xValues = c(0, 14.482, 28.965, 0, 1, 2),
+    xUnit = "min",
+    xDimension = "Time",
+    yValues = c(1, 1, 1, 1, 1, 1),
+    yUnit = "mol/ml",
+    yDimension = ospDimensions$`Concentration (mass)`,
+    yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+    molWeight = c(10, 10, 20, 20, 10, 10)
+  )
+
+  labels <- .createAxesLabels(.unitConverter(df), "TimeProfilePlotConfiguration")
+
+  expect_equal(labels$xLabel, "Time [min]")
+  expect_equal(labels$yLabel, "Concentration [mol/ml]")
 })

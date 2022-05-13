@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{getDimensionsEnum}
 \alias{getDimensionsEnum}
-\title{#'Function to return an enum of all available dimensions}
+\title{Function to return an enum of all available dimensions}
 \usage{
 getDimensionsEnum()
 }
@@ -10,6 +10,11 @@ getDimensionsEnum()
 enum of all dimensions
 }
 \description{
-#'Function to return an enum of all available dimensions
+Function to return an enum of all available dimensions
+}
+\examples{
+
+ospsuite:::getDimensionsEnum()
+
 }
 \keyword{internal}

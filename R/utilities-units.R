@@ -211,6 +211,10 @@ toUnit <- function(quantityOrDimension,
   rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
+#' @title Convert base unit to display unit
+#'
+#' @description
+#'
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
 #'
 #' @param quantity Instance of a quantity from which the base unit will be retrieved
@@ -231,22 +235,36 @@ toDisplayUnit <- function(quantity, values) {
   toUnit(quantity, values, quantity$displayUnit)
 }
 
-#' Returns the name of all available dimensions defined in the OSPSuite platform
+#' @title List all available dimensions in the `OSPSuite` platform
+#'
+#' @return
+#'
+#' Returns the names of all available dimensions defined in the `OSPSuite`
+#' platform.
 #'
 #' @examples
-#' dims <- allAvailableDimensions()
+#'
+#' allAvailableDimensions()
+#'
 #' @export
 allAvailableDimensions <- function() {
   dimensionTask <- .getNetTask("DimensionTask")
   rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }
 
-#' Returns the name of dimension that can be used to support the given unit or null if the dimension cannot be found
+#' @title Get dimension for a given unit
 #'
-#' @param unit Unit used to find the corresponding dimension
+#' @return
+#'
+#' Returns the name of dimension that can be used to support the given unit or
+#' `NULL` if the dimension cannot be found.
+#'
+#' @param unit Unit used to find the corresponding dimension.
 #'
 #' @examples
-#' dim <- getDimensionForUnit("mg")
+#'
+#' getDimensionForUnit("mg")
+#'
 #' @export
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
@@ -256,12 +274,18 @@ getDimensionForUnit <- function(unit) {
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
 }
 
+#' @title Get units for a given dimension
+#'
+#' @return
+#'
 #' Returns a vector containing all units defined in the dimension
 #'
 #' @param dimension Name of dimension for which units should be returned
 #'
 #' @examples
-#' units <- getUnitsForDimension("Mass")
+#'
+#' getUnitsForDimension("Mass")
+#'
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
@@ -269,7 +293,7 @@ getUnitsForDimension <- function(dimension) {
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
 
-#' Return an instance of the .NET Task `DimensionTask`
+#' Return an instance of the `.NET` Task `DimensionTask`
 #' This is purely for optimization purposes
 #'
 #' @return An instance of the Task
@@ -282,12 +306,19 @@ getDimensionTask <- function() {
   return(dimensionTask)
 }
 
-#' Returns the an instance of the dimension with the given name if found or NULL otherwise
+#' @title Get dimension by name
+#'
+#' @return
+#'
+#' Returns the an instance of the dimension with the given name if found or `NULL`
+#' otherwise.
 #'
 #' @param name Name of dimension that should be retrieved
 #'
 #' @examples
-#' dim <- getDimensionByName("Time")
+#'
+#' getDimensionByName("Time")
+#'
 #' @export
 getDimensionByName <- function(name) {
   validateIsString(name)
@@ -296,32 +327,54 @@ getDimensionByName <- function(name) {
 }
 
 
-#' Loop through dimensions and build a list containing an enum of all units available for each dimension
+#' @title Create a list of all units available for each dimension
+#'
+#' @details
+#'
+#' Loop through dimensions and build a list containing an enum of all units
+#' available for each dimension
+#'
 #' @return enum of all units for each dimension
+#'
+#' @examples
+#'
+#' ospsuite:::getUnitsEnum()
+#'
 #' @keywords internal
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
+
   units <- lapply(dimensions, function(dimension) {
     x <- getUnitsForDimension(dimension = dimension)
     return(enum(replace(x, x == "", "Unitless")))
   })
+
   names(units) <- sapply(dimensions, function(str) {
     str <- gsub(pattern = "[(]", replacement = "[", x = str)
     str <- gsub(pattern = "[)]", replacement = "]", x = str)
   })
+
   return(units)
 }
 
-#' #'Function to return an enum of all available dimensions
+#' @title Function to return an enum of all available dimensions
+#'
 #' @return enum of all dimensions
+#'
+#' @examples
+#'
+#' ospsuite:::getDimensionsEnum()
+#'
 #' @keywords internal
 getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
 }
 
-#' Supported dimensions defined as a named list
+#' @title Supported dimensions defined as a named list
 #'
+#' @details
 #' ospDimensions$Mass => "Mass"
+#'
 #' @export
 ospDimensions <- list()
 
@@ -408,8 +461,6 @@ initializeDimensionAndUnitLists <- function() {
   # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
   xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
   yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
-  xTargetDim <- getDimensionForUnit(xTargetUnit)
-  yTargetDim <- getDimensionForUnit(yTargetUnit)
 
   # Strategy --------------------------
 
@@ -483,14 +534,14 @@ initializeDimensionAndUnitLists <- function() {
   xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
   data <- purrr::map_dfr(
     .x = xDataList,
-    .f = function(data) .xUnitConverter(data, xTargetUnit, xTargetDim)
+    .f = function(data) .xUnitConverter(data, xTargetUnit)
   )
 
   # yUnit
   yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
   data <- purrr::map_dfr(
     .x = yDataList,
-    .f = function(data) .yUnitConverter(data, yTargetUnit, yTargetDim)
+    .f = function(data) .yUnitConverter(data, yTargetUnit)
   )
 
   # yUnit error
@@ -499,7 +550,7 @@ initializeDimensionAndUnitLists <- function() {
 
     data <- purrr::map_dfr(
       .x = yErrorDataList,
-      .f = function(data) .yErrorUnitConverter(data, yTargetUnit, yTargetDim)
+      .f = function(data) .yErrorUnitConverter(data, yTargetUnit)
     )
   }
 
@@ -537,9 +588,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.xUnitConverter <- function(xData, xTargetUnit, xTargetDim) {
+.xUnitConverter <- function(xData, xTargetUnit) {
   xData$xValues <- toUnit(
-    quantityOrDimension = xTargetDim,
+    quantityOrDimension = xData$xDimension[[1]],
     values = xData$xValues,
     targetUnit = xTargetUnit,
     sourceUnit = xData$xUnit[[1]]
@@ -552,9 +603,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.yUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
+.yUnitConverter <- function(yData, yTargetUnit) {
   yData$yValues <- toUnit(
-    quantityOrDimension = yTargetDim,
+    quantityOrDimension = yData$yDimension[[1]],
     values = yData$yValues,
     targetUnit = yTargetUnit,
     sourceUnit = yData$yUnit[[1]],
@@ -569,9 +620,9 @@ initializeDimensionAndUnitLists <- function() {
 
 #' @keywords internal
 #' @noRd
-.yErrorUnitConverter <- function(yData, yTargetUnit, yTargetDim) {
+.yErrorUnitConverter <- function(yData, yTargetUnit) {
   yData$yErrorValues <- toUnit(
-    quantityOrDimension = yTargetDim,
+    quantityOrDimension = yData$yDimension[[1]],
     values = yData$yErrorValues,
     targetUnit = yTargetUnit,
     sourceUnit = yData$yErrorUnit[[1]],

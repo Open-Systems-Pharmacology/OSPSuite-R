@@ -188,7 +188,7 @@ test_that("data frame molecular weight column values are as expected", {
   expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
 })
 
-# grouping specification ---------------------------------------
+# grouping validation ---------------------------------------
 
 test_that("with no grouping specified, group column in data frame is `NA`", {
   myCombDat <- DataCombined$new()
@@ -273,6 +273,44 @@ y
     fixed = TRUE
   )
 })
+
+# grouping with add --------------------------
+
+test_that("group assignment with `$addDatasets()` works even if names are not provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "m")
+  expect_equal(myCombDat$groupMap$name, dataSet[[1]]$name)
+  expect_equal(myCombDat$groupMap$group, "m")
+})
+
+test_that("group assignment with `$addDatasets()` works if names are provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], names = "Placebo_total", groups = "m")
+  expect_equal(myCombDat$groupMap$name, "Placebo_total")
+  expect_equal(myCombDat$groupMap$group, "m")
+})
+
+test_that("group assignment with `$addSimulationResults()` works even if names are not provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults, groups = list("a", "b", "c", "d", "e"))
+  expect_equal(myCombDat$groupMap$name, simResults$allQuantityPaths)
+  expect_equal(myCombDat$groupMap$group, c("a", "b", "c", "d", "e"))
+})
+
+test_that("group assignment with `$addSimulationResults()` works if names are provided", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(
+    simResults,
+    names = list("l", "m", "n", "o", "p"),
+    groups = list("a", NULL, "b", "c", "d")
+  )
+
+  expect_equal(myCombDat$groupMap$name, c("l", "n", "o", "p", "m"))
+  expect_equal(myCombDat$groupMap$group, c("a", "b", "c", "d", NA))
+})
+
+
+# grouping with set --------------------------
 
 test_that("assigned group can be removed using `NA` or `NULL`", {
   myCombDat <- DataCombined$new()

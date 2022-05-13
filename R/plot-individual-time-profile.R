@@ -15,7 +15,6 @@
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL) {
-
   .plotTimeProfile(dataCombined, defaultPlotConfiguration)
 }
 
@@ -55,6 +54,13 @@ plotIndividualTimeProfile <- function(dataCombined,
     generalPlotConfiguration = defaultPlotConfiguration
   )
 
+  # axes labels -----------------------------
+
+  plotType <- class(timeProfilePlotConfiguration)[[1]]
+  axesLabels <- .createAxesLabels(df, plotType)
+  timeProfilePlotConfiguration$labels$xlabel$text <- timeProfilePlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
+  timeProfilePlotConfiguration$labels$ylabel$text <- timeProfilePlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+
   # plot -----------------------------
 
   obsData <- as.data.frame(dplyr::filter(df, dataType == "observed"))
@@ -67,8 +73,10 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   if (nrow(simData) == 0) {
     simData <- NULL
-  } else if (!is.null(quantiles)) {
-    # Extract aggregated simulated data
+  }
+
+  # Extract aggregated simulated data (relevant only for the population plot)
+  if (!is.null(quantiles) && !is.null(simData)) {
     simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
   }
 

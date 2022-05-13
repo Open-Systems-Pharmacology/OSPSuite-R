@@ -144,6 +144,80 @@
   return(simAggregatedData)
 }
 
+#' Create axes labels
+#'
+#' @details
+#'
+#' If axes labels haven't been specified, create them using dimensions and units.
+#'
+#' @keywords internal
+.createAxesLabels <- function(data, plotType) {
+  # If empty data frame is entered or plot type is not specified, return early
+  if (nrow(data) == 0L || missing(plotType)) {
+    return(NULL)
+  }
+
+  # Initialize strings with unique values for units and dimensions.
+  #
+  # The`.unitConverter()` has already ensured that there is only a single unit
+  # for x and y quantities, so we can safely take the unique unit to prepare
+  # axes labels.
+  xUnitString <- unique(data$xUnit)
+  yUnitString <- unique(data$yUnit)
+  xDimensionString <- unique(data$xDimension)
+  yDimensionString <- unique(data$yDimension)
+
+  # Currently, hard code any of the different concentration dimensions to just
+  # one dimension: "Concentration"
+  #
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
+  concDimensions <- c(
+    ospDimensions$`Concentration (mass)`,
+    ospDimensions$`Concentration (molar)`,
+    ospDimensions$`Concentration (molar) per time`
+  )
+
+  if (xDimensionString %in% concDimensions) {
+    xDimensionString <- "Concentration"
+  }
+
+  if (yDimensionString %in% concDimensions) {
+    yDimensionString <- "Concentration"
+  }
+
+  # If quantities are unitless, no unit information will be displayed.
+  # Otherwise, `Dimension [Unit]` pattern will be followed.
+  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
+  xUnitString <- paste0(xDimensionString, xUnitString)
+  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
+  yUnitString <- paste0(yDimensionString, yUnitString)
+
+  # The exact axis label will depend on the type of the plot, and the type
+  # of the plot can be guessed using the specific `PlotConfiguration` object
+  # entered in this function.
+  #
+  # If the specific `PlotConfiguration` object is not any of the cases included
+  # in the `switch` below, the result will be no change; i.e., the labels will
+  # continue to be `NULL`.
+
+  # x-axis label
+  xLabel <- switch(plotType,
+    "TimeProfilePlotConfiguration" = xUnitString,
+    "ResVsPredPlotConfiguration" = xUnitString,
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
+  )
+
+  # y-axis label
+  yLabel <- switch(plotType,
+    "TimeProfilePlotConfiguration" = yUnitString,
+    "ResVsPredPlotConfiguration" = "Residuals",
+    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+  )
+
+  return(list("xLabel" = xLabel, "yLabel" = yLabel))
+}
+
+
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
 #' @param data A data frame containing information about dimensions and units
@@ -194,48 +268,6 @@
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
   }
 
-  # Axes labels -----------------------------------
-
-  # If axes labels haven't been specified, create them using dimensions and units.
-
-  # In the code below, `.unitConverter()` has already ensured that there is only
-  # a single unit for x and y quantities, so we can safely take the unique unit
-  # to prepare axes labels.
-  xUnitString <- unique(data$xUnit)
-  yUnitString <- unique(data$yUnit)
-
-  # If quantities are unitless, no unit information will be displayed.
-  # Otherwise, `Dimension [Unit]` pattern will be followed.
-  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
-  xUnitString <- paste0(unique(data$xDimension), xUnitString)
-  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
-  yUnitString <- paste0(unique(data$yDimension), yUnitString)
-
-  # The exact axis label will depend on the type of the plot, and the type
-  # of the plot can be guessed using the specific `PlotConfiguration` object
-  # entered in this function.
-  #
-  # If the specific `PlotConfiguration` object is not any of the cases included
-  # in the `switch` below, the result will be no change; i.e., the labels will
-  # continue to be `NULL`.
-
-  # x-axis label
-  if (is.null(generalPlotConfiguration$xLabel)) {
-    generalPlotConfiguration$xLabel <- switch(plotType,
-      "TimeProfilePlotConfiguration" = xUnitString,
-      "ResVsPredPlotConfiguration" = xUnitString,
-      "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
-    )
-  }
-
-  # y-axis label
-  if (is.null(generalPlotConfiguration$yLabel)) {
-    generalPlotConfiguration$yLabel <- switch(plotType,
-      "TimeProfilePlotConfiguration" = yUnitString,
-      "ResVsPredPlotConfiguration" = "Residuals",
-      "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
-    )
-  }
 
   # labels object ---------------------------------------
 
@@ -496,6 +528,9 @@
 #'
 #' Relevant only in the context of profile plots.
 #'
+#' By default, every grouping won't get a unique aesthetic mapping. Therefore,
+#' the current function uses brute force method to update them afterwards.
+#'
 #' @param legendCaptionData Data frame extracted using `tlf::getLegendCaption()`.
 #' @param timeProfilePlotConfiguration An instance of
 #'   `TimeProfilePlotConfiguration` class.
@@ -511,27 +546,39 @@
   pointsShape <- unname(unlist(tlf::Shapes)[timeProfilePlotConfiguration$points$shape])
   lineTypes <- timeProfilePlotConfiguration$lines$linetype
 
-  # Extract as many properties as there are datasets from the specified config
-  # object fields.
-  if (length(pointsColor) > 1L) {
-    pointsColor <- pointsColor[1:nrow(legendCaptionData)]
+  # As many unique colors and shapes will be needed as there are groupings
+  numberOfColorsNeeded <- numberOfShapesNeeded <- nrow(legendCaptionData)
+
+  # Number of needed line types would be equal to only non-blank line types.
+  numberOfLinetypesNeeded <- nrow(legendCaptionData[legendCaptionData$linetype != tlf::Linetypes$blank, ])
+
+  # Extract as many color, shape, and line type values as there are datasets
+  # from the specified plot configuration object.
+  #
+  # This is necessary only if a vector of values is provided.
+  if (numberOfColorsNeeded > 0L && length(pointsColor) > 1L) {
+    pointsColor <- pointsColor[1:numberOfColorsNeeded]
   }
 
-  if (length(pointsShape) > 1L) {
-    pointsShape <- pointsShape[1:nrow(legendCaptionData)]
+  if (numberOfShapesNeeded > 0L && length(pointsShape) > 1L) {
+    pointsShape <- pointsShape[1:numberOfShapesNeeded]
   }
 
-  if (length(lineTypes) > 1L) {
-    lineTypes <- lineTypes[1:nrow(legendCaptionData)]
+  if (numberOfLinetypesNeeded > 0L && length(lineTypes) > 1L) {
+    lineTypes <- lineTypes[1:numberOfLinetypesNeeded]
   }
 
-  # New version of legend mappings.
-  newLegendCaptionData <- dplyr::mutate(
-    legendCaptionData,
+  # New version of legend mappings for shape and color: all rows are replaced.
+  newLegendCaptionData <- dplyr::mutate(legendCaptionData,
     color = pointsColor,
-    shape = pointsShape,
-    linetype = lineTypes
+    shape = pointsShape
   )
+
+  # New version of legend mappings for line type: only non-blank line rows are replaced.
+  # Relevant only if there were any blank lines in the original legend data frame.
+  if (numberOfLinetypesNeeded > 0L) {
+    newLegendCaptionData[newLegendCaptionData$linetype != tlf::Linetypes$blank, ]$linetype <- lineTypes
+  }
 
   return(newLegendCaptionData)
 }
