@@ -131,16 +131,16 @@
 
   # x-axis label
   xLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = xUnitString,
-                   "ResVsPredPlotConfiguration" = xUnitString,
-                   "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
+    "TimeProfilePlotConfiguration" = xUnitString,
+    "ResVsPredPlotConfiguration" = xUnitString,
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
   )
 
   # y-axis label
   yLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = yUnitString,
-                   "ResVsPredPlotConfiguration" = "Residuals",
-                   "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "TimeProfilePlotConfiguration" = yUnitString,
+    "ResVsPredPlotConfiguration" = "Residuals",
+    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   return(list("xLabel" = xLabel, "yLabel" = yLabel))
