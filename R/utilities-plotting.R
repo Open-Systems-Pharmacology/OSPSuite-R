@@ -457,6 +457,9 @@
 #'
 #' Relevant only in the context of profile plots.
 #'
+#' By default, every grouping won't get a unique aesthetic mapping. Therefore,
+#' the current function uses brute force method to update them afterwards.
+#'
 #' @param legendCaptionData Data frame extracted using `tlf::getLegendCaption()`.
 #' @param timeProfilePlotConfiguration An instance of
 #'   `TimeProfilePlotConfiguration` class.
@@ -472,27 +475,39 @@
   pointsShape <- unname(unlist(tlf::Shapes)[timeProfilePlotConfiguration$points$shape])
   lineTypes <- timeProfilePlotConfiguration$lines$linetype
 
-  # Extract as many properties as there are datasets from the specified config
-  # object fields.
-  if (length(pointsColor) > 1L) {
-    pointsColor <- pointsColor[1:nrow(legendCaptionData)]
+  # As many unique colors and shapes will be needed as there are groupings
+  numberOfColorsNeeded <- numberOfShapesNeeded <- nrow(legendCaptionData)
+
+  # Number of needed line types would be equal to only non-blank line types.
+  numberOfLinetypesNeeded <- nrow(legendCaptionData[legendCaptionData$linetype != tlf::Linetypes$blank, ])
+
+  # Extract as many color, shape, and line type values as there are datasets
+  # from the specified plot configuration object.
+  #
+  # This is necessary only if a vector of values is provided.
+  if (numberOfColorsNeeded > 0L && length(pointsColor) > 1L) {
+    pointsColor <- pointsColor[1:numberOfColorsNeeded]
   }
 
-  if (length(pointsShape) > 1L) {
-    pointsShape <- pointsShape[1:nrow(legendCaptionData)]
+  if (numberOfShapesNeeded > 0L && length(pointsShape) > 1L) {
+    pointsShape <- pointsShape[1:numberOfShapesNeeded]
   }
 
-  if (length(lineTypes) > 1L) {
-    lineTypes <- lineTypes[1:nrow(legendCaptionData)]
+  if (numberOfLinetypesNeeded > 0L && length(lineTypes) > 1L) {
+    lineTypes <- lineTypes[1:numberOfLinetypesNeeded]
   }
 
-  # New version of legend mappings.
-  newLegendCaptionData <- dplyr::mutate(
-    legendCaptionData,
+  # New version of legend mappings for shape and color: all rows are replaced.
+  newLegendCaptionData <- dplyr::mutate(legendCaptionData,
     color = pointsColor,
-    shape = pointsShape,
-    linetype = lineTypes
+    shape = pointsShape
   )
+
+  # New version of legend mappings for line type: only non-blank line rows are replaced.
+  # Relevant only if there were any blank lines in the original legend data frame.
+  if (numberOfLinetypesNeeded > 0L) {
+    newLegendCaptionData[newLegendCaptionData$linetype != tlf::Linetypes$blank, ]$linetype <- lineTypes
+  }
 
   return(newLegendCaptionData)
 }
