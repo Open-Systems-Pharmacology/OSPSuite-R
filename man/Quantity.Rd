@@ -44,24 +44,24 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Quantity$new()}}
-\item \href{#method-print}{\code{Quantity$print()}}
-\item \href{#method-printValue}{\code{Quantity$printValue()}}
-\item \href{#method-printQuantityValue}{\code{Quantity$printQuantityValue()}}
-\item \href{#method-setValue}{\code{Quantity$setValue()}}
-\item \href{#method-hasUnit}{\code{Quantity$hasUnit()}}
-\item \href{#method-reset}{\code{Quantity$reset()}}
+\item \href{#method-Quantity-new}{\code{Quantity$new()}}
+\item \href{#method-Quantity-print}{\code{Quantity$print()}}
+\item \href{#method-Quantity-printValue}{\code{Quantity$printValue()}}
+\item \href{#method-Quantity-printQuantityValue}{\code{Quantity$printQuantityValue()}}
+\item \href{#method-Quantity-setValue}{\code{Quantity$setValue()}}
+\item \href{#method-Quantity-hasUnit}{\code{Quantity$hasUnit()}}
+\item \href{#method-Quantity-reset}{\code{Quantity$reset()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Quantity-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -80,8 +80,8 @@ A new \code{Quantity} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Quantity-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -97,8 +97,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printValue"></a>}}
-\if{latex}{\out{\hypertarget{method-printValue}{}}}
+\if{html}{\out{<a id="method-Quantity-printValue"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-printValue}{}}}
 \subsection{Method \code{printValue()}}{
 Print the name of the quantity and its value
 \subsection{Usage}{
@@ -107,8 +107,8 @@ Print the name of the quantity and its value
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printQuantityValue"></a>}}
-\if{latex}{\out{\hypertarget{method-printQuantityValue}{}}}
+\if{html}{\out{<a id="method-Quantity-printQuantityValue"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-printQuantityValue}{}}}
 \subsection{Method \code{printQuantityValue()}}{
 Print the the value and unit of the quantity
 \subsection{Usage}{
@@ -124,8 +124,8 @@ Print the the value and unit of the quantity
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setValue"></a>}}
-\if{latex}{\out{\hypertarget{method-setValue}{}}}
+\if{html}{\out{<a id="method-Quantity-setValue"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-setValue}{}}}
 \subsection{Method \code{setValue()}}{
 Convert value from unit to the base unit and sets the value in base unit.
 \subsection{Usage}{
@@ -143,8 +143,8 @@ Convert value from unit to the base unit and sets the value in base unit.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hasUnit"></a>}}
-\if{latex}{\out{\hypertarget{method-hasUnit}{}}}
+\if{html}{\out{<a id="method-Quantity-hasUnit"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-hasUnit}{}}}
 \subsection{Method \code{hasUnit()}}{
 Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
 For the list of supported units, use \code{allUnits}
@@ -161,8 +161,8 @@ For the list of supported units, use \code{allUnits}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reset"></a>}}
-\if{latex}{\out{\hypertarget{method-reset}{}}}
+\if{html}{\out{<a id="method-Quantity-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-reset}{}}}
 \subsection{Method \code{reset()}}{
 Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
 \subsection{Usage}{

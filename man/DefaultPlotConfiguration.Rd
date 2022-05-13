@@ -32,16 +32,20 @@ extract that element first.
 
 For example, if you want to specify that the
 legend position should be outside the plot to the left and at bottom, you
-will have to do the following:\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
+will have to do the following:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
 myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideBottomLeft
-}
+}\if{html}{\out{</div>}}
 
 Of course, the extracted element doesn't have to be a single value, and can
 also be an atomic vector. For example, if you want to assign a different line
 type to each group in a profile plot, you will have to assign a vector of
-line types.\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
+line types.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
 myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
-}
+}\if{html}{\out{</div>}}
 
 If there are more number of elements in the vector than the number of groups,
 the additional elements will be ignored.
@@ -67,10 +71,12 @@ A font family is a grouping of fonts defined by shared design styles.
 
 The available font families will depend on which fonts have been installed on
 your computer. This information can be extracted by running the following
-code:\preformatted{# install.packages("systemfonts")
+code:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# install.packages("systemfonts")
 library(systemfonts)
 system_fonts()
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Specifying scaling}{
@@ -84,9 +90,11 @@ The available transformations can be seen in the \code{tlf::Scaling} list.
 By default, the plots will be shown in plot pane of your IDE, but the plots
 can also be saved to a file using the \code{tlf::exportPlot()} function. Once you
 pass a plot object to this function, it will use the \verb{save*} public members
-of the plot configuration object to save the plot.\preformatted{myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
+of the plot configuration object to save the plot.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
 tlf::exportPlot(myPlot)
-}
+}\if{html}{\out{</div>}}
 
 By default, the plot will be saved in the current working directory and the
 file will be named \code{"figure.png"}.
@@ -250,12 +258,12 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-clone}{\code{DefaultPlotConfiguration$clone()}}
+\item \href{#method-DefaultPlotConfiguration-clone}{\code{DefaultPlotConfiguration$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-DefaultPlotConfiguration-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-DefaultPlotConfiguration-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

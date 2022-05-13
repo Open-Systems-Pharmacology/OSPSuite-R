@@ -24,20 +24,20 @@ A parameter range typically used in the definition of \code{PopulationCharacteri
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ParameterRange$new()}}
-\item \href{#method-print}{\code{ParameterRange$print()}}
-\item \href{#method-printValue}{\code{ParameterRange$printValue()}}
+\item \href{#method-ParameterRange-new}{\code{ParameterRange$new()}}
+\item \href{#method-ParameterRange-print}{\code{ParameterRange$print()}}
+\item \href{#method-ParameterRange-printValue}{\code{ParameterRange$printValue()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ParameterRange-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ParameterRange-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -62,8 +62,8 @@ A new \code{ParameterRange} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-ParameterRange-print"></a>}}
+\if{latex}{\out{\hypertarget{method-ParameterRange-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -79,8 +79,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printValue"></a>}}
-\if{latex}{\out{\hypertarget{method-printValue}{}}}
+\if{html}{\out{<a id="method-ParameterRange-printValue"></a>}}
+\if{latex}{\out{\hypertarget{method-ParameterRange-printValue}{}}}
 \subsection{Method \code{printValue()}}{
 Print the the parameter in one line
 \subsection{Usage}{

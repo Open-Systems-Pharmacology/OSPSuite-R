@@ -24,23 +24,23 @@ Output schema associated with a given simulation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-clear}{\code{OutputSchema$clear()}}
-\item \href{#method-addInterval}{\code{OutputSchema$addInterval()}}
-\item \href{#method-removeInterval}{\code{OutputSchema$removeInterval()}}
-\item \href{#method-addTimePoints}{\code{OutputSchema$addTimePoints()}}
-\item \href{#method-print}{\code{OutputSchema$print()}}
+\item \href{#method-OutputSchema-clear}{\code{OutputSchema$clear()}}
+\item \href{#method-OutputSchema-addInterval}{\code{OutputSchema$addInterval()}}
+\item \href{#method-OutputSchema-removeInterval}{\code{OutputSchema$removeInterval()}}
+\item \href{#method-OutputSchema-addTimePoints}{\code{OutputSchema$addTimePoints()}}
+\item \href{#method-OutputSchema-print}{\code{OutputSchema$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-clear}{}}}
+\if{html}{\out{<a id="method-OutputSchema-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSchema-clear}{}}}
 \subsection{Method \code{clear()}}{
 Clears all intervals and time points
 \subsection{Usage}{
@@ -49,8 +49,8 @@ Clears all intervals and time points
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addInterval"></a>}}
-\if{latex}{\out{\hypertarget{method-addInterval}{}}}
+\if{html}{\out{<a id="method-OutputSchema-addInterval"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSchema-addInterval}{}}}
 \subsection{Method \code{addInterval()}}{
 Adds an interval to the schema
 \subsection{Usage}{
@@ -66,8 +66,8 @@ Adds an interval to the schema
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeInterval"></a>}}
-\if{latex}{\out{\hypertarget{method-removeInterval}{}}}
+\if{html}{\out{<a id="method-OutputSchema-removeInterval"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSchema-removeInterval}{}}}
 \subsection{Method \code{removeInterval()}}{
 Removes the interval from the schema
 \subsection{Usage}{
@@ -83,8 +83,8 @@ Removes the interval from the schema
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addTimePoints"></a>}}
-\if{latex}{\out{\hypertarget{method-addTimePoints}{}}}
+\if{html}{\out{<a id="method-OutputSchema-addTimePoints"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSchema-addTimePoints}{}}}
 \subsection{Method \code{addTimePoints()}}{
 Adds the time points to the schema. Note that time points and intervals exists concurrently.
 Use time points only if you need to ensure that specific time are used.
@@ -101,8 +101,8 @@ Use time points only if you need to ensure that specific time are used.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OutputSchema-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSchema-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

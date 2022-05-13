@@ -28,19 +28,19 @@ pK-Parameter values for all individuals of a simulation (1 or more) calculated f
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{QuantityPKParameter$new()}}
-\item \href{#method-print}{\code{QuantityPKParameter$print()}}
+\item \href{#method-QuantityPKParameter-new}{\code{QuantityPKParameter$new()}}
+\item \href{#method-QuantityPKParameter-print}{\code{QuantityPKParameter$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-QuantityPKParameter-new"></a>}}
+\if{latex}{\out{\hypertarget{method-QuantityPKParameter-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -59,8 +59,8 @@ A new \code{QuantityPKParameter} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-QuantityPKParameter-print"></a>}}
+\if{latex}{\out{\hypertarget{method-QuantityPKParameter-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

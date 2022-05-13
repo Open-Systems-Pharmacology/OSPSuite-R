@@ -20,22 +20,22 @@ List of selected quantities selected as output for a given simulation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-clear}{\code{OutputSelections$clear()}}
-\item \href{#method-addQuantity}{\code{OutputSelections$addQuantity()}}
-\item \href{#method-removeQuantity}{\code{OutputSelections$removeQuantity()}}
-\item \href{#method-print}{\code{OutputSelections$print()}}
+\item \href{#method-OutputSelections-clear}{\code{OutputSelections$clear()}}
+\item \href{#method-OutputSelections-addQuantity}{\code{OutputSelections$addQuantity()}}
+\item \href{#method-OutputSelections-removeQuantity}{\code{OutputSelections$removeQuantity()}}
+\item \href{#method-OutputSelections-print}{\code{OutputSelections$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-clear}{}}}
+\if{html}{\out{<a id="method-OutputSelections-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSelections-clear}{}}}
 \subsection{Method \code{clear()}}{
 Removes all selected output from the selection
 \subsection{Usage}{
@@ -44,8 +44,8 @@ Removes all selected output from the selection
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addQuantity"></a>}}
-\if{latex}{\out{\hypertarget{method-addQuantity}{}}}
+\if{html}{\out{<a id="method-OutputSelections-addQuantity"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSelections-addQuantity}{}}}
 \subsection{Method \code{addQuantity()}}{
 Adds a quantity as selected
 \subsection{Usage}{
@@ -61,8 +61,8 @@ Adds a quantity as selected
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeQuantity"></a>}}
-\if{latex}{\out{\hypertarget{method-removeQuantity}{}}}
+\if{html}{\out{<a id="method-OutputSelections-removeQuantity"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSelections-removeQuantity}{}}}
 \subsection{Method \code{removeQuantity()}}{
 Removes a quantity from the selection
 \subsection{Usage}{
@@ -78,8 +78,8 @@ Removes a quantity from the selection
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OutputSelections-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OutputSelections-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

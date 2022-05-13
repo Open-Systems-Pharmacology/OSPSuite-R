@@ -27,24 +27,24 @@ see https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentat
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Molecule$new()}}
-\item \href{#method-print}{\code{Molecule$print()}}
+\item \href{#method-Molecule-new}{\code{Molecule$new()}}
+\item \href{#method-Molecule-print}{\code{Molecule$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit">}\href{../../ospsuite/html/Quantity.html#method-hasUnit}{\code{ospsuite::Quantity$hasUnit()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue">}\href{../../ospsuite/html/Quantity.html#method-printQuantityValue}{\code{ospsuite::Quantity$printQuantityValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue">}\href{../../ospsuite/html/Quantity.html#method-printValue}{\code{ospsuite::Quantity$printValue()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset">}\href{../../ospsuite/html/Quantity.html#method-reset}{\code{ospsuite::Quantity$reset()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue">}\href{../../ospsuite/html/Quantity.html#method-setValue}{\code{ospsuite::Quantity$setValue()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>ospsuite::Quantity$reset()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>ospsuite::Quantity$setValue()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Molecule-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Molecule-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -63,8 +63,8 @@ A new \code{Molecule} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Molecule-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Molecule-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

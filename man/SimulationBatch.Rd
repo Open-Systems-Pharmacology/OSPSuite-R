@@ -50,20 +50,20 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SimulationBatch$new()}}
-\item \href{#method-addRunValues}{\code{SimulationBatch$addRunValues()}}
-\item \href{#method-print}{\code{SimulationBatch$print()}}
+\item \href{#method-SimulationBatch-new}{\code{SimulationBatch$new()}}
+\item \href{#method-SimulationBatch-addRunValues}{\code{SimulationBatch$addRunValues()}}
+\item \href{#method-SimulationBatch-print}{\code{SimulationBatch$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SimulationBatch-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatch-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -84,8 +84,8 @@ A new \code{SimulationBatch} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addRunValues"></a>}}
-\if{latex}{\out{\hypertarget{method-addRunValues}{}}}
+\if{html}{\out{<a id="method-SimulationBatch-addRunValues"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatch-addRunValues}{}}}
 \subsection{Method \code{addRunValues()}}{
 Add a set of parameter and start values for next execution.
 \subsection{Usage}{
@@ -138,8 +138,8 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SimulationBatch-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatch-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
