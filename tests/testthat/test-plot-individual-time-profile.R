@@ -70,6 +70,11 @@ test_that("It respects custom plot configuration", {
     title = "custom plot config",
     fig = plotIndividualTimeProfile(myCombDat, myPlotConfiguration)
   )
+
+  # Since these were not specified by the user, they should not be updated
+  # after plotting function is done with it.
+  expect_null(myPlotConfiguration$xLabel)
+  expect_null(myPlotConfiguration$yLabel)
 })
 
 
