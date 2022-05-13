@@ -26,19 +26,19 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{AgingData$new()}}
-\item \href{#method-print}{\code{AgingData$print()}}
+\item \href{#method-AgingData-new}{\code{AgingData$new()}}
+\item \href{#method-AgingData-print}{\code{AgingData$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-AgingData-new"></a>}}
+\if{latex}{\out{\hypertarget{method-AgingData-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -50,8 +50,8 @@ A new \code{OSPSuite.R.Domain.AgingData} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-AgingData-print"></a>}}
+\if{latex}{\out{\hypertarget{method-AgingData-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

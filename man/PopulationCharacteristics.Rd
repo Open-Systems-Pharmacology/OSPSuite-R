@@ -40,20 +40,20 @@ Characteristics of a population used for population creation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{PopulationCharacteristics$new()}}
-\item \href{#method-print}{\code{PopulationCharacteristics$print()}}
-\item \href{#method-addMoleculeOntogeny}{\code{PopulationCharacteristics$addMoleculeOntogeny()}}
+\item \href{#method-PopulationCharacteristics-new}{\code{PopulationCharacteristics$new()}}
+\item \href{#method-PopulationCharacteristics-print}{\code{PopulationCharacteristics$print()}}
+\item \href{#method-PopulationCharacteristics-addMoleculeOntogeny}{\code{PopulationCharacteristics$addMoleculeOntogeny()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-PopulationCharacteristics-new"></a>}}
+\if{latex}{\out{\hypertarget{method-PopulationCharacteristics-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -65,8 +65,8 @@ A new \code{PopulationCharacteristics} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-PopulationCharacteristics-print"></a>}}
+\if{latex}{\out{\hypertarget{method-PopulationCharacteristics-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -82,8 +82,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addMoleculeOntogeny"></a>}}
-\if{latex}{\out{\hypertarget{method-addMoleculeOntogeny}{}}}
+\if{html}{\out{<a id="method-PopulationCharacteristics-addMoleculeOntogeny"></a>}}
+\if{latex}{\out{\hypertarget{method-PopulationCharacteristics-addMoleculeOntogeny}{}}}
 \subsection{Method \code{addMoleculeOntogeny()}}{
 Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristics
 \subsection{Usage}{

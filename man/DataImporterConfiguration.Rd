@@ -66,22 +66,22 @@ and \code{{Sheet}} for sheet name.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DataImporterConfiguration$new()}}
-\item \href{#method-saveConfiguration}{\code{DataImporterConfiguration$saveConfiguration()}}
-\item \href{#method-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
-\item \href{#method-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
-\item \href{#method-print}{\code{DataImporterConfiguration$print()}}
+\item \href{#method-DataImporterConfiguration-new}{\code{DataImporterConfiguration$new()}}
+\item \href{#method-DataImporterConfiguration-saveConfiguration}{\code{DataImporterConfiguration$saveConfiguration()}}
+\item \href{#method-DataImporterConfiguration-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
+\item \href{#method-DataImporterConfiguration-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
+\item \href{#method-DataImporterConfiguration-print}{\code{DataImporterConfiguration$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -102,8 +102,8 @@ A new \code{DataImporterConfiguration} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-saveConfiguration"></a>}}
-\if{latex}{\out{\hypertarget{method-saveConfiguration}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-saveConfiguration"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-saveConfiguration}{}}}
 \subsection{Method \code{saveConfiguration()}}{
 Save configuration to a XML file that can be used in PKSim/MoBi
 \subsection{Usage}{
@@ -120,8 +120,8 @@ will be exported to.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addGroupingColumn"></a>}}
-\if{latex}{\out{\hypertarget{method-addGroupingColumn}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-addGroupingColumn"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-addGroupingColumn}{}}}
 \subsection{Method \code{addGroupingColumn()}}{
 Add a column for grouping the data sets
 \subsection{Usage}{
@@ -137,8 +137,8 @@ Add a column for grouping the data sets
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeGroupingColumn"></a>}}
-\if{latex}{\out{\hypertarget{method-removeGroupingColumn}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-removeGroupingColumn"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-removeGroupingColumn}{}}}
 \subsection{Method \code{removeGroupingColumn()}}{
 Remove a column for grouping the data sets
 \subsection{Usage}{
@@ -154,8 +154,8 @@ Remove a column for grouping the data sets
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-print"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

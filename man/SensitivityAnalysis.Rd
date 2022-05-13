@@ -28,21 +28,21 @@ with a value that was overridden by the user}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SensitivityAnalysis$new()}}
-\item \href{#method-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
-\item \href{#method-clearParameterPaths}{\code{SensitivityAnalysis$clearParameterPaths()}}
-\item \href{#method-print}{\code{SensitivityAnalysis$print()}}
+\item \href{#method-SensitivityAnalysis-new}{\code{SensitivityAnalysis$new()}}
+\item \href{#method-SensitivityAnalysis-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
+\item \href{#method-SensitivityAnalysis-clearParameterPaths}{\code{SensitivityAnalysis$clearParameterPaths()}}
+\item \href{#method-SensitivityAnalysis-print}{\code{SensitivityAnalysis$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysis-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysis-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -74,8 +74,8 @@ A new \code{SensitivityAnalysis} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addParameterPaths"></a>}}
-\if{latex}{\out{\hypertarget{method-addParameterPaths}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysis-addParameterPaths"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysis-addParameterPaths}{}}}
 \subsection{Method \code{addParameterPaths()}}{
 Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
 \subsection{Usage}{
@@ -93,8 +93,8 @@ calling \code{addParameterPaths} will make only the manually added parameters be
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clearParameterPaths"></a>}}
-\if{latex}{\out{\hypertarget{method-clearParameterPaths}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysis-clearParameterPaths"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysis-clearParameterPaths}{}}}
 \subsection{Method \code{clearParameterPaths()}}{
 Removes all parameter paths defined in the Sensitivity Analysis
 \subsection{Usage}{
@@ -103,8 +103,8 @@ Removes all parameter paths defined in the Sensitivity Analysis
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysis-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysis-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

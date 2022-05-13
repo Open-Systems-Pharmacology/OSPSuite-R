@@ -57,25 +57,25 @@ values were specified by the user for each dataset.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-addDataSets}{\code{DataCombined$addDataSets()}}
-\item \href{#method-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
-\item \href{#method-setGroups}{\code{DataCombined$setGroups()}}
-\item \href{#method-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
-\item \href{#method-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
-\item \href{#method-toDataFrame}{\code{DataCombined$toDataFrame()}}
-\item \href{#method-print}{\code{DataCombined$print()}}
-\item \href{#method-clone}{\code{DataCombined$clone()}}
+\item \href{#method-DataCombined-addDataSets}{\code{DataCombined$addDataSets()}}
+\item \href{#method-DataCombined-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
+\item \href{#method-DataCombined-setGroups}{\code{DataCombined$setGroups()}}
+\item \href{#method-DataCombined-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
+\item \href{#method-DataCombined-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
+\item \href{#method-DataCombined-toDataFrame}{\code{DataCombined$toDataFrame()}}
+\item \href{#method-DataCombined-print}{\code{DataCombined$print()}}
+\item \href{#method-DataCombined-clone}{\code{DataCombined$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addDataSets"></a>}}
-\if{latex}{\out{\hypertarget{method-addDataSets}{}}}
+\if{html}{\out{<a id="method-DataCombined-addDataSets"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-addDataSets}{}}}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
@@ -109,8 +109,8 @@ output will be all \code{NA}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addSimulationResults"></a>}}
-\if{latex}{\out{\hypertarget{method-addSimulationResults}{}}}
+\if{html}{\out{<a id="method-DataCombined-addSimulationResults"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-addSimulationResults}{}}}
 \subsection{Method \code{addSimulationResults()}}{
 Add simulated data using instance of \code{SimulationResults} class.
 \subsection{Usage}{
@@ -168,8 +168,8 @@ output will be all \code{NA}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setGroups"></a>}}
-\if{latex}{\out{\hypertarget{method-setGroups}{}}}
+\if{html}{\out{<a id="method-DataCombined-setGroups"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-setGroups}{}}}
 \subsection{Method \code{setGroups()}}{
 Adds grouping information to (observed and/or simulated) datasets.
 \subsection{Usage}{
@@ -206,8 +206,8 @@ any of the other (previously specified) groupings.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeGroupAssignment"></a>}}
-\if{latex}{\out{\hypertarget{method-removeGroupAssignment}{}}}
+\if{html}{\out{<a id="method-DataCombined-removeGroupAssignment"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-removeGroupAssignment}{}}}
 \subsection{Method \code{removeGroupAssignment()}}{
 Remove existing groupings for (observed and/or simulated) datasets.
 \subsection{Usage}{
@@ -230,8 +230,8 @@ assignment. The elements of \code{names} argument should be unique.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setDataTransformations"></a>}}
-\if{latex}{\out{\hypertarget{method-setDataTransformations}{}}}
+\if{html}{\out{<a id="method-DataCombined-setDataTransformations"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-setDataTransformations}{}}}
 \subsection{Method \code{setDataTransformations()}}{
 Transform raw data with required offsets and scale factors.
 \subsection{Usage}{
@@ -273,8 +273,8 @@ offset and scale factor values.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-toDataFrame"></a>}}
-\if{latex}{\out{\hypertarget{method-toDataFrame}{}}}
+\if{html}{\out{<a id="method-DataCombined-toDataFrame"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-toDataFrame}{}}}
 \subsection{Method \code{toDataFrame()}}{
 A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).
@@ -294,8 +294,8 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-DataCombined-print"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console.
 \subsection{Usage}{
@@ -304,8 +304,8 @@ Print the object to the console.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-DataCombined-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

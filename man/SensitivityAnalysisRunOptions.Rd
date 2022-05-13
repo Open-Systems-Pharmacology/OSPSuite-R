@@ -22,19 +22,19 @@ Options to be passed to the sensitivity analysis engine
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SensitivityAnalysisRunOptions$new()}}
-\item \href{#method-print}{\code{SensitivityAnalysisRunOptions$print()}}
+\item \href{#method-SensitivityAnalysisRunOptions-new}{\code{SensitivityAnalysisRunOptions$new()}}
+\item \href{#method-SensitivityAnalysisRunOptions-print}{\code{SensitivityAnalysisRunOptions$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysisRunOptions-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisRunOptions-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -55,8 +55,8 @@ A new \code{SensitivityAnalysisRunOptions} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysisRunOptions-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisRunOptions-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
