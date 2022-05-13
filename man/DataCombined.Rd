@@ -79,7 +79,7 @@ values were specified by the user for each dataset.}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -93,6 +93,14 @@ list of instances of the \code{DataSet} class. If a dataset is not to be
 renamed, this can be specified as \code{NULL} in the list. For example, in
 \code{names = list("dataName" = "dataNewName", "dataName2" = NULL)}),
 dataset with name \code{"dataName2"} will not be renamed.}
+
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group (and the corresponding entry in the \code{group}
+column will be an \code{NA}). If provided, \code{groups} must have the same length as
+\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
+specified for any of the dataset, the column \code{group} in the data frame
+output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -111,7 +119,8 @@ Add simulated data using instance of \code{SimulationResults} class.
   quantitiesOrPaths = NULL,
   population = NULL,
   individualIds = NULL,
-  names = NULL
+  names = NULL,
+  groups = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -143,6 +152,14 @@ quantities or paths present in the entered \code{SimulationResults} object.
 If a dataset is not to be renamed, this can be specified as \code{NULL} in
 the list. For example, in \code{names = list("dataName" = "dataNewName", "dataName2" = NULL)}), dataset with name \code{"dataName2"} will not be
 renamed.}
+
+\item{\code{groups}}{A string or a list of strings assigning the data set to a
+group. If an entry within the list is \code{NULL}, the corresponding data set is
+not assigned to any group (and the corresponding entry in the \code{group}
+column will be an \code{NA}). If provided, \code{groups} must have the same length as
+\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
+specified for any of the dataset, the column \code{group} in the data frame
+output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
