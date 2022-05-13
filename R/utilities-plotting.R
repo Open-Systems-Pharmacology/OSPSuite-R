@@ -97,7 +97,7 @@
 #'   molWeight = c(10, 10, 20, 20, 10, 10)
 #' )
 #'
-#' .createAxesLabels(.unitConverter(df), "TimeProfilePlotConfiguration")
+#' ospsuite:::.createAxesLabels(.unitConverter(df), TimeProfilePlotConfiguration$new())
 #'
 #' @details
 #'
@@ -105,14 +105,14 @@
 #'
 #' @keywords internal
 .createAxesLabels <- function(data, specificPlotConfiguration) {
+  # If empty data frame is entered or plot type is not specified, return early
+  if (nrow(data) == 0L || missing(specificPlotConfiguration)) {
+    return(NULL)
+  }
+
   # The type of plot can be guessed from the specific `PlotConfiguration` object
   # used, since each plot has a unique corresponding class.
   plotType <- class(specificPlotConfiguration)[[1]]
-
-  # If empty data frame is entered or plot type is not specified, return early
-  if (nrow(data) == 0L || missing(plotType)) {
-    return(NULL)
-  }
 
   # Initialize strings with unique values for units and dimensions.
   #
