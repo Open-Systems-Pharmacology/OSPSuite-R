@@ -91,9 +91,7 @@
 #' # Saving plot
 #'
 #' By default, the plots will be shown in plot pane of your IDE, but the plots
-#' can also be saved to a file using the `tlf::exportPlot()` function. Once you
-#' pass a plot object to this function, it will use the `save*` public members
-#' of the plot configuration object to save the plot.
+#' can also be saved to a file using the `tlf::exportPlot()` function.
 #'
 #' ```
 #' myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
@@ -102,11 +100,6 @@
 #'
 #' By default, the plot will be saved in the current working directory and the
 #' file will be named `"figure.png"`.
-#'
-#' The default dimensions with which the plot will be saved are 16 cm x 9 cm.
-#'
-#' The available file formats (default: "png") to save the plot are: "eps",
-#' "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
 #'
 #' @field xUnit,yUnit Units for quantities plotted on x- and y-axes, respectively.
 #' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character
@@ -140,7 +133,6 @@
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
-#' @field saveFileName,saveFileFormat,saveFileWidth,saveFileHeight,saveFileDimensionUnits,saveFileDpi File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.
 #'
 #' @examples
 #'
@@ -345,15 +337,6 @@ DefaultPlotConfiguration <- R6::R6Class(
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
     errorbarsLinetype = tlf::Linetypes$solid,
-    errorbarsAlpha = 0.75,
-
-    # export ------------------------------------
-
-    saveFileName = "figure",
-    saveFileFormat = "png",
-    saveFileWidth = 16,
-    saveFileHeight = 9,
-    saveFileDimensionUnits = "cm",
-    saveFileDpi = 300
+    errorbarsAlpha = 0.75
   )
 )

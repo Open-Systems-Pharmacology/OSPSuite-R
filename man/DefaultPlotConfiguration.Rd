@@ -98,11 +98,6 @@ tlf::exportPlot(myPlot)
 
 By default, the plot will be saved in the current working directory and the
 file will be named \code{"figure.png"}.
-
-The default dimensions with which the plot will be saved are 16 cm x 9 cm.
-
-The available file formats (default: "png") to save the plot are: "eps",
-"ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf".
 }
 
 \examples{
@@ -188,8 +183,6 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
-
-\item{\code{saveFileName, saveFileFormat, saveFileWidth, saveFileHeight, saveFileDimensionUnits, saveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }
@@ -250,8 +243,6 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
-
-\item{\code{saveFileName, saveFileFormat, saveFileWidth, saveFileHeight, saveFileDimensionUnits, saveFileDpi}}{File name (without extension) format to which the plot needs to be saved, and the specifications for saving the plot.}
 }
 \if{html}{\out{</div>}}
 }
