@@ -61,22 +61,22 @@ Value in yUnit associated with the yValues}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DataSet$new()}}
-\item \href{#method-addMetaData}{\code{DataSet$addMetaData()}}
-\item \href{#method-removeMetaData}{\code{DataSet$removeMetaData()}}
-\item \href{#method-setValues}{\code{DataSet$setValues()}}
-\item \href{#method-print}{\code{DataSet$print()}}
+\item \href{#method-DataSet-new}{\code{DataSet$new()}}
+\item \href{#method-DataSet-addMetaData}{\code{DataSet$addMetaData()}}
+\item \href{#method-DataSet-removeMetaData}{\code{DataSet$removeMetaData()}}
+\item \href{#method-DataSet-setValues}{\code{DataSet$setValues()}}
+\item \href{#method-DataSet-print}{\code{DataSet$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DataSet-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class.
 Either create a \code{DataSet} from a \code{DataRepository} (e.g. loaded from a PKML)
@@ -102,8 +102,8 @@ A new \code{DataSet} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addMetaData"></a>}}
-\if{latex}{\out{\hypertarget{method-addMetaData}{}}}
+\if{html}{\out{<a id="method-DataSet-addMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-addMetaData}{}}}
 \subsection{Method \code{addMetaData()}}{
 Adds a new entry to meta data list or changes its value if the name is
 already present.
@@ -122,8 +122,8 @@ already present.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeMetaData"></a>}}
-\if{latex}{\out{\hypertarget{method-removeMetaData}{}}}
+\if{html}{\out{<a id="method-DataSet-removeMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-removeMetaData}{}}}
 \subsection{Method \code{removeMetaData()}}{
 Removes the meta data entry in the list if one is defined with this name
 \subsection{Usage}{
@@ -139,8 +139,8 @@ Removes the meta data entry in the list if one is defined with this name
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setValues"></a>}}
-\if{latex}{\out{\hypertarget{method-setValues}{}}}
+\if{html}{\out{<a id="method-DataSet-setValues"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-setValues}{}}}
 \subsection{Method \code{setValues()}}{
 Sets the xValues, yValues, and (optionally) yErrorValuues into the dataSet.
 Note: xValues, yValues and yErrorValues must have the same length
@@ -161,8 +161,8 @@ Note: xValues, yValues and yErrorValues must have the same length
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-DataSet-print"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

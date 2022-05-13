@@ -14,6 +14,14 @@
 #' @import tidyr
 #' @import ospsuite.utils
 #'
+#' @param groups A string or a list of strings assigning the data set to a
+#'   group. If an entry within the list is `NULL`, the corresponding data set is
+#'   not assigned to any group (and the corresponding entry in the `group`
+#'   column will be an `NA`). If provided, `groups` must have the same length as
+#'   `dataSets` and/or `simulationResults$quantityPath`. If no grouping is
+#'   specified for any of the dataset, the column `group` in the data frame
+#'   output will be all `NA`.
+#'
 #' @examples
 #'
 #' # load the simulation
@@ -54,26 +62,23 @@ DataCombined <- R6::R6Class(
     #' Adds observed data.
     #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, names = NULL) {
+    addDataSets = function(dataSets, names = NULL, groups = NULL) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       names <- .cleanVectorArgs(names, objectCount(dataSets), type = "character")
+
+      # The original names for datasets can be "plucked" from respective
+      # objects. `purrr::map()` is used to iterate over the vector and the
+      # anonymous function is used to pluck an object. The `map_chr()` variant
+      # clarifies that we are always expecting a character type in return.
+      datasetNames <- purrr::map_chr(c(dataSets), function(x) purrr::pluck(x, "name"))
 
       # If alternate names are provided for datasets, use them instead.
       #
       # If any of the alternate names are missing, then the original name should
       # be used instead.
-      #
-      # The original names for datasets can be "plucked" from respective
-      # objects. `purrr::map()` is used to iterate over the vector and the
-      # anonymous function is used to pluck an object. The `map_chr()` variant
-      # clarifies that we are always expcting a character type in return.
       if (!is.null(names) && is.list(dataSets)) {
-        names <- ifelse(
-          test = is.na(names),
-          yes = purrr::map_chr(dataSets, function(x) purrr::pluck(x, "name")),
-          no = names
-        )
+        names <- ifelse(is.na(names), datasetNames, names)
       }
 
       # Update private fields and bindings for the new setter call
@@ -86,6 +91,14 @@ DataCombined <- R6::R6Class(
       private$.extractBindings()
 
       self$setDataTransformations(names)
+
+      if (!is.null(groups)) {
+        if (is.null(names)) {
+          names <- datasetNames
+        }
+
+        self$setGroups(names, groups)
+      }
 
       # for method chaining
       invisible(self)
@@ -126,7 +139,8 @@ DataCombined <- R6::R6Class(
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL,
-                                    names = NULL) {
+                                    names = NULL,
+                                    groups = NULL) {
       # validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -172,6 +186,14 @@ DataCombined <- R6::R6Class(
 
       self$setDataTransformations(names)
 
+      if (!is.null(groups)) {
+        if (is.null(names)) {
+          names <- pathsNames
+        }
+
+        self$setGroups(names, groups)
+      }
+
       # for method chaining
       invisible(self)
     },
@@ -203,7 +225,7 @@ DataCombined <- R6::R6Class(
     setGroups = function(names, groups) {
       # Return early if no datasets are present
       if (is.null(private$.dataCombined)) {
-        stop("There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.")
+        stop(messages$noDatasetsToGroup())
       }
 
       # Sanitize vector arguments of `character` type
@@ -244,7 +266,7 @@ DataCombined <- R6::R6Class(
     removeGroupAssignment = function(names) {
       # Return early if no datasets are present
       if (is.null(private$.dataCombined)) {
-        stop("There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.")
+        stop(messages$noDatasetsPresentInDataCombined())
       }
 
       # Sanitize vector arguments of `character` type
@@ -548,10 +570,10 @@ DataCombined <- R6::R6Class(
       if (!isIncluded(specifiedNames, currentNames)) {
         missingNames <- specifiedNames[!specifiedNames %in% currentNames]
 
-        message(
-          "Following datasets were specified to be grouped but not found:\n",
-          paste0(missingNames, collapse = "\n")
-        )
+        message(messages$printMultipleEntries(
+          header = messages$datasetsToGroupNotFound(),
+          entries = missingNames
+        ))
       }
 
       # Update the specified groupings with what already exists

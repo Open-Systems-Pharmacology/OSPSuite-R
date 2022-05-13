@@ -398,14 +398,11 @@
 <line x1='501.18' y1='278.32' x2='515.01' y2='278.32' style='stroke-width: 2.13; stroke: #107C10; stroke-opacity: 0.75; stroke-dasharray: 2.85,8.54; stroke-linecap: butt;' />
 <polygon points='508.09,273.62 512.16,280.67 504.02,280.67 ' style='stroke-width: 0.71; stroke: none; fill: #107C10; fill-opacity: 0.75;' />
 <rect x='499.45' y='286.96' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='501.18' y1='295.60' x2='515.01' y2='295.60' style='stroke-width: 2.13; stroke: #A80000; stroke-opacity: 0.75; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
 <polygon points='508.09,300.30 512.16,293.25 504.02,293.25 ' style='stroke-width: 0.71; stroke: #A80000; stroke-opacity: 0.75; fill: none;' />
 <rect x='499.45' y='304.24' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='501.18' y1='312.88' x2='515.01' y2='312.88' style='stroke-width: 2.13; stroke: #002050; stroke-opacity: 0.75; stroke-dasharray: 5.69,5.69,17.07,5.69; stroke-linecap: butt;' />
 <line x1='505.07' y1='315.90' x2='511.12' y2='309.85' style='stroke-width: 0.71; stroke: #002050; stroke-opacity: 0.75;' />
 <line x1='505.07' y1='309.85' x2='511.12' y2='315.90' style='stroke-width: 0.71; stroke: #002050; stroke-opacity: 0.75;' />
 <rect x='499.45' y='321.52' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='501.18' y1='330.16' x2='515.01' y2='330.16' style='stroke-width: 2.13; stroke: #B4009E; stroke-opacity: 0.75; stroke-dasharray: 2.85,8.54,11.38,8.54; stroke-linecap: butt;' />
 <line x1='503.82' y1='330.16' x2='512.37' y2='330.16' style='stroke-width: 0.71; stroke: #B4009E; stroke-opacity: 0.75;' />
 <line x1='508.09' y1='334.43' x2='508.09' y2='325.88' style='stroke-width: 0.71; stroke: #B4009E; stroke-opacity: 0.75;' />
 <text x='522.21' y='247.20' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='23.35px' lengthAdjust='spacingAndGlyphs'>distal</text>

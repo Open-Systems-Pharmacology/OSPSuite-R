@@ -22,20 +22,20 @@ A parameter typically used in the definition of \code{IndividualCharacteristics}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SnapshotParameter$new()}}
-\item \href{#method-print}{\code{SnapshotParameter$print()}}
-\item \href{#method-printValue}{\code{SnapshotParameter$printValue()}}
+\item \href{#method-SnapshotParameter-new}{\code{SnapshotParameter$new()}}
+\item \href{#method-SnapshotParameter-print}{\code{SnapshotParameter$print()}}
+\item \href{#method-SnapshotParameter-printValue}{\code{SnapshotParameter$printValue()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SnapshotParameter-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -58,8 +58,8 @@ A new \code{SnapshotParameter} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SnapshotParameter-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -75,8 +75,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printValue"></a>}}
-\if{latex}{\out{\hypertarget{method-printValue}{}}}
+\if{html}{\out{<a id="method-SnapshotParameter-printValue"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-printValue}{}}}
 \subsection{Method \code{printValue()}}{
 Print the the parameter in one line
 \subsection{Usage}{

@@ -28,22 +28,22 @@ Results of a simulation run (either individual or population simulation)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SimulationResults$new()}}
-\item \href{#method-hasResultsForIndividual}{\code{SimulationResults$hasResultsForIndividual()}}
-\item \href{#method-getValuesByPath}{\code{SimulationResults$getValuesByPath()}}
-\item \href{#method-resultsForIndividual}{\code{SimulationResults$resultsForIndividual()}}
-\item \href{#method-print}{\code{SimulationResults$print()}}
+\item \href{#method-SimulationResults-new}{\code{SimulationResults$new()}}
+\item \href{#method-SimulationResults-hasResultsForIndividual}{\code{SimulationResults$hasResultsForIndividual()}}
+\item \href{#method-SimulationResults-getValuesByPath}{\code{SimulationResults$getValuesByPath()}}
+\item \href{#method-SimulationResults-resultsForIndividual}{\code{SimulationResults$resultsForIndividual()}}
+\item \href{#method-SimulationResults-print}{\code{SimulationResults$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SimulationResults-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationResults-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -64,8 +64,8 @@ A new \code{SimulationResults} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hasResultsForIndividual"></a>}}
-\if{latex}{\out{\hypertarget{method-hasResultsForIndividual}{}}}
+\if{html}{\out{<a id="method-SimulationResults-hasResultsForIndividual"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationResults-hasResultsForIndividual}{}}}
 \subsection{Method \code{hasResultsForIndividual()}}{
 Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
 \subsection{Usage}{
@@ -81,8 +81,8 @@ Returns \code{TRUE} if results are available for the individual with id \code{in
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getValuesByPath"></a>}}
-\if{latex}{\out{\hypertarget{method-getValuesByPath}{}}}
+\if{html}{\out{<a id="method-SimulationResults-getValuesByPath"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationResults-getValuesByPath}{}}}
 \subsection{Method \code{getValuesByPath()}}{
 Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
 \subsection{Usage}{
@@ -103,8 +103,8 @@ If \code{FALSE}, a list of \code{NA} values is returned}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-resultsForIndividual"></a>}}
-\if{latex}{\out{\hypertarget{method-resultsForIndividual}{}}}
+\if{html}{\out{<a id="method-SimulationResults-resultsForIndividual"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationResults-resultsForIndividual}{}}}
 \subsection{Method \code{resultsForIndividual()}}{
 Returns all available results for the individual with id \code{individualId}
 \subsection{Usage}{
@@ -120,8 +120,8 @@ Returns all available results for the individual with id \code{individualId}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SimulationResults-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationResults-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

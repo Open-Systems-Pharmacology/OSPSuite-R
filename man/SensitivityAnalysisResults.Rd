@@ -31,21 +31,21 @@ results.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SensitivityAnalysisResults$new()}}
-\item \href{#method-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
-\item \href{#method-pkParameterSensitivityValueFor}{\code{SensitivityAnalysisResults$pkParameterSensitivityValueFor()}}
-\item \href{#method-print}{\code{SensitivityAnalysisResults$print()}}
+\item \href{#method-SensitivityAnalysisResults-new}{\code{SensitivityAnalysisResults$new()}}
+\item \href{#method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
+\item \href{#method-SensitivityAnalysisResults-pkParameterSensitivityValueFor}{\code{SensitivityAnalysisResults$pkParameterSensitivityValueFor()}}
+\item \href{#method-SensitivityAnalysisResults-print}{\code{SensitivityAnalysisResults$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysisResults-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -67,8 +67,8 @@ A new \code{SensitivityAnalysisResults} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-allPKParameterSensitivitiesFor"></a>}}
-\if{latex}{\out{\hypertarget{method-allPKParameterSensitivitiesFor}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor}{}}}
 \subsection{Method \code{allPKParameterSensitivitiesFor()}}{
 Returns the \code{PKParameterSensitivity} for a given \code{pkParameter} and output
 participating to a total sensitivity greater or equal to
@@ -101,8 +101,8 @@ parameters.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pkParameterSensitivityValueFor"></a>}}
-\if{latex}{\out{\hypertarget{method-pkParameterSensitivityValueFor}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysisResults-pkParameterSensitivityValueFor"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-pkParameterSensitivityValueFor}{}}}
 \subsection{Method \code{pkParameterSensitivityValueFor()}}{
 Returns the sensitivity value for a given \code{pkParameter}, output and model
 parameter (either by path or by name). If the sensitivity result does not
@@ -135,8 +135,8 @@ sensitivity should be retrieved. Wildcards (*) not accepted.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SensitivityAnalysisResults-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

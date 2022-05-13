@@ -33,18 +33,18 @@ DotNetWrapper$new(sim$ref)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DotNetWrapper$new()}}
+\item \href{#method-DotNetWrapper-new}{\code{DotNetWrapper$new()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DotNetWrapper-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DotNetWrapper-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
