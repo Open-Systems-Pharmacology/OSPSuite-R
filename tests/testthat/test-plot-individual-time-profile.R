@@ -111,20 +111,30 @@ test_that("It creates default plots as expected for only simulated", {
   )
 })
 
-test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Concentration' in plot axis labels", {
-  df <- dplyr::tibble(
-    dataType = c(rep("simulated", 3), rep("observed", 3)),
-    xValues = c(0, 14.482, 28.965, 0, 1, 2),
-    xUnit = "min",
-    xDimension = "Time",
-    yValues = c(1, 1, 1, 1, 1, 1),
-    yUnit = "mol/ml",
-    yDimension = ospDimensions$`Concentration (mass)`,
-    yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
-    molWeight = c(10, 10, 20, 20, 10, 10)
-  )
+context(".createAxesLabels")
 
-  labels <- .createAxesLabels(.unitConverter(df), "TimeProfilePlotConfiguration")
+df <- dplyr::tibble(
+  dataType = c(rep("simulated", 3), rep("observed", 3)),
+  xValues = c(0, 14.482, 28.965, 0, 1, 2),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(1, 1, 1, 1, 1, 1),
+  yUnit = "mol/ml",
+  yDimension = ospDimensions$`Concentration (mass)`,
+  yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+  molWeight = c(10, 10, 20, 20, 10, 10)
+)
+
+test_that("It returns NULL when arguments are missing", {
+  expect_null(.createAxesLabels(df))
+})
+
+test_that("It returns NULL when data frame is empty", {
+  expect_null(.createAxesLabels(data.frame(), TimeProfilePlotConfiguration$new()))
+})
+
+test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Concentration' in plot axis labels", {
+  labels <- .createAxesLabels(.unitConverter(df), TimeProfilePlotConfiguration$new())
 
   expect_equal(labels$xLabel, "Time [min]")
   expect_equal(labels$yLabel, "Concentration [mol/ml]")

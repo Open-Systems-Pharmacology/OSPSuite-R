@@ -75,16 +75,46 @@
 
 #' Create axes labels
 #'
+#' @param data A data frame from `DataCombined$toDataFrame()`, which has
+#'   additionally been cleaned using `.unitConverter()` to have the same units
+#'   across datasets.
+#' @param specificPlotConfiguration The nature of labels will change depending
+#'   on the type of plot, which can be guessed from the specific
+#'   `PlotConfiguration` object used, since each plot has a unique corresponding
+#'   class.
+#'
+#' @examples
+#'
+#' df <- dplyr::tibble(
+#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
+#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(1, 1, 1, 1, 1, 1),
+#'   yUnit = "mol/ml",
+#'   yDimension = ospDimensions$`Concentration (mass)`,
+#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+#'   molWeight = c(10, 10, 20, 20, 10, 10)
+#' )
+#'
+#' df <- ospsuite:::.unitConverter(df)
+#'
+#' ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
+#'
 #' @details
 #'
 #' If axes labels haven't been specified, create them using dimensions and units.
 #'
 #' @keywords internal
-.createAxesLabels <- function(data, plotType) {
+.createAxesLabels <- function(data, specificPlotConfiguration) {
   # If empty data frame is entered or plot type is not specified, return early
-  if (nrow(data) == 0L || missing(plotType)) {
+  if (nrow(data) == 0L || missing(specificPlotConfiguration)) {
     return(NULL)
   }
+
+  # The type of plot can be guessed from the specific `PlotConfiguration` object
+  # used, since each plot has a unique corresponding class.
+  plotType <- class(specificPlotConfiguration)[[1]]
 
   # Initialize strings with unique values for units and dimensions.
   #
@@ -102,8 +132,7 @@
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
   concDimensions <- c(
     ospDimensions$`Concentration (mass)`,
-    ospDimensions$`Concentration (molar)`,
-    ospDimensions$`Concentration (molar) per time`
+    ospDimensions$`Concentration (molar)`
   )
 
   if (xDimensionString %in% concDimensions) {
@@ -133,6 +162,11 @@
   xLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = xUnitString,
     "ResVsPredPlotConfiguration" = xUnitString,
+    # Note that `yUnitString` here is deliberate.
+    #
+    # In case of an observed versus simulated plot, `yValues` are plotted on
+    # both x- and y-axes, and therefore the units strings are going to be the
+    # same for both axes.
     "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
   )
 
