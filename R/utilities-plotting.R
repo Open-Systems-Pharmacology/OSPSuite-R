@@ -75,6 +75,29 @@
 
 #' Create axes labels
 #'
+#' @param data A data frame from `DataCombined$toDataFrame()`, which has
+#'   additionally been cleaned using `.unitConverter()` to have the same units
+#'   across datasets.
+#' @param plotType The nature of labels will change depending on the type of
+#' plot, which can be guessed from the specific `PlotConfiguration` object used,
+#' since each plot has a unique corresponding class.
+#'
+#' @examples
+#'
+#' df <- dplyr::tibble(
+#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
+#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(1, 1, 1, 1, 1, 1),
+#'   yUnit = "mol/ml",
+#'   yDimension = ospDimensions$`Concentration (mass)`,
+#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+#'   molWeight = c(10, 10, 20, 20, 10, 10)
+#' )
+#'
+#' .createAxesLabels(.unitConverter(df), "TimeProfilePlotConfiguration")
+#'
 #' @details
 #'
 #' If axes labels haven't been specified, create them using dimensions and units.
@@ -102,8 +125,7 @@
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
   concDimensions <- c(
     ospDimensions$`Concentration (mass)`,
-    ospDimensions$`Concentration (molar)`,
-    ospDimensions$`Concentration (molar) per time`
+    ospDimensions$`Concentration (molar)`
   )
 
   if (xDimensionString %in% concDimensions) {
