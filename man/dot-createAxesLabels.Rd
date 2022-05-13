@@ -4,16 +4,17 @@
 \alias{.createAxesLabels}
 \title{Create axes labels}
 \usage{
-.createAxesLabels(data, plotType)
+.createAxesLabels(data, specificPlotConfiguration)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has
 additionally been cleaned using \code{.unitConverter()} to have the same units
 across datasets.}
 
-\item{plotType}{The nature of labels will change depending on the type of
-plot, which can be guessed from the specific \code{PlotConfiguration} object used,
-since each plot has a unique corresponding class.}
+\item{specificPlotConfiguration}{The nature of labels will change depending
+on the type of plot, which can be guessed from the specific
+\code{PlotConfiguration} object used, since each plot has a unique corresponding
+class.}
 }
 \description{
 Create axes labels
@@ -35,7 +36,7 @@ df <- dplyr::tibble(
   molWeight = c(10, 10, 20, 20, 10, 10)
 )
 
-.createAxesLabels(.unitConverter(df), "TimeProfilePlotConfiguration")
+ospsuite:::.createAxesLabels(.unitConverter(df), TimeProfilePlotConfiguration$new())
 
 }
 \keyword{internal}
