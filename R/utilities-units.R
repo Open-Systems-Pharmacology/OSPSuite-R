@@ -245,7 +245,6 @@ toDisplayUnit <- function(quantity, values) {
 #' @examples
 #'
 #' allAvailableDimensions()
-#'
 #' @export
 allAvailableDimensions <- function() {
   dimensionTask <- .getNetTask("DimensionTask")
@@ -264,7 +263,6 @@ allAvailableDimensions <- function() {
 #' @examples
 #'
 #' getDimensionForUnit("mg")
-#'
 #' @export
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
@@ -285,7 +283,6 @@ getDimensionForUnit <- function(unit) {
 #' @examples
 #'
 #' getUnitsForDimension("Mass")
-#'
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
@@ -318,7 +315,6 @@ getDimensionTask <- function() {
 #' @examples
 #'
 #' getDimensionByName("Time")
-#'
 #' @export
 getDimensionByName <- function(name) {
   validateIsString(name)
@@ -339,13 +335,23 @@ getDimensionByName <- function(name) {
 #' @examples
 #'
 #' ospsuite:::getUnitsEnum()
-#'
 #' @keywords internal
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
 
   units <- lapply(dimensions, function(dimension) {
-    x <- getUnitsForDimension(dimension = dimension)
+    x <- tryCatch(
+      {
+        #on some systems, we have issues loading units because of encoding
+        #see https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/923#issuecomment-1119442789
+        getUnitsForDimension(dimension = dimension)
+      },
+      error = function(cond) {
+        warning(messages$errorLoadingUnitsForDimension(dimension, cond))
+        #making sure that in this case, the user see that something is not right
+        return(c("Unavailable"))
+      }
+    )
     return(enum(replace(x, x == "", "Unitless")))
   })
 
@@ -364,7 +370,6 @@ getUnitsEnum <- function() {
 #' @examples
 #'
 #' ospsuite:::getDimensionsEnum()
-#'
 #' @keywords internal
 getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
@@ -444,7 +449,6 @@ initializeDimensionAndUnitLists <- function() {
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
 #' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
-#'
 #' @keywords internal
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
 
@@ -581,7 +585,6 @@ initializeDimensionAndUnitLists <- function() {
 #'
 #' # Remove element data frames with 0 rows
 #' ospsuite:::.removeEmptyDataFrame(ls)
-#'
 #' @keywords internal
 .removeEmptyDataFrame <- function(x) purrr::keep(x, function(data) nrow(data) > 0L)
 
