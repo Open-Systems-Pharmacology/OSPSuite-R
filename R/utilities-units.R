@@ -342,13 +342,13 @@ getUnitsEnum <- function() {
   units <- lapply(dimensions, function(dimension) {
     x <- tryCatch(
       {
-        #on some systems, we have issues loading units because of encoding
-        #see https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/923#issuecomment-1119442789
+        # on some systems, we have issues loading units because of encoding
+        # see https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/923#issuecomment-1119442789
         getUnitsForDimension(dimension = dimension)
       },
       error = function(cond) {
         warning(messages$errorLoadingUnitsForDimension(dimension, cond))
-        #making sure that in this case, the user see that something is not right
+        # making sure that in this case, the user sees that something went wrong
         return(c("Unavailable"))
       }
     )

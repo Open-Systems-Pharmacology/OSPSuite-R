@@ -18,5 +18,4 @@ Get units for a given dimension
 \examples{
 
 getUnitsForDimension("Mass")
-
 }

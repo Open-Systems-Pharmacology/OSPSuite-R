@@ -19,6 +19,5 @@ available for each dimension
 \examples{
 
 ospsuite:::getUnitsEnum()
-
 }
 \keyword{internal}

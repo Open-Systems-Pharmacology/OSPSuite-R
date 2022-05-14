@@ -83,7 +83,6 @@ saveSimulation <- function(simulation, filePath) {
 }
 
 #' @title
-#'
 #' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
 #'
 #' @param simulation One `Simulation` to simulate.
