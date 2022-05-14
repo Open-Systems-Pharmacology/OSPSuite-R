@@ -302,7 +302,6 @@
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
   }
 
-
   # labels object ---------------------------------------
 
   labelTitle <- tlf::Label$new(

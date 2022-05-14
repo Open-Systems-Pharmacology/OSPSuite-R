@@ -230,7 +230,7 @@ simulationResultsToDataFrame <- function(simulationResults,
   )
 
   # convert data to long format with a new column for paths
-  df_data <- tidyr::pivot_longer(
+  simData <- tidyr::pivot_longer(
     simList$data,
     cols = -c("IndividualId", "Time"),
     names_to = "paths",
@@ -243,7 +243,7 @@ simulationResultsToDataFrame <- function(simulationResults,
   #
   # The result will be a list of data frames, which will be row-wise glued into
   # a single data frame with the `_dfr` variant of this function.
-  df_meta <- purrr::imap_dfr(
+  simMetaData <- purrr::imap_dfr(
     .x = simList$metaData,
     .f = ~ as.data.frame(.x, row.names = NULL, stringsAsFactors = FALSE),
     .id = "paths"
@@ -251,14 +251,14 @@ simulationResultsToDataFrame <- function(simulationResults,
 
   # Leave out time units and dimensions since time is not a path; they will be
   # added at a later stage.
-  df_meta <- dplyr::filter(df_meta, paths != "Time")
+  simMetaData <- dplyr::filter(simMetaData, paths != "Time")
 
   # Combine data frame with simulated data and meta data.
-  df <- dplyr::left_join(df_data, df_meta, by = "paths")
+  simData <- dplyr::left_join(simData, simMetaData, by = "paths")
 
   # Add back in the previously left out time meta data to the combined data frame.
-  df <- dplyr::bind_cols(
-    df,
+  simData <- dplyr::bind_cols(
+    simData,
     dplyr::tibble(
       "TimeUnit" = simList$metaData$Time$unit[[1]],
       "TimeDimension" = simList$metaData$Time$dimension[[1]]
@@ -272,7 +272,7 @@ simulationResultsToDataFrame <- function(simulationResults,
   # there are 100 rows, `rowwise()` will run the computation 100 times, while
   # with `nest()`, the computation only be carried for the same number of
   # times as the number of `paths` present.
-  df <- df %>%
+  simData <- simData %>%
     dplyr::group_by(paths) %>%
     tidyr::nest() %>%
     # Add a new column for molecular weight.
@@ -290,7 +290,7 @@ simulationResultsToDataFrame <- function(simulationResults,
     dplyr::ungroup()
 
   # consistently return a (classical) data frame
-  return(as.data.frame(df, stringsAsFactors = FALSE))
+  return(as.data.frame(simData, stringsAsFactors = FALSE))
 }
 
 #' @rdname simulationResultsToDataFrame
@@ -300,7 +300,7 @@ simulationResultsToTibble <- function(simulationResults,
                                       quantitiesOrPaths = NULL,
                                       population = NULL,
                                       individualIds = NULL) {
-  df <- simulationResultsToDataFrame(
+  simData <- simulationResultsToDataFrame(
     simulationResults = simulationResults,
     quantitiesOrPaths = quantitiesOrPaths,
     population = population,
@@ -308,5 +308,5 @@ simulationResultsToTibble <- function(simulationResults,
   )
 
   # consistently return a tibble data frame
-  return(dplyr::as_tibble(df))
+  return(dplyr::as_tibble(simData))
 }
