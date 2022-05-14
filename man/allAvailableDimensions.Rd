@@ -16,5 +16,4 @@ List all available dimensions in the \code{OSPSuite} platform
 \examples{
 
 allAvailableDimensions()
-
 }

@@ -19,5 +19,4 @@ Get dimension by name
 \examples{
 
 getDimensionByName("Time")
-
 }

@@ -20,6 +20,5 @@ combination of source unit and molecular weight.
 
 # Remove element data frames with 0 rows
 ospsuite:::.removeEmptyDataFrame(ls)
-
 }
 \keyword{internal}

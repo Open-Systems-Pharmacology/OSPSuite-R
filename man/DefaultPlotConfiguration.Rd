@@ -88,9 +88,7 @@ The available transformations can be seen in the \code{tlf::Scaling} list.
 
 \section{Saving plot}{
 By default, the plots will be shown in plot pane of your IDE, but the plots
-can also be saved to a file using the \code{tlf::exportPlot()} function. Once you
-pass a plot object to this function, it will use the \verb{save*} public members
-of the plot configuration object to save the plot.
+can also be saved to a file using the \code{tlf::exportPlot()} function.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
 tlf::exportPlot(myPlot)
