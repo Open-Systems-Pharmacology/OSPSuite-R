@@ -114,11 +114,11 @@ saveSimulation <- function(simulation, filePath) {
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' @export
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
-  #Check that only one simulation is passed
+  # Check that only one simulation is passed
   simulation <- c(simulation)
   validateIsOfLength(simulation, 1)
-  #Returning the first element of `runSimulations` output, as the latter returns
-  #a named list with ID of the simulation as element name.
+  # Returning the first element of `runSimulations` output, as the latter returns
+  # a named list with ID of the simulation as element name.
   runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)[[1]]
 }
 
@@ -183,7 +183,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
       agingData = agingData
     )
     outputList <- list()
-    outputList[[simulations[[1]]$id]] <-  results
+    outputList[[simulations[[1]]$id]] <- results
     return(outputList)
   }
 
