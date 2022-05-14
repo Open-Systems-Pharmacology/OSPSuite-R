@@ -70,7 +70,8 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 pkAnalysesToDataFrame <- function(pkAnalyses) {
   validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   pkParameterResultsFilePath <- tempfile()
-  df <- tryCatch(
+
+  pkAnalysesData <- tryCatch(
     {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
       colTypes <- list(
@@ -96,15 +97,15 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
   )
 
   # consistently return a (classical) data frame
-  return(df)
+  return(pkAnalysesData)
 }
 
 #' @rdname pkAnalysesToDataFrame
 #'
 #' @export
 pkAnalysesToTibble <- function(pkAnalyses) {
-  df <- pkAnalysesToDataFrame(pkAnalyses)
+  pkAnalysesData <- pkAnalysesToDataFrame(pkAnalyses)
 
   # consistently return a tibble data frame
-  return(dplyr::as_tibble(df))
+  return(dplyr::as_tibble(pkAnalysesData))
 }

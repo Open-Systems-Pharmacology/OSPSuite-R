@@ -64,20 +64,20 @@ populationToDataFrame <- function(population) {
     columns[[parameterPath]] <- population$getParameterValues(parameterPath)
   }
 
-  df <- data.frame(columns, stringsAsFactors = FALSE, check.names = FALSE)
+  popData <- data.frame(columns, stringsAsFactors = FALSE, check.names = FALSE)
 
   # consistently return a (classical) data frame
-  return(df)
+  return(popData)
 }
 
 #' @rdname populationToDataFrame
 #'
 #' @export
 populationToTibble <- function(population) {
-  df <- populationToDataFrame(population)
+  popData <- populationToDataFrame(population)
 
   # consistently return a tibble data frame
-  return(dplyr::as_tibble(df))
+  return(dplyr::as_tibble(popData))
 }
 
 #' Saves the population to csv file

@@ -35,21 +35,21 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # data frames -----------------------------
 
-  df <- dataCombined$toDataFrame()
+  combinedData <- dataCombined$toDataFrame()
 
   # Getting all units on the same scale
-  df <- .unitConverter(df, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
   # Datasets which haven't been assigned to any group will be plotted as a group
   # on its own. That is, the `group` column entries for them will be their names.
-  df <- .addMissingGroupings(df)
+  combinedData <- .addMissingGroupings(combinedData)
 
   # `TimeProfilePlotConfiguration` object -----------------------------
 
   # Create an instance of `TimeProfilePlotConfiguration` class by doing a
   # one-to-one mapping of internal plot configuration object's public fields
   timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
-    data = df,
+    data = combinedData,
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
   )
@@ -59,19 +59,19 @@ plotIndividualTimeProfile <- function(dataCombined,
   # The type of plot can be guessed from the specific `PlotConfiguration` object
   # used, since each plot has a unique corresponding class. The labels can then
   # be prepared accordingly.
-  axesLabels <- .createAxesLabels(df, timeProfilePlotConfiguration)
+  axesLabels <- .createAxesLabels(combinedData, timeProfilePlotConfiguration)
   timeProfilePlotConfiguration$labels$xlabel$text <- timeProfilePlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
   timeProfilePlotConfiguration$labels$ylabel$text <- timeProfilePlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
 
   # plot -----------------------------
 
-  obsData <- as.data.frame(dplyr::filter(df, dataType == "observed"))
+  obsData <- as.data.frame(dplyr::filter(combinedData, dataType == "observed"))
 
   if (nrow(obsData) == 0) {
     obsData <- NULL
   }
 
-  simData <- as.data.frame(dplyr::filter(df, dataType == "simulated"))
+  simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
 
   if (nrow(simData) == 0) {
     simData <- NULL
