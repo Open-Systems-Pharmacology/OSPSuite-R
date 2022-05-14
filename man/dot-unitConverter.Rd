@@ -55,7 +55,6 @@ ospsuite:::.unitConverter(df)
 ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
 ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
 ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
-
 }
 \seealso{
 toUnit

@@ -63,4 +63,3 @@ test_that("It respects custom plot configuration", {
     fig = p
   )
 })
-

@@ -19,5 +19,4 @@ Get dimension for a given unit
 \examples{
 
 getDimensionForUnit("mg")
-
 }

@@ -33,3 +33,7 @@ messages$valuesNotInterpolated <- function() {
 messages$printMultipleEntries <- function(header, entries) {
   message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
 }
+
+messages$errorLoadingUnitsForDimension <- function(dimension, error) {
+  paste0("Could not load units for dimension'", dimension, "'. Error is '", error, "'")
+}
