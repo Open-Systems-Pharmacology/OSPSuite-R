@@ -93,11 +93,7 @@ DataCombined <- R6::R6Class(
       self$setDataTransformations(names)
 
       if (!is.null(groups)) {
-        if (is.null(names)) {
-          names <- datasetNames
-        }
-
-        self$setGroups(names, groups)
+        self$setGroups(names %||% datasetNames, groups)
       }
 
       # for method chaining
@@ -187,11 +183,7 @@ DataCombined <- R6::R6Class(
       self$setDataTransformations(names)
 
       if (!is.null(groups)) {
-        if (is.null(names)) {
-          names <- pathsNames
-        }
-
-        self$setGroups(names, groups)
+        self$setGroups(names %||% pathsNames, groups)
       }
 
       # for method chaining
