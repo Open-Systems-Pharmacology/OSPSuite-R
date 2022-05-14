@@ -128,3 +128,4 @@ createIndividualCharacteristics <- function(species,
 
   return(individualCharacteristics)
 }
+
