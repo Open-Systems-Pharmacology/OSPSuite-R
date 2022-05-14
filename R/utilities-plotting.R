@@ -259,7 +259,7 @@
 #'   `.unitConverter()` functions.
 #'
 #' @keywords internal
-.createPairedData <- function(data) {
+.createObsVsPredData <- function(data) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
