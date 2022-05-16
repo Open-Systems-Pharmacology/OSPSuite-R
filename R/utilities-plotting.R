@@ -313,7 +313,7 @@
   if (length(predValueMissingIndices) > 0) {
     warning(
       messages$printMultipleEntries(
-        header = messages$valuesNotInterpolated,
+        header = messages$valuesNotInterpolated(),
         entries = obsTime[predValueMissingIndices]
       ),
       call. = FALSE
