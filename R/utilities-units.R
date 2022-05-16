@@ -338,7 +338,7 @@ getDimensionByName <- function(name) {
 #' @keywords internal
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
-
+  errors <- c()
   units <- lapply(dimensions, function(dimension) {
     x <- tryCatch(
       {
@@ -347,13 +347,17 @@ getUnitsEnum <- function() {
         getUnitsForDimension(dimension = dimension)
       },
       error = function(cond) {
-        warning(messages$errorLoadingUnitsForDimension(dimension, cond))
+        errors <<- c(errors, dimension)
         # making sure that in this case, the user sees that something went wrong
         return(c("Unavailable"))
       }
     )
     return(enum(replace(x, x == "", "Unitless")))
   })
+
+  if (length(errors) > 0L) {
+    message(messages$errorLoadingUnitsForDimension(errors))
+  }
 
   names(units) <- sapply(dimensions, function(str) {
     str <- gsub(pattern = "[(]", replacement = "[", x = str)
