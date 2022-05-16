@@ -288,7 +288,6 @@ getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
-  stop("errror")
 }
 
 #' Return an instance of the `.NET` Task `DimensionTask`
