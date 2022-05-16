@@ -21,7 +21,7 @@ test_that("It can add a user defined pk-parameter with another display unit", {
 
 test_that("It calculates the pk parameters in the expected units", {
   sim <- loadTestSimulation("S1")
-  c_max_base <- updatePKParameter(name = "C_max", displayUnit = encodeUnit("µmol/l"))
+  c_max_base <- updatePKParameter(name = "C_max", displayUnit = "µmol/l")
   myCmax <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$C_max, displayUnit = "mg/l")
   quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
   mw <- sim$molWeightFor(quantityPath)

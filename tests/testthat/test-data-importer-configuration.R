@@ -10,7 +10,7 @@ test_that("it can create a new data importer configuration", {
   expect_equal(importerConfiguration$errorType, NULL)
   expect_equal(importerConfiguration$errorUnit, NULL)
   expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
-  expect_equal(importerConfiguration$measurementUnit, encodeUnit("µmol/l"))
+  expect_equal(importerConfiguration$measurementUnit, "µmol/l")
   expect_equal(importerConfiguration$isMeasurementUnitFromColumn, FALSE)
   expect_equal(importerConfiguration$timeUnit, ospUnits$Time$h)
   expect_equal(importerConfiguration$isTimeUnitFromColumn, FALSE)
@@ -90,7 +90,7 @@ test_that("it can set measurement unit from column and change column name", {
 
   importerConfiguration$isMeasurementUnitFromColumn <- FALSE
   expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
-  expect_equal(importerConfiguration$measurementUnit, encodeUnit("µmol/l"))
+  expect_equal(importerConfiguration$measurementUnit, "µmol/l")
 
   expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
