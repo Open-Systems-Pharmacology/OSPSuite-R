@@ -348,7 +348,7 @@ getUnitsEnum <- function() {
         getUnitsForDimension(dimension = dimension)
       },
       error = function(cond) {
-        errors <- c(errors, dimension)
+        errors <<- c(errors, dimension)
         # making sure that in this case, the user sees that something went wrong
         return(c("Unavailable"))
       }
