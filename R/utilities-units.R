@@ -357,7 +357,7 @@ getUnitsEnum <- function() {
   })
 
   if (length(errors) > 0L) {
-    message(messages$errorLoadingUnitsForDimensionoadingUnitsForDimension(errors))
+    message(messages$errorLoadingUnitsForDimension(errors))
   }
 
   names(units) <- sapply(dimensions, function(str) {
