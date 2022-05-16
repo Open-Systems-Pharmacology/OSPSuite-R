@@ -1180,7 +1180,7 @@ test_that("data frame is as expected when `Population` objects are used", {
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
-  expect_equal(unique(df$yUnit), "µmol/l")
+  expect_equal(unique(df$yUnit), encodeUnit("µmol/l"))
   expect_equal(unique(df$yDimension), "Concentration (molar)")
   expect_equal(unique(df$xUnit), "min")
 })

@@ -140,7 +140,7 @@ test_that("It returns null if the dimension is not found for the unit", {
 context("getUnitsForDimension")
 
 test_that("It can return the expected dimension for a given unit", {
-  expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", "µg", "ng", "pg"))
+  expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", encodeUnit("µg"), "ng", "pg"))
 })
 
 
@@ -171,20 +171,20 @@ test_that("It returns NULL when the dimension exists,
 
 context("hasUnit")
 test_that("It returns true for an existing unit in the dimension, false otherwise", {
-  expect_true(hasUnit(unit = "µmol", dimension = "Amount"))
+  expect_true(hasUnit(unit = encodeUnit("µmol"), dimension = "Amount"))
   expect_false(hasUnit(unit = "g", "Amount"))
 })
 
 context("validateUnit")
 test_that("It returns NULL when the unit exists in the dimension,
           or throws an error otherwise", {
-  expect_null(validateUnit(unit = "µmol", dimension = "Amount"))
+  expect_null(validateUnit(unit = encodeUnit("µmol"), dimension = "Amount"))
   expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
 })
 
 context("getBaseUnit")
 test_that("It returns the correct base unit", {
-  expect_equal(getBaseUnit(dimension = "Amount"), "µmol")
+  expect_equal(getBaseUnit(dimension = "Amount"), encodeUnit("µmol"))
 })
 
 
