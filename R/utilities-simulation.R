@@ -306,12 +306,15 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
     stop(messages$errorSimulationBatchNothingToVary)
   }
+
   variableParameters <- c(parametersOrPaths)
+
   if (isOfType(variableParameters, "Parameter")) {
     variableParameters <- unlist(lapply(variableParameters, function(x) x$path))
   }
 
   variableMolecules <- c(moleculesOrPaths)
+
   if (isOfType(variableMolecules, "Molecule")) {
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path))
   }

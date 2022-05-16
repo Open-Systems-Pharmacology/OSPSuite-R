@@ -90,7 +90,7 @@ dataSetToDataFrame <- function(dataSets) {
   yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
   lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
 
-  df <- data.frame(
+  obsData <- data.frame(
     name,
     xValues,
     yValues,
@@ -114,21 +114,21 @@ dataSetToDataFrame <- function(dataSets) {
   # add one column for each one
   for (name in metaDataNames) {
     col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
-    df[[name]] <- col
+    obsData[[name]] <- col
   }
 
   # consistently return a (classical) data frame
-  return(df)
+  return(obsData)
 }
 
 #' @rdname dataSetToDataFrame
 #'
 #' @export
 dataSetToTibble <- function(dataSets) {
-  df <- dataSetToDataFrame(dataSets)
+  obsData <- dataSetToDataFrame(dataSets)
 
   # consistently return a tibble data frame
-  return(dplyr::as_tibble(df))
+  return(dplyr::as_tibble(obsData))
 }
 
 #' Load data sets from excel
