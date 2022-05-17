@@ -421,7 +421,7 @@ initializeDimensionAndUnitLists <- function() {
 #'
 #' @return A data frame with measurement columns transformed to have common units.
 #'
-#' @param data A data frame (or a tibble).
+#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
 #'   not specified (`NULL`), first of the existing units in the respective
 #'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
@@ -456,19 +456,20 @@ initializeDimensionAndUnitLists <- function() {
 #' @keywords internal
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
 
-  # target units --------------------------
-
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
+
+  # target units --------------------------
 
   # The observed and simulated data should have the same units for
   # visual/graphical comparison.
   #
   # Therefore, if target units are not specified by the user, we need to choose
-  # one ourselves. For no special reason, the first element from a vector of
-  # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
-  xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
-  yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
+  # one ourselves. For no special reason, the most frequent units will be
+  # selected: one for X-axis, and one for Y-axis. If multiple units are tied in
+  # terms of their frequency, the first will be selected.
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, xUnit)
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, yUnit)
 
   # Strategy --------------------------
 
@@ -640,4 +641,50 @@ initializeDimensionAndUnitLists <- function() {
   yData$yErrorUnit <- yTargetUnit
 
   return(yData)
+}
+
+
+#' Find the most common units
+#'
+#' @inheritParams .unitConverter
+#' @param ... The name of the column containing units (e.g. `xUnit`).
+#'
+#' @examples
+#'
+#' df <- dplyr::tibble(
+#'   xValues = c(15, 30, 60),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(0.25, 45, 78),
+#'   yUnit = c("", "%", "%"),
+#'   yErrorUnit = c("", "%", "%"),
+#'   yDimension = "Fraction",
+#'   molWeight = 10
+#' )
+#'
+#' ospsuite:::.extractMostFrequentUnit(df, xUnit)
+#' ospsuite:::.extractMostFrequentUnit(df, yUnit)
+#'
+#' @keywords internal
+.extractMostFrequentUnit <- function(data, ...) {
+  # Create a new data frame with frequency for each unit
+  unitUsageFrequency <- data %>%
+    dplyr::group_by(...) %>%
+    dplyr::tally(name = "unitFrequency")
+
+  mostFrequentUnit <- unitUsageFrequency %>%
+    # Select only the row(s) with maximum frequency.
+    dplyr::filter(unitFrequency == max(unitFrequency)) %>%
+    # In case of ties, there will be more than one row. In such cases, for no
+    # special reason, select the first unit.
+    #
+    # Do *not* select randomly as that would introduce randomness in plotting
+    # functions with each run of the plotting function defaulting to a different
+    # unit.
+    dplyr::slice_head(n = 1L) %>%
+    # Remove the frequency column, which is not useful outside the context of
+    # this function.
+    dplyr::select(-unitFrequency)
+
+  return(mostFrequentUnit[[1]])
 }
