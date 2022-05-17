@@ -199,7 +199,6 @@ df <- dplyr::tibble(
   xDimension = "Time",
   yValues = c(0.25, 45, 78),
   yUnit = c("", "%", "%"),
-  yErrorUnit = c("", "%", "%"),
   yDimension = "Fraction",
   molWeight = 10
 )
@@ -242,6 +241,10 @@ test_that("defaults for .unitConverter leaves dimension columns untouched", {
 
 test_that("defaults for .unitConverter leaves molWeight columns untouched", {
   expect_equal(dfConvert$molWeight, df$molWeight)
+})
+
+test_that("defaults for .unitConverter don't introduce yUnitError column if not present", {
+  expect_false("yErrorUnit" %in% names(dfConvert))
 })
 
 # only `xUnit` -------------------

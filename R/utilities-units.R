@@ -496,7 +496,8 @@ initializeDimensionAndUnitLists <- function() {
 
   # `yErrorUnit` column won't be present when only simulated datasets are
   # entered, but it can be assumed to be the same as `yUnit`.
-  if (!"yErrorUnit" %in% names(data)) {
+  if (("yErrorValues" %in% names(data)) &&
+    (!"yErrorUnit" %in% names(data))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
