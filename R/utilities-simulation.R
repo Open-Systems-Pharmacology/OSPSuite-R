@@ -364,10 +364,9 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE) {
   validateIsOfType(simulationBatches, "SimulationBatch")
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
-  if (!is.null(simulationRunOptions)) {
-    validateIsOfType(simulationRunOptions, "SimulationRunOptions")
-    rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
-  }
+  validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
+  simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
+  rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
   simulationBatches <- c(simulationBatches)
   # Result Id <-> simulation batch pointer id map to get the correct simulation for the results.
