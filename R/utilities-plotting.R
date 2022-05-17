@@ -268,41 +268,59 @@
   simTime <- data$xValues[data$dataType == "simulated"]
   simValue <- data$yValues[data$dataType == "simulated"]
 
-  # Initialize to `NA`, and not 0.
-  predValue <- rep(NA_real_, length(obsTime))
+  # Number of observed and simulated data points
+  maxSimPoints <- length(simTime)
+  maxObsPoints <- length(obsTime)
 
-  # Figure out time points where both observed and simulated data were sampled.
-  obsExactMatchIndices <- which(obsTime %in% simTime)
-  simExactMatchIndices <- which(simTime %in% obsTime)
-  obsNoExactMatchIndices <- which(!obsTime %in% simTime)
-
-  # For exactly matched time points, there is no need for interpolation.
-  if (length(obsExactMatchIndices) > 0L) {
-    predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
-  }
+  # It is important to initialize this vector to `NA`, and not to `0`.
+  predValue <- rep(NA_real_, maxObsPoints)
 
   # For time points that are not matched, the simulated data needs to be
   # interpolated. This is because simulated data is typically sampled at a
   # higher frequency than the observed data.
   #
   # Interpolation is carried out using the Newton–Raphson method.
-  for (idx in obsNoExactMatchIndices) {
-    # If index is the same as the length of the vector, then `idx + 1` will be
-    # out-of-bounds. So loop only if the index is less than the length of the
-    # vector.
-    #
-    # Note that this does *not* mean that the value at the last index
-    # in `predValue` vector is always going to be `NA`. It is also possible
-    # that there is an exact match at this time point.
-    if (idx < length(predValue)) {
-      # f(x) =
-      predValue[idx] <-
-        # f0 * ((x1 - x) / (x1 - x0)) +
-        simValue[idx] * ((simTime[idx + 1] - obsTime[idx]) / (simTime[idx + 1] - simTime[idx])) +
-        # f1 * ((x - x0) / (x1 - x0))
-        simValue[idx + 1] * ((obsTime[idx] - simTime[idx]) / (simTime[idx + 1] - simTime[idx]))
+  #
+  # If index is the same as the length of the vector, then `idx + 1` will be
+  # out-of-bounds. So loop only if the index is less than the length of the
+  # vector. Thus, `[-maxObsPoints]`.
+  #
+  # Note that this does *not* mean that the value at the last index
+  # in `predValue` vector is always going to be `NA`. It is also possible
+  # that there is an exact match at this time point.
+  for (idx in seq_along(obsTime)[-maxObsPoints]) {
+    currentObsTime <- obsTime[idx]
+    currentSimTime <- simTime[idx]
+    nextSimTime <- simTime[idx + 1L]
+    currentSimValue <- simValue[idx]
+    nextSimValue <- simValue[idx + 1L]
+
+    # If the next simulated time point is already OOB but the last simulated
+    # time point is still within the bounds of observed time points,
+    # interpolation can still be carried out.
+    if (idx >= maxSimPoints) {
+      if (simTime[maxSimPoints] < obsTime[maxObsPoints]) {
+        currentSimTime <- simTime[maxSimPoints - 1L]
+        nextSimTime <- simTime[maxSimPoints]
+        currentSimValue <- simValue[maxSimPoints - 1L]
+        nextSimValue <- simValue[maxSimPoints]
+      }
     }
+
+    # f(x) =
+    predValue[idx] <-
+      # f0 * ((x1 - x) / (x1 - x0)) +
+      currentSimValue * ((nextSimTime - currentObsTime) / (nextSimTime - currentSimTime)) +
+      # f1 * ((x - x0) / (x1 - x0))
+      nextSimValue * ((currentObsTime - currentSimTime) / (nextSimTime - currentSimTime))
   }
+
+  # Figure out time points where both observed and simulated data were sampled.
+  obsExactMatchIndices <- which(obsTime %in% simTime)
+  simExactMatchIndices <- which(simTime %in% obsTime)
+
+  # For exactly matched time points, there is no need for interpolation.
+  predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
 
   # Link observed and interpolated predicted for each observed time point using
   # a data frame.
