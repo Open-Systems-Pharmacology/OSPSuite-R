@@ -111,14 +111,5 @@ plotIndividualTimeProfile <- function(dataCombined,
     plotConfiguration = timeProfilePlotConfiguration
   )
 
-  # Extract current mappings in the legend (which are going to be incorrect).
-  legendCaptionData <- tlf::getLegendCaption(profilePlot)
-
-  # Update the legend data frame to have the correct mappings.
-  newLegendCaptionData <- .updateLegendCaptionData(legendCaptionData, timeProfilePlotConfiguration)
-
-  # Update plot legend using this new data frame.
-  profilePlot <- tlf::updateTimeProfileLegend(profilePlot, caption = newLegendCaptionData)
-
   return(profilePlot)
 }
