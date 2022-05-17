@@ -277,7 +277,9 @@
   obsNoExactMatchIndices <- which(!obsTime %in% simTime)
 
   # For exactly matched time points, there is no need for interpolation.
-  predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
+  if (length(obsExactMatchIndices) > 0L) {
+    predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
+  }
 
   # For time points that are not matched, the simulated data needs to be
   # interpolated. This is because simulated data is typically sampled at a
@@ -300,24 +302,6 @@
         # f1 * ((x - x0) / (x1 - x0))
         simValue[idx + 1] * ((obsTime[idx] - simTime[idx]) / (simTime[idx + 1] - simTime[idx]))
     }
-  }
-
-  # Time points at which predicted values can't be interpolated, and need to be
-  # extrapolated.
-  #
-  # This will happen in rare case scenarios where simulated data is sampled at a
-  # lower frequency than observed data.
-  predValueMissingIndices <- which(is.na(predValue))
-
-  # Warn the user about failure to interpolate.
-  if (length(predValueMissingIndices) > 0) {
-    warning(
-      messages$printMultipleEntries(
-        header = messages$valuesNotInterpolated(),
-        entries = obsTime[predValueMissingIndices]
-      ),
-      call. = FALSE
-    )
   }
 
   # Link observed and interpolated predicted for each observed time point using

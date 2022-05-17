@@ -41,6 +41,24 @@ plotObservedVsSimulated <- function(dataCombined,
     dplyr::group_modify(.f = ~ .createObsVsPredData(.x)) %>%
     dplyr::ungroup()
 
+  # Time points at which predicted values can't be interpolated, and need to be
+  # extrapolated.
+  #
+  # This will happen in rare case scenarios where simulated data is sampled at a
+  # lower frequency than observed data.
+  predValueMissingIndices <- which(is.na(pairedData$predValue))
+
+  # Warn the user about failure to interpolate.
+  if (length(predValueMissingIndices) > 0) {
+    warning(
+      messages$printMultipleEntries(
+        header = messages$valuesNotInterpolated(),
+        entries = pairedData$obsTime[predValueMissingIndices]
+      ),
+      call. = FALSE
+    )
+  }
+
   # `ObsVsPredPlotConfiguration` object -----------------------------
 
   # Create an instance of `ObsVsPredPlotConfiguration` class by doing a
