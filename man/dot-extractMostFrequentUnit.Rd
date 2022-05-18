@@ -4,12 +4,12 @@
 \alias{.extractMostFrequentUnit}
 \title{Find the most common units}
 \usage{
-.extractMostFrequentUnit(data, ...)
+.extractMostFrequentUnit(data, unitColumn)
 }
 \arguments{
 \item{data}{A data frame (or a tibble) from \code{DataCombined$toDataFrame()}.}
 
-\item{...}{The name of the column containing units (e.g. \code{xUnit}).}
+\item{unitColumn}{The name of the column containing units (e.g. \code{xUnit}).}
 }
 \description{
 Find the most common units
@@ -27,8 +27,8 @@ df <- dplyr::tibble(
   molWeight = 10
 )
 
-ospsuite:::.extractMostFrequentUnit(df, xUnit)
-ospsuite:::.extractMostFrequentUnit(df, yUnit)
+ospsuite:::.extractMostFrequentUnit(df, unitColumn = xUnit)
+ospsuite:::.extractMostFrequentUnit(df, unitColumn = yUnit)
 
 }
 \keyword{internal}

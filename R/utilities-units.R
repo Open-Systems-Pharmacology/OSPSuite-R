@@ -468,8 +468,8 @@ initializeDimensionAndUnitLists <- function() {
   # one ourselves. For no special reason, the most frequent units will be
   # selected: one for X-axis, and one for Y-axis. If multiple units are tied in
   # terms of their frequency, the first will be selected.
-  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, xUnit)
-  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, yUnit)
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = xUnit)
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = yUnit)
 
   # Strategy --------------------------
 
@@ -496,8 +496,11 @@ initializeDimensionAndUnitLists <- function() {
 
   # `yErrorUnit` column won't be present when only simulated datasets are
   # entered, but it can be assumed to be the same as `yUnit`.
+  #
+  # If there is no `yErrorValues` column in the entered data frame, it doesn't
+  # make sense for this function to introduce a new column called `yErrorUnit`.
   if (("yErrorValues" %in% names(data)) &&
-    (!"yErrorUnit" %in% names(data))) {
+    !("yErrorUnit" %in% names(data))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
@@ -648,7 +651,7 @@ initializeDimensionAndUnitLists <- function() {
 #' Find the most common units
 #'
 #' @inheritParams .unitConverter
-#' @param ... The name of the column containing units (e.g. `xUnit`).
+#' @param unitColumn The name of the column containing units (e.g. `xUnit`).
 #'
 #' @examples
 #'
@@ -663,14 +666,18 @@ initializeDimensionAndUnitLists <- function() {
 #'   molWeight = 10
 #' )
 #'
-#' ospsuite:::.extractMostFrequentUnit(df, xUnit)
-#' ospsuite:::.extractMostFrequentUnit(df, yUnit)
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = xUnit)
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = yUnit)
 #'
 #' @keywords internal
-.extractMostFrequentUnit <- function(data, ...) {
+.extractMostFrequentUnit <- function(data, unitColumn) {
   # Create a new data frame with frequency for each unit
   unitUsageFrequency <- data %>%
-    dplyr::group_by(...) %>%
+    # The embrace operator (`{{`) captures the user input and evaluates in the
+    # current data frame. This is non-standard evaluation, so the user can
+    # supply unquoted arguments (i.e. `unitColumn = xUnit` instead of
+    # `unitColumn = "xUnit"`).
+    dplyr::group_by({{ unitColumn }}) %>%
     dplyr::tally(name = "unitFrequency")
 
   mostFrequentUnit <- unitUsageFrequency %>%
