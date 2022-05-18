@@ -21,17 +21,26 @@
 }
 
 
+#' Encoding mu symbol
+#'
+#' @details
+#'
 #' This is required to ensure that we have no issue using the mu symbol in different OS
 #' See https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/476 for details.
 #'
-#' @param unit Unit to encode
+#' @param unit Unit to encode.
+#'
+#' @examples
+#' ospsuite:::.encodeUnit("µl")
+#'
 #' @keywords internal
-encodeUnit <- function(unit) {
+.encodeUnit <- function(unit) {
   mu <- ospsuiteEnv$muSymbol
   unit <- enc2utf8(unit)
   unit <- stringr::str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)
   unit <- stringr::str_replace(unit, rawToChar(as.raw(c(0xc2, 0xb5))), mu)
   unit <- stringr::str_replace(unit, rawToChar(as.raw(0xb5)), mu)
+  return(unit)
 }
 
 #' Retrieves the name of the constant in the specified enumeration that has the
