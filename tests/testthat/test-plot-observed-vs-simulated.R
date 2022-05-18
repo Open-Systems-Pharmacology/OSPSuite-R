@@ -66,7 +66,7 @@ test_that("It respects custom plot configuration", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "custom plot config",
-    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration)
+    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration, smoother = "loess")
   )
 
   # Since these were not specified by the user, they should not be updated
