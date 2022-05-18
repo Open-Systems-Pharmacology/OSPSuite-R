@@ -100,7 +100,7 @@ can either be specified using explicit instances or using paths.</dd>
           
           <code><a href="allAvailableDimensions.html">allAvailableDimensions()</a></code> 
         </dt>
-        <dd>Returns the name of all available dimensions defined in the OSPSuite platform</dd>
+        <dd>List all available dimensions in the <code>OSPSuite</code> platform</dd>
       </dl><dl><dt>
           
           <code><a href="allPKParameterNames.html">allPKParameterNames()</a></code> 
@@ -212,6 +212,11 @@ defined in <code>simulation</code></dd>
           <code><a href="dataSetToDataFrame.html">dataSetToDataFrame()</a></code> <code><a href="dataSetToDataFrame.html">dataSetToTibble()</a></code> 
         </dt>
         <dd>Converts a list of <code>DataSet</code> objects to a data.frame</dd>
+      </dl><dl><dt>
+          
+          <code><a href="DefaultPlotConfiguration.html">DefaultPlotConfiguration</a></code> 
+        </dt>
+        <dd>Plot configuration for OSP plots</dd>
       </dl><dl><dt>
           
           <code><a href="dot-getConcurrentSimulationRunnerResults.html">.getConcurrentSimulationRunnerResults()</a></code> 
@@ -362,17 +367,17 @@ matching the given path criteria</dd>
           
           <code><a href="getDimensionByName.html">getDimensionByName()</a></code> 
         </dt>
-        <dd>Returns the an instance of the dimension with the given name if found or NULL otherwise</dd>
+        <dd>Get dimension by name</dd>
       </dl><dl><dt>
           
           <code><a href="getDimensionForUnit.html">getDimensionForUnit()</a></code> 
         </dt>
-        <dd>Returns the name of dimension that can be used to support the given unit or null if the dimension cannot be found</dd>
+        <dd>Get dimension for a given unit</dd>
       </dl><dl><dt>
           
           <code><a href="getDimensionTask.html">getDimensionTask()</a></code> 
         </dt>
-        <dd>Return an instance of the .NET Task <code>DimensionTask</code>
+        <dd>Return an instance of the <code>.NET</code> Task <code>DimensionTask</code>
 This is purely for optimization purposes</dd>
       </dl><dl><dt>
           
@@ -431,7 +436,7 @@ For the list of standard parameters</dd>
           
           <code><a href="getUnitsForDimension.html">getUnitsForDimension()</a></code> 
         </dt>
-        <dd>Returns a vector containing all units defined in the dimension</dd>
+        <dd>Get units for a given dimension</dd>
       </dl><dl><dt>
           
           <code><a href="hasDimension.html">hasDimension()</a></code> 
@@ -598,6 +603,16 @@ Note: Units are only available for .NET object of type <code>ParameterValueWithU
         <dd>PKParameterSensitivity</dd>
       </dl><dl><dt>
           
+          <code><a href="plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> 
+        </dt>
+        <dd>Time-profile plot of individual data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> 
+        </dt>
+        <dd>Time-values profile plot for population simulations</dd>
+      </dl><dl><dt>
+          
           <code><a href="Population.html">Population</a></code> 
         </dt>
         <dd>Population</dd>
@@ -656,9 +671,7 @@ and can potentially be used for sensitivity analysis</dd>
           
           <code><a href="runSimulation.html">runSimulation()</a></code> 
         </dt>
-        <dd>DEPRECATED
-<code>runSimulations</code> should be used in favor of  <code>runSimulation</code>. The latter will be removed in future releases
-Runs one  simulation (individual or population) and returns a <code>SimulationResults</code> object containing all results of the simulation.</dd>
+        <dd>Runs one  simulation (individual or population) and returns a <code>SimulationResults</code> object containing all results of the simulation.</dd>
       </dl><dl><dt>
           
           <code><a href="runSimulationBatches.html">runSimulationBatches()</a></code> 
@@ -668,8 +681,7 @@ Runs one  simulation (individual or population) and returns a <code>SimulationRe
           
           <code><a href="runSimulations.html">runSimulations()</a></code> 
         </dt>
-        <dd>Runs one  simulation (individual or population) and returns a <code>SimulationResults</code> object containing all results of the simulation.
-Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation</dd>
+        <dd>Runs multiple simulations concurrently.</dd>
       </dl><dl><dt>
           
           <code><a href="saveDataSetToPKML.html">saveDataSetToPKML()</a></code> 
@@ -861,7 +873,7 @@ This is only used to defined how a user defined PK Parameter should be calculate
           
           <code><a href="toDisplayUnit.html">toDisplayUnit()</a></code> 
         </dt>
-        <dd>Converts a value given in base unit of a quantity into the display unit of a quantity</dd>
+        <dd>Convert base unit to display unit</dd>
       </dl><dl><dt>
           
           <code><a href="toPathArray.html">toPathArray()</a></code> 
@@ -921,7 +933,7 @@ This is only used to defined how a user defined PK Parameter should be calculate
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer></div>
