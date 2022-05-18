@@ -137,14 +137,14 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>Quantity$new()</code></a></p></li>
-<li><p><a href="#method-print"><code>Quantity$print()</code></a></p></li>
-<li><p><a href="#method-printValue"><code>Quantity$printValue()</code></a></p></li>
-<li><p><a href="#method-printQuantityValue"><code>Quantity$printQuantityValue()</code></a></p></li>
-<li><p><a href="#method-setValue"><code>Quantity$setValue()</code></a></p></li>
-<li><p><a href="#method-hasUnit"><code>Quantity$hasUnit()</code></a></p></li>
-<li><p><a href="#method-reset"><code>Quantity$reset()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-Quantity-new"><code>Quantity$new()</code></a></p></li>
+<li><p><a href="#method-Quantity-print"><code>Quantity$print()</code></a></p></li>
+<li><p><a href="#method-Quantity-printValue"><code>Quantity$printValue()</code></a></p></li>
+<li><p><a href="#method-Quantity-printQuantityValue"><code>Quantity$printQuantityValue()</code></a></p></li>
+<li><p><a href="#method-Quantity-setValue"><code>Quantity$setValue()</code></a></p></li>
+<li><p><a href="#method-Quantity-hasUnit"><code>Quantity$hasUnit()</code></a></p></li>
+<li><p><a href="#method-Quantity-reset"><code>Quantity$reset()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-Quantity-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -164,7 +164,7 @@
 <p>A new <code>Quantity</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-Quantity-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -180,7 +180,7 @@
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-printValue"></a><div class="section">
+</div><p></p><hr><a id="method-Quantity-printValue"></a><div class="section">
 <h3 id="method-printvalue-">Method <code>printValue()</code><a class="anchor" aria-label="anchor" href="#method-printvalue-"></a></h3>
 <p>Print the name of the quantity and its value</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -188,7 +188,7 @@
 </div>
 
 
-</div><p></p><hr><a id="method-printQuantityValue"></a><div class="section">
+</div><p></p><hr><a id="method-Quantity-printQuantityValue"></a><div class="section">
 <h3 id="method-printquantityvalue-">Method <code>printQuantityValue()</code><a class="anchor" aria-label="anchor" href="#method-printquantityvalue-"></a></h3>
 <p>Print the the value and unit of the quantity</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -204,7 +204,7 @@
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-setValue"></a><div class="section">
+</div><p></p><hr><a id="method-Quantity-setValue"></a><div class="section">
 <h3 id="method-setvalue-">Method <code>setValue()</code><a class="anchor" aria-label="anchor" href="#method-setvalue-"></a></h3>
 <p>Convert value from unit to the base unit and sets the value in base unit.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -224,7 +224,7 @@
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-hasUnit"></a><div class="section">
+</div><p></p><hr><a id="method-Quantity-hasUnit"></a><div class="section">
 <h3 id="method-hasunit-">Method <code><a href="hasUnit.html">hasUnit()</a></code><a class="anchor" aria-label="anchor" href="#method-hasunit-"></a></h3>
 <p>Returns <code>TRUE</code> if the quantity supports the given unit otherwise <code>FALSE</code>.
 For the list of supported units, use <code>allUnits</code></p><div class="section">
@@ -241,7 +241,7 @@ For the list of supported units, use <code>allUnits</code></p><div class="sectio
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-reset"></a><div class="section">
+</div><p></p><hr><a id="method-Quantity-reset"></a><div class="section">
 <h3 id="method-reset-">Method <code>reset()</code><a class="anchor" aria-label="anchor" href="#method-reset-"></a></h3>
 <p>Ensures that the quantity uses the value computed by its formula. It is a shortcut for <code>self$isFixedValue &lt;- false</code>.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -262,7 +262,7 @@ For the list of supported units, use <code>allUnits</code></p><div class="sectio
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer></div>

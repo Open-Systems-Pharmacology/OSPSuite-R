@@ -121,19 +121,19 @@ values were specified by the user for each dataset.</p></dd>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-addDataSets"><code>DataCombined$addDataSets()</code></a></p></li>
-<li><p><a href="#method-addSimulationResults"><code>DataCombined$addSimulationResults()</code></a></p></li>
-<li><p><a href="#method-setGroups"><code>DataCombined$setGroups()</code></a></p></li>
-<li><p><a href="#method-removeGroupAssignment"><code>DataCombined$removeGroupAssignment()</code></a></p></li>
-<li><p><a href="#method-setDataTransformations"><code>DataCombined$setDataTransformations()</code></a></p></li>
-<li><p><a href="#method-toDataFrame"><code>DataCombined$toDataFrame()</code></a></p></li>
-<li><p><a href="#method-print"><code>DataCombined$print()</code></a></p></li>
-<li><p><a href="#method-clone"><code>DataCombined$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-addDataSets"></a><div class="section">
+<ul><li><p><a href="#method-DataCombined-addDataSets"><code>DataCombined$addDataSets()</code></a></p></li>
+<li><p><a href="#method-DataCombined-addSimulationResults"><code>DataCombined$addSimulationResults()</code></a></p></li>
+<li><p><a href="#method-DataCombined-setGroups"><code>DataCombined$setGroups()</code></a></p></li>
+<li><p><a href="#method-DataCombined-removeGroupAssignment"><code>DataCombined$removeGroupAssignment()</code></a></p></li>
+<li><p><a href="#method-DataCombined-setDataTransformations"><code>DataCombined$setDataTransformations()</code></a></p></li>
+<li><p><a href="#method-DataCombined-toDataFrame"><code>DataCombined$toDataFrame()</code></a></p></li>
+<li><p><a href="#method-DataCombined-print"><code>DataCombined$print()</code></a></p></li>
+<li><p><a href="#method-DataCombined-clone"><code>DataCombined$clone()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul></ul></details></p><hr><a id="method-DataCombined-addDataSets"></a><div class="section">
 <h3 id="method-adddatasets-">Method <code>addDataSets()</code><a class="anchor" aria-label="anchor" href="#method-adddatasets-"></a></h3>
 <p>Adds observed data.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span>, groups <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -151,6 +151,16 @@ renamed, this can be specified as <code>NULL</code> in the list. For example, in
 dataset with name <code>"dataName2"</code> will not be renamed.</p></dd>
 
 
+<dt><code>groups</code></dt>
+<dd><p>A string or a list of strings assigning the data set to a
+group. If an entry within the list is <code>NULL</code>, the corresponding data set is
+not assigned to any group (and the corresponding entry in the <code>group</code>
+column will be an <code>NA</code>). If provided, <code>groups</code> must have the same length as
+<code>dataSets</code> and/or <code>simulationResults$quantityPath</code>. If no grouping is
+specified for any of the dataset, the column <code>group</code> in the data frame
+output will be all <code>NA</code>.</p></dd>
+
+
 </dl><p></p></div>
 </div>
 <div class="section">
@@ -158,7 +168,7 @@ dataset with name <code>"dataName2"</code> will not be renamed.</p></dd>
 <p><code>DataCombined</code> object containing observed data.</p>
 </div>
 
-</div><p></p><hr><a id="method-addSimulationResults"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-addSimulationResults"></a><div class="section">
 <h3 id="method-addsimulationresults-">Method <code>addSimulationResults()</code><a class="anchor" aria-label="anchor" href="#method-addsimulationresults-"></a></h3>
 <p>Add simulated data using instance of <code>SimulationResults</code> class.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -167,7 +177,8 @@ dataset with name <code>"dataName2"</code> will not be renamed.</p></dd>
   quantitiesOrPaths <span class="op">=</span> <span class="cn">NULL</span>,
   population <span class="op">=</span> <span class="cn">NULL</span>,
   individualIds <span class="op">=</span> <span class="cn">NULL</span>,
-  names <span class="op">=</span> <span class="cn">NULL</span>
+  names <span class="op">=</span> <span class="cn">NULL</span>,
+  groups <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -209,6 +220,16 @@ the list. For example, in <code>names = list("dataName" = "dataNewName", "dataNa
 renamed.</p></dd>
 
 
+<dt><code>groups</code></dt>
+<dd><p>A string or a list of strings assigning the data set to a
+group. If an entry within the list is <code>NULL</code>, the corresponding data set is
+not assigned to any group (and the corresponding entry in the <code>group</code>
+column will be an <code>NA</code>). If provided, <code>groups</code> must have the same length as
+<code>dataSets</code> and/or <code>simulationResults$quantityPath</code>. If no grouping is
+specified for any of the dataset, the column <code>group</code> in the data frame
+output will be all <code>NA</code>.</p></dd>
+
+
 </dl><p></p></div>
 </div>
 <div class="section">
@@ -216,7 +237,7 @@ renamed.</p></dd>
 <p><code>DataCombined</code> object containing simulated data.</p>
 </div>
 
-</div><p></p><hr><a id="method-setGroups"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-setGroups"></a><div class="section">
 <h3 id="method-setgroups-">Method <code>setGroups()</code><a class="anchor" aria-label="anchor" href="#method-setgroups-"></a></h3>
 <p>Adds grouping information to (observed and/or simulated) datasets.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -256,7 +277,7 @@ any of the other (previously specified) groupings.</p></dd>
 <p><code>DataCombined</code> object with grouped datasets.</p>
 </div>
 
-</div><p></p><hr><a id="method-removeGroupAssignment"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
 <h3 id="method-removegroupassignment-">Method <code>removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#method-removegroupassignment-"></a></h3>
 <p>Remove existing groupings for (observed and/or simulated) datasets.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -280,7 +301,7 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 <p><code>DataCombined</code> object with updated group assignments.</p>
 </div>
 
-</div><p></p><hr><a id="method-setDataTransformations"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-setDataTransformations"></a><div class="section">
 <h3 id="method-setdatatransformations-">Method <code>setDataTransformations()</code><a class="anchor" aria-label="anchor" href="#method-setdatatransformations-"></a></h3>
 <p>Transform raw data with required offsets and scale factors.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -322,7 +343,7 @@ offset and scale factor values.</p><ul><li><p>For X and Y variables:
 </ul></div>
 
 
-</div><p></p><hr><a id="method-toDataFrame"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-toDataFrame"></a><div class="section">
 <h3 id="method-todataframe-">Method <code>toDataFrame()</code><a class="anchor" aria-label="anchor" href="#method-todataframe-"></a></h3>
 <p>A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).</p>
@@ -340,7 +361,7 @@ name.</p><div class="section">
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -348,7 +369,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-DataCombined-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
@@ -374,7 +395,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span class="co"># load the simulation</span></span>
 <span class="r-in"><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="runSimulation.html">runSimulation</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># create a new dataset object</span></span>
 <span class="r-in"><span class="va">dataSet</span> <span class="op">&lt;-</span> <span class="va"><a href="DataSet.html">DataSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"DS"</span><span class="op">)</span></span>
@@ -404,7 +425,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer></div>
