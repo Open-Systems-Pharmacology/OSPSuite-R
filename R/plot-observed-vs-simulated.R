@@ -15,7 +15,7 @@
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
                                     smoother = NULL,
-                                    lines = c(-0.2, 0, 0.2)) {
+                                    lines = NULL) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
@@ -77,6 +77,12 @@ plotObservedVsSimulated <- function(dataCombined,
   axesLabels <- .createAxesLabels(combinedData, obsVsPredPlotConfiguration)
   obsVsPredPlotConfiguration$labels$xlabel$text <- obsVsPredPlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
   obsVsPredPlotConfiguration$labels$ylabel$text <- obsVsPredPlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+
+  if (is.null(lines)) {
+    # lines <- list(0, c(-2, 2))
+    # list("solid", c("dashed"))
+    lines <- list(0)
+  }
 
   # plot -----------------------------
 
