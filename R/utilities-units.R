@@ -31,7 +31,7 @@ hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), encodeUnit(unit))
+  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), .encodeUnit(unit))
 }
 
 #' Validate unit
@@ -97,7 +97,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  unit <- encodeUnit(unit)
+  unit <- .encodeUnit(unit)
   dimension <- quantityOrDimension
   dimensionTask <- .getNetTask("DimensionTask")
 
@@ -163,7 +163,7 @@ toUnit <- function(quantityOrDimension,
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  targetUnit <- encodeUnit(targetUnit)
+  targetUnit <- .encodeUnit(targetUnit)
   dimension <- quantityOrDimension
   dimensionTask <- .getNetTask("DimensionTask")
 
@@ -174,7 +174,7 @@ toUnit <- function(quantityOrDimension,
   }
 
   if (!is.null(sourceUnit)) {
-    sourceUnit <- encodeUnit(sourceUnit)
+    sourceUnit <- .encodeUnit(sourceUnit)
   }
 
   if (isOfType(quantityOrDimension, "Quantity")) {
@@ -266,7 +266,7 @@ allAvailableDimensions <- function() {
 #' @export
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
-  unit <- encodeUnit(unit)
+  unit <- .encodeUnit(unit)
   dimensionTask <- getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
@@ -421,7 +421,7 @@ initializeDimensionAndUnitLists <- function() {
 #'
 #' @return A data frame with measurement columns transformed to have common units.
 #'
-#' @param data A data frame (or a tibble).
+#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
 #'   not specified (`NULL`), first of the existing units in the respective
 #'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
@@ -456,19 +456,20 @@ initializeDimensionAndUnitLists <- function() {
 #' @keywords internal
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
 
-  # target units --------------------------
-
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
+
+  # target units --------------------------
 
   # The observed and simulated data should have the same units for
   # visual/graphical comparison.
   #
   # Therefore, if target units are not specified by the user, we need to choose
-  # one ourselves. For no special reason, the first element from a vector of
-  # unique units will be selected: one for X-axis, and one for Y-axis, i.e.
-  xTargetUnit <- xUnit %||% unique(data$xUnit)[[1]]
-  yTargetUnit <- yUnit %||% unique(data$yUnit)[[1]]
+  # one ourselves. The most frequent units will be selected: one for X-axis, and
+  # one for Y-axis. If multiple units are tied in terms of their frequency, the
+  # first will be selected.
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = "xUnit")
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = "yUnit")
 
   # Strategy --------------------------
 
@@ -495,7 +496,11 @@ initializeDimensionAndUnitLists <- function() {
 
   # `yErrorUnit` column won't be present when only simulated datasets are
   # entered, but it can be assumed to be the same as `yUnit`.
-  if (!"yErrorUnit" %in% names(data)) {
+  #
+  # If there is no `yErrorValues` column in the entered data frame, it doesn't
+  # make sense for this function to introduce a new column called `yErrorUnit`.
+  if (("yErrorValues" %in% names(data)) &&
+    !("yErrorUnit" %in% names(data))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
@@ -640,4 +645,58 @@ initializeDimensionAndUnitLists <- function() {
   yData$yErrorUnit <- yTargetUnit
 
   return(yData)
+}
+
+
+#' Find the most common units
+#'
+#' @inheritParams .unitConverter
+#' @param unitColumn The name of the column containing units (e.g. `xUnit`).
+#'
+#' @examples
+#'
+#' df <- dplyr::tibble(
+#'   xValues = c(15, 30, 60),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(0.25, 45, 78),
+#'   yUnit = c("", "%", "%"),
+#'   yErrorUnit = c("", "%", "%"),
+#'   yDimension = "Fraction",
+#'   molWeight = 10
+#' )
+#'
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "xUnit")
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "yUnit")
+#'
+#' @keywords internal
+.extractMostFrequentUnit <- function(data, unitColumn) {
+  # Converting to argument to symbol makes sure that both ways of specifying
+  # arguments will be treated the same way:
+  # - unquoted (`unitColumn = xUnit`)
+  # - quoted (`unitColumn = "xUnit"`)
+  unitColumn <- rlang::ensym(unitColumn)
+
+  # Create a new data frame with frequency for each unit
+  unitUsageFrequency <- data %>%
+    # The embrace operator (`{{`) captures the user input and evaluates it in
+    # the current data frame.
+    dplyr::group_by({{ unitColumn }}) %>%
+    dplyr::tally(name = "unitFrequency")
+
+  mostFrequentUnit <- unitUsageFrequency %>%
+    # Select only the row(s) with maximum frequency.
+    dplyr::filter(unitFrequency == max(unitFrequency)) %>%
+    # In case of ties, there will be more than one row. In such cases, the first
+    # unit is selected.
+    #
+    # Do *not* select randomly as that would introduce randomness in plotting
+    # functions with each run of the plotting function defaulting to a different
+    # unit.
+    dplyr::slice_head(n = 1L) %>%
+    # Remove the frequency column, which is not useful outside the context of
+    # this function.
+    dplyr::select(-unitFrequency)
+
+  return(mostFrequentUnit[[1]])
 }

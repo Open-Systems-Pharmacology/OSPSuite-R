@@ -7,7 +7,7 @@
 .unitConverter(data, xUnit = NULL, yUnit = NULL)
 }
 \arguments{
-\item{data}{A data frame (or a tibble).}
+\item{data}{A data frame (or a tibble) from \code{DataCombined$toDataFrame()}.}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
 not specified (\code{NULL}), first of the existing units in the respective

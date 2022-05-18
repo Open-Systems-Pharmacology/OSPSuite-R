@@ -140,7 +140,7 @@ test_that("It returns null if the dimension is not found for the unit", {
 context("getUnitsForDimension")
 
 test_that("It can return the expected dimension for a given unit", {
-  expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", encodeUnit("µg"), "ng", "pg"))
+  expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", .encodeUnit("µg"), "ng", "pg"))
 })
 
 
@@ -171,20 +171,20 @@ test_that("It returns NULL when the dimension exists,
 
 context("hasUnit")
 test_that("It returns true for an existing unit in the dimension, false otherwise", {
-  expect_true(hasUnit(unit = encodeUnit("µmol"), dimension = "Amount"))
+  expect_true(hasUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
   expect_false(hasUnit(unit = "g", "Amount"))
 })
 
 context("validateUnit")
 test_that("It returns NULL when the unit exists in the dimension,
           or throws an error otherwise", {
-  expect_null(validateUnit(unit = encodeUnit("µmol"), dimension = "Amount"))
+  expect_null(validateUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
   expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
 })
 
 context("getBaseUnit")
 test_that("It returns the correct base unit", {
-  expect_equal(getBaseUnit(dimension = "Amount"), encodeUnit("µmol"))
+  expect_equal(getBaseUnit(dimension = "Amount"), .encodeUnit("µmol"))
 })
 
 
@@ -199,9 +199,8 @@ df <- dplyr::tibble(
   xDimension = "Time",
   yValues = c(0.25, 45, 78),
   yUnit = c("", "%", "%"),
-  yErrorUnit = c("", "%", "%"),
-  yDimension = c("Fraction", "Fraction", "Fraction"),
-  molWeight = c(10, 10, 10)
+  yDimension = "Fraction",
+  molWeight = 10
 )
 
 # also contains error columns
@@ -211,10 +210,10 @@ dfError <- dplyr::tibble(
   xDimension = "Time",
   yValues = c(0.25, 45, 78),
   yUnit = c("", "%", "%"),
-  yDimension = c("Fraction", "Fraction", "Fraction"),
+  yDimension = "Fraction",
   yErrorValues = c(0.01, 5, 8),
   yErrorUnit = c("", "%", "%"),
-  molWeight = c(10, 10, 10)
+  molWeight = 10
 )
 
 # default conversion -------------------
@@ -226,16 +225,13 @@ test_that("defaults for .unitConverter update xValues column as expected", {
 })
 
 test_that("defaults for .unitConverter update yValues column as expected", {
-  expect_equal(dfConvert$yValues[1], df$yValues[1])
-  expect_equal(dfConvert$yValues[2:3] * 100, df$yValues[2:3])
+  expect_equal(dfConvert$yValues[1] / 100, df$yValues[1])
+  expect_equal(dfConvert$yValues[2:3], df$yValues[2:3])
 })
 
 test_that("defaults for .unitConverter update xUnit and yUnit column as expected", {
-  expect_equal(unique(dfConvert$xUnit), unique(dfConvert$xUnit))
-  expect_equal(unique(dfConvert$yUnit), unique(dfConvert$yUnit)[1])
-
   expect_equal(unique(dfConvert$xUnit), "min")
-  expect_equal(unique(dfConvert$yUnit), "")
+  expect_equal(unique(dfConvert$yUnit), "%")
 })
 
 test_that("defaults for .unitConverter leaves dimension columns untouched", {
@@ -245,6 +241,10 @@ test_that("defaults for .unitConverter leaves dimension columns untouched", {
 
 test_that("defaults for .unitConverter leaves molWeight columns untouched", {
   expect_equal(dfConvert$molWeight, df$molWeight)
+})
+
+test_that("defaults for .unitConverter don't introduce yUnitError column if not present", {
+  expect_false("yErrorUnit" %in% names(dfConvert))
 })
 
 # only `xUnit` -------------------
@@ -338,9 +338,9 @@ dfErrorConvert <- .unitConverter(dfError)
 dfYErrorConvert <- .unitConverter(dfError, yUnit = ospUnits$Fraction$`%`)
 
 test_that(".unitConverter changes error units as well - defaults", {
-  expect_equal(unique(dfErrorConvert$yErrorUnit), "")
-  expect_equal(dfErrorConvert$yErrorValues[1], dfError$yErrorValues[1])
-  expect_equal(dfErrorConvert$yErrorValues[2:3] * 100, dfError$yErrorValues[2:3])
+  expect_equal(unique(dfErrorConvert$yErrorUnit), "%")
+  expect_equal(dfErrorConvert$yErrorValues[1] / 100, dfError$yErrorValues[1])
+  expect_equal(dfErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
 })
 
 test_that(".unitConverter changes error units as well - defaults", {
@@ -367,7 +367,8 @@ test_that("Correct conversion for yValues having the same unit but different MW"
 dfNA <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
   xValues = c(0, 14.482, 28.965, 0, 1, 2),
-  xUnit = "min", xDimension = "Time",
+  xUnit = "min",
+  xDimension = "Time",
   yValues = c(25.579, 32.446, 32.103, 0, 0.995, 0.991),
   yUnit = c("%", "%", "%", "", "", ""),
   yDimension = "Fraction",
@@ -393,17 +394,16 @@ test_that("simulated data is as expected in presence of missing values - default
   # because of the missing values, no conversion should have taken place and so these two
   # data frames should be identical
   expect_equal(
-    dplyr::filter(dfNAConvert, dataType == "simulated"),
-    dplyr::filter(dfNA, dataType == "simulated")
+    dplyr::filter(dfNAConvert, dataType == "simulated")$yValues * 100,
+    dplyr::filter(dfNA, dataType == "simulated")$yValues
   )
 })
 
 test_that("observed data is as expected in presence of missing values - default units", {
   # only `yValues` and unit columns should change; everything else should remain the same
   expect_equal(
-    dplyr::filter(dfNAConvert, dataType == "observed"),
-    dplyr::filter(dfNA, dataType == "observed") %>%
-      dplyr::mutate(yValues = 100 * yValues, yUnit = "%", yErrorUnit = "%")
+    dplyr::filter(dfNAConvert, dataType == "observed")$yValues,
+    dplyr::filter(dfNA, dataType == "observed")$yValues
   )
 })
 
@@ -465,7 +465,7 @@ dfMolWeightNA <- dplyr::tibble(
 
 test_that("if molWeight is missing, an error is signaled if dimensions require them", {
   expect_error(
-    .unitConverter(dfMolWeightNA),
+    .unitConverter(dfMolWeightNA, yUnit = "mol"),
     "Molecular Weight not available."
   )
 })
