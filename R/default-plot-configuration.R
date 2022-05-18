@@ -212,7 +212,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # legend ------------------------------------
 
-    legendPosition = NULL,
+    legendPosition = tlf::LegendPositions$insideTopRight,
     legendTitle = NULL,
     legendTitleSize = 10,
     legendTitleColor = "black",
@@ -317,8 +317,8 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # There is no `pointsFill` because it doesn't make sense to "fill" a line
     # with color. There is already `pointsColor` for that.
-    pointsColor = NULL,
-    pointsShape = NULL,
+    pointsColor = tlf::ColorMaps$ospDefault,
+    pointsShape = names(tlf::Shapes),
     pointsSize = 3,
     pointsAlpha = 0.75,
 

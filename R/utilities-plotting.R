@@ -363,24 +363,14 @@
 
   # For `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`
   if (plotType == "TimeProfilePlotConfiguration") {
-    generalPlotConfiguration$pointsColor <- generalPlotConfiguration$pointsColor %||% tlf::ColorMaps$ospDefault
-    generalPlotConfiguration$pointsShape <- generalPlotConfiguration$pointsShape %||% names(tlf::Shapes)
-
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$solid
-
-    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideTopRight
   }
 
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
-    generalPlotConfiguration$pointsColor <- generalPlotConfiguration$pointsColor %||% tlf::ColorMaps$ospDefault
-    generalPlotConfiguration$pointsShape <- generalPlotConfiguration$pointsShape %||% names(tlf::Shapes)
-
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
-
-    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
   }
 
   # labels object ---------------------------------------
