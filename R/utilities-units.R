@@ -465,9 +465,9 @@ initializeDimensionAndUnitLists <- function() {
   # visual/graphical comparison.
   #
   # Therefore, if target units are not specified by the user, we need to choose
-  # one ourselves. For no special reason, the most frequent units will be
-  # selected: one for X-axis, and one for Y-axis. If multiple units are tied in
-  # terms of their frequency, the first will be selected.
+  # one ourselves. The most frequent units will be selected: one for X-axis, and
+  # one for Y-axis. If multiple units are tied in terms of their frequency, the
+  # first will be selected.
   xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = xUnit)
   yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = yUnit)
 
@@ -683,8 +683,8 @@ initializeDimensionAndUnitLists <- function() {
   mostFrequentUnit <- unitUsageFrequency %>%
     # Select only the row(s) with maximum frequency.
     dplyr::filter(unitFrequency == max(unitFrequency)) %>%
-    # In case of ties, there will be more than one row. In such cases, for no
-    # special reason, select the first unit.
+    # In case of ties, there will be more than one row. In such cases, the first
+    # unit is selected.
     #
     # Do *not* select randomly as that would introduce randomness in plotting
     # functions with each run of the plotting function defaulting to a different
