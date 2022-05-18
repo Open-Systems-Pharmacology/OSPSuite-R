@@ -468,8 +468,8 @@ initializeDimensionAndUnitLists <- function() {
   # one ourselves. The most frequent units will be selected: one for X-axis, and
   # one for Y-axis. If multiple units are tied in terms of their frequency, the
   # first will be selected.
-  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = xUnit)
-  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = yUnit)
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = "xUnit")
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = "yUnit")
 
   # Strategy --------------------------
 
@@ -666,17 +666,21 @@ initializeDimensionAndUnitLists <- function() {
 #'   molWeight = 10
 #' )
 #'
-#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = xUnit)
-#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = yUnit)
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "xUnit")
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "yUnit")
 #'
 #' @keywords internal
 .extractMostFrequentUnit <- function(data, unitColumn) {
+  # Converting to argument to symbol makes sure that both ways of specifying
+  # arguments will be treated the same way:
+  # - unquoted (`unitColumn = xUnit`)
+  # - quoted (`unitColumn = "xUnit"`)
+  unitColumn <- rlang::ensym(unitColumn)
+
   # Create a new data frame with frequency for each unit
   unitUsageFrequency <- data %>%
-    # The embrace operator (`{{`) captures the user input and evaluates in the
-    # current data frame. This is non-standard evaluation, so the user can
-    # supply unquoted arguments (i.e. `unitColumn = xUnit` instead of
-    # `unitColumn = "xUnit"`).
+    # The embrace operator (`{{`) captures the user input and evaluates it in
+    # the current data frame.
     dplyr::group_by({{ unitColumn }}) %>%
     dplyr::tally(name = "unitFrequency")
 
