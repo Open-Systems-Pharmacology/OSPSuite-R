@@ -50,3 +50,27 @@ test_that("It creates default plots as expected", {
     fig = plotObservedVsSimulated(myCombDat)
   )
 })
+
+
+test_that("It respects custom plot configuration", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
+  myPlotConfiguration$title <- "My Plot Title"
+  myPlotConfiguration$subtitle <- "My Plot Subtitle"
+  myPlotConfiguration$caption <- "My Sources"
+  myPlotConfiguration$pointsSize <- 2.5
+  myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
+  myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
+  myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "custom plot config",
+    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration)
+  )
+
+  # Since these were not specified by the user, they should not be updated
+  # after plotting function is done with it.
+  expect_null(myPlotConfiguration$xLabel)
+  expect_null(myPlotConfiguration$yLabel)
+})
