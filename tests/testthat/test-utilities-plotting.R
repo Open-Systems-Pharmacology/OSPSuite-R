@@ -47,5 +47,5 @@ test_that("It works correctly when multiple dimensions are present", {
   labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
 
   expect_equal(labs$xLabel, "Time [h]")
-  expect_equal(labs$yLabel, "Concentration [µmol/l]")
+  expect_equal(labs$yLabel, "Concentration [mg/l]")
 })
