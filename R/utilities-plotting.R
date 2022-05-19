@@ -194,8 +194,10 @@
   # axes labels.
   xUnitString <- unique(data$xUnit)
   yUnitString <- unique(data$yUnit)
-  xDimensionString <- unique(data$xDimension)
-  yDimensionString <- unique(data$yDimension)
+
+  # There might be multiple dimensions across datasets, select the first one.
+  xDimensionString <- unique(data$xDimension)[[1]]
+  yDimensionString <- unique(data$yDimension)[[1]]
 
   # Currently, hard code any of the different concentration dimensions to just
   # one dimension: "Concentration"
