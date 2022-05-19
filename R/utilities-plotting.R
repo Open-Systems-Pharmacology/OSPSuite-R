@@ -208,11 +208,11 @@
     ospDimensions$`Concentration (molar)`
   )
 
-  if (xDimensionString %in% concDimensions) {
+  if (any(xDimensionString %in% concDimensions)) {
     xDimensionString <- "Concentration"
   }
 
-  if (yDimensionString %in% concDimensions) {
+  if (any(yDimensionString %in% concDimensions)) {
     yDimensionString <- "Concentration"
   }
 
