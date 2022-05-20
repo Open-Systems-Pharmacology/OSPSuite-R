@@ -11,51 +11,30 @@ init:
       Import-Module '..\appveyor-tool.ps1'
 
 install:
+  - cmd: set PATH=C:\Ruby27-x64\bin;%PATH%
   - ps: Bootstrap
   - git submodule update --init --recursive
 
 environment:
   USE_RTOOLS: true
   NOT_CRAN: true
-  KEEP_VIGNETTES: true
+  KEEP_VIGNETTES: false
+  R_BUILD_ARGS: --no-build-vignettes --no-manual"
   R_ARCH: x64
-  R_VERSION: "4.0.5"
-  COVERALLS_TOKEN:
-    secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
-
-
-
-before_build:
-  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
-  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
-  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
-  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
-  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
-  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
-  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
-  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
-  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
+  R_VERSION: 4.1.0
+  #We use this variale to skip some long lasting tests using "skip_on_ci"
+  CI: true 
 
 build_script:
-  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
-
-before_test:
-  - cinst pandoc
-  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
-  - pandoc -v
-
-on_success:
-  - Rscript -e "covr::codecov(function_exclusions = c('print.*', '\\.onLoad'))"
+  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
 
 test_script:
   - travis-tool.sh run_tests
-
-after_test:
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
-  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
@@ -73,15 +52,6 @@ artifacts:
 
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
-
-  - path: "ospsuite_*_ubuntu18.tar.gz"
-    name: Ubuntu18
-
-  - path: "ospsuite_*_centOS7.tar.gz"
-    name: CentOS7
-
-  - path: '\*_*.zip'
-    name: Win
 
 platform: x64
 

@@ -2,16 +2,20 @@
 % Please edit documentation in R/utilities-units.R
 \name{getUnitsForDimension}
 \alias{getUnitsForDimension}
-\title{Returns a vector containing all units defined in the dimension}
+\title{Get units for a given dimension}
 \usage{
 getUnitsForDimension(dimension)
 }
 \arguments{
 \item{dimension}{Name of dimension for which units should be returned}
 }
-\description{
+\value{
 Returns a vector containing all units defined in the dimension
 }
+\description{
+Get units for a given dimension
+}
 \examples{
-units <- getUnitsForDimension("Mass")
+
+getUnitsForDimension("Mass")
 }

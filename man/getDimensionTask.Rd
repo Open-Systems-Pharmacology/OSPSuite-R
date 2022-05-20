@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{getDimensionTask}
 \alias{getDimensionTask}
-\title{Return an instance of the .NET Task \code{DimensionTask}
+\title{Return an instance of the \code{.NET} Task \code{DimensionTask}
 This is purely for optimization purposes}
 \usage{
 getDimensionTask()
@@ -11,6 +11,6 @@ getDimensionTask()
 An instance of the Task
 }
 \description{
-Return an instance of the .NET Task \code{DimensionTask}
+Return an instance of the \code{.NET} Task \code{DimensionTask}
 This is purely for optimization purposes
 }

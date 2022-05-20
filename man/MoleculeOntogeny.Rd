@@ -9,7 +9,7 @@ Use when retrieving individual values using the createIndividualAlgorithm. This 
 allowing the user to retrieve potential ontogeny values.
 }
 \section{Super class}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{MoleculeOntogeny}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{MoleculeOntogeny}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -23,21 +23,20 @@ allowing the user to retrieve potential ontogeny values.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{MoleculeOntogeny$new()}}
-\item \href{#method-print}{\code{MoleculeOntogeny$print()}}
-\item \href{#method-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
-\item \href{#method-clone}{\code{MoleculeOntogeny$clone()}}
+\item \href{#method-MoleculeOntogeny-new}{\code{MoleculeOntogeny$new()}}
+\item \href{#method-MoleculeOntogeny-print}{\code{MoleculeOntogeny$print()}}
+\item \href{#method-MoleculeOntogeny-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-MoleculeOntogeny-new"></a>}}
+\if{latex}{\out{\hypertarget{method-MoleculeOntogeny-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -58,8 +57,8 @@ A new \code{MoleculeOntogeny} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-MoleculeOntogeny-print"></a>}}
+\if{latex}{\out{\hypertarget{method-MoleculeOntogeny-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -75,30 +74,13 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printMoleculeOntogeny"></a>}}
-\if{latex}{\out{\hypertarget{method-printMoleculeOntogeny}{}}}
+\if{html}{\out{<a id="method-MoleculeOntogeny-printMoleculeOntogeny"></a>}}
+\if{latex}{\out{\hypertarget{method-MoleculeOntogeny-printMoleculeOntogeny}{}}}
 \subsection{Method \code{printMoleculeOntogeny()}}{
 Print the \code{MoleculeOntogeny} on one line
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$printMoleculeOntogeny()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

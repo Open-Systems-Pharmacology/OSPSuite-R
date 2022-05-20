@@ -5,8 +5,24 @@
 \alias{Cache}
 \title{Cache}
 \description{
-Structure for caching objects
+A class that provides structure for caching objects.
 }
+\examples{
+# Create a new instance of the class
+myCache <- ospsuite:::Cache$new()
+
+# Adding new key-value pairs
+myCache$set("data1", iris)
+myCache$set("data2", BOD)
+
+# Print to see the current pairs
+myCache
+
+# Get value using a key
+myCache$get("data2")
+
+}
+\keyword{internal}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -24,18 +40,18 @@ Structure for caching objects
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Cache$new()}}
-\item \href{#method-reset}{\code{Cache$reset()}}
-\item \href{#method-set}{\code{Cache$set()}}
-\item \href{#method-hasKey}{\code{Cache$hasKey()}}
-\item \href{#method-get}{\code{Cache$get()}}
-\item \href{#method-dropKey}{\code{Cache$dropKey()}}
-\item \href{#method-print}{\code{Cache$print()}}
+\item \href{#method-Cache-new}{\code{Cache$new()}}
+\item \href{#method-Cache-reset}{\code{Cache$reset()}}
+\item \href{#method-Cache-set}{\code{Cache$set()}}
+\item \href{#method-Cache-hasKey}{\code{Cache$hasKey()}}
+\item \href{#method-Cache-get}{\code{Cache$get()}}
+\item \href{#method-Cache-dropKey}{\code{Cache$dropKey()}}
+\item \href{#method-Cache-print}{\code{Cache$print()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Cache-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -54,8 +70,8 @@ A new \code{Cache} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reset"></a>}}
-\if{latex}{\out{\hypertarget{method-reset}{}}}
+\if{html}{\out{<a id="method-Cache-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-reset}{}}}
 \subsection{Method \code{reset()}}{
 Clear cache
 \subsection{Usage}{
@@ -64,8 +80,8 @@ Clear cache
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set"></a>}}
-\if{latex}{\out{\hypertarget{method-set}{}}}
+\if{html}{\out{<a id="method-Cache-set"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-set}{}}}
 \subsection{Method \code{set()}}{
 Store the given value in cache with the given key
 \subsection{Usage}{
@@ -83,8 +99,8 @@ Store the given value in cache with the given key
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hasKey"></a>}}
-\if{latex}{\out{\hypertarget{method-hasKey}{}}}
+\if{html}{\out{<a id="method-Cache-hasKey"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-hasKey}{}}}
 \subsection{Method \code{hasKey()}}{
 Check if an entry with the given \code{key} exists in cache
 \subsection{Usage}{
@@ -100,8 +116,8 @@ Check if an entry with the given \code{key} exists in cache
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get"></a>}}
-\if{latex}{\out{\hypertarget{method-get}{}}}
+\if{html}{\out{<a id="method-Cache-get"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-get}{}}}
 \subsection{Method \code{get()}}{
 Get cached object by key
 \subsection{Usage}{
@@ -117,8 +133,8 @@ Get cached object by key
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dropKey"></a>}}
-\if{latex}{\out{\hypertarget{method-dropKey}{}}}
+\if{html}{\out{<a id="method-Cache-dropKey"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-dropKey}{}}}
 \subsection{Method \code{dropKey()}}{
 Remove the value associated with the key from cache.
 \subsection{Usage}{
@@ -134,8 +150,8 @@ Remove the value associated with the key from cache.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Cache-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Cache-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

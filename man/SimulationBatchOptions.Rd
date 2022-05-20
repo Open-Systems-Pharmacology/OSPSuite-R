@@ -5,10 +5,10 @@
 \alias{SimulationBatchOptions}
 \title{SimulationBatchOptions}
 \description{
-Options to be passed to the SimulationBatch
+Options to be passed to the \code{SimulationBatch}.
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchOptions}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchOptions}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -22,20 +22,19 @@ Options to be passed to the SimulationBatch
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SimulationBatchOptions$new()}}
-\item \href{#method-print}{\code{SimulationBatchOptions$print()}}
+\item \href{#method-SimulationBatchOptions-new}{\code{SimulationBatchOptions$new()}}
+\item \href{#method-SimulationBatchOptions-print}{\code{SimulationBatchOptions$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SimulationBatchOptions-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatchOptions-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -56,8 +55,8 @@ A new \code{SimulationBatchOptions} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SimulationBatchOptions-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatchOptions-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

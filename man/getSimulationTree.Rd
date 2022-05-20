@@ -5,13 +5,15 @@
 \title{Given a simulation file path or an instance of a simulation, traverses the simulation structure and returns a tree like structure
 allowing for intuitive navigation in the simulation tree}
 \usage{
-getSimulationTree(simulationOrFilePath)
+getSimulationTree(simulationOrFilePath, quantityType = "Quantity")
 }
 \arguments{
 \item{simulationOrFilePath}{Full path of the simulation to load or instance of a simulation}
+
+\item{quantityType}{A vector of strings that specify the types of the entities to be included in the tree.  The types can be any combination of "Quantity", "Molecule", "Parameter" and "Observer"}
 }
 \value{
-A list with a branched structure representing the path tree of Quantities in the simulation file.
+A list with a branched structure representing the path tree of entities in the simulation file that fall under the types specified in \code{quantityType}.
 At the end of each branch is a string called 'path' that is the path of the quantity represented by the branch.
 }
 \description{

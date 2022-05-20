@@ -8,7 +8,7 @@
 A parameter typically used in the definition of \code{IndividualCharacteristics} covariates (Height, Weight etc...)
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SnapshotParameter}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SnapshotParameter}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -22,22 +22,20 @@ A parameter typically used in the definition of \code{IndividualCharacteristics}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SnapshotParameter$new()}}
-\item \href{#method-print}{\code{SnapshotParameter$print()}}
-\item \href{#method-printValue}{\code{SnapshotParameter$printValue()}}
-\item \href{#method-clone}{\code{SnapshotParameter$clone()}}
+\item \href{#method-SnapshotParameter-new}{\code{SnapshotParameter$new()}}
+\item \href{#method-SnapshotParameter-print}{\code{SnapshotParameter$print()}}
+\item \href{#method-SnapshotParameter-printValue}{\code{SnapshotParameter$printValue()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SnapshotParameter-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -60,8 +58,8 @@ A new \code{SnapshotParameter} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SnapshotParameter-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -77,8 +75,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printValue"></a>}}
-\if{latex}{\out{\hypertarget{method-printValue}{}}}
+\if{html}{\out{<a id="method-SnapshotParameter-printValue"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-printValue}{}}}
 \subsection{Method \code{printValue()}}{
 Print the the parameter in one line
 \subsection{Usage}{
@@ -89,23 +87,6 @@ Print the the parameter in one line
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{caption}}{Caption to display before the value of the parameter}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

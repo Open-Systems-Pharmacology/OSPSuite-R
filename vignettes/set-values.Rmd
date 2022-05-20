@@ -1,28 +1,26 @@
 ---
 title: "Changing parameter and molecule start values"
 output: rmarkdown::html_vignette
-#output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Changing parameter and molecule start values}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  error=TRUE
+  error = TRUE
 )
-```
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Changing initial values
+
 It is possible to change the initial values of all parameters and molecules in a simulation. It is important to differentiate between the *constant* values and the values that are defined by a *formula*.
 
 ### Formula types
+
 Every (initial) value is described either by a constant or by a formula. If the value is defined by a simple constant, the field `isConstant` of the respective parameter or molecule has the value `TRUE`.
 
 ```{r getConstantValue}
@@ -32,17 +30,18 @@ library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
-#Get the parameter "Age" of the Organism
+# Get the parameter "Age" of the Organism
 ageParam <- getParameter("Organism|Age", sim)
 print(ageParam)
 ageParam$isConstant
 ```
+
 If the value is not constant, it is described by one of the formula types:
 
   **Distributed**: Distributed parameters describe a variation around a constant value or between two numerical limits. In the simulation, the behavior equals that of constant values. See [OSPS documentation](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#working-with-constant-and-distributed-parameters) for more information.
 
 ```{r getDistributedValue}
-#Get the parameter "Volume" of the Liver
+# Get the parameter "Volume" of the Liver
 liverVolume <- getParameter("Organism|Liver|Volume", sim)
 print(liverVolume)
 liverVolume$isDistributed
@@ -51,7 +50,7 @@ liverVolume$isDistributed
   **Explicit formula**: The value of the parameter is given by an explicit formula. The value of an explicit formula can change during the simulation. The string of the formula can be accessed via `parameter$formulaString`.
 
 ```{r getExplicitFormulaValue}
-#Get the parameter "Volume" of the Liver interstital
+# Get the parameter "Volume" of the Liver interstital
 liverIntVolume <- getParameter("Organism|Liver|Interstitial|Volume", sim)
 print(liverIntVolume)
 liverIntVolume$formulaString
@@ -60,7 +59,7 @@ liverIntVolume$formulaString
   **Table formula**: The value of the parameter is given by a table with x-y value pairs. X values usually refer to the simulation time. See [Table parameters](table-parameters.html) for additional information on how to retrieve or change the table values.
 
 ```{r getTableFormulaValue}
-#Get the parameter defined by a table.
+# Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
 print(tableParam)
 ```
@@ -68,7 +67,7 @@ print(tableParam)
 Additionally, some parameters are modeled as *state variables*. In this case, the parameter has an *initial value* and a *right hand side (RHS)* formula, both of which can be any formula type.
 
 ```{r getStateVariableValue}
-#Get the parameter defined by a state variable.
+# Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
 
@@ -79,6 +78,7 @@ stateVariableParam$rhsFormula
 ```
 
 ### Changing parameters and molecules initial values
+
 The user can change initial values of parameters and molecules with the methods `setParameterValues` and `setMoleculeInitialValues`, respectively.
 
 ```{r changeDose}
@@ -112,9 +112,10 @@ print(doseParam)
 Only constant values can be set. If the parameters value is defined by a formula (explicit or table), the newly assigned value will override the formula. This will be reflected by the field `isFixedValue`. Changing values of formula parameters should be done with caution, as the potential dependency on another simulation parameters will be destroyed.
 
 ```{r setExplicitFormulaValue}
-#Get the parameter "Volume" of the Liver interstital
+# Get the parameter "Volume" of the Liver interstital
 liverIntVolume <- getParameter("Organism|Liver|Interstitial|Volume", sim)
 print(liverIntVolume)
+
 # isFixedValue is FALSE as the parameter is defined by its formula
 liverIntVolume$isFixedValue
 
@@ -125,8 +126,10 @@ liverIntVolume$isFixedValue
 ```
 
 The parameter value can be reset to its formula after assigning a constant value:
+
 ```{r resetExplicitFormulaValue}
 print(liverIntVolume)
+
 # isFixedValue is TRUE as the value of parameter is overridden by the constant value
 liverIntVolume$isFixedValue
 
@@ -135,10 +138,10 @@ print(liverIntVolume)
 liverIntVolume$isFixedValue
 ```
 
-Changing the value of a state variable parameter will only change its initial value, but not the right hand side (i.e., the value in the simulation will still change according to the rhs formula). To switch to RHS formula off and, by that, make the parameter be only dependent on its initial value, the field `isStateVariable` can be set to `FALSE`. This function is one-way only! It is not possible to re-activate the RHS formula after switching it off.
+Changing the value of a state variable parameter will only change its initial value, but not the right hand side (i.e., the value in the simulation will still change according to the RHS formula). To switch to RHS formula off and, by that, make the parameter be only dependent on its initial value, the field `isStateVariable` can be set to `FALSE`. This function is one-way only! It is not possible to re-activate the RHS formula after switching it off.
 
 ```{r setStateVariableValue}
-#Get the parameter defined by a state variable.
+# Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 print(stateVariableParam)
 
@@ -158,8 +161,8 @@ An example how to set the initial values of molecules in all containers to a cer
 
 ```{r changeInitialValue}
 # Get objects representing the molecule Aciclovir in all containers
-allAciclovirMolecules <- getAllMoleculesMatching("Organism|**|Aciclovir",sim)
+allAciclovirMolecules <- getAllMoleculesMatching("Organism|**|Aciclovir", sim)
 
-#Set initial values to 10 µmol in all containers
+# Set initial values to 10 µmol in all containers
 setMoleculeInitialValues(allAciclovirMolecules, rep(10, length(allAciclovirMolecules)))
 ```

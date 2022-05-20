@@ -1,6 +1,6 @@
 #' Standard PK-Parameters types defined in OSPSuite
 #' This is only used to defined how a user defined PK Parameter should be calculated
-#' @include enum.R
+#'
 #' @export
 StandardPKParameter <- enum(c(
   Unknown = 0,
@@ -33,6 +33,7 @@ StandardPKParameter <- enum(c(
 #' @description Standard PK Parameters defined in the OSPSuite
 PKParameter <- R6::R6Class("PKParameter",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field name Name of the PK-Parameter
     name = function(value) {

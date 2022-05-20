@@ -33,10 +33,10 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateIsString(displayName, nullAllowed = TRUE)
   validateIsString(displayUnit, nullAllowed = TRUE)
 
-  displayUnit <- encodeUnit(displayUnit %||% "")
+  displayUnit <- .encodeUnit(displayUnit %||% "")
   displayName <- enc2utf8(displayName %||% "")
 
-  pkParameterTask <- getNetTask("PKParameterTask")
+  pkParameterTask <- .getNetTask("PKParameterTask")
   netUserDefinedPKParameter <- rClr::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
   userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
   rClr::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
@@ -47,7 +47,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
 #'
 #' @export
 removeAllUserDefinedPKParameters <- function() {
-  pkParameterTask <- getNetTask("PKParameterTask")
+  pkParameterTask <- .getNetTask("PKParameterTask")
   rClr::clrCall(pkParameterTask, "RemoveAllUserDefinedPKParameters")
 }
 
@@ -62,7 +62,7 @@ removeAllUserDefinedPKParameters <- function() {
 #' updatePKParameter("t_max", "MyTmax", "min")
 #' @export
 updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
-  pkParameterTask <- getNetTask("PKParameterTask")
+  pkParameterTask <- .getNetTask("PKParameterTask")
   pkParameter <- pkParameterByName(name)
 
   .updatePKParameterProperties(pkParameter, displayName, displayUnit)
@@ -91,9 +91,9 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' pkParameter <- pkParameterByName(name = "t_max")
 #' @export
 pkParameterByName <- function(name, stopIfNotFound = TRUE) {
-  pkParameterTask <- getNetTask("PKParameterTask")
+  pkParameterTask <- .getNetTask("PKParameterTask")
   pkParameter <- rClr::clrCall(pkParameterTask, "PKParameterByName", name)
-  pkParameter <- toObjectType(pkParameter, PKParameter)
+  pkParameter <- .toObjectType(pkParameter, PKParameter)
 
   if (!is.null(pkParameter) || !stopIfNotFound) {
     return(pkParameter)
@@ -110,6 +110,6 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
 #' pkParameterNames <- allPKParameterNames()
 #' @export
 allPKParameterNames <- function() {
-  pkParameterTask <- getNetTask("PKParameterTask")
+  pkParameterTask <- .getNetTask("PKParameterTask")
   rClr::clrCall(pkParameterTask, "AllPKParameterNames")
 }

@@ -23,7 +23,7 @@
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
 #' @export
 getAllParametersMatching <- function(paths, container) {
-  getAllEntitiesMatching(paths, container, Parameter)
+  .getAllEntitiesMatching(paths, container, Parameter)
 }
 
 #' Retrieves the path of all parameters defined in the container and all its children
@@ -41,7 +41,7 @@ getAllParametersMatching <- function(paths, container) {
 #' parameterPaths <- getAllParameterPathsIn(sim)
 #' @export
 getAllParameterPathsIn <- function(container) {
-  getAllEntityPathsIn(container, Parameter)
+  .getAllEntityPathsIn(container, Parameter)
 }
 
 #' Retrieve a single parameter by path in the given container
@@ -61,7 +61,7 @@ getAllParameterPathsIn <- function(container) {
 #' param <- getParameter("Organism|Liver|Volume", sim)
 #' @export
 getParameter <- function(path, container, stopIfNotFound = TRUE) {
-  getEntity(path, container, Parameter, stopIfNotFound)
+  .getEntity(path, container, Parameter, stopIfNotFound)
 }
 
 #' Retrieves the display path of the parameters defined by paths in the simulation
@@ -100,7 +100,7 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' setParameterValues(params, c(2, 3), units = c("ml", "l"))
 #' @export
 setParameterValues <- function(parameters, values, units = NULL) {
-  validateIsOfType(parameters, Parameter)
+  validateIsOfType(parameters, "Parameter")
   setQuantityValues(parameters, values, units)
 }
 
@@ -151,6 +151,6 @@ setParameterValuesByPath <- function(parameterPaths, values, simulation, units =
 #' scaleParameterValues(params, 1.5)
 #' @export
 scaleParameterValues <- function(parameters, factor) {
-  validateIsOfType(parameters, Parameter)
+  validateIsOfType(parameters, "Parameter")
   scaleQuantityValues(parameters, factor)
 }

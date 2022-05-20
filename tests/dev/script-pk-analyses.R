@@ -17,15 +17,16 @@ quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Veno
 sim <- loadSimulation("tests/data/S1.pkml")
 toto <- sim$molWeightFor(quantityPath)
 
-population <- loadPopulation("tests/data/pop_10.csv")
+popFile <- getTestDataFilePath("pop.csv")
+population <- loadPopulation(popFile)
 simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
 populationResults <- runSimulation(sim, population, simRunOptions)
 populationPkAnalyses <- calculatePKAnalyses(populationResults)
-df <- pkAnalysesAsDataFrame(populationPkAnalyses)
+df <- pkAnalysesToDataFrame(populationPkAnalyses)
 
 exportPKAnalysesToCSV(populationPkAnalyses, "C:/temp/export/pk.csv")
 newPKAnalyses <- importPKAnalysesFromCSV("C:/temp/export/pk.csv", sim)
-df <- pkAnalysesAsDataFrame(newPKAnalyses)
+df <- pkAnalysesToDataFrame(newPKAnalyses)
 
 print(populationPkAnalyses)
 pkParameters <- populationPkAnalyses$allPKParametersFor(quantityPath)

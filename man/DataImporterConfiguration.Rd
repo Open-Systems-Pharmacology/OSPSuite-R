@@ -8,39 +8,43 @@
 Configuration of data import from excel or csv files. To be used with #TODO
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataImporterConfiguration}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataImporterConfiguration}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{timeColumn}}{Name of the column for time values}
 
-\item{\code{timeUnit}}{If \code{timeUnitFromColumn} is \code{FALSE}, unit of the values in time column
-If \code{timeUnitFromColumn} is \code{TRUE}, name of the column with units of the values in time column}
+\item{\code{timeUnit}}{If \code{isTimeUnitFromColumn} is \code{FALSE}, unit of the values
+in time column If \code{isTimeUnitFromColumn} is \code{TRUE}, name of the column
+with units of the values in time column.}
 
-\item{\code{timeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
+\item{\code{isTimeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
 are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined by
-\code{timeUnit}.}
+the value of \code{timeUnit}.}
 
 \item{\code{measurementColumn}}{Name of the column for measurement values}
 
-\item{\code{measurementDimension}}{If \code{measurementUnitFromColumn} is \code{FALSE}, dimension of the values in measurement column
-If \code{measurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from the unit defined in the column \code{measurementUnit} during import process and \verb{$measurementDimension} is \code{NULL}.
-When changing dimension, the unit is set to the base unit of this dimension.}
+\item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE},
+dimension of the values in measurement column If
+\code{isMeasurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from
+the unit defined in the column \code{measurementUnit} during import process
+and \verb{$measurementDimension} is \code{NULL}. When changing dimension, the
+unit is set to the base unit of this dimension.}
 
-\item{\code{measurementUnit}}{If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
-If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column}
+\item{\code{measurementUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
+If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column}
 
-\item{\code{measurementUnitFromColumn}}{If \code{TRUE}, units of the values in measurement column
+\item{\code{isMeasurementUnitFromColumn}}{If \code{TRUE}, units of the values in measurement column
 are defined in the column \code{measurementUnit}. If \code{FALSE}, the unit is defined by
-\code{measurementUnit}.}
+the value of \code{measurementUnit}.}
 
 \item{\code{errorColumn}}{Name of the column for measurement error values
 If no error column is defined, the value is \code{NULL}. Setting the value
 to \code{NULL} removes an existing error column.}
 
-\item{\code{errorUnit}}{If \code{measurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
-If \code{measurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in error column
+\item{\code{errorUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
+If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in error column
 If no error column is present, the value is \code{NULL}}
 
 \item{\code{errorType}}{Type of the measurement error values. See enum \code{DataErrorType}
@@ -53,7 +57,7 @@ If no error column is present, the value is \code{NULL}}
 configuration will be applied.}
 
 \item{\code{namingPattern}}{Regular expression used for naming of loaded data sets.
-Words between curly brackets (e.g. \code{{Group Id}}) will be replaced by the value
+Words between curly brackets (e.g. \verb{\{Group Id\}}) will be replaced by the value
 in the corresponding column. Further keywords are \code{{Source}} for the file name
 and \code{{Sheet}} for sheet name.}
 }
@@ -62,35 +66,32 @@ and \code{{Sheet}} for sheet name.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DataImporterConfiguration$new()}}
-\item \href{#method-saveConfiguration}{\code{DataImporterConfiguration$saveConfiguration()}}
-\item \href{#method-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
-\item \href{#method-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
-\item \href{#method-print}{\code{DataImporterConfiguration$print()}}
-\item \href{#method-clone}{\code{DataImporterConfiguration$clone()}}
+\item \href{#method-DataImporterConfiguration-new}{\code{DataImporterConfiguration$new()}}
+\item \href{#method-DataImporterConfiguration-saveConfiguration}{\code{DataImporterConfiguration$saveConfiguration()}}
+\item \href{#method-DataImporterConfiguration-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
+\item \href{#method-DataImporterConfiguration-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
+\item \href{#method-DataImporterConfiguration-print}{\code{DataImporterConfiguration$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(configurationFilePath = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(ref = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{configurationFilePath}}{Path to the XML file with stored configuration
-(e.g. create in PK-Sim or MoBi).
+\item{\code{ref}}{Reference to .NET DataImporterConfiguration object
 If \code{NULL} (default), an empty configuration with columns "Time" and
 "Measurement" is created.}
 }
@@ -101,8 +102,8 @@ A new \code{DataImporterConfiguration} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-saveConfiguration"></a>}}
-\if{latex}{\out{\hypertarget{method-saveConfiguration}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-saveConfiguration"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-saveConfiguration}{}}}
 \subsection{Method \code{saveConfiguration()}}{
 Save configuration to a XML file that can be used in PKSim/MoBi
 \subsection{Usage}{
@@ -119,8 +120,8 @@ will be exported to.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addGroupingColumn"></a>}}
-\if{latex}{\out{\hypertarget{method-addGroupingColumn}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-addGroupingColumn"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-addGroupingColumn}{}}}
 \subsection{Method \code{addGroupingColumn()}}{
 Add a column for grouping the data sets
 \subsection{Usage}{
@@ -136,8 +137,8 @@ Add a column for grouping the data sets
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeGroupingColumn"></a>}}
-\if{latex}{\out{\hypertarget{method-removeGroupingColumn}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-removeGroupingColumn"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-removeGroupingColumn}{}}}
 \subsection{Method \code{removeGroupingColumn()}}{
 Remove a column for grouping the data sets
 \subsection{Usage}{
@@ -153,8 +154,8 @@ Remove a column for grouping the data sets
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-DataImporterConfiguration-print"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -165,23 +166,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

@@ -24,7 +24,7 @@
 #' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 #' @export
 getAllMoleculesMatching <- function(paths, container) {
-  getAllEntitiesMatching(paths, container, Molecule)
+  .getAllEntitiesMatching(paths, container, Molecule)
 }
 
 #' Retrieves the paths of all molecules defined in the container and all its children
@@ -42,7 +42,7 @@ getAllMoleculesMatching <- function(paths, container) {
 #' moleculePaths <- getAllMoleculePathsIn(sim)
 #' @export
 getAllMoleculePathsIn <- function(container) {
-  getAllEntityPathsIn(container, Molecule)
+  .getAllEntityPathsIn(container, Molecule)
 }
 
 #' Retrieve a single molecule by path in the given container
@@ -62,7 +62,7 @@ getAllMoleculePathsIn <- function(container) {
 #' molecule <- getMolecule("Organism|Liver|A", sim)
 #' @export
 getMolecule <- function(path, container, stopIfNotFound = TRUE) {
-  getEntity(path, container, Molecule, stopIfNotFound)
+  .getEntity(path, container, Molecule, stopIfNotFound)
 }
 
 #' Set molecule start values
@@ -85,7 +85,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #' setMoleculeInitialValues(molecules, c(2, 3), units = c("pmol", "mmol"))
 #' @export
 setMoleculeInitialValues <- function(molecules, values, units = NULL) {
-  validateIsOfType(molecules, Molecule)
+  validateIsOfType(molecules, "Molecule")
   setQuantityValues(molecules, values, units)
 }
 
@@ -104,7 +104,12 @@ setMoleculeInitialValues <- function(molecules, values, units = NULL) {
 #' sim <- loadSimulation(simPath)
 #' setMoleculeValuesByPath("Organism|Liver|A", 1, sim)
 #'
-#' setMoleculeValuesByPath(c("Organism|Liver|A", "Organism|Liver|B"), c(2, 3), sim, units = c("µmol", "mmol"))
+#' setMoleculeValuesByPath(
+#'   c("Organism|Liver|A", "Organism|Liver|B"),
+#'   c(2, 3),
+#'   sim,
+#'   units = c("µmol", "mmol")
+#' )
 #' @export
 setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
   setQuantityValuesByPath(
@@ -136,7 +141,7 @@ setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = N
 #' @export
 setMoleculeScaleDivisors <- function(molecules, values) {
   molecules <- toList(molecules)
-  validateIsOfType(molecules, Molecule)
+  validateIsOfType(molecules, "Molecule")
   validateIsNumeric(values)
   validateIsSameLength(molecules, values)
 

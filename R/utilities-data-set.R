@@ -8,7 +8,7 @@
     }
 
     if (len == 0) {
-      rep(NA, length(dataSet$xValues))
+      rep(NA_real_, length(dataSet$xValues))
     } else if (len == 1) {
       if (is.null(metaDataName)) {
         rep(dataSet[[property]], length(dataSet$xValues))
@@ -37,7 +37,7 @@
 #' @export
 loadDataSetFromPKML <- function(filePath) {
   dataRepository <- .loadDataRepositoryFromPKML(filePath)
-  return(DataSet$new(dataRepository))
+  return(DataSet$new(dataRepository = dataRepository))
 }
 
 #' Save the `DataSet` to pkml
@@ -49,15 +49,15 @@ loadDataSetFromPKML <- function(filePath) {
 #'
 #' @examples
 #' \dontrun{
-#' dataSet <- DataSet$new()
+#' dataSet <- DataSet$new(name = "NewDataSet")
 #' dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
 #' dataSet$saveToPKML(filePath = "../ObsData.pkml")
 #' }
 saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
-  validateIsOfType(dataSet, DataSet)
+  validateIsOfType(dataSet, "DataSet")
   filePath <- expandPath(filePath)
-  dataRepositoryTask <- getNetTask("DataRepositoryTask")
+  dataRepositoryTask <- .getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }
 
@@ -65,13 +65,17 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 #'
 #' @param dataSets A list of `DataSet` objects or a single `DataSet`
 #'
-#' @return DataSet objects as data.frame with columns name, xValues, yValues, yErrorValues,
-#' xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit, molWeight, lloq,
-#'  and a column for each meta data that is present in any `DataSet`
+#' @return
+#'
+#' DataSet objects as data.frame with columns name, xValues, yValues,
+#' yErrorValues, xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit,
+#' molWeight, lloq, and a column for each meta data that is present in any
+#' `DataSet`.
+#'
 #' @export
 dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
-  validateIsOfType(dataSets, DataSet)
+  validateIsOfType(dataSets, "DataSet")
 
   name <- .makeDataFrameColumn(dataSets, "name")
   xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
@@ -85,31 +89,55 @@ dataSetToDataFrame <- function(dataSets) {
   yValues <- .makeDataFrameColumn(dataSets, "yValues")
   yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
   lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
-  df <- data.frame(
-    name, xValues, yValues, yErrorValues, xDimension, xUnit, yDimension,
-    yUnit, yErrorType, yErrorUnit, molWeight, lloq
+
+  obsData <- data.frame(
+    name,
+    xValues,
+    yValues,
+    yErrorValues,
+    xDimension,
+    xUnit,
+    yDimension,
+    yUnit,
+    yErrorType,
+    yErrorUnit,
+    molWeight,
+    lloq,
+    stringsAsFactors = FALSE
   )
 
   # get all names of meta data entries from all data sets
   metaDataNames <- unique(unlist(lapply(dataSets, function(dataSets) {
     names(dataSets[["metaData"]])
   }), use.names = FALSE))
+
   # add one column for each one
   for (name in metaDataNames) {
     col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
-    df[[name]] <- col
+    obsData[[name]] <- col
   }
 
-  return(df)
+  # consistently return a (classical) data frame
+  return(obsData)
 }
 
+#' @rdname dataSetToDataFrame
+#'
+#' @export
+dataSetToTibble <- function(dataSets) {
+  obsData <- dataSetToDataFrame(dataSets)
+
+  # consistently return a tibble data frame
+  return(dplyr::as_tibble(obsData))
+}
 
 #' Load data sets from excel
 #'
 #' @details Load observed data from an excel file using an importer configuration
 #'
 #' @param xlsFilePath Path to the excel file with the data
-#' @param importerConfiguration An object of type `DataImporterConfiguration` that is valid for the excel file
+#' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
+#'  for the excel file or a path to a XML file with stored configuration
 #' @param importAllSheets If `FALSE` (default), only sheets specified in the
 #' `importerConfiguration` will be loaded. If `TRUE`, an attempt to load all sheets
 #' is performed. If any sheet does not comply with the configuration, an error is thrown.
@@ -119,24 +147,46 @@ dataSetToDataFrame <- function(dataSets) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' configurationPath <- "../dataImporterConfiguration_noSheets.xml"
-#' xlsFilePath <- "../CompiledDataSet_oneSheet.xlsx"
-#' importerConfiguration <- DataImporterConfiguration$new(configurationPath)
 #'
-#' dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
-#' }
-loadDataSetsFromExcel <- function(xlsFilePath, importerConfiguration, importAllSheets = FALSE) {
+#' xlsFilePath <- system.file(
+#'   "extdata", "CompiledDataSet.xlsx",
+#'   package = "ospsuite"
+#' )
+#'
+#' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
+#' importerConfiguration$sheets <- "TestSheet_1"
+#'
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfigurationOrPath = importerConfiguration,
+#'   importAllSheets = FALSE
+#' )
+#'
+#' importerConfigurationFilePath <- system.file(
+#'   "extdata", "dataImporterConfiguration.xml",
+#'   package = "ospsuite"
+#' )
+#'
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfigurationOrPath = importerConfigurationFilePath,
+#'   importAllSheets = FALSE
+#' )
+loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, importAllSheets = FALSE) {
   validateIsString(xlsFilePath)
-  validateIsOfType(importerConfiguration, DataImporterConfiguration)
+  importerConfiguration <- importerConfigurationOrPath
+  if (is.character(importerConfigurationOrPath)) {
+    importerConfiguration <- loadDataImporterConfiguration(importerConfigurationOrPath)
+  }
+  validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- getNetTask("DataImporterTask")
+  dataImporterTask <- .getNetTask("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
-    DataSet$new(repository)
+    DataSet$new(dataRepository = repository)
   })
   names(dataSets) <- lapply(dataSets, function(x) {
     x$name

@@ -1,5 +1,5 @@
 context("Population")
-populationFileName <- getTestDataFilePath("pop_10.csv")
+populationFileName <- getTestDataFilePath("pop.csv")
 simuation <- loadTestSimulation("S1")
 venousBloodVolume <- getParameter("Organism|VenousBlood|Volume", simuation)
 values <- c(1:10) * 2.5
@@ -77,7 +77,7 @@ test_that("It can remove user defined variability", {
 test_that("It throws an exception when adding values that have the wrong number of items", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"
-  expect_that(population$setParameterValues(parameterPath, c(1:5) * 2.5), throws_error())
+  expect_error(population$setParameterValues(parameterPath, c(1:5) * 2.5))
 })
 
 test_that("It can retrieve all parameter values for an existing individual id", {
@@ -90,7 +90,7 @@ test_that("It can retrieve all parameter values for an existing individual id", 
 
 test_that("It throws an exception when retrieving all parameter values for an individual id that does not exist", {
   population <- loadPopulation(populationFileName)
-  expect_that(parameterValues <- population$getParameterValuesForIndividual(666), throws_error())
+  expect_error(parameterValues <- population$getParameterValuesForIndividual(666))
 })
 
 context("Covariates")

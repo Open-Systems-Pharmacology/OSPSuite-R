@@ -1,12 +1,14 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 10.0.72
+Version: 11.0.0
 Authors@R: 
     c(person("Open-Systems-Pharmacology Community", role = "cph"),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
       person("Pavel", "Balazki", role = "aut"),
-      person("Juri", "Solodenko", role = "aut"))
+      person("Juri", "Solodenko", role = "aut", comment = c(ORCID = "0000-0001-6922-588X")),
+      person("Indrajeet", "Patil", , "patilindrajeet.science@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")))
 Description: The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
   created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 License: GPL-2 | file LICENSE
@@ -17,17 +19,22 @@ Depends:
     R (>= 3.6),
     rClr (>= 0.9.1)
 Imports: 
+    dplyr (>= 1.0.0),
+    ospsuite.utils (>= 1.3.0),
+    purrr,
     R6,
+    readr,
     stringr,
-    readr
-Suggests: 
+    tidyr,
+    tlf (>= 1.3.0)
+Suggests:
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0),
-    pander
+    testthat (>= 3.0.3),
+    vdiffr (>= 1.0.0)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
@@ -36,16 +43,14 @@ Collate:
     'application.R'
     'cache.R'
     'container.R'
-    'create-individual.R'
-    'create-population.R'
     'data-column.R'
-    'enum.R'
+    'data-combined.R'
     'data-importer-configuration.R'
     'data-repository.R'
     'data-set.R'
+    'default-plot-configuration.R'
     'dot-net-wrapper.R'
     'entity.R'
-    'error-checks.R'
     'formula.R'
     'get-net-task.R'
     'individual-characteristics.R'
@@ -55,6 +60,7 @@ Collate:
     'molecule-ontogeny.R'
     'molecule.R'
     'object-base.R'
+    'utilities.R'
     'ospsuite-env.R'
     'output-schema.R'
     'output-selections.R'
@@ -64,12 +70,14 @@ Collate:
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
     'pk-sim.R'
+    'plot-individual-time-profile.R'
+    'plot-population-time-profile.R'
     'population-characteristics.R'
     'population.R'
-    'printable.R'
     'quantity-pk-parameter.R'
     'quantity-selection.R'
     'quantity.R'
+    're-exports.R'
     'sensitivity-analysis-results.R'
     'sensitivity-analysis-run-options.R'
     'sensitivity-analysis.R'
@@ -88,11 +96,14 @@ Collate:
     'table-formula.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
+    'utilities-data-combined.R'
+    'utilities-data-importer-configuration.R'
     'utilities-data-repository.R'
     'utilities-data-set.R'
     'utilities-dot-net.R'
     'utilities-entity.R'
     'utilities-file.R'
+    'utilities-individual.R'
     'utilities-molecule.R'
     'utilities-output-schema.R'
     'utilities-output-selections.R'
@@ -101,12 +112,13 @@ Collate:
     'utilities-pk-analysis.R'
     'utilities-pk-parameter.R'
     'utilities-pksim.R'
+    'utilities-plotting.R'
     'utilities-population.R'
     'utilities-quantity.R'
     'utilities-sensitivity-analysis.R'
     'utilities-simulation-results.R'
     'utilities-simulation.R'
     'utilities-units.R'
-    'utilities.R'
     'value-point.R'
     'zzz.R'
+    'zzz_deprecated.R'

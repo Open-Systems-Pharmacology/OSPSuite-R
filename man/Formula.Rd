@@ -11,7 +11,7 @@ A formula of the model (Typically related to a \code{Quantity} such as a paramet
 A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Formula}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Formula}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -37,21 +37,20 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-print}{\code{Formula$print()}}
-\item \href{#method-printFormula}{\code{Formula$printFormula()}}
+\item \href{#method-Formula-print}{\code{Formula$print()}}
+\item \href{#method-Formula-printFormula}{\code{Formula$printFormula()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Formula-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Formula-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -67,8 +66,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printFormula"></a>}}
-\if{latex}{\out{\hypertarget{method-printFormula}{}}}
+\if{html}{\out{<a id="method-Formula-printFormula"></a>}}
+\if{latex}{\out{\hypertarget{method-Formula-printFormula}{}}}
 \subsection{Method \code{printFormula()}}{
 Print the formula to the console without the name of the class
 \subsection{Usage}{
@@ -78,7 +77,7 @@ Print the formula to the console without the name of the class
 }
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Formula]{ospsuite::Formula}} -> \code{TableFormula}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Formula]{ospsuite::Formula}} -> \code{TableFormula}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -94,26 +93,25 @@ Print the formula to the console without the name of the class
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-addPoints}{\code{TableFormula$addPoints()}}
-\item \href{#method-removePoint}{\code{TableFormula$removePoint()}}
-\item \href{#method-clearPoints}{\code{TableFormula$clearPoints()}}
-\item \href{#method-setPoints}{\code{TableFormula$setPoints()}}
-\item \href{#method-print}{\code{TableFormula$print()}}
-\item \href{#method-valueAt}{\code{TableFormula$valueAt()}}
-\item \href{#method-printFormula}{\code{TableFormula$printFormula()}}
+\item \href{#method-TableFormula-addPoints}{\code{TableFormula$addPoints()}}
+\item \href{#method-TableFormula-removePoint}{\code{TableFormula$removePoint()}}
+\item \href{#method-TableFormula-clearPoints}{\code{TableFormula$clearPoints()}}
+\item \href{#method-TableFormula-setPoints}{\code{TableFormula$setPoints()}}
+\item \href{#method-TableFormula-print}{\code{TableFormula$print()}}
+\item \href{#method-TableFormula-valueAt}{\code{TableFormula$valueAt()}}
+\item \href{#method-TableFormula-printFormula}{\code{TableFormula$printFormula()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addPoints"></a>}}
-\if{latex}{\out{\hypertarget{method-addPoints}{}}}
+\if{html}{\out{<a id="method-TableFormula-addPoints"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-addPoints}{}}}
 \subsection{Method \code{addPoints()}}{
 Adds one or more points to a table
 \subsection{Usage}{
@@ -131,8 +129,8 @@ Adds one or more points to a table
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removePoint"></a>}}
-\if{latex}{\out{\hypertarget{method-removePoint}{}}}
+\if{html}{\out{<a id="method-TableFormula-removePoint"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-removePoint}{}}}
 \subsection{Method \code{removePoint()}}{
 Remove the point having the same x and y from the table
 \subsection{Usage}{
@@ -150,8 +148,8 @@ Remove the point having the same x and y from the table
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clearPoints"></a>}}
-\if{latex}{\out{\hypertarget{method-clearPoints}{}}}
+\if{html}{\out{<a id="method-TableFormula-clearPoints"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-clearPoints}{}}}
 \subsection{Method \code{clearPoints()}}{
 Remove all points from the table
 \subsection{Usage}{
@@ -160,8 +158,8 @@ Remove all points from the table
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setPoints"></a>}}
-\if{latex}{\out{\hypertarget{method-setPoints}{}}}
+\if{html}{\out{<a id="method-TableFormula-setPoints"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-setPoints}{}}}
 \subsection{Method \code{setPoints()}}{
 Replace all points defined in the table with the new values given.
 This is a convenience method for calling \code{clearPoints} and \code{addPoints}
@@ -180,8 +178,8 @@ This is a convenience method for calling \code{clearPoints} and \code{addPoints}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-TableFormula-print"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -197,8 +195,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-valueAt"></a>}}
-\if{latex}{\out{\hypertarget{method-valueAt}{}}}
+\if{html}{\out{<a id="method-TableFormula-valueAt"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-valueAt}{}}}
 \subsection{Method \code{valueAt()}}{
 Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
 If the table contains no point, 0 is returned
@@ -215,8 +213,8 @@ If the table contains no point, 0 is returned
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-printFormula"></a>}}
-\if{latex}{\out{\hypertarget{method-printFormula}{}}}
+\if{html}{\out{<a id="method-TableFormula-printFormula"></a>}}
+\if{latex}{\out{\hypertarget{method-TableFormula-printFormula}{}}}
 \subsection{Method \code{printFormula()}}{
 Print the formula to the console
 \subsection{Usage}{

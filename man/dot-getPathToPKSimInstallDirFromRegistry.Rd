@@ -11,7 +11,7 @@
 }
 \value{
 The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 }
 \description{
 Tries to find the installation path for a specific version of PK-Sim from an Windows registry entry.

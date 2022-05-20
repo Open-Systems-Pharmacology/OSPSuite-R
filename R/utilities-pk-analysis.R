@@ -1,6 +1,7 @@
 #' @title Calculates the pkAnalyses for all output values available in `results`.
 #'
-#' @param results Results of simulation. Typically the `results` are calculated using `runSimulation` or imported from csv file via `importResults`
+#' @param results Results of simulation. Typically the `results` are calculated
+#'   using `runSimulation` or imported from csv file via `importResults`.
 #'
 #' @return An instance of `SimulationPKAnalyses` class.
 #'
@@ -14,8 +15,8 @@
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {
-  validateIsOfType(results, SimulationResults)
-  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  validateIsOfType(results, "SimulationResults")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rClr::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   rClr::clrSet(calculatePKAnalysisArgs, "Simulation", results$simulation$ref)
   rClr::clrSet(calculatePKAnalysisArgs, "SimulationResults", results$ref)
@@ -30,10 +31,10 @@ calculatePKAnalyses <- function(results) {
 #'
 #' @export
 exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
-  validateIsOfType(pkAnalyses, SimulationPKAnalyses)
+  validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
 }
@@ -46,15 +47,15 @@ savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
 #' @title Loads the pK-analyses from csv file
 #'
 #' @param filePath Full path of the file containing the pK-Analyses to load.
-#' @param simulation Instance of the simulation for which the pk-Analyses were calculated. This is required to verify that the file
-#' matches the simulation
+#' @param simulation Instance of the simulation for which the pk-Analyses were
+#'   calculated. This is required to verify that the file matches the simulation.
 #'
 #' @export
 importPKAnalysesFromCSV <- function(filePath, simulation) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  pkAnalysisTask <- getNetTask("PKAnalysisTask")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
   SimulationPKAnalyses$new(pkAnalyses, simulation)
 }
@@ -62,28 +63,49 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 
 #' @title Convert the pk-Analysis to data frame
 #'
-#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated using `calculatePKAnalyses` or imported from file)
+#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated
+#'   using `calculatePKAnalyses` or imported from file).
 #'
 #' @export
-pkAnalysesAsDataFrame <- function(pkAnalyses) {
-  validateIsOfType(pkAnalyses, SimulationPKAnalyses)
+pkAnalysesToDataFrame <- function(pkAnalyses) {
+  validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   pkParameterResultsFilePath <- tempfile()
-  dataFrame <- tryCatch(
+
+  pkAnalysesData <- tryCatch(
     {
       exportPKAnalysesToCSV(pkAnalyses, pkParameterResultsFilePath)
       colTypes <- list(
         IndividualId = readr::col_integer(),
-        QuantityPath = readr::col_factor(),
-        Parameter = readr::col_factor(),
+        QuantityPath = readr::col_character(),
+        Parameter = readr::col_character(),
         Value = readr::col_double(),
-        Unit = readr::col_factor()
+        Unit = readr::col_character()
       )
-      pkResultsDataFrame <- readr::read_csv(pkParameterResultsFilePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = colTypes)
+
+      pkResultsDataFrame <- readr::read_csv(
+        pkParameterResultsFilePath,
+        locale = readr::locale(encoding = "UTF-8"),
+        comment = "#",
+        col_types = colTypes
+      )
+
       return(pkResultsDataFrame)
     },
     finally = {
       file.remove(pkParameterResultsFilePath)
     }
   )
-  return(dataFrame)
+
+  # consistently return a (classical) data frame
+  return(pkAnalysesData)
+}
+
+#' @rdname pkAnalysesToDataFrame
+#'
+#' @export
+pkAnalysesToTibble <- function(pkAnalyses) {
+  pkAnalysesData <- pkAnalysesToDataFrame(pkAnalyses)
+
+  # consistently return a tibble data frame
+  return(dplyr::as_tibble(pkAnalysesData))
 }

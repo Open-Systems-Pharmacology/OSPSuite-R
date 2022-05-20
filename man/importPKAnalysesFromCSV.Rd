@@ -9,8 +9,8 @@ importPKAnalysesFromCSV(filePath, simulation)
 \arguments{
 \item{filePath}{Full path of the file containing the pK-Analyses to load.}
 
-\item{simulation}{Instance of the simulation for which the pk-Analyses were calculated. This is required to verify that the file
-matches the simulation}
+\item{simulation}{Instance of the simulation for which the pk-Analyses were
+calculated. This is required to verify that the file matches the simulation.}
 }
 \description{
 Loads the pK-analyses from csv file

@@ -37,7 +37,7 @@ test_that("It can remove a point from the table defined with existing x and y", 
 
 test_that("It throws an exception when trying to add a point at an existing x with a different y", {
   tableFormula$addPoints(20, 30)
-  expect_that(tableFormula$add(20, 40), throws_error())
+  expect_error(tableFormula$add(20, 40))
 })
 
 test_that("It can update the restart solver flag of a given point", {

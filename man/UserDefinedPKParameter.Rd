@@ -8,20 +8,22 @@
 Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:PKParameter]{ospsuite::PKParameter}} -> \code{UserDefinedPKParameter}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:PKParameter]{ospsuite::PKParameter}} -> \code{UserDefinedPKParameter}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{startTime}}{Start time for the calculation of the PK-Parameter.
+\item{\code{startTime}}{Start time in minutes for the calculation of the PK-Parameter.
 If not specified, the time will start at the first time point of the simulation (optional)}
 
-\item{\code{startTimeOffset}}{Offset in \link{min} to apply to the start time (0 by default).}
+\item{\code{startTimeOffset}}{Offset in minutes to apply to the start time or
+to the start time of the application identified by  \code{startApplicationIndex}. (0 by default).}
 
-\item{\code{endTime}}{End time for the calculation of the PK-Parameter.
+\item{\code{endTime}}{End time in minutes for the calculation of the PK-Parameter.
 If not specified, the time will end at the last time point of the simulation (optional)}
 
-\item{\code{endTimeOffset}}{Offset in \link{min} to apply to the end time (0 by default).}
+\item{\code{endTimeOffset}}{Offset in minutes to apply to the end time or
+to the start time of the application identified by \code{endApplicationIndex}. (0 by default).}
 
 \item{\code{startApplicationIndex}}{1-based Index of the application to use to determine the start time for the calculation of the PK-Parameter.
 If not specified, the time will start at the first time point of the simulation (optional)}
@@ -43,21 +45,19 @@ See \code{StandardPKParameter} enum for all possible pk parameters}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-print}{\code{UserDefinedPKParameter$print()}}
-\item \href{#method-clone}{\code{UserDefinedPKParameter$clone()}}
+\item \href{#method-UserDefinedPKParameter-print}{\code{UserDefinedPKParameter$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-UserDefinedPKParameter-print"></a>}}
+\if{latex}{\out{\hypertarget{method-UserDefinedPKParameter-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -68,23 +68,6 @@ Print the object to the console
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{UserDefinedPKParameter$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

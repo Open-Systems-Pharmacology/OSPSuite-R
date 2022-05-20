@@ -4,7 +4,10 @@ context("uniqueEntities")
 sim <- loadTestSimulation("S1")
 
 test_that("It throws an error when no valid entities are provided", {
-  expect_that(uniqueEntities("String"), throws_error())
+  expect_error(
+    uniqueEntities("String"),
+    "argument 'entities' is of type 'list', but expected 'Entity'!"
+  )
 })
 
 test_that("It returns the entity for uniqueEntities with one passed entity", {
@@ -14,8 +17,9 @@ test_that("It returns the entity for uniqueEntities with one passed entity", {
 
 test_that("It throws an error when no valid 'compareBy' is provided", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim)
-  expect_that(uniqueEntities(parameter, compareBy = 2), throws_error())
-  expect_that(uniqueEntities(parameter, compareBy = "2"), throws_error())
+  errorMessage <- "Value '2' is not in defined enumeration values: 'id, name, path'"
+  expect_error(suppressWarnings(uniqueEntities(parameter, compareBy = 2)), errorMessage)
+  expect_error(suppressWarnings(uniqueEntities(parameter, compareBy = "2")), errorMessage)
 })
 
 test_that("It can filter by id", {
@@ -51,5 +55,8 @@ test_that("It throws an exception if comparing by a value that is not defined", 
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Volume")), sim),
     getParameter(toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")), sim)
   )
-  expect_that(uniqueEntities(parameters, "toto"), throws_error())
+  expect_error(
+    uniqueEntities(parameters, "toto"),
+    "Value 'toto' is not in defined enumeration values: 'id, name, path'"
+  )
 })

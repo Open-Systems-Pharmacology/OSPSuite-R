@@ -8,7 +8,7 @@
 pK-Analyses of a simulation (either individual or population simulation).
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationPKAnalyses}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationPKAnalyses}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -24,22 +24,21 @@ pK-Analyses of a simulation (either individual or population simulation).
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SimulationPKAnalyses$new()}}
-\item \href{#method-allPKParametersFor}{\code{SimulationPKAnalyses$allPKParametersFor()}}
-\item \href{#method-pKParameterFor}{\code{SimulationPKAnalyses$pKParameterFor()}}
-\item \href{#method-print}{\code{SimulationPKAnalyses$print()}}
+\item \href{#method-SimulationPKAnalyses-new}{\code{SimulationPKAnalyses$new()}}
+\item \href{#method-SimulationPKAnalyses-allPKParametersFor}{\code{SimulationPKAnalyses$allPKParametersFor()}}
+\item \href{#method-SimulationPKAnalyses-pKParameterFor}{\code{SimulationPKAnalyses$pKParameterFor()}}
+\item \href{#method-SimulationPKAnalyses-print}{\code{SimulationPKAnalyses$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SimulationPKAnalyses-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationPKAnalyses-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -60,8 +59,8 @@ A new \code{SimulationPKAnalyses} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-allPKParametersFor"></a>}}
-\if{latex}{\out{\hypertarget{method-allPKParametersFor}{}}}
+\if{html}{\out{<a id="method-SimulationPKAnalyses-allPKParametersFor"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationPKAnalyses-allPKParametersFor}{}}}
 \subsection{Method \code{allPKParametersFor()}}{
 Returns all QuantityPKParameter defined for a given path
 \subsection{Usage}{
@@ -77,8 +76,8 @@ Returns all QuantityPKParameter defined for a given path
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pKParameterFor"></a>}}
-\if{latex}{\out{\hypertarget{method-pKParameterFor}{}}}
+\if{html}{\out{<a id="method-SimulationPKAnalyses-pKParameterFor"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationPKAnalyses-pKParameterFor}{}}}
 \subsection{Method \code{pKParameterFor()}}{
 The pK Parameter defined for the given path and name
 \subsection{Usage}{
@@ -88,7 +87,8 @@ The pK Parameter defined for the given path and name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter} should be retrieved}
+\item{\code{quantityPath}}{Path for which the pkParameter named \code{pkParameter}
+should be retrieved}
 
 \item{\code{pkParameter}}{Name of the pkParameter to retrieve}
 }
@@ -96,8 +96,8 @@ The pK Parameter defined for the given path and name
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SimulationPKAnalyses-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationPKAnalyses-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

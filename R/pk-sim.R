@@ -1,7 +1,7 @@
 
 #' Default species defined in PK-Sim
 #'
-#' @include enum.R
+#'
 #' @export
 Species <- enum(c(
   "Beagle",
@@ -16,7 +16,7 @@ Species <- enum(c(
 
 #' Default human population defined in PK-Sim
 #'
-#' @include enum.R
+#'
 #' @export
 HumanPopulation <- enum(c(
   "Asian_Tanaka_1996",
@@ -31,7 +31,7 @@ HumanPopulation <- enum(c(
 
 #' Default genders  defined in PK-Sim
 #'
-#' @include enum.R
+#'
 #' @export
 Gender <- enum(c(
   Female = "FEMALE",
@@ -41,7 +41,7 @@ Gender <- enum(c(
 
 #' List of ontogeny supported in PK-Sim
 #'
-#' @include enum.R
+#'
 #' @export
 StandardOntogeny <- enum(c(
   "CYP1A2",

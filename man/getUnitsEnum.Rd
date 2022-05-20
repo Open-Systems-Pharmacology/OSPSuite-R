@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{getUnitsEnum}
 \alias{getUnitsEnum}
-\title{Loop through dimensions and build a list containing an enum of all units available for each dimension}
+\title{Create a list of all units available for each dimension}
 \usage{
 getUnitsEnum()
 }
@@ -10,5 +10,14 @@ getUnitsEnum()
 enum of all units for each dimension
 }
 \description{
-Loop through dimensions and build a list containing an enum of all units available for each dimension
+Create a list of all units available for each dimension
 }
+\details{
+Loop through dimensions and build a list containing an enum of all units
+available for each dimension
+}
+\examples{
+
+ospsuite:::getUnitsEnum()
+}
+\keyword{internal}

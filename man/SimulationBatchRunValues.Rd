@@ -8,7 +8,7 @@
 Options to be passed to the SimulationBatch run
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchRunValues}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatchRunValues}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -16,26 +16,27 @@ Options to be passed to the SimulationBatch run
 \item{\code{parameterValues}}{Vector of parameter values used in a batch run}
 
 \item{\code{initialValues}}{Vector of initial values used in a batch run}
+
+\item{\code{id}}{Internal id of the batch run value}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SimulationBatchRunValues$new()}}
-\item \href{#method-print}{\code{SimulationBatchRunValues$print()}}
+\item \href{#method-SimulationBatchRunValues-new}{\code{SimulationBatchRunValues$new()}}
+\item \href{#method-SimulationBatchRunValues-print}{\code{SimulationBatchRunValues$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SimulationBatchRunValues-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatchRunValues-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -56,8 +57,8 @@ A new \code{SimulationBatchRunValues} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-SimulationBatchRunValues-print"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatchRunValues-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

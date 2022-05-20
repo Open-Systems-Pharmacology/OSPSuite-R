@@ -1,11 +1,18 @@
 
-#' Retrieve all quantities of a container (simulation or container instance) matching the given path criteria
+#' Retrieve all quantities of a container (simulation or container instance)
+#' matching the given path criteria
 #'
 #' @param paths A vector of strings relative to the `container`
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and
+#'   [getAllContainersMatching()] to retrieve objects of type Container or
+#'   Simulation
 #'
-#' @return A list of quantities matching the path criteria. The list is empty if no quantity matching were found.
+#' @return
+#'
+#' A list of quantities matching the path criteria. The list is empty if no
+#' quantity matching were found.
+#'
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -23,13 +30,15 @@
 #' quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
 #' @export
 getAllQuantitiesMatching <- function(paths, container) {
-  getAllEntitiesMatching(paths, container, Quantity)
+  .getAllEntitiesMatching(paths, container, Quantity)
 }
 
 #' Retrieves the path of all quantities defined in the container and all its children
 #'
 #' @param container A Container or Simulation used to find the parameters
-#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
+#' @seealso [loadSimulation()], [getContainer()] and
+#'   [getAllContainersMatching()] to retrieve objects of type Container or
+#'   Simulation
 #'
 #' @return An array with one entry per quantity defined in the container
 #' @examples
@@ -41,15 +50,15 @@ getAllQuantitiesMatching <- function(paths, container) {
 #' quantityPaths <- getAllQuantityPathsIn(sim)
 #' @export
 getAllQuantityPathsIn <- function(container) {
-  getAllEntityPathsIn(container, Quantity)
+  .getAllEntityPathsIn(container, Quantity)
 }
 
 #' Retrieve a single quantity by path in the given container
 #'
 #' @inherit getAllQuantitiesMatching
 #' @param path A string representing the path relative to the `container`
-#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
-#' an error is thrown. If `FALSE`, `NULL` is returned.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, `NULL` is returned.
 #'
 #' @return The `Quantity` with the given path. If the quantity for the path
 #' does not exist, an error is thrown if `stopIfNotFound` is `TRUE` (default),
@@ -61,19 +70,21 @@ getAllQuantityPathsIn <- function(container) {
 #' quantity <- getQuantity("Organism|Liver|Volume", sim)
 #' @export
 getQuantity <- function(path, container, stopIfNotFound = TRUE) {
-  getEntity(path, container, Quantity, stopIfNotFound)
+  .getEntity(path, container, Quantity, stopIfNotFound)
 }
 
 
 #' Set values of quantity
 #'
 #' @param quantities A single or a list of `Quantity`
-#'
-#' @param values A numeric value that should be assigned to the quantity or a vector
-#' of numeric values, if the value of more than one quantity should be changed. Must have the same
-#' length as 'quantities'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
-#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
-#' are assumed to be in base units. If not `NULL`, must have the same length as `quantities`.
+#' @param values A numeric value that should be assigned to the quantity or a
+#'   vector of numeric values, if the value of more than one quantity should be
+#'   changed. Must have the same length as 'quantities'. Alternatively, the
+#'   value can be a unique number. In that case, the same value will be set in
+#'   all parameters
+#' @param units A string or a list of strings defining the units of the
+#'   `values`. If `NULL` (default), values are assumed to be in base units. If
+#'   not `NULL`, must have the same length as `quantities`.
 #'
 setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
@@ -82,7 +93,7 @@ setQuantityValues <- function(quantities, values, units = NULL) {
   values <- c(values)
 
   # Test for correct inputs
-  validateIsOfType(quantities, Quantity)
+  validateIsOfType(quantities, "Quantity")
   validateIsNumeric(values)
 
   if (length(values) > 1) {
@@ -109,14 +120,17 @@ setQuantityValues <- function(quantities, values, units = NULL) {
 #' Set the values of parameters in the simulation by path
 #'
 #' @param quantityPaths A single or a list of absolute quantity path
-#' @param values A numeric value that should be assigned to the quantities or a vector
-#' of numeric values, if the value of more than one quantity should be changed. Must have the same
-#' length as 'quantityPaths'
-#' @param simulation Simulation uses to retrieve quantity instances from given paths.
-#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for the given path,
-#' an error is thrown. If `FALSE`, a warning is shown to the user
-#' @param units A string or a list of strings defining the units of the `values`. If `NULL` (default), values
-#' are assumed to be in base units. If not `NULL`, must have the same length as `quantityPaths`.
+#' @param values A numeric value that should be assigned to the quantities or a
+#'   vector of numeric values, if the value of more than one quantity should be
+#'   changed. Must have the same length as 'quantityPaths'.
+#' @param simulation Simulation uses to retrieve quantity instances from given
+#'   paths.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, a warning is shown to the
+#'   user.
+#' @param units A string or a list of strings defining the units of the
+#'   `values`. If `NULL` (default), values are assumed to be in base units. If
+#'   not `NULL`, must have the same length as `quantityPaths`.
 #' @examples
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -129,19 +143,23 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
   validateIsString(quantityPaths)
   validateIsNumeric(values)
   validateIsSameLength(quantityPaths, values)
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
 
   if (!is.null(units)) {
     validateIsSameLength(quantityPaths, units)
     validateIsString(units)
   }
 
-  task <- getContainerTask()
+  task <- .getContainerTask()
   for (i in seq_along(quantityPaths)) {
     path <- enc2utf8(quantityPaths[[i]])
     value <- values[[i]]
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path)
+      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
+      # Dimension ca be be empty if the path was not found
+      if (dimension == "") {
+        next
+      }
       value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
     }
 
@@ -165,7 +183,7 @@ scaleQuantityValues <- function(quantities, factor) {
   quantities <- c(quantities)
 
   # Test for correct inputs
-  validateIsOfType(quantities, Quantity)
+  validateIsOfType(quantities, "Quantity")
   validateIsNumeric(factor)
 
   lapply(quantities, function(q) q$value <- q$value * factor)
@@ -182,8 +200,8 @@ scaleQuantityValues <- function(quantities, factor) {
 #'
 getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
-  validateIsOfType(simulation, Simulation)
-  displayResolver <- getNetTask("FullPathDisplayResolver")
+  validateIsOfType(simulation, "Simulation")
+  displayResolver <- .getNetTask("FullPathDisplayResolver")
   paths <- c(paths)
 
   displayPaths <- lapply(paths, function(path) {
@@ -196,4 +214,26 @@ getQuantityDisplayPaths <- function(paths, simulation) {
   })
 
   return(unlist(displayPaths, use.names = FALSE))
+}
+
+
+#' Retrieves the path of all observers defined in the container and all its children
+#'
+#' @param container A Container or Simulation used to find the observers
+#' @seealso [loadSimulation()], [getContainer()] and [getAllContainersMatching()] to retrieve objects of type Container or Simulation
+#'
+#' @return An array with one entry per observer defined in the container
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' # Returns the path of all quantities defined in the simulation
+#' observerPaths <- getAllObserverPathsIn(sim)
+#' @export
+getAllObserverPathsIn <- function(container) {
+  return(setdiff(
+    x = getAllQuantityPathsIn(container),
+    y = c(getAllParameterPathsIn(container), getAllMoleculePathsIn(container))
+  ))
 }

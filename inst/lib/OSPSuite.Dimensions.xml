@@ -329,6 +329,7 @@
       <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="mg/kg" factor="1E-6" />
+        <Unit name="g/kg" factor="1E-3" />
         <Unit name="kg/kg" factor="1" visible="0" />
       </Units>
     </Dimension>
@@ -337,6 +338,8 @@
       <Units>
         <Unit name="mg/m²" factor="1E-8" />
         <Unit name="kg/dm²" factor="1" visible="0" />
+        <Unit name="µg/cm²" factor="1E-7" />
+        <Unit name="mg/cm²" factor="1E-4" />
       </Units>
     </Dimension>
     <Dimension name="Elastance" baseUnit="(kg/(dm*min²))/l" defaultUnit="mmHg/ml">
@@ -388,6 +391,13 @@
         <Unit name="l/h/kg" factor="1/60" />
         <Unit name="ml/min/kg" factor="0.001" />
         <Unit name="ml/h/kg" factor="1/60000" />
+      </Units>
+    </Dimension>
+     <Dimension name="Flow per body surface area" baseUnit="l/min/dm²" defaultUnit="ml/min/1.73m²">
+      <BaseRepresentation lengthExponent="1" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="l/min/dm²" factor="1" visible="0"/>
+        <Unit name="ml/min/1.73m²" factor="1E-3*1E-2/1.73" />
       </Units>
     </Dimension>
     <Dimension name="Flow²" baseUnit="(l/min)²">
@@ -782,7 +792,7 @@
       <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="1" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="°C" factor="1" offset="273.15" />
-        <Unit name="°F" factor="5/9" offset="255.37" />
+        <Unit name="°F" factor="5/9" offset="459.67" />
         <Unit name="K" factor="1" />
       </Units>
     </Dimension>

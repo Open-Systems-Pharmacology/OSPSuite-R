@@ -6,7 +6,7 @@ test_that("It can load a simulation whose name contains unicode characters", {
   # in principle, this test runs under Linux. The problem is more in transfering files containing unicode chars in the file name
   # between Windows and Linux. Thus e.g. when installing the ospsuite-r package under Linux, the file name of "unicoße.pkml"
   # is already corrupted - so no chance for ospsuite-r to load it properly
-  # The same happens if e.g. the ospsuite-R sources are just zipped under Windows and unzipped under Linux - the file name becomes corrupted
+  # The same happens if e.g. the `{ospsuite}` sources are just zipped under Windows and unzipped under Linux - the file name becomes corrupted
 
   sim <- loadTestSimulation("unicoße")
   expect_false(is.null(sim))

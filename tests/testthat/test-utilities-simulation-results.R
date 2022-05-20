@@ -2,7 +2,7 @@ sim <- loadTestSimulation("S1")
 individualResults <- runSimulation(sim)
 resultsPaths <- individualResults$allQuantityPaths
 
-population <- loadPopulation(getTestDataFilePath("pop_10.csv"))
+population <- loadPopulation(getTestDataFilePath("pop.csv"))
 populationResults <- runSimulation(sim, population)
 
 
@@ -123,12 +123,170 @@ test_that("It can import valid simulation results from multiple CSV files", {
 })
 
 test_that("It throws an exception if the file imported are not valid results file", {
-  junkFile <- getTestDataFilePath("pop_10.csv")
-  expect_that(importResultsFromCSV(sim, junkFile), throws_error())
+  junkFile <- getTestDataFilePath("pop.csv")
+  expect_error(importResultsFromCSV(sim, junkFile))
 })
 
 test_that("It throws an exception when importing a valid result file that does not match the simulation", {
   otherSim <- loadTestSimulation("simple")
   resFile <- getTestDataFilePath("res_10.csv")
-  expect_that(importResultsFromCSV(otherSim, resFile), throws_error())
+  expect_error(importResultsFromCSV(otherSim, resFile))
+})
+
+
+test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
+  simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+  sim <- loadSimulation(simPath)
+
+  # Running an individual simulation
+  # results is an instance of `SimulationResults`
+  results <- runSimulation(sim)
+
+  df1 <- simulationResultsToDataFrame(results)
+  df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
+
+  # should not be grouped
+  expect_false(dplyr::is_grouped_df(df1))
+  expect_false(dplyr::is_grouped_df(df2))
+
+  # with all paths
+  expect_equal(dim(df1), c(84L, 9L))
+  expect_equal(
+    unique(df1$paths),
+    c("Organism|Liver|A", "Organism|Liver|B", "Organism|A", "Organism|B")
+  )
+  expect_equal(unique(df1$IndividualId), 0)
+  expect_equal(unique(df1$unit), .encodeUnit("µmol"))
+  expect_equal(unique(df1$dimension), "Amount")
+  expect_equal(unique(df1$TimeUnit), "min")
+  expect_equal(unique(df1$TimeDimension), "Time")
+
+  # certain path
+  expect_equal(dim(df2), c(21L, 9L))
+  expect_equal(unique(df2$paths), "Organism|A")
+
+  # names
+  expect_equal(
+    names(df1),
+    c(
+      "paths", "IndividualId", "Time", "simulationValues", "unit",
+      "dimension", "TimeUnit", "TimeDimension", "molWeight"
+    )
+  )
+})
+
+test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
+  simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simPath)
+
+  # Running an individual simulation
+  # results is an instance of `SimulationResults`
+  results <- runSimulation(sim)
+
+  df1 <- simulationResultsToDataFrame(results)
+
+  # with all paths
+  expect_equal(dim(df1), c(491L, 9L))
+  expect_s3_class(df1, "data.frame")
+  expect_equal(
+    unique(df1$paths),
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  )
+  expect_equal(unique(df1$IndividualId), 0)
+  expect_equal(unique(df1$unit), .encodeUnit("µmol/l"))
+  expect_equal(unique(df1$dimension), "Concentration (molar)")
+  expect_equal(unique(df1$TimeUnit), "min")
+})
+
+test_that("simulationResultsToTibble works as expected - Aciclovir", {
+  simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simPath)
+
+  # Running an individual simulation
+  # results is an instance of `SimulationResults`
+  results <- runSimulation(sim)
+
+  df1 <- simulationResultsToTibble(results)
+
+  # with all paths
+  expect_equal(dim(df1), c(491L, 9L))
+  expect_s3_class(df1, "tbl_df")
+})
+
+test_that("simulationResultsToDataFrame with lists", {
+
+  # Load and run multiple simulations concurrently.
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+
+  # We load 3 times the same simulation for convenience. But in real life scenarios,
+  # they should be different simulations
+  sim1 <- loadSimulation(simFilePath)
+  sim2 <- loadSimulation(simFilePath)
+  sim3 <- loadSimulation(simFilePath)
+
+  # list is not allowed, so this should fail
+  simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
+  expect_error(simulationResultsToDataFrame(simulationResults))
+})
+
+
+test_that("simulationResultsToDataFrame with population", {
+  skip_on_os("linux")
+  skip_on_ci()
+
+  # If no unit is specified, the default units are used. For "height" it is "dm",
+  # for "weight" it is "kg", for "age" it is "year(s)".
+  populationCharacteristics <- createPopulationCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$Asian_Tanaka_1996,
+    numberOfIndividuals = 50,
+    proportionOfFemales = 50,
+    weightMin = 30,
+    weightMax = 98,
+    weightUnit = "kg",
+    heightMin = NULL,
+    heightMax = NULL,
+    ageMin = 0,
+    ageMax = 80,
+    ageUnit = "year(s)"
+  )
+
+  # Create population from population characteristics
+  result <- createPopulation(populationCharacteristics = populationCharacteristics)
+  myPopulation <- result$population
+
+  # Load simulation
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  populationResults <- runSimulation(
+    simulation = sim,
+    population = myPopulation
+  )
+
+  df1 <- simulationResultsToDataFrame(populationResults)
+
+  expect_equal(dim(df1), c(24550L, 9L))
+  expect_equal(
+    unique(df1$paths),
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  )
+  expect_equal(min(df1$IndividualId), 0)
+  expect_equal(max(df1$IndividualId), 49)
+  expect_equal(unique(df1$unit), .encodeUnit("µmol/l"))
+  expect_equal(unique(df1$dimension), "Concentration (molar)")
+  expect_equal(unique(df1$TimeUnit), "min")
+
+  df2 <- simulationResultsToDataFrame(populationResults, individualIds = c(1, 4, 5))
+
+  expect_equal(dim(df2), c(1473L, 9L))
+  expect_equal(
+    unique(df2$paths),
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  )
+  expect_equal(min(df2$IndividualId), 1)
+  expect_equal(max(df2$IndividualId), 5)
+  expect_equal(unique(df2$unit), .encodeUnit("µmol/l"))
+  expect_equal(unique(df2$dimension), "Concentration (molar)")
+  expect_equal(unique(df2$TimeUnit), "min")
 })

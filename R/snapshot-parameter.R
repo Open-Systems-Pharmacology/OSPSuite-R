@@ -7,6 +7,7 @@
 SnapshotParameter <- R6::R6Class(
   "SnapshotParameter",
   inherit = DotNetWrapper,
+  cloneable = FALSE,
   active = list(
     #' @field value Parameter value
     value = function(value) {
@@ -55,8 +56,8 @@ SnapshotParameter <- R6::R6Class(
   )
 )
 
-createSnapshotParameter <- function(value, unit) {
-  if (is.null(value)) {
+.createSnapshotParameter <- function(value, unit) {
+  if (is.null(value) || is.na(value)) {
     return(NULL)
   }
   return(SnapshotParameter$new(value = value, unit = unit))

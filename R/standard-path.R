@@ -1,7 +1,7 @@
 
 #' Standard containers typically available in a PBPK simulation
 #'
-#' @include enum.R
+#'
 #' @export
 StandardContainer <- enum(c(
   Organism = "Organism",
@@ -12,7 +12,7 @@ StandardContainer <- enum(c(
 
 #' Standard parameter paths typically available in a PBPK simulation
 #'
-#' @include enum.R
+#'
 #' @include utilities-path.R
 #' @export
 StandardPath <- enum(c(
@@ -28,7 +28,7 @@ StandardPath <- enum(c(
 
 #' Standard molecule parameter names typically available in an endogenous molecule (enzyme, transporter etc...) coming from PK-Sim
 #'
-#' @include enum.R
+#'
 #' @export
 MoleculeParameter <- enum(c(
   ReferenceConcentration = "Reference concentration",

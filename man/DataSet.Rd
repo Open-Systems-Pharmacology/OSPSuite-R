@@ -5,10 +5,11 @@
 \alias{DataSet}
 \title{DataSet}
 \description{
-A class for storage of numerical x- and y-value pairs and optional error for y-values.
+A class for storage of numerical x- and y-value pairs and
+optional error for y-values.
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -32,12 +33,15 @@ Use \verb{$setValues()} to change the values.}
 Use \verb{$setValues()} to change the values.}
 
 \item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
-When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100\%).
-When changing from geometric to arithmetic, the values are set to the same unit as \code{yErrorUnit}.
+When changing from arithmetic to geometric error, the values are
+considered in as fraction (1 = 100\%).
+When changing from geometric to arithmetic, the values are set to the
+same unit as \code{yErrorUnit}.
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
-\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
-for \code{yDimension}. For geometric error, the unit must be valid for \code{Dimensionless}.
+\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For
+arithmetic error, the unit must be valid for \code{yDimension}. For
+geometric error, the unit must be valid for \code{Dimensionless}.
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
 \item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.
@@ -47,7 +51,7 @@ Use \verb{$setValues()} to change the values.}
 
 \item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
 
-\item{\code{LLOQ}}{LLOQ Lower Limit Of Quantification.
+\item{\code{LLOQ}}{Lower Limit Of Quantification.
 Value in yUnit associated with the yValues}
 
 \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
@@ -57,32 +61,37 @@ Value in yUnit associated with the yValues}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{DataSet$new()}}
-\item \href{#method-addMetaData}{\code{DataSet$addMetaData()}}
-\item \href{#method-removeMetaData}{\code{DataSet$removeMetaData()}}
-\item \href{#method-setValues}{\code{DataSet$setValues()}}
-\item \href{#method-print}{\code{DataSet$print()}}
+\item \href{#method-DataSet-new}{\code{DataSet$new()}}
+\item \href{#method-DataSet-addMetaData}{\code{DataSet$addMetaData()}}
+\item \href{#method-DataSet-removeMetaData}{\code{DataSet$removeMetaData()}}
+\item \href{#method-DataSet-setValues}{\code{DataSet$setValues()}}
+\item \href{#method-DataSet-print}{\code{DataSet$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DataSet-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize a new instance of the class
+Initialize a new instance of the class.
+Either create a \code{DataSet} from a \code{DataRepository} (e.g. loaded from a PKML)
+or an empty \code{DataSet}. In case of an empty \code{DataSet}, a \code{name} must be
+provided.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$new(dataRepository = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataSet$new(name = NULL, dataRepository = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{name}}{Name of the \code{DataSet} if created from scratch (no \code{dataRepository})
+provided. Ignored if \code{dataRepository} is not \code{NULL}.}
+
 \item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap.
 If \code{NULL}, an empty \code{DataRepository} is created.}
 }
@@ -93,10 +102,11 @@ A new \code{DataSet} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addMetaData"></a>}}
-\if{latex}{\out{\hypertarget{method-addMetaData}{}}}
+\if{html}{\out{<a id="method-DataSet-addMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-addMetaData}{}}}
 \subsection{Method \code{addMetaData()}}{
-Adds a new entry to meta data list or changes its value if the name is already present.
+Adds a new entry to meta data list or changes its value if the name is
+already present.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataSet$addMetaData(name, value)}\if{html}{\out{</div>}}
 }
@@ -112,8 +122,8 @@ Adds a new entry to meta data list or changes its value if the name is already p
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeMetaData"></a>}}
-\if{latex}{\out{\hypertarget{method-removeMetaData}{}}}
+\if{html}{\out{<a id="method-DataSet-removeMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-removeMetaData}{}}}
 \subsection{Method \code{removeMetaData()}}{
 Removes the meta data entry in the list if one is defined with this name
 \subsection{Usage}{
@@ -129,8 +139,8 @@ Removes the meta data entry in the list if one is defined with this name
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setValues"></a>}}
-\if{latex}{\out{\hypertarget{method-setValues}{}}}
+\if{html}{\out{<a id="method-DataSet-setValues"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-setValues}{}}}
 \subsection{Method \code{setValues()}}{
 Sets the xValues, yValues, and (optionally) yErrorValuues into the dataSet.
 Note: xValues, yValues and yErrorValues must have the same length
@@ -151,8 +161,8 @@ Note: xValues, yValues and yErrorValues must have the same length
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-DataSet-print"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

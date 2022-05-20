@@ -8,7 +8,7 @@
 List of individuals used in a population simulation
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -26,27 +26,26 @@ List of individuals used in a population simulation
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-has}{\code{Population$has()}}
-\item \href{#method-setParameterValues}{\code{Population$setParameterValues()}}
-\item \href{#method-getParameterValues}{\code{Population$getParameterValues()}}
-\item \href{#method-getCovariateValues}{\code{Population$getCovariateValues()}}
-\item \href{#method-getCovariateValue}{\code{Population$getCovariateValue()}}
-\item \href{#method-getParameterValuesForIndividual}{\code{Population$getParameterValuesForIndividual()}}
-\item \href{#method-remove}{\code{Population$remove()}}
-\item \href{#method-print}{\code{Population$print()}}
+\item \href{#method-Population-has}{\code{Population$has()}}
+\item \href{#method-Population-setParameterValues}{\code{Population$setParameterValues()}}
+\item \href{#method-Population-getParameterValues}{\code{Population$getParameterValues()}}
+\item \href{#method-Population-getCovariateValues}{\code{Population$getCovariateValues()}}
+\item \href{#method-Population-getCovariateValue}{\code{Population$getCovariateValue()}}
+\item \href{#method-Population-getParameterValuesForIndividual}{\code{Population$getParameterValuesForIndividual()}}
+\item \href{#method-Population-remove}{\code{Population$remove()}}
+\item \href{#method-Population-print}{\code{Population$print()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize">}\href{../../ospsuite/html/DotNetWrapper.html#method-initialize}{\code{ospsuite::DotNetWrapper$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-has"></a>}}
-\if{latex}{\out{\hypertarget{method-has}{}}}
+\if{html}{\out{<a id="method-Population-has"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-has}{}}}
 \subsection{Method \code{has()}}{
 Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
 \subsection{Usage}{
@@ -62,8 +61,8 @@ Returns \code{TRUE} if the population has variability defined for \code{paramete
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setParameterValues"></a>}}
-\if{latex}{\out{\hypertarget{method-setParameterValues}{}}}
+\if{html}{\out{<a id="method-Population-setParameterValues"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-setParameterValues}{}}}
 \subsection{Method \code{setParameterValues()}}{
 Updates or adds the variability values in the population for \code{parameterOrPath}.
 \subsection{Usage}{
@@ -82,8 +81,8 @@ If an entry already exists for this parameter by path, its values be overwritten
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getParameterValues"></a>}}
-\if{latex}{\out{\hypertarget{method-getParameterValues}{}}}
+\if{html}{\out{<a id="method-Population-getParameterValues"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-getParameterValues}{}}}
 \subsection{Method \code{getParameterValues()}}{
 Returns the variability values defined in the population for \code{parameterOrPath}
 \subsection{Usage}{
@@ -99,8 +98,8 @@ Returns the variability values defined in the population for \code{parameterOrPa
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getCovariateValues"></a>}}
-\if{latex}{\out{\hypertarget{method-getCovariateValues}{}}}
+\if{html}{\out{<a id="method-Population-getCovariateValues"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-getCovariateValues}{}}}
 \subsection{Method \code{getCovariateValues()}}{
 Returns the values defined in the population for the covariate named \code{covariateName}
 \subsection{Usage}{
@@ -116,8 +115,8 @@ Returns the values defined in the population for the covariate named \code{covar
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getCovariateValue"></a>}}
-\if{latex}{\out{\hypertarget{method-getCovariateValue}{}}}
+\if{html}{\out{<a id="method-Population-getCovariateValue"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-getCovariateValue}{}}}
 \subsection{Method \code{getCovariateValue()}}{
 Returns the values defined in the population for the covariate named \code{covariateName} and individual with id \code{individualId}
 \subsection{Usage}{
@@ -135,8 +134,8 @@ Returns the values defined in the population for the covariate named \code{covar
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-getParameterValuesForIndividual"></a>}}
-\if{latex}{\out{\hypertarget{method-getParameterValuesForIndividual}{}}}
+\if{html}{\out{<a id="method-Population-getParameterValuesForIndividual"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-getParameterValuesForIndividual}{}}}
 \subsection{Method \code{getParameterValuesForIndividual()}}{
 Returns all values defined in the population the individual with id \code{individualId}
 \subsection{Usage}{
@@ -152,8 +151,8 @@ Returns all values defined in the population the individual with id \code{indivi
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-remove"></a>}}
-\if{latex}{\out{\hypertarget{method-remove}{}}}
+\if{html}{\out{<a id="method-Population-remove"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-remove}{}}}
 \subsection{Method \code{remove()}}{
 Removes the value of a parameter by path
 \subsection{Usage}{
@@ -169,8 +168,8 @@ Removes the value of a parameter by path
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Population-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Population-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{

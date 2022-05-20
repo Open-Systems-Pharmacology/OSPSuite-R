@@ -9,7 +9,7 @@
 #' @export
 initPKSim <- function(pksimFolderPath = NULL) {
 
-  # pksimFolderPath <- "C:/projects/PK-Sim/src/PKSim/bin/Debug/net472"
+  # pksimFolderPath <- "C:/dev/PK-Sim/src/PKSim/bin/Debug/net472"
 
   if (ospsuiteEnv$isPKSimLoaded) {
     return(invisible())
@@ -40,7 +40,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #'
 #' @return
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-#' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+#' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #'
 #' @examples
 #' \dontrun{
@@ -53,7 +53,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     stop("Only Windows platforms are supported")
   }
 
-  suite.name <- ospsuiteEnv$suiteName
+  suite.name <- ospsuite.utils::getOSPSuiteUtilsSetting("suiteName")
   product.name <- "PK-Sim"
   reg.path <- file.path("SOFTWARE",
     suite.name,
@@ -62,7 +62,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     fsep = "\\"
   )
 
-  reg.entry <- NA
+  reg.entry <- NA_character_
   try(reg.entry <- utils::readRegistry(reg.path, hive = "HLM", maxdepth = 1, view = "64-bit"),
     silent = TRUE
   )
@@ -71,7 +71,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     return(.homogenizePath(reg.entry$InstallDir))
   }
 
-  return(NA)
+  return(NA_character_)
 }
 
 #' Tries to find the installation path for a specific version of PK-Sim via the filesystem.
@@ -92,6 +92,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' path <- .getPathToPKSimInstallDirFromFileSystem("7.4")
 #' path2 <- .getPathToPKSimInstallDirFromFileSystem("7.5", "C:/MyOSPFolder/")
 #' }
+#' @keywords internal
 .getPathToPKSimInstallDirFromFileSystem <- function(pksim.version,
                                                     base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.version <- trimws(pksim.version)
@@ -103,11 +104,11 @@ initPKSim <- function(pksimFolderPath = NULL) {
   }
 
   if (!nzchar(base.search.folder)) {
-    return(NA)
+    return(NA_character_)
   }
 
   # First guess: OSP/PK-Sim folder
-  suite.name <- ospsuiteEnv$suiteName
+  suite.name <- ospsuite.utils::getOSPSuiteUtilsSetting("suiteName")
   product.name <- "PK-Sim"
 
   full.guess <- file.path(base.search.folder, suite.name, fsep = "\\")
@@ -136,7 +137,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
     return(.homogenizePath(full.match[1]))
   }
 
-  return(NA)
+  return(NA_character_)
 }
 
 #' Tries to find the installation path for a specific version of PK-Sim.
@@ -149,7 +150,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #'
 #' @return
 #' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
-#' The path is separated with slashes (unix-style) and in compilance with base-R without a trailing slash.
+#' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #' If more than one matching path is found a warning is produced.
 #'
 #' @examples
@@ -157,6 +158,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' path <- .getPathToPKSimInstallDir("9")
 #' path2 <- .getPathToPKSimInstallDir("10.1", "C:/MyOSPFolder/")
 #' }
+#' #' @keywords internal
 .getPathToPKSimInstallDir <- function(pksim.version = ospsuiteEnv$suiteVersion,
                                       base.search.folder = Sys.getenv("ProgramW6432")) {
   pksim.path <- .getPathToPKSimInstallDirFromRegistry(pksim.version)
@@ -169,5 +171,5 @@ initPKSim <- function(pksimFolderPath = NULL) {
     return(pksim.path)
   }
 
-  return(NA)
+  return(NA_character_)
 }

@@ -1,6 +1,7 @@
 library(ospsuite)
 
-population <- loadPopulation("tests/data/pop_10.csv")
+popFile <- getTestDataFilePath("pop.csv")
+population <- loadPopulation(popFile)
 sim <- loadSimulation("tests/data/S1.pkml")
 
 saveSimulation(sim, "tests/data/S2.pkml")
@@ -10,7 +11,7 @@ population$setParameterValues("Organism|Lung|Volume", values)
 population$getParameterValuesForIndividual(individualId = 0)
 ids <- population$allIndividualIds
 
-df <- populationAsDataFrame(population = population)
+df <- populationToDataFrame(population = population)
 
 
 res <- runSimulation(simulation = sim, population = population)

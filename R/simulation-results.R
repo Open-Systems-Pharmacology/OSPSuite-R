@@ -1,4 +1,3 @@
-
 #' @title SimulationResults
 #' @docType class
 #' @description  Results of a simulation run (either individual or population simulation)
@@ -30,7 +29,7 @@ SimulationResults <- R6::R6Class(
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SimulationResults` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
       private$.individualResultsCache <- Cache$new()
       super$initialize(ref)
@@ -57,7 +56,7 @@ SimulationResults <- R6::R6Class(
         stop(messages$errorResultNotFound(path, individualIds))
       }
 
-      values[is.nan(values)] <- NA
+      values[is.nan(values)] <- NA_real_
       return(values)
     },
     #' @description

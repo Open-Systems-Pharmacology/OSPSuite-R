@@ -1,0 +1,56 @@
+image: Visual Studio 2019
+
+version: '{build}'
+
+# Download script file from GitHub
+init:
+  - ps: Update-AppveyorBuild -Version "$($env:ospsuite_version).$($env:appveyor_build_version)"
+  - ps: |
+      $ErrorActionPreference = "Stop"
+      Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+      Import-Module '..\appveyor-tool.ps1'
+
+install:
+  - cmd: set PATH=C:\Ruby27-x64\bin;%PATH%
+  - ps: Bootstrap
+  - git submodule update --init --recursive
+
+environment:
+  USE_RTOOLS: true
+  NOT_CRAN: true
+  KEEP_VIGNETTES: true
+  R_ARCH: x64
+  R_VERSION: 3.6.3
+
+before_build:
+  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
+  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
+  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
+  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
+  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
+  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
+  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
+  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
+  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
+
+build_script:
+  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
+  - travis-tool.sh install_deps
+  - travis-tool.sh r_binary_install curl
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
+
+before_test:
+  - cinst pandoc
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+platform: x64

@@ -1,5 +1,11 @@
 url: https://www.open-systems-pharmacology.org/OSPSuite-R/
 
+template:
+  bootstrap: 5
+
+authors:
+  Indrajeet Patil:
+    href: https://sites.google.com/site/indrajeetspatilmorality/
 
 articles:
 

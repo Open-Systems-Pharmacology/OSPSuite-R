@@ -9,12 +9,15 @@ setQuantityValues(quantities, values, units = NULL)
 \arguments{
 \item{quantities}{A single or a list of \code{Quantity}}
 
-\item{values}{A numeric value that should be assigned to the quantity or a vector
-of numeric values, if the value of more than one quantity should be changed. Must have the same
-length as 'quantities'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters}
+\item{values}{A numeric value that should be assigned to the quantity or a
+vector of numeric values, if the value of more than one quantity should be
+changed. Must have the same length as 'quantities'. Alternatively, the
+value can be a unique number. In that case, the same value will be set in
+all parameters}
 
-\item{units}{A string or a list of strings defining the units of the \code{values}. If \code{NULL} (default), values
-are assumed to be in base units. If not \code{NULL}, must have the same length as \code{quantities}.}
+\item{units}{A string or a list of strings defining the units of the
+\code{values}. If \code{NULL} (default), values are assumed to be in base units. If
+not \code{NULL}, must have the same length as \code{quantities}.}
 }
 \description{
 Set values of quantity

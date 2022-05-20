@@ -8,7 +8,7 @@
 An object typically holding observed data
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataRepository}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataRepository}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -29,23 +29,22 @@ where the name is the name of the metaData and the value is the meta data value.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-addColumn}{\code{DataRepository$addColumn()}}
-\item \href{#method-new}{\code{DataRepository$new()}}
-\item \href{#method-print}{\code{DataRepository$print()}}
-\item \href{#method-addMetaData}{\code{DataRepository$addMetaData()}}
-\item \href{#method-removeMetaData}{\code{DataRepository$removeMetaData()}}
+\item \href{#method-DataRepository-addColumn}{\code{DataRepository$addColumn()}}
+\item \href{#method-DataRepository-new}{\code{DataRepository$new()}}
+\item \href{#method-DataRepository-print}{\code{DataRepository$print()}}
+\item \href{#method-DataRepository-addMetaData}{\code{DataRepository$addMetaData()}}
+\item \href{#method-DataRepository-removeMetaData}{\code{DataRepository$removeMetaData()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addColumn"></a>}}
-\if{latex}{\out{\hypertarget{method-addColumn}{}}}
+\if{html}{\out{<a id="method-DataRepository-addColumn"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-addColumn}{}}}
 \subsection{Method \code{addColumn()}}{
 Adds a column to the data repository
 \subsection{Usage}{
@@ -61,8 +60,8 @@ Adds a column to the data repository
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-DataRepository-new"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -81,8 +80,8 @@ A new \code{DataRepository} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-DataRepository-print"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -98,8 +97,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addMetaData"></a>}}
-\if{latex}{\out{\hypertarget{method-addMetaData}{}}}
+\if{html}{\out{<a id="method-DataRepository-addMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-addMetaData}{}}}
 \subsection{Method \code{addMetaData()}}{
 Adds a new entry to meta data list or changes its value if the name is already present.
 \subsection{Usage}{
@@ -117,8 +116,8 @@ Adds a new entry to meta data list or changes its value if the name is already p
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-removeMetaData"></a>}}
-\if{latex}{\out{\hypertarget{method-removeMetaData}{}}}
+\if{html}{\out{<a id="method-DataRepository-removeMetaData"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-removeMetaData}{}}}
 \subsection{Method \code{removeMetaData()}}{
 Removes the meta data entry in the list if one is defined with this name
 \subsection{Usage}{

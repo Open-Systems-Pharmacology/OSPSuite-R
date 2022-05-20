@@ -31,7 +31,7 @@ hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- getDimensionTask()
-  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), encodeUnit(unit))
+  rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), .encodeUnit(unit))
 }
 
 #' Validate unit
@@ -44,6 +44,23 @@ validateUnit <- function(unit, dimension) {
   if (!hasUnit(unit, dimension)) {
     stop(messages$errorUnitNotSupported(unit, dimension))
   }
+}
+
+#' Check if quantity can be represented in the unit
+#'
+#' @param quantity `Quantity` object
+#' @param unit Unit name to check for
+#'
+#' @return
+#' If validations are successful, `NULL` is returned. Otherwise, error is
+#' signaled.
+validateHasUnit <- function(quantity, unit) {
+  validateIsOfType(quantity, "Quantity")
+  validateIsString(unit)
+  if (quantity$hasUnit(unit)) {
+    return()
+  }
+  stop(messages$errorUnitNotDefined(quantity$name, quantity$dimension, unit))
 }
 
 #' Get base unit of a dimension
@@ -77,12 +94,12 @@ getBaseUnit <- function(dimension) {
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
 toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
-  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
+  validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  unit <- encodeUnit(unit)
+  unit <- .encodeUnit(unit)
   dimension <- quantityOrDimension
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
 
   # covers all NULL or NA
   if (all(is.na(values))) {
@@ -92,7 +109,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   # ensure that we are dealing with an list of values seen as number (and not integer)
   values <- as.numeric(c(values))
 
-  if (isOfType(quantityOrDimension, Quantity)) {
+  if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
   }
 
@@ -137,13 +154,18 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #'   sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
 #' )
 #' @export
-toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, sourceUnit = NULL, molWeightUnit = NULL) {
-  validateIsOfType(quantityOrDimension, c(Quantity, "character"))
+toUnit <- function(quantityOrDimension,
+                   values,
+                   targetUnit,
+                   sourceUnit = NULL,
+                   molWeight = NULL,
+                   molWeightUnit = NULL) {
+  validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  targetUnit <- encodeUnit(targetUnit)
+  targetUnit <- .encodeUnit(targetUnit)
   dimension <- quantityOrDimension
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
 
 
   # covers all NULL or NA
@@ -152,10 +174,10 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
   }
 
   if (!is.null(sourceUnit)) {
-    sourceUnit <- encodeUnit(sourceUnit)
+    sourceUnit <- .encodeUnit(sourceUnit)
   }
 
-  if (isOfType(quantityOrDimension, Quantity)) {
+  if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
   }
 
@@ -172,6 +194,7 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
     if (!is.null(sourceUnit)) {
       values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values)
     }
+
     return(rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values))
   }
 
@@ -179,13 +202,19 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
   if (!is.null(molWeightUnit)) {
     molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
   }
+
   # Convert values to base unit first if the source unit is provided
   if (!is.null(sourceUnit)) {
     values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
   }
+
   rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
+#' @title Convert base unit to display unit
+#'
+#' @description
+#'
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
 #'
 #' @param quantity Instance of a quantity from which the base unit will be retrieved
@@ -202,41 +231,58 @@ toUnit <- function(quantityOrDimension, values, targetUnit, molWeight = NULL, so
 #' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
 #' @export
 toDisplayUnit <- function(quantity, values) {
-  validateIsOfType(quantity, Quantity)
+  validateIsOfType(quantity, "Quantity")
   toUnit(quantity, values, quantity$displayUnit)
 }
 
-#' Returns the name of all available dimensions defined in the OSPSuite platform
+#' @title List all available dimensions in the `OSPSuite` platform
+#'
+#' @return
+#'
+#' Returns the names of all available dimensions defined in the `OSPSuite`
+#' platform.
 #'
 #' @examples
-#' dims <- allAvailableDimensions()
+#'
+#' allAvailableDimensions()
 #' @export
 allAvailableDimensions <- function() {
-  dimensionTask <- getNetTask("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
   rClr::clrCall(dimensionTask, "AllAvailableDimensionNames")
 }
 
-#' Returns the name of dimension that can be used to support the given unit or null if the dimension cannot be found
+#' @title Get dimension for a given unit
 #'
-#' @param unit Unit used to find the corresponding dimension
+#' @return
+#'
+#' Returns the name of dimension that can be used to support the given unit or
+#' `NULL` if the dimension cannot be found.
+#'
+#' @param unit Unit used to find the corresponding dimension.
 #'
 #' @examples
-#' dim <- getDimensionForUnit("mg")
+#'
+#' getDimensionForUnit("mg")
 #' @export
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
-  unit <- encodeUnit(unit)
+  unit <- .encodeUnit(unit)
   dimensionTask <- getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
 }
 
+#' @title Get units for a given dimension
+#'
+#' @return
+#'
 #' Returns a vector containing all units defined in the dimension
 #'
 #' @param dimension Name of dimension for which units should be returned
 #'
 #' @examples
-#' units <- getUnitsForDimension("Mass")
+#'
+#' getUnitsForDimension("Mass")
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
@@ -244,25 +290,31 @@ getUnitsForDimension <- function(dimension) {
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
 
-#' Return an instance of the .NET Task `DimensionTask`
+#' Return an instance of the `.NET` Task `DimensionTask`
 #' This is purely for optimization purposes
 #'
 #' @return An instance of the Task
 getDimensionTask <- function() {
   dimensionTask <- ospsuiteEnv$dimensionTask
   if (is.null(dimensionTask)) {
-    dimensionTask <- getNetTask("DimensionTask")
+    dimensionTask <- .getNetTask("DimensionTask")
     ospsuiteEnv$dimensionTask <- dimensionTask
   }
   return(dimensionTask)
 }
 
-#' Returns the an instance of the dimension with the given name if found or NULL otherwise
+#' @title Get dimension by name
+#'
+#' @return
+#'
+#' Returns the an instance of the dimension with the given name if found or `NULL`
+#' otherwise.
 #'
 #' @param name Name of dimension that should be retrieved
 #'
 #' @examples
-#' dim <- getDimensionByName("Time")
+#'
+#' getDimensionByName("Time")
 #' @export
 getDimensionByName <- function(name) {
   validateIsString(name)
@@ -271,32 +323,67 @@ getDimensionByName <- function(name) {
 }
 
 
-#' Loop through dimensions and build a list containing an enum of all units available for each dimension
+#' @title Create a list of all units available for each dimension
+#'
+#' @details
+#'
+#' Loop through dimensions and build a list containing an enum of all units
+#' available for each dimension
+#'
 #' @return enum of all units for each dimension
-#' @export
+#'
+#' @examples
+#'
+#' ospsuite:::getUnitsEnum()
+#' @keywords internal
 getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
+  errors <- c()
   units <- lapply(dimensions, function(dimension) {
-    x <- getUnitsForDimension(dimension = dimension)
+    x <- tryCatch(
+      {
+        # on some systems, we have issues loading units because of encoding
+        # see https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/923#issuecomment-1119442789
+        getUnitsForDimension(dimension = dimension)
+      },
+      error = function(cond) {
+        errors <<- c(errors, dimension)
+        # making sure that in this case, the user sees that something went wrong
+        return(c("Unavailable"))
+      }
+    )
     return(enum(replace(x, x == "", "Unitless")))
   })
+
+  if (length(errors) > 0L) {
+    message(messages$errorLoadingUnitsForDimension(errors))
+  }
+
   names(units) <- sapply(dimensions, function(str) {
     str <- gsub(pattern = "[(]", replacement = "[", x = str)
     str <- gsub(pattern = "[)]", replacement = "]", x = str)
   })
+
   return(units)
 }
 
-#' #'Function to return an enum of all available dimensions
+#' @title Function to return an enum of all available dimensions
+#'
 #' @return enum of all dimensions
-#' @export
+#'
+#' @examples
+#'
+#' ospsuite:::getDimensionsEnum()
+#' @keywords internal
 getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
 }
 
-#' Supported dimensions defined as a named list
+#' @title Supported dimensions defined as a named list
 #'
+#' @details
 #' ospDimensions$Mass => "Mass"
+#'
 #' @export
 ospDimensions <- list()
 
@@ -310,4 +397,306 @@ initializeDimensionAndUnitLists <- function() {
   # This initializes the two lists in the parent environment which is the package environments
   ospDimensions <<- getDimensionsEnum()
   ospUnits <<- getUnitsEnum()
+}
+
+
+#' Convert data frame to common units
+#'
+#' @description
+#'
+#' When multiple (observed and/or simulated) datasets are present in a data
+#' frame, they are likely to have different units. This function helps to
+#' convert them to a common unit specified by the user.
+#'
+#' This is especially helpful while plotting since the quantities from different
+#' datasets to be plotted on the X-and Y-axis need to have same units to be
+#' meaningfully compared.
+#'
+#' @note
+#'
+#' Molecular weight is **required** for the conversion between certain
+#' dimensions (`Amount`, `Mass`, `Concentration (molar)`, and `Concentration
+#' (mass)`). Therefore, if molecular weight is missing for these dimension, the
+#' unit conversion will fail.
+#'
+#' @return A data frame with measurement columns transformed to have common units.
+#'
+#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
+#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
+#'   not specified (`NULL`), first of the existing units in the respective
+#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
+#'   available dimensions and units, see `ospsuite::ospDimensions` and
+#'   `ospsuite::ospUnits`, respectively.
+#'
+#' @seealso toUnit
+#'
+#' @examples
+#'
+#' # small dataframe to illustrate the conversion
+#' (df <- dplyr::tibble(
+#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
+#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(1, 1, 1, 1, 1, 1),
+#'   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
+#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+#'   yErrorUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   molWeight = c(10, 10, 20, 20, 20, 10)
+#' ))
+#'
+#' # default conversion
+#' ospsuite:::.unitConverter(df)
+#'
+#' # customizing conversion with specified unit(s)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
+#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
+#' @keywords internal
+.unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+
+  # No validation of inputs for this non-exported function.
+  # All validation will take place in the `DataCombined` class itself.
+
+  # target units --------------------------
+
+  # The observed and simulated data should have the same units for
+  # visual/graphical comparison.
+  #
+  # Therefore, if target units are not specified by the user, we need to choose
+  # one ourselves. The most frequent units will be selected: one for X-axis, and
+  # one for Y-axis. If multiple units are tied in terms of their frequency, the
+  # first will be selected.
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = "xUnit")
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = "yUnit")
+
+  # Strategy --------------------------
+
+  # The strategy is to split the data frame (using `split()`) for each source
+  # unit and carry out conversion separately per data frame. This is the most
+  # performant option since there can only be as many expensive calls to
+  # `toUnit()`/`{rClr}` as there are source units.
+  #
+  # The problem occurs when source units are missing (`NA`). The `toUnit()`
+  # function can handle them but not `split()`, which would drop the entire
+  # section of the data frame corresponding to `NA` and thus there will be loss
+  # of data when a data frame is split into a list of data frames.
+  #
+  # The trick is to create copies of source unit and molecular weight columns
+  # and fill in the missing values with something other than `NA`. Using these
+  # new columns with `split()` makes sure that the parts of a data frame where
+  # source units are missing won't be dropped. Note that the original columns
+  # containing source units remain unchanged.
+  #
+  # These newly created columns are removed before the converted data frame is
+  # returned to the user.
+
+  # internal --------------------------
+
+  # `yErrorUnit` column won't be present when only simulated datasets are
+  # entered, but it can be assumed to be the same as `yUnit`.
+  #
+  # If there is no `yErrorValues` column in the entered data frame, it doesn't
+  # make sense for this function to introduce a new column called `yErrorUnit`.
+  if (("yErrorValues" %in% names(data)) &&
+    !("yErrorUnit" %in% names(data))) {
+    data <- dplyr::mutate(data, yErrorUnit = yUnit)
+  }
+
+  # Add suffix `Split` to the following columns:
+  # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      .cols = dplyr::matches("Unit$|Weight$"), # use pattern matching to select columns
+      .fns = as.character,
+      .names = "{.col}Split" # = original column name + Split suffix
+    )
+  )
+
+  # Replace missing values in these new columns with `"missing"`, so that
+  # `split()` won't remove the corresponding portion of the data frame.
+  data <- dplyr::mutate(
+    data,
+    dplyr::across(
+      .cols = dplyr::matches("Split$"), # use pattern matching to select columns
+      .fns = function(x) tidyr::replace_na(x, "missing")
+    )
+  )
+
+  # `split()` will change the row order of the data frame depending on the
+  # alphabetical order of the levels of the variable used to split the data
+  # frame into a list.
+  #
+  # Therefore, an internal row identifier is kept to restore the original
+  # data frame row order before the data is returned.
+  data <- dplyr::mutate(data, .rowidInternal = dplyr::row_number())
+
+  # splitting data frames and unit conversions --------------------------
+
+  # Split data frame to a list, mutate the unit column using the corresponding
+  # `*UnitConverter()`, and then rebind.
+  #
+  # The `_dfr` variant of `purrr::map()` signals this intent:
+  # It will return a single data frame. This data frame is created by binding
+  # row-wise resulting data frames from mapping the given function `.f` to each
+  # element data frame in the list provided to `.x`.
+
+  # xUnit
+  xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
+  data <- purrr::map_dfr(
+    .x = xDataList,
+    .f = function(data) .xUnitConverter(data, xTargetUnit)
+  )
+
+  # yUnit
+  yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
+  data <- purrr::map_dfr(
+    .x = yDataList,
+    .f = function(data) .yUnitConverter(data, yTargetUnit)
+  )
+
+  # yUnit error
+  if ("yErrorValues" %in% names(data)) {
+    yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
+
+    data <- purrr::map_dfr(
+      .x = yErrorDataList,
+      .f = function(data) .yErrorUnitConverter(data, yTargetUnit)
+    )
+  }
+
+  # clean up and return --------------------------
+
+  # Restore the original row order using the internal row id
+  data <- dplyr::arrange(data, .rowidInternal)
+
+  # Remove all columns that were added only for internal workings of the function.
+  data <- dplyr::select(data, -dplyr::matches("Split$|.rowidInternal"))
+
+  return(data)
+}
+
+#' Remove empty data frames from a list of data frames
+#'
+#' @description
+#'
+#' Remove empty data frames sometimes produced due to the non-existent
+#' combination of source unit and molecular weight.
+#'
+#' @param x A list of data frames.
+#'
+#' @examples
+#'
+#' # Create a list of data frames
+#' (ls <- split(mtcars, list(mtcars$vs, mtcars$cyl)))
+#'
+#' # Remove element data frames with 0 rows
+#' ospsuite:::.removeEmptyDataFrame(ls)
+#' @keywords internal
+.removeEmptyDataFrame <- function(x) purrr::keep(x, function(data) nrow(data) > 0L)
+
+
+#' @keywords internal
+#' @noRd
+.xUnitConverter <- function(xData, xTargetUnit) {
+  xData$xValues <- toUnit(
+    quantityOrDimension = xData$xDimension[[1]],
+    values = xData$xValues,
+    targetUnit = xTargetUnit,
+    sourceUnit = xData$xUnit[[1]]
+  )
+
+  xData$xUnit <- xTargetUnit
+
+  return(xData)
+}
+
+#' @keywords internal
+#' @noRd
+.yUnitConverter <- function(yData, yTargetUnit) {
+  yData$yValues <- toUnit(
+    quantityOrDimension = yData$yDimension[[1]],
+    values = yData$yValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yUnit <- yTargetUnit
+
+  return(yData)
+}
+
+#' @keywords internal
+#' @noRd
+.yErrorUnitConverter <- function(yData, yTargetUnit) {
+  yData$yErrorValues <- toUnit(
+    quantityOrDimension = yData$yDimension[[1]],
+    values = yData$yErrorValues,
+    targetUnit = yTargetUnit,
+    sourceUnit = yData$yErrorUnit[[1]],
+    molWeight = yData$molWeight[[1]],
+    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+  )
+
+  yData$yErrorUnit <- yTargetUnit
+
+  return(yData)
+}
+
+
+#' Find the most common units
+#'
+#' @inheritParams .unitConverter
+#' @param unitColumn The name of the column containing units (e.g. `xUnit`).
+#'
+#' @examples
+#'
+#' df <- dplyr::tibble(
+#'   xValues = c(15, 30, 60),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(0.25, 45, 78),
+#'   yUnit = c("", "%", "%"),
+#'   yErrorUnit = c("", "%", "%"),
+#'   yDimension = "Fraction",
+#'   molWeight = 10
+#' )
+#'
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "xUnit")
+#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "yUnit")
+#'
+#' @keywords internal
+.extractMostFrequentUnit <- function(data, unitColumn) {
+  # Converting to argument to symbol makes sure that both ways of specifying
+  # arguments will be treated the same way:
+  # - unquoted (`unitColumn = xUnit`)
+  # - quoted (`unitColumn = "xUnit"`)
+  unitColumn <- rlang::ensym(unitColumn)
+
+  # Create a new data frame with frequency for each unit
+  unitUsageFrequency <- data %>%
+    # The embrace operator (`{{`) captures the user input and evaluates it in
+    # the current data frame.
+    dplyr::group_by({{ unitColumn }}) %>%
+    dplyr::tally(name = "unitFrequency")
+
+  mostFrequentUnit <- unitUsageFrequency %>%
+    # Select only the row(s) with maximum frequency.
+    dplyr::filter(unitFrequency == max(unitFrequency)) %>%
+    # In case of ties, there will be more than one row. In such cases, the first
+    # unit is selected.
+    #
+    # Do *not* select randomly as that would introduce randomness in plotting
+    # functions with each run of the plotting function defaulting to a different
+    # unit.
+    dplyr::slice_head(n = 1L) %>%
+    # Remove the frequency column, which is not useful outside the context of
+    # this function.
+    dplyr::select(-unitFrequency)
+
+  return(mostFrequentUnit[[1]])
 }

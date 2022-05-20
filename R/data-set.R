@@ -1,5 +1,5 @@
 #' Supported types of the error
-#' @include enum.R
+#'
 #' @export
 DataErrorType <- enum(c(
   "ArithmeticStdDev",
@@ -8,7 +8,8 @@ DataErrorType <- enum(c(
 
 #' @title DataSet
 #' @docType class
-#' @description A class for storage of numerical x- and y-value pairs and optional error for y-values.
+#' @description A class for storage of numerical x- and y-value pairs and
+#'   optional error for y-values.
 #' @export
 #' @format NULL
 DataSet <- R6::R6Class(
@@ -16,6 +17,7 @@ DataSet <- R6::R6Class(
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(
+
     #' @field name The name of the DataSet
     name = function(value) {
       if (missing(value)) {
@@ -39,6 +41,7 @@ DataSet <- R6::R6Class(
       }
       private$.setColumnDimension(private$.xColumn, value)
     },
+
     #' @field xUnit Unit in which the xValues are defined
     xUnit = function(value) {
       if (missing(value)) {
@@ -46,6 +49,7 @@ DataSet <- R6::R6Class(
       }
       private$.setColumnUnit(private$.xColumn, value)
     },
+
     #' @field xValues Values stored in the xUnit. This field is read-only.
     #' Use `$setValues()` to change the values.
     xValues = function(values) {
@@ -54,6 +58,7 @@ DataSet <- R6::R6Class(
       }
       private$throwPropertyIsReadonly("xValues")
     },
+
     #' @field yDimension Dimension in which the yValues are defined
     yDimension = function(value) {
       if (missing(value)) {
@@ -65,6 +70,7 @@ DataSet <- R6::R6Class(
         private$.setColumnDimension(private$.yErrorColumn, value)
       }
     },
+
     #' @field yUnit Unit in which the yValues are defined
     yUnit = function(value) {
       if (missing(value)) {
@@ -72,6 +78,7 @@ DataSet <- R6::R6Class(
       }
       private$.setColumnUnit(private$.yColumn, value)
     },
+
     #' @field yValues Values stored in the yUnit. This field is read-only.
     #' Use `$setValues()` to change the values.
     yValues = function(values) {
@@ -82,8 +89,10 @@ DataSet <- R6::R6Class(
     },
 
     #' @field yErrorType Type of the error - geometric or arithmetic.
-    #' When changing from arithmetic to geometric error, the values are considered in as fraction (1 = 100%).
-    #' When changing from geometric to arithmetic, the values are set to the same unit as `yErrorUnit`.
+    #' When changing from arithmetic to geometric error, the values are
+    #' considered in as fraction (1 = 100%).
+    #' When changing from geometric to arithmetic, the values are set to the
+    #' same unit as `yErrorUnit`.
     #' In case no yError is defined, the value is `NULL` and cannot be changed
     yErrorType = function(value) {
       if (missing(value)) {
@@ -93,13 +102,15 @@ DataSet <- R6::R6Class(
 
         dataInfo <- rClr::clrGet(private$.yErrorColumn$ref, "DataInfo")
         errorTypeEnumVal <- rClr::clrGet(dataInfo, "AuxiliaryType")
-        return(netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
+        return(.netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
       }
       private$.setErrorType(value)
     },
-    #' @field yErrorUnit Unit in which the yErrorValues are defined. For arithmetic error, the unit must be valid
-    #' for `yDimension`. For geometric error, the unit must be valid for `Dimensionless`.
-    #' In case no yError is defined, the value is `NULL` and cannot be changed
+
+    #' @field yErrorUnit Unit in which the yErrorValues are defined. For
+    #'   arithmetic error, the unit must be valid for `yDimension`. For
+    #'   geometric error, the unit must be valid for `Dimensionless`.
+    #'   In case no yError is defined, the value is `NULL` and cannot be changed
     yErrorUnit = function(value) {
       if (missing(value)) {
         # Do not have to check for NULL here becase NULL$something is NULL
@@ -111,6 +122,7 @@ DataSet <- R6::R6Class(
       }
       invisible(self)
     },
+
     #' @field yErrorValues Values of error stored in the yErrorUnit unit. This field is read-only.
     #' Use `$setValues()` to change the values.
     #' In case no yError is defined, the value is `NULL` and cannot be changed.
@@ -125,6 +137,7 @@ DataSet <- R6::R6Class(
       }
       private$throwPropertyIsReadonly("yErrorValues")
     },
+
     #' @field molWeight Molecular weight of the yValues in g/mol
     molWeight = function(value) {
       if (missing(value)) {
@@ -135,9 +148,14 @@ DataSet <- R6::R6Class(
         return(toUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = molWeight, targetUnit = ospUnits$`Molecular weight`$`g/mol`))
       }
 
-      private$.yColumn$molWeight <- toBaseUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = value, unit = ospUnits$`Molecular weight`$`g/mol`)
+      private$.yColumn$molWeight <- toBaseUnit(
+        quantityOrDimension = ospDimensions$`Molecular weight`,
+        values = value,
+        unit = ospUnits$`Molecular weight`$`g/mol`
+      )
     },
-    #' @field LLOQ LLOQ Lower Limit Of Quantification.
+
+    #' @field LLOQ Lower Limit Of Quantification.
     #' Value in yUnit associated with the yValues
     LLOQ = function(value) {
       if (missing(value)) {
@@ -146,9 +164,15 @@ DataSet <- R6::R6Class(
         if (is.null(lloq)) {
           return(NULL)
         }
+
         return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
       }
-      private$.yColumn$LLOQ <- toBaseUnit(quantityOrDimension = private$.yColumn$dimension, values = value, unit = private$.yColumn$displayUnit)
+
+      private$.yColumn$LLOQ <- toBaseUnit(
+        quantityOrDimension = private$.yColumn$dimension,
+        values = value,
+        unit = private$.yColumn$displayUnit
+      )
     },
 
     #' @field metaData Returns a named list of meta data defined for the data set.
@@ -161,17 +185,32 @@ DataSet <- R6::R6Class(
   ),
   public = list(
     #' @description
-    #' Initialize a new instance of the class
+    #' Initialize a new instance of the class.
+    #' Either create a `DataSet` from a `DataRepository` (e.g. loaded from a PKML)
+    #' or an empty `DataSet`. In case of an empty `DataSet`, a `name` must be
+    #' provided.
+    #'
     #' @param dataRepository Instance of the `DataRepository` object to wrap.
     #' If `NULL`, an empty `DataRepository` is created.
+    #' @param name Name of the `DataSet` if created from scratch (no `dataRepository`)
+    #' provided. Ignored if `dataRepository` is not `NULL`.
     #' @return A new `DataSet` object.
-    initialize = function(dataRepository = NULL) {
+    initialize = function(name = NULL, dataRepository = NULL) {
+      if (is.null(dataRepository) && is.null(name)) {
+        stop(messages$errorDataSetNameMissing)
+      }
       private$.dataRepository <- dataRepository %||% private$.createDataRepository()
       private$.initializeCache()
+
+      # Set the name if no `dataRepository` provided
+      if (is.null(dataRepository)) {
+        self$name <- name
+      }
     },
 
     #' @description
-    #' Adds a new entry to meta data list or changes its value if the name is already present.
+    #' Adds a new entry to meta data list or changes its value if the name is
+    #' already present.
     #'
     #' @param name Name of new meta data list entry
     #' @param value Value of new meta data list entry
@@ -205,10 +244,16 @@ DataSet <- R6::R6Class(
       private$.setColumnValues(column = private$.xColumn, xValues)
       private$.setColumnValues(column = private$.yColumn, yValues)
 
-      # yError column must be removed in case yError is NULL and there is a yErrorColumn already
+      # yError column must be removed in case yError is NULL and there is a
+      # yErrorColumn already
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
-        dataRepositoryTask <- getNetTask("DataRepositoryTask")
-        rClr::clrCall(dataRepositoryTask, "RemoveColumn", private$.dataRepository$ref, private$.yErrorColumn$ref)
+        dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+        rClr::clrCall(
+          dataRepositoryTask,
+          "RemoveColumn",
+          private$.dataRepository$ref,
+          private$.yErrorColumn$ref
+        )
         private$.yErrorColumn <- NULL
       }
 
@@ -243,14 +288,23 @@ DataSet <- R6::R6Class(
     .yColumn = NULL,
     .yErrorColumn = NULL,
     .setColumnValues = function(column, values) {
-      # values are set in the display unit. We need to make sure we convert them to the base unit
-      valuesInBaseUnit <- toBaseUnit(quantityOrDimension = column$dimension, values = values, unit = column$displayUnit)
+      # values are set in the display unit. We need to make sure we convert them
+      # to the base unit
+      valuesInBaseUnit <- toBaseUnit(
+        quantityOrDimension = column$dimension,
+        values = values,
+        unit = column$displayUnit
+      )
       column$values <- valuesInBaseUnit
       invisible(self)
     },
     .getColumnValues = function(column) {
       # we need to convert the values in the display unit
-      toUnit(quantityOrDimension = column$dimension, values = column$values, targetUnit = column$displayUnit)
+      toUnit(
+        quantityOrDimension = column$dimension,
+        values = column$values,
+        targetUnit = column$displayUnit
+      )
     },
     .setColumnDimension = function(column, value) {
       # no need to update anything if we are setting the same values
@@ -292,9 +346,9 @@ DataSet <- R6::R6Class(
       validateEnumValue(errorType, DataErrorType)
       column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
-
       dataInfo <- rClr::clrGet(column$ref, "DataInfo")
-      rClr::clrSet(dataInfo, "AuxiliaryType", rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType))
+      auxType <- rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
+      rClr::clrSet(dataInfo, "AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
       if (errorType == DataErrorType$ArithmeticStdDev) {
@@ -310,25 +364,18 @@ DataSet <- R6::R6Class(
       invisible(self)
     },
     .createDataRepository = function() {
-      # Create an empty data repository with a base grid and columns
-      dataRepository <- DataRepository$new()
-      # Passing time for dimension for now
-      xColumn <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.BaseGrid", "xValues", getDimensionByName(ospDimensions$Time)))
-
-      # Passing concentration (mass) for dimension for now
-      yColumn <- DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.DataColumn", "yValues", getDimensionByName(ospDimensions$`Concentration (mass)`), xColumn$ref))
-
-      dataRepository$addColumn(xColumn)
-      dataRepository$addColumn(yColumn)
-      return(dataRepository)
+      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+      dataRepository <- rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues")
+      return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
+      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
-      # We assume for now that the first column not base grid in the data column
-      private$.yColumn <- private$.dataRepository$allButBaseGrid[[1]]
 
-      dataRepositoryTask <- getNetTask("DataRepositoryTask")
-      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", private$.yColumn$ref)
+      netYColumn <- rClr::clrCall(dataRepositoryTask, "GetMeasurementColumn", private$.dataRepository$ref)
+      private$.yColumn <- DataColumn$new(netYColumn)
+      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", netYColumn)
+
       if (!is.null(netYErrorColumn)) {
         private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
       }
@@ -338,8 +385,14 @@ DataSet <- R6::R6Class(
         return()
       }
 
-      dataRepositoryTask <- getNetTask("DataRepositoryTask")
-      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "AddErrorColumn", private$.yColumn$ref, "yErrorValues", DataErrorType$ArithmeticStdDev)
+      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+      netYErrorColumn <- rClr::clrCall(
+        dataRepositoryTask,
+        "AddErrorColumn",
+        private$.yColumn$ref,
+        "yErrorValues",
+        DataErrorType$ArithmeticStdDev
+      )
       private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
     }
   )

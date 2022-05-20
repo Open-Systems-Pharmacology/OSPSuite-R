@@ -1,13 +1,13 @@
-
 #' Convert a path defined as string to a path array
 #'
 #' @param path A string representation of a path, with path entries separated
 #' by '|'
 #'
-#' @return An array containing one element for each path entry
-#' @examples
+#' @return An array containing one element for each path entry.
 #'
-#' array <- toPathArray("Organism|Organ|Liver")
+#' @examples
+#' toPathArray("Organism|Organ|Liver")
+#'
 #' @export
 toPathArray <- function(path) {
   validateIsString(path)
@@ -16,12 +16,13 @@ toPathArray <- function(path) {
 
 #' Convert a path array to a path as string with entries separated by '|'
 #'
-#' @param ... Path entries to concatenate into a path string
+#' @param ... Path entries to concatenate into a path string.
 #'
-#' @return A string built using each entry of the pathArray
+#' @return A string built using each entry of the pathArray.
+#'
 #' @examples
+#' toPathString(c("Organism", "Organ", "Liver"))
 #'
-#' path <- toPathString(c("Organism", "Organ", "Liver"))
 #' @export
 toPathString <- function(...) {
   pathStrings <- c(...)

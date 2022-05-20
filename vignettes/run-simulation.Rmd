@@ -1,14 +1,13 @@
 ---
 title: "Running a simulation"
 output: rmarkdown::html_vignette
-#output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Running a simulation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -16,7 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 ## Running individual simulation and retrieving the results
-Once the simulation is loaded (see [Loading a simulation and accessing entities](load-get.html)), it can be run to produce an object of the class `SimulationResults`.
+
+Once the simulation is loaded (see [Loading a simulation and accessing entities](load-get.html)), it can be run using `runSimulations()` to produce an object of the class `SimulationResults`. Keep in mind that `runSimulations()` produces a list of `SimulationResults` objects.
 
 ```{r runSim}
 library(ospsuite)
@@ -26,6 +26,8 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 simulationResults <- runSimulations(simulations = sim)
+# Extract `SimulationResults` by simulation id
+simulationResults <- simulationResults[[sim$id]]
 print(simulationResults)
 ```
 
@@ -69,7 +71,9 @@ The results can be stored in and imported from a *.csv file with the methods `ex
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simulationResults <- runSimulations(simulations = sim)
+# `runSimulations` returns a list of `SimulationResults`. For single simulation,
+# we directly extract the first element, as only one object is created.
+simulationResults <- runSimulations(simulations = sim)[[1]]
 
 # Export to csv
 csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
@@ -81,16 +85,18 @@ print(resultsLoaded)
 ```
 
 ## Running multiple individual simulations and retrieving the results
-In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations the `runSimulations` function. However, only individual simulations (i.e., the `population` argument must remain empty) 
+
+In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations to the `runSimulations()` function. However, only individual simulations (i.e., the `population` argument must remain empty) 
 are supported.
+
 By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 
 4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.
 
 ```{r MultipleSimRun}
-# Load and run multiple simulations concurrently. 
+# Load and run multiple simulations concurrently.
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
-# We load 3 times the same simulation for convenience. But in real life scenarios, 
+# We load 3 times the same simulation for convenience. But in real life scenarios,
 # they should be different simulations
 sim1 <- loadSimulation(simFilePath)
 sim2 <- loadSimulation(simFilePath)
@@ -104,15 +110,16 @@ The names of the entries of the list are the ids of the simulation to which the 
 correspond. This way, it is easy to retrieve the correct results for the specific simulation
 
 ```{r MultipleRunSimResultsIds}
-#Get the id of the second simulation
+# Get the id of the second simulation
 id <- sim2$id
 print(id)
-#get the corresponding result
+# get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
 ```
 
 ## Adding new outputs
+
 By default, only outputs that were selected in PK-Sim or MoBi prior to the export of the simulation to `pkml` are generated. The user can add new outputs to the simulation with the method `addOutputs`. The outputs can be provided either as objects of the type(s) `Molecule`, `Parameter`, or `Quantity`, or as path strings. The output list is a property of the `simulation`.
 After adding or removing outputs, the corresponding simulation needs to be re-run in order to generate updated results.
 
@@ -127,9 +134,12 @@ observer <- getQuantity("Organism|Lumen|Aciclovir|Fraction dissolved", sim)
 addOutputs(c(molecule, observer), simulation = sim)
 
 # Add new outputs as path strings
-addOutputs(c("Organism|Lumen|Stomach|Aciclovir", 
-             "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"),
-           simulation = sim)
+addOutputs(c(
+  "Organism|Lumen|Stomach|Aciclovir",
+  "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"
+),
+simulation = sim
+)
 
 # Run simulation
 simulationResults <- runSimulations(simulations = sim)
@@ -138,19 +148,20 @@ simulationResults <- runSimulations(simulations = sim)
 # will return all available values)
 resultsData <- getOutputValues(simulationResults)
 
-# Note that "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" 
+# Note that "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 # is not in the list of generated results any more
 names(resultsData$data)
 ```
 
 ## Changing simulation intervals
-The simulation interval (i.e., the simulation times at which results are stored) can are stored as the property `outputSchema` of a `Simulation` object.
+
+The simulation interval (i.e., the simulation times at which results are stored) are stored as the property `$outputSchema` of a `Simulation` object.
 
 ```{r $outputSchema}
 print(sim$outputSchema)
 ```
 
-To change the simulation interval, the user can use one of the functions `clearOutputIntervals`, `addOutputInterval`, and `setOutputInterval`.
+To change the simulation interval, the user can use one of the functions `clearOutputIntervals()`, `addOutputInterval()`, and `setOutputInterval()`.
 
 ```{r changeOutputInterval, error = TRUE, purl = FALSE}
 # Remove all output intervals - simulation not possible!

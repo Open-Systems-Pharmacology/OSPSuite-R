@@ -10,7 +10,7 @@ SimulationPKAnalyses <- R6::R6Class(
   private = list(
     .simulation = NULL,
     toPKParameter = function(netPKParameters) {
-      toObjectType(netPKParameters, QuantityPKParameter)
+      .toObjectType(netPKParameters, QuantityPKParameter)
     }
   ),
   public = list(
@@ -20,7 +20,7 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param simulation Simulation for which the pkParameters were calculated
     #' @return A new `SimulationPKAnalyses` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
       super$initialize(ref)
     },
@@ -33,7 +33,8 @@ SimulationPKAnalyses <- R6::R6Class(
     },
     #' @description
     #' The pK Parameter defined for the given path and name
-    #' @param quantityPath Path for which the pkParameter named `pkParameter` should be retrieved
+    #' @param quantityPath Path for which the pkParameter named `pkParameter`
+    #'   should be retrieved
     #' @param pkParameter Name of the pkParameter to retrieve
     pKParameterFor = function(quantityPath, pkParameter) {
       validateIsString(quantityPath)
@@ -46,11 +47,11 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       private$printClass()
-      private$printLine("For outputs:", addTab = FALSE)
+      private$printLine("For outputs", addTab = FALSE)
       for (quantityPath in self$allQuantityPaths) {
         private$printLine(quantityPath)
       }
-      private$printLine("For pK-Parameters:", addTab = FALSE)
+      private$printLine("For pK-Parameters", addTab = FALSE)
       for (pkParameter in self$allPKParameterNames) {
         private$printLine(pkParameter)
       }

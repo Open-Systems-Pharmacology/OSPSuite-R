@@ -10,10 +10,10 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-task :prepare_for_build, [:build_version] do |t, args|
+task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
+  args.with_defaults(:pksim_branch => 'develop')
   update_package_version(args.build_version, description_file)
-  copy_files_to_lib_folder
-  install_pksim('develop')
+  install_pksim(args.pksim_branch)
 end
 
 task :postclean do 
@@ -30,13 +30,18 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   build_dir = args.build_dir
   linux_distro = args.linux_distro
 
+  puts "Build dir is #{build_dir}".light_blue
+
+  #TEMP
+  build_dir = "C:/projects/ospsuite-r"
+
   #run nuget to get linux packages
   nuget_restore linux_distro
 
-  tar_file_name = "ospsuite_#{product_version}.tar.gz"
-  
   # Tar file produced by the script
+  tar_file_name = "ospsuite_#{product_version}.tar.gz"
   tar_file = File.join(build_dir, tar_file_name)
+  puts "Windows package is #{tar_file}".light_blue
 
   #unzip it in a temp folder
   temp_distro_dir = File.join(temp_dir, linux_distro)
@@ -99,7 +104,7 @@ def download_file(project_name, file_name, uri)
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
   open(file, 'wb') do |fo|
-    fo.print open(uri,:read_timeout => nil).read
+    fo.print URI.open(uri,:read_timeout => nil).read
   end
   file
 end
@@ -142,7 +147,7 @@ def copy_packages_files
   native_folder = '/bin/native/x64/Release/'
   copy_dependencies packages_dir, lib_dir do
     # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
-    copy_files '*/**/netstandard2.0', 'dll'
+    copy_files '*/**/lib/netstandard2.0', 'dll'
 
     # Copy all x64 release dll and so from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']

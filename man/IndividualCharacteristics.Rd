@@ -8,7 +8,7 @@
 Characteristics of an individual describing its origin
 }
 \section{Super classes}{
-\code{\link[ospsuite:Printable]{ospsuite::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{IndividualCharacteristics}
+\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{IndividualCharacteristics}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -36,21 +36,20 @@ Characteristics of an individual describing its origin
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{IndividualCharacteristics$new()}}
-\item \href{#method-print}{\code{IndividualCharacteristics$print()}}
-\item \href{#method-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
+\item \href{#method-IndividualCharacteristics-new}{\code{IndividualCharacteristics$new()}}
+\item \href{#method-IndividualCharacteristics-print}{\code{IndividualCharacteristics$print()}}
+\item \href{#method-IndividualCharacteristics-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="finalize">}\href{../../ospsuite/html/DotNetWrapper.html#method-finalize}{\code{ospsuite::DotNetWrapper$finalize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-IndividualCharacteristics-new"></a>}}
+\if{latex}{\out{\hypertarget{method-IndividualCharacteristics-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
@@ -62,8 +61,8 @@ A new \code{IndividualCharacteristics} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-IndividualCharacteristics-print"></a>}}
+\if{latex}{\out{\hypertarget{method-IndividualCharacteristics-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
@@ -79,8 +78,8 @@ Print the object to the console
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-addMoleculeOntogeny"></a>}}
-\if{latex}{\out{\hypertarget{method-addMoleculeOntogeny}{}}}
+\if{html}{\out{<a id="method-IndividualCharacteristics-addMoleculeOntogeny"></a>}}
+\if{latex}{\out{\hypertarget{method-IndividualCharacteristics-addMoleculeOntogeny}{}}}
 \subsection{Method \code{addMoleculeOntogeny()}}{
 Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristics
 \subsection{Usage}{

@@ -2,7 +2,8 @@
 % Please edit documentation in R/utilities-quantity.R
 \name{getAllQuantitiesMatching}
 \alias{getAllQuantitiesMatching}
-\title{Retrieve all quantities of a container (simulation or container instance) matching the given path criteria}
+\title{Retrieve all quantities of a container (simulation or container instance)
+matching the given path criteria}
 \usage{
 getAllQuantitiesMatching(paths, container)
 }
@@ -12,10 +13,12 @@ getAllQuantitiesMatching(paths, container)
 \item{container}{A Container or Simulation used to find the parameters}
 }
 \value{
-A list of quantities matching the path criteria. The list is empty if no quantity matching were found.
+A list of quantities matching the path criteria. The list is empty if no
+quantity matching were found.
 }
 \description{
-Retrieve all quantities of a container (simulation or container instance) matching the given path criteria
+Retrieve all quantities of a container (simulation or container instance)
+matching the given path criteria
 }
 \examples{
 
@@ -34,5 +37,7 @@ quantities <- getAllQuantitiesMatching(paths, sim)
 quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
 }
 \seealso{
-\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and \code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to retrieve objects of type Container or Simulation
+\code{\link[=loadSimulation]{loadSimulation()}}, \code{\link[=getContainer]{getContainer()}} and
+\code{\link[=getAllContainersMatching]{getAllContainersMatching()}} to retrieve objects of type Container or
+Simulation
 }

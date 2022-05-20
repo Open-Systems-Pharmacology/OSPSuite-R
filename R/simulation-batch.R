@@ -9,7 +9,13 @@ SimulationBatch <- R6::R6Class(
   cloneable = FALSE,
   inherit = DotNetWrapper,
   private = list(
-    .simulation = NULL
+    .simulation = NULL,
+    finalize = function() {
+      private$.simulation <- NULL
+      # SimulationBatch are disposable object and should be disposed
+      rClr::clrCall(self$ref, "Dispose")
+      super$finalize()
+    }
   ),
   public = list(
     #' @description
@@ -18,7 +24,7 @@ SimulationBatch <- R6::R6Class(
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
     initialize = function(ref, simulation) {
-      validateIsOfType(simulation, Simulation)
+      validateIsOfType(simulation, "Simulation")
       super$initialize(ref)
       private$.simulation <- simulation
     },
@@ -64,15 +70,28 @@ SimulationBatch <- R6::R6Class(
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
       rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
+      return(batchRunValues$id)
     },
 
     #' @description
-    #' Clears the reference to the wrapped .NET object
-    finalize = function() {
-      private$.simulation <- NULL
-      # SimulationBatch are disposable object and should be disposed
-      rClr::clrCall(self$ref, "Dispose")
-      super$finalize()
+    #' Print the object to the console
+    #' @param ... Additional arguments.
+    print = function(...) {
+      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
+      private$printClass()
+      private$printLine("Simulation", self$simulation$name)
+      private$printLine("runValuesIds", self$runValuesIds)
+      private$printLine(
+        "Parameters",
+        rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
+          rClr::clrGet(simulationBatchOptions, "VariableParameter")
+      )
+      private$printLine(
+        "Molecules",
+        rClr::clrGet(simulationBatchOptions, "VariableMolecules") %||%
+          rClr::clrGet(simulationBatchOptions, "VariableMolecule")
+      )
+      invisible(self)
     }
   ),
   active = list(

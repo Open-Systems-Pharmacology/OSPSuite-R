@@ -3,6 +3,7 @@
 #'
 #' @param netObjects List of .NET object
 #' @param  propertyName Property name that should be retrieved from the `netObjects`
+#' @keywords internal
 getPropertyValues <- function(netObjects, propertyName) {
   sapply(netObjects, function(x) getPropertyValue(x, propertyName))
 }
@@ -11,6 +12,7 @@ getPropertyValues <- function(netObjects, propertyName) {
 #'
 #' @param netObject .NET object
 #' @param  propertyName Property name that should be retrieved from the `netObject`
+#' @keywords internal
 getPropertyValue <- function(netObject, propertyName) {
   rClr::clrGet(netObject, name = propertyName)
 }

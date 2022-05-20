@@ -1,18 +1,20 @@
-#' @title Loads a simulation from a pkml file and returns the simulation. If the passed simulation file
-#' has been loaded before, the simulation is not loaded again but a cached object is returned.
-#' This behavior can be overridden.
+#' @title Load a simulation from a pkml file
+#'
+#' @description
+#' Loads a simulation from a pkml file and returns the simulation. If the passed
+#' simulation file has been loaded before, the simulation is not loaded again
+#' but a cached object is returned. This behavior can be overridden.
 #'
 #' @param filePath Full path of pkml simulation file to load.
 #'
-#' @param loadFromCache If `TRUE`, an already loaded pkml file will not be loaded
-#' again, but the simulation object will be retrieved from cache.
-#' If `FALSE`, a new simulation object will be created. Default value is `FALSE`.
-#'
-#' @param addToCache If `TRUE`, the loaded simulation is added to cache. If `FALSE`,
-#' the returned simulation only exists locally. Default is `TRUE`.
-#'
-#' @param resetIds If `TRUE`, the internal object ids in the simulation are reset to a unique value.
-#' If `FALSE`, the ids are kept as defined in the pkml simulation. Default is `TRUE`.
+#' @param loadFromCache If `TRUE`, an already loaded pkml file will not be
+#'   loaded again, but the simulation object will be retrieved from cache. If
+#'   `FALSE`, a new simulation object will be created. Default value is `FALSE`.
+#' @param addToCache If `TRUE`, the loaded simulation is added to cache. If
+#'   `FALSE`, the returned simulation only exists locally. Default is `TRUE`.
+#' @param resetIds If `TRUE`, the internal object ids in the simulation are
+#'   reset to a unique value. If `FALSE`, the ids are kept as defined in the
+#'   pkml simulation. Default is `TRUE`.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -50,7 +52,7 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
 
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
-  simulationPersister <- getNetTask("SimulationPersister")
+  simulationPersister <- .getNetTask("SimulationPersister")
 
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
   netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", expandPath(filePath), resetIds)
@@ -72,18 +74,15 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
 #'
 #' @export
 saveSimulation <- function(simulation, filePath) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- expandPath(filePath)
-  simulationPersister <- getNetTask("SimulationPersister")
+  simulationPersister <- .getNetTask("SimulationPersister")
   rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
   invisible()
 }
 
 #' @title
-#'
-#' DEPRECATED
-#'  `runSimulations` should be used in favor of  `runSimulation`. The latter will be removed in future releases
 #' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
 #'
 #' @param simulation One `Simulation` to simulate.
@@ -114,28 +113,41 @@ saveSimulation <- function(simulation, filePath) {
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' @export
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
-  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)
+  # Check that only one simulation is passed
+  simulation <- c(simulation)
+  validateIsOfLength(simulation, 1)
+  # Returning the first element of `runSimulations` output, as the latter returns
+  # a named list with ID of the simulation as element name.
+  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)[[1]]
 }
 
-#' @title  Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
-#' Alternatively if multiple simulations are provided, they will be run concurrently. This feature is only supported for individual simulation
+#' @title  Runs multiple simulations concurrently.
 #'
-#' @param simulations One `Simulation` or list of `Simulation`  to simulate.
-#' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
-#' Alternatively, you can also pass the result of `createPopulation` directly. In this case, the population will be extracted
-#' @param agingData Optional instance of `AgingData` to use for the simulation. This is only used with a population simulation
+#' @details For multiple simulations, only individual simulations are possible.
+#' For single simulatio, either individual or population simulations can be
+#' performed.
+#'
+#' @param simulations One `Simulation` or list of `Simulation` objects
+#' to simulate.
+#' @param population Optional instance of a `Population` to use for the simulation.
+#' Only allowed when simulating one simulation.
+#' Alternatively, you can also pass the result of `createPopulation` directly.
+#' In this case, the population will be extracted.
+#' @param agingData Optional instance of `AgingData` to use for the simulation.
+#' This is only used with a population simulation
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
 #' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`
 #'
-#' @return SimulationResults (one entry per Individual) for a single simulation or
-#' a list of `SimulationResults` objects with names being the IDs of the simulations. If a simulation fails, the result for this simulation is `NULL`
+#' @return A named list of `SimulationResults` objects with names being the IDs
+#' of the respective simulations. If a simulation fails, the result for this
+#' simulation is `NULL`
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
-#' # Results is an instance of `SimulationResults`
+#' # Results is a list with one object `SimulationResults`
 #' results <- runSimulations(sim)
 #'
 #' # Creating custom simulation run options
@@ -158,17 +170,20 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' @export
 runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
   simulations <- c(simulations)
-  validateIsOfType(simulationRunOptions, SimulationRunOptions, nullAllowed = TRUE)
+  validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
   # only one simulation? We allow population run
   if (length(simulations) == 1) {
-    return(.runSingleSimulation(
+    results <- .runSingleSimulation(
       simulation = simulations[[1]],
       simulationRunOptions = simulationRunOptions,
       population = population,
       agingData = agingData
-    ))
+    )
+    outputList <- list()
+    outputList[[simulations[[1]]$id]] <- results
+    return(outputList)
   }
 
   # more than one simulation? This is a concurrent run. We do not allow population variation
@@ -185,17 +200,17 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 }
 
 .runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   if (is.list(population)) {
     # if a list was given as parameter, we assume that the user wants to run a population simulation
     # The population object must be present otherwise, this is an error => nullAllowed is FALSE
     population <- population$population
-    validateIsOfType(population, Population)
+    validateIsOfType(population, "Population")
   } else {
-    validateIsOfType(population, Population, nullAllowed = TRUE)
+    validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
-  validateIsOfType(agingData, AgingData, nullAllowed = TRUE)
-  simulationRunner <- getNetTask("SimulationRunner")
+  validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
+  simulationRunner <- .getNetTask("SimulationRunner")
   simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
   rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
   rClr::clrSet(simulationRunArgs, "SimulationRunOptions", simulationRunOptions$ref)
@@ -214,30 +229,38 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 }
 
 .runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE) {
-  validateIsOfType(simulations, Simulation)
-  simulationRunner <- getNetTask("ConcurrentSimulationRunner")
-  rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  tryCatch(
+    {
+      validateIsOfType(simulations, "Simulation")
+      rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
-  # Map of simulations ids to simulations objects
-  simulationIdSimulationMap <- vector("list", length(simulations))
+      # Map of simulations ids to simulations objects
+      simulationIdSimulationMap <- vector("list", length(simulations))
 
-  # Add simulations
-  for (simulationIdx in seq_along(simulations)) {
-    simulation <- simulations[[simulationIdx]]
-    simulationIdSimulationMap[[simulationIdx]] <- simulation
-    names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
+      # Add simulations
+      for (simulationIdx in seq_along(simulations)) {
+        simulation <- simulations[[simulationIdx]]
+        simulationIdSimulationMap[[simulationIdx]] <- simulation
+        names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 
-    rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
-  }
-  # Run all simulations
-  results <- rClr::clrCall(simulationRunner, "RunConcurrently")
+        rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
+      }
+      # Run all simulations
+      results <- rClr::clrCall(simulationRunner, "RunConcurrently")
 
-  # Ids of the results are Ids of the simulations
-  resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
-  names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
-  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
+      # Ids of the results are Ids of the simulations
+      resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
+      names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
+      simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
 
-  return(simulationResults)
+      return(simulationResults)
+    },
+    finally = {
+      # Dispose of the runner to release any possible instances still in memory (.NET side)
+      rClr::clrCall(simulationRunner, "Dispose")
+    }
+  )
 }
 
 #' @title  Creates and returns an instance of a `SimulationBatch` that can be used to efficiently vary parameters and initial values in a simulation
@@ -271,20 +294,23 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 #' )
 #' @export
 createSimulationBatch <- function(simulation, parametersOrPaths = NULL, moleculesOrPaths = NULL) {
-  validateIsOfType(simulation, Simulation)
-  validateIsOfType(parametersOrPaths, c(Parameter, "character"), nullAllowed = TRUE)
-  validateIsOfType(moleculesOrPaths, c(Molecule, "character"), nullAllowed = TRUE)
+  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(parametersOrPaths, c("Parameter", "character"), nullAllowed = TRUE)
+  validateIsOfType(moleculesOrPaths, c("Molecule", "character"), nullAllowed = TRUE)
 
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
     stop(messages$errorSimulationBatchNothingToVary)
   }
+
   variableParameters <- c(parametersOrPaths)
-  if (isOfType(variableParameters, Parameter)) {
+
+  if (isOfType(variableParameters, "Parameter")) {
     variableParameters <- unlist(lapply(variableParameters, function(x) x$path))
   }
 
   variableMolecules <- c(moleculesOrPaths)
-  if (isOfType(variableMolecules, Molecule)) {
+
+  if (isOfType(variableMolecules, "Molecule")) {
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path))
   }
 
@@ -336,12 +362,11 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 #' }
 runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE) {
-  validateIsOfType(simulationBatches, SimulationBatch)
-  simulationRunner <- getNetTask("ConcurrentSimulationRunner")
-  if (!is.null(simulationRunOptions)) {
-    validateIsOfType(simulationRunOptions, SimulationRunOptions)
-    rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
-  }
+  validateIsOfType(simulationBatches, "SimulationBatch")
+  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
+  simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
+  rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
   simulationBatches <- c(simulationBatches)
   # Result Id <-> simulation batch pointer id map to get the correct simulation for the results.
@@ -402,7 +427,7 @@ resetSimulationCache <- function() {
 #' removeSimulationFromCache(sim1) # returns TRUE
 #' removeSimulationFromCache(sim2) # returns FALSE
 removeSimulationFromCache <- function(simulation) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
 
   simulationFilePath <- simulation$sourceFile
 
@@ -442,7 +467,7 @@ removeSimulationFromCache <- function(simulation) {
 #'
 #' parameters <- getStandardMoleculeParameters("CYP3A4", sim1)
 getStandardMoleculeParameters <- function(moleculeName, simulation) {
-  validateIsOfType(simulation, Simulation)
+  validateIsOfType(simulation, "Simulation")
   validateIsString(moleculeName)
   paths <- sapply(MoleculeParameter, function(p) toPathString(moleculeName, p))
   getAllParametersMatching(paths = paths, container = simulation)
@@ -466,8 +491,8 @@ getStandardMoleculeParameters <- function(moleculeName, simulation) {
 #' params <- getAllParametersForSensitivityAnalysisMatching("Organism|*|Volume", sim)
 #' @export
 getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
-  validateIsOfType(simulation, Simulation)
-  getAllEntitiesMatching(
+  validateIsOfType(simulation, "Simulation")
+  .getAllEntitiesMatching(
     paths = paths,
     container = simulation,
     entityType = Parameter,
@@ -484,9 +509,9 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 #' @return A list of paths
 #' @export
 getAllStateVariablesPaths <- function(simulation) {
-  validateIsOfType(simulation, type = Simulation)
+  validateIsOfType(simulation, type = "Simulation")
   allMoleculesPaths <- getAllMoleculePathsIn(container = simulation)
-  allStateVariableParamsPaths <- getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
+  allStateVariableParamsPaths <- .getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
   allQantitiesPaths <- append(allMoleculesPaths, allStateVariableParamsPaths)
   return(allQantitiesPaths)
 }
@@ -512,8 +537,8 @@ getAllStateVariablesPaths <- function(simulation) {
 exportIndividualSimulations <- function(population, individualIds, outputFolder, simulation) {
   validateIsString(outputFolder)
   validateIsNumeric(individualIds)
-  validateIsOfType(simulation, Simulation)
-  validateIsOfType(population, Population)
+  validateIsOfType(simulation, "Simulation")
+  validateIsOfType(population, "Population")
   individualIds <- c(individualIds)
   outputFolder <- expandPath(outputFolder)
 

@@ -4,21 +4,39 @@ test_that("It can load a valid observed data file and create a DataSet object", 
   file <- getTestDataFilePath("obs_data.pkml")
   dataSet <- loadDataSetFromPKML(file)
 
-  expect_true(isOfType(dataSet, DataSet))
+  expect_true(isOfType(dataSet, "DataSet"))
+})
+
+
+test_that("It correctly gets the yValues column for a certain type of DataRepository", {
+  file <- system.file("extdata", "ObsDataAciclovir_2.pkml", package = "ospsuite")
+  dataSet <- loadDataSetFromPKML(file)
+
+  expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
 })
 
 context("dataSetToDataFrame")
 
-dataSet <- DataSet$new()
+dataSetName <- "NewDataSet"
+dataSet <- DataSet$new(name = dataSetName)
 
 test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = character(0), xValues = logical(0), yValues = logical(0), yErrorValues = logical(0),
-      xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = logical(0), yErrorUnit = logical(0), molWeight = logical(0),
-      lloq = logical(0)
+      name = character(0),
+      xValues = numeric(0),
+      yValues = numeric(0),
+      yErrorValues = numeric(0),
+      xDimension = character(0),
+      xUnit = character(0),
+      yDimension = character(0),
+      yUnit = character(0),
+      yErrorType = numeric(0),
+      yErrorUnit = numeric(0),
+      molWeight = numeric(0),
+      lloq = numeric(0),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -28,10 +46,19 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep("", 5), xValues = dataSet$xValues, yValues = dataSet$yValues, yErrorValues = rep(NA, 5),
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA, 5), yErrorUnit = rep(NA, 5), molWeight = rep(NA, 5), lloq = rep(NA, 5)
+      name = rep(dataSetName, 5),
+      xValues = dataSet$xValues,
+      yValues = dataSet$yValues,
+      yErrorValues = rep(NA_real_, 5),
+      xDimension = rep(dataSet$xDimension, 5),
+      xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5),
+      yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(NA_real_, 5),
+      yErrorUnit = rep(NA_real_, 5),
+      molWeight = rep(NA_real_, 5),
+      lloq = rep(NA_real_, 5),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -44,30 +71,44 @@ test_that("It can convert a data set with only non-empty fields, except for meta
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep(dataSet$name, 5), xValues = dataSet$xValues,
-      yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(dataSet$yErrorType, 5), yErrorUnit = rep(dataSet$yErrorUnit, 5),
-      molWeight = rep(dataSet$molWeight, 5), lloq = rep(dataSet$LLOQ, 5)
+      name = rep(dataSet$name, 5),
+      xValues = dataSet$xValues,
+      yValues = dataSet$yValues,
+      yErrorValues = dataSet$yErrorValues,
+      xDimension = rep(dataSet$xDimension, 5),
+      xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5),
+      yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(dataSet$yErrorType, 5),
+      yErrorUnit = rep(dataSet$yErrorUnit, 5),
+      molWeight = rep(dataSet$molWeight, 5),
+      lloq = rep(dataSet$LLOQ, 5),
+      stringsAsFactors = FALSE
     )
   )
 })
 
 test_that("It can convert a data set with metaData", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
-  
+
   dataSet$addMetaData("Organ", "Blood")
   expect_equal(
     dataSetToDataFrame(dataSet),
     data.frame(
-      name = rep(dataSet$name, 5), xValues = dataSet$xValues,
-      yValues = dataSet$yValues, yErrorValues = dataSet$yErrorValues,
-      xDimension = rep(dataSet$xDimension, 5), xUnit = rep(dataSet$xUnit, 5),
-      yDimension = rep(dataSet$yDimension, 5), yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(dataSet$yErrorType, 5), yErrorUnit = rep(dataSet$yErrorUnit, 5),
-      molWeight = rep(dataSet$molWeight, 5), lloq = rep(dataSet$LLOQ, 5),
-      Organ = rep("Blood", 5)
+      name = rep(dataSet$name, 5),
+      xValues = dataSet$xValues,
+      yValues = dataSet$yValues,
+      yErrorValues = dataSet$yErrorValues,
+      xDimension = rep(dataSet$xDimension, 5),
+      xUnit = rep(dataSet$xUnit, 5),
+      yDimension = rep(dataSet$yDimension, 5),
+      yUnit = rep(dataSet$yUnit, 5),
+      yErrorType = rep(dataSet$yErrorType, 5),
+      yErrorUnit = rep(dataSet$yErrorUnit, 5),
+      molWeight = rep(dataSet$molWeight, 5),
+      lloq = rep(dataSet$LLOQ, 5),
+      Organ = rep("Blood", 5),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -75,7 +116,7 @@ test_that("It can convert a data set with metaData", {
 test_that("It can convert a list of data sets", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSet2 <- DataSet$new()
+  dataSet2 <- DataSet$new(name = "SecondDataSet")
   dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
   dataSet2$molWeight <- 456
   dataSet2$addMetaData("Compartment", "Plasma")
@@ -83,8 +124,10 @@ test_that("It can convert a list of data sets", {
   expect_equal(
     dataSetToDataFrame(list(dataSet, dataSet2)),
     data.frame(
-      name = c(rep(dataSet$name, 5), rep("", 3)), xValues = c(dataSet$xValues, dataSet2$xValues),
-      yValues = c(dataSet$yValues, dataSet2$yValues), yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
+      name = c(rep(dataSet$name, 5), rep("SecondDataSet", 3)),
+      xValues = c(dataSet$xValues, dataSet2$xValues),
+      yValues = c(dataSet$yValues, dataSet2$yValues),
+      yErrorValues = c(dataSet$yErrorValues, rep(NA, 3)),
       xDimension = c(rep(dataSet$xDimension, 5), rep(dataSet2$xDimension, 3)),
       xUnit = c(rep(dataSet$xUnit, 5), rep(dataSet2$xUnit, 3)),
       yDimension = c(rep(dataSet$yDimension, 5), rep(dataSet2$yDimension, 3)),
@@ -93,7 +136,9 @@ test_that("It can convert a list of data sets", {
       yErrorUnit = c(rep(dataSet$yErrorUnit, 5), rep(NA_character_, 3)),
       molWeight = c(rep(dataSet$molWeight, 5), rep(dataSet2$molWeight, 3)),
       lloq = c(rep(dataSet$LLOQ, 5), rep(NA, 3)),
-      Organ = c(rep("Blood", 5), rep(NA, 3)), Compartment = c(rep(NA, 5), rep("Plasma", 3))
+      Organ = c(rep("Blood", 5), rep(NA, 3)),
+      Compartment = c(rep(NA, 5), rep("Plasma", 3)),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -151,53 +196,75 @@ test_that("it can save the data set as pkml", {
 context("loadDataSetsFromExcel")
 configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
-importerConfiguration <- DataImporterConfiguration$new(configurationPath)
+importerConfiguration <- loadDataImporterConfiguration(configurationPath)
 
 test_that("it returns an empty list when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration), character())
+  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath), character())
 })
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
-  expect_true(isOfType(dataSets, DataSet))
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath, importAllSheets = TRUE)
+  expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
 })
 
 test_that("it can convert DataSets loaded from excel to data.frame", {
   skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
 
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfiguration = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
-  expect_equal(names(dataSetsFrame), c(
-    "name",
-    "xValues",
-    "yValues",
-    "yErrorValues",
-    "xDimension",
-    "xUnit",
-    "yDimension",
-    "yUnit",
-    "yErrorType",
-    "yErrorUnit",
-    "molWeight",
-    "lloq",
-    "Source",
-    "Sheet",
-    "Study Id",
-    "Organ",
-    "Compartment",
-    "Species",
-    "Gender",
-    "Molecule",
-    "Route",
-    "Subject Id",
-    "Dose",
-    "Group Id"
-  ))
+  expect_equal(
+    names(dataSetsFrame), c(
+      "name",
+      "xValues",
+      "yValues",
+      "yErrorValues",
+      "xDimension",
+      "xUnit",
+      "yDimension",
+      "yUnit",
+      "yErrorType",
+      "yErrorUnit",
+      "molWeight",
+      "lloq",
+      "Sheet",
+      "Study Id",
+      "Organ",
+      "Compartment",
+      "Species",
+      "Gender",
+      "Molecule",
+      "Route",
+      "Subject Id",
+      "Dose"
+    )
+  )
+})
+
+context("dataSetToTibble")
+
+dataSetName <- "NewDataSet"
+dataSet <- DataSet$new(name = dataSetName)
+
+test_that("It can convert an empty data set", {
+  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+  expect_equal(
+    dataSetToTibble(dataSet),
+    dplyr::tibble(
+      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
+      xDimension = character(0), xUnit = character(0), yDimension = character(0),
+      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
+      lloq = numeric(0)
+    )
+  )
 })

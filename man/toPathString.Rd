@@ -7,15 +7,15 @@
 toPathString(...)
 }
 \arguments{
-\item{...}{Path entries to concatenate into a path string}
+\item{...}{Path entries to concatenate into a path string.}
 }
 \value{
-A string built using each entry of the pathArray
+A string built using each entry of the pathArray.
 }
 \description{
 Convert a path array to a path as string with entries separated by '|'
 }
 \examples{
+toPathString(c("Organism", "Organ", "Liver"))
 
-path <- toPathString(c("Organism", "Organ", "Liver"))
 }

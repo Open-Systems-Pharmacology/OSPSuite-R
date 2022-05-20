@@ -128,7 +128,7 @@ Quantity <- R6::R6Class(
       validateIsNumeric(value)
       validateIsString(unit, nullAllowed = TRUE)
       if (!is.null(unit)) {
-        unit <- encodeUnit(unit)
+        unit <- .encodeUnit(unit)
         validateHasUnit(self, unit)
         value <- rClr::clrCallStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
       }
