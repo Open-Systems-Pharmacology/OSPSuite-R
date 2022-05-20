@@ -11,12 +11,12 @@ toPathArray(path)
 by '|'}
 }
 \value{
-An array containing one element for each path entry
+An array containing one element for each path entry.
 }
 \description{
 Convert a path defined as string to a path array
 }
 \examples{
+toPathArray("Organism|Organ|Liver")
 
-array <- toPathArray("Organism|Organ|Liver")
 }
