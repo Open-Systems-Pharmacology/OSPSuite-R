@@ -7,6 +7,8 @@
 R6 configuration class defining properties of plots that can be created with
 \code{plotIndividualTimeProfile()}, \code{plotPopulationTimeProfile()},
 \code{plotObservedVsSimulated()}, and \code{plotResidualsVsTime()}.
+
+The following sections provide more details on how to customize it further.
 }
 \section{Specifying aesthetic properties}{
 Aesthetic mappings describe how groups are mapped to visual properties
@@ -24,7 +26,7 @@ The supported values for each property can be seen using \code{{tlf}} lists:
 
 For example, all parameters related to color (\code{titleColor},
 \code{yAxisLabelTicksColor}, etc.) accept any of the palettes available in
-``tlf::ColorMaps\verb{(e.g.}tlf::ColorMaps$ospDefault`).
+\code{tlf::ColorMaps} (e.g. \code{tlf::ColorMaps$ospDefault}).
 
 Note that these are named lists, and, therefore, if you want to assign a
 specific element from a list to an object's public field, you will have to
@@ -34,7 +36,7 @@ For example, if you want to specify that the
 legend position should be outside the plot to the left and at bottom, you
 will have to do the following:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
 myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideBottomLeft
 }\if{html}{\out{</div>}}
 
@@ -43,7 +45,7 @@ also be an atomic vector. For example, if you want to assign a different line
 type to each group in a profile plot, you will have to assign a vector of
 line types.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlotConfiguration <- DefaultPlotConfiguration$new()
 myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
 }\if{html}{\out{</div>}}
 
@@ -73,7 +75,7 @@ The available font families will depend on which fonts have been installed on
 your computer. This information can be extracted by running the following
 code:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{# install.packages("systemfonts")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# install.packages("systemfonts")
 library(systemfonts)
 system_fonts()
 }\if{html}{\out{</div>}}
@@ -88,14 +90,11 @@ The available transformations can be seen in the \code{tlf::Scaling} list.
 
 \section{Saving plot}{
 By default, the plots will be shown in plot pane of your IDE, but the plots
-can also be saved to a file using the \code{tlf::exportPlot()} function.
+can also be saved to a file using the \code{ggplot2::ggsave()} function.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
-tlf::exportPlot(myPlot)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
+ggplot2::ggsave(filename = "plot_1.png", plot = myPlot)
 }\if{html}{\out{</div>}}
-
-By default, the plot will be saved in the current working directory and the
-file will be named \code{"figure.png"}.
 }
 
 \examples{

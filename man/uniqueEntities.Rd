@@ -14,7 +14,7 @@ Can take values 'id', 'name', and 'path'. Default is 'id'.}
 }
 \value{
 List of entities that are unique for the property defined by the
-argument 'compareBy'
+argument 'compareBy'.
 }
 \description{
 Extract Unique Elements of type 'Entity'
@@ -31,4 +31,5 @@ parameters <- c(
 
 # Return a list containing the two parameters 'Volume' and 'Weight (tissue)'
 uniqueEntities(parameters, CompareBy$id)
+
 }

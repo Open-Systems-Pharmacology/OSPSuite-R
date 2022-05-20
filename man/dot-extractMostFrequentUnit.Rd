@@ -27,8 +27,8 @@ df <- dplyr::tibble(
   molWeight = 10
 )
 
-ospsuite:::.extractMostFrequentUnit(df, unitColumn = xUnit)
-ospsuite:::.extractMostFrequentUnit(df, unitColumn = yUnit)
+ospsuite:::.extractMostFrequentUnit(df, unitColumn = "xUnit")
+ospsuite:::.extractMostFrequentUnit(df, unitColumn = "yUnit")
 
 }
 \keyword{internal}

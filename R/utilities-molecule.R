@@ -24,7 +24,7 @@
 #' molecules <- getAllMoleculesMatching("Organism|**|A", sim)
 #' @export
 getAllMoleculesMatching <- function(paths, container) {
-  getAllEntitiesMatching(paths, container, Molecule)
+  .getAllEntitiesMatching(paths, container, Molecule)
 }
 
 #' Retrieves the paths of all molecules defined in the container and all its children
@@ -42,7 +42,7 @@ getAllMoleculesMatching <- function(paths, container) {
 #' moleculePaths <- getAllMoleculePathsIn(sim)
 #' @export
 getAllMoleculePathsIn <- function(container) {
-  getAllEntityPathsIn(container, Molecule)
+  .getAllEntityPathsIn(container, Molecule)
 }
 
 #' Retrieve a single molecule by path in the given container
@@ -62,7 +62,7 @@ getAllMoleculePathsIn <- function(container) {
 #' molecule <- getMolecule("Organism|Liver|A", sim)
 #' @export
 getMolecule <- function(path, container, stopIfNotFound = TRUE) {
-  getEntity(path, container, Molecule, stopIfNotFound)
+  .getEntity(path, container, Molecule, stopIfNotFound)
 }
 
 #' Set molecule start values

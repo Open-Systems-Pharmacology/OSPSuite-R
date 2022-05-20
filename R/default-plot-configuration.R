@@ -6,7 +6,7 @@
 #' `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
 #' `plotObservedVsSimulated()`, and `plotResidualsVsTime()`.
 #'
-#' @details
+#' The following sections provide more details on how to customize it further.
 #'
 #' # Specifying aesthetic properties
 #'
@@ -24,7 +24,7 @@
 #'
 #' For example, all parameters related to color (`titleColor`,
 #' `yAxisLabelTicksColor`, etc.) accept any of the palettes available in
-#' ``tlf::ColorMaps` (e.g. `tlf::ColorMaps$ospDefault`).
+#' `tlf::ColorMaps` (e.g. `tlf::ColorMaps$ospDefault`).
 #'
 #' Note that these are named lists, and, therefore, if you want to assign a
 #' specific element from a list to an object's public field, you will have to
@@ -34,7 +34,7 @@
 #' legend position should be outside the plot to the left and at bottom, you
 #' will have to do the following:
 #'
-#' ```
+#' ```r
 #' myPlotConfiguration <- DefaultPlotConfiguration$new()
 #' myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideBottomLeft
 #' ```
@@ -44,7 +44,7 @@
 #' type to each group in a profile plot, you will have to assign a vector of
 #' line types.
 #'
-#' ```
+#' ```r
 #' myPlotConfiguration <- DefaultPlotConfiguration$new()
 #' myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
 #' ```
@@ -75,7 +75,7 @@
 #' your computer. This information can be extracted by running the following
 #' code:
 #'
-#' ```
+#' ```r
 #' # install.packages("systemfonts")
 #' library(systemfonts)
 #' system_fonts()
@@ -91,15 +91,12 @@
 #' # Saving plot
 #'
 #' By default, the plots will be shown in plot pane of your IDE, but the plots
-#' can also be saved to a file using the `tlf::exportPlot()` function.
+#' can also be saved to a file using the `ggplot2::ggsave()` function.
 #'
-#' ```
+#' ```r
 #' myPlot <- plotIndividualTimeProfile(myDataComb, myPC)
-#' tlf::exportPlot(myPlot)
+#' ggplot2::ggsave(filename = "plot_1.png", plot = myPlot)
 #' ```
-#'
-#' By default, the plot will be saved in the current working directory and the
-#' file will be named `"figure.png"`.
 #'
 #' @field xUnit,yUnit Units for quantities plotted on x- and y-axes, respectively.
 #' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character

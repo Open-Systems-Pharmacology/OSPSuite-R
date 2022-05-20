@@ -145,6 +145,21 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dataSetToDataFrame.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DefaultPlotConfiguration.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-addMissingGroupings.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-createAxesLabels.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-encodeUnit.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractMostFrequentUnit.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getConcurrentSimulationRunnerResults.html</loc>
   </url>
   <url>
@@ -169,13 +184,19 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-netEnumName.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-removeEmptyDataFrame.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-removeUnpairableDatasets.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-toObjectType.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DotNetWrapper.html</loc>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-unitConverter.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/encodeUnit.html</loc>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DotNetWrapper.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Entity.html</loc>
@@ -407,6 +428,12 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/PKParameterSensitivity.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotIndividualTimeProfile.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPopulationTimeProfile.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Population.html</loc>
