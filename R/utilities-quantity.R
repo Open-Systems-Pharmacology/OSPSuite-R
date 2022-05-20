@@ -30,7 +30,7 @@
 #' quantities <- getAllQuantitiesMatching("Organism|**|Volume", sim)
 #' @export
 getAllQuantitiesMatching <- function(paths, container) {
-  getAllEntitiesMatching(paths, container, Quantity)
+  .getAllEntitiesMatching(paths, container, Quantity)
 }
 
 #' Retrieves the path of all quantities defined in the container and all its children
@@ -50,7 +50,7 @@ getAllQuantitiesMatching <- function(paths, container) {
 #' quantityPaths <- getAllQuantityPathsIn(sim)
 #' @export
 getAllQuantityPathsIn <- function(container) {
-  getAllEntityPathsIn(container, Quantity)
+  .getAllEntityPathsIn(container, Quantity)
 }
 
 #' Retrieve a single quantity by path in the given container
@@ -70,7 +70,7 @@ getAllQuantityPathsIn <- function(container) {
 #' quantity <- getQuantity("Organism|Liver|Volume", sim)
 #' @export
 getQuantity <- function(path, container, stopIfNotFound = TRUE) {
-  getEntity(path, container, Quantity, stopIfNotFound)
+  .getEntity(path, container, Quantity, stopIfNotFound)
 }
 
 

@@ -23,7 +23,7 @@
 #' containers <- getAllContainersMatching("Organism|**|Intracellular", sim)
 #' @export
 getAllContainersMatching <- function(paths, container) {
-  getAllEntitiesMatching(paths, container, Container)
+  .getAllEntitiesMatching(paths, container, Container)
 }
 
 #' Retrieves the path of all containers defined in the container and all its children
@@ -41,7 +41,7 @@ getAllContainersMatching <- function(paths, container) {
 #' moleculePaths <- getAllContainerPathsIn(sim)
 #' @export
 getAllContainerPathsIn <- function(container) {
-  getAllEntityPathsIn(container, Container)
+  .getAllEntityPathsIn(container, Container)
 }
 
 
@@ -62,5 +62,5 @@ getAllContainerPathsIn <- function(container) {
 #' container <- getContainer("Organism|Liver", sim)
 #' @export
 getContainer <- function(path, container, stopIfNotFound = TRUE) {
-  getEntity(path, container, Container, stopIfNotFound)
+  .getEntity(path, container, Container, stopIfNotFound)
 }

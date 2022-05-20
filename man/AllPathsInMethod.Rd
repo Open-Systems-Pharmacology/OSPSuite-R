@@ -3,7 +3,7 @@
 \docType{data}
 \name{AllPathsInMethod}
 \alias{AllPathsInMethod}
-\title{Names of the .NET container tasks of the type "AllXXXPathsIn"}
+\title{Names of the \code{.NET} container tasks of the type \code{"AllXXXPathsIn"}}
 \format{
 An object of class \code{list} of length 4.
 }
@@ -11,6 +11,6 @@ An object of class \code{list} of length 4.
 AllPathsInMethod
 }
 \description{
-Names of the .NET container tasks of the type "AllXXXPathsIn"
+Names of the \code{.NET} container tasks of the type \code{"AllXXXPathsIn"}
 }
 \keyword{internal}
