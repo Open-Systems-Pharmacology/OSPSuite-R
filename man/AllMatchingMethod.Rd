@@ -3,7 +3,7 @@
 \docType{data}
 \name{AllMatchingMethod}
 \alias{AllMatchingMethod}
-\title{Names of the .NET container tasks of the type "AllXXXMatching"}
+\title{Names of the \code{.NET} container tasks of the type \code{"AllXXXMatching"}}
 \format{
 An object of class \code{list} of length 4.
 }
@@ -11,6 +11,6 @@ An object of class \code{list} of length 4.
 AllMatchingMethod
 }
 \description{
-Names of the .NET container tasks of the type "AllXXXMatching"
+Names of the \code{.NET} container tasks of the type \code{"AllXXXMatching"}
 }
 \keyword{internal}

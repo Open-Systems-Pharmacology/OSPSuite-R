@@ -492,7 +492,7 @@ getStandardMoleculeParameters <- function(moleculeName, simulation) {
 #' @export
 getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
   validateIsOfType(simulation, "Simulation")
-  getAllEntitiesMatching(
+  .getAllEntitiesMatching(
     paths = paths,
     container = simulation,
     entityType = Parameter,
@@ -511,7 +511,7 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 getAllStateVariablesPaths <- function(simulation) {
   validateIsOfType(simulation, type = "Simulation")
   allMoleculesPaths <- getAllMoleculePathsIn(container = simulation)
-  allStateVariableParamsPaths <- getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
+  allStateVariableParamsPaths <- .getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
   allQantitiesPaths <- append(allMoleculesPaths, allStateVariableParamsPaths)
   return(allQantitiesPaths)
 }
