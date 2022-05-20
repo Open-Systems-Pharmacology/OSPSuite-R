@@ -5,7 +5,22 @@
 \alias{Cache}
 \title{Cache}
 \description{
-Structure for caching objects
+A class that provides structure for caching objects.
+}
+\examples{
+# Create a new instance of the class
+myCache <- ospsuite:::Cache$new()
+
+# Adding new key-value pairs
+myCache$set("data1", iris)
+myCache$set("data2", BOD)
+
+# Print to see the current pairs
+myCache
+
+# Get value using a key
+myCache$get("data2")
+
 }
 \keyword{internal}
 \section{Public fields}{

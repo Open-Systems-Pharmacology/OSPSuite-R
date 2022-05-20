@@ -1,6 +1,21 @@
 #' @title Cache
 #' @docType class
-#' @description Structure for caching objects
+#' @description A class that provides structure for caching objects.
+#'
+#' @examples
+#' # Create a new instance of the class
+#' myCache <- ospsuite:::Cache$new()
+#'
+#' # Adding new key-value pairs
+#' myCache$set("data1", iris)
+#' myCache$set("data2", BOD)
+#'
+#' # Print to see the current pairs
+#' myCache
+#'
+#' # Get value using a key
+#' myCache$get("data2")
+#'
 #' @keywords internal
 Cache <- R6::R6Class(
   "Cache",
@@ -54,6 +69,7 @@ Cache <- R6::R6Class(
     #' @param key Key used to find the value to remove. If the key is not found, nothing happens.
     dropKey = function(key) {
       key <- toString(key)
+
       if (self$hasKey(key)) {
         rm(list = key, envir = private$cachedObjects, inherits = FALSE)
       }
@@ -68,6 +84,7 @@ Cache <- R6::R6Class(
       lapply(self$keys, function(key) {
         cat(key, "\n", sep = "")
       })
+
       invisible(self)
     }
   ),
@@ -90,9 +107,11 @@ Cache <- R6::R6Class(
       if (is.null(self$type)) {
         return()
       }
+
       if (isOfType(object, self$type)) {
         return()
       }
+
       # Name of the variable in the calling function
       objectName <- deparse(substitute(object))
       stop(messages$errorWrongCacheType(objectName, self$type))
