@@ -24,7 +24,7 @@ test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Co
   labels <- .createAxesLabels(.unitConverter(df), TimeProfilePlotConfiguration$new())
 
   expect_equal(labels$xLabel, "Time [min]")
-  expect_equal(labels$yLabel, "Concentration [mol/ml]")
+  expect_equal(labels$yLabel, "Concentration")
 })
 
 
@@ -47,5 +47,5 @@ test_that("It works correctly when multiple dimensions are present", {
   labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
 
   expect_equal(labs$xLabel, "Time [h]")
-  expect_equal(labs$yLabel, "Concentration [mg/l]")
+  expect_equal(labs$yLabel, "Concentration")
 })

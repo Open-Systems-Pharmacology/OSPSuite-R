@@ -200,9 +200,10 @@
   yDimensionString <- unique(data$yDimension)[[1]]
 
   # Currently, hard code any of the different concentration dimensions to just
-  # one dimension: "Concentration"
+  # one dimension: "Concentration" and also don't show units in axes labels.
   #
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/974
   concDimensions <- c(
     ospDimensions$`Concentration (mass)`,
     ospDimensions$`Concentration (molar)`
@@ -210,10 +211,12 @@
 
   if (any(xDimensionString %in% concDimensions)) {
     xDimensionString <- "Concentration"
+    xUnitString <- ""
   }
 
   if (any(yDimensionString %in% concDimensions)) {
     yDimensionString <- "Concentration"
+    yUnitString <- ""
   }
 
   # If quantities are unitless, no unit information will be displayed.

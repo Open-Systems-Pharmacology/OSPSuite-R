@@ -1,4 +1,12 @@
-# ospsuite 11.0 (development version)
+# ospsuite 12.0 (development version)
+
+## MINOR CHANGES
+
+* When the quantity dimensions are "Concentration (molar)" or "Concentration
+  (mass)" in datasets entered in `DataCombined` objects, the plotting functions
+  now display axes labels without units.
+
+# ospsuite 11.0
 
 ## New features
 
