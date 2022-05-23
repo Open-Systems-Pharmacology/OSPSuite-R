@@ -28,38 +28,26 @@ test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Co
 })
 
 
-concDataSet <- DataSet$new(name = "Concentration data set")
-concDataSet$setValues(1, 1)
-concDataSet$yDimension <- ospDimensions$`Concentration (molar)`
-concDataSet$molWeight <- 1
-
-amountDataSet <- DataSet$new(name = "Amount data set")
-amountDataSet$setValues(1, 1)
-amountDataSet$yDimension <- ospDimensions$`Concentration (mass)`
-amountDataSet$molWeight <- 1
-
-myCombDat <- DataCombined$new()
-myCombDat$addDataSets(c(concDataSet, amountDataSet))
-
-test_that("It works correctly when multiple dimensions are present and max frequency is a tie", {
-  # ties for the maximum frequency
-
-
-  df <- myCombDat$toDataFrame()
-
-  labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
-
-  expect_equal(labs$xLabel, "Time [h]")
-  expect_equal(labs$yLabel, .encodeUnit("Concentration [µmol/l]"))
-})
-
 test_that("It works correctly when multiple dimensions are present and max frequency is not a tie", {
-  amountDataSet2 <- DataSet$new(name = "Amount data set 2")
-  amountDataSet2$setValues(1, 1)
-  amountDataSet2$yDimension <- ospDimensions$`Concentration (mass)`
-  amountDataSet2$molWeight <- 1
+  concentrationMolarDataSet <- DataSet$new(name = "Concentration data set")
+  concentrationMolarDataSet$setValues(1, 1)
+  concentrationMolarDataSet$yDimension <- ospDimensions$`Concentration (molar)`
+  concentrationMolarDataSet$molWeight <- 1
 
-  myCombDat$addDataSets(amountDataSet2)
+  concentrationMassDataSet <- DataSet$new(name = "Amount data set")
+  concentrationMassDataSet$setValues(1, 1)
+  concentrationMassDataSet$yDimension <- ospDimensions$`Concentration (mass)`
+  concentrationMassDataSet$molWeight <- 1
+
+  concentrationMassDataSet2 <- DataSet$new(name = "Amount data set 2")
+  concentrationMassDataSet2$setValues(1, 1)
+  concentrationMassDataSet2$yDimension <- ospDimensions$`Concentration (mass)`
+  concentrationMassDataSet2$molWeight <- 1
+
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(c(concentrationMolarDataSet, concentrationMassDataSet, concentrationMassDataSet2))
+
+  myCombDat$addDataSets(concentrationMassDataSet2)
 
   df <- myCombDat$toDataFrame()
   labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
