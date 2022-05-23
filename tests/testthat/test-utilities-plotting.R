@@ -47,8 +47,6 @@ test_that("It works correctly when multiple dimensions are present and max frequ
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(c(concentrationMolarDataSet, concentrationMassDataSet, concentrationMassDataSet2))
 
-  myCombDat$addDataSets(concentrationMassDataSet2)
-
   df <- myCombDat$toDataFrame()
   labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
 
