@@ -686,14 +686,15 @@ initializeDimensionAndUnitLists <- function() {
 
   mostFrequentUnit <- unitUsageFrequency %>%
     # Select only the row(s) with maximum frequency.
-    dplyr::filter(unitFrequency == max(unitFrequency)) %>%
-    # In case of ties, there will be more than one row. In such cases, the first
-    # unit is selected.
+    #
+    # In case of ties, there can be more than one row. In such cases, setting
+    # `with_ties = FALSE` make sure that only the first row (and the
+    # corresponding) unit will be selected.
     #
     # Do *not* select randomly as that would introduce randomness in plotting
     # functions with each run of the plotting function defaulting to a different
     # unit.
-    dplyr::slice_head(n = 1L) %>%
+    dplyr::slice_max(unitFrequency, n = 1L, with_ties = FALSE) %>%
     # Remove the frequency column, which is not useful outside the context of
     # this function.
     dplyr::select(-unitFrequency)
