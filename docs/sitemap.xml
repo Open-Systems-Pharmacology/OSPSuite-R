@@ -160,7 +160,16 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractMostFrequentUnit.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getAllEntitiesMatching.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getAllEntityPathsIn.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getConcurrentSimulationRunnerResults.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getEntity.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getNetTask.html</loc>
@@ -232,12 +241,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllContainersMatching.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllEntitiesMatching.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllEntityPathsIn.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllMoleculePathsIn.html</loc>
   </url>
   <url>
@@ -281,9 +284,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getDimensionTask.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getEntity.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getMolecule.html</loc>

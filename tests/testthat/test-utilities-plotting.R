@@ -12,11 +12,11 @@ df <- dplyr::tibble(
   molWeight = c(10, 10, 20, 20, 10, 10)
 )
 
-test_that("It returns NULL when arguments are missing", {
+test_that("It returns `NULL` when arguments are missing", {
   expect_null(.createAxesLabels(df))
 })
 
-test_that("It returns NULL when data frame is empty", {
+test_that("It returns `NULL` when data frame is empty", {
   expect_null(.createAxesLabels(data.frame(), TimeProfilePlotConfiguration$new()))
 })
 
@@ -28,22 +28,26 @@ test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Co
 })
 
 
-test_that("It works correctly when multiple dimensions are present", {
-  concDataSet <- DataSet$new(name = "Concentration data set")
-  concDataSet$setValues(1, 1)
-  concDataSet$yDimension <- ospDimensions$`Concentration (molar)`
-  concDataSet$molWeight <- 1
+test_that("It works correctly when multiple dimensions are present and max frequency is not a tie", {
+  concentrationMolarDataSet <- DataSet$new(name = "Concentration data set")
+  concentrationMolarDataSet$setValues(1, 1)
+  concentrationMolarDataSet$yDimension <- ospDimensions$`Concentration (molar)`
+  concentrationMolarDataSet$molWeight <- 1
 
-  amountDataSet <- DataSet$new(name = "Amount data set")
-  amountDataSet$setValues(1, 1)
-  amountDataSet$yDimension <- ospDimensions$`Concentration (mass)`
-  amountDataSet$molWeight <- 1
+  concentrationMassDataSet <- DataSet$new(name = "Amount data set")
+  concentrationMassDataSet$setValues(1, 1)
+  concentrationMassDataSet$yDimension <- ospDimensions$`Concentration (mass)`
+  concentrationMassDataSet$molWeight <- 1
+
+  concentrationMassDataSet2 <- DataSet$new(name = "Amount data set 2")
+  concentrationMassDataSet2$setValues(1, 1)
+  concentrationMassDataSet2$yDimension <- ospDimensions$`Concentration (mass)`
+  concentrationMassDataSet2$molWeight <- 1
 
   myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(c(concDataSet, amountDataSet))
+  myCombDat$addDataSets(c(concentrationMolarDataSet, concentrationMassDataSet, concentrationMassDataSet2))
 
   df <- myCombDat$toDataFrame()
-
   labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
 
   expect_equal(labs$xLabel, "Time [h]")

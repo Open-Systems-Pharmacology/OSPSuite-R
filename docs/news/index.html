@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">11.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">11.0.123</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,9 +66,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="11.0" id="ospsuite-110-development-version">ospsuite 11.0 (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-110-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="11.0.123" id="ospsuite-110123">ospsuite 11.0.123<a class="anchor" aria-label="anchor" href="#ospsuite-110123"></a></h2>
 <div class="section level3">
-<h3 id="new-features-11-0">New features<a class="anchor" aria-label="anchor" href="#new-features-11-0"></a></h3>
+<h3 id="new-features-11-0-123">New features<a class="anchor" aria-label="anchor" href="#new-features-11-0-123"></a></h3>
 <ul><li><p>Adds new <code>DataCombined</code> class that combines observed data (<code>DataSet</code>) and simulated data (<code>SimulationResults</code>) into a single object. Especially important is the <code>$toDataFrame()</code> method of this object that returns a data frame containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.</p></li>
 <li>
 <p>Adds new visualization functions:</p>
@@ -80,7 +80,7 @@
 <li><p>All <code>*ToDataFrame()</code> functions also get <code>*ToTibble()</code> variants to extract a tibble data frame instead of a classical data frame.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="major-changes-11-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-0"></a></h3>
+<h3 id="major-changes-11-0-123">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-0-123"></a></h3>
 <ul><li>
 <p>Following functions are marked for deprecation and will be removed in future releases:</p>
 <ul><li><p><code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> is now <code><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame()</a></code></p></li>
@@ -88,7 +88,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="breaking-changes-11-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-11-0"></a></h3>
+<h3 id="breaking-changes-11-0-123">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-11-0-123"></a></h3>
 <ul><li><p>Signature for <code>toUnit</code> function has changed. <code>molWeight</code> is now the fifth, while <code>sourceUnit</code> is the fourth parameter (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/837" class="external-link">#837</a>).</p></li>
 <li><p><code>DataImporterConfiguration</code>: fields <code>timeUnitFromColumn</code> and <code>measurementUnitFromColumn</code> are renamed to <code>isTimeUnitFromColumn</code> and <code>isMeasurementUnitFromColumn</code></p></li>
 <li><p>The constructor for <code>DataImporterConfiguration</code> does not accept a path to a configuration file any more. Use the function <code><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration()</a></code> to create a configuration object from a file.</p></li>

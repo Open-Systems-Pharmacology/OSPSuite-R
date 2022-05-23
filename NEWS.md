@@ -1,4 +1,6 @@
-# ospsuite 11.0 (development version)
+# ospsuite 12.0 (development version)
+
+# ospsuite 11.0.123
 
 ## New features
 
