@@ -1249,7 +1249,23 @@ test_that("scalar argument to `groups` works as expected", {
     c(dataSet1, dataSet2, dataSet3),
     groups = "myGroup"
   )
-  groupDf <- myCombDatWithOnlyDataSets$groupMap
 
-  expect_equal(unique(groupDf$group), "myGroup")
+  expect_equal(
+    unique(myCombDatWithOnlyDataSets$groupMap$group),
+    "myGroup"
+  )
+})
+
+
+test_that("scalar argument in a list to `groups` works as expected", {
+  myCombDatWithOnlyDataSets2 <- DataCombined$new()
+  myCombDatWithOnlyDataSets2$addDataSets(
+    c(dataSet1, dataSet2, dataSet3),
+    groups = list("myGroup")
+  )
+
+  expect_equal(
+    unique(myCombDatWithOnlyDataSets2$groupMap$group),
+    "myGroup"
+  )
 })
