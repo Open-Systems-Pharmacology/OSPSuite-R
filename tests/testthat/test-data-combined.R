@@ -1225,3 +1225,31 @@ test_that("data frame metadata column entries are as expected when `DataSet` wit
   expect_equal(unique(df$Compartment), "Intracellular")
   expect_equal(unique(df$Species), "Human")
 })
+
+# Scalar groups specification -----------------------------
+
+dataSet1 <- DataSet$new(name = "Dataset1")
+dataSet1$setValues(1, 1)
+dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
+dataSet1$molWeight <- 1
+
+dataSet2 <- DataSet$new(name = "Dataset2")
+dataSet2$setValues(2, 2)
+dataSet2$yDimension <- ospDimensions$`Concentration (mass)`
+dataSet2$molWeight <- 1
+
+dataSet3 <- DataSet$new(name = "Dataset3")
+dataSet3$setValues(1, 3)
+dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
+dataSet3$molWeight <- 1
+
+test_that("scalar argument to `groups` works as expected", {
+  myCombDatWithOnlyDataSets <- DataCombined$new()
+  myCombDatWithOnlyDataSets$addDataSets(
+    c(dataSet1, dataSet2, dataSet3),
+    groups = "myGroup"
+  )
+  groupDf <- myCombDatWithOnlyDataSets$groupMap
+
+  expect_equal(unique(groupDf$group), "myGroup")
+})
