@@ -161,7 +161,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     title = NULL,
     titleColor = "black",
-    titleSize = PlotAnnotationTextSize$plotTitleSize,
+    titleSize = tlf::PlotAnnotationTextSize$plotTitleSize,
     titleFontFace = tlf::FontFaces$plain,
     titleFontFamily = "",
     titleAngle = 0,
@@ -171,7 +171,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     subtitle = NULL,
     subtitleColor = "black",
-    subtitleSize = PlotAnnotationTextSize$plotSubtitleSize,
+    subtitleSize = tlf::PlotAnnotationTextSize$plotSubtitleSize,
     subtitleFontFace = tlf::FontFaces$plain,
     subtitleFontFamily = "",
     subtitleAngle = 0,
@@ -181,7 +181,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     caption = NULL,
     captionColor = "black",
-    captionSize = PlotAnnotationTextSize$plotCaptionSize,
+    captionSize = tlf::PlotAnnotationTextSize$plotCaptionSize,
     captionFontFace = tlf::FontFaces$plain,
     captionFontFamily = "",
     captionAngle = 0,
@@ -191,7 +191,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     xLabel = NULL,
     xLabelColor = "black",
-    xLabelSize = PlotAnnotationTextSize$plotXLabelSize,
+    xLabelSize = tlf::PlotAnnotationTextSize$plotXLabelSize,
     xLabelFontFace = tlf::FontFaces$plain,
     xLabelFontFamily = "",
     xLabelAngle = 0,
@@ -201,7 +201,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     yLabel = NULL,
     yLabelColor = "black",
-    yLabelSize = PlotAnnotationTextSize$plotYLabelSize,
+    yLabelSize = tlf::PlotAnnotationTextSize$plotYLabelSize,
     yLabelFontFace = tlf::FontFaces$plain,
     yLabelFontFamily = "",
     yLabelAngle = 90,
@@ -211,7 +211,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     legendPosition = NULL,
     legendTitle = NULL,
-    legendTitleSize = PlotAnnotationTextSize$plotLegendTitleSize,
+    legendTitleSize = tlf::PlotAnnotationTextSize$plotLegendTitleSize,
     legendTitleColor = "black",
     legendTitleFontFamily = "",
     legendTitleFontFace = tlf::FontFaces$plain,
@@ -220,7 +220,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # legendCaption ------------------------------------
 
-    legendCaptionSize = PlotAnnotationTextSize$plotLegendCaptionSize,
+    legendCaptionSize = tlf::PlotAnnotationTextSize$plotLegendCaptionSize,
     legendCaptionColor = "black",
     legendCaptionFontFamily = "",
     legendCaptionFontFace = tlf::FontFaces$plain,
@@ -256,7 +256,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # watermark ------------------------------------
 
     watermark = NULL,
-    watermarkSize = 20,
+    watermarkSize = tlf::PlotAnnotationTextSize$plotWatermarkSize,
     watermarkColor = "grey40",
     watermarkFontFamily = "",
     watermarkFontFace = tlf::FontFaces$plain,
