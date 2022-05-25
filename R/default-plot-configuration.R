@@ -161,7 +161,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     title = NULL,
     titleColor = "black",
-    titleSize = 12,
+    titleSize = PlotAnnotationTextSize$plotTitleSize,
     titleFontFace = tlf::FontFaces$plain,
     titleFontFamily = "",
     titleAngle = 0,
@@ -171,7 +171,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     subtitle = NULL,
     subtitleColor = "black",
-    subtitleSize = 10,
+    subtitleSize = PlotAnnotationTextSize$plotSubtitleSize,
     subtitleFontFace = tlf::FontFaces$plain,
     subtitleFontFamily = "",
     subtitleAngle = 0,
@@ -181,7 +181,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     caption = NULL,
     captionColor = "black",
-    captionSize = 8,
+    captionSize = PlotAnnotationTextSize$plotCaptionSize,
     captionFontFace = tlf::FontFaces$plain,
     captionFontFamily = "",
     captionAngle = 0,
@@ -191,7 +191,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     xLabel = NULL,
     xLabelColor = "black",
-    xLabelSize = 10,
+    xLabelSize = PlotAnnotationTextSize$plotXLabelSize,
     xLabelFontFace = tlf::FontFaces$plain,
     xLabelFontFamily = "",
     xLabelAngle = 0,
@@ -201,7 +201,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     yLabel = NULL,
     yLabelColor = "black",
-    yLabelSize = 10,
+    yLabelSize = PlotAnnotationTextSize$plotYLabelSize,
     yLabelFontFace = tlf::FontFaces$plain,
     yLabelFontFamily = "",
     yLabelAngle = 90,
@@ -211,7 +211,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     legendPosition = NULL,
     legendTitle = NULL,
-    legendTitleSize = 10,
+    legendTitleSize = PlotAnnotationTextSize$plotLegendTitleSize,
     legendTitleColor = "black",
     legendTitleFontFamily = "",
     legendTitleFontFace = tlf::FontFaces$plain,
@@ -220,7 +220,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # legendCaption ------------------------------------
 
-    legendCaptionSize = 10,
+    legendCaptionSize = PlotAnnotationTextSize$plotLegendCaptionSize,
     legendCaptionColor = "black",
     legendCaptionFontFamily = "",
     legendCaptionFontFace = tlf::FontFaces$plain,
