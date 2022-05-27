@@ -366,7 +366,7 @@
   # For `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`
   if (plotType == "TimeProfilePlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% names(tlf::Linetypes)
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$solid
   }
 
   # For `plotObservedVsSimulated()`
