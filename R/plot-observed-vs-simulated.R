@@ -2,6 +2,7 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotObsVsPred
+#' @param foldDistance A vector for plotting lines at required fold differences.
 #'
 #' @import tlf
 #'
@@ -14,8 +15,8 @@
 #' @export
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
-                                    smoother = NULL,
-                                    lines = NULL) {
+                                    smoother = "lm",
+                                    foldDistance = c(0, 1.5, 2)) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
@@ -78,12 +79,6 @@ plotObservedVsSimulated <- function(dataCombined,
   obsVsPredPlotConfiguration$labels$xlabel$text <- obsVsPredPlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
   obsVsPredPlotConfiguration$labels$ylabel$text <- obsVsPredPlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
 
-  if (is.null(lines)) {
-    # lines <- list(0, c(-2, 2))
-    # list("solid", c("dashed"))
-    lines <- list(0)
-  }
-
   # plot -----------------------------
 
   tlf::plotObsVsPred(
@@ -92,7 +87,8 @@ plotObservedVsSimulated <- function(dataCombined,
       x = "obsValue",
       y = "predValue",
       group = "group",
-      lines = lines
+      lines = NULL#,
+      #lines = tlfNewFunction(foldDistance) # TODO
     ),
     smoother = smoother,
     plotConfiguration = obsVsPredPlotConfiguration

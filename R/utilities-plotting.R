@@ -367,12 +367,16 @@
   if (plotType == "TimeProfilePlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$solid
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
   }
 
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
   }
 
   # labels object ---------------------------------------

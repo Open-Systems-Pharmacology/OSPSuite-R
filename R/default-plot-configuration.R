@@ -230,7 +230,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
-    xAxisScale = tlf::Scaling$lin,
+    xAxisScale = NULL,
     xAxisTicks = NULL,
     xAxisTicksLabels = identity,
     xAxisLabelTicksSize = NULL,
@@ -243,7 +243,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
-    yAxisScale = tlf::Scaling$lin,
+    yAxisScale = NULL,
     yAxisTicks = NULL,
     yAxisTicksLabels = identity,
     yAxisLabelTicksSize = NULL,
