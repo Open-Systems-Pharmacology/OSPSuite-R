@@ -459,6 +459,18 @@ initializeDimensionAndUnitLists <- function() {
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
 
+  # early return --------------------------
+
+  # Return early if there are only unique units present in the provided data and
+  # `xUnit` and `yUnit` arguments are `NULL`. This helps avoid expensive and
+  # redundant computations.
+  #
+  # *DO NOT* use short-circuiting `&&` logical operator here.
+  if (length(unique(data$xUnit)) == 1L & is.null(xUnit) &
+    length(unique(data$yUnit)) == 1L & is.null(yUnit)) {
+    return(data)
+  }
+
   # target units --------------------------
 
   # The observed and simulated data should have the same units for
