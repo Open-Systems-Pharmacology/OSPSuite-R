@@ -216,6 +216,22 @@ dfError <- dplyr::tibble(
   molWeight = 10
 )
 
+# early return  -------------------
+
+dfEarly <- dplyr::tibble(
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(25, 45, 78),
+  yUnit = "%",
+  yDimension = "Fraction",
+  molWeight = 10
+)
+
+test_that("returns early if there are only unique units and arguments are `NULL`", {
+  expect_equal(dfEarly, .unitConverter(dfEarly))
+})
+
 # default conversion -------------------
 
 dfConvert <- .unitConverter(df)

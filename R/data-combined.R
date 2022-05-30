@@ -223,13 +223,25 @@ DataCombined <- R6::R6Class(
       # Sanitize vector arguments of `character` type
       names <- .cleanVectorArgs(names, type = "character")
       groups <- .cleanVectorArgs(groups, type = "character")
-      validateIsSameLength(names, groups)
+
+      # `names` and `groups` need to be of the same length only if each dataset
+      # is assigned to a different group. But it is possible that the users
+      # assign all entered datasets to the same group.
+      #
+      # In the latter case, `groups` argument can be a scalar (length 1, i.e.)
+      # and we don't need to check that names and groups are of the same length.
+      if (length(groups) > 1L) {
+        validateIsSameLength(names, groups)
+      }
+
+      # All entered datasets should be unique and their unique identity is
+      # their name.
       validateHasOnlyDistinctValues(names)
 
       # Extract groupings and dataset names in a data frame.
       #
       # `purrr::simplify()` will simplify input vector (which can be an atomic
-      # vector or a list) to an atomic vector, and covers both of these
+      # vector or a list) to an atomic vector. This will cover both of these
       # contexts:
       # - `names/groups = c(...)`
       # - `names/groups = list(...)`
