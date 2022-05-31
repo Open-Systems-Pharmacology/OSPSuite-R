@@ -33,7 +33,7 @@ From CRAN:
 
 - [dplyr](https://cran.r-project.org/web/packages/dplyr/index.html)
 - [purrr](https://cran.r-project.org/web/packages/purrr/index.html)
-- [R6](https://github.com/r-lib/R6)
+- [R6](https://cran.r-project.org/web/packages/R6/index.html)
 - [readr](https://cran.r-project.org/web/packages/readr/index.html)
 - [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
 - [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)
