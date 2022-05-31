@@ -44,7 +44,7 @@ Must be downloaded manually:
   - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip)
   - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
 
-- [tlf](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.3.66/tlf_1.3.66.tar.gz)
+- [tlf](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.3.66/tlf_1.3.66.zip)
 
 - [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip)
 
