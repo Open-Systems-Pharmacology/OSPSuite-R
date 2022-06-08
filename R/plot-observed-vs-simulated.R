@@ -87,9 +87,9 @@ plotObservedVsSimulated <- function(dataCombined,
       x = "obsValue",
       y = "predValue",
       group = "group",
-      lines = NULL#,
-      #lines = tlfNewFunction(foldDistance) # TODO
+      lines = NULL
     ),
+    foldDistance = foldDistance,
     smoother = smoother,
     plotConfiguration = obsVsPredPlotConfiguration
   )
