@@ -17,4 +17,16 @@ points.}
 \description{
 Created observed versus simulated paired data
 }
+\examples{
+
+# create an example data frame
+df <- dplyr::tibble(
+  dataType = c(rep("observed", 5), rep("simulated", 3)),
+  xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
+  yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8)
+)
+
+ospsuite:::.createObsVsPredData(df, tolerance = 0.01)
+
+}
 \keyword{internal}

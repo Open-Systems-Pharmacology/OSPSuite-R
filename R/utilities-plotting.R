@@ -259,9 +259,22 @@
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has been
 #'   further tidied using `.removeUnpairableDatasets()` and then
 #'   `.unitConverter()` functions.
+#' @param tolerance Tolerance of comparison for observed and simulated time
+#'   points.
+#'
+#' @examples
+#'
+#' # create an example data frame
+#' df <- dplyr::tibble(
+#'   dataType = c(rep("observed", 5), rep("simulated", 3)),
+#'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
+#'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8)
+#' )
+#'
+#' ospsuite:::.createObsVsPredData(df, tolerance = 0.01)
 #'
 #' @keywords internal
-.createObsVsPredData <- function(data) {
+.createObsVsPredData <- function(data, tolerance = 0.001) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
@@ -318,8 +331,8 @@
   }
 
   # Figure out time points where both observed and simulated data were sampled.
-  obsExactMatchIndices <- which(obsTime %in% simTime)
-  simExactMatchIndices <- which(simTime %in% obsTime)
+  obsExactMatchIndices <- .extractMatchingIndices(obsTime, simTime, tolerance)
+  simExactMatchIndices <- .extractMatchingIndices(simTime, obsTime, tolerance)
 
   # For exactly matched time points, there is no need for interpolation.
   predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
@@ -334,6 +347,53 @@
 
   return(pairedData)
 }
+
+#' Custom function to extract matching indices
+#'
+#' @description
+#'
+#' None of the base equality/match operators (`%in%`, `==`, `all.equal`) allow
+#' tolerance for comparing two numeric values. Therefore, `dplyr::near()` is
+#' used.
+#'
+#' But even `dplyr::near()` is not up to the task because it carries out vector
+#' comparison element-wise, whereas what is needed is `match()`-like behavior,
+#' where each element in the first vector is compared against all values in the
+#' second vector for equality.
+#'
+#' This custom function does exactly this.
+#'
+#' @inheritParams dplyr::near
+#' @inheritParams .createObsVsPredData
+#'
+#' @examples
+#'
+#' ospsuite:::.extractMatchingIndices(c(1, 2), c(1.001, 3, 4))
+#' ospsuite:::.extractMatchingIndices(c(1, 2), c(1.001, 3, 4), tolerance = 0.00001)
+#' ospsuite:::.extractMatchingIndices(c(1, 2), c(3, 4))
+#'
+#' @keywords internal
+.extractMatchingIndices <- function(x, y, tolerance = 0.001) {
+  # Vectorize `dplyr::near()` function only over the `y` argument.
+  # Note that that `Vectorize()` is a function operator and will return a function.
+  customNear <- Vectorize(dplyr::near, vectorize.args = c("y"), SIMPLIFY = FALSE)
+
+  # Apply the vectorized function to the two vectors and then check where the
+  # comparisons are equal (i.e. `TRUE`) using `which()`.
+  #
+  # Use `compact()` to remove empty elements from the resulting list.
+  index_list <- purrr::compact(purrr::map(customNear(x, y, tol = tolerance), which))
+
+  # If there are any matches, return the indices as an atomic vector of integers.
+  if (length(index_list) > 0L) {
+    index_vector <- purrr::simplify(index_list, "integer")
+    return(index_vector)
+  }
+
+  # If there are no matches
+  return(integer(0L))
+}
+
 
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
