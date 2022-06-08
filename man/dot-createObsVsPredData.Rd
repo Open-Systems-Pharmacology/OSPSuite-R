@@ -4,12 +4,15 @@
 \alias{.createObsVsPredData}
 \title{Created observed versus simulated paired data}
 \usage{
-.createObsVsPredData(data)
+.createObsVsPredData(data, tolerance = 0.001)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has been
 further tidied using \code{.removeUnpairableDatasets()} and then
 \code{.unitConverter()} functions.}
+
+\item{tolerance}{Tolerance of comparison for observed and simulated time
+points.}
 }
 \description{
 Created observed versus simulated paired data

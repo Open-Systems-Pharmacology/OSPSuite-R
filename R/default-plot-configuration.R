@@ -111,8 +111,8 @@
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
 #' @field legendCaptionSize,legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle,legendCaptionAlign Aesthetic properties for the legend caption.
-#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign Aesthetic properties for the x-axis label.
-#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign Aesthetic properties for the y-axis label.
+#' @field xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign Aesthetic properties for the x-axis label.
+#' @field yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
@@ -232,7 +232,13 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLimits = NULL,
     xAxisScale = NULL,
     xAxisTicks = NULL,
-    xAxisTicksLabels = identity,
+    #' @description
+    #' Transformation function to convert X-axis tick labels. The default is
+    #' identity function. That is, the values will be shown as they are in the
+    #' form of labels.
+    #'
+    #' @param x A value.
+    xAxisTicksLabels = function(x) x,
     xAxisLabelTicksSize = NULL,
     xAxisLabelTicksColor = "black",
     xAxisLabelTicksFontFamily = "",
@@ -245,7 +251,13 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLimits = NULL,
     yAxisScale = NULL,
     yAxisTicks = NULL,
-    yAxisTicksLabels = identity,
+    #' @description
+    #' Transformation function to convert Y-axis tick labels. The default is
+    #' identity function. That is, the values will be shown as they are in the
+    #' form of labels.
+    #'
+    #' @param x A value.
+    yAxisTicksLabels = function(x) x,
     yAxisLabelTicksSize = NULL,
     yAxisLabelTicksColor = "black",
     yAxisLabelTicksFontFamily = "",
