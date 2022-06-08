@@ -30,33 +30,46 @@ The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.
 **ospsuite** requires following packages to be installed:
 
 From CRAN:
-- [R6](https://github.com/r-lib/R6)
-- [stringr](https://cran.r-project.org/web/packages/stringr/)
+
+- [dplyr](https://cran.r-project.org/web/packages/dplyr/index.html)
+- [purrr](https://cran.r-project.org/web/packages/purrr/index.html)
+- [R6](https://cran.r-project.org/web/packages/R6/index.html)
 - [readr](https://cran.r-project.org/web/packages/readr/index.html)
+- [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
+- [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)
 
 Must be downloaded manually:
+
 - rClr
-  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip)
+  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip)
   - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
 
+- [tlf](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.3.66/tlf_1.3.66.zip)
 
+- [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip)
 
 ## Under Windows
 
-The release version of the package comes as a binary *.zip and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
+The release version of the package comes as a binary `*.zip` and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 
-The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
+If you use [RStudio IDE](https://www.rstudio.com/), you can use the *Install* option in the *Packages* pane and select the option *Install from -> Package Archive File* to install a package from binary `*.zip` files.
+
+To install manually, follow these instructions:
 
 ```r
-# Install dependencies
+# Install dependencies (e.g. R6) which are on CRAN
 install.packages('R6')
 
-# Install rClr from local file 
+# Install `{rClr}` from local file 
+# (`pathTorCLR.zip` here should be replaced with the actual path to the `.zip` file)
 install.packages(pathTorCLR.zip, repos = NULL)
 
-# Install ospsuite-r from local file
+# Install `{ospsuite}` from local file
+# (`pathToOSPSuite.zip` here should be replaced with the actual path to the `.zip` file)
 install.packages(pathToOSPSuite.zip, repos = NULL)
 ```
+
+The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
 
 ## Under Linux
 
@@ -75,7 +88,7 @@ You can clone the GIT repository and build the package from source.
 
 # Usage
 
-In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()`  returns the corresponding simulation that is used as input of other methods. The user can then change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
+In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()` returns the corresponding simulation that is used as input of other methods. The user can then change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
 
 ```r
 library(ospsuite)
@@ -104,13 +117,13 @@ xlab = "Time [min]",
 ylab = "Concentration [µmol/l]")
 ```
 
-More detailed description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vignettes available for **ospsuite** by calling
+More detailed description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vignettes available for **ospsuite** by calling-
 
 ```r
 vignette(package = "ospsuite")
 ```
 
-To open a specific vignette, call
+To open a specific vignette, call-
 
 ```r
 # Insert the name of the vignette you want to view as the argument
@@ -119,11 +132,11 @@ vignette("introduction-ospsuite")
 
 # Known issues
 
-**RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating .NET objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore .RData into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
+**RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating `.NET` objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore `.RData` into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
 
-# Code of conduct
+# Code of Conduct
 
-Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc...) is expected to follow the Open Systems Pharmacology [code of conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc.) is expected to follow the Open Systems Pharmacology [code of conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
 
 # Contribution
 
