@@ -10,7 +10,9 @@
 \item{x, y}{Numeric vectors to compare}
 
 \item{tolerance}{Tolerance of comparison for observed and simulated time
-points.}
+points. Default is \code{NULL}, in which case the internal enum
+\code{.thresholdByTimeUnit} will be used to decide on what threshold to use
+based on the unit of time measurement.}
 }
 \description{
 None of the base equality/match operators (\code{\%in\%}, \code{==}, \code{all.equal}) allow

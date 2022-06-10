@@ -4,7 +4,7 @@
 \alias{.createObsVsPredData}
 \title{Created observed versus simulated paired data}
 \usage{
-.createObsVsPredData(data, tolerance = 0.001)
+.createObsVsPredData(data, tolerance = NULL)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has been
@@ -12,7 +12,9 @@ further tidied using \code{.removeUnpairableDatasets()} and then
 \code{.unitConverter()} functions.}
 
 \item{tolerance}{Tolerance of comparison for observed and simulated time
-points.}
+points. Default is \code{NULL}, in which case the internal enum
+\code{.thresholdByTimeUnit} will be used to decide on what threshold to use
+based on the unit of time measurement.}
 }
 \description{
 Created observed versus simulated paired data
@@ -23,10 +25,11 @@ Created observed versus simulated paired data
 df <- dplyr::tibble(
   dataType = c(rep("observed", 5), rep("simulated", 3)),
   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
-  yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8)
+  yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
+  xUnit = ospUnits$Time$min
 )
 
-ospsuite:::.createObsVsPredData(df, tolerance = 0.01)
+ospsuite:::.createObsVsPredData(df)
 
 }
 \keyword{internal}

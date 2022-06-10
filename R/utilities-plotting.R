@@ -260,7 +260,9 @@
 #'   further tidied using `.removeUnpairableDatasets()` and then
 #'   `.unitConverter()` functions.
 #' @param tolerance Tolerance of comparison for observed and simulated time
-#'   points.
+#'   points. Default is `NULL`, in which case the internal enum
+#'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
+#'   based on the unit of time measurement.
 #'
 #' @examples
 #'
@@ -268,13 +270,14 @@
 #' df <- dplyr::tibble(
 #'   dataType = c(rep("observed", 5), rep("simulated", 3)),
 #'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
-#'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8)
+#'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
+#'   xUnit = ospUnits$Time$min
 #' )
 #'
-#' ospsuite:::.createObsVsPredData(df, tolerance = 0.01)
+#' ospsuite:::.createObsVsPredData(df)
 #'
 #' @keywords internal
-.createObsVsPredData <- function(data, tolerance = 0.001) {
+.createObsVsPredData <- function(data, tolerance = NULL) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
@@ -330,6 +333,14 @@
       nextSimValue * ((currentObsTime - currentSimTime) / (nextSimTime - currentSimTime))
   }
 
+  # The exact tolerance used to decide when observed and simulated time points
+  # match will depend on the unit used for time measurement.
+  #
+  # Given that this function will always be called after `.unitConverter()`,
+  # there will only be a single unit across datasets.
+  timeUnit <- unique(data$xUnit)
+  tolerance <- tolerance %||% .thresholdByTimeUnit[[timeUnit]]
+
   # Figure out time points where both observed and simulated data were sampled.
   obsExactMatchIndices <- .extractMatchingIndices(obsTime, simTime, tolerance)
   simExactMatchIndices <- .extractMatchingIndices(simTime, obsTime, tolerance)
@@ -341,12 +352,32 @@
   # a data frame.
   pairedData <- dplyr::tibble(
     "obsTime" = obsTime,
+    "timeUnit" = timeUnit,
     "obsValue" = obsValue,
     "predValue" = predValue
   )
 
   return(pairedData)
 }
+
+
+#' Threshold to match time points
+#'
+#' @description
+#' A named list with a unique threshold for each measurement unit for time.
+#'
+#' @keywords internal
+#' @noRd
+.thresholdByTimeUnit <- list(
+  s = 10,
+  min = 1,
+  h = 0.1,
+  `day(s)` = 0.01,
+  `week(s)` = 0.001,
+  `month(s)` = 0.0001,
+  `year(s)` = 0.00001,
+  ks = 0.01
+)
 
 #' Custom function to extract matching indices
 #'

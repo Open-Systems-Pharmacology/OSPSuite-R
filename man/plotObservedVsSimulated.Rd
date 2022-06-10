@@ -7,7 +7,7 @@
 plotObservedVsSimulated(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  smoother = "lm",
+  smoother = NULL,
   foldDistance = c(0, 1.5, 2)
 )
 }
