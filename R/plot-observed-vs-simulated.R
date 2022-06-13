@@ -15,7 +15,7 @@
 #' @export
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
-                                    smoother = NULL,
+                                    smoother = "lm",
                                     foldDistance = c(0, 1.5, 2)) {
   # validation -----------------------------
 

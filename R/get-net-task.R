@@ -1,5 +1,4 @@
-#' @title Returns an instance of the specified `.NET` Task
-#' @name .getNetTask
+#' Get an instance of the specified `.NET` Task
 #'
 #' @param taskName The name of the task to retrieve (**without** `Get` prefix).
 #'
