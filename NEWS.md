@@ -1,5 +1,9 @@
 # ospsuite 12.0 (development version)
 
+* Adds new visualization functions:
+
+    - `plotObservedVsSimulated()` for observed versus predicted scatter plots.
+
 # ospsuite 11.0.123
 
 ## New features

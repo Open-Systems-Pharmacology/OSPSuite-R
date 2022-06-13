@@ -33,4 +33,13 @@ ospsuite:::.extractMatchingIndices(c(1, 2), c(1.001, 3, 4), tolerance = 0.00001)
 ospsuite:::.extractMatchingIndices(c(1, 2), c(3, 4))
 
 }
+\seealso{
+Other utilities-plotting: 
+\code{\link{.addMissingGroupings}()},
+\code{\link{.createAxesLabels}()},
+\code{\link{.createObsVsPredData}()},
+\code{\link{.extractAggregatedSimulatedData}()},
+\code{\link{.removeUnpairableDatasets}()}
+}
+\concept{utilities-plotting}
 \keyword{internal}

@@ -7,6 +7,8 @@
 #'
 #' @param data A data frame returned by `DataCombined$toDataFrame()`.
 #'
+#' @family utilities-plotting
+#'
 #' @examples
 #'
 #' df <- dplyr::tibble(
@@ -62,6 +64,8 @@
 #' combined data frame.
 #'
 #' @param data A data frame returned by `DataCombined$toDataFrame()`.
+#'
+#' @family utilities-plotting
 #'
 #' @examples
 #'
@@ -127,9 +131,50 @@
 
 #' Extract aggregated simulated data
 #'
+#' @param simData A data frame with simulated data from
+#'   `DataCombined$toDataFrame()`.
+#' @inheritParams plotPopulationTimeProfile
+#'
+#' @details
+#'
+#' The simulated values will be aggregated across individuals for each time
+#' point.
+#'
+#' @family utilities-plotting
+#'
+#' @examples
+#'
+#' # let's create a data frame to test this function
+#' df <- dplyr::tibble(
+#'   xValues = c(
+#'     0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5,
+#'     0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2,
+#'     3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5
+#'   ),
+#'   yValues = c(
+#'     0,
+#'     0.990956723690033, 0.981773018836975, 0.972471475601196, 0.963047087192535,
+#'     0.953498184680939, 0, 0.990953505039215, 0.981729507446289, 0.97233647108078,
+#'     0.962786376476288, 0.953093528747559, 0, 0.990955889225006, 0.981753170490265,
+#'     0.972399413585663, 0.962896287441254, 0.953253626823425, 0, 0.990950107574463,
+#'     0.981710314750671, 0.972296476364136, 0.962724387645721, 0.953009009361267,
+#'     0, 0.261394888162613, 0.266657412052155, 0.27151620388031, 0.275971591472626,
+#'     0.280027687549591, 0, 0.26139160990715, 0.266613900661469, 0.271381109952927,
+#'     0.275710910558701, 0.279623001813889, 0, 0.261393994092941, 0.266637593507767,
+#'     0.271443992853165, 0.275820910930634, 0.279783099889755, 0, 0.261388212442398,
+#'     0.266594797372818, 0.27134120464325, 0.275649011135101, 0.279538512229919
+#'   ),
+#'   group = c(rep("Stevens 2012 solid total", 24), rep("Stevens 2012 solid distal", 24))
+#' )
+#'
+#' # raw data
+#' df
+#'
+#' # aggregated data
+#' ospsuite:::.extractAggregatedSimulatedData(df)
+#'
 #' @keywords internal
-#' @noRd
-.extractAggregatedSimulatedData <- function(simData, quantiles) {
+.extractAggregatedSimulatedData <- function(simData, quantiles = c(0.05, 0.5, 0.95)) {
   # Compute quantiles
   simAggregatedData <- simData %>%
     # For each dataset, compute across all individuals for each time point
@@ -153,6 +198,8 @@
 #'   on the type of plot, which can be guessed from the specific
 #'   `PlotConfiguration` object used, since each plot has a unique corresponding
 #'   class.
+#'
+#' @family utilities-plotting
 #'
 #' @examples
 #'
@@ -263,6 +310,8 @@
 #'   points. Default is `NULL`, in which case the internal enum
 #'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
 #'   based on the unit of time measurement.
+#'
+#' @family utilities-plotting
 #'
 #' @examples
 #'
@@ -396,6 +445,8 @@
 #'
 #' @inheritParams dplyr::near
 #' @inheritParams .createObsVsPredData
+#'
+#' @family utilities-plotting
 #'
 #' @examples
 #'

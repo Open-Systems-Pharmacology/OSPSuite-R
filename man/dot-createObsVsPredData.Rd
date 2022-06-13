@@ -32,4 +32,13 @@ df <- dplyr::tibble(
 ospsuite:::.createObsVsPredData(df)
 
 }
+\seealso{
+Other utilities-plotting: 
+\code{\link{.addMissingGroupings}()},
+\code{\link{.createAxesLabels}()},
+\code{\link{.extractAggregatedSimulatedData}()},
+\code{\link{.extractMatchingIndices}()},
+\code{\link{.removeUnpairableDatasets}()}
+}
+\concept{utilities-plotting}
 \keyword{internal}

@@ -46,4 +46,13 @@ df
 ospsuite:::.addMissingGroupings(df)
 
 }
+\seealso{
+Other utilities-plotting: 
+\code{\link{.createAxesLabels}()},
+\code{\link{.createObsVsPredData}()},
+\code{\link{.extractAggregatedSimulatedData}()},
+\code{\link{.extractMatchingIndices}()},
+\code{\link{.removeUnpairableDatasets}()}
+}
+\concept{utilities-plotting}
 \keyword{internal}
