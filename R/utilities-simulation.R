@@ -717,4 +717,3 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 
   return(pathEnumList)
 }
-

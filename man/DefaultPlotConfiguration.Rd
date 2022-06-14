@@ -88,6 +88,13 @@ default is linear for both axes.
 The available transformations can be seen in the \code{tlf::Scaling} list.
 }
 
+\section{Specifying tick labels}{
+\code{tlf::TickLabelTransforms} lists of all available tick label transformations.
+For example, selecting \code{tlf::TickLabelTransforms$identity} will display tick
+labels as they are, while selecting \code{tlf::TickLabelTransforms$log} will
+display tick labels in logarithmic scale format.
+}
+
 \section{Saving plot}{
 By default, the plots will be shown in plot pane of your IDE, but the plots
 can also be saved to a file using the \code{ggplot2::ggsave()} function.
