@@ -111,4 +111,3 @@ test_that("It creates default plots as expected for only simulated", {
     fig = plotIndividualTimeProfile(myCombDat3)
   )
 })
-
