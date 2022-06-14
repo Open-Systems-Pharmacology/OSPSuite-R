@@ -88,6 +88,13 @@
 #'
 #' The available transformations can be seen in the `tlf::Scaling` list.
 #'
+#' # Specifying tick labels
+#'
+#' `tlf::TickLabelTransforms` lists of all available tick label transformations.
+#' For example, selecting `tlf::TickLabelTransforms$identity` will display tick
+#' labels as they are, while selecting `tlf::TickLabelTransforms$log` will
+#' display tick labels in logarithmic scale format.
+#'
 #' # Saving plot
 #'
 #' By default, the plots will be shown in plot pane of your IDE, but the plots
@@ -232,7 +239,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLimits = NULL,
     xAxisScale = tlf::Scaling$lin,
     xAxisTicks = NULL,
-    xAxisTicksLabels = identity,
+    xAxisTicksLabels = tlf::TickLabelTransforms$identity,
     xAxisLabelTicksSize = NULL,
     xAxisLabelTicksColor = "black",
     xAxisLabelTicksFontFamily = "",
@@ -245,7 +252,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLimits = NULL,
     yAxisScale = tlf::Scaling$lin,
     yAxisTicks = NULL,
-    yAxisTicksLabels = identity,
+    yAxisTicksLabels = tlf::TickLabelTransforms$identity,
     yAxisLabelTicksSize = NULL,
     yAxisLabelTicksColor = "black",
     yAxisLabelTicksFontFamily = "",
