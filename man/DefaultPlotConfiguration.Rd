@@ -154,9 +154,9 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -214,9 +214,9 @@ label, y-axis label, plot legend, watermark, respectively.}
 
 \item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -254,47 +254,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-DefaultPlotConfiguration-xAxisTicksLabels}{\code{DefaultPlotConfiguration$xAxisTicksLabels()}}
-\item \href{#method-DefaultPlotConfiguration-yAxisTicksLabels}{\code{DefaultPlotConfiguration$yAxisTicksLabels()}}
 \item \href{#method-DefaultPlotConfiguration-clone}{\code{DefaultPlotConfiguration$clone()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DefaultPlotConfiguration-xAxisTicksLabels"></a>}}
-\if{latex}{\out{\hypertarget{method-DefaultPlotConfiguration-xAxisTicksLabels}{}}}
-\subsection{Method \code{xAxisTicksLabels()}}{
-Transformation function to convert X-axis tick labels. The default is
-identity function. That is, the values will be shown as they are in the
-form of labels.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DefaultPlotConfiguration$xAxisTicksLabels(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{A value.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DefaultPlotConfiguration-yAxisTicksLabels"></a>}}
-\if{latex}{\out{\hypertarget{method-DefaultPlotConfiguration-yAxisTicksLabels}{}}}
-\subsection{Method \code{yAxisTicksLabels()}}{
-Transformation function to convert Y-axis tick labels. The default is
-identity function. That is, the values will be shown as they are in the
-form of labels.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DefaultPlotConfiguration$yAxisTicksLabels(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{A value.}
-}
-\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
