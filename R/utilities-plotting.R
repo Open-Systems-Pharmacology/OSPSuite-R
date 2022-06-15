@@ -516,7 +516,7 @@
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$dashed, 10))
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$longdash, 10))
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
   }
