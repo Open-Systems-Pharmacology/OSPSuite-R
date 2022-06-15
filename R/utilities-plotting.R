@@ -685,7 +685,8 @@
     scale = generalPlotConfiguration$xAxisScale,
     ticks = generalPlotConfiguration$xAxisTicks,
     ticklabels = generalPlotConfiguration$xAxisTicksLabels,
-    font = generalPlotConfiguration$xAxisFont
+    font = generalPlotConfiguration$xAxisFont,
+    expand = TRUE
   )
 
   # yAxis objects -----------------------------------
@@ -704,7 +705,8 @@
     scale = generalPlotConfiguration$yAxisScale,
     ticks = generalPlotConfiguration$yAxisTicks,
     ticklabels = generalPlotConfiguration$yAxisTicksLabels,
-    font = generalPlotConfiguration$yAxisFont
+    font = generalPlotConfiguration$yAxisFont,
+    expand = TRUE
   )
 
   # lines -------------------------------------------------------
