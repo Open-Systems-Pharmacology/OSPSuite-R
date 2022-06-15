@@ -70,6 +70,14 @@ plotObservedVsSimulated <- function(dataCombined,
     generalPlotConfiguration = defaultPlotConfiguration
   )
 
+  any_scale_linear <- obsVsPredPlotConfiguration$xAxis$scale == tlf::Scaling$lin ||
+    obsVsPredPlotConfiguration$yAxis$scale == tlf::Scaling$lin
+
+  if (any_scale_linear && !is.null(foldDistance)) {
+    warning("Linear scale is inappropriate when `foldDistance` argument is specified.")
+    foldDistance <- 0
+  }
+
   # axes labels -----------------------------
 
   # The type of plot can be guessed from the specific `PlotConfiguration` object
@@ -94,4 +102,3 @@ plotObservedVsSimulated <- function(dataCombined,
     plotConfiguration = obsVsPredPlotConfiguration
   )
 }
-

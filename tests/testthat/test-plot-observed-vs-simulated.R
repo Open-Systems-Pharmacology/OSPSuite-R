@@ -51,6 +51,18 @@ test_that("It creates default plots as expected", {
   )
 })
 
+test_that("It issues warning when scale is linear", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$xAxisScale <- tlf::Scaling$lin
+  myPlotConfiguration$yAxisScale <- tlf::Scaling$lin
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "linear scale",
+    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration)
+  )
+})
+
 
 test_that("It respects custom plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
