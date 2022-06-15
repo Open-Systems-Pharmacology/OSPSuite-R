@@ -16,7 +16,7 @@
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
                                     smoother = "lm",
-                                    foldDistance = c(0, 1.5, 2)) {
+                                    foldDistance = c(1, 1.5, 2)) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
