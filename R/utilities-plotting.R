@@ -520,7 +520,7 @@
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
     # 10 is arbitrary; the `foldDistance` argument vector is not expected to
     # have a length greater than 5
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$dotted, 10))
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$dashed, 10))
   }
 
   # labels object ---------------------------------------
