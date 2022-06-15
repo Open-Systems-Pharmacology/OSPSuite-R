@@ -233,8 +233,9 @@
 
   # x-axis label
   xLabel <- switch(plotType,
-    "TimeProfilePlotConfiguration" = xUnitString,
-    "ResVsPredPlotConfiguration" = xUnitString,
+    "TimeProfilePlotConfiguration" = ,
+    "ResVsPredPlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = xUnitString,
     # Note that `yUnitString` here is deliberate.
     #
     # In case of an observed versus simulated plot, `yValues` are plotted on
@@ -302,6 +303,11 @@
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
 
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
+  }
+
+  # For `plotResidualsVsTime()`
+  if (plotType == "ResVsTimePlotConfiguration") {
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
   }
 
   # labels object ---------------------------------------
