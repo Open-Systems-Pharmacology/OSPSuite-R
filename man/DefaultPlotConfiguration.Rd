@@ -154,9 +154,9 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -214,9 +214,9 @@ label, y-axis label, plot legend, watermark, respectively.}
 
 \item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}

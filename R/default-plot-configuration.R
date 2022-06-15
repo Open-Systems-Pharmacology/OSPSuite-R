@@ -118,8 +118,8 @@
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
 #' @field legendCaptionSize,legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle,legendCaptionAlign Aesthetic properties for the legend caption.
-#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign Aesthetic properties for the x-axis label.
-#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign Aesthetic properties for the y-axis label.
+#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
+#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
@@ -289,12 +289,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisColor = "black",
     xAxisSize = 0.5,
     xAxisLinetype = tlf::Linetypes$solid,
+    xAxisExpand = FALSE,
 
     # yAxis ------------------------------------
 
     yAxisColor = "black",
     yAxisSize = 0.5,
     yAxisLinetype = tlf::Linetypes$solid,
+    yAxisExpand = FALSE,
 
     # xGrid ------------------------------------
 

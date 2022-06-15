@@ -516,9 +516,11 @@
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$longdash, 10))
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
+    # 10 is arbitrary; the `foldDistance` argument vector is not expected to
+    # have a length greater than 5
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$dotted, 10))
   }
 
   # labels object ---------------------------------------
@@ -686,7 +688,7 @@
     ticks = generalPlotConfiguration$xAxisTicks,
     ticklabels = generalPlotConfiguration$xAxisTicksLabels,
     font = generalPlotConfiguration$xAxisFont,
-    expand = TRUE
+    expand = generalPlotConfiguration$xAxisExpand
   )
 
   # yAxis objects -----------------------------------
@@ -706,7 +708,7 @@
     ticks = generalPlotConfiguration$yAxisTicks,
     ticklabels = generalPlotConfiguration$yAxisTicksLabels,
     font = generalPlotConfiguration$yAxisFont,
-    expand = TRUE
+    expand = generalPlotConfiguration$yAxisExpand
   )
 
   # lines -------------------------------------------------------

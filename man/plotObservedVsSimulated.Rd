@@ -7,8 +7,8 @@
 plotObservedVsSimulated(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  smoother = "lm",
-  foldDistance = c(0, 1.5, 2)
+  smoother = NULL,
+  foldDistance = c(1, 1.5, 2)
 )
 }
 \arguments{
