@@ -27,11 +27,15 @@ messages$unpairableDatasetsRemoved <- function() {
 }
 
 messages$valuesNotInterpolated <- function() {
-"Predicted values couldn't be interpolated at following time points"
+  "Predicted values couldn't be interpolated at following time points"
 }
 
 messages$printMultipleEntries <- function(header, entries) {
   message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
+}
+
+messages$linearScaleWithFoldDistance <- function() {
+  "Linear scale is inappropriate when `foldDistance` argument is specified."
 }
 
 messages$errorLoadingUnitsForDimension <- function(dimensions) {

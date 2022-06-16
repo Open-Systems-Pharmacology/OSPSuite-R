@@ -74,7 +74,7 @@ plotObservedVsSimulated <- function(dataCombined,
     obsVsPredPlotConfiguration$yAxis$scale == "identity"
 
   if (any_scale_linear && !is.null(foldDistance)) {
-    warning("Linear scale is inappropriate when `foldDistance` argument is specified.")
+    warning(messages$linearScaleWithFoldDistance())
     foldDistance <- 0
   }
 
