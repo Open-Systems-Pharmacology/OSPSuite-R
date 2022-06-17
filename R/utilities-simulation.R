@@ -516,6 +516,19 @@ getAllStateVariablesPaths <- function(simulation) {
   return(allQantitiesPaths)
 }
 
+#' Get the paths of all state variable parameters of the simulation
+#'
+#' @param simulation `Simulation` object
+#' @details List of paths of all state variable parameters.
+#'
+#' @return A list of paths
+#' @export
+getAllStateVariableParametersPaths <- function(simulation) {
+  validateIsOfType(simulation, type = "Simulation")
+  allStateVariableParamsPaths <- .getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
+  return(allStateVariableParamsPaths)
+}
+
 #' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the original simulation updated with parameters of the corresponding individual.
 #'
 #' @param population A population object typically loaded with `loadPopulation`
