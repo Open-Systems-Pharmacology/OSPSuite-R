@@ -5,7 +5,7 @@
 #' @export
 hasDimension <- function(dimension) {
   validateIsString(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "HasDimension", enc2utf8(dimension))
 }
 
@@ -30,7 +30,7 @@ validateDimension <- function(dimension) {
 hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), .encodeUnit(unit))
 }
 
@@ -54,7 +54,7 @@ validateUnit <- function(unit, dimension) {
 #' @return
 #' If validations are successful, `NULL` is returned. Otherwise, error is
 #' signaled.
-validateHasUnit <- function(quantity, unit) {
+.validateHasUnit <- function(quantity, unit) {
   validateIsOfType(quantity, "Quantity")
   validateIsString(unit)
   if (quantity$hasUnit(unit)) {
@@ -71,7 +71,7 @@ validateHasUnit <- function(quantity, unit) {
 #' @export
 getBaseUnit <- function(dimension) {
   validateDimension(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
 }
 
@@ -267,7 +267,7 @@ allAvailableDimensions <- function() {
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- .encodeUnit(unit)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
 }
@@ -286,7 +286,7 @@ getDimensionForUnit <- function(unit) {
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
 
@@ -294,7 +294,7 @@ getUnitsForDimension <- function(dimension) {
 #' This is purely for optimization purposes
 #'
 #' @return An instance of the Task
-getDimensionTask <- function() {
+.getDimensionTask <- function() {
   dimensionTask <- ospsuiteEnv$dimensionTask
   if (is.null(dimensionTask)) {
     dimensionTask <- .getNetTask("DimensionTask")
@@ -318,7 +318,7 @@ getDimensionTask <- function() {
 #' @export
 getDimensionByName <- function(name) {
   validateIsString(name)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(name))
 }
 
@@ -334,9 +334,9 @@ getDimensionByName <- function(name) {
 #'
 #' @examples
 #'
-#' ospsuite:::getUnitsEnum()
+#' ospsuite:::.getUnitsEnum()
 #' @keywords internal
-getUnitsEnum <- function() {
+.getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
   errors <- c()
   units <- lapply(dimensions, function(dimension) {
@@ -373,9 +373,9 @@ getUnitsEnum <- function() {
 #'
 #' @examples
 #'
-#' ospsuite:::getDimensionsEnum()
+#' ospsuite:::.getDimensionsEnum()
 #' @keywords internal
-getDimensionsEnum <- function() {
+.getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
 }
 
@@ -393,10 +393,10 @@ ospDimensions <- list()
 #' @export
 ospUnits <- list()
 
-initializeDimensionAndUnitLists <- function() {
+.initializeDimensionAndUnitLists <- function() {
   # This initializes the two lists in the parent environment which is the package environments
-  ospDimensions <<- getDimensionsEnum()
-  ospUnits <<- getUnitsEnum()
+  ospDimensions <<- .getDimensionsEnum()
+  ospUnits <<- .getUnitsEnum()
 }
 
 

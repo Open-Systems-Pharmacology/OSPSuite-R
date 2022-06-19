@@ -73,7 +73,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #' @param values A numeric value that should be assigned to the molecule start value or a vector
 #' of numeric values, if the start value of more than one molecule should be changed. Must have the same
 #' length as `molecules`
-#' @inheritParams setQuantityValues
+#' @inheritParams .setQuantityValues
 #'
 #' @examples
 #'
@@ -86,7 +86,7 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #' @export
 setMoleculeInitialValues <- function(molecules, values, units = NULL) {
   validateIsOfType(molecules, "Molecule")
-  setQuantityValues(molecules, values, units)
+  .setQuantityValues(molecules, values, units)
 }
 
 

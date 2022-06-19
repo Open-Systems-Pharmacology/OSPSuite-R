@@ -4,7 +4,7 @@
 #'
 #' @import rClr
 #' @keywords internal
-initPackage <- function() {
+.initPackage <- function() {
   filePathFor <- function(name) {
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
@@ -20,5 +20,5 @@ initPackage <- function() {
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 
-  initializeDimensionAndUnitLists()
+  .initializeDimensionAndUnitLists()
 }

@@ -8,6 +8,6 @@
     return()
   }
 
-  initPackage()
+  .initPackage()
 }
 # nocov end

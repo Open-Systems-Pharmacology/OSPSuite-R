@@ -9,7 +9,7 @@
 #' @export
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
-  csvPopulationFile <- expandPath(csvPopulationFile)
+  csvPopulationFile <- .expandPath(csvPopulationFile)
   populationTask <- .getNetTask("PopulationTask")
   population <- rClr::clrCall(populationTask, "ImportPopulation", csvPopulationFile)
   Population$new(population)
@@ -34,7 +34,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsNumeric(numberOfCores)
   validateIsString(outputFolder)
   validateIsString(outputFileName)
-  csvPopulationFile <- expandPath(csvPopulationFile)
+  csvPopulationFile <- .expandPath(csvPopulationFile)
   outputFileName <- enc2utf8(outputFileName)
   populationTask <- .getNetTask("PopulationTask")
   rClr::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
@@ -97,14 +97,14 @@ populationToTibble <- function(population) {
 exportPopulationToCSV <- function(population, filePath) {
   validateIsOfType(population, "Population")
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   df <- populationToDataFrame(population)
   write.csv(df, file = filePath, row.names = FALSE, fileEncoding = "UTF-8")
   invisible()
 }
 
 #' @inherit exportPopulationToCSV
-savePopulationToCSV <- function(population, filePath) {
+.savePopulationToCSV <- function(population, filePath) {
   exportPopulationToCSV(population, filePath)
 }
 
@@ -145,8 +145,8 @@ createPopulation <- function(populationCharacteristics) {
 
   populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
   results <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
-  netPopulation <- getPropertyValue(results, "IndividualValuesCache")
-  seed <- getPropertyValue(results, "Seed")
+  netPopulation <- .getPropertyValue(results, "IndividualValuesCache")
+  seed <- .getPropertyValue(results, "Seed")
   population <- Population$new(netPopulation)
 
   individualCharacteristics <- NULL
@@ -273,11 +273,11 @@ createPopulationCharacteristics <- function(species,
   populationCharacteristics$population <- population
   populationCharacteristics$numberOfIndividuals <- numberOfIndividuals
   populationCharacteristics$proportionOfFemales <- proportionOfFemales
-  populationCharacteristics$age <- createParameterRange(ageMin, ageMax, ageUnit)
-  populationCharacteristics$weight <- createParameterRange(weightMin, weightMax, weightUnit)
-  populationCharacteristics$height <- createParameterRange(heightMin, heightMax, heightUnit)
-  populationCharacteristics$gestationalAge <- createParameterRange(gestationalAgeMin, gestationalAgeMax, gestationalAgeUnit)
-  populationCharacteristics$BMI <- createParameterRange(BMIMin, BMIMax, BMIUnit)
+  populationCharacteristics$age <- .createParameterRange(ageMin, ageMax, ageUnit)
+  populationCharacteristics$weight <- .createParameterRange(weightMin, weightMax, weightUnit)
+  populationCharacteristics$height <- .createParameterRange(heightMin, heightMax, heightUnit)
+  populationCharacteristics$gestationalAge <- .createParameterRange(gestationalAgeMin, gestationalAgeMax, gestationalAgeUnit)
+  populationCharacteristics$BMI <- .createParameterRange(BMIMin, BMIMax, BMIUnit)
   populationCharacteristics$seed <- seed
 
   for (moleculeOntogeny in moleculeOntogenies) {
