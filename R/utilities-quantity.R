@@ -253,7 +253,7 @@ getAllObserverPathsIn <- function(container) {
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' isExplicitFormulaByPath("Organism|Liver|Volume", sim) #FALSE
+#' isExplicitFormulaByPath("Organism|Liver|Volume", sim) # FALSE
 isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
   validateIsString(path, nullAllowed = FALSE)
   validateIsOfType(simulation, "Simulation")
