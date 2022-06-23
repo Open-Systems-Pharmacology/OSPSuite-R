@@ -33,14 +33,14 @@ calculatePKAnalyses <- function(results) {
 exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   rClr::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
 }
 
 #' @inherit exportPKAnalysesToCSV
-savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
+.savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
   exportPKAnalysesToCSV(pkAnalyses, filePath)
 }
 
@@ -54,7 +54,7 @@ savePKAnalysesToCSV <- function(pkAnalyses, filePath) {
 importPKAnalysesFromCSV <- function(filePath, simulation) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   pkAnalyses <- rClr::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
   SimulationPKAnalyses$new(pkAnalyses, simulation)

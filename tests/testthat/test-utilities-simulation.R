@@ -400,6 +400,12 @@ test_that("It returns the correct paths of the state variables", {
   expect_equal(length(stateVariablePaths), 5)
 })
 
+test_that("It returns the correct paths of the state variables", {
+  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  stateVariableParametersPaths <- getAllStateVariableParametersPaths(simulation = sim)
+  expect_equal(length(stateVariableParametersPaths), 1)
+})
+
 context("getSimulationTree")
 
 test_that("it can explore a simulation by path", {

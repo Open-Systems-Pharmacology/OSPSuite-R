@@ -68,7 +68,7 @@ ParameterRange <- R6::R6Class(
   )
 )
 
-createParameterRange <- function(min, max, unit) {
+.createParameterRange <- function(min, max, unit) {
   if (is.null(min) && is.null(max)) {
     return(NULL)
   }

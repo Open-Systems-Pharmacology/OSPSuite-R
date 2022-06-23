@@ -155,14 +155,14 @@ getOutputValues <- function(simulationResults,
 exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SimulationResults")
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
   rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
 
 #' @inherit exportResultsToCSV
-saveResultsToCSV <- function(results, filePath) {
+.saveResultsToCSV <- function(results, filePath) {
   exportResultsToCSV(results, filePath)
 }
 
@@ -187,7 +187,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)), use.names = FALSE)
+  filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
 
   results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)
