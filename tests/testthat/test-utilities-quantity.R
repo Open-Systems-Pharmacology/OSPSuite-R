@@ -120,3 +120,31 @@ test_that("It throws an error when the number of quantity paths differs from the
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
   expect_error(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"))
 })
+
+#isExplicitFormulaByPath
+nonFormulaPath <- "Organism|Liver|Volume"
+formulaPath <- "Organism|Weight"
+
+test_that("It throws an error when a quantity with the given path is not found and stopIfNotFound is TRUE", {
+  expect_error(isExplicitFormulaByPath(path = "foo",
+                                       simulation = sim))
+})
+
+test_that("It returns FALSE when a quantity with the given path is not found and stopIfNotFound is FALSE", {
+  expect_false(isExplicitFormulaByPath(path = "foo",
+                          simulation = sim,
+                          stopIfNotFound = FALSE)
+  )
+})
+
+test_that("It returns FALSE when the quantity is not an explicit formula", {
+  expect_false(isExplicitFormulaByPath(path = nonFormulaPath,
+                                       simulation = sim)
+  )
+})
+
+test_that("It returns TRUE when the quantity is an explicit formula", {
+  expect_true(isExplicitFormulaByPath(path = formulaPath,
+                                       simulation = sim)
+  )
+})

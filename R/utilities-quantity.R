@@ -237,3 +237,30 @@ getAllObserverPathsIn <- function(container) {
     y = c(getAllParameterPathsIn(container), getAllMoleculePathsIn(container))
   ))
 }
+
+#' Is the value defined by an explicit formula
+#'
+#' @param path Path to the quantity
+#' @param simulation A `Simulation` object that contains the quantity
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists
+#' for the given path, an error is thrown. If `FALSE`, `FALSE` is returned.
+#'
+#' @return `TRUE` if the value is an explicit formula, `FALSE` otherwise.
+#' Alsoe returns `FALSE` if no quantity with the given path is found and
+#' `stopInfNotFound` is set to `FALSE`.
+#' @export
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' isExplicitFormulaByPath("Organism|Liver|Volume", sim) #FALSE
+isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
+  validateIsString(path, nullAllowed = FALSE)
+  validateIsOfType(simulation, "Simulation")
+
+  task <- .getContainerTask()
+  # Check if the quantity is defined by an explicit formula
+  isFormulaExplicit <- rClr::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
+
+  return(isFormulaExplicit)
+}
