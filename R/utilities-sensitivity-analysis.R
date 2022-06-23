@@ -49,14 +49,14 @@ runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOp
 exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SensitivityAnalysisResults")
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
   rClr::clrCall(sensitivityAnalysisTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
 
 #' @inherit exportSensitivityAnalysisResultsToCSV
-saveSensitivityAnalysisResultsToCSV <- function(results, filePath) {
+.saveSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   exportSensitivityAnalysisResultsToCSV(results, filePath)
 }
 
@@ -81,7 +81,7 @@ saveSensitivityAnalysisResultsToCSV <- function(results, filePath) {
 importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
-  filePaths <- unlist(lapply(filePaths, function(filePath) expandPath(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)))
 
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
   results <- rClr::clrCall(sensitivityAnalysisTask, "ImportResultsFromCSV", simulation$ref, filePaths)
