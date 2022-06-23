@@ -145,11 +145,11 @@ test_that("It can return the expected dimension for a given unit", {
 
 
 test_that("It can return an enum of dimensions.", {
-  expect_true(getDimensionsEnum()[["Mass"]] == "Mass")
+  expect_true(.getDimensionsEnum()[["Mass"]] == "Mass")
 })
 
 test_that("It can return the expected set of units for a given dimension", {
-  expect_true("kg" %in% getUnitsEnum()[["Mass"]])
+  expect_true("kg" %in% .getUnitsEnum()[["Mass"]])
 })
 
 test_that("It throws an error if the dimension is not found", {

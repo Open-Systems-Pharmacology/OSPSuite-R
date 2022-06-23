@@ -86,7 +86,7 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #'   `values`. If `NULL` (default), values are assumed to be in base units. If
 #'   not `NULL`, must have the same length as `quantities`.
 #'
-setQuantityValues <- function(quantities, values, units = NULL) {
+.setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
   quantities <- toList(quantities)
@@ -179,7 +179,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 #'
 #' @param factor A numeric value that will be used to scale all quantities
 #'
-scaleQuantityValues <- function(quantities, factor) {
+.scaleQuantityValues <- function(quantities, factor) {
   quantities <- c(quantities)
 
   # Test for correct inputs
@@ -198,7 +198,7 @@ scaleQuantityValues <- function(quantities, factor) {
 #'
 #' @return a display path for each entry in paths
 #'
-getQuantityDisplayPaths <- function(paths, simulation) {
+.getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
   validateIsOfType(simulation, "Simulation")
   displayResolver <- .getNetTask("FullPathDisplayResolver")
