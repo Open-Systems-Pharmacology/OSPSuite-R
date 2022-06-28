@@ -8,6 +8,12 @@
     return()
   }
 
-  initPackage()
+  # Now verify that the package is running on R 64
+  isR64 <- R.version$arch == "x86_64"
+  if(!isR64){
+    stop("64 bit version of R is required.")
+  }
+
+  .initPackage()
 }
 # nocov end

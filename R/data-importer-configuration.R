@@ -275,7 +275,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' will be exported to.
     saveConfiguration = function(filePath) {
       validateIsString(filePath)
-      filePath <- expandPath(filePath)
+      filePath <- .expandPath(filePath)
 
       rClr::clrCall(private$.dataImporterTask, "SaveConfiguration", self$ref, filePath)
       invisible(self)

@@ -86,7 +86,7 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #'   `values`. If `NULL` (default), values are assumed to be in base units. If
 #'   not `NULL`, must have the same length as `quantities`.
 #'
-setQuantityValues <- function(quantities, values, units = NULL) {
+.setQuantityValues <- function(quantities, values, units = NULL) {
   # Must turn the input into a list so we can iterate through even when only
   # one parameter is passed
   quantities <- toList(quantities)
@@ -179,7 +179,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 #'
 #' @param factor A numeric value that will be used to scale all quantities
 #'
-scaleQuantityValues <- function(quantities, factor) {
+.scaleQuantityValues <- function(quantities, factor) {
   quantities <- c(quantities)
 
   # Test for correct inputs
@@ -198,7 +198,7 @@ scaleQuantityValues <- function(quantities, factor) {
 #'
 #' @return a display path for each entry in paths
 #'
-getQuantityDisplayPaths <- function(paths, simulation) {
+.getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
   validateIsOfType(simulation, "Simulation")
   displayResolver <- .getNetTask("FullPathDisplayResolver")
@@ -236,4 +236,31 @@ getAllObserverPathsIn <- function(container) {
     x = getAllQuantityPathsIn(container),
     y = c(getAllParameterPathsIn(container), getAllMoleculePathsIn(container))
   ))
+}
+
+#' Is the value defined by an explicit formula
+#'
+#' @param path Path to the quantity
+#' @param simulation A `Simulation` object that contains the quantity
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists
+#' for the given path, an error is thrown. If `FALSE`, `FALSE` is returned.
+#'
+#' @return `TRUE` if the value is an explicit formula, `FALSE` otherwise.
+#' Alsoe returns `FALSE` if no quantity with the given path is found and
+#' `stopInfNotFound` is set to `FALSE`.
+#' @export
+#'
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' isExplicitFormulaByPath("Organism|Liver|Volume", sim) # FALSE
+isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
+  validateIsString(path, nullAllowed = FALSE)
+  validateIsOfType(simulation, "Simulation")
+
+  task <- .getContainerTask()
+  # Check if the quantity is defined by an explicit formula
+  isFormulaExplicit <- rClr::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
+
+  return(isFormulaExplicit)
 }

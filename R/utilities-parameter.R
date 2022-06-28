@@ -77,7 +77,7 @@ getParameter <- function(path, container, stopIfNotFound = TRUE) {
 #' displayPath <- getParameterDisplayPaths("Organism|Liver|Volume", sim)
 #' @export
 getParameterDisplayPaths <- function(paths, simulation) {
-  getQuantityDisplayPaths(paths, simulation)
+  .getQuantityDisplayPaths(paths, simulation)
 }
 
 #' Set values of parameters
@@ -88,7 +88,7 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' @param values A numeric value that should be assigned to the parameter or a vector
 #' of numeric values, if the value of more than one parameter should be changed. Must have the same
 #' length as 'parameters'. Alternatively, the value can be a unique number. In that case, the same value will be set in all parameters
-#' @inheritParams setQuantityValues
+#' @inheritParams .setQuantityValues
 #'
 #' @examples
 #'
@@ -101,7 +101,7 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' @export
 setParameterValues <- function(parameters, values, units = NULL) {
   validateIsOfType(parameters, "Parameter")
-  setQuantityValues(parameters, values, units)
+  .setQuantityValues(parameters, values, units)
 }
 
 
@@ -152,5 +152,5 @@ setParameterValuesByPath <- function(parameterPaths, values, simulation, units =
 #' @export
 scaleParameterValues <- function(parameters, factor) {
   validateIsOfType(parameters, "Parameter")
-  scaleQuantityValues(parameters, factor)
+  .scaleQuantityValues(parameters, factor)
 }
