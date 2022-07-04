@@ -452,12 +452,12 @@
 <rect x='499.45' y='326.44' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='503.82' y1='335.08' x2='512.37' y2='335.08' style='stroke-width: 0.71; stroke: #B4009E; stroke-opacity: 0.75;' />
 <line x1='508.09' y1='339.36' x2='508.09' y2='330.81' style='stroke-width: 0.71; stroke: #B4009E; stroke-opacity: 0.75;' />
-<text x='522.21' y='252.12' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='23.35px' lengthAdjust='spacingAndGlyphs'>distal</text>
-<text x='522.21' y='269.40' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='37.79px' lengthAdjust='spacingAndGlyphs'>proximal</text>
-<text x='522.21' y='286.68' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='18.90px' lengthAdjust='spacingAndGlyphs'>total</text>
-<text x='522.21' y='303.96' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='172.38px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_distal</text>
-<text x='522.21' y='321.24' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='186.83px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_proximal</text>
-<text x='522.21' y='338.52' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='167.93px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_total</text>
+<text x='615.63' y='252.12' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='23.35px' lengthAdjust='spacingAndGlyphs'>distal</text>
+<text x='615.63' y='269.40' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='37.79px' lengthAdjust='spacingAndGlyphs'>proximal</text>
+<text x='615.63' y='286.68' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='18.90px' lengthAdjust='spacingAndGlyphs'>total</text>
+<text x='615.63' y='303.96' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='172.38px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_distal</text>
+<text x='615.63' y='321.24' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='186.83px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_proximal</text>
+<text x='615.63' y='338.52' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='167.93px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_total</text>
 <text x='41.57' y='29.63' style='font-size: 10.00px; font-family: sans;' textLength='69.48px' lengthAdjust='spacingAndGlyphs'>My Plot Subtitle</text>
 <text x='41.57' y='14.98' style='font-size: 12.00px; font-family: sans;' textLength='66.02px' lengthAdjust='spacingAndGlyphs'>My Plot Title</text>
 <text x='483.02' y='569.69' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='42.25px' lengthAdjust='spacingAndGlyphs'>My Sources</text>
