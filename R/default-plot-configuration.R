@@ -223,7 +223,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFamily = "",
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
-    legendTitleAlign = tlf::Alignments$center,
+    legendTitleAlign = tlf::Alignments$left,
 
     # legendCaption ------------------------------------
 

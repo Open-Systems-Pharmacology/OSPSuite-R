@@ -229,8 +229,8 @@
 <polygon points='636.90,59.40 644.01,59.40 644.01,52.29 636.90,52.29 ' style='stroke-width: 0.71; stroke: none; fill: #CE3D32; fill-opacity: 0.75;' />
 <rect x='631.82' y='64.48' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <polygon points='640.46,67.60 645.24,75.89 635.67,75.89 ' style='stroke-width: 0.71; stroke: none; fill: #749B58; fill-opacity: 0.75;' />
-<text x='673.47' y='42.01' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='23.35px' lengthAdjust='spacingAndGlyphs'>distal</text>
-<text x='673.47' y='59.29' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='37.79px' lengthAdjust='spacingAndGlyphs'>proximal</text>
-<text x='673.47' y='76.57' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='18.90px' lengthAdjust='spacingAndGlyphs'>total</text>
+<text x='654.58' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='23.35px' lengthAdjust='spacingAndGlyphs'>distal</text>
+<text x='654.58' y='59.29' style='font-size: 10.00px; font-family: sans;' textLength='37.79px' lengthAdjust='spacingAndGlyphs'>proximal</text>
+<text x='654.58' y='76.57' style='font-size: 10.00px; font-family: sans;' textLength='18.90px' lengthAdjust='spacingAndGlyphs'>total</text>
 </g>
 </svg>

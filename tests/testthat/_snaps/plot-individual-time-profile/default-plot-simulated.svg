@@ -138,8 +138,8 @@
 <line x1='415.08' y1='55.84' x2='428.91' y2='55.84' style='stroke-width: 2.13; stroke: #CE3D32; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <rect x='413.35' y='64.48' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='415.08' y1='73.12' x2='428.91' y2='73.12' style='stroke-width: 2.13; stroke: #749B58; stroke-opacity: 0.75; stroke-linecap: butt;' />
-<text x='564.17' y='42.01' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='256.10px' lengthAdjust='spacingAndGlyphs'>Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying</text>
-<text x='564.17' y='59.29' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='254.44px' lengthAdjust='spacingAndGlyphs'>Organism|Lumen|Stomach|Dapagliflozin|Gastric retention</text>
-<text x='564.17' y='76.57' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='241.64px' lengthAdjust='spacingAndGlyphs'>Organism|Lumen|Stomach|Metformin|Gastric retention</text>
+<text x='436.11' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='256.10px' lengthAdjust='spacingAndGlyphs'>Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying</text>
+<text x='436.11' y='59.29' style='font-size: 10.00px; font-family: sans;' textLength='254.44px' lengthAdjust='spacingAndGlyphs'>Organism|Lumen|Stomach|Dapagliflozin|Gastric retention</text>
+<text x='436.11' y='76.57' style='font-size: 10.00px; font-family: sans;' textLength='241.64px' lengthAdjust='spacingAndGlyphs'>Organism|Lumen|Stomach|Metformin|Gastric retention</text>
 </g>
 </svg>
