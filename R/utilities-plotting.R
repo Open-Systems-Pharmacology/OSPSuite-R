@@ -607,7 +607,7 @@
     position = generalPlotConfiguration$legendPosition,
     caption = NULL,
     title = generalPlotConfiguration$legendTitle,
-    font = generalPlotConfiguration$legendCaptionFont,
+    font = legendTitleFont,
     background = NULL
   )
 
