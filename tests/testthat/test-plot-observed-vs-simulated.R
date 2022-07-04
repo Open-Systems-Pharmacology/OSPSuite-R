@@ -106,3 +106,20 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
     messages$plottingWithEmptyDataCombined()
   )
 })
+
+
+test_that("It returns `NULL` when `DataCombined`doesn't have any pairable datasets", {
+  dataSet1 <- DataSet$new(name = "Dataset1")
+  dataSet1$setValues(1, 1)
+  dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
+  dataSet1$molWeight <- 1
+
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet1)
+
+  expect_null(suppressWarnings(plotObservedVsSimulated(myCombDat)))
+  expect_warning(
+    plotObservedVsSimulated(myCombDat),
+    messages$plottingWithNoPairedDatasets()
+  )
+})

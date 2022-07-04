@@ -38,6 +38,12 @@ plotObservedVsSimulated <- function(dataCombined,
   # Remove the observed and simulated datasets which can't be paired.
   combinedData <- .removeUnpairableDatasets(combinedData)
 
+  # Return early if there are no pair-able datasets present
+  if (nrow(combinedData) == 0L) {
+    warning(messages$plottingWithNoPairedDatasets())
+    return(NULL)
+  }
+
   # Getting all units on the same scale
   combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
