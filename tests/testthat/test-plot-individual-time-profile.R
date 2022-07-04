@@ -111,3 +111,15 @@ test_that("It creates default plots as expected for only simulated", {
     fig = plotIndividualTimeProfile(myCombDat3)
   )
 })
+
+# edge cases ------------------------
+
+test_that("It returns `NULL` when `DataCombined` is empty", {
+  myCombDat <- DataCombined$new()
+
+  expect_null(suppressWarnings(plotIndividualTimeProfile(myCombDat)))
+  expect_warning(
+    plotIndividualTimeProfile(myCombDat),
+    messages$plottingWithEmptyDataCombined()
+  )
+})

@@ -93,3 +93,16 @@ test_that("It respects custom plot configuration", {
   expect_null(myPlotConfiguration$xLabel)
   expect_null(myPlotConfiguration$yLabel)
 })
+
+
+# edge cases ------------------------
+
+test_that("It returns `NULL` when `DataCombined` is empty", {
+  myCombDat <- DataCombined$new()
+
+  expect_null(suppressWarnings(plotObservedVsSimulated(myCombDat)))
+  expect_warning(
+    plotObservedVsSimulated(myCombDat),
+    messages$plottingWithEmptyDataCombined()
+  )
+})

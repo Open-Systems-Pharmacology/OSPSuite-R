@@ -63,3 +63,15 @@ test_that("It respects custom plot configuration", {
     fig = p
   )
 })
+
+# edge cases ------------------------
+
+test_that("It returns `NULL` when `DataCombined` is empty", {
+  myCombDat <- DataCombined$new()
+
+  expect_null(suppressWarnings(plotPopulationTimeProfile(myCombDat)))
+  expect_warning(
+    plotPopulationTimeProfile(myCombDat),
+    messages$plottingWithEmptyDataCombined()
+  )
+})

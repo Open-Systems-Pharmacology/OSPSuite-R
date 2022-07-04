@@ -33,6 +33,11 @@ plotIndividualTimeProfile <- function(dataCombined,
   validateIsOfType(dataCombined, "DataCombined")
   validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
 
+  if (is.null(dataCombined$groupMap)) {
+    warning(messages$plottingWithEmptyDataCombined())
+    return(NULL)
+  }
+
   # data frames -----------------------------
 
   combinedData <- dataCombined$toDataFrame()

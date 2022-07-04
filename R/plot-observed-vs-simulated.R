@@ -26,6 +26,11 @@ plotObservedVsSimulated <- function(dataCombined,
   validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
+  if (is.null(dataCombined$groupMap)) {
+    warning(messages$plottingWithEmptyDataCombined())
+    return(NULL)
+  }
+
   # data frames -----------------------------
 
   combinedData <- dataCombined$toDataFrame()

@@ -41,3 +41,7 @@ messages$linearScaleWithFoldDistance <- function() {
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
   messages$printMultipleEntries("Could not load units for the following dimensions", dimensions)
 }
+
+messages$plottingWithEmptyDataCombined <- function() {
+  "No plot can be created because the entered `DataCombined` object does not contain any datasets."
+}
