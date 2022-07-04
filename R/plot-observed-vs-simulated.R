@@ -2,7 +2,9 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotObsVsPred
-#' @param foldDistance A vector for plotting lines at required fold differences.
+#' @param foldDistance A vector for plotting lines at required fold distances
+#'   The vector can include only fold distance values different from `1`. Even
+#'   if it is not specified, it will **always** be included.
 #'
 #' @import tlf
 #'
@@ -16,7 +18,7 @@
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
                                     smoother = NULL,
-                                    foldDistance = c(1, 1.5, 2)) {
+                                    foldDistance = 2) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
@@ -75,6 +77,12 @@ plotObservedVsSimulated <- function(dataCombined,
     obsVsPredPlotConfiguration$xAxis$scale == "identity" ||
       obsVsPredPlotConfiguration$yAxis$scale == "identity"
   )
+
+  # The argument `foldDistance` should only include fold values different from `1`.
+  # `1` always must be present.
+  if (!any(dplyr::near(1.0, foldDistance))) {
+    foldDistance <- c(1.0, foldDistance)
+  }
 
   if (is_any_scale_linear && !is.null(foldDistance)) {
     warning(messages$linearScaleWithFoldDistance())

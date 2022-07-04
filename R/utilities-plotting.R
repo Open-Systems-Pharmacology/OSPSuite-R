@@ -509,6 +509,7 @@
   if (plotType == "TimeProfilePlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$solid
+    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideTopRight
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
   }
@@ -516,11 +517,11 @@
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
-    # 10 is arbitrary; the `foldDistance` argument vector is not expected to
-    # have a length greater than 5
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% c(tlf::Linetypes$solid, rep(tlf::Linetypes$dashed, 10))
+    # every fold distance line should get a unique type of line
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% names(tlf::Linetypes)
   }
 
   # labels object ---------------------------------------

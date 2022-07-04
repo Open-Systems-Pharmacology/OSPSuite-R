@@ -216,7 +216,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # legend ------------------------------------
 
-    legendPosition = tlf::LegendPositions$insideTopRight,
+    legendPosition = NULL,
     legendTitle = NULL,
     legendTitleSize = tlf::PlotAnnotationTextSize$plotLegendTitleSize,
     legendTitleColor = "black",

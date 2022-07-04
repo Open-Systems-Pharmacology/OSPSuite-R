@@ -20,27 +20,26 @@ dataSet <- loadDataSetsFromExcel(
 
 # create a new instance and add datasets
 myCombDat <- DataCombined$new()
+myCombDat$addDataSets(dataSet)
 myCombDat$addSimulationResults(
   simResults,
   quantitiesOrPaths = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention"
+    "Organism|Lumen|Stomach|Metformin|Gastric retention",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
   )
 )
 
-myCombDat$addDataSets(dataSet)
-
 myCombDat$setGroups(
   names = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Stevens_2012_placebo.Sita_dist",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Stevens_2012_placebo.Sita_proximal",
     "Organism|Lumen|Stomach|Metformin|Gastric retention",
-    "Stevens_2012_placebo.Sita_total"
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+    "Stevens_2012_placebo.Placebo_total",
+    "Stevens_2012_placebo.Placebo_distal",
+    "Stevens_2012_placebo.Placebo_proximal"
   ),
-  groups = c("distal", "distal", "proximal", "proximal", "total", "total")
+  groups = c("Solid total", "Solid distal", "Solid proximal", "Solid total", "Solid distal", "Solid proximal")
 )
 
 test_that("It creates default plots as expected", {

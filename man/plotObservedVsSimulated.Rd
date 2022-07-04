@@ -8,7 +8,7 @@ plotObservedVsSimulated(
   dataCombined,
   defaultPlotConfiguration = NULL,
   smoother = NULL,
-  foldDistance = c(1, 1.5, 2)
+  foldDistance = 2
 )
 }
 \arguments{
@@ -23,7 +23,9 @@ an \code{R6} class object that defines plot properties.}
 \item \code{"lm"} for linear regression
 }}
 
-\item{foldDistance}{A vector for plotting lines at required fold differences.}
+\item{foldDistance}{A vector for plotting lines at required fold distances
+The vector can include only fold distance values different from \code{1}. Even
+if it is not specified, it will \strong{always} be included.}
 }
 \description{
 Observed versus predicted/simulated scatter plot
