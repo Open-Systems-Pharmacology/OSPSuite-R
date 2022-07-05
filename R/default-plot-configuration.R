@@ -117,7 +117,7 @@
 #' @field legendPosition A character string defining the legend position.
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
-#' @field legendCaptionSize,legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle,legendCaptionAlign Aesthetic properties for the legend caption.
+#' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign Aesthetic properties for the legend caption.
 #' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
 #' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
@@ -225,14 +225,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$left,
 
-    # legendCaption ------------------------------------
+    # legendKeys ------------------------------------
 
-    legendCaptionSize = tlf::PlotAnnotationTextSize$plotLegendCaptionSize,
-    legendCaptionColor = "black",
-    legendCaptionFontFamily = "",
-    legendCaptionFontFace = tlf::FontFaces$plain,
-    legendCaptionAngle = 0,
-    legendCaptionAlign = tlf::Alignments$left,
+    legendKeysSize = tlf::PlotAnnotationTextSize$plotLegendCaptionSize,
+    legendKeysColor = "black",
+    legendKeysFontFamily = "",
+    legendKeysFontFace = tlf::FontFaces$plain,
+    legendKeysAngle = 0,
+    legendKeysAlign = tlf::Alignments$left,
 
     # XAxisConfiguration ------------------------------------
 

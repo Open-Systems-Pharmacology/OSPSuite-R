@@ -600,20 +600,20 @@
     font = legendTitleFont
   )
 
-  legendCaptionFont <- tlf::Font$new(
-    size = generalPlotConfiguration$legendCaptionSize,
-    color = generalPlotConfiguration$legendCaptionColor,
-    fontFamily = generalPlotConfiguration$legendCaptionFontFamily,
-    fontFace = generalPlotConfiguration$legendCaptionFontFace,
-    angle = generalPlotConfiguration$legendCaptionAngle,
-    align = generalPlotConfiguration$legendCaptionAlign
+  legendKeysFont <- tlf::Font$new(
+    size = generalPlotConfiguration$legendKeysSize,
+    color = generalPlotConfiguration$legendKeysColor,
+    fontFamily = generalPlotConfiguration$legendKeysFontFamily,
+    fontFace = generalPlotConfiguration$legendKeysFontFace,
+    angle = generalPlotConfiguration$legendKeysAngle,
+    align = generalPlotConfiguration$legendKeysAlign
   )
 
   legendConfiguration <- tlf::LegendConfiguration$new(
     position = generalPlotConfiguration$legendPosition,
     caption = NULL,
     title = legendTitleLabel, # for legend title aesthetics
-    font = legendCaptionFont, # for legend keys aesthetics
+    font = legendKeysFont, # for legend keys aesthetics
     background = NULL
   )
 

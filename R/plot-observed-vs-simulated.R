@@ -95,6 +95,8 @@ plotObservedVsSimulated <- function(dataCombined,
 
   if (is_any_scale_linear && !is.null(foldDistance)) {
     warning(messages$linearScaleWithFoldDistance())
+
+    # For linear scale, the equivalent of 1 in log scale is 0
     foldDistance <- 0
   }
 

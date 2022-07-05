@@ -152,7 +152,7 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
+\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
 
 \item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
@@ -212,7 +212,7 @@ label, y-axis label, plot legend, watermark, respectively.}
 
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
+\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
 
 \item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 

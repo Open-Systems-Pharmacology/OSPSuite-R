@@ -72,7 +72,7 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$legendTitle <- "My legendary title"
   myPlotConfiguration$legendTitleColor <- "red"
   myPlotConfiguration$legendTitleSize <- 8
-  myPlotConfiguration$legendCaptionColor <- "brown"
+  myPlotConfiguration$legendKeysColor <- "brown"
   myPlotConfiguration$pointsSize <- 2.5
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
   myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
