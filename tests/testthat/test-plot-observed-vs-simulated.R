@@ -83,8 +83,7 @@ test_that("It respects custom plot configuration", {
     fig = plotObservedVsSimulated(
       myCombDat,
       myPlotConfiguration,
-      foldDistance = c(1.5, 2),
-      smoother = "loess"
+      foldDistance = c(1.5, 2)
     )
   )
 

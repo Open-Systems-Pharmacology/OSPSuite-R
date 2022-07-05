@@ -1,7 +1,6 @@
 #' Observed versus predicted/simulated scatter plot
 #'
 #' @inheritParams plotIndividualTimeProfile
-#' @inheritParams tlf::plotObsVsPred
 #' @param foldDistance A vector for plotting lines at required fold distances
 #'   The vector can include only fold distance values different from `1`. Even
 #'   if it is not specified, it will **always** be included.
@@ -17,7 +16,6 @@
 #' @export
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
-                                    smoother = NULL,
                                     foldDistance = 2) {
   # validation -----------------------------
 
@@ -120,7 +118,7 @@ plotObservedVsSimulated <- function(dataCombined,
       lines = NULL
     ),
     foldDistance = foldDistance,
-    smoother = smoother,
+    smoother = NULL,
     plotConfiguration = obsVsPredPlotConfiguration
   )
 }

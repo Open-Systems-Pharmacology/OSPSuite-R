@@ -7,7 +7,6 @@
 plotObservedVsSimulated(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  smoother = NULL,
   foldDistance = 2
 )
 }
@@ -16,12 +15,6 @@ plotObservedVsSimulated(
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
-
-\item{smoother}{Optional name of smoother function:
-\itemize{
-\item \code{"loess"} for loess regression
-\item \code{"lm"} for linear regression
-}}
 
 \item{foldDistance}{A vector for plotting lines at required fold distances
 The vector can include only fold distance values different from \code{1}. Even
