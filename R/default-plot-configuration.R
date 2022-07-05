@@ -232,7 +232,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendCaptionFontFamily = "",
     legendCaptionFontFace = tlf::FontFaces$plain,
     legendCaptionAngle = 0,
-    legendCaptionAlign = tlf::Alignments$center,
+    legendCaptionAlign = tlf::Alignments$left,
 
     # XAxisConfiguration ------------------------------------
 
