@@ -201,9 +201,9 @@
 <polygon points='604.93,297.00 610.97,297.00 610.97,290.95 604.93,290.95 ' style='stroke-width: 0.71; stroke: none; fill: #D83B01; fill-opacity: 0.75;' />
 <rect x='599.31' y='302.61' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <polygon points='607.95,306.56 612.02,313.60 603.88,313.60 ' style='stroke-width: 0.71; stroke: none; fill: #107C10; fill-opacity: 0.75;' />
-<text x='623.57' y='279.45' style='font-size: 8.00px; fill: #FF0000; font-family: sans;' textLength='38.69px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
-<text x='623.57' y='296.73' style='font-size: 8.00px; fill: #FF0000; font-family: sans;' textLength='50.25px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>
-<text x='623.57' y='314.01' style='font-size: 8.00px; fill: #FF0000; font-family: sans;' textLength='35.13px' lengthAdjust='spacingAndGlyphs'>Solid total</text>
+<text x='654.97' y='280.14' text-anchor='middle' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
+<text x='654.97' y='297.42' text-anchor='middle' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='62.81px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>
+<text x='654.97' y='314.70' text-anchor='middle' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='43.91px' lengthAdjust='spacingAndGlyphs'>Solid total</text>
 <text x='38.79' y='29.63' style='font-size: 10.00px; font-family: sans;' textLength='69.48px' lengthAdjust='spacingAndGlyphs'>My Plot Subtitle</text>
 <text x='38.79' y='14.98' style='font-size: 12.00px; font-family: sans;' textLength='66.02px' lengthAdjust='spacingAndGlyphs'>My Plot Title</text>
 <text x='582.87' y='569.69' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='42.25px' lengthAdjust='spacingAndGlyphs'>My Sources</text>

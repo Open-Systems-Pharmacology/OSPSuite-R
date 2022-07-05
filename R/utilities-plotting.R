@@ -595,6 +595,11 @@
     align = generalPlotConfiguration$legendTitleAlign
   )
 
+  legendTitleLabel <- tlf::Label$new(
+    text = generalPlotConfiguration$legendTitle,
+    font = legendTitleFont
+  )
+
   legendCaptionFont <- tlf::Font$new(
     size = generalPlotConfiguration$legendCaptionSize,
     color = generalPlotConfiguration$legendCaptionColor,
@@ -607,8 +612,8 @@
   legendConfiguration <- tlf::LegendConfiguration$new(
     position = generalPlotConfiguration$legendPosition,
     caption = NULL,
-    title = generalPlotConfiguration$legendTitle,
-    font = legendTitleFont,
+    title = legendTitleLabel, # for legend title aesthetics
+    font = legendCaptionFont, # for legend keys aesthetics
     background = NULL
   )
 
