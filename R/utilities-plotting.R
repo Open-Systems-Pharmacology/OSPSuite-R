@@ -310,6 +310,8 @@
 #'   points. Default is `NULL`, in which case the internal enum
 #'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
 #'   based on the unit of time measurement.
+#' @param scaling A character specifying scale: either linear (default) or
+#'   logarithmic.
 #'
 #' @family utilities-plotting
 #'
@@ -326,7 +328,9 @@
 #' ospsuite:::.createObsVsPredData(df)
 #'
 #' @keywords internal
-.createObsVsPredData <- function(data, tolerance = NULL) {
+.createObsVsPredData <- function(data,
+                                 tolerance = NULL,
+                                 scaling = tlf::Scaling$lin) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
@@ -405,6 +409,14 @@
     "obsValue" = obsValue,
     "predValue" = predValue
   )
+
+  # the linear scaling can be called either `"lin"` (in default plot config) or
+  # `"identity"` in specific plot config in tlf
+  if (scaling %in% c("lin", "identity")) {
+    pairedData <- dplyr::mutate(pairedData, resValue = obsValue - predValue)
+  } else {
+    pairedData <- dplyr::mutate(pairedData, resValue = log(obsValue) - log(predValue))
+  }
 
   return(pairedData)
 }
