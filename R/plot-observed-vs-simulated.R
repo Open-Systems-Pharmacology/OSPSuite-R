@@ -55,36 +55,42 @@ plotObservedVsSimulated <- function(dataCombined,
     generalPlotConfiguration = defaultPlotConfiguration
   )
 
-  # linear scaling is stored as identity scaling in `{tlf}`
+  # Linear scaling is stored as identity scaling in `{tlf}`
   is_any_scale_linear <- (
     obsVsPredPlotConfiguration$xAxis$scale == "identity" ||
       obsVsPredPlotConfiguration$yAxis$scale == "identity"
   )
 
-  # The argument `foldDistance` should only include fold values different from `1`.
-  # `1` always must be present.
-  if (!any(dplyr::near(1.0, foldDistance))) {
-    foldDistance <- c(1.0, foldDistance)
+  # The argument `foldDistance` should only include fold values different from
+  # the default value, which must always be present.
+  #
+  # The default value depends on the scale:
+  #
+  # - For linear scale: `1`
+  # - For logarithmic scale: `0`
+  defaultFoldDistance <- ifelse(is_any_scale_linear, 0, 1)
+
+  if (!any(dplyr::near(defaultFoldDistance, foldDistance))) {
+    foldDistance <- c(defaultFoldDistance, foldDistance)
   }
 
   if (is_any_scale_linear && !is.null(foldDistance)) {
     warning(messages$linearScaleWithFoldDistance())
-
-    # For linear scale, the equivalent of 1 in log scale is 0
     foldDistance <- 0
   }
 
   # paired data frame -----------------------------
 
   # Create observed versus simulated paired data using interpolation for each
-  # grouping level and combine the resulting data frames row-wise. The last
-  # step will be automatically carried by `dplyr::group_modify()`.
+  # grouping level and combine the resulting data frames in a row-wise manner.
+  #
+  # Both of these routines will be carried out by `dplyr::group_modify()`.
   pairedData <- combinedData %>%
     dplyr::group_by(group) %>%
     dplyr::group_modify(.f = ~ .createObsVsPredData(.x, scaling = obsVsPredPlotConfiguration$yAxis$scale)) %>%
     dplyr::ungroup()
 
-  # Add min and max values for error bars
+  # Add min and max values for horizontal error bars
   pairedData <- dplyr::mutate(
     pairedData,
     obsValueLower = obsValue - obsErrorValue,
@@ -104,8 +110,7 @@ plotObservedVsSimulated <- function(dataCombined,
       messages$printMultipleEntries(
         header = messages$valuesNotInterpolated(),
         entries = pairedData$obsTime[predValueMissingIndices]
-      ),
-      call. = FALSE
+      )
     )
   }
 
