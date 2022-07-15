@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-quantity.R
 \name{setQuantityValuesByPath}
 \alias{setQuantityValuesByPath}
-\title{Set the values of parameters in the simulation by path}
+\title{Set the values of quantities in the simulation by path}
 \usage{
 setQuantityValuesByPath(
   quantityPaths,
@@ -13,14 +13,13 @@ setQuantityValuesByPath(
 )
 }
 \arguments{
-\item{quantityPaths}{A single or a list of absolute quantity path}
+\item{quantityPaths}{A single or a list of absolute quantity paths}
 
 \item{values}{A numeric value that should be assigned to the quantities or a
 vector of numeric values, if the value of more than one quantity should be
 changed. Must have the same length as 'quantityPaths'.}
 
-\item{simulation}{Simulation uses to retrieve quantity instances from given
-paths.}
+\item{simulation}{Simulation containing the quantities}
 
 \item{units}{A string or a list of strings defining the units of the
 \code{values}. If \code{NULL} (default), values are assumed to be in base units. If
@@ -31,7 +30,7 @@ the given path, an error is thrown. If \code{FALSE}, a warning is shown to the
 user.}
 }
 \description{
-Set the values of parameters in the simulation by path
+Set the values of quantities in the simulation by path
 }
 \examples{
 
