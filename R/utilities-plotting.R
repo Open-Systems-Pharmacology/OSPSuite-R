@@ -339,6 +339,14 @@
   simTime <- data$xValues[data$dataType == "simulated"]
   simValue <- data$yValues[data$dataType == "simulated"]
 
+  # If available, error values will be useful for plotting error bars in the
+  # scatter plot. Even if not available, add missing values to be consistent.
+  if ("yErrorValues" %in% colnames(data)) {
+    obsErrorValue <- data$yErrorValues[data$dataType == "observed"]
+  } else {
+    obsErrorValue <- rep(NA_real_, length(obsValue))
+  }
+
   # Number of observed and simulated data points
   maxSimPoints <- length(simTime)
   maxObsPoints <- length(obsTime)
@@ -407,6 +415,7 @@
     "obsTime" = obsTime,
     "timeUnit" = timeUnit,
     "obsValue" = obsValue,
+    "obsErrorValue" = obsErrorValue,
     "predValue" = predValue
   )
 

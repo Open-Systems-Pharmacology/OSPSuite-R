@@ -84,6 +84,13 @@ plotObservedVsSimulated <- function(dataCombined,
     dplyr::group_modify(.f = ~ .createObsVsPredData(.x, scaling = obsVsPredPlotConfiguration$yAxis$scale)) %>%
     dplyr::ungroup()
 
+  # Add min and max values for error bars
+  pairedData <- dplyr::mutate(
+    pairedData,
+    obsValueLower = obsValue - obsErrorValue,
+    obsValueHigher = obsValue + obsErrorValue
+  )
+
   # Time points at which predicted values can't be interpolated, and need to be
   # extrapolated.
   #
@@ -119,6 +126,8 @@ plotObservedVsSimulated <- function(dataCombined,
       x = "obsValue",
       y = "predValue",
       group = "group",
+      xmin = "obsValueLower",
+      xmax = "obsValueHigher",
       lines = NULL
     ),
     foldDistance = foldDistance,
