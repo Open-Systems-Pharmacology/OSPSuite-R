@@ -18,8 +18,6 @@
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
                                       quantiles = c(0.05, 0.5, 0.95)) {
-  # validation -----------------------------
-
   validateIsNumeric(quantiles, nullAllowed = FALSE)
   validateIsOfLength(quantiles, 3L)
 

@@ -41,4 +41,13 @@ df <- ospsuite:::.unitConverter(df)
 ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 
 }
+\seealso{
+Other utilities-plotting: 
+\code{\link{.addMissingGroupings}()},
+\code{\link{.createObsVsPredData}()},
+\code{\link{.extractAggregatedSimulatedData}()},
+\code{\link{.extractMatchingIndices}()},
+\code{\link{.removeUnpairableDatasets}()}
+}
+\concept{utilities-plotting}
 \keyword{internal}

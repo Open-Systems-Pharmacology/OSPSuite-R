@@ -23,6 +23,7 @@ Time-profile plot of individual data
 \seealso{
 Other plotting: 
 \code{\link{DefaultPlotConfiguration}},
+\code{\link{plotObservedVsSimulated}()},
 \code{\link{plotPopulationTimeProfile}()}
 }
 \concept{plotting}

@@ -31,6 +31,7 @@ Time-values profile plot for population simulations
 \seealso{
 Other plotting: 
 \code{\link{DefaultPlotConfiguration}},
-\code{\link{plotIndividualTimeProfile}()}
+\code{\link{plotIndividualTimeProfile}()},
+\code{\link{plotObservedVsSimulated}()}
 }
 \concept{plotting}
