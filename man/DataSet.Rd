@@ -68,12 +68,6 @@ Value in yUnit associated with the yValues}
 \item \href{#method-DataSet-print}{\code{DataSet$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataSet-new"></a>}}
 \if{latex}{\out{\hypertarget{method-DataSet-new}{}}}

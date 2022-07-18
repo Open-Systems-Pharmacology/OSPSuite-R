@@ -26,12 +26,6 @@ Options to be passed to the \code{SimulationBatch}.
 \item \href{#method-SimulationBatchOptions-print}{\code{SimulationBatchOptions$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatchOptions-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatchOptions-new}{}}}
