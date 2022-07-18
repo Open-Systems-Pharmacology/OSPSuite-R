@@ -510,8 +510,8 @@ ospUnits <- list()
   #
   # If there is no `yErrorValues` column in the entered data frame, it doesn't
   # make sense for this function to introduce a new column called `yErrorUnit`.
-  if (("yErrorValues" %in% names(data)) &&
-    !("yErrorUnit" %in% names(data))) {
+  if (("yErrorValues" %in% colnames(data)) &&
+    !("yErrorUnit" %in% colnames(data))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
