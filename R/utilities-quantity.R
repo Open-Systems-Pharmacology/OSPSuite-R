@@ -117,14 +117,13 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
   }
 }
 
-#' Set the values of parameters in the simulation by path
+#' Set the values of quantities in the simulation by path
 #'
-#' @param quantityPaths A single or a list of absolute quantity path
+#' @param quantityPaths A single or a list of absolute quantity paths
 #' @param values A numeric value that should be assigned to the quantities or a
 #'   vector of numeric values, if the value of more than one quantity should be
 #'   changed. Must have the same length as 'quantityPaths'.
-#' @param simulation Simulation uses to retrieve quantity instances from given
-#'   paths.
+#' @param simulation Simulation containing the quantities
 #' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
 #'   the given path, an error is thrown. If `FALSE`, a warning is shown to the
 #'   user.
@@ -160,7 +159,13 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       if (dimension == "") {
         next
       }
-      value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]])
+      #If the unit is NULL, the value is assumend to be in base unit and no conversion
+      #in necessary
+      if (!is.null(units[[i]])){
+        mw <- simulation$molWeightFor(path)
+        value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]],
+                            molWeight = mw)
+      }
     }
 
     rClr::clrCall(
@@ -171,6 +176,62 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       stopIfNotFound
     )
   }
+}
+
+#' Get the values of quantities in the simulation by path
+#'
+#' @param quantityPaths A single or a list of absolute quantity paths
+#' @param simulation Simulation containing the quantities
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, a warning is shown to the
+#'   user.
+#' @param units A string or a list of strings defining the units of returned
+#' values. If `NULL` (default), values are returned in base units. If not
+#' `NULL`, must have the same length as `quantityPaths`. Single entries may be
+#' `NULL`.
+#' @examples
+#'
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' getQuantityValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"),
+#' sim, list("ml", NULL))
+#' @export
+getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, stopIfNotFound = TRUE) {
+  validateIsString(quantityPaths)
+  validateIsOfType(simulation, "Simulation")
+
+  if (!is.null(units)) {
+    validateIsSameLength(quantityPaths, units)
+    validateIsString(units, nullAllowed = TRUE)
+  }
+
+  task <- .getContainerTask()
+  outputValues <- vector("numeric", length(quantityPaths))
+  for (i in seq_along(quantityPaths)) {
+    path <- enc2utf8(quantityPaths[[i]])
+    value <- rClr::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
+    if (!is.null(units)) {
+      dimension <- rClr::clrCall(task, "DimensionNameByPath",
+                                 simulation$ref,
+                                 path,
+                                 stopIfNotFound)
+      # Dimension ca be be empty if the path was not found
+      if (dimension == "") {
+        next
+      }
+      #If the unit is NULL, the value is assumend to be in base unit and no conversion
+      #in necessary
+      if (!is.null(units[[i]])){
+        mw <- simulation$molWeightFor(path)
+        value <- toUnit(quantityOrDimension = dimension, values = value, targetUnit = units[[i]],
+                        molWeight = mw)
+      }
+    }
+
+    outputValues[[i]] <- value
+  }
+
+  return(outputValues)
 }
 
 #' Scale current values of quantities using a factor

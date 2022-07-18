@@ -25,5 +25,5 @@ Is the value defined by an explicit formula
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-isExplicitFormulaByPath("Organism|Liver|Volume", sim) #FALSE
+isExplicitFormulaByPath("Organism|Liver|Volume", sim) # FALSE
 }

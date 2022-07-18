@@ -94,7 +94,7 @@ Cache <- R6::R6Class(
       if (missing(value)) {
         ls(private$cachedObjects)
       } else {
-        stop(messages$errorPropertyReadOnly("keys"), call. = FALSE)
+        stop(messages$errorPropertyReadOnly("keys"))
       }
     }
   ),
