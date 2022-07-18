@@ -33,7 +33,7 @@ Parameter <- R6::R6Class(
 
       # Set to true and no RHS => error
       if (value) {
-        stop(messages$errorCannotSetRHSFormula, call. = FALSE)
+        stop(messages$errorCannotSetRHSFormula)
       }
 
       # we are deleting the RHS Formula
