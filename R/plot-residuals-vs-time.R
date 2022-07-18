@@ -13,14 +13,18 @@
 #'
 #' @export
 plotResidualsVsTime <- function(dataCombined,
-                                defaultPlotConfiguration = NULL,
-                                smoother = NULL) {
+                                defaultPlotConfiguration = NULL) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(dataCombined, "DataCombined")
   validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
+
+  if (is.null(dataCombined$groupMap)) {
+    warning(messages$plottingWithEmptyDataCombined())
+    return(NULL)
+  }
 
   # data frames -----------------------------
 
@@ -29,11 +33,14 @@ plotResidualsVsTime <- function(dataCombined,
   # Remove the observed and simulated datasets which can't be paired.
   combinedData <- .removeUnpairableDatasets(combinedData)
 
+  # Return early if there are no pair-able datasets present
+  if (nrow(combinedData) == 0L) {
+    warning(messages$plottingWithNoPairedDatasets())
+    return(NULL)
+  }
+
   # Getting all units on the same scale
   combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
-
-  # FIXME: placeholder
-  pairedData <- .calculateResiduals(combinedData)
 
   # `ResVsTimePlotConfiguration` object -----------------------------
 
@@ -44,6 +51,17 @@ plotResidualsVsTime <- function(dataCombined,
     specificPlotConfiguration = tlf::ResVsTimePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
   )
+
+  # paired data frame -----------------------------
+
+  # Create observed versus simulated paired data using interpolation for each
+  # grouping level and combine the resulting data frames in a row-wise manner.
+  #
+  # Both of these routines will be carried out by `dplyr::group_modify()`.
+  pairedData <- combinedData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .createObsVsPredData(.x, scaling = resVsTimePlotConfiguration$yAxis$scale)) %>%
+    dplyr::ungroup()
 
   # axes labels -----------------------------
 
@@ -56,15 +74,14 @@ plotResidualsVsTime <- function(dataCombined,
 
   # plot -----------------------------
 
-  tlf::plotObsVsPred(
+  tlf::plotResVsTime(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ResVsTimeDataMapping$new(
-      x = "xValues",
+      x = "obsValue",
       y = "resValue",
       group = "group",
       lines = NULL
     ),
-    smoother = smoother,
     plotConfiguration = resVsTimePlotConfiguration
   )
 }

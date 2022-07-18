@@ -549,6 +549,8 @@
   # For `plotResidualsVsTime()`
   if (plotType == "ResVsTimePlotConfiguration") {
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
   }
 
   # labels object ---------------------------------------
