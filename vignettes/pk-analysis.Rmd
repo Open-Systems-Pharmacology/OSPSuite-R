@@ -102,7 +102,7 @@ The `{ospsuite}` package also supports user-defined PK Parameters, e.g. PK Param
 This feature is useful when calculating PK Parameters for specific time intervals, or to apply PK Parameters for output not using 
 the dimension `Concentration`. 
 
-A User-Defined PK Parameter is always based on an existing PK-Parameter and simply extends the way the output is calcualted.
+A User-Defined PK Parameter is always based on an existing PK-Parameter and simply extends the way the output is calculated.
 It is not possible at the moment to define your own `formula`.
 
 The utility [`addUserDefinedPKParameter`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addUserDefinedPKParameter.html) creates and returns an instance of the [`UserDefinedPKParameter`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/UserDefinedPKParameter.html) which can then be parameterized for specific requirements.

@@ -512,6 +512,29 @@ test_that("if yErrorUnit is missing, error values are converted correctly", {
   )
 })
 
+# LLOQ column --------------------------------
+
+dfLloq <- dplyr::tibble(
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(0.5, 2, 3),
+  yUnit = "mol",
+  yErrorUnit = "mol", # error unit present without error values
+  yDimension = ospDimensions$Amount,
+  molWeight = 10,
+  lloq = 1,
+  random = "bla" # test that function doesn't remove additional columns
+)
+
+dfMWConvert <- .unitConverter(dfLloq, yUnit = ospUnits$Mass$g)
+
+test_that("it can convert lloq columns", {
+  expect_equal(dfMWConvert$lloq, rep(10, 3))
+  expect_equal(unique(dfMWConvert$yUnit), ospUnits$Mass$g)
+  expect_equal(unique(dfMWConvert$yErrorUnit), ospUnits$Mass$g)
+})
+
 # conversion to weeks --------------------------------
 
 dfWeek <- dplyr::tibble(
