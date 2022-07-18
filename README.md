@@ -21,7 +21,21 @@ The **ospsuite-R** package provides the functionality of loading, manipulating, 
 
 # Documentation
 
-Please refer to the [online documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/) for more details on the package 
+If you are reading this on GitHub README, please refer to the [online documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/) for more details on the package. 
+
+In particular, we would recommend that you read the articles in the following order:
+
+* [Get Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html)
+* [Loading a simulation and accessing entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
+* [Changing parameter and molecule start values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
+* [Running a simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
+* [Efficient calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
+* [Creating individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
+* [Population simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
+* [PK Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
+* [Sensitivity analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
+* [Table parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
+* [Dimensions and Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
 
 # Installation
 
