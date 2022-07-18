@@ -400,11 +400,11 @@
 <rect x='482.56' y='116.32' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='486.17' y1='124.96' x2='496.23' y2='124.96' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75;' />
 <line x1='491.20' y1='129.99' x2='491.20' y2='119.94' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75;' />
-<text x='505.32' y='42.01' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='172.38px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_distal</text>
-<text x='505.32' y='59.29' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='186.83px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_proximal</text>
-<text x='505.32' y='76.57' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='167.93px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_total</text>
-<text x='505.32' y='93.85' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='145.69px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Sita_dist</text>
-<text x='505.32' y='111.13' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='167.92px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Sita_proximal</text>
-<text x='505.32' y='128.41' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='149.02px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Sita_total</text>
+<text x='505.32' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='172.38px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_distal</text>
+<text x='505.32' y='59.29' style='font-size: 10.00px; font-family: sans;' textLength='186.83px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_proximal</text>
+<text x='505.32' y='76.57' style='font-size: 10.00px; font-family: sans;' textLength='167.93px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_total</text>
+<text x='505.32' y='93.85' style='font-size: 10.00px; font-family: sans;' textLength='145.69px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Sita_dist</text>
+<text x='505.32' y='111.13' style='font-size: 10.00px; font-family: sans;' textLength='167.92px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Sita_proximal</text>
+<text x='505.32' y='128.41' style='font-size: 10.00px; font-family: sans;' textLength='149.02px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Sita_total</text>
 </g>
 </svg>

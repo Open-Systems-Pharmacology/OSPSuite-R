@@ -44,4 +44,13 @@ df
 ospsuite:::.removeUnpairableDatasets(df)
 
 }
+\seealso{
+Other utilities-plotting: 
+\code{\link{.addMissingGroupings}()},
+\code{\link{.createAxesLabels}()},
+\code{\link{.createObsVsPredData}()},
+\code{\link{.extractAggregatedSimulatedData}()},
+\code{\link{.extractMatchingIndices}()}
+}
+\concept{utilities-plotting}
 \keyword{internal}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get-net-task.R
 \name{.getNetTask}
 \alias{.getNetTask}
-\title{Returns an instance of the specified \code{.NET} Task}
+\title{Get an instance of the specified \code{.NET} Task}
 \usage{
 .getNetTask(taskName)
 }
@@ -17,7 +17,7 @@ optimization purposes only.
 }
 }
 \description{
-Returns an instance of the specified \code{.NET} Task
+Get an instance of the specified \code{.NET} Task
 }
 \examples{
 
