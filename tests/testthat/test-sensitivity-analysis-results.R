@@ -11,7 +11,7 @@ test_that("It returns the name of all pk parameters available in the SA results"
   expect_gt(length(pkParameterNames), 0)
 })
 
-test_that("It returns the number of QuantityPKParameters calcualted", {
+test_that("It returns the number of QuantityPKParameters calculated", {
   expect_gt(length(results$count), 0)
 })
 

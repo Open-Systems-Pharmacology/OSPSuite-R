@@ -455,7 +455,6 @@ ospUnits <- list()
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #' @keywords internal
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
-
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
 
@@ -511,8 +510,8 @@ ospUnits <- list()
   #
   # If there is no `yErrorValues` column in the entered data frame, it doesn't
   # make sense for this function to introduce a new column called `yErrorUnit`.
-  if (("yErrorValues" %in% names(data)) &&
-    !("yErrorUnit" %in% names(data))) {
+  if (("yErrorValues" %in% colnames(data)) &&
+    !("yErrorUnit" %in% colnames(data))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
@@ -570,13 +569,20 @@ ospUnits <- list()
   )
 
   # yUnit error
-  if ("yErrorValues" %in% names(data)) {
+  if ("yErrorValues" %in% colnames(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
 
     data <- purrr::map_dfr(
       .x = yErrorDataList,
       .f = function(data) .yErrorUnitConverter(data, yTargetUnit)
     )
+  } else {
+    # For some reason, if the user dataset doesn't have error values, but
+    # still have columns about error units, update them as well. The quantity
+    # and its error should always have the same unit in the final data frame.
+    if ("yErrorUnit" %in% colnames(data)) {
+      data <- dplyr::mutate(data, yErrorUnit = yUnit)
+    }
   }
 
   # clean up and return --------------------------
@@ -636,6 +642,17 @@ ospUnits <- list()
     molWeight = yData$molWeight[[1]],
     molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
   )
+
+  if ("lloq" %in% colnames(yData)) {
+    yData$lloq <- toUnit(
+      quantityOrDimension = yData$yDimension[[1]],
+      values = yData$lloq,
+      targetUnit = yTargetUnit,
+      sourceUnit = yData$yUnit[[1]],
+      molWeight = yData$molWeight[[1]],
+      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+    )
+  }
 
   yData$yUnit <- yTargetUnit
 
