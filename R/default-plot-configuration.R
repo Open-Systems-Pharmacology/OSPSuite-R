@@ -2,9 +2,12 @@
 #'
 #' @description
 #'
-#' R6 configuration class defining properties of plots that can be created with
-#' `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
+#' R6 configuration class defining aesthetic properties of plots that can be
+#' created with `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
 #' `plotObservedVsSimulated()`, and `plotResidualsVsTime()`.
+#'
+#' To interactively explore various aesthetic properties and appearance of plots
+#' with these properties, you can use the [Shiny app](https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html) from `{tlf}` package.
 #'
 #' The following sections provide more details on how to customize it further.
 #'

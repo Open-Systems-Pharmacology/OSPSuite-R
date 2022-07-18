@@ -4,9 +4,12 @@
 \alias{DefaultPlotConfiguration}
 \title{Plot configuration for OSP plots}
 \description{
-R6 configuration class defining properties of plots that can be created with
-\code{plotIndividualTimeProfile()}, \code{plotPopulationTimeProfile()},
+R6 configuration class defining aesthetic properties of plots that can be
+created with \code{plotIndividualTimeProfile()}, \code{plotPopulationTimeProfile()},
 \code{plotObservedVsSimulated()}, and \code{plotResidualsVsTime()}.
+
+To interactively explore various aesthetic properties and appearance of plots
+with these properties, you can use the \href{https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html}{Shiny app} from \code{{tlf}} package.
 
 The following sections provide more details on how to customize it further.
 }
