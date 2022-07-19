@@ -44,6 +44,8 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \item{\code{simulation}}{Underlying simulation used for the batch run. Read only.}
 
 \item{\code{runValuesIds}}{Ids of the run values that will be executed on next run}
+
+\item{\code{id}}{The id of the .NET wrapped object. (read-only)}
 }
 \if{html}{\out{</div>}}
 }
