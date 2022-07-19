@@ -162,6 +162,8 @@
 #' @export
 DefaultPlotConfiguration <- R6::R6Class(
   "DefaultPlotConfiguration",
+  lock_objects = FALSE,
+  lock_class = FALSE,
   public = list(
     # units ------------------------------------
     xUnit = NULL,
