@@ -214,7 +214,6 @@ test_that("simulationResultsToTibble works as expected - Aciclovir", {
 })
 
 test_that("simulationResultsToDataFrame with lists", {
-
   # Load and run multiple simulations concurrently.
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 

@@ -400,10 +400,12 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
 
   # Run the batch with the ConcurrentSimulationRunner
   results <- rClr::clrCall(simulationRunner, "RunConcurrently")
-  simulationResults <- .getConcurrentSimulationRunnerResults(results = results,
-                                                             resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
-                                                             simulationIdSimulationMap = simulationBatchIdSimulationMap,
-                                                             silentMode = silentMode)
+  simulationResults <- .getConcurrentSimulationRunnerResults(
+    results = results,
+    resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
+    simulationIdSimulationMap = simulationBatchIdSimulationMap,
+    silentMode = silentMode
+  )
 
   # Returned is a named list of results with names being the IDs of the batches
   output <- lapply(names(simulationBatchIdSimulationMap), function(simBatchId) {
