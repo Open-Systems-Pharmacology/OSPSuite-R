@@ -37,12 +37,6 @@ results.}
 \item \href{#method-SensitivityAnalysisResults-print}{\code{SensitivityAnalysisResults$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysisResults-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-new}{}}}
@@ -77,8 +71,8 @@ participating to a total sensitivity greater or equal to
 \if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
   outputPath,
- 
-    totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
+  totalSensitivityThreshold =
+    ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
 )}\if{html}{\out{</div>}}
 }
 

@@ -29,12 +29,6 @@ Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 \item \href{#method-SimulationRunOptions-print}{\code{SimulationRunOptions$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationRunOptions-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationRunOptions-new}{}}}

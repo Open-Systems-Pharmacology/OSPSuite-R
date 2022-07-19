@@ -36,12 +36,6 @@ where the name is the name of the metaData and the value is the meta data value.
 \item \href{#method-DataRepository-removeMetaData}{\code{DataRepository$removeMetaData()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataRepository-addColumn"></a>}}
 \if{latex}{\out{\hypertarget{method-DataRepository-addColumn}{}}}

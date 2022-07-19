@@ -35,12 +35,6 @@ Results of a simulation run (either individual or population simulation)
 \item \href{#method-SimulationResults-print}{\code{SimulationResults$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationResults-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationResults-new}{}}}

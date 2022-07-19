@@ -34,11 +34,11 @@ see https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentat
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>ospsuite::Quantity$reset()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>ospsuite::Quantity$setValue()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>ospsuite::Quantity$reset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>ospsuite::Quantity$setValue()</code></a></span></li>
 </ul>
 </details>
 }}

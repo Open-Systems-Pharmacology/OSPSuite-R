@@ -28,12 +28,6 @@ Options to be passed to the SimulationBatch run
 \item \href{#method-SimulationBatchRunValues-print}{\code{SimulationBatchRunValues$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatchRunValues-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatchRunValues-new}{}}}

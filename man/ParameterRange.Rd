@@ -29,12 +29,6 @@ A parameter range typically used in the definition of \code{PopulationCharacteri
 \item \href{#method-ParameterRange-printValue}{\code{ParameterRange$printValue()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ParameterRange-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ParameterRange-new}{}}}
