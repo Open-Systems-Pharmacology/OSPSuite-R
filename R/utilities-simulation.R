@@ -400,15 +400,16 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
 
   # Run the batch with the ConcurrentSimulationRunner
   results <- rClr::clrCall(simulationRunner, "RunConcurrently")
-  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap, simulationIdSimulationMap = simulationBatchIdSimulationMap, silentMode = silentMode)
+  simulationResults <- .getConcurrentSimulationRunnerResults(results = results,
+                                                             resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
+                                                             simulationIdSimulationMap = simulationBatchIdSimulationMap,
+                                                             silentMode = silentMode)
 
   # Returned is a named list of results with names being the IDs of the batches
-  output <- vector("list", length(simulationBatches))
+  output <- lapply(names(simulationBatchIdSimulationMap), function(simBatchId) {
+    simulationResults[which(resultsIdSimulationBatchIdMap == simBatchId)]
+  })
   names(output) <- names(simulationBatchIdSimulationMap)
-  # Iterate through simulation batch ids
-  for (simBatchId in names(simulationBatchIdSimulationMap)) {
-    output[[simBatchId]] <- simulationResults[which(resultsIdSimulationBatchIdMap == simBatchId)]
-  }
 
   # Dispose of the runner to release any possible instances still in memory (.NET side)
   rClr::clrCall(simulationRunner, "Dispose")

@@ -164,7 +164,9 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       if (!is.null(units[[i]])) {
         mw <- simulation$molWeightFor(path)
         value <- toBaseUnit(
-          quantityOrDimension = dimension, values = value, unit = units[[i]],
+          quantityOrDimension = dimension,
+          values = value,
+          unit = units[[i]],
           molWeight = mw
         )
       }
@@ -230,7 +232,9 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
       if (!is.null(units[[i]])) {
         mw <- simulation$molWeightFor(path)
         value <- toUnit(
-          quantityOrDimension = dimension, values = value, targetUnit = units[[i]],
+          quantityOrDimension = dimension,
+          values = value,
+          targetUnit = units[[i]],
           molWeight = mw
         )
       }
