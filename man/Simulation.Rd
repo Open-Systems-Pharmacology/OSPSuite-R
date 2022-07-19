@@ -40,12 +40,6 @@ An OSPSuite simulation
 \item \href{#method-Simulation-print}{\code{Simulation$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-new}{}}}

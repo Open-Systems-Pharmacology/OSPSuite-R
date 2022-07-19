@@ -30,12 +30,6 @@ pK-Analyses of a simulation (either individual or population simulation).
 \item \href{#method-SimulationPKAnalyses-print}{\code{SimulationPKAnalyses$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationPKAnalyses-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationPKAnalyses-new}{}}}

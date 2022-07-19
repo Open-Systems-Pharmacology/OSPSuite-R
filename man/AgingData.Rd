@@ -30,12 +30,6 @@ Results of a sensitivity analysis run (either individual or population simulatio
 \item \href{#method-AgingData-print}{\code{AgingData$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AgingData-new"></a>}}
 \if{latex}{\out{\hypertarget{method-AgingData-new}{}}}

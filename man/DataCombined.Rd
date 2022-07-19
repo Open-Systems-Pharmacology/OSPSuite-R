@@ -67,12 +67,6 @@ values were specified by the user for each dataset.}
 \item \href{#method-DataCombined-clone}{\code{DataCombined$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-addDataSets"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-addDataSets}{}}}

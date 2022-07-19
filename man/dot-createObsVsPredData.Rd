@@ -4,7 +4,7 @@
 \alias{.createObsVsPredData}
 \title{Created observed versus simulated paired data}
 \usage{
-.createObsVsPredData(data, tolerance = NULL)
+.createObsVsPredData(data, tolerance = NULL, scaling = tlf::Scaling$lin)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has been
@@ -15,6 +15,9 @@ further tidied using \code{.removeUnpairableDatasets()} and then
 points. Default is \code{NULL}, in which case the internal enum
 \code{.thresholdByTimeUnit} will be used to decide on what threshold to use
 based on the unit of time measurement.}
+
+\item{scaling}{A character specifying scale: either linear (default) or
+logarithmic.}
 }
 \description{
 Created observed versus simulated paired data

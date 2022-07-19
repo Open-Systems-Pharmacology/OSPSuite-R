@@ -55,12 +55,6 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \item \href{#method-SimulationBatch-print}{\code{SimulationBatch$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatch-new}{}}}

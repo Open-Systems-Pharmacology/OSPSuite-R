@@ -28,12 +28,6 @@ allowing the user to retrieve potential ontogeny values.
 \item \href{#method-MoleculeOntogeny-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoleculeOntogeny-new"></a>}}
 \if{latex}{\out{\hypertarget{method-MoleculeOntogeny-new}{}}}

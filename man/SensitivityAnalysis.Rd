@@ -34,12 +34,6 @@ with a value that was overridden by the user}
 \item \href{#method-SensitivityAnalysis-print}{\code{SensitivityAnalysis$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysis-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysis-new}{}}}
