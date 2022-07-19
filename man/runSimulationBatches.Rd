@@ -19,7 +19,10 @@ runSimulationBatches(
 Default is \code{FALSE}.}
 }
 \value{
-Nested list of \code{SimulationResults} objects. The first level of the list are the IDs of the simulations of SimulationBatches, containing a list of \code{SimulationResults} for each set of parameter/initial values. If a simulation with a parameter/initial values set fails, the result for this run is \code{NULL}
+Nested list of \code{SimulationResults} objects. The first level of the
+fist are the IDs of the SimulationBatches, containing a list of
+\code{SimulationResults} for each set of parameter/initial values. If a simulation
+with a parameter/initial values set fails, the result for this run is \code{NULL}
 }
 \description{
 Run simulation batches

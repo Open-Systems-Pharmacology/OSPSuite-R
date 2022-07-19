@@ -159,12 +159,16 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       if (dimension == "") {
         next
       }
-      #If the unit is NULL, the value is assumend to be in base unit and no conversion
-      #in necessary
-      if (!is.null(units[[i]])){
+      # If the unit is NULL, the value is assumend to be in base unit and no conversion
+      # in necessary
+      if (!is.null(units[[i]])) {
         mw <- simulation$molWeightFor(path)
-        value <- toBaseUnit(quantityOrDimension = dimension, values = value, unit = units[[i]],
-                            molWeight = mw)
+        value <- toBaseUnit(
+          quantityOrDimension = dimension,
+          values = value,
+          unit = units[[i]],
+          molWeight = mw
+        )
       }
     }
 
@@ -193,8 +197,10 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 #'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' getQuantityValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"),
-#' sim, list("ml", NULL))
+#' getQuantityValuesByPath(
+#'   list("Organism|Liver|Volume", "Organism|Liver|A"),
+#'   sim, list("ml", NULL)
+#' )
 #' @export
 getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, stopIfNotFound = TRUE) {
   validateIsString(quantityPaths)
@@ -211,20 +217,26 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
     path <- enc2utf8(quantityPaths[[i]])
     value <- rClr::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(task, "DimensionNameByPath",
-                                 simulation$ref,
-                                 path,
-                                 stopIfNotFound)
+      dimension <- rClr::clrCall(
+        task, "DimensionNameByPath",
+        simulation$ref,
+        path,
+        stopIfNotFound
+      )
       # Dimension ca be be empty if the path was not found
       if (dimension == "") {
         next
       }
-      #If the unit is NULL, the value is assumend to be in base unit and no conversion
-      #in necessary
-      if (!is.null(units[[i]])){
+      # If the unit is NULL, the value is assumend to be in base unit and no conversion
+      # in necessary
+      if (!is.null(units[[i]])) {
         mw <- simulation$molWeightFor(path)
-        value <- toUnit(quantityOrDimension = dimension, values = value, targetUnit = units[[i]],
-                        molWeight = mw)
+        value <- toUnit(
+          quantityOrDimension = dimension,
+          values = value,
+          targetUnit = units[[i]],
+          molWeight = mw
+        )
       }
     }
 
