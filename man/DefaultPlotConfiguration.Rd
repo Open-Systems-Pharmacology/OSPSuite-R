@@ -128,7 +128,8 @@ myPlotConfiguration
 Other plotting: 
 \code{\link{plotIndividualTimeProfile}()},
 \code{\link{plotObservedVsSimulated}()},
-\code{\link{plotPopulationTimeProfile}()}
+\code{\link{plotPopulationTimeProfile}()},
+\code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}
 \section{Public fields}{

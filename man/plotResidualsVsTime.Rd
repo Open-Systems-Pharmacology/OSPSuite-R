@@ -4,23 +4,13 @@
 \alias{plotResidualsVsTime}
 \title{Residuals versus time scatter plot}
 \usage{
-plotResidualsVsTime(
-  dataCombined,
-  defaultPlotConfiguration = NULL,
-  smoother = NULL
-)
+plotResidualsVsTime(dataCombined, defaultPlotConfiguration = NULL)
 }
 \arguments{
 \item{dataCombined}{A \code{DataCombined} object.}
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
-
-\item{smoother}{Optional name of smoother function:
-\itemize{
-\item \code{"loess"} for loess regression
-\item \code{"lm"} for linear regression
-}}
 }
 \description{
 Residuals versus time scatter plot
@@ -34,6 +24,7 @@ Residuals versus time scatter plot
 Other plotting: 
 \code{\link{DefaultPlotConfiguration}},
 \code{\link{plotIndividualTimeProfile}()},
+\code{\link{plotObservedVsSimulated}()},
 \code{\link{plotPopulationTimeProfile}()}
 }
 \concept{plotting}

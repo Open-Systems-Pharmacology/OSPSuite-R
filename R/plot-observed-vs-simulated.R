@@ -87,7 +87,7 @@ plotObservedVsSimulated <- function(dataCombined,
   # Both of these routines will be carried out by `dplyr::group_modify()`.
   pairedData <- combinedData %>%
     dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .createObsVsPredData(.x, scaling = obsVsPredPlotConfiguration$yAxis$scale)) %>%
+    dplyr::group_modify(.f = ~ .calculateResiduals(.x, scaling = obsVsPredPlotConfiguration$yAxis$scale)) %>%
     dplyr::ungroup()
 
   # Add min and max values for horizontal error bars

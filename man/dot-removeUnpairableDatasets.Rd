@@ -47,8 +47,8 @@ ospsuite:::.removeUnpairableDatasets(df)
 \seealso{
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
+\code{\link{.calculateResiduals}()},
 \code{\link{.createAxesLabels}()},
-\code{\link{.createObsVsPredData}()},
 \code{\link{.extractAggregatedSimulatedData}()},
 \code{\link{.extractMatchingIndices}()}
 }

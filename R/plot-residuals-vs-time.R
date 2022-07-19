@@ -60,7 +60,7 @@ plotResidualsVsTime <- function(dataCombined,
   # Both of these routines will be carried out by `dplyr::group_modify()`.
   pairedData <- combinedData %>%
     dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .createObsVsPredData(.x, scaling = resVsTimePlotConfiguration$yAxis$scale)) %>%
+    dplyr::group_modify(.f = ~ .calculateResiduals(.x, scaling = resVsTimePlotConfiguration$yAxis$scale)) %>%
     dplyr::ungroup()
 
   # axes labels -----------------------------

@@ -44,7 +44,7 @@ ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 \seealso{
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
-\code{\link{.createObsVsPredData}()},
+\code{\link{.calculateResiduals}()},
 \code{\link{.extractAggregatedSimulatedData}()},
 \code{\link{.extractMatchingIndices}()},
 \code{\link{.removeUnpairableDatasets}()}

@@ -24,6 +24,7 @@ Time-profile plot of individual data
 Other plotting: 
 \code{\link{DefaultPlotConfiguration}},
 \code{\link{plotObservedVsSimulated}()},
-\code{\link{plotPopulationTimeProfile}()}
+\code{\link{plotPopulationTimeProfile}()},
+\code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}

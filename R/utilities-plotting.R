@@ -326,10 +326,10 @@
 #'   xUnit = ospUnits$Time$min
 #' )
 #'
-#' ospsuite:::.createObsVsPredData(df)
+#' ospsuite:::.calculateResiduals(df)
 #'
 #' @keywords internal
-.createObsVsPredData <- function(data,
+.calculateResiduals <- function(data,
                                  tolerance = NULL,
                                  scaling = tlf::Scaling$lin) {
   # Extract time and values to raw vectors. Working with a single data frame is
@@ -431,7 +431,6 @@
   return(pairedData)
 }
 
-
 #' Threshold to match time points
 #'
 #' @description
@@ -466,7 +465,7 @@
 #' This custom function does exactly this.
 #'
 #' @inheritParams dplyr::near
-#' @inheritParams .createObsVsPredData
+#' @inheritParams .calculateResiduals
 #'
 #' @family utilities-plotting
 #'
