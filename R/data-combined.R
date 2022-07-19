@@ -320,7 +320,6 @@ DataCombined <- R6::R6Class(
                                       yOffsets = 0,
                                       xScaleFactors = 1,
                                       yScaleFactors = 1) {
-
       # Check that the arguments to parameters make sense
       xOffsets <- .cleanVectorArgs(xOffsets, type = "numeric")
       yOffsets <- .cleanVectorArgs(yOffsets, type = "numeric")
