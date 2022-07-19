@@ -32,6 +32,8 @@ Get the values of quantities in the simulation by path
 
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-getQuantityValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"),
-sim, list("ml", NULL))
+getQuantityValuesByPath(
+  list("Organism|Liver|Volume", "Organism|Liver|A"),
+  sim, list("ml", NULL)
+)
 }

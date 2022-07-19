@@ -338,7 +338,10 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails.
 #' Default is `FALSE`.
 #'
-#' @return Nested list of `SimulationResults` objects. The first level of the list are the IDs of the simulations of SimulationBatches, containing a list of `SimulationResults` for each set of parameter/initial values. If a simulation with a parameter/initial values set fails, the result for this run is `NULL`
+#' @return Nested list of `SimulationResults` objects. The first level of the
+#' fist are the IDs of the SimulationBatches, containing a list of
+#' `SimulationResults` for each set of parameter/initial values. If a simulation
+#'  with a parameter/initial values set fails, the result for this run is `NULL`
 #' @export
 #'
 #' @examples
@@ -374,35 +377,38 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
   simulationBatches <- c(simulationBatches)
-  # Result Id <-> simulation batch pointer id map to get the correct simulation for the results.
-  # Using the Id of the pointer instead of the Id of the simulation as multiple
+  # Result Id <-> simulation batch id map to get the correct simulation for the results.
+  # Using the Id of the batch instead of the Id of the simulation as multiple
   # SimulationBatches can be created with the same simulation
   # Each SimulationBatchRunValues has its own id, which will be the id of the result
-  resultsIdSimulationIdMap <- list()
+  resultsIdSimulationBatchIdMap <- list()
   # Map of simulations ids to simulations objects
-  simulationIdSimulationMap <- vector("list", length(simulationBatches))
+  simulationBatchIdSimulationMap <- vector("list", length(simulationBatches))
   # Iterate through all simulation batches
   for (simBatchIndex in seq_along(simulationBatches)) {
     simBatch <- simulationBatches[[simBatchIndex]]
-    simBatchId <- rClr::clrGet(simBatch$ref, "Id")
-    simulationIdSimulationMap[[simBatchIndex]] <- simBatch$simulation
-    names(simulationIdSimulationMap)[[simBatchIndex]] <- simBatchId
+    simBatchId <- simBatch$id
+    simulationBatchIdSimulationMap[[simBatchIndex]] <- simBatch$simulation
+    names(simulationBatchIdSimulationMap)[[simBatchIndex]] <- simBatchId
     # Ids of the values of the batch
     valuesIds <- simBatch$runValuesIds
     # All results of this batch have the id of the same simulation
-    resultsIdSimulationIdMap[valuesIds] <- simBatchId
+    resultsIdSimulationBatchIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
     rClr::clrCall(simulationRunner, "AddSimulationBatch", simBatch$ref)
   }
 
   # Run the batch with the ConcurrentSimulationRunner
   results <- rClr::clrCall(simulationRunner, "RunConcurrently")
-  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
+  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap, simulationIdSimulationMap = simulationBatchIdSimulationMap, silentMode = silentMode)
 
-  # output: list of lists of SimulationResults, one list per SimulationBatch
-  output <- lapply(names(simulationIdSimulationMap), function(simId) {
-    simulationResults[which(resultsIdSimulationIdMap == simId)]
-  })
+  # Returned is a named list of results with names being the IDs of the batches
+  output <- vector("list", length(simulationBatches))
+  names(output) <- names(simulationBatchIdSimulationMap)
+  # Iterate through simulation batch ids
+  for (simBatchId in names(simulationBatchIdSimulationMap)) {
+    output[[simBatchId]] <- simulationResults[which(resultsIdSimulationBatchIdMap == simBatchId)]
+  }
 
   # Dispose of the runner to release any possible instances still in memory (.NET side)
   rClr::clrCall(simulationRunner, "Dispose")

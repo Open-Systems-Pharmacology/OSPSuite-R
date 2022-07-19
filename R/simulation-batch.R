@@ -79,6 +79,7 @@ SimulationBatch <- R6::R6Class(
     print = function(...) {
       simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
       private$printClass()
+      private$printLine("Id", self$id)
       private$printLine("Simulation", self$simulation$name)
       private$printLine("runValuesIds", self$runValuesIds)
       private$printLine(
@@ -110,6 +111,10 @@ SimulationBatch <- R6::R6Class(
       } else {
         private$throwPropertyIsReadonly("runValuesIds")
       }
+    },
+    #' @field id The id of the .NET wrapped object. (read-only)
+    id = function(value) {
+      private$wrapReadOnlyProperty("Id", value)
     }
   ),
 )

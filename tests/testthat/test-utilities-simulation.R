@@ -362,6 +362,8 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
   res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
   expect_equal(length(res), 2)
+  # Check for batch ids as names
+  expect_equal(names(res), c(simulationBatch1$id, simulationBatch2$id))
   expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
   expect_equal(names(res[[1]])[[2]], ids[[2]])

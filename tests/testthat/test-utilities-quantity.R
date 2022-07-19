@@ -133,17 +133,21 @@ test_that("It can get single parameter value with unit", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
   value <- getQuantityValuesByPath(quantityPaths = parameterPath, simulation = sim, units = "ml")
   parameter <- getParameter(parameterPath, sim)
-  paramValue <- toUnit(quantityOrDimension = parameter,
-                       values = parameter$value,
-                       targetUnit = "ml")
+  paramValue <- toUnit(
+    quantityOrDimension = parameter,
+    values = parameter$value,
+    targetUnit = "ml"
+  )
   expect_equal(paramValue, value)
 })
 
 test_that("It can get multiple quantity values", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
-  values <- getQuantityValuesByPath(quantityPaths = list(quantityPath1, quantityPath2),
-                                    simulation = sim)
+  values <- getQuantityValuesByPath(
+    quantityPaths = list(quantityPath1, quantityPath2),
+    simulation = sim
+  )
   quantity1 <- getQuantity(quantityPath1, sim)
   quantity2 <- getQuantity(quantityPath2, sim)
   expect_equal(quantity1$value, values[[1]])
@@ -158,14 +162,18 @@ test_that("It can get multiple quantity values with units", {
     units = list("ml", "mol")
   )
   quantity <- getQuantity(quantityPath1, sim)
-  quantityValue <- toUnit(quantityOrDimension = quantity,
-                       values = quantity$value,
-                       targetUnit = "ml")
+  quantityValue <- toUnit(
+    quantityOrDimension = quantity,
+    values = quantity$value,
+    targetUnit = "ml"
+  )
   expect_equal(quantityValue, values[[1]])
   quantity <- getQuantity(quantityPath2, sim)
-  quantityValue <- toUnit(quantityOrDimension = quantity,
-                          values = quantity$value,
-                          targetUnit = "mol")
+  quantityValue <- toUnit(
+    quantityOrDimension = quantity,
+    values = quantity$value,
+    targetUnit = "mol"
+  )
   expect_equal(quantityValue, values[[2]])
 })
 
@@ -177,9 +185,11 @@ test_that("It can get multiple quantity values with units when one unit is NULL"
     units = list("ml", NULL)
   )
   quantity <- getQuantity(quantityPath1, sim)
-  quantityValue <- toUnit(quantityOrDimension = quantity,
-                          values = quantity$value,
-                          targetUnit = "ml")
+  quantityValue <- toUnit(
+    quantityOrDimension = quantity,
+    values = quantity$value,
+    targetUnit = "ml"
+  )
   expect_equal(quantityValue, values[[1]])
   quantity <- getQuantity(quantityPath2, sim)
   quantityValue <- quantity$value
