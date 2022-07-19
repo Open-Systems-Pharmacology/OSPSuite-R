@@ -20,14 +20,27 @@ install:
 
 platform: x64
 
+ #We use this set of variables to bypass issue with PK-Sim build. This should be removed when dealt with 
 environment:
   USE_RTOOLS: true
   NOT_CRAN: true
-  KEEP_VIGNETTES: true
+  KEEP_VIGNETTES: false
+  R_BUILD_ARGS: --no-build-vignettes --no-manual"
   R_ARCH: x64
   R_VERSION: 4.1.0
+  #We use this variale to skip some long lasting tests using "skip_on_ci"
+  CI: true
   COVERALLS_TOKEN:
     secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
+
+# environment:
+#   USE_RTOOLS: true
+#   NOT_CRAN: true
+#   KEEP_VIGNETTES: true
+#   R_ARCH: x64
+#   R_VERSION: 4.1.0
+#   COVERALLS_TOKEN:
+#     secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
 
 before_build:
   - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
