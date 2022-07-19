@@ -234,7 +234,6 @@ createPopulationCharacteristics <- function(species,
                                             gestationalAgeUnit = "week(s)",
                                             moleculeOntogenies = NULL,
                                             seed = NULL) {
-
   # Assuming that if this function is called directly, PKSim was either initialized already
   # or should be initialized automatically
   initPKSim()
