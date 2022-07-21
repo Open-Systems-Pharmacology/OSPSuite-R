@@ -2,7 +2,8 @@
 
 * Adds new visualization functions:
 
-    - `plotObservedVsSimulated()` for observed versus predicted scatter plots.
+    - `plotObservedVsSimulated()` for observed versus predicted scatter plot.
+    - `plotResidualsVsTime()` for time versus residuals scatter plot.
 
 # ospsuite 11.0.123
 
