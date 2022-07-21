@@ -253,10 +253,6 @@
     return(NULL)
   }
 
-  # The type of plot can be guessed from the specific `PlotConfiguration` object
-  # used, since each plot has a unique corresponding class.
-  plotType <- class(specificPlotConfiguration)[[1]]
-
   # Initialize strings with unique values for units and dimensions.
   #
   # The`.unitConverter()` has already ensured that there is only a single unit
@@ -273,21 +269,12 @@
   # one dimension: "Concentration"
   #
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
-  concDimensions <- c(
-    ospDimensions$`Concentration (mass)`,
-    ospDimensions$`Concentration (molar)`
-  )
-
-  if (any(xDimensionString %in% concDimensions)) {
-    xDimensionString <- "Concentration"
-  }
-
-  if (any(yDimensionString %in% concDimensions)) {
-    yDimensionString <- "Concentration"
-  }
+  concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+  xDimensionString <- ifelse(any(xDimensionString %in% concDimensions), "Concentration", xDimensionString)
+  yDimensionString <- ifelse(any(yDimensionString %in% concDimensions), "Concentration", yDimensionString)
 
   # If quantities are unitless, no unit information will be displayed.
-  # Otherwise, `Dimension [Unit]` pattern will be followed.
+  # Otherwise, `Dimension [Unit]` pattern is followed.
   xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
   xUnitString <- paste0(xDimensionString, xUnitString)
   yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
@@ -296,12 +283,12 @@
   # The exact axis label will depend on the type of the plot, and the type
   # of the plot can be guessed using the specific `PlotConfiguration` object
   # entered in this function.
-  #
-  # If the specific `PlotConfiguration` object is not any of the cases included
-  # in the `switch` below, the result will be no change; i.e., the labels will
-  # continue to be `NULL`.
+  plotType <- class(specificPlotConfiguration)[[1]]
 
-  # x-axis label
+  # If the specific `PlotConfiguration` object is not any of the cases included
+  # in the `switch` below, the the labels will be `NULL`.
+
+  # X-axis label
   xLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = ,
     "ResVsPredPlotConfiguration" = ,
@@ -314,10 +301,11 @@
     "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
   )
 
-  # y-axis label
+  # Y-axis label
   yLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = yUnitString,
-    "ResVsPredPlotConfiguration" = "Residuals",
+    "ResVsPredPlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = "Residuals",
     "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
@@ -464,15 +452,17 @@
     "yDimension" = unique(data$yDimension)
   )
 
-  # the linear scaling can be called either `"lin"` (in default plot config) or
-  # `"identity"` in specific plot config in tlf
+  # The linear scaling is represented either of the following:
+  #
+  # - `"lin"` (in `DefaultPlotConfiguration`)
+  # - `"identity"` (in `tlf::PlotConfiguration`, because of `{ggplot2}`)
   if (scaling %in% c("lin", "identity")) {
     pairedData <- dplyr::mutate(pairedData, resValue = obsValue - predValue)
   } else {
     pairedData <- dplyr::mutate(pairedData, resValue = log(obsValue) - log(predValue))
   }
 
-  # Add min and max values for error bars
+  # Add minimum and maximum values for observed data to plot error bars
   pairedData <- dplyr::mutate(
     pairedData,
     obsValueLower = obsValue - obsErrorValue,
@@ -482,6 +472,8 @@
   return(pairedData)
 }
 
+#' @keywords internal
+#' @noRd
 .dataCombinedToPairedData <- function(dataCombined, defaultPlotConfiguration, scaling) {
   combinedData <- dataCombined$toDataFrame()
 
@@ -494,7 +486,7 @@
     return(NULL)
   }
 
-  # Getting all units on the same scale
+  # Getting all datasets to have the same units.
   combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
   # Create observed versus simulated paired data using interpolation for each
