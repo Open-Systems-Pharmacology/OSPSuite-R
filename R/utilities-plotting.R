@@ -325,6 +325,24 @@
 }
 
 
+#' Update axes labels in `PlotConfiguration` object
+#'
+#' @details
+#'
+#' The type of plot can be guessed from the specific `PlotConfiguration` object
+#' used, since each plot has a unique corresponding class. The labels can then
+#' be prepared accordingly.
+#'
+#' @keywords internal
+#' @noRd
+.updatePlotConfigurationAxesLabels <- function(data, plotConfiguration) {
+  axesLabels <- .createAxesLabels(data, plotConfiguration)
+  plotConfiguration$labels$xlabel$text <- plotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
+  plotConfiguration$labels$ylabel$text <- plotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+  return(plotConfiguration)
+}
+
+
 #' Created observed versus simulated paired data
 #'
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has been
@@ -450,6 +468,13 @@
   } else {
     pairedData <- dplyr::mutate(pairedData, resValue = log(obsValue) - log(predValue))
   }
+
+  # Add min and max values for error bars
+  pairedData <- dplyr::mutate(
+    pairedData,
+    obsValueLower = obsValue - obsErrorValue,
+    obsValueHigher = obsValue + obsErrorValue
+  )
 
   return(pairedData)
 }

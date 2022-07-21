@@ -54,8 +54,6 @@ plotResidualsVsTime <- function(dataCombined,
   # Getting all units on the same scale
   combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
-  # paired data frame -----------------------------
-
   # Create observed versus simulated paired data using interpolation for each
   # grouping level and combine the resulting data frames in a row-wise manner.
   #
@@ -67,12 +65,7 @@ plotResidualsVsTime <- function(dataCombined,
 
   # axes labels -----------------------------
 
-  # The type of plot can be guessed from the specific `PlotConfiguration` object
-  # used, since each plot has a unique corresponding class. The labels can then
-  # be prepared accordingly.
-  axesLabels <- .createAxesLabels(combinedData, resVsTimePlotConfiguration)
-  resVsTimePlotConfiguration$labels$xlabel$text <- resVsTimePlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
-  resVsTimePlotConfiguration$labels$ylabel$text <- resVsTimePlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+  resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(combinedData, resVsTimePlotConfiguration)
 
   # plot -----------------------------
 

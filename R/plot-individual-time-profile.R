@@ -57,12 +57,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # axes labels -----------------------------
 
-  # The type of plot can be guessed from the specific `PlotConfiguration` object
-  # used, since each plot has a unique corresponding class. The labels can then
-  # be prepared accordingly.
-  axesLabels <- .createAxesLabels(combinedData, timeProfilePlotConfiguration)
-  timeProfilePlotConfiguration$labels$xlabel$text <- timeProfilePlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
-  timeProfilePlotConfiguration$labels$ylabel$text <- timeProfilePlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+  timeProfilePlotConfiguration <- .updatePlotConfigurationAxesLabels(combinedData, timeProfilePlotConfiguration)
 
   # plot -----------------------------
 
