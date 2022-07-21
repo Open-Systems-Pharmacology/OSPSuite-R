@@ -47,7 +47,6 @@ plotResidualsVsTime <- function(dataCombined,
   # Create an instance of `ResVsTimePlotConfiguration` class by doing a
   # one-to-one mapping of internal plot configuration object's public fields
   resVsTimePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
-    data = combinedData,
     specificPlotConfiguration = tlf::ResVsTimePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
   )

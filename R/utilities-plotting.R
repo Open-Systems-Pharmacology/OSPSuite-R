@@ -330,8 +330,8 @@
 #'
 #' @keywords internal
 .calculateResiduals <- function(data,
-                                 tolerance = NULL,
-                                 scaling = tlf::Scaling$lin) {
+                                tolerance = NULL,
+                                scaling = tlf::Scaling$lin) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
@@ -500,16 +500,13 @@
 
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
-#' @param data A data frame containing information about dimensions and units
-#'   for the x-and y-axes quantities.
 #' @param specificPlotConfiguration A specific subclass of
 #'   `tlf::PlotConfiguration` needed for the given plot.
 #' @param generalPlotConfiguration A `DefaultPlotConfiguration` object.
 #'
 #' @keywords internal
 #' @noRd
-.convertGeneralToSpecificPlotConfiguration <- function(data,
-                                                       specificPlotConfiguration,
+.convertGeneralToSpecificPlotConfiguration <- function(specificPlotConfiguration,
                                                        generalPlotConfiguration) {
   validateIsOfType(generalPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
 
