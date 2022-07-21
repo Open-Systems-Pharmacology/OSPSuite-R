@@ -19,13 +19,10 @@ plotObservedVsSimulated <- function(dataCombined,
                                     foldDistance = 2) {
   # validation -----------------------------
 
-  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
-  validateIsOfType(dataCombined, "DataCombined")
-  validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
-  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
+  .validateDataCombinedForPlotting(dataCombined)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
   if (is.null(dataCombined$groupMap)) {
-    warning(messages$plottingWithEmptyDataCombined())
     return(NULL)
   }
 

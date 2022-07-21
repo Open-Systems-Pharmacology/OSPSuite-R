@@ -28,13 +28,10 @@ plotIndividualTimeProfile <- function(dataCombined,
                              quantiles = NULL) {
   # validation -----------------------------
 
-  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = TRUE)
-  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
-  validateIsOfType(dataCombined, "DataCombined")
-  validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
+  .validateDataCombinedForPlotting(dataCombined)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
   if (is.null(dataCombined$groupMap)) {
-    warning(messages$plottingWithEmptyDataCombined())
     return(NULL)
   }
 

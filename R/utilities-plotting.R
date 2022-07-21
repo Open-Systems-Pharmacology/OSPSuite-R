@@ -1,3 +1,26 @@
+#' @keywords internal
+#' @noRd
+.validateDataCombinedForPlotting <- function(dataCombined) {
+  validateIsOfType(dataCombined, "DataCombined")
+
+  # Only single instance is allowed.
+  validateIsSameLength(objectCount(dataCombined), 1L)
+
+  # If there are no datasets in the object, inform the user that no plot will
+  # be created.
+  if (is.null(dataCombined$groupMap)) {
+    warning(messages$plottingWithEmptyDataCombined())
+  }
+}
+
+#' @keywords internal
+#' @noRd
+.validateDefaultPlotConfiguration <- function(defaultPlotConfiguration) {
+  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
+  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration")
+  return(defaultPlotConfiguration)
+}
+
 #' Replace missing groupings with dataset names
 #'
 #' @description
