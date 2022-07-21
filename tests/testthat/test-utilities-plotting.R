@@ -53,3 +53,61 @@ test_that("It works correctly when multiple dimensions are present and max frequ
   expect_equal(labs$xLabel, "Time [h]")
   expect_equal(labs$yLabel, "Concentration [mg/l]")
 })
+
+context(".convertGeneralToSpecificPlotConfiguration")
+
+test_that("It returns correct subclass instance of `PlotConfiguration`", {
+  expect_s3_class(
+    .convertGeneralToSpecificPlotConfiguration(
+      tlf::TimeProfilePlotConfiguration$new(),
+      DefaultPlotConfiguration$new()
+    ),
+    "TimeProfilePlotConfiguration"
+  )
+
+  expect_s3_class(
+    .convertGeneralToSpecificPlotConfiguration(
+      tlf::ResVsPredPlotConfiguration$new(),
+      DefaultPlotConfiguration$new()
+    ),
+    "ResVsPredPlotConfiguration"
+  )
+})
+
+
+context(".addMissingGroupings")
+
+test_that("It adds dataset names as groups when grouping is missing", {
+  df <- dplyr::tibble(
+    group = c(
+      "Stevens 2012 solid total",
+      "Stevens 2012 solid total",
+      NA,
+      NA,
+      NA
+    ),
+    name = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Sita_dist",
+      "Stevens_2012_placebo.Sita_proximal",
+      "Stevens_2012_placebo.Sita_total"
+    ),
+    dataType = c(
+      "simulated",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    )
+  )
+
+  df_new <- .addMissingGroupings(df)
+
+  missing_idx <- which(is.na(df$group))
+
+  expect_equal(
+    df$name[missing_idx],
+    df_new$group[missing_idx]
+  )
+})

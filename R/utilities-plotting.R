@@ -1,3 +1,5 @@
+#' Make sure entered `DataCombined` object is valid for plotting
+#'
 #' @keywords internal
 #' @noRd
 .validateDataCombinedForPlotting <- function(dataCombined) {
@@ -13,9 +15,11 @@
   }
 }
 
+#' Make sure entered `DefaultPlotConfiguration` object is valid for plotting
+#'
 #' @keywords internal
 #' @noRd
-.validateDefaultPlotConfiguration <- function(defaultPlotConfiguration) {
+.validateDefaultPlotConfiguration <- function(defaultPlotConfiguration = NULL) {
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration")
   return(defaultPlotConfiguration)
@@ -79,12 +83,19 @@
   return(data)
 }
 
-#' Remove unpairable datasets for scatter plots
+#' Remove unpairable datasets for scatter plot functions
 #'
 #' @description
 #'
-#' Datasets which haven't been assigned to any group will be removed from the
-#' combined data frame.
+#' Scatter plots by their nature require that data should be of paired, i.e. for
+#' every simulated dataset in a given group, there should also be a
+#' corresponding observed dataset.
+#'
+#' To this end, current function removes the following datasets:
+#'
+#' - Datasets which haven't been assigned to any group.
+#' - Datasets that are not part of a pair (i.e. a simulated dataset without
+#'   observed dataset partner, and vice versa).
 #'
 #' @param data A data frame returned by `DataCombined$toDataFrame()`.
 #'
@@ -122,7 +133,7 @@
 #'
 #' @keywords internal
 .removeUnpairableDatasets <- function(data) {
-  # How many rows were originally present
+  # How many rows were originally present?
   originalDatasets <- unique(data$name)
 
   # Remove datasets that don't belong to any group.
@@ -135,10 +146,10 @@
     dplyr::filter(length(unique(dataType)) > 1L) %>%
     dplyr::ungroup()
 
-  # How many rows are present after filtering
+  # How many rows are left after filtering?
   finalDatasets <- unique(data$name)
 
-  # Warn the user about the filtering if it took place
+  # Inform the user about which (if any) datasets were removed.
   if (length(finalDatasets) < length(originalDatasets)) {
     missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
 
@@ -197,10 +208,10 @@
 #' ospsuite:::.extractAggregatedSimulatedData(df)
 #'
 #' @keywords internal
-.extractAggregatedSimulatedData <- function(simData, quantiles = c(0.05, 0.5, 0.95)) {
-  # Compute quantiles
+.extractAggregatedSimulatedData <- function(simData,
+                                            quantiles = c(0.05, 0.5, 0.95)) {
   simAggregatedData <- simData %>%
-    # For each dataset, compute across all individuals for each time point
+    # For each dataset, compute quantiles across all individuals for each time point
     dplyr::group_by(group, xValues) %>% #
     dplyr::summarise(
       yValuesLower = stats::quantile(yValues, quantiles[[1]]),
@@ -214,11 +225,17 @@
 
 #' Create axes labels
 #'
+#' @details
+#'
+#' If axes labels haven't been specified, create them using information about
+#' dimensions and units present in the data frame produced by
+#' `DataCombined$toDataFrame()`.
+#'
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has
-#'   additionally been cleaned using `.unitConverter()` to have the same units
-#'   across datasets.
+#'   additionally been cleaned using `ospsuite:::.unitConverter()` to have the
+#'   same units across datasets.
 #' @param specificPlotConfiguration The nature of labels will change depending
-#'   on the type of plot, which can be guessed from the specific
+#'   on the type of plot. The type of plot can be guessed from the specific
 #'   `PlotConfiguration` object used, since each plot has a unique corresponding
 #'   class.
 #'
@@ -242,10 +259,6 @@
 #'
 #' ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 #'
-#' @details
-#'
-#' If axes labels haven't been specified, create them using dimensions and units.
-#'
 #' @keywords internal
 .createAxesLabels <- function(data, specificPlotConfiguration) {
   # If empty data frame is entered or plot type is not specified, return early
@@ -256,8 +269,8 @@
   # Initialize strings with unique values for units and dimensions.
   #
   # The`.unitConverter()` has already ensured that there is only a single unit
-  # for x and y quantities, so we can safely take the unique unit to prepare
-  # axes labels.
+  # for quantities, so we can safely take the unique unit to prepare axes
+  # labels.
   xUnitString <- unique(data$xUnit)
   yUnitString <- unique(data$yUnit)
 
@@ -265,15 +278,15 @@
   xDimensionString <- unique(data$xDimension)[[1]]
   yDimensionString <- unique(data$yDimension)[[1]]
 
-  # Currently, hard code any of the different concentration dimensions to just
-  # one dimension: "Concentration"
+  # Hard code some concentration dimensions to one dimension: `"Concentration"`
   #
+  # For more, see:
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
   concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
   xDimensionString <- ifelse(any(xDimensionString %in% concDimensions), "Concentration", xDimensionString)
   yDimensionString <- ifelse(any(yDimensionString %in% concDimensions), "Concentration", yDimensionString)
 
-  # If quantities are unitless, no unit information will be displayed.
+  # If quantities are unitless, no unit information needs to be displayed.
   # Otherwise, `Dimension [Unit]` pattern is followed.
   xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
   xUnitString <- paste0(xDimensionString, xUnitString)
@@ -281,12 +294,11 @@
   yUnitString <- paste0(yDimensionString, yUnitString)
 
   # The exact axis label will depend on the type of the plot, and the type
-  # of the plot can be guessed using the specific `PlotConfiguration` object
-  # entered in this function.
+  # of the plot can be guessed using the specific `PlotConfiguration` object.
   plotType <- class(specificPlotConfiguration)[[1]]
 
   # If the specific `PlotConfiguration` object is not any of the cases included
-  # in the `switch` below, the the labels will be `NULL`.
+  # in the `switch` below, the the labels will remain `NULL`.
 
   # X-axis label
   xLabel <- switch(plotType,
@@ -313,20 +325,17 @@
 }
 
 
-#' Update axes labels in `PlotConfiguration` object
-#'
-#' @details
-#'
-#' The type of plot can be guessed from the specific `PlotConfiguration` object
-#' used, since each plot has a unique corresponding class. The labels can then
-#' be prepared accordingly.
+#' Update axes label fields in `PlotConfiguration` object
 #'
 #' @keywords internal
 #' @noRd
 .updatePlotConfigurationAxesLabels <- function(data, plotConfiguration) {
   axesLabels <- .createAxesLabels(data, plotConfiguration)
+
+  # Update only if the user hasn't already specified labels.
   plotConfiguration$labels$xlabel$text <- plotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
   plotConfiguration$labels$ylabel$text <- plotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+
   return(plotConfiguration)
 }
 
@@ -336,12 +345,12 @@
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has been
 #'   further tidied using `.removeUnpairableDatasets()` and then
 #'   `.unitConverter()` functions.
-#' @param tolerance Tolerance of comparison for observed and simulated time
-#'   points. Default is `NULL`, in which case the internal enum
-#'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
-#'   based on the unit of time measurement.
 #' @param scaling A character specifying scale: either linear (default) or
 #'   logarithmic.
+#' @param tolerance Tolerance of comparison for observed and simulated time
+#'   points. Default is `NULL`, in which case the internal enumerated list
+#'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
+#'   based on the unit of time measurement.
 #'
 #' @family utilities-plotting
 #'
@@ -351,8 +360,12 @@
 #' df <- dplyr::tibble(
 #'   dataType = c(rep("observed", 5), rep("simulated", 3)),
 #'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
+#'   xUnit = ospUnits$Time$min,
+#'   xDimension = ospDimensions$Time,
 #'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
-#'   xUnit = ospUnits$Time$min
+#'   yErrorValues = rnorm(8),
+#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`,
+#'   yDimension = ospDimensions$`Concentration (mass)`
 #' )
 #'
 #' ospsuite:::.calculateResiduals(df)
@@ -472,6 +485,8 @@
   return(pairedData)
 }
 
+#' Extract data frame for scatter plot functions
+#'
 #' @keywords internal
 #' @noRd
 .dataCombinedToPairedData <- function(dataCombined, defaultPlotConfiguration, scaling) {
@@ -563,31 +578,43 @@
     return(index_vector)
   }
 
-  # If there are no matches
+  # If there are no matches, return an empty vector of `integer` type.
   return(integer(0L))
 }
 
 
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
+#' @details
+#'
+#' The default plot configuration and the labels needs to vary from plot-to-plot
+#' because each plot has its specific (default) aesthetic needs that need to be
+#' met.
+#'
+#' For example, although the axes labels for profile plots will be (e.g.) "Time
+#' vs Fraction", they will be (e.g.) "Observed vs simulated values" for scatter
+#' plots. Additionally, mapping group to line colors might be desirable for a
+#' profile plot, it is not so for scatter plots.
+#'
+#' This function generates object of specific subclass of
+#' `tlf::PlotConfiguration` needed for the given plot but with suitable defaults
+#' taken from the `DefaultPlotConfiguration` object.
+#'
 #' @param specificPlotConfiguration A specific subclass of
 #'   `tlf::PlotConfiguration` needed for the given plot.
 #' @param generalPlotConfiguration A `DefaultPlotConfiguration` object.
 #'
+#' @examples
+#'
+#' ospsuite:::.convertGeneralToSpecificPlotConfiguration(
+#'   tlf::TimeProfilePlotConfiguration$new(),
+#'   ospsuite::DefaultPlotConfiguration$new()
+#' )
+#'
 #' @keywords internal
-#' @noRd
 .convertGeneralToSpecificPlotConfiguration <- function(specificPlotConfiguration,
                                                        generalPlotConfiguration) {
-  validateIsOfType(generalPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
-
   # Plot-specific configuration defaults -----------------------------------
-
-  # The default plot configuration and the labels will vary from plot-to-plot.
-  #
-  # For example, although the axes labels for profile plots will be (e.g.) "Time
-  # vs Fraction", it will be "observed vs simulated values" with the same unit
-  # for scatter plot. Additionally, mapping group to line colors might be
-  # desirable for a profile plot, it is not so for scatter plots.
 
   # The type of plot can be guessed from the specific `PlotConfiguration` object
   # used, since each plot has a unique corresponding class.

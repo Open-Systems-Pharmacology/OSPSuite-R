@@ -15,7 +15,7 @@ further tidied using \code{.removeUnpairableDatasets()} and then
 logarithmic.}
 
 \item{tolerance}{Tolerance of comparison for observed and simulated time
-points. Default is \code{NULL}, in which case the internal enum
+points. Default is \code{NULL}, in which case the internal enumerated list
 \code{.thresholdByTimeUnit} will be used to decide on what threshold to use
 based on the unit of time measurement.}
 }
@@ -28,8 +28,12 @@ Created observed versus simulated paired data
 df <- dplyr::tibble(
   dataType = c(rep("observed", 5), rep("simulated", 3)),
   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
+  xUnit = ospUnits$Time$min,
+  xDimension = ospDimensions$Time,
   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
-  xUnit = ospUnits$Time$min
+  yErrorValues = rnorm(8),
+  yUnit = ospUnits$`Concentration [mass]`$`mg/l`,
+  yDimension = ospDimensions$`Concentration (mass)`
 )
 
 ospsuite:::.calculateResiduals(df)

@@ -10,7 +10,7 @@
 \item{x, y}{Numeric vectors to compare}
 
 \item{tolerance}{Tolerance of comparison for observed and simulated time
-points. Default is \code{NULL}, in which case the internal enum
+points. Default is \code{NULL}, in which case the internal enumerated list
 \code{.thresholdByTimeUnit} will be used to decide on what threshold to use
 based on the unit of time measurement.}
 }
