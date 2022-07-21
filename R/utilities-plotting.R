@@ -371,8 +371,8 @@
 #'
 #' @keywords internal
 .calculateResiduals <- function(data,
-                                tolerance = NULL,
-                                scaling = tlf::Scaling$lin) {
+                                scaling = tlf::Scaling$lin,
+                                tolerance = NULL) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
@@ -455,10 +455,13 @@
   # a data frame.
   pairedData <- dplyr::tibble(
     "obsTime" = obsTime,
-    "timeUnit" = timeUnit,
+    "xUnit" = timeUnit,
+    "xDimension" = unique(data$xDimension),
     "obsValue" = obsValue,
     "obsErrorValue" = obsErrorValue,
-    "predValue" = predValue
+    "predValue" = predValue,
+    "yUnit" = unique(data$yUnit),
+    "yDimension" = unique(data$yDimension)
   )
 
   # the linear scaling can be called either `"lin"` (in default plot config) or
@@ -475,6 +478,33 @@
     obsValueLower = obsValue - obsErrorValue,
     obsValueHigher = obsValue + obsErrorValue
   )
+
+  return(pairedData)
+}
+
+.dataCombinedToPairedData <- function(dataCombined, defaultPlotConfiguration, scaling) {
+  combinedData <- dataCombined$toDataFrame()
+
+  # Remove the observed and simulated datasets which can't be paired.
+  combinedData <- .removeUnpairableDatasets(combinedData)
+
+  # Return early if there are no pair-able datasets present
+  if (nrow(combinedData) == 0L) {
+    warning(messages$plottingWithNoPairedDatasets())
+    return(NULL)
+  }
+
+  # Getting all units on the same scale
+  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+
+  # Create observed versus simulated paired data using interpolation for each
+  # grouping level and combine the resulting data frames in a row-wise manner.
+  #
+  # Both of these routines will be carried out by `dplyr::group_modify()`.
+  pairedData <- combinedData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .calculateResiduals(.x, scaling)) %>%
+    dplyr::ungroup()
 
   return(pairedData)
 }

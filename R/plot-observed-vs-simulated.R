@@ -61,28 +61,16 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # data frames -----------------------------
 
-  combinedData <- dataCombined$toDataFrame()
+  # Create a paired data frame (observed versus simulated) from `DataCombined` object.
+  #
+  # `DefaultPlotConfiguration` provides units for conversion.
+  # `PlotConfiguration` provides scaling details needed while computing residuals.
+  pairedData <- .dataCombinedToPairedData(dataCombined, defaultPlotConfiguration, obsVsPredPlotConfiguration$yAxis$scale)
 
-  # Remove the observed and simulated datasets which can't be paired.
-  combinedData <- .removeUnpairableDatasets(combinedData)
-
-  # Return early if there are no pair-able datasets present
-  if (nrow(combinedData) == 0L) {
-    warning(messages$plottingWithNoPairedDatasets())
+  # Quit early if there is no data to visualize.
+  if (is.null(pairedData)) {
     return(NULL)
   }
-
-  # Getting all units on the same scale
-  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
-
-  # Create observed versus simulated paired data using interpolation for each
-  # grouping level and combine the resulting data frames in a row-wise manner.
-  #
-  # Both of these routines will be carried out by `dplyr::group_modify()`.
-  pairedData <- combinedData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .calculateResiduals(.x, scaling = obsVsPredPlotConfiguration$yAxis$scale)) %>%
-    dplyr::ungroup()
 
   # Time points at which predicted values can't be interpolated, and need to be
   # extrapolated.
@@ -103,7 +91,7 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # axes labels -----------------------------
 
-  obsVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(combinedData, obsVsPredPlotConfiguration)
+  obsVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, obsVsPredPlotConfiguration)
 
   # plot -----------------------------
 

@@ -4,20 +4,20 @@
 \alias{.calculateResiduals}
 \title{Created observed versus simulated paired data}
 \usage{
-.calculateResiduals(data, tolerance = NULL, scaling = tlf::Scaling$lin)
+.calculateResiduals(data, scaling = tlf::Scaling$lin, tolerance = NULL)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has been
 further tidied using \code{.removeUnpairableDatasets()} and then
 \code{.unitConverter()} functions.}
 
+\item{scaling}{A character specifying scale: either linear (default) or
+logarithmic.}
+
 \item{tolerance}{Tolerance of comparison for observed and simulated time
 points. Default is \code{NULL}, in which case the internal enum
 \code{.thresholdByTimeUnit} will be used to decide on what threshold to use
 based on the unit of time measurement.}
-
-\item{scaling}{A character specifying scale: either linear (default) or
-logarithmic.}
 }
 \description{
 Created observed versus simulated paired data
