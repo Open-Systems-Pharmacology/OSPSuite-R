@@ -23,6 +23,21 @@ plotResidualsVsTime <- function(dataCombined,
     return(NULL)
   }
 
+  # `ResVsTimePlotConfiguration` object -----------------------------
+
+  # Create an instance of `ResVsTimePlotConfiguration` class by doing a
+  # one-to-one mapping of internal plot configuration object's public fields
+  resVsTimePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
+    specificPlotConfiguration = tlf::ResVsTimePlotConfiguration$new(),
+    generalPlotConfiguration = defaultPlotConfiguration
+  )
+
+  # This should never be the case as the residuals should be centered around 0.
+  is_y_scale_logarithmic <- resVsTimePlotConfiguration$yAxis$scale == "log"
+  if (is_y_scale_logarithmic) {
+    stop(messages$logScaleNotAllowed())
+  }
+
   # data frames -----------------------------
 
   combinedData <- dataCombined$toDataFrame()
@@ -38,21 +53,6 @@ plotResidualsVsTime <- function(dataCombined,
 
   # Getting all units on the same scale
   combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
-
-  # `ResVsTimePlotConfiguration` object -----------------------------
-
-  # Create an instance of `ResVsTimePlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
-  resVsTimePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
-    specificPlotConfiguration = tlf::ResVsTimePlotConfiguration$new(),
-    generalPlotConfiguration = defaultPlotConfiguration
-  )
-
-  # This should never be the case as the residuals should be centered around 0.
-  is_y_scale_logarithmic <- resVsTimePlotConfiguration$yAxis$scale == "log"
-  if (is_y_scale_logarithmic) {
-    stop(messages$logScaleNotAllowed())
-  }
 
   # paired data frame -----------------------------
 

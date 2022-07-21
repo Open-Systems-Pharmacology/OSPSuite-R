@@ -35,6 +35,15 @@ plotIndividualTimeProfile <- function(dataCombined,
     return(NULL)
   }
 
+  # `TimeProfilePlotConfiguration` object -----------------------------
+
+  # Create an instance of `TimeProfilePlotConfiguration` class by doing a
+  # one-to-one mapping of internal plot configuration object's public fields
+  timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
+    specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
+    generalPlotConfiguration = defaultPlotConfiguration
+  )
+
   # data frames -----------------------------
 
   combinedData <- dataCombined$toDataFrame()
@@ -45,15 +54,6 @@ plotIndividualTimeProfile <- function(dataCombined,
   # Datasets which haven't been assigned to any group will be plotted as a group
   # on its own. That is, the `group` column entries for them will be their names.
   combinedData <- .addMissingGroupings(combinedData)
-
-  # `TimeProfilePlotConfiguration` object -----------------------------
-
-  # Create an instance of `TimeProfilePlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
-  timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
-    specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
-    generalPlotConfiguration = defaultPlotConfiguration
-  )
 
   # axes labels -----------------------------
 

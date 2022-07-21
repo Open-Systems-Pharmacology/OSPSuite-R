@@ -26,22 +26,6 @@ plotObservedVsSimulated <- function(dataCombined,
     return(NULL)
   }
 
-  # data frames -----------------------------
-
-  combinedData <- dataCombined$toDataFrame()
-
-  # Remove the observed and simulated datasets which can't be paired.
-  combinedData <- .removeUnpairableDatasets(combinedData)
-
-  # Return early if there are no pair-able datasets present
-  if (nrow(combinedData) == 0L) {
-    warning(messages$plottingWithNoPairedDatasets())
-    return(NULL)
-  }
-
-  # Getting all units on the same scale
-  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
-
   # `ObsVsPredPlotConfiguration` object -----------------------------
 
   # Create an instance of `ObsVsPredPlotConfiguration` class by doing a
@@ -74,6 +58,22 @@ plotObservedVsSimulated <- function(dataCombined,
     warning(messages$linearScaleWithFoldDistance())
     foldDistance <- 0
   }
+
+  # data frames -----------------------------
+
+  combinedData <- dataCombined$toDataFrame()
+
+  # Remove the observed and simulated datasets which can't be paired.
+  combinedData <- .removeUnpairableDatasets(combinedData)
+
+  # Return early if there are no pair-able datasets present
+  if (nrow(combinedData) == 0L) {
+    warning(messages$plottingWithNoPairedDatasets())
+    return(NULL)
+  }
+
+  # Getting all units on the same scale
+  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
   # paired data frame -----------------------------
 
