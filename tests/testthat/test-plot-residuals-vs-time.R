@@ -51,6 +51,16 @@ test_that("It creates default plots as expected", {
 })
 
 
+test_that("It doesn't work with log scale for Y-axis", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$yAxisScale <- tlf::Scaling$log
+  expect_error(
+    plotResidualsVsTime(myCombDat, myPlotConfiguration),
+    messages$logScaleNotAllowed()
+  )
+})
+
+
 test_that("It respects custom plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`

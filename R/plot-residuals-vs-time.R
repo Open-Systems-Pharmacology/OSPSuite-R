@@ -48,6 +48,12 @@ plotResidualsVsTime <- function(dataCombined,
     generalPlotConfiguration = defaultPlotConfiguration
   )
 
+  # This should never be the case as the residuals should be centered around 0.
+  is_y_scale_logarithmic <- resVsTimePlotConfiguration$yAxis$scale == "log"
+  if (is_y_scale_logarithmic) {
+    stop(messages$logScaleNotAllowed())
+  }
+
   # paired data frame -----------------------------
 
   # Create observed versus simulated paired data using interpolation for each
@@ -75,8 +81,7 @@ plotResidualsVsTime <- function(dataCombined,
     dataMapping = tlf::ResVsTimeDataMapping$new(
       x = "obsValue",
       y = "resValue",
-      group = "group",
-      lines = NULL
+      group = "group"
     ),
     plotConfiguration = resVsTimePlotConfiguration
   )

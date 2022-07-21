@@ -49,3 +49,7 @@ messages$plottingWithEmptyDataCombined <- function() {
 messages$plottingWithNoPairedDatasets <- function() {
   "No plot can be created because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
 }
+
+messages$logScaleNotAllowed <- function() {
+  "The Y-axis for this plot should not be on a log scale, since the residuals are expected to be centered around 0."
+}
