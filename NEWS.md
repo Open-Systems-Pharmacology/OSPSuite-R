@@ -1,10 +1,19 @@
 # ospsuite 12.0 (development version)
 
+## New features
+
 * Adds new visualization functions:
 
     - `plotObservedVsSimulated()` for observed versus simulated data scatter plot.
     - `plotResidualsVsTime()` for time versus residuals data scatter plot.
     - `plotResidualsVsSimulated()` for simulated versus residuals data scatter plot.
+
+## Major Changes
+
+* The class `SimulationBatch` gets a new property `id`.
+
+* The output of `runSimulationBatches()` is now a named list with names being 
+  the ids of `SimulationBatch`.
     
 # ospsuite 11.0.123
 
