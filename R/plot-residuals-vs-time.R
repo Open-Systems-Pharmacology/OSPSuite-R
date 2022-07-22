@@ -59,7 +59,7 @@ plotResidualsVsTime <- function(dataCombined,
   tlf::plotResVsTime(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ResVsTimeDataMapping$new(
-      x = "obsValue",
+      x = "obsTime",
       y = "resValue",
       group = "group"
     ),
