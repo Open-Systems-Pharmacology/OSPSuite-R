@@ -57,6 +57,7 @@ ospsuite:::.extractAggregatedSimulatedData(df)
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
 \code{\link{.calculateResiduals}()},
+\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
 \code{\link{.extractMatchingIndices}()},
 \code{\link{.removeUnpairableDatasets}()}

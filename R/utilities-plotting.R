@@ -1,5 +1,7 @@
 #' Make sure entered `DataCombined` object is valid for plotting
 #'
+#' @family utilities-plotting
+#'
 #' @keywords internal
 #' @noRd
 .validateDataCombinedForPlotting <- function(dataCombined) {
@@ -16,6 +18,8 @@
 }
 
 #' Make sure entered `DefaultPlotConfiguration` object is valid for plotting
+#'
+#' @family utilities-plotting
 #'
 #' @keywords internal
 #' @noRd
@@ -327,6 +331,8 @@
 
 #' Update axes label fields in `PlotConfiguration` object
 #'
+#' @family utilities-plotting
+#'
 #' @keywords internal
 #' @noRd
 .updatePlotConfigurationAxesLabels <- function(data, plotConfiguration) {
@@ -487,6 +493,8 @@
 
 #' Extract data frame for scatter plot functions
 #'
+#' @family utilities-plotting
+#'
 #' @keywords internal
 #' @noRd
 .dataCombinedToPairedData <- function(dataCombined, defaultPlotConfiguration, scaling) {
@@ -520,6 +528,8 @@
 #'
 #' @description
 #' A named list with a unique threshold for each measurement unit for time.
+#'
+#' @family utilities-plotting
 #'
 #' @keywords internal
 #' @noRd
@@ -603,6 +613,8 @@
 #' @param specificPlotConfiguration A specific subclass of
 #'   `tlf::PlotConfiguration` needed for the given plot.
 #' @param generalPlotConfiguration A `DefaultPlotConfiguration` object.
+#'
+#' @family utilities-plotting
 #'
 #' @examples
 #'

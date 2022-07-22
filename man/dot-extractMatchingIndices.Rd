@@ -37,6 +37,7 @@ ospsuite:::.extractMatchingIndices(c(1, 2), c(3, 4))
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
 \code{\link{.calculateResiduals}()},
+\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
 \code{\link{.extractAggregatedSimulatedData}()},
 \code{\link{.removeUnpairableDatasets}()}
