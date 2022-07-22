@@ -8,11 +8,11 @@
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has
-additionally been cleaned using \code{.unitConverter()} to have the same units
-across datasets.}
+additionally been cleaned using \code{ospsuite:::.unitConverter()} to have the
+same units across datasets.}
 
 \item{specificPlotConfiguration}{The nature of labels will change depending
-on the type of plot, which can be guessed from the specific
+on the type of plot. The type of plot can be guessed from the specific
 \code{PlotConfiguration} object used, since each plot has a unique corresponding
 class.}
 }
@@ -20,7 +20,9 @@ class.}
 Create axes labels
 }
 \details{
-If axes labels haven't been specified, create them using dimensions and units.
+If axes labels haven't been specified, create them using information about
+dimensions and units present in the data frame produced by
+\code{DataCombined$toDataFrame()}.
 }
 \examples{
 
@@ -44,7 +46,8 @@ ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 \seealso{
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
-\code{\link{.createObsVsPredData}()},
+\code{\link{.calculateResiduals}()},
+\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.extractAggregatedSimulatedData}()},
 \code{\link{.extractMatchingIndices}()},
 \code{\link{.removeUnpairableDatasets}()}

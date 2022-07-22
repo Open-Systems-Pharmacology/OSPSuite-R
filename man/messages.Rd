@@ -6,7 +6,7 @@
 \title{List of functions and strings used to signal error messages
 Extends the \code{messages} list from ospsuite.utils}
 \format{
-An object of class \code{list} of length 45.
+An object of class \code{list} of length 46.
 }
 \usage{
 messages

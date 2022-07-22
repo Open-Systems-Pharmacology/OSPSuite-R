@@ -28,15 +28,20 @@ plotIndividualTimeProfile <- function(dataCombined,
                              quantiles = NULL) {
   # validation -----------------------------
 
-  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = TRUE)
-  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
-  validateIsOfType(dataCombined, "DataCombined")
-  validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
+  .validateDataCombinedForPlotting(dataCombined)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
   if (is.null(dataCombined$groupMap)) {
-    warning(messages$plottingWithEmptyDataCombined())
     return(NULL)
   }
+
+  # `TimeProfilePlotConfiguration` object -----------------------------
+
+  # Create an instance of plot-specific class object
+  timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
+    specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
+    generalPlotConfiguration = defaultPlotConfiguration
+  )
 
   # data frames -----------------------------
 
@@ -49,24 +54,9 @@ plotIndividualTimeProfile <- function(dataCombined,
   # on its own. That is, the `group` column entries for them will be their names.
   combinedData <- .addMissingGroupings(combinedData)
 
-  # `TimeProfilePlotConfiguration` object -----------------------------
-
-  # Create an instance of `TimeProfilePlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
-  timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
-    data = combinedData,
-    specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
-    generalPlotConfiguration = defaultPlotConfiguration
-  )
-
   # axes labels -----------------------------
 
-  # The type of plot can be guessed from the specific `PlotConfiguration` object
-  # used, since each plot has a unique corresponding class. The labels can then
-  # be prepared accordingly.
-  axesLabels <- .createAxesLabels(combinedData, timeProfilePlotConfiguration)
-  timeProfilePlotConfiguration$labels$xlabel$text <- timeProfilePlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
-  timeProfilePlotConfiguration$labels$ylabel$text <- timeProfilePlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+  timeProfilePlotConfiguration <- .updatePlotConfigurationAxesLabels(combinedData, timeProfilePlotConfiguration)
 
   # plot -----------------------------
 

@@ -1,6 +1,6 @@
 # data to be used ---------------------------------------
 
-context("plotObservedVsSimulated")
+context("plotResidualsVsSimulated")
 
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
@@ -46,19 +46,17 @@ test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "default plot",
-    fig = plotObservedVsSimulated(myCombDat)
+    fig = plotResidualsVsSimulated(myCombDat)
   )
 })
 
-test_that("It issues warning when scale is linear", {
-  myPlotConfiguration <- DefaultPlotConfiguration$new()
-  myPlotConfiguration$xAxisScale <- tlf::Scaling$lin
-  myPlotConfiguration$yAxisScale <- tlf::Scaling$lin
 
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "linear scale",
-    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration)
+test_that("It doesn't work with log scale for Y-axis", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$yAxisScale <- tlf::Scaling$log
+  expect_error(
+    plotResidualsVsSimulated(myCombDat, myPlotConfiguration),
+    messages$logScaleNotAllowed()
   )
 })
 
@@ -81,10 +79,9 @@ test_that("It respects custom plot configuration", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "customized plot",
-    fig = plotObservedVsSimulated(
+    fig = plotResidualsVsSimulated(
       myCombDat,
-      myPlotConfiguration,
-      foldDistance = c(1.5, 2)
+      myPlotConfiguration
     )
   )
 
@@ -100,9 +97,9 @@ test_that("It respects custom plot configuration", {
 test_that("It returns `NULL` when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
-  expect_null(suppressWarnings(plotObservedVsSimulated(myCombDat)))
+  expect_null(suppressWarnings(plotResidualsVsSimulated(myCombDat)))
   expect_warning(
-    plotObservedVsSimulated(myCombDat),
+    plotResidualsVsSimulated(myCombDat),
     messages$plottingWithEmptyDataCombined()
   )
 })
@@ -117,9 +114,9 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet1)
 
-  expect_null(suppressWarnings(plotObservedVsSimulated(myCombDat)))
+  expect_null(suppressWarnings(plotResidualsVsSimulated(myCombDat)))
   expect_warning(
-    plotObservedVsSimulated(myCombDat),
+    plotResidualsVsSimulated(myCombDat),
     messages$plottingWithNoPairedDatasets()
   )
 })

@@ -19,38 +19,17 @@ plotObservedVsSimulated <- function(dataCombined,
                                     foldDistance = 2) {
   # validation -----------------------------
 
-  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
-  validateIsOfType(dataCombined, "DataCombined")
-  validateIsSameLength(objectCount(dataCombined), 1L) # only single instance is allowed
-  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
+  .validateDataCombinedForPlotting(dataCombined)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
   if (is.null(dataCombined$groupMap)) {
-    warning(messages$plottingWithEmptyDataCombined())
     return(NULL)
   }
-
-  # data frames -----------------------------
-
-  combinedData <- dataCombined$toDataFrame()
-
-  # Remove the observed and simulated datasets which can't be paired.
-  combinedData <- .removeUnpairableDatasets(combinedData)
-
-  # Return early if there are no pair-able datasets present
-  if (nrow(combinedData) == 0L) {
-    warning(messages$plottingWithNoPairedDatasets())
-    return(NULL)
-  }
-
-  # Getting all units on the same scale
-  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
   # `ObsVsPredPlotConfiguration` object -----------------------------
 
-  # Create an instance of `ObsVsPredPlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
+  # Create an instance of plot-specific class object
   obsVsPredPlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
-    data = combinedData,
     specificPlotConfiguration = tlf::ObsVsPredPlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
   )
@@ -79,23 +58,18 @@ plotObservedVsSimulated <- function(dataCombined,
     foldDistance <- 0
   }
 
-  # paired data frame -----------------------------
+  # data frames -----------------------------
 
-  # Create observed versus simulated paired data using interpolation for each
-  # grouping level and combine the resulting data frames in a row-wise manner.
+  # Create a paired data frame (observed versus simulated) from `DataCombined` object.
   #
-  # Both of these routines will be carried out by `dplyr::group_modify()`.
-  pairedData <- combinedData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .createObsVsPredData(.x, scaling = obsVsPredPlotConfiguration$yAxis$scale)) %>%
-    dplyr::ungroup()
+  # `DefaultPlotConfiguration` provides units for conversion.
+  # `PlotConfiguration` provides scaling details needed while computing residuals.
+  pairedData <- .dataCombinedToPairedData(dataCombined, defaultPlotConfiguration, obsVsPredPlotConfiguration$yAxis$scale)
 
-  # Add min and max values for horizontal error bars
-  pairedData <- dplyr::mutate(
-    pairedData,
-    obsValueLower = obsValue - obsErrorValue,
-    obsValueHigher = obsValue + obsErrorValue
-  )
+  # Quit early if there is no data to visualize.
+  if (is.null(pairedData)) {
+    return(NULL)
+  }
 
   # Time points at which predicted values can't be interpolated, and need to be
   # extrapolated.
@@ -116,12 +90,7 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # axes labels -----------------------------
 
-  # The type of plot can be guessed from the specific `PlotConfiguration` object
-  # used, since each plot has a unique corresponding class. The labels can then
-  # be prepared accordingly.
-  axesLabels <- .createAxesLabels(combinedData, obsVsPredPlotConfiguration)
-  obsVsPredPlotConfiguration$labels$xlabel$text <- obsVsPredPlotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
-  obsVsPredPlotConfiguration$labels$ylabel$text <- obsVsPredPlotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+  obsVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, obsVsPredPlotConfiguration)
 
   # plot -----------------------------
 
@@ -136,7 +105,6 @@ plotObservedVsSimulated <- function(dataCombined,
       lines = NULL
     ),
     foldDistance = foldDistance,
-    smoother = NULL,
     plotConfiguration = obsVsPredPlotConfiguration
   )
 }

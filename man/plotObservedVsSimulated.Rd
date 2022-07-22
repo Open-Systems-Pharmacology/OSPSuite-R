@@ -32,6 +32,8 @@ Observed versus predicted/simulated scatter plot
 Other plotting: 
 \code{\link{DefaultPlotConfiguration}},
 \code{\link{plotIndividualTimeProfile}()},
-\code{\link{plotPopulationTimeProfile}()}
+\code{\link{plotPopulationTimeProfile}()},
+\code{\link{plotResidualsVsSimulated}()},
+\code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}

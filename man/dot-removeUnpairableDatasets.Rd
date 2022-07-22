@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-plotting.R
 \name{.removeUnpairableDatasets}
 \alias{.removeUnpairableDatasets}
-\title{Remove unpairable datasets for scatter plots}
+\title{Remove unpairable datasets for scatter plot functions}
 \usage{
 .removeUnpairableDatasets(data)
 }
@@ -10,8 +10,16 @@
 \item{data}{A data frame returned by \code{DataCombined$toDataFrame()}.}
 }
 \description{
-Datasets which haven't been assigned to any group will be removed from the
-combined data frame.
+Scatter plots by their nature require that data should be of paired, i.e. for
+every simulated dataset in a given group, there should also be a
+corresponding observed dataset.
+
+To this end, current function removes the following datasets:
+\itemize{
+\item Datasets which haven't been assigned to any group.
+\item Datasets that are not part of a pair (i.e. a simulated dataset without
+observed dataset partner, and vice versa).
+}
 }
 \examples{
 
@@ -47,8 +55,9 @@ ospsuite:::.removeUnpairableDatasets(df)
 \seealso{
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
+\code{\link{.calculateResiduals}()},
+\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
-\code{\link{.createObsVsPredData}()},
 \code{\link{.extractAggregatedSimulatedData}()},
 \code{\link{.extractMatchingIndices}()}
 }

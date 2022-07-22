@@ -1,3 +1,34 @@
+#' Make sure entered `DataCombined` object is valid for plotting
+#'
+#' @family utilities-plotting
+#'
+#' @keywords internal
+#' @noRd
+.validateDataCombinedForPlotting <- function(dataCombined) {
+  validateIsOfType(dataCombined, "DataCombined")
+
+  # Only single instance is allowed.
+  validateIsSameLength(objectCount(dataCombined), 1L)
+
+  # If there are no datasets in the object, inform the user that no plot will
+  # be created.
+  if (is.null(dataCombined$groupMap)) {
+    warning(messages$plottingWithEmptyDataCombined())
+  }
+}
+
+#' Make sure entered `DefaultPlotConfiguration` object is valid for plotting
+#'
+#' @family utilities-plotting
+#'
+#' @keywords internal
+#' @noRd
+.validateDefaultPlotConfiguration <- function(defaultPlotConfiguration = NULL) {
+  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
+  validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration")
+  return(defaultPlotConfiguration)
+}
+
 #' Replace missing groupings with dataset names
 #'
 #' @description
@@ -56,12 +87,19 @@
   return(data)
 }
 
-#' Remove unpairable datasets for scatter plots
+#' Remove unpairable datasets for scatter plot functions
 #'
 #' @description
 #'
-#' Datasets which haven't been assigned to any group will be removed from the
-#' combined data frame.
+#' Scatter plots by their nature require that data should be of paired, i.e. for
+#' every simulated dataset in a given group, there should also be a
+#' corresponding observed dataset.
+#'
+#' To this end, current function removes the following datasets:
+#'
+#' - Datasets which haven't been assigned to any group.
+#' - Datasets that are not part of a pair (i.e. a simulated dataset without
+#'   observed dataset partner, and vice versa).
 #'
 #' @param data A data frame returned by `DataCombined$toDataFrame()`.
 #'
@@ -99,7 +137,7 @@
 #'
 #' @keywords internal
 .removeUnpairableDatasets <- function(data) {
-  # How many rows were originally present
+  # How many rows were originally present?
   originalDatasets <- unique(data$name)
 
   # Remove datasets that don't belong to any group.
@@ -112,10 +150,10 @@
     dplyr::filter(length(unique(dataType)) > 1L) %>%
     dplyr::ungroup()
 
-  # How many rows are present after filtering
+  # How many rows are left after filtering?
   finalDatasets <- unique(data$name)
 
-  # Warn the user about the filtering if it took place
+  # Inform the user about which (if any) datasets were removed.
   if (length(finalDatasets) < length(originalDatasets)) {
     missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
 
@@ -174,10 +212,10 @@
 #' ospsuite:::.extractAggregatedSimulatedData(df)
 #'
 #' @keywords internal
-.extractAggregatedSimulatedData <- function(simData, quantiles = c(0.05, 0.5, 0.95)) {
-  # Compute quantiles
+.extractAggregatedSimulatedData <- function(simData,
+                                            quantiles = c(0.05, 0.5, 0.95)) {
   simAggregatedData <- simData %>%
-    # For each dataset, compute across all individuals for each time point
+    # For each dataset, compute quantiles across all individuals for each time point
     dplyr::group_by(group, xValues) %>% #
     dplyr::summarise(
       yValuesLower = stats::quantile(yValues, quantiles[[1]]),
@@ -191,11 +229,17 @@
 
 #' Create axes labels
 #'
+#' @details
+#'
+#' If axes labels haven't been specified, create them using information about
+#' dimensions and units present in the data frame produced by
+#' `DataCombined$toDataFrame()`.
+#'
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has
-#'   additionally been cleaned using `.unitConverter()` to have the same units
-#'   across datasets.
+#'   additionally been cleaned using `ospsuite:::.unitConverter()` to have the
+#'   same units across datasets.
 #' @param specificPlotConfiguration The nature of labels will change depending
-#'   on the type of plot, which can be guessed from the specific
+#'   on the type of plot. The type of plot can be guessed from the specific
 #'   `PlotConfiguration` object used, since each plot has a unique corresponding
 #'   class.
 #'
@@ -219,10 +263,6 @@
 #'
 #' ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 #'
-#' @details
-#'
-#' If axes labels haven't been specified, create them using dimensions and units.
-#'
 #' @keywords internal
 .createAxesLabels <- function(data, specificPlotConfiguration) {
   # If empty data frame is entered or plot type is not specified, return early
@@ -230,15 +270,11 @@
     return(NULL)
   }
 
-  # The type of plot can be guessed from the specific `PlotConfiguration` object
-  # used, since each plot has a unique corresponding class.
-  plotType <- class(specificPlotConfiguration)[[1]]
-
   # Initialize strings with unique values for units and dimensions.
   #
   # The`.unitConverter()` has already ensured that there is only a single unit
-  # for x and y quantities, so we can safely take the unique unit to prepare
-  # axes labels.
+  # for quantities, so we can safely take the unique unit to prepare axes
+  # labels.
   xUnitString <- unique(data$xUnit)
   yUnitString <- unique(data$yUnit)
 
@@ -246,58 +282,67 @@
   xDimensionString <- unique(data$xDimension)[[1]]
   yDimensionString <- unique(data$yDimension)[[1]]
 
-  # Currently, hard code any of the different concentration dimensions to just
-  # one dimension: "Concentration"
+  # Hard code some concentration dimensions to one dimension: `"Concentration"`
   #
+  # For more, see:
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
-  concDimensions <- c(
-    ospDimensions$`Concentration (mass)`,
-    ospDimensions$`Concentration (molar)`
-  )
+  concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+  xDimensionString <- ifelse(any(xDimensionString %in% concDimensions), "Concentration", xDimensionString)
+  yDimensionString <- ifelse(any(yDimensionString %in% concDimensions), "Concentration", yDimensionString)
 
-  if (any(xDimensionString %in% concDimensions)) {
-    xDimensionString <- "Concentration"
-  }
-
-  if (any(yDimensionString %in% concDimensions)) {
-    yDimensionString <- "Concentration"
-  }
-
-  # If quantities are unitless, no unit information will be displayed.
-  # Otherwise, `Dimension [Unit]` pattern will be followed.
+  # If quantities are unitless, no unit information needs to be displayed.
+  # Otherwise, `Dimension [Unit]` pattern is followed.
   xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
   xUnitString <- paste0(xDimensionString, xUnitString)
   yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
   yUnitString <- paste0(yDimensionString, yUnitString)
 
   # The exact axis label will depend on the type of the plot, and the type
-  # of the plot can be guessed using the specific `PlotConfiguration` object
-  # entered in this function.
-  #
-  # If the specific `PlotConfiguration` object is not any of the cases included
-  # in the `switch` below, the result will be no change; i.e., the labels will
-  # continue to be `NULL`.
+  # of the plot can be guessed using the specific `PlotConfiguration` object.
+  plotType <- class(specificPlotConfiguration)[[1]]
 
-  # x-axis label
+  # If the specific `PlotConfiguration` object is not any of the cases included
+  # in the `switch` below, the the labels will remain `NULL`.
+
+  # X-axis label
   xLabel <- switch(plotType,
-    "TimeProfilePlotConfiguration" = xUnitString,
-    "ResVsPredPlotConfiguration" = xUnitString,
+    "TimeProfilePlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = xUnitString,
     # Note that `yUnitString` here is deliberate.
     #
     # In case of an observed versus simulated plot, `yValues` are plotted on
     # both x- and y-axes, and therefore the units strings are going to be the
     # same for both axes.
-    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
+    "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
-  # y-axis label
+  # Y-axis label
   yLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = yUnitString,
-    "ResVsPredPlotConfiguration" = "Residuals",
+    "ResVsPredPlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = "Residuals",
     "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   return(list("xLabel" = xLabel, "yLabel" = yLabel))
+}
+
+
+#' Update axes label fields in `PlotConfiguration` object
+#'
+#' @family utilities-plotting
+#'
+#' @keywords internal
+#' @noRd
+.updatePlotConfigurationAxesLabels <- function(data, plotConfiguration) {
+  axesLabels <- .createAxesLabels(data, plotConfiguration)
+
+  # Update only if the user hasn't already specified labels.
+  plotConfiguration$labels$xlabel$text <- plotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
+  plotConfiguration$labels$ylabel$text <- plotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+
+  return(plotConfiguration)
 }
 
 
@@ -306,12 +351,12 @@
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has been
 #'   further tidied using `.removeUnpairableDatasets()` and then
 #'   `.unitConverter()` functions.
-#' @param tolerance Tolerance of comparison for observed and simulated time
-#'   points. Default is `NULL`, in which case the internal enum
-#'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
-#'   based on the unit of time measurement.
 #' @param scaling A character specifying scale: either linear (default) or
 #'   logarithmic.
+#' @param tolerance Tolerance of comparison for observed and simulated time
+#'   points. Default is `NULL`, in which case the internal enumerated list
+#'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
+#'   based on the unit of time measurement.
 #'
 #' @family utilities-plotting
 #'
@@ -321,16 +366,20 @@
 #' df <- dplyr::tibble(
 #'   dataType = c(rep("observed", 5), rep("simulated", 3)),
 #'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
+#'   xUnit = ospUnits$Time$min,
+#'   xDimension = ospDimensions$Time,
 #'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
-#'   xUnit = ospUnits$Time$min
+#'   yErrorValues = rnorm(8),
+#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`,
+#'   yDimension = ospDimensions$`Concentration (mass)`
 #' )
 #'
-#' ospsuite:::.createObsVsPredData(df)
+#' ospsuite:::.calculateResiduals(df)
 #'
 #' @keywords internal
-.createObsVsPredData <- function(data,
-                                 tolerance = NULL,
-                                 scaling = tlf::Scaling$lin) {
+.calculateResiduals <- function(data,
+                                scaling = tlf::Scaling$lin,
+                                tolerance = NULL) {
   # Extract time and values to raw vectors. Working with a single data frame is
   # not an option since the dimensions of observed and simulated data frames are
   # different.
@@ -413,28 +462,74 @@
   # a data frame.
   pairedData <- dplyr::tibble(
     "obsTime" = obsTime,
-    "timeUnit" = timeUnit,
+    "xUnit" = timeUnit,
+    "xDimension" = unique(data$xDimension),
     "obsValue" = obsValue,
     "obsErrorValue" = obsErrorValue,
-    "predValue" = predValue
+    "predValue" = predValue,
+    "yUnit" = unique(data$yUnit),
+    "yDimension" = unique(data$yDimension)
   )
 
-  # the linear scaling can be called either `"lin"` (in default plot config) or
-  # `"identity"` in specific plot config in tlf
+  # The linear scaling is represented either of the following:
+  #
+  # - `"lin"` (in `DefaultPlotConfiguration`)
+  # - `"identity"` (in `tlf::PlotConfiguration`, because of `{ggplot2}`)
   if (scaling %in% c("lin", "identity")) {
     pairedData <- dplyr::mutate(pairedData, resValue = obsValue - predValue)
   } else {
     pairedData <- dplyr::mutate(pairedData, resValue = log(obsValue) - log(predValue))
   }
 
+  # Add minimum and maximum values for observed data to plot error bars
+  pairedData <- dplyr::mutate(
+    pairedData,
+    obsValueLower = obsValue - obsErrorValue,
+    obsValueHigher = obsValue + obsErrorValue
+  )
+
   return(pairedData)
 }
 
+#' Extract data frame for scatter plot functions
+#'
+#' @family utilities-plotting
+#'
+#' @keywords internal
+#' @noRd
+.dataCombinedToPairedData <- function(dataCombined, defaultPlotConfiguration, scaling) {
+  combinedData <- dataCombined$toDataFrame()
+
+  # Remove the observed and simulated datasets which can't be paired.
+  combinedData <- .removeUnpairableDatasets(combinedData)
+
+  # Return early if there are no pair-able datasets present
+  if (nrow(combinedData) == 0L) {
+    warning(messages$plottingWithNoPairedDatasets())
+    return(NULL)
+  }
+
+  # Getting all datasets to have the same units.
+  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+
+  # Create observed versus simulated paired data using interpolation for each
+  # grouping level and combine the resulting data frames in a row-wise manner.
+  #
+  # Both of these routines will be carried out by `dplyr::group_modify()`.
+  pairedData <- combinedData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .calculateResiduals(.x, scaling)) %>%
+    dplyr::ungroup()
+
+  return(pairedData)
+}
 
 #' Threshold to match time points
 #'
 #' @description
 #' A named list with a unique threshold for each measurement unit for time.
+#'
+#' @family utilities-plotting
 #'
 #' @keywords internal
 #' @noRd
@@ -465,7 +560,7 @@
 #' This custom function does exactly this.
 #'
 #' @inheritParams dplyr::near
-#' @inheritParams .createObsVsPredData
+#' @inheritParams .calculateResiduals
 #'
 #' @family utilities-plotting
 #'
@@ -493,34 +588,45 @@
     return(index_vector)
   }
 
-  # If there are no matches
+  # If there are no matches, return an empty vector of `integer` type.
   return(integer(0L))
 }
 
 
 #' Create plot-specific `tlf::PlotConfiguration` object
 #'
-#' @param data A data frame containing information about dimensions and units
-#'   for the x-and y-axes quantities.
+#' @details
+#'
+#' The default plot configuration and the labels needs to vary from plot-to-plot
+#' because each plot has its specific (default) aesthetic needs that need to be
+#' met.
+#'
+#' For example, although the axes labels for profile plots will be (e.g.) "Time
+#' vs Fraction", they will be (e.g.) "Observed vs simulated values" for scatter
+#' plots. Additionally, mapping group to line colors might be desirable for a
+#' profile plot, it is not so for scatter plots.
+#'
+#' This function generates object of specific subclass of
+#' `tlf::PlotConfiguration` needed for the given plot but with suitable defaults
+#' taken from the `DefaultPlotConfiguration` object.
+#'
 #' @param specificPlotConfiguration A specific subclass of
 #'   `tlf::PlotConfiguration` needed for the given plot.
 #' @param generalPlotConfiguration A `DefaultPlotConfiguration` object.
 #'
+#' @family utilities-plotting
+#'
+#' @examples
+#'
+#' ospsuite:::.convertGeneralToSpecificPlotConfiguration(
+#'   tlf::TimeProfilePlotConfiguration$new(),
+#'   ospsuite::DefaultPlotConfiguration$new()
+#' )
+#'
 #' @keywords internal
-#' @noRd
-.convertGeneralToSpecificPlotConfiguration <- function(data,
-                                                       specificPlotConfiguration,
+.convertGeneralToSpecificPlotConfiguration <- function(specificPlotConfiguration,
                                                        generalPlotConfiguration) {
-  validateIsOfType(generalPlotConfiguration, "DefaultPlotConfiguration", nullAllowed = FALSE)
-
   # Plot-specific configuration defaults -----------------------------------
-
-  # The default plot configuration and the labels will vary from plot-to-plot.
-  #
-  # For example, although the axes labels for profile plots will be (e.g.) "Time
-  # vs Fraction", it will be "observed vs simulated values" with the same unit
-  # for scatter plot. Additionally, mapping group to line colors might be
-  # desirable for a profile plot, it is not so for scatter plots.
 
   # The type of plot can be guessed from the specific `PlotConfiguration` object
   # used, since each plot has a unique corresponding class.
@@ -543,6 +649,14 @@
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
     # every fold distance line should get a unique type of line
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% names(tlf::Linetypes)
+  }
+
+  # For `plotResidualsVsTime()` and `plotResidualsVsSimulated()`
+  if (plotType %in% c("ResVsTimePlotConfiguration", "ResVsPredPlotConfiguration")) {
+    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
   }
 
   # labels object ---------------------------------------

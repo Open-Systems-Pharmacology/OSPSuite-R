@@ -10,7 +10,7 @@
 \item{x, y}{Numeric vectors to compare}
 
 \item{tolerance}{Tolerance of comparison for observed and simulated time
-points. Default is \code{NULL}, in which case the internal enum
+points. Default is \code{NULL}, in which case the internal enumerated list
 \code{.thresholdByTimeUnit} will be used to decide on what threshold to use
 based on the unit of time measurement.}
 }
@@ -36,8 +36,9 @@ ospsuite:::.extractMatchingIndices(c(1, 2), c(3, 4))
 \seealso{
 Other utilities-plotting: 
 \code{\link{.addMissingGroupings}()},
+\code{\link{.calculateResiduals}()},
+\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
-\code{\link{.createObsVsPredData}()},
 \code{\link{.extractAggregatedSimulatedData}()},
 \code{\link{.removeUnpairableDatasets}()}
 }
