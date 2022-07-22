@@ -37,8 +37,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # `TimeProfilePlotConfiguration` object -----------------------------
 
-  # Create an instance of `TimeProfilePlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
+  # Create an instance of plot-specific class object
   timeProfilePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration

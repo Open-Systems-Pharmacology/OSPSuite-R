@@ -28,8 +28,7 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # `ObsVsPredPlotConfiguration` object -----------------------------
 
-  # Create an instance of `ObsVsPredPlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
+  # Create an instance of plot-specific class object
   obsVsPredPlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     specificPlotConfiguration = tlf::ObsVsPredPlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration

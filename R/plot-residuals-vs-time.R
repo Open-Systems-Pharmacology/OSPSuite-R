@@ -25,8 +25,7 @@ plotResidualsVsTime <- function(dataCombined,
 
   # `ResVsTimePlotConfiguration` object -----------------------------
 
-  # Create an instance of `ResVsTimePlotConfiguration` class by doing a
-  # one-to-one mapping of internal plot configuration object's public fields
+  # Create an instance of plot-specific class object
   resVsTimePlotConfiguration <- .convertGeneralToSpecificPlotConfiguration(
     specificPlotConfiguration = tlf::ResVsTimePlotConfiguration$new(),
     generalPlotConfiguration = defaultPlotConfiguration
