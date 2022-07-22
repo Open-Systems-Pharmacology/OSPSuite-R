@@ -25,6 +25,7 @@ Other plotting:
 \code{\link{DefaultPlotConfiguration}},
 \code{\link{plotObservedVsSimulated}()},
 \code{\link{plotPopulationTimeProfile}()},
+\code{\link{plotResidualsVsSimulated}()},
 \code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}

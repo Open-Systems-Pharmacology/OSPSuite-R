@@ -33,6 +33,7 @@ Other plotting:
 \code{\link{DefaultPlotConfiguration}},
 \code{\link{plotIndividualTimeProfile}()},
 \code{\link{plotObservedVsSimulated}()},
+\code{\link{plotResidualsVsSimulated}()},
 \code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}

@@ -72,6 +72,7 @@ Collate:
     'plot-individual-time-profile.R'
     'plot-observed-vs-simulated.R'
     'plot-population-time-profile.R'
+    'plot-residuals-vs-simulated.R'
     'plot-residuals-vs-time.R'
     'population-characteristics.R'
     'population.R'

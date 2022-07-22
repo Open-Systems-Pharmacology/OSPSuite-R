@@ -129,6 +129,7 @@ Other plotting:
 \code{\link{plotIndividualTimeProfile}()},
 \code{\link{plotObservedVsSimulated}()},
 \code{\link{plotPopulationTimeProfile}()},
+\code{\link{plotResidualsVsSimulated}()},
 \code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}

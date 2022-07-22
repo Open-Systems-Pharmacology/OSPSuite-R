@@ -307,14 +307,14 @@
   # X-axis label
   xLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = ,
-    "ResVsPredPlotConfiguration" = ,
     "ResVsTimePlotConfiguration" = xUnitString,
     # Note that `yUnitString` here is deliberate.
     #
     # In case of an observed versus simulated plot, `yValues` are plotted on
     # both x- and y-axes, and therefore the units strings are going to be the
     # same for both axes.
-    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")")
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
+    "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   # Y-axis label
@@ -651,8 +651,8 @@
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% names(tlf::Linetypes)
   }
 
-  # For `plotResidualsVsTime()`
-  if (plotType == "ResVsTimePlotConfiguration") {
+  # For `plotResidualsVsTime()` and `plotResidualsVsSimulated()`
+  if (plotType %in% c("ResVsTimePlotConfiguration", "ResVsPredPlotConfiguration")) {
     generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
