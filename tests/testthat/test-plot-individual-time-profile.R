@@ -14,7 +14,7 @@ simResults <- importResultsFromCSV(
   filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
 )
 
-# import observed data (will return a list of DataSet objects)
+# import observed data (will return a list of `DataSet` objects)
 dataSet <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
   importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
