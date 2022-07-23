@@ -94,6 +94,8 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # plot -----------------------------
 
+  tlf::setDefaultErrorbarCapWidth(defaultPlotConfiguration$errorbarsCapWidth)
+
   tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(

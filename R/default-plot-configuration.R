@@ -345,7 +345,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # Color and fill are taken from point mapping, therefore no
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
-    #errorbarsCapWidth = 0.2,
+    errorbarsCapWidth = 0.2,
     errorbarsLinetype = tlf::Linetypes$solid,
     errorbarsAlpha = 0.75
   )

@@ -885,9 +885,9 @@
 
   errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
     size = generalPlotConfiguration$errorbarsSize,
+    # width = generalPlotConfiguration$errorbarsCapWidth,
     linetype = generalPlotConfiguration$errorbarsLinetype,
-    alpha = generalPlotConfiguration$errorbarsAlpha,
-    width = generalPlotConfiguration$errorbarsCapWidth
+    alpha = generalPlotConfiguration$errorbarsAlpha
   )
 
   # Update specific plot configuration object ----------------------
