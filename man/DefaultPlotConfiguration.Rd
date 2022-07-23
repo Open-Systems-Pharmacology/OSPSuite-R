@@ -192,7 +192,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapWidth}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 }
 \if{html}{\out{</div>}}
 }
@@ -252,7 +252,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapWidth}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
 }
 \if{html}{\out{</div>}}
 }
