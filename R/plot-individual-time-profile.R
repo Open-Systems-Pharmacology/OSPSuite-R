@@ -93,6 +93,8 @@ plotIndividualTimeProfile <- function(dataCombined,
     )
   }
 
+  tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
+
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
     dataMapping = dataMapping,

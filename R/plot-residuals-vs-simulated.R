@@ -56,6 +56,8 @@ plotResidualsVsSimulated <- function(dataCombined,
 
   # plot -----------------------------
 
+  tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
+
   tlf::plotResVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ResVsPredDataMapping$new(
