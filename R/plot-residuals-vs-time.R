@@ -56,7 +56,7 @@ plotResidualsVsTime <- function(dataCombined,
 
   # plot -----------------------------
 
-  tlf::setDefaultErrorbarCapExtent(defaultPlotConfiguration$errorbarsCapExtent)
+  tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
 
   tlf::plotResVsTime(
     data = as.data.frame(pairedData),

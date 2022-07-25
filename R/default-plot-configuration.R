@@ -139,7 +139,7 @@
 #' @field linesColor,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
-#' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha,errorbarsCapExtent A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.
+#' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha,errorbarsCapSize A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.
 #'
 #' @examples
 #'
@@ -345,7 +345,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # Color and fill are taken from point mapping, therefore no
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
-    errorbarsCapExtent = 0.2,
+    errorbarsCapSize = 5,
     errorbarsLinetype = tlf::Linetypes$solid,
     errorbarsAlpha = 0.75
   )
