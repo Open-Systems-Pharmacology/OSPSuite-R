@@ -94,6 +94,8 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # plot -----------------------------
 
+  tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
+
   tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
@@ -101,8 +103,7 @@ plotObservedVsSimulated <- function(dataCombined,
       y = "predValue",
       group = "group",
       xmin = "obsValueLower",
-      xmax = "obsValueHigher",
-      lines = NULL
+      xmax = "obsValueHigher"
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration
