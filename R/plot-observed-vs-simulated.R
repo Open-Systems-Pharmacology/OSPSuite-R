@@ -102,8 +102,8 @@ plotObservedVsSimulated <- function(dataCombined,
       x = "obsValue",
       y = "predValue",
       group = "group",
-      xmin = "obsValueLower",
-      xmax = "obsValueHigher"
+      xmin = "yValuesLower",
+      xmax = "yValuesHigher"
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration

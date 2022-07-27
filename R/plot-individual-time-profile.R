@@ -85,11 +85,27 @@ plotIndividualTimeProfile <- function(dataCombined,
       ymax = "yValuesHigher",
       group = "group"
     )
+
+    observedDataMapping <- tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group"
+    )
   } else {
     dataMapping <- tlf::TimeProfileDataMapping$new(
       x = "xValues",
       y = "yValues",
       group = "group"
+    )
+
+    obsData <- .computeBoundsFromErrorType(obsData)
+
+    observedDataMapping <- tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group",
+      ymin = "yValuesLower",
+      ymax = "yValuesHigher"
     )
   }
 
@@ -99,12 +115,7 @@ plotIndividualTimeProfile <- function(dataCombined,
     data = simData,
     dataMapping = dataMapping,
     observedData = obsData,
-    observedDataMapping = tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group",
-      error = "yErrorValues"
-    ),
+    observedDataMapping = observedDataMapping,
     plotConfiguration = timeProfilePlotConfiguration
   )
 
