@@ -666,7 +666,7 @@ ospUnits <- list()
   # should not trigger conversion of error values (and units)
   if ("yErrorType" %in% colnames(yData) &&
     !is.na(unique(yData$yErrorType)) &&
-    unique(yData$yErrorType) == "GeometricStdDev") {
+    unique(yData$yErrorType) == DataErrorType$GeometricStdDev) {
     return(yData)
   }
 
