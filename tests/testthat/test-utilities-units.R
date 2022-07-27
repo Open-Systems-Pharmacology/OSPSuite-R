@@ -592,7 +592,7 @@ dfGeomError <- dplyr::tibble(
 
 dfGeomErrorConvert <- .unitConverter(dfGeomError, yUnit = "µmol/l")
 
-test_that("it shouldn't convert geometric error values or units, only `yValues`", {
+test_that("It shouldn't convert geometric error values or units, only `yValues`", {
   expect_equal(unique(dfGeomError$yErrorValues), unique(dfGeomErrorConvert$yErrorValues))
   expect_equal(unique(dfGeomError$yErrorUnit), unique(dfGeomErrorConvert$yErrorUnit))
   expect_equal(unique(dfGeomError$yErrorType), unique(dfGeomErrorConvert$yErrorType))
@@ -603,4 +603,24 @@ test_that("it shouldn't convert geometric error values or units, only `yValues`"
     c(39.5815559184067, 60.8538700951183, 59.9579929775307, 56.5043725143431, 45.909774903701),
     tolerance = 0.001
   )
+})
+
+# multiple concentration dims present --------------------------------
+
+dfConc <- dplyr::tibble(
+  xValues = c(15, 0.5),
+  xUnit = c("min", "h"),
+  xDimension = "Time",
+  yValues = c(0.25, 45),
+  yUnit = c("mg/l", "mol/l"),
+  yDimension = c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`),
+  yErrorValues = NA,
+  yErrorUnit = NA,
+  molWeight = 10
+)
+
+dfConcConvert <- .unitConverter(dfConc)
+
+test_that("it can convert multiple concentration dimensions to a single one", {
+  expect_equal(unique(dfConcConvert$yDimension), "Concentration")
 })
