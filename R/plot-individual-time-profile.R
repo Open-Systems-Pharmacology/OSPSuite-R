@@ -98,21 +98,7 @@ plotIndividualTimeProfile <- function(dataCombined,
       group = "group"
     )
 
-    if (!all(is.na(obsData$yErrorValues)) && !all(is.na(obsData$yErrorType))) {
-      obsData <- dplyr::mutate(obsData,
-        yValuesLower = dplyr::case_when(
-          yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
-          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
-          TRUE ~ NA_real_
-        ),
-        yValuesHigher = dplyr::case_when(
-          yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
-          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
-          TRUE ~ NA_real_
-        ),
-      )
-    }
-
+    obsData <- .computeBoundsFromErrorType(obsData)
 
     observedDataMapping <- tlf::ObservedDataMapping$new(
       x = "xValues",

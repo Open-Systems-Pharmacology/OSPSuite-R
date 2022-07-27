@@ -391,9 +391,9 @@
   # If available, error values will be useful for plotting error bars in the
   # scatter plot. Even if not available, add missing values to be consistent.
   if ("yErrorValues" %in% colnames(data)) {
-    obsErrorValue <- data$yErrorValues[data$dataType == "observed"]
+    yErrorValues <- data$yErrorValues[data$dataType == "observed"]
   } else {
-    obsErrorValue <- rep(NA_real_, length(obsValue))
+    yErrorValues <- rep(NA_real_, length(obsValue))
   }
 
   # Number of observed and simulated data points
@@ -465,7 +465,7 @@
     "xUnit" = timeUnit,
     "xDimension" = unique(data$xDimension),
     "obsValue" = obsValue,
-    "obsErrorValue" = obsErrorValue,
+    "yErrorValues" = yErrorValues,
     "predValue" = predValue,
     "yUnit" = unique(data$yUnit),
     "yDimension" = unique(data$yDimension)
@@ -484,12 +484,32 @@
   # Add minimum and maximum values for observed data to plot error bars
   pairedData <- dplyr::mutate(
     pairedData,
-    obsValueLower = obsValue - obsErrorValue,
-    obsValueHigher = obsValue + obsErrorValue
+    yValuesLower = obsValue - yErrorValues,
+    yValuesHigher = obsValue + yErrorValues
   )
 
   return(pairedData)
 }
+
+.computeBoundsFromErrorType <- function(data) {
+  if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
+    data <- dplyr::mutate(data,
+      yValuesLower = dplyr::case_when(
+        yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
+        yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
+        TRUE ~ NA_real_
+      ),
+      yValuesHigher = dplyr::case_when(
+        yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
+        yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
+        TRUE ~ NA_real_
+      ),
+    )
+  }
+
+  return(data)
+}
+
 
 #' Extract data frame for scatter plot functions
 #'
