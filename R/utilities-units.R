@@ -665,6 +665,7 @@ ospUnits <- list()
   # If error type is geometric, conversion of `yValues` to different units
   # should not trigger conversion of error values (and units)
   if ("yErrorType" %in% colnames(yData) &&
+    !is.na(unique(yData$yErrorType)) &&
     unique(yData$yErrorType) == "GeometricStdDev") {
     return(yData)
   }
