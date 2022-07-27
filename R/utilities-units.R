@@ -662,6 +662,13 @@ ospUnits <- list()
 #' @keywords internal
 #' @noRd
 .yErrorUnitConverter <- function(yData, yTargetUnit) {
+  # If error type is geometric, conversion of `yValues` to different units
+  # should not trigger conversion of error values (and units)
+  if ("yErrorType" %in% colnames(yData) &&
+    unique(yData$yErrorType) == "GeometricStdDev") {
+    return(yData)
+  }
+
   yData$yErrorValues <- toUnit(
     quantityOrDimension = yData$yDimension[[1]],
     values = yData$yErrorValues,
