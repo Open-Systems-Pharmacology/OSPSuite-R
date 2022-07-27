@@ -123,7 +123,7 @@ test_that("It works when geometric error is present", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "geometric error",
-    fig = plotIndividualTimeProfile(myCombDat3)
+    fig = plotIndividualTimeProfile(myDataCombined3)
   )
 })
 
