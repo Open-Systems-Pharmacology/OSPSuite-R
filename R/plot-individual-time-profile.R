@@ -85,11 +85,41 @@ plotIndividualTimeProfile <- function(dataCombined,
       ymax = "yValuesHigher",
       group = "group"
     )
+
+    observedDataMapping <- tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group"
+    )
   } else {
     dataMapping <- tlf::TimeProfileDataMapping$new(
       x = "xValues",
       y = "yValues",
       group = "group"
+    )
+
+    if (!all(is.na(obsData$yErrorValues)) && !all(is.na(obsData$yErrorType))) {
+      obsData <- dplyr::mutate(obsData,
+        yValuesLower = dplyr::case_when(
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
+          TRUE ~ NA_real_
+        ),
+        yValuesHigher = dplyr::case_when(
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
+          TRUE ~ NA_real_
+        ),
+      )
+    }
+
+
+    observedDataMapping <- tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      group = "group",
+      ymin = "yValuesLower",
+      ymax = "yValuesHigher"
     )
   }
 
@@ -99,12 +129,7 @@ plotIndividualTimeProfile <- function(dataCombined,
     data = simData,
     dataMapping = dataMapping,
     observedData = obsData,
-    observedDataMapping = tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group",
-      error = "yErrorValues"
-    ),
+    observedDataMapping = observedDataMapping,
     plotConfiguration = timeProfilePlotConfiguration
   )
 

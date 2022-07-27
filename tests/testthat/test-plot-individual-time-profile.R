@@ -112,6 +112,21 @@ test_that("It creates default plots as expected for only simulated", {
   )
 })
 
+# geometric error ------------------------
+
+test_that("It works when geometric error is present", {
+  obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
+
+  myDataCombined3 <- DataCombined$new()
+  myDataCombined3$addDataSets(obsData, groups = "Aciclovir PVB")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "geometric error",
+    fig = plotIndividualTimeProfile(myCombDat3)
+  )
+})
+
 # edge cases ------------------------
 
 test_that("It returns `NULL` when `DataCombined` is empty", {
