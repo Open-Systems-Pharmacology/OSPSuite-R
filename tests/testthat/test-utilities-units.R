@@ -556,3 +556,51 @@ test_that("it can convert time to weeks", {
   expect_equal(unique(dfWeekConvert$xDimension), unique(dfWeek$xDimension))
   expect_equal(dfWeekConvert$xValues, c(0.001488, 0.002976, 0.005952), tolerance = 0.0001)
 })
+
+# geometric error --------------------------------
+
+dfGeomError <- dplyr::tibble(
+  xValues = c(
+    0.1822785059611,
+    0.425316492716471,
+    0.698734219868978,
+    1.0936710357666,
+    1.18481000264486
+  ),
+  xDimension = "Time",
+  xUnit = "h",
+  yValues = c(
+    8.91416220838437,
+    13.7049000841216,
+    13.5031395984697,
+    12.7253497339552,
+    10.3393404060625
+  ),
+  yErrorValues = c(
+    3.8111879825592,
+    2.42863011360168,
+    4.66285991668701,
+    4.65008020401001,
+    3.5703399181366
+  ),
+  yDimension = "Concentration (mass)",
+  yUnit = "mg/l",
+  yErrorType = "GeometricStdDev",
+  yErrorUnit = "",
+  molWeight = 225.21
+)
+
+dfGeomErrorConvert <- .unitConverter(dfGeomError, yUnit = "µmol/l")
+
+test_that("it shouldn't convert geometric error values or units, only `yValues`", {
+  expect_equal(unique(dfGeomError$yErrorValues), unique(dfGeomErrorConvert$yErrorValues))
+  expect_equal(unique(dfGeomError$yErrorUnit), unique(dfGeomErrorConvert$yErrorUnit))
+  expect_equal(unique(dfGeomError$yErrorType), unique(dfGeomErrorConvert$yErrorType))
+
+  expect_equal(unique(dfGeomErrorConvert$yUnit), "µmol/l")
+  expect_equal(
+    dfGeomErrorConvert$yValues,
+    c(39.5815559184067, 60.8538700951183, 59.9579929775307, 56.5043725143431, 45.909774903701),
+    tolerance = 0.001
+  )
+})
