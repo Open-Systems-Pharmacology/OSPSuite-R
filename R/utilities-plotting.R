@@ -491,19 +491,32 @@
   return(pairedData)
 }
 
+#' Compute error bar bounds from error type
+#'
+#' @details
+#'
+#' There are only three possibilities:
+#'
+#' - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
+#' - The error type is geometric (`DataErrorType$GeometricStdDev`).
+#' - If the errors are none of these, then add `NA`s (of type `double`), since
+#'   these are the only error types supported in `DataErrorType`.
+#'
+#' @keywords internal
+#' @noRd
 .computeBoundsFromErrorType <- function(data) {
   if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
     data <- dplyr::mutate(data,
       yValuesLower = dplyr::case_when(
-        yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
         yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
+        yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
         TRUE ~ NA_real_
       ),
       yValuesHigher = dplyr::case_when(
-        yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
         yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
+        yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
         TRUE ~ NA_real_
-      ),
+      )
     )
   }
 
