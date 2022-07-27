@@ -585,6 +585,35 @@ ospUnits <- list()
     }
   }
 
+  # special concern for concentration --------------------------
+
+  # If there are multiple dimensions for Y-axis variable, it is most likely to
+  # be due to multiple concentration dimensions.
+  #
+  # Hard code these to  a single dimension: `"Concentration"`.
+  #
+  # For more, see:
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
+  concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+
+  if (!all(is.na(data$yDimension)) && length(unique(data$yDimension)) > 1L) {
+    data <- dplyr::mutate(data,
+      yDimension = dplyr::case_when(
+        yDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ yDimension
+      )
+    )
+  }
+
+  if (!all(is.na(data$xDimension)) && length(unique(data$xDimension)) > 1L) {
+    data <- dplyr::mutate(data,
+      xDimension = dplyr::case_when(
+        xDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ xDimension
+      )
+    )
+  }
+
   # clean up and return --------------------------
 
   # Restore the original row order using the internal row id
