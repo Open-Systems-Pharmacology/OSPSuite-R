@@ -42,7 +42,7 @@
   # convert `NULL`s or logical `NA`s to `NA` of required type
 
   # Note that `purrr::map()` will return a list
-  arg <- purrr::map(arg, function(x) .toMissingOfType(x, type))
+  arg <- purrr::map(arg, function(x) toMissingOfType(x, type))
 
   # validate the type of arguments
 
@@ -52,75 +52,7 @@
 
   # arguments are still in a list
   # flatten them to an atomic vector of required type
-  arg <- .flattenList(arg, type)
+  arg <- flattenList(arg, type)
 
   return(arg)
-}
-
-#' Flatten a list to an atomic vector of desired type
-#'
-#' @param x A list or an atomic vector. If the latter, no change will be made.
-#' @param type Type of atomic vector to be returned.
-#'
-#' @details
-#'
-#' The `type` argument will decide which variant from `purrr::flatten()` family
-#' is used to flatten the list.
-#'
-#' @examples
-#'
-#' ospsuite:::.flattenList(list(1, 2, 3, NA), type = "numeric")
-#' ospsuite:::.flattenList(list(TRUE, FALSE, NA), type = "integer")
-#' @return An atomic vector of desired type.
-#'
-#' @keywords internal
-#' @noRd
-.flattenList <- function(x, type) {
-  if (!is.null(dim(x))) {
-    stop("Argument to parameter `x` can only be a vector.")
-  }
-
-  if (is.list(x)) {
-    x <- switch(type,
-      "character" = purrr::flatten_chr(x),
-      "numeric" = ,
-      "real" = ,
-      "double" = purrr::flatten_dbl(x),
-      "integer" = purrr::flatten_int(x),
-      "logical" = purrr::flatten_lgl(x),
-      purrr::flatten(x)
-    )
-  }
-
-  return(x)
-}
-
-
-#' Convert `NULL` or `NA`s to `NA` of desired type
-#'
-#' @param x A single element.
-#' @inheritParams .flattenList
-#'
-#' @examples
-#'
-#' ospsuite:::.toMissingOfType(NA, type = "real")
-#' ospsuite:::.toMissingOfType(NULL, type = "integer")
-#' @keywords internal
-#' @noRd
-.toMissingOfType <- function(x, type) {
-  # all unexpected values will be converted to `NA` of a desired type
-  if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
-    x <- switch(type,
-      "character" = NA_character_,
-      "numeric" = ,
-      "real" = ,
-      "double" = NA_real_,
-      "integer" = NA_integer_,
-      "complex" = NA_complex_,
-      "logical" = NA,
-      stop("Incorrect type entered.")
-    )
-  }
-
-  return(x)
 }

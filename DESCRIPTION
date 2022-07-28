@@ -20,7 +20,7 @@ Depends:
     rClr (>= 0.9.1)
 Imports: 
     dplyr (>= 1.0.0),
-    ospsuite.utils (>= 1.3.0),
+    ospsuite.utils (>= 1.4.0),
     purrr,
     R6,
     readr,
