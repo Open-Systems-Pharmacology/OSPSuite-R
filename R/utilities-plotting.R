@@ -544,6 +544,15 @@
 
   if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
     data <- dplyr::mutate(data,
+      # If the error values are 0, the error bar caps will be displayed even
+      # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
+      # problem.
+      #
+      # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
+      yErrorValues = dplyr::case_when(
+        dplyr::near(yErrorValues, 0) ~ NA_real_,
+        TRUE ~ yErrorValues
+      ),
       yValuesLower = dplyr::case_when(
         yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
         yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
