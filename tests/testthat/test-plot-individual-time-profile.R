@@ -112,6 +112,33 @@ test_that("It creates default plots as expected for only simulated", {
   )
 })
 
+# multiple datasets per group ------------------------
+
+test_that("It maps multiple observed datasets to different shapes", {
+  dataSet1 <- DataSet$new(name = "Dataset1")
+  dataSet1$setValues(1, 1)
+  dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
+  dataSet1$molWeight <- 1
+
+  dataSet2 <- DataSet$new(name = "Dataset2")
+  dataSet2$setValues(2, 1)
+  dataSet2$yDimension <- ospDimensions$`Concentration (mass)`
+  dataSet2$molWeight <- 1
+
+  dataSet3 <- DataSet$new(name = "Dataset3")
+  dataSet3$setValues(1, 3)
+  dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
+  dataSet3$molWeight <- 1
+
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(
+    c(dataSet1, dataSet2, dataSet3),
+    groups = "myGroup"
+  )
+
+  plotIndividualTimeProfile(myCombDat)
+})
+
 # geometric error ------------------------
 
 test_that("It works when geometric error is present", {

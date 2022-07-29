@@ -216,7 +216,13 @@
                                             quantiles = c(0.05, 0.5, 0.95)) {
   simAggregatedData <- simData %>%
     # For each dataset, compute quantiles across all individuals for each time point
-    dplyr::group_by(group, xValues) %>% #
+    #
+    # Each group should always a single dataset, so grouping by `group` *and* `name`
+    # should produce the same result as grouping by only `group` column.
+    #
+    # The reason `name` column also needs to be retained in the resulting data
+    # is because it is mapped to linetype property in population profile type.
+    dplyr::group_by(group, name, xValues) %>% #
     dplyr::summarise(
       yValuesLower = stats::quantile(yValues, quantiles[[1]]),
       yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
@@ -505,6 +511,10 @@
 #' @keywords internal
 #' @noRd
 .computeBoundsFromErrorType <- function(data) {
+  if (is.null(data)) {
+    return(NULL)
+  }
+
   if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
     data <- dplyr::mutate(data,
       yValuesLower = dplyr::case_when(
@@ -518,6 +528,10 @@
         TRUE ~ NA_real_
       )
     )
+  } else {
+    # These columns should always be present in the data frame because they are
+    # part of `{tlf}` mapping.
+    data <- dplyr::mutate(data, yValuesLower = NA_real_, yValuesHigher = NA_real_)
   }
 
   return(data)

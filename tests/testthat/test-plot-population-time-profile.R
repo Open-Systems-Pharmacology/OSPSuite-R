@@ -49,9 +49,6 @@ test_that("It respects custom plot configuration", {
 
   set.seed(123)
   p <- plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
-  df <- tlf::getLegendCaption(p)
-
-  expect_equal(df$name, "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)")
 
   expect_equal(p$labels$title, myPlotConfiguration$title)
   expect_equal(p$labels$subtitle, myPlotConfiguration$subtitle)

@@ -543,17 +543,15 @@
 <rect x='482.56' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='491.20' cy='38.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <rect x='482.56' y='47.20' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polygon points='487.65,59.40 494.76,59.40 494.76,52.29 487.65,52.29 ' style='stroke-width: 0.71; stroke: none; fill: #CE3D32; fill-opacity: 0.75;' />
+<circle cx='491.20' cy='55.84' r='3.56' style='stroke-width: 0.71; stroke: #CE3D32; stroke-opacity: 0.75; fill: #CE3D32; fill-opacity: 0.75;' />
 <rect x='482.56' y='64.48' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polygon points='491.20,67.60 495.99,75.89 486.41,75.89 ' style='stroke-width: 0.71; stroke: none; fill: #749B58; fill-opacity: 0.75;' />
+<circle cx='491.20' cy='73.12' r='3.56' style='stroke-width: 0.71; stroke: #749B58; stroke-opacity: 0.75; fill: #749B58; fill-opacity: 0.75;' />
 <rect x='482.56' y='81.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polygon points='491.20,95.93 495.99,87.64 486.41,87.64 ' style='stroke-width: 0.71; stroke: #F0E685; stroke-opacity: 0.75; fill: none;' />
+<circle cx='491.20' cy='90.40' r='3.56' style='stroke-width: 0.71; stroke: #F0E685; stroke-opacity: 0.75; fill: #F0E685; fill-opacity: 0.75;' />
 <rect x='482.56' y='99.04' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='487.65' y1='111.24' x2='494.76' y2='104.13' style='stroke-width: 0.71; stroke: #466983; stroke-opacity: 0.75;' />
-<line x1='487.65' y1='104.13' x2='494.76' y2='111.24' style='stroke-width: 0.71; stroke: #466983; stroke-opacity: 0.75;' />
+<circle cx='491.20' cy='107.68' r='3.56' style='stroke-width: 0.71; stroke: #466983; stroke-opacity: 0.75; fill: #466983; fill-opacity: 0.75;' />
 <rect x='482.56' y='116.32' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='486.17' y1='124.96' x2='496.23' y2='124.96' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75;' />
-<line x1='491.20' y1='129.99' x2='491.20' y2='119.94' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75;' />
+<circle cx='491.20' cy='124.96' r='3.56' style='stroke-width: 0.71; stroke: #BA6338; stroke-opacity: 0.75; fill: #BA6338; fill-opacity: 0.75;' />
 <text x='505.32' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='172.38px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_distal</text>
 <text x='505.32' y='59.29' style='font-size: 10.00px; font-family: sans;' textLength='186.83px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_proximal</text>
 <text x='505.32' y='76.57' style='font-size: 10.00px; font-family: sans;' textLength='167.93px' lengthAdjust='spacingAndGlyphs'>Stevens_2012_placebo.Placebo_total</text>

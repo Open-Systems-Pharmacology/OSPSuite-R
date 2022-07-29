@@ -83,19 +83,22 @@ plotIndividualTimeProfile <- function(dataCombined,
       y = "yValuesCentral",
       ymin = "yValuesLower",
       ymax = "yValuesHigher",
-      group = "group"
+      color = "group",
+      linetype = "name"
     )
 
     observedDataMapping <- tlf::ObservedDataMapping$new(
       x = "xValues",
       y = "yValues",
-      group = "group"
+      shape = "name",
+      color = "group"
     )
   } else {
     dataMapping <- tlf::TimeProfileDataMapping$new(
       x = "xValues",
       y = "yValues",
-      group = "group"
+      color = "group",
+      linetype = "name"
     )
 
     obsData <- .computeBoundsFromErrorType(obsData)
@@ -103,9 +106,10 @@ plotIndividualTimeProfile <- function(dataCombined,
     observedDataMapping <- tlf::ObservedDataMapping$new(
       x = "xValues",
       y = "yValues",
-      group = "group",
       ymin = "yValuesLower",
-      ymax = "yValuesHigher"
+      ymax = "yValuesHigher",
+      shape = "name",
+      color = "group"
     )
   }
 
@@ -117,7 +121,8 @@ plotIndividualTimeProfile <- function(dataCombined,
     observedData = obsData,
     observedDataMapping = observedDataMapping,
     plotConfiguration = timeProfilePlotConfiguration
-  )
+  ) +
+    ggplot2::guides(shape = "none", linetype = "none")
 
   return(profilePlot)
 }
