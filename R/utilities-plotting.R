@@ -202,7 +202,8 @@
 #'     0.271443992853165, 0.275820910930634, 0.279783099889755, 0, 0.261388212442398,
 #'     0.266594797372818, 0.27134120464325, 0.275649011135101, 0.279538512229919
 #'   ),
-#'   group = c(rep("Stevens 2012 solid total", 24), rep("Stevens 2012 solid distal", 24))
+#'   group = c(rep("Stevens 2012 solid total", 24), rep("Stevens 2012 solid distal", 24)),
+#'   name = group
 #' )
 #'
 #' # raw data
