@@ -84,9 +84,11 @@ plotIndividualTimeProfile <- function(dataCombined,
     simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
   }
 
+  # population time profile mappings ------------------------------
+
   if (!is.null(quantiles)) {
     if (hasMultipleSimDatasetsPerGroup) {
-      dataMapping <- tlf::TimeProfileDataMapping$new(
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
         x = "xValues",
         y = "yValuesCentral",
         ymin = "yValuesLower",
@@ -95,7 +97,7 @@ plotIndividualTimeProfile <- function(dataCombined,
         linetype = "name"
       )
     } else {
-      dataMapping <- tlf::TimeProfileDataMapping$new(
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
         x = "xValues",
         y = "yValuesCentral",
         ymin = "yValuesLower",
@@ -118,18 +120,22 @@ plotIndividualTimeProfile <- function(dataCombined,
         group = "group"
       )
     }
-  } else {
+  }
+
+  # individual time profile mappings ------------------------------
+
+  if (is.null(quantiles)) {
     obsData <- .computeBoundsFromErrorType(obsData)
 
     if (hasMultipleSimDatasetsPerGroup) {
-      dataMapping <- tlf::TimeProfileDataMapping$new(
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
         x = "xValues",
         y = "yValues",
         color = "group",
         linetype = "name"
       )
     } else {
-      dataMapping <- tlf::TimeProfileDataMapping$new(
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
         x = "xValues",
         y = "yValues",
         group = "group"
@@ -149,9 +155,9 @@ plotIndividualTimeProfile <- function(dataCombined,
       observedDataMapping <- tlf::ObservedDataMapping$new(
         x = "xValues",
         y = "yValues",
-        group = "group",
         ymin = "yValuesLower",
-        ymax = "yValuesHigher"
+        ymax = "yValuesHigher",
+        group = "group"
       )
     }
   }
@@ -160,7 +166,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
-    dataMapping = dataMapping,
+    dataMapping = simulatedDataMapping,
     observedData = obsData,
     observedDataMapping = observedDataMapping,
     plotConfiguration = timeProfilePlotConfiguration
