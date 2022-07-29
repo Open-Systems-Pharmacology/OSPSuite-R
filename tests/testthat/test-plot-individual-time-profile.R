@@ -130,13 +130,17 @@ test_that("It maps multiple observed datasets to different shapes", {
   dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
   dataSet3$molWeight <- 1
 
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(
+  myCombDat4 <- DataCombined$new()
+  myCombDat4$addDataSets(
     c(dataSet1, dataSet2, dataSet3),
     groups = "myGroup"
   )
 
-  plotIndividualTimeProfile(myCombDat)
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple observed datasets",
+    fig = plotIndividualTimeProfile(myCombDat4)
+  )
 })
 
 # geometric error ------------------------

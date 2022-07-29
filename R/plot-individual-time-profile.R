@@ -64,12 +64,19 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   if (nrow(obsData) == 0) {
     obsData <- NULL
+    hasMultipleObsDatasetsPerGroup <- FALSE
+  } else {
+    hasMultipleObsDatasetsPerGroup <- .hasMultipleDatasetsPerGroup(obsData)
   }
+
 
   simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
 
   if (nrow(simData) == 0) {
     simData <- NULL
+    hasMultipleSimDatasetsPerGroup <- FALSE
+  } else {
+    hasMultipleSimDatasetsPerGroup <- .hasMultipleDatasetsPerGroup(simData)
   }
 
   # Extract aggregated simulated data (relevant only for the population plot)
@@ -78,39 +85,75 @@ plotIndividualTimeProfile <- function(dataCombined,
   }
 
   if (!is.null(quantiles)) {
-    dataMapping <- tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValuesCentral",
-      ymin = "yValuesLower",
-      ymax = "yValuesHigher",
-      color = "group",
-      linetype = "name"
-    )
+    if (hasMultipleSimDatasetsPerGroup) {
+      dataMapping <- tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValuesCentral",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher",
+        color = "group",
+        linetype = "name"
+      )
+    } else {
+      dataMapping <- tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValuesCentral",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher",
+        group = "group"
+      )
+    }
 
-    observedDataMapping <- tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      shape = "name",
-      color = "group"
-    )
+    if (hasMultipleObsDatasetsPerGroup) {
+      observedDataMapping <- tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        shape = "name",
+        color = "group"
+      )
+    } else {
+      observedDataMapping <- tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group"
+      )
+    }
   } else {
-    dataMapping <- tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      color = "group",
-      linetype = "name"
-    )
-
     obsData <- .computeBoundsFromErrorType(obsData)
 
-    observedDataMapping <- tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      ymin = "yValuesLower",
-      ymax = "yValuesHigher",
-      shape = "name",
-      color = "group"
-    )
+    if (hasMultipleSimDatasetsPerGroup) {
+      dataMapping <- tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        color = "group",
+        linetype = "name"
+      )
+    } else {
+      dataMapping <- tlf::TimeProfileDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group"
+      )
+    }
+
+    if (hasMultipleObsDatasetsPerGroup) {
+      observedDataMapping <- tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher",
+        shape = "name",
+        color = "group"
+      )
+    } else {
+      observedDataMapping <- tlf::ObservedDataMapping$new(
+        x = "xValues",
+        y = "yValues",
+        group = "group",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher"
+      )
+    }
   }
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
@@ -121,8 +164,15 @@ plotIndividualTimeProfile <- function(dataCombined,
     observedData = obsData,
     observedDataMapping = observedDataMapping,
     plotConfiguration = timeProfilePlotConfiguration
-  ) +
-    ggplot2::guides(shape = "none", linetype = "none")
+  )
+
+  if (hasMultipleSimDatasetsPerGroup) {
+    profilePlot <- profilePlot + ggplot2::guides(linetype = "none")
+  }
+
+  if (hasMultipleObsDatasetsPerGroup) {
+    profilePlot <- profilePlot + ggplot2::guides(shape = "none")
+  }
 
   return(profilePlot)
 }
