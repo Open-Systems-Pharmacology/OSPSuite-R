@@ -2,6 +2,7 @@
 #' @docType class
 #' @description  Contains other entities such as Parameter or containers
 #' @format NULL
+#' @keywords internal
 Container <- R6::R6Class(
   "Container",
   cloneable = FALSE,
