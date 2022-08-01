@@ -1142,34 +1142,13 @@ test_that("sequential update when first and second datasets have same names but 
 # `Population` objects -----------------------------
 
 test_that("data frame is as expected when `Population` objects are used", {
-  # If no unit is specified, the default units are used. For "height" it is "dm",
-  # for "weight" it is "kg", for "age" it is "year(s)".
-  populationCharacteristics <- createPopulationCharacteristics(
-    species = Species$Human,
-    population = HumanPopulation$Asian_Tanaka_1996,
-    numberOfIndividuals = 50,
-    proportionOfFemales = 50,
-    weightMin = 30,
-    weightMax = 98,
-    weightUnit = "kg",
-    heightMin = NULL,
-    heightMax = NULL,
-    ageMin = 0,
-    ageMax = 80,
-    ageUnit = "year(s)"
-  )
-
-  # Create population from population characteristics
-  result <- createPopulation(populationCharacteristics = populationCharacteristics)
-  myPopulation <- result$population
-
   # Load simulation
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  populationResults <- runSimulation(
+  populationResults <- importResultsFromCSV(
     simulation = sim,
-    population = myPopulation
+    filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
   )
 
   myDataComb <- DataCombined$new()
