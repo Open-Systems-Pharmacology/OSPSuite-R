@@ -112,7 +112,23 @@ test_that("It creates default plots as expected for only simulated", {
   )
 })
 
-# multiple observed datasets per group ------------------------
+
+# geometric error ------------------------
+
+test_that("It works when geometric error is present", {
+  obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
+
+  myDataCombined4 <- DataCombined$new()
+  myDataCombined4$addDataSets(obsData, groups = "Aciclovir PVB")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "geometric error",
+    fig = plotIndividualTimeProfile(myDataCombined4)
+  )
+})
+
+# multiple datasets per group ------------------------
 
 test_that("It maps multiple observed datasets to different shapes", {
   dataSet1 <- DataSet$new(name = "Dataset1")
@@ -130,8 +146,8 @@ test_that("It maps multiple observed datasets to different shapes", {
   dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
   dataSet3$molWeight <- 1
 
-  myCombDat4 <- DataCombined$new()
-  myCombDat4$addDataSets(
+  myCombDat5 <- DataCombined$new()
+  myCombDat5$addDataSets(
     c(dataSet1, dataSet2, dataSet3),
     groups = "myGroup"
   )
@@ -139,11 +155,38 @@ test_that("It maps multiple observed datasets to different shapes", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple observed datasets",
-    fig = plotIndividualTimeProfile(myCombDat4)
+    fig = plotIndividualTimeProfile(myCombDat5)
   )
 })
 
-# multiple observed and simulated datasets per group ------------------------
+test_that("It maps simulated datasets to different linetypes", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPath <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  addOutputs(outputPath, sim)
+  simResults <- runSimulation(sim)
+
+
+  myDataCombined6 <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined6$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple simulated datasets",
+    fig = plotIndividualTimeProfile(myDataCombined6)
+  )
+})
 
 test_that("It maps multiple observed and simulated datasets to different visual properties", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -187,20 +230,6 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   )
 })
 
-# geometric error ------------------------
-
-test_that("It works when geometric error is present", {
-  obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
-
-  myDataCombined3 <- DataCombined$new()
-  myDataCombined3$addDataSets(obsData, groups = "Aciclovir PVB")
-
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "geometric error",
-    fig = plotIndividualTimeProfile(myDataCombined3)
-  )
-})
 
 # edge cases ------------------------
 
