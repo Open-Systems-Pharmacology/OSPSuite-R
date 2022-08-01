@@ -112,7 +112,7 @@ test_that("It creates default plots as expected for only simulated", {
   )
 })
 
-# multiple datasets per group ------------------------
+# multiple observed datasets per group ------------------------
 
 test_that("It maps multiple observed datasets to different shapes", {
   dataSet1 <- DataSet$new(name = "Dataset1")
@@ -140,6 +140,50 @@ test_that("It maps multiple observed datasets to different shapes", {
   vdiffr::expect_doppelganger(
     title = "multiple observed datasets",
     fig = plotIndividualTimeProfile(myCombDat4)
+  )
+})
+
+# multiple observed and simulated datasets per group ------------------------
+
+test_that("It maps multiple observed and simulated datasets to different visual properties", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPath <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  addOutputs(outputPath, sim)
+  simResults <- runSimulation(sim)
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
+  )
+
+  names(obsData) <- lapply(obsData, function(x) {
+    x$name
+  })
+
+  myDataCombined5 <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined5$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined5$addDataSets(obsData, groups = "Aciclovir observed")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple observed and simulated datasets",
+    fig = plotIndividualTimeProfile(myDataCombined5)
   )
 })
 
