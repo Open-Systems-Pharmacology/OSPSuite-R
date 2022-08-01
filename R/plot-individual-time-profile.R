@@ -69,7 +69,6 @@ plotIndividualTimeProfile <- function(dataCombined,
     hasMultipleObsDatasetsPerGroup <- .hasMultipleDatasetsPerGroup(obsData)
   }
 
-
   simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
 
   if (nrow(simData) == 0) {
