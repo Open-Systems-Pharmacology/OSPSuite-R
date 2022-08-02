@@ -27,16 +27,9 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$caption <- "My Sources"
 
   set.seed(123)
-  p <- plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
-
-  expect_equal(p$labels$title, myPlotConfiguration$title)
-  expect_equal(p$labels$subtitle, myPlotConfiguration$subtitle)
-  expect_equal(p$labels$caption, myPlotConfiguration$caption)
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "custom plot config",
-    fig = p
+    fig = plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
   )
 })
 
