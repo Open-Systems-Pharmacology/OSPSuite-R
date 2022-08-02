@@ -60,9 +60,7 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
-  myPlotConfiguration$pointsSize <- 2.5
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-  myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
   myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 
   set.seed(123)
