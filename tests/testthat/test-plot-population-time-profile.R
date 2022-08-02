@@ -78,7 +78,7 @@ test_that("It produces expected plot for multple simulated datasets per group", 
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  outputPath <- c(
+  outputPaths <- c(
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
@@ -111,7 +111,7 @@ test_that("It produces expected plot for multple simulated and observed datasets
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  outputPath <- c(
+  outputPaths <- c(
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
