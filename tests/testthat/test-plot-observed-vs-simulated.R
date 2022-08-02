@@ -94,6 +94,42 @@ test_that("It respects custom plot configuration", {
   expect_null(myPlotConfiguration$yLabel)
 })
 
+test_that("It produces expected plot for Aciclovir data", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  simResults <- runSimulation(sim)
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
+  )
+
+  names(obsData) <- lapply(obsData, function(x) {
+    x$name
+  })
+
+  outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  myDataCombined <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "Aciclovir data",
+    fig = plotObservedVsSimulated(myDataCombined)
+  )
+})
 
 # edge cases ------------------------
 
