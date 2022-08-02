@@ -86,15 +86,13 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # population time profile mappings ------------------------------
 
-  # To avoid repitition, assing column names to variables and use them instead
+  # To avoid repetition, assign column names to variables and use them instead
   x <- "xValues"
   y <- "yValues"
   ymin <- "yValuesLower"
   ymax <- "yValuesHigher"
-  group <- "group"
-  color <- "group"
-  linetype <- "name"
-  shape <- "name"
+  group <- color <- "group"
+  linetype <- shape <- "name"
 
   if (!is.null(quantiles)) {
     if (hasMultipleSimDatasetsPerGroup) {
