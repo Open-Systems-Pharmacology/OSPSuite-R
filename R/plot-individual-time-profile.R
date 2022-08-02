@@ -106,22 +106,13 @@ plotIndividualTimeProfile <- function(dataCombined,
       )
     }
 
-    if (hasMultipleObsDatasetsPerGroup) {
-      observedDataMapping <- tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        shape = "name",
-        color = "group"
-      )
-    } else {
-      observedDataMapping <- tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        group = "group"
-      )
-    }
+    observedDataMapping <- tlf::ObservedDataMapping$new(
+      x = "xValues",
+      y = "yValues",
+      ymin = "yValuesLower",
+      ymax = "yValuesHigher",
+      group = "group"
+    )
   }
 
   # individual time profile mappings ------------------------------
