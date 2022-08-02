@@ -226,7 +226,7 @@
     dplyr::group_by(group, name, xValues) %>% #
     dplyr::summarise(
       yValuesLower = stats::quantile(yValues, quantiles[[1]]),
-      yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
+      yValues = stats::quantile(yValues, quantiles[[2]]),
       yValuesHigher = stats::quantile(yValues, quantiles[[3]]),
       .groups = "drop" # drop grouping information from the summary data frame
     )

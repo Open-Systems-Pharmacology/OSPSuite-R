@@ -86,42 +86,38 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # population time profile mappings ------------------------------
 
+  # To avoid repitition, assing column names to variables and use them instead
+  x <- "xValues"
+  y <- "yValues"
+  ymin <- "yValuesLower"
+  ymax <- "yValuesHigher"
+  group <- "group"
+  color <- "group"
+  linetype <- "name"
+  shape <- "name"
+
   if (!is.null(quantiles)) {
     if (hasMultipleSimDatasetsPerGroup) {
-      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
-        x = "xValues",
-        y = "yValuesCentral",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        color = "group",
-        linetype = "name"
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
+        color = color,
+        linetype = linetype
       )
     } else {
-      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
-        x = "xValues",
-        y = "yValuesCentral",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        group = "group"
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
+        group = group
       )
     }
 
     if (hasMultipleObsDatasetsPerGroup) {
-      observedDataMapping <- tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        shape = "name",
-        color = "group"
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
+        ymin = ymin, ymax = ymax,
+        shape = shape,
+        color = color
       )
     } else {
-      observedDataMapping <- tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        group = "group"
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
+        ymin = ymin, ymax = ymax,
+        group = group
       )
     }
   }
@@ -130,36 +126,26 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   if (is.null(quantiles)) {
     if (hasMultipleSimDatasetsPerGroup) {
-      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        color = "group",
-        linetype = "name"
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
+        color = color,
+        linetype = linetype
       )
     } else {
-      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        group = "group"
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
+        group = group
       )
     }
 
     if (hasMultipleObsDatasetsPerGroup) {
-      observedDataMapping <- tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        shape = "name",
-        color = "group"
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
+        ymin = ymin, ymax = ymax,
+        shape = shape,
+        color = color
       )
     } else {
-      observedDataMapping <- tlf::ObservedDataMapping$new(
-        x = "xValues",
-        y = "yValues",
-        ymin = "yValuesLower",
-        ymax = "yValuesHigher",
-        group = "group"
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
+        ymin = ymin, ymax = ymax,
+        group = group
       )
     }
   }
