@@ -60,7 +60,6 @@ Other utilities-plotting:
 \code{\link{.calculateResiduals}()},
 \code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
-\code{\link{.extractMatchingIndices}()},
 \code{\link{.removeUnpairableDatasets}()}
 }
 \concept{utilities-plotting}

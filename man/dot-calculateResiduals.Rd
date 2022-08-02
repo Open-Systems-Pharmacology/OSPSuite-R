@@ -4,7 +4,7 @@
 \alias{.calculateResiduals}
 \title{Created observed versus simulated paired data}
 \usage{
-.calculateResiduals(data, scaling = tlf::Scaling$lin, tolerance = NULL)
+.calculateResiduals(data, scaling = tlf::Scaling$lin)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has been
@@ -13,11 +13,6 @@ further tidied using \code{.removeUnpairableDatasets()} and then
 
 \item{scaling}{A character specifying scale: either linear (default) or
 logarithmic.}
-
-\item{tolerance}{Tolerance of comparison for observed and simulated time
-points. Default is \code{NULL}, in which case the internal enumerated list
-\code{.thresholdByTimeUnit} will be used to decide on what threshold to use
-based on the unit of time measurement.}
 }
 \description{
 Created observed versus simulated paired data
@@ -45,7 +40,6 @@ Other utilities-plotting:
 \code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
 \code{\link{.extractAggregatedSimulatedData}()},
-\code{\link{.extractMatchingIndices}()},
 \code{\link{.removeUnpairableDatasets}()}
 }
 \concept{utilities-plotting}

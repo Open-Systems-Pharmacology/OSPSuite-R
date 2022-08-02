@@ -1155,7 +1155,7 @@ test_that("data frame is as expected when `Population` objects are used", {
   myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
   df <- myDataComb$toDataFrame()
 
-  expect_equal(nrow(df), 1964L)
+  expect_equal(nrow(df), 3928L)
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
