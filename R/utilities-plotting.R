@@ -386,10 +386,6 @@
 #'   `.unitConverter()` functions.
 #' @param scaling A character specifying scale: either linear (default) or
 #'   logarithmic.
-#' @param tolerance Tolerance of comparison for observed and simulated time
-#'   points. Default is `NULL`, in which case the internal enumerated list
-#'   `.thresholdByTimeUnit` will be used to decide on what threshold to use
-#'   based on the unit of time measurement.
 #'
 #' @family utilities-plotting
 #'
@@ -410,98 +406,37 @@
 #' ospsuite:::.calculateResiduals(df)
 #'
 #' @keywords internal
-.calculateResiduals <- function(data,
-                                scaling = tlf::Scaling$lin,
-                                tolerance = NULL) {
-  # Extract time and values to raw vectors. Working with a single data frame is
-  # not an option since the dimensions of observed and simulated data frames are
-  # different.
-  obsTime <- data$xValues[data$dataType == "observed"]
-  obsValue <- data$yValues[data$dataType == "observed"]
-  simTime <- data$xValues[data$dataType == "simulated"]
-  simValue <- data$yValues[data$dataType == "simulated"]
+.calculateResiduals <- function(data, scaling = tlf::Scaling$lin) {
+  # Since the data frames will be fed to `matrix()`, make sure that data has
+  # `data.frame` class. That is, if tibbles are supplied, coerce them to a
+  # simple data frame.
+  observedData <- as.data.frame(dplyr::filter(data, dataType == "observed"))
+  simulatedData <- as.data.frame(dplyr::filter(data, dataType == "simulated"))
 
   # If available, error values will be useful for plotting error bars in the
   # scatter plot. Even if not available, add missing values to be consistent.
   if ("yErrorValues" %in% colnames(data)) {
     yErrorValues <- data$yErrorValues[data$dataType == "observed"]
   } else {
-    yErrorValues <- rep(NA_real_, length(obsValue))
+    yErrorValues <- rep(NA_real_, nrow(observedData))
   }
 
-  # Number of observed and simulated data points
-  maxSimPoints <- length(simTime)
-  maxObsPoints <- length(obsTime)
+  # Time matrix to match observed time with closest simulation time
+  # This method assumes that there simulated data are dense enough to capture observed data
+  obsTimeMatrix <- matrix(observedData[, "xValues"], nrow(simulatedData), nrow(observedData), byrow = TRUE)
+  simTimeMatrix <- matrix(simulatedData[, "xValues"], nrow(simulatedData), nrow(observedData))
 
-  # It is important to initialize this vector to `NA`, and not to `0`.
-  predValue <- rep(NA_real_, maxObsPoints)
+  timeMatchedData <- as.numeric(sapply(as.data.frame(abs(obsTimeMatrix - simTimeMatrix)), which.min))
 
-  # For time points that are not matched, the simulated data needs to be
-  # interpolated. This is because simulated data is typically sampled at a
-  # higher frequency than the observed data.
-  #
-  # Interpolation is carried out using the Newton–Raphson method.
-  #
-  # If index is the same as the length of the vector, then `idx + 1` will be
-  # out-of-bounds. So loop only if the index is less than the length of the
-  # vector. Thus, `[-maxObsPoints]`.
-  #
-  # Note that this does *not* mean that the value at the last index
-  # in `predValue` vector is always going to be `NA`. It is also possible
-  # that there is an exact match at this time point.
-  for (idx in seq_along(obsTime)[-maxObsPoints]) {
-    currentObsTime <- obsTime[idx]
-    currentSimTime <- simTime[idx]
-    nextSimTime <- simTime[idx + 1L]
-    currentSimValue <- simValue[idx]
-    nextSimValue <- simValue[idx + 1L]
-
-    # If the next simulated time point is already OOB but the last simulated
-    # time point is still within the bounds of observed time points,
-    # interpolation can still be carried out.
-    if (idx >= maxSimPoints) {
-      if (simTime[maxSimPoints] < obsTime[maxObsPoints]) {
-        currentSimTime <- simTime[maxSimPoints - 1L]
-        nextSimTime <- simTime[maxSimPoints]
-        currentSimValue <- simValue[maxSimPoints - 1L]
-        nextSimValue <- simValue[maxSimPoints]
-      }
-    }
-
-    # f(x) =
-    predValue[idx] <-
-      # f0 * ((x1 - x) / (x1 - x0)) +
-      currentSimValue * ((nextSimTime - currentObsTime) / (nextSimTime - currentSimTime)) +
-      # f1 * ((x - x0) / (x1 - x0))
-      nextSimValue * ((currentObsTime - currentSimTime) / (nextSimTime - currentSimTime))
-  }
-
-  # The exact tolerance used to decide when observed and simulated time points
-  # match will depend on the unit used for time measurement.
-  #
-  # Given that this function will always be called after `.unitConverter()`,
-  # there will only be a single unit across datasets.
-  timeUnit <- unique(data$xUnit)
-  tolerance <- tolerance %||% .thresholdByTimeUnit[[timeUnit]]
-
-  # Figure out time points where both observed and simulated data were sampled.
-  obsExactMatchIndices <- .extractMatchingIndices(obsTime, simTime, tolerance)
-  simExactMatchIndices <- .extractMatchingIndices(simTime, obsTime, tolerance)
-
-  # For exactly matched time points, there is no need for interpolation.
-  predValue[obsExactMatchIndices] <- simValue[simExactMatchIndices]
-
-  # Link observed and interpolated predicted for each observed time point using
-  # a data frame.
   pairedData <- dplyr::tibble(
-    "obsTime" = obsTime,
-    "xUnit" = timeUnit,
-    "xDimension" = unique(data$xDimension),
-    "obsValue" = obsValue,
+    "obsTime"      = observedData[, "xValues"],
+    "xUnit"        = unique(data$xUnit),
+    "xDimension"   = unique(data$xDimension),
+    "obsValue"     = observedData[, "yValues"],
+    "predValue"    = simulatedData[timeMatchedData, "yValues"],
     "yErrorValues" = yErrorValues,
-    "predValue" = predValue,
-    "yUnit" = unique(data$yUnit),
-    "yDimension" = unique(data$yDimension)
+    "yUnit"        = unique(data$yUnit),
+    "yDimension"   = unique(data$yDimension)
   )
 
   # The linear scaling is represented either of the following:
@@ -609,74 +544,6 @@
     dplyr::ungroup()
 
   return(pairedData)
-}
-
-#' Threshold to match time points
-#'
-#' @description
-#' A named list with a unique threshold for each measurement unit for time.
-#'
-#' @family utilities-plotting
-#'
-#' @keywords internal
-#' @noRd
-.thresholdByTimeUnit <- list(
-  s = 10,
-  min = 1,
-  h = 0.1,
-  `day(s)` = 0.01,
-  `week(s)` = 0.001,
-  `month(s)` = 0.0001,
-  `year(s)` = 0.00001,
-  ks = 0.01
-)
-
-#' Custom function to extract matching indices
-#'
-#' @description
-#'
-#' None of the base equality/match operators (`%in%`, `==`, `all.equal`) allow
-#' tolerance for comparing two numeric values. Therefore, `dplyr::near()` is
-#' used.
-#'
-#' But even `dplyr::near()` is not up to the task because it carries out vector
-#' comparison element-wise, whereas what is needed is `match()`-like behavior,
-#' where each element in the first vector is compared against all values in the
-#' second vector for equality.
-#'
-#' This custom function does exactly this.
-#'
-#' @inheritParams dplyr::near
-#' @inheritParams .calculateResiduals
-#'
-#' @family utilities-plotting
-#'
-#' @examples
-#'
-#' ospsuite:::.extractMatchingIndices(c(1, 2), c(1.001, 3, 4))
-#' ospsuite:::.extractMatchingIndices(c(1, 2), c(1.001, 3, 4), tolerance = 0.00001)
-#' ospsuite:::.extractMatchingIndices(c(1, 2), c(3, 4))
-#'
-#' @keywords internal
-.extractMatchingIndices <- function(x, y, tolerance = 0.001) {
-  # Vectorize `dplyr::near()` function only over the `y` argument.
-  # Note that that `Vectorize()` is a function operator and will return a function.
-  customNear <- Vectorize(dplyr::near, vectorize.args = c("y"), SIMPLIFY = FALSE)
-
-  # Apply the vectorized function to the two vectors and then check where the
-  # comparisons are equal (i.e. `TRUE`) using `which()`.
-  #
-  # Use `compact()` to remove empty elements from the resulting list.
-  index_list <- purrr::compact(purrr::map(customNear(x, y, tol = tolerance), which))
-
-  # If there are any matches, return the indices as an atomic vector of integers.
-  if (length(index_list) > 0L) {
-    index_vector <- purrr::simplify(index_list, "integer")
-    return(index_vector)
-  }
-
-  # If there are no matches, return an empty vector of `integer` type.
-  return(integer(0L))
 }
 
 
