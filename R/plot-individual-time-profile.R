@@ -67,6 +67,7 @@ plotIndividualTimeProfile <- function(dataCombined,
     hasMultipleObsDatasetsPerGroup <- FALSE
   } else {
     hasMultipleObsDatasetsPerGroup <- .hasMultipleDatasetsPerGroup(obsData)
+    obsData <- .computeBoundsFromErrorType(obsData)
   }
 
   simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
@@ -116,6 +117,8 @@ plotIndividualTimeProfile <- function(dataCombined,
       observedDataMapping <- tlf::ObservedDataMapping$new(
         x = "xValues",
         y = "yValues",
+        ymin = "yValuesLower",
+        ymax = "yValuesHigher",
         group = "group"
       )
     }
@@ -124,8 +127,6 @@ plotIndividualTimeProfile <- function(dataCombined,
   # individual time profile mappings ------------------------------
 
   if (is.null(quantiles)) {
-    obsData <- .computeBoundsFromErrorType(obsData)
-
     if (hasMultipleSimDatasetsPerGroup) {
       simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
         x = "xValues",

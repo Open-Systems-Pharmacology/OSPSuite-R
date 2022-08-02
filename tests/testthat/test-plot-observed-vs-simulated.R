@@ -102,14 +102,10 @@ test_that("It produces expected plot for Aciclovir data", {
 
   obsData <- lapply(
     c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) {
-      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-    }
+    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
   )
 
-  names(obsData) <- lapply(obsData, function(x) {
-    x$name
-  })
+  names(obsData) <- lapply(obsData, function(x) x$name)
 
   outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   myDataCombined <- DataCombined$new()

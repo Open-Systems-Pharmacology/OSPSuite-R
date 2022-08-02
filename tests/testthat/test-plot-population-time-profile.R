@@ -33,6 +33,44 @@ test_that("It respects custom plot configuration", {
   )
 })
 
+# both observed and simulated ------------------------
+
+test_that("It produces expected plot for both observed and simulated datasets", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPaths <- c("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+                   "Organism|Muscle|Intracellular|Aciclovir|Concentration")
+
+  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  )
+  names(obsData) <- lapply(obsData, function(x) x$name)
+
+  outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  myDataCombined <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both observed and simulated",
+    fig = plotPopulationTimeProfile(myDataCombined)
+  )
+})
+
 # edge cases ------------------------
 
 test_that("It returns `NULL` when `DataCombined` is empty", {
