@@ -580,7 +580,11 @@
 #'
 #' @keywords internal
 #' @noRd
-.dataCombinedToPairedData <- function(dataCombined, defaultPlotConfiguration, scaling) {
+.dataCombinedToPairedData <- function(dataCombined,
+                                      xUnit = NULL,
+                                      yUnit = NULL,
+                                      scaling = tlf::Scaling$lin) {
+  # Validation has already taken place in the calling plotting function
   combinedData <- dataCombined$toDataFrame()
 
   # Remove the observed and simulated datasets which can't be paired.
@@ -593,7 +597,7 @@
   }
 
   # Getting all datasets to have the same units.
-  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
 
   # Create observed versus simulated paired data using interpolation for each
   # grouping level and combine the resulting data frames in a row-wise manner.

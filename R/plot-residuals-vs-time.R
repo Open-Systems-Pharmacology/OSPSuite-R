@@ -43,7 +43,11 @@ plotResidualsVsTime <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- .dataCombinedToPairedData(dataCombined, defaultPlotConfiguration, resVsTimePlotConfiguration$yAxis$scale)
+  pairedData <- .dataCombinedToPairedData(dataCombined,
+    xUnit = defaultPlotConfiguration$xUnit,
+    yUnit = defaultPlotConfiguration$yUnit,
+    scaling = resVsTimePlotConfiguration$yAxis$scale
+  )
 
   # Quit early if there is no data to visualize.
   if (is.null(pairedData)) {

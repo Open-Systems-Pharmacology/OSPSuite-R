@@ -43,7 +43,11 @@ plotResidualsVsSimulated <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- .dataCombinedToPairedData(dataCombined, defaultPlotConfiguration, resVsPredPlotConfiguration$yAxis$scale)
+  pairedData <- .dataCombinedToPairedData(dataCombined,
+    xUnit = defaultPlotConfiguration$xUnit,
+    yUnit = defaultPlotConfiguration$yUnit,
+    scaling = resVsPredPlotConfiguration$yAxis$scale
+  )
 
   # Quit early if there is no data to visualize.
   if (is.null(pairedData)) {
