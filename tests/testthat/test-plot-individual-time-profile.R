@@ -47,6 +47,8 @@ myCombDat$setGroups(
 )
 
 test_that("It creates default plots as expected for both observed and simulated", {
+  skip_on_ci()
+
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "default plot - both",
