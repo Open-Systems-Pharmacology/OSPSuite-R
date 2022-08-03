@@ -5,7 +5,7 @@ context("plotPopulationTimeProfile")
 skip_on_os("linux") # TODO enable again as soon as `createPopulation()` runs under Linux
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
-skip_on_ci()
+# skip_on_ci()
 
 # only simulated ------------------------
 
