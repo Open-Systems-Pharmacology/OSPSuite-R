@@ -107,14 +107,12 @@ plotIndividualTimeProfile <- function(dataCombined,
     }
 
     if (hasMultipleObsDatasetsPerGroup) {
-      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
-        ymin = ymin, ymax = ymax,
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
         shape = shape,
         color = color
       )
     } else {
-      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
-        ymin = ymin, ymax = ymax,
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
         group = group
       )
     }
@@ -135,14 +133,12 @@ plotIndividualTimeProfile <- function(dataCombined,
     }
 
     if (hasMultipleObsDatasetsPerGroup) {
-      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
-        ymin = ymin, ymax = ymax,
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
         shape = shape,
         color = color
       )
     } else {
-      observedDataMapping <- tlf::ObservedDataMapping$new(x, y,
-        ymin = ymin, ymax = ymax,
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
         group = group
       )
     }
