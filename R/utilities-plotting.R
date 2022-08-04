@@ -352,14 +352,14 @@
   return(plotConfiguration)
 }
 
-#' Check if there are multiple datasets per group
+#' Check if there are multiple datasets of a given type per group
 #'
 #' @details
 #'
-#' The entered data should have either only observed datasets or simulated
-#' datasets, and not both.
+#' The entered data should not contain both observed and simulated datasets.
 #'
-#' @param data A data frame from `DataCombined$groupMap`
+#' @param data A data frame from `DataCombined$groupMap`, subset to either focus
+#'   only on observed or simulated data.
 #'
 #' @keywords internal
 #' @noRd
@@ -370,9 +370,7 @@
   # Keep only distinct combinations.
   data <- dplyr::distinct(data)
 
-  datasetCount <- data %>%
-    dplyr::group_by(group) %>%
-    dplyr::count()
+  datasetCount <- dplyr::count(dplyr::group_by(data, group))
 
   multipleDatasetsPerGroup <- any(datasetCount[["n"]] > 1L)
 

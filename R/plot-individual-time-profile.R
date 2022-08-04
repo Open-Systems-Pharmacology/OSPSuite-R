@@ -94,6 +94,8 @@ plotIndividualTimeProfile <- function(dataCombined,
   group <- color <- "group"
   linetype <- shape <- "name"
 
+  # The exact mappings chosen will depend on whether there are multiple datasets
+  # of a given type present per group
   if (!is.null(quantiles)) {
     if (hasMultipleSimDatasetsPerGroup) {
       simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
