@@ -47,7 +47,6 @@ myCombDat$setGroups(
 )
 
 test_that("It creates default plots as expected for both observed and simulated", {
-  skip_on_ci()
 
   set.seed(123)
   vdiffr::expect_doppelganger(
@@ -57,8 +56,6 @@ test_that("It creates default plots as expected for both observed and simulated"
 })
 
 test_that("It respects custom plot configuration", {
-  skip_on_ci()
-
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
   myPlotConfiguration$title <- "My Plot Title"

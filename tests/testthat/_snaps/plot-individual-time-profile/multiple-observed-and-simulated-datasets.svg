@@ -220,9 +220,8 @@
 <rect x='582.75' y='18.97' width='114.88' height='51.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='588.23' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='589.95' y1='38.56' x2='603.78' y2='38.56' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
-<circle cx='596.87' cy='38.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='596.87' y='38.56' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='2.63px' lengthAdjust='spacingAndGlyphs'> </text>
 <rect x='588.23' y='47.20' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='589.95' y1='55.84' x2='603.78' y2='55.84' style='stroke-width: 2.13; stroke: #CE3D32; stroke-opacity: 0.75; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
 <circle cx='596.87' cy='55.84' r='3.56' style='stroke-width: 0.71; stroke: #CE3D32; stroke-opacity: 0.75; fill: #CE3D32; fill-opacity: 0.75;' />
 <text x='610.99' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
 <text x='610.99' y='59.29' style='font-size: 10.00px; font-family: sans;' textLength='81.16px' lengthAdjust='spacingAndGlyphs'>Aciclovir observed</text>
