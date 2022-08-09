@@ -223,13 +223,14 @@
     #
     # The reason `name` column also needs to be retained in the resulting data
     # is because it is mapped to linetype property in population profile type.
-    dplyr::group_by(group, name, xValues) %>% #
+    dplyr::group_by(group, name, xValues) %>%
     dplyr::summarise(
-      yValuesLower = stats::quantile(yValues, quantiles[[1]]),
-      yValues = stats::quantile(yValues, quantiles[[2]]),
-      yValuesHigher = stats::quantile(yValues, quantiles[[3]]),
-      .groups = "drop" # drop grouping information from the summary data frame
-    )
+      yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
+      yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
+      yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
+      .groups        = "drop" # drop grouping information from the summary data frame
+    ) %>% # Naming schema expected by plotting functions
+    dplyr::rename(yValues = yValuesCentral)
 
   return(simAggregatedData)
 }
