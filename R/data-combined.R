@@ -23,24 +23,43 @@
 #'   output will be all `NA`.
 #'
 #' @examples
-#'
-#' # load the simulation
+#' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
-#' simulationResults <- runSimulation(simulation = sim)
+#' simResults <- runSimulation(sim)
+#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 #'
-#' # create a new dataset object
-#' dataSet <- DataSet$new(name = "DS")
+#' # observed data
+#' obsData <- lapply(
+#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+#' )
+#' names(obsData) <- lapply(obsData, function(x) x$name)
 #'
-#' # created object with datasets combined
-#' myCombDat <- DataCombined$new()
-#' myCombDat$addSimulationResults(simulationResults)
-#' myCombDat$addDataSets(dataSet)
 #'
-#' # print the object
-#' myCombDat
+#' # Create a new instance of `DataCombined` class
+#' myDataCombined <- DataCombined$new()
+#'
+#' # Add simulated results
+#' myDataCombined$addSimulationResults(
+#'   simulationResults = simResults,
+#'   quantitiesOrPaths = outputPath,
+#'   groups = "Aciclovir PVB"
+#' )
+#'
+#' # Add observed data set
+#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+#'
+#' # Looking at group mappings
+#' myDataCombined$groupMap
+#'
+#' # Looking at the applied transformations
+#' myDataCombined$dataTransformations
+#'
+#' # Accessing the combined data frame
+#' myDataCombined$toDataFrame()
+#'
 #' @docType class
-#'
 #' @export
 DataCombined <- R6::R6Class(
   classname = "DataCombined",

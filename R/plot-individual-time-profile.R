@@ -84,8 +84,6 @@ plotIndividualTimeProfile <- function(dataCombined,
     simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
   }
 
-  # population time profile mappings ------------------------------
-
   # To avoid repetition, assign column names to variables and use them instead
   x <- "xValues"
   y <- "yValues"
@@ -93,6 +91,8 @@ plotIndividualTimeProfile <- function(dataCombined,
   ymax <- "yValuesHigher"
   group <- color <- "group"
   linetype <- shape <- "name"
+
+  # population time profile mappings ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
   # of a given type present per group
