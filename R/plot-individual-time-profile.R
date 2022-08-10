@@ -122,7 +122,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   y <- "yValues"
   ymin <- "yValuesLower"
   ymax <- "yValuesHigher"
-  group <- color <- "group"
+  group <- color <- fill <- "group"
   linetype <- shape <- "name"
 
   # population time profile mappings ------------------------------
@@ -133,7 +133,8 @@ plotIndividualTimeProfile <- function(dataCombined,
     if (hasMultipleSimDatasetsPerGroup) {
       simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
         color = color,
-        linetype = linetype
+        linetype = linetype,
+        fill = fill
       )
     } else {
       simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
