@@ -1,0 +1,19 @@
+---
+title: "Visualizations with `DataCombined`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualizations with `DataCombined`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+You have already seen how the `DataCombined` class can be utilized to store observed and/or simulated data (if not, read `vignette("data-combined")`).
