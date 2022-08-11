@@ -212,5 +212,5 @@ dataSets <- loadDataSetsFromExcel(xlsFilePath = excelFilePath,
 Currently, `DataImporterConfiguration` created from scratch or for a specific 
 data sheet does not support all features of importer configuration, such as 
 specifying the column containing the molecular weight of the measured molecule 
-or the LLOQ values. It is therefore recommended to use importer configurations 
+or the LLOQ values. It is therefore recommended that you use importer configurations 
 created in PK-Si or MoBi.
