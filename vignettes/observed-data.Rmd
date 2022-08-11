@@ -24,7 +24,7 @@ created. This vignette gives an overview of the options to create `DataSet` obje
 
 ## DataSet
 
-A `DataSet` objects stores numerical data pairs - typically the time 
+A `DataSet` object stores numerical data pairs - typically time 
 as x values and measurement as y values - and optionally the (statistical) error of 
 the measurement. All values have a *dimension*  and a *unit* (see [Dimensions and Units](unit-conversion.html) 
 for more information). Furthermore, each `DataSet` must have a *name*. When creating 
