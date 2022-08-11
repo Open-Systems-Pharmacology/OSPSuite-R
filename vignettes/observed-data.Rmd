@@ -117,7 +117,7 @@ print(dataSet$metaData)
 ```
  
 A `DataSet` or multiple `DataSet`s  can be converted to `data.frame` (or `tibble`) 
-to be processed in establised R workflows:
+to be processed in downstream analysis and visualization workflows:
 
 ```{r dataSetToDataFrame}
 # Create a second data set
