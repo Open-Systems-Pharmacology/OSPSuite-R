@@ -14,13 +14,20 @@
 #' @import tidyr
 #' @import ospsuite.utils
 #'
-#' @param groups A string or a list of strings assigning the data set to a
-#'   group. If an entry within the list is `NULL`, the corresponding data set is
-#'   not assigned to any group (and the corresponding entry in the `group`
-#'   column will be an `NA`). If provided, `groups` must have the same length as
-#'   `dataSets` and/or `simulationResults$quantityPath`. If no grouping is
-#'   specified for any of the dataset, the column `group` in the data frame
-#'   output will be all `NA`.
+#' @param names A string or a `list` of strings assigning new names. These
+#'   new names can be either for renaming `DataSet` objects, or for renaming
+#'   quantities/paths in `SimulationResults` object. If an entity is not to
+#'   be renamed, this can be specified as `NULL`. E.g., in `names =
+#'   list("oldName1" = "newName1", "oldName2" = NULL)`), dataset with name
+#'   `"oldName2"` will not be renamed. The list can either be named or
+#'   unnamed.
+#' @param groups A string or a list of strings specifying group name
+#'   corresponding to each data set. If an entry within the list is `NULL`, the
+#'   corresponding data set is not assigned to any group (and the corresponding
+#'   entry in the `group` column will be an `NA`). If provided, `groups` must
+#'   have the same length as `dataSets` and/or `simulationResults$quantityPath`.
+#'   If no grouping is specified for any of the dataset, the column `group` in
+#'   the data frame output will be all `NA`.
 #'
 #' @examples
 #' # simulated data
@@ -69,13 +76,8 @@ DataCombined <- R6::R6Class(
 
   public = list(
 
-    #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
+    #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
     #'   class.
-    #' @param names A string or a list of strings assigning new names to the
-    #'   list of instances of the `DataSet` class. If a dataset is not to be
-    #'   renamed, this can be specified as `NULL` in the list. For example, in
-    #'   `names = list("dataName" = "dataNewName", "dataName2" = NULL)`),
-    #'   dataset with name `"dataName2"` will not be renamed.
     #'
     #' @description
     #' Adds observed data.
@@ -86,9 +88,10 @@ DataCombined <- R6::R6Class(
       validateIsOfType(dataSets, "DataSet", FALSE)
       names <- .cleanVectorArgs(names, objectCount(dataSets), type = "character")
 
-      # The original names for datasets can be "plucked" from respective
-      # objects. `purrr::map()` is used to iterate over the vector and the
-      # anonymous function is used to pluck an object. The `map_chr()` variant
+      # The original names for datasets can be "plucked" from objects.
+      #
+      # `purrr::map()` iterates over the vector and applies the anonymous
+      # function to pluck name from the object. The `map_chr()` variant
       # clarifies that we are always expecting a character type in return.
       datasetNames <- purrr::map_chr(c(dataSets), function(x) purrr::pluck(x, "name"))
 
@@ -123,14 +126,15 @@ DataCombined <- R6::R6Class(
     # from `ospsuite::getOutputValues()` to avoid repetition.
 
     #' @param simulationResults Object of type `SimulationResults` produced by
-    #'   calling `runSimulation()` on a `Simulation` object.
+    #'   calling `runSimulation()` on a `Simulation` object. Only a single
+    #'   instance is allowed in a given `$addSimulationResults()` method call.
     #' @param quantitiesOrPaths Quantity instances (element or list) typically
-    #'   retrieved using `getAllQuantitiesMatching()` or quantity path (element or
-    #'   list of strings) for which the results are to be returned. (optional)
-    #'   When providing the paths, only absolute full paths are supported (i.e.,
-    #'   no matching with '*' possible). If `quantitiesOrPaths` is `NULL`
-    #'   (default value), returns the results for all output defined in the
-    #'   results.
+    #'   retrieved using `getAllQuantitiesMatching()` or quantity path (element
+    #'   or list of strings) for which the results are to be returned.
+    #'   (optional) When providing the paths, only absolute full paths are
+    #'   supported (i.e., no matching with '*' possible). If `quantitiesOrPaths`
+    #'   is `NULL` (default value), returns the results for all output defined
+    #'   in the results.
     #' @param individualIds Numeric IDs of individuals for which the results
     #'   should be extracted. By default, all individuals from the results are
     #'   considered. If the individual with the provided ID is not found, the ID
@@ -138,12 +142,6 @@ DataCombined <- R6::R6Class(
     #' @param population Population used to calculate the `simulationResults`
     #'   (optional). This is used only to add the population covariates to the
     #'   resulting data frame.
-    #' @param names A string or a list of strings assigning new names to the
-    #'   quantities or paths present in the entered `SimulationResults` object.
-    #'   If a dataset is not to be renamed, this can be specified as `NULL` in
-    #'   the list. For example, in `names = list("dataName" = "dataNewName",
-    #'   "dataName2" = NULL)`), dataset with name `"dataName2"` will not be
-    #'   renamed.
     #'
     #' @description
     #'
