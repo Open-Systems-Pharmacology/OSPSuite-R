@@ -99,22 +99,24 @@ Adds observed data.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataSets}}{Instance (or a \code{list} of instances) of the \code{DataSet}
+\item{\code{dataSets}}{An instance (or a \code{list} of instances) of the \code{DataSet}
 class.}
 
-\item{\code{names}}{A string or a list of strings assigning new names to the
-list of instances of the \code{DataSet} class. If a dataset is not to be
-renamed, this can be specified as \code{NULL} in the list. For example, in
-\code{names = list("dataName" = "dataNewName", "dataName2" = NULL)}),
-dataset with name \code{"dataName2"} will not be renamed.}
+\item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
+names can be either for renaming \code{DataSet} objects, or for renaming
+quantities/paths in \code{SimulationResults} object. If an entity is not to be
+renamed, this can be specified as \code{NULL}. E.g., in \code{names = list("oldName1" = "newName1", "oldName2" = NULL)}), dataset with name \code{"oldName2"} will not
+be renamed. The list can either be named or unnamed. Names act as unique
+identifiers for datsets in the \code{DataCombined} object and, therefore,
+duplicate names are not allowed.}
 
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group (and the corresponding entry in the \code{group}
-column will be an \code{NA}). If provided, \code{groups} must have the same length as
-\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
-specified for any of the dataset, the column \code{group} in the data frame
-output will be all \code{NA}.}
+\item{\code{groups}}{A string or a list of strings specifying group name
+corresponding to each data set. If an entry within the list is \code{NULL}, the
+corresponding data set is not assigned to any group (and the corresponding
+entry in the \code{group} column will be an \code{NA}). If provided, \code{groups} must
+have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
+If no grouping is specified for any of the dataset, the column \code{group} in
+the data frame output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -142,15 +144,16 @@ Add simulated data using instance of \code{SimulationResults} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulation()} on a \code{Simulation} object.}
+calling \code{runSimulation()} on a \code{Simulation} object. Only a single
+instance is allowed in a given \verb{$addSimulationResults()} method call.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
-retrieved using \code{getAllQuantitiesMatching()} or quantity path (element or
-list of strings) for which the results are to be returned. (optional)
-When providing the paths, only absolute full paths are supported (i.e.,
-no matching with '*' possible). If \code{quantitiesOrPaths} is \code{NULL}
-(default value), returns the results for all output defined in the
-results.}
+retrieved using \code{getAllQuantitiesMatching()} or quantity path (element
+or list of strings) for which the results are to be returned.
+(optional) When providing the paths, only absolute full paths are
+supported (i.e., no matching with '*' possible). If \code{quantitiesOrPaths}
+is \code{NULL} (default value), returns the results for all output defined
+in the results.}
 
 \item{\code{population}}{Population used to calculate the \code{simulationResults}
 (optional). This is used only to add the population covariates to the
@@ -161,19 +164,21 @@ should be extracted. By default, all individuals from the results are
 considered. If the individual with the provided ID is not found, the ID
 is ignored.}
 
-\item{\code{names}}{A string or a list of strings assigning new names to the
-quantities or paths present in the entered \code{SimulationResults} object.
-If a dataset is not to be renamed, this can be specified as \code{NULL} in
-the list. For example, in \code{names = list("dataName" = "dataNewName", "dataName2" = NULL)}), dataset with name \code{"dataName2"} will not be
-renamed.}
+\item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
+names can be either for renaming \code{DataSet} objects, or for renaming
+quantities/paths in \code{SimulationResults} object. If an entity is not to be
+renamed, this can be specified as \code{NULL}. E.g., in \code{names = list("oldName1" = "newName1", "oldName2" = NULL)}), dataset with name \code{"oldName2"} will not
+be renamed. The list can either be named or unnamed. Names act as unique
+identifiers for datsets in the \code{DataCombined} object and, therefore,
+duplicate names are not allowed.}
 
-\item{\code{groups}}{A string or a list of strings assigning the data set to a
-group. If an entry within the list is \code{NULL}, the corresponding data set is
-not assigned to any group (and the corresponding entry in the \code{group}
-column will be an \code{NA}). If provided, \code{groups} must have the same length as
-\code{dataSets} and/or \code{simulationResults$quantityPath}. If no grouping is
-specified for any of the dataset, the column \code{group} in the data frame
-output will be all \code{NA}.}
+\item{\code{groups}}{A string or a list of strings specifying group name
+corresponding to each data set. If an entry within the list is \code{NULL}, the
+corresponding data set is not assigned to any group (and the corresponding
+entry in the \code{group} column will be an \code{NA}). If provided, \code{groups} must
+have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
+If no grouping is specified for any of the dataset, the column \code{group} in
+the data frame output will be all \code{NA}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -205,13 +210,14 @@ should be unique.}
 Please note that the order in which groups are specified should match
 the order in which datasets were specified for \code{names} parameter. For
 example, if datsets are named \code{"x"}, \code{"y"}, \code{"z"}, and the desired
-groupings for them are, respectively, \code{"a"}, \code{"b"}, and no grouping,
-this can be specified as \verb{names = list("x", "y"), groups = list("a", "b")}. Datasets for which no grouping is to be specified, can be left
-out of the \code{groups} argument. The column \code{group} in the data frame
-output will be \code{NA} for such datasets. If you wish to remove \emph{existing}
-grouping assignment for a given dataset, you can specify it as
-following: \code{list("x" = NA)} or \code{list("x" = NULL)}. This will not change
-any of the other (previously specified) groupings.}
+groupings for them are, respectively, \code{"a"}, \code{"b"}, this can be
+specified as \verb{names = list("x", "y"), groups = list("a", "b")}.
+Datasets for which no grouping is to be specified, can be left out of
+the \code{groups} argument. The column \code{group} in the data frame output will
+be \code{NA} for such datasets. If you wish to remove an \emph{existing} grouping
+assignment for a given dataset, you can specify it as following:
+\code{list("x" = NA)} or \code{list("x" = NULL)}. This will not change any of the
+other groupings.}
 }
 \if{html}{\out{</div>}}
 }
@@ -270,7 +276,7 @@ specified, will be applied to all rows of the data frame.}
 numeric value or a list of numeric values specifying offsets and
 scale factors to apply to raw values. The default offset is \code{0}, while
 default scale factor is \code{1}, i.e., the data will not be modified. If a
-list is specified, it should be the same length as \code{names} argument.}
+list is specified, it should be the same length as \code{forNames} argument.}
 }
 \if{html}{\out{</div>}}
 }
