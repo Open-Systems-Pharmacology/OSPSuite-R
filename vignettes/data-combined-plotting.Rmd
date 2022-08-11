@@ -17,3 +17,39 @@ knitr::opts_chunk$set(
 ## Introduction
 
 You have already seen how the `DataCombined` class can be utilized to store observed and/or simulated data (if not, read `vignette("data-combined")`).
+
+Let's first create a `DataCombined` object, which we will use to demonstrate different visualizations available.
+
+```{r}
+library(ospsuite)
+
+# simulated data
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+simResults <- runSimulation(sim)
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+
+# observed data
+obsData <- lapply(
+  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+)
+names(obsData) <- lapply(obsData, function(x) x$name)
+
+myDataCombined <- DataCombined$new()
+
+myDataCombined$addSimulationResults(
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir PVB"
+)
+
+myDataCombined$addDataSets(
+  obsData$`Vergin 1995.Iv`, 
+  groups = "Aciclovir PVB"
+)
+```
+
+# Profile plots
+
+# Observed versus simulated scatter plot 

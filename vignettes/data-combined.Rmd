@@ -53,6 +53,7 @@ Then we add simulated results to this object using `$addSimulationResults()`:
 myDataCombined$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = outputPath,
+  names = "Aciclovir Plasma",
   groups = "Aciclovir PVB"
 )
 ```
@@ -73,27 +74,44 @@ There are a few things to keep in mind here:
 - You can add only a single instance of `SimulationResults` in `$addSimulationResults()` method call.
 - If you add a dataset and then add it one more time, the latter will replace the former. `DataCombined` uses name of the dataset as an identifier to check for uniqueness. 
 
+## Renaming
+
+Since the dataset names can be quite long, sometimes you may wish to rename them. Both `$addDataSets()` and `$addSimulationResults()` allow this via `names` argument. In case of `SimulationResults`, the new names will be for quantities/paths.
+
+Given that datsets names act as unique identifier for these entities, duplicate names are not allowed.
+
 ## Grouping
 
-If you do not specify `groups` when you add datasets and wish to do so later, you can use the `$setGroups()` method.
+Since the `DataCombined` object can store many datasets, some of them may naturally form a grouping and you would wish to track this in the object. Both `$addDataSets()` and `$addSimulationResults()` allow group specification via `groups` argument.
 
-At any point, you can check the current groupings with the following active field:
+If you do not specify `groups` when you add datasets or set it to `NULL`, and wish to update groupings later, you can use the `$setGroups()` method.
+
+At any point, you can check the current names and groupings with the following active field:
 
 ```{r}
 myDataCombined$groupMap
 ```
-
 
 ## Extracting a combined data frame
 
 Internally, this object extracts data frames for observed and simulated datasets and combines them.
 
 ```{r}
-
+myDataCombined$toDataFrame()
 ```
 
+This function returns a [tibble data frame](https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame). If you wish to modify how it is printed, you can have a look at the available options [here](https://pillar.r-lib.org/reference/pillar_options.html). In fact, let's change a few options and print the data frame again.
 
-https://pillar.r-lib.org/reference/pillar_options.html
+```{r}
+options(
+  pillar.width = Inf, # show all columns
+  pillar.min_chars = Inf # to turn off truncation of column titles
+)
+
+myDataCombined$toDataFrame()
+```
+
+As can be seen, this data frame attemtps to provide a one-stop solution to access all important details about the datasets included in the object.
 
 ## Visualizations with `DataCombined`
 
