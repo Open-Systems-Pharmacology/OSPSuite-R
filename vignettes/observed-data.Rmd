@@ -44,7 +44,7 @@ dimension of the error values always corresponds to the dimension of the y value
 though the units may differ.
 
 Setting numerical values (or overwriting current values) is performed by the 
-`setValues()` method:
+`$setValues()` method:
 
 
 ```{r setValues}
