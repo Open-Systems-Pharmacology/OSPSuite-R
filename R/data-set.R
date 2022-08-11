@@ -118,7 +118,7 @@ DataSet <- R6::R6Class(
       }
 
       if (!is.null((private$.yErrorColumn))) {
-        private$.setColumnUnit(private$.yColumn, value)
+        private$.setColumnUnit(private$.yErrorColumn, value)
       }
       invisible(self)
     },

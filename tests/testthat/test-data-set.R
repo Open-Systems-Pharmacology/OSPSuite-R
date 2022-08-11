@@ -146,7 +146,11 @@ test_that("it can update the unit of the yErrorValues and this does not change t
   )
   # Change units of y error values - actual values are converted
   dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 
+  # Also test for dimension change
+  dataSet$yDimension <- ospDimensions$Amount
   expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
 })
 
