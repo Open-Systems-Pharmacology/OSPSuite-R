@@ -20,7 +20,7 @@ unified format by implementing a `DataSet` class. `DataSet` objects standardize
 handling of (observed) data coming from different sources, such as excel files 
 using the data importer functionality of the OSPS, loaded from *.pkml, or manually 
 created. This vignette gives an overview of the options to create `DataSet` objects
- and combine them into grouped data sets using the `DataCombined` class
+ and combine them into grouped data sets using the `DataCombined` class.
 
 ## DataSet
 
