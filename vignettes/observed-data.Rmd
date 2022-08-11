@@ -84,7 +84,7 @@ print(dataSet)
 ```
 
 Two types of error values are supported - arithmetic error (default) and geometric 
-error, the latter being given in fraction. The user can change error type:
+error, the latter being given in fraction. The user can change the error type:
 
 ```{r setErrorType}
 # Default error type is "ArithmeticStdDev"
