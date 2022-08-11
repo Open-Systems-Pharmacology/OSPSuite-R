@@ -102,7 +102,7 @@ dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
 print(dataSet)
 ```
 
-A `DataSet` can store any kind of text meta data as meta data name - values pairs
+A `DataSet` can store any kind of text meta data as name-values pairs
  and can be added by the `addMetaData()` method:
  
 ```{r addMetaData}
