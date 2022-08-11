@@ -131,3 +131,20 @@ myTibble <- dataSetToTibble(dataSets = c(dataSet, dataSet2))
 
 print(myTibble)
 ```
+
+## Importing data
+
+Creating `DataSet` objects from scratch is a rather advanced use case. Typically, 
+observed data are loaded either from `*.pkml` files exported from PK-Sim or MoBi,
+ or imported from Excel files. The function `loadDataSetFromPKML()` loads data from
+ the `*.pkml` file. Complementary to this function is the function `saveDataSetToPKML()`
+ that allows to export any `DataSet` to a `*.pkml` that can be loaded e.g. in MoBi.
+
+```{r loadDataSetFromPKML}
+# Load a data set from PKML
+filePath <- system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite")
+
+dataSet <- loadDataSetFromPKML(filePath = filePath)
+
+print(dataSet)
+```
