@@ -148,8 +148,8 @@ dataSet <- loadDataSetFromPKML(filePath = filePath)
 print(dataSet)
 ```
 
-Another (and probably the most important) way to create `DataSet` objects is to 
-import data from excel files. The function `loadDataSetsFromExcel()` utilizes the 
+Another (and probably the most important) way to create `DataSet` objects is by 
+importing data from excel files. The function `loadDataSetsFromExcel()` utilizes the 
 data import functionality implemented in PK-Sim and MoBi and returns a set of 
 `DataSet` objects. For description of the supported file formats and configurations, 
 please refer to the [OSPS documentation](https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/import-edit-observed-data).
