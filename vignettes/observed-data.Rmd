@@ -148,3 +148,70 @@ dataSet <- loadDataSetFromPKML(filePath = filePath)
 
 print(dataSet)
 ```
+
+Another (and probably the most important) way to create `DataSet` objects is to 
+import data from excel files. The function `loadDataSetsFromExcel()` utilizes the 
+data import functionality implemented in PK-Sim and MoBi and returns a set of 
+`DataSet` objects. For description of the supported file formats and configurations, 
+please refer to the [OSPS documentation](https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/import-edit-observed-data).
+
+Loading observed data from an Excel sheet requires an `ImporterConfiguration`. 
+The configuration describes mapping of excel sheet columns to numerical data (e.g. 
+which column contains the x values) or meta data (e.g., description of the 
+applied dose). One way to obtain such configuration is to create it in PK-Sim 
+or MoBi, save it (as an `*.xml`) file, and load it in R with the `loadDataImporterConfiguration()` 
+function:
+
+```{r loadDataImporterConfiguration}
+# Load a configuration from xml file
+filePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
+importerConfiguration <- loadDataImporterConfiguration(configurationFilePath = filePath)
+
+print(importerConfiguration)
+```
+
+A data importer configuration can also be created from scratch and has to be 
+manually populated by the user. Alternatively, the user can let the software 
+"guess" the configuration for a given excel sheet:
+
+```{r createDataImporterConfigurationFor}
+# Excel file
+excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+sheetName <- "TestSheet_1"
+
+# Create importer configuration for the excel sheet
+importerConfiguration_guessed <- createImporterConfigurationForFile(filePath =  excelFilePath,
+                                                            sheet = sheetName)
+
+print(importerConfiguration)
+```
+
+It is important to manually check the created configuration, as the automated 
+configuration recognition cannot cover all possible cases.
+
+If only specific sheets from the excel file should be imported, they can be 
+specified in the `ImporterConfiguration`. The following example loads the sheets 
+`TestSheet_1` and `TestSheet_1_withMW`:
+
+```{r loadSheets}
+# Excel file
+excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+sheetName <- "TestSheet_1"
+
+# Create importer configuration for the excel sheet
+importerConfiguration_guessed <- createImporterConfigurationForFile(filePath =  excelFilePath,
+                                                            sheet = sheetName)
+# Add sheet names to the configuration
+importerConfiguration_guessed$sheets <- c("TestSheet_1", "TestSheet_1_withMW")
+
+# Load data
+dataSets <- loadDataSetsFromExcel(xlsFilePath = excelFilePath,
+                      importerConfigurationOrPath = importerConfiguration_guessed)
+
+```
+
+Currently, `DataImporterConfiguration` created from scratch or for a specific 
+data sheet does not support all features of importer configuration, such as 
+specifying the column containing the molecular weight of the measured molecule 
+or the LLOQ values. It is therefore recommended to use importer configurations 
+created in PK-Si or MoBi.
