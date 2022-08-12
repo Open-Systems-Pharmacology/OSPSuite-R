@@ -7,7 +7,7 @@
 #' @docType class
 #' @name Molecule
 #'
-#' @keywords Molecule
+#' @keywords internal
 #' @format NULL
 Molecule <- R6::R6Class(
   "Molecule",
