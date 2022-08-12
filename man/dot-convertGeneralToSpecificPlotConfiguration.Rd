@@ -46,7 +46,6 @@ Other utilities-plotting:
 \code{\link{.calculateResiduals}()},
 \code{\link{.createAxesLabels}()},
 \code{\link{.extractAggregatedSimulatedData}()},
-\code{\link{.extractMatchingIndices}()},
 \code{\link{.removeUnpairableDatasets}()}
 }
 \concept{utilities-plotting}

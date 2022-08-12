@@ -14,33 +14,60 @@
 #' @import tidyr
 #' @import ospsuite.utils
 #'
-#' @param groups A string or a list of strings assigning the data set to a
-#'   group. If an entry within the list is `NULL`, the corresponding data set is
-#'   not assigned to any group (and the corresponding entry in the `group`
-#'   column will be an `NA`). If provided, `groups` must have the same length as
-#'   `dataSets` and/or `simulationResults$quantityPath`. If no grouping is
-#'   specified for any of the dataset, the column `group` in the data frame
-#'   output will be all `NA`.
+#' @param names A string or a `list` of strings assigning new names. These new
+#'   names can be either for renaming `DataSet` objects, or for renaming
+#'   quantities/paths in `SimulationResults` object. If an entity is not to be
+#'   renamed, this can be specified as `NULL`. E.g., in `names = list("oldName1"
+#'   = "newName1", "oldName2" = NULL)`), dataset with name `"oldName2"` will not
+#'   be renamed. The list can either be named or unnamed. Names act as unique
+#'   identifiers for datsets in the `DataCombined` object and, therefore,
+#'   duplicate names are not allowed.
+#' @param groups A string or a list of strings specifying group name
+#'   corresponding to each data set. If an entry within the list is `NULL`, the
+#'   corresponding data set is not assigned to any group (and the corresponding
+#'   entry in the `group` column will be an `NA`). If provided, `groups` must
+#'   have the same length as `dataSets` and/or `simulationResults$quantityPath`.
+#'   If no grouping is specified for any of the dataset, the column `group` in
+#'   the data frame output will be all `NA`.
 #'
 #' @examples
-#'
-#' # load the simulation
+#' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
-#' simulationResults <- runSimulation(simulation = sim)
+#' simResults <- runSimulation(sim)
+#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 #'
-#' # create a new dataset object
-#' dataSet <- DataSet$new(name = "DS")
+#' # observed data
+#' obsData <- lapply(
+#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+#' )
+#' names(obsData) <- lapply(obsData, function(x) x$name)
 #'
-#' # created object with datasets combined
-#' myCombDat <- DataCombined$new()
-#' myCombDat$addSimulationResults(simulationResults)
-#' myCombDat$addDataSets(dataSet)
 #'
-#' # print the object
-#' myCombDat
+#' # Create a new instance of `DataCombined` class
+#' myDataCombined <- DataCombined$new()
+#'
+#' # Add simulated results
+#' myDataCombined$addSimulationResults(
+#'   simulationResults = simResults,
+#'   quantitiesOrPaths = outputPath,
+#'   groups = "Aciclovir PVB"
+#' )
+#'
+#' # Add observed data set
+#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+#'
+#' # Looking at group mappings
+#' myDataCombined$groupMap
+#'
+#' # Looking at the applied transformations
+#' myDataCombined$dataTransformations
+#'
+#' # Accessing the combined data frame
+#' myDataCombined$toDataFrame()
+#'
 #' @docType class
-#'
 #' @export
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
@@ -50,13 +77,8 @@ DataCombined <- R6::R6Class(
 
   public = list(
 
-    #' @param dataSets Instance (or a `list` of instances) of the `DataSet`
+    #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
     #'   class.
-    #' @param names A string or a list of strings assigning new names to the
-    #'   list of instances of the `DataSet` class. If a dataset is not to be
-    #'   renamed, this can be specified as `NULL` in the list. For example, in
-    #'   `names = list("dataName" = "dataNewName", "dataName2" = NULL)`),
-    #'   dataset with name `"dataName2"` will not be renamed.
     #'
     #' @description
     #' Adds observed data.
@@ -65,11 +87,13 @@ DataCombined <- R6::R6Class(
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
-      names <- .cleanVectorArgs(names, objectCount(dataSets), type = "character")
+      numberOfDatasets <- objectCount(dataSets)
+      names <- .cleanVectorArgs(names, numberOfDatasets, type = "character")
 
-      # The original names for datasets can be "plucked" from respective
-      # objects. `purrr::map()` is used to iterate over the vector and the
-      # anonymous function is used to pluck an object. The `map_chr()` variant
+      # The original names for datasets can be "plucked" from objects.
+      #
+      # `purrr::map()` iterates over the vector and applies the anonymous
+      # function to pluck name from the object. The `map_chr()` variant
       # clarifies that we are always expecting a character type in return.
       datasetNames <- purrr::map_chr(c(dataSets), function(x) purrr::pluck(x, "name"))
 
@@ -104,14 +128,15 @@ DataCombined <- R6::R6Class(
     # from `ospsuite::getOutputValues()` to avoid repetition.
 
     #' @param simulationResults Object of type `SimulationResults` produced by
-    #'   calling `runSimulation()` on a `Simulation` object.
+    #'   calling `runSimulation()` on a `Simulation` object. Only a single
+    #'   instance is allowed in a given `$addSimulationResults()` method call.
     #' @param quantitiesOrPaths Quantity instances (element or list) typically
-    #'   retrieved using `getAllQuantitiesMatching()` or quantity path (element or
-    #'   list of strings) for which the results are to be returned. (optional)
-    #'   When providing the paths, only absolute full paths are supported (i.e.,
-    #'   no matching with '*' possible). If `quantitiesOrPaths` is `NULL`
-    #'   (default value), returns the results for all output defined in the
-    #'   results.
+    #'   retrieved using `getAllQuantitiesMatching()` or quantity path (element
+    #'   or list of strings) for which the results are to be returned.
+    #'   (optional) When providing the paths, only absolute full paths are
+    #'   supported (i.e., no matching with '*' possible). If `quantitiesOrPaths`
+    #'   is `NULL` (default value), returns the results for all output defined
+    #'   in the results.
     #' @param individualIds Numeric IDs of individuals for which the results
     #'   should be extracted. By default, all individuals from the results are
     #'   considered. If the individual with the provided ID is not found, the ID
@@ -119,12 +144,6 @@ DataCombined <- R6::R6Class(
     #' @param population Population used to calculate the `simulationResults`
     #'   (optional). This is used only to add the population covariates to the
     #'   resulting data frame.
-    #' @param names A string or a list of strings assigning new names to the
-    #'   quantities or paths present in the entered `SimulationResults` object.
-    #'   If a dataset is not to be renamed, this can be specified as `NULL` in
-    #'   the list. For example, in `names = list("dataName" = "dataNewName",
-    #'   "dataName2" = NULL)`), dataset with name `"dataName2"` will not be
-    #'   renamed.
     #'
     #' @description
     #'
@@ -137,10 +156,10 @@ DataCombined <- R6::R6Class(
                                     individualIds = NULL,
                                     names = NULL,
                                     groups = NULL) {
-      # validate vector arguments' type and length
+      # Validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
-      # A list or a vector of `SimulationResults` class instances is not allowed.
+      # A vector of `SimulationResults` class instances is not allowed. Why?
       #
       # If this were to be allowed, `quantitiesOrPaths`, `population`, and
       # `individualIds ` could all be different for every `SimulationResults`
@@ -154,7 +173,7 @@ DataCombined <- R6::R6Class(
       pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
       pathsLength <- length(pathsNames)
 
-      # validate alternative names for their length and type
+      # Validate alternative names for their length and type
       names <- .cleanVectorArgs(names, pathsLength, type = "character")
 
       # If alternate names are provided for datasets, use them instead.
@@ -172,9 +191,9 @@ DataCombined <- R6::R6Class(
         private$.simResultsToDataFrame(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
-          population = population,
-          individualIds = individualIds,
-          names = names
+          population        = population,
+          individualIds     = individualIds,
+          names             = names
         )
       )
 
@@ -201,14 +220,14 @@ DataCombined <- R6::R6Class(
     #'   Please note that the order in which groups are specified should match
     #'   the order in which datasets were specified for `names` parameter. For
     #'   example, if datsets are named `"x"`, `"y"`, `"z"`, and the desired
-    #'   groupings for them are, respectively, `"a"`, `"b"`, and no grouping,
-    #'   this can be specified as `names = list("x", "y"), groups = list("a",
-    #'   "b")`. Datasets for which no grouping is to be specified, can be left
-    #'   out of the `groups` argument. The column `group` in the data frame
-    #'   output will be `NA` for such datasets. If you wish to remove *existing*
-    #'   grouping assignment for a given dataset, you can specify it as
-    #'   following: `list("x" = NA)` or `list("x" = NULL)`. This will not change
-    #'   any of the other (previously specified) groupings.
+    #'   groupings for them are, respectively, `"a"`, `"b"`, this can be
+    #'   specified as `names = list("x", "y"), groups = list("a", "b")`.
+    #'   Datasets for which no grouping is to be specified, can be left out of
+    #'   the `groups` argument. The column `group` in the data frame output will
+    #'   be `NA` for such datasets. If you wish to remove an *existing* grouping
+    #'   assignment for a given dataset, you can specify it as following:
+    #'   `list("x" = NA)` or `list("x" = NULL)`. This will not change any of the
+    #'   other groupings.
     #'
     #' @description
     #' Adds grouping information to (observed and/or simulated) datasets.
@@ -226,7 +245,7 @@ DataCombined <- R6::R6Class(
 
       # `names` and `groups` need to be of the same length only if each dataset
       # is assigned to a different group. But it is possible that the users
-      # assign all entered datasets to the same group.
+      # want to assign all entered datasets to the same group.
       #
       # In the latter case, `groups` argument can be a scalar (length 1, i.e.)
       # and we don't need to check that names and groups are of the same length.
@@ -234,15 +253,15 @@ DataCombined <- R6::R6Class(
         validateIsSameLength(names, groups)
       }
 
-      # All entered datasets should be unique and their unique identity is
-      # their name.
+      # All entered datasets should be unique, name being their identifier.
       validateHasOnlyDistinctValues(names)
 
       # Extract groupings and dataset names in a data frame.
       #
       # `purrr::simplify()` will simplify input vector (which can be an atomic
-      # vector or a list) to an atomic vector. This will cover both of these
+      # vector or a list) to an atomic vector. That is, it'll cover both of these
       # contexts:
+      #
       # - `names/groups = c(...)`
       # - `names/groups = list(...)`
       groupData <- dplyr::tibble(
@@ -278,7 +297,7 @@ DataCombined <- R6::R6Class(
       validateHasOnlyDistinctValues(names)
 
       # Extract dataset names in a data frame. Groupings for all of them are
-      # going to be `NA`, so make avail of tibble's recycling rule.
+      # going to be `NA`, so make avail of `{tibble}`'s recycling rule.
       groupData <- dplyr::tibble(
         name = purrr::simplify(names),
         group = NA_character_
@@ -303,7 +322,7 @@ DataCombined <- R6::R6Class(
     #'   numeric value or a list of numeric values specifying offsets and
     #'   scale factors to apply to raw values. The default offset is `0`, while
     #'   default scale factor is `1`, i.e., the data will not be modified. If a
-    #'   list is specified, it should be the same length as `names` argument.
+    #'   list is specified, it should be the same length as `forNames` argument.
     #'
     #' @details
     #'
@@ -386,7 +405,8 @@ DataCombined <- R6::R6Class(
     #' @description
     #' Print the object to the console.
     print = function() {
-      # group map contains names and nature of the datasets and grouping details
+      # Group map contains names, types, and groupings for all datasets, providing
+      # the most succinct snapshot of the object.
       private$printClass()
       private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
@@ -538,13 +558,13 @@ DataCombined <- R6::R6Class(
         # If the newly entered dataset(s) are already present, then replace the
         # existing ones with the new ones.
         #
-        # For example, someone can all `$addSimulationResults(dataSet1)` and
-        # then again call `$addSimulationResults(dataSet1)` with the same class
+        # For example, someone can all `$addDataSets(dataSet1)` and
+        # then again call `$addDataSets(dataSet1)` with the same class
         # instance because they realized that the first time they created the
-        # DataSet object, they had made a mistake. In this case, data frame
+        # `DataSet` object, they had made a mistake. In this case, data frame
         # created in the latter call should replace the one created in the
         # former call. If we were not to allow this, the user will need to
-        # restart their work with a new instance of this class.
+        # restart with a new instance of this class.
         if (length(dupDatasets) > 0L) {
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
         }
@@ -636,11 +656,10 @@ DataCombined <- R6::R6Class(
       data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
 
       # Datasets for which no data transformations were specified, there will be
-      # missing values, which need to be replaced by values representing no
-      # change.
+      # missing values, which need to be replaced by defaults for no change.
       data <- dplyr::left_join(data, private$.dataTransformations, by = "name")
 
-      # For offsets: 0
+      # For offsets: `0` (default for no change)
       data <- dplyr::mutate(
         data,
         dplyr::across(
@@ -649,7 +668,7 @@ DataCombined <- R6::R6Class(
         )
       )
 
-      # For scale factors: 1
+      # For scale factors: `1` (default for no change)
       data <- dplyr::mutate(
         data,
         dplyr::across(

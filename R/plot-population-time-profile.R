@@ -11,8 +11,26 @@
 #' @family plotting
 #'
 #' @examples
+#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simFilePath)
 #'
-#' # TODO: add example
+#' populationResults <- importResultsFromCSV(
+#'   simulation = sim,
+#'   filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+#' )
+#'
+#' # Create a new instance of `DataCombined` class
+#' myDataComb <- DataCombined$new()
+#' myDataComb$addSimulationResults(populationResults)
+#'
+#' # Create a new instance of `DefaultPlotConfiguration` class
+#' myPlotConfiguration <- DefaultPlotConfiguration$new()
+#' myPlotConfiguration$title <- "My Plot Title"
+#' myPlotConfiguration$subtitle <- "My Plot Subtitle"
+#' myPlotConfiguration$caption <- "My Sources"
+#'
+#' # plot
+#' plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
 #'
 #' @export
 plotPopulationTimeProfile <- function(dataCombined,
