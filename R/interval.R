@@ -1,8 +1,8 @@
 #' @title Interval
 #' @docType class
 #' @description  Simulation Interval (typically associated with an instance of `OutputSchema`)
-#'
 #' @format NULL
+#' @keywords internal
 Interval <- R6::R6Class(
   "Interval",
   cloneable = FALSE,

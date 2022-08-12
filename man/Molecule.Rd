@@ -10,7 +10,7 @@ A molecule defined in a compartment of the system
 \details{
 Derived from \link{Quantity}, please see base class documentation.
 }
-\keyword{Molecule}
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Molecule}
 }

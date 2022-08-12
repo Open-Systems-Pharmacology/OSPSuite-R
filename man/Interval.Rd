@@ -7,6 +7,7 @@
 \description{
 Simulation Interval (typically associated with an instance of \code{OutputSchema})
 }
+\keyword{internal}
 \section{Super classes}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Container]{ospsuite::Container}} -> \code{Interval}
 }
