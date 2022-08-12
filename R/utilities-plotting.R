@@ -443,9 +443,9 @@
   # - `"lin"` (in `DefaultPlotConfiguration`)
   # - `"identity"` (in `tlf::PlotConfiguration`, because of `{ggplot2}`)
   if (scaling %in% c("lin", "identity")) {
-    pairedData <- dplyr::mutate(pairedData, resValue = obsValue - predValue)
+    pairedData <- dplyr::mutate(pairedData, resValue = predValue - obsValue)
   } else {
-    pairedData <- dplyr::mutate(pairedData, resValue = log(obsValue) - log(predValue))
+    pairedData <- dplyr::mutate(pairedData, resValue = log(predValue) - log(obsValue))
   }
 
   # Add minimum and maximum values for observed data to plot error bars
