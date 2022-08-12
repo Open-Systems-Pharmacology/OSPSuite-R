@@ -9,8 +9,41 @@
 #' @family plotting
 #'
 #' @examples
+#' # simulated data
+#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simFilePath)
+#' simResults <- runSimulation(sim)
+#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 #'
-#' # TODO: add example
+#' # observed data
+#' obsData <- lapply(
+#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+#' )
+#' names(obsData) <- lapply(obsData, function(x) x$name)
+#'
+#'
+#' # Create a new instance of `DataCombined` class
+#' myDataCombined <- DataCombined$new()
+#'
+#' # Add simulated results
+#' myDataCombined$addSimulationResults(
+#'   simulationResults = simResults,
+#'   quantitiesOrPaths = outputPath,
+#'   groups = "Aciclovir PVB"
+#' )
+#'
+#' # Add observed data set
+#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+#'
+#' # Create a new instance of `DefaultPlotConfiguration` class
+#' myPlotConfiguration <- DefaultPlotConfiguration$new()
+#' myPlotConfiguration$title <- "My Plot Title"
+#' myPlotConfiguration$subtitle <- "My Plot Subtitle"
+#' myPlotConfiguration$caption <- "My Sources"
+#'
+#' # plot
+#' plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
@@ -64,12 +97,19 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   if (nrow(obsData) == 0) {
     obsData <- NULL
+    hasMultipleObsDatasetsPerGroup <- FALSE
+  } else {
+    hasMultipleObsDatasetsPerGroup <- .hasMultipleDatasetsPerGroup(obsData)
+    obsData <- .computeBoundsFromErrorType(obsData)
   }
 
   simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
 
   if (nrow(simData) == 0) {
     simData <- NULL
+    hasMultipleSimDatasetsPerGroup <- FALSE
+  } else {
+    hasMultipleSimDatasetsPerGroup <- .hasMultipleDatasetsPerGroup(simData)
   }
 
   # Extract aggregated simulated data (relevant only for the population plot)
@@ -77,47 +117,86 @@ plotIndividualTimeProfile <- function(dataCombined,
     simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
   }
 
+  # To avoid repetition, assign column names to variables and use them instead
+  x <- "xValues"
+  y <- "yValues"
+  ymin <- "yValuesLower"
+  ymax <- "yValuesHigher"
+  group <- color <- fill <- "group"
+  linetype <- shape <- "name"
+
+  # population time profile mappings ------------------------------
+
+  # The exact mappings chosen will depend on whether there are multiple datasets
+  # of a given type present per group
   if (!is.null(quantiles)) {
-    dataMapping <- tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValuesCentral",
-      ymin = "yValuesLower",
-      ymax = "yValuesHigher",
-      group = "group"
-    )
+    if (hasMultipleSimDatasetsPerGroup) {
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
+        color = color,
+        linetype = linetype,
+        fill = fill
+      )
+    } else {
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
+        group = group
+      )
+    }
 
-    observedDataMapping <- tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group"
-    )
-  } else {
-    dataMapping <- tlf::TimeProfileDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group"
-    )
+    if (hasMultipleObsDatasetsPerGroup) {
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
+        shape = shape,
+        color = color
+      )
+    } else {
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
+        group = group
+      )
+    }
+  }
 
-    obsData <- .computeBoundsFromErrorType(obsData)
+  # individual time profile mappings ------------------------------
 
-    observedDataMapping <- tlf::ObservedDataMapping$new(
-      x = "xValues",
-      y = "yValues",
-      group = "group",
-      ymin = "yValuesLower",
-      ymax = "yValuesHigher"
-    )
+  if (is.null(quantiles)) {
+    if (hasMultipleSimDatasetsPerGroup) {
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
+        color = color,
+        linetype = linetype
+      )
+    } else {
+      simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
+        group = group
+      )
+    }
+
+    if (hasMultipleObsDatasetsPerGroup) {
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
+        shape = shape,
+        color = color
+      )
+    } else {
+      observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
+        group = group
+      )
+    }
   }
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
 
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
-    dataMapping = dataMapping,
+    dataMapping = simulatedDataMapping,
     observedData = obsData,
     observedDataMapping = observedDataMapping,
     plotConfiguration = timeProfilePlotConfiguration
   )
+
+  if (hasMultipleSimDatasetsPerGroup) {
+    profilePlot <- profilePlot + ggplot2::guides(linetype = "none")
+  }
+
+  if (hasMultipleObsDatasetsPerGroup) {
+    profilePlot <- profilePlot + ggplot2::guides(shape = "none")
+  }
 
   return(profilePlot)
 }

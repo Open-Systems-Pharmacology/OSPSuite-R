@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^appveyor\.yml$
+(^appveyor)(.*)(.yml$)
 ^README\.md$
 ^tests/dev
 ^tools
@@ -20,7 +20,6 @@
 ^doc$
 ^docs$
 ^_pkgdown\.yml$
-^appveyor\.yml$
 ^.gitlab-ci\.yml$
 ^data-raw$
 ^pkgdown$

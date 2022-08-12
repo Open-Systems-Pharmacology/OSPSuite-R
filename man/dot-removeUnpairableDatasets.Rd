@@ -58,8 +58,7 @@ Other utilities-plotting:
 \code{\link{.calculateResiduals}()},
 \code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
-\code{\link{.extractAggregatedSimulatedData}()},
-\code{\link{.extractMatchingIndices}()}
+\code{\link{.extractAggregatedSimulatedData}()}
 }
 \concept{utilities-plotting}
 \keyword{internal}
