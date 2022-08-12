@@ -26,6 +26,10 @@
 .validateDefaultPlotConfiguration <- function(defaultPlotConfiguration = NULL) {
   defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration")
+
+  # Plotting functions should not update the configuration objects
+  defaultPlotConfiguration <- defaultPlotConfiguration$clone(deep = TRUE)
+
   return(defaultPlotConfiguration)
 }
 
