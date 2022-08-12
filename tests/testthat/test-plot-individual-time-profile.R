@@ -60,10 +60,7 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
-  myPlotConfiguration$pointsSize <- 2.5
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-  myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
-  myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
   myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 
   set.seed(123)
@@ -112,20 +109,124 @@ test_that("It creates default plots as expected for only simulated", {
   )
 })
 
+
 # geometric error ------------------------
 
 test_that("It works when geometric error is present", {
   obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
 
-  myDataCombined3 <- DataCombined$new()
-  myDataCombined3$addDataSets(obsData, groups = "Aciclovir PVB")
+  myDataCombined4 <- DataCombined$new()
+  myDataCombined4$addDataSets(obsData, groups = "Aciclovir PVB")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "geometric error",
-    fig = plotIndividualTimeProfile(myDataCombined3)
+    fig = plotIndividualTimeProfile(myDataCombined4)
   )
 })
+
+# multiple datasets per group ------------------------
+
+test_that("It maps multiple observed datasets to different shapes", {
+  dataSet1 <- DataSet$new(name = "Dataset1")
+  dataSet1$setValues(1, 1)
+  dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
+  dataSet1$molWeight <- 1
+
+  dataSet2 <- DataSet$new(name = "Dataset2")
+  dataSet2$setValues(2, 1)
+  dataSet2$yDimension <- ospDimensions$`Concentration (mass)`
+  dataSet2$molWeight <- 1
+
+  dataSet3 <- DataSet$new(name = "Dataset3")
+  dataSet3$setValues(1, 3)
+  dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
+  dataSet3$molWeight <- 1
+
+  myCombDat5 <- DataCombined$new()
+  myCombDat5$addDataSets(
+    c(dataSet1, dataSet2, dataSet3),
+    groups = "myGroup"
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple observed datasets",
+    fig = plotIndividualTimeProfile(myCombDat5)
+  )
+})
+
+test_that("It maps simulated datasets to different linetypes", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPath <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  addOutputs(outputPath, sim)
+  simResults <- runSimulation(sim)
+
+
+  myDataCombined6 <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined6$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple simulated datasets",
+    fig = plotIndividualTimeProfile(myDataCombined6)
+  )
+})
+
+test_that("It maps multiple observed and simulated datasets to different visual properties", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPath <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  addOutputs(outputPath, sim)
+  simResults <- runSimulation(sim)
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
+  )
+
+  names(obsData) <- lapply(obsData, function(x) {
+    x$name
+  })
+
+  myDataCombined5 <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined5$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined5$addDataSets(obsData, groups = "Aciclovir observed")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple observed and simulated datasets",
+    fig = plotIndividualTimeProfile(myDataCombined5)
+  )
+})
+
 
 # edge cases ------------------------
 

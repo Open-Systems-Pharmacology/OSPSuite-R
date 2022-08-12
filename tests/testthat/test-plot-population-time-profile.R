@@ -5,62 +5,141 @@ context("plotPopulationTimeProfile")
 skip_on_os("linux") # TODO enable again as soon as `createPopulation()` runs under Linux
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
-skip_on_ci() # TODO don't run simulation each time; use a stored example
-
-populationCharacteristics <- createPopulationCharacteristics(
-  species = Species$Human,
-  population = HumanPopulation$Asian_Tanaka_1996,
-  numberOfIndividuals = 50,
-  proportionOfFemales = 50,
-  weightMin = 30,
-  weightMax = 98,
-  weightUnit = "kg",
-  heightMin = NULL,
-  heightMax = NULL,
-  ageMin = 0,
-  ageMax = 80,
-  ageUnit = "year(s)"
-)
-
-# Create population from population characteristics
-result <- createPopulation(populationCharacteristics = populationCharacteristics)
-myPopulation <- result$population
-
-# Load simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
-
-set.seed(123)
-populationResults <- runSimulation(
-  simulation = sim,
-  population = myPopulation
-)
-
-myDataComb <- DataCombined$new()
-myDataComb$addSimulationResults(populationResults)
+# skip_on_ci()
 
 # only simulated ------------------------
 
 test_that("It respects custom plot configuration", {
+  # Load simulation
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  populationResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+  )
+
+  myDataComb <- DataCombined$new()
+  myDataComb$addSimulationResults(populationResults)
+
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
 
   set.seed(123)
-  p <- plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
-  df <- tlf::getLegendCaption(p)
+  vdiffr::expect_doppelganger(
+    title = "only simulated",
+    fig = plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
+  )
+})
 
-  expect_equal(df$name, "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)")
+# both observed and simulated ------------------------
 
-  expect_equal(p$labels$title, myPlotConfiguration$title)
-  expect_equal(p$labels$subtitle, myPlotConfiguration$subtitle)
-  expect_equal(p$labels$caption, myPlotConfiguration$caption)
+test_that("It produces expected plot for both observed and simulated datasets", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPaths <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  )
+  names(obsData) <- lapply(obsData, function(x) x$name)
+
+  outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  myDataCombined <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPath,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "custom plot config",
-    fig = p
+    title = "both observed and simulated",
+    fig = plotPopulationTimeProfile(myDataCombined)
+  )
+})
+
+# multiple datasets per group ---------------------
+
+test_that("It produces expected plot for multple simulated datasets per group", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPaths <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  )
+
+  names(obsData) <- lapply(obsData, function(x) x$name)
+
+  myDataCombined <- DataCombined$new()
+
+  myDataCombined$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPaths,
+    groups = "Aciclovir PVB"
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple simulated per group",
+    fig = plotPopulationTimeProfile(myDataCombined)
+  )
+})
+
+test_that("It produces expected plot for multple simulated and observed datasets per group", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  outputPaths <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  )
+
+  names(obsData) <- lapply(obsData, function(x) x$name)
+
+  myDataCombined <- DataCombined$new()
+
+  myDataCombined$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPaths,
+    groups = "Aciclovir PVB"
+  )
+
+  myDataCombined$addDataSets(obsData, groups = "Aciclovir observed")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple simulated and observed per group",
+    fig = plotPopulationTimeProfile(myDataCombined)
   )
 })
 
