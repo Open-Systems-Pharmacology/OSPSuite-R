@@ -13,10 +13,10 @@ showtext_auto()
 # https://www.flaticon.com/free-icon/caduceus-symbol_3209049?term=medicine&related_id=3209049#
 #
 # Needs attribution in README acknowledgments section.
-machine <- image_read("ospsuite-hextools/caduceus-symbol.png")
+image <- image_read("ospsuite-hextools/caduceus-symbol.png")
 
 sticker(
-  machine,
+  image,
   package = "ospsuite",
   p_color	= "#545452",
   p_family = google_font_name,
