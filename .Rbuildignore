@@ -30,3 +30,4 @@ tests\^spelling
 ^\.lintr$
 ^WIP/.
 ^old/.
+^hextools/.

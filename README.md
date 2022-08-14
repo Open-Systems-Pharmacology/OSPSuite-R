@@ -1,4 +1,4 @@
-# OSPSuite-R
+# OSPSuite-R <img src="man/figures/logo.png" align="right" width="240" />
 
   <!-- badges: start -->
 
@@ -147,6 +147,11 @@ vignette("introduction-ospsuite")
 # Known issues
 
 **RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating `.NET` objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore `.RData` into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
+
+# Acknowledgments
+
+Hex sticker font is [Cairo](https://fonts.google.com/specimen/Cairo), and the image is adapted from icon made by [Freepik](https://www.freepik.com) from
+[flaticon.com](https://www.flaticon.com/free-icon/caduceus-symbol_3209049?term=medicine&related_id=3209049#).
 
 # Code of Conduct
 
