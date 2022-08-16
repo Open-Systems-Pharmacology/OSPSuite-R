@@ -1,8 +1,6 @@
 # data to be used ---------------------------------------
 
 context("plotObservedVsSimulated")
-
-skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
 
 # load the simulation
@@ -45,7 +43,7 @@ myCombDat$setGroups(
 test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot",
+    title = "defaults",
     fig = plotObservedVsSimulated(myCombDat)
   )
 })
@@ -80,7 +78,7 @@ test_that("It respects custom plot configuration", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "customized plot",
+    title = "custom",
     fig = plotObservedVsSimulated(
       myCombDat,
       myPlotConfiguration,
@@ -122,7 +120,7 @@ test_that("It produces expected plot for Aciclovir data", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "Aciclovir data",
+    title = "Aciclovir",
     fig = plotObservedVsSimulated(myDataCombined)
   )
 })

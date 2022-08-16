@@ -2,7 +2,7 @@
 
 context("plotResidualsVsTime")
 
-skip_if_not_installed("vdiffr")
+
 skip_if(getRversion() < "4.1")
 
 # load the simulation
@@ -45,7 +45,7 @@ myCombDat$setGroups(
 test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot",
+    title = "defaults",
     fig = plotResidualsVsTime(myCombDat)
   )
 })
@@ -78,7 +78,7 @@ test_that("It respects custom plot configuration", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "customized plot",
+    title = "custom",
     fig = plotResidualsVsTime(
       myCombDat,
       myPlotConfiguration
