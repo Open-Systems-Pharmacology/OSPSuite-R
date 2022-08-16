@@ -134,11 +134,12 @@ observer <- getQuantity("Organism|Lumen|Aciclovir|Fraction dissolved", sim)
 addOutputs(c(molecule, observer), simulation = sim)
 
 # Add new outputs as path strings
-addOutputs(c(
-  "Organism|Lumen|Stomach|Aciclovir",
-  "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"
-),
-simulation = sim
+addOutputs(
+  c(
+    "Organism|Lumen|Stomach|Aciclovir",
+    "Organism|PeripheralVenousBlood|Aciclovir|Whole Blood (Peripheral Venous Blood)"
+  ),
+  simulation = sim
 )
 
 # Run simulation

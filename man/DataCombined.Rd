@@ -55,6 +55,12 @@ myDataCombined$dataTransformations
 myDataCombined$toDataFrame()
 
 }
+\seealso{
+Other data-combined: 
+\code{\link{calculateResiduals}()},
+\code{\link{convertUnits}()}
+}
+\concept{data-combined}
 \section{Super class}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
 }
@@ -307,7 +313,7 @@ name.
 }
 
 \subsection{Returns}{
-In the returned data frame, the following columns will always be present:
+In the returned tibble data frame, the following columns will always be present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight

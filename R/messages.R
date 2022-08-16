@@ -46,8 +46,8 @@ messages$plottingWithEmptyDataCombined <- function() {
   "No plot can be created because the entered `DataCombined` object does not contain any datasets."
 }
 
-messages$plottingWithNoPairedDatasets <- function() {
-  "No plot can be created because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
+messages$residualsCanNotBeComputed <- function() {
+  "No residuals can be computed because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
 }
 
 messages$logScaleNotAllowed <- function() {
