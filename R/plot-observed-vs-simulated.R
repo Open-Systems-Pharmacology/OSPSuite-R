@@ -68,8 +68,8 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # Linear scaling is stored as identity scaling in `{tlf}`
   is_any_scale_linear <- (
-    obsVsPredPlotConfiguration$xAxis$scale == "identity" ||
-      obsVsPredPlotConfiguration$yAxis$scale == "identity"
+    obsVsPredPlotConfiguration$xAxis$scale == tlf::Scaling$identity ||
+      obsVsPredPlotConfiguration$yAxis$scale == tlf::Scaling$identity
   )
 
   # The argument `foldDistance` should only include fold values different from
