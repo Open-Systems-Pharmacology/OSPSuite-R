@@ -227,11 +227,8 @@ calculateResiduals <- function(dataCombined,
     "predictedValues" = simulatedData[timeMatchedData, "yValues"]
   )
 
-  # The linear scaling is represented either of the following:
-  #
-  # - `"lin"` (in `DefaultPlotConfiguration`)
-  # - `"identity"` (in `tlf::PlotConfiguration`, because of `{ggplot2}`)
-  if (scaling %in% c(tlf::Scaling$lin, "identity")) {
+  # Residual computation will depend on the scaling.
+  if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
     pairedData <- dplyr::mutate(pairedData, residualValues = predictedValues - yValues)
   } else {
     pairedData <- dplyr::mutate(pairedData, residualValues = log(predictedValues) - log(yValues))
