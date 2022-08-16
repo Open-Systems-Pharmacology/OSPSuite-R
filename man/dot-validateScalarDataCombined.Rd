@@ -10,8 +10,8 @@
 Validate that single instance of \code{DataCombined}
 }
 \examples{
-.validateScalarDataCombined(DataCombined$new()) # okay
-# .validateScalarDataCombined(list(DataCombined$new(), DataCombined$new())) # error
+ospsuite:::.validateScalarDataCombined(DataCombined$new()) # okay
+# ospsuite:::.validateScalarDataCombined(list(DataCombined$new(), DataCombined$new())) # error
 
 }
 \keyword{internal}

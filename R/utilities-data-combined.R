@@ -328,8 +328,8 @@ calculateResiduals <- function(dataCombined,
 #' Validate that single instance of `DataCombined`
 #'
 #' @examples
-#' .validateScalarDataCombined(DataCombined$new()) # okay
-#' # .validateScalarDataCombined(list(DataCombined$new(), DataCombined$new())) # error
+#' ospsuite:::.validateScalarDataCombined(DataCombined$new()) # okay
+#' # ospsuite:::.validateScalarDataCombined(list(DataCombined$new(), DataCombined$new())) # error
 #'
 #' @keywords internal
 .validateScalarDataCombined <- function(dataCombined) {
