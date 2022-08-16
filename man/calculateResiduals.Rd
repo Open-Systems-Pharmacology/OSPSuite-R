@@ -4,30 +4,25 @@
 \alias{calculateResiduals}
 \title{Calculate residuals for datasets in \code{DataCombined}}
 \usage{
-calculateResiduals(
-  dataCombined,
-  xUnit = NULL,
-  yUnit = NULL,
-  scaling = tlf::Scaling$lin
-)
+calculateResiduals(dataCombined, scaling, xUnit = NULL, yUnit = NULL)
 }
 \arguments{
 \item{dataCombined}{A single instance of \code{DataCombined} class.}
+
+\item{scaling}{A character specifying scale: either \code{tlf::Scaling$lin}
+(linear) or \code{tlf::Scaling$log} (logarithmic).}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
 not specified (\code{NULL}), first of the existing units in the respective
 columns (\code{xUnit} and \code{yUnit}) will be selected as the common unit. For
 available dimensions and units, see \code{ospsuite::ospDimensions} and
 \code{ospsuite::ospUnits}, respectively.}
-
-\item{scaling}{A character specifying scale: either \code{tlf::Scaling$lin}
-(linear) or \code{tlf::Scaling$log} (logarithmic).}
 }
 \value{
 In the returned tibble data frame, the following columns will always be present:
 
 xValues - xUnit - xDimension - yValues - yValuesLower - yValuesHigher -
-yErrorValues - yUnit - yDimension - predValue - resValue
+yErrorValues - yUnit - yDimension - predictedValues - residualValues
 }
 \description{
 Calculate residuals for datasets in \code{DataCombined}
@@ -69,7 +64,7 @@ myDataCombined$addSimulationResults(
 # Add observed data set
 myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
-calculateResiduals(myDataCombined)
+calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
 }
 \seealso{
 Other data-combined: 

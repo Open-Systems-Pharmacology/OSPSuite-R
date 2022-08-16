@@ -105,7 +105,7 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' In the returned tibble data frame, the following columns will always be present:
 #'
 #' xValues - xUnit - xDimension - yValues - yValuesLower - yValuesHigher -
-#' yErrorValues - yUnit - yDimension - predValue - resValue
+#' yErrorValues - yUnit - yDimension - predictedValues - residualValues
 #'
 #' @family data-combined
 #'
@@ -137,12 +137,12 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' # Add observed data set
 #' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 #'
-#' calculateResiduals(myDataCombined)
+#' calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
 #' @export
 calculateResiduals <- function(dataCombined,
+                               scaling,
                                xUnit = NULL,
-                               yUnit = NULL,
-                               scaling = tlf::Scaling$lin) {
+                               yUnit = NULL) {
   .validateScalarDataCombined(dataCombined)
 
   # Validation has already taken place in the calling plotting function
@@ -217,24 +217,24 @@ calculateResiduals <- function(dataCombined,
   timeMatchedData <- as.numeric(sapply(as.data.frame(abs(obsTimeMatrix - simTimeMatrix)), which.min))
 
   pairedData <- dplyr::tibble(
-    "xValues"      = observedData[, "xValues"],
-    "xUnit"        = unique(data$xUnit),
-    "xDimension"   = unique(data$xDimension),
-    "yValues"      = observedData[, "yValues"],
-    "yErrorValues" = yErrorValues,
-    "yUnit"        = unique(data$yUnit),
-    "yDimension"   = unique(data$yDimension),
-    "predValue"    = simulatedData[timeMatchedData, "yValues"]
+    "xValues"         = observedData[, "xValues"],
+    "xUnit"           = unique(data$xUnit),
+    "xDimension"      = unique(data$xDimension),
+    "yValues"         = observedData[, "yValues"],
+    "yErrorValues"    = yErrorValues,
+    "yUnit"           = unique(data$yUnit),
+    "yDimension"      = unique(data$yDimension),
+    "predictedValues" = simulatedData[timeMatchedData, "yValues"]
   )
 
   # The linear scaling is represented either of the following:
   #
   # - `"lin"` (in `DefaultPlotConfiguration`)
   # - `"identity"` (in `tlf::PlotConfiguration`, because of `{ggplot2}`)
-  if (scaling %in% c("lin", "identity")) {
-    pairedData <- dplyr::mutate(pairedData, resValue = predValue - yValues)
+  if (scaling %in% c(tlf::Scaling$lin, "identity")) {
+    pairedData <- dplyr::mutate(pairedData, residualValues = predictedValues - yValues)
   } else {
-    pairedData <- dplyr::mutate(pairedData, resValue = log(predValue) - log(yValues))
+    pairedData <- dplyr::mutate(pairedData, residualValues = log(predictedValues) - log(yValues))
   }
 
   # Add minimum and maximum values for observed data to plot error bars

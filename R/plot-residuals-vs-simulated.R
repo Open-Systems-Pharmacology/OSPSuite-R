@@ -78,9 +78,9 @@ plotResidualsVsSimulated <- function(dataCombined,
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
   pairedData <- calculateResiduals(dataCombined,
+    scaling = resVsPredPlotConfiguration$yAxis$scale,
     xUnit = defaultPlotConfiguration$xUnit,
-    yUnit = defaultPlotConfiguration$yUnit,
-    scaling = resVsPredPlotConfiguration$yAxis$scale
+    yUnit = defaultPlotConfiguration$yUnit
   )
 
   # Quit early if there is no data to visualize.
@@ -99,8 +99,8 @@ plotResidualsVsSimulated <- function(dataCombined,
   tlf::plotResVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ResVsPredDataMapping$new(
-      x = "predValue",
-      y = "resValue",
+      x = "predictedValues",
+      y = "residualValues",
       group = "group"
     ),
     plotConfiguration = resVsPredPlotConfiguration

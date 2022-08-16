@@ -97,9 +97,9 @@ plotObservedVsSimulated <- function(dataCombined,
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
   pairedData <- calculateResiduals(dataCombined,
+    scaling = obsVsPredPlotConfiguration$yAxis$scale,
     xUnit = defaultPlotConfiguration$xUnit,
-    yUnit = defaultPlotConfiguration$yUnit,
-    scaling = obsVsPredPlotConfiguration$yAxis$scale
+    yUnit = defaultPlotConfiguration$yUnit
   )
 
   # Quit early if there is no data to visualize.
@@ -112,14 +112,14 @@ plotObservedVsSimulated <- function(dataCombined,
   #
   # This will happen in rare case scenarios where simulated data is sampled at a
   # lower frequency than observed data.
-  predValueMissingIndices <- which(is.na(pairedData$predValue))
+  predictedValuesMissingIndices <- which(is.na(pairedData$predictedValues))
 
   # Warn the user about failure to interpolate.
-  if (length(predValueMissingIndices) > 0) {
+  if (length(predictedValuesMissingIndices) > 0) {
     warning(
       messages$printMultipleEntries(
         header = messages$valuesNotInterpolated(),
-        entries = pairedData$xValues[predValueMissingIndices]
+        entries = pairedData$xValues[predictedValuesMissingIndices]
       )
     )
   }
@@ -136,7 +136,7 @@ plotObservedVsSimulated <- function(dataCombined,
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
       x = "yValues",
-      y = "predValue",
+      y = "predictedValues",
       group = "group",
       xmin = "yValuesLower",
       xmax = "yValuesHigher"
