@@ -3,9 +3,8 @@
 context("plotPopulationTimeProfile")
 
 skip_on_os("linux") # TODO enable again as soon as `createPopulation()` runs under Linux
-skip_if_not_installed("vdiffr")
+
 skip_if(getRversion() < "4.1")
-# skip_on_ci()
 
 # only simulated ------------------------
 
@@ -29,7 +28,7 @@ test_that("It respects custom plot configuration", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "only simulated",
+    title = "only sim",
     fig = plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
   )
 })
@@ -68,7 +67,7 @@ test_that("It produces expected plot for both observed and simulated datasets", 
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "both observed and simulated",
+    title = "obs and sim",
     fig = plotPopulationTimeProfile(myDataCombined)
   )
 })
@@ -103,7 +102,7 @@ test_that("It produces expected plot for multple simulated datasets per group", 
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "multiple simulated per group",
+    title = "multiple sim",
     fig = plotPopulationTimeProfile(myDataCombined)
   )
 })
@@ -138,7 +137,7 @@ test_that("It produces expected plot for multple simulated and observed datasets
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "multiple simulated and observed per group",
+    title = "multiple sim and obs",
     fig = plotPopulationTimeProfile(myDataCombined)
   )
 })

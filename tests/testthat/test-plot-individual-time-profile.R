@@ -4,7 +4,7 @@ context("plotIndividualTimeProfile")
 
 # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 skip_on_os("linux")
-skip_if_not_installed("vdiffr")
+
 skip_if(getRversion() < "4.1")
 
 # load the simulation
@@ -49,7 +49,7 @@ myCombDat$setGroups(
 test_that("It creates default plots as expected for both observed and simulated", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot - both",
+    title = "defaults - both",
     fig = plotIndividualTimeProfile(myCombDat)
   )
 })
@@ -65,7 +65,7 @@ test_that("It respects custom plot configuration", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "custom plot config",
+    title = "custom",
     fig = plotIndividualTimeProfile(myCombDat, myPlotConfiguration)
   )
 
@@ -84,7 +84,7 @@ myCombDat2$addDataSets(dataSet)
 test_that("It creates default plots as expected for only observed", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot - observed",
+    title = "defaults - obs",
     fig = plotIndividualTimeProfile(myCombDat2)
   )
 })
@@ -104,7 +104,7 @@ myCombDat3$addSimulationResults(
 test_that("It creates default plots as expected for only simulated", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot - simulated",
+    title = "defaults - sim",
     fig = plotIndividualTimeProfile(myCombDat3)
   )
 })
@@ -151,7 +151,7 @@ test_that("It maps multiple observed datasets to different shapes", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "multiple observed datasets",
+    title = "multiple obs",
     fig = plotIndividualTimeProfile(myCombDat5)
   )
 })
@@ -180,7 +180,7 @@ test_that("It maps simulated datasets to different linetypes", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "multiple simulated datasets",
+    title = "multiple sim",
     fig = plotIndividualTimeProfile(myDataCombined6)
   )
 })
@@ -222,7 +222,7 @@ test_that("It maps multiple observed and simulated datasets to different visual 
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "multiple observed and simulated datasets",
+    title = "multiple obs and sim",
     fig = plotIndividualTimeProfile(myDataCombined5)
   )
 })
