@@ -209,6 +209,9 @@ calculateResiduals <- function(dataCombined,
     yErrorValues <- rep(NA_real_, nrow(observedData))
   }
 
+  # Predicted values for simulated data points past the maximum should be `NA`.
+  maxSimTime <- max(simulatedData[, "xValues"])
+
   # Time matrix to match observed time with closest simulation time
   # This method assumes that there simulated data are dense enough to capture observed data.
   obsTimeMatrix <- matrix(observedData[, "xValues"], nrow(simulatedData), nrow(observedData), byrow = TRUE)
@@ -240,7 +243,7 @@ calculateResiduals <- function(dataCombined,
   #
   # To avoid this, just remove rows where any of the quantities are `0`s.
   if (scaling %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
-    pairedData <- dplyr::filter(pairedData, xValues != 0, yValues != 0)
+    pairedData <- dplyr::filter(pairedData, xValues != 0, yValues != 0, predictedValues != 0)
   }
 
   # Add minimum and maximum values for observed data to plot error bars
@@ -249,6 +252,13 @@ calculateResiduals <- function(dataCombined,
     yValuesLower = yValues - yErrorValues,
     yValuesHigher = yValues + yErrorValues,
     .after = yValues # Create new columns after `yValues` column
+  )
+
+  pairedData <- dplyr::mutate(pairedData,
+    predictedValues = dplyr::case_when(
+      xValues > maxSimTime ~ NA_real_,
+      TRUE ~ predictedValues
+    )
   )
 
   return(pairedData)
