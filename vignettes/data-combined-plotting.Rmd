@@ -10,7 +10,13 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  warning = FALSE,
+  message = FALSE,
+  dpi = 300,
+  comment = "#>",
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8
 )
 ```
 
@@ -45,11 +51,55 @@ myDataCombined$addSimulationResults(
 )
 
 myDataCombined$addDataSets(
-  obsData$`Vergin 1995.Iv`, 
+  obsData$`Vergin 1995.Iv`,
   groups = "Aciclovir PVB"
 )
 ```
 
-# Profile plots
+## Profile plots
 
-# Observed versus simulated scatter plot 
+```{r}
+plotIndividualTimeProfile(myDataCombined)
+```
+
+## Observed versus simulated scatter plot 
+
+```{r}
+plotObservedVsSimulated(myDataCombined)
+```
+
+## Residuals versus simulated scatter plot
+
+```{r}
+plotResidualsVsSimulated(myDataCombined)
+```
+
+## Residuals versus time scatter plot
+
+```{r}
+plotResidualsVsTime(myDataCombined)
+```
+
+## Customizing plot aesthetics
+
+The aesthetics for plots can be customized using the `DefaultPlotConfiguration` class, which provides various class members that can be used to modify the *look* of the plot.
+
+```{r}
+myPlotConfiguration <- DefaultPlotConfiguration$new()
+
+myPlotConfiguration$xUnit <- ospUnits$Time$s
+myPlotConfiguration$yUnit <- ospUnits$`Concentration [mass]`$`µg/l`
+
+myPlotConfiguration$title <- "Example: Customizing a Plot"
+myPlotConfiguration$subtitle <- "Using `DefaultPlotConfiguration` class"
+myPlotConfiguration$caption <- "Source: `Aciclovir` data"
+
+myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
+myPlotConfiguration$yAxisScale <- tlf::Scaling$log
+```
+
+This configuration class can be passed to all plotting functions:
+
+```{r}
+plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
+```
