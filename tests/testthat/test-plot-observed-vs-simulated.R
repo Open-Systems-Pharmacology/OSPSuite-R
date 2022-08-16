@@ -153,6 +153,6 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
   expect_null(suppressWarnings(plotObservedVsSimulated(myCombDat)))
   expect_warning(
     plotObservedVsSimulated(myCombDat),
-    messages$plottingWithNoPairedDatasets()
+    messages$residualsCanNotBeComputed()
   )
 })

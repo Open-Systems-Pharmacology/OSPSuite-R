@@ -7,7 +7,7 @@
 plotIndividualTimeProfile(dataCombined, defaultPlotConfiguration = NULL)
 }
 \arguments{
-\item{dataCombined}{A \code{DataCombined} object.}
+\item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}

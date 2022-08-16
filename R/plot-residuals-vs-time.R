@@ -76,7 +76,7 @@ plotResidualsVsTime <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- .dataCombinedToPairedData(dataCombined,
+  pairedData <- calculateResiduals(dataCombined,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit,
     scaling = resVsTimePlotConfiguration$yAxis$scale
@@ -98,7 +98,7 @@ plotResidualsVsTime <- function(dataCombined,
   tlf::plotResVsTime(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ResVsTimeDataMapping$new(
-      x = "obsTime",
+      x = "xValues",
       y = "resValue",
       group = "group"
     ),

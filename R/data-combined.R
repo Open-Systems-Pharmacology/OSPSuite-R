@@ -67,6 +67,7 @@
 #' # Accessing the combined data frame
 #' myDataCombined$toDataFrame()
 #'
+#' @family data-combined
 #' @docType class
 #' @export
 DataCombined <- R6::R6Class(

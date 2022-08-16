@@ -55,6 +55,12 @@ myDataCombined$dataTransformations
 myDataCombined$toDataFrame()
 
 }
+\seealso{
+Other data-combined: 
+\code{\link{.cleanVectorArgs}()},
+\code{\link{.extractResidualsToTibble}()}
+}
+\concept{data-combined}
 \section{Super class}{
 \code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
 }

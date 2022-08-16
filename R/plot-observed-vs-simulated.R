@@ -96,7 +96,7 @@ plotObservedVsSimulated <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- .dataCombinedToPairedData(dataCombined,
+  pairedData <- calculateResiduals(dataCombined,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit,
     scaling = obsVsPredPlotConfiguration$yAxis$scale
@@ -119,7 +119,7 @@ plotObservedVsSimulated <- function(dataCombined,
     warning(
       messages$printMultipleEntries(
         header = messages$valuesNotInterpolated(),
-        entries = pairedData$obsTime[predValueMissingIndices]
+        entries = pairedData$xValues[predValueMissingIndices]
       )
     )
   }
@@ -135,7 +135,7 @@ plotObservedVsSimulated <- function(dataCombined,
   tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
-      x = "obsValue",
+      x = "yValues",
       y = "predValue",
       group = "group",
       xmin = "yValuesLower",

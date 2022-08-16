@@ -1,6 +1,6 @@
 #' Time-profile plot of individual data
 #'
-#' @param dataCombined A `DataCombined` object.
+#' @inheritParams calculateResiduals
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
 #'   an `R6` class object that defines plot properties.
 #'
