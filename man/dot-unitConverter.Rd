@@ -2,12 +2,12 @@
 % Please edit documentation in R/utilities-units.R
 \name{.unitConverter}
 \alias{.unitConverter}
-\title{Convert data frame to common units}
+\title{Convert datasets in \code{DataCombined} to common units}
 \usage{
-.unitConverter(data, xUnit = NULL, yUnit = NULL)
+.unitConverter(dataCombined, xUnit = NULL, yUnit = NULL)
 }
 \arguments{
-\item{data}{A data frame (or a tibble) from \code{DataCombined$toDataFrame()}.}
+\item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
 not specified (\code{NULL}), first of the existing units in the respective
