@@ -51,9 +51,9 @@ plotObservedVsSimulated <- function(dataCombined,
                                     foldDistance = 2) {
   # validation -----------------------------
 
-  .validateDataCombinedForPlotting(dataCombined)
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
+  .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
   }

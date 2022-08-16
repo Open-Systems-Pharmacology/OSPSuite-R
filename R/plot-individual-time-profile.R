@@ -61,9 +61,9 @@ plotIndividualTimeProfile <- function(dataCombined,
                              quantiles = NULL) {
   # validation -----------------------------
 
-  .validateDataCombinedForPlotting(dataCombined)
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
+  .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
   }
