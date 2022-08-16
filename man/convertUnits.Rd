@@ -17,6 +17,13 @@ available dimensions and units, see \code{ospsuite::ospDimensions} and
 }
 \value{
 A data frame with measurement columns transformed to have common units.
+
+In the returned tibble data frame, the following columns will always be present:
+
+name - group - dataType - xValues - xDimension - xUnit - yValues -
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+
+Importantly, the \code{xUnit} and \code{yUnit} columns will have unique entries.
 }
 \description{
 When multiple (observed and/or simulated) datasets are present in a data

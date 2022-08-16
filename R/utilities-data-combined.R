@@ -26,6 +26,15 @@
 #'   available dimensions and units, see `ospsuite::ospDimensions` and
 #'   `ospsuite::ospUnits`, respectively.
 #'
+#' @return
+#'
+#' In the returned tibble data frame, the following columns will always be present:
+#'
+#' name - group - dataType - xValues - xDimension - xUnit - yValues -
+#' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+#'
+#' Importantly, the `xUnit` and `yUnit` columns will have unique entries.
+#'
 #' @family data-combined
 #'
 #' @examples
@@ -90,6 +99,13 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' @param scaling A character specifying scale: either `tlf::Scaling$lin`
 #'   (linear) or `tlf::Scaling$log` (logarithmic).
 #' @inheritParams convertUnits
+#'
+#' @return
+#'
+#' In the returned tibble data frame, the following columns will always be present:
+#'
+#' xValues - xUnit - xDimension - yValues - yValuesLower - yValuesHigher -
+#' yErrorValues - yUnit - yDimension - predValue - resValue
 #'
 #' @family data-combined
 #'
@@ -344,7 +360,6 @@ calculateResiduals <- function(dataCombined,
 #'
 #' @examples
 #' ospsuite:::.cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
-#' ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex_), 4L, "numeric")
 #' @keywords internal
 .cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # Return early if no argument was specified

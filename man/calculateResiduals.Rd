@@ -23,6 +23,12 @@ available dimensions and units, see \code{ospsuite::ospDimensions} and
 \item{scaling}{A character specifying scale: either \code{tlf::Scaling$lin}
 (linear) or \code{tlf::Scaling$log} (logarithmic).}
 }
+\value{
+In the returned tibble data frame, the following columns will always be present:
+
+xValues - xUnit - xDimension - yValues - yValuesLower - yValuesHigher -
+yErrorValues - yUnit - yDimension - predValue - resValue
+}
 \description{
 Calculate residuals for datasets in \code{DataCombined}
 }
