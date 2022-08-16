@@ -4,7 +4,7 @@
 \alias{.extractResidualsToTibble}
 \title{Created observed versus simulated paired data}
 \usage{
-.extractResidualsToTibble(data, scaling = tlf::Scaling$lin)
+.extractResidualsToTibble(data, scaling)
 }
 \arguments{
 \item{data}{A data frame from \code{DataCombined$toDataFrame()}, which has been
@@ -27,7 +27,7 @@ df <- dplyr::tibble(
   yDimension = ospDimensions$`Concentration (mass)`
 )
 
-ospsuite:::.extractResidualsToTibble(df)
+ospsuite:::.extractResidualsToTibble(df, scaling = tlf::Scaling$lin)
 
 }
 \keyword{internal}

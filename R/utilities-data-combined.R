@@ -191,10 +191,10 @@ calculateResiduals <- function(dataCombined,
 #'   yDimension = ospDimensions$`Concentration (mass)`
 #' )
 #'
-#' ospsuite:::.extractResidualsToTibble(df)
+#' ospsuite:::.extractResidualsToTibble(df, scaling = tlf::Scaling$lin)
 #'
 #' @keywords internal
-.extractResidualsToTibble <- function(data, scaling = tlf::Scaling$lin) {
+.extractResidualsToTibble <- function(data, scaling) {
   # Since the data frames will be fed to `matrix()`, make sure that data has
   # `data.frame` class. That is, if tibbles are supplied, coerce them to a
   # simple data frame.
@@ -235,6 +235,15 @@ calculateResiduals <- function(dataCombined,
     pairedData <- dplyr::mutate(pairedData, residualValues = predictedValues - yValues)
   } else {
     pairedData <- dplyr::mutate(pairedData, residualValues = log(predictedValues) - log(yValues))
+  }
+
+  # In logarithmic scale, if any of the values are `0` (e.g. time measurement at
+  # 0 will correspond to `xValues = 0`), the scales won't be drawn and plotting
+  # will fail.
+  #
+  # To avoid this, just remove rows where any of the quantities are `0`s.
+  if (scaling %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
+    pairedData <- dplyr::filter(pairedData, xValues != 0, yValues != 0)
   }
 
   # Add minimum and maximum values for observed data to plot error bars

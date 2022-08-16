@@ -4,7 +4,6 @@ context("plotObservedVsSimulated")
 
 skip_if_not_installed("vdiffr")
 skip_if(getRversion() < "4.1")
-skip_on_ci() # TODO: fix tests once https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/367 is resolved
 
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")
