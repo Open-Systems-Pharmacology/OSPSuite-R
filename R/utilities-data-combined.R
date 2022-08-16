@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' ospsuite:::.cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
-#' ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
+#' ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex_), 4L, "numeric")
 #' @keywords internal
 .cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # Return early if no argument was specified
@@ -174,7 +174,7 @@ calculateResiduals <- function(dataCombined,
   }
 
   # Time matrix to match observed time with closest simulation time
-  # This method assumes that there simulated data are dense enough to capture observed data
+  # This method assumes that there simulated data are dense enough to capture observed data.
   obsTimeMatrix <- matrix(observedData[, "xValues"], nrow(simulatedData), nrow(observedData), byrow = TRUE)
   simTimeMatrix <- matrix(simulatedData[, "xValues"], nrow(simulatedData), nrow(observedData))
 
