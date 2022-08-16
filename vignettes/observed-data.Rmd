@@ -48,9 +48,11 @@ Setting numerical values (or overwriting current values) is performed by the
 
 
 ```{r setValues}
-dataSet$setValues(xValues = c(1, 2, 3, 4),
-                  yValues = c(0, 0.1, 0.6, 10),
-                  yErrorValues = c(0.001, 0.001, 0.1, 1))
+dataSet$setValues(
+  xValues = c(1, 2, 3, 4),
+  yValues = c(0, 0.1, 0.6, 10),
+  yErrorValues = c(0.001, 0.001, 0.1, 1)
+)
 
 print(dataSet)
 ```
@@ -95,7 +97,7 @@ dataSet$yErrorType <- DataErrorType$GeometricStdDev
 # Error unit is "Unitless" for dimension "Fraction".
 dataSet$yErrorUnit
 
-# Changing error type to arithmetic will set the dimension and unit of the error 
+# Changing error type to arithmetic will set the dimension and unit of the error
 # to the same dimension and unit as the y values
 dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
 
@@ -107,10 +109,14 @@ A `DataSet` can store any kind of text meta data as name-values pairs
  
 ```{r addMetaData}
 # Add new meta data entries
-dataSet$addMetaData(name = "Molecule",
-                    value = "Aciclovir")
-dataSet$addMetaData(name = "Organ",
-                    value = "Muscle")
+dataSet$addMetaData(
+  name = "Molecule",
+  value = "Aciclovir"
+)
+dataSet$addMetaData(
+  name = "Organ",
+  value = "Muscle"
+)
 
 # Print meta data of the DataSet
 print(dataSet$metaData)
@@ -122,8 +128,10 @@ to be processed in downstream analysis and visualization workflows:
 ```{r dataSetToDataFrame}
 # Create a second data set
 dataSet2 <- DataSet$new(name = "Second data set")
-dataSet2$setValues(xValues = c(1, 2, 3, 4, 5),
-                   yValues = c(1, 0, 5, 8, 0.1))
+dataSet2$setValues(
+  xValues = c(1, 2, 3, 4, 5),
+  yValues = c(1, 0, 5, 8, 0.1)
+)
 
 # Convert data sets to a tibble
 myTibble <- dataSetToTibble(dataSets = c(dataSet, dataSet2))
@@ -179,8 +187,10 @@ excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsu
 sheetName <- "TestSheet_1"
 
 # Create importer configuration for the excel sheet
-importerConfiguration_guessed <- createImporterConfigurationForFile(filePath =  excelFilePath,
-                                                            sheet = sheetName)
+importerConfiguration_guessed <- createImporterConfigurationForFile(
+  filePath = excelFilePath,
+  sheet = sheetName
+)
 
 print(importerConfiguration)
 ```
@@ -198,15 +208,18 @@ excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsu
 sheetName <- "TestSheet_1"
 
 # Create importer configuration for the excel sheet
-importerConfiguration_guessed <- createImporterConfigurationForFile(filePath =  excelFilePath,
-                                                            sheet = sheetName)
+importerConfiguration_guessed <- createImporterConfigurationForFile(
+  filePath = excelFilePath,
+  sheet = sheetName
+)
 # Add sheet names to the configuration
 importerConfiguration_guessed$sheets <- c("TestSheet_1", "TestSheet_1_withMW")
 
 # Load data
-dataSets <- loadDataSetsFromExcel(xlsFilePath = excelFilePath,
-                      importerConfigurationOrPath = importerConfiguration_guessed)
-
+dataSets <- loadDataSetsFromExcel(
+  xlsFilePath = excelFilePath,
+  importerConfigurationOrPath = importerConfiguration_guessed
+)
 ```
 
 Currently, `DataImporterConfiguration` created from scratch or for a specific 

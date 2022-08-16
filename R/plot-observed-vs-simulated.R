@@ -51,9 +51,9 @@ plotObservedVsSimulated <- function(dataCombined,
                                     foldDistance = 2) {
   # validation -----------------------------
 
-  .validateDataCombinedForPlotting(dataCombined)
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
+  .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
   }
@@ -96,10 +96,10 @@ plotObservedVsSimulated <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- .dataCombinedToPairedData(dataCombined,
+  pairedData <- calculateResiduals(dataCombined,
+    scaling = obsVsPredPlotConfiguration$yAxis$scale,
     xUnit = defaultPlotConfiguration$xUnit,
-    yUnit = defaultPlotConfiguration$yUnit,
-    scaling = obsVsPredPlotConfiguration$yAxis$scale
+    yUnit = defaultPlotConfiguration$yUnit
   )
 
   # Quit early if there is no data to visualize.
@@ -112,14 +112,14 @@ plotObservedVsSimulated <- function(dataCombined,
   #
   # This will happen in rare case scenarios where simulated data is sampled at a
   # lower frequency than observed data.
-  predValueMissingIndices <- which(is.na(pairedData$predValue))
+  predictedValuesMissingIndices <- which(is.na(pairedData$predictedValues))
 
   # Warn the user about failure to interpolate.
-  if (length(predValueMissingIndices) > 0) {
+  if (length(predictedValuesMissingIndices) > 0) {
     warning(
       messages$printMultipleEntries(
         header = messages$valuesNotInterpolated(),
-        entries = pairedData$obsTime[predValueMissingIndices]
+        entries = pairedData$xValues[predictedValuesMissingIndices]
       )
     )
   }
@@ -135,11 +135,11 @@ plotObservedVsSimulated <- function(dataCombined,
   tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
-      x = "obsValue",
-      y = "predValue",
+      x     = "yValues",
+      y     = "predictedValues",
       group = "group",
-      xmin = "yValuesLower",
-      xmax = "yValuesHigher"
+      xmin  = "yValuesLower",
+      xmax  = "yValuesHigher"
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration

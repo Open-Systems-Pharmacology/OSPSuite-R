@@ -8,6 +8,11 @@
     - `plotResidualsVsTime()` for time versus residuals data scatter plot.
     - `plotResidualsVsSimulated()` for simulated versus residuals data scatter plot.
 
+* Adds new helper functions to work with `DataCombined` objects:
+
+    - `convertUnits()` to convert datasets in `DataCombined` to common units.
+    - `calculateResiduals()` to calculate residuals for datasets in `DataCombined`.
+
 ## Major Changes
 
 * The class `SimulationBatch` gets a new property `id`.

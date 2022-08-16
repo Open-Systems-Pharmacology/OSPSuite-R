@@ -67,6 +67,7 @@
 #' # Accessing the combined data frame
 #' myDataCombined$toDataFrame()
 #'
+#' @family data-combined
 #' @docType class
 #' @export
 DataCombined <- R6::R6Class(
@@ -375,7 +376,7 @@ DataCombined <- R6::R6Class(
     #'
     #' @return
     #'
-    #' In the returned data frame, the following columns will always be present:
+    #' In the returned tibble data frame, the following columns will always be present:
     #'
     #' name - group - dataType - xValues - xDimension - xUnit - yValues -
     #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight

@@ -48,11 +48,9 @@ ospsuite:::.addMissingGroupings(df)
 }
 \seealso{
 Other utilities-plotting: 
-\code{\link{.calculateResiduals}()},
 \code{\link{.convertGeneralToSpecificPlotConfiguration}()},
 \code{\link{.createAxesLabels}()},
-\code{\link{.extractAggregatedSimulatedData}()},
-\code{\link{.removeUnpairableDatasets}()}
+\code{\link{.extractAggregatedSimulatedData}()}
 }
 \concept{utilities-plotting}
 \keyword{internal}

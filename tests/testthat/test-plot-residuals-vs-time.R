@@ -117,6 +117,6 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
   expect_null(suppressWarnings(plotResidualsVsTime(myCombDat)))
   expect_warning(
     plotResidualsVsTime(myCombDat),
-    messages$plottingWithNoPairedDatasets()
+    messages$residualsCanNotBeComputed()
   )
 })

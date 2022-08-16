@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{.unitConverter}
 \alias{.unitConverter}
-\title{Convert data frame to common units}
+\title{Convert a data frame to common units}
 \usage{
 .unitConverter(data, xUnit = NULL, yUnit = NULL)
 }
@@ -15,22 +15,8 @@ columns (\code{xUnit} and \code{yUnit}) will be selected as the common unit. For
 available dimensions and units, see \code{ospsuite::ospDimensions} and
 \code{ospsuite::ospUnits}, respectively.}
 }
-\value{
-A data frame with measurement columns transformed to have common units.
-}
 \description{
-When multiple (observed and/or simulated) datasets are present in a data
-frame, they are likely to have different units. This function helps to
-convert them to a common unit specified by the user.
-
-This is especially helpful while plotting since the quantities from different
-datasets to be plotted on the X-and Y-axis need to have same units to be
-meaningfully compared.
-}
-\note{
-Molecular weight is \strong{required} for the conversion between certain
-dimensions (\code{Amount}, \code{Mass}, \code{Concentration (molar)}, and \code{Concentration (mass)}). Therefore, if molecular weight is missing for these dimension, the
-unit conversion will fail.
+Convert a data frame to common units
 }
 \examples{
 

@@ -5,13 +5,9 @@
 #' @keywords internal
 #' @noRd
 .validateDataCombinedForPlotting <- function(dataCombined) {
-  validateIsOfType(dataCombined, "DataCombined")
+  .validateScalarDataCombined(dataCombined)
 
-  # Only single instance is allowed.
-  validateIsSameLength(objectCount(dataCombined), 1L)
-
-  # If there are no datasets in the object, inform the user that no plot will
-  # be created.
+  # If there are no datasets in the object, no plot will be created.
   if (is.null(dataCombined$groupMap)) {
     warning(messages$plottingWithEmptyDataCombined())
   }
@@ -87,85 +83,6 @@
       TRUE ~ group
     )
   )
-
-  return(data)
-}
-
-#' Remove unpairable datasets for scatter plot functions
-#'
-#' @description
-#'
-#' Scatter plots by their nature require that data should be of paired, i.e. for
-#' every simulated dataset in a given group, there should also be a
-#' corresponding observed dataset.
-#'
-#' To this end, current function removes the following datasets:
-#'
-#' - Datasets which haven't been assigned to any group.
-#' - Datasets that are not part of a pair (i.e. a simulated dataset without
-#'   observed dataset partner, and vice versa).
-#'
-#' @param data A data frame returned by `DataCombined$toDataFrame()`.
-#'
-#' @family utilities-plotting
-#'
-#' @examples
-#'
-#' df <- dplyr::tribble(
-#'   ~name, ~dataType, ~group,
-#'   "Sim1", "Simulated", "GroupA",
-#'   "Sim2", "Simulated", "GroupA",
-#'   "Obs1", "Observed", "GroupB",
-#'   "Obs2", "Observed", "GroupB",
-#'   "Sim3", "Simulated", "GroupC",
-#'   "Obs3", "Observed", "GroupC",
-#'   "Sim4", "Simulated", "GroupD",
-#'   "Obs4", "Observed", "GroupD",
-#'   "Obs5", "Observed", "GroupD",
-#'   "Sim5", "Simulated", "GroupE",
-#'   "Sim6", "Simulated", "GroupE",
-#'   "Obs7", "Observed", "GroupE",
-#'   "Sim7", "Simulated", "GroupF",
-#'   "Sim8", "Simulated", "GroupF",
-#'   "Obs8", "Observed", "GroupF",
-#'   "Obs9", "Observed", "GroupF",
-#'   "Sim9", "Simulated", NA,
-#'   "Obs10", "Observed", NA
-#' )
-#'
-#' # original
-#' df
-#'
-#' # transformed
-#' ospsuite:::.removeUnpairableDatasets(df)
-#'
-#' @keywords internal
-.removeUnpairableDatasets <- function(data) {
-  # How many rows were originally present?
-  originalDatasets <- unique(data$name)
-
-  # Remove datasets that don't belong to any group.
-  data <- dplyr::filter(data, !is.na(group))
-
-  # Remove groups (and the datasets therein) with only one type (either only
-  # observed or only simulated) of dataset.
-  data <- data %>%
-    dplyr::group_by(group) %>%
-    dplyr::filter(length(unique(dataType)) > 1L) %>%
-    dplyr::ungroup()
-
-  # How many rows are left after filtering?
-  finalDatasets <- unique(data$name)
-
-  # Inform the user about which (if any) datasets were removed.
-  if (length(finalDatasets) < length(originalDatasets)) {
-    missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
-
-    message(messages$printMultipleEntries(
-      header = messages$datasetsToGroupNotFound(),
-      entries = missingDatasets
-    ))
-  }
 
   return(data)
 }
@@ -382,85 +299,7 @@
   return(multipleDatasetsPerGroup)
 }
 
-#' Created observed versus simulated paired data
-#'
-#' @param data A data frame from `DataCombined$toDataFrame()`, which has been
-#'   further tidied using `.removeUnpairableDatasets()` and then
-#'   `.unitConverter()` functions.
-#' @param scaling A character specifying scale: either linear (default) or
-#'   logarithmic.
-#'
-#' @family utilities-plotting
-#'
-#' @examples
-#'
-#' # create an example data frame
-#' df <- dplyr::tibble(
-#'   dataType = c(rep("observed", 5), rep("simulated", 3)),
-#'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
-#'   xUnit = ospUnits$Time$min,
-#'   xDimension = ospDimensions$Time,
-#'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
-#'   yErrorValues = rnorm(8),
-#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`,
-#'   yDimension = ospDimensions$`Concentration (mass)`
-#' )
-#'
-#' ospsuite:::.calculateResiduals(df)
-#'
-#' @keywords internal
-.calculateResiduals <- function(data, scaling = tlf::Scaling$lin) {
-  # Since the data frames will be fed to `matrix()`, make sure that data has
-  # `data.frame` class. That is, if tibbles are supplied, coerce them to a
-  # simple data frame.
-  observedData <- as.data.frame(dplyr::filter(data, dataType == "observed"))
-  simulatedData <- as.data.frame(dplyr::filter(data, dataType == "simulated"))
 
-  # If available, error values will be useful for plotting error bars in the
-  # scatter plot. Even if not available, add missing values to be consistent.
-  if ("yErrorValues" %in% colnames(data)) {
-    yErrorValues <- data$yErrorValues[data$dataType == "observed"]
-  } else {
-    yErrorValues <- rep(NA_real_, nrow(observedData))
-  }
-
-  # Time matrix to match observed time with closest simulation time
-  # This method assumes that there simulated data are dense enough to capture observed data
-  obsTimeMatrix <- matrix(observedData[, "xValues"], nrow(simulatedData), nrow(observedData), byrow = TRUE)
-  simTimeMatrix <- matrix(simulatedData[, "xValues"], nrow(simulatedData), nrow(observedData))
-
-  timeMatchedData <- as.numeric(sapply(as.data.frame(abs(obsTimeMatrix - simTimeMatrix)), which.min))
-
-  pairedData <- dplyr::tibble(
-    "obsTime"      = observedData[, "xValues"],
-    "xUnit"        = unique(data$xUnit),
-    "xDimension"   = unique(data$xDimension),
-    "obsValue"     = observedData[, "yValues"],
-    "predValue"    = simulatedData[timeMatchedData, "yValues"],
-    "yErrorValues" = yErrorValues,
-    "yUnit"        = unique(data$yUnit),
-    "yDimension"   = unique(data$yDimension)
-  )
-
-  # The linear scaling is represented either of the following:
-  #
-  # - `"lin"` (in `DefaultPlotConfiguration`)
-  # - `"identity"` (in `tlf::PlotConfiguration`, because of `{ggplot2}`)
-  if (scaling %in% c("lin", "identity")) {
-    pairedData <- dplyr::mutate(pairedData, resValue = predValue - obsValue)
-  } else {
-    pairedData <- dplyr::mutate(pairedData, resValue = log(predValue) - log(obsValue))
-  }
-
-  # Add minimum and maximum values for observed data to plot error bars
-  pairedData <- dplyr::mutate(
-    pairedData,
-    yValuesLower = obsValue - yErrorValues,
-    yValuesHigher = obsValue + yErrorValues
-  )
-
-  return(pairedData)
-}
 
 #' Compute error bar bounds from error type
 #'
@@ -512,42 +351,7 @@
 }
 
 
-#' Extract data frame for scatter plot functions
-#'
-#' @family utilities-plotting
-#'
-#' @keywords internal
-#' @noRd
-.dataCombinedToPairedData <- function(dataCombined,
-                                      xUnit = NULL,
-                                      yUnit = NULL,
-                                      scaling = tlf::Scaling$lin) {
-  # Validation has already taken place in the calling plotting function
-  combinedData <- dataCombined$toDataFrame()
 
-  # Remove the observed and simulated datasets which can't be paired.
-  combinedData <- .removeUnpairableDatasets(combinedData)
-
-  # Return early if there are no pair-able datasets present
-  if (nrow(combinedData) == 0L) {
-    warning(messages$plottingWithNoPairedDatasets())
-    return(NULL)
-  }
-
-  # Getting all datasets to have the same units.
-  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
-
-  # Create observed versus simulated paired data using interpolation for each
-  # grouping level and combine the resulting data frames in a row-wise manner.
-  #
-  # Both of these routines will be carried out by `dplyr::group_modify()`.
-  pairedData <- combinedData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .calculateResiduals(.x, scaling)) %>%
-    dplyr::ungroup()
-
-  return(pairedData)
-}
 
 
 #' Create plot-specific `tlf::PlotConfiguration` object
