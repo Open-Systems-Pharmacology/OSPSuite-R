@@ -30,10 +30,4 @@ df <- dplyr::tibble(
 ospsuite:::.extractResidualsToTibble(df)
 
 }
-\seealso{
-Other data-combined: 
-\code{\link{.cleanVectorArgs}()},
-\code{\link{DataCombined}}
-}
-\concept{data-combined}
 \keyword{internal}

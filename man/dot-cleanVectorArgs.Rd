@@ -33,11 +33,6 @@ the input was a list or an atomic vector.
 }
 \examples{
 ospsuite:::.cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
+ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex_), 4L, "numeric")
 }
-\seealso{
-Other data-combined: 
-\code{\link{.extractResidualsToTibble}()},
-\code{\link{DataCombined}}
-}
-\concept{data-combined}
 \keyword{internal}

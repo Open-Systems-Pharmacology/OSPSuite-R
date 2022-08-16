@@ -5,13 +5,9 @@
 #' @keywords internal
 #' @noRd
 .validateDataCombinedForPlotting <- function(dataCombined) {
-  validateIsOfType(dataCombined, "DataCombined")
+  .validateScalarDataCombined(dataCombined)
 
-  # Only single instance is allowed.
-  validateIsSameLength(objectCount(dataCombined), 1L)
-
-  # If there are no datasets in the object, inform the user that no plot will
-  # be created.
+  # If there are no datasets in the object, no plot will be created.
   if (is.null(dataCombined$groupMap)) {
     warning(messages$plottingWithEmptyDataCombined())
   }
@@ -90,8 +86,6 @@
 
   return(data)
 }
-
-
 
 
 #' Extract aggregated simulated data

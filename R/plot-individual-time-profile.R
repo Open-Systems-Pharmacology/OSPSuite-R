@@ -78,10 +78,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # data frames -----------------------------
 
-  combinedData <- dataCombined$toDataFrame()
-
   # Getting all units on the same scale
-  combinedData <- .unitConverter(combinedData, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+  combinedData <- convertUnits(dataCombined, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
 
   # Datasets which haven't been assigned to any group will be plotted as a group
   # on its own. That is, the `group` column entries for them will be their names.

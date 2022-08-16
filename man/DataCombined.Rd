@@ -57,8 +57,8 @@ myDataCombined$toDataFrame()
 }
 \seealso{
 Other data-combined: 
-\code{\link{.cleanVectorArgs}()},
-\code{\link{.extractResidualsToTibble}()}
+\code{\link{calculateResiduals}()},
+\code{\link{convertUnits}()}
 }
 \concept{data-combined}
 \section{Super class}{

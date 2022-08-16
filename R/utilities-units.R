@@ -400,33 +400,10 @@ ospUnits <- list()
 }
 
 
-#' Convert data frame to common units
-#'
-#' @description
-#'
-#' When multiple (observed and/or simulated) datasets are present in a data
-#' frame, they are likely to have different units. This function helps to
-#' convert them to a common unit specified by the user.
-#'
-#' This is especially helpful while plotting since the quantities from different
-#' datasets to be plotted on the X-and Y-axis need to have same units to be
-#' meaningfully compared.
-#'
-#' @note
-#'
-#' Molecular weight is **required** for the conversion between certain
-#' dimensions (`Amount`, `Mass`, `Concentration (molar)`, and `Concentration
-#' (mass)`). Therefore, if molecular weight is missing for these dimension, the
-#' unit conversion will fail.
-#'
-#' @return A data frame with measurement columns transformed to have common units.
+#' Convert a data frame to common units
 #'
 #' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
-#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), first of the existing units in the respective
-#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
-#'   available dimensions and units, see `ospsuite::ospDimensions` and
-#'   `ospsuite::ospUnits`, respectively.
+#' @inheritParams convertUnits
 #'
 #' @seealso toUnit
 #'
