@@ -94,7 +94,9 @@ myDataCombined$groupMap
 
 ## Extracting a combined data frame
 
-Internally, this object extracts data frames for observed and simulated datasets and combines them.
+The data frame (also sometimes called as a table) data structure is central to R-based workflows, and, thus, we may wish to extract a data frame for datasets present in the object.
+
+Internally, `DataCombined` extracts data frames for observed and simulated datasets and combines them.
 
 ```{r}
 myDataCombined$toDataFrame()
@@ -102,7 +104,7 @@ myDataCombined$toDataFrame()
 
 This function returns a [tibble data frame](https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame). If you wish to modify how it is printed, you can have a look at the available options [here](https://pillar.r-lib.org/reference/pillar_options.html). In fact, let's change a few options and print the data frame again.
 
-```{r}
+```{r, eval=FALSE}
 options(
   pillar.width = Inf, # show all columns
   pillar.min_chars = Inf # to turn off truncation of column titles
@@ -111,7 +113,39 @@ options(
 myDataCombined$toDataFrame()
 ```
 
-As can be seen, this data frame attemtps to provide a one-stop solution to access all important details about the datasets included in the object.
+
+```{r, echo=FALSE}
+# change these settings only temporarily
+withr::with_options(
+  list(
+    pillar.width = Inf, # show all columns
+    pillar.min_chars = Inf # to turn off truncation of column titles
+  ),
+  code = {
+    print(myDataCombined$toDataFrame())
+  }
+)
+```
+
+As can be seen, this data frame attemtps to provide a one-stop access to all important details about the datasets included in the object, including important meta-data.
+
+`{ospsuite}` also provides a few helper functions to modify the data frame further.
+
+When multiple (observed and/or simulated) datasets are present in a data frame, they are likely to have different units. `convertUnits()` function helps to convert them to a common unit^[Note that if you are using `DataCombined` object for plotting functions, you don't need to this conversion; the plotting functions will take care of this internally.].
+
+```{r}
+convertUnits(
+  myDataCombined,
+  xUnit = ospUnits$Time$s,
+  yUnit = ospUnits$`Concentration [mass]`$`µg/l`
+)
+```
+
+Furthermore, when both observed and simulated datasets are present, we can also compute residuals using `calculateResiduals()`:
+
+```{r}
+calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+```
 
 ## Visualizations with `DataCombined`
 
