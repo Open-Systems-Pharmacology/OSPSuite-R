@@ -10,7 +10,13 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  warning = FALSE,
+  message = FALSE,
+  dpi = 300,
+  comment = "#>",
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8
 )
 ```
 
@@ -91,6 +97,25 @@ At any point, you can check the current names and groupings with the following a
 ```{r}
 myDataCombined$groupMap
 ```
+
+## Transformations
+
+Sometimes the raw data included in `DataCombined` needs to be transformed using specified
+offset and scale factor values.
+
+This is supported via `$setDataTransformations()` method, where you can specify names of datasets, and offsets and scale factors. If these arguments are scalar (i.e., of length 1), then the same transformation will be appluied to all datasets.
+
+The internal data frame in `DataCombined` will be transformed with the specified parameters, with the new columns computed as: 
+
+  - For measurement variables: `newValue = (rawValue + offset) * scaleFactor`
+  - For error term: `newErrorValue = rawErrorValue * scaleFactor`
+
+At any point, you can check the applied offsets and scale factors with the following active field:
+
+```{r}
+myDataCombined$dataTransformations
+```
+
 
 ## Extracting a combined data frame
 
