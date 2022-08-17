@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-You have already seen how the `DataCombined` class can be utilized to store observed and/or simulated data (if not, read `vignette("data-combined")`).
+You have already seen how the `DataCombined` class can be utilized to store observed and/or simulated data (if not, read [Working with `DataCombined` class](data-combined.html)).
 
 Let's first create a `DataCombined` object, which we will use to demonstrate different visualizations available.
 

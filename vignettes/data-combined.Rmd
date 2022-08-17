@@ -1,8 +1,8 @@
 ---
-title: "Working with `DataCombined`"
+title: "Working with `DataCombined` class"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Working with `DataCombined`}
+  %\VignetteIndexEntry{Working with `DataCombined` class}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -149,4 +149,6 @@ calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
 
 ## Visualizations with `DataCombined`
 
-You can visualize the data stored in a `DataCombined` object. See `vignette("data-combined-plotting")` describing this functionality.
+Plotting the stored data is an important part of model diagnostics and quality control.
+
+See [Visualizations with `DataCombined`](data-combined-plotting.html) describing functions that can visualize data stored in `DataCombined` object.
