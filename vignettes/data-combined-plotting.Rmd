@@ -58,23 +58,28 @@ myDataCombined$addDataSets(
 
 ## Profile plots
 
+Time profile plots visualize the pharmacokinetics of the drug in question and help assess if the observed data (represented by points and error bars) match the simulated data (represented by lines).
+
 ```{r}
 plotIndividualTimeProfile(myDataCombined)
 ```
 
 ## Observed versus simulated scatter plot 
 
+Observed versus simulated plots show if simulated time points and observed time points follow a linear trend.
+
 ```{r}
 plotObservedVsSimulated(myDataCombined)
 ```
 
-## Residuals versus simulated scatter plot
+## Residuals versus time or simulated scatter plot
+
+Residual plots show if there is a systematic bias in how the simulation represents values either in high-concentration or low-concentration regions, or, alternatively, in early or late time periods.
 
 ```{r}
 plotResidualsVsSimulated(myDataCombined)
 ```
 
-## Residuals versus time scatter plot
 
 ```{r}
 plotResidualsVsTime(myDataCombined)
@@ -102,4 +107,13 @@ This configuration class can be passed to all plotting functions:
 
 ```{r}
 plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
+```
+
+## Saving plots
+
+The plots returned by plotting functions are `ggplot` objects. They can be modified further and saved to files with `{ggplot2}` functions:
+
+```{r save-plots, eval=FALSE}
+plotObject <- plotIndividualTimeProfile(dataCombined)
+ggplot2::ggsave(filename = "aciclovir_time_profile.png", plotObject, width = 8, height = 4)
 ```
