@@ -209,9 +209,6 @@ calculateResiduals <- function(dataCombined,
     yErrorValues <- rep(NA_real_, nrow(observedData))
   }
 
-  # Predicted values for simulated data points past the maximum should be `NA`.
-  maxSimTime <- max(simulatedData[, "xValues"])
-
   # Time matrix to match observed time with closest simulation time
   # This method assumes that there simulated data are dense enough to capture observed data.
   obsTimeMatrix <- matrix(observedData[, "xValues"], nrow(simulatedData), nrow(observedData), byrow = TRUE)
@@ -254,9 +251,14 @@ calculateResiduals <- function(dataCombined,
     .after = yValues # Create new columns after `yValues` column
   )
 
+  # Predicted values for simulated data points past the maximum simulated time
+  # should be `NA`.
+  maxSimTime <- max(simulatedData[, "xValues"])
   pairedData <- dplyr::mutate(pairedData,
     predictedValues = dplyr::case_when(
+      # Past max time: `NA`
       xValues > maxSimTime ~ NA_real_,
+      # Otherwise, no change
       TRUE ~ predictedValues
     )
   )
