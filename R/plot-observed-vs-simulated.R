@@ -107,6 +107,14 @@ plotObservedVsSimulated <- function(dataCombined,
     return(NULL)
   }
 
+  # Add minimum and maximum values for observed data to plot error bars
+  pairedData <- dplyr::mutate(
+    pairedData,
+    yValuesObservedLower = yValuesObserved - yErrorValues,
+    yValuesObservedHigher = yValuesObserved + yErrorValues,
+    .after = yValuesObserved # Create new columns after `yValuesObserved` column
+  )
+
   # Time points at which predicted values can't be interpolated, and need to be
   # extrapolated.
   #

@@ -104,9 +104,8 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'
 #' In the returned tibble data frame, the following columns will always be present:
 #'
-#' xValues - xUnit - xDimension - yValuesObserved - yValuesObservedLower -
-#' yValuesObservedHigher - yUnit - yDimension - yErrorValues - yErrorType -
-#' yErrorUnit - yValuesSimulated - residualValues
+#' xValues - xUnit - xDimension - yValuesObserved - yUnit - yDimension -
+#' yErrorValues - yErrorType - yErrorUnit - yValuesSimulated - residualValues
 #'
 #' @family data-combined
 #'
@@ -237,14 +236,6 @@ calculateResiduals <- function(dataCombined,
       xValues != 0, yValuesObserved != 0, yValuesSimulated != 0
     )
   }
-
-  # Add minimum and maximum values for observed data to plot error bars
-  pairedData <- dplyr::mutate(
-    pairedData,
-    yValuesObservedLower = yValuesObserved - yErrorValues,
-    yValuesObservedHigher = yValuesObserved + yErrorValues,
-    .after = yValuesObserved # Create new columns after `yValuesObserved` column
-  )
 
   # Predicted values for simulated data points past the maximum simulated time
   # should be `NA`.

@@ -21,9 +21,8 @@ available dimensions and units, see \code{ospsuite::ospDimensions} and
 \value{
 In the returned tibble data frame, the following columns will always be present:
 
-xValues - xUnit - xDimension - yValuesObserved - yValuesObservedLower -
-yValuesObservedHigher - yUnit - yDimension - yErrorValues - yErrorType -
-yErrorUnit - yValuesSimulated - residualValues
+xValues - xUnit - xDimension - yValuesObserved - yUnit - yDimension -
+yErrorValues - yErrorType - yErrorUnit - yValuesSimulated - residualValues
 }
 \description{
 Calculate residuals for datasets in \code{DataCombined}
