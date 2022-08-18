@@ -202,17 +202,20 @@ calculateResiduals <- function(dataCombined,
 
   timeMatchedData <- as.numeric(sapply(as.data.frame(abs(obsTimeMatrix - simTimeMatrix)), which.min))
 
-  pairedData <- dplyr::tibble(
-    "name"             = observedData[, "name"],
-    "xValues"          = observedData[, "xValues"],
-    "xUnit"            = unique(data$xUnit),
-    "xDimension"       = unique(data$xDimension),
-    "yValuesObserved"  = observedData[, "yValues"],
-    "yUnit"            = unique(data$yUnit),
-    "yDimension"       = unique(data$yDimension),
-    "yErrorValues"     = yErrorValues,
-    "yErrorType"       = observedData[, "yErrorType"],
-    "yErrorUnit"       = observedData[, "yErrorUnit"],
+  # Most of the columns in the observed data frame should also be included in
+  # the paired data frame for completeness.
+  pairedData <- dplyr::select(
+    observedData,
+    # Identifier column
+    name,
+    # Everything related to the X-variable
+    "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+    # Everything related to the Y-variable
+    "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y")
+  )
+
+  # Add predicted values
+  pairedData <- dplyr::mutate(pairedData,
     "yValuesSimulated" = simulatedData[timeMatchedData, "yValues"]
   )
 
