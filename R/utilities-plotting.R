@@ -303,15 +303,6 @@
 
 #' Compute error bar bounds from error type
 #'
-#' @details
-#'
-#' There are only three possibilities:
-#'
-#' - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
-#' - The error type is geometric (`DataErrorType$GeometricStdDev`).
-#' - If the errors are none of these, then add `NA`s (of type `double`), since
-#'   these are the only error types supported in `DataErrorType`.
-#'
 #' @keywords internal
 #' @noRd
 .computeBoundsFromErrorType <- function(data) {
@@ -330,6 +321,12 @@
         dplyr::near(yErrorValues, 0) ~ NA_real_,
         TRUE ~ yErrorValues
       ),
+      # For compuring uncertainty, there are only three possibilities:
+      #
+      # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
+      # - The error type is geometric (`DataErrorType$GeometricStdDev`).
+      # - If the errors are none of these, then add `NA`s (of type `double`),
+      #   since these are the only error types supported in `DataErrorType`.
       yValuesLower = dplyr::case_when(
         yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
         yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,

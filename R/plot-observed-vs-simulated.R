@@ -112,7 +112,7 @@ plotObservedVsSimulated <- function(dataCombined,
   #
   # This will happen in rare case scenarios where simulated data is sampled at a
   # lower frequency than observed data.
-  predictedValuesMissingIndices <- which(is.na(pairedData$predictedValues))
+  predictedValuesMissingIndices <- which(is.na(pairedData$yValuesSimulated))
 
   # Warn the user about failure to interpolate.
   if (length(predictedValuesMissingIndices) > 0) {
@@ -135,11 +135,11 @@ plotObservedVsSimulated <- function(dataCombined,
   tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
-      x     = "yValues",
-      y     = "predictedValues",
+      x     = "yValuesObserved",
+      y     = "yValuesSimulated",
       group = "group",
-      xmin  = "yValuesLower",
-      xmax  = "yValuesHigher"
+      xmin  = "yValuesObservedLower",
+      xmax  = "yValuesObservedHigher"
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration

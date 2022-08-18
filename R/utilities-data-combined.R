@@ -104,8 +104,9 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'
 #' In the returned tibble data frame, the following columns will always be present:
 #'
-#' xValues - xUnit - xDimension - yValues - yValuesLower - yValuesHigher -
-#' yErrorValues - yUnit - yDimension - predictedValues - residualValues
+#' xValues - xUnit - xDimension - yValuesObserved - yValuesObservedLower -
+#' yValuesObservedHigher - yUnit - yDimension - yErrorValues - yErrorType -
+#' yErrorUnit - yValuesSimulated - residualValues
 #'
 #' @family data-combined
 #'
@@ -217,21 +218,24 @@ calculateResiduals <- function(dataCombined,
   timeMatchedData <- as.numeric(sapply(as.data.frame(abs(obsTimeMatrix - simTimeMatrix)), which.min))
 
   pairedData <- dplyr::tibble(
-    "xValues"         = observedData[, "xValues"],
-    "xUnit"           = unique(data$xUnit),
-    "xDimension"      = unique(data$xDimension),
-    "yValues"         = observedData[, "yValues"],
-    "yErrorValues"    = yErrorValues,
-    "yUnit"           = unique(data$yUnit),
-    "yDimension"      = unique(data$yDimension),
-    "predictedValues" = simulatedData[timeMatchedData, "yValues"]
+    "name"             = observedData[, "name"],
+    "xValues"          = observedData[, "xValues"],
+    "xUnit"            = unique(data$xUnit),
+    "xDimension"       = unique(data$xDimension),
+    "yValuesObserved"  = observedData[, "yValues"],
+    "yUnit"            = unique(data$yUnit),
+    "yDimension"       = unique(data$yDimension),
+    "yErrorValues"     = yErrorValues,
+    "yErrorType"       = observedData[, "yErrorType"],
+    "yErrorUnit"       = observedData[, "yErrorUnit"],
+    "yValuesSimulated" = simulatedData[timeMatchedData, "yValues"]
   )
 
   # Residual computation will depend on the scaling.
   if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
-    pairedData <- dplyr::mutate(pairedData, residualValues = predictedValues - yValues)
+    pairedData <- dplyr::mutate(pairedData, residualValues = yValuesSimulated - yValuesObserved)
   } else {
-    pairedData <- dplyr::mutate(pairedData, residualValues = log(predictedValues) - log(yValues))
+    pairedData <- dplyr::mutate(pairedData, residualValues = log(yValuesSimulated) - log(yValuesObserved))
   }
 
   # In logarithmic scale, if any of the values are `0` (e.g. time measurement at
@@ -240,26 +244,29 @@ calculateResiduals <- function(dataCombined,
   #
   # To avoid this, just remove rows where any of the quantities are `0`s.
   if (scaling %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
-    pairedData <- dplyr::filter(pairedData, xValues != 0, yValues != 0, predictedValues != 0)
+    pairedData <- dplyr::filter(
+      pairedData,
+      xValues != 0, yValuesObserved != 0, yValuesSimulated != 0
+    )
   }
 
   # Add minimum and maximum values for observed data to plot error bars
   pairedData <- dplyr::mutate(
     pairedData,
-    yValuesLower = yValues - yErrorValues,
-    yValuesHigher = yValues + yErrorValues,
-    .after = yValues # Create new columns after `yValues` column
+    yValuesObservedLower = yValuesObserved - yErrorValues,
+    yValuesObservedHigher = yValuesObserved + yErrorValues,
+    .after = yValuesObserved # Create new columns after `yValuesObserved` column
   )
 
   # Predicted values for simulated data points past the maximum simulated time
   # should be `NA`.
   maxSimTime <- max(simulatedData[, "xValues"])
   pairedData <- dplyr::mutate(pairedData,
-    predictedValues = dplyr::case_when(
+    yValuesSimulated = dplyr::case_when(
       # Past max time: `NA`
       xValues > maxSimTime ~ NA_real_,
       # Otherwise, no change
-      TRUE ~ predictedValues
+      TRUE ~ yValuesSimulated
     )
   )
 
