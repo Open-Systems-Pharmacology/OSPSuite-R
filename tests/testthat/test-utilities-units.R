@@ -607,13 +607,15 @@ test_that("It shouldn't convert geometric error values or units, only `yValues`"
 
 # multiple concentration dims present --------------------------------
 
+concDims <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+
 dfConc <- dplyr::tibble(
   xValues = c(15, 0.5),
   xUnit = c("min", "h"),
   xDimension = "Time",
   yValues = c(0.25, 45),
   yUnit = c("mg/l", "mol/l"),
-  yDimension = c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`),
+  yDimension = concDims,
   yErrorValues = NA,
   yErrorUnit = NA,
   molWeight = 10
@@ -621,6 +623,6 @@ dfConc <- dplyr::tibble(
 
 dfConcConvert <- .unitConverter(dfConc)
 
-test_that("it can convert multiple concentration dimensions to a single one", {
-  expect_equal(unique(dfConcConvert$yDimension), "Concentration")
+test_that("it retains multiple concentration dimensions", {
+  expect_equal(unique(dfConcConvert$yDimension), concDims)
 })
