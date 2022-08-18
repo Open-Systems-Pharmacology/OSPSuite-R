@@ -21,7 +21,7 @@ test_that("It respects custom plot configuration", {
   myDataComb <- DataCombined$new()
   myDataComb$addSimulationResults(populationResults)
 
-  myDataCombined$setDataTransformations(
+  myDataComb$setDataTransformations(
     forNames = obsData$`Laskin 1982.Group D`$name,
     xOffsets = 2
   )
