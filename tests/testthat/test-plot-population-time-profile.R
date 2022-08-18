@@ -65,10 +65,19 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   # Add observed data set
   myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
+  myDataCombined$setDataTransformations(
+    forNames = obsData$`Laskin 1982.Group D`$name,
+    xOffsets = 2
+  )
+
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$yAxisScale <- "log"
+  myPlotConfiguration$yAxisLimits <- c(0.01, 1000)
+
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "obs and sim",
-    fig = plotPopulationTimeProfile(myDataCombined)
+    fig = plotPopulationTimeProfile(myDataCombined, myPlotConfiguration)
   )
 })
 
