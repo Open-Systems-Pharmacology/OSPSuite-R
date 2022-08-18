@@ -21,10 +21,17 @@ test_that("It respects custom plot configuration", {
   myDataComb <- DataCombined$new()
   myDataComb$addSimulationResults(populationResults)
 
+  myDataCombined$setDataTransformations(
+    forNames = obsData$`Laskin 1982.Group D`$name,
+    xOffsets = 2
+  )
+
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
+  myPlotConfiguration$yAxisScale <- "log"
+  myPlotConfiguration$yAxisLimits <- c(0.01, 1000)
 
   set.seed(123)
   vdiffr::expect_doppelganger(
