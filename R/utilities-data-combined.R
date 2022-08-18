@@ -104,8 +104,8 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'
 #' In the returned tibble data frame, the following columns will always be present:
 #'
-#' xValues - xUnit - xDimension - yValues - yValuesLower - yValuesHigher -
-#' yErrorValues - yUnit - yDimension - predictedValues - residualValues
+#' xValues - xUnit - xDimension - yValuesObserved - yUnit - yDimension -
+#' yErrorValues - yErrorType - yErrorUnit - yValuesSimulated - residualValues
 #'
 #' @family data-combined
 #'
@@ -178,21 +178,6 @@ calculateResiduals <- function(dataCombined,
 #'   further tidied using `.removeUnpairableDatasets()` and then
 #'   `.unitConverter()` functions.
 #'
-#' @examples
-#' # create an example data frame
-#' df <- dplyr::tibble(
-#'   dataType = c(rep("observed", 5), rep("simulated", 3)),
-#'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
-#'   xUnit = ospUnits$Time$min,
-#'   xDimension = ospDimensions$Time,
-#'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
-#'   yErrorValues = rnorm(8),
-#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`,
-#'   yDimension = ospDimensions$`Concentration (mass)`
-#' )
-#'
-#' ospsuite:::.extractResidualsToTibble(df, scaling = tlf::Scaling$lin)
-#'
 #' @keywords internal
 .extractResidualsToTibble <- function(data, scaling) {
   # Since the data frames will be fed to `matrix()`, make sure that data has
@@ -216,22 +201,28 @@ calculateResiduals <- function(dataCombined,
 
   timeMatchedData <- as.numeric(sapply(as.data.frame(abs(obsTimeMatrix - simTimeMatrix)), which.min))
 
-  pairedData <- dplyr::tibble(
-    "xValues"         = observedData[, "xValues"],
-    "xUnit"           = unique(data$xUnit),
-    "xDimension"      = unique(data$xDimension),
-    "yValues"         = observedData[, "yValues"],
-    "yErrorValues"    = yErrorValues,
-    "yUnit"           = unique(data$yUnit),
-    "yDimension"      = unique(data$yDimension),
-    "predictedValues" = simulatedData[timeMatchedData, "yValues"]
+  # Most of the columns in the observed data frame should also be included in
+  # the paired data frame for completeness.
+  pairedData <- dplyr::select(
+    observedData,
+    # Identifier column
+    name,
+    # Everything related to the X-variable
+    "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+    # Everything related to the Y-variable
+    "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y")
+  )
+
+  # Add predicted values
+  pairedData <- dplyr::mutate(pairedData,
+    "yValuesSimulated" = simulatedData[timeMatchedData, "yValues"]
   )
 
   # Residual computation will depend on the scaling.
   if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
-    pairedData <- dplyr::mutate(pairedData, residualValues = predictedValues - yValues)
+    pairedData <- dplyr::mutate(pairedData, residualValues = yValuesSimulated - yValuesObserved)
   } else {
-    pairedData <- dplyr::mutate(pairedData, residualValues = log(predictedValues) - log(yValues))
+    pairedData <- dplyr::mutate(pairedData, residualValues = log(yValuesSimulated) - log(yValuesObserved))
   }
 
   # In logarithmic scale, if any of the values are `0` (e.g. time measurement at
@@ -240,18 +231,46 @@ calculateResiduals <- function(dataCombined,
   #
   # To avoid this, just remove rows where any of the quantities are `0`s.
   if (scaling %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
-    pairedData <- dplyr::filter(pairedData, xValues != 0, yValues != 0)
+    pairedData <- dplyr::filter(
+      pairedData,
+      xValues != 0, yValuesObserved != 0, yValuesSimulated != 0
+    )
   }
 
-  # Add minimum and maximum values for observed data to plot error bars
-  pairedData <- dplyr::mutate(
-    pairedData,
-    yValuesLower = yValues - yErrorValues,
-    yValuesHigher = yValues + yErrorValues,
-    .after = yValues # Create new columns after `yValues` column
+  # Predicted values for simulated data points past the maximum simulated time
+  # should be `NA`.
+  maxSimTime <- max(simulatedData[, "xValues"])
+  pairedData <- dplyr::mutate(pairedData,
+    yValuesSimulated = dplyr::case_when(
+      # Past max time: `NA`
+      xValues > maxSimTime ~ NA_real_,
+      # Otherwise, no change
+      TRUE ~ yValuesSimulated
+    )
   )
 
   return(pairedData)
+}
+
+# TODO:
+#
+# Depending on what is decided in issue
+# https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091, change
+# defaults for `base` and `epsilon` for `.log_safe`, and use it instead of
+# using `log()` in `.extractResidualsToTibble()`.
+
+#' @keywords internal
+#' @noRd
+.log_safe <- function(x, base = 10, epsilon = .Machine$double.eps^0.5) {
+  x <- ospsuite.utils::toMissingOfType(x, type = "double")
+
+  if (is.na(x)) {
+    return(NA_real_)
+  } else if (x < epsilon) {
+    return(log(epsilon, base = base))
+  } else {
+    return(log(x, base = base))
+  }
 }
 
 #' Remove unpairable datasets for computing residuals

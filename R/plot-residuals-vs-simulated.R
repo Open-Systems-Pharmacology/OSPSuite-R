@@ -99,7 +99,7 @@ plotResidualsVsSimulated <- function(dataCombined,
   tlf::plotResVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ResVsPredDataMapping$new(
-      x = "predictedValues",
+      x = "yValuesSimulated",
       y = "residualValues",
       group = "group"
     ),

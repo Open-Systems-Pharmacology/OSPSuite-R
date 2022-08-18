@@ -199,6 +199,35 @@
     return(NULL)
   }
 
+  # special concern for concentration --------------------------
+
+  # If there are multiple dimensions for Y-axis variable, it is most likely to
+  # be due to multiple concentration dimensions.
+  #
+  # Hard code these to  a single dimension: `"Concentration"`.
+  #
+  # For more, see:
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
+  concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+
+  if (!all(is.na(data$yDimension))) {
+    data <- dplyr::mutate(data,
+      yDimension = dplyr::case_when(
+        yDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ yDimension
+      )
+    )
+  }
+
+  if (!all(is.na(data$xDimension))) {
+    data <- dplyr::mutate(data,
+      xDimension = dplyr::case_when(
+        xDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ xDimension
+      )
+    )
+  }
+
   # Initialize strings with unique values for units and dimensions.
   #
   # The`.unitConverter()` has already ensured that there is only a single unit
@@ -210,14 +239,6 @@
   # There might be multiple dimensions across datasets, select the first one.
   xDimensionString <- unique(data$xDimension)[[1]]
   yDimensionString <- unique(data$yDimension)[[1]]
-
-  # Hard code some concentration dimensions to one dimension: `"Concentration"`
-  #
-  # For more, see:
-  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
-  concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
-  xDimensionString <- ifelse(any(xDimensionString %in% concDimensions), "Concentration", xDimensionString)
-  yDimensionString <- ifelse(any(yDimensionString %in% concDimensions), "Concentration", yDimensionString)
 
   # If quantities are unitless, no unit information needs to be displayed.
   # Otherwise, `Dimension [Unit]` pattern is followed.
@@ -303,15 +324,6 @@
 
 #' Compute error bar bounds from error type
 #'
-#' @details
-#'
-#' There are only three possibilities:
-#'
-#' - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
-#' - The error type is geometric (`DataErrorType$GeometricStdDev`).
-#' - If the errors are none of these, then add `NA`s (of type `double`), since
-#'   these are the only error types supported in `DataErrorType`.
-#'
 #' @keywords internal
 #' @noRd
 .computeBoundsFromErrorType <- function(data) {
@@ -330,6 +342,12 @@
         dplyr::near(yErrorValues, 0) ~ NA_real_,
         TRUE ~ yErrorValues
       ),
+      # For compuring uncertainty, there are only three possibilities:
+      #
+      # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
+      # - The error type is geometric (`DataErrorType$GeometricStdDev`).
+      # - If the errors are none of these, then add `NA`s (of type `double`),
+      #   since these are the only error types supported in `DataErrorType`.
       yValuesLower = dplyr::case_when(
         yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
         yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
