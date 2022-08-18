@@ -117,3 +117,7 @@ The plots returned by plotting functions are `ggplot` objects. They can be modif
 plotObject <- plotIndividualTimeProfile(dataCombined)
 ggplot2::ggsave(filename = "aciclovir_time_profile.png", plotObject, width = 8, height = 4)
 ```
+
+## Implementation details
+
+All plotting functions in `{ospsuite}` make use of the `{tlf}` library to prepare visualizations. To know more about this library, see its [website](https://www.open-systems-pharmacology.org/TLF-Library/).
