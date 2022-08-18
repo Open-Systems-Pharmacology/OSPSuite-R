@@ -252,6 +252,27 @@ calculateResiduals <- function(dataCombined,
   return(pairedData)
 }
 
+# TODO:
+#
+# Depending on what is decided in issue
+# https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091, change
+# defaults for `base` and `epsilon` for `.log_safe`, and use it instead of
+# using `log()` in `.extractResidualsToTibble()`.
+
+#' @keywords internal
+#' @noRd
+.log_safe <- function(x, base = 10, epsilon = .Machine$double.eps^0.5) {
+  x <- ospsuite.utils::toMissingOfType(x, type = "double")
+
+  if (is.na(x)) {
+    return(NA_real_)
+  } else if (x < epsilon) {
+    return(log(epsilon, base = base))
+  } else {
+    return(log(x, base = base))
+  }
+}
+
 #' Remove unpairable datasets for computing residuals
 #'
 #' @description
