@@ -179,21 +179,6 @@ calculateResiduals <- function(dataCombined,
 #'   further tidied using `.removeUnpairableDatasets()` and then
 #'   `.unitConverter()` functions.
 #'
-#' @examples
-#' # create an example data frame
-#' df <- dplyr::tibble(
-#'   dataType = c(rep("observed", 5), rep("simulated", 3)),
-#'   xValues = c(1, 3, 3.5, 4, 5, 0, 2, 4),
-#'   xUnit = ospUnits$Time$min,
-#'   xDimension = ospDimensions$Time,
-#'   yValues = c(1.9, 6.1, 7, 8.2, 1, 0, 4, 8),
-#'   yErrorValues = rnorm(8),
-#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`,
-#'   yDimension = ospDimensions$`Concentration (mass)`
-#' )
-#'
-#' ospsuite:::.extractResidualsToTibble(df, scaling = tlf::Scaling$lin)
-#'
 #' @keywords internal
 .extractResidualsToTibble <- function(data, scaling) {
   # Since the data frames will be fed to `matrix()`, make sure that data has
