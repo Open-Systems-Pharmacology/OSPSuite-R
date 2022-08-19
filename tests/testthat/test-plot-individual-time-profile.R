@@ -86,7 +86,6 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   )
 })
 
-
 # edge cases ------------------------
 
 test_that("It works when geometric error is present", {
