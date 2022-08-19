@@ -23,6 +23,7 @@ articles:
     - sensitivity-analysis
     - create-individual
     - create-run-population
+    - observed-data
 
   - title: Miscellaneous
     navbar: Miscellaneous
