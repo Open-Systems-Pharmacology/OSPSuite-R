@@ -3,31 +3,65 @@
 context("plotObservedVsSimulated")
 skip_if(getRversion() < "4.1")
 
-oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC"))
-manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
+# load the simulation
+sim <- loadTestSimulation("MinimalModel")
+simResults <- importResultsFromCSV(
+  simulation = sim,
+  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+)
 
-# one dataset per group -----------------------------------
+# import observed data (will return a list of `DataSet` objects)
+dataSet <- loadDataSetsFromExcel(
+  xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+)
 
-test_that("It creates default plots as expected with one dataset per group", {
+# create a new instance and add datasets
+myCombDat <- DataCombined$new()
+myCombDat$addDataSets(dataSet)
+myCombDat$addSimulationResults(
+  simResults,
+  quantitiesOrPaths = c(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
+  )
+)
+
+myCombDat$setGroups(
+  names = c(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+    "Stevens_2012_placebo.Placebo_total",
+    "Stevens_2012_placebo.Placebo_distal",
+    "Stevens_2012_placebo.Placebo_proximal"
+  ),
+  groups = c("Solid total", "Solid distal", "Solid proximal", "Solid total", "Solid distal", "Solid proximal")
+)
+
+test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "one per group",
-    fig = plotObservedVsSimulated(oneObsSimDC)
+    title = "defaults",
+    fig = plotObservedVsSimulated(myCombDat)
   )
 })
 
-# multiple datasets per group -----------------------------------
+test_that("It issues warning when scale is linear", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$xAxisScale <- tlf::Scaling$lin
+  myPlotConfiguration$yAxisScale <- tlf::Scaling$lin
 
-test_that("It creates default plots as expected with multiple datasets per group", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "many per group - defaults",
-    fig = plotObservedVsSimulated(manyObsSimDC)
+    title = "linear scale",
+    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration)
   )
 })
 
 
-test_that("many per group - defaults", {
+test_that("It respects custom plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
   myPlotConfiguration$title <- "My Plot Title"
@@ -44,9 +78,9 @@ test_that("many per group - defaults", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "many per group - custom",
+    title = "custom",
     fig = plotObservedVsSimulated(
-      manyObsSimDC,
+      myCombDat,
       myPlotConfiguration,
       foldDistance = c(1.5, 2)
     )
@@ -58,20 +92,40 @@ test_that("many per group - defaults", {
   expect_null(myPlotConfiguration$yLabel)
 })
 
+test_that("It produces expected plot for Aciclovir data", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
 
-# edge cases ------------------------
+  simResults <- runSimulation(sim)
 
-test_that("It issues warning when scale is linear", {
-  myPlotConfiguration <- DefaultPlotConfiguration$new()
-  myPlotConfiguration$xAxisScale <- tlf::Scaling$lin
-  myPlotConfiguration$yAxisScale <- tlf::Scaling$lin
+  obsData <- lapply(
+    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  )
+
+  names(obsData) <- lapply(obsData, function(x) x$name)
+
+  outputPaths <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  myDataCombined <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined$addSimulationResults(
+    simulationResults = simResults,
+    quantitiesOrPaths = outputPaths,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "linear scale",
-    fig = plotObservedVsSimulated(oneObsSimDC, myPlotConfiguration)
+    title = "Aciclovir",
+    fig = plotObservedVsSimulated(myDataCombined)
   )
 })
+
+# edge cases ------------------------
 
 test_that("It returns `NULL` when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
