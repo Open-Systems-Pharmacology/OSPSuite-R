@@ -94,6 +94,35 @@ test_that("It respects custom plot configuration", {
 
 # edge cases ------------------------
 
+test_that("It doesn't extrapolate past maximum simulated time point", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  simData <- withr::with_tempdir({
+    df <- dplyr::tibble(
+      IndividualId = c(0, 0, 0),
+      `Time [min]` = c(0, 2, 4),
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+    )
+    readr::write_csv(df, "SimResults.csv")
+    importResultsFromCSV(sim, "SimResults.csv")
+  })
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$xUnit <- "min"
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "NA past max sim time",
+    fig = plotResidualsVsSimulated(myDC)
+  )
+})
+
 test_that("It returns `NULL` when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
