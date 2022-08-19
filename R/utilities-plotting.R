@@ -295,32 +295,6 @@
   return(plotConfiguration)
 }
 
-#' Check if there are multiple datasets of a given type per group
-#'
-#' @details
-#'
-#' The entered data should not contain both observed and simulated datasets.
-#'
-#' @param data A data frame from `DataCombined$groupMap`, subset to either focus
-#'   only on observed or simulated data.
-#'
-#' @keywords internal
-#' @noRd
-.hasMultipleDatasetsPerGroup <- function(data) {
-  # Retain only the columns that have relevant information for group mapping.
-  data <- dplyr::select(data, group, name)
-
-  # Keep only distinct combinations.
-  data <- dplyr::distinct(data)
-
-  datasetCount <- dplyr::count(dplyr::group_by(data, group))
-
-  multipleDatasetsPerGroup <- any(datasetCount[["n"]] > 1L)
-
-  return(multipleDatasetsPerGroup)
-}
-
-
 
 #' Compute error bar bounds from error type
 #'
