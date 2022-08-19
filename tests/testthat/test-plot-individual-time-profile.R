@@ -7,66 +7,52 @@ skip_on_os("linux")
 
 skip_if(getRversion() < "4.1")
 
-# load the simulation
-sim <- loadTestSimulation("MinimalModel")
-simResults <- importResultsFromCSV(
-  simulation = sim,
-  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+
+simResults <- runSimulation(sim)
+
+obsData <- lapply(
+  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
 )
 
-# import observed data (will return a list of `DataSet` objects)
-dataSet <- loadDataSetsFromExcel(
-  xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+names(obsData) <- lapply(obsData, function(x) x$name)
+
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+myDataCombined <- DataCombined$new()
+
+# Add simulated results
+myDataCombined$addSimulationResults(
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir PVB"
 )
 
-# both observed and simulated ------------------------
-
-# create a new instance and add datasets
-myCombDat <- DataCombined$new()
-myCombDat$addSimulationResults(
-  simResults,
-  quantitiesOrPaths = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention"
-  )
-)
-myCombDat$addDataSets(dataSet)
-
-myCombDat$setGroups(
-  names = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Stevens_2012_placebo.Sita_dist",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Stevens_2012_placebo.Sita_proximal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention",
-    "Stevens_2012_placebo.Sita_total"
-  ),
-  groups = c("distal", "distal", "proximal", "proximal", "total", "total")
-)
+# Add observed data set
+myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
 test_that("It creates default plots as expected for both observed and simulated", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults - both",
-    fig = plotIndividualTimeProfile(myCombDat)
+    fig = plotIndividualTimeProfile(myDataCombined)
   )
 })
 
 test_that("It respects custom plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
-  myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
   myPlotConfiguration$title <- "My Plot Title"
   myPlotConfiguration$subtitle <- "My Plot Subtitle"
   myPlotConfiguration$caption <- "My Sources"
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-  myPlotConfiguration$yAxisScale <- tlf::Scaling$log
+  myPlotConfiguration$yAxisScale <- "log"
+  myPlotConfiguration$yAxisLimits <- c(0.01, 1000)
 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "custom",
-    fig = plotIndividualTimeProfile(myCombDat, myPlotConfiguration)
+    fig = plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
   )
 
   # Since these were not specified by the user, they should not be updated
@@ -79,7 +65,7 @@ test_that("It respects custom plot configuration", {
 # only observed ------------------------
 
 myCombDat2 <- DataCombined$new()
-myCombDat2$addDataSets(dataSet)
+myCombDat2$addDataSets(obsData$`Vergin 1995.Iv`)
 
 test_that("It creates default plots as expected for only observed", {
   set.seed(123)
@@ -93,12 +79,9 @@ test_that("It creates default plots as expected for only observed", {
 
 myCombDat3 <- DataCombined$new()
 myCombDat3$addSimulationResults(
-  simResults,
-  quantitiesOrPaths = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention"
-  )
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir PVB"
 )
 
 test_that("It creates default plots as expected for only simulated", {
