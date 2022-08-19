@@ -127,7 +127,7 @@
 <line x1='324.08' y1='68.15' x2='337.90' y2='68.15' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <rect x='322.35' y='76.79' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='323.06' y='77.50' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #CE3D32; fill-opacity: 0.50;' />
-<line x1='324.08' y1='85.43' x2='337.90' y2='85.43' style='stroke-width: 2.13; stroke: #CE3D32; stroke-opacity: 0.75; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
+<line x1='324.08' y1='85.43' x2='337.90' y2='85.43' style='stroke-width: 2.13; stroke: #CE3D32; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <text x='345.11' y='71.59' style='font-size: 10.00px; font-family: sans;' textLength='236.63px' lengthAdjust='spacingAndGlyphs'>Organism|Muscle|Intracellular|Aciclovir|Concentration</text>
 <text x='345.11' y='88.87' style='font-size: 10.00px; font-family: sans;' textLength='346.90px' lengthAdjust='spacingAndGlyphs'>Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</text>
 <text x='33.23' y='29.63' style='font-size: 10.00px; font-family: sans;' textLength='69.48px' lengthAdjust='spacingAndGlyphs'>My Plot Subtitle</text>

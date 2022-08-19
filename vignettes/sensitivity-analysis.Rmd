@@ -20,7 +20,7 @@ In brief, the values of the chosen parameters are changed by a certain percentag
 
 ## Performing a sensitivity analysis
 
-The first step of performing a sensitivity analysis is creating an object of the class `SensitivityAnalysis`. At this step, the user can define which parameters should be considered for the sensitivity analysis, in which range the values are varied, and how may steps are performed in one direction (plus and minus). If no parameters are specified, all constant and suitable for sensitivity calculations parameters of the simulation will be variated. The list of such parameters paths for a simulation can be accessed with the method `potentialVariableParameterPathsFor(simulation)`.
+The first step of performing a sensitivity analysis is creating an object of the class `SensitivityAnalysis`. At this step, the user can define which parameters should be considered for the sensitivity analysis, in which range the values are varied, and how may steps are performed in one direction (plus and minus). If no parameters are specified, all constant and suitable for sensitivity calculations parameters of the simulation will be varied. The list of such parameters paths for a simulation can be accessed with the method `potentialVariableParameterPathsFor(simulation)`.
 
 ```{r createSensitivityAnalysis}
 library(ospsuite)
