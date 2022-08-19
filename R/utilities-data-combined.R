@@ -218,6 +218,18 @@ calculateResiduals <- function(dataCombined,
     "yValuesSimulated" = simulatedData[timeMatchedData, "yValues"]
   )
 
+  # Predicted values for simulated data points past the maximum simulated time
+  # should be `NA`.
+  maxSimTime <- max(simulatedData[, "xValues"])
+  pairedData <- dplyr::mutate(pairedData,
+    yValuesSimulated = dplyr::case_when(
+      # Past max time: `NA`
+      xValues > maxSimTime ~ NA_real_,
+      # Otherwise, no change
+      TRUE ~ yValuesSimulated
+    )
+  )
+
   # Residual computation will depend on the scaling.
   if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
     pairedData <- dplyr::mutate(pairedData, residualValues = yValuesSimulated - yValuesObserved)
@@ -236,18 +248,6 @@ calculateResiduals <- function(dataCombined,
       xValues != 0, yValuesObserved != 0, yValuesSimulated != 0
     )
   }
-
-  # Predicted values for simulated data points past the maximum simulated time
-  # should be `NA`.
-  maxSimTime <- max(simulatedData[, "xValues"])
-  pairedData <- dplyr::mutate(pairedData,
-    yValuesSimulated = dplyr::case_when(
-      # Past max time: `NA`
-      xValues > maxSimTime ~ NA_real_,
-      # Otherwise, no change
-      TRUE ~ yValuesSimulated
-    )
-  )
 
   return(pairedData)
 }
