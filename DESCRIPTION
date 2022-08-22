@@ -12,6 +12,7 @@ Authors@R:
 Description: The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
   created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 License: GPL-2 | file LICENSE
+Language: en-US
 URL: https://github.com/open-systems-pharmacology/ospsuite-r, 
     https://www.open-systems-pharmacology.org/OSPSuite-R/ (release),
     https://www.open-systems-pharmacology.org/OSPSuite-R/dev (development)
