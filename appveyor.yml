@@ -35,7 +35,7 @@ build_script:
   - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
-  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
 
 test_script:
   - travis-tool.sh run_tests
@@ -44,6 +44,9 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
+on_success:
+  - Rscript -e "spelling::spell_check_package()"
+  
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs
