@@ -1,217 +1,100 @@
-# data to be used ---------------------------------------
-
 context("plotIndividualTimeProfile")
-
-# `loadDataSetsFromExcel()` does not work for non-Windows platforms
-skip_on_os("linux")
-
+skip_on_os("linux") # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 skip_if(getRversion() < "4.1")
 
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
+# `DataCombined` objects ------------------------
 
-simResults <- runSimulation(sim)
+oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
+manyObsDC <- readRDS(getTestDataFilePath("manyObsDC"))
 
-obsData <- lapply(
-  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-)
+oneSimDC <- readRDS(getTestDataFilePath("oneSimDC"))
+manySimDC <- readRDS(getTestDataFilePath("manySimDC"))
 
-names(obsData) <- lapply(obsData, function(x) x$name)
+oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC"))
+manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
 
-outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-myDataCombined <- DataCombined$new()
+oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
 
-# Add simulated results
-myDataCombined$addSimulationResults(
-  simulationResults = simResults,
-  quantitiesOrPaths = outputPath,
-  groups = "Aciclovir PVB"
-)
-
-# Add observed data set
-myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
-
-test_that("It creates default plots as expected for both observed and simulated", {
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "defaults - both",
-    fig = plotIndividualTimeProfile(myDataCombined)
-  )
-})
-
-test_that("It respects custom plot configuration", {
-  myPlotConfiguration <- DefaultPlotConfiguration$new()
-  myPlotConfiguration$title <- "My Plot Title"
-  myPlotConfiguration$subtitle <- "My Plot Subtitle"
-  myPlotConfiguration$caption <- "My Sources"
-  myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-  myPlotConfiguration$yAxisScale <- "log"
-  myPlotConfiguration$yAxisLimits <- c(0.01, 1000)
-
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "custom",
-    fig = plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
-  )
-
-  # Since these were not specified by the user, they should not be updated
-  # after plotting function is done with it.
-  expect_null(myPlotConfiguration$xLabel)
-  expect_null(myPlotConfiguration$yLabel)
-})
-
+customDPC <- readRDS(getTestDataFilePath("customDPC"))
 
 # only observed ------------------------
 
-myCombDat2 <- DataCombined$new()
-myCombDat2$addDataSets(obsData$`Vergin 1995.Iv`)
-
-test_that("It creates default plots as expected for only observed", {
+test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "defaults - obs",
-    fig = plotIndividualTimeProfile(myCombDat2)
+    title = "single obs",
+    fig = plotIndividualTimeProfile(oneObsDC)
+  )
+})
+
+test_that("It creates default plots as expected for multiple observed datasets", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple obs",
+    fig = plotIndividualTimeProfile(manyObsDC)
   )
 })
 
 # only simulated ------------------------
 
-myCombDat3 <- DataCombined$new()
-myCombDat3$addSimulationResults(
-  simulationResults = simResults,
-  quantitiesOrPaths = outputPath,
-  groups = "Aciclovir PVB"
-)
-
-test_that("It creates default plots as expected for only simulated", {
+test_that("It creates default plots as expected for single simulated dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "defaults - sim",
-    fig = plotIndividualTimeProfile(myCombDat3)
+    title = "single sim",
+    fig = plotIndividualTimeProfile(oneSimDC)
   )
 })
 
-
-# geometric error ------------------------
-
-test_that("It works when geometric error is present", {
-  obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
-
-  myDataCombined4 <- DataCombined$new()
-  myDataCombined4$addDataSets(obsData, groups = "Aciclovir PVB")
-
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "geometric error",
-    fig = plotIndividualTimeProfile(myDataCombined4)
-  )
-})
-
-# multiple datasets per group ------------------------
-
-test_that("It maps multiple observed datasets to different shapes", {
-  dataSet1 <- DataSet$new(name = "Dataset1")
-  dataSet1$setValues(1, 1)
-  dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
-  dataSet1$molWeight <- 1
-
-  dataSet2 <- DataSet$new(name = "Dataset2")
-  dataSet2$setValues(2, 1)
-  dataSet2$yDimension <- ospDimensions$`Concentration (mass)`
-  dataSet2$molWeight <- 1
-
-  dataSet3 <- DataSet$new(name = "Dataset3")
-  dataSet3$setValues(1, 3)
-  dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
-  dataSet3$molWeight <- 1
-
-  myCombDat5 <- DataCombined$new()
-  myCombDat5$addDataSets(
-    c(dataSet1, dataSet2, dataSet3),
-    groups = "myGroup"
-  )
-
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "multiple obs",
-    fig = plotIndividualTimeProfile(myCombDat5)
-  )
-})
-
-test_that("It maps simulated datasets to different linetypes", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  outputPath <- c(
-    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
-  )
-
-  addOutputs(outputPath, sim)
-  simResults <- runSimulation(sim)
-
-
-  myDataCombined6 <- DataCombined$new()
-
-  # Add simulated results
-  myDataCombined6$addSimulationResults(
-    simulationResults = simResults,
-    quantitiesOrPaths = outputPath,
-    groups = "Aciclovir PVB"
-  )
-
+test_that("It creates default plots as expected for multiple simulated datasets", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim",
-    fig = plotIndividualTimeProfile(myDataCombined6)
+    fig = plotIndividualTimeProfile(manySimDC)
   )
 })
 
+# single observed and simulated datasets ------------------------
+
+test_that("It creates default plots as expected for both observed and simulated", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - default",
+    fig = plotIndividualTimeProfile(oneObsSimDC)
+  )
+})
+
+test_that("It respects custom plot configuration", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - custom",
+    fig = plotIndividualTimeProfile(oneObsSimDC, customDPC)
+  )
+
+  # Since these were not specified by the user, they should not be updated
+  # after plotting function is done with it.
+  expect_null(customDPC$xLabel)
+  expect_null(customDPC$yLabel)
+})
+
+# multiple observed and simulated datasets ------------------------
+
 test_that("It maps multiple observed and simulated datasets to different visual properties", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  outputPath <- c(
-    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
-  )
-
-  addOutputs(outputPath, sim)
-  simResults <- runSimulation(sim)
-
-  obsData <- lapply(
-    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) {
-      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-    }
-  )
-
-  names(obsData) <- lapply(obsData, function(x) {
-    x$name
-  })
-
-  myDataCombined5 <- DataCombined$new()
-
-  # Add simulated results
-  myDataCombined5$addSimulationResults(
-    simulationResults = simResults,
-    quantitiesOrPaths = outputPath,
-    groups = "Aciclovir PVB"
-  )
-
-  # Add observed data set
-  myDataCombined5$addDataSets(obsData, groups = "Aciclovir observed")
-
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs and sim",
-    fig = plotIndividualTimeProfile(myDataCombined5)
+    fig = plotIndividualTimeProfile(manyObsSimDC)
   )
 })
 
-
 # edge cases ------------------------
+
+test_that("It works when geometric error is present", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "geometric error",
+    fig = plotIndividualTimeProfile(oneObsGeometricDC)
+  )
+})
 
 test_that("It returns `NULL` when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
