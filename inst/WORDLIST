@@ -28,6 +28,7 @@ displayName
 displayUnit
 dm
 Dockerfiles
+DosePerBodyWeight
 dplyr
 DrugComplex
 drugmass
@@ -86,6 +87,7 @@ parametersOrPaths
 pathArray
 PBPK
 pK
+PK-Sim
 pkAnalyses
 pkml
 PKML
@@ -142,6 +144,7 @@ UserDefinedPKParameter
 ValuePoint
 www
 xArgs
+xenobiotic
 xDimension
 XDimension
 xLabel

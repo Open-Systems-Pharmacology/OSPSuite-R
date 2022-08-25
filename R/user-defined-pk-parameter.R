@@ -35,7 +35,7 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
     endApplicationIndex = function(value) {
       private$wrapIndexProperty("EndApplicationIndex", value)
     },
-    #' @field normalizationFactor Factor to use to normalized the calculated PK-Parameter. (typically DrugMass, Dose, Dose per bodyweight).
+    #' @field normalizationFactor Factor to use to normalized the calculated PK-Parameter. (typically DrugMass, Dose, DosePerBodyWeight).
     #' It is the responsibility of the caller to ensure that the value is in the correct unit. (optional)
     normalizationFactor = function(value) {
       private$wrapProperty("NormalizationFactor", value)

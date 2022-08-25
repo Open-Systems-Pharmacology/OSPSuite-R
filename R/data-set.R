@@ -227,7 +227,7 @@ DataSet <- R6::R6Class(
     },
 
     #' @description
-    #' Sets the xValues, yValues, and (optionally) yErrorValuues into the dataSet.
+    #' Sets the xValues, yValues, and (optionally) yErrorValues into the dataSet.
     #' Note: xValues, yValues and yErrorValues must have the same length
     #' @param xValues xValues to use
     #' @param yValues yValues to use

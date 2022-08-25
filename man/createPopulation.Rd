@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-population.R
 \name{createPopulation}
 \alias{createPopulation}
-\title{Creates an population using the PKSim Database}
+\title{Creates an population using the PK-Sim Database}
 \usage{
 createPopulation(populationCharacteristics)
 }
@@ -19,5 +19,5 @@ An list with three entries:
 }
 }
 \description{
-Creates an population using the PKSim Database
+Creates an population using the PK-Sim Database
 }

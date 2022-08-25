@@ -27,7 +27,7 @@ Molecule <- R6::R6Class(
       }
     },
     #' @field  scaleDivisor Scale divisor. Its purpose is to reduce numerical noise and to enhance computation performance.
-    #' see https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#import-molecule-and-parameter-start-values-from-excel
+    #' see \url{https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#import-molecule-and-parameter-start-values-from-excel}
     scaleDivisor = function(value) {
       private$wrapProperty("ScaleDivisor", value)
     }
