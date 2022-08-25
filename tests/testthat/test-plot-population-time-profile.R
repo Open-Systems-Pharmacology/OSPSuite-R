@@ -52,13 +52,13 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   )
   names(obsData) <- lapply(obsData, function(x) x$name)
 
-  outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  outputPaths <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   myDataCombined <- DataCombined$new()
 
   # Add simulated results
   myDataCombined$addSimulationResults(
     simulationResults = simResults,
-    quantitiesOrPaths = outputPath,
+    quantitiesOrPaths = outputPaths,
     groups = "Aciclovir PVB"
   )
 
