@@ -24,10 +24,11 @@ Imports:
     dplyr (>= 1.0.0),
     ospsuite.utils (>= 1.4.0),
     purrr,
-    R6,
     readr,
     stringr,
     tidyr,
+    ggplot2,
+    rlang,
     tlf (>= 1.4.0)
 Suggests:
     knitr,

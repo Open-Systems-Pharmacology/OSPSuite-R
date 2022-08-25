@@ -20,7 +20,7 @@ Derived from \link{Quantity}, please see base class documentation.
 \item{\code{value}}{Start value of the molecule}
 
 \item{\code{scaleDivisor}}{Scale divisor. Its purpose is to reduce numerical noise and to enhance computation performance.
-see \link{https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#import-molecule-and-parameter-start-values-from-excel}}
+see \url{https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#import-molecule-and-parameter-start-values-from-excel}}
 }
 \if{html}{\out{</div>}}
 }
