@@ -266,8 +266,8 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
 
 #' Retrieves the display path of the quantity defined by path in the simulation
 #'
-#' @param paths A single string or array of paths path relative to the `simulation`
-#' @param simulation A imulation used to find the entities
+#' @param paths A single string or array of paths path relative to the `Simulation`
+#' @param simulation A `Simulation` used to find the entities
 #'
 #' @return a display path for each entry in paths
 #'
@@ -319,7 +319,7 @@ getAllObserverPathsIn <- function(container) {
 #' for the given path, an error is thrown. If `FALSE`, `FALSE` is returned.
 #'
 #' @return `TRUE` if the value is an explicit formula, `FALSE` otherwise.
-#' Alsoe returns `FALSE` if no quantity with the given path is found and
+#' Also returns `FALSE` if no quantity with the given path is found and
 #' `stopInfNotFound` is set to `FALSE`.
 #' @export
 #'

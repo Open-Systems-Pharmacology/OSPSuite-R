@@ -82,7 +82,7 @@ Print the formula to the console without the name of the class
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
+\item{\code{allPoints}}{Returns all points defined in the table formula for a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
 
 \item{\code{useDerivedValues}}{Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}}
 

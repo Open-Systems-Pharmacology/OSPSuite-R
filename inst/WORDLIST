@@ -28,6 +28,7 @@ displayName
 displayUnit
 dm
 Dockerfiles
+DosePerBodyWeight
 dplyr
 DrugComplex
 drugmass
@@ -86,6 +87,7 @@ parametersOrPaths
 pathArray
 PBPK
 pK
+PK-Sim
 pkAnalyses
 pkml
 PKML

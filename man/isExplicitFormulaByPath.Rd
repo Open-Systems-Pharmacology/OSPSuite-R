@@ -16,7 +16,7 @@ for the given path, an error is thrown. If \code{FALSE}, \code{FALSE} is returne
 }
 \value{
 \code{TRUE} if the value is an explicit formula, \code{FALSE} otherwise.
-Alsoe returns \code{FALSE} if no quantity with the given path is found and
+Also returns \code{FALSE} if no quantity with the given path is found and
 \code{stopInfNotFound} is set to \code{FALSE}.
 }
 \description{

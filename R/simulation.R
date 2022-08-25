@@ -61,7 +61,7 @@ Simulation <- R6::R6Class(
       rClr::clrCall(private$.buildConfiguration, "AllPresentEndogenousStationaryMoleculeNames")
     },
     #' @description
-    #' Returns the name of all xenobiotoc floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
+    #' Returns the name of all xenobiotic floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
     #' This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
     allXenobioticFloatingMoleculeNames = function() {
       rClr::clrCall(private$.buildConfiguration, "AllPresentXenobioticFloatingMoleculeNames")

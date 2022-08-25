@@ -8,7 +8,7 @@ TableFormula <- R6::R6Class(
   cloneable = FALSE,
   inherit = Formula,
   active = list(
-    #' @field allPoints Returns all points defined in the table formulafor a `TableFormula` or `NULL`  otherwise (Read-Only).
+    #' @field allPoints Returns all points defined in the table formula for a `TableFormula` or `NULL`  otherwise (Read-Only).
     allPoints = function(value) {
       if (missing(value)) {
         .toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)

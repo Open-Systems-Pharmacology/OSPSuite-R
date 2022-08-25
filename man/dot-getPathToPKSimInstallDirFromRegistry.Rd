@@ -10,7 +10,7 @@
 \item{pksim.version}{The version number of Pk-Sim as a string.}
 }
 \value{
-The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
+The path to the PK-Sim installation for version \code{pksim.version} or NA if no path could be found.
 The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 }
 \description{
