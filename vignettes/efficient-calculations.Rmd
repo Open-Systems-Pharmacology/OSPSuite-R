@@ -104,7 +104,7 @@ results <- runSimulations(simulations = list(sim100, sim200, sim300, sim400, sim
 This implementation is also fairly straight forward. We load the simulation multiple times from the same file (note the usage of `loadFromCache = FALSE` to ensure that we always get a new instance of a simulation and not the same instance) and we set the dose. Then, we call the `runSimulations` function with the list of simulations. The engine will run these simulations in parallel, which means that the overall execution time should be slightly more than 1h, as each run would be executed **at the same time**.
 
 
-## Optimized loading for running simulations with pre-defined set of variable parameters
+## Optimized loading for running simulations with predefined set of variable parameters
 
 This is a more advanced use case, typically when implementing some kind of optimization or sensitivity algorithms. The `{ospsuite}` package introduces the concept of a **simulation batch**. With a simulation batch, the variable parameters (or initial values) of a simulation to vary between each run are specified explicitly during the creation of the simulation batch. This allows the simulation engine to speed up the system significantly as some equations can be rewritten and simplified. A simulation batch also keeps the simplified simulation in memory. That means that running a simulation again with a new set of values will be much faster, as the initialization phase (4) is only done if required and not for every run. 
 

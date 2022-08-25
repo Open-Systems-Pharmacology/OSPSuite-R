@@ -1,5 +1,5 @@
 
-#' Loads the PKSim.R that will enable create individual and create population workflows.
+#' Loads the `PKSim.R` that will enable create individual and create population workflows.
 #' @param pksimFolderPath Path where PK-Sim is installed. If this is not specified, path will be read from registry using the package version
 #'
 #' @note  This will only work on Windows machine and should not be called on any other OS.
@@ -38,7 +38,7 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' @param pksim.version The version number of Pk-Sim as a string.
 #'
 #' @return
-#' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
+#' The path to the PK-Sim installation for version `pksim.version` or NA if no path could be found.
 #' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #'
 #' @examples
@@ -73,16 +73,16 @@ initPKSim <- function(pksimFolderPath = NULL) {
   return(NA_character_)
 }
 
-#' Tries to find the installation path for a specific version of PK-Sim via the filesystem.
+#' Tries to find the installation path for a specific version of PK-Sim via the file system.
 #' Searching is done in the following order:
-#' 1. Search via filesystem in a guessed installation folder from the base.search.folder
-#' 3. Search via filesystem for PKSim.exe recursively from the defined base.search.folder (fallback)
+#' 1. Search via file system in a guessed installation folder from the base.search.folder
+#' 3. Search via file system for `PKSim.exe` recursively from the defined base.search.folder (fallback)
 #'
 #' @param pksim.version The version number of Pk-Sim as a string.
-#' @param base.search.folder The base folder for filesystem-lookup fallback (default: 64-bit program folder)
+#' @param base.search.folder The base folder for file system lookup fallback (default: 64-bit program folder)
 #'
 #' @return
-#' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
+#' The path to the PK-Sim installation for version `pksim.version` or NA if no path could be found.
 #' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #' If more than one matching path is found a warning is produced.
 #'
@@ -142,13 +142,13 @@ initPKSim <- function(pksimFolderPath = NULL) {
 #' Tries to find the installation path for a specific version of PK-Sim.
 #' Searching is done in the following order:
 #' 1. Search via Windows registry entry
-#' 2. Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
+#' 2. Search via file system in a guessed installation folder from the base.search.folder (fallback 1)
 #'
 #' @param pksim.version The version number of Pk-Sim as a string.
-#' @param base.search.folder The base folder for filesystem-lookup fallback (default: 64-bit program folder)
+#' @param base.search.folder The base folder for file system lookup fallback (default: 64-bit program folder)
 #'
 #' @return
-#' The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
+#' The path to the PK-Sim installation for version `pksim.version` or NA if no path could be found.
 #' The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 #' If more than one matching path is found a warning is produced.
 #'

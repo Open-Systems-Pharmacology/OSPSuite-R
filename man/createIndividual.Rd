@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-individual.R
 \name{createIndividual}
 \alias{createIndividual}
-\title{Creates an individual using the PKSim Database}
+\title{Creates an individual using the PK-Sim Database}
 \usage{
 createIndividual(individualCharacteristics)
 }
@@ -19,7 +19,7 @@ A list with three entries:
 }
 }
 \description{
-Creates an individual using the PKSim Database
+Creates an individual using the PK-Sim Database
 }
 \note{
 When updating a simulation with the value for a new individual, only

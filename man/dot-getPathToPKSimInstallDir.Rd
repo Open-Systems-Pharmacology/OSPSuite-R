@@ -6,7 +6,7 @@
 Searching is done in the following order:
 \enumerate{
 \item Search via Windows registry entry
-\item Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
+\item Search via file system in a guessed installation folder from the base.search.folder (fallback 1)
 }}
 \usage{
 .getPathToPKSimInstallDir(
@@ -17,10 +17,10 @@ Searching is done in the following order:
 \arguments{
 \item{pksim.version}{The version number of Pk-Sim as a string.}
 
-\item{base.search.folder}{The base folder for filesystem-lookup fallback (default: 64-bit program folder)}
+\item{base.search.folder}{The base folder for file system lookup fallback (default: 64-bit program folder)}
 }
 \value{
-The path to the PK-Sim installation for version pksim.version or NA if no path could be found.
+The path to the PK-Sim installation for version \code{pksim.version} or NA if no path could be found.
 The path is separated with slashes (unix-style) and in compliance with base-R without a trailing slash.
 If more than one matching path is found a warning is produced.
 }
@@ -29,7 +29,7 @@ Tries to find the installation path for a specific version of PK-Sim.
 Searching is done in the following order:
 \enumerate{
 \item Search via Windows registry entry
-\item Search via filesystem in a guessed installation folder from the base.search.folder (fallback 1)
+\item Search via file system in a guessed installation folder from the base.search.folder (fallback 1)
 }
 }
 \examples{

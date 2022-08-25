@@ -7,9 +7,9 @@
 .getQuantityDisplayPaths(paths, simulation)
 }
 \arguments{
-\item{paths}{A single string or array of paths path relative to the \code{simulation}}
+\item{paths}{A single string or array of paths path relative to the \code{Simulation}}
 
-\item{simulation}{A imulation used to find the entities}
+\item{simulation}{A \code{Simulation} used to find the entities}
 }
 \value{
 a display path for each entry in paths

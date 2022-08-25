@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-pksim.R
 \name{initPKSim}
 \alias{initPKSim}
-\title{Loads the PKSim.R that will enable create individual and create population workflows.}
+\title{Loads the \code{PKSim.R} that will enable create individual and create population workflows.}
 \usage{
 initPKSim(pksimFolderPath = NULL)
 }
@@ -10,7 +10,7 @@ initPKSim(pksimFolderPath = NULL)
 \item{pksimFolderPath}{Path where PK-Sim is installed. If this is not specified, path will be read from registry using the package version}
 }
 \description{
-Loads the PKSim.R that will enable create individual and create population workflows.
+Loads the \code{PKSim.R} that will enable create individual and create population workflows.
 }
 \note{
 This will only work on Windows machine and should not be called on any other OS.

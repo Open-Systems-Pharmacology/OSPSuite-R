@@ -20,7 +20,7 @@
 #'   renamed, this can be specified as `NULL`. E.g., in `names = list("oldName1"
 #'   = "newName1", "oldName2" = NULL)`), dataset with name `"oldName2"` will not
 #'   be renamed. The list can either be named or unnamed. Names act as unique
-#'   identifiers for datsets in the `DataCombined` object and, therefore,
+#'   identifiers for data sets in the `DataCombined` object and, therefore,
 #'   duplicate names are not allowed.
 #' @param groups A string or a list of strings specifying group name
 #'   corresponding to each data set. If an entry within the list is `NULL`, the
@@ -220,7 +220,7 @@ DataCombined <- R6::R6Class(
     #' @param groups A list specifying which datasets belong to which group(s).
     #'   Please note that the order in which groups are specified should match
     #'   the order in which datasets were specified for `names` parameter. For
-    #'   example, if datsets are named `"x"`, `"y"`, `"z"`, and the desired
+    #'   example, if data sets are named `"x"`, `"y"`, `"z"`, and the desired
     #'   groupings for them are, respectively, `"a"`, `"b"`, this can be
     #'   specified as `names = list("x", "y"), groups = list("a", "b")`.
     #'   Datasets for which no grouping is to be specified, can be left out of

@@ -1,0 +1,109 @@
+
+library(ospsuite)
+
+# path relative to the project directory where data should be saved
+path <- file.path(getwd(), "tests", "data")
+
+# simulated results ------------------------
+
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+simResultsOne <- runSimulation(sim)
+
+addOutputs(outputPaths, sim)
+simResultsMany <- runSimulation(sim)
+
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+outputPaths <- c(
+  "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+  "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+)
+
+# observed data ------------------------
+
+obsDataOne <- lapply(
+  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+)
+names(obsDataOne) <- lapply(obsDataOne, function(x) x$name)
+
+obsDataMany <- lapply(
+  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
+  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+)
+names(obsDataMany) <- lapply(obsDataMany, function(x) x$name)
+
+# `DataCombined` (DC) objects ----------------------------
+
+## only one observed dataset ------------------------
+
+oneObsDC <- DataCombined$new()
+oneObsDC$addDataSets(obsDataOne$`Vergin 1995.Iv`)
+saveRDS(oneObsDC, file = file.path(path, "oneObsDC"))
+
+## only one simulated dataset ------------------------
+
+oneSimDC <- DataCombined$new()
+oneSimDC$addSimulationResults(
+  simulationResults = simResultsOne,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir PVB"
+)
+saveRDS(oneSimDC, file = file.path(path, "oneSimDC"))
+
+## many observed datasets ------------------------
+
+manyObsDC <- DataCombined$new()
+manyObsDC$addDataSets(obsDataMany, groups = "Aciclovir observed")
+saveRDS(manyObsDC, file = file.path(path, "manyObsDC"))
+
+## many simulated datasets ------------------------
+
+manySimDC <- DataCombined$new()
+manySimDC$addSimulationResults(
+  simulationResults = simResultsMany,
+  quantitiesOrPaths = outputPaths,
+  groups = "Aciclovir PVB"
+)
+saveRDS(manySimDC, file = file.path(path, "manySimDC"))
+
+## one observed and one simulated dataset ------------------------
+
+oneObsSimDC <- DataCombined$new()
+oneObsSimDC$addDataSets(obsDataOne$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+oneObsSimDC$addSimulationResults(
+  simulationResults = simResultsOne,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir PVB"
+)
+saveRDS(oneObsSimDC, file = file.path(path, "oneObsSimDC"))
+
+## multiple observed and multiple simulated datasets ------------------------
+
+manyObsSimDC <- DataCombined$new()
+manyObsSimDC$addDataSets(obsDataMany, groups = "Aciclovir observed")
+manyObsSimDC$addSimulationResults(
+  simulationResults = simResultsMany,
+  quantitiesOrPaths = outputPaths,
+  groups = "Aciclovir PVB"
+)
+saveRDS(manyObsSimDC, file = file.path(path, "manyObsSimDC"))
+
+## dataset with geometric error ------------------------
+
+ObsDataAciclovir_3 <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
+
+oneObsGeometricDC <- DataCombined$new()
+oneObsGeometricDC$addDataSets(ObsDataAciclovir_3, groups = "Aciclovir PVB")
+saveRDS(oneObsGeometricDC, file = file.path(path, "oneObsGeometricDC"))
+
+# custom default plot configuration (DPC) -------------------------------------
+
+customDPC <- DefaultPlotConfiguration$new()
+customDPC$title <- "My Plot Title"
+customDPC$subtitle <- "My Plot Subtitle"
+customDPC$caption <- "My Sources"
+customDPC$legendPosition <- tlf::LegendPositions$outsideRight
+customDPC$yAxisScale <- "log"
+customDPC$yAxisLimits <- c(0.01, 1000)
+saveRDS(customDPC, file = file.path(path, "customDPC"))

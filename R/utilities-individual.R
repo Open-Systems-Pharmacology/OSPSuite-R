@@ -1,4 +1,4 @@
-#' Creates an individual using the PKSim Database
+#' Creates an individual using the PK-Sim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create
 #'   as an instance of `IndividualCharacteristics`
@@ -52,7 +52,7 @@ createDistributions <- function(individualCharacteristics) {
   )
 }
 
-#' Creates an individual using the PKSim Database.
+#' Creates an individual using the PK-Sim Database.
 #'
 #' @param species Species of the individual as defined in PK-Sim (see Species enum)
 #' @param population Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)

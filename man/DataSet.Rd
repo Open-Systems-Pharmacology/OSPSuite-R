@@ -136,7 +136,7 @@ Removes the meta data entry in the list if one is defined with this name
 \if{html}{\out{<a id="method-DataSet-setValues"></a>}}
 \if{latex}{\out{\hypertarget{method-DataSet-setValues}{}}}
 \subsection{Method \code{setValues()}}{
-Sets the xValues, yValues, and (optionally) yErrorValuues into the dataSet.
+Sets the xValues, yValues, and (optionally) yErrorValues into the dataSet.
 Note: xValues, yValues and yErrorValues must have the same length
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataSet$setValues(xValues, yValues, yErrorValues = NULL)}\if{html}{\out{</div>}}
