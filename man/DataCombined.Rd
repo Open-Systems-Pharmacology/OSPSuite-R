@@ -113,7 +113,7 @@ names can be either for renaming \code{DataSet} objects, or for renaming
 quantities/paths in \code{SimulationResults} object. If an entity is not to be
 renamed, this can be specified as \code{NULL}. E.g., in \code{names = list("oldName1" = "newName1", "oldName2" = NULL)}), dataset with name \code{"oldName2"} will not
 be renamed. The list can either be named or unnamed. Names act as unique
-identifiers for datsets in the \code{DataCombined} object and, therefore,
+identifiers for data sets in the \code{DataCombined} object and, therefore,
 duplicate names are not allowed.}
 
 \item{\code{groups}}{A string or a list of strings specifying group name
@@ -175,7 +175,7 @@ names can be either for renaming \code{DataSet} objects, or for renaming
 quantities/paths in \code{SimulationResults} object. If an entity is not to be
 renamed, this can be specified as \code{NULL}. E.g., in \code{names = list("oldName1" = "newName1", "oldName2" = NULL)}), dataset with name \code{"oldName2"} will not
 be renamed. The list can either be named or unnamed. Names act as unique
-identifiers for datsets in the \code{DataCombined} object and, therefore,
+identifiers for data sets in the \code{DataCombined} object and, therefore,
 duplicate names are not allowed.}
 
 \item{\code{groups}}{A string or a list of strings specifying group name
@@ -215,7 +215,7 @@ should be unique.}
 \item{\code{groups}}{A list specifying which datasets belong to which group(s).
 Please note that the order in which groups are specified should match
 the order in which datasets were specified for \code{names} parameter. For
-example, if datsets are named \code{"x"}, \code{"y"}, \code{"z"}, and the desired
+example, if data sets are named \code{"x"}, \code{"y"}, \code{"z"}, and the desired
 groupings for them are, respectively, \code{"a"}, \code{"b"}, this can be
 specified as \verb{names = list("x", "y"), groups = list("a", "b")}.
 Datasets for which no grouping is to be specified, can be left out of

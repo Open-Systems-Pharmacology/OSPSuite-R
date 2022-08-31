@@ -129,7 +129,7 @@ loadAgingDataFromCSV <- function(filePath) {
 }
 
 
-#' Creates an population using the PKSim Database
+#' Creates an population using the PK-Sim Database
 #'
 #' @param populationCharacteristics Characteristics of the population to create as an instance of `OriginData`
 #' that are actually distributed parameters
@@ -161,7 +161,7 @@ createPopulation <- function(populationCharacteristics) {
 
   derivedParameters <- list()
 
-  # Even though those parameters are derived parameters, we keep them in the population for consistency purpose with the PKSim export.
+  # Even though those parameters are derived parameters, we keep them in the population for consistency purpose with the PK-Sim export.
   standardDerivedParametersToKeep <- c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)
 
   for (derivedParameterPath in individual$derivedParameters$paths) {
@@ -234,7 +234,7 @@ createPopulationCharacteristics <- function(species,
                                             gestationalAgeUnit = "week(s)",
                                             moleculeOntogenies = NULL,
                                             seed = NULL) {
-  # Assuming that if this function is called directly, PKSim was either initialized already
+  # Assuming that if this function is called directly, PK-Sim was either initialized already
   # or should be initialized automatically
   initPKSim()
 

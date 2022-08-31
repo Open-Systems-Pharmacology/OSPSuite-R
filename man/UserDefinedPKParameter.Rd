@@ -31,7 +31,7 @@ If not specified, the time will start at the first time point of the simulation 
 \item{\code{endApplicationIndex}}{1-based Index of the application to use to determine the end time for the calculation of the PK-Parameter.
 If not specified, the time will end at the last time point of the simulation (optional)}
 
-\item{\code{normalizationFactor}}{Factor to use to normalized the calculated PK-Parameter. (typically DrugMass, Dose, Dose per bodyweight).
+\item{\code{normalizationFactor}}{Factor to use to normalized the calculated PK-Parameter. (typically DrugMass, Dose, DosePerBodyWeight).
 It is the responsibility of the caller to ensure that the value is in the correct unit. (optional)}
 
 \item{\code{concentrationThreshold}}{Used in conjunction with the \code{threshold} parameter type.
