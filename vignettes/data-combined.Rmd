@@ -22,16 +22,21 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In Modeling and Simulation workflow, we often need to work multiple observed and/or simulated datasets. Further, some of these datasets can be clubbed together in a group for analysis and visualization.
+In Modeling and Simulation (M&S) workflows, we often need to work with multiple 
+observed and/or simulated datasets. Further, some of these datasets can be linked 
+together in a group (e.g., the simulated and the correnspoding observed data)
+for analysis and visualization.
 
-The `DataCombined` class in `{ospsuite}` provides a container to store these datasets, to group them, and to transform them further.
+The `DataCombined` class in `{ospsuite}` provides a container to store 
+data, to group them, and to transform them further. The class accepts data 
+coming from `SimulationResults` or as a `DataSet` object (see [Observed data](observed-data.html)).
 
-Before we see how, let's first create an observed and a simulated dataset.
+Let's first generate some simulation results and load observed data.
 
 ```{r}
 library(ospsuite)
 
-# simulated data
+# Simulation results
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 simResults <- runSimulation(sim)
@@ -42,6 +47,7 @@ obsData <- lapply(
   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
 )
+# Name the elements of the list according to the names of the loaded `DataSet`.
 names(obsData) <- lapply(obsData, function(x) x$name)
 ```
 
@@ -73,18 +79,20 @@ myDataCombined$addDataSets(
 )
 ```
 
+Every data, be it simulated results or from `DataSet`, must have a unique name 
+within `DataCombined`. If not specified by user, the path of simulated results 
+or the `$name` property of the `DataSet` are used as the name. Alternatively, we 
+can define the name when adding the data, as in the above example adding simulated 
+results.
+
 There are a few things to keep in mind here:
 
-- It doesn't matter the order in which observed or simulated datasets are added.
+- It doesn't matter in which order observed or simulated datasets are added.
 - You can add multiple `DataSet` objects in `$addDataSets()` method call.
 - You can add only a single instance of `SimulationResults` in `$addSimulationResults()` method call.
-- If you add a dataset and then add it one more time, the latter will replace the former. `DataCombined` uses name of the dataset as an identifier to check for uniqueness. 
-
-## Renaming
-
-Since the dataset names can be quite long, sometimes you may wish to rename them. Both `$addDataSets()` and `$addSimulationResults()` allow this via `names` argument. In case of `SimulationResults`, the new names will be for quantities/paths.
-
-Given that datsets names act as unique identifier for these entities, duplicate names are not allowed.
+- If you add a dataset with the same name as existing (e.g., adding simulation results 
+from multiple simulations and not specifying the name, so the path of the results 
+is used as the name), the new data will replace the existing.
 
 ## Grouping
 

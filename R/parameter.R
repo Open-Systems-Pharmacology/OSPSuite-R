@@ -18,7 +18,8 @@ Parameter <- R6::R6Class(
   ),
   active = list(
     #' @field isStateVariable Returns `TRUE` is the parameter has a RHS otherwise `FALSE`.
-    #' @details Setting the value to `FALSE` will delete the RHS Formula. Setting it to `TRUE` is not currently supported and will throw an error
+    #' Setting the value to `FALSE` will delete the RHS Formula.
+    #' Setting it to `TRUE` is not currently supported and will throw an error.
     isStateVariable = function(value) {
       hasRHSFormula <- !is.null(private$.rhsFormula)
       if (missing(value)) {
