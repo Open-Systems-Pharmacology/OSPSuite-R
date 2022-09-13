@@ -44,7 +44,9 @@ cleanEnvironment <- function() {
     cleanEnvironment,
     displayProgress,
     installOSPPackages,
-    installPackagesGlobally
+    installPackagesGlobally,
+
+    pos = 1
   )
 }
 
