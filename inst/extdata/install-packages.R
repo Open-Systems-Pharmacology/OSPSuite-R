@@ -1,20 +1,24 @@
 # Message strings used in the setup script
 packageInstallationMessages <- list(
   installRTools = "Install Rtools and / or specify a path to an existing installation, then run updateEnvironment(rtoolsPath = path)",
-  RToolsNotFound = function(rToolsPath){
+  RToolsNotFound = function(rToolsPath) {
     paste0("Rtools not found at ", rToolsPath, ", cannot continue")
   },
   PKSimLoadFails = "PK-Sim fails to load. The installation might be incompatible with your current version of PK-Sim"
 )
 
-#Download paths of released package versions
-.releasePaths <- list(ospsuite.utils = "https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip",
-                      tlf = "https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.4.89/tlf_1.4.89.zip",
-                      ospsuite = "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases/download/v11.0.123/ospsuite_11.0.123.zip")
-#Download paths of latest develop package versions
-.developPaths <- list(ospsuite.utils = "https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip",
-                      tlf = "https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip",
-                      ospsuite = "https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-r/artifacts/ospsuite.zip")
+# Download paths of released package versions
+.releasePaths <- list(
+  ospsuite.utils = "https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip",
+  tlf = "https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.4.89/tlf_1.4.89.zip",
+  ospsuite = "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases/download/v11.0.123/ospsuite_11.0.123.zip"
+)
+# Download paths of latest develop package versions
+.developPaths <- list(
+  ospsuite.utils = "https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip",
+  tlf = "https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip",
+  ospsuite = "https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-r/artifacts/ospsuite.zip"
+)
 
 #' Test connection to PK-Sim
 #'
@@ -31,22 +35,27 @@ testPKSIMConnection <- function(pkSimPath = NULL) {
 }
 
 # Remove functions created by this script from the environment
-cleanEnvironment <- function(){
-  rm(packageInstallationMessages,
-          testPKSIMConnection,
-          cleanEnvironment,
-          displayProgress,
-          installOSPPackages,
-          installPackagesGlobally
+cleanEnvironment <- function() {
+  rm(
+    packageInstallationMessages,
+    .releasePaths,
+    .developPaths,
+    testPKSIMConnection,
+    cleanEnvironment,
+    displayProgress,
+    installOSPPackages,
+    installPackagesGlobally
   )
 }
 
 displayProgress <- function(current, success = TRUE, message = NULL, suppressOutput = TRUE) {
-  states <- c("Installing RENV", "Installing CRAN packages",
-              "Checking RTOOLS", "Installing rClr", "Installing ospsuite.utils",
-              "Installing tlf", "Installing ospsuite",
-              "Testing PK-Sim connection",
-              "Installation successful")
+  states <- c(
+    "Installing RENV", "Installing CRAN packages",
+    "Checking RTOOLS", "Installing rClr", "Installing ospsuite.utils",
+    "Installing tlf", "Installing ospsuite",
+    "Testing PK-Sim connection",
+    "Installation successful"
+  )
   if (suppressOutput) {
     cat("\014")
     for (i in seq_along(states)) {
@@ -76,11 +85,12 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 #' @examples
 installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
                                suppressOutput = TRUE,
-                               developerVersion = FALSE){
+                               developerVersion = FALSE) {
   # Install dependencies from CRAN
   displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
   install.packages(c("R6", "stringr", "readr", "hash", "readxl", "shiny", "shinyjs", "vctrs", "writexl", "dplyr", "tidyr", "ggplot2", "FME", "patchwork"),
-                   dependencies = TRUE)
+    dependencies = TRUE
+  )
 
   displayProgress("Checking RTOOLS", suppressOutput = suppressOutput)
   if (Sys.which("make") == "") { # rtools is not found
@@ -133,10 +143,12 @@ installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
 installPackagesGlobally <- function(updatePackages = TRUE, pkSimPath = NULL,
                                     rtoolsPath = NULL, rclrVersion = "0.9.2",
                                     suppressOutput = TRUE,
-                                    developerVersion = FALSE){
-  installOSPPackages(rtoolsPath = rtoolsPath, rclrVersion = rclrVersion,
-                     suppressOutput = suppressOutput,
-                     developerVersion = developerVersion)
+                                    developerVersion = FALSE) {
+  installOSPPackages(
+    rtoolsPath = rtoolsPath, rclrVersion = rclrVersion,
+    suppressOutput = suppressOutput,
+    developerVersion = developerVersion
+  )
 
   # Update all installed packages from CRAN
   if (updatePackages) {
@@ -156,8 +168,8 @@ installPackagesGlobally <- function(updatePackages = TRUE, pkSimPath = NULL,
 # Specify the path to latest portable PK-Sim if you are installing the development
 # version of the packages
 pkSimPath <- NULL
-#pkSimPath <- "c:\\Program Files\\Open Systems Pharmacology\\PK-Sim 11.1"
-#installPackagesGlobally(updatePackages = TRUE, pkSimPath = pkSimPath, suppressOutput = TRUE, developerVersion = FALSE)
+# pkSimPath <- "c:\\Program Files\\Open Systems Pharmacology\\PK-Sim 11.1"
+# installPackagesGlobally(updatePackages = TRUE, pkSimPath = pkSimPath, suppressOutput = TRUE, developerVersion = FALSE)
 
-#Clean the workspace
-#cleanEnvironment()
+# Clean the workspace
+# cleanEnvironment()
