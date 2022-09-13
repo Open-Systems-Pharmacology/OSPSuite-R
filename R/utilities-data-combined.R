@@ -220,6 +220,13 @@ calculateResiduals <- function(dataCombined,
     pairedData <- dplyr::mutate(pairedData, residualValues = log(yValuesSimulated) - log(yValuesObserved))
   }
 
+  # some residual values might turn out to be NA (for example, when extrapolating)
+  # they are not returned in the output tibble
+  pairedData <- dplyr::filter(
+    pairedData,
+    !is.na(residualValues)
+  )
+
   # In logarithmic scale, if any of the values are `0` (e.g. time measurement at
   # 0 will correspond to `xValues = 0`), the scales won't be drawn and plotting
   # will fail.
