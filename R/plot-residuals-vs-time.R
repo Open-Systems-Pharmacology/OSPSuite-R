@@ -100,8 +100,9 @@ plotResidualsVsTime <- function(dataCombined,
     dataMapping = tlf::ResVsTimeDataMapping$new(
       x = "xValues",
       y = "residualValues",
-      group = "group"
+      group = "group",
+      shape = "name"
     ),
     plotConfiguration = resVsTimePlotConfiguration
-  )
+  ) + ggplot2::guides(shape = "none") # Suppress certain mappings in the legend
 }

@@ -101,8 +101,9 @@ plotResidualsVsSimulated <- function(dataCombined,
     dataMapping = tlf::ResVsPredDataMapping$new(
       x = "yValuesSimulated",
       y = "residualValues",
-      group = "group"
+      group = "group",
+      shape = "name"
     ),
     plotConfiguration = resVsPredPlotConfiguration
-  )
+  ) + ggplot2::guides(shape = "none") # Suppress certain mappings in the legend
 }

@@ -147,9 +147,11 @@ plotObservedVsSimulated <- function(dataCombined,
       y     = "yValuesSimulated",
       group = "group",
       xmin  = "yValuesObservedLower",
-      xmax  = "yValuesObservedHigher"
+      xmax  = "yValuesObservedHigher",
+      shape = "name"
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration
-  )
+  ) + ggplot2::guides(shape = "none") # Suppress certain mappings in the legend
+
 }
