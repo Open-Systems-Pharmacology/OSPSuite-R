@@ -7,10 +7,13 @@ packageInstallationMessages <- list(
   PKSimLoadFails = "PK-Sim fails to load. The installation might be incompatible with your current version of PK-Sim"
 )
 
+# Packages that will be installed from CRAN
+.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purr", "patchwork")
+
 # Download paths of released package versions
 .releasePaths <- list(
-  ospsuite.utils = "https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip",
-  tlf = "https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.4.89/tlf_1.4.89.zip",
+  ospsuite.utils = "https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.tar.gz",
+  tlf = "https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.4.89/tlf_1.4.89.tar.gz",
   ospsuite = "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases/download/v11.0.123/ospsuite_11.0.123.zip"
 )
 # Download paths of latest develop package versions
@@ -44,8 +47,7 @@ cleanEnvironment <- function() {
     cleanEnvironment,
     displayProgress,
     installOSPPackages,
-    installPackagesGlobally,
-
+    .cranPackages,
     pos = 1
   )
 }
@@ -86,11 +88,11 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 #'
 #' @examples
 installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
-                               suppressOutput = TRUE,
+                               suppressOutput = FALSE,
                                developerVersion = FALSE) {
   # Install dependencies from CRAN
   displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
-  install.packages(c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "patchwork"),
+  install.packages(.cranPackages,
     dependencies = TRUE
   )
 
@@ -129,49 +131,16 @@ installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
   install.packages(packagePaths$ospsuite, repos = NULL)
 }
 
-#' Install osps packages and their dependencies into global library.
-#'
-#' @param updatePackages If `TRUE` (default), all installed packages will be
-#' updated prior to installation
-#' @param pkSimPath Path where PK-Sim is installed. If this is not specified
-#' (`NULL`), path is estimated by the `ospsuite` package.
-#' @param rtoolsPath Path to where rtools are installed. If `NULL` (default),
-#' the path is deduced from system environment variables.
-#' @param rclrVersion Version of rClr package. Default is 0.9.2 for Windows R4.
-#' @param developerVersion If `FALSE` (default), release verions of the packages
-#' will be installed. If `TRUE`, latest developer builds of the osps packages
-#' will be installed
-#' @param suppressOutput
-installPackagesGlobally <- function(updatePackages = TRUE, pkSimPath = NULL,
-                                    rtoolsPath = NULL, rclrVersion = "0.9.2",
-                                    suppressOutput = TRUE,
-                                    developerVersion = FALSE) {
-  installOSPPackages(
-    rtoolsPath = rtoolsPath, rclrVersion = rclrVersion,
-    suppressOutput = suppressOutput,
-    developerVersion = developerVersion
-  )
+# Run this function to install the packages
+# installOSPPackages(developerVersion = FALSE)
 
-  # Update all installed packages from CRAN
-  if (updatePackages) {
-    update.packages(ask = FALSE)
-  }
-
-  displayProgress("Testing PK-Sim connection", suppressOutput = suppressOutput)
-  flagConnection <- FALSE
-  try(flagConnection <- testPKSIMConnection(pkSimPath = pkSimPath))
-  if (!flagConnection) {
-    stop(message = packageInstallationMessages$PKSimLoadFails)
-  }
-
-  displayProgress("Installation sucessful", suppressOutput = suppressOutput)
-}
-
+# Test if PK-Sim connection can be established
 # Specify the path to latest portable PK-Sim if you are installing the development
 # version of the packages
 pkSimPath <- NULL
 # pkSimPath <- "c:\\Program Files\\Open Systems Pharmacology\\PK-Sim 11.1"
-# installPackagesGlobally(updatePackages = TRUE, pkSimPath = pkSimPath, suppressOutput = TRUE, developerVersion = FALSE)
+# testPKSIMConnection(pkSimPath = pkSimPath)
+
 
 # Clean the workspace
 # cleanEnvironment()
