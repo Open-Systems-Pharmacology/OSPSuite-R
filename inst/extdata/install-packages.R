@@ -8,7 +8,7 @@ packageInstallationMessages <- list(
 )
 
 # Packages that will be installed from CRAN
-.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purr", "patchwork")
+.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purr", "patchwork", "jsonlite")
 
 # Download paths of released package versions
 .releasePaths <- list(
