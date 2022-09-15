@@ -90,7 +90,7 @@ installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
                                developerVersion = FALSE) {
   # Install dependencies from CRAN
   displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
-  install.packages(c("R6", "stringr", "readr", "hash", "readxl", "shiny", "shinyjs", "vctrs", "writexl", "dplyr", "tidyr", "ggplot2", "FME", "patchwork"),
+  install.packages(c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "patchwork"),
     dependencies = TRUE
   )
 
