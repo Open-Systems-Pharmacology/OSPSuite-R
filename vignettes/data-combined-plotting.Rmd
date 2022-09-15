@@ -56,9 +56,11 @@ myDataCombined$addDataSets(
 )
 ```
 
-## Profile plots
+## Time profile plots
 
-Time profile plots visualize the pharmacokinetics of the drug in question and help assess if the observed data (represented by points and error bars) match the simulated data (represented by lines).
+Time profile plots visualize measured or simulated values against time and help 
+assess if the observed data (represented by symbols and error bars) match the 
+simulated data (represented by lines).
 
 ```{r}
 plotIndividualTimeProfile(myDataCombined)
@@ -66,13 +68,24 @@ plotIndividualTimeProfile(myDataCombined)
 
 ## Observed versus simulated scatter plot 
 
-Observed versus simulated plots show if simulated time points and observed time points follow a linear trend.
+Observed versus simulated plots show allow to assess how far simulated results 
+are from observed values.
 
 ```{r}
 plotObservedVsSimulated(myDataCombined)
 ```
 
-## Residuals versus time or simulated scatter plot
+The identity line represents perfect correspondance of simulated values with the 
+observed ones. By default, a "two-fold" are is marked by the dashed lines. 
+The "x-fold" range is defined as values that are `x`-fold above and `1/x`-fold 
+below the observed onces. The user can specify multiple ranges by the `foldDistance` 
+argument.
+
+```{r}
+plotObservedVsSimulated(myDataCombined, foldDistance = c(1.3, 2))
+```
+
+## Residuals versus time or vs simulated scatter plot
 
 Residual plots show if there is a systematic bias in how the simulation represents values either in high-concentration or low-concentration regions, or, alternatively, in early or late time periods.
 
@@ -92,15 +105,18 @@ The aesthetics for plots can be customized using the `DefaultPlotConfiguration` 
 ```{r}
 myPlotConfiguration <- DefaultPlotConfiguration$new()
 
+# Define x units
 myPlotConfiguration$xUnit <- ospUnits$Time$s
+# Define y units
 myPlotConfiguration$yUnit <- ospUnits$`Concentration [mass]`$`µg/l`
+# Change y axis scaling to logarithmic
+myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 
 myPlotConfiguration$title <- "Example: Customizing a Plot"
 myPlotConfiguration$subtitle <- "Using `DefaultPlotConfiguration` class"
 myPlotConfiguration$caption <- "Source: `Aciclovir` data"
 
 myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 ```
 
 This configuration class can be passed to all plotting functions:
@@ -109,13 +125,56 @@ This configuration class can be passed to all plotting functions:
 plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
 ```
 
+## Creating multi-panel plots
+
+Each of the `plotXXX()` returnsan a `ggplot2` object. Lets create different plots 
+from the same `DataCombined` and store them as variables.
+
+```{r}
+indivProfile <- plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
+obsVsSim <- plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
+resVsSim <- plotResidualsVsSimulated(myDataCombined)
+resVsTime <- plotResidualsVsTime(myDataCombined)
+```
+
+These plots can be combined into a multi-panel figure using the `PlotGridConfiguration` 
+and then used with `plotGrid()` function to create a figure.
+
+```{r}
+plotGridConfiguration <- PlotGridConfiguration$new()
+plotGridConfiguration$tagLevels <- "a"
+plotGridConfiguration$title <- "Multiple plots in one figure"
+
+plotGridConfiguration$addPlots(plots = list(indivProfile, obsVsSim, resVsSim, resVsTime))
+
+plotGrid(plotGridConfiguration)
+```
+Check out the documentation of the `PlotGridConfiguration` class for the list of 
+supported properties.
+
 ## Saving plots
 
-The plots returned by plotting functions are `ggplot` objects. They can be modified further and saved to files with `{ggplot2}` functions:
+All plotting functions return `ggplot` objects that can be further modified.
+
+To save a plot to a file, use the `ExportConfiguration` object. You can edit 
+various properties of the export, including the resolution, file format, 
+or file name.
 
 ```{r save-plots, eval=FALSE}
-plotObject <- plotIndividualTimeProfile(dataCombined)
-ggplot2::ggsave(filename = "aciclovir_time_profile.png", plotObject, width = 8, height = 4)
+# Create new export configuration
+exportConfiguration <- tlf::ExportConfiguration$new()
+# Define the path to the folder where the file will be stored
+exportConfiguration$path <- "../OutputFigures"
+# Define the name of the file
+exportConfiguration$name <- "MultiPanelPlot"
+#Resolution
+exportConfiguration$dpi <- 600
+
+# Store the plot into a variable and export it to a file
+plotObject <- plotIndividualTimeProfile(myDataCombined)
+
+exportConfiguration$savePlot(plotObject)
+}
 ```
 
 ## Implementation details

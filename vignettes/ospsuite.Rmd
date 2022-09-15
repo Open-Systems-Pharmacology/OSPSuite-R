@@ -39,6 +39,7 @@ The workflow steps are described in the following vignettes:
 * [Sensitivity analysis](sensitivity-analysis.html)
 * [Table parameters](table-parameters.html)
 * [Dimensions and Units](unit-conversion.html)
+* [Working with data sets and import from excel](observed-data.html)
 * [Working with `DataCombined` class](data-combined.html)
 * [Visualizations with `DataCombined`](data-combined-plotting.html)
 

@@ -51,6 +51,11 @@ obsData <- lapply(
 names(obsData) <- lapply(obsData, function(x) x$name)
 ```
 
+Typically, `DataCombined` is used to create figures using the `plotXXX()` functions. 
+The different plot types are described in [Visualizations with `DataCombined`](data-combined-plotting.html). 
+To visualize the different functionalities of `DataCombined` in this document, 
+we will use the `plotIndividualTimeProfile()` function.
+
 ## Creating `DataCombined` object
 
 First, we create a new instance of `DataCombined` class.
@@ -98,7 +103,40 @@ is used as the name), the new data will replace the existing.
 
 Since the `DataCombined` object can store many datasets, some of them may naturally form a grouping and you would wish to track this in the object. Both `$addDataSets()` and `$addSimulationResults()` allow group specification via `groups` argument.
 
-If you do not specify `groups` when you add datasets or set it to `NULL`, and wish to update groupings later, you can use the `$setGroups()` method.
+When being plotted, data sets without a grouping will appear with distinct color, 
+line style (for simulated results), or symbol style (for observed data) with a 
+separate entry in the legend, with the name of the data set being the legend entry.
+
+Let's create a `DataCombined` and add simulation results and observed data *without* 
+specifying their grouping and create a time profile:
+
+```{r}
+myDataCombined <- DataCombined$new()
+
+myDataCombined$addSimulationResults(
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath,
+  names = "Aciclovir Plasma"
+)
+
+myDataCombined$addDataSets(
+  obsData$`Vergin 1995.Iv`
+)
+
+plotIndividualTimeProfile(dataCombined = myDataCombined)
+```
+
+If you do not specify `groups` when you add datasets or set it to `NULL`, and 
+wish to update groupings later, you can use the `$setGroups()` method. All data 
+within one group will get one entry in the legend with the name of the group, 
+and will be plotted with the same color.
+
+```{r}
+myDataCombined$setGroups(names = c("Aciclovir Plasma", obsData$`Vergin 1995.Iv`$name),
+                         groups = "Aciclovir PVB")
+
+plotIndividualTimeProfile(dataCombined = myDataCombined)
+```
 
 At any point, you can check the current names and groupings with the following active field:
 
@@ -111,12 +149,14 @@ myDataCombined$groupMap
 Sometimes the raw data included in `DataCombined` needs to be transformed using specified
 offset and scale factor values.
 
-This is supported via `$setDataTransformations()` method, where you can specify names of datasets, and offsets and scale factors. If these arguments are scalar (i.e., of length 1), then the same transformation will be appluied to all datasets.
+This is supported via `$setDataTransformations()` method, where you can specify the names of datasets, and offsets and scale factors. If these arguments are scalar (i.e., of length 1), then the same value will be applied to all specified names.
 
 The internal data frame in `DataCombined` will be transformed with the specified parameters, with the new columns computed as: 
 
-  - For measurement variables: `newValue = (rawValue + offset) * scaleFactor`
-  - For error term: `newErrorValue = rawErrorValue * scaleFactor`
+  - For x values: `newXValue = (rawXValue + xOffset) * xScaleFactor`
+  - For y values: `newYValue = (rawYValue + yOffset) * yScaleFactor`
+  - For arithmetic error: `newErrorValue = rawErrorValue * scaleFactor`
+  - For geometric errir: no transformation.
 
 At any point, you can check the applied offsets and scale factors with the following active field:
 
@@ -124,6 +164,48 @@ At any point, you can check the applied offsets and scale factors with the follo
 myDataCombined$dataTransformations
 ```
 
+Now lets take a closer look on possible situations where you would apply any 
+transformations. Consider the obssrved data from the examples above. It reports 
+concentrations of aciclovir after single intravenous administration.
+
+```{r}
+myDataCombinedTranformations <- DataCombined$new()
+
+myDataCombinedTranformations$addDataSets(
+  obsData$`Vergin 1995.Iv`
+)
+
+plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+```
+
+However, we might want to use this data set with a simulation where aciclovir is 
+administered 24 hours after simulation begin. To be able to compare simulation 
+results with the data set, we can *offset*  the observed data time by 24 hours. 
+Keep in mind that the offset must be given in the same unit as the data set values are.
+
+```{r}
+# Check the units of the observed time values
+obsData$`Vergin 1995.Iv`$xUnit
+
+myDataCombinedTranformations$setDataTransformations(forNames = obsData$`Vergin 1995.Iv`$name,
+                                      xOffsets = 24)
+
+plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+```
+
+In the next step, we want to *normalize* observed concentrations to a dose. We 
+can easily achieve this with the scale factor. In the next example, we normalize 
+observed values to 250 mg dose by setting the `yScaleFactor` to 1/250:
+
+```{r}
+myDataCombinedTranformations$setDataTransformations(forNames = obsData$`Vergin 1995.Iv`$name,
+                                      yScaleFactors = 1/250)
+
+plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+```
+Finally, offsetting the observation values might be useful when working with measurements 
+of endogenous substrates, such as the hormone glucogen, and want to correct for the 
+individual specific baseline levels of the hormone.
 
 ## Extracting a combined data frame
 
@@ -174,10 +256,41 @@ convertUnits(
 )
 ```
 
-Furthermore, when both observed and simulated datasets are present, we can also compute residuals using `calculateResiduals()`:
+## Further functionalities
+
+Grouping of simulated results with observed data inside `DataCombined` also allows 
+to calculate the error between simulated results and observations using the 
+`calculateResiduals()` function. The function calculates the distance between 
+each observed data point within the group and the simulated results. Simulation 
+results interpolated if no simulated value is available for a certain observed 
+time point.
+
+There are two ways to calculate the distance (residuals) - linear and logarithmic - 
+specified by the `scaling` argument. For linear scaling (`scaling = tlf::Scaling$lin`):
+
+> Residuals are calculated as: Simulation value - Observed value. This means that the residuals are defined by absolute differences.
+
+For logarithmic scaling (`scaling = tlf::Scaling$log`):
+
+> Residuals are calculated as: log(Simulation value) - log(Observed value) = log (Simulation Value / Observed Value). This means that the ratio of values is considered which is independent of the magnitude of the value. But for very small observed values, in particular close to 0 values, this can lead to problems, because log(10E-N) = -N can becomes large.
+
 
 ```{r}
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+#Linear residuals
+calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues
+
+#Logarithmic residuals
+calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
+```
+
+To quickly calculate the total error of the `DataCombined`, one can sum up the 
+absolute values of the residulas:
+
+```{r}
+#Linear residuals
+totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
+
+print(totalError)
 ```
 
 ## Visualizations with `DataCombined`
