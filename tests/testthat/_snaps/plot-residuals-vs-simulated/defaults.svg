@@ -158,9 +158,9 @@
 <rect x='606.59' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='615.23' cy='38.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <rect x='606.59' y='47.20' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='615.23' cy='55.84' r='3.56' style='stroke-width: 0.71; stroke: #CE3D32; stroke-opacity: 0.75; fill: #CE3D32; fill-opacity: 0.75;' />
+<polygon points='611.68,59.40 618.79,59.40 618.79,52.29 611.68,52.29 ' style='stroke-width: 0.71; stroke: none; fill: #CE3D32; fill-opacity: 0.75;' />
 <rect x='606.59' y='64.48' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='615.23' cy='73.12' r='3.56' style='stroke-width: 0.71; stroke: #749B58; stroke-opacity: 0.75; fill: #749B58; fill-opacity: 0.75;' />
+<polygon points='615.23,67.60 620.02,75.89 610.45,75.89 ' style='stroke-width: 0.71; stroke: none; fill: #749B58; fill-opacity: 0.75;' />
 <text x='629.35' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
 <text x='629.35' y='59.29' style='font-size: 10.00px; font-family: sans;' textLength='62.81px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>
 <text x='629.35' y='76.57' style='font-size: 10.00px; font-family: sans;' textLength='43.91px' lengthAdjust='spacingAndGlyphs'>Solid total</text>
