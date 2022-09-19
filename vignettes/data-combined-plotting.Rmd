@@ -68,17 +68,17 @@ plotIndividualTimeProfile(myDataCombined)
 
 ## Observed versus simulated scatter plot 
 
-Observed versus simulated plots show allow to assess how far simulated results 
+Observed versus simulated plots allow to assess how far simulated results 
 are from observed values.
 
 ```{r}
 plotObservedVsSimulated(myDataCombined)
 ```
 
-The identity line represents perfect correspondance of simulated values with the 
-observed ones. By default, a "two-fold" are is marked by the dashed lines. 
-The "x-fold" range is defined as values that are `x`-fold above and `1/x`-fold 
-below the observed onces. The user can specify multiple ranges by the `foldDistance` 
+The identity line represents perfect correspondence of simulated values with the 
+observed ones. By default, a "two-fold" range is marked by the dashed lines. 
+The "x-fold" range is defined as values that are `x`-fold higher and `1/x`-fold 
+lower than the observed ones. The user can specify multiple ranges by the `foldDistance` 
 argument.
 
 ```{r}
@@ -87,7 +87,9 @@ plotObservedVsSimulated(myDataCombined, foldDistance = c(1.3, 2))
 
 ## Residuals versus time or vs simulated scatter plot
 
-Residual plots show if there is a systematic bias in how the simulation represents values either in high-concentration or low-concentration regions, or, alternatively, in early or late time periods.
+Residual plots show if there is a systematic bias in simulated values either in 
+high-concentration or low-concentration regions, or, alternatively, in early or 
+late time periods.
 
 ```{r}
 plotResidualsVsSimulated(myDataCombined)
@@ -98,9 +100,9 @@ plotResidualsVsSimulated(myDataCombined)
 plotResidualsVsTime(myDataCombined)
 ```
 
-## Customizing plot aesthetics
+## Customizing plots
 
-The aesthetics for plots can be customized using the `DefaultPlotConfiguration` class, which provides various class members that can be used to modify the *look* of the plot.
+The look and feel for plots can be customized using the `DefaultPlotConfiguration` class, which provides various class members that can be used to modify the *appearance* of the plot.
 
 ```{r}
 myPlotConfiguration <- DefaultPlotConfiguration$new()
@@ -127,7 +129,7 @@ plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
 
 ## Creating multi-panel plots
 
-Each of the `plotXXX()` returnsan a `ggplot2` object. Lets create different plots 
+Each of the `plotXXX()` returns a `ggplot2` object. Lets create different plots 
 from the same `DataCombined` and store them as variables.
 
 ```{r}

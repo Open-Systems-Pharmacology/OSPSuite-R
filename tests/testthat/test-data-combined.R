@@ -764,6 +764,35 @@ test_that("transformed values are equal to raw values times scale factor plus of
   expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
 })
 
+test_that("correct transformations with negative scale factors", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  # original data frame
+  dfOriginal <- myCombDat$toDataFrame()
+
+  # First test with positive scale factor
+  myCombDat$setDataTransformations(
+    forNames = dataSet[[1]]$name,
+    yScaleFactors = 2.5
+  )
+  expect_equal(myCombDat$dataTransformations$yScaleFactors, 2.5)
+
+  dfTransformed <- myCombDat$toDataFrame()
+  expect_equal(dfTransformed$yValues, dfOriginal$yValues * 2.5)
+  expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
+
+  # Now with negative scale factor
+  myCombDat$setDataTransformations(
+    forNames = dataSet[[1]]$name,
+    yScaleFactors = -2.5
+  )
+  expect_equal(myCombDat$dataTransformations$yScaleFactors, -2.5)
+
+  dfTransformed <- myCombDat$toDataFrame()
+  expect_equal(dfTransformed$yValues, dfOriginal$yValues * -2.5)
+  expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
+})
 
 test_that("transformed values are equal to raw values times scale factor plus offsets - different transformations for each dataset", {
   myCombDat <- DataCombined$new()

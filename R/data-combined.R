@@ -682,7 +682,7 @@ DataCombined <- R6::R6Class(
       data <- dplyr::mutate(data,
         xValues      = (xRawValues + xOffsets) * xScaleFactors,
         yValues      = (yRawValues + yOffsets) * yScaleFactors,
-        yErrorValues = yRawErrorValues * yScaleFactors
+        yErrorValues = yRawErrorValues * abs(yScaleFactors)
       )
 
       return(data)

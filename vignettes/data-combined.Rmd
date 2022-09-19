@@ -23,13 +23,14 @@ knitr::opts_chunk$set(
 ## Introduction
 
 In Modeling and Simulation (M&S) workflows, we often need to work with multiple 
-observed and/or simulated datasets. Further, some of these datasets can be linked 
-together in a group (e.g., the simulated and the correnspoding observed data)
+observed and/or simulated datasets. Some of these datasets can be linked 
+together in a group (e.g., the simulated and the corresponding observed data)
 for analysis and visualization.
 
 The `DataCombined` class in `{ospsuite}` provides a container to store 
-data, to group them, and to transform them further. The class accepts data 
-coming from `SimulationResults` or as a `DataSet` object (see [Observed data](observed-data.html)).
+data, to group them, and to transform them (e.g. scale or offset). The 
+class accepts data coming from `SimulationResults` or as a `DataSet` object 
+(see [Observed data](observed-data.html)).
 
 Let's first generate some simulation results and load observed data.
 
@@ -107,6 +108,12 @@ When being plotted, data sets without a grouping will appear with distinct color
 line style (for simulated results), or symbol style (for observed data) with a 
 separate entry in the legend, with the name of the data set being the legend entry.
 
+Though it is possible to group data with different dimensions, it makes sense to 
+only group data sets that have the same dimension (or dimensions that can be 
+transformed into each other, like `Amount` and `Mass`) in order to be able to compare the 
+data. Grouping data sets with different dimensions most likely will result in an 
+error when trying to create plots or calculating residuals with such a `DataCombined`.
+
 Let's create a `DataCombined` and add simulation results and observed data *without* 
 specifying their grouping and create a time profile:
 
@@ -126,14 +133,14 @@ myDataCombined$addDataSets(
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
 
-If you do not specify `groups` when you add datasets or set it to `NULL`, and 
-wish to update groupings later, you can use the `$setGroups()` method. All data 
-within one group will get one entry in the legend with the name of the group, 
-and will be plotted with the same color.
+If you do not specify `groups` when you add datasets, and wish to update 
+groupings later, you can use the `$setGroups()` method. All data within one 
+group will get one entry in the legend with the name of the group, and will be 
+plotted with the same color.
 
 ```{r}
 myDataCombined$setGroups(names = c("Aciclovir Plasma", obsData$`Vergin 1995.Iv`$name),
-                         groups = "Aciclovir PVB")
+                         groups = c("Aciclovir PVB", "Aciclovir PVB"))
 
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
@@ -149,14 +156,16 @@ myDataCombined$groupMap
 Sometimes the raw data included in `DataCombined` needs to be transformed using specified
 offset and scale factor values.
 
-This is supported via `$setDataTransformations()` method, where you can specify the names of datasets, and offsets and scale factors. If these arguments are scalar (i.e., of length 1), then the same value will be applied to all specified names.
+This is supported via `$setDataTransformations()` method, where you can specify the names of datasets, and offsets and scale factors. If these arguments are scalar (i.e., of length 1), then the same value will be applied to all specified names. Scale factors are unitless values by which raw data values will 
+be multiplied, offsets are added to the raw values without any conversion and must 
+therefore be in the same units as the raw data.
 
 The internal data frame in `DataCombined` will be transformed with the specified parameters, with the new columns computed as: 
 
   - For x values: `newXValue = (rawXValue + xOffset) * xScaleFactor`
   - For y values: `newYValue = (rawYValue + yOffset) * yScaleFactor`
-  - For arithmetic error: `newErrorValue = rawErrorValue * scaleFactor`
-  - For geometric errir: no transformation.
+  - For arithmetic error: `newErrorValue = rawErrorValue * yScaleFactor`
+  - For geometric error: no transformation.
 
 At any point, you can check the applied offsets and scale factors with the following active field:
 
@@ -165,7 +174,7 @@ myDataCombined$dataTransformations
 ```
 
 Now lets take a closer look on possible situations where you would apply any 
-transformations. Consider the obssrved data from the examples above. It reports 
+transformations. Consider the observed data from the examples above. It reports 
 concentrations of aciclovir after single intravenous administration.
 
 ```{r}
@@ -204,7 +213,7 @@ myDataCombinedTranformations$setDataTransformations(forNames = obsData$`Vergin 1
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 Finally, offsetting the observation values might be useful when working with measurements 
-of endogenous substrates, such as the hormone glucogen, and want to correct for the 
+of endogenous substrates, such as the hormone glucagon, and want to correct for the 
 individual specific baseline levels of the hormone.
 
 ## Extracting a combined data frame
@@ -242,11 +251,11 @@ withr::with_options(
 )
 ```
 
-As can be seen, this data frame attemtps to provide a one-stop access to all important details about the datasets included in the object, including important meta-data.
-
 `{ospsuite}` also provides a few helper functions to modify the data frame further.
 
-When multiple (observed and/or simulated) datasets are present in a data frame, they are likely to have different units. `convertUnits()` function helps to convert them to a common unit^[Note that if you are using `DataCombined` object for plotting functions, you don't need to this conversion; the plotting functions will take care of this internally.].
+When multiple (observed and/or simulated) datasets are present in a data frame, they are likely to have different units. `convertUnits()` function helps to convert them to a common unit. The function 
+will not modify the `DataCombined` object but return a new data frame with unified 
+units.^[Note that if you are using `DataCombined` object for plotting functions, you don't need to this conversion; the plotting functions will take care of this internally.].
 
 ```{r}
 convertUnits(
@@ -263,7 +272,8 @@ to calculate the error between simulated results and observations using the
 `calculateResiduals()` function. The function calculates the distance between 
 each observed data point within the group and the simulated results. Simulation 
 results interpolated if no simulated value is available for a certain observed 
-time point.
+time point. Observed data beyond simulated time is ignored, i.e., no *extrapolation* 
+is performed.
 
 There are two ways to calculate the distance (residuals) - linear and logarithmic - 
 specified by the `scaling` argument. For linear scaling (`scaling = tlf::Scaling$lin`):
@@ -284,7 +294,7 @@ calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
 ```
 
 To quickly calculate the total error of the `DataCombined`, one can sum up the 
-absolute values of the residulas:
+absolute values of the residuals:
 
 ```{r}
 #Linear residuals
@@ -294,7 +304,5 @@ print(totalError)
 ```
 
 ## Visualizations with `DataCombined`
-
-Plotting the stored data is an important part of model diagnostics and quality control.
 
 See [Visualizations with `DataCombined`](data-combined-plotting.html) describing functions that can visualize data stored in `DataCombined` object.
