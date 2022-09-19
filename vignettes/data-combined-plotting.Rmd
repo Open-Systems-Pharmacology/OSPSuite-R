@@ -151,6 +151,17 @@ plotGridConfiguration$addPlots(plots = list(indivProfile, obsVsSim, resVsSim, re
 
 plotGrid(plotGridConfiguration)
 ```
+
+The function will try to arrange the panels such that the number of rows equals 
+to the number of colums. You can also specify the number of rows or columns through 
+the `PlotGridConfiguration`:
+
+```{r}
+plotGridConfiguration$nRows <- 1
+
+plotGrid(plotGridConfiguration)
+```
+
 Check out the documentation of the `PlotGridConfiguration` class for the list of 
 supported properties.
 
