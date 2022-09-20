@@ -353,3 +353,8 @@ test_that("it can set the llog value", {
   dataSet$LLOQ <- 0.25
   expect_equal(dataSet$LLOQ, 0.25, tolerance)
 })
+
+test_that("it throws an error when a vector of LLOQ is provided", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_error(dataSet$LLOQ <- c(0.25, 0.25), regexp = messages$lloqOnlyScalar())
+})

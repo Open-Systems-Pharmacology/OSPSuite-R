@@ -53,3 +53,7 @@ messages$residualsCanNotBeComputed <- function() {
 messages$logScaleNotAllowed <- function() {
   "The Y-axis for this plot should not be on a log scale, since the residuals are expected to be centered around 0."
 }
+
+messages$lloqOnlyScalar <- function() {
+  "Only one LLOQ value per `DataSet` is supported! Please provide a scalar value and not a vector."
+}

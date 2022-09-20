@@ -168,6 +168,10 @@ DataSet <- R6::R6Class(
         return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
       }
 
+      # Only one LLOQ value per data set is supported
+      if (!isOfLength(value, 1)){
+        stop(messages$lloqOnlyScalar())
+      }
       private$.yColumn$LLOQ <- toBaseUnit(
         quantityOrDimension = private$.yColumn$dimension,
         values = value,

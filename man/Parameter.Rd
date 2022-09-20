@@ -17,7 +17,9 @@ Derived from \link{Quantity}, please see base class documentation.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{isStateVariable}}{Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.}
+\item{\code{isStateVariable}}{Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.
+Setting the value to \code{FALSE} will delete the RHS Formula.
+Setting it to \code{TRUE} is not currently supported and will throw an error.}
 
 \item{\code{rhsFormula}}{An instance of a \code{Formula} object representing the RHS Formula (Read-Only)}
 }
@@ -57,10 +59,6 @@ Initialize a new instance of the class
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-Setting the value to \code{FALSE} will delete the RHS Formula. Setting it to \code{TRUE} is not currently supported and will throw an error
-}
-
 \subsection{Returns}{
 A new \code{Parameter} object.
 }
