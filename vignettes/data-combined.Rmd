@@ -164,7 +164,7 @@ The internal data frame in `DataCombined` will be transformed with the specified
 
   - For x values: `newXValue = (rawXValue + xOffset) * xScaleFactor`
   - For y values: `newYValue = (rawYValue + yOffset) * yScaleFactor`
-  - For arithmetic error: `newErrorValue = rawErrorValue * yScaleFactor`
+  - For arithmetic error: `newErrorValue = rawErrorValue * abs(yScaleFactor)`
   - For geometric error: no transformation.
 
 At any point, you can check the applied offsets and scale factors with the following active field:
