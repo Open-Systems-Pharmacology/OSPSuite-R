@@ -151,9 +151,6 @@ plotObservedVsSimulated <- function(dataCombined,
     dplyr::mutate(shapeAssn = obsVsPredPlotConfiguration$points$shape[1:nrow(.)]) %>%
     dplyr::filter(!duplicated(group))
 
-  # If legend is present, it needs to be explicitly specified in the call
-  legendTitle <- obsVsPredPlotConfiguration$legend$title
-
   plotObject <- tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
