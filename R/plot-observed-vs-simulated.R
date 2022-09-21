@@ -140,7 +140,21 @@ plotObservedVsSimulated <- function(dataCombined,
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
 
-  tlf::plotObsVsPred(
+  # Since groups might include more than one observed dataset (indicated by shape)
+  # in a group (indicated by color), we have to override the default shape legend
+  # and assign a manual shape to each legend entry
+  # The shapes follow the settings in the user-provided plot configuration
+  overrideShapeAssignment <- pairedData %>%
+    dplyr::select(name, group) %>%
+    dplyr::distinct() %>%
+    dplyr::arrange(name) %>%
+    dplyr::mutate(shapeAssn = obsVsPredPlotConfiguration$points$shape[1:nrow(.)]) %>%
+    dplyr::filter(!duplicated(group))
+
+  # If legend is present, it needs to be explicitly specified in the call
+  legendTitle <- obsVsPredPlotConfiguration$legend$title
+
+  plotObject <- tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
       x     = "yValuesObserved",
@@ -152,6 +166,10 @@ plotObservedVsSimulated <- function(dataCombined,
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration
-  ) + ggplot2::guides(shape = "none") # Suppress certain mappings in the legend
+  )
 
+  return(plotObject + ggplot2::guides(shape = "none",
+                                      col = ggplot2::guide_legend(title = obsVsPredPlotConfiguration$legend$title$text,
+                                                                  title.theme = obsVsPredPlotConfiguration$legend$title$createPlotFont(),
+                                                                  override.aes = list(shape = overrideShapeAssignment$shapeAssn))))
 }
