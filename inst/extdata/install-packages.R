@@ -8,7 +8,7 @@ packageInstallationMessages <- list(
 )
 
 # Packages that will be installed from CRAN
-.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purr", "patchwork", "jsonlite")
+.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purrr", "patchwork", "jsonlite")
 
 # Download paths of released package versions
 .releasePaths <- list(
@@ -54,8 +54,8 @@ cleanEnvironment <- function() {
 
 displayProgress <- function(current, success = TRUE, message = NULL, suppressOutput = TRUE) {
   states <- c(
-    "Installing RENV", "Installing CRAN packages",
-    "Checking RTOOLS", "Installing rClr", "Installing ospsuite.utils",
+    "Installing RENV", "Checking RTOOLS", "Installing CRAN packages",
+    "Installing rClr", "Installing ospsuite.utils",
     "Installing tlf", "Installing ospsuite",
     "Testing PK-Sim connection",
     "Installation successful"
@@ -82,6 +82,8 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 #' will be installed. If `TRUE`, latest developer builds of the osps packages
 #' will be installed
 #' @param suppressOutput
+#' @param ... Optinal parameters that will be passed to `install.packages()`
+#' for installation of osp packages (but nor for CRAN packages).
 #'
 #' @return
 #' @export
@@ -89,13 +91,8 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 #' @examples
 installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
                                suppressOutput = FALSE,
-                               developerVersion = FALSE) {
-  # Install dependencies from CRAN
-  displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
-  install.packages(.cranPackages,
-    dependencies = TRUE
-  )
-
+                               developerVersion = FALSE,
+                               ...) {
   displayProgress("Checking RTOOLS", suppressOutput = suppressOutput)
   if (Sys.which("make") == "") { # rtools is not found
     if (!is.null(rtoolsPath)) { # adding an existing installation of rtools to path
@@ -109,6 +106,12 @@ installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
     displayProgress("Checking RTOOLS", success = FALSE, message = packageInstallationMessages$RToolsNotFound, suppressOutput = suppressOutput)
     return()
   }
+
+  # Install dependencies from CRAN
+  displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
+  install.packages(.cranPackages,
+    dependencies = TRUE
+  )
 
   displayProgress("Installing rClr", suppressOutput = suppressOutput)
   if (version$major == "4") {
@@ -124,11 +127,11 @@ installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
   }
 
   displayProgress("Installing ospsuite.utils", suppressOutput = suppressOutput)
-  install.packages(packagePaths$ospsuite.utils, repos = NULL)
+  install.packages(packagePaths$ospsuite.utils, repos = NULL, ...)
   displayProgress("Installing tlf", suppressOutput = suppressOutput)
   install.packages(packagePaths$tlf, repos = NULL)
   displayProgress("Installing ospsuite", suppressOutput = suppressOutput)
-  install.packages(packagePaths$ospsuite, repos = NULL)
+  install.packages(packagePaths$ospsuite, repos = NULL, ...)
 }
 
 # Run this function to install the packages
