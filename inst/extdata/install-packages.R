@@ -1,9 +1,6 @@
 # Message strings used in the setup script
 packageInstallationMessages <- list(
-  installRTools = "Install Rtools and / or specify a path to an existing installation, then run updateEnvironment(rtoolsPath = path)",
-  RToolsNotFound = function(rToolsPath) {
-    paste0("Rtools not found at ", rToolsPath, ", cannot continue")
-  },
+  installRTools = "Install Rtools compatible with your R version, then run updateEnvironment() again",
   PKSimLoadFails = "PK-Sim fails to load. The installation might be incompatible with your current version of PK-Sim"
 )
 
@@ -75,8 +72,6 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 
 #' Install all osps packages and their dependencies.
 #'
-#' @param rtoolsPath Path to where rtools are installed. If `NULL` (default),
-#' the path is deduced from system environment variables.
 #' @param rclrVersion Version of rClr package. Default is 0.9.2 for Windows R4.
 #' @param developerVersion If `FALSE` (default), release verions of the packages
 #' will be installed. If `TRUE`, latest developer builds of the osps packages
@@ -89,23 +84,16 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 #' @export
 #'
 #' @examples
-installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
+installOSPPackages <- function(rclrVersion = "0.9.2",
                                suppressOutput = FALSE,
                                developerVersion = FALSE,
                                ...) {
+  install.packages("pkgbuild")
   displayProgress("Checking RTOOLS", suppressOutput = suppressOutput)
-  if (Sys.which("make") == "") { # rtools is not found
-    if (!is.null(rtoolsPath)) { # adding an existing installation of rtools to path
-      Sys.setenv(PATH = paste(rtoolsPath, Sys.getenv("PATH"), sep = ";"))
-    } else {
+  if (!pkgbuild::has_rtools()) { # rtools is not found
       displayProgress("Checking RTOOLS", success = FALSE, message = packageInstallationMessages$installRTools, suppressOutput = suppressOutput)
       return()
     }
-  }
-  if (Sys.which("make") == "") {
-    displayProgress("Checking RTOOLS", success = FALSE, message = packageInstallationMessages$RToolsNotFound, suppressOutput = suppressOutput)
-    return()
-  }
 
   # Install dependencies from CRAN
   displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
