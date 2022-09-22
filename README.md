@@ -36,6 +36,9 @@ In particular, we would recommend that you read the articles in the following or
 * [Sensitivity analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
 * [Table parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
 * [Dimensions and Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+* [Working with data sets and import from excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
+* [Working with `DataCombined` class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
+* [Visualizations with `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
 
 # Installation
 
@@ -51,6 +54,9 @@ From CRAN:
 - [readr](https://cran.r-project.org/web/packages/readr/index.html)
 - [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
 - [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)
+- [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html)
+- [rlang](https://cran.r-project.org/web/packages/rlang/index.html)
+
 
 Must be downloaded manually:
 
@@ -146,7 +152,26 @@ vignette("introduction-ospsuite")
 
 # Known issues
 
-**RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating `.NET` objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore `.RData` into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
+
+- Loading `ospsuite` might fail if your systems locale is not set to *English*, e.g.: 
+
+```ibrary(ospsuite)
+载入需要的程辑包：rClr
+Loading the dynamic library for Microsoft .NET runtime...
+Loaded Common Language Runtime version 4.0.30319.42000
+
+Error: package or namespace load failed for ‘ospsuite’:
+loadNamespace()里算'ospsuite'时.onLoad失败了，详细内容：
+调用: rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
+错误: Type: System.Collections.Generic.KeyNotFoundException
+Message: Dimension 'CV mmHg*s虏/ml' not available in DimensionFactory.
+...
+```
+
+On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs` 
+to `English (United States)` and reboot.
+
+- **RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating `.NET` objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore `.RData` into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
 
 # Code of Conduct
 
