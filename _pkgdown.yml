@@ -24,6 +24,8 @@ articles:
     - create-individual
     - create-run-population
     - observed-data
+    - data-combined
+    - data-combined-plotting
 
   - title: Miscellaneous
     navbar: Miscellaneous
