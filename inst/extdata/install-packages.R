@@ -76,9 +76,9 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 #' @param developerVersion If `FALSE` (default), release verions of the packages
 #' will be installed. If `TRUE`, latest developer builds of the osps packages
 #' will be installed
+#' @param lib character vector giving the library directories where to install
+#' the packages. Recycled as needed. If missing, defaults to the first element of .libPaths().
 #' @param suppressOutput
-#' @param ... Optinal parameters that will be passed to `install.packages()`
-#' for installation of osp packages (but nor for CRAN packages).
 #'
 #' @return
 #' @export
@@ -87,8 +87,9 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 installOSPPackages <- function(rclrVersion = "0.9.2",
                                suppressOutput = FALSE,
                                developerVersion = FALSE,
+                               lib = NULL,
                                ...) {
-  install.packages("pkgbuild")
+  install.packages("pkgbuild", lib = lib)
   displayProgress("Checking RTOOLS", suppressOutput = suppressOutput)
   if (!pkgbuild::has_rtools()) { # rtools is not found
       displayProgress("Checking RTOOLS", success = FALSE, message = packageInstallationMessages$installRTools, suppressOutput = suppressOutput)
@@ -98,15 +99,18 @@ installOSPPackages <- function(rclrVersion = "0.9.2",
   # Install dependencies from CRAN
   displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
   install.packages(.cranPackages,
-    dependencies = TRUE
+    dependencies = TRUE,
+    lib = lib
   )
 
   displayProgress("Installing rClr", suppressOutput = suppressOutput)
   if (version$major == "4") {
-    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "/rClr_", rclrVersion, ".zip"), repos = NULL)
+    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "/rClr_", rclrVersion, ".zip"), repos = NULL,
+                     lib = lib)
   }
   if (version$major == "3") {
-    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "-R3/rClr_", rclrVersion, ".zip"), repos = NULL)
+    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "-R3/rClr_", rclrVersion, ".zip"), repos = NULL,
+                     lib = lib)
   }
 
   packagePaths <- .releasePaths
@@ -115,11 +119,11 @@ installOSPPackages <- function(rclrVersion = "0.9.2",
   }
 
   displayProgress("Installing ospsuite.utils", suppressOutput = suppressOutput)
-  install.packages(packagePaths$ospsuite.utils, repos = NULL, ...)
+  install.packages(packagePaths$ospsuite.utils, repos = NULL, lib = lib, ...)
   displayProgress("Installing tlf", suppressOutput = suppressOutput)
   install.packages(packagePaths$tlf, repos = NULL)
   displayProgress("Installing ospsuite", suppressOutput = suppressOutput)
-  install.packages(packagePaths$ospsuite, repos = NULL, ...)
+  install.packages(packagePaths$ospsuite, repos = NULL, lib = lib, ...)
 }
 
 # Run this function to install the packages
