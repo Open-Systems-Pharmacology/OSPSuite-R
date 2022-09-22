@@ -87,6 +87,17 @@ plotResidualsVsTime <- function(dataCombined,
     return(NULL)
   }
 
+  # Since groups might include more than one observed dataset (indicated by shape)
+  # in a group (indicated by color), we have to override the default shape legend
+  # and assign a manual shape to each legend entry
+  # The shapes follow the settings in the user-provided plot configuration
+  overrideShapeAssignment <- pairedData %>%
+    dplyr::select(name, group) %>%
+    dplyr::distinct() %>%
+    dplyr::arrange(name) %>%
+    dplyr::mutate(shapeAssn = resVsTimePlotConfiguration$points$shape[1:nrow(.)]) %>%
+    dplyr::filter(!duplicated(group))
+
   # axes labels -----------------------------
 
   resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsTimePlotConfiguration)
@@ -100,8 +111,12 @@ plotResidualsVsTime <- function(dataCombined,
     dataMapping = tlf::ResVsTimeDataMapping$new(
       x = "xValues",
       y = "residualValues",
-      group = "group"
+      group = "group",
+      shape = "name"
     ),
     plotConfiguration = resVsTimePlotConfiguration
-  )
+  ) + ggplot2::guides(shape = "none",
+                    col = ggplot2::guide_legend(title = resVsTimePlotConfiguration$legend$title$text,
+                                                title.theme = resVsTimePlotConfiguration$legend$title$createPlotFont(),
+                                                override.aes = list(shape = overrideShapeAssignment$shapeAssn)))
 }

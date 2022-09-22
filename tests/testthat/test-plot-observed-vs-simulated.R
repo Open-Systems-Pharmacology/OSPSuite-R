@@ -181,3 +181,40 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
     messages$residualsCanNotBeComputed()
   )
 })
+
+test_that("Different symbols for data sets within one group", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  simData <- withr::with_tempdir({
+    df <- dplyr::tibble(
+      IndividualId = c(0, 0, 0),
+      `Time [min]` = c(0, 2, 4),
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+    )
+    readr::write_csv(df, "SimResults.csv")
+    importResultsFromCSV(sim, "SimResults.csv")
+  })
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+
+  # Add second obs data
+  obsData2 <- DataSet$new(name = "Observed 2")
+  obsData2$setValues(xValues = c(0, 3, 4, 4.5, 5.5), yValues = c(2.9, 5.1, 3, 8.2, 1))
+  obsData2$xUnit <- "min"
+  obsData2$yDimension <- ospDimensions$`Concentration (molar)`
+  myDC$addDataSets(obsData2, groups = "myGroup")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple data sets one group",
+    fig = plotObservedVsSimulated(myDC)
+  )
+})
