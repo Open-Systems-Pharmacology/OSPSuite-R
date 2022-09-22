@@ -1,14 +1,11 @@
 # Message strings used in the setup script
 packageInstallationMessages <- list(
-  installRTools = "Install Rtools and / or specify a path to an existing installation, then run updateEnvironment(rtoolsPath = path)",
-  RToolsNotFound = function(rToolsPath) {
-    paste0("Rtools not found at ", rToolsPath, ", cannot continue")
-  },
+  installRTools = "Install Rtools compatible with your R version, then run updateEnvironment() again",
   PKSimLoadFails = "PK-Sim fails to load. The installation might be incompatible with your current version of PK-Sim"
 )
 
 # Packages that will be installed from CRAN
-.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purr", "patchwork", "jsonlite")
+.cranPackages <- c("R6", "stringr", "readr", "readxl", "shiny", "dplyr", "tidyr", "ggplot2", "purrr", "patchwork", "jsonlite")
 
 # Download paths of released package versions
 .releasePaths <- list(
@@ -54,8 +51,8 @@ cleanEnvironment <- function() {
 
 displayProgress <- function(current, success = TRUE, message = NULL, suppressOutput = TRUE) {
   states <- c(
-    "Installing RENV", "Installing CRAN packages",
-    "Checking RTOOLS", "Installing rClr", "Installing ospsuite.utils",
+    "Installing RENV", "Checking RTOOLS", "Installing CRAN packages",
+    "Installing rClr", "Installing ospsuite.utils",
     "Installing tlf", "Installing ospsuite",
     "Testing PK-Sim connection",
     "Installation successful"
@@ -75,47 +72,45 @@ displayProgress <- function(current, success = TRUE, message = NULL, suppressOut
 
 #' Install all osps packages and their dependencies.
 #'
-#' @param rtoolsPath Path to where rtools are installed. If `NULL` (default),
-#' the path is deduced from system environment variables.
 #' @param rclrVersion Version of rClr package. Default is 0.9.2 for Windows R4.
 #' @param developerVersion If `FALSE` (default), release verions of the packages
 #' will be installed. If `TRUE`, latest developer builds of the osps packages
 #' will be installed
+#' @param lib character vector giving the library directories where to install
+#' the packages. Recycled as needed. If missing, defaults to the first element of .libPaths().
 #' @param suppressOutput
 #'
 #' @return
 #' @export
 #'
 #' @examples
-installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
+installOSPPackages <- function(rclrVersion = "0.9.2",
                                suppressOutput = FALSE,
-                               developerVersion = FALSE) {
-  # Install dependencies from CRAN
-  displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
-  install.packages(.cranPackages,
-    dependencies = TRUE
-  )
-
+                               developerVersion = FALSE,
+                               lib = NULL,
+                               ...) {
+  install.packages("pkgbuild", lib = lib)
   displayProgress("Checking RTOOLS", suppressOutput = suppressOutput)
-  if (Sys.which("make") == "") { # rtools is not found
-    if (!is.null(rtoolsPath)) { # adding an existing installation of rtools to path
-      Sys.setenv(PATH = paste(rtoolsPath, Sys.getenv("PATH"), sep = ";"))
-    } else {
+  if (!pkgbuild::has_rtools()) { # rtools is not found
       displayProgress("Checking RTOOLS", success = FALSE, message = packageInstallationMessages$installRTools, suppressOutput = suppressOutput)
       return()
     }
-  }
-  if (Sys.which("make") == "") {
-    displayProgress("Checking RTOOLS", success = FALSE, message = packageInstallationMessages$RToolsNotFound, suppressOutput = suppressOutput)
-    return()
-  }
+
+  # Install dependencies from CRAN
+  displayProgress("Installing CRAN packages", suppressOutput = suppressOutput)
+  install.packages(.cranPackages,
+    dependencies = TRUE,
+    lib = lib
+  )
 
   displayProgress("Installing rClr", suppressOutput = suppressOutput)
   if (version$major == "4") {
-    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "/rClr_", rclrVersion, ".zip"), repos = NULL)
+    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "/rClr_", rclrVersion, ".zip"), repos = NULL,
+                     lib = lib)
   }
   if (version$major == "3") {
-    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "-R3/rClr_", rclrVersion, ".zip"), repos = NULL)
+    install.packages(paste0("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v", rclrVersion, "-R3/rClr_", rclrVersion, ".zip"), repos = NULL,
+                     lib = lib)
   }
 
   packagePaths <- .releasePaths
@@ -124,11 +119,11 @@ installOSPPackages <- function(rtoolsPath = NULL, rclrVersion = "0.9.2",
   }
 
   displayProgress("Installing ospsuite.utils", suppressOutput = suppressOutput)
-  install.packages(packagePaths$ospsuite.utils, repos = NULL)
+  install.packages(packagePaths$ospsuite.utils, repos = NULL, lib = lib, ...)
   displayProgress("Installing tlf", suppressOutput = suppressOutput)
-  install.packages(packagePaths$tlf, repos = NULL)
+  install.packages(packagePaths$tlf, repos = NULL, lib = lib, ...)
   displayProgress("Installing ospsuite", suppressOutput = suppressOutput)
-  install.packages(packagePaths$ospsuite, repos = NULL)
+  install.packages(packagePaths$ospsuite, repos = NULL, lib = lib, ...)
 }
 
 # Run this function to install the packages

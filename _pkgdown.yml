@@ -23,7 +23,13 @@ articles:
     - sensitivity-analysis
     - create-individual
     - create-run-population
+  - title: Figure creation
+    navbar: Figure creation
+    desc: How to create standard figures
+    contents:
     - observed-data
+    - data-combined
+    - data-combined-plotting
 
   - title: Miscellaneous
     navbar: Miscellaneous
