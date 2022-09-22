@@ -121,7 +121,7 @@ installOSPPackages <- function(rclrVersion = "0.9.2",
   displayProgress("Installing ospsuite.utils", suppressOutput = suppressOutput)
   install.packages(packagePaths$ospsuite.utils, repos = NULL, lib = lib, ...)
   displayProgress("Installing tlf", suppressOutput = suppressOutput)
-  install.packages(packagePaths$tlf, repos = NULL)
+  install.packages(packagePaths$tlf, repos = NULL, lib = lib, ...)
   displayProgress("Installing ospsuite", suppressOutput = suppressOutput)
   install.packages(packagePaths$ospsuite, repos = NULL, lib = lib, ...)
 }

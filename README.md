@@ -168,8 +168,12 @@ Message: Dimension 'CV mmHg*s虏/ml' not available in DimensionFactory.
 ...
 ```
 
-On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs` 
+-- On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs` 
 to `English (United States)` and reboot.
+-- On Linux, set the environment variable `LC_ALL` before starting R:
+```
+export LC_ALL=en_US.UTF-8
+```
 
 - **RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating `.NET` objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore `.RData` into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
 
