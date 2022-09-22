@@ -36,6 +36,8 @@
     <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
     <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
     <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
+    <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
+    <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6>
     <a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a>
@@ -221,13 +223,13 @@ available for each dimension</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Area</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Area$dm²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Area$`dm²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "dm²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Area$cm²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Area$`cm²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cm²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Area$m²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Area$`m²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "m²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -835,17 +837,17 @@ available for each dimension</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "l/min/kg organ"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Flow²</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Flow²$`(l/min)²`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Flow²`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Flow²`$`(l/min)²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(l/min)²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Flow²$`(ml/min)²`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Flow²`$`(ml/min)²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(ml/min)²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Flow²$`(l/h)²`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Flow²`$`(l/h)²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(l/h)²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Flow²$`(ml/h)²`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Flow²`$`(ml/h)²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(ml/h)²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1318,8 +1320,8 @@ available for each dimension</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Resistance$`kg/(dm*min²)*s/m³`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "kg/(dm*min²)*s/m³"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Resistance$`dyn*s*cm-5`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "dyn*s*cm-5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Resistance$`dyn*s*cm−5`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "dyn*s*cm−5"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Resistance$`kg/(dm*min²)*min/l`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "kg/(dm*min²)*min/l"</span>
@@ -1498,14 +1500,14 @@ available for each dimension</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ks"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Time²</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Time²$s²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Time²`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Time²`$`s²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "s²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Time²$min²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Time²`$`min²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "min²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Time²$h²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Time²`$`h²`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "h²"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1674,7 +1676,7 @@ available for each dimension</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>
