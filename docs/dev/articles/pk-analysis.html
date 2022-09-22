@@ -54,6 +54,8 @@
     <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
     <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
     <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
+    <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
+    <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6>
     <a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a>
@@ -104,7 +106,7 @@
 PK Parameters calculated by PK-Sim such as AUC, Cmax etc. For the
 complete list of PK Parameters supported out of the box, please refer to
 the <a href="https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-parameters" class="external-link">online
-documentaton</a>.</p>
+documentation</a>.</p>
 <p>PK parameters can be calculated for all outputs of a simulation.
 First, simulation results must be calculated, and the
 <code>SimulationResults</code> object is then passed to the method
@@ -265,24 +267,24 @@ wrangling), and the package provides a convenient helper to extract
 it:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame</a></span><span class="op">(</span><span class="va">pkAnalysis</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 x 5</span></span></span>
-<span><span class="co">#&gt;    IndividualId QuantityPath                              Param~1    Value Unit </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 5</span></span></span>
+<span><span class="co">#&gt;    IndividualId QuantityPath                              Param…¹    Value Unit </span></span>
 <span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ C_max   5.03<span style="color: #949494;">e</span>+ 1 µmol~</span>~</span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ C_max_~ 3.07<span style="color: #949494;">e</span>+ 6 mg/l </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ t_max   1.83<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span> h    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ C_tEnd  3.25<span style="color: #949494;">e</span><span style="color: #BB0000;">- 2</span> µmol~</span>~</span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ AUC_tE~ 4.06<span style="color: #949494;">e</span>+ 3 µmol~</span>~</span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ AUC_tE~ 2.48<span style="color: #949494;">e</span>+11 µg*m~</span>~</span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ AUC_inf 4.07<span style="color: #949494;">e</span>+ 3 µmol~</span>~</span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ AUC_in~ 2.48<span style="color: #949494;">e</span>+11 µg*m~</span>~</span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ MRT     3.22<span style="color: #949494;">e</span>+ 0 h    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ Thalf   3.02<span style="color: #949494;">e</span>+ 0 h    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ Fracti~ 2.09<span style="color: #949494;">e</span><span style="color: #BB0000;">- 3</span> <span style="color: #BB0000;">NA</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ CL      4.02<span style="color: #949494;">e</span>+ 0 ml/m~</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ Vss     7.78<span style="color: #949494;">e</span>+ 2 ml/kg</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            0 Organism|PeripheralVenousBlood|Aciclovir~ Vd      1.05<span style="color: #949494;">e</span>+ 3 ml/kg</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ... with abbreviated variable name 1: Parameter</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            0 Organism|PeripheralVenousBlood|Aciclovir… C_max   5.03<span style="color: #949494;">e</span>+ 1 µmol…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            0 Organism|PeripheralVenousBlood|Aciclovir… C_max_… 3.07<span style="color: #949494;">e</span>+ 6 mg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            0 Organism|PeripheralVenousBlood|Aciclovir… t_max   1.83<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span> h    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            0 Organism|PeripheralVenousBlood|Aciclovir… C_tEnd  3.25<span style="color: #949494;">e</span><span style="color: #BB0000;">- 2</span> µmol…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            0 Organism|PeripheralVenousBlood|Aciclovir… AUC_tE… 4.06<span style="color: #949494;">e</span>+ 3 µmol…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            0 Organism|PeripheralVenousBlood|Aciclovir… AUC_tE… 2.48<span style="color: #949494;">e</span>+11 µg*m…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            0 Organism|PeripheralVenousBlood|Aciclovir… AUC_inf 4.07<span style="color: #949494;">e</span>+ 3 µmol…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            0 Organism|PeripheralVenousBlood|Aciclovir… AUC_in… 2.48<span style="color: #949494;">e</span>+11 µg*m…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            0 Organism|PeripheralVenousBlood|Aciclovir… MRT     3.22<span style="color: #949494;">e</span>+ 0 h    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            0 Organism|PeripheralVenousBlood|Aciclovir… Thalf   3.02<span style="color: #949494;">e</span>+ 0 h    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            0 Organism|PeripheralVenousBlood|Aciclovir… Fracti… 2.09<span style="color: #949494;">e</span><span style="color: #BB0000;">- 3</span> <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>            0 Organism|PeripheralVenousBlood|Aciclovir… CL      4.02<span style="color: #949494;">e</span>+ 0 ml/m…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            0 Organism|PeripheralVenousBlood|Aciclovir… Vss     7.78<span style="color: #949494;">e</span>+ 2 ml/kg</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            0 Organism|PeripheralVenousBlood|Aciclovir… Vd      1.05<span style="color: #949494;">e</span>+ 3 ml/kg</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​Parameter</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="import-and-export-of-pk-analyses">Import and export of PK-analyses<a class="anchor" aria-label="anchor" href="#import-and-export-of-pk-analyses"></a>
@@ -401,7 +403,7 @@ target dimension can do the trick</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>What will happen here:</p>
 <ul>
-<li>The dimension of the user defined PK PArameter will be estimated
+<li>The dimension of the user defined PK Parameter will be estimated
 from the display unit, e.g in this case <code>mg/m²</code>
 </li>
 <li>The calculated value of the user defined PK Parameter will be
@@ -441,7 +443,7 @@ documentation of <code>UserDefinedPKParameter</code>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

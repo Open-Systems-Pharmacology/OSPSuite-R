@@ -48,6 +48,8 @@ Transforming data with given offsets and scale factors.
     <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
     <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
     <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
+    <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
+    <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6>
     <a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a>
@@ -156,7 +158,7 @@ names can be either for renaming <code>DataSet</code> objects, or for renaming
 quantities/paths in <code>SimulationResults</code> object. If an entity is not to be
 renamed, this can be specified as <code>NULL</code>. E.g., in <code>names = list("oldName1" = "newName1", "oldName2" = NULL)</code>), dataset with name <code>"oldName2"</code> will not
 be renamed. The list can either be named or unnamed. Names act as unique
-identifiers for datsets in the <code>DataCombined</code> object and, therefore,
+identifiers for data sets in the <code>DataCombined</code> object and, therefore,
 duplicate names are not allowed.</p></dd>
 
 
@@ -228,7 +230,7 @@ names can be either for renaming <code>DataSet</code> objects, or for renaming
 quantities/paths in <code>SimulationResults</code> object. If an entity is not to be
 renamed, this can be specified as <code>NULL</code>. E.g., in <code>names = list("oldName1" = "newName1", "oldName2" = NULL)</code>), dataset with name <code>"oldName2"</code> will not
 be renamed. The list can either be named or unnamed. Names act as unique
-identifiers for datsets in the <code>DataCombined</code> object and, therefore,
+identifiers for data sets in the <code>DataCombined</code> object and, therefore,
 duplicate names are not allowed.</p></dd>
 
 
@@ -272,7 +274,7 @@ should be unique.</p></dd>
 <dd><p>A list specifying which datasets belong to which group(s).
 Please note that the order in which groups are specified should match
 the order in which datasets were specified for <code>names</code> parameter. For
-example, if datsets are named <code>"x"</code>, <code>"y"</code>, <code>"z"</code>, and the desired
+example, if data sets are named <code>"x"</code>, <code>"y"</code>, <code>"z"</code>, and the desired
 groupings for them are, respectively, <code>"a"</code>, <code>"b"</code>, this can be
 specified as <code>names = list("x", "y"), groups = list("a", "b")</code>.
 Datasets for which no grouping is to be specified, can be left out of
@@ -433,45 +435,44 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Looking at group mappings</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">groupMap</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 x 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   group         name                                                     dataT~1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group         name                                                     dataT…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Aciclovir PVB Organism|PeripheralVenousBlood|Aciclovir|Plasma (Periph~ simula~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Aciclovir PVB Vergin 1995.Iv                                           observ~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with abbreviated variable name 1: dataType</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Aciclovir PVB Organism|PeripheralVenousBlood|Aciclovir|Plasma (Periph… simula…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Aciclovir PVB Vergin 1995.Iv                                           observ…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​dataType</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Looking at the applied transformations</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">dataTransformations</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 x 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   name                                           xOffs~1 yOffs~2 xScal~3 yScal~4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name                                           xOffs…¹ yOffs…² xScal…³ yScal…⁴</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Organism|PeripheralVenousBlood|Aciclovir|Plas~       0       0       1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Organism|PeripheralVenousBlood|Aciclovir|Plas…       0       0       1       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Vergin 1995.Iv                                       0       0       1       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with abbreviated variable names 1: xOffsets, 2: yOffsets,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   3: xScaleFactors, 4: yScaleFactors</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​xOffsets, ²​yOffsets, ³​xScaleFactors,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁴​yScaleFactors</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Accessing the combined data frame</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 x 27</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name        group dataT~1 xValues xUnit xDime~2 yValues yUnit yDime~3 yErro~4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 × 27</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name        group dataT…¹ xValues xUnit xDime…² yValues yUnit yDime…³ yErro…⁴</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Organism|P~ Acic~ simula~       0 min   Time       0    µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Organism|P~ Acic~ simula~       1 min   Time       3.25 µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Organism|P~ Acic~ simula~       2 min   Time       9.10 µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Organism|P~ Acic~ simula~       3 min   Time      15.0  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Organism|P~ Acic~ simula~       4 min   Time      20.7  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Organism|P~ Acic~ simula~       5 min   Time      26.2  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Organism|P~ Acic~ simula~       6 min   Time      31.4  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Organism|P~ Acic~ simula~       7 min   Time      36.4  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Organism|P~ Acic~ simula~       8 min   Time      41.1  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Organism|P~ Acic~ simula~       9 min   Time      45.5  µmol~ Concen~      <span style="color: #BB0000;">NA</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 494 more rows, 17 more variables: yErrorType &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   yErrorUnit &lt;chr&gt;, IndividualId &lt;int&gt;, molWeight &lt;dbl&gt;, lloq &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Source &lt;chr&gt;, File &lt;chr&gt;, Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Organ &lt;chr&gt;, Compartment &lt;chr&gt;, `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Route &lt;chr&gt;, `Patient Id` &lt;chr&gt;, and abbreviated variable names</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   1: dataType, 2: xDimension, 3: yDimension, 4: yErrorValues</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Organism|P… Acic… simula…       0 min   Time       0    µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Organism|P… Acic… simula…       1 min   Time       3.25 µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Organism|P… Acic… simula…       2 min   Time       9.10 µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Organism|P… Acic… simula…       3 min   Time      15.0  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Organism|P… Acic… simula…       4 min   Time      20.7  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Organism|P… Acic… simula…       5 min   Time      26.2  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Organism|P… Acic… simula…       6 min   Time      31.4  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Organism|P… Acic… simula…       7 min   Time      36.4  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Organism|P… Acic… simula…       8 min   Time      41.1  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Organism|P… Acic… simula…       9 min   Time      45.5  µmol… Concen…      <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 494 more rows, 17 more variables: yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IndividualId &lt;int&gt;, molWeight &lt;dbl&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, and abbreviated variable names ¹​dataType, ²​xDimension,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​yDimension, ⁴​yErrorValues</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -484,7 +485,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

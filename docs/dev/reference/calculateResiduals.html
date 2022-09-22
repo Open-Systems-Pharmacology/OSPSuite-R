@@ -36,6 +36,8 @@
     <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
     <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
     <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
+    <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
+    <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6>
     <a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a>
@@ -151,26 +153,25 @@ corresponding observed or simulated datasets will be removed.</p>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span>, groups <span class="op">=</span> <span class="st">"Aciclovir PVB"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">calculateResiduals</span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 x 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group       name  xValues xUnit xDime~1 yValu~2 yUnit yDime~3 yErro~4 yErro~5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 13</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group       name  xValues xUnit xDime…¹ yValu…² yUnit yDime…³ yErro…⁴ yErro…⁵</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Aciclovir ~ Verg~    13.4 min   Time     35.0   µmol~ Concen~   6.64  Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Aciclovir ~ Verg~    29.1 min   Time     20.0   µmol~ Concen~   3.81  Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Aciclovir ~ Verg~    44.7 min   Time     14.1   µmol~ Concen~   2.83  Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Aciclovir ~ Verg~    58.1 min   Time     11.0   µmol~ Concen~   2.29  Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Aciclovir ~ Verg~    87.2 min   Time      7.51  µmol~ Concen~   1.74  Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Aciclovir ~ Verg~   119.  min   Time      5.88  µmol~ Concen~   1.20  Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Aciclovir ~ Verg~   179.  min   Time      4.03  µmol~ Concen~   0.979 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Aciclovir ~ Verg~   239.  min   Time      3.05  µmol~ Concen~   0.653 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Aciclovir ~ Verg~   360   min   Time      1.63  µmol~ Concen~   0.435 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Aciclovir ~ Verg~   541.  min   Time      0.871 µmol~ Concen~   0.218 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Aciclovir ~ Verg~   720   min   Time      0.544 µmol~ Concen~   0.326 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Aciclovir ~ Verg~   901.  min   Time      0.435 µmol~ Concen~   0.326 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Aciclovir ~ Verg~  <span style="text-decoration: underline;">1</span>440   min   Time      0.326 µmol~ Concen~   0.326 Arithm~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 3 more variables: yErrorUnit &lt;chr&gt;, yValuesSimulated &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   residualValues &lt;dbl&gt;, and abbreviated variable names 1: xDimension,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   2: yValuesObserved, 3: yDimension, 4: yErrorValues, 5: yErrorType</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i Use `colnames()` to see all variable names</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Aciclovir … Verg…    13.4 min   Time     35.0   µmol… Concen…   6.64  Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Aciclovir … Verg…    29.1 min   Time     20.0   µmol… Concen…   3.81  Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Aciclovir … Verg…    44.7 min   Time     14.1   µmol… Concen…   2.83  Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Aciclovir … Verg…    58.1 min   Time     11.0   µmol… Concen…   2.29  Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Aciclovir … Verg…    87.2 min   Time      7.51  µmol… Concen…   1.74  Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Aciclovir … Verg…   119.  min   Time      5.88  µmol… Concen…   1.20  Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Aciclovir … Verg…   179.  min   Time      4.03  µmol… Concen…   0.979 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Aciclovir … Verg…   239.  min   Time      3.05  µmol… Concen…   0.653 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Aciclovir … Verg…   360   min   Time      1.63  µmol… Concen…   0.435 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Aciclovir … Verg…   541.  min   Time      0.871 µmol… Concen…   0.218 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Aciclovir … Verg…   720   min   Time      0.544 µmol… Concen…   0.326 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Aciclovir … Verg…   901.  min   Time      0.435 µmol… Concen…   0.326 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Aciclovir … Verg…  <span style="text-decoration: underline;">1</span>440   min   Time      0.326 µmol… Concen…   0.326 Arithm…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 3 more variables: yErrorUnit &lt;chr&gt;, yValuesSimulated &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   residualValues &lt;dbl&gt;, and abbreviated variable names ¹​xDimension,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​yValuesObserved, ³​yDimension, ⁴​yErrorValues, ⁵​yErrorType</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -182,7 +183,7 @@ corresponding observed or simulated datasets will be removed.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>
