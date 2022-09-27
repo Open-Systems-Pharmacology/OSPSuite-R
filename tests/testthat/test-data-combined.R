@@ -900,6 +900,17 @@ test_that("each call to set transformations resets previous parameters for the s
   expect_equal(dfDat1$yValues * 4, dfDat2$yValues)
 })
 
+test_that("Calls to set transformations with only part of the parameters do not reset other transformations",{
+  myDC <- DataCombined$new()
+  obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite"))
+  myDC$addDataSets(obsData)
+  myDC$setDataTransformations(xOffsets = 1)
+  myDC$setDataTransformations(yOffsets = 2)
+
+  expect_equal(myDC$dataTransformations$xOffsets, 1)
+  expect_equal(myDC$dataTransformations$yOffsets, 2)
+})
+
 test_that("messy inputs (with special constants) for data transformations don't cause any problems", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)

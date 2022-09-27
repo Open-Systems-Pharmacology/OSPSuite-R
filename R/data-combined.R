@@ -339,23 +339,43 @@ DataCombined <- R6::R6Class(
                                       xOffsets = 0,
                                       yOffsets = 0,
                                       xScaleFactors = 1,
-                                      yScaleFactors = 1) {
+                                      yScaleFactors = 1,
+                                      reset = FALSE) {
       # Check that the arguments to parameters make sense
-      xOffsets <- .cleanVectorArgs(xOffsets, type = "numeric")
-      yOffsets <- .cleanVectorArgs(yOffsets, type = "numeric")
-      xScaleFactors <- .cleanVectorArgs(xScaleFactors, type = "numeric")
-      yScaleFactors <- .cleanVectorArgs(yScaleFactors, type = "numeric")
+      xOffsetsNew <- .cleanVectorArgs(xOffsets, type = "numeric")
+      yOffsetsNew <- .cleanVectorArgs(yOffsets, type = "numeric")
+      xScaleFactorsNew <- .cleanVectorArgs(xScaleFactors, type = "numeric")
+      yScaleFactorsNew <- .cleanVectorArgs(yScaleFactors, type = "numeric")
 
       forNames <- .cleanVectorArgs(forNames, type = "character")
+
+      # If any of the values is missing, they are retained from already existing values
+      if ((!reset) & (!is.null(private$.dataTransformations))) {
+        if (any(!missing(xOffsets), !missing(yOffsets), !missing(xScaleFactors), !missing(yScaleFactors))) {
+          if (missing(xOffsets)) {
+            xOffsetsNew <- private$.dataTransformations$xOffsets
+          }
+          if (missing(yOffsets)) {
+            yOffsetsNew <- private$.dataTransformations$yOffsets
+          }
+          if (missing(xScaleFactors)) {
+            xScaleFactorsNew <- private$.dataTransformations$xScaleFactors
+          }
+          if (missing(yScaleFactors)) {
+            yScaleFactorsNew <- private$.dataTransformations$yScaleFactors
+          }
+        }
+      }
+
 
       # Apply specified data transformations
       private$.dataCombined <- private$.dataTransform(
         data          = private$.dataCombined,
         forNames      = forNames,
-        xOffsets      = xOffsets,
-        yOffsets      = yOffsets,
-        xScaleFactors = xScaleFactors,
-        yScaleFactors = yScaleFactors
+        xOffsets      = xOffsetsNew,
+        yOffsets      = yOffsetsNew,
+        xScaleFactors = xScaleFactorsNew,
+        yScaleFactors = yScaleFactorsNew
       )
 
       # Update private field with transformation values
