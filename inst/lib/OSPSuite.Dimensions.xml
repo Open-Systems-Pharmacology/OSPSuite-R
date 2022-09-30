@@ -6,17 +6,17 @@
       <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
       <Units>
         <Unit name="pmol/mg mic. protein" factor="1" />
-        <Unit name="nmol/mg mic. protein" factor="1e3" />
-        <Unit name="µmol/mg mic. protein" factor="1e6" />
+        <Unit name="nmol/mg mic. protein" factor="1E3" />
+        <Unit name="µmol/mg mic. protein" factor="1E6" />
         <Unit name="µmol/kg mic. protein" factor="1" visible="0" />
       </Units>
     </Dimension>
     <Dimension name="Abundance per tissue" baseUnit="µmol/kg tissue" defaultUnit="pmol/g tissue">
       <BaseRepresentation lengthExponent="0" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
       <Units>
-        <Unit name="pmol/g tissue" factor="1e-3" />
+        <Unit name="pmol/g tissue" factor="1E-3" />
         <Unit name="nmol/g tissue" factor="1" />
-        <Unit name="µmol/g tissue" factor="1000" />
+        <Unit name="µmol/g tissue" factor="1E3" />
         <Unit name="µmol/kg tissue" factor="1" visible="0" />
       </Units>
     </Dimension>
@@ -42,7 +42,7 @@
       <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
       <Units>
         <Unit name="mol" factor="1E6" />
-        <Unit name="mmol" factor="1000" />
+        <Unit name="mmol" factor="1E3" />
         <Unit name="µmol" factor="1" />
         <Unit name="nmol" factor="0.001" />
         <Unit name="pmol" factor="1E-06" />
@@ -73,8 +73,8 @@
       <BaseRepresentation lengthExponent="2" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="dm²" factor="1" />
-        <Unit name="cm²" factor="1e-2" />
-        <Unit name="m²" factor="100" />
+        <Unit name="cm²" factor="1E-2" />
+        <Unit name="m²" factor="1E2" />
       </Units>
     </Dimension>
     <Dimension name="AUC (mass)" baseUnit="kg*min/l" defaultUnit="µg*min/l">
@@ -147,15 +147,15 @@
     <Dimension name="BMI" baseUnit="kg/dm²" defaultUnit="kg/m²">
       <BaseRepresentation lengthExponent="-2" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
-        <Unit name="kg/m²" factor="1e-2" />
+        <Unit name="kg/m²" factor="1E-2" />
         <Unit name="kg/dm²" factor="1" />
       </Units>
     </Dimension>
     <Dimension name="CL per mass protein" baseUnit="l/min/kg mic. protein" defaultUnit="µl/min/mg mic. protein">
       <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
-        <Unit name="pl/min/mg mic. protein" factor="1e-6" />
-        <Unit name="nl/min/mg mic. protein" factor="1e-3" />
+        <Unit name="pl/min/mg mic. protein" factor="1E-6" />
+        <Unit name="nl/min/mg mic. protein" factor="1E-3" />
         <Unit name="µl/min/mg mic. protein" factor="1" />
         <Unit name="l/min/kg mic. protein" factor="1" visible="0" />
       </Units>
@@ -328,6 +328,8 @@
     <Dimension name="Dose per body weight" baseUnit="kg/kg" defaultUnit="mg/kg">
       <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
+        <Unit name="ng/kg" factor="1E-12" />
+        <Unit name="µg/kg" factor="1E-9" />
         <Unit name="mg/kg" factor="1E-6" />
         <Unit name="g/kg" factor="1E-3" />
         <Unit name="kg/kg" factor="1" visible="0" />
@@ -375,11 +377,11 @@
     <Dimension name="Flow per weight organ" baseUnit="l/min/kg organ" defaultUnit="ml/min/100g organ">
       <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
-        <Unit name="ml/min/100g organ" factor="0.01" />
+        <Unit name="ml/min/100g organ" factor="1E-2" />
         <Unit name="ml/min/g organ" factor="1" />
-        <Unit name="ml/min/kg organ" factor="0.001" />
+        <Unit name="ml/min/kg organ" factor="1E-3" />
         <Unit name="l/h/100g organ" factor="10/60" />
-        <Unit name="l/h/g organ" factor="1000/60" />
+        <Unit name="l/h/g organ" factor="1E3/60" />
         <Unit name="l/h/kg organ" factor="1/60" />
         <Unit name="l/min/kg organ" factor="1" />
       </Units>
@@ -393,7 +395,7 @@
         <Unit name="ml/h/kg" factor="1/60000" />
       </Units>
     </Dimension>
-     <Dimension name="Flow per body surface area" baseUnit="l/min/dm²" defaultUnit="ml/min/1.73m²">
+    <Dimension name="Flow per body surface area" baseUnit="l/min/dm²" defaultUnit="ml/min/1.73m²">
       <BaseRepresentation lengthExponent="1" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="l/min/dm²" factor="1" visible="0"/>
@@ -413,7 +415,7 @@
       <BaseRepresentation lengthExponent="0" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="" factor="1" />
-        <Unit name="%" factor="0.01" />
+        <Unit name="%" factor="1E-2" />
       </Units>
     </Dimension>
     <Dimension name="Hydraulic conductivity" baseUnit="l/min/(kg*dm/min²)" defaultUnit="ml/min/N">
@@ -689,7 +691,8 @@
       <BaseRepresentation lengthExponent="3" massExponent="-1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
         <Unit name="l/kg" factor="1" />
-        <Unit name="ml/kg" factor="0.001" />
+        <Unit name="ml/kg" factor="1E-3" />
+        <Unit name="µl/kg" factor="1E-6" visible="0" />
       </Units>
     </Dimension>
     <Dimension name="Ampere" baseUnit="A">
@@ -903,7 +906,7 @@
         <Unit name="V*A" factor="1" />
         <Unit name="(kg*dm²)/min³" factor="1" />
         <Unit name="(kg*m²)/s³" factor="1E2*60*60*60" />
-        <Unit name="(g*cm²)/s³" factor="1e-7*60*60*60" />
+        <Unit name="(g*cm²)/s³" factor="1E-7*60*60*60" />
       </Units>
     </Dimension>
     <Dimension name="Weber" baseUnit="Wb">
