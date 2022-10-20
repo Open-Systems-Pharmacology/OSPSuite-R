@@ -116,8 +116,12 @@ plotResidualsVsSimulated <- function(dataCombined,
       shape = "name"
     ),
     plotConfiguration = resVsPredPlotConfiguration
-  ) + ggplot2::guides(shape = "none",
-                      col = ggplot2::guide_legend(title = resVsPredPlotConfiguration$legend$title$text,
-                                                  title.theme = resVsPredPlotConfiguration$legend$title$createPlotFont(),
-                                                  override.aes = list(shape = overrideShapeAssignment$shapeAssn)))
+  ) + ggplot2::guides(
+    shape = "none",
+    col = ggplot2::guide_legend(
+      title = resVsPredPlotConfiguration$legend$title$text,
+      title.theme = resVsPredPlotConfiguration$legend$title$createPlotFont(),
+      override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+    )
+  )
 }

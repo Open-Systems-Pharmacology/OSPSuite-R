@@ -57,3 +57,7 @@ messages$logScaleNotAllowed <- function() {
 messages$lloqOnlyScalar <- function() {
   "Only one LLOQ value per `DataSet` is supported! Please provide a scalar value and not a vector."
 }
+
+messages$simBatchStartValueNaN <- function(entityPaths) {
+  paste0("Start values of the entities with paths '", paste(entityPaths, collapse = ", "), "' is `NaN`! Cannot add such run values set")
+}

@@ -209,8 +209,10 @@ calculateResiduals <- function(dataCombined,
   # Add predicted values
   # the approx function with a default rule = 1 argument returns NA for extrapolated points
   pairedData <- dplyr::mutate(pairedData,
-    "yValuesSimulated" = approx(simulatedData$xValues, simulatedData$yValues,
-                                observedData$xValues)$y
+    "yValuesSimulated" = approx(
+      simulatedData$xValues, simulatedData$yValues,
+      observedData$xValues
+    )$y
   )
 
   # Residual computation will depend on the scaling.

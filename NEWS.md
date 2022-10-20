@@ -19,6 +19,12 @@
 
 * The output of `runSimulationBatches()` is now a named list with names being 
   the ids of `SimulationBatch`.
+  
+## Minor Changes
+
+* `SimulationBatch$addRunValues()` will throw an error when any start value is `NaN`
+* `SimulatioBatch` gets methods `getVariableParameters()` and `getVariableMolecules()`
+that return list of parameter resp. molecule paths that are defined variable.
     
 # ospsuite 11.0.123
 

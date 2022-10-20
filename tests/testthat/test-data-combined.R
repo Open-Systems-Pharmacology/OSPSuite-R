@@ -900,7 +900,7 @@ test_that("each call to set transformations resets previous parameters for the s
   expect_equal(dfDat1$yValues * 4, dfDat2$yValues)
 })
 
-test_that("Calls to set transformations with only part of the parameters do not reset other transformations",{
+test_that("Calls to set transformations with only part of the parameters do not reset other transformations", {
   myDC <- DataCombined$new()
   obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite"))
   myDC$addDataSets(obsData)

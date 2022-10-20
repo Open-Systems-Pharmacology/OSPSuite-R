@@ -169,7 +169,7 @@ DataSet <- R6::R6Class(
       }
 
       # Only one LLOQ value per data set is supported
-      if (!isOfLength(value, 1)){
+      if (!isOfLength(value, 1)) {
         stop(messages$lloqOnlyScalar())
       }
       private$.yColumn$LLOQ <- toBaseUnit(

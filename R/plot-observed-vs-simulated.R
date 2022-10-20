@@ -165,8 +165,12 @@ plotObservedVsSimulated <- function(dataCombined,
     plotConfiguration = obsVsPredPlotConfiguration
   )
 
-  return(plotObject + ggplot2::guides(shape = "none",
-                                      col = ggplot2::guide_legend(title = obsVsPredPlotConfiguration$legend$title$text,
-                                                                  title.theme = obsVsPredPlotConfiguration$legend$title$createPlotFont(),
-                                                                  override.aes = list(shape = overrideShapeAssignment$shapeAssn))))
+  return(plotObject + ggplot2::guides(
+    shape = "none",
+    col = ggplot2::guide_legend(
+      title = obsVsPredPlotConfiguration$legend$title$text,
+      title.theme = obsVsPredPlotConfiguration$legend$title$createPlotFont(),
+      override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+    )
+  ))
 }
