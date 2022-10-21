@@ -59,6 +59,6 @@ messages$lloqOnlyScalar <- function() {
 }
 
 messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, foldDistances){
-  paste0("Parameter '", parameterName, "' should not be <1! Following values have
+  paste0("Parameter '", parameterName, "' should be >1! Following values have
          been passed: '", paste(foldDistances, collapse = ", "), "'.")
 }

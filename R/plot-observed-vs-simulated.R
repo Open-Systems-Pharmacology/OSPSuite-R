@@ -2,11 +2,11 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @param foldDistance A vector for plotting lines at required fold distances
-#'   The vector can include only fold distance values different from `>=1`. An
+#'   The vector can include only fold distance values `>1`. An
 #'   `x`-fold distance is defined as all simulated values within the range
 #'   between `x`-fold (depicted by the upper fold range line) and `1/x`-fold
-#'   (depicted by the lower fold range line) of observed values. `1`-fold range is the
-#'   identity line.
+#'   (depicted by the lower fold range line) of observed values. The identity
+#'   line can be interpreted as the `1`-fold range.
 #'
 #' @import tlf
 #'
@@ -84,8 +84,8 @@ plotObservedVsSimulated <- function(dataCombined,
   # - For logarithmic scale: `0`
   defaultFoldDistance <- ifelse(is_any_scale_linear, 0, 1)
 
-  # foldDistance should not be lower than 1
-  if (any(foldDistance < 1)) {
+  # foldDistance should be above 1
+  if (any(foldDistance <= 1)) {
     stop(messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", foldDistance))
   }
 
