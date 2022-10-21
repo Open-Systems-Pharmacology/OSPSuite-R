@@ -40,6 +40,16 @@ myCombDat$setGroups(
   groups = c("Solid total", "Solid distal", "Solid proximal", "Solid total", "Solid distal", "Solid proximal")
 )
 
+test_that("It throws an error when foldDistance is lower that 1", {
+  expect_error(plotObservedVsSimulated(myCombDat, foldDistance = 0.5),
+    regexp = messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", 0.5)
+  )
+
+  expect_error(plotObservedVsSimulated(myCombDat, foldDistance = c(1, 0.5)),
+    regexp = messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", c(1, 0.5))
+  )
+})
+
 test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
