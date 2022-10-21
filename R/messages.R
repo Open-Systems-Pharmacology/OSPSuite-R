@@ -60,6 +60,7 @@ messages$lloqOnlyScalar <- function() {
 
 messages$simBatchStartValueNaN <- function(entityPaths) {
   paste0("Start values of the entities with paths '", paste(entityPaths, collapse = ", "), "' is `NaN`! Cannot add such run values set")
+}
 
 messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, foldDistances){
   paste0("Parameter '", parameterName, "' should be >1! Following values have
