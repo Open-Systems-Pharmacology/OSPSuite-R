@@ -57,3 +57,8 @@ messages$logScaleNotAllowed <- function() {
 messages$lloqOnlyScalar <- function() {
   "Only one LLOQ value per `DataSet` is supported! Please provide a scalar value and not a vector."
 }
+
+messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, foldDistances){
+  paste0("Parameter '", parameterName, "' should be >1! Following values have
+         been passed: '", paste(foldDistances, collapse = ", "), "'.")
+}
