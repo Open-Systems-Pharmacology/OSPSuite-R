@@ -115,8 +115,12 @@ plotResidualsVsTime <- function(dataCombined,
       shape = "name"
     ),
     plotConfiguration = resVsTimePlotConfiguration
-  ) + ggplot2::guides(shape = "none",
-                    col = ggplot2::guide_legend(title = resVsTimePlotConfiguration$legend$title$text,
-                                                title.theme = resVsTimePlotConfiguration$legend$title$createPlotFont(),
-                                                override.aes = list(shape = overrideShapeAssignment$shapeAssn)))
+  ) + ggplot2::guides(
+    shape = "none",
+    col = ggplot2::guide_legend(
+      title = resVsTimePlotConfiguration$legend$title$text,
+      title.theme = resVsTimePlotConfiguration$legend$title$createPlotFont(),
+      override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+    )
+  )
 }
