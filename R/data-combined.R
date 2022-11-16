@@ -324,6 +324,10 @@ DataCombined <- R6::R6Class(
     #'   scale factors to apply to raw values. The default offset is `0`, while
     #'   default scale factor is `1`, i.e., the data will not be modified. If a
     #'   list is specified, it should be the same length as `forNames` argument.
+    #' @param reset IF `TRUE`, only data transformations that are specified will
+    #'   be retained. Not specified transformations will be reset to their defaults.
+    #'   Default behavior is `FALSE`, e.g., setting only `xOffsets` will not reset
+    #'   `xScaleFactors` if those have been set previously.
     #'
     #' @details
     #'

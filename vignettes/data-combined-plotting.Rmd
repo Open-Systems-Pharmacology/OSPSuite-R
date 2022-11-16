@@ -180,14 +180,13 @@ exportConfiguration <- tlf::ExportConfiguration$new()
 exportConfiguration$path <- "../OutputFigures"
 # Define the name of the file
 exportConfiguration$name <- "MultiPanelPlot"
-#Resolution
+# Resolution
 exportConfiguration$dpi <- 600
 
 # Store the plot into a variable and export it to a file
 plotObject <- plotIndividualTimeProfile(myDataCombined)
 
 exportConfiguration$savePlot(plotObject)
-}
 ```
 
 ## Implementation details

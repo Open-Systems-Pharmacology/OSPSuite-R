@@ -266,7 +266,8 @@ Transform raw data with required offsets and scale factors.
   xOffsets = 0,
   yOffsets = 0,
   xScaleFactors = 1,
-  yScaleFactors = 1
+  yScaleFactors = 1,
+  reset = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -283,6 +284,11 @@ numeric value or a list of numeric values specifying offsets and
 scale factors to apply to raw values. The default offset is \code{0}, while
 default scale factor is \code{1}, i.e., the data will not be modified. If a
 list is specified, it should be the same length as \code{forNames} argument.}
+
+\item{\code{reset}}{IF \code{TRUE}, only data transformations that are specified will
+be retained. Not specified transformations will be reset to their defaults.
+Default behavior is \code{FALSE}, e.g., setting only \code{xOffsets} will not reset
+\code{xScaleFactors} if those have been set previously.}
 }
 \if{html}{\out{</div>}}
 }

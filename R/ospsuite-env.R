@@ -54,6 +54,9 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 # NetTask `DimensionTask` cached for performance benefits. Created the first time it is requested.
 ospsuiteEnv$dimensionTask <- NULL
 
+# Small value added to zero when calculating log
+ospsuiteEnv$LOG_SAFE_EPSILON <- 1e-20
+
 #' Names of the settings stored in ospsuiteEnv. Can be used with `getOSPSuiteSetting()`
 #' @include utilities.R
 #' @export

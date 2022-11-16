@@ -20,6 +20,13 @@
 * The output of `runSimulationBatches()` is now a named list with names being 
   the ids of `SimulationBatch`.
   
+* `calculateResiduals()` now uses `log(base = 10)` for calculation of residuals 
+in logarithmic scale instead if `log(base = exp(1))`
+* `calculateResiduals()` does also return residuals for entries where simulated 
+or observed value is 0 in logarithmic scale. These values were ignored in previous 
+versions. If the observed or simulated value is zero or negative, it is replaced 
+by an arbitrary small value `getOSPSuiteSetting("LOG_SAFE_EPSILON")` (1e-20 by default).
+  
 ## Minor Changes
 
 * `SimulationBatch$addRunValues()` will throw an error when any start value is `NaN`
