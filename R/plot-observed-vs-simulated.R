@@ -115,6 +115,16 @@ plotObservedVsSimulated <- function(dataCombined,
     return(NULL)
   }
 
+  # In logarithmic scale, if any of the values are `0`, plotting will fail.
+  #
+  # To avoid this, just remove rows where any of the quantities are `0`s.
+  if (obsVsPredPlotConfiguration$yAxis$scale %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
+    pairedData <- dplyr::filter(
+      pairedData,
+      yValuesObserved != 0, yValuesSimulated != 0
+    )
+  }
+
   # Add minimum and maximum values for observed data to plot error bars
   pairedData <- dplyr::mutate(
     pairedData,

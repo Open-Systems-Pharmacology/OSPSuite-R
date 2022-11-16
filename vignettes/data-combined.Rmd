@@ -80,7 +80,7 @@ Next we add observed data to this object using `$addDataSets()`:
 
 ```{r}
 myDataCombined$addDataSets(
-  obsData$`Vergin 1995.Iv`, 
+  obsData$`Vergin 1995.Iv`,
   groups = "Aciclovir PVB"
 )
 ```
@@ -139,8 +139,10 @@ group will get one entry in the legend with the name of the group, and will be
 plotted with the same color.
 
 ```{r}
-myDataCombined$setGroups(names = c("Aciclovir Plasma", obsData$`Vergin 1995.Iv`$name),
-                         groups = c("Aciclovir PVB", "Aciclovir PVB"))
+myDataCombined$setGroups(
+  names = c("Aciclovir Plasma", obsData$`Vergin 1995.Iv`$name),
+  groups = c("Aciclovir PVB", "Aciclovir PVB")
+)
 
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
@@ -196,8 +198,10 @@ Keep in mind that the offset must be given in the same unit as the data set valu
 # Check the units of the observed time values
 obsData$`Vergin 1995.Iv`$xUnit
 
-myDataCombinedTranformations$setDataTransformations(forNames = obsData$`Vergin 1995.Iv`$name,
-                                      xOffsets = 24)
+myDataCombinedTranformations$setDataTransformations(
+  forNames = obsData$`Vergin 1995.Iv`$name,
+  xOffsets = 24
+)
 
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
@@ -207,8 +211,10 @@ can easily achieve this with the scale factor. In the next example, we normalize
 observed values to 250 mg dose by setting the `yScaleFactor` to 1/250:
 
 ```{r}
-myDataCombinedTranformations$setDataTransformations(forNames = obsData$`Vergin 1995.Iv`$name,
-                                      yScaleFactors = 1/250)
+myDataCombinedTranformations$setDataTransformations(
+  forNames = obsData$`Vergin 1995.Iv`$name,
+  yScaleFactors = 1 / 250
+)
 
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
@@ -286,10 +292,10 @@ For logarithmic scaling (`scaling = tlf::Scaling$log`):
 
 
 ```{r}
-#Linear residuals
+# Linear residuals
 calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues
 
-#Logarithmic residuals
+# Logarithmic residuals
 calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
 ```
 
@@ -297,7 +303,7 @@ To quickly calculate the total error of the `DataCombined`, one can sum up the
 absolute values of the residuals:
 
 ```{r}
-#Linear residuals
+# Linear residuals
 totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
 
 print(totalError)

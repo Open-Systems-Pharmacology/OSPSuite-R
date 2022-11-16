@@ -17,8 +17,11 @@ plotObservedVsSimulated(
 an \code{R6} class object that defines plot properties.}
 
 \item{foldDistance}{A vector for plotting lines at required fold distances
-The vector can include only fold distance values different from \code{1}. Even
-if it is not specified, it will \strong{always} be included.}
+The vector can include only fold distance values \verb{>1}. An
+\code{x}-fold distance is defined as all simulated values within the range
+between \code{x}-fold (depicted by the upper fold range line) and \code{1/x}-fold
+(depicted by the lower fold range line) of observed values. The identity
+line can be interpreted as the \code{1}-fold range.}
 }
 \description{
 Observed versus predicted/simulated scatter plot

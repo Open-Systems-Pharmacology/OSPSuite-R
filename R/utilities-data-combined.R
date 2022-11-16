@@ -214,12 +214,18 @@ calculateResiduals <- function(dataCombined,
       observedData$xValues
     )$y
   )
-
   # Residual computation will depend on the scaling.
   if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
     pairedData <- dplyr::mutate(pairedData, residualValues = yValuesSimulated - yValuesObserved)
   } else {
-    pairedData <- dplyr::mutate(pairedData, residualValues = log(yValuesSimulated) - log(yValuesObserved))
+    # Epsilon for safe log calculation should be converted to the units of the values
+    epsilon <- toUnit(
+      quantityOrDimension = pairedData$yDimension[[1]],
+      values = ospsuiteEnv$LOG_SAFE_EPSILON,
+      targetUnit = pairedData$yUnit[[1]],
+      molWeight = 1
+    )
+    pairedData <- dplyr::mutate(pairedData, residualValues = .log_safe(yValuesSimulated, epsilon = epsilon) - .log_safe(yValuesObserved, epsilon = epsilon))
   }
 
   # some residual values might turn out to be NA (for example, when extrapolating)
@@ -229,18 +235,6 @@ calculateResiduals <- function(dataCombined,
     !is.na(residualValues)
   )
 
-  # In logarithmic scale, if any of the values are `0` (e.g. time measurement at
-  # 0 will correspond to `xValues = 0`), the scales won't be drawn and plotting
-  # will fail.
-  #
-  # To avoid this, just remove rows where any of the quantities are `0`s.
-  if (scaling %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
-    pairedData <- dplyr::filter(
-      pairedData,
-      xValues != 0, yValuesObserved != 0, yValuesSimulated != 0
-    )
-  }
-
   return(pairedData)
 }
 
@@ -248,21 +242,23 @@ calculateResiduals <- function(dataCombined,
 #
 # Depending on what is decided in issue
 # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091, change
-# defaults for `base` and `epsilon` for `.log_safe`, and use it instead of
-# using `log()` in `.extractResidualsToTibble()`.
+# defaults for `base` for `.log_safe`.
 
 #' @keywords internal
 #' @noRd
-.log_safe <- function(x, base = 10, epsilon = .Machine$double.eps^0.5) {
-  x <- ospsuite.utils::toMissingOfType(x, type = "double")
+.log_safe <- function(x, base = 10, epsilon = ospsuiteEnv$LOG_SAFE_EPSILON) {
+  x <- sapply(X = x, \(element){
+    element <- ospsuite.utils::toMissingOfType(element, type = "double")
+    if (is.na(element)) {
+      return(NA_real_)
+    } else if (element < epsilon) {
+      return(log(epsilon, base = base))
+    } else {
+      return(log(element, base = base))
+    }
+  })
 
-  if (is.na(x)) {
-    return(NA_real_)
-  } else if (x < epsilon) {
-    return(log(epsilon, base = base))
-  } else {
-    return(log(x, base = base))
-  }
+  return(x)
 }
 
 #' Remove unpairable datasets for computing residuals
