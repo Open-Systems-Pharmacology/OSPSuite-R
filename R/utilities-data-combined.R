@@ -247,7 +247,7 @@ calculateResiduals <- function(dataCombined,
 #' @keywords internal
 #' @noRd
 .log_safe <- function(x, base = 10, epsilon = ospsuiteEnv$LOG_SAFE_EPSILON) {
-  x <- sapply(X = x, \(element){
+  x <- sapply(X = x, function(element){
     element <- ospsuite.utils::toMissingOfType(element, type = "double")
     if (is.na(element)) {
       return(NA_real_)
