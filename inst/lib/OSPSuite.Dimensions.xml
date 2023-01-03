@@ -171,6 +171,7 @@
     <Dimension name="Concentration (mass)" baseUnit="kg/l" defaultUnit="mg/l">
       <BaseRepresentation lengthExponent="-3" massExponent="1" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
       <Units>
+        <Unit name="g/l" factor="1E-3" />
         <Unit name="mg/l" factor="1E-6" />
         <Unit name="µg/l" factor="1E-9" />
         <Unit name="ng/l" factor="1E-12" />

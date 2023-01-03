@@ -15,12 +15,12 @@
     <PKParameter name="t_max_tD1_tD2" displayName="t_max_tD1-tD2" mode="Multi" dimension="Time" description="Time at which the maximum concentration occurs within the first application interval"/>
     <PKParameter name="t_max_tDLast_tEnd" displayName="t_max_tDlast-tEnd" mode="Multi" dimension="Time" description="Time at which the maximum concentration occurs following the last application " />
 
+    <PKParameter name="C_tEnd" displayName="C_tEnd" mode="Always" dimension="Concentration (molar)" description="Concentration at the end of simulation" />
     <PKParameter name="C_trough_tD2" displayName="C_trough_tD2" mode="Multi" dimension="Concentration (molar)" description="Trough concentration just before the second dose is administered"/>
     <PKParameter name="C_trough_tDLast" displayName="C_trough_tDlast" mode="Multi" dimension="Concentration (molar)" description="Trough concentration just before the last dose is administered"/>
-    <PKParameter name="C_tEnd" displayName="C_tEnd" mode="Single" dimension="Concentration (molar)" description="Concentration at the end of simulation" />
 
-    <PKParameter name="AUC_tEnd" displayName="AUC_tEnd" mode="Single" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the first to the last data point" />
-    <PKParameter name="AUC_tEnd_norm" displayName="AUC_tEnd_norm" mode="Single" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the first to the last data point normalized to dose, with dose in drug mass per body weight" />
+    <PKParameter name="AUC_tEnd" displayName="AUC_tEnd" mode="Always" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the first to the last data point" />
+    <PKParameter name="AUC_tEnd_norm" displayName="AUC_tEnd_norm" mode="Always" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the first to the last data point normalized to dose, with dose in drug mass per body weight" />
 
     <PKParameter name="AUC_inf" displayName="AUC_inf" mode="Single" dimension="AUC (molar)" description="Area under the concentration vs. time curve from the first data point extrapolated to infinity" />
     <PKParameter name="AUC_inf_norm" displayName="AUC_inf_norm" mode="Single" dimension="AUC (mass)" description="Area under the concentration vs. time curve from the first data point extrapolated to infinity normalized to dose, with dose in drug mass per body weight" />
