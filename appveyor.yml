@@ -23,7 +23,8 @@ environment:
   USE_RTOOLS: true
   NOT_CRAN: true
   KEEP_VIGNETTES: false
-  R_BUILD_ARGS: --no-build-vignettes --no-manual --no-multiarch"
+  R_BUILD_ARGS: --no-build-vignettes --no-manual
+  R_CHECK_INSTALL_ARGS: --no-multiarch
   R_ARCH: x64
   R_VERSION: 4.1.1
   #We use this variale to skip some long lasting tests using "skip_on_ci"
