@@ -2,8 +2,10 @@
 
   <!-- badges: start -->
 
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&svg=true)](https://ci.appveyor.com/project/open-systems-pharmacology-ci/ospsuite-r)
-[![codecov](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg)](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R)
+<a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/OSPSuite-R/branch/develop" class="pkgdown-devel">
+<img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status" /></a>
+<a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="pkgdown-devel">
+<img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov" /></a>
 
   <!-- badges: end -->
 
@@ -56,6 +58,10 @@ From CRAN:
 - [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)
 - [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html)
 - [rlang](https://cran.r-project.org/web/packages/rlang/index.html)
+- [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html)
+- [patchwork](https://cran.r-project.org/web/packages/patchwork/index.html)
+- [cowplot](https://cran.r-project.org/web/packages/cowplot/index.html)
+- [scales](https://cran.r-project.org/web/packages/scales/index.html)
 
 
 Must be downloaded manually:
@@ -64,9 +70,10 @@ Must be downloaded manually:
   - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip)
   - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
 
-- [tlf](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.3.66/tlf_1.3.66.zip)
+- [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest)
 
-- [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip)
+- [tlf](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
+
 
 ## Under Windows
 
@@ -81,8 +88,16 @@ To install manually, follow these instructions:
 install.packages('R6')
 
 # Install `{rClr}` from local file 
-# (`pathTorCLR.zip` here should be replaced with the actual path to the `.zip` file)
-install.packages(pathTorCLR.zip, repos = NULL)
+# (`pathTo_rCLR.zip` here should be replaced with the actual path to the `.zip` file)
+install.packages(pathTo_rCLR.zip, repos = NULL)
+
+# Install `{ospsuite.utils}` from local file 
+# (`pathTo_ospsuite.utils.zip` here should be replaced with the actual path to the `.zip` file)
+install.packages(pathTo_ospsuite.utils.zip, repos = NULL)
+
+# Install `{tlf}` from local file 
+# (`pathTo_tlf.zip` here should be replaced with the actual path to the `.zip` file)
+install.packages(pathTo_tlf.zip, repos = NULL)
 
 # Install `{ospsuite}` from local file
 # (`pathToOSPSuite.zip` here should be replaced with the actual path to the `.zip` file)
