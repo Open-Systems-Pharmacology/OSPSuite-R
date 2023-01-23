@@ -17,6 +17,7 @@ obsData <- DataSet$new(name = "Observed")
 obsData$setValues(xValues = c(0, 1, 3, 3.5, 4, 5, 6), yValues = c(0, 1.9, 6.1, 7, 8.2, 1, 0))
 obsData$xUnit <- "min"
 obsData$yDimension <- ospDimensions$`Concentration (molar)`
+obsData$LLOQ <- 0.02
 myDC <- DataCombined$new()
 myDC$addSimulationResults(simData, groups = "myGroup")
 myDC$addDataSets(obsData, groups = "myGroup")
@@ -46,6 +47,22 @@ test_that(
   "calculateResiduals returns expected columns",
   expect_setequal(
     expected_column_names, colnames(calculateResiduals(myDC, scaling = "lin"))
+  )
+)
+
+test_that(
+  "DataCombined objects keep LLOQ data passed from underlying DataSet objects", 
+  expect_equal(
+    myDC$toDataFrame()$lloq, 
+	c(rep(0.02, length(obsData$yValues)), rep(NA, nrow(df)))
+  )
+)
+
+test_that(
+  "calculateResiduals function keeps passes lloq data through", 
+  expect_equal(
+    calculateResiduals(myDC, scaling = "lin")$lloq,
+	rep(0.02, 6)
   )
 )
 
