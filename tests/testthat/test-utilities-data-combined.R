@@ -41,7 +41,7 @@ test_that(
     "data.frame" %in% class(calculateResiduals(myDC, scaling = "lin"))
   )
 )
-expected_column_names <- c("group", "name", "xValues", "xUnit", "xDimension", "yValuesObserved", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit", "yValuesSimulated", "residualValues")
+expected_column_names <- c("group", "name", "xValues", "xUnit", "xDimension", "yValuesObserved", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit", "lloq", "yValuesSimulated", "residualValues")
 test_that(
   "calculateResiduals returns expected columns",
   expect_setequal(

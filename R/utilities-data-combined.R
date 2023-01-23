@@ -203,7 +203,9 @@ calculateResiduals <- function(dataCombined,
     # Everything related to the X-variable
     "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
     # Everything related to the Y-variable
-    "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y")
+    "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
+	# lower limit of quantification
+	"lloq"
   )
 
   # Add predicted values
