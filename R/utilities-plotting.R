@@ -582,7 +582,7 @@
     scale = generalPlotConfiguration$xAxisScale,
     ticks = generalPlotConfiguration$xAxisTicks,
     ticklabels = generalPlotConfiguration$xAxisTicksLabels,
-    font = generalPlotConfiguration$xAxisFont,
+    font = xAxisFont,
     expand = generalPlotConfiguration$xAxisExpand
   )
 
@@ -602,7 +602,7 @@
     scale = generalPlotConfiguration$yAxisScale,
     ticks = generalPlotConfiguration$yAxisTicks,
     ticklabels = generalPlotConfiguration$yAxisTicksLabels,
-    font = generalPlotConfiguration$yAxisFont,
+    font = yAxisFont,
     expand = generalPlotConfiguration$yAxisExpand
   )
 
