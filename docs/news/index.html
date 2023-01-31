@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">11.1.189</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">11.1.197</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,9 +71,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="12.0" id="ospsuite-120-development-version">ospsuite 12.0 (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-120-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="11.1.197" id="ospsuite-111197">ospsuite 11.1.197<a class="anchor" aria-label="anchor" href="#ospsuite-111197"></a></h2>
 <div class="section level3">
-<h3 id="new-features-12-0">New features<a class="anchor" aria-label="anchor" href="#new-features-12-0"></a></h3>
+<h3 id="new-features-11-1-197">New features<a class="anchor" aria-label="anchor" href="#new-features-11-1-197"></a></h3>
 <ul><li>
 <p>Adds new visualization functions:</p>
 <ul><li>
@@ -92,14 +92,14 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="major-changes-12-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-0"></a></h3>
+<h3 id="major-changes-11-1-197">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-1-197"></a></h3>
 <ul><li><p>The class <code>SimulationBatch</code> gets a new property <code>id</code>.</p></li>
 <li><p>The output of <code><a href="../reference/runSimulationBatches.html">runSimulationBatches()</a></code> is now a named list with names being the ids of <code>SimulationBatch</code>.</p></li>
 <li><p><code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> now uses <code>log(base = 10)</code> for calculation of residuals in logarithmic scale instead if <code>log(base = exp(1))</code></p></li>
 <li><p><code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> does also return residuals for entries where simulated or observed value is 0 in logarithmic scale. These values were ignored in previous versions. If the observed or simulated value is zero or negative, it is replaced by an arbitrary small value <code>getOSPSuiteSetting("LOG_SAFE_EPSILON")</code> (1e-20 by default).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-12-0">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-12-0"></a></h3>
+<h3 id="minor-changes-11-1-197">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-11-1-197"></a></h3>
 <ul><li>
 <code>SimulationBatch$addRunValues()</code> will throw an error when any start value is <code>NaN</code>
 </li>
