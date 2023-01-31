@@ -41,12 +41,6 @@ Characteristics of an individual describing its origin
 \item \href{#method-IndividualCharacteristics-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IndividualCharacteristics-new"></a>}}
 \if{latex}{\out{\hypertarget{method-IndividualCharacteristics-new}{}}}

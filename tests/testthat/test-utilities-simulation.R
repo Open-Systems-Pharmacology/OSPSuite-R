@@ -362,6 +362,8 @@ test_that("It can run multiple simulation batches with multiple parameters and m
   ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
   res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
   expect_equal(length(res), 2)
+  # Check for batch ids as names
+  expect_equal(names(res), c(simulationBatch1$id, simulationBatch2$id))
   expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
   expect_equal(names(res[[1]])[[2]], ids[[2]])
@@ -398,4 +400,29 @@ test_that("It returns the correct paths of the state variables", {
   sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
   stateVariablePaths <- getAllStateVariablesPaths(simulation = sim)
   expect_equal(length(stateVariablePaths), 5)
+})
+
+test_that("It returns the correct paths of the state variables", {
+  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  stateVariableParametersPaths <- getAllStateVariableParametersPaths(simulation = sim)
+  expect_equal(length(stateVariableParametersPaths), 1)
+})
+
+context("getSimulationTree")
+
+test_that("it can explore a simulation by path", {
+  simPath <- getSimulationFilePath("simple")
+  tree <- getSimulationTree(simPath)
+
+  path <- tree$Organism$Liver$Volume$path
+  expect_equal(path, "Organism|Liver|Volume")
+})
+
+
+test_that("it can explore a simulation by instance", {
+  sim <- loadTestSimulation("simple")
+  tree <- getSimulationTree(sim)
+
+  path <- tree$Organism$Liver$Volume$path
+  expect_equal(path, "Organism|Liver|Volume")
 })

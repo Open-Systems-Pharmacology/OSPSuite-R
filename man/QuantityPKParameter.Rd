@@ -32,12 +32,6 @@ pK-Parameter values for all individuals of a simulation (1 or more) calculated f
 \item \href{#method-QuantityPKParameter-print}{\code{QuantityPKParameter$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-QuantityPKParameter-new"></a>}}
 \if{latex}{\out{\hypertarget{method-QuantityPKParameter-new}{}}}

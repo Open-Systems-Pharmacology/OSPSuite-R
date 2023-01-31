@@ -44,6 +44,8 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \item{\code{simulation}}{Underlying simulation used for the batch run. Read only.}
 
 \item{\code{runValuesIds}}{Ids of the run values that will be executed on next run}
+
+\item{\code{id}}{The id of the .NET wrapped object. (read-only)}
 }
 \if{html}{\out{</div>}}
 }
@@ -52,15 +54,11 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 \itemize{
 \item \href{#method-SimulationBatch-new}{\code{SimulationBatch$new()}}
 \item \href{#method-SimulationBatch-addRunValues}{\code{SimulationBatch$addRunValues()}}
+\item \href{#method-SimulationBatch-getVariableParameters}{\code{SimulationBatch$getVariableParameters()}}
+\item \href{#method-SimulationBatch-getVariableMolecules}{\code{SimulationBatch$getVariableMolecules()}}
 \item \href{#method-SimulationBatch-print}{\code{SimulationBatch$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatch-new}{}}}
@@ -103,7 +101,8 @@ Add a set of parameter and start values for next execution.
 }
 \subsection{Details}{
 Intended for the use with \code{runSimulationBatches}. The simulation batch is executed
-with the sets of parameter and initial values that have been scheduled. The set of run values is cleared after successful run.
+with the sets of parameter and initial values that have been scheduled.
+The set of run values is cleared after successful run.
 }
 
 \subsection{Returns}{
@@ -136,6 +135,42 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimulationBatch-getVariableParameters"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatch-getVariableParameters}{}}}
+\subsection{Method \code{getVariableParameters()}}{
+Returns a list of parameter paths that are variable in this batch.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$getVariableParameters()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+The order of parameters is the same as the order of parameter
+values added with \verb{$addRunValues()} method.
+}
+
+\subsection{Returns}{
+List of parameter paths, or \code{NULL} if no parameter is variable.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimulationBatch-getVariableMolecules"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatch-getVariableMolecules}{}}}
+\subsection{Method \code{getVariableMolecules()}}{
+Returns a list of molecules paths that are variable in this batch
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$getVariableMolecules()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+The order of molecules is the same as the order of molecule
+start values added with \verb{$addRunValues()} method.
+}
+
+\subsection{Returns}{
+List of parameter paths, or \code{NULL} if no molecule is variable.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-print"></a>}}

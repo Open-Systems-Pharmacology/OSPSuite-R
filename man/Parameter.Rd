@@ -17,7 +17,9 @@ Derived from \link{Quantity}, please see base class documentation.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{isStateVariable}}{Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.}
+\item{\code{isStateVariable}}{Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.
+Setting the value to \code{FALSE} will delete the RHS Formula.
+Setting it to \code{TRUE} is not currently supported and will throw an error.}
 
 \item{\code{rhsFormula}}{An instance of a \code{Formula} object representing the RHS Formula (Read-Only)}
 }
@@ -33,11 +35,11 @@ Derived from \link{Quantity}, please see base class documentation.
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>ospsuite::Quantity$reset()</code></a></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>ospsuite::Quantity$setValue()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>ospsuite::Quantity$reset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>ospsuite::Quantity$setValue()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -57,10 +59,6 @@ Initialize a new instance of the class
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-Setting the value to \code{FALSE} will delete the RHS Formula. Setting it to \code{TRUE} is not currently supported and will throw an error
-}
-
 \subsection{Returns}{
 A new \code{Parameter} object.
 }

@@ -1,10 +1,14 @@
 image: Visual Studio 2019
 
-version: '{build}'
+
+# uncomment to use global ospsuite version (and comment line underneath)
+# version: '{build}' 
+version: '11.1.{build}'
 
 # Download script file from GitHub
 init:
-  - ps: Update-AppveyorBuild -Version "$($env:ospsuite_version).$($env:appveyor_build_version)"
+# uncomment to use global ospsuite version
+#  - ps: Update-AppveyorBuild -Version "$($env:ospsuite_version).$($env:appveyor_build_version)"
   - ps: |
       $ErrorActionPreference = "Stop"
       Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
@@ -19,7 +23,8 @@ environment:
   USE_RTOOLS: true
   NOT_CRAN: true
   KEEP_VIGNETTES: false
-  R_BUILD_ARGS: --no-build-vignettes --no-manual"
+  R_BUILD_ARGS: --no-build-vignettes --no-manual
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran
   R_ARCH: x64
   R_VERSION: 4.1.0
   #We use this variale to skip some long lasting tests using "skip_on_ci"
@@ -31,7 +36,7 @@ build_script:
   - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
-  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
+  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
 
 test_script:
   - travis-tool.sh run_tests
@@ -40,6 +45,9 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
+on_success:
+  - Rscript -e "spelling::spell_check_package()"
+  
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs

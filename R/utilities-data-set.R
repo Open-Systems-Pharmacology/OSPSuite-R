@@ -56,7 +56,7 @@ loadDataSetFromPKML <- function(filePath) {
 saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, "DataSet")
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   dataRepositoryTask <- .getNetTask("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }

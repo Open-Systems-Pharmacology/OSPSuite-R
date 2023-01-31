@@ -73,7 +73,7 @@ setParameterValuesByPath(
 
 ## Adding enzyme ontogenies
 
-The PK-Sim database includes ontogeny information for some proteins (see (PK-Sim Ontogeny Database)[https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf]). For a protein molecule present in the simulation, it is possible to add the ontogeny information on one of the pre-defined proteins. For example, it is possible to set the ontogeny of the protein `MyProtein` to the value of the ontogeny of a CYP3A4 enzyme for the specified individual. The list of supported ontogenies is stored in the `StandardOntogeny`-list.
+The PK-Sim database includes ontogeny information for some proteins (see (PK-Sim Ontogeny Database)[https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf]). For a protein molecule present in the simulation, it is possible to add the ontogeny information on one of the predefined proteins. For example, it is possible to set the ontogeny of the protein `MyProtein` to the value of the ontogeny of a CYP3A4 enzyme for the specified individual. The list of supported ontogenies is stored in the `StandardOntogeny`-list.
 
 ```{r addOntogeny}
 library(ospsuite)

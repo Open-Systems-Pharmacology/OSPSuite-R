@@ -44,7 +44,7 @@ A table formula of the model (Typically related to a \code{Quantity} such as a p
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -82,7 +82,7 @@ Print the formula to the console without the name of the class
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{allPoints}}{Returns all points defined in the table formulafor a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
+\item{\code{allPoints}}{Returns all points defined in the table formula for a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
 
 \item{\code{useDerivedValues}}{Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}}
 
@@ -105,7 +105,7 @@ Print the formula to the console without the name of the class
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></span></li>
 </ul>
 </details>
 }}

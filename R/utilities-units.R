@@ -5,7 +5,7 @@
 #' @export
 hasDimension <- function(dimension) {
   validateIsString(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "HasDimension", enc2utf8(dimension))
 }
 
@@ -30,7 +30,7 @@ validateDimension <- function(dimension) {
 hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), .encodeUnit(unit))
 }
 
@@ -54,7 +54,7 @@ validateUnit <- function(unit, dimension) {
 #' @return
 #' If validations are successful, `NULL` is returned. Otherwise, error is
 #' signaled.
-validateHasUnit <- function(quantity, unit) {
+.validateHasUnit <- function(quantity, unit) {
   validateIsOfType(quantity, "Quantity")
   validateIsString(unit)
   if (quantity$hasUnit(unit)) {
@@ -71,7 +71,7 @@ validateHasUnit <- function(quantity, unit) {
 #' @export
 getBaseUnit <- function(dimension) {
   validateDimension(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
 }
 
@@ -267,7 +267,7 @@ allAvailableDimensions <- function() {
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- .encodeUnit(unit)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   dim <- rClr::clrCall(dimensionTask, "DimensionForUnit", unit)
   ifNotNull(dim, rClr::clrGet(dim, "Name"))
 }
@@ -286,7 +286,7 @@ getDimensionForUnit <- function(unit) {
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
 
@@ -294,7 +294,7 @@ getUnitsForDimension <- function(dimension) {
 #' This is purely for optimization purposes
 #'
 #' @return An instance of the Task
-getDimensionTask <- function() {
+.getDimensionTask <- function() {
   dimensionTask <- ospsuiteEnv$dimensionTask
   if (is.null(dimensionTask)) {
     dimensionTask <- .getNetTask("DimensionTask")
@@ -318,7 +318,7 @@ getDimensionTask <- function() {
 #' @export
 getDimensionByName <- function(name) {
   validateIsString(name)
-  dimensionTask <- getDimensionTask()
+  dimensionTask <- .getDimensionTask()
   rClr::clrCall(dimensionTask, "DimensionByName", enc2utf8(name))
 }
 
@@ -334,9 +334,9 @@ getDimensionByName <- function(name) {
 #'
 #' @examples
 #'
-#' ospsuite:::getUnitsEnum()
+#' ospsuite:::.getUnitsEnum()
 #' @keywords internal
-getUnitsEnum <- function() {
+.getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
   errors <- c()
   units <- lapply(dimensions, function(dimension) {
@@ -373,9 +373,9 @@ getUnitsEnum <- function() {
 #'
 #' @examples
 #'
-#' ospsuite:::getDimensionsEnum()
+#' ospsuite:::.getDimensionsEnum()
 #' @keywords internal
-getDimensionsEnum <- function() {
+.getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
 }
 
@@ -393,40 +393,17 @@ ospDimensions <- list()
 #' @export
 ospUnits <- list()
 
-initializeDimensionAndUnitLists <- function() {
+.initializeDimensionAndUnitLists <- function() {
   # This initializes the two lists in the parent environment which is the package environments
-  ospDimensions <<- getDimensionsEnum()
-  ospUnits <<- getUnitsEnum()
+  ospDimensions <<- .getDimensionsEnum()
+  ospUnits <<- .getUnitsEnum()
 }
 
 
-#' Convert data frame to common units
-#'
-#' @description
-#'
-#' When multiple (observed and/or simulated) datasets are present in a data
-#' frame, they are likely to have different units. This function helps to
-#' convert them to a common unit specified by the user.
-#'
-#' This is especially helpful while plotting since the quantities from different
-#' datasets to be plotted on the X-and Y-axis need to have same units to be
-#' meaningfully compared.
-#'
-#' @note
-#'
-#' Molecular weight is **required** for the conversion between certain
-#' dimensions (`Amount`, `Mass`, `Concentration (molar)`, and `Concentration
-#' (mass)`). Therefore, if molecular weight is missing for these dimension, the
-#' unit conversion will fail.
-#'
-#' @return A data frame with measurement columns transformed to have common units.
+#' Convert a data frame to common units
 #'
 #' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
-#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), first of the existing units in the respective
-#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
-#'   available dimensions and units, see `ospsuite::ospDimensions` and
-#'   `ospsuite::ospUnits`, respectively.
+#' @inheritParams convertUnits
 #'
 #' @seealso toUnit
 #'
@@ -455,9 +432,20 @@ initializeDimensionAndUnitLists <- function() {
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #' @keywords internal
 .unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
-
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
+
+  # early return --------------------------
+
+  # Return early if there are only unique units present in the provided data and
+  # `xUnit` and `yUnit` arguments are `NULL`. This helps avoid expensive and
+  # redundant computations.
+  #
+  # *DO NOT* use short-circuiting `&&` logical operator here.
+  if (length(unique(data$xUnit)) == 1L & is.null(xUnit) &
+    length(unique(data$yUnit)) == 1L & is.null(yUnit)) {
+    return(data)
+  }
 
   # target units --------------------------
 
@@ -499,8 +487,8 @@ initializeDimensionAndUnitLists <- function() {
   #
   # If there is no `yErrorValues` column in the entered data frame, it doesn't
   # make sense for this function to introduce a new column called `yErrorUnit`.
-  if (("yErrorValues" %in% names(data)) &&
-    !("yErrorUnit" %in% names(data))) {
+  if (("yErrorValues" %in% colnames(data)) &&
+    !("yErrorUnit" %in% colnames(data))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
@@ -558,13 +546,20 @@ initializeDimensionAndUnitLists <- function() {
   )
 
   # yUnit error
-  if ("yErrorValues" %in% names(data)) {
+  if ("yErrorValues" %in% colnames(data)) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
 
     data <- purrr::map_dfr(
       .x = yErrorDataList,
       .f = function(data) .yErrorUnitConverter(data, yTargetUnit)
     )
+  } else {
+    # For some reason, if the user dataset doesn't have error values, but
+    # still have columns about error units, update them as well. The quantity
+    # and its error should always have the same unit in the final data frame.
+    if ("yErrorUnit" %in% colnames(data)) {
+      data <- dplyr::mutate(data, yErrorUnit = yUnit)
+    }
   }
 
   # clean up and return --------------------------
@@ -625,6 +620,17 @@ initializeDimensionAndUnitLists <- function() {
     molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
   )
 
+  if ("lloq" %in% colnames(yData)) {
+    yData$lloq <- toUnit(
+      quantityOrDimension = yData$yDimension[[1]],
+      values = yData$lloq,
+      targetUnit = yTargetUnit,
+      sourceUnit = yData$yUnit[[1]],
+      molWeight = yData$molWeight[[1]],
+      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+    )
+  }
+
   yData$yUnit <- yTargetUnit
 
   return(yData)
@@ -633,6 +639,14 @@ initializeDimensionAndUnitLists <- function() {
 #' @keywords internal
 #' @noRd
 .yErrorUnitConverter <- function(yData, yTargetUnit) {
+  # If error type is geometric, conversion of `yValues` to different units
+  # should not trigger conversion of error values (and units)
+  if ("yErrorType" %in% colnames(yData) &&
+    !is.na(unique(yData$yErrorType)) &&
+    unique(yData$yErrorType) == DataErrorType$GeometricStdDev) {
+    return(yData)
+  }
+
   yData$yErrorValues <- toUnit(
     quantityOrDimension = yData$yDimension[[1]],
     values = yData$yErrorValues,
@@ -686,14 +700,15 @@ initializeDimensionAndUnitLists <- function() {
 
   mostFrequentUnit <- unitUsageFrequency %>%
     # Select only the row(s) with maximum frequency.
-    dplyr::filter(unitFrequency == max(unitFrequency)) %>%
-    # In case of ties, there will be more than one row. In such cases, the first
-    # unit is selected.
+    #
+    # In case of ties, there can be more than one row. In such cases, setting
+    # `with_ties = FALSE` make sure that only the first row (and the
+    # corresponding) unit will be selected.
     #
     # Do *not* select randomly as that would introduce randomness in plotting
     # functions with each run of the plotting function defaulting to a different
     # unit.
-    dplyr::slice_head(n = 1L) %>%
+    dplyr::slice_max(unitFrequency, n = 1L, with_ties = FALSE) %>%
     # Remove the frequency column, which is not useful outside the context of
     # this function.
     dplyr::select(-unitFrequency)

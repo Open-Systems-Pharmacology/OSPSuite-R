@@ -17,7 +17,7 @@ dataSet <- loadDataSetsFromExcel(
   importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
-# same as dataSet, but with deliberately changed entries for testing
+# same as `dataSet`, but with deliberately changed entries for testing
 dataSet2 <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012v2.xlsx"),
   importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
@@ -764,6 +764,35 @@ test_that("transformed values are equal to raw values times scale factor plus of
   expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
 })
 
+test_that("correct transformations with negative scale factors", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+
+  # original data frame
+  dfOriginal <- myCombDat$toDataFrame()
+
+  # First test with positive scale factor
+  myCombDat$setDataTransformations(
+    forNames = dataSet[[1]]$name,
+    yScaleFactors = 2.5
+  )
+  expect_equal(myCombDat$dataTransformations$yScaleFactors, 2.5)
+
+  dfTransformed <- myCombDat$toDataFrame()
+  expect_equal(dfTransformed$yValues, dfOriginal$yValues * 2.5)
+  expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
+
+  # Now with negative scale factor
+  myCombDat$setDataTransformations(
+    forNames = dataSet[[1]]$name,
+    yScaleFactors = -2.5
+  )
+  expect_equal(myCombDat$dataTransformations$yScaleFactors, -2.5)
+
+  dfTransformed <- myCombDat$toDataFrame()
+  expect_equal(dfTransformed$yValues, dfOriginal$yValues * -2.5)
+  expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
+})
 
 test_that("transformed values are equal to raw values times scale factor plus offsets - different transformations for each dataset", {
   myCombDat <- DataCombined$new()
@@ -869,6 +898,17 @@ test_that("each call to set transformations resets previous parameters for the s
   expect_equal(dfDat1, dfDat3)
   expect_equal(dfDat1$xValues + 3, dfDat2$xValues)
   expect_equal(dfDat1$yValues * 4, dfDat2$yValues)
+})
+
+test_that("Calls to set transformations with only part of the parameters do not reset other transformations", {
+  myDC <- DataCombined$new()
+  obsData <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite"))
+  myDC$addDataSets(obsData)
+  myDC$setDataTransformations(xOffsets = 1)
+  myDC$setDataTransformations(yOffsets = 2)
+
+  expect_equal(myDC$dataTransformations$xOffsets, 1)
+  expect_equal(myDC$dataTransformations$yOffsets, 2)
 })
 
 test_that("messy inputs (with special constants) for data transformations don't cause any problems", {
@@ -1142,41 +1182,20 @@ test_that("sequential update when first and second datasets have same names but 
 # `Population` objects -----------------------------
 
 test_that("data frame is as expected when `Population` objects are used", {
-  # If no unit is specified, the default units are used. For "height" it is "dm",
-  # for "weight" it is "kg", for "age" it is "year(s)".
-  populationCharacteristics <- createPopulationCharacteristics(
-    species = Species$Human,
-    population = HumanPopulation$Asian_Tanaka_1996,
-    numberOfIndividuals = 50,
-    proportionOfFemales = 50,
-    weightMin = 30,
-    weightMax = 98,
-    weightUnit = "kg",
-    heightMin = NULL,
-    heightMax = NULL,
-    ageMin = 0,
-    ageMax = 80,
-    ageUnit = "year(s)"
-  )
-
-  # Create population from population characteristics
-  result <- createPopulation(populationCharacteristics = populationCharacteristics)
-  myPopulation <- result$population
-
   # Load simulation
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  populationResults <- runSimulation(
+  populationResults <- importResultsFromCSV(
     simulation = sim,
-    population = myPopulation
+    filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
   )
 
   myDataComb <- DataCombined$new()
   myDataComb$addSimulationResults(populationResults, individualIds = c(1, 8, 10, 44))
   df <- myDataComb$toDataFrame()
 
-  expect_equal(nrow(df), 1964L)
+  expect_equal(nrow(df), 3928L)
 
   expect_equal(min(df$IndividualId), 1)
   expect_equal(max(df$IndividualId), 44)
@@ -1224,4 +1243,48 @@ test_that("data frame metadata column entries are as expected when `DataSet` wit
   expect_equal(unique(df$Organ), "Liver")
   expect_equal(unique(df$Compartment), "Intracellular")
   expect_equal(unique(df$Species), "Human")
+})
+
+# Scalar groups specification -----------------------------
+
+dataSet1 <- DataSet$new(name = "Dataset1")
+dataSet1$setValues(1, 1)
+dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
+dataSet1$molWeight <- 1
+
+dataSet2 <- DataSet$new(name = "Dataset2")
+dataSet2$setValues(2, 2)
+dataSet2$yDimension <- ospDimensions$`Concentration (mass)`
+dataSet2$molWeight <- 1
+
+dataSet3 <- DataSet$new(name = "Dataset3")
+dataSet3$setValues(1, 3)
+dataSet3$yDimension <- ospDimensions$`Concentration (mass)`
+dataSet3$molWeight <- 1
+
+test_that("scalar argument to `groups` works as expected", {
+  myCombDatWithOnlyDataSets <- DataCombined$new()
+  myCombDatWithOnlyDataSets$addDataSets(
+    c(dataSet1, dataSet2, dataSet3),
+    groups = "myGroup"
+  )
+
+  expect_equal(
+    unique(myCombDatWithOnlyDataSets$groupMap$group),
+    "myGroup"
+  )
+})
+
+
+test_that("scalar argument in a list to `groups` works as expected", {
+  myCombDatWithOnlyDataSets2 <- DataCombined$new()
+  myCombDatWithOnlyDataSets2$addDataSets(
+    c(dataSet1, dataSet2, dataSet3),
+    groups = list("myGroup")
+  )
+
+  expect_equal(
+    unique(myCombDatWithOnlyDataSets2$groupMap$group),
+    "myGroup"
+  )
 })

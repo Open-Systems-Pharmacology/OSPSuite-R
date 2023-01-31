@@ -5,7 +5,7 @@
 #' @keywords internal
 .loadDataRepositoryFromPKML <- function(filePath) {
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   dataRepositoryTask <- .getNetTask("DataRepositoryTask")
   dataRepository <- rClr::clrCall(dataRepositoryTask, "LoadDataRepository", filePath)
   DataRepository$new(dataRepository)

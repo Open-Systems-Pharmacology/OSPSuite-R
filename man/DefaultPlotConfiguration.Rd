@@ -4,9 +4,12 @@
 \alias{DefaultPlotConfiguration}
 \title{Plot configuration for OSP plots}
 \description{
-R6 configuration class defining properties of plots that can be created with
-\code{plotIndividualTimeProfile()}, \code{plotPopulationTimeProfile()},
+R6 configuration class defining aesthetic properties of plots that can be
+created with \code{plotIndividualTimeProfile()}, \code{plotPopulationTimeProfile()},
 \code{plotObservedVsSimulated()}, and \code{plotResidualsVsTime()}.
+
+To interactively explore various aesthetic properties and appearance of plots
+with these properties, you can use the \href{https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html}{Shiny app} from \code{{tlf}} package.
 
 The following sections provide more details on how to customize it further.
 }
@@ -88,6 +91,13 @@ default is linear for both axes.
 The available transformations can be seen in the \code{tlf::Scaling} list.
 }
 
+\section{Specifying tick labels}{
+\code{tlf::TickLabelTransforms} lists of all available tick label transformations.
+For example, selecting \code{tlf::TickLabelTransforms$identity} will display tick
+labels as they are, while selecting \code{tlf::TickLabelTransforms$log} will
+display tick labels in logarithmic scale format.
+}
+
 \section{Saving plot}{
 By default, the plots will be shown in plot pane of your IDE, but the plots
 can also be saved to a file using the \code{ggplot2::ggsave()} function.
@@ -117,7 +127,10 @@ myPlotConfiguration
 \seealso{
 Other plotting: 
 \code{\link{plotIndividualTimeProfile}()},
-\code{\link{plotPopulationTimeProfile}()}
+\code{\link{plotObservedVsSimulated}()},
+\code{\link{plotPopulationTimeProfile}()},
+\code{\link{plotResidualsVsSimulated}()},
+\code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}
 \section{Public fields}{
@@ -144,11 +157,11 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
+\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -179,7 +192,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
 }
 \if{html}{\out{</div>}}
 }
@@ -204,11 +217,11 @@ label, y-axis label, plot legend, watermark, respectively.}
 
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendCaptionSize, legendCaptionColor, legendCaptionFontFamily, legendCaptionFontFace, legendCaptionAngle, legendCaptionAlign}}{Aesthetic properties for the legend caption.}
+\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
@@ -239,7 +252,7 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.}
+\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
 }
 \if{html}{\out{</div>}}
 }

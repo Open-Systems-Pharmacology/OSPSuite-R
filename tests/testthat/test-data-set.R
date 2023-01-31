@@ -121,6 +121,39 @@ test_that("it can update the unit of the yValues and this does not change the re
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
 })
 
+test_that("it can update the dimension of the yValues and this does not change the returned value of the error", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expectedYErrorValues <- c(0.001, 0.001, 0.1, 1)
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(0, 0.1, 0.6, 10),
+    yErrorValues = expectedYErrorValues
+  )
+
+  dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
+  dataSet$yDimension <- ospDimensions$Amount
+
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+})
+
+test_that("it can update the unit of the yErrorValues and this does not change the returned value", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expectedYErrorValues <- c(0.001, 0.001, 0.1, 1)
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(0, 0.1, 0.6, 10),
+    yErrorValues = expectedYErrorValues
+  )
+  # Change units of y error values - actual values are converted
+  dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+  expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
+
+  # Also test for dimension change
+  dataSet$yDimension <- ospDimensions$Amount
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+})
+
 test_that("Empty error with defined y values", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
@@ -319,4 +352,9 @@ test_that("it can set the llog value", {
   dataSet <- DataSet$new(dataRepository = obsData)
   dataSet$LLOQ <- 0.25
   expect_equal(dataSet$LLOQ, 0.25, tolerance)
+})
+
+test_that("it throws an error when a vector of LLOQ is provided", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_error(dataSet$LLOQ <- c(0.25, 0.25), regexp = messages$lloqOnlyScalar())
 })

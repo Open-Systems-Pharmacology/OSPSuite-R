@@ -11,7 +11,7 @@ plotPopulationTimeProfile(
 )
 }
 \arguments{
-\item{dataCombined}{A \code{DataCombined} object.}
+\item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
@@ -24,13 +24,34 @@ a line, while the lower and upper values will be used to create a ribbon.}
 Time-values profile plot for population simulations
 }
 \examples{
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
 
-# TODO: add example
+populationResults <- importResultsFromCSV(
+  simulation = sim,
+  filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+)
+
+# Create a new instance of `DataCombined` class
+myDataComb <- DataCombined$new()
+myDataComb$addSimulationResults(populationResults)
+
+# Create a new instance of `DefaultPlotConfiguration` class
+myPlotConfiguration <- DefaultPlotConfiguration$new()
+myPlotConfiguration$title <- "My Plot Title"
+myPlotConfiguration$subtitle <- "My Plot Subtitle"
+myPlotConfiguration$caption <- "My Sources"
+
+# plot
+plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
 
 }
 \seealso{
 Other plotting: 
 \code{\link{DefaultPlotConfiguration}},
-\code{\link{plotIndividualTimeProfile}()}
+\code{\link{plotIndividualTimeProfile}()},
+\code{\link{plotObservedVsSimulated}()},
+\code{\link{plotResidualsVsSimulated}()},
+\code{\link{plotResidualsVsTime}()}
 }
 \concept{plotting}

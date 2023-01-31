@@ -1,4 +1,359 @@
-#'  Validate arguments provided as vectors
+#' Convert datasets in `DataCombined` to common units
+#'
+#' @description
+#'
+#' When multiple (observed and/or simulated) datasets are present in a data
+#' frame, they are likely to have different units. This function helps to
+#' convert them to a common unit specified by the user.
+#'
+#' This is especially helpful while plotting since the quantities from different
+#' datasets to be plotted on the X-and Y-axis need to have same units to be
+#' meaningfully compared.
+#'
+#' @note
+#'
+#' Molecular weight is **required** for the conversion between certain
+#' dimensions (`Amount`, `Mass`, `Concentration (molar)`, and `Concentration
+#' (mass)`). Therefore, if molecular weight is missing for these dimension, the
+#' unit conversion will fail.
+#'
+#' @return A data frame with measurement columns transformed to have common units.
+#'
+#' @param dataCombined A single instance of `DataCombined` class.
+#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
+#'   not specified (`NULL`), first of the existing units in the respective
+#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
+#'   available dimensions and units, see `ospsuite::ospDimensions` and
+#'   `ospsuite::ospUnits`, respectively.
+#'
+#' @return
+#'
+#' In the returned tibble data frame, the following columns will always be present:
+#'
+#' name - group - dataType - xValues - xDimension - xUnit - yValues -
+#' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+#'
+#' Importantly, the `xUnit` and `yUnit` columns will have unique entries.
+#'
+#' @family data-combined
+#'
+#' @examples
+#' # simulated data
+#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simFilePath)
+#' simResults <- runSimulation(sim)
+#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+#'
+#' # observed data
+#' obsData <- lapply(
+#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+#' )
+#' names(obsData) <- lapply(obsData, function(x) x$name)
+#'
+#'
+#' # Create a new instance of `DataCombined` class
+#' myDataCombined <- DataCombined$new()
+#'
+#' # Add simulated results
+#' myDataCombined$addSimulationResults(
+#'   simulationResults = simResults,
+#'   quantitiesOrPaths = outputPath,
+#'   groups = "Aciclovir PVB"
+#' )
+#'
+#' # Add observed data set
+#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+#'
+#' convertUnits(
+#'   myDataCombined,
+#'   xUnit = ospUnits$Time$s,
+#'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
+#' )
+#'
+#' @export
+convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
+  .validateScalarDataCombined(dataCombined)
+
+  # Extract combined data frame
+  combinedData <- dataCombined$toDataFrame()
+
+  # Getting all units on the same scale
+  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
+
+  return(combinedData)
+}
+
+#' Calculate residuals for datasets in `DataCombined`
+#'
+#' @details
+#'
+#' To compute residuals, for every simulated dataset in a given group, there
+#' should also be a corresponding observed dataset. If this is not the case, the
+#' corresponding observed or simulated datasets will be removed.
+#'
+#' When multiple (observed and/or simulated) datasets are present in
+#' `DataCombined`, they are likely to have different units. The `xUnit` and
+#' `yUnit` arguments help you specify a common unit to convert them to.
+#'
+#' @param scaling A character specifying scale: either `tlf::Scaling$lin`
+#'   (linear) or `tlf::Scaling$log` (logarithmic).
+#' @inheritParams convertUnits
+#'
+#' @return
+#'
+#' In the returned tibble data frame, the following columns will always be present:
+#'
+#' xValues - xUnit - xDimension - yValuesObserved - yUnit - yDimension -
+#' yErrorValues - yErrorType - yErrorUnit - yValuesSimulated - residualValues
+#'
+#' @family data-combined
+#'
+#' @examples
+#' # simulated data
+#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simFilePath)
+#' simResults <- runSimulation(sim)
+#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+#'
+#' # observed data
+#' obsData <- lapply(
+#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+#' )
+#' names(obsData) <- lapply(obsData, function(x) x$name)
+#'
+#'
+#' # Create a new instance of `DataCombined` class
+#' myDataCombined <- DataCombined$new()
+#'
+#' # Add simulated results
+#' myDataCombined$addSimulationResults(
+#'   simulationResults = simResults,
+#'   quantitiesOrPaths = outputPath,
+#'   groups = "Aciclovir PVB"
+#' )
+#'
+#' # Add observed data set
+#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+#'
+#' calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+#' @export
+calculateResiduals <- function(dataCombined,
+                               scaling,
+                               xUnit = NULL,
+                               yUnit = NULL) {
+  .validateScalarDataCombined(dataCombined)
+
+  # Validation has already taken place in the calling plotting function
+  combinedData <- dataCombined$toDataFrame()
+
+  # Remove the observed and simulated datasets which can't be paired.
+  combinedData <- .removeUnpairableDatasets(combinedData)
+
+  # Return early if there are no pair-able datasets present
+  if (nrow(combinedData) == 0L) {
+    warning(messages$residualsCanNotBeComputed())
+    return(NULL)
+  }
+
+  # Getting all datasets to have the same units.
+  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
+
+  # Create observed versus simulated paired data using interpolation for each
+  # grouping level and combine the resulting data frames in a row-wise manner.
+  #
+  # Both of these routines will be carried out by `dplyr::group_modify()`.
+  pairedData <- combinedData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
+    dplyr::ungroup()
+
+  return(pairedData)
+}
+
+#' Created observed versus simulated paired data
+#'
+#' @param data A data frame from `DataCombined$toDataFrame()`, which has been
+#'   further tidied using `.removeUnpairableDatasets()` and then
+#'   `.unitConverter()` functions.
+#'
+#' @keywords internal
+.extractResidualsToTibble <- function(data, scaling) {
+  # Since the data frames will be fed to `matrix()`, make sure that data has
+  # `data.frame` class. That is, if tibbles are supplied, coerce them to a
+  # simple data frame.
+  observedData <- as.data.frame(dplyr::filter(data, dataType == "observed"))
+  simulatedData <- as.data.frame(dplyr::filter(data, dataType == "simulated"))
+
+  # If available, error values will be useful for plotting error bars in the
+  # scatter plot. Even if not available, add missing values to be consistent.
+  if ("yErrorValues" %in% colnames(data)) {
+    yErrorValues <- data$yErrorValues[data$dataType == "observed"]
+  } else {
+    yErrorValues <- rep(NA_real_, nrow(observedData))
+  }
+
+  # Most of the columns in the observed data frame should also be included in
+  # the paired data frame for completeness.
+  pairedData <- dplyr::select(
+    observedData,
+    # Identifier column
+    name,
+    # Everything related to the X-variable
+    "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+    # Everything related to the Y-variable
+    "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
+	# lower limit of quantification
+	"lloq"
+  )
+
+  # Add predicted values
+  # the approx function with a default rule = 1 argument returns NA for extrapolated points
+  pairedData <- dplyr::mutate(pairedData,
+    "yValuesSimulated" = approx(
+      simulatedData$xValues, simulatedData$yValues,
+      observedData$xValues
+    )$y
+  )
+  # Residual computation will depend on the scaling.
+  if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
+    pairedData <- dplyr::mutate(pairedData, residualValues = yValuesSimulated - yValuesObserved)
+  } else {
+    # Epsilon for safe log calculation should be converted to the units of the values
+    epsilon <- toUnit(
+      quantityOrDimension = pairedData$yDimension[[1]],
+      values = ospsuiteEnv$LOG_SAFE_EPSILON,
+      targetUnit = pairedData$yUnit[[1]],
+      molWeight = 1
+    )
+    pairedData <- dplyr::mutate(pairedData, residualValues = .log_safe(yValuesSimulated, epsilon = epsilon) - .log_safe(yValuesObserved, epsilon = epsilon))
+  }
+
+  # some residual values might turn out to be NA (for example, when extrapolating)
+  # they are not returned in the output tibble
+  pairedData <- dplyr::filter(
+    pairedData,
+    !is.na(residualValues)
+  )
+
+  return(pairedData)
+}
+
+# TODO:
+#
+# Depending on what is decided in issue
+# https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091, change
+# defaults for `base` for `.log_safe`.
+
+#' @keywords internal
+#' @noRd
+.log_safe <- function(x, base = 10, epsilon = ospsuiteEnv$LOG_SAFE_EPSILON) {
+  x <- sapply(X = x, function(element){
+    element <- ospsuite.utils::toMissingOfType(element, type = "double")
+    if (is.na(element)) {
+      return(NA_real_)
+    } else if (element < epsilon) {
+      return(log(epsilon, base = base))
+    } else {
+      return(log(element, base = base))
+    }
+  })
+
+  return(x)
+}
+
+#' Remove unpairable datasets for computing residuals
+#'
+#' @description
+#'
+#' Computing residuals by definition requires that data should be in pairs, i.e.
+#' for every simulated dataset in a given group, there should also be a
+#' corresponding observed dataset.
+#'
+#' To this end, current function removes the following datasets:
+#'
+#' - Datasets which haven't been assigned to any group.
+#' - Datasets that are not part of a pair (i.e. a simulated dataset without
+#'   observed dataset partner, and vice versa).
+#'
+#' @param data A data frame returned by `DataCombined$toDataFrame()`.
+#'
+#' @examples
+#'
+#' df <- dplyr::tribble(
+#'   ~name, ~dataType, ~group,
+#'   "Sim1", "Simulated", "GroupA",
+#'   "Sim2", "Simulated", "GroupA",
+#'   "Obs1", "Observed", "GroupB",
+#'   "Obs2", "Observed", "GroupB",
+#'   "Sim3", "Simulated", "GroupC",
+#'   "Obs3", "Observed", "GroupC",
+#'   "Sim4", "Simulated", "GroupD",
+#'   "Obs4", "Observed", "GroupD",
+#'   "Obs5", "Observed", "GroupD",
+#'   "Sim5", "Simulated", "GroupE",
+#'   "Sim6", "Simulated", "GroupE",
+#'   "Obs7", "Observed", "GroupE",
+#'   "Sim7", "Simulated", "GroupF",
+#'   "Sim8", "Simulated", "GroupF",
+#'   "Obs8", "Observed", "GroupF",
+#'   "Obs9", "Observed", "GroupF",
+#'   "Sim9", "Simulated", NA,
+#'   "Obs10", "Observed", NA
+#' )
+#'
+#' # original
+#' df
+#'
+#' # transformed
+#' ospsuite:::.removeUnpairableDatasets(df)
+#'
+#' @keywords internal
+.removeUnpairableDatasets <- function(data) {
+  # How many rows were originally present?
+  originalDatasets <- unique(data$name)
+
+  # Remove datasets that don't belong to any group.
+  data <- dplyr::filter(data, !is.na(group))
+
+  # Remove groups (and the datasets therein) with only one type (either only
+  # observed or only simulated) of dataset.
+  data <- data %>%
+    dplyr::group_by(group) %>%
+    dplyr::filter(length(unique(dataType)) > 1L) %>%
+    dplyr::ungroup()
+
+  # How many rows are left after filtering?
+  finalDatasets <- unique(data$name)
+
+  # Inform the user about which (if any) datasets were removed.
+  if (length(finalDatasets) < length(originalDatasets)) {
+    missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
+
+    message(messages$printMultipleEntries(
+      header = messages$datasetsToGroupNotFound(),
+      entries = missingDatasets
+    ))
+  }
+
+  return(data)
+}
+
+#' Validate that single instance of `DataCombined`
+#'
+#' @examples
+#' ospsuite:::.validateScalarDataCombined(DataCombined$new()) # okay
+#' # ospsuite:::.validateScalarDataCombined(list(DataCombined$new(), DataCombined$new())) # error
+#'
+#' @keywords internal
+.validateScalarDataCombined <- function(dataCombined) {
+  validateIsOfType(dataCombined, "DataCombined")
+  validateIsSameLength(objectCount(dataCombined), 1L)
+}
+
+
+#' Validate arguments provided as vectors
 #'
 #' @details
 #'
@@ -16,15 +371,11 @@
 #' @inheritParams ospsuite.utils::validateIsOfType
 #'
 #' @return
-#'
 #' An atomic vector of desired data type.
 #'
 #' @examples
-#'
 #' ospsuite:::.cleanVectorArgs(list(1, 2, NA, NULL), 4L, "numeric")
-#' ospsuite:::.cleanVectorArgs(c(1, 2, NA, NA_complex), 4L, "numeric")
 #' @keywords internal
-#' @noRd
 .cleanVectorArgs <- function(arg = NULL, expectedLength = NULL, type) {
   # Return early if no argument was specified
   if (is.null(arg)) {
@@ -42,7 +393,7 @@
   # convert `NULL`s or logical `NA`s to `NA` of required type
 
   # Note that `purrr::map()` will return a list
-  arg <- purrr::map(arg, function(x) .toMissingOfType(x, type))
+  arg <- purrr::map(arg, function(x) toMissingOfType(x, type))
 
   # validate the type of arguments
 
@@ -52,75 +403,7 @@
 
   # arguments are still in a list
   # flatten them to an atomic vector of required type
-  arg <- .flattenList(arg, type)
+  arg <- flattenList(arg, type)
 
   return(arg)
-}
-
-#' Flatten a list to an atomic vector of desired type
-#'
-#' @param x A list or an atomic vector. If the latter, no change will be made.
-#' @param type Type of atomic vector to be returned.
-#'
-#' @details
-#'
-#' The `type` argument will decide which variant from `purrr::flatten()` family
-#' is used to flatten the list.
-#'
-#' @examples
-#'
-#' ospsuite:::.flattenList(list(1, 2, 3, NA), type = "numeric")
-#' ospsuite:::.flattenList(list(TRUE, FALSE, NA), type = "integer")
-#' @return An atomic vector of desired type.
-#'
-#' @keywords internal
-#' @noRd
-.flattenList <- function(x, type) {
-  if (!is.null(dim(x))) {
-    stop("Argument to parameter `x` can only be a vector.")
-  }
-
-  if (is.list(x)) {
-    x <- switch(type,
-      "character" = purrr::flatten_chr(x),
-      "numeric" = ,
-      "real" = ,
-      "double" = purrr::flatten_dbl(x),
-      "integer" = purrr::flatten_int(x),
-      "logical" = purrr::flatten_lgl(x),
-      purrr::flatten(x)
-    )
-  }
-
-  return(x)
-}
-
-
-#' Convert `NULL` or `NA`s to `NA` of desired type
-#'
-#' @param x A single element.
-#' @inheritParams .flattenList
-#'
-#' @examples
-#'
-#' ospsuite:::.toMissingOfType(NA, type = "real")
-#' ospsuite:::.toMissingOfType(NULL, type = "integer")
-#' @keywords internal
-#' @noRd
-.toMissingOfType <- function(x, type) {
-  # all unexpected values will be converted to `NA` of a desired type
-  if (is.null(x) || is.na(x) || is.nan(x) || is.infinite(x)) {
-    x <- switch(type,
-      "character" = NA_character_,
-      "numeric" = ,
-      "real" = ,
-      "double" = NA_real_,
-      "integer" = NA_integer_,
-      "complex" = NA_complex_,
-      "logical" = NA,
-      stop("Incorrect type entered.")
-    )
-  }
-
-  return(x)
 }

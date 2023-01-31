@@ -31,7 +31,8 @@ SimulationBatch <- R6::R6Class(
 
     #' @description Add a set of parameter and start values for next execution.
     #' @details Intended for the use with `runSimulationBatches`. The simulation batch is executed
-    #' with the sets of parameter and initial values that have been scheduled. The set of run values is cleared after successful run.
+    #' with the sets of parameter and initial values that have been scheduled.
+    #' The set of run values is cleared after successful run.
     #'
     #' @param parameterValues Vector of parameter values to set in the simulation (default is `NULL`)
     #' @param initialValues Vector of initial values to set in the simulation  (default is `NULL`)
@@ -68,28 +69,62 @@ SimulationBatch <- R6::R6Class(
         stop(messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
       }
 
+      # Check if any of the values is `NA`. If so, throw an error, as such
+      # values set will produce empty results
+      if (any(is.na(parameterValues))) {
+        naIdx <- which(is.na(parameterValues))
+        stop(messages$simBatchStartValueNaN(self$getVariableParameters()[naIdx]))
+      }
+      if (any(is.na(initialValues))) {
+        naIdx <- which(is.na(initialValues))
+        stop(messages$simBatchStartValueNaN(self$getVariableMolecules()[naIdx]))
+      }
+
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
       rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
       return(batchRunValues$id)
+    },
+
+    #' @description Returns a list of parameter paths that are variable in this batch.
+    #' @details The order of parameters is the same as the order of parameter
+    #' values added with `$addRunValues()` method.
+    #'
+    #' @return List of parameter paths, or `NULL` if no parameter is variable.
+    #' @export
+    getVariableParameters = function() {
+      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
+
+      rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
+        rClr::clrGet(simulationBatchOptions, "VariableParameter")
+    },
+
+    #' @description Returns a list of molecules paths that are variable in this batch
+    #'
+    #' @details The order of molecules is the same as the order of molecule
+    #' start values added with `$addRunValues()` method.
+    #'
+    #' @return List of parameter paths, or `NULL` if no molecule is variable.
+    #' @export
+    getVariableMolecules = function() {
+      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
+
+      rClr::clrGet(simulationBatchOptions, "VariableMolecules") %||%
+        rClr::clrGet(simulationBatchOptions, "VariableMolecule")
     },
 
     #' @description
     #' Print the object to the console
     #' @param ... Additional arguments.
     print = function(...) {
-      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
       private$printClass()
+      private$printLine("Id", self$id)
       private$printLine("Simulation", self$simulation$name)
       private$printLine("runValuesIds", self$runValuesIds)
       private$printLine(
-        "Parameters",
-        rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
-          rClr::clrGet(simulationBatchOptions, "VariableParameter")
+        "Parameters", self$getVariableParameters()
       )
       private$printLine(
-        "Molecules",
-        rClr::clrGet(simulationBatchOptions, "VariableMolecules") %||%
-          rClr::clrGet(simulationBatchOptions, "VariableMolecule")
+        "Molecules", self$getVariableMolecules()
       )
       invisible(self)
     }
@@ -110,6 +145,10 @@ SimulationBatch <- R6::R6Class(
       } else {
         private$throwPropertyIsReadonly("runValuesIds")
       }
+    },
+    #' @field id The id of the .NET wrapped object. (read-only)
+    id = function(value) {
+      private$wrapReadOnlyProperty("Id", value)
     }
   ),
 )

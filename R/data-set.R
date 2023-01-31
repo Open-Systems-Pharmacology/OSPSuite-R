@@ -118,7 +118,7 @@ DataSet <- R6::R6Class(
       }
 
       if (!is.null((private$.yErrorColumn))) {
-        private$.yErrorColumn$displayUnit <- value
+        private$.setColumnUnit(private$.yErrorColumn, value)
       }
       invisible(self)
     },
@@ -168,6 +168,10 @@ DataSet <- R6::R6Class(
         return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
       }
 
+      # Only one LLOQ value per data set is supported
+      if (!isOfLength(value, 1)) {
+        stop(messages$lloqOnlyScalar())
+      }
       private$.yColumn$LLOQ <- toBaseUnit(
         quantityOrDimension = private$.yColumn$dimension,
         values = value,
@@ -227,7 +231,7 @@ DataSet <- R6::R6Class(
     },
 
     #' @description
-    #' Sets the xValues, yValues, and (optionally) yErrorValuues into the dataSet.
+    #' Sets the xValues, yValues, and (optionally) yErrorValues into the dataSet.
     #' Note: xValues, yValues and yErrorValues must have the same length
     #' @param xValues xValues to use
     #' @param yValues yValues to use

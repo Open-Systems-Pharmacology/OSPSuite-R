@@ -45,12 +45,6 @@ Characteristics of a population used for population creation
 \item \href{#method-PopulationCharacteristics-addMoleculeOntogeny}{\code{PopulationCharacteristics$addMoleculeOntogeny()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PopulationCharacteristics-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PopulationCharacteristics-new}{}}}

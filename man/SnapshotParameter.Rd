@@ -27,12 +27,6 @@ A parameter typically used in the definition of \code{IndividualCharacteristics}
 \item \href{#method-SnapshotParameter-printValue}{\code{SnapshotParameter$printValue()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SnapshotParameter-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SnapshotParameter-new}{}}}

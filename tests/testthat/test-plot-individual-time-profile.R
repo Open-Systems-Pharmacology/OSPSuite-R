@@ -1,113 +1,107 @@
-# data to be used ---------------------------------------
-
 context("plotIndividualTimeProfile")
-
-# `loadDataSetsFromExcel()` does not work for non-Windows platforms
-skip_on_os("linux")
-skip_if_not_installed("vdiffr")
+skip_on_os("linux") # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 skip_if(getRversion() < "4.1")
 
-# load the simulation
-sim <- loadTestSimulation("MinimalModel")
-simResults <- importResultsFromCSV(
-  simulation = sim,
-  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
-)
+# `DataCombined` objects ------------------------
 
-# import observed data (will return a list of DataSet objects)
-dataSet <- loadDataSetsFromExcel(
-  xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
-)
+oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
+manyObsDC <- readRDS(getTestDataFilePath("manyObsDC"))
 
-# both observed and simulated ------------------------
+oneSimDC <- readRDS(getTestDataFilePath("oneSimDC"))
+manySimDC <- readRDS(getTestDataFilePath("manySimDC"))
 
-# create a new instance and add datasets
-myCombDat <- DataCombined$new()
-myCombDat$addSimulationResults(
-  simResults,
-  quantitiesOrPaths = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention"
-  )
-)
-myCombDat$addDataSets(dataSet)
+oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC"))
+manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
 
-myCombDat$setGroups(
-  names = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Stevens_2012_placebo.Sita_dist",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Stevens_2012_placebo.Sita_proximal",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention",
-    "Stevens_2012_placebo.Sita_total"
-  ),
-  groups = c("distal", "distal", "proximal", "proximal", "total", "total")
-)
+oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
 
-test_that("It creates default plots as expected for both observed and simulated", {
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "default plot - both",
-    fig = plotIndividualTimeProfile(myCombDat)
-  )
-})
-
-test_that("It respects custom plot configuration", {
-  myPlotConfiguration <- DefaultPlotConfiguration$new()
-  myPlotConfiguration$yUnit <- ospUnits$Fraction$`%`
-  myPlotConfiguration$title <- "My Plot Title"
-  myPlotConfiguration$subtitle <- "My Plot Subtitle"
-  myPlotConfiguration$caption <- "My Sources"
-  myPlotConfiguration$pointsSize <- 2.5
-  myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
-  myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
-  myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
-
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "custom plot config",
-    fig = plotIndividualTimeProfile(myCombDat, myPlotConfiguration)
-  )
-
-  # Since these were not specified by the user, they should not be updated
-  # after plotting function is done with it.
-  expect_null(myPlotConfiguration$xLabel)
-  expect_null(myPlotConfiguration$yLabel)
-})
-
+customDPC <- readRDS(getTestDataFilePath("customDPC"))
 
 # only observed ------------------------
 
-myCombDat2 <- DataCombined$new()
-myCombDat2$addDataSets(dataSet)
-
-test_that("It creates default plots as expected for only observed", {
+test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot - observed",
-    fig = plotIndividualTimeProfile(myCombDat2)
+    title = "single obs",
+    fig = plotIndividualTimeProfile(oneObsDC)
+  )
+})
+
+test_that("It creates default plots as expected for multiple observed datasets", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple obs",
+    fig = plotIndividualTimeProfile(manyObsDC)
   )
 })
 
 # only simulated ------------------------
 
-myCombDat3 <- DataCombined$new()
-myCombDat3$addSimulationResults(
-  simResults,
-  quantitiesOrPaths = c(
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
-    "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
-    "Organism|Lumen|Stomach|Metformin|Gastric retention"
-  )
-)
-
-test_that("It creates default plots as expected for only simulated", {
+test_that("It creates default plots as expected for single simulated dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "default plot - simulated",
-    fig = plotIndividualTimeProfile(myCombDat3)
+    title = "single sim",
+    fig = plotIndividualTimeProfile(oneSimDC)
   )
 })
 
+test_that("It creates default plots as expected for multiple simulated datasets", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple sim",
+    fig = plotIndividualTimeProfile(manySimDC)
+  )
+})
+
+# single observed and simulated datasets ------------------------
+
+test_that("It creates default plots as expected for both observed and simulated", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - default",
+    fig = plotIndividualTimeProfile(oneObsSimDC)
+  )
+})
+
+test_that("It respects custom plot configuration", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - custom",
+    fig = plotIndividualTimeProfile(oneObsSimDC, customDPC)
+  )
+
+  # Since these were not specified by the user, they should not be updated
+  # after plotting function is done with it.
+  expect_null(customDPC$xLabel)
+  expect_null(customDPC$yLabel)
+})
+
+# multiple observed and simulated datasets ------------------------
+
+test_that("It maps multiple observed and simulated datasets to different visual properties", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple obs and sim",
+    fig = plotIndividualTimeProfile(manyObsSimDC)
+  )
+})
+
+# edge cases ------------------------
+
+test_that("It works when geometric error is present", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "geometric error",
+    fig = plotIndividualTimeProfile(oneObsGeometricDC)
+  )
+})
+
+test_that("It returns `NULL` when `DataCombined` is empty", {
+  myCombDat <- DataCombined$new()
+
+  expect_null(suppressWarnings(plotIndividualTimeProfile(myCombDat)))
+  expect_warning(
+    plotIndividualTimeProfile(myCombDat),
+    messages$plottingWithEmptyDataCombined()
+  )
+})

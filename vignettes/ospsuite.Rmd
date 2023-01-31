@@ -39,6 +39,9 @@ The workflow steps are described in the following vignettes:
 * [Sensitivity analysis](sensitivity-analysis.html)
 * [Table parameters](table-parameters.html)
 * [Dimensions and Units](unit-conversion.html)
+* [Working with data sets and import from excel](observed-data.html)
+* [Working with `DataCombined` class](data-combined.html)
+* [Visualizations with `DataCombined`](data-combined-plotting.html)
 
 Some aspects of the `{ospsuite}` package may appear uncommon for the users not familiar with the object-oriented approach. It is recommended to read the following section to better understand some semantics and to get the most of the flexibility and efficiency of the package.
 

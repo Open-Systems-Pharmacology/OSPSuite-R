@@ -1,4 +1,4 @@
-#' Creates an individual using the PKSim Database
+#' Creates an individual using the PK-Sim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create
 #'   as an instance of `IndividualCharacteristics`
@@ -19,12 +19,12 @@ createIndividual <- function(individualCharacteristics) {
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
   createIndividualResults <- rClr::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
 
-  distributedParameters <- getPropertyValue(createIndividualResults, "DistributedParameters")
-  derivedParameters <- getPropertyValue(createIndividualResults, "DerivedParameters")
-  seed <- getPropertyValue(createIndividualResults, "Seed")
+  distributedParameters <- .getPropertyValue(createIndividualResults, "DistributedParameters")
+  derivedParameters <- .getPropertyValue(createIndividualResults, "DerivedParameters")
+  seed <- .getPropertyValue(createIndividualResults, "Seed")
 
-  distributedParameters <- parameterValueListFrom(distributedParameters, addUnits = TRUE)
-  derivedParameters <- parameterValueListFrom(derivedParameters, addUnits = TRUE)
+  distributedParameters <- .parameterValueListFrom(distributedParameters, addUnits = TRUE)
+  derivedParameters <- .parameterValueListFrom(derivedParameters, addUnits = TRUE)
 
   list(distributedParameters = distributedParameters, derivedParameters = derivedParameters, seed = seed)
 }
@@ -43,16 +43,16 @@ createDistributions <- function(individualCharacteristics) {
   distributedParameters <- rClr::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
 
   list(
-    paths = getPropertyValues(distributedParameters, "ParameterPath"),
-    values = getPropertyValues(distributedParameters, "Value"),
-    units = getPropertyValues(distributedParameters, "Unit"),
-    means = getPropertyValues(distributedParameters, "Mean"),
-    stds = getPropertyValues(distributedParameters, "Std"),
-    distributionTypes = getPropertyValues(getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
+    paths = .getPropertyValues(distributedParameters, "ParameterPath"),
+    values = .getPropertyValues(distributedParameters, "Value"),
+    units = .getPropertyValues(distributedParameters, "Unit"),
+    means = .getPropertyValues(distributedParameters, "Mean"),
+    stds = .getPropertyValues(distributedParameters, "Std"),
+    distributionTypes = .getPropertyValues(.getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
   )
 }
 
-#' Creates an individual using the PKSim Database.
+#' Creates an individual using the PK-Sim Database.
 #'
 #' @param species Species of the individual as defined in PK-Sim (see Species enum)
 #' @param population Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)
@@ -89,7 +89,6 @@ createIndividualCharacteristics <- function(species,
                                             gestationalAgeUnit = "week(s)",
                                             moleculeOntogenies = NULL,
                                             seed = NULL) {
-
   # Assuming that if this function is called directly, PK-Sim was either initialized already
   # or should be initialized automatically
   initPKSim()

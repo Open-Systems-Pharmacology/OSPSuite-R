@@ -2,9 +2,12 @@
 #'
 #' @description
 #'
-#' R6 configuration class defining properties of plots that can be created with
-#' `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
+#' R6 configuration class defining aesthetic properties of plots that can be
+#' created with `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
 #' `plotObservedVsSimulated()`, and `plotResidualsVsTime()`.
+#'
+#' To interactively explore various aesthetic properties and appearance of plots
+#' with these properties, you can use the [Shiny app](https://www.open-systems-pharmacology.org/TLF-Library/articles/theme-maker.html) from `{tlf}` package.
 #'
 #' The following sections provide more details on how to customize it further.
 #'
@@ -88,6 +91,13 @@
 #'
 #' The available transformations can be seen in the `tlf::Scaling` list.
 #'
+#' # Specifying tick labels
+#'
+#' `tlf::TickLabelTransforms` lists of all available tick label transformations.
+#' For example, selecting `tlf::TickLabelTransforms$identity` will display tick
+#' labels as they are, while selecting `tlf::TickLabelTransforms$log` will
+#' display tick labels in logarithmic scale format.
+#'
 #' # Saving plot
 #'
 #' By default, the plots will be shown in plot pane of your IDE, but the plots
@@ -110,9 +120,9 @@
 #' @field legendPosition A character string defining the legend position.
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
-#' @field legendCaptionSize,legendCaptionColor,legendCaptionFontFamily,legendCaptionFontFace,legendCaptionAngle,legendCaptionAlign Aesthetic properties for the legend caption.
-#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign Aesthetic properties for the x-axis label.
-#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign Aesthetic properties for the y-axis label.
+#' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign Aesthetic properties for the legend caption.
+#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
+#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
@@ -129,7 +139,7 @@
 #' @field linesColor,linesSize,linesLinetype,linesAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
-#' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for errorbars.
+#' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha,errorbarsCapSize A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.
 #'
 #' @examples
 #'
@@ -161,7 +171,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     title = NULL,
     titleColor = "black",
-    titleSize = 12,
+    titleSize = tlf::PlotAnnotationTextSize$plotTitleSize,
     titleFontFace = tlf::FontFaces$plain,
     titleFontFamily = "",
     titleAngle = 0,
@@ -171,7 +181,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     subtitle = NULL,
     subtitleColor = "black",
-    subtitleSize = 10,
+    subtitleSize = tlf::PlotAnnotationTextSize$plotSubtitleSize,
     subtitleFontFace = tlf::FontFaces$plain,
     subtitleFontFamily = "",
     subtitleAngle = 0,
@@ -181,7 +191,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     caption = NULL,
     captionColor = "black",
-    captionSize = 8,
+    captionSize = tlf::PlotAnnotationTextSize$plotCaptionSize,
     captionFontFace = tlf::FontFaces$plain,
     captionFontFamily = "",
     captionAngle = 0,
@@ -191,7 +201,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     xLabel = NULL,
     xLabelColor = "black",
-    xLabelSize = 10,
+    xLabelSize = tlf::PlotAnnotationTextSize$plotXLabelSize,
     xLabelFontFace = tlf::FontFaces$plain,
     xLabelFontFamily = "",
     xLabelAngle = 0,
@@ -201,7 +211,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     yLabel = NULL,
     yLabelColor = "black",
-    yLabelSize = 10,
+    yLabelSize = tlf::PlotAnnotationTextSize$plotYLabelSize,
     yLabelFontFace = tlf::FontFaces$plain,
     yLabelFontFamily = "",
     yLabelAngle = 90,
@@ -211,28 +221,28 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     legendPosition = NULL,
     legendTitle = NULL,
-    legendTitleSize = 10,
+    legendTitleSize = tlf::PlotAnnotationTextSize$plotLegendTitleSize,
     legendTitleColor = "black",
     legendTitleFontFamily = "",
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
-    legendTitleAlign = tlf::Alignments$center,
+    legendTitleAlign = tlf::Alignments$left,
 
-    # legendCaption ------------------------------------
+    # legendKeys ------------------------------------
 
-    legendCaptionSize = 10,
-    legendCaptionColor = "black",
-    legendCaptionFontFamily = "",
-    legendCaptionFontFace = tlf::FontFaces$plain,
-    legendCaptionAngle = 0,
-    legendCaptionAlign = tlf::Alignments$center,
+    legendKeysSize = tlf::PlotAnnotationTextSize$plotLegendCaptionSize,
+    legendKeysColor = "black",
+    legendKeysFontFamily = "",
+    legendKeysFontFace = tlf::FontFaces$plain,
+    legendKeysAngle = 0,
+    legendKeysAlign = tlf::Alignments$left,
 
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
-    xAxisScale = tlf::Scaling$lin,
+    xAxisScale = NULL,
     xAxisTicks = NULL,
-    xAxisTicksLabels = NULL,
+    xAxisTicksLabels = tlf::TickLabelTransforms$identity,
     xAxisLabelTicksSize = NULL,
     xAxisLabelTicksColor = "black",
     xAxisLabelTicksFontFamily = "",
@@ -243,9 +253,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
-    yAxisScale = tlf::Scaling$lin,
+    yAxisScale = NULL,
     yAxisTicks = NULL,
-    yAxisTicksLabels = NULL,
+    yAxisTicksLabels = tlf::TickLabelTransforms$identity,
     yAxisLabelTicksSize = NULL,
     yAxisLabelTicksColor = "black",
     yAxisLabelTicksFontFamily = "",
@@ -256,7 +266,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # watermark ------------------------------------
 
     watermark = NULL,
-    watermarkSize = 20,
+    watermarkSize = tlf::PlotAnnotationTextSize$plotWatermarkSize,
     watermarkColor = "grey40",
     watermarkFontFamily = "",
     watermarkFontFace = tlf::FontFaces$plain,
@@ -282,12 +292,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisColor = "black",
     xAxisSize = 0.5,
     xAxisLinetype = tlf::Linetypes$solid,
+    xAxisExpand = FALSE,
 
     # yAxis ------------------------------------
 
     yAxisColor = "black",
     yAxisSize = 0.5,
     yAxisLinetype = tlf::Linetypes$solid,
+    yAxisExpand = FALSE,
 
     # xGrid ------------------------------------
 
@@ -314,8 +326,8 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # There is no `pointsFill` because it doesn't make sense to "fill" a line
     # with color. There is already `pointsColor` for that.
-    pointsColor = NULL,
-    pointsShape = NULL,
+    pointsColor = tlf::ColorMaps$ospDefault,
+    pointsShape = names(tlf::Shapes),
     pointsSize = 3,
     pointsAlpha = 0.75,
 
@@ -333,6 +345,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # Color and fill are taken from point mapping, therefore no
     # `errorbarsColor`, `errorbarsFill` parameters
     errorbarsSize = 1,
+    errorbarsCapSize = 5,
     errorbarsLinetype = tlf::Linetypes$solid,
     errorbarsAlpha = 0.75
   )

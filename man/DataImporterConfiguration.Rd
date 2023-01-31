@@ -73,12 +73,6 @@ and \code{{Sheet}} for sheet name.}
 \item \href{#method-DataImporterConfiguration-print}{\code{DataImporterConfiguration$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataImporterConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-DataImporterConfiguration-new}{}}}
@@ -105,7 +99,7 @@ A new \code{DataImporterConfiguration} object.
 \if{html}{\out{<a id="method-DataImporterConfiguration-saveConfiguration"></a>}}
 \if{latex}{\out{\hypertarget{method-DataImporterConfiguration-saveConfiguration}{}}}
 \subsection{Method \code{saveConfiguration()}}{
-Save configuration to a XML file that can be used in PKSim/MoBi
+Save configuration to a XML file that can be used in PK-Sim/MoBi
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$saveConfiguration(filePath)}\if{html}{\out{</div>}}
 }

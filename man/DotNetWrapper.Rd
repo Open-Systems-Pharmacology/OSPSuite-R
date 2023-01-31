@@ -36,12 +36,6 @@ DotNetWrapper$new(sim$ref)
 \item \href{#method-DotNetWrapper-new}{\code{DotNetWrapper$new()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DotNetWrapper-new"></a>}}
 \if{latex}{\out{\hypertarget{method-DotNetWrapper-new}{}}}

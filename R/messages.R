@@ -26,10 +26,43 @@ messages$unpairableDatasetsRemoved <- function() {
   "Following non-grouped or unpairable datasets have been removed"
 }
 
+messages$valuesNotInterpolated <- function() {
+  "Predicted values couldn't be interpolated at following time points"
+}
+
 messages$printMultipleEntries <- function(header, entries) {
   message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
 }
 
+messages$linearScaleWithFoldDistance <- function() {
+  "Linear scale is inappropriate when `foldDistance` argument is specified."
+}
+
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
   messages$printMultipleEntries("Could not load units for the following dimensions", dimensions)
+}
+
+messages$plottingWithEmptyDataCombined <- function() {
+  "No plot can be created because the entered `DataCombined` object does not contain any datasets."
+}
+
+messages$residualsCanNotBeComputed <- function() {
+  "No residuals can be computed because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
+}
+
+messages$logScaleNotAllowed <- function() {
+  "The Y-axis for this plot should not be on a log scale, since the residuals are expected to be centered around 0."
+}
+
+messages$lloqOnlyScalar <- function() {
+  "Only one LLOQ value per `DataSet` is supported! Please provide a scalar value and not a vector."
+}
+
+messages$simBatchStartValueNaN <- function(entityPaths) {
+  paste0("Start values of the entities with paths '", paste(entityPaths, collapse = ", "), "' is `NaN`! Cannot add such run values set")
+}
+
+messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, foldDistances) {
+  paste0("Parameter '", parameterName, "' should be >1! Following values have
+         been passed: '", paste(foldDistances, collapse = ", "), "'.")
 }

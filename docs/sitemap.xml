@@ -10,6 +10,12 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html</loc>
   </url>
   <url>
@@ -17,6 +23,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html</loc>
@@ -88,6 +97,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/calculatePKAnalyses.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/calculateResiduals.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/clearMemory.html</loc>
   </url>
   <url>
@@ -101,6 +113,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Container.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/convertUnits.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createDistributions.html</loc>
@@ -151,16 +166,46 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-addMissingGroupings.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-cleanVectorArgs.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-convertGeneralToSpecificPlotConfiguration.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-createAxesLabels.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-encodeUnit.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-expandPath.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractAggregatedSimulatedData.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractMostFrequentUnit.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractResidualsToTibble.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getAllEntitiesMatching.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getAllEntityPathsIn.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getConcurrentSimulationRunnerResults.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getDimensionsEnum.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getDimensionTask.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getEntity.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getNetTask.html</loc>
@@ -175,7 +220,22 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getPathToPKSimInstallDirFromRegistry.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getPropertyValue.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getPropertyValues.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getQuantityDisplayPaths.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getUnitsEnum.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-ImporterErrorTypeToDataSetErrorType.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-initPackage.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-loadDataRepositoryFromPKML.html</loc>
@@ -184,10 +244,31 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-netEnumName.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-parameterValueListFrom.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-removeEmptyDataFrame.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-removeUnpairableDatasets.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-savePKAnalysesToCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-savePopulationToCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-saveResultsToCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-saveSensitivityAnalysisResultsToCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-scaleQuantityValues.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-setQuantityValues.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-toObjectType.html</loc>
@@ -196,13 +277,16 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-unitConverter.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-validateHasUnit.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-validateScalarDataCombined.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DotNetWrapper.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Entity.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/expandPath.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/exportIndividualSimulations.html</loc>
@@ -232,12 +316,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllContainersMatching.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllEntitiesMatching.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllEntityPathsIn.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllMoleculePathsIn.html</loc>
   </url>
   <url>
@@ -262,6 +340,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllQuantityPathsIn.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllStateVariableParametersPaths.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getAllStateVariablesPaths.html</loc>
   </url>
   <url>
@@ -275,15 +356,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getDimensionForUnit.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getDimensionsEnum.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getDimensionTask.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getEntity.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getMolecule.html</loc>
@@ -301,25 +373,16 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getParameterDisplayPaths.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getPropertyValue.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getPropertyValues.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getQuantity.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getQuantityDisplayPaths.html</loc>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getQuantityValuesByPath.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getSimulationTree.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getStandardMoleculeParameters.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getUnitsEnum.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getUnitsForDimension.html</loc>
@@ -349,13 +412,13 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/IndividualCharacteristics.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/initPackage.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/initPKSim.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Interval.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/isExplicitFormulaByPath.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadAgingDataFromCSV.html</loc>
@@ -415,9 +478,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ParameterRange.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/parameterValueListFrom.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/pkAnalysesToDataFrame.html</loc>
   </url>
   <url>
@@ -433,7 +493,16 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotIndividualTimeProfile.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotObservedVsSimulated.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPopulationTimeProfile.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsSimulated.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsTime.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Population.html</loc>
@@ -484,25 +553,10 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/saveDataSetToPKML.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/savePKAnalysesToCSV.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/savePopulationToCSV.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/saveResultsToCSV.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/saveSensitivityAnalysisResultsToCSV.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/saveSimulation.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/scaleParameterValues.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/scaleQuantityValues.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/SensitivityAnalysis.html</loc>
@@ -530,9 +584,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/setParameterValuesByPath.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/setQuantityValues.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/setQuantityValuesByPath.html</loc>
@@ -614,9 +665,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateDimension.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateHasUnit.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateUnit.html</loc>

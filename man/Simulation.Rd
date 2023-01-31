@@ -40,12 +40,6 @@ An OSPSuite simulation
 \item \href{#method-Simulation-print}{\code{Simulation$print()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-new}{}}}
@@ -83,7 +77,7 @@ This is a typically a molecule that is individual specific such as en Enzyme, Pr
 \if{html}{\out{<a id="method-Simulation-allXenobioticFloatingMoleculeNames"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allXenobioticFloatingMoleculeNames}{}}}
 \subsection{Method \code{allXenobioticFloatingMoleculeNames()}}{
-Returns the name of all xenobiotoc floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
+Returns the name of all xenobiotic floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
 This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Simulation$allXenobioticFloatingMoleculeNames()}\if{html}{\out{</div>}}

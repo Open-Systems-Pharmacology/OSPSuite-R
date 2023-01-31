@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-individual.R
 \name{createIndividualCharacteristics}
 \alias{createIndividualCharacteristics}
-\title{Creates an individual using the PKSim Database.}
+\title{Creates an individual using the PK-Sim Database.}
 \usage{
 createIndividualCharacteristics(
   species,
@@ -54,5 +54,5 @@ can be accessed programmatically using the enum \code{StandardOntogeny}}
 An array of \code{ParameterValue} containing the value of each individual parameter
 }
 \description{
-Creates an individual using the PKSim Database.
+Creates an individual using the PK-Sim Database.
 }

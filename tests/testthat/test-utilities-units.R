@@ -145,11 +145,11 @@ test_that("It can return the expected dimension for a given unit", {
 
 
 test_that("It can return an enum of dimensions.", {
-  expect_true(getDimensionsEnum()[["Mass"]] == "Mass")
+  expect_true(.getDimensionsEnum()[["Mass"]] == "Mass")
 })
 
 test_that("It can return the expected set of units for a given dimension", {
-  expect_true("kg" %in% getUnitsEnum()[["Mass"]])
+  expect_true("kg" %in% .getUnitsEnum()[["Mass"]])
 })
 
 test_that("It throws an error if the dimension is not found", {
@@ -215,6 +215,22 @@ dfError <- dplyr::tibble(
   yErrorUnit = c("", "%", "%"),
   molWeight = 10
 )
+
+# early return  -------------------
+
+dfEarly <- dplyr::tibble(
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(25, 45, 78),
+  yUnit = "%",
+  yDimension = "Fraction",
+  molWeight = 10
+)
+
+test_that("returns early if there are only unique units and arguments are `NULL`", {
+  expect_equal(dfEarly, .unitConverter(dfEarly))
+})
 
 # default conversion -------------------
 
@@ -496,6 +512,29 @@ test_that("if yErrorUnit is missing, error values are converted correctly", {
   )
 })
 
+# LLOQ column --------------------------------
+
+dfLloq <- dplyr::tibble(
+  xValues = c(15, 30, 60),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(0.5, 2, 3),
+  yUnit = "mol",
+  yErrorUnit = "mol", # error unit present without error values
+  yDimension = ospDimensions$Amount,
+  molWeight = 10,
+  lloq = 1,
+  random = "bla" # test that function doesn't remove additional columns
+)
+
+dfMWConvert <- .unitConverter(dfLloq, yUnit = ospUnits$Mass$g)
+
+test_that("it can convert lloq columns", {
+  expect_equal(dfMWConvert$lloq, rep(10, 3))
+  expect_equal(unique(dfMWConvert$yUnit), ospUnits$Mass$g)
+  expect_equal(unique(dfMWConvert$yErrorUnit), ospUnits$Mass$g)
+})
+
 # conversion to weeks --------------------------------
 
 dfWeek <- dplyr::tibble(
@@ -516,4 +555,74 @@ test_that("it can convert time to weeks", {
   expect_equal(unique(dfWeekConvert$xUnit), ospsuite::ospUnits$Time$`week(s)`)
   expect_equal(unique(dfWeekConvert$xDimension), unique(dfWeek$xDimension))
   expect_equal(dfWeekConvert$xValues, c(0.001488, 0.002976, 0.005952), tolerance = 0.0001)
+})
+
+# geometric error --------------------------------
+
+dfGeomError <- dplyr::tibble(
+  xValues = c(
+    0.1822785059611,
+    0.425316492716471,
+    0.698734219868978,
+    1.0936710357666,
+    1.18481000264486
+  ),
+  xDimension = "Time",
+  xUnit = "h",
+  yValues = c(
+    8.91416220838437,
+    13.7049000841216,
+    13.5031395984697,
+    12.7253497339552,
+    10.3393404060625
+  ),
+  yErrorValues = c(
+    3.8111879825592,
+    2.42863011360168,
+    4.66285991668701,
+    4.65008020401001,
+    3.5703399181366
+  ),
+  yDimension = "Concentration (mass)",
+  yUnit = "mg/l",
+  yErrorType = "GeometricStdDev",
+  yErrorUnit = "",
+  molWeight = 225.21
+)
+
+dfGeomErrorConvert <- .unitConverter(dfGeomError, yUnit = "µmol/l")
+
+test_that("It shouldn't convert geometric error values or units, only `yValues`", {
+  expect_equal(unique(dfGeomError$yErrorValues), unique(dfGeomErrorConvert$yErrorValues))
+  expect_equal(unique(dfGeomError$yErrorUnit), unique(dfGeomErrorConvert$yErrorUnit))
+  expect_equal(unique(dfGeomError$yErrorType), unique(dfGeomErrorConvert$yErrorType))
+
+  expect_equal(unique(dfGeomErrorConvert$yUnit), "µmol/l")
+  expect_equal(
+    dfGeomErrorConvert$yValues,
+    c(39.5815559184067, 60.8538700951183, 59.9579929775307, 56.5043725143431, 45.909774903701),
+    tolerance = 0.001
+  )
+})
+
+# multiple concentration dims present --------------------------------
+
+concDims <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+
+dfConc <- dplyr::tibble(
+  xValues = c(15, 0.5),
+  xUnit = c("min", "h"),
+  xDimension = "Time",
+  yValues = c(0.25, 45),
+  yUnit = c("mg/l", "mol/l"),
+  yDimension = concDims,
+  yErrorValues = NA,
+  yErrorUnit = NA,
+  molWeight = 10
+)
+
+dfConcConvert <- .unitConverter(dfConc)
+
+test_that("it retains multiple concentration dimensions", {
+  expect_equal(unique(dfConcConvert$yDimension), concDims)
 })

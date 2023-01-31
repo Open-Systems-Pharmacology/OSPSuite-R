@@ -3,6 +3,9 @@ url: https://www.open-systems-pharmacology.org/OSPSuite-R/
 template:
   bootstrap: 5
 
+development:
+  mode: devel
+
 authors:
   Indrajeet Patil:
     href: https://sites.google.com/site/indrajeetspatilmorality/
@@ -20,6 +23,13 @@ articles:
     - sensitivity-analysis
     - create-individual
     - create-run-population
+  - title: Figure creation
+    navbar: Figure creation
+    desc: How to create standard figures
+    contents:
+    - observed-data
+    - data-combined
+    - data-combined-plotting
 
   - title: Miscellaneous
     navbar: Miscellaneous

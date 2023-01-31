@@ -53,12 +53,6 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item \href{#method-Quantity-reset}{\code{Quantity$reset()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-new}{}}}

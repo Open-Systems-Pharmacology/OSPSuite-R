@@ -1,4 +1,39 @@
-# ospsuite 11.0 (development version)
+# ospsuite 11.1.197
+
+## New features
+
+* Adds new visualization functions:
+
+    - `plotObservedVsSimulated()` for observed versus simulated data scatter plot.
+    - `plotResidualsVsTime()` for time versus residuals data scatter plot.
+    - `plotResidualsVsSimulated()` for simulated versus residuals data scatter plot.
+
+* Adds new helper functions to work with `DataCombined` objects:
+
+    - `convertUnits()` to convert datasets in `DataCombined` to common units.
+    - `calculateResiduals()` to calculate residuals for datasets in `DataCombined`.
+
+## Major Changes
+
+* The class `SimulationBatch` gets a new property `id`.
+
+* The output of `runSimulationBatches()` is now a named list with names being 
+  the ids of `SimulationBatch`.
+  
+* `calculateResiduals()` now uses `log(base = 10)` for calculation of residuals 
+in logarithmic scale instead if `log(base = exp(1))`
+* `calculateResiduals()` does also return residuals for entries where simulated 
+or observed value is 0 in logarithmic scale. These values were ignored in previous 
+versions. If the observed or simulated value is zero or negative, it is replaced 
+by an arbitrary small value `getOSPSuiteSetting("LOG_SAFE_EPSILON")` (1e-20 by default).
+  
+## Minor Changes
+
+* `SimulationBatch$addRunValues()` will throw an error when any start value is `NaN`
+* `SimulatioBatch` gets methods `getVariableParameters()` and `getVariableMolecules()`
+that return list of parameter resp. molecule paths that are defined variable.
+    
+# ospsuite 11.0.123
 
 ## New features
 

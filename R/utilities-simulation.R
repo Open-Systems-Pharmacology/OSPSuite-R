@@ -55,7 +55,7 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
   simulationPersister <- .getNetTask("SimulationPersister")
 
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
-  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", expandPath(filePath), resetIds)
+  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", .expandPath(filePath), resetIds)
 
   simulation <- Simulation$new(netSim, filePath)
 
@@ -76,14 +76,19 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
 saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
-  filePath <- expandPath(filePath)
+  filePath <- .expandPath(filePath)
   simulationPersister <- .getNetTask("SimulationPersister")
   rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
   invisible()
 }
 
-#' @title
-#' Runs one  simulation (individual or population) and returns a `SimulationResults` object containing all results of the simulation.
+
+#' @title Run a single simulation
+#'
+#' @details
+#'
+#' Runs one simulation (individual or population) and returns a
+#' `SimulationResults` object containing all results of the simulation.
 #'
 #' @param simulation One `Simulation` to simulate.
 #' @param population Optional instance of a `Population` to use for the simulation. This is only used when simulating one simulation
@@ -124,7 +129,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' @title  Runs multiple simulations concurrently.
 #'
 #' @details For multiple simulations, only individual simulations are possible.
-#' For single simulatio, either individual or population simulations can be
+#' For single simulation, either individual or population simulations can be
 #' performed.
 #'
 #' @param simulations One `Simulation` or list of `Simulation` objects
@@ -333,7 +338,10 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails.
 #' Default is `FALSE`.
 #'
-#' @return Nested list of `SimulationResults` objects. The first level of the list are the IDs of the simulations of SimulationBatches, containing a list of `SimulationResults` for each set of parameter/initial values. If a simulation with a parameter/initial values set fails, the result for this run is `NULL`
+#' @return Nested list of `SimulationResults` objects. The first level of the
+#' fist are the IDs of the SimulationBatches, containing a list of
+#' `SimulationResults` for each set of parameter/initial values. If a simulation
+#'  with a parameter/initial values set fails, the result for this run is `NULL`
 #' @export
 #'
 #' @examples
@@ -369,35 +377,41 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
   simulationBatches <- c(simulationBatches)
-  # Result Id <-> simulation batch pointer id map to get the correct simulation for the results.
-  # Using the Id of the pointer instead of the Id of the simulation as multiple
+  # Result Id <-> simulation batch id map to get the correct simulation for the results.
+  # Using the Id of the batch instead of the Id of the simulation as multiple
   # SimulationBatches can be created with the same simulation
   # Each SimulationBatchRunValues has its own id, which will be the id of the result
-  resultsIdSimulationIdMap <- list()
+  resultsIdSimulationBatchIdMap <- list()
   # Map of simulations ids to simulations objects
-  simulationIdSimulationMap <- vector("list", length(simulationBatches))
+  simulationBatchIdSimulationMap <- vector("list", length(simulationBatches))
   # Iterate through all simulation batches
   for (simBatchIndex in seq_along(simulationBatches)) {
     simBatch <- simulationBatches[[simBatchIndex]]
-    simBatchId <- rClr::clrGet(simBatch$ref, "Id")
-    simulationIdSimulationMap[[simBatchIndex]] <- simBatch$simulation
-    names(simulationIdSimulationMap)[[simBatchIndex]] <- simBatchId
+    simBatchId <- simBatch$id
+    simulationBatchIdSimulationMap[[simBatchIndex]] <- simBatch$simulation
+    names(simulationBatchIdSimulationMap)[[simBatchIndex]] <- simBatchId
     # Ids of the values of the batch
     valuesIds <- simBatch$runValuesIds
     # All results of this batch have the id of the same simulation
-    resultsIdSimulationIdMap[valuesIds] <- simBatchId
+    resultsIdSimulationBatchIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
     rClr::clrCall(simulationRunner, "AddSimulationBatch", simBatch$ref)
   }
 
   # Run the batch with the ConcurrentSimulationRunner
   results <- rClr::clrCall(simulationRunner, "RunConcurrently")
-  simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
+  simulationResults <- .getConcurrentSimulationRunnerResults(
+    results = results,
+    resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
+    simulationIdSimulationMap = simulationBatchIdSimulationMap,
+    silentMode = silentMode
+  )
 
-  # output: list of lists of SimulationResults, one list per SimulationBatch
-  output <- lapply(names(simulationIdSimulationMap), function(simId) {
-    simulationResults[which(resultsIdSimulationIdMap == simId)]
+  # Returned is a named list of results with names being the IDs of the batches
+  output <- lapply(names(simulationBatchIdSimulationMap), function(simBatchId) {
+    simulationResults[which(resultsIdSimulationBatchIdMap == simBatchId)]
   })
+  names(output) <- names(simulationBatchIdSimulationMap)
 
   # Dispose of the runner to release any possible instances still in memory (.NET side)
   rClr::clrCall(simulationRunner, "Dispose")
@@ -516,6 +530,19 @@ getAllStateVariablesPaths <- function(simulation) {
   return(allQantitiesPaths)
 }
 
+#' Get the paths of all state variable parameters of the simulation
+#'
+#' @param simulation `Simulation` object
+#' @details List of paths of all state variable parameters.
+#'
+#' @return A list of paths
+#' @export
+getAllStateVariableParametersPaths <- function(simulation) {
+  validateIsOfType(simulation, type = "Simulation")
+  allStateVariableParamsPaths <- .getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
+  return(allStateVariableParamsPaths)
+}
+
 #' Export simulation PKMLs for given `individualIds`. Each pkml file will contain the original simulation updated with parameters of the corresponding individual.
 #'
 #' @param population A population object typically loaded with `loadPopulation`
@@ -540,7 +567,7 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
   validateIsOfType(simulation, "Simulation")
   validateIsOfType(population, "Population")
   individualIds <- c(individualIds)
-  outputFolder <- expandPath(outputFolder)
+  outputFolder <- .expandPath(outputFolder)
 
   simuationPaths <- NULL
   for (individualId in individualIds) {
@@ -589,4 +616,126 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
     }
   }
   return(simulationResults)
+}
+
+
+#' @keywords internal
+#' @noRd
+.addBranch <- function(originalPathString, arrayToGo) {
+  # Function to create a multilayered list called endList with a branched
+  # structure corresponding to the structure of arrayToGo that terminates with a
+  # string called 'path' that is equal to the string originalString
+  if (length(arrayToGo) == 0) {
+    # If arrayToGo is empty, create a terminal list with a string called 'path'
+    # and value equal to originalString
+    endList <- list()
+    endList$path <- originalPathString
+    return(endList)
+  } else {
+    # If arrayToGo is still not empty, remove its leading element and create a
+    # sub-branch list corresponding to the structure of the remaining elements
+    # of arrayToGo
+    newBranch <- list()
+    newBranch[[arrayToGo[1]]] <- .addBranch(originalPathString, tail(arrayToGo, -1))
+
+    return(newBranch)
+  }
+}
+
+#' @keywords internal
+#' @noRd
+.nextStep <- function(listSoFar, originalString, arrayToGo) {
+  # Recursive function that adds a multilayer list to listSoFar that has a
+  # branched structure representing the vector of strings arrayToGo.
+  if (length(arrayToGo) == 0) {
+    # If end of string vector arrayToGo has been reached, create a vector called
+    # 'path' and give it the value 'originalString'.
+    listSoFar$path <- originalString
+  } else {
+    # End of branch has not been reached. If this portion of the string vector
+    # arrayToGo has not been added to listToGo yet, add it using the function
+    # .addBranch
+    if (is.null(listSoFar[[arrayToGo[1]]])) {
+      listSoFar[[arrayToGo[1]]] <- .addBranch(originalString, tail(arrayToGo, -1))
+    }
+    # If this portion of the string vector arrayToGo has already been added to
+    # listSoFar, remove the leading element of arrayToGo and recursively apply
+    # this function using the remaining elements of arrayToGo.
+    else {
+      listSoFar[[arrayToGo[1]]] <- .nextStep(listSoFar[[arrayToGo[1]]], originalString, tail(arrayToGo, -1))
+    }
+  }
+
+  return(listSoFar)
+}
+
+
+#' Get simulation tree
+#'
+#' @description
+#'
+#' Given a simulation file path or an instance of a simulation, traverses the
+#' simulation structure and returns a tree like structure allowing for intuitive
+#' navigation in the simulation tree.
+#
+#' @param simulationOrFilePath Full path of the simulation to load or instance
+#'   of a simulation.
+#' @param quantityType A vector of strings that specify the types of the
+#'   entities to be included in the tree.  The types can be any combination of
+#'   "Quantity", "Molecule", "Parameter" and "Observer".
+#'
+#' @return
+#'
+#' A list with a branched structure representing the path tree of entities in
+#' the simulation file that fall under the types specified in `quantityType`. At
+#' the end of each branch is a string called 'path' that is the path of the
+#' quantity represented by the branch.
+#'
+#' @importFrom utils tail
+#' @examples
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#'
+#' tree <- getSimulationTree(sim)
+#'
+#' liver_volume_path <- tree$Organism$Liver$Volume$path
+#' @export
+getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
+  validateIsOfType(simulationOrFilePath, c("Simulation", "character"))
+
+  quantityTypeList <- list(
+    "Quantity" = getAllQuantityPathsIn,
+    "Molecule" = getAllMoleculePathsIn,
+    "Parameter" = getAllParameterPathsIn,
+    "Observer" = getAllObserverPathsIn
+  )
+
+  validateIsIncluded(values = quantityType, parentValues = names(quantityTypeList))
+
+  simulation <- simulationOrFilePath
+  if (isOfType(simulationOrFilePath, "character")) {
+    simulation <- loadSimulation(simulationOrFilePath)
+  }
+
+  # Build a vector, with no duplicated entries, of all paths corresponding to
+  # entities in `simulation` that fall under the types specified in quantityType
+  allPaths <- sapply(quantityType, function(type) {
+    quantityTypeList[[type]](simulation)
+  }) %>%
+    unname() %>%
+    unlist() %>%
+    unique()
+
+  # Initiate list to be returned as a null list.
+  pathEnumList <- list()
+
+  for (path in allPaths) {
+    # Convert the path string to a vector of strings, each representing a branch portion.
+    pathArray <- toPathArray(path)
+
+    # Begin recursive loop to generate branched list.
+    pathEnumList <- .nextStep(pathEnumList, path, pathArray)
+  }
+
+  return(pathEnumList)
 }

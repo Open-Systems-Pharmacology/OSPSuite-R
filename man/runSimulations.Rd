@@ -38,7 +38,7 @@ Runs multiple simulations concurrently.
 }
 \details{
 For multiple simulations, only individual simulations are possible.
-For single simulatio, either individual or population simulations can be
+For single simulation, either individual or population simulations can be
 performed.
 }
 \examples{

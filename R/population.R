@@ -67,7 +67,7 @@ Population <- R6::R6Class(
     #' Returns all values defined in the population the individual with id `individualId`
     #' @param individualId Id of individual for which all values should be returned
     getParameterValuesForIndividual = function(individualId) {
-      parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
+      .parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
     },
     #' @description
     #' Removes the value of a parameter by path

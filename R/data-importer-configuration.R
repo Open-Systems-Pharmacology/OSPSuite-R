@@ -270,12 +270,12 @@ DataImporterConfiguration <- R6::R6Class(
     },
 
     #' @description
-    #' Save configuration to a XML file that can be used in PKSim/MoBi
+    #' Save configuration to a XML file that can be used in PK-Sim/MoBi
     #' @param filePath Path (incl. file name) to the location where the configuration
     #' will be exported to.
     saveConfiguration = function(filePath) {
       validateIsString(filePath)
-      filePath <- expandPath(filePath)
+      filePath <- .expandPath(filePath)
 
       rClr::clrCall(private$.dataImporterTask, "SaveConfiguration", self$ref, filePath)
       invisible(self)
