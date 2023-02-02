@@ -1,8 +1,8 @@
 image: Visual Studio 2019
 
 # uncomment to use global ospsuite version (and comment line underneath)
-# version: '{build}' 
-version: '11.1.{build}'
+# version: '{build}'
+version: '11.2.{build}'
 
 # Download script file from GitHub
 init:
@@ -20,7 +20,7 @@ install:
 
 platform: x64
 
- #We use this set of variables to bypass issue with PK-Sim build. This should be removed when dealt with 
+ #We use this set of variables to bypass issue with PK-Sim build. This should be removed when dealt with
 environment:
   USE_RTOOLS: true
   NOT_CRAN: true

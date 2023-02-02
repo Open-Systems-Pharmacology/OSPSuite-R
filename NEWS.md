@@ -1,3 +1,15 @@
+# ospsuite 11.2 (development)
+
+## New features
+
+## Breaking Changes
+
+## Major Changes
+
+## Minor Changes
+
+- Fixed Passing font size options from plotConfiguration objects to tlf objects #1198
+
 # ospsuite 11.1.197
 
 ## New features
