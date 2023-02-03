@@ -2,8 +2,8 @@ image: Visual Studio 2019
 
 
 # uncomment to use global ospsuite version (and comment line underneath)
-# version: '{build}' 
-version: '11.1.{build}'
+# version: '{build}'
+version: '11.2.{build}'
 
 # Download script file from GitHub
 init:
@@ -28,7 +28,7 @@ environment:
   R_ARCH: x64
   R_VERSION: 4.1.0
   #We use this variale to skip some long lasting tests using "skip_on_ci"
-  CI: true 
+  CI: true
 
 build_script:
   - travis-tool.sh install_deps
@@ -47,7 +47,7 @@ on_failure:
 
 on_success:
   - Rscript -e "spelling::spell_check_package()"
-  
+
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs

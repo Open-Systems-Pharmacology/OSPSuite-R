@@ -100,20 +100,20 @@
 <circle cx='682.82' cy='39.13' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <polygon points='473.39,141.65 480.50,141.65 480.50,134.54 473.39,134.54 ' style='stroke-width: 0.71; stroke: none; fill: #5050FF; fill-opacity: 0.75;' />
 <polygon points='243.34,42.68 250.45,42.68 250.45,35.57 243.34,35.57 ' style='stroke-width: 0.71; stroke: none; fill: #5050FF; fill-opacity: 0.75;' />
-<line x1='71.11' y1='558.82' x2='71.11' y2='555.99' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='246.90' y1='558.82' x2='246.90' y2='555.99' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='371.62' y1='558.82' x2='371.62' y2='555.99' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='468.36' y1='558.82' x2='468.36' y2='553.15' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='547.40' y1='558.82' x2='547.40' y2='555.99' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='614.23' y1='558.82' x2='614.23' y2='555.99' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='672.12' y1='558.82' x2='672.12' y2='555.99' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='516.03' x2='20.01' y2='516.03' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='376.54' x2='20.01' y2='376.54' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='277.58' x2='20.01' y2='277.58' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='200.81' x2='22.85' y2='200.81' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='138.09' x2='20.01' y2='138.09' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='85.06' x2='20.01' y2='85.06' style='stroke-width: 1.07; stroke: #333333;' />
-<line x1='17.18' y1='39.13' x2='20.01' y2='39.13' style='stroke-width: 1.07; stroke: #333333;' />
+<line x1='71.11' y1='558.82' x2='71.11' y2='555.99' style='stroke-width: 1.07;' />
+<line x1='246.90' y1='558.82' x2='246.90' y2='555.99' style='stroke-width: 1.07;' />
+<line x1='371.62' y1='558.82' x2='371.62' y2='555.99' style='stroke-width: 1.07;' />
+<line x1='468.36' y1='558.82' x2='468.36' y2='553.15' style='stroke-width: 1.07;' />
+<line x1='547.40' y1='558.82' x2='547.40' y2='555.99' style='stroke-width: 1.07;' />
+<line x1='614.23' y1='558.82' x2='614.23' y2='555.99' style='stroke-width: 1.07;' />
+<line x1='672.12' y1='558.82' x2='672.12' y2='555.99' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='516.03' x2='20.01' y2='516.03' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='376.54' x2='20.01' y2='376.54' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='277.58' x2='20.01' y2='277.58' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='200.81' x2='22.85' y2='200.81' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='138.09' x2='20.01' y2='138.09' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='85.06' x2='20.01' y2='85.06' style='stroke-width: 1.07;' />
+<line x1='17.18' y1='39.13' x2='20.01' y2='39.13' style='stroke-width: 1.07;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='17.18,558.82 17.18,5.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
