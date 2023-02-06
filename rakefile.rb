@@ -118,6 +118,7 @@ def download_pksim_portable(branch)
   
   #possibly we do not even need the unzipping, but let's leave it in for now
   portable_msi_package = unzip_package(portable_zip_package)
+  puts "Downloading #{portable_msi_package} silently possibly in #{portable_file_name}".light_blue
 end
 
 def unzip_package(package_full_path)
