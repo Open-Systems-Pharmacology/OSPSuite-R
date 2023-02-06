@@ -75,7 +75,7 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '**\*pk-sim-portable-setup*'
+  - path: '**\*.zip'
     name: PKSim
 
 platform: x64

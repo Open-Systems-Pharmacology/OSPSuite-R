@@ -89,7 +89,7 @@ def install_pksim(branch)
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
-  zip_package = download_file(appveyor_project_name, file_name, uri)
+  zip_package = download_file(appveyor_project_name, file_name, uri, temp_dir)
   msi_package = unzip_package(zip_package)
   # MSI installer only works with \\ style separator
   msi_package = msi_package.split('/').join('\\')
@@ -99,7 +99,7 @@ def install_pksim(branch)
   puts "Installation done.".light_blue
 end
 
-def download_file(project_name, file_name, uri)
+def download_file(project_name, file_name, uri, target_dir)
   download_dir = File.join(temp_dir, project_name) 
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
@@ -114,7 +114,9 @@ def download_pksim_portable(branch)
   portable_file_name ='pk-sim-portable-setup.zip'
   appveyor_project_name = 'pk-sim'
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
-  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri)
+  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri, build_dir)
+  # we have downloaded in temp dir
+  #we need it to be in 
   #FileUtils.cp(portable_zip_package, inst_lib_dir)
   #possibly we do not even need the unzipping, but let's leave it in for now
   #portable_msi_package = unzip_package(portable_zip_package)
