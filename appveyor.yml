@@ -52,6 +52,9 @@ build_script:
 test_script:
   - travis-tool.sh run_tests
 
+after_test:
+  - ps: copy pk-sim-portable-setup*.zip pk-sim-portable-setup.zip
+
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
