@@ -101,7 +101,7 @@ def install_pksim(branch)
 end
 
 def download_file(project_name, file_name, uri, target_dir)
-  download_dir = File.join(temp_dir, project_name) 
+  download_dir = File.join(target_dir, project_name) 
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
