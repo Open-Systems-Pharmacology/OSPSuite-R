@@ -14,6 +14,7 @@ task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
   update_package_version(args.build_version, description_file)
   install_pksim(args.pksim_branch)
+  download_pksim_portable(args.pksim_branch)
 end
 
 task :postclean do 
