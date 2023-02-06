@@ -95,38 +95,22 @@ getBaseUnit <- function(dimension) {
 #' @export
 toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
-  validateIsNumeric(values, nullAllowed = TRUE)
-  validateIsNumeric(molWeight, nullAllowed = TRUE)
-  unit <- .encodeUnit(unit)
+
+  # Get the base unit of the dimension and call `toUnit()`
   dimension <- quantityOrDimension
-  dimensionTask <- .getNetTask("DimensionTask")
-
-  # covers all NULL or NA
-  if (all(is.na(values))) {
-    return(values)
-  }
-
-  # ensure that we are dealing with an list of values seen as number (and not integer)
-  values <- as.numeric(c(values))
-
   if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
   }
+  baseUnit <- getBaseUnit(dimension)
 
-  if (all(is.na(molWeight))) {
-    molWeight <- NULL
-  }
-
-
-  if (is.null(molWeight)) {
-    return(rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values))
-  }
-
-  # Convert molWeight value to base unit if a unit is provided
-  if (!is.null(molWeightUnit)) {
-    molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
-  }
-  rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, unit, values, molWeight)
+  toUnit(
+    quantityOrDimension = quantityOrDimension,
+    values = values,
+    targetUnit = baseUnit,
+    sourceUnit = unit,
+    molWeight = molWeight,
+    molWeightUnit = molWeightUnit
+  )
 }
 
 #' Converts a value given in base unit of a quantity into a target unit
@@ -163,41 +147,58 @@ toUnit <- function(quantityOrDimension,
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
-  targetUnit <- .encodeUnit(targetUnit)
-  dimension <- quantityOrDimension
-  dimensionTask <- .getNetTask("DimensionTask")
-
 
   # covers all NULL or NA
   if (all(is.na(values))) {
     return(values)
   }
 
+  targetUnit <- .encodeUnit(targetUnit)
+
   if (!is.null(sourceUnit)) {
     sourceUnit <- .encodeUnit(sourceUnit)
+
+    # If source and target units are equal, return early
+    if (sourceUnit == targetUnit) {
+      return(values)
+    }
   }
 
+  dimension <- quantityOrDimension
   if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
+  }
+  baseUnit <- getBaseUnit(dimension)
+
+  # Return early
+  # If no source unit is defined and target is the base unit
+  if (is.null(sourceUnit) && targetUnit == baseUnit) {
+    return(values)
   }
 
   if (all(is.na(molWeight))) {
     molWeight <- NULL
   }
 
+  dimensionTask <- .getNetTask("DimensionTask")
   # ensure that we are dealing with an list of values seen as number (and not integer)
   values <- as.numeric(c(values))
 
-
+  # Case - no molecular weight is provided
   if (is.null(molWeight)) {
     # Convert values to base unit first if the source unit is provided
     if (!is.null(sourceUnit)) {
       values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values)
     }
+    # Return early if target unit is the base unit
+    if (targetUnit == baseUnit) {
+      return(values)
+    }
 
     return(rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values))
   }
 
+  # Case - molecular weight is provided
   # Convert molWeight value to base unit if a unit is provided
   if (!is.null(molWeightUnit)) {
     molWeight <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
@@ -206,6 +207,10 @@ toUnit <- function(quantityOrDimension,
   # Convert values to base unit first if the source unit is provided
   if (!is.null(sourceUnit)) {
     values <- rClr::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
+  }
+  # Return early if target unit is the base unit
+  if (targetUnit == baseUnit) {
+    return(values)
   }
 
   rClr::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)

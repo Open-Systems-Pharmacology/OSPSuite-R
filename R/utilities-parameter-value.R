@@ -1,4 +1,3 @@
-
 #' Converts a list of .NET `ParameterValue` into a list with 2 entries: `paths`, `values`.
 #' A 3rd optional entry `units` will be defined if the parameter `addUnits` is set to `TRUE`.
 #' Note: Units are only available for .NET object of type `ParameterValueWithUnit`

@@ -1,4 +1,3 @@
-
 context("getAllParametersMatching")
 
 sim <- loadTestSimulation("S1")

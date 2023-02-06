@@ -1,4 +1,3 @@
-
 #' @title ObjectBase
 #' @docType class
 #' @description  Abstract wrapper for an OSPSuite.Core ObjectBase.

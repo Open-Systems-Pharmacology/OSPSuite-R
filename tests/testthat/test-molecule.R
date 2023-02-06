@@ -1,4 +1,3 @@
-
 context("Molecule in concentration mode")
 
 sim_conc_based <- loadTestSimulation("concentration_based")

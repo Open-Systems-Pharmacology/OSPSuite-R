@@ -1,4 +1,3 @@
-
 #' Loads the `PKSim.R` that will enable create individual and create population workflows.
 #' @param pksimFolderPath Path where PK-Sim is installed. If this is not specified, path will be read from registry using the package version
 #'

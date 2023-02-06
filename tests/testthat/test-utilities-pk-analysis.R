@@ -1,4 +1,3 @@
-
 context("calculatePKAnalyses")
 
 sim <- loadTestSimulation("S1")

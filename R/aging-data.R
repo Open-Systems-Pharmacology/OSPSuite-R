@@ -1,4 +1,3 @@
-
 #' @title AgingData
 #' @docType class
 #' @description  Results of a sensitivity analysis run (either individual or population simulation)

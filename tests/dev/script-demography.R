@@ -1,4 +1,3 @@
-
 library(ospsuite)
 
 sim <- loadSimulation("tests/data/S1.pkml")

@@ -51,18 +51,18 @@ test_that(
 )
 
 test_that(
-  "DataCombined objects keep LLOQ data passed from underlying DataSet objects", 
+  "DataCombined objects keep LLOQ data passed from underlying DataSet objects",
   expect_equal(
-    myDC$toDataFrame()$lloq, 
-	c(rep(0.02, length(obsData$yValues)), rep(NA, nrow(df)))
+    myDC$toDataFrame()$lloq,
+    c(rep(0.02, length(obsData$yValues)), rep(NA, nrow(df)))
   )
 )
 
 test_that(
-  "calculateResiduals function keeps passes lloq data through", 
+  "calculateResiduals function keeps passes lloq data through",
   expect_equal(
     calculateResiduals(myDC, scaling = "lin")$lloq,
-	rep(0.02, 6)
+    rep(0.02, 6)
   )
 )
 
