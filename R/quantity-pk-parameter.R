@@ -1,4 +1,3 @@
-
 #' @title QuantityPKParameter
 #' @docType class
 #' @description  pK-Parameter values for all individuals of a simulation (1 or more) calculated for a specific quantity with path `quantityPath`

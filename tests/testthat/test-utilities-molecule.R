@@ -1,5 +1,3 @@
-
-
 sim <- loadTestSimulation("S1")
 
 context("getAllMoleculesMatching")

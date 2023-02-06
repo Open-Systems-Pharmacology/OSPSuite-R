@@ -1,4 +1,3 @@
-
 library(ospsuite)
 
 # path relative to the project directory where data should be saved

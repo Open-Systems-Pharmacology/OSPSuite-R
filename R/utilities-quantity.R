@@ -1,4 +1,3 @@
-
 #' Retrieve all quantities of a container (simulation or container instance)
 #' matching the given path criteria
 #'

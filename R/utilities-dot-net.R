@@ -1,4 +1,3 @@
-
 #' Returns a list containing all properties `propertyName` from the .NET objects `netObjects`
 #'
 #' @param netObjects List of .NET object

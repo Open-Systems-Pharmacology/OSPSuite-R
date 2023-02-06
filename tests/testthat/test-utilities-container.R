@@ -1,4 +1,3 @@
-
 context("getAllContainersMatching")
 
 sim <- loadTestSimulation("S1")
