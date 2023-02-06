@@ -109,6 +109,16 @@ def download_file(project_name, file_name, uri)
   file
 end
 
+def download_pksim_portable(branch)
+  portable_file_name ='pk-sim-portable-setup.zip'
+  appveyor_project_name = 'pk-sim'
+  portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
+  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri)
+  
+  #possibly we do not even need the unzipping, but let's leave it in for now
+  portable_msi_package = unzip_package(portable_zip_package)
+end
+
 def unzip_package(package_full_path)
   unzip_dir = unzip(package_full_path)
   artifact_name = ''

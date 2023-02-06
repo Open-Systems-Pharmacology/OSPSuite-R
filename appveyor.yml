@@ -30,6 +30,17 @@ environment:
   #We use this variale to skip some long lasting tests using "skip_on_ci"
   CI: true
 
+before_build:
+  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
+  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
+  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
+  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
+  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
+  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
+  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
+  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
+  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
+  
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
@@ -60,6 +71,9 @@ artifacts:
 
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
+
+  - path: '\pk-sim-portable-setup*.zip'
+    name: PKSim
 
 platform: x64
 
