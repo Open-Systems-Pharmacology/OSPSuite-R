@@ -10,11 +10,11 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
+task :prepare_for_build, [:build_version, :pksim_branch, :build_dir] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
   update_package_version(args.build_version, description_file)
   install_pksim(args.pksim_branch)
-  download_pksim_portable(args.pksim_branch)
+  download_pksim_portable(args.pksim_branch, args.build_dir)
 end
 
 task :postclean do 
@@ -110,11 +110,11 @@ def download_file(project_name, file_name, uri, target_dir)
   file
 end
 
-def download_pksim_portable(branch)
+def download_pksim_portable(branch, output_dir)
   portable_file_name ='pk-sim-portable-setup.zip'
   appveyor_project_name = 'pk-sim'
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
-  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri, build_dir)
+  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri, output_dir)
   # we have downloaded in temp dir
   #we need it to be in 
   #FileUtils.cp(portable_zip_package, inst_lib_dir)
