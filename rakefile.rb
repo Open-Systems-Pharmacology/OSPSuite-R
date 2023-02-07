@@ -133,10 +133,10 @@ def download_pksim_portable(branch)
   portable_zip_package = download_portable_file(appveyor_project_name, portable_file_name, portable_uri)
   puts "Portable downloaded at #{portable_zip_package}".light_blue
 
-  command_line = %W[e #{portable_file_name}]
+  command_line = %W[e #{portable_zip_package}]
   puts "command_line #{command_line}".light_blue
   #Utils.run_cmd('7z', command_line)
-  Utils.run_cmd('7z', %W[e #{portable_file_name}])
+  Utils.run_cmd('7z', %W[e #{portable_zip_package}])
 
   puts File.exists?("PKSim.Core.dll")
 
