@@ -39,7 +39,7 @@ before_build:
   - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
   - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
   - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
-  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%]"
+  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
 build_script:
   - travis-tool.sh install_deps
@@ -53,6 +53,7 @@ test_script:
   - travis-tool.sh run_tests
 
 after_test:
+  - rake "download_portable[%APPVEYOR_BUILD_VERSION%]"
   - ps: copy pk-sim-portable-setup*.zip pk-sim-portable-setup.zip
 
 on_failure:
@@ -75,8 +76,11 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '**\*.zip'
+  - path: '\pk-sim-portable-setup*.zip'
     name: PKSim
+
+  - path: 'pk-sim-portable-setup*.zip'
+    name: PKSim_2
 
 platform: x64
 

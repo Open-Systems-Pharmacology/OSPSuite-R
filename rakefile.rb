@@ -10,11 +10,14 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
-task :prepare_for_build, [:build_version, :pksim_branch, :build_dir] do |t, args|
+task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
   update_package_version(args.build_version, description_file)
   install_pksim(args.pksim_branch)
-  download_pksim_portable(args.pksim_branch, args.build_dir)
+end
+
+task :download_portable, [:pksim_branch] do |t, args|
+  download_pksim_portable(args.pksim_branch)
 end
 
 task :postclean do 
@@ -89,8 +92,7 @@ def install_pksim(branch)
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
-  zip_package = download_file(appveyor_project_name, file_name, uri, temp_dir)
-  puts "Zip pack: #{zip_package} silently".light_blue
+  zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
   # MSI installer only works with \\ style separator
   msi_package = msi_package.split('/').join('\\')
@@ -100,8 +102,8 @@ def install_pksim(branch)
   puts "Installation done.".light_blue
 end
 
-def download_file(project_name, file_name, uri, target_dir)
-  download_dir = File.join(target_dir, project_name) 
+def download_file(project_name, file_name, uri)
+  download_dir = File.join(temp_dir, project_name) 
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
@@ -111,17 +113,25 @@ def download_file(project_name, file_name, uri, target_dir)
   file
 end
 
-def download_pksim_portable(branch, output_dir)
+def download_pksim_portable(branch)
   portable_file_name ='pk-sim-portable-setup.zip'
   appveyor_project_name = 'pk-sim'
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
-  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri, output_dir)
+  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri)
   # we have downloaded in temp dir
   #we need it to be in 
   #FileUtils.cp(portable_zip_package, inst_lib_dir)
   #possibly we do not even need the unzipping, but let's leave it in for now
   #portable_msi_package = unzip_package(portable_zip_package)
   #puts "Downloading #{portable_msi_package} silently possibly in #{portable_file_name}".light_blue
+    
+  temp_download_dir = File.join(temp_dir, appveyor_project_name) 
+  #TEMP
+  build_dir = "C:/projects/ospsuite-r"
+  
+  Dir.chdir(temp_download_dir) do
+    FileUtils.mv("#{portable_zip_package}", build_dir)
+  end
 end
 
 def unzip_package(package_full_path)
