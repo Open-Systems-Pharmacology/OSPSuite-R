@@ -17,6 +17,7 @@ task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
 end
 
 task :download_portable, [:pksim_branch] do |t, args|
+  args.with_defaults(:pksim_branch => 'develop')
   download_pksim_portable(args.pksim_branch)
 end
 
@@ -104,6 +105,17 @@ end
 
 def download_file(project_name, file_name, uri)
   download_dir = File.join(temp_dir, project_name) 
+  FileUtils.mkdir_p download_dir
+  file = File.join(download_dir, file_name)
+  puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
+  open(file, 'wb') do |fo|
+    fo.print URI.open(uri,:read_timeout => nil).read
+  end
+  file
+end
+
+def download_portable_file(project_name, file_name, uri)
+  download_dir = "C:/projects/ospsuite-r"
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
