@@ -18,7 +18,7 @@ end
 
 task :download_portable, [:pksim_branch] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
-  download_pksim_portable(args.pksim_branch)
+  download_pksim_portable('develop')
 end
 
 task :postclean do 

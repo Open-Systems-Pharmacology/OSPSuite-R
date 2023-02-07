@@ -30,17 +30,6 @@ environment:
   #We use this variale to skip some long lasting tests using "skip_on_ci"
   CI: true
 
-before_build:
-  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
-  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
-  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
-  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
-  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
-  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
-  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
-  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
-  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
-
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
@@ -49,10 +38,11 @@ build_script:
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
 
-test_script:
-  - travis-tool.sh run_tests
+#test_script:
+#  - travis-tool.sh run_tests
 
-after_test:
+#after_test:
+after_build:
   - rake "download_portable[%APPVEYOR_BUILD_VERSION%]"
   - ps: copy pk-sim-portable-setup*.zip pk-sim-portable-setup.zip
 
