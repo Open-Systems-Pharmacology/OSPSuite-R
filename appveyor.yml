@@ -38,11 +38,10 @@ build_script:
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
 
-#test_script:
-#  - travis-tool.sh run_tests
+test_script:
+  - travis-tool.sh run_tests
 
-#after_test:
-after_build:
+after_test:
   - rake "download_portable[develop]"
   - appveyor PushArtifact "C:/projects/ospsuite-r/pk-sim-portable-setup.zip"
 
@@ -66,12 +65,6 @@ artifacts:
 
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
-
-  - path: '\pk-sim-portable-setup*.zip'
-    name: PKSim
-
-  - path: 'pk-sim-portable-setup*.zip'
-    name: PKSim_2
 
 platform: x64
 
