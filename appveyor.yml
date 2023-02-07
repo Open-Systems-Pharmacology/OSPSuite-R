@@ -44,7 +44,8 @@ build_script:
 #after_test:
 after_build:
   - rake "download_portable[develop]"
-  - ps: copy pk-sim-portable-setup*.zip pk-sim-portable-setup.zip
+  - appveyor PushArtifact "C:/projects/ospsuite-r/pk-sim-portable-setup.zip"
+
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
