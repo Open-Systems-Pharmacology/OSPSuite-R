@@ -44,7 +44,6 @@ build_script:
 #after_test:
 after_build:
  - rake "download_portable[develop]"
- - appveyor PushArtifact "C:/projects/ospsuite-r/pk-sim-portable-setup.zip"
  - appveyor PushArtifact "C:/projects/ospsuite-r/pksim_minimal.zip"
 
 

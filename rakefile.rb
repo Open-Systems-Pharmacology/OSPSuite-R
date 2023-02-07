@@ -141,13 +141,38 @@ def download_pksim_portable(branch)
   puts File.exists?("PKSim.Core.dll")
 
   pksim_minimal_dir = "C:/projects/ospsuite-r/pksim_minimal.zip"
-
-  command_line = %W[a #{pksim_minimal_dir} Castle.Core.dll Castle.Windsor.dll DevExpress.Data.v21.2.dll]
+  command_line = %W[
+    a 
+    #{pksim_minimal_dir} 
+    Castle.Core.dll 
+    Castle.Windsor.dll 
+    DevExpress.Data.v21.2.dll 
+    FluentNHibernate.dll 
+    MarkdownLog.dll 
+    Newtonsoft.Json.dll 
+    Newtonsoft.Json.Schema.dll
+    NHibernate.dll
+    OSPSuite.Assets.Images.dll
+    OSPSuite.Dimensions.xml
+    OSPSuite.Infrastructure.Castle.dll
+    OSPSuite.Infrastructure.Export.dll
+    OSPSuite.Infrastructure.Reporting.dll
+    OSPSuite.Infrastructure.Serialization.dll
+    OSPSuite.PKParameters.xml
+    OSPSuite.Presentation.dll
+    OSPSuite.Presentation.Serialization.dll
+    OSPSuite.TeXReporting.dll
+    PKSim.Assets.dll
+    PKSim.CLI.Core.dll
+    PKSim.Core.dll
+    PKSim.Infrastructure.dll
+    PKSim.Presentation.dll
+    PKSim.R.dll
+    PKSimDB.sqlite
+    SQLite.Interop.dll
+    System.Data.SQLite.dll
+]
   puts "command_line is #{command_line}".light_blue
-
-
-
-
   Utils.run_cmd('7z', command_line)
 
 
