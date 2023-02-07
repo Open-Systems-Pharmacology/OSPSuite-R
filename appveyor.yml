@@ -13,7 +13,6 @@ init:
       $ErrorActionPreference = "Stop"
       Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
       Import-Module '..\appveyor-tool.ps1'
-
 install:
   - cmd: set PATH=C:\Ruby27-x64\bin;%PATH%
   - ps: Bootstrap
@@ -38,14 +37,8 @@ build_script:
   - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
 
-#test_script:
-#  - travis-tool.sh run_tests
-
-#after_test:
-after_build:
- - rake "download_portable[develop]"
- - appveyor PushArtifact "C:/projects/ospsuite-r/pksim_minimal.zip"
-
+test_script:
+  - travis-tool.sh run_tests
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*

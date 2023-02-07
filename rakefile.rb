@@ -172,6 +172,7 @@ def download_pksim_portable(branch)
     SQLite.Interop.dll
     System.Data.SQLite.dll
 ]
+
   puts "command_line is #{command_line}".light_blue
   Utils.run_cmd('7z', command_line)
 
