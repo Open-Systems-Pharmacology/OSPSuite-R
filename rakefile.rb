@@ -133,7 +133,7 @@ def download_pksim_portable(branch)
   portable_zip_package = download_portable_file(appveyor_project_name, portable_file_name, portable_uri)
   puts "Portable downloaded at #{portable_zip_package}".light_blue
 
-  command_line = %W[e #{package_full_path}]
+  command_line = %W[e #{portable_file_name}]
   puts "command_line #{command_line}".light_blue
   Utils.run_cmd('7z', command_line)
 
