@@ -43,7 +43,7 @@ build_script:
 
 #after_test:
 after_build:
-  - rake "download_portable[%APPVEYOR_BUILD_VERSION%]"
+  - rake "download_portable[develop]"
   - ps: copy pk-sim-portable-setup*.zip pk-sim-portable-setup.zip
 
 on_failure:

@@ -18,7 +18,7 @@ end
 
 task :download_portable, [:pksim_branch] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
-  download_pksim_portable('develop')
+  download_pksim_portable(args.pksim_branch)
 end
 
 task :postclean do 
@@ -130,7 +130,7 @@ def download_pksim_portable(branch)
   portable_file_name ='pk-sim-portable-setup.zip'
   appveyor_project_name = 'pk-sim'
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
-  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri)
+  portable_zip_package = download_portable_file(appveyor_project_name, portable_file_name, portable_uri)
   puts "Portable downloaded at #{portable_zip_package}".light_blue
   # we have downloaded in temp dir
   #we need it to be in 
