@@ -93,6 +93,7 @@ def install_pksim(branch)
   file_name ='setup.zip'
   appveyor_project_name = 'pk-sim'
   uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{file_name}?branch=#{branch}"
+  download_dir = File.join(temp_dir, appveyor_project_name)
   zip_package = download_file(appveyor_project_name, file_name, uri)
   msi_package = unzip_package(zip_package)
   # MSI installer only works with \\ style separator
@@ -103,19 +104,7 @@ def install_pksim(branch)
   puts "Installation done.".light_blue
 end
 
-def download_file(project_name, file_name, uri)
-  download_dir = File.join(temp_dir, project_name) 
-  FileUtils.mkdir_p download_dir
-  file = File.join(download_dir, file_name)
-  puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
-  open(file, 'wb') do |fo|
-    fo.print URI.open(uri,:read_timeout => nil).read
-  end
-  file
-end
-
-def download_portable_file(project_name, file_name, uri)
-  download_dir = "C:/projects/ospsuite-r"
+def download_file(project_name, file_name, uri, download_dir) 
   FileUtils.mkdir_p download_dir
   file = File.join(download_dir, file_name)
   puts "Downloading #{file_name} from #{uri} under #{file}".light_blue
@@ -130,15 +119,11 @@ def download_pksim_portable(branch)
   portable_file_name ='pk-sim-portable-setup.zip'
   appveyor_project_name = 'pk-sim'
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
-  portable_zip_package = download_portable_file(appveyor_project_name, portable_file_name, portable_uri)
-  puts "Portable downloaded at #{portable_zip_package}".light_blue
 
-  command_line = %W[e #{portable_zip_package}]
-  puts "command_line #{command_line}".light_blue
-  #Utils.run_cmd('7z', command_line)
+  download_dir = "C:/projects/ospsuite-r"
+  portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri, download_dir)
+  
   Utils.run_cmd('7z', %W[e #{portable_zip_package}])
-
-  puts File.exists?("PKSim.Core.dll")
 
   pksim_minimal_dir = "C:/projects/ospsuite-r/pksim_minimal.zip"
   command_line = %W[
@@ -171,12 +156,8 @@ def download_pksim_portable(branch)
     PKSimDB.sqlite
     SQLite.Interop.dll
     System.Data.SQLite.dll
-]
-
-  puts "command_line is #{command_line}".light_blue
+  ]
   Utils.run_cmd('7z', command_line)
-
-
 end
 
 def unzip_package(package_full_path)
@@ -191,7 +172,6 @@ end
 def unzip(package_full_path)
   unzip_dir = File.dirname(package_full_path)
   command_line = %W[e #{package_full_path} -o#{unzip_dir}]
-  puts "command_line #{command_line}".light_blue
   Utils.run_cmd('7z', command_line)
   unzip_dir
 end
