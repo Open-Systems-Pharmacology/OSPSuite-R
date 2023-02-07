@@ -140,12 +140,12 @@ def download_pksim_portable(branch)
 
   puts File.exists?("PKSim.Core.dll")
 
+  pksim_minimal_dir = "C:/projects/ospsuite-r/pksim_minimal.zip}"
+  
   command_line = %W[a pksim_minimal.zip Castle.Core.dll Castle.Windsor.dll DevExpress.Data.v21.2.dll]
   puts "command_line is #{command_line}".light_blue
 
-  #Dir.chdir(unziped_dir) do
 
-  #end
 
 
   Utils.run_cmd('7z', command_line)
