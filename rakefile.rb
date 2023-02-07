@@ -137,6 +137,12 @@ def download_pksim_portable(branch)
 
   command_line = %W[a pksim_minimal.zip Castle.Core.dll Castle.Windsor.dll DevExpress.Data.v21.2.dll]
   puts "command_line is #{command_line}".light_blue
+
+  #Dir.chdir(unziped_dir) do
+
+  #end
+
+
   Utils.run_cmd('7z', command_line)
 
 
@@ -154,6 +160,7 @@ end
 def unzip(package_full_path)
   unzip_dir = File.dirname(package_full_path)
   command_line = %W[e #{package_full_path} -o#{unzip_dir}]
+  puts "command_line #{command_line}".light_blue
   Utils.run_cmd('7z', command_line)
   unzip_dir
 end
