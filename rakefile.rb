@@ -132,8 +132,12 @@ def download_pksim_portable(branch)
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
   portable_zip_package = download_portable_file(appveyor_project_name, portable_file_name, portable_uri)
   puts "Portable downloaded at #{portable_zip_package}".light_blue
-  unziped_dir = unzip(portable_zip_package)
-  puts "unziped_dir at #{unziped_dir}".light_blue
+
+  command_line = %W[e #{package_full_path} -o#{unzip_dir}]
+  puts "command_line #{command_line}".light_blue
+  Utils.run_cmd('7z', command_line)
+
+  puts File.exists?(PKSim.Core.dll)
 
   command_line = %W[a pksim_minimal.zip Castle.Core.dll Castle.Windsor.dll DevExpress.Data.v21.2.dll]
   puts "command_line is #{command_line}".light_blue
