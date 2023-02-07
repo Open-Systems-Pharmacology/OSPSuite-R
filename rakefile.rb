@@ -137,7 +137,7 @@ def download_pksim_portable(branch)
   puts "command_line #{command_line}".light_blue
   Utils.run_cmd('7z', command_line)
 
-  puts File.exists?(PKSim.Core.dll)
+  puts File.exists?("PKSim.Core.dll")
 
   command_line = %W[a pksim_minimal.zip Castle.Core.dll Castle.Windsor.dll DevExpress.Data.v21.2.dll]
   puts "command_line is #{command_line}".light_blue
