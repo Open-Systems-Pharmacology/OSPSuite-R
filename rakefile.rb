@@ -132,20 +132,6 @@ def download_pksim_portable(branch)
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
   portable_zip_package = download_portable_file(appveyor_project_name, portable_file_name, portable_uri)
   puts "Portable downloaded at #{portable_zip_package}".light_blue
-  # we have downloaded in temp dir
-  #we need it to be in 
-  #FileUtils.cp(portable_zip_package, inst_lib_dir)
-  #possibly we do not even need the unzipping, but let's leave it in for now
-  #portable_msi_package = unzip_package(portable_zip_package)
-  #puts "Downloading #{portable_msi_package} silently possibly in #{portable_file_name}".light_blue
-    
-  temp_download_dir = File.join(temp_dir, appveyor_project_name) 
-  #TEMP
-  build_dir = "C:/projects/ospsuite-r"
-  
-  Dir.chdir(temp_download_dir) do
-    FileUtils.mv("#{portable_zip_package}", build_dir)
-  end
 end
 
 def unzip_package(package_full_path)
