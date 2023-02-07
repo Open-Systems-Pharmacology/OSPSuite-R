@@ -135,7 +135,8 @@ def download_pksim_portable(branch)
 
   command_line = %W[e #{portable_file_name}]
   puts "command_line #{command_line}".light_blue
-  Utils.run_cmd('7z', command_line)
+  #Utils.run_cmd('7z', command_line)
+  Utils.run_cmd('7z', %W[e #{portable_file_name}])
 
   puts File.exists?("PKSim.Core.dll")
 

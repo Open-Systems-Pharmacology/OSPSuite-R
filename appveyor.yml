@@ -30,11 +30,6 @@ environment:
   #We use this variale to skip some long lasting tests using "skip_on_ci"
   CI: true
 
-before_build:
-  - rake "download_portable[develop]"
-  - appveyor PushArtifact "C:/projects/ospsuite-r/pk-sim-portable-setup.zip"
-  - appveyor PushArtifact "C:/projects/ospsuite-r/pksim_minimal.zip"
-
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
@@ -47,10 +42,10 @@ build_script:
 #  - travis-tool.sh run_tests
 
 #after_test:
-#after_build:
-# - rake "download_portable[develop]"
-# - appveyor PushArtifact "C:/projects/ospsuite-r/pk-sim-portable-setup.zip"
-# - appveyor PushArtifact "C:/projects/ospsuite-r/pksim_minimal.zip"
+after_build:
+ - rake "download_portable[develop]"
+ - appveyor PushArtifact "C:/projects/ospsuite-r/pk-sim-portable-setup.zip"
+ - appveyor PushArtifact "C:/projects/ospsuite-r/pksim_minimal.zip"
 
 
 on_failure:
