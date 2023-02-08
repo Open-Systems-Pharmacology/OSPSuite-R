@@ -131,7 +131,7 @@ def download_pksim_portable(branch)
     #{pksim_minimal_dir} 
     Castle.Core.dll 
     Castle.Windsor.dll 
-    DevExpress.Data.v21.2.dll 
+    DevExpress.Data*.dll 
     FluentNHibernate.dll 
     MarkdownLog.dll 
     Newtonsoft.Json.dll 
