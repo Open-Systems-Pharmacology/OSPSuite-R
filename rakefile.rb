@@ -16,6 +16,10 @@ task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
   install_pksim(args.pksim_branch)
 end
 
+# TEMP
+# This creates a folder with a minimal set of PK-Sim dlls 
+# that are necessary to run OSPSuite-R without any further 
+# PK-Sim installation. 
 task :download_portable, [:pksim_branch] do |t, args|
   args.with_defaults(:pksim_branch => 'develop')
   download_pksim_portable(args.pksim_branch)
