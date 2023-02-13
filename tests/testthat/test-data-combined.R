@@ -1288,3 +1288,23 @@ test_that("scalar argument in a list to `groups` works as expected", {
     "myGroup"
   )
 })
+
+test_that("It cann add a data set without error type after adding a data set with error", {
+  dataCombined <- DataCombined$new()
+  ds <- DataSet$new(name = "withError")
+  ds$setValues(
+    xValues = c(1, 2),
+    yValues = c(1, 2),
+    yErrorValues = c(1, 2)
+  )
+  dataCombined$addDataSets(ds)
+
+  ds <- DataSet$new(name = "withoutError")
+  ds$setValues(
+    xValues = c(1, 2),
+    yValues = c(1, 2)
+  )
+  dataCombined$addDataSets(ds)
+
+  expect_error(dataCombined$addDataSets(ds), regexp = NA)
+})
