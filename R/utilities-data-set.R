@@ -8,7 +8,11 @@
     }
 
     if (len == 0) {
-      rep(NA_real_, length(dataSet$xValues))
+      if (property %in% c("yErrorType", "yErrorUnit")) {
+        rep(NA_character_, length(dataSet$xValues))
+      } else {
+        rep(NA_real_, length(dataSet$xValues))
+      }
     } else if (len == 1) {
       if (is.null(metaDataName)) {
         rep(dataSet[[property]], length(dataSet$xValues))
