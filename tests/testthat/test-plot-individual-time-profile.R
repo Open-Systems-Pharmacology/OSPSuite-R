@@ -105,3 +105,20 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
     messages$plottingWithEmptyDataCombined()
   )
 })
+
+test_that("Legend shapes are correct with multiple data sets and multiple groups", {
+  manyObsDC$removeGroupAssignment(names = "Vergin 1995.Iv")
+
+  dataSet3 <- DataSet$new(name = "Data set 3")
+  dataSet3$setValues(xValues = 1, yValues = 1, yErrorValues = 1)
+  dataSet4 <- DataSet$new(name = "Data set 4")
+  dataSet4$setValues(xValues = 1, yValues = 1, yErrorValues = 1)
+
+  manyObsDC$addDataSets(c(dataSet3, dataSet4))
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple groups and data sets",
+    fig = plotIndividualTimeProfile(manyObsDC)
+  )
+})
