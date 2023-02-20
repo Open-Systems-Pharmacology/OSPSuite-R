@@ -159,8 +159,13 @@ plotIndividualTimeProfile <- function(dataCombined,
     plotConfiguration = timeProfilePlotConfiguration
   )
 
+  # If there are multiple data sets and multiple groups, shapes in the color legend have to be overriden
+  uniqueShapesForGroups <- dplyr::distinct(obsData[c("name", "group")])
+  uniqueShapesForGroups$shape <- tlf:::.getAestheticValuesFromConfiguration(n = nrow(uniqueShapesForGroups), plotConfigurationProperty = profilePlot$plotConfiguration$points, propertyNames = "shape")$shape
+  uniqueShapesForGroups <- uniqueShapesForGroups[!duplicated(uniqueShapesForGroups$group), ]
+
   # Suppress certain mappings in the legend
-  profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
+  profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none", color = guide_legend(override.aes = list(shape = uniqueShapesForGroups$shape)))
 
   return(profilePlot)
 }
