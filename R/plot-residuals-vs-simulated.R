@@ -2,6 +2,7 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotResVsPred
+#' @param scaling A character of length one specifying the scale type for residual. can be lin or log.
 #'
 #' @import tlf
 #'
@@ -43,12 +44,15 @@
 #' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotResidualsVsSimulated(myDataCombined, myPlotConfiguration)
+#' plotResidualsVsSimulated(myDataCombined, scaling = "log", defaultPlotConfiguration = myPlotConfiguration)
 #'
 #' @export
 plotResidualsVsSimulated <- function(dataCombined,
+                                     scaling="lin",
                                      defaultPlotConfiguration = NULL) {
   # validation -----------------------------
+
+  rlang::arg_match(scaling, values=c("lin",'log'))
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
@@ -56,6 +60,8 @@ plotResidualsVsSimulated <- function(dataCombined,
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
   }
+
+
 
   # `ResVsPredPlotConfiguration` object -----------------------------
 
@@ -78,7 +84,7 @@ plotResidualsVsSimulated <- function(dataCombined,
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
   pairedData <- calculateResiduals(dataCombined,
-    scaling = resVsPredPlotConfiguration$yAxis$scale,
+    scaling = scaling,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit
   )
@@ -102,6 +108,10 @@ plotResidualsVsSimulated <- function(dataCombined,
   # axes labels -----------------------------
 
   resVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsPredPlotConfiguration)
+
+  if (scaling == "log") {
+    resVsPredPlotConfiguration$labels$ylabel$text <- paste(resVsPredPlotConfiguration$labels$ylabel$text, '(log)')
+  }
 
   # plot -----------------------------
 
