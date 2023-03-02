@@ -162,6 +162,6 @@ test_that("scaling residuals argument works with log", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "log-residuals",
-    fig = plotResidualsVsSimulated(myCombDat,scaling = "log")
+    fig = plotResidualsVsTime(myCombDat,scaling = "log")
   )
 })
