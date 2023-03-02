@@ -4,13 +4,19 @@
 \alias{plotResidualsVsTime}
 \title{Residuals versus time scatter plot}
 \usage{
-plotResidualsVsTime(dataCombined, defaultPlotConfiguration = NULL)
+plotResidualsVsTime(
+  dataCombined,
+  defaultPlotConfiguration = NULL,
+  scaling = "lin"
+)
 }
 \arguments{
 \item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
+
+\item{scaling}{A character of length one specifying the scale type for residual. can be lin or log.}
 }
 \description{
 Residuals versus time scatter plot
@@ -50,7 +56,7 @@ myPlotConfiguration$subtitle <- "My Plot Subtitle"
 myPlotConfiguration$caption <- "My Sources"
 
 # plot
-plotResidualsVsTime(myDataCombined, myPlotConfiguration)
+plotResidualsVsTime(myDataCombined, scaling = "lin", defaultPlotConfiguration = myPlotConfiguration)
 
 }
 \seealso{
