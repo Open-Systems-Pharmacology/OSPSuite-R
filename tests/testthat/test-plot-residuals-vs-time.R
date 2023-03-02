@@ -55,7 +55,7 @@ test_that("It doesn't work with log scale for Y-axis", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$yAxisScale <- tlf::Scaling$log
   expect_error(
-    plotResidualsVsTime(myCombDat, myPlotConfiguration),
+    plotResidualsVsTime(myCombDat, defaultPlotConfiguration = myPlotConfiguration),
     messages$logScaleNotAllowed()
   )
 })
@@ -81,7 +81,7 @@ test_that("It respects custom plot configuration", {
     title = "custom",
     fig = plotResidualsVsTime(
       myCombDat,
-      myPlotConfiguration
+      defaultPlotConfiguration = myPlotConfiguration
     )
   )
 
@@ -155,5 +155,13 @@ test_that("Different symbols for data sets within one group", {
   vdiffr::expect_doppelganger(
     title = "multiple data sets one group",
     fig = plotResidualsVsTime(myDC)
+  )
+})
+
+test_that("scaling residuals argument works with log", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "log-residuals",
+    fig = plotResidualsVsSimulated(myCombDat,scaling = "log")
   )
 })
