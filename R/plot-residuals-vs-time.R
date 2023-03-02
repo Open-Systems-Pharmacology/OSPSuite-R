@@ -47,8 +47,8 @@
 #'
 #' @export
 plotResidualsVsTime <- function(dataCombined,
-                                scaling = "lin",
-                                defaultPlotConfiguration = NULL) {
+                                defaultPlotConfiguration = NULL,
+                                scaling = "lin") {
   # validation -----------------------------
 
 
@@ -108,7 +108,7 @@ plotResidualsVsTime <- function(dataCombined,
   resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsTimePlotConfiguration)
 
   if (scaling == "log") {
-    resVsPredPlotConfiguration$labels$ylabel$text <- paste(resVsPredPlotConfiguration$labels$ylabel$text, '(log)')
+    resVsTimePlotConfiguration$labels$ylabel$text <- paste(resVsTimePlotConfiguration$labels$ylabel$text, '(log)')
   }
 
   # plot -----------------------------

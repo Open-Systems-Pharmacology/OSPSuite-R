@@ -48,8 +48,8 @@
 #'
 #' @export
 plotResidualsVsSimulated <- function(dataCombined,
-                                     scaling="lin",
-                                     defaultPlotConfiguration = NULL) {
+                                     defaultPlotConfiguration = NULL,
+                                     scaling="lin") {
   # validation -----------------------------
 
   rlang::arg_match(scaling, values=c("lin",'log'))
