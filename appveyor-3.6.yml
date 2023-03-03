@@ -41,7 +41,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript -e "download.file('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip?pr=false', destfile = 'ospsuite.utils.zip', mode='wb'); install.packages('ospsuite.utils.zip', repos = NULL, type = 'binary')"
-  - Rscript -e "download.file('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip?pr=false', destfile = 'rlf.zip', mode='wb'); install.packages('tlf.zip', repos = NULL, type = 'binary')"  
+  - Rscript -e "download.file('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip?pr=false', destfile = 'tlf.zip', mode='wb'); install.packages('tlf.zip', repos = NULL, type = 'binary')"  
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
 
 before_test:
