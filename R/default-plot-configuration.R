@@ -121,6 +121,7 @@
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
 #' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign Aesthetic properties for the legend caption.
+#' @field legendBackgroundColor,legendBackgroundAlpha,legendBorderColor,legendBorderType,legendBorderSize Aesthetic properties for the legend box
 #' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
 #' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
@@ -227,6 +228,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$left,
+
+    # legendBox ------------------------------------
+
+    legendBackgroundColor = "white",
+    legendBackgroundAlpha = .6,
+    legendBorderColor = "grey20",
+    legendBorderType = 1,
+    legendBorderSize = NULL,
 
     # legendKeys ------------------------------------
 
