@@ -232,8 +232,8 @@ DefaultPlotConfiguration <- R6::R6Class(
     # legendBox ------------------------------------
 
     legendBackgroundColor = "white",
-    legendBackgroundAlpha = .6,
-    legendBorderColor = "grey20",
+    legendBackgroundAlpha = 0,
+    legendBorderColor = NULL,
     legendBorderType = 1,
     legendBorderSize = NULL,
 
