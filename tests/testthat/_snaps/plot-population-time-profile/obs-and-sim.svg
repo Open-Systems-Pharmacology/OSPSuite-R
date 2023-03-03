@@ -236,8 +236,8 @@
 <text x='709.36' y='557.58' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='26.70px' lengthAdjust='spacingAndGlyphs'>1500</text>
 <text x='373.69' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='46.67px' lengthAdjust='spacingAndGlyphs'>Time [min]</text>
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='97.48px' lengthAdjust='spacingAndGlyphs'>Concentration [µmol/l]</text>
-<rect x='603.73' y='18.92' width='93.75' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='609.21' y='29.88' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='603.73' y='18.92' width='93.75' height='33.72' style='stroke-width: 0.75; stroke: none;' />
+<rect x='609.21' y='29.88' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <rect x='609.92' y='30.59' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #5050FF; fill-opacity: 0.50;' />
 <line x1='610.94' y1='38.52' x2='624.76' y2='38.52' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <circle cx='617.85' cy='38.52' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />

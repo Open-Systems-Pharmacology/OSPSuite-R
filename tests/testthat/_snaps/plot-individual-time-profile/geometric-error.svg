@@ -148,8 +148,8 @@
 <text x='653.12' y='557.58' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>20</text>
 <text x='373.69' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='36.12px' lengthAdjust='spacingAndGlyphs'>Time [h]</text>
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='89.50px' lengthAdjust='spacingAndGlyphs'>Concentration [mg/l]</text>
-<rect x='603.73' y='18.92' width='93.75' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='609.21' y='29.88' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='603.73' y='18.92' width='93.75' height='33.72' style='stroke-width: 0.75; stroke: none;' />
+<rect x='609.21' y='29.88' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <circle cx='617.85' cy='38.52' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <text x='631.97' y='41.96' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
 </g>

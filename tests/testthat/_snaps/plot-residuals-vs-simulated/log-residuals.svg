@@ -154,12 +154,12 @@
 <text x='564.49' y='557.58' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='23.36px' lengthAdjust='spacingAndGlyphs'>0.75</text>
 <text x='373.69' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='121.73px' lengthAdjust='spacingAndGlyphs'>Simulated values (Fraction)</text>
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='66.70px' lengthAdjust='spacingAndGlyphs'>Residuals (log)</text>
-<rect x='600.95' y='18.92' width='96.53' height='68.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='606.43' y='29.88' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='600.95' y='18.92' width='96.53' height='68.28' style='stroke-width: 0.75; stroke: none;' />
+<rect x='606.43' y='29.88' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <circle cx='615.07' cy='38.52' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<rect x='606.43' y='47.16' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='606.43' y='47.16' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <polygon points='611.52,59.36 618.63,59.36 618.63,52.24 611.52,52.24 ' style='stroke-width: 0.71; stroke: none; fill: #CE3D32; fill-opacity: 0.75;' />
-<rect x='606.43' y='64.44' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='606.43' y='64.44' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <polygon points='615.07,67.55 619.86,75.84 610.28,75.84 ' style='stroke-width: 0.71; stroke: none; fill: #749B58; fill-opacity: 0.75;' />
 <text x='629.19' y='41.96' style='font-size: 10.00px; font-family: sans;' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
 <text x='629.19' y='59.24' style='font-size: 10.00px; font-family: sans;' textLength='62.81px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>
