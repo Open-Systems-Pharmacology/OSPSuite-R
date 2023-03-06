@@ -9,6 +9,8 @@
 ## Minor Changes
 
 - Fixed Passing font size options from plotConfiguration objects to tlf objects #1198
+- Legend now have transparent background by default and can be customized through new 
+  `DefaultPlotConfiguration` fields #1216
 
 # ospsuite 11.1.197
 
