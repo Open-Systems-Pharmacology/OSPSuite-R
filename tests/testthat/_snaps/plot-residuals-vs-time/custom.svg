@@ -158,13 +158,13 @@
 <text x='558.73' y='544.93' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='20.02px' lengthAdjust='spacingAndGlyphs'>250</text>
 <text x='300.03' y='556.84' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='46.67px' lengthAdjust='spacingAndGlyphs'>Time [min]</text>
 <text transform='translate(13.40,283.32) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='43.92px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
-<rect x='578.16' y='240.77' width='136.36' height='85.10' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='578.16' y='240.77' width='136.36' height='85.10' style='stroke-width: 0.75; stroke: none;' />
 <text x='583.64' y='258.92' style='font-size: 16.00px; fill: #FF0000; font-family: sans;' textLength='125.40px' lengthAdjust='spacingAndGlyphs'>My legendary title</text>
-<rect x='583.64' y='268.55' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='583.64' y='268.55' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <circle cx='592.28' cy='277.19' r='3.02' style='stroke-width: 0.71; stroke: #0078D7; stroke-opacity: 0.75; fill: #0078D7; fill-opacity: 0.75;' />
-<rect x='583.64' y='285.83' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='583.64' y='285.83' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <polygon points='589.25,297.49 595.30,297.49 595.30,291.45 589.25,291.45 ' style='stroke-width: 0.71; stroke: none; fill: #D83B01; fill-opacity: 0.75;' />
-<rect x='583.64' y='303.11' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='583.64' y='303.11' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <polygon points='592.28,307.05 596.35,314.10 588.21,314.10 ' style='stroke-width: 0.71; stroke: none; fill: #107C10; fill-opacity: 0.75;' />
 <text x='608.89' y='280.63' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
 <text x='608.89' y='297.91' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='62.81px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>

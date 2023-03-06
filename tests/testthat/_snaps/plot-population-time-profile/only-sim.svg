@@ -121,11 +121,11 @@
 <text x='709.36' y='544.93' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='26.70px' lengthAdjust='spacingAndGlyphs'>1500</text>
 <text x='373.69' y='556.84' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='46.67px' lengthAdjust='spacingAndGlyphs'>Time [min]</text>
 <text transform='translate(13.40,283.32) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='97.48px' lengthAdjust='spacingAndGlyphs'>Concentration [µmol/l]</text>
-<rect x='316.86' y='48.50' width='380.62' height='51.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='322.34' y='59.46' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='316.86' y='48.50' width='380.62' height='51.00' style='stroke-width: 0.75; stroke: none;' />
+<rect x='322.34' y='59.46' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <rect x='323.05' y='60.17' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #5050FF; fill-opacity: 0.50;' />
 <line x1='324.07' y1='68.10' x2='337.89' y2='68.10' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
-<rect x='322.34' y='76.74' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='322.34' y='76.74' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <rect x='323.05' y='77.45' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #CE3D32; fill-opacity: 0.50;' />
 <line x1='324.07' y1='85.38' x2='337.89' y2='85.38' style='stroke-width: 2.13; stroke: #CE3D32; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <text x='345.10' y='71.54' style='font-size: 10.00px; font-family: sans;' textLength='236.63px' lengthAdjust='spacingAndGlyphs'>Organism|Muscle|Intracellular|Aciclovir|Concentration</text>

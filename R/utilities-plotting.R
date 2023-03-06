@@ -503,7 +503,15 @@
     caption = NULL,
     title = legendTitleLabel, # for legend title aesthetics
     font = legendKeysFont, # for legend keys aesthetics
-    background = NULL
+    background = tlf::BackgroundElement$new(
+      color = generalPlotConfiguration$legendBorderColor,
+      fill = ggplot2::alpha(
+        colour = generalPlotConfiguration$legendBackgroundColor,
+        alpha = generalPlotConfiguration$legendBackgroundAlpha
+      ),
+      linetype = generalPlotConfiguration$legendBorderType,
+      size = generalPlotConfiguration$legendBorderSize
+    )
   )
 
   # background objects -----------------------------------
