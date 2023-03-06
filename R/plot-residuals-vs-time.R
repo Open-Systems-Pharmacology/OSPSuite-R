@@ -2,6 +2,7 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotResVsTime
+#' @param scaling A character of length one specifying the scale type for residual. can be lin or log.
 #'
 #' @import tlf
 #'
@@ -42,12 +43,16 @@
 #' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotResidualsVsTime(myDataCombined, myPlotConfiguration)
+#' plotResidualsVsTime(myDataCombined, scaling = "lin", defaultPlotConfiguration = myPlotConfiguration)
 #'
 #' @export
 plotResidualsVsTime <- function(dataCombined,
-                                defaultPlotConfiguration = NULL) {
+                                defaultPlotConfiguration = NULL,
+                                scaling = "lin") {
   # validation -----------------------------
+
+
+  rlang::arg_match(scaling, values=c("lin",'log'))
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
@@ -77,7 +82,7 @@ plotResidualsVsTime <- function(dataCombined,
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
   pairedData <- calculateResiduals(dataCombined,
-    scaling = resVsTimePlotConfiguration$yAxis$scale,
+    scaling = scaling,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit
   )
@@ -101,6 +106,10 @@ plotResidualsVsTime <- function(dataCombined,
   # axes labels -----------------------------
 
   resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsTimePlotConfiguration)
+
+  if (scaling == "log") {
+    resVsTimePlotConfiguration$labels$ylabel$text <- paste(resVsTimePlotConfiguration$labels$ylabel$text, '(log)')
+  }
 
   # plot -----------------------------
 
