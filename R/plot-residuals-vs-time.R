@@ -52,7 +52,7 @@ plotResidualsVsTime <- function(dataCombined,
   # validation -----------------------------
 
 
-  rlang::arg_match(scaling, values=c("lin",'log'))
+  rlang::arg_match(scaling, values = c("lin", "log"))
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
@@ -108,7 +108,7 @@ plotResidualsVsTime <- function(dataCombined,
   resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsTimePlotConfiguration)
 
   if (scaling == "log") {
-    resVsTimePlotConfiguration$labels$ylabel$text <- paste(resVsTimePlotConfiguration$labels$ylabel$text, '(log)')
+    resVsTimePlotConfiguration$labels$ylabel$text <- paste(resVsTimePlotConfiguration$labels$ylabel$text, "(log)")
   }
 
   # plot -----------------------------
