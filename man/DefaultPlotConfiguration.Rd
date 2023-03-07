@@ -159,6 +159,8 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 
 \item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
 
+\item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
+
 \item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
 \item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
@@ -218,6 +220,8 @@ label, y-axis label, plot legend, watermark, respectively.}
 \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
 
 \item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
+
+\item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
 
 \item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 

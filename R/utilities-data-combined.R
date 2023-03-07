@@ -227,7 +227,7 @@ calculateResiduals <- function(dataCombined,
       targetUnit = pairedData$yUnit[[1]],
       molWeight = 1
     )
-    pairedData <- dplyr::mutate(pairedData, residualValues = .log_safe(yValuesSimulated, epsilon = epsilon) - .log_safe(yValuesObserved, epsilon = epsilon))
+    pairedData <- dplyr::mutate(pairedData, residualValues = ospsuite.utils::logSafe(yValuesSimulated, epsilon = epsilon, base = exp(1)) - ospsuite.utils::logSafe(yValuesObserved, epsilon = epsilon, base = exp(1)))
   }
 
   # some residual values might turn out to be NA (for example, when extrapolating)
@@ -238,29 +238,6 @@ calculateResiduals <- function(dataCombined,
   )
 
   return(pairedData)
-}
-
-# TODO:
-#
-# Depending on what is decided in issue
-# https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091, change
-# defaults for `base` for `.log_safe`.
-
-#' @keywords internal
-#' @noRd
-.log_safe <- function(x, base = 10, epsilon = ospsuiteEnv$LOG_SAFE_EPSILON) {
-  x <- sapply(X = x, function(element) {
-    element <- ospsuite.utils::toMissingOfType(element, type = "double")
-    if (is.na(element)) {
-      return(NA_real_)
-    } else if (element < epsilon) {
-      return(log(epsilon, base = base))
-    } else {
-      return(log(element, base = base))
-    }
-  })
-
-  return(x)
 }
 
 #' Remove unpairable datasets for computing residuals
