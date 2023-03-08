@@ -49,10 +49,10 @@
 #' @export
 plotResidualsVsSimulated <- function(dataCombined,
                                      defaultPlotConfiguration = NULL,
-                                     scaling="lin") {
+                                     scaling = "lin") {
   # validation -----------------------------
 
-  rlang::arg_match(scaling, values=c("lin",'log'))
+  rlang::arg_match(scaling, values = c("lin", "log"))
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
@@ -110,7 +110,7 @@ plotResidualsVsSimulated <- function(dataCombined,
   resVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsPredPlotConfiguration)
 
   if (scaling == "log") {
-    resVsPredPlotConfiguration$labels$ylabel$text <- paste(resVsPredPlotConfiguration$labels$ylabel$text, '(log)')
+    resVsPredPlotConfiguration$labels$ylabel$text <- paste(resVsPredPlotConfiguration$labels$ylabel$text, "(log)")
   }
 
   # plot -----------------------------

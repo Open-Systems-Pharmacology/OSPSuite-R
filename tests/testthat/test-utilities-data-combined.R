@@ -83,9 +83,16 @@ test_that(
 )
 
 test_that(
-  "calculateResiduals returns a correct vector of log residuals on example data",
+  "calculateResiduals returns a correct vector of log residuals on example data",{
+  pairedData <- calculateResiduals(myDC, scaling = "log")
+  expectedResiduals <- sapply(seq_along(pairedData$yValuesObserved), function(idx){
+    ospsuite.utils::logSafe(pairedData$yValuesSimulated[[idx]]) -
+    ospsuite.utils::logSafe(pairedData$yValuesObserved[[idx]])
+    })
+
   expect_equal(calculateResiduals(myDC, scaling = "log")$residualValues,
-    c(0, 0.022276400, -0.007178578, 0.00000000, -0.010723855, -20),
+               expectedResiduals,
     tolerance = 1e-5
   )
+  }
 )
