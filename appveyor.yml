@@ -35,7 +35,6 @@ build_script:
   - travis-tool.sh r_binary_install curl
   - Rscript install_dependencies.R
 
-
 test_script:
   - travis-tool.sh run_tests
 

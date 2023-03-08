@@ -492,8 +492,8 @@ ospUnits <- list()
   #
   # If there is no `yErrorValues` column in the entered data frame, it doesn't
   # make sense for this function to introduce a new column called `yErrorUnit`.
-  if (("yErrorValues" %in% colnames(data)) &&
-    !("yErrorUnit" %in% colnames(data))) {
+  if ((any(colnames(data) == "yErrorValues")) &&
+    !(any(colnames(data) == "yErrorUnit"))) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
@@ -551,7 +551,7 @@ ospUnits <- list()
   )
 
   # yUnit error
-  if ("yErrorValues" %in% colnames(data)) {
+  if (any(colnames(data) == "yErrorValues")) {
     yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
 
     data <- purrr::map_dfr(
@@ -562,7 +562,7 @@ ospUnits <- list()
     # For some reason, if the user dataset doesn't have error values, but
     # still have columns about error units, update them as well. The quantity
     # and its error should always have the same unit in the final data frame.
-    if ("yErrorUnit" %in% colnames(data)) {
+    if (any(colnames(data) == "yErrorUnit")) {
       data <- dplyr::mutate(data, yErrorUnit = yUnit)
     }
   }
@@ -625,7 +625,7 @@ ospUnits <- list()
     molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
   )
 
-  if ("lloq" %in% colnames(yData)) {
+  if (any(colnames(yData) == "lloq")) {
     yData$lloq <- toUnit(
       quantityOrDimension = yData$yDimension[[1]],
       values = yData$lloq,
@@ -646,7 +646,7 @@ ospUnits <- list()
 .yErrorUnitConverter <- function(yData, yTargetUnit) {
   # If error type is geometric, conversion of `yValues` to different units
   # should not trigger conversion of error values (and units)
-  if ("yErrorType" %in% colnames(yData) &&
+  if (any(colnames(yData) == "yErrorType") &&
     !is.na(unique(yData$yErrorType)) &&
     unique(yData$yErrorType) == DataErrorType$GeometricStdDev) {
     return(yData)

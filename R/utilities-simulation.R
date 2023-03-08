@@ -310,13 +310,13 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
   variableParameters <- c(parametersOrPaths)
 
   if (isOfType(variableParameters, "Parameter")) {
-    variableParameters <- unlist(lapply(variableParameters, function(x) x$path))
+    variableParameters <- unlist(lapply(variableParameters, function(x) x$path), use.names = FALSE)
   }
 
   variableMolecules <- c(moleculesOrPaths)
 
   if (isOfType(variableMolecules, "Molecule")) {
-    variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path))
+    variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path), use.names = FALSE)
   }
 
   simulationBatchOptions <- SimulationBatchOptions$new(
@@ -723,7 +723,7 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
     quantityTypeList[[type]](simulation)
   }) %>%
     unname() %>%
-    unlist() %>%
+    unlist(use.names = FALSE) %>%
     unique()
 
   # Initiate list to be returned as a null list.
