@@ -33,8 +33,7 @@ environment:
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages(c('testthat', 'vdiffr', 'spelling','covr'), repos = 'http://cran.us.r-project.org')"
-  - Rscript install_OSP_Packages.R
+  - Rscript install_dependencies.R
 
 
 test_script:
