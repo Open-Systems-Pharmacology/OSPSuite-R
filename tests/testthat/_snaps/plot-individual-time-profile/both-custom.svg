@@ -233,8 +233,8 @@
 <text x='605.44' y='544.93' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='26.70px' lengthAdjust='spacingAndGlyphs'>1500</text>
 <text x='321.34' y='556.84' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='46.67px' lengthAdjust='spacingAndGlyphs'>Time [min]</text>
 <text transform='translate(13.40,283.32) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='97.48px' lengthAdjust='spacingAndGlyphs'>Concentration [µmol/l]</text>
-<rect x='620.77' y='266.46' width='93.75' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='626.25' y='277.42' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='620.77' y='266.46' width='93.75' height='33.72' style='stroke-width: 0.75; stroke: none;' />
+<rect x='626.25' y='277.42' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <line x1='627.98' y1='286.06' x2='641.80' y2='286.06' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <circle cx='634.89' cy='286.06' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <text x='649.01' y='289.50' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>

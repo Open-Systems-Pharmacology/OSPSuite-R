@@ -1,7 +1,7 @@
 library(ospsuite)
 
 # path relative to the project directory where data should be saved
-path <- file.path(getwd(), "tests", "data")
+path <- testthat::test_path("../data")
 
 # simulated results ------------------------
 
@@ -9,7 +9,7 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 simResultsOne <- runSimulation(sim)
 
-addOutputs(outputPaths, sim)
+
 simResultsMany <- runSimulation(sim)
 
 outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
@@ -17,6 +17,7 @@ outputPaths <- c(
   "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
   "Organism|Muscle|Intracellular|Aciclovir|Concentration"
 )
+addOutputs(outputPaths, sim)
 
 # observed data ------------------------
 

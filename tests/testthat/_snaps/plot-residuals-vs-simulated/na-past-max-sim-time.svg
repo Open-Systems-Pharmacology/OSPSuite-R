@@ -116,8 +116,8 @@
 <text x='591.04' y='557.58' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='16.68px' lengthAdjust='spacingAndGlyphs'>1.6</text>
 <text x='373.69' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='175.10px' lengthAdjust='spacingAndGlyphs'>Simulated values (Concentration [mg/l])</text>
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='43.92px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
-<rect x='622.62' y='18.92' width='74.85' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='628.10' y='29.88' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='622.62' y='18.92' width='74.85' height='33.72' style='stroke-width: 0.75; stroke: none;' />
+<rect x='628.10' y='29.88' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <circle cx='636.74' cy='38.52' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <text x='650.86' y='41.96' style='font-size: 10.00px; font-family: sans;' textLength='41.14px' lengthAdjust='spacingAndGlyphs'>myGroup</text>
 </g>

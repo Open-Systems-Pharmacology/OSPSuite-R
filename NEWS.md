@@ -6,9 +6,18 @@
 
 ## Major Changes
 
+* Function `calculateResiduals()` uses natural logarithm (`log()`) when calculating 
+residuals with `scaling = "log"` as opposed to `log10()` as it was done before. This also 
+affects figures created by `plotObservedVsSimulated()`, `plotResidualsVsSimulated()`, and 
+`plotResidualsVsTime()`. See discusssions https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091
+and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
+
+
 ## Minor Changes
 
 - Fixed Passing font size options from plotConfiguration objects to tlf objects #1198
+- Legend now have transparent background by default and can be customized through new 
+  `DefaultPlotConfiguration` fields #1216
 
 # ospsuite 11.1.197
 
