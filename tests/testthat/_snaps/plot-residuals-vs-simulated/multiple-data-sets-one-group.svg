@@ -92,13 +92,13 @@
 </g>
 <g clip-path='url(#cpMzIuODZ8NzE0LjUyfDUuNDh8NTQzLjE0)'>
 <line x1='32.86' y1='274.31' x2='714.52' y2='274.31' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
-<circle cx='218.77' cy='269.42' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='528.61' cy='279.20' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='606.07' cy='274.31' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='683.54' cy='284.09' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<polygon points='60.29,419.61 67.40,419.61 67.40,412.50 60.29,412.50 ' style='stroke-width: 0.71; stroke: none; fill: #5050FF; fill-opacity: 0.75;' />
-<polygon points='525.06,233.88 532.17,233.88 532.17,226.76 525.06,226.76 ' style='stroke-width: 0.71; stroke: none; fill: #5050FF; fill-opacity: 0.75;' />
-<polygon points='679.98,33.47 687.09,33.47 687.09,26.36 679.98,26.36 ' style='stroke-width: 0.71; stroke: none; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='218.77' y='272.69' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='528.61' y='282.46' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='606.07' y='277.57' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='683.54' y='287.35' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='63.84' y='419.32' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>🞅</text>
+<text x='528.61' y='233.58' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>🞅</text>
+<text x='683.54' y='33.18' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>🞅</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='32.86,543.14 32.86,5.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
@@ -127,7 +127,7 @@
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='43.92px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
 <rect x='622.62' y='18.92' width='74.85' height='33.72' style='stroke-width: 0.75; stroke: none;' />
 <rect x='628.10' y='29.88' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
-<circle cx='636.74' cy='38.52' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='636.74' y='41.78' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
 <text x='650.86' y='41.96' style='font-size: 10.00px; font-family: sans;' textLength='41.14px' lengthAdjust='spacingAndGlyphs'>myGroup</text>
 </g>
 </svg>
