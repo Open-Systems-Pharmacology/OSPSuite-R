@@ -92,10 +92,10 @@
 </g>
 <g clip-path='url(#cpMzIuODZ8NzE0LjUyfDUuNDh8NTQzLjE0)'>
 <line x1='32.86' y1='274.31' x2='714.52' y2='274.31' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
-<circle cx='63.84' cy='329.68' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='476.97' cy='455.69' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='580.25' cy='481.47' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='683.54' cy='518.70' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='63.84' y='332.94' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='476.97' y='458.96' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='580.25' y='484.73' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
+<text x='683.54' y='521.96' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='7.11px' lengthAdjust='spacingAndGlyphs'>⬤</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='32.86,543.14 32.86,5.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
