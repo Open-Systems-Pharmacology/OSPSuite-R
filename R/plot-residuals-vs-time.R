@@ -100,7 +100,7 @@ plotResidualsVsTime <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = resVsTimePlotConfiguration$points$shape[1:nrow(.)]) %>%
+    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[resVsTimePlotConfiguration$points$shape[1:nrow(.)]])) %>%
     dplyr::filter(!duplicated(group))
 
   # axes labels -----------------------------
