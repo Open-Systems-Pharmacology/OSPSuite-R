@@ -102,7 +102,7 @@ plotResidualsVsSimulated <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = resVsPredPlotConfiguration$points$shape[1:nrow(.)]) %>%
+    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[resVsPredPlotConfiguration$points$shape[1:nrow(.)]])) %>%
     dplyr::filter(!duplicated(group))
 
   # axes labels -----------------------------
