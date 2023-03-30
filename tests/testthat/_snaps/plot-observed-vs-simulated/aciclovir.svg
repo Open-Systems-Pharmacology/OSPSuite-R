@@ -146,19 +146,19 @@
 <text x='567.80' y='132.82' text-anchor='middle' style='font-size: 15.17px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='3.94px' lengthAdjust='spacingAndGlyphs'>|</text>
 <text x='563.87' y='150.89' text-anchor='middle' style='font-size: 15.17px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='3.94px' lengthAdjust='spacingAndGlyphs'>|</text>
 <text x='559.34' y='201.35' text-anchor='middle' style='font-size: 15.17px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='3.94px' lengthAdjust='spacingAndGlyphs'>|</text>
-<circle cx='676.48' cy='29.92' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='660.02' cy='48.63' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='649.81' cy='56.23' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='642.38' cy='58.78' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='631.17' cy='62.29' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='623.96' cy='65.72' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='612.84' cy='72.25' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='604.65' cy='78.74' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='586.29' cy='91.60' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='567.80' cy='110.59' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='553.97' cy='128.93' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='547.41' cy='147.00' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='538.95' cy='197.46' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='676.48' y='32.86' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='660.02' y='51.57' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='649.81' y='59.17' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='642.38' y='61.71' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='631.17' y='65.23' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='623.96' y='68.66' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='612.84' y='75.19' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='604.65' y='81.67' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='586.29' y='94.54' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='567.80' y='113.53' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='553.97' y='131.86' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='547.41' y='149.94' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='538.95' y='200.40' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
 <line x1='50.43' y1='543.14' x2='50.43' y2='540.31' style='stroke-width: 1.07;' />
 <line x1='62.36' y1='543.14' x2='62.36' y2='540.31' style='stroke-width: 1.07;' />
 <line x1='70.82' y1='543.14' x2='70.82' y2='540.31' style='stroke-width: 1.07;' />
@@ -387,7 +387,7 @@
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='183.08px' lengthAdjust='spacingAndGlyphs'>Simulated values (Concentration [µmol/l])</text>
 <rect x='603.73' y='495.98' width='93.75' height='33.72' style='stroke-width: 0.75; stroke: none;' />
 <rect x='609.21' y='506.94' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
-<circle cx='617.85' cy='515.58' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='617.85' y='518.84' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='5.73px' lengthAdjust='spacingAndGlyphs'>●</text>
 <text x='631.97' y='519.02' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
 </g>
 </svg>

@@ -144,19 +144,19 @@
 <text x='321.34' y='331.14' text-anchor='middle' style='font-size: 15.17px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='8.44px' lengthAdjust='spacingAndGlyphs'>_</text>
 <text x='387.31' y='336.35' text-anchor='middle' style='font-size: 15.17px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='8.44px' lengthAdjust='spacingAndGlyphs'>_</text>
 <text x='583.59' y='342.37' text-anchor='middle' style='font-size: 15.17px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='8.44px' lengthAdjust='spacingAndGlyphs'>_</text>
-<circle cx='63.97' cy='189.43' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='69.67' cy='211.27' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='75.37' cy='224.84' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='80.26' cy='234.69' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='90.85' cy='249.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='102.25' cy='259.13' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='124.24' cy='273.89' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='146.23' cy='284.77' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='190.21' cy='309.13' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='256.18' cy='333.67' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='321.34' cy='352.02' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='387.31' cy='360.73' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='583.59' cy='371.96' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='63.97' y='192.37' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='69.67' y='214.21' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='75.37' y='227.77' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='80.26' y='237.63' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='90.85' y='252.50' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='102.25' y='262.07' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='124.24' y='276.82' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='146.23' y='287.70' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='190.21' y='312.07' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='256.18' y='336.61' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='321.34' y='354.95' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='387.31' y='363.66' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='583.59' y='374.89' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
 <line x1='32.86' y1='527.97' x2='35.69' y2='527.97' style='stroke-width: 1.07;' />
 <line x1='32.86' y1='521.95' x2='35.69' y2='521.95' style='stroke-width: 1.07;' />
 <line x1='32.86' y1='516.74' x2='35.69' y2='516.74' style='stroke-width: 1.07;' />
@@ -236,7 +236,7 @@
 <rect x='620.77' y='266.46' width='93.75' height='33.72' style='stroke-width: 0.75; stroke: none;' />
 <rect x='626.25' y='277.42' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
 <line x1='627.98' y1='286.06' x2='641.80' y2='286.06' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
-<circle cx='634.89' cy='286.06' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='634.89' y='289.32' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='5.73px' lengthAdjust='spacingAndGlyphs'>●</text>
 <text x='649.01' y='289.50' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
 <text x='32.86' y='29.63' style='font-size: 10.00px; font-family: sans;' textLength='69.48px' lengthAdjust='spacingAndGlyphs'>My Plot Subtitle</text>
 <text x='32.86' y='14.98' style='font-size: 12.00px; font-family: sans;' textLength='66.02px' lengthAdjust='spacingAndGlyphs'>My Plot Title</text>

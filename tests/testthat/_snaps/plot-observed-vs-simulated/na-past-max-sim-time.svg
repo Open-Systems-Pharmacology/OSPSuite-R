@@ -94,10 +94,10 @@
 <line x1='-648.80' y1='1080.80' x2='1396.18' y2='-532.18' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <line x1='-648.80' y1='964.05' x2='1396.18' y2='-648.94' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
 <line x1='-648.80' y1='1197.56' x2='1396.18' y2='-415.42' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
-<circle cx='371.25' cy='518.70' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='620.35' cy='333.64' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='649.75' cy='307.68' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<circle cx='683.54' cy='285.19' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='371.25' y='521.64' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='620.35' y='336.58' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='649.75' y='310.62' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
+<text x='683.54' y='288.12' text-anchor='middle' style='font-size: 8.54px; fill: #5050FF; font-family: sans;' textLength='5.16px' lengthAdjust='spacingAndGlyphs'>●</text>
 <line x1='38.49' y1='543.14' x2='38.49' y2='540.31' style='stroke-width: 1.07;' />
 <line x1='86.14' y1='543.14' x2='86.14' y2='537.47' style='stroke-width: 1.07;' />
 <line x1='125.08' y1='543.14' x2='125.08' y2='540.31' style='stroke-width: 1.07;' />
@@ -140,7 +140,7 @@
 <text transform='translate(13.40,274.31) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='175.10px' lengthAdjust='spacingAndGlyphs'>Simulated values (Concentration [mg/l])</text>
 <rect x='622.62' y='495.98' width='74.85' height='33.72' style='stroke-width: 0.75; stroke: none;' />
 <rect x='628.10' y='506.94' width='17.28' height='17.28' style='stroke-width: 0.75; stroke: none;' />
-<circle cx='636.74' cy='515.58' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='636.74' y='518.84' text-anchor='middle' style='font-size: 9.48px; fill: #5050FF; fill-opacity: 0.75; font-family: sans;' textLength='5.73px' lengthAdjust='spacingAndGlyphs'>●</text>
 <text x='650.86' y='519.02' style='font-size: 10.00px; font-family: sans;' textLength='41.14px' lengthAdjust='spacingAndGlyphs'>myGroup</text>
 </g>
 </svg>
