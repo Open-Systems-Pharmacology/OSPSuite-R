@@ -35,11 +35,10 @@
 #'
 #' @keywords internal
 .encodeUnit <- function(unit) {
-  mu <- ospsuiteEnv$muSymbol
   unit <- enc2utf8(unit)
-  unit <- stringr::str_replace(unit, rawToChar(as.raw(c(0xce, 0xbc))), mu)
-  unit <- stringr::str_replace(unit, rawToChar(as.raw(c(0xc2, 0xb5))), mu)
-  unit <- stringr::str_replace(unit, rawToChar(as.raw(0xb5)), mu)
+  if (stringr::str_detect(unit, "\xc2\xb5|\xce\xbc|\xb5")){
+    unit <- stringr::str_replace_all(unit, "\xc2\xb5|\xce\xbc|\xb5", ospsuiteEnv$muSymbol)
+  }
   return(unit)
 }
 
