@@ -105,3 +105,21 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
     messages$plottingWithEmptyDataCombined()
   )
 })
+
+# LLOQ
+
+test_that("LLOQ is plotted", {
+  dataSet <- DataSet$new("ds with lloq")
+  dataSet$setValues(1:7, c(10 * exp(-1:-7) + rnorm(7, 0, .25)), abs(rnorm(7, 0, 0.1)))
+  dataSet$LLOQ <- 0.15
+
+  dc <- DataCombined$new()
+  dc$addDataSets(dataSet)
+
+  vdiffr::expect_doppelganger(
+    title = "lloq",
+    fig = plotIndividualTimeProfile(dc)
+  )
+
+})
+
