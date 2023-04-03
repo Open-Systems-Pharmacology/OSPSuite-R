@@ -117,6 +117,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   ymax <- "yValuesHigher"
   color <- fill <- "group"
   linetype <- shape <- "name"
+  lloq <- "lloq"
 
   # population time profile mappings ------------------------------
 
@@ -131,7 +132,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 
     observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
       shape = shape,
-      color = color
+      color = color,
+      lloq = lloq
     )
   }
 
@@ -145,7 +147,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 
     observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
       shape = shape,
-      color = color
+      color = color,
+      lloq = lloq
     )
   }
 
