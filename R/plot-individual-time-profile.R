@@ -115,8 +115,8 @@ plotIndividualTimeProfile <- function(dataCombined,
   y <- "yValues"
   ymin <- "yValuesLower"
   ymax <- "yValuesHigher"
-  color <- fill <- shape <- "group"
-  linetype <-  "name"
+  color <- fill <- "group"
+  linetype <- shape <- "name"
 
   # population time profile mappings ------------------------------
 
@@ -160,7 +160,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   )
 
   # Suppress certain mappings in the legend
-  profilePlot <- profilePlot + ggplot2::guides(linetype = "none")
+  profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
 
   return(profilePlot)
 }
