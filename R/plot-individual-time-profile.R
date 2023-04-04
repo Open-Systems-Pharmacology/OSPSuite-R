@@ -117,7 +117,14 @@ plotIndividualTimeProfile <- function(dataCombined,
   ymax <- "yValuesHigher"
   color <- fill <- "group"
   linetype <- shape <- "name"
-  lloq <- "lloq"
+
+  # map lloq only if non NA values are available in obsData$lloq
+  if (!all(is.na(unique(c(obsData$lloq))))) {
+    lloq <- "lloq"
+  } else {
+    lloq <- NULL
+  }
+
 
   # population time profile mappings ------------------------------
 
