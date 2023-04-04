@@ -13,11 +13,6 @@
     stop("64 bit version of R is required.")
   }
 
-  sysfonts::font_add(
-    family = "Symbola",
-    regular = system.file("extdata", "Symbola.ttf", package = "tlf")
-  )
-
   .initPackage()
 }
 # nocov end
