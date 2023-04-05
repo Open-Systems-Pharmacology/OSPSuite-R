@@ -1,6 +1,7 @@
 # ospsuite 11.2 (development)
 
 ## New features
+- Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
 
 ## Breaking Changes
 
