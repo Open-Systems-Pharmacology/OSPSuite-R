@@ -356,6 +356,10 @@ DefaultPlotConfiguration <- R6::R6Class(
     errorbarsSize = 1,
     errorbarsCapSize = 5,
     errorbarsLinetype = tlf::Linetypes$solid,
-    errorbarsAlpha = 0.75
+    errorbarsAlpha = 0.75,
+
+    # LLOQ -----------------------------------------
+    displayLLOQ = TRUE
+
   )
 )

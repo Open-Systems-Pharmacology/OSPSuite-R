@@ -169,6 +169,16 @@ plotObservedVsSimulated <- function(dataCombined,
     dplyr::mutate(shapeAssn = unlist(tlf::Shapes[obsVsPredPlotConfiguration$points$shape[1:nrow(.)]])) %>%
     dplyr::filter(!duplicated(group))
 
+  # LLOQ is not mapped by default
+  lloq <- NULL
+  # Map LLOQ if defaultPlotConfiguration$displayLLOQ is set to TRUE and lloq
+  # column contains at least one non NA value.
+  if (defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(pairedData$lloq)))) {
+    lloq <- "lloq"
+  }
+
+
+
   plotObject <- tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(

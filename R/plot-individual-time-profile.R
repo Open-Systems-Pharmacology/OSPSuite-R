@@ -118,11 +118,12 @@ plotIndividualTimeProfile <- function(dataCombined,
   color <- fill <- "group"
   linetype <- shape <- "name"
 
-  # map lloq only if non NA values are available in obsData$lloq
-  if (!all(is.na(unique(c(obsData$lloq))))) {
+  # LLOQ is not mapped by default
+  lloq <- NULL
+  # Map LLOQ if defaultPlotConfiguration$displayLLOQ is set to TRUE and lloq
+  # column contains at least one non NA value.
+  if (defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(obsData$lloq)))) {
     lloq <- "lloq"
-  } else {
-    lloq <- NULL
   }
 
 
