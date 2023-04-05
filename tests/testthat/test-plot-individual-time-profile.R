@@ -122,12 +122,10 @@ test_that("LLOQ is plotted", {
   )
 
   noLLOQ <- DefaultPlotConfiguration$new()
-  noLLOQ$displayLLOQ = FALSE
+  noLLOQ$displayLLOQ <- FALSE
 
   vdiffr::expect_doppelganger(
     title = "no lloq",
     fig = plotIndividualTimeProfile(dc, defaultPlotConfiguration = noLLOQ)
   )
-
 })
-
