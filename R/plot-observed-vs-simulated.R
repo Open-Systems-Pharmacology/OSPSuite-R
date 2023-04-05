@@ -182,12 +182,13 @@ plotObservedVsSimulated <- function(dataCombined,
   plotObject <- tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
-      x     = "yValuesObserved",
-      y     = "yValuesSimulated",
+      x = "yValuesObserved",
+      y = "yValuesSimulated",
       group = "group",
-      xmin  = "yValuesObservedLower",
-      xmax  = "yValuesObservedHigher",
-      shape = "name"
+      xmin = "yValuesObservedLower",
+      xmax = "yValuesObservedHigher",
+      shape = "name",
+      lloq = lloq
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration
