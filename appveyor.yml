@@ -3,7 +3,7 @@ image: Visual Studio 2019
 
 # uncomment to use global ospsuite version (and comment line underneath)
 # version: '{build}' 
-version: '11.1.{build}'
+version: '11.2.{build}'
 
 # Download script file from GitHub
 init:
@@ -74,6 +74,7 @@ skip_tags: true
 branches:
   only:
     - develop
+    - hotfix/11.2
 
 pull_requests:
   do_not_increment_build_number: true
