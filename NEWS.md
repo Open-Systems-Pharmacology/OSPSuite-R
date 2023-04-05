@@ -19,6 +19,7 @@ and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
 - Fixed Passing font size options from plotConfiguration objects to tlf objects #1198
 - Legend now have transparent background by default and can be customized through new 
   `DefaultPlotConfiguration` fields #1216
+- `DefaultPlotConfiguration` has a new setting: `displayLLOQ` (default TRUE) to control plotting of LLOQ lines.
 
 # ospsuite 11.1.197
 
