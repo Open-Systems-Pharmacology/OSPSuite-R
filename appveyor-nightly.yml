@@ -47,9 +47,9 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript -e "install.packages('covr', repos = 'http://cran.us.r-project.org')"
-  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.4.23/ospsuite.utils_1.4.23.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr'), repos = 'http://cran.us.r-project.org')"
-  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.5.125/tlf_1.5.125.zip', repos = NULL, type = 'binary')"
 
 before_test:
   - cinst pandoc
