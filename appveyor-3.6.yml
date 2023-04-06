@@ -12,7 +12,7 @@ init:
       $ErrorActionPreference = "Stop"
       Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
       Import-Module '..\appveyor-tool.ps1'
-
+      
 install:
   - cmd: set PATH=C:\Ruby27-x64\bin;%PATH%
   - ps: Bootstrap
@@ -52,3 +52,5 @@ test_script:
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
+
+platform: x64

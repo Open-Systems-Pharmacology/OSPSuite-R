@@ -91,3 +91,4 @@ artifacts:
     name: CentOS7
 
   - path: '\ospsuite*.zip'
+    name: Win
