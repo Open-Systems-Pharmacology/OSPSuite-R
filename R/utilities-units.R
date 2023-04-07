@@ -180,7 +180,7 @@ toUnit <- function(quantityOrDimension,
     molWeight <- NULL
   }
 
-  dimensionTask <- .getNetTask2("DimensionTask")
+  dimensionTask <- .getNetTask("DimensionTask")
   # ensure that we are dealing with an list of values seen as number (and not integer)
   values <- as.numeric(c(values))
 
