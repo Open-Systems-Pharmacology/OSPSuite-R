@@ -116,6 +116,21 @@ test_that("It does not change the value of the quantity when converting to anoth
   expect_equal(par$value, 5)
 })
 
+test_that("µtants are converted to the right unicode",{
+  mu1 <- rawToChar(as.raw(c(0xce, 0xbc)))
+  mu2 <- rawToChar(as.raw(c(0xc2, 0xb5)))
+  mu3 <- rawToChar(as.raw(0xb5))
+  unit1 <- paste0(mu1,"g/",mu1,"L")
+  unit2 <- paste0(mu2,"g/",mu1,"L")
+  unit3 <- paste0(mu3,"g/",mu1,"L")
+
+  expected <- paste0(ospsuiteEnv$muSymbol, "g/",ospsuiteEnv$muSymbol, "L")
+
+  expect_identical(object = .encodeUnit(unit1), expected)
+  expect_identical(object = .encodeUnit(unit2), expected)
+  expect_identical(object = .encodeUnit(unit3), expected)
+})
+
 context("toDisplayUnit")
 
 test_that("It can convert from a value in base unit to display unit", {
