@@ -118,6 +118,15 @@ plotIndividualTimeProfile <- function(dataCombined,
   color <- fill <- "group"
   linetype <- shape <- "name"
 
+  # LLOQ is not mapped by default
+  lloq <- NULL
+  # Map LLOQ if defaultPlotConfiguration$displayLLOQ is set to TRUE and lloq
+  # column contains at least one non NA value.
+  if (defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(obsData$lloq)))) {
+    lloq <- "lloq"
+  }
+
+
   # population time profile mappings ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
@@ -131,7 +140,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 
     observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
       shape = shape,
-      color = color
+      color = color,
+      lloq = lloq
     )
   }
 
@@ -145,7 +155,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 
     observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
       shape = shape,
-      color = color
+      color = color,
+      lloq = lloq
     )
   }
 
