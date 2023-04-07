@@ -1,6 +1,7 @@
 # ospsuite 11.2 (development)
 
 ## New features
+- Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
 
 ## Breaking Changes
 
@@ -20,6 +21,7 @@ and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
   `DefaultPlotConfiguration` fields #1216
 - `plotObsVsPred()` now have foldDistance argument set to `NULL` by default (previously 2). The function will not
   add any fold lines on the plot by default.
+- `DefaultPlotConfiguration` has a new setting: `displayLLOQ` (default TRUE) to control plotting of LLOQ lines.
 
 # ospsuite 11.1.197
 

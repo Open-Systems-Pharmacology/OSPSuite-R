@@ -92,6 +92,3 @@ artifacts:
 
   - path: '\ospsuite*.zip'
     name: Win
-
-
-
