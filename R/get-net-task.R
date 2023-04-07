@@ -28,3 +28,11 @@
 
   ospsuiteEnv$containerTask
 }
+
+.getNetTask2 <- function(taskName) {
+  if (is.null(ospsuiteEnv[[taskName]])) {
+    ospsuiteEnv[[taskName]] <- .getNetTask(taskName)
+  } else {
+    return(ospsuiteEnv[[taskName]])
+  }
+}
