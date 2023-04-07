@@ -58,15 +58,36 @@ test_that("It creates default plots as expected", {
   )
 })
 
+test_that("It creates default plots as expected with 1 fold distance", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults 1 fold dist",
+    fig = plotObservedVsSimulated(myCombDat, foldDistance = 2)
+  )
+})
+
+test_that("It creates default plots as expected with several fold distances", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults 3 fold dist",
+    fig = plotObservedVsSimulated(myCombDat, foldDistance = c(2,4,6))
+  )
+})
+
 test_that("It issues warning when scale is linear", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$xAxisScale <- tlf::Scaling$lin
   myPlotConfiguration$yAxisScale <- tlf::Scaling$lin
 
   set.seed(123)
+
+  testthat::expect_warning({
+    plot <- plotObservedVsSimulated(myCombDat, myPlotConfiguration, foldDistance = c(2,4,6))
+  })
+
   vdiffr::expect_doppelganger(
     title = "linear scale",
-    fig = plotObservedVsSimulated(myCombDat, myPlotConfiguration)
+    fig = plot
   )
 })
 
@@ -131,7 +152,7 @@ test_that("It produces expected plot for Aciclovir data", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "Aciclovir",
-    fig = plotObservedVsSimulated(myDataCombined)
+    fig = plotObservedVsSimulated(myDataCombined, foldDistance = 2)
   )
 })
 
@@ -172,7 +193,7 @@ test_that("It doesn't extrapolate past maximum simulated time point", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "NA past max sim time",
-    fig = plotObservedVsSimulated(myDC)
+    fig = plotObservedVsSimulated(myDC, foldDistance = 2)
   )
 })
 
@@ -225,6 +246,6 @@ test_that("Different symbols for data sets within one group", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple data sets one group",
-    fig = plotObservedVsSimulated(myDC)
+    fig = plotObservedVsSimulated(myDC, foldDistance = 2)
   )
 })
