@@ -359,7 +359,10 @@ DefaultPlotConfiguration <- R6::R6Class(
     errorbarsAlpha = 0.75,
 
     # LLOQ -----------------------------------------
-    displayLLOQ = TRUE
+    displayLLOQ = TRUE,
 
+    # Fold Distance Lines --------------------------
+    foldLinesLegend = NULL,
+    foldLinesLegendDiagonal = NULL
   )
 )

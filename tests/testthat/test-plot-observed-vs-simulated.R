@@ -106,6 +106,8 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
   myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
   myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
+  myPlotConfiguration$foldLinesLegend <- TRUE
+  myPlotConfiguration$foldLinesLegendDiagonal <- TRUE
 
   set.seed(123)
   vdiffr::expect_doppelganger(

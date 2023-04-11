@@ -653,6 +653,15 @@
     alpha = generalPlotConfiguration$errorbarsAlpha
   )
 
+  # foldDistance
+
+  if (!is.null(specificPlotConfiguration[["foldLinesLegend"]])) {
+    specificPlotConfiguration[["foldLinesLegend"]] <- generalPlotConfiguration$foldLinesLegend
+  }
+  if (!is.null(specificPlotConfiguration[["foldLinesLegendDiagonal"]])) {
+    specificPlotConfiguration[["foldLinesLegendDiagonal"]] <- generalPlotConfiguration$foldLinesLegendDiagonal
+  }
+
   # Update specific plot configuration object ----------------------
 
   # Do one-to-one mappings of public fields
