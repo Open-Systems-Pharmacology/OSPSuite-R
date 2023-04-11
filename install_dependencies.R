@@ -1,5 +1,5 @@
 install.packages(c('testthat', 'vdiffr', 'spelling','covr','remotes'), repos = 'http://cran.us.r-project.org')
-remotes::install_local('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', dependencies = c('Depends', 'Imports'), upgrade = 'never')
+install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')
 download.file('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip?pr=false', destfile = 'ospsuite.utils.zip', mode='wb')
 remotes::install_local('ospsuite.utils.zip', dependencies = c('Depends', 'Imports'), upgrade = 'never')
 unlink('ospsuite.utils.zip')
