@@ -215,7 +215,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
-  simulationRunner <- .createNetTask("SimulationRunner")
+  simulationRunner <- .getNewNetTask("SimulationRunner")
   simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
   rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
   rClr::clrSet(simulationRunArgs, "SimulationRunOptions", simulationRunOptions$ref)
@@ -234,7 +234,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 }
 
 .runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE) {
-  simulationRunner <- .createNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getNewNetTask("ConcurrentSimulationRunner")
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
@@ -371,7 +371,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' }
 runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE) {
   validateIsOfType(simulationBatches, "SimulationBatch")
-  simulationRunner <- .createNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getNewNetTask("ConcurrentSimulationRunner")
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
   rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)

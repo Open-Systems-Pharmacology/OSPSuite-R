@@ -15,24 +15,27 @@
 #' ospsuite:::.getContainerTask()
 #'
 #' @keywords internal
-.createNetTask <- function(taskName) {
+.getNewNetTask <- function(taskName) {
   rClr::clrCallStatic("OSPSuite.R.Api", paste0("Get", taskName))
 }
 
-#' @rdname .getNetTask
+
+#' @title .getContainerTask
+#' @description
+#'
 #' @keywords internal
 .getContainerTask <- function() {
-  if (is.null(ospsuiteEnv$containerTask)) {
-    ospsuiteEnv$containerTask <- .createNetTask("ContainerTask")
-  }
-
-  ospsuiteEnv$containerTask
+  .getNetTask("ContainerTask")
 }
 
+#' @title .getNetTask
+#'
+#' @param taskName
+#'
+#' @keywords internal
 .getNetTask <- function(taskName) {
   if (is.null(ospsuiteEnv[[taskName]])) {
-    ospsuiteEnv[[taskName]] <- .createNetTask(taskName)
-  } else {
-    return(ospsuiteEnv[[taskName]])
+    ospsuiteEnv[[taskName]] <- .getNewNetTask(taskName)
   }
+  return(ospsuiteEnv[[taskName]])
 }
