@@ -141,7 +141,8 @@
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha,errorbarsCapSize A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.
-#'
+#' @field displayLLOQ,lloqDirection Lower Limit Of Quantification properties.
+#' @field foldLinesLegend,foldLinesLegendDiagonal fold Distance lines properties for legend.
 #' @examples
 #'
 #' # Create a new instance of this class

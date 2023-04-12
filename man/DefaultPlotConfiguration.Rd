@@ -195,6 +195,10 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
+
+\item{\code{displayLLOQ, lloqDirection}}{Lower Limit Of Quantification properties.}
+
+\item{\code{foldLinesLegend, foldLinesLegendDiagonal}}{fold Distance lines properties for legend.}
 }
 \if{html}{\out{</div>}}
 }
@@ -257,6 +261,10 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
+
+\item{\code{displayLLOQ, lloqDirection}}{Lower Limit Of Quantification properties.}
+
+\item{\code{foldLinesLegend, foldLinesLegendDiagonal}}{fold Distance lines properties for legend.}
 }
 \if{html}{\out{</div>}}
 }
