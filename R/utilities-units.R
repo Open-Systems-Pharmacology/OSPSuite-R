@@ -295,19 +295,6 @@ getUnitsForDimension <- function(dimension) {
   rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
 }
 
-#' Return an instance of the `.NET` Task `DimensionTask`
-#' This is purely for optimization purposes
-#'
-#' @return An instance of the Task
-.getDimensionTask <- function() {
-  dimensionTask <- ospsuiteEnv$dimensionTask
-  if (is.null(dimensionTask)) {
-    dimensionTask <- .getNetTask("DimensionTask")
-    ospsuiteEnv$dimensionTask <- dimensionTask
-  }
-  return(dimensionTask)
-}
-
 #' @title Get dimension by name
 #'
 #' @return
