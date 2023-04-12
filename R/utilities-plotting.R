@@ -653,14 +653,13 @@
     alpha = generalPlotConfiguration$errorbarsAlpha
   )
 
-  # foldDistance
+  # LLOQ
+  .updateSpecificSetting("displayLLOQ", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting("lloqDirection", specificPlotConfiguration, generalPlotConfiguration)
 
-  if (!is.null(specificPlotConfiguration[["foldLinesLegend"]])) {
-    specificPlotConfiguration[["foldLinesLegend"]] <- generalPlotConfiguration$foldLinesLegend
-  }
-  if (!is.null(specificPlotConfiguration[["foldLinesLegendDiagonal"]])) {
-    specificPlotConfiguration[["foldLinesLegendDiagonal"]] <- generalPlotConfiguration$foldLinesLegendDiagonal
-  }
+  # foldDistance
+  .updateSpecificSetting("foldLinesLegend", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting("foldLinesLegendDiagonal", specificPlotConfiguration, generalPlotConfiguration)
 
   # Update specific plot configuration object ----------------------
 
@@ -676,4 +675,13 @@
   specificPlotConfiguration$errorbars <- errorbarsConfiguration
 
   return(specificPlotConfiguration)
+}
+
+.updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
+  if (!is.null(specificPlotConfiguration[[specificSetting]]) &
+    !is.null(generalPlotConfiguration[[specificSetting]])) {
+    if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
+      specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
+    }
+  }
 }
