@@ -364,7 +364,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     lloqDirection = NULL,
 
     # Fold Distance Lines --------------------------
-    foldLinesLegend = NULL,
-    foldLinesLegendDiagonal = NULL
+    foldLinesLegend = FALSE,
+    foldLinesLegendDiagonal = FALSE
   )
 )
