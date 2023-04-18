@@ -136,6 +136,7 @@
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
                                             quantiles = c(0.05, 0.5, 0.95)) {
+  quantileNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- simData %>%
     # For each dataset, compute quantiles across all individuals for each time point
     #
@@ -146,12 +147,12 @@
     # is because it is mapped to linetype property in population profile type.
     dplyr::group_by(group, name, xValues) %>%
     dplyr::summarise(
-      yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
-      yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
-      yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
-      .groups        = "drop" # drop grouping information from the summary data frame
-    ) %>% # Naming schema expected by plotting functions
-    dplyr::rename(yValues = yValuesCentral)
+      quantiles = list(stats::quantile(yValues, quantiles)), # Compute quantiles once but get all values
+      names = list(quantileNames),
+      .groups = "drop"
+    ) %>% # drop grouping information from the summary data frame
+    unnest(quantiles, names) %>% # expand lists
+    pivot_wider(names_from = names, values_from = quantiles) # create a column for each quantile
 
   return(simAggregatedData)
 }
