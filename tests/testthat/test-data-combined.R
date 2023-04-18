@@ -1308,27 +1308,3 @@ test_that("It cann add a data set without error type after adding a data set wit
 
   expect_error(dataCombined$addDataSets(ds), regexp = NA)
 })
-
-
-test_that("dataCombined is slow", {
-
-  profvis::profvis({
-
-  bigSimResults <- importResultsFromCSV(
-    simulation = loadTestSimulation("BigSim"),
-    filePaths = getTestDataFilePath("bigSimResults.csv")
-  )
-
-  dataCombined <- DataCombined$new()
-
-  path <- "Organism|PeripheralVenousBlood|Tivozanib|Plasma (Peripheral Venous Blood)"
-
-
-  dataCombined$addSimulationResults(bigSimResults,
-                                    quantitiesOrPaths = path,
-                                    name = "Tivozanib Plasma")
-
-  plotPopulationTimeProfile(dataCombined)
-  })
-
-})
