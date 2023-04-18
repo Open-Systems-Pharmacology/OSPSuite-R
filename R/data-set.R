@@ -251,7 +251,7 @@ DataSet <- R6::R6Class(
       # yError column must be removed in case yError is NULL and there is a
       # yErrorColumn already
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
-        dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+        dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
         rClr::clrCall(
           dataRepositoryTask,
           "RemoveColumn",
@@ -368,12 +368,12 @@ DataSet <- R6::R6Class(
       invisible(self)
     },
     .createDataRepository = function() {
-      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       dataRepository <- rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues")
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
-      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
 
       netYColumn <- rClr::clrCall(dataRepositoryTask, "GetMeasurementColumn", private$.dataRepository$ref)
@@ -389,7 +389,7 @@ DataSet <- R6::R6Class(
         return()
       }
 
-      dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       netYErrorColumn <- rClr::clrCall(
         dataRepositoryTask,
         "AddErrorColumn",
