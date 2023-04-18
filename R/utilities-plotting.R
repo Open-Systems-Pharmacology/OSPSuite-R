@@ -151,7 +151,7 @@
       names = list(quantileNames),
       .groups = "drop"
     ) %>% # drop grouping information from the summary data frame
-    unnest(quantiles, names) %>% # expand lists
+    unnest(c(quantiles, names)) %>% # expand lists
     pivot_wider(names_from = names, values_from = quantiles) # create a column for each quantile
 
   return(simAggregatedData)
