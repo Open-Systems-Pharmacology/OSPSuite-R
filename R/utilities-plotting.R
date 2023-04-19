@@ -101,6 +101,8 @@
 #'
 #' @family utilities-plotting
 #'
+#' @import data.table
+#'
 #' @examples
 #'
 #' # let's create a data frame to test this function
@@ -137,22 +139,23 @@
 .extractAggregatedSimulatedData <- function(simData,
                                             quantiles = c(0.05, 0.5, 0.95)) {
   quantileNames <- c("yValuesLower", "yValues", "yValuesHigher")
-  simAggregatedData <- simData %>%
-    # For each dataset, compute quantiles across all individuals for each time point
-    #
-    # Each group should always a single dataset, so grouping by `group` *and* `name`
-    # should produce the same result as grouping by only `group` column.
-    #
-    # The reason `name` column also needs to be retained in the resulting data
-    # is because it is mapped to linetype property in population profile type.
-    dplyr::group_by(group, name, xValues) %>%
-    dplyr::summarise(
-      quantiles = list(stats::quantile(yValues, quantiles)), # Compute quantiles once but get all values
-      names = list(quantileNames),
-      .groups = "drop"
-    ) %>% # drop grouping information from the summary data frame
-    unnest(c(quantiles, names)) %>% # expand lists
-    pivot_wider(names_from = names, values_from = quantiles) # create a column for each quantile
+  simAggregatedData <- data.table::as.data.table(simData)
+  # For each dataset, compute quantiles across all individuals for each time point
+  #
+  # Each group should always a single dataset, so grouping by `group` *and* `name`
+  # should produce the same result as grouping by only `group` column.
+  #
+  # The reason `name` column also needs to be retained in the resulting data
+  # is because it is mapped to linetype property in population profile type.
+
+  simAggregatedData <-
+    simAggregatedData[,
+      setNames(
+        as.list(stats::quantile(yValues, quantiles)),
+        quantileNames
+      ),
+      by = .(group, name, xValues)
+    ]
 
   return(simAggregatedData)
 }
