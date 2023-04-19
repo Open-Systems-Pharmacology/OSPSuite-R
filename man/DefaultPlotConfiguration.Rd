@@ -196,9 +196,13 @@ Available options can be seen using \code{tlf::Scaling} list.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
 
-\item{\code{displayLLOQ, lloqDirection}}{Lower Limit Of Quantification properties.}
+\item{\code{displayLLOQ}}{A Boolean controlling display Lower Limit of Quantification lines. Default to True.}
 
-\item{\code{foldLinesLegend, foldLinesLegendDiagonal}}{fold Distance lines properties for legend.}
+\item{\code{lloqDirection}}{A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.}
+
+\item{\code{foldLinesLegend}}{A Boolean controlling the drawing of the fold lines in the legend. Default to False.}
+
+\item{\code{foldLinesLegendDiagonal}}{A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.}
 }
 \if{html}{\out{</div>}}
 }
@@ -261,10 +265,6 @@ Available options can be seen using \code{tlf::Scaling} list.}
 \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
 \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
-
-\item{\code{displayLLOQ, lloqDirection}}{Lower Limit Of Quantification properties.}
-
-\item{\code{foldLinesLegend, foldLinesLegendDiagonal}}{fold Distance lines properties for legend.}
 }
 \if{html}{\out{</div>}}
 }
