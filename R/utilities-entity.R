@@ -120,7 +120,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
   }
 
-  task <- .getContainerTask()
+  task <- .getNetTaskFromCache("ContainerTask")
   method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
@@ -154,7 +154,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
   }
 
-  task <- .getContainerTask()
+  task <- .getNetTaskFromCache("ContainerTask")
   method <- method %||% AllPathsInMethod[[className]]
 
   rClr::clrCall(task, method, container$ref)

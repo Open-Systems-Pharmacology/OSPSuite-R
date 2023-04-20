@@ -249,7 +249,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `DataImporterConfiguration` object.
     initialize = function(ref = NULL) {
-      importerTask <- .getNetTask("DataImporterTask")
+      importerTask <- .getNetTaskFromCache("DataImporterTask")
       if (is.null(ref)) {
         ref <- rClr::clrCall(importerTask, "CreateConfiguration")
       }
