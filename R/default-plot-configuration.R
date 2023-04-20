@@ -141,7 +141,10 @@
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha,errorbarsCapSize A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.
-#'
+#' @field displayLLOQ A Boolean controlling display Lower Limit of Quantification lines. Default to True.
+#' @field lloqDirection A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.
+#' @field foldLinesLegend A Boolean controlling the drawing of the fold lines in the legend. Default to False.
+#' @field foldLinesLegendDiagonal A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.
 #' @examples
 #'
 #' # Create a new instance of this class
@@ -359,7 +362,11 @@ DefaultPlotConfiguration <- R6::R6Class(
     errorbarsAlpha = 0.75,
 
     # LLOQ -----------------------------------------
-    displayLLOQ = TRUE
+    displayLLOQ = TRUE,
+    lloqDirection = NULL,
 
+    # Fold Distance Lines --------------------------
+    foldLinesLegend = FALSE,
+    foldLinesLegendDiagonal = FALSE
   )
 )

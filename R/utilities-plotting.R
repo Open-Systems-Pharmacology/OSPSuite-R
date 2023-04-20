@@ -653,6 +653,14 @@
     alpha = generalPlotConfiguration$errorbarsAlpha
   )
 
+  # LLOQ
+  .updateSpecificSetting("displayLLOQ", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting("lloqDirection", specificPlotConfiguration, generalPlotConfiguration)
+
+  # foldDistance
+  .updateSpecificSetting("foldLinesLegend", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting("foldLinesLegendDiagonal", specificPlotConfiguration, generalPlotConfiguration)
+
   # Update specific plot configuration object ----------------------
 
   # Do one-to-one mappings of public fields
@@ -667,4 +675,13 @@
   specificPlotConfiguration$errorbars <- errorbarsConfiguration
 
   return(specificPlotConfiguration)
+}
+
+.updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
+  if (!is.null(specificPlotConfiguration[[specificSetting]]) &
+    !is.null(generalPlotConfiguration[[specificSetting]])) {
+    if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
+      specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
+    }
+  }
 }
