@@ -29,7 +29,8 @@ Imports:
     tidyr,
     ggplot2,
     rlang,
-    tlf (>= 1.4.0)
+    tlf (>= 1.4.0),
+    data.table
 Suggests:
     knitr,
     rmarkdown,
