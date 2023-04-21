@@ -62,6 +62,7 @@ From CRAN:
 - [patchwork](https://cran.r-project.org/web/packages/patchwork/index.html)
 - [cowplot](https://cran.r-project.org/web/packages/cowplot/index.html)
 - [scales](https://cran.r-project.org/web/packages/scales/index.html)
+- [data.table](https://cran.r-project.org/web/packages/data.table/index.html)
 
 
 Must be downloaded manually:
