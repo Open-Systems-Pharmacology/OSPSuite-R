@@ -113,19 +113,23 @@ test_that("LLOQ is plotted", {
   dataSet$setValues(1:7, c(10 * exp(-1:-7) + rnorm(7, 0, .25)), abs(rnorm(7, 0, 0.1)))
   dataSet$LLOQ <- 0.15
 
+
   dc <- DataCombined$new()
   dc$addDataSets(dataSet)
 
+  LLOQ_DPC <- DefaultPlotConfiguration$new()
+  LLOQ_DPC$lloqDirection <- "both"
+
   vdiffr::expect_doppelganger(
     title = "lloq",
-    fig = plotIndividualTimeProfile(dc)
+    fig = plotIndividualTimeProfile(dc,defaultPlotConfiguration = LLOQ_DPC)
   )
 
-  noLLOQ <- DefaultPlotConfiguration$new()
-  noLLOQ$displayLLOQ <- FALSE
+  noLLOQ_DPC <- DefaultPlotConfiguration$new()
+  noLLOQ_DPC$displayLLOQ <- FALSE
 
   vdiffr::expect_doppelganger(
     title = "no lloq",
-    fig = plotIndividualTimeProfile(dc, defaultPlotConfiguration = noLLOQ)
+    fig = plotIndividualTimeProfile(dc, defaultPlotConfiguration = noLLOQ_DPC)
   )
 })

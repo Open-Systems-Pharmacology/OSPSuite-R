@@ -15,9 +15,6 @@ ospsuiteEnv$packageName <- "ospsuite"
 # Major version of the suite. Corresponds to the version of installed `ospsuite-r`
 ospsuiteEnv$suiteVersion <- .getSuiteVersion()
 
-# Reference to container task for optimization purposes only
-ospsuiteEnv$containerTask <- NULL
-
 # Separator defined in OSPSuite.Core.
 ospsuiteEnv$pathSeparator <- "|"
 
@@ -50,9 +47,6 @@ ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 
 # Indicates whether PK-Sim was loaded already. This will prevent unnecessary initialization of the PK-Sim assemblies
 ospsuiteEnv$isPKSimLoaded <- FALSE
-
-# NetTask `DimensionTask` cached for performance benefits. Created the first time it is requested.
-ospsuiteEnv$dimensionTask <- NULL
 
 # Small value added to zero when calculating log
 ospsuiteEnv$LOG_SAFE_EPSILON <- 1e-20

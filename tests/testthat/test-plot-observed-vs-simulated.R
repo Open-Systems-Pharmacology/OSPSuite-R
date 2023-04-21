@@ -70,7 +70,7 @@ test_that("It creates default plots as expected with several fold distances", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults 3 fold dist",
-    fig = plotObservedVsSimulated(myCombDat, foldDistance = c(2,4,6))
+    fig = plotObservedVsSimulated(myCombDat, foldDistance = c(2, 4, 6))
   )
 })
 
@@ -82,7 +82,7 @@ test_that("It issues warning when scale is linear", {
   set.seed(123)
 
   testthat::expect_warning({
-    plot <- plotObservedVsSimulated(myCombDat, myPlotConfiguration, foldDistance = c(2,4,6))
+    plot <- plotObservedVsSimulated(myCombDat, myPlotConfiguration, foldDistance = c(2, 4, 6))
   })
 
   vdiffr::expect_doppelganger(
@@ -106,6 +106,8 @@ test_that("It respects custom plot configuration", {
   myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
   myPlotConfiguration$pointsColor <- tlf::ColorMaps$default
   myPlotConfiguration$linesLinetype <- names(tlf::Linetypes)
+  myPlotConfiguration$foldLinesLegend <- TRUE
+  myPlotConfiguration$foldLinesLegendDiagonal <- TRUE
 
   set.seed(123)
   vdiffr::expect_doppelganger(
@@ -247,5 +249,46 @@ test_that("Different symbols for data sets within one group", {
   vdiffr::expect_doppelganger(
     title = "multiple data sets one group",
     fig = plotObservedVsSimulated(myDC, foldDistance = 2)
+  )
+})
+
+test_that("LLOQ is plotted", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  simData <- withr::with_tempdir({
+    df <- dplyr::tibble(
+      IndividualId = c(0, 0, 0),
+      `Time [min]` = c(0, 2, 4),
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+    )
+    readr::write_csv(df, "SimResults.csv")
+    importResultsFromCSV(sim, "SimResults.csv")
+  })
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+  obsData$LLOQ <- 3
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "lloq vertical",
+    fig = plotObservedVsSimulated(myDC, foldDistance = 2)
+  )
+
+  DPC <- DefaultPlotConfiguration$new()
+  DPC$lloqDirection <- "both"
+  vdiffr::expect_doppelganger(
+    title = "lloq both direction",
+    fig = plotObservedVsSimulated(myDC,
+      foldDistance = 2,
+      defaultPlotConfiguration = DPC
+    )
   )
 })

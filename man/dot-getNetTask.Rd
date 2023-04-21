@@ -2,7 +2,7 @@
 % Please edit documentation in R/get-net-task.R
 \name{.getNetTask}
 \alias{.getNetTask}
-\title{Get an instance of the specified \code{.NET} Task}
+\title{.getNetTask}
 \usage{
 .getNetTask(taskName)
 }
@@ -10,20 +10,11 @@
 \item{taskName}{The name of the task to retrieve (\strong{without} \code{Get} prefix).}
 }
 \value{
-\itemize{
-\item \code{.getNetTask()} returns an instance of of the specified \code{.NET} task.
-\item \code{.getContainerTask()} returns a reference to the container task for
-optimization purposes only.
-}
+returns an instance of of the specified \code{.NET} task.
 }
 \description{
-Get an instance of the specified \code{.NET} Task
-}
-\examples{
-
-ospsuite:::.getNetTask("SimulationRunner")
-
-ospsuite:::.getContainerTask()
-
+Get an instance of the specified \code{.NET} Task that is retrieved
+from cache if already initiated. Otherwise a new task will be initiated and
+cached in the \code{tasksEnv}.
 }
 \keyword{internal}
