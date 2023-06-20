@@ -71,7 +71,7 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName){
   warning(paste0("\r\n",
                  "The following name(s) already exist in DataCombined:",
                  "\r\n",
-                 "- ", paste(DataFrameName, collapse = "\r\n  - "),
+                 "  - ", paste(DataFrameName, collapse = "\r\n  - "),
                  "\r\n",
                  "Existing data will be overwriten."))
 }
