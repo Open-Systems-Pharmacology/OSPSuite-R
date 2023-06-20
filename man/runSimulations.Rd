@@ -9,7 +9,8 @@ runSimulations(
   population = NULL,
   agingData = NULL,
   simulationRunOptions = NULL,
-  silentMode = FALSE
+  silentMode = FALSE,
+  stopIfFails = FALSE
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ This is only used with a population simulation}
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}
 
 \item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}}
+
+\item{stopIfFails}{Wether to stop the execution if one of the simulation did not succeed. default to FALSE.}
 }
 \value{
 A named list of \code{SimulationResults} objects with names being the IDs

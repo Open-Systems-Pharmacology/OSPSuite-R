@@ -7,7 +7,8 @@
 runSimulationBatches(
   simulationBatches,
   simulationRunOptions = NULL,
-  silentMode = FALSE
+  silentMode = FALSE,
+  stopIfFails = FALSE
 )
 }
 \arguments{
@@ -15,8 +16,9 @@ runSimulationBatches(
 
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run.}
 
-\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails.
-Default is \code{FALSE}.}
+\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}}
+
+\item{stopIfFails}{Wether to stop the execution if one of the simulation did not succeed. default to FALSE.}
 }
 \value{
 Nested list of \code{SimulationResults} objects. The first level of the
