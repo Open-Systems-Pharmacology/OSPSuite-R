@@ -201,11 +201,20 @@ test_that("It does not show a warning if one of simulations fails in silent mode
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim$solver$relTol <- 1000
 
-  expect_warning(results <- runSimulations(simulations = c(sim, sim2), silentMode = TRUE), regexp = NA)
+  expect_no_warning(results <- runSimulations(simulations = c(sim, sim2), silentMode = TRUE))
   expect_equal(length(results), 2)
   expect_equal(names(results)[[2]], sim2$id)
   expect_null(results[[sim$id]])
   expect_true(isOfType(results[[2]], "SimulationResults"))
+})
+
+test_that("Show an error when a simulations fails.", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$solver$relTol <- 1000
+
+  expect_error(runSimulations(simulations = c(sim, sim2), stopIfFails = TRUE))
 })
 
 test_that("It throws an error when running multiple simulations with a population", {
@@ -392,6 +401,20 @@ test_that("It can run a simulation batch, add new values, and run again", {
   expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
   expect_equal(names(res[[1]])[[2]], ids[[2]])
+})
+
+test_that("It does not show a warning when simulation fails in silentMode", {
+  molecules <- "Organism|Liver|A"
+  simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
+  id <- simulationBatch$addRunValues(initialValues = c(1, 1.2))
+  expect_no_warning(runSimulationBatches(simulationBatch, silentMode = TRUE))
+})
+
+test_that("Throws an error when a simulation does not succeed", {
+  molecules <- "Organism|Liver|A"
+  simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
+  id <- simulationBatch$addRunValues(initialValues = c(1, 1.2))
+  expect_error(runSimulationBatches(simulationBatch, stopIfFails = TRUE))
 })
 
 context("getAllStateVariablesPaths")

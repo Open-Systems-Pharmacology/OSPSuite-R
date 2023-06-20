@@ -141,7 +141,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' @param agingData Optional instance of `AgingData` to use for the simulation.
 #' This is only used with a population simulation
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
-#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`
+#' @inheritParams .getConcurrentSimulationRunnerResults
 #'
 #' @return A named list of `SimulationResults` objects with names being the IDs
 #' of the respective simulations. If a simulation fails, the result for this
@@ -173,7 +173,7 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' # Results is an array of `SimulationResults`
 #' results <- runSimulations(list(sim, sim2, sim3))
 #' @export
-runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE) {
+runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
   simulations <- c(simulations)
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
@@ -200,7 +200,8 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   return(.runSimulationsConcurrently(
     simulations = simulations,
     simulationRunOptions = simulationRunOptions,
-    silentMode = silentMode
+    silentMode = silentMode,
+    stopIfFails = stopIfFails
   ))
 }
 
@@ -233,7 +234,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   SimulationResults$new(results, simulation)
 }
 
-.runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE) {
+.runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE, stopIfFails = FALSE) {
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
   tryCatch(
     {
@@ -257,7 +258,11 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
       # Ids of the results are Ids of the simulations
       resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
       names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
-      simulationResults <- .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, simulationIdSimulationMap = simulationIdSimulationMap, silentMode = silentMode)
+      simulationResults <- .getConcurrentSimulationRunnerResults(results = results,
+                                                                 resultsIdSimulationIdMap = resultsIdSimulationIdMap,
+                                                                 simulationIdSimulationMap = simulationIdSimulationMap,
+                                                                 silentMode = silentMode,
+                                                                 stopIfFails = stopIfFails)
 
       return(simulationResults)
     },
@@ -335,8 +340,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #'
 #' @param simulationBatches List of `SimulationBatch` objects with added parameter and initial values
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run.
-#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails.
-#' Default is `FALSE`.
+#' @inheritParams .getConcurrentSimulationRunnerResults
 #'
 #' @return Nested list of `SimulationResults` objects. The first level of the
 #' fist are the IDs of the SimulationBatches, containing a list of
@@ -369,7 +373,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
 #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 #' }
-runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE) {
+runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
   validateIsOfType(simulationBatches, "SimulationBatch")
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
@@ -404,7 +408,8 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
     results = results,
     resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
     simulationIdSimulationMap = simulationBatchIdSimulationMap,
-    silentMode = silentMode
+    silentMode = silentMode,
+    stopIfFails = stopIfFails
   )
 
   # Returned is a named list of results with names being the IDs of the batches
@@ -589,11 +594,12 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
 #' @param resultsIdSimulationIdMap Map of results ids as keys with values being the ids of simulations the respective batch was created with. The order of IDs is as they were added to the batch.
 #' @param simulationIdSimulationMap A named list of simulation ids as keys and simulation objects as values
 #' to the id of a result
-#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails.
+#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`
+#' @param stopIfFails Wether to stop the execution if one of the simulation did not succeed. default to FALSE.
 #'
 #' @return A named list of `SimulationResults` objects with the names being the ids of simulations or
 #' simulation-batch values pairs they were produced by
-.getConcurrentSimulationRunnerResults <- function(results, resultsIdSimulationIdMap, simulationIdSimulationMap, silentMode) {
+.getConcurrentSimulationRunnerResults <- function(results, resultsIdSimulationIdMap, simulationIdSimulationMap, silentMode, stopIfFails) {
   # Pre-allocate lists for SimulationResult
   simulationResults <- vector("list", length(results))
   # Set the correct order of IDs
@@ -609,9 +615,11 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
       simulationResults[[resultsId]] <- SimulationResults$new(ref = rClr::clrGet(resultObject, "Result"), simulation = simulationIdSimulationMap[[simId]])
       next()
     }
-    # If the simulation run failed, show a warning
-    if (!silentMode) {
-      errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
+    # If the simulation run failed, show a warning or an error
+    errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
+    if (stopIfFails) {
+      stop(errorMessage)
+    } else if (!silentMode) {
       warning(errorMessage)
     }
   }
