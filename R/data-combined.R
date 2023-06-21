@@ -89,6 +89,7 @@ DataCombined <- R6::R6Class(
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       numberOfDatasets <- objectCount(dataSets)
+
       names <- .cleanVectorArgs(names, numberOfDatasets, type = "character")
 
       # The original names for datasets can be "plucked" from objects.
@@ -96,7 +97,7 @@ DataCombined <- R6::R6Class(
       # `purrr::map()` iterates over the vector and applies the anonymous
       # function to pluck name from the object. The `map_chr()` variant
       # clarifies that we are always expecting a character type in return.
-      datasetNames <- purrr::map_chr(c(dataSets), function(x) purrr::pluck(x, "name"))
+      datasetNames <- purrr::map_chr(c(dataSets), ~purrr::pluck(.x, "name"))
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -721,15 +722,15 @@ DataCombined <- R6::R6Class(
 
     # Extract data frame with group mappings
     .extractGroupMap = function(data) {
-      # Retain only the columns that have relevant information for group mapping.
-      data <- dplyr::select(data, group, name, dataType)
 
-      # Keep only distinct combinations.
-      data <- dplyr::distinct(data)
-
-      # Arrange the dataframe alphabetically:
-      # first by group name column and then by dataset name column
-      data <- dplyr::arrange(data, group, name)
+      data <-
+        data %>%
+        # Retain only the columns that have relevant information for group mapping.
+        # Keep only distinct combinations.
+        dplyr::distinct(group, name, dataType) %>%
+        # Arrange the dataframe alphabetically:
+        # first by group name column and then by dataset name column
+        dplyr::arrange(group, name)
 
       return(data)
     },
@@ -741,7 +742,7 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      return(sort(unique(dplyr::pull(data, name))))
+      return(sort(unique(data$name)))
     },
 
     # During object's lifecycle, the applied data transformations can change,
@@ -756,11 +757,10 @@ DataCombined <- R6::R6Class(
       }
 
       # Create new columns with internal copies of raw data
-      data <- dplyr::mutate(data,
-        xRawValues      = xValues,
-        yRawValues      = yValues,
-        yRawErrorValues = yErrorValues
-      )
+      data$xRawValues <- data$xValues
+      data$yRawValues <- data$yValues
+      data$yRawErrorValues <- data$yErrorValues
+
 
       return(data)
     },
