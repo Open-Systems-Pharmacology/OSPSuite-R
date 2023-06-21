@@ -594,8 +594,8 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
 #' @param resultsIdSimulationIdMap Map of results ids as keys with values being the ids of simulations the respective batch was created with. The order of IDs is as they were added to the batch.
 #' @param simulationIdSimulationMap A named list of simulation ids as keys and simulation objects as values
 #' to the id of a result
-#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`
-#' @param stopIfFails Wether to stop the execution if one of the simulation did not succeed. default to FALSE.
+#' @param silentMode If `TRUE`, no warnings are displayed if a simulation fails. Default is `FALSE`. Has no effect if `stopIfFails` is `TRUE`.
+#' @param stopIfFails Whether to stop the execution if one of the simulations failed. Default is `FALSE`.
 #'
 #' @return A named list of `SimulationResults` objects with the names being the ids of simulations or
 #' simulation-batch values pairs they were produced by
