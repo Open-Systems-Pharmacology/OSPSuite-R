@@ -73,5 +73,5 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName){
                  "\r\n",
                  "  - ", paste(DataFrameName, collapse = "\r\n  - "),
                  "\r\n",
-                 "Existing data will be overwriten."))
+                 "Existing data will be overwritten."))
 }
