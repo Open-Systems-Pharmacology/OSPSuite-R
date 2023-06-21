@@ -14,6 +14,7 @@
 #' @import tidyr
 #' @import ospsuite.utils
 #'
+#'
 #' @param names A string or a `list` of strings assigning new names. These new
 #'   names can be either for renaming `DataSet` objects, or for renaming
 #'   quantities/paths in `SimulationResults` object. If an entity is not to be
@@ -78,11 +79,11 @@ DataCombined <- R6::R6Class(
 
   public = list(
 
-    #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
-    #'   class.
-    #'
     #' @description
     #' Adds observed data.
+    #'
+    #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
+    #'   class.
     #'
     #' @return `DataCombined` object containing observed data.
     addDataSets = function(dataSets, names = NULL, groups = NULL) {
@@ -107,12 +108,15 @@ DataCombined <- R6::R6Class(
         names <- ifelse(is.na(names), datasetNames, names)
       }
 
+      private$.verifyExistingNames(newNames = c(datasetNames, names))
+
       # Update private fields and bindings for the new setter call
 
       private$.dataCombined <- private$.updateDataFrame(
         private$.dataCombined,
         private$.dataSetToDataFrame(dataSets, names)
       )
+
 
       private$.extractBindings()
 
@@ -126,30 +130,10 @@ DataCombined <- R6::R6Class(
       invisible(self)
     },
 
-    # TODO: if and when this is supported by `{roxygen2}`, inherit parameters
-    # from `ospsuite::getOutputValues()` to avoid repetition.
-
-    #' @param simulationResults Object of type `SimulationResults` produced by
-    #'   calling `runSimulation()` on a `Simulation` object. Only a single
-    #'   instance is allowed in a given `$addSimulationResults()` method call.
-    #' @param quantitiesOrPaths Quantity instances (element or list) typically
-    #'   retrieved using `getAllQuantitiesMatching()` or quantity path (element
-    #'   or list of strings) for which the results are to be returned.
-    #'   (optional) When providing the paths, only absolute full paths are
-    #'   supported (i.e., no matching with '*' possible). If `quantitiesOrPaths`
-    #'   is `NULL` (default value), returns the results for all output defined
-    #'   in the results.
-    #' @param individualIds Numeric IDs of individuals for which the results
-    #'   should be extracted. By default, all individuals from the results are
-    #'   considered. If the individual with the provided ID is not found, the ID
-    #'   is ignored.
-    #' @param population Population used to calculate the `simulationResults`
-    #'   (optional). This is used only to add the population covariates to the
-    #'   resulting data frame.
-    #'
     #' @description
-    #'
     #' Add simulated data using instance of `SimulationResults` class.
+    #'
+    #' @template simulation_results
     #'
     #' @return `DataCombined` object containing simulated data.
     addSimulationResults = function(simulationResults,
@@ -185,6 +169,8 @@ DataCombined <- R6::R6Class(
       if (!is.null(names)) {
         names <- ifelse(is.na(names), pathsNames, names)
       }
+
+      private$.verifyExistingNames(newNames = c(pathsNames, names))
 
       # Update private fields and bindings for the new setter call
 
@@ -587,6 +573,8 @@ DataCombined <- R6::R6Class(
         # created in the latter call should replace the one created in the
         # former call. If we were not to allow this, the user will need to
         # restart with a new instance of this class.
+        # Also, a DataFrame can be updated several times by ospsuite. For
+        # example, `addDataSet()` calls it twice.
         if (length(dupDatasets) > 0L) {
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
         }
@@ -745,7 +733,6 @@ DataCombined <- R6::R6Class(
       data$yRawValues <- data$yValues
       data$yRawErrorValues <- data$yErrorValues
 
-
       return(data)
     },
 
@@ -789,6 +776,13 @@ DataCombined <- R6::R6Class(
 
       # Always a return a tibble data frame
       return(dplyr::as_tibble(data))
+    },
+    # Warn the user if he adds a dataset with a name already used in dataCombined
+    .verifyExistingNames = function(newNames){
+      if(any(c(newNames) %in% self$names)){
+        messages$DataFrameNameAlreadyUsed(intersect(newNames, self$names))
+      }
+
     },
 
     # private fields ----------------------------------------

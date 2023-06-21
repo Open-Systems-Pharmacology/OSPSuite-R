@@ -578,7 +578,7 @@ test_that("order in which objects are entered should not matter and method chain
   myCombDat <- DataCombined$new()
 
   df1 <- myCombDat$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$toDataFrame()
-  df2 <- myCombDat$addDataSets(dataSet[[1]])$addSimulationResults(simResults)$toDataFrame()
+  expect_warning(df2 <- myCombDat$addDataSets(dataSet[[1]])$addSimulationResults(simResults)$toDataFrame())
 
   expect_equal(df1, df2)
 })
@@ -591,7 +591,7 @@ test_that("data order with or without `names` argument should be same", {
   # don't specify names argument for one, while do for the other
   myCombDat$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
   myCombDat2$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]),
-    names = list("x", "y", NULL)
+                         names = list("x", "y", NULL)
   )
 
   # extract data frames
@@ -628,6 +628,19 @@ test_that("data frame should be same when objects are entered either as a list o
   myCombDat2$addDataSets(c(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
 
   expect_equal(myCombDat1$toDataFrame(), myCombDat2$toDataFrame())
+})
+
+test_that("it shows a warning when a dataset is added with the same name as a dataset already present in dataCombined",{
+  ds <- DataSet$new(name = "test")
+  ds$setValues(1, 1)
+
+  dc <- DataCombined$new()
+  dc$addDataSets(ds)
+  expect_warning(dc$addDataSets(ds))
+
+  dc$addSimulationResults(simResults)
+  expect_warning(dc$addSimulationResults(simResults))
+
 })
 
 # data transformations --------------------------
@@ -1056,7 +1069,7 @@ test_that("sequential update when first and second datasets have same names and 
   df1 <- myCombDat$toDataFrame()
 
   # second run but with different grouping
-  myCombDat$addSimulationResults(simResults)
+  expect_warning(myCombDat$addSimulationResults(simResults))
   myCombDat$setGroups(
     names = list(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
@@ -1065,7 +1078,7 @@ test_that("sequential update when first and second datasets have same names and 
     groups = list("Dapagliflozin - emptying", "Dapagliflozin - retention")
   )
 
-  myCombDat$addDataSets(dataSet)
+  expect_warning(myCombDat$addDataSets(dataSet))
   myCombDat$setGroups(
     names = list(
       "Stevens_2012_placebo.Placebo_distal",
@@ -1145,7 +1158,7 @@ test_that("sequential update when first and second datasets have same names but 
   )
 
   # update object with another `DataSet` object which has common datasets
-  myCombDat$addDataSets(dataSet2)
+  expect_warning(myCombDat$addDataSets(dataSet2))
 
   df2 <- myCombDat$toDataFrame()
   df2Filter <- dplyr::filter(
@@ -1306,5 +1319,5 @@ test_that("It cann add a data set without error type after adding a data set wit
   )
   dataCombined$addDataSets(ds)
 
-  expect_error(dataCombined$addDataSets(ds), regexp = NA)
+  expect_warning(dataCombined$addDataSets(ds))
 })

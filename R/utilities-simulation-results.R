@@ -12,21 +12,7 @@
 #' Results of a simulation of a single individual is treated as a population
 #' simulation with only one individual.
 #'
-#' @param simulationResults Object of type `SimulationResults` produced by
-#'   calling `runSimulation` on a `Simulation` object.
-#' @param quantitiesOrPaths Quantity instances (element or vector) typically
-#'   retrieved using `getAllQuantitiesMatching` or quantity path (element or
-#'   vector of strings) for which the results are to be returned. (optional)
-#'   When providing the paths, only absolute full paths are supported (i.e., no
-#'   matching with '*' possible). If quantitiesOrPaths is `NULL` (default
-#'   value), returns the results for all output defined in the results.
-#' @param individualIds `numeric` IDs of individuals for which the results
-#'   should be extracted. By default, all individuals from the results are
-#'   considered. If the individual with the provided ID is not found, the ID is
-#'   ignored.
-#' @param population population used to calculate the `simulationResults`
-#'   (optional). This is used only to add the population covariates to the
-#'   resulting data table.
+#' @template simulation_results
 #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results
 #'   exist for any `path`. If `FALSE`, a list of `NA` values is returned for the
 #'   respective path.
