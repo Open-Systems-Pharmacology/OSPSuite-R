@@ -372,7 +372,6 @@ DataCombined <- R6::R6Class(
         }
       }
 
-
       # Apply specified data transformations
       private$.dataCombined <- private$.dataTransform(
         data          = private$.dataCombined,
@@ -382,9 +381,6 @@ DataCombined <- R6::R6Class(
         xScaleFactors = xScaleFactorsNew,
         yScaleFactors = yScaleFactorsNew
       )
-
-      # Update private field with transformation values
-      private$.dataTransformations <- private$.extractTransforms(private$.dataCombined)
 
       # for method chaining
       invisible(self)
@@ -492,8 +488,8 @@ DataCombined <- R6::R6Class(
       # always start out with an empty `group` column, which is later modified
       # in `$setGroups()` call.
       obsData <- dplyr::mutate(obsData,
-        dataType = "observed",
-        group    = NA_character_
+                               dataType = "observed",
+                               group    = NA_character_
       )
 
       # Use the user-defined new names for datasets
@@ -523,10 +519,10 @@ DataCombined <- R6::R6Class(
       # always start out with an empty `group` column, which is later modified
       # in `$setGroups()` call.
       simData <- dplyr::mutate(simData,
-        name         = paths,
-        group        = NA_character_,
-        dataType     = "simulated",
-        yErrorValues = NA_real_
+                               name         = paths,
+                               group        = NA_character_,
+                               dataType     = "simulated",
+                               yErrorValues = NA_real_
       )
 
       # Use the user-defined new names for datasets
@@ -537,12 +533,12 @@ DataCombined <- R6::R6Class(
       # same kind of quantities have the same column names so that they are
       # glued appropriately. This requires renaming a few columns.
       simData <- dplyr::rename(simData,
-        "xValues"    = "Time",
-        "xUnit"      = "TimeUnit",
-        "xDimension" = "TimeDimension",
-        "yValues"    = "simulationValues",
-        "yUnit"      = "unit",
-        "yDimension" = "dimension"
+                               "xValues"    = "Time",
+                               "xUnit"      = "TimeUnit",
+                               "xDimension" = "TimeDimension",
+                               "yValues"    = "simulationValues",
+                               "yUnit"      = "unit",
+                               "yDimension" = "dimension"
       )
 
       return(simData)
@@ -666,48 +662,36 @@ DataCombined <- R6::R6Class(
       # raw data that needs to be transformed.
       dataArg <- dplyr::tibble(
         name          = forNames %||% unique(data$name),
-        xOffsets      = xOffsets,
-        yOffsets      = yOffsets,
-        xScaleFactors = xScaleFactors,
-        yScaleFactors = yScaleFactors
+        # For offsets: `0` (default for no change)
+        xOffsets      = tidyr::replace_na(xOffsets, 0),
+        yOffsets      = tidyr::replace_na(yOffsets, 0),
+        # For scale factors: `1` (default for no change)
+        xScaleFactors = tidyr::replace_na(xScaleFactors, 1),
+        yScaleFactors = tidyr::replace_na(yScaleFactors, 1)
       )
 
-      # Update data frame using given transformation parameters
-      private$.dataTransformations <- private$.updateDataFrame(private$.dataTransformations, dataArg)
+      # Update private$.dataTransformations with new transformation settings
+      private$.dataTransformations <-
+        private$.updateDataFrame(private$.dataTransformations,
+                                 dataArg) %>%
+        # Preserve the order from data
+        dplyr::arrange(match(name, data$name))
 
       # Every call to method to set transformations refreshes these parameters.
       #
       # Thus, if there are any existing parameters from object's lifecycle,
-      # they should be removed.
-      data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
-
-      # Datasets for which no data transformations were specified, there will be
-      # missing values, which need to be replaced by defaults for no change.
-      data <- dplyr::left_join(data, private$.dataTransformations, by = "name")
-
-      # For offsets: `0` (default for no change)
-      data <- dplyr::mutate(
-        data,
-        dplyr::across(
-          .cols = matches("offsets$"), # relevant only for columns matching this pattern
-          .fns = function(x) tidyr::replace_na(x, 0)
-        )
-      )
-
-      # For scale factors: `1` (default for no change)
-      data <- dplyr::mutate(
-        data,
-        dplyr::across(
-          .cols = matches("scalefactors$"), # relevant only for columns matching this pattern
-          .fns = function(x) tidyr::replace_na(x, 1)
-        )
-      )
+      # they should be removed and set with the new/default values.
+      data <-
+        data %>%
+        dplyr::select(-tidyr::any_of(colnames(private$.dataTransformations)[-1])) %>%
+        dplyr::left_join(private$.dataTransformations,
+                         by = "name")
 
       # Apply the specified transformations to the columns of interest
       data <- dplyr::mutate(data,
-        xValues      = (xRawValues + xOffsets) * xScaleFactors,
-        yValues      = (yRawValues + yOffsets) * yScaleFactors,
-        yErrorValues = yRawErrorValues * abs(yScaleFactors)
+                            xValues      = (xRawValues + xOffsets) * xScaleFactors,
+                            yValues      = (yRawValues + yOffsets) * yScaleFactors,
+                            yErrorValues = yRawErrorValues * abs(yScaleFactors)
       )
 
       return(data)
@@ -761,25 +745,6 @@ DataCombined <- R6::R6Class(
       data$yRawValues <- data$yValues
       data$yRawErrorValues <- data$yErrorValues
 
-
-      return(data)
-    },
-
-    # Extract offsets and scale factors used for data transformations for each
-    # dataset
-    .extractTransforms = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      # Retain only the columns that have relevant information for group mapping.
-      data <- dplyr::select(data, name, dplyr::matches("offset|scale"))
-
-      # Keep only distinct combinations *for each dataset (name)*.
-      data <- dplyr::group_by(data, name) %>%
-        dplyr::distinct() %>%
-        dplyr::ungroup()
 
       return(data)
     },
