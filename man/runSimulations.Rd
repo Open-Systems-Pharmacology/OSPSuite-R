@@ -27,9 +27,9 @@ This is only used with a population simulation}
 
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions} used during the simulation run}
 
-\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}}
+\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}. Has no effect if \code{stopIfFails} is \code{TRUE}.}
 
-\item{stopIfFails}{Wether to stop the execution if one of the simulation did not succeed. default to FALSE.}
+\item{stopIfFails}{Whether to stop the execution if one of the simulations failed. Default is \code{FALSE}.}
 }
 \value{
 A named list of \code{SimulationResults} objects with names being the IDs
