@@ -93,13 +93,11 @@
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
 #' @param aggregation The type of the aggregation of individual data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric`. Quantiles will
-#'  replace `yValues` by the median and add a set of upper and lower bounds
-#'  (`yValuesLower` and `yValuesHigher`). `arithmetic` or `geometric` will only
-#'  replace `yValues` by means.
-#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
-#'   0.50, 0.95)`), with the quantile values defining the aggregation of
-#'   individual data. Ignored if aggregation is different than `quantiles`.
+#'  `quantiles` (Default), `arithmetic` or `geometric`.  will
+#'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
+#'  (`yValuesLower` and `yValuesHigher`)
+#' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
+#' standard deviation to add below and above the average for `arithmetic` or `geometric`.
 #'
 #'
 #' @details
@@ -146,54 +144,35 @@
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
                                             aggregation = c("quantiles", "arithmetic","geometric"),
-                                            quantiles = c(0.05, 0.5, 0.95)) {
+                                            ...) {
 
   aggregation <- rlang::arg_match(aggregation)
 
-  quantileNames <- c("yValuesLower", "yValues", "yValuesHigher")
+  valueNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- data.table::as.data.table(simData)
 
 
+  aggregation_function <- switch(aggregation,
+                                 "quantiles" = quantrange,
+                                 "arithmetic" = normrange,
+                                 "geometric" = georange)
+
+  # For each dataset, compute quantiles across all individuals for each time point
+  #
+  # Each group should always a single dataset, so grouping by `group` *and* `name`
+  # should produce the same result as grouping by only `group` column.
+  #
+  # The reason `name` column also needs to be retained in the resulting data
+  # is because it is mapped to linetype property in population profile type.
   simAggregatedData <-
-    switch(aggregation,
-           # For each dataset, compute quantiles across all individuals for each time point
-           #
-           # Each group should always a single dataset, so grouping by `group` *and* `name`
-           # should produce the same result as grouping by only `group` column.
-           #
-           # The reason `name` column also needs to be retained in the resulting data
-           # is because it is mapped to linetype property in population profile type.
 
-           "quantiles" = {
-             simAggregatedData[,
-                               setNames(
-                                 as.list(stats::quantile(yValues, quantiles)),
-                                 quantileNames
-                               ),
-                               by = .(group, name, xValues)
-             ]
-           },
-           "arithmetic" = {
-             simAggregatedData[,
-                               setNames(
-                                 as.list(mean(yValues)),
-                                 "yValues"
-                               ),
-                               by = .(group, name, xValues)
-             ]
-           },
-           "geometric" = {
-             simAggregatedData[,
-                               setNames(
-                                 as.list(exp(mean(log(yValues))) ),
-                                 "yValues"
-                               ),
-                               by = .(group, name, xValues)
-             ]
-           })
-
-
-
+    simAggregatedData[,
+                      setNames(
+                        as.list(aggregation_function(yValues, ...)),
+                        valueNames
+                      ),
+                      by = .(group, name, xValues)
+    ]
 
   return(simAggregatedData)
 }
@@ -727,3 +706,31 @@
     }
   }
 }
+
+
+quantrange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...){
+  validateIsNumeric(probs, nullAllowed = FALSE)
+  validateIsOfLength(probs, 3L)
+  stats::quantile(x, probs, na.rm = na.rm, ... )
+}
+
+normrange <- function(x, n = 1, na.rm = FALSE, ...){
+  mean <- mean(x, na.rm = na.rm, ...)
+  sd <- sd(x, na.rm = na.rm, ...)
+  return(c(mean-(n*sd), mean, mean+(n*sd)))
+}
+
+georange <- function(x, n = 1, na.rm = FALSE,...){
+  mean <- geomean(x, na.rm = na.rm, ...)
+  sd <- geosd(x, na.rm = na.rm)
+  return(c(mean-(n*sd), mean, mean+(n*sd)))
+}
+
+
+geomean <- function(x, na.rm = FALSE, ...){
+  exp(mean(log(x, ...), na.rm = na.rm, ...))
+}
+geosd <- function(x, na.rm = FALSE, ...){
+  exp(sd(log(x, ...), na.rm = na.rm, ...))
+}
+

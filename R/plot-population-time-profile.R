@@ -25,13 +25,23 @@
 #' # plot
 #' plotPopulationTimeProfile(myDataComb)
 #'
+#' # plot with other quantiles
+#' plotPopulationTimeProfile(myDataComb, probs = c(0.1, 0.5, 0.9))
+#'
+#' # plot with arithmetic mean
+#' plotPopulationTimeProfile(myDataComb,
+#'                           aggregation = "arithmetic")
+#
+#' # plot with arithmetic mean and 3sd above and below average line
+#' plotPopulationTimeProfile(myDataComb,
+#'                           aggregation = "arithmetic",
+#'                           n=3)
+#'
 #' @export
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
-                                      quantiles = c(0.05, 0.5, 0.95),
-                                      aggregation = "quantiles") {
-  validateIsNumeric(quantiles, nullAllowed = FALSE)
-  validateIsOfLength(quantiles, 3L)
+                                      aggregation = "quantiles",
+                                      ...) {
 
-  .plotTimeProfile(dataCombined, defaultPlotConfiguration, quantiles, aggregation)
+  .plotTimeProfile(dataCombined, defaultPlotConfiguration, aggregation, ...)
 }

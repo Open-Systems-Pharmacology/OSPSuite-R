@@ -58,8 +58,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 #' @noRd
 .plotTimeProfile <- function(dataCombined,
                              defaultPlotConfiguration = NULL,
-                             quantiles = NULL,
-                             aggregation = NULL) {
+                             aggregation = NULL,
+                             ...) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
@@ -107,8 +107,8 @@ plotIndividualTimeProfile <- function(dataCombined,
   }
 
   # Extract aggregated simulated data (relevant only for the population plot)
-  if (!is.null(quantiles) && !is.null(simData)) {
-    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, aggregation, quantiles))
+  if (!is.null(aggregation) && !is.null(simData)) {
+    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, aggregation, ...))
   }
 
   # To avoid repetition, assign column names to variables and use them instead
@@ -132,13 +132,13 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # The exact mappings chosen will depend on whether there are multiple datasets
   # of a given type present per group
-  if (!is.null(aggregation) && aggregation == "quantiles"){
+  if (!is.null(aggregation)){
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
                                                             color = color,
                                                             linetype = linetype,
                                                             fill = fill
     )
-  # individual time profile and population time profile mappings without  ribbon
+  # individual time profile mappings ------------------------------------------
 
   } else {
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
