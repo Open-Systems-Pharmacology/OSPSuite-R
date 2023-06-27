@@ -4,15 +4,24 @@
 \alias{.extractAggregatedSimulatedData}
 \title{Extract aggregated simulated data}
 \usage{
-.extractAggregatedSimulatedData(simData, quantiles = c(0.05, 0.5, 0.95))
+.extractAggregatedSimulatedData(
+  simData,
+  aggregation = c("quantiles", "arithmetic", "geometric"),
+  quantiles = c(0.05, 0.5, 0.95)
+)
 }
 \arguments{
 \item{simData}{A data frame with simulated data from
 \code{DataCombined$toDataFrame()}.}
 
+\item{aggregation}{The type of the aggregation of individual data. One of
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric}. Quantiles will
+replace \code{yValues} by the median and add a set of upper and lower bounds
+(\code{yValuesLower} and \code{yValuesHigher}). \code{arithmetic} or \code{geometric} will only
+replace \code{yValues} by means.}
+
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}), with the quantile values defining the aggregation of
-individual data. In the profile plot, the middle value will be used to draw
-a line, while the lower and upper values will be used to create a ribbon.}
+individual data. Ignored if aggregation is different than \code{quantiles}.}
 }
 \description{
 Extract aggregated simulated data

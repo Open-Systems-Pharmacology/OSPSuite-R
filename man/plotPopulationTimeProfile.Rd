@@ -7,7 +7,8 @@
 plotPopulationTimeProfile(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  quantiles = c(0.05, 0.5, 0.95)
+  quantiles = c(0.05, 0.5, 0.95),
+  aggregation = "quantiles"
 )
 }
 \arguments{
@@ -17,8 +18,13 @@ plotPopulationTimeProfile(
 an \code{R6} class object that defines plot properties.}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}), with the quantile values defining the aggregation of
-individual data. In the profile plot, the middle value will be used to draw
-a line, while the lower and upper values will be used to create a ribbon.}
+individual data. Ignored if aggregation is different than \code{quantiles}.}
+
+\item{aggregation}{The type of the aggregation of individual data. One of
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric}. Quantiles will
+replace \code{yValues} by the median and add a set of upper and lower bounds
+(\code{yValuesLower} and \code{yValuesHigher}). \code{arithmetic} or \code{geometric} will only
+replace \code{yValues} by means.}
 }
 \description{
 Time-values profile plot for population simulations
@@ -36,14 +42,9 @@ populationResults <- importResultsFromCSV(
 myDataComb <- DataCombined$new()
 myDataComb$addSimulationResults(populationResults)
 
-# Create a new instance of `DefaultPlotConfiguration` class
-myPlotConfiguration <- DefaultPlotConfiguration$new()
-myPlotConfiguration$title <- "My Plot Title"
-myPlotConfiguration$subtitle <- "My Plot Subtitle"
-myPlotConfiguration$caption <- "My Sources"
 
 # plot
-plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
+plotPopulationTimeProfile(myDataComb)
 
 }
 \seealso{
