@@ -128,25 +128,22 @@ plotIndividualTimeProfile <- function(dataCombined,
   }
 
 
-  # population time profile mappings ------------------------------
+  # population time profile mappings with ribbon ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
   # of a given type present per group
-  if (aggregation == "quantiles"){
+  if (!is.null(aggregation) && aggregation == "quantiles"){
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
-      color = color,
-      linetype = linetype,
-      fill = fill
+                                                            color = color,
+                                                            linetype = linetype,
+                                                            fill = fill
     )
-  }
+  # individual time profile and population time profile mappings without  ribbon
 
-  # individual time profile mappings ------------------------------
-
-  if (aggregation != "quantiles") {
+  } else {
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
-      color = color,
-      linetype = linetype
-    )
+                                                            color = color,
+                                                            linetype = linetype)
   }
 
   observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
