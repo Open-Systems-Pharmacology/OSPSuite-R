@@ -254,7 +254,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
-    xAxisvaluesLimits = NULL,
+    xAxisValuesLimits = NULL,
     xAxisScale = NULL,
     xAxisTicks = NULL,
     xAxisTicksLabels = tlf::TickLabelTransforms$identity,
@@ -268,7 +268,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
-    yAxisvaluesLimits = NULL,
+    yAxisValuesLimits = NULL,
     yAxisScale = NULL,
     yAxisTicks = NULL,
     yAxisTicksLabels = tlf::TickLabelTransforms$identity,
