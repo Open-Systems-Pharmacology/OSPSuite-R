@@ -1,10 +1,8 @@
 #' Time-values profile plot for population simulations
 #'
 #' @inheritParams plotIndividualTimeProfile
-#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
-#'   0.50, 0.95)`), with the quantile values defining the aggregation of
-#'   individual data. In the profile plot, the middle value will be used to draw
-#'   a line, while the lower and upper values will be used to create a ribbon.
+#' @inheritParams .extractAggregatedSimulatedData
+#'
 #'
 #' @import tlf
 #'
@@ -23,21 +21,17 @@
 #' myDataComb <- DataCombined$new()
 #' myDataComb$addSimulationResults(populationResults)
 #'
-#' # Create a new instance of `DefaultPlotConfiguration` class
-#' myPlotConfiguration <- DefaultPlotConfiguration$new()
-#' myPlotConfiguration$title <- "My Plot Title"
-#' myPlotConfiguration$subtitle <- "My Plot Subtitle"
-#' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
+#' plotPopulationTimeProfile(myDataComb)
 #'
 #' @export
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
-                                      quantiles = c(0.05, 0.5, 0.95)) {
+                                      quantiles = c(0.05, 0.5, 0.95),
+                                      aggregation = "quantiles") {
   validateIsNumeric(quantiles, nullAllowed = FALSE)
   validateIsOfLength(quantiles, 3L)
 
-  .plotTimeProfile(dataCombined, defaultPlotConfiguration, quantiles)
+  .plotTimeProfile(dataCombined, defaultPlotConfiguration, quantiles, aggregation)
 }

@@ -92,7 +92,15 @@
 #'
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
-#' @inheritParams plotPopulationTimeProfile
+#' @param aggregation The type of the aggregation of individual data. One of
+#'  `quantiles` (Default), `arithmetic` or `geometric`. Quantiles will
+#'  replace `yValues` by the median and add a set of upper and lower bounds
+#'  (`yValuesLower` and `yValuesHigher`). `arithmetic` or `geometric` will only
+#'  replace `yValues` by means.
+#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
+#'   0.50, 0.95)`), with the quantile values defining the aggregation of
+#'   individual data. Ignored if aggregation is different than `quantiles`.
+#'
 #'
 #' @details
 #'
@@ -137,25 +145,55 @@
 #'
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
+                                            aggregation = c("quantiles", "arithmetic","geometric"),
                                             quantiles = c(0.05, 0.5, 0.95)) {
+
+  aggregation <- rlang::arg_match(aggregation)
+
   quantileNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- data.table::as.data.table(simData)
-  # For each dataset, compute quantiles across all individuals for each time point
-  #
-  # Each group should always a single dataset, so grouping by `group` *and* `name`
-  # should produce the same result as grouping by only `group` column.
-  #
-  # The reason `name` column also needs to be retained in the resulting data
-  # is because it is mapped to linetype property in population profile type.
+
 
   simAggregatedData <-
-    simAggregatedData[,
-      setNames(
-        as.list(stats::quantile(yValues, quantiles)),
-        quantileNames
-      ),
-      by = .(group, name, xValues)
-    ]
+    switch(aggregation,
+           # For each dataset, compute quantiles across all individuals for each time point
+           #
+           # Each group should always a single dataset, so grouping by `group` *and* `name`
+           # should produce the same result as grouping by only `group` column.
+           #
+           # The reason `name` column also needs to be retained in the resulting data
+           # is because it is mapped to linetype property in population profile type.
+
+           "quantiles" = {
+             simAggregatedData[,
+                               setNames(
+                                 as.list(stats::quantile(yValues, quantiles)),
+                                 quantileNames
+                               ),
+                               by = .(group, name, xValues)
+             ]
+           },
+           "arithmetic" = {
+             simAggregatedData[,
+                               setNames(
+                                 as.list(mean(yValues)),
+                                 "yValues"
+                               ),
+                               by = .(group, name, xValues)
+             ]
+           },
+           "geometric" = {
+             simAggregatedData[,
+                               setNames(
+                                 as.list(exp(mean(log(yValues))) ),
+                                 "yValues"
+                               ),
+                               by = .(group, name, xValues)
+             ]
+           })
+
+
+
 
   return(simAggregatedData)
 }
