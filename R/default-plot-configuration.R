@@ -125,9 +125,9 @@
 #' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
 #' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
-#'   y-axis, respectively.
-#' @field xAxisvaluesLimits,yAxisvaluesLimits A numeric vector of values limits for the x-and
-#'   y-axis, respectively.
+#'   y-axis, respectively. This will preserve all data points but zoom in the plot.
+#' @field xAxisValuesLimits,yAxisValuesLimits A numeric vector of values limits for the x-and
+#'   y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
 #' @field xAxisScale,yAxisScale A character string defining axis scale.
