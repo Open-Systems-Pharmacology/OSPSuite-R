@@ -7,7 +7,7 @@
 .extractAggregatedSimulatedData(
   simData,
   aggregation = c("quantiles", "arithmetic", "geometric"),
-  quantiles = c(0.05, 0.5, 0.95)
+  ...
 )
 }
 \arguments{
@@ -15,13 +15,12 @@
 \code{DataCombined$toDataFrame()}.}
 
 \item{aggregation}{The type of the aggregation of individual data. One of
-\code{quantiles} (Default), \code{arithmetic} or \code{geometric}. Quantiles will
-replace \code{yValues} by the median and add a set of upper and lower bounds
-(\code{yValuesLower} and \code{yValuesHigher}). \code{arithmetic} or \code{geometric} will only
-replace \code{yValues} by means.}
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric}.  will
+replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
+(\code{yValuesLower} and \code{yValuesHigher})}
 
-\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}), with the quantile values defining the aggregation of
-individual data. Ignored if aggregation is different than \code{quantiles}.}
+\item{...}{Extra parameters to pass to aggregating functions. \code{probs} for \code{stats::quantile} or \code{n} for the number of
+standard deviation to add below and above the average for \code{arithmetic} or \code{geometric}.}
 }
 \description{
 Extract aggregated simulated data
