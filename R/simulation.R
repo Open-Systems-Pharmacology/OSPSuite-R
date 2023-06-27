@@ -52,7 +52,7 @@ Simulation <- R6::R6Class(
       super$initialize(ref)
       private$.sourceFile <- sourceFile
       private$.buildConfiguration <- rClr::clrGet(self$ref, "BuildConfiguration")
-      private$.settings <- SimulationSettings$new(rClr::clrGet(private$.buildConfiguration, "SimulationSettings"))
+      private$.settings <- SimulationSettings$new(rClr::clrGet(self$ref, "Settings"))
     },
     #' @description
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)

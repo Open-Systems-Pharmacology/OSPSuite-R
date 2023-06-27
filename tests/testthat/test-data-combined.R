@@ -1302,7 +1302,7 @@ test_that("scalar argument in a list to `groups` works as expected", {
   )
 })
 
-test_that("It cann add a data set without error type after adding a data set with error", {
+test_that("It can add a data set without error type after adding a data set with error", {
   dataCombined <- DataCombined$new()
   ds <- DataSet$new(name = "withError")
   ds$setValues(
