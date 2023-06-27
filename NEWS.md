@@ -22,6 +22,10 @@ and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
 - `plotObsVsPred()` now have foldDistance argument set to `NULL` by default (previously 2). The function will not
   add any fold lines on the plot by default.
 - `DefaultPlotConfiguration` has a new setting: `displayLLOQ` (default TRUE) to control plotting of LLOQ lines.
+- `DefaultPlotConfiguration`'s `xLimits` and `yLimits` arguments are deprecated and replaced by `xAxisLimits` and 
+  `yAxisLimits`. Use them to zoom in the plot while preserving all data points.
+  Use `xValuesLimits` and `yValuesLimits` to filter out data point outside of these range. 
+  More detailed explanations [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples)
 
 # ospsuite 11.1.197
 
