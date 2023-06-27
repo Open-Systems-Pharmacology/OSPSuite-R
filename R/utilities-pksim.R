@@ -7,7 +7,7 @@
 #' @import rClr
 #' @export
 initPKSim <- function(pksimFolderPath = NULL) {
-  # pksimFolderPath <- "C:/dev/PK-Sim/src/PKSim/bin/Debug/net472"
+  pksimFolderPath <- "C:/repos/OSPSuite/PK-Sim/src/PKSim/bin/Debug/net472"
 
   if (ospsuiteEnv$isPKSimLoaded) {
     return(invisible())
