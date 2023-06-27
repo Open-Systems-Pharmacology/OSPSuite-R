@@ -12,6 +12,8 @@ residuals with `scaling = "log"` as opposed to `log10()` as it was done before. 
 affects figures created by `plotObservedVsSimulated()`, `plotResidualsVsSimulated()`, and 
 `plotResidualsVsTime()`. See discusssions https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091
 and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
+- `plotPopulationTimeProfile()` has a new `aggregation` argument that allow the user to choose between quantiles, 
+  arithmetic and geometric aggragations of y.
 
 
 ## Minor Changes
