@@ -126,6 +126,8 @@
 #' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively.
+#' @field xAxisvaluesLimits,yAxisvaluesLimits A numeric vector of values limits for the x-and
+#'   y-axis, respectively.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
 #' @field xAxisScale,yAxisScale A character string defining axis scale.
@@ -252,6 +254,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
+    xAxisvaluesLimits = NULL,
     xAxisScale = NULL,
     xAxisTicks = NULL,
     xAxisTicksLabels = tlf::TickLabelTransforms$identity,
@@ -265,6 +268,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
+    yAxisvaluesLimits = NULL,
     yAxisScale = NULL,
     yAxisTicks = NULL,
     yAxisTicksLabels = tlf::TickLabelTransforms$identity,
