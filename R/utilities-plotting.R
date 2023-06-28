@@ -93,7 +93,7 @@
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
 #' @param aggregation The type of the aggregation of individual data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric`.  will
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in ospsuite:::SimulatedDataAggregationMethods). Will
 #'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
 #'  (`yValuesLower` and `yValuesHigher`)
 #' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
@@ -143,10 +143,14 @@
 #'
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
-                                            aggregation = c("quantiles", "arithmetic","geometric"),
+                                            aggregation = "quantiles",
                                             ...) {
 
-  aggregation <- rlang::arg_match(aggregation)
+  ospsuite.utils::validateEnumValue(
+    value       = aggregation,
+    enum        = SimulatedDataAggregationMethods,
+    nullAllowed = FALSE
+    )
 
   valueNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- data.table::as.data.table(simData)
@@ -165,7 +169,6 @@
   # The reason `name` column also needs to be retained in the resulting data
   # is because it is mapped to linetype property in population profile type.
   simAggregatedData <-
-
     simAggregatedData[,
                       setNames(
                         as.list(aggregation_function(yValues, ...)),
@@ -711,6 +714,15 @@
   }
 }
 
+#' Names of aggregation available for .extractAggregatedSimulatedData
+#'
+#' @keywords internal
+SimulatedDataAggregationMethods <-
+  ospsuite.utils::enum(c(
+    "quantiles",
+    "arithmetic",
+    "geometric")
+  )
 
 #' Quantile Range
 #'
