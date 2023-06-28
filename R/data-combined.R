@@ -533,18 +533,14 @@ DataCombined <- R6::R6Class(
         return(data)
       }
 
-      # Create a nested data frame where all columns except `name` are collapsed
-      # into a single column named `data`, which will contain these columns in a
-      # list data frame.
-      data <- tidyr::nest(data, data = -name)
+      # Create a map vector with old and new names
+      new_names <- setNames(names, unique(data$name))
 
-      # Note that `name` column is based on lexical order of `names`. This
-      # always works because the order of data frame (and thus the `name`
-      # column) returned by `*ToTibble()` functions never changes.
-      data <- dplyr::mutate(data, name = names)
+      # Convert old names to new names
+      data$name <- unname(new_names[as.character(data$name)])
 
-      # Unnest the nested data frame.
-      data <- tidyr::unnest(data, cols = c(data))
+      # Set name as first column
+      data <- dplyr::relocate(data, name)
 
       return(data)
     },
