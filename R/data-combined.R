@@ -473,10 +473,8 @@ DataCombined <- R6::R6Class(
       # Irrespective of whether groups are specified or not, the data frames
       # always start out with an empty `group` column, which is later modified
       # in `$setGroups()` call.
-      obsData <- dplyr::mutate(obsData,
-                               dataType = "observed",
-                               group    = NA_character_
-      )
+      obsData$dataType <- "observed"
+      obsData$group <- NA_character_
 
       # Use the user-defined new names for datasets
       obsData <- private$.renameDatasets(obsData, names)
@@ -504,12 +502,10 @@ DataCombined <- R6::R6Class(
       # Irrespective of whether groups are specified or not, the data frames
       # always start out with an empty `group` column, which is later modified
       # in `$setGroups()` call.
-      simData <- dplyr::mutate(simData,
-                               name         = paths,
-                               group        = NA_character_,
-                               dataType     = "simulated",
-                               yErrorValues = NA_real_
-      )
+      simData$name <- simData$paths
+      simData$group <- NA_character_
+      simData$dataType <- "simulated"
+      simData$yErrorValues <-  NA_real_
 
       # Use the user-defined new names for datasets
       simData <- private$.renameDatasets(simData, names)
