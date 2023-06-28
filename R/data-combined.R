@@ -252,8 +252,8 @@ DataCombined <- R6::R6Class(
       #
       # - `names/groups = c(...)`
       # - `names/groups = list(...)`
-      groupData <- dplyr::tibble(
-        name = purrr::simplify(names),
+      groupData <- tibble::tibble(
+        name  = purrr::simplify(names),
         group = purrr::simplify(groups)
       )
 
@@ -286,7 +286,7 @@ DataCombined <- R6::R6Class(
 
       # Extract dataset names in a data frame. Groupings for all of them are
       # going to be `NA`, so make avail of `{tibble}`'s recycling rule.
-      groupData <- dplyr::tibble(
+      groupData <- tibble::tibble(
         name = purrr::simplify(names),
         group = NA_character_
       )
