@@ -276,24 +276,26 @@
   # in the `switch` below, the the labels will remain `NULL`.
 
   # X-axis label
-  xLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = ,
-                   "ResVsTimePlotConfiguration" = xUnitString,
-                   # Note that `yUnitString` here is deliberate.
-                   #
-                   # In case of an observed versus simulated plot, `yValues` are plotted on
-                   # both x- and y-axes, and therefore the units strings are going to be the
-                   # same for both axes.
-                   "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
-                   "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+  xLabel <- switch(
+    plotType,
+    "TimeProfilePlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = xUnitString,
+    # Note that `yUnitString` here is deliberate.
+    #
+    # In case of an observed versus simulated plot, `yValues` are plotted on
+    # both x- and y-axes, and therefore the units strings are going to be the
+    # same for both axes.
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
+    "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   # Y-axis label
-  yLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = yUnitString,
-                   "ResVsPredPlotConfiguration" = ,
-                   "ResVsTimePlotConfiguration" = "Residuals",
-                   "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+  yLabel <- switch(
+    plotType,
+    "TimeProfilePlotConfiguration" = yUnitString,
+    "ResVsPredPlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = "Residuals",
+    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   return(list("xLabel" = xLabel, "yLabel" = yLabel))
@@ -327,33 +329,35 @@
   }
 
   if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
-    data <- dplyr::mutate(data,
-                          # If the error values are 0, the error bar caps will be displayed even
-                          # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
-                          # problem.
-                          #
-                          # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
-                          yErrorValues = dplyr::case_when(
-                            dplyr::near(yErrorValues, 0) ~ NA_real_,
-                            TRUE ~ yErrorValues
-                          ),
-                          # For compuring uncertainty, there are only three possibilities:
-                          #
-                          # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
-                          # - The error type is geometric (`DataErrorType$GeometricStdDev`).
-                          # - If the errors are none of these, then add `NA`s (of type `double`),
-                          #   since these are the only error types supported in `DataErrorType`.
-                          yValuesLower = dplyr::case_when(
-                            yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
-                            yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
-                            TRUE ~ NA_real_
-                          ),
-                          yValuesHigher = dplyr::case_when(
-                            yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
-                            yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
-                            TRUE ~ NA_real_
-                          )
-    )
+    data <-
+      dplyr::mutate(
+        data,
+        # If the error values are 0, the error bar caps will be displayed even
+        # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
+        # problem.
+        #
+        # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
+        yErrorValues = dplyr::case_when(
+          dplyr::near(yErrorValues, 0) ~ NA_real_,
+          TRUE ~ yErrorValues
+        ),
+        # For compuring uncertainty, there are only three possibilities:
+        #
+        # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
+        # - The error type is geometric (`DataErrorType$GeometricStdDev`).
+        # - If the errors are none of these, then add `NA`s (of type `double`),
+        #   since these are the only error types supported in `DataErrorType`.
+        yValuesLower = dplyr::case_when(
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
+          TRUE ~ NA_real_
+        ),
+        yValuesHigher = dplyr::case_when(
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
+          TRUE ~ NA_real_
+        )
+      )
   } else {
     # These columns should always be present in the data frame because they are
     # part of `{tlf}` mapping.
