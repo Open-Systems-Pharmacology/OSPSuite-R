@@ -596,7 +596,7 @@ DataCombined <- R6::R6Class(
         missingNames <- specifiedNames[!specifiedNames %in% currentNames]
 
         message(messages$printMultipleEntries(
-          header = messages$datasetsToGroupNotFound(),
+          header  = messages$datasetsToGroupNotFound(),
           entries = missingNames
         ))
       }
@@ -772,9 +772,9 @@ DataCombined <- R6::R6Class(
 
     # private fields ----------------------------------------
 
-    .dataCombined = NULL,
-    .groupMap = NULL,
-    .names = NULL,
+    .dataCombined        = NULL,
+    .groupMap            = NULL,
+    .names               = NULL,
     .dataTransformations = NULL
   ),
 
