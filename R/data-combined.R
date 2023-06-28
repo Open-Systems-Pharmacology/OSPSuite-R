@@ -735,35 +735,29 @@ DataCombined <- R6::R6Class(
       }
 
       # Returned data frame should always have a consistent column order
-      data <- dplyr::select(
-        data,
-        # All data identifier columns
-        name,
-        group,
-        dataType,
-        # Everything related to the X-variable
-        "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
-        # Everything related to the Y-variable
-        "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
-        # All other columns go after that (meta data, etc.)
-        dplyr::everything()
-      )
-
-      # The following columns are no longer necessary
-      #
-      # Retaining the offset and scale factor parameters might confuse the
-      # user about whether the transformations are supposed to be carried out
-      # by the user using these values, or these transformations have already
-      # been carried out.
-      data <- dplyr::select(
-        data,
-        -dplyr::matches("^paths$"),
-        -dplyr::matches("offsets$|scalefactors$"),
-        -(dplyr::contains("raw") & dplyr::matches("values$"))
-      )
-
-      # Arrange the data frame in alphabetical order of the dataset name.
-      data <- dplyr::arrange(data, name)
+      data <- data %>%
+        dplyr::select(
+          # All data identifier columns
+          name,
+          group,
+          dataType,
+          # Everything related to the X-variable
+          "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+          # Everything related to the Y-variable
+          "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
+          # All other columns go after that (meta data, etc.)
+          dplyr::everything(),
+          # The following columns are no longer necessary
+          #
+          # Retaining the offset and scale factor parameters might confuse the
+          # user about whether the transformations are supposed to be carried out
+          # by the user using these values, or these transformations have already
+          # been carried out.
+          -dplyr::matches("^paths$"),
+          -dplyr::matches("offsets$|scalefactors$"),
+          -(dplyr::contains("raw") & dplyr::matches("values$"))) %>%
+        # Arrange the data frame in alphabetical order of the dataset name.
+        dplyr::arrange(name)
 
       # Always a return a tibble data frame
       return(dplyr::as_tibble(data))
