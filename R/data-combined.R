@@ -175,8 +175,8 @@ DataCombined <- R6::R6Class(
       # Update private fields and bindings for the new setter call
 
       private$.dataCombined <- private$.updateDataFrame(
-        private$.dataCombined,
-        private$.simResultsToDataFrame(
+        dataCurrent = private$.dataCombined,
+        dataNew = private$.simResultsToDataFrame(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
@@ -660,8 +660,10 @@ DataCombined <- R6::R6Class(
 
       # Update private$.dataTransformations with new transformation settings
       private$.dataTransformations <-
-        private$.updateDataFrame(private$.dataTransformations,
-                                 dataArg) %>%
+        private$.updateDataFrame(
+          dataCurrent = private$.dataTransformations,
+          dataNew     = dataArg
+        ) %>%
         # Preserve the order from data
         dplyr::arrange(match(name, data$name))
 
@@ -672,15 +674,12 @@ DataCombined <- R6::R6Class(
       data <-
         data %>%
         dplyr::select(-tidyr::any_of(colnames(private$.dataTransformations)[-1])) %>%
-        dplyr::left_join(private$.dataTransformations,
-                         by = "name")
-
-      # Apply the specified transformations to the columns of interest
-      data <- dplyr::mutate(data,
-                            xValues      = (xRawValues + xOffsets) * xScaleFactors,
-                            yValues      = (yRawValues + yOffsets) * yScaleFactors,
-                            yErrorValues = yRawErrorValues * abs(yScaleFactors)
-      )
+        dplyr::left_join(y = private$.dataTransformations, by = "name") %>%
+        # Apply the specified transformations to the columns of interest
+        dplyr::mutate(xValues      = (xRawValues + xOffsets) * xScaleFactors,
+                      yValues      = (yRawValues + yOffsets) * yScaleFactors,
+                      yErrorValues = yRawErrorValues * abs(yScaleFactors)
+        )
 
       return(data)
     },
