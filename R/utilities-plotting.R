@@ -153,9 +153,9 @@
 
 
   aggregation_function <- switch(aggregation,
-                                 "quantiles" = quantrange,
-                                 "arithmetic" = normrange,
-                                 "geometric" = georange)
+                                 "quantiles"  = .quantRange,
+                                 "arithmetic" = .normRange,
+                                 "geometric"  = .geoRange)
 
   # For each dataset, compute quantiles across all individuals for each time point
   #
@@ -712,29 +712,57 @@
 }
 
 
-quantrange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...){
+#' Quantile Range
+#'
+#' @param x numeric vector to compute quantile range from
+#' @param probs numeric vector of length 3 containing probabilities with values in [0,1].
+#' @param na.rm logical; if true, any NA and NaN's are removed from x before the quantiles are computed.
+#' @param ... further arguments passed to stats::quantile.
+#'
+#' @return numeric vector of length 3 representing the computed quantiles of x.
+#' @noRd
+.quantRange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...){
   validateIsNumeric(probs, nullAllowed = FALSE)
   validateIsOfLength(probs, 3L)
   stats::quantile(x, probs, na.rm = na.rm, ... )
 }
 
-normrange <- function(x, n = 1, na.rm = FALSE, ...){
+#' Normal Range
+#'
+#' @param x numeric vector to compute normal range from
+#' @param n the number of standard deviation to add/substract from mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param ... further arguments passed to mean and sd functions.
+#'
+#' @return numeric vector of length 3 representing the min, mean and max of the normal range.
+#' @noRd
+.normRange <- function(x, n = 1, na.rm = FALSE, ...){
   mean <- mean(x, na.rm = na.rm, ...)
   sd <- sd(x, na.rm = na.rm, ...)
   return(c(mean-(n*sd), mean, mean+(n*sd)))
 }
 
-georange <- function(x, n = 1, na.rm = FALSE,...){
-  mean <- geomean(x, na.rm = na.rm, ...)
-  sd <- geosd(x, na.rm = na.rm)
+#' Geometric Range
+#'
+#' @param x numeric vector to compute geometric range from
+#' @param n the number of geometric standard deviation to add/substract from mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param ... further arguments passed to mean and sd functions.
+#'
+#' @return numeric vector of length 3 representing the min, mean and max of the geometric range.
+#' @noRd
+.geoRange <- function(x, n = 1, na.rm = FALSE,...){
+  mean <- .geoMean(x, na.rm = na.rm, ...)
+  sd <- .geoSD(x, na.rm = na.rm)
   return(c(mean-(n*sd), mean, mean+(n*sd)))
 }
 
 
-geomean <- function(x, na.rm = FALSE, ...){
+.geoMean <- function(x, na.rm = FALSE, ...){
   exp(mean(log(x, ...), na.rm = na.rm, ...))
 }
-geosd <- function(x, na.rm = FALSE, ...){
+
+.geoSD <- function(x, na.rm = FALSE, ...){
   exp(sd(log(x, ...), na.rm = na.rm, ...))
 }
 
