@@ -168,6 +168,9 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively.}
 
+\item{\code{xAxisvaluesLimits, yAxisvaluesLimits}}{A numeric vector of values limits for the x-and
+y-axis, respectively.}
+
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
 position x-and y-axis ticks, respectively.}
 
@@ -236,6 +239,9 @@ label, y-axis label, plot legend, watermark, respectively.}
 \item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
+y-axis, respectively.}
+
+\item{\code{xAxisvaluesLimits, yAxisvaluesLimits}}{A numeric vector of values limits for the x-and
 y-axis, respectively.}
 
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to

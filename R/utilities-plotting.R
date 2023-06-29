@@ -614,7 +614,8 @@
   )
 
   xAxisConfiguration <- tlf::XAxisConfiguration$new(
-    limits = generalPlotConfiguration$xAxisLimits,
+    axisLimits = generalPlotConfiguration$xAxisLimits,
+    valuesLimits = generalPlotConfiguration$xAxisvaluesLimits,
     scale = generalPlotConfiguration$xAxisScale,
     ticks = generalPlotConfiguration$xAxisTicks,
     ticklabels = generalPlotConfiguration$xAxisTicksLabels,
@@ -634,7 +635,8 @@
   )
 
   yAxisConfiguration <- tlf::YAxisConfiguration$new(
-    limits = generalPlotConfiguration$yAxisLimits,
+    axisLimits = generalPlotConfiguration$yAxisLimits,
+    valuesLimits = generalPlotConfiguration$yAxisvaluesLimits,
     scale = generalPlotConfiguration$yAxisScale,
     ticks = generalPlotConfiguration$yAxisTicks,
     ticklabels = generalPlotConfiguration$yAxisTicksLabels,
