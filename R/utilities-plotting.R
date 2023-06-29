@@ -148,13 +148,12 @@
 
   ospsuite.utils::validateEnumValue(
     value       = aggregation,
-    enum        = SimulatedDataAggregationMethods,
+    enum        = DataAggregationMethods,
     nullAllowed = FALSE
-    )
+  )
 
   valueNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- data.table::as.data.table(simData)
-
 
   aggregation_function <- switch(aggregation,
                                  "quantiles"  = .quantRange,
@@ -717,7 +716,7 @@
 #' Names of aggregation available for .extractAggregatedSimulatedData
 #'
 #' @keywords internal
-SimulatedDataAggregationMethods <-
+DataAggregationMethods <-
   ospsuite.utils::enum(c(
     "quantiles",
     "arithmetic",
