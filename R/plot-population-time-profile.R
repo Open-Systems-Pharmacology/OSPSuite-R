@@ -46,26 +46,26 @@ plotPopulationTimeProfile <- function(dataCombined,
                                       aggregation = "quantiles",
                                       ...) {
 
-  # Make previous "quantiles" argument deprecated but still working
-  lifecycle::deprecate_warn(when = "11.2.0",
-                            what = "plotPopulationTimeProfile(quantiles)",
-                            with = "plotPopulationTimeProfile(...)",
-                            details = "Use ... to pass extra parameters to
+
+
+  dots <- rlang::list2(...)
+  # set probs argument
+  if ("quantiles" %in% names(dots)) {
+    # Make previous "quantiles" argument deprecated but still working
+    lifecycle::deprecate_warn(when = "11.2.0",
+                              what = "plotPopulationTimeProfile(quantiles)",
+                              with = "plotPopulationTimeProfile(...)",
+                              details = "Use ... to pass extra parameters to
                             aggregating functions.
                             `probs` for `stats::quantile` or `n` for the number
                             of standard deviation to add below and above the
                             average for `arithmetic` or `geometric`."
-  )
-
-  args <- list(...)
-  # set probs argument
-  if ("quantiles" %in% names(args)) {
-    args$probs <- args$quantiles
+    )
+    names(dots)[names(dots) == "quantiles"] <- "probs"
   }
 
-  do.call(.plotTimeProfile,
-          args = list(dataCombined = dataCombined,
-                      defaultPlotConfiguration = defaultPlotConfiguration,
-                      aggregation = aggregation,
-                      ... = args))
+  rlang::inject(.plotTimeProfile(dataCombined,
+                                 defaultPlotConfiguration,
+                                 aggregation,
+                                 !!!dots))
 }
