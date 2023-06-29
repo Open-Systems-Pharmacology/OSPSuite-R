@@ -190,6 +190,12 @@ test_that("Aggregations are computed and displayed correctly", {
   )
 
   vdiffr::expect_doppelganger(
+    title = "use old quantiles argument",
+    fig =   plotPopulationTimeProfile(myDataComb,
+                                      quantiles = c(0.1, 0.5, 0.9))
+  )
+
+  vdiffr::expect_doppelganger(
     title = "arithmetic mean",
     fig =
       plotPopulationTimeProfile(myDataComb,
