@@ -18,7 +18,7 @@ plotPopulationTimeProfile(
 an \code{R6} class object that defines plot properties.}
 
 \item{aggregation}{The type of the aggregation of individual data. One of
-\code{quantiles} (Default), \code{arithmetic} or \code{geometric}.  will
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in ospsuite:::SimulatedDataAggregationMethods). Will
 replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yValuesLower} and \code{yValuesHigher})}
 
@@ -47,6 +47,9 @@ plotPopulationTimeProfile(myDataComb)
 
 # plot with other quantiles
 plotPopulationTimeProfile(myDataComb, probs = c(0.1, 0.5, 0.9))
+
+# Previous quantiles argument still works
+plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
 
 # plot with arithmetic mean
 plotPopulationTimeProfile(myDataComb,
