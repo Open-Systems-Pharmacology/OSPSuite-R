@@ -37,8 +37,8 @@
 .encodeUnit <- function(unit) {
   unit <- enc2utf8(unit)
   mutants <- enc2utf8("\xc2\xb5|\xce\xbc|\xb5")
-  if (stringr::str_detect(unit, pattern = mutants)){
-    unit <- stringr::str_replace_all(unit,  pattern = mutants, replacement = ospsuiteEnv$muSymbol)
+  if (stringr::str_detect(unit, pattern = mutants)) {
+    unit <- stringr::str_replace_all(unit, pattern = mutants, replacement = ospsuiteEnv$muSymbol)
   }
   return(unit)
 }

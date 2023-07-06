@@ -2,6 +2,7 @@
 
 export("%||%")
 export(CompareBy)
+export(DataAggregationMethods)
 export(DataCombined)
 export(DataErrorType)
 export(DataImporterConfiguration)

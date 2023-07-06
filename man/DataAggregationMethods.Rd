@@ -3,7 +3,7 @@
 \docType{data}
 \name{DataAggregationMethods}
 \alias{DataAggregationMethods}
-\title{Names of aggregation available for .extractAggregatedSimulatedData}
+\title{Names of aggregation available for plotPopulationTimeProfile()}
 \format{
 An object of class \code{list} of length 3.
 }
@@ -11,6 +11,6 @@ An object of class \code{list} of length 3.
 DataAggregationMethods
 }
 \description{
-Names of aggregation available for .extractAggregatedSimulatedData
+Names of aggregation available for plotPopulationTimeProfile()
 }
-\keyword{internal}
+\keyword{datasets}

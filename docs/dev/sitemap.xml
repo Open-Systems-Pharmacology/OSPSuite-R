@@ -136,6 +136,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationBatch.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataAggregationMethods.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataColumn.html</loc>
   </url>
   <url>
@@ -206,6 +209,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTask.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTaskFromCache.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getPathToPKSimInstallDir.html</loc>

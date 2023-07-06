@@ -33,29 +33,29 @@
 #'
 #' # plot with arithmetic mean
 #' plotPopulationTimeProfile(myDataComb,
-#'                           aggregation = "arithmetic")
-#
+#'   aggregation = "arithmetic"
+#' )
+#' #
 #' # plot with arithmetic mean and 3sd above and below average line
 #' plotPopulationTimeProfile(myDataComb,
-#'                           aggregation = "arithmetic",
-#'                           n=3)
+#'   aggregation = "arithmetic",
+#'   n = 3
+#' )
 #'
 #' @export
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
                                       aggregation = "quantiles",
                                       ...) {
-
-
-
   dots <- rlang::list2(...)
   # set probs argument
   if ("quantiles" %in% names(dots)) {
     # Make previous "quantiles" argument deprecated but still working
-    lifecycle::deprecate_warn(when = "11.2.0",
-                              what = "plotPopulationTimeProfile(quantiles)",
-                              with = "plotPopulationTimeProfile(...)",
-                              details = "Use ... to pass extra parameters to
+    lifecycle::deprecate_warn(
+      when = "11.2.0",
+      what = "plotPopulationTimeProfile(quantiles)",
+      with = "plotPopulationTimeProfile(...)",
+      details = "Use ... to pass extra parameters to
                             aggregating functions.
                             `probs` for `stats::quantile` or `n` for the number
                             of standard deviation to add below and above the
@@ -64,8 +64,10 @@ plotPopulationTimeProfile <- function(dataCombined,
     names(dots)[names(dots) == "quantiles"] <- "probs"
   }
 
-  rlang::inject(.plotTimeProfile(dataCombined,
-                                 defaultPlotConfiguration,
-                                 aggregation,
-                                 !!!dots))
+  rlang::inject(.plotTimeProfile(
+    dataCombined,
+    defaultPlotConfiguration,
+    aggregation,
+    !!!dots
+  ))
 }

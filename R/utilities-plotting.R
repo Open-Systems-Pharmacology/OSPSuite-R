@@ -93,7 +93,7 @@
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
 #' @param aggregation The type of the aggregation of individual data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in ospsuite:::SimulatedDataAggregationMethods). Will
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in ospsuite::DataAggregationMethods). Will
 #'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
 #'  (`yValuesLower` and `yValuesHigher`)
 #' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
@@ -145,7 +145,6 @@
 .extractAggregatedSimulatedData <- function(simData,
                                             aggregation = "quantiles",
                                             ...) {
-
   ospsuite.utils::validateEnumValue(
     value       = aggregation,
     enum        = DataAggregationMethods,
@@ -156,9 +155,10 @@
   simAggregatedData <- data.table::as.data.table(simData)
 
   aggregation_function <- switch(aggregation,
-                                 "quantiles"  = .quantRange,
-                                 "arithmetic" = .normRange,
-                                 "geometric"  = .geoRange)
+    "quantiles"  = .quantRange,
+    "arithmetic" = .normRange,
+    "geometric"  = .geoRange
+  )
 
   # For each dataset, compute quantiles across all individuals for each time point
   #
@@ -169,11 +169,11 @@
   # is because it is mapped to linetype property in population profile type.
   simAggregatedData <-
     simAggregatedData[,
-                      setNames(
-                        as.list(aggregation_function(yValues, ...)),
-                        valueNames
-                      ),
-                      by = .(group, name, xValues)
+      setNames(
+        as.list(aggregation_function(yValues, ...)),
+        valueNames
+      ),
+      by = .(group, name, xValues)
     ]
 
   return(simAggregatedData)
@@ -235,19 +235,19 @@
 
   if (!all(is.na(data$yDimension))) {
     data <- dplyr::mutate(data,
-                          yDimension = dplyr::case_when(
-                            yDimension %in% concDimensions ~ "Concentration",
-                            TRUE ~ yDimension
-                          )
+      yDimension = dplyr::case_when(
+        yDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ yDimension
+      )
     )
   }
 
   if (!all(is.na(data$xDimension))) {
     data <- dplyr::mutate(data,
-                          xDimension = dplyr::case_when(
-                            xDimension %in% concDimensions ~ "Concentration",
-                            TRUE ~ xDimension
-                          )
+      xDimension = dplyr::case_when(
+        xDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ xDimension
+      )
     )
   }
 
@@ -278,8 +278,7 @@
   # in the `switch` below, the the labels will remain `NULL`.
 
   # X-axis label
-  xLabel <- switch(
-    plotType,
+  xLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = ,
     "ResVsTimePlotConfiguration" = xUnitString,
     # Note that `yUnitString` here is deliberate.
@@ -292,8 +291,7 @@
   )
 
   # Y-axis label
-  yLabel <- switch(
-    plotType,
+  yLabel <- switch(plotType,
     "TimeProfilePlotConfiguration" = yUnitString,
     "ResVsPredPlotConfiguration" = ,
     "ResVsTimePlotConfiguration" = "Residuals",
@@ -708,22 +706,22 @@
 
 .updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
   if (!is.null(specificPlotConfiguration[[specificSetting]]) &
-      !is.null(generalPlotConfiguration[[specificSetting]])) {
+    !is.null(generalPlotConfiguration[[specificSetting]])) {
     if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
       specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
     }
   }
 }
 
-#' Names of aggregation available for .extractAggregatedSimulatedData
+#' Names of aggregation available for plotPopulationTimeProfile()
 #'
-#' @keywords internal
+#' @export
 DataAggregationMethods <-
   ospsuite.utils::enum(c(
     "quantiles",
     "arithmetic",
-    "geometric")
-  )
+    "geometric"
+  ))
 
 #' Quantile Range
 #'
@@ -734,10 +732,10 @@ DataAggregationMethods <-
 #'
 #' @return numeric vector of length 3 representing the computed quantiles of x.
 #' @noRd
-.quantRange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...){
+.quantRange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...) {
   validateIsNumeric(probs, nullAllowed = FALSE)
   validateIsOfLength(probs, 3L)
-  stats::quantile(x, probs, na.rm = na.rm, ... )
+  stats::quantile(x, probs, na.rm = na.rm, ...)
 }
 
 #' Normal Range
@@ -749,10 +747,10 @@ DataAggregationMethods <-
 #'
 #' @return numeric vector of length 3 representing the min, mean and max of the normal range.
 #' @noRd
-.normRange <- function(x, n = 1, na.rm = FALSE, ...){
+.normRange <- function(x, n = 1, na.rm = FALSE, ...) {
   mean <- mean(x, na.rm = na.rm, ...)
   sd <- sd(x, na.rm = na.rm, ...)
-  return(c(mean-(n*sd), mean, mean+(n*sd)))
+  return(c(mean - (n * sd), mean, mean + (n * sd)))
 }
 
 #' Geometric Range
@@ -764,18 +762,17 @@ DataAggregationMethods <-
 #'
 #' @return numeric vector of length 3 representing the min, mean and max of the geometric range.
 #' @noRd
-.geoRange <- function(x, n = 1, na.rm = FALSE,...){
+.geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
   mean <- .geoMean(x, na.rm = na.rm, ...)
   sd <- .geoSD(x, na.rm = na.rm)
-  return(c(mean-(n*sd), mean, mean+(n*sd)))
+  return(c(mean - (n * sd), mean, mean + (n * sd)))
 }
 
 
-.geoMean <- function(x, na.rm = FALSE, ...){
+.geoMean <- function(x, na.rm = FALSE, ...) {
   exp(mean(log(x, ...), na.rm = na.rm, ...))
 }
 
-.geoSD <- function(x, na.rm = FALSE, ...){
+.geoSD <- function(x, na.rm = FALSE, ...) {
   exp(sd(log(x, ...), na.rm = na.rm, ...))
 }
-

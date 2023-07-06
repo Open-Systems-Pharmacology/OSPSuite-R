@@ -132,24 +132,24 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # The exact mappings chosen will depend on whether there are multiple datasets
   # of a given type present per group
-  if (!is.null(aggregation)){
+  if (!is.null(aggregation)) {
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
-                                                            color = color,
-                                                            linetype = linetype,
-                                                            fill = fill
+      color = color,
+      linetype = linetype,
+      fill = fill
     )
-  # individual time profile mappings ------------------------------------------
-
+    # individual time profile mappings ------------------------------------------
   } else {
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
-                                                            color = color,
-                                                            linetype = linetype)
+      color = color,
+      linetype = linetype
+    )
   }
 
   observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
-                                                      shape = shape,
-                                                      color = color,
-                                                      lloq = lloq
+    shape = shape,
+    color = color,
+    lloq = lloq
   )
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
