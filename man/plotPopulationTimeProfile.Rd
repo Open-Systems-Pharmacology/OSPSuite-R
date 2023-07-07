@@ -8,7 +8,7 @@ plotPopulationTimeProfile(
   dataCombined,
   defaultPlotConfiguration = NULL,
   aggregation = "quantiles",
-  ...
+  quantiles = c(0.05, 0.5, 0.95)
 )
 }
 \arguments{
@@ -18,15 +18,22 @@ plotPopulationTimeProfile(
 an \code{R6} class object that defines plot properties.}
 
 \item{aggregation}{The type of the aggregation of individual data. One of
-\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in ospsuite::DataAggregationMethods). Will
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in \code{ospsuite::DataAggregationMethods}). Will
 replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yValuesLower} and \code{yValuesHigher})}
 
-\item{...}{Extra parameters to pass to aggregating functions. \code{probs} for \code{stats::quantile} or \code{n} for the number of
-standard deviation to add below and above the average for \code{arithmetic} or \code{geometric}.}
+\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
 }
 \description{
 Time-values profile plot for population simulations
+}
+\details{
+For \code{aggregation = arithmetic}, arithmetic mean with arithmetic standard deviation (SD)
+will be plotted.
+For \code{aggregation = geometric}, geometric mean with geo SD will be plotted
+For \code{aggregation = quantiles}, the quantile values defined in the argument \code{quantiles}
+will be used. In the profile plot, the middle value will be used to draw
+a line, while the lower and upper values will be used as the lower und upper ranges.
 }
 \examples{
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -46,18 +53,12 @@ myDataComb$addSimulationResults(populationResults)
 plotPopulationTimeProfile(myDataComb)
 
 # plot with other quantiles
-plotPopulationTimeProfile(myDataComb, probs = c(0.1, 0.5, 0.9))
-
-# Previous quantiles argument still works
 plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
 
 # plot with arithmetic mean
 plotPopulationTimeProfile(myDataComb,
-                          aggregation = "arithmetic")
-# plot with arithmetic mean and 3sd above and below average line
-plotPopulationTimeProfile(myDataComb,
-                          aggregation = "arithmetic",
-                          n=3)
+  aggregation = "arithmetic"
+)
 
 }
 \seealso{

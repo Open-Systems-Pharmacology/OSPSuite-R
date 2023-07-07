@@ -11,7 +11,7 @@
 \code{DataCombined$toDataFrame()}.}
 
 \item{aggregation}{The type of the aggregation of individual data. One of
-\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in ospsuite::DataAggregationMethods). Will
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in \code{ospsuite::DataAggregationMethods}). Will
 replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yValuesLower} and \code{yValuesHigher})}
 

@@ -93,7 +93,7 @@
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
 #' @param aggregation The type of the aggregation of individual data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in ospsuite::DataAggregationMethods). Will
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in `ospsuite::DataAggregationMethods`). Will
 #'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
 #'  (`yValuesLower` and `yValuesHigher`)
 #' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
@@ -725,9 +725,7 @@ DataAggregationMethods <-
 
 #' Quantile Range
 #'
-#' @param x numeric vector to compute quantile range from
-#' @param probs numeric vector of length 3 containing probabilities with values in [0,1].
-#' @param na.rm logical; if true, any NA and NaN's are removed from x before the quantiles are computed.
+#' @inheritParams stats::quantile
 #' @param ... further arguments passed to stats::quantile.
 #'
 #' @return numeric vector of length 3 representing the computed quantiles of x.
