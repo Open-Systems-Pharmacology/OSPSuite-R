@@ -162,3 +162,62 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
     messages$plottingWithEmptyDataCombined()
   )
 })
+
+# Aggregations ------------------------
+
+test_that("Aggregations are computed and displayed correctly", {
+  # Load simulation
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  populationResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+  )
+
+  myDataComb <- DataCombined$new()
+  myDataComb$addSimulationResults(populationResults)
+
+  vdiffr::expect_doppelganger(
+    title = "default (quantiles)",
+    fig = plotPopulationTimeProfile(myDataComb)
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "modified quantiles",
+    fig = plotPopulationTimeProfile(myDataComb,
+      quantiles = c(0.1, 0.5, 0.9)
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "use old quantiles argument",
+    fig = plotPopulationTimeProfile(myDataComb,
+      quantiles = c(0.1, 0.5, 0.9)
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "arithmetic mean",
+    fig =
+      plotPopulationTimeProfile(myDataComb,
+        aggregation = "arithmetic"
+      )
+  )
+
+  # vdiffr::expect_doppelganger(
+  #   title = "arithmetic mean with 3 sd",
+  #   fig =
+  #     plotPopulationTimeProfile(myDataComb,
+  #       aggregation = "arithmetic",
+  #       n = 3
+  #     )
+  # )
+
+  vdiffr::expect_doppelganger(
+    title = "geometric mean",
+    fig = plotPopulationTimeProfile(myDataComb,
+      aggregation = "geometric"
+    )
+  )
+})

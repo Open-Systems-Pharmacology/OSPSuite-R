@@ -591,7 +591,7 @@ test_that("data order with or without `names` argument should be same", {
   # don't specify names argument for one, while do for the other
   myCombDat$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]))
   myCombDat2$addDataSets(list(dataSet[[1]], dataSet[[2]], dataSet[[3]]),
-                         names = list("x", "y", NULL)
+    names = list("x", "y", NULL)
   )
 
   # extract data frames
@@ -630,7 +630,7 @@ test_that("data frame should be same when objects are entered either as a list o
   expect_equal(myCombDat1$toDataFrame(), myCombDat2$toDataFrame())
 })
 
-test_that("it shows a warning when a dataset is added with the same name as a dataset already present in dataCombined",{
+test_that("it shows a warning when a dataset is added with the same name as a dataset already present in dataCombined", {
   ds <- DataSet$new(name = "test")
   ds$setValues(1, 1)
 
@@ -640,7 +640,6 @@ test_that("it shows a warning when a dataset is added with the same name as a da
 
   dc$addSimulationResults(simResults)
   expect_warning(dc$addSimulationResults(simResults))
-
 })
 
 # data transformations --------------------------

@@ -258,11 +258,13 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
       # Ids of the results are Ids of the simulations
       resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
       names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
-      simulationResults <- .getConcurrentSimulationRunnerResults(results = results,
-                                                                 resultsIdSimulationIdMap = resultsIdSimulationIdMap,
-                                                                 simulationIdSimulationMap = simulationIdSimulationMap,
-                                                                 silentMode = silentMode,
-                                                                 stopIfFails = stopIfFails)
+      simulationResults <- .getConcurrentSimulationRunnerResults(
+        results = results,
+        resultsIdSimulationIdMap = resultsIdSimulationIdMap,
+        simulationIdSimulationMap = simulationIdSimulationMap,
+        silentMode = silentMode,
+        stopIfFails = stopIfFails
+      )
 
       return(simulationResults)
     },

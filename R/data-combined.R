@@ -98,7 +98,7 @@ DataCombined <- R6::R6Class(
       # `purrr::map()` iterates over the vector and applies the anonymous
       # function to pluck name from the object. The `map_chr()` variant
       # clarifies that we are always expecting a character type in return.
-      datasetNames <- purrr::map_chr(c(dataSets), ~purrr::pluck(.x, "name"))
+      datasetNames <- purrr::map_chr(c(dataSets), ~ purrr::pluck(.x, "name"))
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -505,7 +505,7 @@ DataCombined <- R6::R6Class(
       simData$name <- simData$paths
       simData$group <- NA_character_
       simData$dataType <- "simulated"
-      simData$yErrorValues <-  NA_real_
+      simData$yErrorValues <- NA_real_
 
       # Use the user-defined new names for datasets
       simData <- private$.renameDatasets(simData, names)
@@ -515,12 +515,12 @@ DataCombined <- R6::R6Class(
       # same kind of quantities have the same column names so that they are
       # glued appropriately. This requires renaming a few columns.
       simData <- dplyr::rename(simData,
-                               "xValues"    = "Time",
-                               "xUnit"      = "TimeUnit",
-                               "xDimension" = "TimeDimension",
-                               "yValues"    = "simulationValues",
-                               "yUnit"      = "unit",
-                               "yDimension" = "dimension"
+        "xValues"    = "Time",
+        "xUnit"      = "TimeUnit",
+        "xDimension" = "TimeDimension",
+        "yValues"    = "simulationValues",
+        "yUnit"      = "unit",
+        "yDimension" = "dimension"
       )
 
       return(simData)
@@ -668,9 +668,10 @@ DataCombined <- R6::R6Class(
         dplyr::select(-tidyr::any_of(colnames(private$.dataTransformations)[-1])) %>%
         dplyr::left_join(y = private$.dataTransformations, by = "name") %>%
         # Apply the specified transformations to the columns of interest
-        dplyr::mutate(xValues      = (xRawValues + xOffsets) * xScaleFactors,
-                      yValues      = (yRawValues + yOffsets) * yScaleFactors,
-                      yErrorValues = yRawErrorValues * abs(yScaleFactors)
+        dplyr::mutate(
+          xValues = (xRawValues + xOffsets) * xScaleFactors,
+          yValues = (yRawValues + yOffsets) * yScaleFactors,
+          yErrorValues = yRawErrorValues * abs(yScaleFactors)
         )
 
       return(data)
@@ -685,7 +686,6 @@ DataCombined <- R6::R6Class(
 
     # Extract data frame with group mappings
     .extractGroupMap = function(data) {
-
       data <-
         data %>%
         # Retain only the columns that have relevant information for group mapping.
@@ -755,7 +755,8 @@ DataCombined <- R6::R6Class(
           # been carried out.
           -dplyr::matches("^paths$"),
           -dplyr::matches("offsets$|scalefactors$"),
-          -(dplyr::contains("raw") & dplyr::matches("values$"))) %>%
+          -(dplyr::contains("raw") & dplyr::matches("values$"))
+        ) %>%
         # Arrange the data frame in alphabetical order of the dataset name.
         dplyr::arrange(name)
 
@@ -763,18 +764,17 @@ DataCombined <- R6::R6Class(
       return(dplyr::as_tibble(data))
     },
     # Warn the user if he adds a dataset with a name already used in dataCombined
-    .verifyExistingNames = function(newNames){
-      if(any(c(newNames) %in% self$names)){
+    .verifyExistingNames = function(newNames) {
+      if (any(c(newNames) %in% self$names)) {
         messages$DataFrameNameAlreadyUsed(intersect(newNames, self$names))
       }
-
     },
 
     # private fields ----------------------------------------
 
-    .dataCombined        = NULL,
-    .groupMap            = NULL,
-    .names               = NULL,
+    .dataCombined = NULL,
+    .groupMap = NULL,
+    .names = NULL,
     .dataTransformations = NULL
   ),
 

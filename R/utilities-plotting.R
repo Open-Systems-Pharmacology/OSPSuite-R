@@ -92,7 +92,13 @@
 #'
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
-#' @inheritParams plotPopulationTimeProfile
+#' @param aggregation The type of the aggregation of individual data. One of
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in `ospsuite::DataAggregationMethods`). Will
+#'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
+#'  (`yValuesLower` and `yValuesHigher`)
+#' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
+#' standard deviation to add below and above the average for `arithmetic` or `geometric`.
+#'
 #'
 #' @details
 #'
@@ -137,9 +143,23 @@
 #'
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
-                                            quantiles = c(0.05, 0.5, 0.95)) {
-  quantileNames <- c("yValuesLower", "yValues", "yValuesHigher")
+                                            aggregation = "quantiles",
+                                            ...) {
+  ospsuite.utils::validateEnumValue(
+    value       = aggregation,
+    enum        = DataAggregationMethods,
+    nullAllowed = FALSE
+  )
+
+  valueNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- data.table::as.data.table(simData)
+
+  aggregation_function <- switch(aggregation,
+    "quantiles"  = .quantRange,
+    "arithmetic" = .normRange,
+    "geometric"  = .geoRange
+  )
+
   # For each dataset, compute quantiles across all individuals for each time point
   #
   # Each group should always a single dataset, so grouping by `group` *and* `name`
@@ -147,12 +167,11 @@
   #
   # The reason `name` column also needs to be retained in the resulting data
   # is because it is mapped to linetype property in population profile type.
-
   simAggregatedData <-
     simAggregatedData[,
       setNames(
-        as.list(stats::quantile(yValues, quantiles)),
-        quantileNames
+        as.list(aggregation_function(yValues, ...)),
+        valueNames
       ),
       by = .(group, name, xValues)
     ]
@@ -310,33 +329,35 @@
   }
 
   if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
-    data <- dplyr::mutate(data,
-      # If the error values are 0, the error bar caps will be displayed even
-      # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
-      # problem.
-      #
-      # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
-      yErrorValues = dplyr::case_when(
-        dplyr::near(yErrorValues, 0) ~ NA_real_,
-        TRUE ~ yErrorValues
-      ),
-      # For compuring uncertainty, there are only three possibilities:
-      #
-      # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
-      # - The error type is geometric (`DataErrorType$GeometricStdDev`).
-      # - If the errors are none of these, then add `NA`s (of type `double`),
-      #   since these are the only error types supported in `DataErrorType`.
-      yValuesLower = dplyr::case_when(
-        yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
-        yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
-        TRUE ~ NA_real_
-      ),
-      yValuesHigher = dplyr::case_when(
-        yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
-        yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
-        TRUE ~ NA_real_
+    data <-
+      dplyr::mutate(
+        data,
+        # If the error values are 0, the error bar caps will be displayed even
+        # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
+        # problem.
+        #
+        # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
+        yErrorValues = dplyr::case_when(
+          dplyr::near(yErrorValues, 0) ~ NA_real_,
+          TRUE ~ yErrorValues
+        ),
+        # For compuring uncertainty, there are only three possibilities:
+        #
+        # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
+        # - The error type is geometric (`DataErrorType$GeometricStdDev`).
+        # - If the errors are none of these, then add `NA`s (of type `double`),
+        #   since these are the only error types supported in `DataErrorType`.
+        yValuesLower = dplyr::case_when(
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
+          TRUE ~ NA_real_
+        ),
+        yValuesHigher = dplyr::case_when(
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
+          TRUE ~ NA_real_
+        )
       )
-    )
   } else {
     # These columns should always be present in the data frame because they are
     # part of `{tlf}` mapping.
@@ -690,4 +711,66 @@
       specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
     }
   }
+}
+
+#' Names of aggregation available for plotPopulationTimeProfile()
+#'
+#' @export
+DataAggregationMethods <-
+  ospsuite.utils::enum(c(
+    "quantiles",
+    "arithmetic",
+    "geometric"
+  ))
+
+#' Quantile Range
+#'
+#' @inheritParams stats::quantile
+#' @param ... further arguments passed to stats::quantile.
+#'
+#' @return numeric vector of length 3 representing the computed quantiles of x.
+#' @noRd
+.quantRange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...) {
+  validateIsNumeric(probs, nullAllowed = FALSE)
+  validateIsOfLength(probs, 3L)
+  stats::quantile(x, probs, na.rm = na.rm, ...)
+}
+
+#' Normal Range
+#'
+#' @param x numeric vector to compute normal range from
+#' @param n the number of standard deviation to add/substract from mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param ... further arguments passed to mean and sd functions.
+#'
+#' @return numeric vector of length 3 representing the min, mean and max of the normal range.
+#' @noRd
+.normRange <- function(x, n = 1, na.rm = FALSE, ...) {
+  mean <- mean(x, na.rm = na.rm, ...)
+  sd <- sd(x, na.rm = na.rm, ...)
+  return(c(mean - (n * sd), mean, mean + (n * sd)))
+}
+
+#' Geometric Range
+#'
+#' @param x numeric vector to compute geometric range from
+#' @param n the number of geometric standard deviation to add/substract from mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param ... further arguments passed to mean and sd functions.
+#'
+#' @return numeric vector of length 3 representing the min, mean and max of the geometric range.
+#' @noRd
+.geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
+  mean <- .geoMean(x, na.rm = na.rm, ...)
+  sd <- .geoSD(x, na.rm = na.rm)
+  return(c(mean - (n * sd), mean, mean + (n * sd)))
+}
+
+
+.geoMean <- function(x, na.rm = FALSE, ...) {
+  exp(mean(log(x, ...), na.rm = na.rm, ...))
+}
+
+.geoSD <- function(x, na.rm = FALSE, ...) {
+  exp(sd(log(x, ...), na.rm = na.rm, ...))
 }

@@ -9,10 +9,10 @@
   created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.">
 <title>R package to manipulate OSPSuite Models • ospsuite</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="R package to manipulate OSPSuite Models">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="R package to manipulate OSPSuite Models">
 <meta property="og:description" content="The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
   created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.">
 <meta name="robots" content="noindex">
@@ -29,7 +29,7 @@
     
     <a class="navbar-brand me-2" href="index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">11.1.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,8 @@
     <a class="dropdown-item" href="articles/sensitivity-analysis.html">Sensitivity analysis</a>
     <a class="dropdown-item" href="articles/create-individual.html">Creating individuals</a>
     <a class="dropdown-item" href="articles/create-run-population.html">Population simulations</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Figure creation</h6>
     <a class="dropdown-item" href="articles/observed-data.html">Observed data</a>
     <a class="dropdown-item" href="articles/data-combined.html">Working with `DataCombined` class</a>
     <a class="dropdown-item" href="articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
@@ -91,7 +93,7 @@
 <div class="page-header"><h1 id="ospsuite-r">OSPSuite-R<a class="anchor" aria-label="anchor" href="#ospsuite-r"></a>
 </h1></div>
 <p><!-- badges: start --></p>
-<p><a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/ospsuite-r" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="external-link"><img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"></a></p>
+<p><a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/OSPSuite-R/branch/develop" class="external-link pkgdown-devel"> <img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="external-link pkgdown-devel"> <img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"></a></p>
 <p><!-- badges: end --></p>
 </div>
 <div class="section level1">
@@ -125,9 +127,9 @@
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html">Table parameters</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html">Dimensions and Units</a></li>
-<li><a href="observed-data.html">Working with data sets and import from excel</a></li>
-<li><a href="data-combined.html">Working with <code>DataCombined</code> class</a></li>
-<li><a href="data-combined-plotting.html">Visualizations with <code>DataCombined</code></a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html">Working with data sets and import from excel</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html">Working with <code>DataCombined</code> class</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html">Visualizations with <code>DataCombined</code></a></li>
 </ul>
 </div>
 <div class="section level1">
@@ -145,6 +147,11 @@
 <li><a href="https://cran.r-project.org/web/packages/tidyr/index.html" class="external-link">tidyr</a></li>
 <li><a href="https://cran.r-project.org/web/packages/ggplot2/index.html" class="external-link">ggplot2</a></li>
 <li><a href="https://cran.r-project.org/web/packages/rlang/index.html" class="external-link">rlang</a></li>
+<li><a href="https://cran.r-project.org/web/packages/jsonlite/index.html" class="external-link">jsonlite</a></li>
+<li><a href="https://cran.r-project.org/web/packages/patchwork/index.html" class="external-link">patchwork</a></li>
+<li><a href="https://cran.r-project.org/web/packages/cowplot/index.html" class="external-link">cowplot</a></li>
+<li><a href="https://cran.r-project.org/web/packages/scales/index.html" class="external-link">scales</a></li>
+<li><a href="https://cran.r-project.org/web/packages/data.table/index.html" class="external-link">data.table</a></li>
 </ul>
 <p>Must be downloaded manually:</p>
 <ul>
@@ -155,8 +162,8 @@
 <li><a href="https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip" class="external-link">For R 3.6.x</a></li>
 </ul>
 </li>
-<li><p><a href="https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.3.66/tlf_1.3.66.zip" class="external-link">tlf</a></p></li>
-<li><p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.3.17/ospsuite.utils_1.3.17.zip" class="external-link">ospsuite.utils</a></p></li>
+<li><p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest" class="external-link">ospsuite.utils</a></p></li>
+<li><p><a href="https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest" class="external-link">tlf</a></p></li>
 </ul>
 <div class="section level2">
 <h2 id="under-windows">Under Windows<a class="anchor" aria-label="anchor" href="#under-windows"></a>
@@ -169,8 +176,16 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'R6'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Install `{rClr}` from local file </span></span>
-<span><span class="co"># (`pathTorCLR.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTorCLR.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="co"># (`pathTo_rCLR.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_rCLR.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Install `{ospsuite.utils}` from local file </span></span>
+<span><span class="co"># (`pathTo_ospsuite.utils.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_ospsuite.utils.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Install `{tlf}` from local file </span></span>
+<span><span class="co"># (`pathTo_tlf.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_tlf.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Install `{ospsuite}` from local file</span></span>
 <span><span class="co"># (`pathToOSPSuite.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
@@ -238,7 +253,25 @@
 <div class="section level1">
 <h1 id="known-issues">Known issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
 </h1>
-<p><strong>RStudio crashes when trying to load a workspace.</strong> The ospsuite package uses the features implemented in PK-Sim and MoBi by creating <code>.NET</code> objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box “Restore <code>.RData</code> into workspace at startup” in the options of RStudio. Keep in mind that you can also change this setting for specific projects.</p>
+<ul>
+<li>Loading <code>ospsuite</code> might fail if your systems locale is not set to <em>English</em>, e.g.:</li>
+</ul>
+<pre class="ibrary(ospsuite)"><code>载入需要的程辑包：rClr
+Loading the dynamic library for Microsoft .NET runtime...
+Loaded Common Language Runtime version 4.0.30319.42000
+
+Error: package or namespace load failed for ‘ospsuite’:
+loadNamespace()里算'ospsuite'时.onLoad失败了，详细内容：
+调用: rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
+错误: Type: System.Collections.Generic.KeyNotFoundException
+Message: Dimension 'CV mmHg*s虏/ml' not available in DimensionFactory.
+...</code></pre>
+<p>– On Windows, set <code>Settings &gt; Language &gt; Administrative language settings &gt; Current language for non-Unicode programs</code> to <code>English (United States)</code> and reboot. – On Linux, set the environment variable <code>LC_ALL</code> before starting R:</p>
+<pre><code>export LC_ALL=en_US.UTF-8</code></pre>
+<ul>
+<li>
+<strong>RStudio crashes when trying to load a workspace.</strong> The ospsuite package uses the features implemented in PK-Sim and MoBi by creating <code>.NET</code> objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box “Restore <code>.RData</code> into workspace at startup” in the options of RStudio. Keep in mind that you can also change this setting for specific projects.</li>
+</ul>
 </div>
 <div class="section level1">
 <h1 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
@@ -307,7 +340,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>

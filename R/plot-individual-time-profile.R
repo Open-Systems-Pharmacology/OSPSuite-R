@@ -58,7 +58,8 @@ plotIndividualTimeProfile <- function(dataCombined,
 #' @noRd
 .plotTimeProfile <- function(dataCombined,
                              defaultPlotConfiguration = NULL,
-                             quantiles = NULL) {
+                             aggregation = NULL,
+                             ...) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
@@ -106,8 +107,8 @@ plotIndividualTimeProfile <- function(dataCombined,
   }
 
   # Extract aggregated simulated data (relevant only for the population plot)
-  if (!is.null(quantiles) && !is.null(simData)) {
-    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, quantiles))
+  if (!is.null(aggregation) && !is.null(simData)) {
+    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, aggregation, ...))
   }
 
   # To avoid repetition, assign column names to variables and use them instead
@@ -127,38 +128,29 @@ plotIndividualTimeProfile <- function(dataCombined,
   }
 
 
-  # population time profile mappings ------------------------------
+  # population time profile mappings with ribbon ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
   # of a given type present per group
-  if (!is.null(quantiles)) {
+  if (!is.null(aggregation)) {
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
       color = color,
       linetype = linetype,
       fill = fill
     )
-
-    observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
-      shape = shape,
-      color = color,
-      lloq = lloq
-    )
-  }
-
-  # individual time profile mappings ------------------------------
-
-  if (is.null(quantiles)) {
+    # individual time profile mappings ------------------------------------------
+  } else {
     simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
       color = color,
       linetype = linetype
     )
-
-    observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
-      shape = shape,
-      color = color,
-      lloq = lloq
-    )
   }
+
+  observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
+    shape = shape,
+    color = color,
+    lloq = lloq
+  )
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
 
