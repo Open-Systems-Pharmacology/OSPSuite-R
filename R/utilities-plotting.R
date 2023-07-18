@@ -422,7 +422,7 @@
 
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
-    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$linesColor <- "black"
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
@@ -432,7 +432,7 @@
 
   # For `plotResidualsVsTime()` and `plotResidualsVsSimulated()`
   if (plotType %in% c("ResVsTimePlotConfiguration", "ResVsPredPlotConfiguration")) {
-    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$linesColor <- "black"
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
