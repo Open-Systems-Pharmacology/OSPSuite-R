@@ -168,7 +168,7 @@ Available options can be seen using \code{tlf::LegendPositions} list.}
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively. This will preserve all data points but zoom in the plot.}
 
-\item{\code{xAxisValuesLimits, yAxisValuesLimits}}{A numeric vector of values limits for the x-and
+\item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.}
 
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
@@ -241,7 +241,7 @@ label, y-axis label, plot legend, watermark, respectively.}
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively. This will preserve all data points but zoom in the plot.}
 
-\item{\code{xAxisValuesLimits, yAxisValuesLimits}}{A numeric vector of values limits for the x-and
+\item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.}
 
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to

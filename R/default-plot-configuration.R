@@ -126,7 +126,7 @@
 #' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively. This will preserve all data points but zoom in the plot.
-#' @field xAxisValuesLimits,yAxisValuesLimits A numeric vector of values limits for the x-and
+#' @field xValuesLimits,yValuesLimits A numeric vector of values limits for the x-and
 #'   y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
@@ -254,7 +254,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
-    xAxisValuesLimits = NULL,
+    xValuesLimits = NULL,
     xAxisScale = NULL,
     xAxisTicks = NULL,
     xAxisTicksLabels = tlf::TickLabelTransforms$identity,
@@ -268,7 +268,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
-    yAxisValuesLimits = NULL,
+    yValuesLimits = NULL,
     yAxisScale = NULL,
     yAxisTicks = NULL,
     yAxisTicksLabels = tlf::TickLabelTransforms$identity,
