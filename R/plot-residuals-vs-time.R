@@ -128,7 +128,7 @@ plotResidualsVsTime <- function(dataCombined,
     shape = "none",
     col = ggplot2::guide_legend(
       title = resVsTimePlotConfiguration$legend$title$text,
-      title.theme = resVsTimePlotConfiguration$legend$title$createPlotFont(),
+      title.theme = resVsTimePlotConfiguration$legend$title$createPlotTextBoxFont(),
       override.aes = list(shape = overrideShapeAssignment$shapeAssn)
     )
   )

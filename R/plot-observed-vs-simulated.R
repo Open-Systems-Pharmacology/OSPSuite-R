@@ -198,7 +198,7 @@ plotObservedVsSimulated <- function(dataCombined,
     shape = "none",
     col = ggplot2::guide_legend(
       title = obsVsPredPlotConfiguration$legend$title$text,
-      title.theme = obsVsPredPlotConfiguration$legend$title$createPlotFont(),
+      title.theme = obsVsPredPlotConfiguration$legend$title$createPlotTextBoxFont(),
       override.aes = list(shape = overrideShapeAssignment$shapeAssn)
     )
   ))
