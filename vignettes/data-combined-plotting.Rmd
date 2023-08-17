@@ -122,8 +122,8 @@ myPlotConfiguration$yUnit <- ospUnits$`Concentration [mass]`$`µg/l`
 myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 
 myPlotConfiguration$title <- "Example: Customizing a Plot"
-myPlotConfiguration$subtitle <- "Using `DefaultPlotConfiguration` class"
-myPlotConfiguration$caption <- "Source: `Aciclovir` data"
+myPlotConfiguration$subtitle <- "Using DefaultPlotConfiguration class"
+myPlotConfiguration$caption <- "Source: Aciclovir data"
 
 myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
 ```
