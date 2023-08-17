@@ -176,6 +176,7 @@
       by = .(group, name, xValues)
     ]
 
+
   return(simAggregatedData)
 }
 
@@ -747,7 +748,7 @@ DataAggregationMethods <-
 #' @noRd
 .normRange <- function(x, n = 1, na.rm = FALSE, ...) {
   mean <- mean(x, na.rm = na.rm, ...)
-  sd <- sd(x, na.rm = na.rm, ...)
+  sd <- sd(x, na.rm = na.rm)
   return(c(mean - (n * sd), mean, mean + (n * sd)))
 }
 
@@ -768,9 +769,9 @@ DataAggregationMethods <-
 
 
 .geoMean <- function(x, na.rm = FALSE, ...) {
-  exp(mean(log(x, ...), na.rm = na.rm, ...))
+  exp(mean(log10(x), na.rm = na.rm, ...))
 }
 
 .geoSD <- function(x, na.rm = FALSE, ...) {
-  exp(sd(log(x, ...), na.rm = na.rm, ...))
+  exp(sd(log10(x), na.rm = na.rm, ...))
 }

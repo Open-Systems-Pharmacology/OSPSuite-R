@@ -191,13 +191,6 @@ test_that("Aggregations are computed and displayed correctly", {
   )
 
   vdiffr::expect_doppelganger(
-    title = "use old quantiles argument",
-    fig = plotPopulationTimeProfile(myDataComb,
-      quantiles = c(0.1, 0.5, 0.9)
-    )
-  )
-
-  vdiffr::expect_doppelganger(
     title = "arithmetic mean",
     fig =
       plotPopulationTimeProfile(myDataComb,
@@ -205,14 +198,15 @@ test_that("Aggregations are computed and displayed correctly", {
       )
   )
 
-  # vdiffr::expect_doppelganger(
-  #   title = "arithmetic mean with 3 sd",
-  #   fig =
-  #     plotPopulationTimeProfile(myDataComb,
-  #       aggregation = "arithmetic",
-  #       n = 3
-  #     )
-  # )
+  vdiffr::expect_doppelganger(
+    title = "arithmetic mean with extra argument",
+    fig =
+      plotPopulationTimeProfile(myDataComb,
+                                aggregation = "arithmetic",
+                                n = 3 # 3 sd around mean
+      )
+  )
+
 
   vdiffr::expect_doppelganger(
     title = "geometric mean",
@@ -220,4 +214,13 @@ test_that("Aggregations are computed and displayed correctly", {
       aggregation = "geometric"
     )
   )
+
+  vdiffr::expect_doppelganger(
+    title = "geometric mean  with extra argument",
+    fig = plotPopulationTimeProfile(myDataComb,
+                                    aggregation = "geometric",
+                                    n = 3
+    )
+  )
+
 })

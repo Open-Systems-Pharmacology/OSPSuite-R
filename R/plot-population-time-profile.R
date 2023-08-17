@@ -48,12 +48,13 @@
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
                                       aggregation = "quantiles",
-                                      quantiles = c(0.05, 0.5, 0.95)) {
-  probs <- quantiles
+                                      quantiles = c(0.05, 0.5, 0.95),
+                                      ...) {
   .plotTimeProfile(
     dataCombined,
     defaultPlotConfiguration,
     aggregation,
-    probs
+    probs = quantiles,
+    ...
   )
 }
