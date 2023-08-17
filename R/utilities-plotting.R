@@ -769,9 +769,9 @@ DataAggregationMethods <-
 
 
 .geoMean <- function(x, na.rm = FALSE, ...) {
-  exp(mean(log10(x), na.rm = na.rm, ...))
+  exp(mean(log(x), na.rm = na.rm, ...))
 }
 
 .geoSD <- function(x, na.rm = FALSE, ...) {
-  exp(sd(log10(x), na.rm = na.rm, ...))
+  exp(sd(log(x), na.rm = na.rm, ...))
 }
