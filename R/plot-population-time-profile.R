@@ -54,7 +54,6 @@ plotPopulationTimeProfile <- function(dataCombined,
     dataCombined,
     defaultPlotConfiguration,
     aggregation,
-    probs = quantiles,
-    ...
+    probs = quantiles
   )
 }
