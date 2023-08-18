@@ -123,3 +123,19 @@ test_that("xAxisLabelTicksSize is correctly passed to plot configurations", {
     timeProfilePlotConfig$xAxis$font$size, 12
   )
 })
+
+
+test_that("Normal range works", {
+  expect_equal(
+    c(mean(randu$x) - sd(randu$x), mean(randu$x), mean(randu$x) + sd(randu$x)),
+    .normRange(randu$x)
+  )
+})
+
+test_that("Geometric range works", {
+  expect_equal(
+    c(exp(mean(log(randu$x))) - exp(sd(log(randu$x))),
+      exp(mean(log(randu$x))),
+      exp(mean(log((randu$x)))) + exp(sd(log(randu$x)))),
+    .geoRange(randu$x))
+})
