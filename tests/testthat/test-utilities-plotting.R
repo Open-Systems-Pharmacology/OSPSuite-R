@@ -134,8 +134,11 @@ test_that("Normal range works", {
 
 test_that("Geometric range works", {
   expect_equal(
-    c(exp(mean(log(randu$x))) - exp(sd(log(randu$x))),
+    c(
+      exp(mean(log(randu$x))) - exp(sd(log(randu$x))),
       exp(mean(log(randu$x))),
-      exp(mean(log((randu$x)))) + exp(sd(log(randu$x)))),
-    .geoRange(randu$x))
+      exp(mean(log((randu$x)))) + exp(sd(log(randu$x)))
+    ),
+    .geoRange(randu$x)
+  )
 })
