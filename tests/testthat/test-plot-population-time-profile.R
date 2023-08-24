@@ -205,5 +205,4 @@ test_that("Aggregations are computed and displayed correctly", {
       aggregation = "geometric"
     )
   )
-
 })
