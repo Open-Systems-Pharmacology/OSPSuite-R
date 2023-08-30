@@ -65,11 +65,16 @@ validateUnit <- function(unit, dimension) {
 
 #' Get base unit of a dimension
 #'
-#' @param dimension Dimension (string name) for which the base unit is returned.
+#' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #'
 #' @return String name of the base unit.
 #' @export
-getBaseUnit <- function(dimension) {
+getBaseUnit <- function(quantityOrDimension) {
+  if (isOfType(quantityOrDimension, "Quantity")) {
+    dimension <- quantityOrDimension$dimension
+  } else {
+    dimension <- quantityOrDimension
+  }
   validateDimension(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
   rClr::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
@@ -97,11 +102,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
 
   # Get the base unit of the dimension and call `toUnit()`
-  dimension <- quantityOrDimension
-  if (isOfType(quantityOrDimension, "Quantity")) {
-    dimension <- quantityOrDimension$dimension
-  }
-  baseUnit <- getBaseUnit(dimension)
+  baseUnit <- getBaseUnit(quantityOrDimension)
 
   toUnit(
     quantityOrDimension = quantityOrDimension,
