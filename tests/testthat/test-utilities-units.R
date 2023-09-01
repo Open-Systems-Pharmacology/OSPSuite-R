@@ -198,8 +198,11 @@ test_that("It returns NULL when the unit exists in the dimension,
 })
 
 context("getBaseUnit")
-test_that("It returns the correct base unit", {
-  expect_equal(getBaseUnit(dimension = "Amount"), .encodeUnit("µmol"))
+test_that("It returns the correct base unit when supplied with dimension", {
+  expect_equal(getBaseUnit(quantityOrDimension = "Amount"), .encodeUnit("µmol"))
+})
+test_that("It returns the correct base unit when supplied with quantity", {
+  expect_equal(getBaseUnit(getQuantity("Organism|VenousBlood|Plasma|CYP3A4|Concentration in container", sim)), .encodeUnit("µmol/l"))
 })
 
 
