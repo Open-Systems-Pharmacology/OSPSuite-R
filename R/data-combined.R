@@ -135,13 +135,17 @@ DataCombined <- R6::R6Class(
     #'
     #' @template simulation_results
     #'
+    #' @param silent A binary flag showing if warnings should be triggered when
+    #' data sets are overwritten in the `DataCombined` object
+    #'
     #' @return `DataCombined` object containing simulated data.
     addSimulationResults = function(simulationResults,
                                     quantitiesOrPaths = NULL,
                                     population = NULL,
                                     individualIds = NULL,
                                     names = NULL,
-                                    groups = NULL) {
+                                    groups = NULL,
+                                    silent = FALSE) {
       # Validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -170,7 +174,12 @@ DataCombined <- R6::R6Class(
         names <- ifelse(is.na(names), pathsNames, names)
       }
 
-      private$.verifyExistingNames(newNames = c(pathsNames, names))
+      # If the names are expected to be the same (replacing the data sets multiple times),
+      # a `silent` flag can be passed to silence warnings.
+      # By default, the warnings will be issued (`silent` set to `FALSE`).
+      if (!silent) {
+        private$.verifyExistingNames(newNames = c(pathsNames, names))
+      }
 
       # Update private fields and bindings for the new setter call
 

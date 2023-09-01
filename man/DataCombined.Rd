@@ -142,7 +142,8 @@ Add simulated data using instance of \code{SimulationResults} class.
   population = NULL,
   individualIds = NULL,
   names = NULL,
-  groups = NULL
+  groups = NULL,
+  silent = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -183,6 +184,9 @@ entry in the \code{group} column will be an \code{NA}). If provided, \code{group
 have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
 If no grouping is specified for any of the dataset, the column \code{group} in
 the data frame output will be all \code{NA}.}
+
+\item{\code{silent}}{A binary flag showing if warnings should be triggered when
+data sets are overwritten in the \code{DataCombined} object}
 }
 \if{html}{\out{</div>}}
 }

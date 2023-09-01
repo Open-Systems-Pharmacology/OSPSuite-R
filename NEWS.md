@@ -28,6 +28,7 @@ and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
   `yAxisLimits`. Use them to zoom in the plot while preserving all data points.
   Use `xValuesLimits` and `yValuesLimits` to filter out data point outside of these range. 
   More detailed explanations [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples)
+- `addSimulationResults` method of the `DataCombined` class now supports an optional `silent` argument which silences the checks for data set names. If you expect to replace data sets in `DataCombined` objects repeatedly, consider switching the parameter from the default `FALSE` value to `TRUE`. 
 
 # ospsuite 11.1.197
 
