@@ -642,6 +642,12 @@ test_that("it shows a warning when a dataset is added with the same name as a da
   expect_warning(dc$addSimulationResults(simResults))
 })
 
+test_that("The warning can be explicitly silenced", {
+  dc <- DataCombined$new()
+  dc$addSimulationResults(simResults)
+  expect_no_warning(dc$addSimulationResults(simResults, silent = TRUE))
+})
+
 # data transformations --------------------------
 
 test_that("data transformations don't work with arguments of wrong length", {
