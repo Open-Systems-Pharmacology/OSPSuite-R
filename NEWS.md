@@ -4,6 +4,7 @@
 - Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
 
 ## Breaking Changes
+- The single argument of the `getBaseUnit()` function is now named `quantityOrDimension` (was `dimension` previously). It can now use objects of class `Quantity` as inputs, to be consistent with the `toBaseUnit()` function.
 
 ## Major Changes
 
