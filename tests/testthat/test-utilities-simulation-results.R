@@ -166,7 +166,7 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   expect_equal(unique(df2$paths), "Organism|A")
 
   # names
-  expect_equal(sort(names(df)), sort(c(
+  expect_equal(sort(names(df1)), sort(c(
     "paths", "IndividualId", "Time", "simulationValues", "unit",
     "dimension", "TimeUnit", "TimeDimension", "molWeight"
   )))
