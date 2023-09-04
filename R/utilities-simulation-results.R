@@ -223,29 +223,30 @@ simulationResultsToDataFrame <- function(simulationResults,
     values_to = "simulationValues"
   )
 
-  units <- lapply(simList$metaData, function(path) {
-    path$unit
-  })
-  dims <- lapply(simList$metaData, function(path) {
-    path$dimension
-  })
-  molWeights <- lapply(unique(simData$paths), function(path) {
-    molWeight <- ospsuite::toUnit(
-      quantityOrDimension = ospDimensions$`Molecular weight`,
-      values              = simulationResults$simulation$molWeightFor(path),
-      targetUnit          = ospUnits$`Molecular weight`$`g/mol`
-    )
-  })
-  names(molWeights) <- unique(simData$paths)
 
-  simData <- dplyr::group_by(simData, paths) %>%
-    dplyr::mutate(
-      TimeDimension = dims$Time,
-      TimeUnit = units$Time,
-      dimension = dims[paths][[1]],
-      unit = units[paths][[1]],
-      molWeight = molWeights[paths][[1]]
+  units <- purrr::map(simList$metaData, "unit")
+
+  dims <- purrr::map(simList$metaData, "dimension")
+
+  molWeights <-
+    unique(simData$paths) %>%
+    purrr::set_names() %>%
+    purrr::map(~ospsuite::toUnit(
+      quantityOrDimension = ospDimensions$`Molecular weight`,
+      values              = simulationResults$simulation$molWeightFor(.x),
+      targetUnit          = ospUnits$`Molecular weight`$`g/mol`)
     )
+
+  simData <-  data.table::as.data.table(simData)
+  simData <- simData[,`:=`(TimeDimension =  dims$Time,
+                           TimeUnit =  units$Time,
+                           dimension =  dims[[paths]],
+                           unit =  units[[paths]],
+                           molWeight = molWeights[[paths]]),
+                     by = paths]
+
+
+
   # # consistently return a (classical) data frame
   return(as.data.frame(simData, stringsAsFactors = FALSE))
 }
