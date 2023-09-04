@@ -117,8 +117,7 @@ DataCombined <- R6::R6Class(
         private$.dataSetToDataFrame(dataSets, names)
       )
 
-
-      private$.extractBindings()
+      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
 
       self$setDataTransformations(names)
 
@@ -163,8 +162,9 @@ DataCombined <- R6::R6Class(
       pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
       pathsLength <- length(pathsNames)
 
-      # Validate alternative names for their length and type
+      # Validate alternative names and groups for their length and type
       names <- .cleanVectorArgs(names, pathsLength, type = "character")
+      groups <- .cleanVectorArgs(groups, pathsLength, type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -174,15 +174,7 @@ DataCombined <- R6::R6Class(
         names <- ifelse(is.na(names), pathsNames, names)
       }
 
-      # If the names are expected to be the same (replacing the data sets multiple times),
-      # a `silent` flag can be passed to silence warnings.
-      # By default, the warnings will be issued (`silent` set to `FALSE`).
-      if (!silent) {
-        private$.verifyExistingNames(newNames = c(pathsNames, names))
-      }
-
       # Update private fields and bindings for the new setter call
-
       private$.dataCombined <- private$.updateDataFrame(
         dataCurrent = private$.dataCombined,
         dataNew = private$.simResultsToDataFrame(
@@ -191,15 +183,12 @@ DataCombined <- R6::R6Class(
           population        = population,
           individualIds     = individualIds,
           names             = names
-        )
+        ),
+        silent = silent
       )
 
-      private$.extractBindings()
-
-      self$setDataTransformations(names)
-
       if (!is.null(groups)) {
-        self$setGroups(names %||% pathsNames, groups)
+        private$.updateGroups(names %||% pathsNames, groups)
       }
 
       # for method chaining
@@ -240,34 +229,20 @@ DataCombined <- R6::R6Class(
       names <- .cleanVectorArgs(names, type = "character")
       groups <- .cleanVectorArgs(groups, type = "character")
 
-      # `names` and `groups` need to be of the same length only if each dataset
-      # is assigned to a different group. But it is possible that the users
-      # want to assign all entered datasets to the same group.
-      #
-      # In the latter case, `groups` argument can be a scalar (length 1, i.e.)
-      # and we don't need to check that names and groups are of the same length.
-      if (length(groups) > 1L) {
-        validateIsSameLength(names, groups)
-      }
-
       # All entered datasets should be unique, name being their identifier.
       validateHasOnlyDistinctValues(names)
 
-      # Extract groupings and dataset names in a data frame.
-      #
-      # `purrr::simplify()` will simplify input vector (which can be an atomic
-      # vector or a list) to an atomic vector. That is, it'll cover both of these
-      # contexts:
-      #
-      # - `names/groups = c(...)`
-      # - `names/groups = list(...)`
-      groupData <- tibble::tibble(
-        name  = purrr::simplify(names),
-        group = purrr::simplify(groups)
-      )
+      # Inform the user about which datasets specified for grouping are missing
+      missingNames <- names[!names %in% self$names]
+      if (length(missingNames) > 0) {
+        message(messages$printMultipleEntries(
+          header  = messages$datasetsToGroupNotFound(),
+          entries = missingNames
+        ))
+      }
 
       # Update group map data frame
-      private$.updateGroupMap(groupData)
+      private$.updateGroups(names, groups)
 
       # for method chaining
       invisible(self)
@@ -284,24 +259,7 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with updated group assignments.
     removeGroupAssignment = function(names) {
-      # Return early if no datasets are present
-      if (is.null(private$.dataCombined)) {
-        stop(messages$noDatasetsPresentInDataCombined())
-      }
-
-      # Sanitize vector arguments of `character` type
-      names <- .cleanVectorArgs(names, type = "character")
-      validateHasOnlyDistinctValues(names)
-
-      # Extract dataset names in a data frame. Groupings for all of them are
-      # going to be `NA`, so make avail of `{tibble}`'s recycling rule.
-      groupData <- tibble::tibble(
-        name = purrr::simplify(names),
-        group = NA_character_
-      )
-
-      # Update group map data frame
-      private$.updateGroupMap(groupData)
+      self$setGroups(names, NULL)
 
       # for method chaining
       invisible(self)
@@ -417,6 +375,9 @@ DataCombined <- R6::R6Class(
       # future will have their own offsets and scale factors, which will need to
       # be appended to the existing ones.
       private$.cleanDataFrame(private$.dataCombined)
+
+      #WHERE??
+      #       self$setDataTransformations(names)
     },
 
     #' @description
@@ -441,7 +402,7 @@ DataCombined <- R6::R6Class(
     #'   `DataCombined` class instance.
     names = function(value) {
       if (missing(value)) {
-        return(private$.names)
+        return(unique(private$.dataCombined$name))
       }
 
       stop(messages$errorPropertyReadOnly("names"))
@@ -508,16 +469,20 @@ DataCombined <- R6::R6Class(
         individualIds     = individualIds
       )
 
-      # Irrespective of whether groups are specified or not, the data frames
-      # always start out with an empty `group` column, which is later modified
-      # in `$setGroups()` call.
-      simData$name <- simData$paths
-      simData$group <- NA_character_
-      simData$dataType <- "simulated"
-      simData$yErrorValues <- NA_real_
+      # Add a column 'names'. The names of simulation results are either their
+      # paths, of names provided by the user
+      if (is.null(names)){
+        simData$name <- simData$paths
+      } else {
+        new_names <- setNames(names, unique(simData$paths))
+        simData <- dplyr::mutate(simData,
+                                 name = new_names[paths])
+      }
 
-      # Use the user-defined new names for datasets
-      simData <- private$.renameDatasets(simData, names)
+      # Set type of data
+      simData$dataType <- "simulated"
+      # Simulated results do not have error values
+      simData$yErrorValues <- NA_real_
 
       # Simulated datasets and observed datasets are glued row-wise when a
       # combined data frame is prepared, and therefore it is necessary that the
@@ -532,30 +497,11 @@ DataCombined <- R6::R6Class(
         "yDimension" = "dimension"
       )
 
-      return(simData)
-    },
-
-    # Add a new column with alternate names
-    .renameDatasets = function(data, names = NULL) {
-      # Return early if there is no data
-      if (is.null(names)) {
-        return(data)
-      }
-
-      # Create a map vector with old and new names
-      new_names <- setNames(names, unique(data$name))
-
-      # Convert old names to new names
-      data$name <- unname(new_names[as.character(data$name)])
-
-      # Set name as first column
-      data <- dplyr::relocate(data, name)
-
-      return(data)
+       return(simData)
     },
 
     # Update the combined data frame "in place"
-    .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL) {
+    .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL, silent = FALSE) {
       # If there is existing data, it will be updated with the new data appended
       # at the bottom.
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
@@ -577,6 +523,11 @@ DataCombined <- R6::R6Class(
         # Also, a DataFrame can be updated several times by ospsuite. For
         # example, `addDataSet()` calls it twice.
         if (length(dupDatasets) > 0L) {
+          # Warn the user if he adds a dataset with a name already used in dataCombined
+          if (!silent){
+            messages$DataFrameNameAlreadyUsed(intersect(dupDatasets))
+          }
+
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
         }
 
@@ -589,45 +540,18 @@ DataCombined <- R6::R6Class(
       return(dataCurrent)
     },
 
-    # Update group map data frame
-    .updateGroupMap = function(groupData) {
-      # Check if any of the specified dataset names are currently not present
-      # in the combined data frame.
-      #
-      # This can happen when users make spelling mistakes in writing dataset
-      # names while specifying groupings, and failing silently will mean that
-      # such a mistake will not be brought to the user's attention.
-      specifiedNames <- unique(groupData$name)
-      currentNames <- unique(private$.dataCombined$name)
-
-      # Inform the user about which datasets are missing
-      if (!isIncluded(specifiedNames, currentNames)) {
-        missingNames <- specifiedNames[!specifiedNames %in% currentNames]
-
-        message(messages$printMultipleEntries(
-          header  = messages$datasetsToGroupNotFound(),
-          entries = missingNames
-        ))
+    # Update group mapping
+    .updateGroups = function(names, groups) {
+      #If only one group is provided, it must be assigned to all names
+      if(length(groups) == 1){
+        groups <- rep(groups, length(names))
       }
+      validateIsSameLength(names, groups)
 
-      # Update the specified groupings with what already exists
-      #
-      # The object could already have gathered some groupings during its
-      # lifetime, and they need to be updated after each `$setGroups()` call.
-      groupData <- private$.updateDataFrame(
-        dplyr::select(private$.groupMap, -dataType),
-        groupData
-      )
-
-      # Update grouping information column in the combined data frame
-      private$.dataCombined <- dplyr::left_join(
-        x  = dplyr::select(private$.dataCombined, -group),
-        y  = groupData,
-        by = "name"
-      )
-
-      # Update active binding with the new grouping specification
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
+      # Map groups to names
+      for (idx in seq_along(names)){
+        private$.groupMap[[names[[idx]]]] <- groups[[idx]]
+      }
     },
 
     # Transform the dataset using specified offsets and scale factors
@@ -686,56 +610,6 @@ DataCombined <- R6::R6Class(
       return(data)
     },
 
-    # Extract all active bindings
-    .extractBindings = function() {
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.dataCombined <- private$.addRawDataColumns(private$.dataCombined)
-      private$.names <- private$.extractNames(private$.dataCombined)
-    },
-
-    # Extract data frame with group mappings
-    .extractGroupMap = function(data) {
-      data <-
-        data %>%
-        # Retain only the columns that have relevant information for group mapping.
-        # Keep only distinct combinations.
-        dplyr::distinct(group, name, dataType) %>%
-        # Arrange the dataframe alphabetically:
-        # first by group name column and then by dataset name column
-        dplyr::arrange(group, name)
-
-      return(data)
-    },
-
-    # Extract unique and sorted dataset names from the combined data frame
-    .extractNames = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      return(sort(unique(data$name)))
-    },
-
-    # During object's lifecycle, the applied data transformations can change,
-    # and therefore internal copies of raw data should be retained.
-    #
-    # This way, when transformation parameter values are updated, the raw data
-    # can be re-transformed with the new parameters.
-    .addRawDataColumns = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      # Create new columns with internal copies of raw data
-      data$xRawValues <- data$xValues
-      data$yRawValues <- data$yValues
-      data$yRawErrorValues <- data$yErrorValues
-
-      return(data)
-    },
-
     # Clean data frame before returning it to the user
     .cleanDataFrame = function(data = NULL) {
       # Return early if there is no data
@@ -772,18 +646,11 @@ DataCombined <- R6::R6Class(
       # Always a return a tibble data frame
       return(dplyr::as_tibble(data))
     },
-    # Warn the user if he adds a dataset with a name already used in dataCombined
-    .verifyExistingNames = function(newNames) {
-      if (any(c(newNames) %in% self$names)) {
-        messages$DataFrameNameAlreadyUsed(intersect(newNames, self$names))
-      }
-    },
 
     # private fields ----------------------------------------
-
     .dataCombined = NULL,
-    .groupMap = NULL,
-    .names = NULL,
+    # Mapping of data set name to a group
+    .groupMap = list(),
     .dataTransformations = NULL
   ),
 
