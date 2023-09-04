@@ -223,59 +223,30 @@ simulationResultsToDataFrame <- function(simulationResults,
     values_to = "simulationValues"
   )
 
-  # Extract units and dimensions for paths in a separate data frame
-  # iterate over the list (in `.x`) using index (names for list elements)
-  # and apply function in `.f` to each element.
-  #
-  # The result will be a list of data frames, which will be row-wise glued into
-  # a single data frame with the `_dfr` variant of this function.
-  simMetaData <- purrr::imap_dfr(
-    .x = simList$metaData,
-    .f = ~ as.data.frame(.x, row.names = NULL, stringsAsFactors = FALSE),
-    .id = "paths"
-  )
-
-  # Leave out time units and dimensions since time is not a path; they will be
-  # added at a later stage.
-  simMetaData <- dplyr::filter(simMetaData, paths != "Time")
-
-  # Combine data frame with simulated data and meta data.
-  simData <- dplyr::left_join(simData, simMetaData, by = "paths")
-
-  # Add back in the previously left out time meta data to the combined data frame.
-  simData <- dplyr::bind_cols(
-    simData,
-    dplyr::tibble(
-      "TimeUnit" = simList$metaData$Time$unit[[1]],
-      "TimeDimension" = simList$metaData$Time$dimension[[1]]
+  units <- lapply(simList$metaData, function(path) {
+    path$unit
+  })
+  dims <- lapply(simList$metaData, function(path) {
+    path$dimension
+  })
+  molWeights <- lapply(unique(simData$paths), function(path) {
+    molWeight <- ospsuite::toUnit(
+      quantityOrDimension = ospDimensions$`Molecular weight`,
+      values              = simulationResults$simulation$molWeightFor(path),
+      targetUnit          = ospUnits$`Molecular weight`$`g/mol`
     )
-  )
+  })
+  names(molWeights) <- unique(simData$paths)
 
-  # For each path, extract the molecular weight based on that path string
-  #
-  # This involves first grouping and nesting the data by path. Note that
-  # `nest()` here will have a better performance than `rowwise()`. E.g., if
-  # there are 100 rows, `rowwise()` will run the computation 100 times, while
-  # with `nest()`, the computation only be carried for the same number of
-  # times as the number of `paths` present.
-  simData <- simData %>%
-    dplyr::group_by(paths) %>%
-    tidyr::nest() %>%
-    # Add a new column for molecular weight.
-    # When you call `molWeightFor()`, it returns the value in the base unit -
-    # which is `kg/µmol`. This is not the unit the user would expect, so we
-    # convert it first to the common unit `g/mol`.
+  simData <- dplyr::group_by(simData, paths) %>%
     dplyr::mutate(
-      molWeight = ospsuite::toUnit(
-        quantityOrDimension = ospDimensions$`Molecular weight`,
-        values              = simulationResults$simulation$molWeightFor(paths),
-        targetUnit          = ospUnits$`Molecular weight`$`g/mol`
-      )
-    ) %>%
-    tidyr::unnest(cols = c(data)) %>%
-    dplyr::ungroup()
-
-  # consistently return a (classical) data frame
+      TimeDimension = dims$Time,
+      TimeUnit = units$Time,
+      dimension = dims[paths][[1]],
+      unit = units[paths][[1]],
+      molWeight = molWeights[paths][[1]]
+    )
+  # # consistently return a (classical) data frame
   return(as.data.frame(simData, stringsAsFactors = FALSE))
 }
 

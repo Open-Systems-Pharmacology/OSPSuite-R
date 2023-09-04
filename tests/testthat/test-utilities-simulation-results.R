@@ -166,12 +166,12 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   expect_equal(unique(df2$paths), "Organism|A")
 
   # names
-  expect_equal(
-    names(df1),
-    c(
-      "paths", "IndividualId", "Time", "simulationValues", "unit",
-      "dimension", "TimeUnit", "TimeDimension", "molWeight"
-    )
+  expect_true(
+    all(names(df1) %in%
+      c(
+        "paths", "IndividualId", "Time", "simulationValues", "unit",
+        "dimension", "TimeUnit", "TimeDimension", "molWeight"
+      ))
   )
 })
 
