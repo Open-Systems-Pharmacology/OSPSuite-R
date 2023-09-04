@@ -24,12 +24,13 @@ environment:
   NOT_CRAN: true
   KEEP_VIGNETTES: false
   R_BUILD_ARGS: --no-build-vignettes --no-manual
-  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_ARCH: x64
   R_VERSION: 4.1.0
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: true
-
+  R_PKGTYPE: binary
+  
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
