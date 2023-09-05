@@ -188,6 +188,23 @@ test_that("data frame molecular weight column values are as expected", {
   expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
 })
 
+# Performance tests are only run on machines
+# with the OSPSUITE-BENCHMARK-TESTS environment variable set to TRUE
+if (Sys.getenv("OSPSUITE-BENCHMARK-TESTS") == "TRUE") {
+  # This is an example benchmark that takes around 4 seconds
+  benchmark_1e8 <- system.time({for (i in 1:1e8) {res <- 2**0.5}})
+  # In the current implementation, 100 runs of simulationResultsToDataFrame() work
+  # approximately twice faster than the benchmark above
+  test_that("The simulationResultsToDataFrame() performance is not degraded, compared to a reference performance", {
+    benchmark <- system.time({
+      for (i in 1:100) {
+        simulationResultsToDataFrame(simResults)
+      }
+    })
+    expect_lt(benchmark[["elapsed"]], benchmark_1e8[["elapsed"]])
+  })
+}
+
 # grouping validation ---------------------------------------
 
 test_that("with no grouping specified, group column in data frame is `NA`", {
