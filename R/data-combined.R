@@ -108,23 +108,25 @@ DataCombined <- R6::R6Class(
         names <- ifelse(is.na(names), datasetNames, names)
       }
 
-      private$.verifyExistingNames(newNames = c(datasetNames, names))
-
       # Update private fields and bindings for the new setter call
-
       private$.dataCombined <- private$.updateDataFrame(
         private$.dataCombined,
-        private$.dataSetToDataFrame(dataSets, names)
+        private$.dataSetToDataFrame(dataSets, names),
+        silent = silent
       )
 
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-
+      names <- names %||% datasetNames
+      # Reset data transformations
       self$setDataTransformations(names)
 
       if (!is.null(groups)) {
-        self$setGroups(names %||% datasetNames, groups)
+        private$.updateGroups(names)
       }
 
+      # Set data type
+      for (name in names){
+        private$.dataType[[name]] <- "observed"
+      }
       # for method chaining
       invisible(self)
     },
@@ -187,10 +189,18 @@ DataCombined <- R6::R6Class(
         silent = silent
       )
 
+      names <- names %||% pathsNames
+      # Reset data transformations
+      self$setDataTransformations(names)
+
       if (!is.null(groups)) {
-        private$.updateGroups(names %||% pathsNames, groups)
+        private$.updateGroups(names, groups)
       }
 
+      # Set data type
+      for (name in names){
+        private$.dataType[[name]] <- "simulated"
+      }
       # for method chaining
       invisible(self)
     },
@@ -307,33 +317,59 @@ DataCombined <- R6::R6Class(
 
       forNames <- .cleanVectorArgs(forNames, type = "character")
 
-      # If any of the values is missing, they are retained from already existing values
-      if ((!reset) & (!is.null(private$.dataTransformations))) {
-        if (any(!missing(xOffsets), !missing(yOffsets), !missing(xScaleFactors), !missing(yScaleFactors))) {
-          if (missing(xOffsets)) {
-            xOffsetsNew <- private$.dataTransformations$xOffsets
-          }
-          if (missing(yOffsets)) {
-            yOffsetsNew <- private$.dataTransformations$yOffsets
-          }
-          if (missing(xScaleFactors)) {
-            xScaleFactorsNew <- private$.dataTransformations$xScaleFactors
-          }
-          if (missing(yScaleFactors)) {
-            yScaleFactorsNew <- private$.dataTransformations$yScaleFactors
-          }
+      # Replace single values by a vector if the same value has to be applied to
+      # all names
+      if (!missing(xOffsets)){
+        if(length(xOffsets) == 1){
+          xOffsets <- rep(xOffsets, length(forNames))
         }
       }
 
-      # Apply specified data transformations
-      private$.dataCombined <- private$.dataTransform(
-        data          = private$.dataCombined,
-        forNames      = forNames,
-        xOffsets      = xOffsetsNew,
-        yOffsets      = yOffsetsNew,
-        xScaleFactors = xScaleFactorsNew,
-        yScaleFactors = yScaleFactorsNew
-      )
+      if (!missing(yOffsets)){
+        if(length(yOffsets) == 1){
+          yOffsets <- rep(yOffsets, length(forNames))
+        }
+      }
+
+      if (!missing(xScaleFactors)){
+        if(length(xScaleFactors) == 1){
+          xScaleFactors <- rep(xScaleFactors, length(forNames))
+        }
+      }
+
+      if (!missing(yScaleFactors)){
+        if(length(yScaleFactors) == 1){
+          yScaleFactors <- rep(yScaleFactors, length(forNames))
+        }
+      }
+
+      # Store values
+      for (idx in seq_along(forNames)){
+        name <- forNames[[idx]]
+        if (!missing(xOffsets)){
+          private$.xOffsets[[name]] <- xOffsets[[idx]]
+        } else if (reset){
+          private$.xOffsets[[name]] <- 1
+        }
+
+        if (!missing(yOffsets)){
+          private$.yOffsets[[name]] <- yOffsets[[idx]]
+        } else if (reset){
+          private$.yOffsets[[name]] <- 1
+        }
+
+        if (!missing(xScaleFactors)){
+          private$.xScaleFactors[[name]] <- xScaleFactors[[idx]]
+        } else if (reset){
+          private$.xScaleFactors[[name]] <- 1
+        }
+
+        if (!missing(yScaleFactors)){
+          private$.yScaleFactors[[name]] <- yScaleFactors[[idx]]
+        } else if (reset){
+          private$.yScaleFactors[[name]] <- 1
+        }
+      }
 
       # for method chaining
       invisible(self)
@@ -359,25 +395,12 @@ DataCombined <- R6::R6Class(
     #'
     #' The molecular weight (in `molWeight` column) is in `g/mol` units.
     toDataFrame = function() {
-      # It is deliberate that the returned data frame is "cleaned" every time
-      # this method is called, instead of just internally storing a copy of
-      # cleaned data frame and returning it.
-      #
-      # `R6` classes have reference (as opposed to value) semantics. This means
-      # the class instance will be modified *in place*, and the combined data
-      # will be updated with it for each method call. But, some information
-      # omitted during clean-up needs to be retained during the entirety of
-      # the object's lifecycle.
-      #
-      # For example, offset and scale factor columns are removed during
-      # cleaning, but they need to be retained in the private copy of the
-      # combined data frame because the datasets that might be added in the
-      # future will have their own offsets and scale factors, which will need to
-      # be appended to the existing ones.
-      private$.cleanDataFrame(private$.dataCombined)
-
-      #WHERE??
-      #       self$setDataTransformations(names)
+      # Add `group` column
+      dplyr::mutate(private$.dataCombined,
+                    group = private$.groupMap[name][[1]] %||% NA,
+                    dataType = private$.dataType[name][[1]]) %>%
+        # Apply data transformations
+        private$.dataTransform()
     },
 
     #' @description
@@ -388,7 +411,7 @@ DataCombined <- R6::R6Class(
       private$printClass()
       private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
-      print(private$.groupMap)
+      print(self$groupMap)
 
       # for method chaining
       invisible(self)
@@ -414,7 +437,11 @@ DataCombined <- R6::R6Class(
     #'   `NA` in the data frame.
     groupMap = function(value) {
       if (missing(value)) {
-        return(private$.groupMap)
+        return(
+          dplyr::tibble(name  = self$names) %>%
+          dplyr::mutate(group = private$.groupMap[name][[1]] %||% NA,
+                        dataType = private$.dataType[name][[1]])
+        )
       }
 
       stop(messages$errorPropertyReadOnly("groupMap"))
@@ -424,7 +451,21 @@ DataCombined <- R6::R6Class(
     #'   values were specified by the user for each dataset.
     dataTransformations = function(value) {
       if (missing(value)) {
-        return(private$.dataTransformations)
+        return(
+          dplyr::tibble(
+          name          = self$names,
+          # For offsets: `0` (default for no change)
+          xOffsets      = 0,
+          yOffsets      = 0,
+          # For scale factors: `1` (default for no change)
+          xScaleFactors = 1,
+          yScaleFactors = 1
+        ) %>%
+          dplyr::mutate(xOffsets = private$.xOffsets[name][[1]] %||% xOffsets,
+                        yOffsets = private$.yOffsets[name][[1]] %||% yOffsets,
+                        xScaleFactors = private$.xScaleFactors[name][[1]] %||% xScaleFactors,
+                        yScaleFactors = private$.yScaleFactors[name][[1]] %||% yScaleFactors)
+        )
       }
 
       stop(messages$errorPropertyReadOnly("dataTransformations"))
@@ -440,14 +481,14 @@ DataCombined <- R6::R6Class(
       # scalar, a vector, or a list of `DataSet` class instances.
       obsData <- dataSetToTibble(dataSets)
 
-      # Irrespective of whether groups are specified or not, the data frames
-      # always start out with an empty `group` column, which is later modified
-      # in `$setGroups()` call.
-      obsData$dataType <- "observed"
-      obsData$group <- NA_character_
+      # Rename, if specific names are provided
+      if (!is.null(names)){
+        new_names <- setNames(names, unique(obsData$names))
+        obsData$name <- unname(new_names[as.character(obsData$name)])
+      }
 
-      # Use the user-defined new names for datasets
-      obsData <- private$.renameDatasets(obsData, names)
+      # Set type of data
+      obsData$dataType <- "observed"
 
       return(obsData)
     },
@@ -469,33 +510,34 @@ DataCombined <- R6::R6Class(
         individualIds     = individualIds
       )
 
-      # Add a column 'names'. The names of simulation results are either their
-      # paths, of names provided by the user
-      if (is.null(names)){
-        simData$name <- simData$paths
-      } else {
-        new_names <- setNames(names, unique(simData$paths))
+      # Simulated datasets and observed datasets are glued row-wise when a
+      # combined data frame is prepared, and therefore it is necessary that the
+      # same kind of quantities have the same column names so that they are
+      # glued appropriately. This requires renaming a few columns.
+      # Also rename "paths to "names". If no custom names are specified, the names
+      # are always the paths
+      simData <- dplyr::rename(simData,
+                               "xValues"    = "Time",
+                               "xUnit"      = "TimeUnit",
+                               "xDimension" = "TimeDimension",
+                               "yValues"    = "simulationValues",
+                               "yUnit"      = "unit",
+                               "yDimension" = "dimension",
+                               "name" = "paths"
+      )
+
+
+      # Update names, if custom names are specified
+      if (!is.null(names)){
+        new_names <- setNames(names, unique(simData$name))
         simData <- dplyr::mutate(simData,
-                                 name = new_names[paths])
+                                 name = new_names[name])
       }
 
       # Set type of data
       simData$dataType <- "simulated"
       # Simulated results do not have error values
       simData$yErrorValues <- NA_real_
-
-      # Simulated datasets and observed datasets are glued row-wise when a
-      # combined data frame is prepared, and therefore it is necessary that the
-      # same kind of quantities have the same column names so that they are
-      # glued appropriately. This requires renaming a few columns.
-      simData <- dplyr::rename(simData,
-        "xValues"    = "Time",
-        "xUnit"      = "TimeUnit",
-        "xDimension" = "TimeDimension",
-        "yValues"    = "simulationValues",
-        "yUnit"      = "unit",
-        "yDimension" = "dimension"
-      )
 
        return(simData)
     },
@@ -555,57 +597,19 @@ DataCombined <- R6::R6Class(
     },
 
     # Transform the dataset using specified offsets and scale factors
-    .dataTransform = function(data,
-                              forNames = NULL,
-                              xOffsets = 0,
-                              yOffsets = 0,
-                              xScaleFactors = 1,
-                              yScaleFactors = 1) {
+    .dataTransform = function(data) {
       # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
 
-      # Keep all transformation parameters and their names linked together in a
-      # data frame data structure.
-      #
-      # Additionally, if no names are provides, the transformations will apply
-      # to the entire data frame, and thus dataset names can be a placeholder for
-      # the purpose of joining of data frame with arguments and data frame with
-      # raw data that needs to be transformed.
-      dataArg <- dplyr::tibble(
-        name          = forNames %||% unique(data$name),
-        # For offsets: `0` (default for no change)
-        xOffsets      = tidyr::replace_na(xOffsets, 0),
-        yOffsets      = tidyr::replace_na(yOffsets, 0),
-        # For scale factors: `1` (default for no change)
-        xScaleFactors = tidyr::replace_na(xScaleFactors, 1),
-        yScaleFactors = tidyr::replace_na(yScaleFactors, 1)
-      )
-
-      # Update private$.dataTransformations with new transformation settings
-      private$.dataTransformations <-
-        private$.updateDataFrame(
-          dataCurrent = private$.dataTransformations,
-          dataNew     = dataArg
-        ) %>%
-        # Preserve the order from data
-        dplyr::arrange(match(name, data$name))
-
-      # Every call to method to set transformations refreshes these parameters.
-      #
-      # Thus, if there are any existing parameters from object's lifecycle,
-      # they should be removed and set with the new/default values.
-      data <-
-        data %>%
-        dplyr::select(-tidyr::any_of(colnames(private$.dataTransformations)[-1])) %>%
-        dplyr::left_join(y = private$.dataTransformations, by = "name") %>%
-        # Apply the specified transformations to the columns of interest
-        dplyr::mutate(
-          xValues = (xRawValues + xOffsets) * xScaleFactors,
-          yValues = (yRawValues + yOffsets) * yScaleFactors,
-          yErrorValues = yRawErrorValues * abs(yScaleFactors)
-        )
+      # Get transformation values
+      dataTransformations <- self$dataTransformations
+      # Tranform values in data frame
+      data <- dplyr::group_by(data, name) %>%
+      dplyr::mutate(xValues = (xValues + dataTransformations[dataTransformations$name == unique(name),]$xOffsets) * dataTransformations[dataTransformations$name == unique(name),]$xScaleFactors,
+                    yValues = (yValues + dataTransformations[dataTransformations$name == unique(name),]$yOffsets) * dataTransformations[dataTransformations$name == unique(name),]$yScaleFactors,
+                    yErrorValues = yErrorValues * abs(dataTransformations[dataTransformations$name == unique(name),]$yScaleFactors))
 
       return(data)
     },
@@ -617,41 +621,15 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      # Returned data frame should always have a consistent column order
-      data <- data %>%
-        dplyr::select(
-          # All data identifier columns
-          name,
-          group,
-          dataType,
-          # Everything related to the X-variable
-          "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
-          # Everything related to the Y-variable
-          "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
-          # All other columns go after that (meta data, etc.)
-          dplyr::everything(),
-          # The following columns are no longer necessary
-          #
-          # Retaining the offset and scale factor parameters might confuse the
-          # user about whether the transformations are supposed to be carried out
-          # by the user using these values, or these transformations have already
-          # been carried out.
-          -dplyr::matches("^paths$"),
-          -dplyr::matches("offsets$|scalefactors$"),
-          -(dplyr::contains("raw") & dplyr::matches("values$"))
-        ) %>%
-        # Arrange the data frame in alphabetical order of the dataset name.
-        dplyr::arrange(name)
-
-      # Always a return a tibble data frame
-      return(dplyr::as_tibble(data))
-    },
-
     # private fields ----------------------------------------
     .dataCombined = NULL,
     # Mapping of data set name to a group
     .groupMap = list(),
-    .dataTransformations = NULL
+    .dataType = list(),
+    .xOffsets = list(),
+    .yOffsets = list(),
+    .xScaleFactors = list(),
+    .yScaleFactors = list()
   ),
 
   # class default properties ---------------------------------

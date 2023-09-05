@@ -8,7 +8,8 @@ plotPopulationTimeProfile(
   dataCombined,
   defaultPlotConfiguration = NULL,
   aggregation = "quantiles",
-  quantiles = c(0.05, 0.5, 0.95)
+  quantiles = c(0.05, 0.5, 0.95),
+  ...
 )
 }
 \arguments{
@@ -23,6 +24,9 @@ replace \code{yValues} by the median, arithmetic or geometric average and add a 
 (\code{yValuesLower} and \code{yValuesHigher})}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
+
+\item{...}{Extra parameters to pass to aggregating functions. \code{probs} for \code{stats::quantile} or \code{n} for the number of
+standard deviation to add below and above the average for \code{arithmetic} or \code{geometric}.}
 }
 \description{
 Time-values profile plot for population simulations
