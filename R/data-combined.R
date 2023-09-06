@@ -165,7 +165,7 @@ DataCombined <- R6::R6Class(
 
       # Validate alternative names and groups for their length and type
       names <- .cleanVectorArgs(names, pathsLength, type = "character")
-      groups <- .cleanVectorArgs(groups, pathsLength, type = "character")
+      groups <- .cleanVectorArgs(groups, type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #

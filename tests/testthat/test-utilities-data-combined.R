@@ -54,7 +54,7 @@ test_that(
   "DataCombined objects keep LLOQ data passed from underlying DataSet objects",
   expect_equal(
     myDC$toDataFrame()$lloq,
-    c(rep(0.02, length(obsData$yValues)), rep(NA, nrow(df)))
+    c(rep(NA, nrow(df)), rep(0.02, length(obsData$yValues)))
   )
 )
 
