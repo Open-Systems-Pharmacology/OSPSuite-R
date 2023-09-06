@@ -1,4 +1,4 @@
-# ospsuite 11.2 (development)
+# ospsuite 12.0 (development)
 
 ## New features
 - Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
@@ -19,6 +19,13 @@ and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
 
 ## Minor Changes
 
+- The order of columns of the data frame returned by `DataCombined$toDataFrame()` has changed.
+- `DataCombined$toDataFrame()` shows the data in the order as the data sets were 
+added and not alphabetically sorted.
+- `DataCombined$removeGroupAssignment()` does not show a warning if specified name is
+not present in the `DataCombined`.
+- `DataCombined$removeGroupAssignment()` does not produce an error if specified 
+names are not unique.
 - Fixed Passing font size options from plotConfiguration objects to tlf objects #1198
 - Legend now have transparent background by default and can be customized through new 
   `DefaultPlotConfiguration` fields #1216
@@ -29,7 +36,10 @@ and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
   `yAxisLimits`. Use them to zoom in the plot while preserving all data points.
   Use `xValuesLimits` and `yValuesLimits` to filter out data point outside of these range. 
   More detailed explanations [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples)
-- `addSimulationResults` method of the `DataCombined` class now supports an optional `silent` argument which silences the checks for data set names. If you expect to replace data sets in `DataCombined` objects repeatedly, consider switching the parameter from the default `FALSE` value to `TRUE`. 
+- `addSimulationResults` and `addDataSets` methods of the `DataCombined` class now 
+support an optional `silent` argument which silences the checks for data set names.
+If you expect to replace data sets in `DataCombined` objects repeatedly, consider 
+switching the parameter from the default `FALSE` value to `TRUE`. 
 
 # ospsuite 11.1.197
 

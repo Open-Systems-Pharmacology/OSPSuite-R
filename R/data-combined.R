@@ -84,13 +84,14 @@ DataCombined <- R6::R6Class(
     #'
     #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
     #'   class.
+    #' @param silent A binary flag showing if warnings should be triggered when
+    #' data sets are overwritten in the `DataCombined` object
     #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, names = NULL, groups = NULL) {
+    addDataSets = function(dataSets, names = NULL, groups = NULL, silent = FALSE) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       numberOfDatasets <- objectCount(dataSets)
-
       names <- .cleanVectorArgs(names, numberOfDatasets, type = "character")
 
       # The original names for datasets can be "plucked" from objects.
@@ -119,12 +120,10 @@ DataCombined <- R6::R6Class(
       # Reset data transformations
       self$setDataTransformations(names)
 
-      if (!is.null(groups)) {
-        private$.updateGroups(names)
-      }
+      private$.updateGroups(names, groups)
 
       # Set data type
-      for (name in names){
+      for (name in names) {
         private$.dataType[[name]] <- "observed"
       }
       # for method chaining
@@ -193,12 +192,10 @@ DataCombined <- R6::R6Class(
       # Reset data transformations
       self$setDataTransformations(names)
 
-      if (!is.null(groups)) {
-        private$.updateGroups(names, groups)
-      }
+      private$.updateGroups(names, groups)
 
       # Set data type
-      for (name in names){
+      for (name in names) {
         private$.dataType[[name]] <- "simulated"
       }
       # for method chaining
@@ -269,7 +266,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with updated group assignments.
     removeGroupAssignment = function(names) {
-      self$setGroups(names, NULL)
+      for (idx in seq_along(names)) {
+        private$.groupMap[[names[[idx]]]] <- NULL
+      }
 
       # for method chaining
       invisible(self)
@@ -309,64 +308,75 @@ DataCombined <- R6::R6Class(
                                       xScaleFactors = 1,
                                       yScaleFactors = 1,
                                       reset = FALSE) {
+      missingArgs <- list(
+        xOffsets = missing(xOffsets),
+        yOffsets = missing(yOffsets),
+        xScaleFactors = missing(xScaleFactors),
+        yScaleFactors = missing(yScaleFactors)
+      )
       # Check that the arguments to parameters make sense
-      xOffsetsNew <- .cleanVectorArgs(xOffsets, type = "numeric")
-      yOffsetsNew <- .cleanVectorArgs(yOffsets, type = "numeric")
-      xScaleFactorsNew <- .cleanVectorArgs(xScaleFactors, type = "numeric")
-      yScaleFactorsNew <- .cleanVectorArgs(yScaleFactors, type = "numeric")
+      xOffsets <- .cleanVectorArgs(xOffsets, type = "numeric")
+      yOffsets <- .cleanVectorArgs(yOffsets, type = "numeric")
+      xScaleFactors <- .cleanVectorArgs(xScaleFactors, type = "numeric")
+      yScaleFactors <- .cleanVectorArgs(yScaleFactors, type = "numeric")
+
+      # Clean up NAs
+      # For offsets: `0` (default for no change)
+      xOffsets <- tidyr::replace_na(xOffsets, 0)
+      yOffsets <- tidyr::replace_na(yOffsets, 0)
+      # For scale factors: `1` (default for no change)
+      xScaleFactors <- tidyr::replace_na(xScaleFactors, 1)
+      yScaleFactors <- tidyr::replace_na(yScaleFactors, 1)
 
       forNames <- .cleanVectorArgs(forNames, type = "character")
+      # if no names a provided, apply transformations to all data sets.
+      if (is.null(forNames)) {
+        forNames <- self$names
+      }
 
       # Replace single values by a vector if the same value has to be applied to
       # all names
-      if (!missing(xOffsets)){
-        if(length(xOffsets) == 1){
-          xOffsets <- rep(xOffsets, length(forNames))
-        }
+      if (length(xOffsets) == 1) {
+        xOffsets <- rep(xOffsets, length(forNames))
       }
 
-      if (!missing(yOffsets)){
-        if(length(yOffsets) == 1){
-          yOffsets <- rep(yOffsets, length(forNames))
-        }
+      if (length(yOffsets) == 1) {
+        yOffsets <- rep(yOffsets, length(forNames))
       }
 
-      if (!missing(xScaleFactors)){
-        if(length(xScaleFactors) == 1){
-          xScaleFactors <- rep(xScaleFactors, length(forNames))
-        }
+      if (length(xScaleFactors) == 1) {
+        xScaleFactors <- rep(xScaleFactors, length(forNames))
       }
 
-      if (!missing(yScaleFactors)){
-        if(length(yScaleFactors) == 1){
-          yScaleFactors <- rep(yScaleFactors, length(forNames))
-        }
+      if (length(yScaleFactors) == 1) {
+        yScaleFactors <- rep(yScaleFactors, length(forNames))
       }
+      ospsuite.utils::validateIsSameLength(forNames, xOffsets, yOffsets, xScaleFactors, yScaleFactors)
 
       # Store values
-      for (idx in seq_along(forNames)){
+      for (idx in seq_along(forNames)) {
         name <- forNames[[idx]]
-        if (!missing(xOffsets)){
+        if (!missingArgs$xOffsets) {
           private$.xOffsets[[name]] <- xOffsets[[idx]]
-        } else if (reset){
-          private$.xOffsets[[name]] <- 1
+        } else if (reset) {
+          private$.xOffsets[[name]] <- 0
         }
 
-        if (!missing(yOffsets)){
+        if (!missingArgs$yOffsets) {
           private$.yOffsets[[name]] <- yOffsets[[idx]]
-        } else if (reset){
-          private$.yOffsets[[name]] <- 1
+        } else if (reset) {
+          private$.yOffsets[[name]] <- 0
         }
 
-        if (!missing(xScaleFactors)){
+        if (!missingArgs$xScaleFactors) {
           private$.xScaleFactors[[name]] <- xScaleFactors[[idx]]
-        } else if (reset){
+        } else if (reset) {
           private$.xScaleFactors[[name]] <- 1
         }
 
-        if (!missing(yScaleFactors)){
+        if (!missingArgs$yScaleFactors) {
           private$.yScaleFactors[[name]] <- yScaleFactors[[idx]]
-        } else if (reset){
+        } else if (reset) {
           private$.yScaleFactors[[name]] <- 1
         }
       }
@@ -395,12 +405,20 @@ DataCombined <- R6::R6Class(
     #'
     #' The molecular weight (in `molWeight` column) is in `g/mol` units.
     toDataFrame = function() {
-      # Add `group` column
-      dplyr::mutate(private$.dataCombined,
-                    group = private$.groupMap[name][[1]] %||% NA,
-                    dataType = private$.dataType[name][[1]]) %>%
-        # Apply data transformations
-        private$.dataTransform()
+      # quit early if no data is available
+      if (is.null(private$.dataCombined)) {
+        return(NULL)
+      }
+      # Add `group` column. Cannot use `mutate` because it would
+      # require `rowwise` which kills the performance
+      # Fist add empty column
+      private$.dataCombined$group <- NA_character_
+      for (name in self$names) {
+        private$.dataCombined[private$.dataCombined$name == name, ]$group <- private$.groupMap[[name]] %||% NA_character_
+      }
+
+      # Apply data transformations
+      private$.dataTransform(private$.dataCombined)
     },
 
     #' @description
@@ -437,10 +455,18 @@ DataCombined <- R6::R6Class(
     #'   `NA` in the data frame.
     groupMap = function(value) {
       if (missing(value)) {
+        # quit early if no data is available
+        if (is.null(private$.dataCombined)) {
+          return(NULL)
+        }
         return(
-          dplyr::tibble(name  = self$names) %>%
-          dplyr::mutate(group = private$.groupMap[name][[1]] %||% NA,
-                        dataType = private$.dataType[name][[1]])
+          dplyr::tibble(name = self$names) %>%
+            dplyr::rowwise() %>%
+            dplyr::mutate(
+              group = private$.groupMap[[name]] %||% NA_character_,
+              dataType = private$.dataType[[name]]
+            ) %>%
+            dplyr::ungroup()
         )
       }
 
@@ -453,18 +479,22 @@ DataCombined <- R6::R6Class(
       if (missing(value)) {
         return(
           dplyr::tibble(
-          name          = self$names,
-          # For offsets: `0` (default for no change)
-          xOffsets      = 0,
-          yOffsets      = 0,
-          # For scale factors: `1` (default for no change)
-          xScaleFactors = 1,
-          yScaleFactors = 1
-        ) %>%
-          dplyr::mutate(xOffsets = private$.xOffsets[name][[1]] %||% xOffsets,
-                        yOffsets = private$.yOffsets[name][[1]] %||% yOffsets,
-                        xScaleFactors = private$.xScaleFactors[name][[1]] %||% xScaleFactors,
-                        yScaleFactors = private$.yScaleFactors[name][[1]] %||% yScaleFactors)
+            name          = self$names,
+            # For offsets: `0` (default for no change)
+            xOffsets      = 0,
+            yOffsets      = 0,
+            # For scale factors: `1` (default for no change)
+            xScaleFactors = 1,
+            yScaleFactors = 1
+          ) %>%
+            dplyr::rowwise() %>%
+            dplyr::mutate(
+              xOffsets = private$.xOffsets[[name]] %||% xOffsets,
+              yOffsets = private$.yOffsets[[name]] %||% yOffsets,
+              xScaleFactors = private$.xScaleFactors[[name]] %||% xScaleFactors,
+              yScaleFactors = private$.yScaleFactors[[name]] %||% yScaleFactors
+            ) %>%
+            dplyr::ungroup()
         )
       }
 
@@ -482,8 +512,8 @@ DataCombined <- R6::R6Class(
       obsData <- dataSetToTibble(dataSets)
 
       # Rename, if specific names are provided
-      if (!is.null(names)){
-        new_names <- setNames(names, unique(obsData$names))
+      if (!is.null(names)) {
+        new_names <- setNames(names, unique(obsData$name))
         obsData$name <- unname(new_names[as.character(obsData$name)])
       }
 
@@ -517,21 +547,22 @@ DataCombined <- R6::R6Class(
       # Also rename "paths to "names". If no custom names are specified, the names
       # are always the paths
       simData <- dplyr::rename(simData,
-                               "xValues"    = "Time",
-                               "xUnit"      = "TimeUnit",
-                               "xDimension" = "TimeDimension",
-                               "yValues"    = "simulationValues",
-                               "yUnit"      = "unit",
-                               "yDimension" = "dimension",
-                               "name" = "paths"
+        "xValues" = "Time",
+        "xUnit" = "TimeUnit",
+        "xDimension" = "TimeDimension",
+        "yValues" = "simulationValues",
+        "yUnit" = "unit",
+        "yDimension" = "dimension",
+        "name" = "paths"
       )
 
 
       # Update names, if custom names are specified
-      if (!is.null(names)){
+      if (!is.null(names)) {
         new_names <- setNames(names, unique(simData$name))
         simData <- dplyr::mutate(simData,
-                                 name = new_names[name])
+          name = new_names[name]
+        )
       }
 
       # Set type of data
@@ -539,7 +570,7 @@ DataCombined <- R6::R6Class(
       # Simulated results do not have error values
       simData$yErrorValues <- NA_real_
 
-       return(simData)
+      return(simData)
     },
 
     # Update the combined data frame "in place"
@@ -566,8 +597,8 @@ DataCombined <- R6::R6Class(
         # example, `addDataSet()` calls it twice.
         if (length(dupDatasets) > 0L) {
           # Warn the user if he adds a dataset with a name already used in dataCombined
-          if (!silent){
-            messages$DataFrameNameAlreadyUsed(intersect(dupDatasets))
+          if (!silent) {
+            messages$DataFrameNameAlreadyUsed(dupDatasets)
           }
 
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
@@ -584,14 +615,16 @@ DataCombined <- R6::R6Class(
 
     # Update group mapping
     .updateGroups = function(names, groups) {
-      #If only one group is provided, it must be assigned to all names
-      if(length(groups) == 1){
-        groups <- rep(groups, length(names))
+      # If groups is NULL, grouping will be removed for this data set.
+      if (!is.null(groups)) {
+        # If only one group is provided, it must be assigned to all names
+        if (length(groups) == 1) {
+          groups <- rep(groups, length(names))
+        }
+        validateIsSameLength(names, groups)
       }
-      validateIsSameLength(names, groups)
-
       # Map groups to names
-      for (idx in seq_along(names)){
+      for (idx in seq_along(names)) {
         private$.groupMap[[names[[idx]]]] <- groups[[idx]]
       }
     },
@@ -605,21 +638,18 @@ DataCombined <- R6::R6Class(
 
       # Get transformation values
       dataTransformations <- self$dataTransformations
-      # Tranform values in data frame
+      # Transform values in data frame
       data <- dplyr::group_by(data, name) %>%
-      dplyr::mutate(xValues = (xValues + dataTransformations[dataTransformations$name == unique(name),]$xOffsets) * dataTransformations[dataTransformations$name == unique(name),]$xScaleFactors,
-                    yValues = (yValues + dataTransformations[dataTransformations$name == unique(name),]$yOffsets) * dataTransformations[dataTransformations$name == unique(name),]$yScaleFactors,
-                    yErrorValues = yErrorValues * abs(dataTransformations[dataTransformations$name == unique(name),]$yScaleFactors))
+        # using `unique(name)` because we have grouped by the name, so it is
+        # always unique
+        dplyr::mutate(
+          xValues = (xValues + dataTransformations[dataTransformations$name == unique(name), ]$xOffsets) * dataTransformations[dataTransformations$name == unique(name), ]$xScaleFactors,
+          yValues = (yValues + dataTransformations[dataTransformations$name == unique(name), ]$yOffsets) * dataTransformations[dataTransformations$name == unique(name), ]$yScaleFactors,
+          yErrorValues = yErrorValues * abs(dataTransformations[dataTransformations$name == unique(name), ]$yScaleFactors)
+        )
 
       return(data)
     },
-
-    # Clean data frame before returning it to the user
-    .cleanDataFrame = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
 
     # private fields ----------------------------------------
     .dataCombined = NULL,
