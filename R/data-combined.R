@@ -636,18 +636,22 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      # Get transformation values
-      dataTransformations <- self$dataTransformations
-      # Transform values in data frame
-      data <- dplyr::group_by(data, name) %>%
-        # using `unique(name)` because we have grouped by the name, so it is
-        # always unique
-        dplyr::mutate(
-          xValues = (xValues + dataTransformations[dataTransformations$name == unique(name), ]$xOffsets) * dataTransformations[dataTransformations$name == unique(name), ]$xScaleFactors,
-          yValues = (yValues + dataTransformations[dataTransformations$name == unique(name), ]$yOffsets) * dataTransformations[dataTransformations$name == unique(name), ]$yScaleFactors,
-          yErrorValues = yErrorValues * abs(dataTransformations[dataTransformations$name == unique(name), ]$yScaleFactors)
-        )
-
+      # Copy dataTransformations to not alter original object and turn into
+      # data.table object
+      dataTransformations <-  data.table::setDT(data.table::copy(self$dataTransformations))
+      # Copy data to not alter original object (private$.dataCombined) and
+      # transform into a data.table object
+      data <- data.table::setDT(data.table::copy(data))
+      # Update values by joining dataTransformations table (base on name column)
+      # and apply transformations.
+      data <-
+        data[dataTransformations,
+                    `:=`(xValues = (xValues + xOffsets) * xScaleFactors,
+                         yValues = (yValues + yOffsets) * yScaleFactors,
+                         yErrorValues = yErrorValues * abs(yScaleFactors)),
+                    on=.(name)] %>%
+        # convert back to tibble
+        tibble::as_tibble()
       return(data)
     },
 
