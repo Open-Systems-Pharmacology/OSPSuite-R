@@ -223,13 +223,12 @@ simulationResultsToDataFrame <- function(simulationResults,
     values_to = "simulationValues"
   )
 
-
   units <- purrr::map(simList$metaData, "unit")
   dims <- purrr::map(simList$metaData, "dimension")
   molWeights <-
     unique(simData$paths) %>%
     purrr::set_names() %>%
-    purrr::map(~ospsuite::toUnit(
+    purrr::map(~ ospsuite::toUnit(
       quantityOrDimension = ospDimensions$`Molecular weight`,
       values              = simulationResults$simulation$molWeightFor(.x),
       targetUnit          = ospUnits$`Molecular weight`$`g/mol`
@@ -242,7 +241,6 @@ simulationResultsToDataFrame <- function(simulationResults,
                            unit =  units[[paths]],
                            molWeight = molWeights[[paths]]),
                      by = paths]
-
   # # consistently return a (classical) data frame
   return(as.data.frame(simData, stringsAsFactors = FALSE))
 }

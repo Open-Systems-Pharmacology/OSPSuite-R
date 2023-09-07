@@ -99,7 +99,7 @@ values were specified by the user for each dataset.}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL, silent = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -123,6 +123,9 @@ entry in the \code{group} column will be an \code{NA}). If provided, \code{group
 have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
 If no grouping is specified for any of the dataset, the column \code{group} in
 the data frame output will be all \code{NA}.}
+
+\item{\code{silent}}{A binary flag showing if warnings should be triggered when
+data sets are overwritten in the \code{DataCombined} object}
 }
 \if{html}{\out{</div>}}
 }
