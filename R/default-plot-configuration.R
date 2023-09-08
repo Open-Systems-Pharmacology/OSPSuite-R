@@ -182,7 +182,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     titleFontFamily = "",
     titleAngle = 0,
     titleAlign = tlf::Alignments$left,
-    titleMargin = c(15, 2, 5, 2), # top, right, bottom, left
+    titleMargin = c(20, 2, 10, 2), # top, right, bottom, left
 
     # subtitle ------------------------------------
 
@@ -193,7 +193,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleFontFamily = "",
     subtitleAngle = 0,
     subtitleAlign = tlf::Alignments$left,
-    subtitleMargin = c(0, 2, 5, 2),
+    subtitleMargin = c(0, 2, 10, 2),
 
     # caption ------------------------------------
 
@@ -204,7 +204,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     captionFontFamily = "",
     captionAngle = 0,
     captionAlign = tlf::Alignments$right,
-    captionMargin = c(0, 2, 5, 2),
+    captionMargin = c(2, 2, 5, 2),
 
     # xLabel ------------------------------------
 
@@ -215,7 +215,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelFontFamily = "",
     xLabelAngle = 0,
     xLabelAlign = tlf::Alignments$center,
-    xLabelMargin = c(5, 2, 5, 2),
+    xLabelMargin = c(10, 2, 5, 2),
 
     # yLabel ------------------------------------
 
@@ -226,9 +226,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelFontFamily = "",
     yLabelAngle = 90,
     yLabelAlign = tlf::Alignments$center,
-    yLabelMargin = c(5, 2, 5, 2),
+    yLabelMargin = c(5, 2, 10, 2),
 
-    # legend ------------------------------------
+    # legendTitle ------------------------------------
 
     legendPosition = NULL,
     legendTitle = NULL,
@@ -271,7 +271,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLabelTicksFontFace = tlf::FontFaces$plain,
     xAxisLabelTicksAngle = 0,
     xAxisLabelTicksAlign = tlf::Alignments$center,
-    xAxisLabelTicksMargin = c(1,5,1,5),
+    xAxisLabelTicksMargin = c(2,2,2,2),
 
     # YAxisConfiguration ------------------------------------
 
@@ -286,7 +286,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLabelTicksFontFace = tlf::FontFaces$plain,
     yAxisLabelTicksAngle = 90,
     yAxisLabelTicksAlign = tlf::Alignments$center,
-    yAxisLabelTicksMargin = c(5,1,5,1),
+    yAxisLabelTicksMargin = c(2,2,2,2),
 
     # watermark ------------------------------------
 
