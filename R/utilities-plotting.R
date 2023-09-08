@@ -448,7 +448,8 @@
     fontFace = generalPlotConfiguration$titleFontFace,
     fontFamily = generalPlotConfiguration$titleFontFamily,
     angle = generalPlotConfiguration$titleAngle,
-    align = generalPlotConfiguration$titleAlign
+    align = generalPlotConfiguration$titleAlign,
+    margin = generalPlotConfiguration$titleMargin
   )
 
   labelSubtitle <- tlf::Label$new(
@@ -458,7 +459,9 @@
     fontFace = generalPlotConfiguration$subtitleFontFace,
     fontFamily = generalPlotConfiguration$subtitleFontFamily,
     angle = generalPlotConfiguration$subtitleAngle,
-    align = generalPlotConfiguration$subtitleAlign
+    align = generalPlotConfiguration$subtitleAlign,
+    margin = generalPlotConfiguration$subtitleMargin
+
   )
 
   labelCaption <- tlf::Label$new(
@@ -468,7 +471,8 @@
     fontFace = generalPlotConfiguration$captionFontFace,
     fontFamily = generalPlotConfiguration$captionFontFamily,
     angle = generalPlotConfiguration$captionAngle,
-    align = generalPlotConfiguration$captionAlign
+    align = generalPlotConfiguration$captionAlign,
+    margin = generalPlotConfiguration$captionMargin
   )
 
   labelXLabel <- tlf::Label$new(
@@ -478,7 +482,8 @@
     fontFace = generalPlotConfiguration$xLabelFontFace,
     fontFamily = generalPlotConfiguration$xLabelFontFamily,
     angle = generalPlotConfiguration$xLabelAngle,
-    align = generalPlotConfiguration$xLabelAlign
+    align = generalPlotConfiguration$xLabelAlign,
+    margin = generalPlotConfiguration$xLabelMargin
   )
 
   labelYLabel <- tlf::Label$new(
@@ -488,7 +493,8 @@
     fontFace = generalPlotConfiguration$yLabelFontFace,
     fontFamily = generalPlotConfiguration$yLabelFontFamily,
     angle = generalPlotConfiguration$yLabelAngle,
-    align = generalPlotConfiguration$yLabelAlign
+    align = generalPlotConfiguration$yLabelAlign,
+    margin = generalPlotConfiguration$yLabelMargin
   )
 
   labelConfiguration <- tlf::LabelConfiguration$new(
@@ -507,7 +513,8 @@
     fontFamily = generalPlotConfiguration$legendTitleFontFamily,
     fontFace = generalPlotConfiguration$legendTitleFontFace,
     angle = generalPlotConfiguration$legendTitleAngle,
-    align = generalPlotConfiguration$legendTitleAlign
+    align = generalPlotConfiguration$legendTitleAlign,
+    margin = generalPlotConfiguration$legendTitleMargin
   )
 
   legendTitleLabel <- tlf::Label$new(
@@ -521,7 +528,8 @@
     fontFamily = generalPlotConfiguration$legendKeysFontFamily,
     fontFace = generalPlotConfiguration$legendKeysFontFace,
     angle = generalPlotConfiguration$legendKeysAngle,
-    align = generalPlotConfiguration$legendKeysAlign
+    align = generalPlotConfiguration$legendKeysAlign,
+    margin = generalPlotConfiguration$legendKeysMargin
   )
 
   legendConfiguration <- tlf::LegendConfiguration$new(
@@ -549,7 +557,8 @@
     fontFace = generalPlotConfiguration$watermarkFontFace,
     fontFamily = generalPlotConfiguration$watermarkFontFamily,
     angle = generalPlotConfiguration$watermarkAngle,
-    align = generalPlotConfiguration$watermarkAlign
+    align = generalPlotConfiguration$watermarkAlign,
+    margin = generalPlotConfiguration$watermarkMargin
   )
 
   plotBackground <- tlf::BackgroundElement$new(
@@ -608,7 +617,8 @@
     fontFamily = generalPlotConfiguration$xAxisLabelTicksFontFamily,
     fontFace = generalPlotConfiguration$xAxisLabelTicksFontFace,
     angle = generalPlotConfiguration$xAxisLabelTicksAngle,
-    align = generalPlotConfiguration$xAxisLabelTicksAlign
+    align = generalPlotConfiguration$xAxisLabelTicksAlign,
+    margin = generalPlotConfiguration$xAxisLabelTicksMargin
   )
 
   xAxisConfiguration <- tlf::XAxisConfiguration$new(
@@ -629,7 +639,8 @@
     fontFamily = generalPlotConfiguration$yAxisLabelTicksFontFamily,
     fontFace = generalPlotConfiguration$yAxisLabelTicksFontFace,
     angle = generalPlotConfiguration$yAxisLabelTicksAngle,
-    align = generalPlotConfiguration$yAxisLabelTicksAlign
+    align = generalPlotConfiguration$yAxisLabelTicksAlign,
+    margin = generalPlotConfiguration$yAxisLabelTicksMargin
   )
 
   yAxisConfiguration <- tlf::YAxisConfiguration$new(

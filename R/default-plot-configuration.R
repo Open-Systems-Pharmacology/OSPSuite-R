@@ -182,6 +182,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     titleFontFamily = "",
     titleAngle = 0,
     titleAlign = tlf::Alignments$left,
+    titleMargin = c(15, 2, 5, 2), # top, right, bottom, left
 
     # subtitle ------------------------------------
 
@@ -192,6 +193,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleFontFamily = "",
     subtitleAngle = 0,
     subtitleAlign = tlf::Alignments$left,
+    subtitleMargin = c(0, 2, 5, 2),
 
     # caption ------------------------------------
 
@@ -202,6 +204,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     captionFontFamily = "",
     captionAngle = 0,
     captionAlign = tlf::Alignments$right,
+    captionMargin = c(0, 2, 5, 2),
 
     # xLabel ------------------------------------
 
@@ -212,6 +215,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelFontFamily = "",
     xLabelAngle = 0,
     xLabelAlign = tlf::Alignments$center,
+    xLabelMargin = c(5, 2, 5, 2),
 
     # yLabel ------------------------------------
 
@@ -222,6 +226,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelFontFamily = "",
     yLabelAngle = 90,
     yLabelAlign = tlf::Alignments$center,
+    yLabelMargin = c(5, 2, 5, 2),
 
     # legend ------------------------------------
 
@@ -233,6 +238,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$left,
+    legendMargin = c(2, 2, 2, 2),
 
     # legendBox ------------------------------------
 
@@ -250,6 +256,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendKeysFontFace = tlf::FontFaces$plain,
     legendKeysAngle = 0,
     legendKeysAlign = tlf::Alignments$left,
+    legendKeysMargin = c(2,0,2,0),
 
     # XAxisConfiguration ------------------------------------
 
@@ -264,6 +271,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLabelTicksFontFace = tlf::FontFaces$plain,
     xAxisLabelTicksAngle = 0,
     xAxisLabelTicksAlign = tlf::Alignments$center,
+    xAxisLabelTicksMargin = c(1,5,1,5),
 
     # YAxisConfiguration ------------------------------------
 
@@ -278,6 +286,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLabelTicksFontFace = tlf::FontFaces$plain,
     yAxisLabelTicksAngle = 90,
     yAxisLabelTicksAlign = tlf::Alignments$center,
+    yAxisLabelTicksMargin = c(5,1,5,1),
 
     # watermark ------------------------------------
 
@@ -288,6 +297,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     watermarkFontFace = tlf::FontFaces$plain,
     watermarkAngle = 30,
     watermarkAlign = tlf::Alignments$center,
+    watermarkMargin = c(1, 1, 1, 1),
 
     # plotBackground ------------------------------------
 
