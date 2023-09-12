@@ -461,7 +461,6 @@
     angle = generalPlotConfiguration$subtitleAngle,
     align = generalPlotConfiguration$subtitleAlign,
     margin = generalPlotConfiguration$subtitleMargin
-
   )
 
   labelCaption <- tlf::Label$new(
