@@ -477,6 +477,19 @@ DataCombined <- R6::R6Class(
     #'   values were specified by the user for each dataset.
     dataTransformations = function(value) {
       if (missing(value)) {
+        # For an empty DataCombined, return an etmpy tibble
+        if (is.null(private$.dataCombined)) {
+          return(
+            dplyr::tibble(
+              name = character(),
+              xOffsets = numeric(),
+              yOffsets = numeric(),
+              xScaleFactors = numeric(),
+              yScaleFactors = numeric()
+            )
+          )
+        }
+
         return(
           dplyr::tibble(
             name          = self$names,
@@ -638,7 +651,7 @@ DataCombined <- R6::R6Class(
 
       # Copy dataTransformations to not alter original object and turn into
       # data.table object
-      dataTransformations <-  data.table::setDT(data.table::copy(self$dataTransformations))
+      dataTransformations <- data.table::setDT(data.table::copy(self$dataTransformations))
       # Copy data to not alter original object (private$.dataCombined) and
       # transform into a data.table object
       data <- data.table::setDT(data.table::copy(data))
@@ -646,10 +659,13 @@ DataCombined <- R6::R6Class(
       # and apply transformations.
       data <-
         data[dataTransformations,
-                    `:=`(xValues = (xValues + xOffsets) * xScaleFactors,
-                         yValues = (yValues + yOffsets) * yScaleFactors,
-                         yErrorValues = yErrorValues * abs(yScaleFactors)),
-                    on=.(name)] %>%
+          `:=`(
+            xValues = (xValues + xOffsets) * xScaleFactors,
+            yValues = (yValues + yOffsets) * yScaleFactors,
+            yErrorValues = yErrorValues * abs(yScaleFactors)
+          ),
+          on = .(name)
+        ] %>%
         # convert back to tibble
         tibble::as_tibble()
       return(data)
