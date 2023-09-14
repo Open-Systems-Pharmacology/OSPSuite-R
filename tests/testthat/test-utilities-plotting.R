@@ -135,17 +135,21 @@ test_that("Normal range works with default options", {
 test_that("Normal range works with different n argument", {
   n <- 2
   expect_equal(
-    c(mean(randu$x) - n * sd(randu$x),
+    c(
+      mean(randu$x) - n * sd(randu$x),
       mean(randu$x),
-      mean(randu$x) + n * sd(randu$x)),
+      mean(randu$x) + n * sd(randu$x)
+    ),
     .normRange(randu$x, n = n)
   )
 
   n <- -2
   expect_equal(
-    c(mean(randu$x) - abs(n) * sd(randu$x),
+    c(
+      mean(randu$x) - abs(n) * sd(randu$x),
       mean(randu$x),
-      mean(randu$x) + abs(n) * sd(randu$x)),
+      mean(randu$x) + abs(n) * sd(randu$x)
+    ),
     .normRange(randu$x, n = n)
   )
 })
@@ -164,7 +168,8 @@ test_that("Geometric range works with default options", {
 test_that("Geometric range works with different n argument", {
   n <- 2
   expect_equal(
-    c(exp(mean(log(randu$x))) - abs(n) * exp(sd(log(randu$x))),
+    c(
+      exp(mean(log(randu$x))) - abs(n) * exp(sd(log(randu$x))),
       exp(mean(log(randu$x))),
       exp(mean(log((randu$x)))) + abs(n) * exp(sd(log(randu$x)))
     ),
@@ -173,7 +178,8 @@ test_that("Geometric range works with different n argument", {
 
   n <- -2
   expect_equal(
-    c(exp(mean(log(randu$x))) - abs(n) * exp(sd(log(randu$x))),
+    c(
+      exp(mean(log(randu$x))) - abs(n) * exp(sd(log(randu$x))),
       exp(mean(log(randu$x))),
       exp(mean(log((randu$x)))) + abs(n) * exp(sd(log(randu$x)))
     ),

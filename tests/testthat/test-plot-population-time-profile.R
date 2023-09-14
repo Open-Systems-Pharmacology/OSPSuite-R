@@ -202,8 +202,8 @@ test_that("Aggregations are computed and displayed correctly", {
     title = "arithmetic mean with 2sd",
     fig =
       plotPopulationTimeProfile(myDataComb,
-                                aggregation = "arithmetic",
-                                n = 2
+        aggregation = "arithmetic",
+        n = 2
       )
   )
 
@@ -218,8 +218,8 @@ test_that("Aggregations are computed and displayed correctly", {
   vdiffr::expect_doppelganger(
     title = "geometric mean with 2sd",
     fig = plotPopulationTimeProfile(myDataComb,
-                                    aggregation = "geometric",
-                                    n = 2
+      aggregation = "geometric",
+      n = 2
     )
   )
 })
