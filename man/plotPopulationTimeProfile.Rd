@@ -26,31 +26,24 @@ arithmetic or geometric average and add a set of upper and lower bounds
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
 
-\item{...}{
-  Arguments passed on to \code{\link[=.extractAggregatedSimulatedData]{.extractAggregatedSimulatedData}}
-  \describe{
-    \item{\code{n}}{optional argument defining the number of standard
-deviation to add above and below the average. Only for \code{arithmetic} and
-\code{geometric} \code{aggregation}.}
-  }}
+\item{...}{additionnal arguments to pass to \code{.extractAggregatedSimulatedData()}}
 }
 \description{
 Time-values profile plot for population simulations
 }
 \details{
-The simulated values will be aggregated across individuals for each time
-point.
+The simulated values will be aggregated across individuals for each
+time point.
 
 For \code{aggregation = quantiles} (default), the quantile values defined in the
-argument \code{quantiles} will be used. In the profile plot, the middle value will
-be used to draw a line, while the lower and upper values will be used as the
-lower und upper ranges.
-For \code{aggregation = arithmetic}, arithmetic mean with arithmetic standard
-deviation (SD) will be plotted. Use the optional parameter \code{n} to change the
-number of SD to plot above and below the mean.
-For \code{aggregation = geometric}, geometric mean with geometric standard
-deviation (SD) will be plotted. Use the optional parameter \code{n} to change the
-number of SD to plot above and below the mean.
+argument \code{quantiles} will be used. In the profile plot, the middle value
+will be used to draw a line, while the lower and upper values will be used
+as the lower und upper ranges. For \code{aggregation = arithmetic}, arithmetic
+mean with arithmetic standard deviation (SD) will be plotted. Use the
+optional parameter \code{n} to change the number of SD to plot above and below
+the mean. For \code{aggregation = geometric}, geometric mean with geometric
+standard deviation (SD) will be plotted. Use the optional parameter \code{n} to
+change the number of SD to plot above and below the mean.
 }
 \examples{
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")

@@ -2,7 +2,7 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams .extractAggregatedSimulatedData
-#' @inheritDotParams .extractAggregatedSimulatedData n
+#' @param ... additionnal arguments to pass to `.extractAggregatedSimulatedData()`
 #'
 #' @inherit .extractAggregatedSimulatedData details
 #'
