@@ -19,16 +19,28 @@ plotPopulationTimeProfile(
 an \code{R6} class object that defines plot properties.}
 
 \item{aggregation}{The type of the aggregation of individual data. One of
-\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in \code{ospsuite::DataAggregationMethods}). Will
-replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
-(\code{yValuesLower} and \code{yValuesHigher})}
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in
+\code{ospsuite::DataAggregationMethods}). Will replace \code{yValues} by the median,
+arithmetic or geometric average and add a set of upper and lower bounds
+(\code{yValuesLower} and \code{yValuesHigher}).}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
+
+\item{...}{
+  Arguments passed on to \code{\link[=.extractAggregatedSimulatedData]{.extractAggregatedSimulatedData}}
+  \describe{
+    \item{\code{n}}{optional argument defining the number of standard
+deviation to add above and below the average. Only for \code{arithmetic} and
+\code{geometric} \code{aggregation}.}
+  }}
 }
 \description{
 Time-values profile plot for population simulations
 }
 \details{
+The simulated values will be aggregated across individuals for each time
+point.
+
 For \code{aggregation = quantiles} (default), the quantile values defined in the
 argument \code{quantiles} will be used. In the profile plot, the middle value will
 be used to draw a line, while the lower and upper values will be used as the

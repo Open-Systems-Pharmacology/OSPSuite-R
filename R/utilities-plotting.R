@@ -91,21 +91,33 @@
 #' Extract aggregated simulated data
 #'
 #' @param simData A data frame with simulated data from
-#'   `DataCombined$toDataFrame()`.
+#'`DataCombined$toDataFrame()`.
 #' @param aggregation The type of the aggregation of individual data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in `ospsuite::DataAggregationMethods`). Will
-#'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
-#'  (`yValuesLower` and `yValuesHigher`)
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in
+#'  `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
+#'  arithmetic or geometric average and add a set of upper and lower bounds
+#'  (`yValuesLower` and `yValuesHigher`).
 #' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
 #'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
-#' @param n optional argument defining the number of standard deviation to add
-#' above and below the average. Only for
-#'
+#' @param n optional argument defining the number of standard
+#' deviation to add above and below the average. Only for `arithmetic` and
+#' `geometric` `aggregation`.
+#' @param ... additional arguments to pass to `.normRange()` or `.geoRange()`
 #'
 #' @details
-#'
 #' The simulated values will be aggregated across individuals for each time
 #' point.
+#'
+#' For `aggregation = quantiles` (default), the quantile values defined in the
+#' argument `quantiles` will be used. In the profile plot, the middle value will
+#' be used to draw a line, while the lower and upper values will be used as the
+#' lower und upper ranges.
+#' For `aggregation = arithmetic`, arithmetic mean with arithmetic standard
+#' deviation (SD) will be plotted. Use the optional parameter `n` to change the
+#' number of SD to plot above and below the mean.
+#' For `aggregation = geometric`, geometric mean with geometric standard
+#' deviation (SD) will be plotted. Use the optional parameter `n` to change the
+#' number of SD to plot above and below the mean.
 #'
 #' @family utilities-plotting
 #'
@@ -146,6 +158,7 @@
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
                                             aggregation = "quantiles",
+                                            n = NULL,
                                             ...) {
   ospsuite.utils::validateEnumValue(
     value       = aggregation,

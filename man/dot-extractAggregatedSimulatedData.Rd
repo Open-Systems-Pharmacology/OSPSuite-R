@@ -4,21 +4,30 @@
 \alias{.extractAggregatedSimulatedData}
 \title{Extract aggregated simulated data}
 \usage{
-.extractAggregatedSimulatedData(simData, aggregation = "quantiles", ...)
+.extractAggregatedSimulatedData(
+  simData,
+  aggregation = "quantiles",
+  n = NULL,
+  ...
+)
 }
 \arguments{
 \item{simData}{A data frame with simulated data from
 \code{DataCombined$toDataFrame()}.}
 
 \item{aggregation}{The type of the aggregation of individual data. One of
-\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in \code{ospsuite::DataAggregationMethods}). Will
-replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
-(\code{yValuesLower} and \code{yValuesHigher})}
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in
+\code{ospsuite::DataAggregationMethods}). Will replace \code{yValues} by the median,
+arithmetic or geometric average and add a set of upper and lower bounds
+(\code{yValuesLower} and \code{yValuesHigher}).}
+
+\item{n}{optional argument defining the number of standard
+deviation to add above and below the average. Only for \code{arithmetic} and
+\code{geometric} \code{aggregation}.}
+
+\item{...}{additional arguments to pass to \code{.normRange()} or \code{.geoRange()}}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
-
-\item{n}{optional argument defining the number of standard deviation to add
-above and below the average. Only for}
 }
 \description{
 Extract aggregated simulated data
@@ -26,6 +35,17 @@ Extract aggregated simulated data
 \details{
 The simulated values will be aggregated across individuals for each time
 point.
+
+For \code{aggregation = quantiles} (default), the quantile values defined in the
+argument \code{quantiles} will be used. In the profile plot, the middle value will
+be used to draw a line, while the lower and upper values will be used as the
+lower und upper ranges.
+For \code{aggregation = arithmetic}, arithmetic mean with arithmetic standard
+deviation (SD) will be plotted. Use the optional parameter \code{n} to change the
+number of SD to plot above and below the mean.
+For \code{aggregation = geometric}, geometric mean with geometric standard
+deviation (SD) will be plotted. Use the optional parameter \code{n} to change the
+number of SD to plot above and below the mean.
 }
 \examples{
 
