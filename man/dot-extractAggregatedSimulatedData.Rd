@@ -15,8 +15,10 @@
 replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yValuesLower} and \code{yValuesHigher})}
 
-\item{...}{Extra parameters to pass to aggregating functions. \code{probs} for \code{stats::quantile} or \code{n} for the number of
-standard deviation to add below and above the average for \code{arithmetic} or \code{geometric}.}
+\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
+
+\item{n}{optional argument defining the number of standard deviation to add
+above and below the average. Only for}
 }
 \description{
 Extract aggregated simulated data
