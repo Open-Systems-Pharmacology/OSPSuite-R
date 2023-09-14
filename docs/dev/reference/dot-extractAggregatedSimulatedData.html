@@ -89,20 +89,38 @@
 
 <dt>aggregation</dt>
 <dd><p>The type of the aggregation of individual data. One of
-<code>quantiles</code> (Default), <code>arithmetic</code> or <code>geometric</code> (full list in <code><a href="DataAggregationMethods.html">ospsuite::DataAggregationMethods</a></code>). Will
-replace <code>yValues</code> by the median, arithmetic or geometric average and add a set of upper and lower bounds
-(<code>yValuesLower</code> and <code>yValuesHigher</code>)</p></dd>
+<code>quantiles</code> (Default), <code>arithmetic</code> or <code>geometric</code> (full list in
+<code><a href="DataAggregationMethods.html">ospsuite::DataAggregationMethods</a></code>). Will replace <code>yValues</code> by the median,
+arithmetic or geometric average and add a set of upper and lower bounds
+(<code>yValuesLower</code> and <code>yValuesHigher</code>).</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Extra parameters to pass to aggregating functions. <code>probs</code> for <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">stats::quantile</a></code> or <code>n</code> for the number of
-standard deviation to add below and above the average for <code>arithmetic</code> or <code>geometric</code>.</p></dd>
+<dd><p>Arguments passed on to <code><a href="dot-normRange.html">.normRange</a></code></p><dl><dt><code>n</code></dt>
+<dd><p>optional argument defining the number of standard deviation to add
+and substract to the mean</p></dd>
+
+  
+</dl></dd>
+
+
+<dt>quantiles</dt>
+<dd><p>A numerical vector with quantile values (Default: <code>c(0.05, 0.50, 0.95)</code>) to be plotted. Ignored if <code>aggregation</code> is not <code>quantiles</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The simulated values will be aggregated across individuals for each time
-point.</p>
+    <p>The simulated values will be aggregated across individuals for each
+time point.</p>
+<p>For <code>aggregation = quantiles</code> (default), the quantile values defined in the
+argument <code>quantiles</code> will be used. In the profile plot, the middle value
+will be used to draw a line, while the lower and upper values will be used
+as the lower und upper ranges. For <code>aggregation = arithmetic</code>, arithmetic
+mean with arithmetic standard deviation (SD) will be plotted. Use the
+optional parameter <code>n</code> to change the number of SD to plot above and below
+the mean. For <code>aggregation = geometric</code>, geometric mean with geometric
+standard deviation (SD) will be plotted. Use the optional parameter <code>n</code> to
+change the number of SD to plot above and below the mean.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

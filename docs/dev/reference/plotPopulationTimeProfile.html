@@ -81,7 +81,8 @@
 <span>  <span class="va">dataCombined</span>,</span>
 <span>  defaultPlotConfiguration <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  aggregation <span class="op">=</span> <span class="st">"quantiles"</span>,</span>
-<span>  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span><span class="op">)</span></span>
+<span>  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -98,23 +99,33 @@ an <code>R6</code> class object that defines plot properties.</p></dd>
 
 <dt>aggregation</dt>
 <dd><p>The type of the aggregation of individual data. One of
-<code>quantiles</code> (Default), <code>arithmetic</code> or <code>geometric</code> (full list in <code><a href="DataAggregationMethods.html">ospsuite::DataAggregationMethods</a></code>). Will
-replace <code>yValues</code> by the median, arithmetic or geometric average and add a set of upper and lower bounds
-(<code>yValuesLower</code> and <code>yValuesHigher</code>)</p></dd>
+<code>quantiles</code> (Default), <code>arithmetic</code> or <code>geometric</code> (full list in
+<code><a href="DataAggregationMethods.html">ospsuite::DataAggregationMethods</a></code>). Will replace <code>yValues</code> by the median,
+arithmetic or geometric average and add a set of upper and lower bounds
+(<code>yValuesLower</code> and <code>yValuesHigher</code>).</p></dd>
 
 
 <dt>quantiles</dt>
 <dd><p>A numerical vector with quantile values (Default: <code>c(0.05, 0.50, 0.95)</code>) to be plotted. Ignored if <code>aggregation</code> is not <code>quantiles</code>.</p></dd>
 
+
+<dt>...</dt>
+<dd><p>additionnal arguments to pass to <code><a href="dot-extractAggregatedSimulatedData.html">.extractAggregatedSimulatedData()</a></code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>For <code>aggregation = arithmetic</code>, arithmetic mean with arithmetic standard deviation (SD)
-will be plotted.
-For <code>aggregation = geometric</code>, geometric mean with geo SD will be plotted
-For <code>aggregation = quantiles</code>, the quantile values defined in the argument <code>quantiles</code>
-will be used. In the profile plot, the middle value will be used to draw
-a line, while the lower and upper values will be used as the lower und upper ranges.</p>
+    <p>The simulated values will be aggregated across individuals for each
+time point.</p>
+<p>For <code>aggregation = quantiles</code> (default), the quantile values defined in the
+argument <code>quantiles</code> will be used. In the profile plot, the middle value
+will be used to draw a line, while the lower and upper values will be used
+as the lower und upper ranges. For <code>aggregation = arithmetic</code>, arithmetic
+mean with arithmetic standard deviation (SD) will be plotted. Use the
+optional parameter <code>n</code> to change the number of SD to plot above and below
+the mean. For <code>aggregation = geometric</code>, geometric mean with geometric
+standard deviation (SD) will be plotted. Use the optional parameter <code>n</code> to
+change the number of SD to plot above and below the mean.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -143,17 +154,17 @@ a line, while the lower and upper values will be used as the lower und upper ran
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot</span></span></span>
 <span class="r-in"><span><span class="fu">plotPopulationTimeProfile</span><span class="op">(</span><span class="va">myDataComb</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rlang::list2(...):</span> '...' used in an incorrect context</span>
+<span class="r-plt img"><img src="plotPopulationTimeProfile-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot with other quantiles</span></span></span>
 <span class="r-in"><span><span class="fu">plotPopulationTimeProfile</span><span class="op">(</span><span class="va">myDataComb</span>, quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rlang::list2(...):</span> '...' used in an incorrect context</span>
+<span class="r-plt img"><img src="plotPopulationTimeProfile-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot with arithmetic mean</span></span></span>
 <span class="r-in"><span><span class="fu">plotPopulationTimeProfile</span><span class="op">(</span><span class="va">myDataComb</span>,</span></span>
 <span class="r-in"><span>  aggregation <span class="op">=</span> <span class="st">"arithmetic"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rlang::list2(...):</span> '...' used in an incorrect context</span>
+<span class="r-plt img"><img src="plotPopulationTimeProfile-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

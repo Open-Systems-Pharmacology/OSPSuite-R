@@ -152,9 +152,9 @@ by the <code>$setValues()</code> method:</p>
 <span><span class="co">#&gt;    Y unit: mg/l </span></span>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: mg/l </span></span>
-<span><span class="co">#&gt;    Molecular weight: </span></span>
-<span><span class="co">#&gt;    LLOQ: </span></span>
-<span><span class="co">#&gt;    Meta data: </span></span>
+<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
+<span><span class="co">#&gt;    LLOQ: NULL </span></span>
+<span><span class="co">#&gt;    Meta data: NULL </span></span>
 <span><span class="co">#&gt; list()</span></span></code></pre></div>
 <p>The user can change the dimensions and units of the values. After
 changing the dimension, the unit is automatically set to the <em>base
@@ -187,9 +187,9 @@ not</em> transform the values.</p>
 <span><span class="co">#&gt;    Y unit: µmol </span></span>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: µmol </span></span>
-<span><span class="co">#&gt;    Molecular weight: </span></span>
-<span><span class="co">#&gt;    LLOQ: </span></span>
-<span><span class="co">#&gt;    Meta data: </span></span>
+<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
+<span><span class="co">#&gt;    LLOQ: NULL </span></span>
+<span><span class="co">#&gt;    Meta data: NULL </span></span>
 <span><span class="co">#&gt; list()</span></span>
 <span></span>
 <span><span class="co"># Change the units of y values and error values - they are now different!</span></span>
@@ -205,9 +205,9 @@ not</em> transform the values.</p>
 <span><span class="co">#&gt;    Y unit: mol </span></span>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: pmol </span></span>
-<span><span class="co">#&gt;    Molecular weight: </span></span>
-<span><span class="co">#&gt;    LLOQ: </span></span>
-<span><span class="co">#&gt;    Meta data: </span></span>
+<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
+<span><span class="co">#&gt;    LLOQ: NULL </span></span>
+<span><span class="co">#&gt;    Meta data: NULL </span></span>
 <span><span class="co">#&gt; list()</span></span></code></pre></div>
 <p>Two types of error values are supported - arithmetic error (default)
 and geometric error, the latter being given in fraction. The user can
@@ -236,9 +236,9 @@ change the error type:</p>
 <span><span class="co">#&gt;    Y unit: mol </span></span>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: mol </span></span>
-<span><span class="co">#&gt;    Molecular weight: </span></span>
-<span><span class="co">#&gt;    LLOQ: </span></span>
-<span><span class="co">#&gt;    Meta data: </span></span>
+<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
+<span><span class="co">#&gt;    LLOQ: NULL </span></span>
+<span><span class="co">#&gt;    Meta data: NULL </span></span>
 <span><span class="co">#&gt; list()</span></span></code></pre></div>
 <p>A <code>DataSet</code> can store any kind of text meta data as
 name-values pairs and can be added by the <code>addMetaData()</code>
@@ -318,8 +318,8 @@ MoBi.</p>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: mg/l </span></span>
 <span><span class="co">#&gt;    Molecular weight: 225.21 </span></span>
-<span><span class="co">#&gt;    LLOQ: </span></span>
-<span><span class="co">#&gt;    Meta data: </span></span>
+<span><span class="co">#&gt;    LLOQ: NULL </span></span>
+<span><span class="co">#&gt;    Meta data: NULL </span></span>
 <span><span class="co">#&gt; $Source</span></span>
 <span><span class="co">#&gt; [1] "X:\\Orga\\BTS-TD\\ET\\TP CSB\\Projects\\Internal Projects\\MagenDarm\\TestSubstanzen\\Acyclovir\\Rohdaten_Acyclovir.xls.Vergin 1995 250 mg iv"</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -385,7 +385,7 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <span><span class="co">#&gt;    Error column: Error [ng/ml] </span></span>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: ng/ml </span></span>
-<span><span class="co">#&gt;    Grouping columns: Study Id Organ Compartment Species Gender Molecule Route MW Patient Id Dose [unit] </span></span>
+<span><span class="co">#&gt;    Grouping columns: Study Id    Organ       Compartment Species     Gender      Molecule    Route       MW          Patient Id  Dose [unit] </span></span>
 <span><span class="co">#&gt;    Sheets: </span></span>
 <span><span class="co">#&gt;    Naming pattern: {Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
 <p>A data importer configuration can also be created from scratch and
@@ -413,7 +413,7 @@ let the software “guess” the configuration for a given excel sheet:</p>
 <span><span class="co">#&gt;    Error column: Error [ng/ml] </span></span>
 <span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
 <span><span class="co">#&gt;    Error unit: ng/ml </span></span>
-<span><span class="co">#&gt;    Grouping columns: Study Id Organ Compartment Species Gender Molecule Route MW Patient Id Dose [unit] </span></span>
+<span><span class="co">#&gt;    Grouping columns: Study Id    Organ       Compartment Species     Gender      Molecule    Route       MW          Patient Id  Dose [unit] </span></span>
 <span><span class="co">#&gt;    Sheets: </span></span>
 <span><span class="co">#&gt;    Naming pattern: {Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
 <p>It is important to manually check the created configuration, as the

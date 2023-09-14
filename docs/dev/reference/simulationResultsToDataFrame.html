@@ -142,176 +142,176 @@ simulationValues, unit, dimension, TimeUnit.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># convert to a dataframe</span></span></span>
 <span class="r-in"><span><span class="fu">simulationResultsToDataFrame</span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               paths IndividualId Time simulationValues unit dimension TimeUnit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Organism|Liver|A            0    0        30.000000 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Organism|Liver|A            0   15        25.820301 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Organism|Liver|A            0   30        22.223164 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Organism|Liver|A            0   45        19.129129 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Organism|Liver|A            0   60        16.467295 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Organism|Liver|A            0   75        14.176212 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Organism|Liver|A            0   90        12.203826 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Organism|Liver|A            0  105        10.505752 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Organism|Liver|A            0  120         9.043887 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Organism|Liver|A            0  135         7.785418 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 Organism|Liver|A            0  150         6.702065 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Organism|Liver|A            0  165         5.769464 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 Organism|Liver|A            0  180         4.966637 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Organism|Liver|A            0  195         4.275526 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 Organism|Liver|A            0  210         3.680582 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Organism|Liver|A            0  225         3.168425 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 Organism|Liver|A            0  240         2.727535 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Organism|Liver|A            0  255         2.347995 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 Organism|Liver|A            0  270         2.021268 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 Organism|Liver|A            0  285         1.740006 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 Organism|Liver|A            0  300         1.497881 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 Organism|Liver|B            0    0         5.000000 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Organism|Liver|B            0   15         9.179699 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 Organism|Liver|B            0   30        12.776835 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 Organism|Liver|B            0   45        15.870872 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 Organism|Liver|B            0   60        18.532705 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 Organism|Liver|B            0   75        20.823788 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 Organism|Liver|B            0   90        22.796175 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 Organism|Liver|B            0  105        24.494247 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 Organism|Liver|B            0  120        25.956112 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 Organism|Liver|B            0  135        27.214582 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 Organism|Liver|B            0  150        28.297935 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 Organism|Liver|B            0  165        29.230536 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34 Organism|Liver|B            0  180        30.033363 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35 Organism|Liver|B            0  195        30.724474 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36 Organism|Liver|B            0  210        31.319418 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 Organism|Liver|B            0  225        31.831575 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 Organism|Liver|B            0  240        32.272465 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39 Organism|Liver|B            0  255        32.652004 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 Organism|Liver|B            0  270        32.978733 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41 Organism|Liver|B            0  285        33.259995 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42 Organism|Liver|B            0  300        33.502117 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43       Organism|A            0    0        40.000000 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44       Organism|A            0   15        34.427067 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45       Organism|A            0   30        29.630886 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46       Organism|A            0   45        25.505505 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47       Organism|A            0   60        21.956394 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48       Organism|A            0   75        18.901617 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49       Organism|A            0   90        16.271769 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50       Organism|A            0  105        14.007668 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51       Organism|A            0  120        12.058517 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52       Organism|A            0  135        10.380558 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53       Organism|A            0  150         8.936086 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54       Organism|A            0  165         7.692618 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55       Organism|A            0  180         6.622183 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56       Organism|A            0  195         5.700700 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57       Organism|A            0  210         4.907443 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58       Organism|A            0  225         4.224566 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59       Organism|A            0  240         3.636713 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60       Organism|A            0  255         3.130660 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61       Organism|A            0  270         2.695024 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62       Organism|A            0  285         2.320008 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63       Organism|A            0  300         1.997175 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64       Organism|B            0    0        10.000000 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65       Organism|B            0   15        15.572932 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66       Organism|B            0   30        20.369114 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67       Organism|B            0   45        24.494495 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68       Organism|B            0   60        28.043606 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69       Organism|B            0   75        31.098383 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70       Organism|B            0   90        33.728233 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71       Organism|B            0  105        35.992332 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72       Organism|B            0  120        37.941483 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73       Organism|B            0  135        39.619442 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74       Organism|B            0  150        41.063915 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75       Organism|B            0  165        42.307381 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76       Organism|B            0  180        43.377815 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77       Organism|B            0  195        44.299301 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78       Organism|B            0  210        45.092556 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79       Organism|B            0  225        45.775433 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80       Organism|B            0  240        46.363285 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81       Organism|B            0  255        46.869339 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82       Organism|B            0  270        47.304977 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83       Organism|B            0  285        47.679993 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84       Organism|B            0  300        48.002823 µmol    Amount      min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    TimeDimension molWeight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83          Time        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84          Time        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    IndividualId Time            paths simulationValues TimeDimension TimeUnit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1             0    0 Organism|Liver|A        30.000000          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2             0    0 Organism|Liver|B         5.000000          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             0    0       Organism|A        40.000000          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             0    0       Organism|B        10.000000          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             0   15 Organism|Liver|A        25.820301          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             0   15 Organism|Liver|B         9.179699          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7             0   15       Organism|A        34.427067          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8             0   15       Organism|B        15.572932          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9             0   30 Organism|Liver|A        22.223164          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10            0   30 Organism|Liver|B        12.776835          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11            0   30       Organism|A        29.630886          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12            0   30       Organism|B        20.369114          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13            0   45 Organism|Liver|A        19.129129          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14            0   45 Organism|Liver|B        15.870872          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15            0   45       Organism|A        25.505505          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16            0   45       Organism|B        24.494495          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17            0   60 Organism|Liver|A        16.467295          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18            0   60 Organism|Liver|B        18.532705          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19            0   60       Organism|A        21.956394          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20            0   60       Organism|B        28.043606          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21            0   75 Organism|Liver|A        14.176212          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22            0   75 Organism|Liver|B        20.823788          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23            0   75       Organism|A        18.901617          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24            0   75       Organism|B        31.098383          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25            0   90 Organism|Liver|A        12.203826          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26            0   90 Organism|Liver|B        22.796175          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27            0   90       Organism|A        16.271769          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28            0   90       Organism|B        33.728233          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29            0  105 Organism|Liver|A        10.505752          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30            0  105 Organism|Liver|B        24.494247          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31            0  105       Organism|A        14.007668          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32            0  105       Organism|B        35.992332          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33            0  120 Organism|Liver|A         9.043887          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34            0  120 Organism|Liver|B        25.956112          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35            0  120       Organism|A        12.058517          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36            0  120       Organism|B        37.941483          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37            0  135 Organism|Liver|A         7.785418          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38            0  135 Organism|Liver|B        27.214582          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39            0  135       Organism|A        10.380558          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40            0  135       Organism|B        39.619442          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41            0  150 Organism|Liver|A         6.702065          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42            0  150 Organism|Liver|B        28.297935          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43            0  150       Organism|A         8.936086          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44            0  150       Organism|B        41.063915          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45            0  165 Organism|Liver|A         5.769464          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46            0  165 Organism|Liver|B        29.230536          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47            0  165       Organism|A         7.692618          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48            0  165       Organism|B        42.307381          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49            0  180 Organism|Liver|A         4.966637          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50            0  180 Organism|Liver|B        30.033363          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51            0  180       Organism|A         6.622183          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52            0  180       Organism|B        43.377815          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53            0  195 Organism|Liver|A         4.275526          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54            0  195 Organism|Liver|B        30.724474          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55            0  195       Organism|A         5.700700          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56            0  195       Organism|B        44.299301          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57            0  210 Organism|Liver|A         3.680582          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58            0  210 Organism|Liver|B        31.319418          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59            0  210       Organism|A         4.907443          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60            0  210       Organism|B        45.092556          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61            0  225 Organism|Liver|A         3.168425          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62            0  225 Organism|Liver|B        31.831575          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63            0  225       Organism|A         4.224566          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64            0  225       Organism|B        45.775433          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65            0  240 Organism|Liver|A         2.727535          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66            0  240 Organism|Liver|B        32.272465          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67            0  240       Organism|A         3.636713          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68            0  240       Organism|B        46.363285          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69            0  255 Organism|Liver|A         2.347995          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70            0  255 Organism|Liver|B        32.652004          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71            0  255       Organism|A         3.130660          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72            0  255       Organism|B        46.869339          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73            0  270 Organism|Liver|A         2.021268          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74            0  270 Organism|Liver|B        32.978733          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75            0  270       Organism|A         2.695024          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76            0  270       Organism|B        47.304977          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77            0  285 Organism|Liver|A         1.740006          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78            0  285 Organism|Liver|B        33.259995          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79            0  285       Organism|A         2.320008          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80            0  285       Organism|B        47.679993          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81            0  300 Organism|Liver|A         1.497881          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82            0  300 Organism|Liver|B        33.502117          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83            0  300       Organism|A         1.997175          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84            0  300       Organism|B        48.002823          Time      min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    dimension unit molWeight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84    Amount µmol        NA</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
