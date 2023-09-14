@@ -96,8 +96,10 @@
 #'  `quantiles` (Default), `arithmetic` or `geometric` (full list in `ospsuite::DataAggregationMethods`). Will
 #'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
 #'  (`yValuesLower` and `yValuesHigher`)
-#' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
-#' standard deviation to add below and above the average for `arithmetic` or `geometric`.
+#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
+#'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
+#' @param n optional argument defining the number of standard deviation to add
+#' above and below the average. Only for
 #'
 #'
 #' @details
@@ -759,7 +761,7 @@ DataAggregationMethods <-
 .normRange <- function(x, n = 1, na.rm = FALSE, ...) {
   mean <- mean(x, na.rm = na.rm, ...)
   sd <- sd(x, na.rm = na.rm)
-  return(c(mean - (n * sd), mean, mean + (n * sd)))
+  return(c(mean - (abs(n) * sd), mean, mean + (abs(n) * sd)))
 }
 
 #' Geometric Range
@@ -774,7 +776,7 @@ DataAggregationMethods <-
 .geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
   mean <- .geoMean(x, na.rm = na.rm, ...)
   sd <- .geoSD(x, na.rm = na.rm)
-  return(c(mean - (n * sd), mean, mean + (n * sd)))
+  return(c(mean - (abs(n) * sd), mean, mean + (abs(n) * sd)))
 }
 
 
