@@ -99,7 +99,7 @@
 #'  (`yValuesLower` and `yValuesHigher`).
 #'@param quantiles A numerical vector with quantile values (Default: `c(0.05,
 #'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
-#'@inheritDotParams .normRange n
+#'@inheritDotParams .normRange nsd
 #'
 #'@details The simulated values will be aggregated across individuals for each
 #'  time point.
@@ -109,9 +109,9 @@
 #'  will be used to draw a line, while the lower and upper values will be used
 #'  as the lower und upper ranges. For `aggregation = arithmetic`, arithmetic
 #'  mean with arithmetic standard deviation (SD) will be plotted. Use the
-#'  optional parameter `n` to change the number of SD to plot above and below
+#'  optional parameter `nsd` to change the number of SD to plot above and below
 #'  the mean. For `aggregation = geometric`, geometric mean with geometric
-#'  standard deviation (SD) will be plotted. Use the optional parameter `n` to
+#'  standard deviation (SD) will be plotted. Use the optional parameter `nsd` to
 #'  change the number of SD to plot above and below the mean.
 #'
 #'@family utilities-plotting
@@ -760,7 +760,7 @@ DataAggregationMethods <-
 #' Normal Range
 #'
 #' @param x numeric vector to compute normal range from
-#' @param n optional argument defining the number of standard deviation to add
+#' @param nsd optional argument defining the number of standard deviation to add
 #'   and substract to the mean
 #' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA
 #'   values should be stripped before the computation proceeds.
@@ -769,10 +769,10 @@ DataAggregationMethods <-
 #' @return numeric vector of length 3 representing the min, mean and max of the
 #'   normal range.
 #' @keywords internal
-.normRange <- function(x, n = 1, na.rm = FALSE, ...) {
+.normRange <- function(x, nsd = 1, na.rm = FALSE, ...) {
   mean <- mean(x, na.rm = na.rm, ...)
   sd <- sd(x, na.rm = na.rm)
-  return(c(mean - (abs(n) * sd), mean, mean + (abs(n) * sd)))
+  return(c(mean - (abs(nsd) * sd), mean, mean + (abs(nsd) * sd)))
 }
 
 #' Geometric Range
@@ -786,12 +786,12 @@ DataAggregationMethods <-
 #' @return numeric vector of length 3 representing the min, mean and max of the
 #'   geometric range.
 #' @keywords internal
-.geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
+.geoRange <- function(x, nsd = 1, na.rm = FALSE, ...) {
   geomean <- .geoMean(x, na.rm = na.rm, ...)
   geomsd <- .geoSD(x, na.rm = na.rm)
-  return(c(exp(log(geomean) - abs(n) * log(geomsd)),
+  return(c(exp(log(geomean) - abs(nsd) * log(geomsd)),
            geomean,
-           exp(log(geomean) + abs(n) * log(geomsd)))
+           exp(log(geomean) + abs(nsd) * log(geomsd)))
   )
 }
 
