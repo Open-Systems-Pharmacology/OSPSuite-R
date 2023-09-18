@@ -4,12 +4,12 @@
 \alias{.normRange}
 \title{Normal Range}
 \usage{
-.normRange(x, n = 1, na.rm = FALSE, ...)
+.normRange(x, nsd = 1, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{numeric vector to compute normal range from}
 
-\item{n}{optional argument defining the number of standard deviation to add
+\item{nsd}{optional argument defining the number of standard deviation to add
 and substract to the mean}
 
 \item{na.rm}{a logical evaluating to TRUE or FALSE indicating whether NA

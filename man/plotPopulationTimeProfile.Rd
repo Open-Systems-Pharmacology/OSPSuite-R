@@ -40,9 +40,9 @@ argument \code{quantiles} will be used. In the profile plot, the middle value
 will be used to draw a line, while the lower and upper values will be used
 as the lower und upper ranges. For \code{aggregation = arithmetic}, arithmetic
 mean with arithmetic standard deviation (SD) will be plotted. Use the
-optional parameter \code{n} to change the number of SD to plot above and below
+optional parameter \code{nsd} to change the number of SD to plot above and below
 the mean. For \code{aggregation = geometric}, geometric mean with geometric
-standard deviation (SD) will be plotted. Use the optional parameter \code{n} to
+standard deviation (SD) will be plotted. Use the optional parameter \code{nsd} to
 change the number of SD to plot above and below the mean.
 }
 \examples{
