@@ -2,7 +2,7 @@
 
 ## New features
 - Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
-- `plotIndividualTimeProfile()` provides two new aggregations methods: `arithmetic` and `geometric` average and the ability to chose the number of standard deviations to display around the mean.
+- `plotPopulationTimeProfile()` provides two new aggregations methods: `arithmetic` and `geometric` average and the ability to chose the number of standard deviations to display around the mean.
 
 ## Breaking Changes
 - The single argument of the `getBaseUnit()` function is now named `quantityOrDimension` (was `dimension` previously). It can now use objects of class `Quantity` as inputs, to be consistent with the `toBaseUnit()` function.
