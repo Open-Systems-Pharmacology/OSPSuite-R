@@ -155,34 +155,38 @@ test_that("Normal range works with different n argument", {
 })
 
 test_that("Geometric range works with default options", {
+
+
+  gm <- exp(mean(log(randu$x)))
+  gsd <- exp(sd(log(randu$x)))
+
   expect_equal(
-    c(
-      exp(mean(log(randu$x))) - exp(sd(log(randu$x))),
-      exp(mean(log(randu$x))),
-      exp(mean(log((randu$x)))) + exp(sd(log(randu$x)))
-    ),
+    c(gm/gsd,
+      gm,
+      gm*gsd),
     .geoRange(randu$x)
   )
 })
 
 test_that("Geometric range works with different n argument", {
   n <- 2
+
+  gm <- exp(mean(log(randu$x)))
+  gsd <- exp(sd(log(randu$x)))
+
+
   expect_equal(
-    c(
-      exp(mean(log(randu$x))) - abs(n) * exp(sd(log(randu$x))),
-      exp(mean(log(randu$x))),
-      exp(mean(log((randu$x)))) + abs(n) * exp(sd(log(randu$x)))
-    ),
+    c(gm/gsd^n,
+      gm,
+      gm*gsd^n),
     .geoRange(randu$x, n = n)
   )
 
   n <- -2
   expect_equal(
-    c(
-      exp(mean(log(randu$x))) - abs(n) * exp(sd(log(randu$x))),
-      exp(mean(log(randu$x))),
-      exp(mean(log((randu$x)))) + abs(n) * exp(sd(log(randu$x)))
-    ),
+    c(gm/gsd^abs(n),
+    gm,
+    gm*gsd^abs(n)),
     .geoRange(randu$x, n = n)
   )
 })

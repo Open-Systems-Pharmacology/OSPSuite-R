@@ -789,9 +789,9 @@ DataAggregationMethods <-
 .geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
   geomean <- .geoMean(x, na.rm = na.rm, ...)
   geomsd <- .geoSD(x, na.rm = na.rm)
-  return(c(exp(log(geomean) - n * log(geomsd)),
+  return(c(exp(log(geomean) - abs(n) * log(geomsd)),
            geomean,
-           exp(log(geomean) + n * log(geomsd)))
+           exp(log(geomean) + abs(n) * log(geomsd)))
   )
 }
 
