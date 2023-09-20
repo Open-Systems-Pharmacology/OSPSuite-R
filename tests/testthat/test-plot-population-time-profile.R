@@ -203,7 +203,7 @@ test_that("Aggregations are computed and displayed correctly", {
     fig =
       plotPopulationTimeProfile(myDataComb,
         aggregation = "arithmetic",
-        n = 2
+        nsd = 2
       )
   )
 
@@ -219,7 +219,7 @@ test_that("Aggregations are computed and displayed correctly", {
     title = "geometric mean with 2sd",
     fig = plotPopulationTimeProfile(myDataComb,
       aggregation = "geometric",
-      n = 2
+      nsd = 2
     )
   )
 })
