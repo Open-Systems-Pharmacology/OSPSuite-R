@@ -12,11 +12,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
-  dpi = 300,
   comment = "#>",
   out.width = "100%",
   fig.height = 6,
-  fig.width = 8
+  fig.width = 8,
+  fig.showtext=TRUE
 )
 ```
 
