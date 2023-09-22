@@ -49,9 +49,6 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/authors.html</loc>
   </url>
   <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/awake-topi_reprex.html</loc>
-  </url>
-  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/index.html</loc>
   </url>
   <url>
@@ -59,9 +56,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/petit-dore_reprex.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputInterval.html</loc>
@@ -686,8 +680,5 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ValuePoint.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/sane-eyas_reprex.html</loc>
   </url>
 </urlset>
