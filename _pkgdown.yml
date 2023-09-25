@@ -38,3 +38,15 @@ articles:
     - efficient-calculations
     - table-parameters
     - unit-conversion
+
+figures:
+  dev: ragg::agg_png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 8
+  fig.height: ~
+  fig.retina: 1
+  fig.asp: 1
+  bg: NA
+  other.parameters: []

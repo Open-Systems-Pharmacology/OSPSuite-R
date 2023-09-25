@@ -13,6 +13,11 @@
     stop("64 bit version of R is required.")
   }
 
+  if (Sys.getenv("IN_PKGDOWN") == "true") {
+    showtext::showtext_auto()
+    showtext::showtext_opts(dpi = 96)
+  }
+
   .initPackage()
 }
 # nocov end
