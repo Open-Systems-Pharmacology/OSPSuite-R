@@ -190,6 +190,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractResidualsToTibble.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-geoRange.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getAllEntitiesMatching.html</loc>
   </url>
   <url>
@@ -200,9 +203,6 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getDimensionsEnum.html</loc>
-  </url>
-  <url>
-    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getDimensionTask.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getEntity.html</loc>
@@ -245,6 +245,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-netEnumName.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-normRange.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-parameterValueListFrom.html</loc>

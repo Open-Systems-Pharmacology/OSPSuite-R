@@ -185,23 +185,23 @@ string providing plot annotations for plot title, subtitle, caption, x-axis
 label, y-axis label, plot legend, watermark, respectively.</p></dd>
 
 
-<dt><code>titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign</code></dt>
+<dt><code>titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin</code></dt>
 <dd><p>Aesthetic properties for the plot title.</p></dd>
 
 
-<dt><code>subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign</code></dt>
+<dt><code>subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin</code></dt>
 <dd><p>Aesthetic properties for the plot subtitle.</p></dd>
 
 
-<dt><code>captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign</code></dt>
+<dt><code>captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin</code></dt>
 <dd><p>Aesthetic properties for the plot caption.</p></dd>
 
 
-<dt><code>xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign</code></dt>
+<dt><code>xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin</code></dt>
 <dd><p>Aesthetic properties for the plot xLabel.</p></dd>
 
 
-<dt><code>yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign</code></dt>
+<dt><code>yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin</code></dt>
 <dd><p>Aesthetic properties for the plot yLabel.</p></dd>
 
 
@@ -210,11 +210,11 @@ label, y-axis label, plot legend, watermark, respectively.</p></dd>
 Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/LegendPositions.html" class="external-link">tlf::LegendPositions</a></code> list.</p></dd>
 
 
-<dt><code>legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign</code></dt>
+<dt><code>legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin</code></dt>
 <dd><p>Aesthetic properties for the legend title.</p></dd>
 
 
-<dt><code>legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign</code></dt>
+<dt><code>legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin</code></dt>
 <dd><p>Aesthetic properties for the legend caption.</p></dd>
 
 
@@ -222,11 +222,11 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/L
 <dd><p>Aesthetic properties for the legend box</p></dd>
 
 
-<dt><code>xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand</code></dt>
+<dt><code>xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand</code></dt>
 <dd><p>Aesthetic properties for the x-axis label.</p></dd>
 
 
-<dt><code>yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand</code></dt>
+<dt><code>yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand</code></dt>
 <dd><p>Aesthetic properties for the y-axis label.</p></dd>
 
 
@@ -235,7 +235,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/L
 y-axis, respectively. This will preserve all data points but zoom in the plot.</p></dd>
 
 
-<dt><code>xAxisValuesLimits, yAxisValuesLimits</code></dt>
+<dt><code>xValuesLimits, yValuesLimits</code></dt>
 <dd><p>A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.</p></dd>
 
@@ -250,7 +250,7 @@ position x-and y-axis ticks, respectively.</p></dd>
 Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">tlf::Scaling</a></code> list.</p></dd>
 
 
-<dt><code>watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign</code></dt>
+<dt><code>watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin</code></dt>
 <dd><p>A character string specifying the aesthetic properties for the watermark.</p></dd>
 
 
@@ -324,31 +324,31 @@ string providing plot annotations for plot title, subtitle, caption, x-axis
 label, y-axis label, plot legend, watermark, respectively.</p></dd>
 
 
-<dt><code>titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign</code></dt>
+<dt><code>titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin</code></dt>
 <dd><p>Aesthetic properties for the plot title.</p></dd>
 
 
-<dt><code>subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign</code></dt>
+<dt><code>subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin</code></dt>
 <dd><p>Aesthetic properties for the plot subtitle.</p></dd>
 
 
-<dt><code>captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign</code></dt>
+<dt><code>captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin</code></dt>
 <dd><p>Aesthetic properties for the plot caption.</p></dd>
 
 
-<dt><code>xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign</code></dt>
+<dt><code>xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin</code></dt>
 <dd><p>Aesthetic properties for the plot xLabel.</p></dd>
 
 
-<dt><code>yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign</code></dt>
+<dt><code>yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin</code></dt>
 <dd><p>Aesthetic properties for the plot yLabel.</p></dd>
 
 
-<dt><code>legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign</code></dt>
+<dt><code>legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin</code></dt>
 <dd><p>Aesthetic properties for the legend title.</p></dd>
 
 
-<dt><code>legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign</code></dt>
+<dt><code>legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin</code></dt>
 <dd><p>Aesthetic properties for the legend caption.</p></dd>
 
 
@@ -356,11 +356,11 @@ label, y-axis label, plot legend, watermark, respectively.</p></dd>
 <dd><p>Aesthetic properties for the legend box</p></dd>
 
 
-<dt><code>xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand</code></dt>
+<dt><code>xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand</code></dt>
 <dd><p>Aesthetic properties for the x-axis label.</p></dd>
 
 
-<dt><code>yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand</code></dt>
+<dt><code>yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand</code></dt>
 <dd><p>Aesthetic properties for the y-axis label.</p></dd>
 
 
@@ -369,7 +369,7 @@ label, y-axis label, plot legend, watermark, respectively.</p></dd>
 y-axis, respectively. This will preserve all data points but zoom in the plot.</p></dd>
 
 
-<dt><code>xAxisValuesLimits, yAxisValuesLimits</code></dt>
+<dt><code>xValuesLimits, yValuesLimits</code></dt>
 <dd><p>A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.</p></dd>
 
@@ -384,7 +384,7 @@ position x-and y-axis ticks, respectively.</p></dd>
 Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">tlf::Scaling</a></code> list.</p></dd>
 
 
-<dt><code>watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign</code></dt>
+<dt><code>watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin</code></dt>
 <dd><p>A character string specifying the aesthetic properties for the watermark.</p></dd>
 
 
@@ -482,6 +482,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     captionColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     captionFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     captionFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     captionMargin: 2 2 5 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     captionSize: 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     displayLLOQ: TRUE</span>
@@ -501,6 +502,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysMargin: 2 0 2 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysSize: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendPosition: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendTitle: My Legend Title</span>
@@ -509,6 +511,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendTitleColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendTitleFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendTitleFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendTitleMargin: 2 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendTitleSize: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     linesAlpha: 0.75</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     linesColor: NULL</span>
@@ -537,6 +540,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subtitleColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subtitleFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subtitleFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     subtitleMargin: 0 2 10 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subtitleSize: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title: My Plot Title</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titleAlign: left</span>
@@ -544,6 +548,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titleColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titleFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titleFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     titleMargin: 20 2 10 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titleSize: 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     watermark: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     watermarkAlign: center</span>
@@ -551,6 +556,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     watermarkColor: grey40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     watermarkFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     watermarkFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     watermarkMargin: 1 1 1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     watermarkSize: 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisExpand: FALSE</span>
@@ -559,6 +565,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLabelTicksColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLabelTicksFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLabelTicksFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLabelTicksMargin: 2 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLabelTicksSize: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisLinetype: solid</span>
@@ -566,7 +573,6 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisSize: 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisTicks: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisTicksLabels: identity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisValuesLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xGridColor: grey</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xGridLinetype: blank</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xGridSize: 0.25</span>
@@ -576,8 +582,10 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xLabelColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xLabelFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xLabelFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     xLabelMargin: 10 2 5 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xLabelSize: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xUnit: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     xValuesLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisExpand: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLabelTicksAlign: center</span>
@@ -585,6 +593,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLabelTicksColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLabelTicksFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLabelTicksFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLabelTicksMargin: 2 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLabelTicksSize: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisLinetype: solid</span>
@@ -592,7 +601,6 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisSize: 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisTicks: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisTicksLabels: identity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisValuesLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yGridColor: grey</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yGridLinetype: blank</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yGridSize: 0.25</span>
@@ -602,8 +610,10 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yLabelColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yLabelFontFace: plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yLabelFontFamily: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     yLabelMargin: 5 2 10 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yLabelSize: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yUnit: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     yValuesLimits: NULL</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

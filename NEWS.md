@@ -2,13 +2,14 @@
 
 ## New features
 - Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
+- `plotPopulationTimeProfile()` provides two new aggregations methods: `arithmetic` and `geometric` average and the ability to chose the number of standard deviations to display around the mean through the `nsd` argument.
 
 ## Breaking Changes
 - The single argument of the `getBaseUnit()` function is now named `quantityOrDimension` (was `dimension` previously). It can now use objects of class `Quantity` as inputs, to be consistent with the `toBaseUnit()` function.
 
 ## Major Changes
 
-* Function `calculateResiduals()` uses natural logarithm (`log()`) when calculating 
+- Function `calculateResiduals()` uses natural logarithm (`log()`) when calculating 
 residuals with `scaling = "log"` as opposed to `log10()` as it was done before. This also 
 affects figures created by `plotObservedVsSimulated()`, `plotResidualsVsSimulated()`, and 
 `plotResidualsVsTime()`. See discusssions https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091

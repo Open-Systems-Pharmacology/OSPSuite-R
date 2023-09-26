@@ -91,19 +91,28 @@
 #' Extract aggregated simulated data
 #'
 #' @param simData A data frame with simulated data from
-#'   `DataCombined$toDataFrame()`.
+#'  `DataCombined$toDataFrame()`.
 #' @param aggregation The type of the aggregation of individual data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in `ospsuite::DataAggregationMethods`). Will
-#'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
-#'  (`yValuesLower` and `yValuesHigher`)
-#' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
-#' standard deviation to add below and above the average for `arithmetic` or `geometric`.
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in
+#'  `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
+#'  arithmetic or geometric average and add a set of upper and lower bounds
+#'  (`yValuesLower` and `yValuesHigher`).
+#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
+#'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
+#' @inheritDotParams .normRange nsd
 #'
+#' @details The simulated values will be aggregated across individuals for each
+#'  time point.
 #'
-#' @details
-#'
-#' The simulated values will be aggregated across individuals for each time
-#' point.
+#'  For `aggregation = quantiles` (default), the quantile values defined in the
+#'  argument `quantiles` will be used. In the profile plot, the middle value
+#'  will be used to draw a line, while the lower and upper values will be used
+#'  as the lower und upper ranges. For `aggregation = arithmetic`, arithmetic
+#'  mean with arithmetic standard deviation (SD) will be plotted. Use the
+#'  optional parameter `nsd` to change the number of SD to plot above and below
+#'  the mean. For `aggregation = geometric`, geometric mean with geometric
+#'  standard deviation (SD) will be plotted. Use the optional parameter `nsd` to
+#'  change the number of SD to plot above and below the mean.
 #'
 #' @family utilities-plotting
 #'
@@ -750,31 +759,40 @@ DataAggregationMethods <-
 #' Normal Range
 #'
 #' @param x numeric vector to compute normal range from
-#' @param n the number of standard deviation to add/substract from mean
-#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param nsd optional argument defining the number of standard deviation to add
+#'   and substract to the mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA
+#'   values should be stripped before the computation proceeds.
 #' @param ... further arguments passed to mean and sd functions.
 #'
-#' @return numeric vector of length 3 representing the min, mean and max of the normal range.
-#' @noRd
-.normRange <- function(x, n = 1, na.rm = FALSE, ...) {
+#' @return numeric vector of length 3 representing the min, mean and max of the
+#'   normal range.
+#' @keywords internal
+.normRange <- function(x, nsd = 1, na.rm = FALSE, ...) {
   mean <- mean(x, na.rm = na.rm, ...)
   sd <- sd(x, na.rm = na.rm)
-  return(c(mean - (n * sd), mean, mean + (n * sd)))
+  return(c(mean - (abs(nsd) * sd), mean, mean + (abs(nsd) * sd)))
 }
 
 #' Geometric Range
 #'
 #' @param x numeric vector to compute geometric range from
-#' @param n the number of geometric standard deviation to add/substract from mean
-#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @inheritParams .normRange
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA
+#'   values should be stripped before the computation proceeds.
 #' @param ... further arguments passed to mean and sd functions.
 #'
-#' @return numeric vector of length 3 representing the min, mean and max of the geometric range.
-#' @noRd
-.geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
-  mean <- .geoMean(x, na.rm = na.rm, ...)
-  sd <- .geoSD(x, na.rm = na.rm)
-  return(c(mean - (n * sd), mean, mean + (n * sd)))
+#' @return numeric vector of length 3 representing the min, mean and max of the
+#'   geometric range.
+#' @keywords internal
+.geoRange <- function(x, nsd = 1, na.rm = FALSE, ...) {
+  geomean <- .geoMean(x, na.rm = na.rm, ...)
+  geomsd <- .geoSD(x, na.rm = na.rm)
+  return(c(
+    exp(log(geomean) - abs(nsd) * log(geomsd)),
+    geomean,
+    exp(log(geomean) + abs(nsd) * log(geomsd))
+  ))
 }
 
 

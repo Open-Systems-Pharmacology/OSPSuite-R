@@ -144,7 +144,7 @@ values were specified by the user for each dataset.</p></dd>
 <h3 id="method-adddatasets-">Method <code>addDataSets()</code><a class="anchor" aria-label="anchor" href="#method-adddatasets-"></a></h3>
 <p>Adds observed data.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span>, groups <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span>, groups <span class="op">=</span> <span class="cn">NULL</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -174,6 +174,11 @@ If no grouping is specified for any of the dataset, the column <code>group</code
 the data frame output will be all <code>NA</code>.</p></dd>
 
 
+<dt><code>silent</code></dt>
+<dd><p>A binary flag showing if warnings should be triggered when
+data sets are overwritten in the <code>DataCombined</code> object</p></dd>
+
+
 </dl><p></p></div>
 </div>
 <div class="section">
@@ -191,7 +196,8 @@ the data frame output will be all <code>NA</code>.</p></dd>
 <span>  population <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  individualIds <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  groups <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  silent <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -242,6 +248,11 @@ entry in the <code>group</code> column will be an <code>NA</code>). If provided,
 have the same length as <code>dataSets</code> and/or <code>simulationResults$quantityPath</code>.
 If no grouping is specified for any of the dataset, the column <code>group</code> in
 the data frame output will be all <code>NA</code>.</p></dd>
+
+
+<dt><code>silent</code></dt>
+<dd><p>A binary flag showing if warnings should be triggered when
+data sets are overwritten in the <code>DataCombined</code> object</p></dd>
 
 
 </dl><p></p></div>
@@ -444,10 +455,10 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span><span class="co"># Looking at group mappings</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">groupMap</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   group         name                                                    dataType</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Aciclovir PVB Organism|PeripheralVenousBlood|Aciclovir|Plasma (Perip… simulat…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Aciclovir PVB Vergin 1995.Iv                                          observed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name                                                            group dataType</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Ve… Acic… simulat…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Vergin 1995.Iv                                                  Acic… observed</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Looking at the applied transformations</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">dataTransformations</span></span></span>
@@ -460,23 +471,24 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span><span class="co"># Accessing the combined data frame</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 × 27</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name         group dataType xValues xUnit xDimension yValues yUnit yDimension</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Organism|Pe… Acic… simulat…       0 min   Time          0    µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Organism|Pe… Acic… simulat…       1 min   Time          3.25 µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Organism|Pe… Acic… simulat…       2 min   Time          9.10 µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Organism|Pe… Acic… simulat…       3 min   Time         15.0  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Organism|Pe… Acic… simulat…       4 min   Time         20.7  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Organism|Pe… Acic… simulat…       5 min   Time         26.2  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Organism|Pe… Acic… simulat…       6 min   Time         31.4  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Organism|Pe… Acic… simulat…       7 min   Time         36.4  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Organism|Pe… Acic… simulat…       8 min   Time         41.1  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Organism|Pe… Acic… simulat…       9 min   Time         45.5  µmol… Concentra…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>            0       0 Organism|Peri…    0    Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>            0       1 Organism|Peri…    3.25 Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>            0       2 Organism|Peri…    9.10 Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>            0       3 Organism|Peri…   15.0  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>            0       4 Organism|Peri…   20.7  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>            0       5 Organism|Peri…   26.2  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>            0       6 Organism|Peri…   31.4  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>            0       7 Organism|Peri…   36.4  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>            0       8 Organism|Peri…   41.1  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>            0       9 Organism|Peri…   45.5  Time       min   Concentra… µmol…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 494 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 18 more variables: yErrorValues &lt;dbl&gt;, yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IndividualId &lt;int&gt;, molWeight &lt;dbl&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more variables: molWeight &lt;dbl&gt;, dataType &lt;chr&gt;, yErrorValues &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;, `Patient Id` &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -202,8 +202,8 @@ plot.</p>
 <span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">yAxisScale</span> <span class="op">&lt;-</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">log</span></span>
 <span></span>
 <span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"Example: Customizing a Plot"</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">subtitle</span> <span class="op">&lt;-</span> <span class="st">"Using `DefaultPlotConfiguration` class"</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">caption</span> <span class="op">&lt;-</span> <span class="st">"Source: `Aciclovir` data"</span></span>
+<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">subtitle</span> <span class="op">&lt;-</span> <span class="st">"Using DefaultPlotConfiguration class"</span></span>
+<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">caption</span> <span class="op">&lt;-</span> <span class="st">"Source: Aciclovir data"</span></span>
 <span></span>
 <span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">legendPosition</span> <span class="op">&lt;-</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/LegendPositions.html" class="external-link">LegendPositions</a></span><span class="op">$</span><span class="va">outsideRight</span></span></code></pre></div>
 <p>This configuration class can be passed to all plotting functions:</p>
@@ -238,7 +238,7 @@ object. Lets create different plots from the same
 rows equals to the number of colums. You can also specify the number of
 rows or columns through the <code>PlotGridConfiguration</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="va">nRows</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<code class="sourceCode R"><span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="va">nColumns</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tlf/man/plotGrid.html" class="external-link">plotGrid</a></span><span class="op">(</span><span class="va">plotGridConfiguration</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>

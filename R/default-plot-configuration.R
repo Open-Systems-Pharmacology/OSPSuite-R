@@ -112,18 +112,18 @@
 #' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character
 #'   string providing plot annotations for plot title, subtitle, caption, x-axis
 #'   label, y-axis label, plot legend, watermark, respectively.
-#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle,titleAlign Aesthetic properties for the plot title.
-#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle,subtitleAlign Aesthetic properties for the plot subtitle.
-#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionAngle,captionAlign Aesthetic properties for the plot caption.
-#' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle,xLabelAlign Aesthetic properties for the plot xLabel.
-#' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle,yLabelAlign Aesthetic properties for the plot yLabel.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle,titleAlign,titleMargin Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle,subtitleAlign,subtitleMargin Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionAngle,captionAlign,captionMargin Aesthetic properties for the plot caption.
+#' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle,xLabelAlign,xLabelMargin Aesthetic properties for the plot xLabel.
+#' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle,yLabelAlign,yLabelMargin Aesthetic properties for the plot yLabel.
 #' @field legendPosition A character string defining the legend position.
 #'   Available options can be seen using `tlf::LegendPositions` list.
-#' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
-#' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign Aesthetic properties for the legend caption.
+#' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign,legendTitleMargin Aesthetic properties for the legend title.
+#' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign,legendKeysMargin Aesthetic properties for the legend caption.
 #' @field legendBackgroundColor,legendBackgroundAlpha,legendBorderColor,legendBorderType,legendBorderSize Aesthetic properties for the legend box
-#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
-#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
+#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisLabelTicksMargin,xAxisExpand Aesthetic properties for the x-axis label.
+#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisLabelTicksMargin,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively. This will preserve all data points but zoom in the plot.
 #' @field xValuesLimits,yValuesLimits A numeric vector of values limits for the x-and
@@ -132,7 +132,7 @@
 #'   position x-and y-axis ticks, respectively.
 #' @field xAxisScale,yAxisScale A character string defining axis scale.
 #'   Available options can be seen using `tlf::Scaling` list.
-#' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle,watermarkAlign A character string specifying the aesthetic properties for the watermark.
+#' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle,watermarkAlign,watermarkMargin A character string specifying the aesthetic properties for the watermark.
 #' @field plotBackgroundFill,plotBackgroundColor,plotBackgroundSize,plotBackgroundLinetype A character string specifying the aesthetic properties for the plot background.
 #' @field plotPanelBackgroundFill,plotPanelBackgroundColor,plotPanelBackgroundSize,plotPanelBackgroundLinetype A character string specifying the aesthetic properties for the plot panel (inside of plot) background.
 #' @field xAxisColor,xAxisSize,xAxisLinetype A character string specifying the aesthetic properties for the x-axis.
@@ -238,7 +238,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$left,
-    legendMargin = c(2, 2, 2, 2),
+    legendTitleMargin = c(2, 2, 2, 2),
 
     # legendBox ------------------------------------
 
