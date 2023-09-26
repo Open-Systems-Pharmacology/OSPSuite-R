@@ -1,4 +1,3 @@
-
 #' Retrieve all parameters of a container (simulation or container instance) matching the given path criteria
 #'
 #' @param paths A vector of strings representing the paths relative to the `container`

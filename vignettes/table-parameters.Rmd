@@ -69,7 +69,6 @@ tableParam$formula$valueAt(90)
 Simply setting the value of a table-defined parameter using `setParameterValues` will override the formula and make the parameter constant.
 
 ```{r setTableToConstant}
-
 # Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
 tableParam

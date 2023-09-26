@@ -1,4 +1,3 @@
-
 #' @title SimulationPKAnalyses
 #' @docType class
 #' @description  pK-Analyses of a simulation (either individual or population simulation).

@@ -1,4 +1,3 @@
-
 context("Unicode support")
 
 test_that("It can load a simulation whose name contains unicode characters", {
