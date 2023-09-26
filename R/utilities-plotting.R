@@ -88,20 +88,20 @@
 }
 
 
-#'Extract aggregated simulated data
+#' Extract aggregated simulated data
 #'
-#'@param simData A data frame with simulated data from
+#' @param simData A data frame with simulated data from
 #'  `DataCombined$toDataFrame()`.
-#'@param aggregation The type of the aggregation of individual data. One of
+#' @param aggregation The type of the aggregation of individual data. One of
 #'  `quantiles` (Default), `arithmetic` or `geometric` (full list in
 #'  `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
 #'  arithmetic or geometric average and add a set of upper and lower bounds
 #'  (`yValuesLower` and `yValuesHigher`).
-#'@param quantiles A numerical vector with quantile values (Default: `c(0.05,
+#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
 #'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
-#'@inheritDotParams .normRange nsd
+#' @inheritDotParams .normRange nsd
 #'
-#'@details The simulated values will be aggregated across individuals for each
+#' @details The simulated values will be aggregated across individuals for each
 #'  time point.
 #'
 #'  For `aggregation = quantiles` (default), the quantile values defined in the
@@ -114,9 +114,9 @@
 #'  standard deviation (SD) will be plotted. Use the optional parameter `nsd` to
 #'  change the number of SD to plot above and below the mean.
 #'
-#'@family utilities-plotting
+#' @family utilities-plotting
 #'
-#'@import data.table
+#' @import data.table
 #'
 #' @examples
 #'
@@ -150,11 +150,10 @@
 #' # aggregated data
 #' ospsuite:::.extractAggregatedSimulatedData(df)
 #'
-#'@keywords internal
+#' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
                                             aggregation = "quantiles",
                                             ...) {
-
   ospsuite.utils::validateEnumValue(
     value       = aggregation,
     enum        = DataAggregationMethods,
@@ -165,9 +164,9 @@
   simAggregatedData <- data.table::as.data.table(simData)
 
   aggregation_function <- switch(aggregation,
-                                 "quantiles"  = .quantRange,
-                                 "arithmetic" = .normRange,
-                                 "geometric"  = .geoRange
+    "quantiles"  = .quantRange,
+    "arithmetic" = .normRange,
+    "geometric"  = .geoRange
   )
 
   # For each dataset, compute quantiles across all individuals for each time point
@@ -246,19 +245,19 @@
 
   if (!all(is.na(data$yDimension))) {
     data <- dplyr::mutate(data,
-                          yDimension = dplyr::case_when(
-                            yDimension %in% concDimensions ~ "Concentration",
-                            TRUE ~ yDimension
-                          )
+      yDimension = dplyr::case_when(
+        yDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ yDimension
+      )
     )
   }
 
   if (!all(is.na(data$xDimension))) {
     data <- dplyr::mutate(data,
-                          xDimension = dplyr::case_when(
-                            xDimension %in% concDimensions ~ "Concentration",
-                            TRUE ~ xDimension
-                          )
+      xDimension = dplyr::case_when(
+        xDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ xDimension
+      )
     )
   }
 
@@ -290,23 +289,23 @@
 
   # X-axis label
   xLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = ,
-                   "ResVsTimePlotConfiguration" = xUnitString,
-                   # Note that `yUnitString` here is deliberate.
-                   #
-                   # In case of an observed versus simulated plot, `yValues` are plotted on
-                   # both x- and y-axes, and therefore the units strings are going to be the
-                   # same for both axes.
-                   "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
-                   "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "TimeProfilePlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = xUnitString,
+    # Note that `yUnitString` here is deliberate.
+    #
+    # In case of an observed versus simulated plot, `yValues` are plotted on
+    # both x- and y-axes, and therefore the units strings are going to be the
+    # same for both axes.
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
+    "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   # Y-axis label
   yLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = yUnitString,
-                   "ResVsPredPlotConfiguration" = ,
-                   "ResVsTimePlotConfiguration" = "Residuals",
-                   "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "TimeProfilePlotConfiguration" = yUnitString,
+    "ResVsPredPlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = "Residuals",
+    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   return(list("xLabel" = xLabel, "yLabel" = yLabel))
@@ -727,7 +726,7 @@
 
 .updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
   if (!is.null(specificPlotConfiguration[[specificSetting]]) &
-      !is.null(generalPlotConfiguration[[specificSetting]])) {
+    !is.null(generalPlotConfiguration[[specificSetting]])) {
     if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
       specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
     }
@@ -789,10 +788,11 @@ DataAggregationMethods <-
 .geoRange <- function(x, nsd = 1, na.rm = FALSE, ...) {
   geomean <- .geoMean(x, na.rm = na.rm, ...)
   geomsd <- .geoSD(x, na.rm = na.rm)
-  return(c(exp(log(geomean) - abs(nsd) * log(geomsd)),
-           geomean,
-           exp(log(geomean) + abs(nsd) * log(geomsd)))
-  )
+  return(c(
+    exp(log(geomean) - abs(nsd) * log(geomsd)),
+    geomean,
+    exp(log(geomean) + abs(nsd) * log(geomsd))
+  ))
 }
 
 
