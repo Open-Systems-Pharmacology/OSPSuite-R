@@ -66,3 +66,7 @@ messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, fol
   paste0("Parameter '", parameterName, "' should be >1! Following values have
          been passed: '", paste(foldDistances, collapse = ", "), "'.")
 }
+
+messages$wrongUnitForQuantity <- function(quantityPath, unit) {
+  paste0("Unit '", unit, "' is not valid for quantity with path '", quantityPath, "'")
+}
