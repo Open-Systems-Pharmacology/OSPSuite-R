@@ -31,6 +31,13 @@ test_that("active bindings should all be NULL for empty initialization", {
   expect_null(myCombDat$groupMap)
   expect_null(myCombDat$names)
   expect_null(myCombDat$toDataFrame())
+  expect_equal(myCombDat$dataTransformations, dplyr::tibble(
+    name = character(),
+    xOffsets = numeric(),
+    yOffsets = numeric(),
+    xScaleFactors = numeric(),
+    yScaleFactors = numeric()
+  ))
   expect_output(print(myCombDat), "DataCombined:")
 })
 
@@ -192,7 +199,11 @@ test_that("data frame molecular weight column values are as expected", {
 # with the OSPSUITE-BENCHMARK-TESTS environment variable set to TRUE
 if (Sys.getenv("OSPSUITE-BENCHMARK-TESTS") == "TRUE") {
   # This is an example benchmark that takes around 4 seconds
-  benchmark_1e8 <- system.time({for (i in 1:1e8) {res <- 2**0.5}})
+  benchmark_1e8 <- system.time({
+    for (i in 1:1e8) {
+      res <- 2**0.5
+    }
+  })
   # In the current implementation, 100 runs of simulationResultsToDataFrame() work
   # approximately twice faster than the benchmark above
   test_that("The simulationResultsToDataFrame() performance is not degraded, compared to a reference performance", {

@@ -234,13 +234,16 @@ simulationResultsToDataFrame <- function(simulationResults,
       targetUnit          = ospUnits$`Molecular weight`$`g/mol`
     ))
 
-  simData <-  data.table::as.data.table(simData)
-  simData <- simData[,`:=`(TimeDimension =  dims$Time,
-                           TimeUnit =  units$Time,
-                           dimension =  dims[[paths]],
-                           unit =  units[[paths]],
-                           molWeight = molWeights[[paths]]),
-                     by = paths]
+  simData <- data.table::as.data.table(simData)
+  simData <- simData[, `:=`(
+    TimeDimension = dims$Time,
+    TimeUnit = units$Time,
+    dimension = dims[[paths]],
+    unit = units[[paths]],
+    molWeight = molWeights[[paths]]
+  ),
+  by = paths
+  ]
   # # consistently return a (classical) data frame
   return(as.data.frame(simData, stringsAsFactors = FALSE))
 }
