@@ -162,12 +162,25 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       # in necessary
       if (!is.null(units[[i]])) {
         mw <- simulation$molWeightFor(path)
-        value <- toBaseUnit(
-          quantityOrDimension = dimension,
-          values = value,
-          unit = units[[i]],
-          molWeight = mw
-        )
+        # Try to convert to base unit. If the provided unit is not valid for the
+        # quantity dimension, throw an error
+        tryCatch({
+          value <- toBaseUnit(
+            quantityOrDimension = dimension,
+            values = value,
+            unit = units[[i]],
+            molWeight = mw
+          )
+        }, error = function(e) {
+          stop(paste0(
+            messages$wrongUnitForQuantity(quantityPath = path,
+                                          unit = units[[i]]
+            ),
+            "\n",
+            "Original error message:\n",
+            e$message
+          ))
+        })
       }
     }
 
