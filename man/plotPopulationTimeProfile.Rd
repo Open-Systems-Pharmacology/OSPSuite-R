@@ -7,7 +7,9 @@
 plotPopulationTimeProfile(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  quantiles = c(0.05, 0.5, 0.95)
+  aggregation = "quantiles",
+  quantiles = c(0.05, 0.5, 0.95),
+  ...
 )
 }
 \arguments{
@@ -16,12 +18,26 @@ plotPopulationTimeProfile(
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
 
-\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}), with the quantile values defining the aggregation of
-individual data. In the profile plot, the middle value will be used to draw
-a line, while the lower and upper values will be used to create a ribbon.}
+\item{aggregation}{The type of the aggregation of individual data. One of
+\code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in \code{ospsuite::DataAggregationMethods}). Will
+replace \code{yValues} by the median, arithmetic or geometric average and add a set of upper and lower bounds
+(\code{yValuesLower} and \code{yValuesHigher})}
+
+\item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
+
+\item{...}{Extra parameters to pass to aggregating functions. \code{probs} for \code{stats::quantile} or \code{n} for the number of
+standard deviation to add below and above the average for \code{arithmetic} or \code{geometric}.}
 }
 \description{
 Time-values profile plot for population simulations
+}
+\details{
+For \code{aggregation = arithmetic}, arithmetic mean with arithmetic standard deviation (SD)
+will be plotted.
+For \code{aggregation = geometric}, geometric mean with geo SD will be plotted
+For \code{aggregation = quantiles}, the quantile values defined in the argument \code{quantiles}
+will be used. In the profile plot, the middle value will be used to draw
+a line, while the lower and upper values will be used as the lower und upper ranges.
 }
 \examples{
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -36,14 +52,17 @@ populationResults <- importResultsFromCSV(
 myDataComb <- DataCombined$new()
 myDataComb$addSimulationResults(populationResults)
 
-# Create a new instance of `DefaultPlotConfiguration` class
-myPlotConfiguration <- DefaultPlotConfiguration$new()
-myPlotConfiguration$title <- "My Plot Title"
-myPlotConfiguration$subtitle <- "My Plot Subtitle"
-myPlotConfiguration$caption <- "My Sources"
 
 # plot
-plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
+plotPopulationTimeProfile(myDataComb)
+
+# plot with other quantiles
+plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
+
+# plot with arithmetic mean
+plotPopulationTimeProfile(myDataComb,
+  aggregation = "arithmetic"
+)
 
 }
 \seealso{

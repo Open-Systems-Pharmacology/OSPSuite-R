@@ -4,10 +4,10 @@
 \alias{getBaseUnit}
 \title{Get base unit of a dimension}
 \usage{
-getBaseUnit(dimension)
+getBaseUnit(quantityOrDimension)
 }
 \arguments{
-\item{dimension}{Dimension (string name) for which the base unit is returned.}
+\item{quantityOrDimension}{Instance of a quantity from which the dimension will be retrieved or name of dimension}
 }
 \value{
 String name of the base unit.

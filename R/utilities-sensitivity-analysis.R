@@ -81,7 +81,7 @@ exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
 importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
-  filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)))
+  filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
 
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
   results <- rClr::clrCall(sensitivityAnalysisTask, "ImportResultsFromCSV", simulation$ref, filePaths)

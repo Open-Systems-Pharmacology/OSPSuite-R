@@ -54,7 +54,7 @@ test_that(
   "DataCombined objects keep LLOQ data passed from underlying DataSet objects",
   expect_equal(
     myDC$toDataFrame()$lloq,
-    c(rep(0.02, length(obsData$yValues)), rep(NA, nrow(df)))
+    c(rep(NA, nrow(df)), rep(0.02, length(obsData$yValues)))
   )
 )
 
@@ -84,8 +84,16 @@ test_that(
 
 test_that(
   "calculateResiduals returns a correct vector of log residuals on example data",
-  expect_equal(calculateResiduals(myDC, scaling = "log")$residualValues,
-    c(0, 0.022276400, -0.007178578, 0.00000000, -0.010723855, -20),
-    tolerance = 1e-5
-  )
+  {
+    pairedData <- calculateResiduals(myDC, scaling = "log")
+    expectedResiduals <- sapply(seq_along(pairedData$yValuesObserved), function(idx) {
+      ospsuite.utils::logSafe(pairedData$yValuesSimulated[[idx]]) -
+        ospsuite.utils::logSafe(pairedData$yValuesObserved[[idx]])
+    })
+
+    expect_equal(calculateResiduals(myDC, scaling = "log")$residualValues,
+      expectedResiduals,
+      tolerance = 1e-5
+    )
+  }
 )

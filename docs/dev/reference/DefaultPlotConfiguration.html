@@ -4,7 +4,7 @@ created with plotIndividualTimeProfile(), plotPopulationTimeProfile(),
 plotObservedVsSimulated(), and plotResidualsVsTime().
 To interactively explore various aesthetic properties and appearance of plots
 with these properties, you can use the Shiny app from {tlf} package.
-The following sections provide more details on how to customize it further."><title>Plot configuration for OSP plots — DefaultPlotConfiguration • ospsuite</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plot configuration for OSP plots — DefaultPlotConfiguration"><meta property="og:description" content="R6 configuration class defining aesthetic properties of plots that can be
+The following sections provide more details on how to customize it further."><title>Plot configuration for OSP plots — DefaultPlotConfiguration • ospsuite</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plot configuration for OSP plots — DefaultPlotConfiguration"><meta property="og:description" content="R6 configuration class defining aesthetic properties of plots that can be
 created with plotIndividualTimeProfile(), plotPopulationTimeProfile(),
 plotObservedVsSimulated(), and plotResidualsVsTime().
 To interactively explore various aesthetic properties and appearance of plots
@@ -20,7 +20,7 @@ The following sections provide more details on how to customize it further."><me
     
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">11.1.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,8 @@ The following sections provide more details on how to customize it further."><me
     <a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
     <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
     <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Figure creation</h6>
     <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
     <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
     <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
@@ -216,6 +218,10 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/L
 <dd><p>Aesthetic properties for the legend caption.</p></dd>
 
 
+<dt><code>legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize</code></dt>
+<dd><p>Aesthetic properties for the legend box</p></dd>
+
+
 <dt><code>xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand</code></dt>
 <dd><p>Aesthetic properties for the x-axis label.</p></dd>
 
@@ -226,7 +232,12 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/L
 
 <dt><code>xAxisLimits, yAxisLimits</code></dt>
 <dd><p>A numeric vector of axis limits for the x-and
-y-axis, respectively.</p></dd>
+y-axis, respectively. This will preserve all data points but zoom in the plot.</p></dd>
+
+
+<dt><code>xAxisValuesLimits, yAxisValuesLimits</code></dt>
+<dd><p>A numeric vector of values limits for the x-and
+y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.</p></dd>
 
 
 <dt><code>xAxisTicks, yAxisTicks</code></dt>
@@ -283,6 +294,22 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <dd><p>A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.</p></dd>
 
 
+<dt><code>displayLLOQ</code></dt>
+<dd><p>A Boolean controlling display Lower Limit of Quantification lines. Default to True.</p></dd>
+
+
+<dt><code>lloqDirection</code></dt>
+<dd><p>A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.</p></dd>
+
+
+<dt><code>foldLinesLegend</code></dt>
+<dd><p>A Boolean controlling the drawing of the fold lines in the legend. Default to False.</p></dd>
+
+
+<dt><code>foldLinesLegendDiagonal</code></dt>
+<dd><p>A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -325,6 +352,10 @@ label, y-axis label, plot legend, watermark, respectively.</p></dd>
 <dd><p>Aesthetic properties for the legend caption.</p></dd>
 
 
+<dt><code>legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize</code></dt>
+<dd><p>Aesthetic properties for the legend box</p></dd>
+
+
 <dt><code>xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand</code></dt>
 <dd><p>Aesthetic properties for the x-axis label.</p></dd>
 
@@ -335,7 +366,12 @@ label, y-axis label, plot legend, watermark, respectively.</p></dd>
 
 <dt><code>xAxisLimits, yAxisLimits</code></dt>
 <dd><p>A numeric vector of axis limits for the x-and
-y-axis, respectively.</p></dd>
+y-axis, respectively. This will preserve all data points but zoom in the plot.</p></dd>
+
+
+<dt><code>xAxisValuesLimits, yAxisValuesLimits</code></dt>
+<dd><p>A numeric vector of values limits for the x-and
+y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.</p></dd>
 
 
 <dt><code>xAxisTicks, yAxisTicks</code></dt>
@@ -448,10 +484,18 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     captionFontFamily: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     captionSize: 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     displayLLOQ: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     errorbarsAlpha: 0.75</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     errorbarsCapSize: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     errorbarsLinetype: solid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     errorbarsSize: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     foldLinesLegend: FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     foldLinesLegendDiagonal: FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendBackgroundAlpha: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendBackgroundColor: white</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendBorderColor: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendBorderSize: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legendBorderType: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysAlign: left</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysAngle: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     legendKeysColor: black</span>
@@ -470,6 +514,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     linesColor: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     linesLinetype: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     linesSize: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lloqDirection: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plotBackgroundColor: black</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plotBackgroundFill: white</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plotBackgroundLinetype: blank</span>
@@ -480,7 +525,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plotPanelBackgroundSize: 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pointsAlpha: 0.75</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pointsColor: #5050FFFF #CE3D32FF #749B58FF #F0E685FF #466983FF #BA633 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     pointsShape: circle square triangle triangleDown cross plus asterisk  ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pointsShape: circle diamond triangle square invertedTriangle cross th ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pointsSize: 2.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ribbonsAlpha: 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ribbonsFill: #5050FFFF #CE3D32FF #749B58FF #F0E685FF #466983FF #BA633 ...</span>
@@ -521,6 +566,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisSize: 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisTicks: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisTicksLabels: identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     xAxisValuesLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xGridColor: grey</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xGridLinetype: blank</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     xGridSize: 0.25</span>
@@ -546,6 +592,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisSize: 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisTicks: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisTicksLabels: identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     yAxisValuesLimits: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yGridColor: grey</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yGridLinetype: blank</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yGridSize: 0.25</span>
@@ -569,7 +616,7 @@ Available options can be seen using <code><a href="https://rdrr.io/pkg/tlf/man/S
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer></div>

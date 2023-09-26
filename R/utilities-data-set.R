@@ -8,7 +8,11 @@
     }
 
     if (len == 0) {
-      rep(NA_real_, length(dataSet$xValues))
+      if (property %in% c("yErrorType", "yErrorUnit")) {
+        rep(NA_character_, length(dataSet$xValues))
+      } else {
+        rep(NA_real_, length(dataSet$xValues))
+      }
     } else if (len == 1) {
       if (is.null(metaDataName)) {
         rep(dataSet[[property]], length(dataSet$xValues))
@@ -57,7 +61,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, "DataSet")
   filePath <- .expandPath(filePath)
-  dataRepositoryTask <- .getNetTask("DataRepositoryTask")
+  dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
   rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }
 
@@ -181,7 +185,7 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, impo
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- .getNetTask("DataImporterTask")
+  dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
   rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {

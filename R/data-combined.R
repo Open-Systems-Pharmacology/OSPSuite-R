@@ -14,6 +14,7 @@
 #' @import tidyr
 #' @import ospsuite.utils
 #'
+#'
 #' @param names A string or a `list` of strings assigning new names. These new
 #'   names can be either for renaming `DataSet` objects, or for renaming
 #'   quantities/paths in `SimulationResults` object. If an entity is not to be
@@ -78,14 +79,16 @@ DataCombined <- R6::R6Class(
 
   public = list(
 
-    #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
-    #'   class.
-    #'
     #' @description
     #' Adds observed data.
     #'
+    #' @param dataSets An instance (or a `list` of instances) of the `DataSet`
+    #'   class.
+    #' @param silent A binary flag showing if warnings should be triggered when
+    #' data sets are overwritten in the `DataCombined` object
+    #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, names = NULL, groups = NULL) {
+    addDataSets = function(dataSets, names = NULL, groups = NULL, silent = FALSE) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       numberOfDatasets <- objectCount(dataSets)
@@ -96,7 +99,7 @@ DataCombined <- R6::R6Class(
       # `purrr::map()` iterates over the vector and applies the anonymous
       # function to pluck name from the object. The `map_chr()` variant
       # clarifies that we are always expecting a character type in return.
-      datasetNames <- purrr::map_chr(c(dataSets), function(x) purrr::pluck(x, "name"))
+      datasetNames <- purrr::map_chr(c(dataSets), ~ purrr::pluck(.x, "name"))
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -107,48 +110,33 @@ DataCombined <- R6::R6Class(
       }
 
       # Update private fields and bindings for the new setter call
-
       private$.dataCombined <- private$.updateDataFrame(
         private$.dataCombined,
-        private$.dataSetToDataFrame(dataSets, names)
+        private$.dataSetToDataFrame(dataSets, names),
+        silent = silent
       )
 
-      private$.extractBindings()
-
+      names <- names %||% datasetNames
+      # Reset data transformations
       self$setDataTransformations(names)
 
-      if (!is.null(groups)) {
-        self$setGroups(names %||% datasetNames, groups)
-      }
+      private$.updateGroups(names, groups)
 
+      # Set data type
+      for (name in names) {
+        private$.dataType[[name]] <- "observed"
+      }
       # for method chaining
       invisible(self)
     },
 
-    # TODO: if and when this is supported by `{roxygen2}`, inherit parameters
-    # from `ospsuite::getOutputValues()` to avoid repetition.
-
-    #' @param simulationResults Object of type `SimulationResults` produced by
-    #'   calling `runSimulation()` on a `Simulation` object. Only a single
-    #'   instance is allowed in a given `$addSimulationResults()` method call.
-    #' @param quantitiesOrPaths Quantity instances (element or list) typically
-    #'   retrieved using `getAllQuantitiesMatching()` or quantity path (element
-    #'   or list of strings) for which the results are to be returned.
-    #'   (optional) When providing the paths, only absolute full paths are
-    #'   supported (i.e., no matching with '*' possible). If `quantitiesOrPaths`
-    #'   is `NULL` (default value), returns the results for all output defined
-    #'   in the results.
-    #' @param individualIds Numeric IDs of individuals for which the results
-    #'   should be extracted. By default, all individuals from the results are
-    #'   considered. If the individual with the provided ID is not found, the ID
-    #'   is ignored.
-    #' @param population Population used to calculate the `simulationResults`
-    #'   (optional). This is used only to add the population covariates to the
-    #'   resulting data frame.
-    #'
     #' @description
-    #'
     #' Add simulated data using instance of `SimulationResults` class.
+    #'
+    #' @template simulation_results
+    #'
+    #' @param silent A binary flag showing if warnings should be triggered when
+    #' data sets are overwritten in the `DataCombined` object
     #'
     #' @return `DataCombined` object containing simulated data.
     addSimulationResults = function(simulationResults,
@@ -156,7 +144,8 @@ DataCombined <- R6::R6Class(
                                     population = NULL,
                                     individualIds = NULL,
                                     names = NULL,
-                                    groups = NULL) {
+                                    groups = NULL,
+                                    silent = FALSE) {
       # Validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -174,8 +163,9 @@ DataCombined <- R6::R6Class(
       pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
       pathsLength <- length(pathsNames)
 
-      # Validate alternative names for their length and type
+      # Validate alternative names and groups for their length and type
       names <- .cleanVectorArgs(names, pathsLength, type = "character")
+      groups <- .cleanVectorArgs(groups, type = "character")
 
       # If alternate names are provided for datasets, use them instead.
       #
@@ -186,26 +176,28 @@ DataCombined <- R6::R6Class(
       }
 
       # Update private fields and bindings for the new setter call
-
       private$.dataCombined <- private$.updateDataFrame(
-        private$.dataCombined,
-        private$.simResultsToDataFrame(
+        dataCurrent = private$.dataCombined,
+        dataNew = private$.simResultsToDataFrame(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
           population        = population,
           individualIds     = individualIds,
           names             = names
-        )
+        ),
+        silent = silent
       )
 
-      private$.extractBindings()
-
+      names <- names %||% pathsNames
+      # Reset data transformations
       self$setDataTransformations(names)
 
-      if (!is.null(groups)) {
-        self$setGroups(names %||% pathsNames, groups)
-      }
+      private$.updateGroups(names, groups)
 
+      # Set data type
+      for (name in names) {
+        private$.dataType[[name]] <- "simulated"
+      }
       # for method chaining
       invisible(self)
     },
@@ -244,34 +236,20 @@ DataCombined <- R6::R6Class(
       names <- .cleanVectorArgs(names, type = "character")
       groups <- .cleanVectorArgs(groups, type = "character")
 
-      # `names` and `groups` need to be of the same length only if each dataset
-      # is assigned to a different group. But it is possible that the users
-      # want to assign all entered datasets to the same group.
-      #
-      # In the latter case, `groups` argument can be a scalar (length 1, i.e.)
-      # and we don't need to check that names and groups are of the same length.
-      if (length(groups) > 1L) {
-        validateIsSameLength(names, groups)
-      }
-
       # All entered datasets should be unique, name being their identifier.
       validateHasOnlyDistinctValues(names)
 
-      # Extract groupings and dataset names in a data frame.
-      #
-      # `purrr::simplify()` will simplify input vector (which can be an atomic
-      # vector or a list) to an atomic vector. That is, it'll cover both of these
-      # contexts:
-      #
-      # - `names/groups = c(...)`
-      # - `names/groups = list(...)`
-      groupData <- dplyr::tibble(
-        name = purrr::simplify(names),
-        group = purrr::simplify(groups)
-      )
+      # Inform the user about which datasets specified for grouping are missing
+      missingNames <- names[!names %in% self$names]
+      if (length(missingNames) > 0) {
+        message(messages$printMultipleEntries(
+          header  = messages$datasetsToGroupNotFound(),
+          entries = missingNames
+        ))
+      }
 
       # Update group map data frame
-      private$.updateGroupMap(groupData)
+      private$.updateGroups(names, groups)
 
       # for method chaining
       invisible(self)
@@ -288,24 +266,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with updated group assignments.
     removeGroupAssignment = function(names) {
-      # Return early if no datasets are present
-      if (is.null(private$.dataCombined)) {
-        stop(messages$noDatasetsPresentInDataCombined())
+      for (idx in seq_along(names)) {
+        private$.groupMap[[names[[idx]]]] <- NULL
       }
-
-      # Sanitize vector arguments of `character` type
-      names <- .cleanVectorArgs(names, type = "character")
-      validateHasOnlyDistinctValues(names)
-
-      # Extract dataset names in a data frame. Groupings for all of them are
-      # going to be `NA`, so make avail of `{tibble}`'s recycling rule.
-      groupData <- dplyr::tibble(
-        name = purrr::simplify(names),
-        group = NA_character_
-      )
-
-      # Update group map data frame
-      private$.updateGroupMap(groupData)
 
       # for method chaining
       invisible(self)
@@ -345,45 +308,78 @@ DataCombined <- R6::R6Class(
                                       xScaleFactors = 1,
                                       yScaleFactors = 1,
                                       reset = FALSE) {
+      missingArgs <- list(
+        xOffsets = missing(xOffsets),
+        yOffsets = missing(yOffsets),
+        xScaleFactors = missing(xScaleFactors),
+        yScaleFactors = missing(yScaleFactors)
+      )
       # Check that the arguments to parameters make sense
-      xOffsetsNew <- .cleanVectorArgs(xOffsets, type = "numeric")
-      yOffsetsNew <- .cleanVectorArgs(yOffsets, type = "numeric")
-      xScaleFactorsNew <- .cleanVectorArgs(xScaleFactors, type = "numeric")
-      yScaleFactorsNew <- .cleanVectorArgs(yScaleFactors, type = "numeric")
+      xOffsets <- .cleanVectorArgs(xOffsets, type = "numeric")
+      yOffsets <- .cleanVectorArgs(yOffsets, type = "numeric")
+      xScaleFactors <- .cleanVectorArgs(xScaleFactors, type = "numeric")
+      yScaleFactors <- .cleanVectorArgs(yScaleFactors, type = "numeric")
+
+      # Clean up NAs
+      # For offsets: `0` (default for no change)
+      xOffsets <- tidyr::replace_na(xOffsets, 0)
+      yOffsets <- tidyr::replace_na(yOffsets, 0)
+      # For scale factors: `1` (default for no change)
+      xScaleFactors <- tidyr::replace_na(xScaleFactors, 1)
+      yScaleFactors <- tidyr::replace_na(yScaleFactors, 1)
 
       forNames <- .cleanVectorArgs(forNames, type = "character")
-
-      # If any of the values is missing, they are retained from already existing values
-      if ((!reset) & (!is.null(private$.dataTransformations))) {
-        if (any(!missing(xOffsets), !missing(yOffsets), !missing(xScaleFactors), !missing(yScaleFactors))) {
-          if (missing(xOffsets)) {
-            xOffsetsNew <- private$.dataTransformations$xOffsets
-          }
-          if (missing(yOffsets)) {
-            yOffsetsNew <- private$.dataTransformations$yOffsets
-          }
-          if (missing(xScaleFactors)) {
-            xScaleFactorsNew <- private$.dataTransformations$xScaleFactors
-          }
-          if (missing(yScaleFactors)) {
-            yScaleFactorsNew <- private$.dataTransformations$yScaleFactors
-          }
-        }
+      # if no names a provided, apply transformations to all data sets.
+      if (is.null(forNames)) {
+        forNames <- self$names
       }
 
+      # Replace single values by a vector if the same value has to be applied to
+      # all names
+      if (length(xOffsets) == 1) {
+        xOffsets <- rep(xOffsets, length(forNames))
+      }
 
-      # Apply specified data transformations
-      private$.dataCombined <- private$.dataTransform(
-        data          = private$.dataCombined,
-        forNames      = forNames,
-        xOffsets      = xOffsetsNew,
-        yOffsets      = yOffsetsNew,
-        xScaleFactors = xScaleFactorsNew,
-        yScaleFactors = yScaleFactorsNew
-      )
+      if (length(yOffsets) == 1) {
+        yOffsets <- rep(yOffsets, length(forNames))
+      }
 
-      # Update private field with transformation values
-      private$.dataTransformations <- private$.extractTransforms(private$.dataCombined)
+      if (length(xScaleFactors) == 1) {
+        xScaleFactors <- rep(xScaleFactors, length(forNames))
+      }
+
+      if (length(yScaleFactors) == 1) {
+        yScaleFactors <- rep(yScaleFactors, length(forNames))
+      }
+      ospsuite.utils::validateIsSameLength(forNames, xOffsets, yOffsets, xScaleFactors, yScaleFactors)
+
+      # Store values
+      for (idx in seq_along(forNames)) {
+        name <- forNames[[idx]]
+        if (!missingArgs$xOffsets) {
+          private$.xOffsets[[name]] <- xOffsets[[idx]]
+        } else if (reset) {
+          private$.xOffsets[[name]] <- 0
+        }
+
+        if (!missingArgs$yOffsets) {
+          private$.yOffsets[[name]] <- yOffsets[[idx]]
+        } else if (reset) {
+          private$.yOffsets[[name]] <- 0
+        }
+
+        if (!missingArgs$xScaleFactors) {
+          private$.xScaleFactors[[name]] <- xScaleFactors[[idx]]
+        } else if (reset) {
+          private$.xScaleFactors[[name]] <- 1
+        }
+
+        if (!missingArgs$yScaleFactors) {
+          private$.yScaleFactors[[name]] <- yScaleFactors[[idx]]
+        } else if (reset) {
+          private$.yScaleFactors[[name]] <- 1
+        }
+      }
 
       # for method chaining
       invisible(self)
@@ -409,22 +405,20 @@ DataCombined <- R6::R6Class(
     #'
     #' The molecular weight (in `molWeight` column) is in `g/mol` units.
     toDataFrame = function() {
-      # It is deliberate that the returned data frame is "cleaned" every time
-      # this method is called, instead of just internally storing a copy of
-      # cleaned data frame and returning it.
-      #
-      # `R6` classes have reference (as opposed to value) semantics. This means
-      # the class instance will be modified *in place*, and the combined data
-      # will be updated with it for each method call. But, some information
-      # omitted during clean-up needs to be retained during the entirety of
-      # the object's lifecycle.
-      #
-      # For example, offset and scale factor columns are removed during
-      # cleaning, but they need to be retained in the private copy of the
-      # combined data frame because the datasets that might be added in the
-      # future will have their own offsets and scale factors, which will need to
-      # be appended to the existing ones.
-      private$.cleanDataFrame(private$.dataCombined)
+      # quit early if no data is available
+      if (is.null(private$.dataCombined)) {
+        return(NULL)
+      }
+      # Add `group` column. Cannot use `mutate` because it would
+      # require `rowwise` which kills the performance
+      # Fist add empty column
+      private$.dataCombined$group <- NA_character_
+      for (name in self$names) {
+        private$.dataCombined[private$.dataCombined$name == name, ]$group <- private$.groupMap[[name]] %||% NA_character_
+      }
+
+      # Apply data transformations
+      private$.dataTransform(private$.dataCombined)
     },
 
     #' @description
@@ -435,7 +429,7 @@ DataCombined <- R6::R6Class(
       private$printClass()
       private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
-      print(private$.groupMap)
+      print(self$groupMap)
 
       # for method chaining
       invisible(self)
@@ -449,7 +443,7 @@ DataCombined <- R6::R6Class(
     #'   `DataCombined` class instance.
     names = function(value) {
       if (missing(value)) {
-        return(private$.names)
+        return(unique(private$.dataCombined$name))
       }
 
       stop(messages$errorPropertyReadOnly("names"))
@@ -461,7 +455,19 @@ DataCombined <- R6::R6Class(
     #'   `NA` in the data frame.
     groupMap = function(value) {
       if (missing(value)) {
-        return(private$.groupMap)
+        # quit early if no data is available
+        if (is.null(private$.dataCombined)) {
+          return(NULL)
+        }
+        return(
+          dplyr::tibble(name = self$names) %>%
+            dplyr::rowwise() %>%
+            dplyr::mutate(
+              group = private$.groupMap[[name]] %||% NA_character_,
+              dataType = private$.dataType[[name]]
+            ) %>%
+            dplyr::ungroup()
+        )
       }
 
       stop(messages$errorPropertyReadOnly("groupMap"))
@@ -471,7 +477,38 @@ DataCombined <- R6::R6Class(
     #'   values were specified by the user for each dataset.
     dataTransformations = function(value) {
       if (missing(value)) {
-        return(private$.dataTransformations)
+        # For an empty DataCombined, return an etmpy tibble
+        if (is.null(private$.dataCombined)) {
+          return(
+            dplyr::tibble(
+              name = character(),
+              xOffsets = numeric(),
+              yOffsets = numeric(),
+              xScaleFactors = numeric(),
+              yScaleFactors = numeric()
+            )
+          )
+        }
+
+        return(
+          dplyr::tibble(
+            name          = self$names,
+            # For offsets: `0` (default for no change)
+            xOffsets      = 0,
+            yOffsets      = 0,
+            # For scale factors: `1` (default for no change)
+            xScaleFactors = 1,
+            yScaleFactors = 1
+          ) %>%
+            dplyr::rowwise() %>%
+            dplyr::mutate(
+              xOffsets = private$.xOffsets[[name]] %||% xOffsets,
+              yOffsets = private$.yOffsets[[name]] %||% yOffsets,
+              xScaleFactors = private$.xScaleFactors[[name]] %||% xScaleFactors,
+              yScaleFactors = private$.yScaleFactors[[name]] %||% yScaleFactors
+            ) %>%
+            dplyr::ungroup()
+        )
       }
 
       stop(messages$errorPropertyReadOnly("dataTransformations"))
@@ -487,16 +524,14 @@ DataCombined <- R6::R6Class(
       # scalar, a vector, or a list of `DataSet` class instances.
       obsData <- dataSetToTibble(dataSets)
 
-      # Irrespective of whether groups are specified or not, the data frames
-      # always start out with an empty `group` column, which is later modified
-      # in `$setGroups()` call.
-      obsData <- dplyr::mutate(obsData,
-        dataType = "observed",
-        group    = NA_character_
-      )
+      # Rename, if specific names are provided
+      if (!is.null(names)) {
+        new_names <- setNames(names, unique(obsData$name))
+        obsData$name <- unname(new_names[as.character(obsData$name)])
+      }
 
-      # Use the user-defined new names for datasets
-      obsData <- private$.renameDatasets(obsData, names)
+      # Set type of data
+      obsData$dataType <- "observed"
 
       return(obsData)
     },
@@ -518,60 +553,41 @@ DataCombined <- R6::R6Class(
         individualIds     = individualIds
       )
 
-      # Irrespective of whether groups are specified or not, the data frames
-      # always start out with an empty `group` column, which is later modified
-      # in `$setGroups()` call.
-      simData <- dplyr::mutate(simData,
-        name         = paths,
-        group        = NA_character_,
-        dataType     = "simulated",
-        yErrorValues = NA_real_
-      )
-
-      # Use the user-defined new names for datasets
-      simData <- private$.renameDatasets(simData, names)
-
       # Simulated datasets and observed datasets are glued row-wise when a
       # combined data frame is prepared, and therefore it is necessary that the
       # same kind of quantities have the same column names so that they are
       # glued appropriately. This requires renaming a few columns.
+      # Also rename "paths to "names". If no custom names are specified, the names
+      # are always the paths
       simData <- dplyr::rename(simData,
-        "xValues"    = "Time",
-        "xUnit"      = "TimeUnit",
+        "xValues" = "Time",
+        "xUnit" = "TimeUnit",
         "xDimension" = "TimeDimension",
-        "yValues"    = "simulationValues",
-        "yUnit"      = "unit",
-        "yDimension" = "dimension"
+        "yValues" = "simulationValues",
+        "yUnit" = "unit",
+        "yDimension" = "dimension",
+        "name" = "paths"
       )
+
+
+      # Update names, if custom names are specified
+      if (!is.null(names)) {
+        new_names <- setNames(names, unique(simData$name))
+        simData <- dplyr::mutate(simData,
+          name = new_names[name]
+        )
+      }
+
+      # Set type of data
+      simData$dataType <- "simulated"
+      # Simulated results do not have error values
+      simData$yErrorValues <- NA_real_
 
       return(simData)
     },
 
-    # Add a new column with alternate names
-    .renameDatasets = function(data, names = NULL) {
-      # Return early if there is no data
-      if (is.null(names)) {
-        return(data)
-      }
-
-      # Create a nested data frame where all columns except `name` are collapsed
-      # into a single column named `data`, which will contain these columns in a
-      # list data frame.
-      data <- tidyr::nest(data, data = -name)
-
-      # Note that `name` column is based on lexical order of `names`. This
-      # always works because the order of data frame (and thus the `name`
-      # column) returned by `*ToTibble()` functions never changes.
-      data <- dplyr::mutate(data, name = names)
-
-      # Unnest the nested data frame.
-      data <- tidyr::unnest(data, cols = c(data))
-
-      return(data)
-    },
-
     # Update the combined data frame "in place"
-    .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL) {
+    .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL, silent = FALSE) {
       # If there is existing data, it will be updated with the new data appended
       # at the bottom.
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
@@ -590,7 +606,14 @@ DataCombined <- R6::R6Class(
         # created in the latter call should replace the one created in the
         # former call. If we were not to allow this, the user will need to
         # restart with a new instance of this class.
+        # Also, a DataFrame can be updated several times by ospsuite. For
+        # example, `addDataSet()` calls it twice.
         if (length(dupDatasets) > 0L) {
+          # Warn the user if he adds a dataset with a name already used in dataCombined
+          if (!silent) {
+            messages$DataFrameNameAlreadyUsed(dupDatasets)
+          }
+
           dataCurrent <- dplyr::filter(dataCurrent, !name %in% dupDatasets)
         }
 
@@ -603,235 +626,60 @@ DataCombined <- R6::R6Class(
       return(dataCurrent)
     },
 
-    # Update group map data frame
-    .updateGroupMap = function(groupData) {
-      # Check if any of the specified dataset names are currently not present
-      # in the combined data frame.
-      #
-      # This can happen when users make spelling mistakes in writing dataset
-      # names while specifying groupings, and failing silently will mean that
-      # such a mistake will not be brought to the user's attention.
-      specifiedNames <- unique(groupData$name)
-      currentNames <- unique(private$.dataCombined$name)
-
-      # Inform the user about which datasets are missing
-      if (!isIncluded(specifiedNames, currentNames)) {
-        missingNames <- specifiedNames[!specifiedNames %in% currentNames]
-
-        message(messages$printMultipleEntries(
-          header = messages$datasetsToGroupNotFound(),
-          entries = missingNames
-        ))
+    # Update group mapping
+    .updateGroups = function(names, groups) {
+      # If groups is NULL, grouping will be removed for this data set.
+      if (!is.null(groups)) {
+        # If only one group is provided, it must be assigned to all names
+        if (length(groups) == 1) {
+          groups <- rep(groups, length(names))
+        }
+        validateIsSameLength(names, groups)
       }
-
-      # Update the specified groupings with what already exists
-      #
-      # The object could already have gathered some groupings during its
-      # lifetime, and they need to be updated after each `$setGroups()` call.
-      groupData <- private$.updateDataFrame(
-        dplyr::select(private$.groupMap, -dataType),
-        groupData
-      )
-
-      # Update grouping information column in the combined data frame
-      private$.dataCombined <- dplyr::left_join(
-        x  = dplyr::select(private$.dataCombined, -group),
-        y  = groupData,
-        by = "name"
-      )
-
-      # Update active binding with the new grouping specification
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
+      # Map groups to names
+      for (idx in seq_along(names)) {
+        private$.groupMap[[names[[idx]]]] <- groups[[idx]]
+      }
     },
 
     # Transform the dataset using specified offsets and scale factors
-    .dataTransform = function(data,
-                              forNames = NULL,
-                              xOffsets = 0,
-                              yOffsets = 0,
-                              xScaleFactors = 1,
-                              yScaleFactors = 1) {
+    .dataTransform = function(data) {
       # Return early if there is no data
       if (is.null(data)) {
         return(NULL)
       }
 
-      # Keep all transformation parameters and their names linked together in a
-      # data frame data structure.
-      #
-      # Additionally, if no names are provides, the transformations will apply
-      # to the entire data frame, and thus dataset names can be a placeholder for
-      # the purpose of joining of data frame with arguments and data frame with
-      # raw data that needs to be transformed.
-      dataArg <- dplyr::tibble(
-        name          = forNames %||% unique(data$name),
-        xOffsets      = xOffsets,
-        yOffsets      = yOffsets,
-        xScaleFactors = xScaleFactors,
-        yScaleFactors = yScaleFactors
-      )
-
-      # Update data frame using given transformation parameters
-      private$.dataTransformations <- private$.updateDataFrame(private$.dataTransformations, dataArg)
-
-      # Every call to method to set transformations refreshes these parameters.
-      #
-      # Thus, if there are any existing parameters from object's lifecycle,
-      # they should be removed.
-      data <- dplyr::select(data, -dplyr::ends_with(c("Offsets", "ScaleFactors")))
-
-      # Datasets for which no data transformations were specified, there will be
-      # missing values, which need to be replaced by defaults for no change.
-      data <- dplyr::left_join(data, private$.dataTransformations, by = "name")
-
-      # For offsets: `0` (default for no change)
-      data <- dplyr::mutate(
-        data,
-        dplyr::across(
-          .cols = matches("offsets$"), # relevant only for columns matching this pattern
-          .fns = function(x) tidyr::replace_na(x, 0)
-        )
-      )
-
-      # For scale factors: `1` (default for no change)
-      data <- dplyr::mutate(
-        data,
-        dplyr::across(
-          .cols = matches("scalefactors$"), # relevant only for columns matching this pattern
-          .fns = function(x) tidyr::replace_na(x, 1)
-        )
-      )
-
-      # Apply the specified transformations to the columns of interest
-      data <- dplyr::mutate(data,
-        xValues      = (xRawValues + xOffsets) * xScaleFactors,
-        yValues      = (yRawValues + yOffsets) * yScaleFactors,
-        yErrorValues = yRawErrorValues * abs(yScaleFactors)
-      )
-
+      # Copy dataTransformations to not alter original object and turn into
+      # data.table object
+      dataTransformations <- data.table::setDT(data.table::copy(self$dataTransformations))
+      # Copy data to not alter original object (private$.dataCombined) and
+      # transform into a data.table object
+      data <- data.table::setDT(data.table::copy(data))
+      # Update values by joining dataTransformations table (base on name column)
+      # and apply transformations.
+      data <-
+        data[dataTransformations,
+          `:=`(
+            xValues = (xValues + xOffsets) * xScaleFactors,
+            yValues = (yValues + yOffsets) * yScaleFactors,
+            yErrorValues = yErrorValues * abs(yScaleFactors)
+          ),
+          on = .(name)
+        ] %>%
+        # convert back to tibble
+        tibble::as_tibble()
       return(data)
-    },
-
-    # Extract all active bindings
-    .extractBindings = function() {
-      private$.groupMap <- private$.extractGroupMap(private$.dataCombined)
-      private$.dataCombined <- private$.addRawDataColumns(private$.dataCombined)
-      private$.names <- private$.extractNames(private$.dataCombined)
-    },
-
-    # Extract data frame with group mappings
-    .extractGroupMap = function(data) {
-      # Retain only the columns that have relevant information for group mapping.
-      data <- dplyr::select(data, group, name, dataType)
-
-      # Keep only distinct combinations.
-      data <- dplyr::distinct(data)
-
-      # Arrange the dataframe alphabetically:
-      # first by group name column and then by dataset name column
-      data <- dplyr::arrange(data, group, name)
-
-      return(data)
-    },
-
-    # Extract unique and sorted dataset names from the combined data frame
-    .extractNames = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      return(sort(unique(dplyr::pull(data, name))))
-    },
-
-    # During object's lifecycle, the applied data transformations can change,
-    # and therefore internal copies of raw data should be retained.
-    #
-    # This way, when transformation parameter values are updated, the raw data
-    # can be re-transformed with the new parameters.
-    .addRawDataColumns = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      # Create new columns with internal copies of raw data
-      data <- dplyr::mutate(data,
-        xRawValues      = xValues,
-        yRawValues      = yValues,
-        yRawErrorValues = yErrorValues
-      )
-
-      return(data)
-    },
-
-    # Extract offsets and scale factors used for data transformations for each
-    # dataset
-    .extractTransforms = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      # Retain only the columns that have relevant information for group mapping.
-      data <- dplyr::select(data, name, dplyr::matches("offset|scale"))
-
-      # Keep only distinct combinations *for each dataset (name)*.
-      data <- dplyr::group_by(data, name) %>%
-        dplyr::distinct() %>%
-        dplyr::ungroup()
-
-      return(data)
-    },
-
-    # Clean data frame before returning it to the user
-    .cleanDataFrame = function(data = NULL) {
-      # Return early if there is no data
-      if (is.null(data)) {
-        return(NULL)
-      }
-
-      # Returned data frame should always have a consistent column order
-      data <- dplyr::select(
-        data,
-        # All data identifier columns
-        name,
-        group,
-        dataType,
-        # Everything related to the X-variable
-        "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
-        # Everything related to the Y-variable
-        "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
-        # All other columns go after that (meta data, etc.)
-        dplyr::everything()
-      )
-
-      # The following columns are no longer necessary
-      #
-      # Retaining the offset and scale factor parameters might confuse the
-      # user about whether the transformations are supposed to be carried out
-      # by the user using these values, or these transformations have already
-      # been carried out.
-      data <- dplyr::select(
-        data,
-        -dplyr::matches("^paths$"),
-        -dplyr::matches("offsets$|scalefactors$"),
-        -(dplyr::contains("raw") & dplyr::matches("values$"))
-      )
-
-      # Arrange the data frame in alphabetical order of the dataset name.
-      data <- dplyr::arrange(data, name)
-
-      # Always a return a tibble data frame
-      return(dplyr::as_tibble(data))
     },
 
     # private fields ----------------------------------------
-
     .dataCombined = NULL,
-    .groupMap = NULL,
-    .names = NULL,
-    .dataTransformations = NULL
+    # Mapping of data set name to a group
+    .groupMap = list(),
+    .dataType = list(),
+    .xOffsets = list(),
+    .yOffsets = list(),
+    .xScaleFactors = list(),
+    .yScaleFactors = list()
   ),
 
   # class default properties ---------------------------------

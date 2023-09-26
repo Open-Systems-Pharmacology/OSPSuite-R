@@ -121,10 +121,13 @@
 #'   Available options can be seen using `tlf::LegendPositions` list.
 #' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
 #' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign Aesthetic properties for the legend caption.
+#' @field legendBackgroundColor,legendBackgroundAlpha,legendBorderColor,legendBorderType,legendBorderSize Aesthetic properties for the legend box
 #' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
 #' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
-#'   y-axis, respectively.
+#'   y-axis, respectively. This will preserve all data points but zoom in the plot.
+#' @field xValuesLimits,yValuesLimits A numeric vector of values limits for the x-and
+#'   y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
 #' @field xAxisScale,yAxisScale A character string defining axis scale.
@@ -140,7 +143,10 @@
 #' @field pointsColor,pointsShape,pointsSize,pointsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.
 #' @field ribbonsFill,ribbonsSize,ribbonsLinetype,ribbonsAlpha A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.
 #' @field errorbarsSize,errorbarsLinetype,errorbarsAlpha,errorbarsCapSize A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.
-#'
+#' @field displayLLOQ A Boolean controlling display Lower Limit of Quantification lines. Default to True.
+#' @field lloqDirection A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.
+#' @field foldLinesLegend A Boolean controlling the drawing of the fold lines in the legend. Default to False.
+#' @field foldLinesLegendDiagonal A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.
 #' @examples
 #'
 #' # Create a new instance of this class
@@ -176,6 +182,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     titleFontFamily = "",
     titleAngle = 0,
     titleAlign = tlf::Alignments$left,
+    titleMargin = c(20, 2, 10, 2), # top, right, bottom, left
 
     # subtitle ------------------------------------
 
@@ -186,6 +193,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleFontFamily = "",
     subtitleAngle = 0,
     subtitleAlign = tlf::Alignments$left,
+    subtitleMargin = c(0, 2, 10, 2),
 
     # caption ------------------------------------
 
@@ -196,6 +204,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     captionFontFamily = "",
     captionAngle = 0,
     captionAlign = tlf::Alignments$right,
+    captionMargin = c(2, 2, 5, 2),
 
     # xLabel ------------------------------------
 
@@ -206,6 +215,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelFontFamily = "",
     xLabelAngle = 0,
     xLabelAlign = tlf::Alignments$center,
+    xLabelMargin = c(10, 2, 5, 2),
 
     # yLabel ------------------------------------
 
@@ -216,8 +226,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelFontFamily = "",
     yLabelAngle = 90,
     yLabelAlign = tlf::Alignments$center,
+    yLabelMargin = c(5, 2, 10, 2),
 
-    # legend ------------------------------------
+    # legendTitle ------------------------------------
 
     legendPosition = NULL,
     legendTitle = NULL,
@@ -227,6 +238,15 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$left,
+    legendMargin = c(2, 2, 2, 2),
+
+    # legendBox ------------------------------------
+
+    legendBackgroundColor = "white",
+    legendBackgroundAlpha = 0,
+    legendBorderColor = NULL,
+    legendBorderType = 1,
+    legendBorderSize = NULL,
 
     # legendKeys ------------------------------------
 
@@ -236,10 +256,12 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendKeysFontFace = tlf::FontFaces$plain,
     legendKeysAngle = 0,
     legendKeysAlign = tlf::Alignments$left,
+    legendKeysMargin = c(2, 0, 2, 0),
 
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
+    xValuesLimits = NULL,
     xAxisScale = NULL,
     xAxisTicks = NULL,
     xAxisTicksLabels = tlf::TickLabelTransforms$identity,
@@ -249,10 +271,12 @@ DefaultPlotConfiguration <- R6::R6Class(
     xAxisLabelTicksFontFace = tlf::FontFaces$plain,
     xAxisLabelTicksAngle = 0,
     xAxisLabelTicksAlign = tlf::Alignments$center,
+    xAxisLabelTicksMargin = c(2, 2, 2, 2),
 
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
+    yValuesLimits = NULL,
     yAxisScale = NULL,
     yAxisTicks = NULL,
     yAxisTicksLabels = tlf::TickLabelTransforms$identity,
@@ -262,6 +286,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     yAxisLabelTicksFontFace = tlf::FontFaces$plain,
     yAxisLabelTicksAngle = 90,
     yAxisLabelTicksAlign = tlf::Alignments$center,
+    yAxisLabelTicksMargin = c(2, 2, 2, 2),
 
     # watermark ------------------------------------
 
@@ -272,6 +297,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     watermarkFontFace = tlf::FontFaces$plain,
     watermarkAngle = 30,
     watermarkAlign = tlf::Alignments$center,
+    watermarkMargin = c(1, 1, 1, 1),
 
     # plotBackground ------------------------------------
 
@@ -347,6 +373,14 @@ DefaultPlotConfiguration <- R6::R6Class(
     errorbarsSize = 1,
     errorbarsCapSize = 5,
     errorbarsLinetype = tlf::Linetypes$solid,
-    errorbarsAlpha = 0.75
+    errorbarsAlpha = 0.75,
+
+    # LLOQ -----------------------------------------
+    displayLLOQ = TRUE,
+    lloqDirection = NULL,
+
+    # Fold Distance Lines --------------------------
+    foldLinesLegend = FALSE,
+    foldLinesLegendDiagonal = FALSE
   )
 )

@@ -1,5 +1,5 @@
 getTestDataFilePath <- function(fileName) {
-  dataPath <- file.path(getwd(), "..", "data", fsep = .Platform$file.sep)
+  dataPath <- testthat::test_path("../data")
   file.path(dataPath, fileName, fsep = .Platform$file.sep)
 }
 

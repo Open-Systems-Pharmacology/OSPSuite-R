@@ -165,7 +165,7 @@ createPopulation <- function(populationCharacteristics) {
   standardDerivedParametersToKeep <- c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)
 
   for (derivedParameterPath in individual$derivedParameters$paths) {
-    if (derivedParameterPath %in% c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)) {
+    if (any(c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA) == derivedParameterPath)) {
       next
     }
 

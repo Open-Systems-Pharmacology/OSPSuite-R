@@ -8,7 +8,8 @@
   results,
   resultsIdSimulationIdMap,
   simulationIdSimulationMap,
-  silentMode
+  silentMode,
+  stopIfFails
 )
 }
 \arguments{
@@ -19,7 +20,9 @@
 \item{simulationIdSimulationMap}{A named list of simulation ids as keys and simulation objects as values
 to the id of a result}
 
-\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails.}
+\item{silentMode}{If \code{TRUE}, no warnings are displayed if a simulation fails. Default is \code{FALSE}. Has no effect if \code{stopIfFails} is \code{TRUE}.}
+
+\item{stopIfFails}{Whether to stop the execution if one of the simulations failed. Default is \code{FALSE}.}
 }
 \value{
 A named list of \code{SimulationResults} objects with the names being the ids of simulations or

@@ -100,6 +100,13 @@ plotResidualsVsSimulated(myDataCombined)
 plotResidualsVsTime(myDataCombined)
 ```
 
+
+Residuals of log values can be visualized with the `scaling` argument.
+
+```{r}
+plotResidualsVsTime(myDataCombined, scaling = "log")
+```
+
 ## Customizing plots
 
 The look and feel for plots can be customized using the `DefaultPlotConfiguration` class, which provides various class members that can be used to modify the *appearance* of the plot.
@@ -115,8 +122,8 @@ myPlotConfiguration$yUnit <- ospUnits$`Concentration [mass]`$`µg/l`
 myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 
 myPlotConfiguration$title <- "Example: Customizing a Plot"
-myPlotConfiguration$subtitle <- "Using `DefaultPlotConfiguration` class"
-myPlotConfiguration$caption <- "Source: `Aciclovir` data"
+myPlotConfiguration$subtitle <- "Using DefaultPlotConfiguration class"
+myPlotConfiguration$caption <- "Source: Aciclovir data"
 
 myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
 ```

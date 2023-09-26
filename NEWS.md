@@ -1,3 +1,46 @@
+# ospsuite 12.0 (development)
+
+## New features
+- Lower limit of quantification (LLOQ) is plotted as dotted lines for `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
+
+## Breaking Changes
+- The single argument of the `getBaseUnit()` function is now named `quantityOrDimension` (was `dimension` previously). It can now use objects of class `Quantity` as inputs, to be consistent with the `toBaseUnit()` function.
+
+## Major Changes
+
+* Function `calculateResiduals()` uses natural logarithm (`log()`) when calculating 
+residuals with `scaling = "log"` as opposed to `log10()` as it was done before. This also 
+affects figures created by `plotObservedVsSimulated()`, `plotResidualsVsSimulated()`, and 
+`plotResidualsVsTime()`. See discusssions https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091
+and https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087.
+- `plotPopulationTimeProfile()` has a new `aggregation` argument that allow the user to choose between quantiles, 
+  arithmetic and geometric aggregations of y.
+
+
+## Minor Changes
+
+- The order of columns of the data frame returned by `DataCombined$toDataFrame()` has changed.
+- `DataCombined$toDataFrame()` shows the data in the order as the data sets were 
+added and not alphabetically sorted.
+- `DataCombined$removeGroupAssignment()` does not show a warning if specified name is
+not present in the `DataCombined`.
+- `DataCombined$removeGroupAssignment()` does not produce an error if specified 
+names are not unique.
+- Fixed Passing font size options from plotConfiguration objects to tlf objects #1198
+- Legend now have transparent background by default and can be customized through new 
+  `DefaultPlotConfiguration` fields #1216
+- `plotObsVsPred()` now have foldDistance argument set to `NULL` by default (previously 2). The function will not
+  add any fold lines on the plot by default.
+- `DefaultPlotConfiguration` has a new setting: `displayLLOQ` (default TRUE) to control plotting of LLOQ lines.
+- `DefaultPlotConfiguration`'s `xLimits` and `yLimits` arguments are deprecated and replaced by `xAxisLimits` and 
+  `yAxisLimits`. Use them to zoom in the plot while preserving all data points.
+  Use `xValuesLimits` and `yValuesLimits` to filter out data point outside of these range. 
+  More detailed explanations [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples)
+- `addSimulationResults` and `addDataSets` methods of the `DataCombined` class now 
+support an optional `silent` argument which silences the checks for data set names.
+If you expect to replace data sets in `DataCombined` objects repeatedly, consider 
+switching the parameter from the default `FALSE` value to `TRUE`. 
+
 # ospsuite 11.1.197
 
 ## New features

@@ -99,7 +99,7 @@ values were specified by the user for each dataset.}
 \subsection{Method \code{addDataSets()}}{
 Adds observed data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL, silent = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -123,6 +123,9 @@ entry in the \code{group} column will be an \code{NA}). If provided, \code{group
 have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
 If no grouping is specified for any of the dataset, the column \code{group} in
 the data frame output will be all \code{NA}.}
+
+\item{\code{silent}}{A binary flag showing if warnings should be triggered when
+data sets are overwritten in the \code{DataCombined} object}
 }
 \if{html}{\out{</div>}}
 }
@@ -142,7 +145,8 @@ Add simulated data using instance of \code{SimulationResults} class.
   population = NULL,
   individualIds = NULL,
   names = NULL,
-  groups = NULL
+  groups = NULL,
+  silent = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -150,25 +154,23 @@ Add simulated data using instance of \code{SimulationResults} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulation()} on a \code{Simulation} object. Only a single
-instance is allowed in a given \verb{$addSimulationResults()} method call.}
+calling \code{runSimulation} on a \code{Simulation} object.}
 
-\item{\code{quantitiesOrPaths}}{Quantity instances (element or list) typically
-retrieved using \code{getAllQuantitiesMatching()} or quantity path (element
-or list of strings) for which the results are to be returned.
-(optional) When providing the paths, only absolute full paths are
-supported (i.e., no matching with '*' possible). If \code{quantitiesOrPaths}
-is \code{NULL} (default value), returns the results for all output defined
-in the results.}
+\item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
+retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
+vector of strings) for which the results are to be returned. (optional)
+When providing the paths, only absolute full paths are supported (i.e., no
+matching with '*' possible). If quantitiesOrPaths is \code{NULL} (default
+value), returns the results for all output defined in the results.}
 
-\item{\code{population}}{Population used to calculate the \code{simulationResults}
+\item{\code{population}}{population used to calculate the \code{simulationResults}
 (optional). This is used only to add the population covariates to the
-resulting data frame.}
+resulting data table.}
 
-\item{\code{individualIds}}{Numeric IDs of individuals for which the results
+\item{\code{individualIds}}{\code{numeric} IDs of individuals for which the results
 should be extracted. By default, all individuals from the results are
-considered. If the individual with the provided ID is not found, the ID
-is ignored.}
+considered. If the individual with the provided ID is not found, the ID is
+ignored.}
 
 \item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
 names can be either for renaming \code{DataSet} objects, or for renaming
@@ -185,6 +187,9 @@ entry in the \code{group} column will be an \code{NA}). If provided, \code{group
 have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
 If no grouping is specified for any of the dataset, the column \code{group} in
 the data frame output will be all \code{NA}.}
+
+\item{\code{silent}}{A binary flag showing if warnings should be triggered when
+data sets are overwritten in the \code{DataCombined} object}
 }
 \if{html}{\out{</div>}}
 }

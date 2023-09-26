@@ -2,11 +2,13 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @param foldDistance A vector for plotting lines at required fold distances
-#'   The vector can include only fold distance values `>1`. An
-#'   `x`-fold distance is defined as all simulated values within the range
-#'   between `x`-fold (depicted by the upper fold range line) and `1/x`-fold
-#'   (depicted by the lower fold range line) of observed values. The identity
-#'   line can be interpreted as the `1`-fold range.
+#' around the identity line (`x=y`). Set to NULL (default) to only draw identity
+#' line.
+#' The vector can include only fold distance values `>1`. An `x`-fold distance
+#' is defined as all simulated values within the range between `x`-fold
+#' (depicted by the upper fold range line) and `1/x`-fold
+#' (depicted by the lower fold range line) of observed values. The identity line
+#'  can be interpreted as the `1`-fold range.
 #'
 #' @import tlf
 #'
@@ -51,7 +53,7 @@
 #' @export
 plotObservedVsSimulated <- function(dataCombined,
                                     defaultPlotConfiguration = NULL,
-                                    foldDistance = 2) {
+                                    foldDistance = NULL) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
@@ -75,22 +77,20 @@ plotObservedVsSimulated <- function(dataCombined,
       obsVsPredPlotConfiguration$yAxis$scale == tlf::Scaling$identity
   )
 
-  # The argument `foldDistance` should only include fold values different from
-  # the default value, which must always be present.
-  #
-  # The default value depends on the scale:
-  #
+  # Identity Line (x=y) definition. Its value depends on the scale:
   # - For linear scale: `1`
   # - For logarithmic scale: `0`
-  defaultFoldDistance <- ifelse(is_any_scale_linear, 0, 1)
+  identity <- ifelse(is_any_scale_linear, 0, 1)
 
   # foldDistance should be above 1
   if (any(foldDistance <= 1)) {
     stop(messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", foldDistance))
   }
 
-  if (!any(dplyr::near(defaultFoldDistance, foldDistance))) {
-    foldDistance <- c(defaultFoldDistance, foldDistance)
+  # The argument `foldDistance` should only include fold values different from
+  # the abline, which must always be present.
+  if (!any(dplyr::near(identity, foldDistance))) {
+    foldDistance <- c(identity, foldDistance)
   }
 
   if (is_any_scale_linear && !is.null(foldDistance)) {
@@ -166,18 +166,29 @@ plotObservedVsSimulated <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = obsVsPredPlotConfiguration$points$shape[1:nrow(.)]) %>%
+    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[obsVsPredPlotConfiguration$points$shape[1:nrow(.)]])) %>%
     dplyr::filter(!duplicated(group))
+
+  # LLOQ is not mapped by default
+  lloq <- NULL
+  # Map LLOQ if defaultPlotConfiguration$displayLLOQ is set to TRUE and lloq
+  # column contains at least one non NA value.
+  if (defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(pairedData$lloq)))) {
+    lloq <- "lloq"
+  }
+
+
 
   plotObject <- tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
     dataMapping = tlf::ObsVsPredDataMapping$new(
-      x     = "yValuesObserved",
-      y     = "yValuesSimulated",
+      x = "yValuesObserved",
+      y = "yValuesSimulated",
       group = "group",
-      xmin  = "yValuesObservedLower",
-      xmax  = "yValuesObservedHigher",
-      shape = "name"
+      xmin = "yValuesObservedLower",
+      xmax = "yValuesObservedHigher",
+      shape = "name",
+      lloq = lloq
     ),
     foldDistance = foldDistance,
     plotConfiguration = obsVsPredPlotConfiguration
@@ -187,7 +198,7 @@ plotObservedVsSimulated <- function(dataCombined,
     shape = "none",
     col = ggplot2::guide_legend(
       title = obsVsPredPlotConfiguration$legend$title$text,
-      title.theme = obsVsPredPlotConfiguration$legend$title$createPlotFont(),
+      title.theme = obsVsPredPlotConfiguration$legend$title$createPlotTextFont(),
       override.aes = list(shape = overrideShapeAssignment$shapeAssn)
     )
   ))

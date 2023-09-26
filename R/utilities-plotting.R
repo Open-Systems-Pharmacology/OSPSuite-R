@@ -92,7 +92,13 @@
 #'
 #' @param simData A data frame with simulated data from
 #'   `DataCombined$toDataFrame()`.
-#' @inheritParams plotPopulationTimeProfile
+#' @param aggregation The type of the aggregation of individual data. One of
+#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in `ospsuite::DataAggregationMethods`). Will
+#'  replace `yValues` by the median, arithmetic or geometric average and add a set of upper and lower bounds
+#'  (`yValuesLower` and `yValuesHigher`)
+#' @param ... Extra parameters to pass to aggregating functions. `probs` for `stats::quantile` or `n` for the number of
+#' standard deviation to add below and above the average for `arithmetic` or `geometric`.
+#'
 #'
 #' @details
 #'
@@ -100,6 +106,8 @@
 #' point.
 #'
 #' @family utilities-plotting
+#'
+#' @import data.table
 #'
 #' @examples
 #'
@@ -135,23 +143,39 @@
 #'
 #' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
-                                            quantiles = c(0.05, 0.5, 0.95)) {
-  simAggregatedData <- simData %>%
-    # For each dataset, compute quantiles across all individuals for each time point
-    #
-    # Each group should always a single dataset, so grouping by `group` *and* `name`
-    # should produce the same result as grouping by only `group` column.
-    #
-    # The reason `name` column also needs to be retained in the resulting data
-    # is because it is mapped to linetype property in population profile type.
-    dplyr::group_by(group, name, xValues) %>%
-    dplyr::summarise(
-      yValuesLower   = stats::quantile(yValues, quantiles[[1]]),
-      yValuesCentral = stats::quantile(yValues, quantiles[[2]]),
-      yValuesHigher  = stats::quantile(yValues, quantiles[[3]]),
-      .groups        = "drop" # drop grouping information from the summary data frame
-    ) %>% # Naming schema expected by plotting functions
-    dplyr::rename(yValues = yValuesCentral)
+                                            aggregation = "quantiles",
+                                            ...) {
+  ospsuite.utils::validateEnumValue(
+    value       = aggregation,
+    enum        = DataAggregationMethods,
+    nullAllowed = FALSE
+  )
+
+  valueNames <- c("yValuesLower", "yValues", "yValuesHigher")
+  simAggregatedData <- data.table::as.data.table(simData)
+
+  aggregation_function <- switch(aggregation,
+    "quantiles"  = .quantRange,
+    "arithmetic" = .normRange,
+    "geometric"  = .geoRange
+  )
+
+  # For each dataset, compute quantiles across all individuals for each time point
+  #
+  # Each group should always a single dataset, so grouping by `group` *and* `name`
+  # should produce the same result as grouping by only `group` column.
+  #
+  # The reason `name` column also needs to be retained in the resulting data
+  # is because it is mapped to linetype property in population profile type.
+  simAggregatedData <-
+    simAggregatedData[,
+      setNames(
+        as.list(aggregation_function(yValues, ...)),
+        valueNames
+      ),
+      by = .(group, name, xValues)
+    ]
+
 
   return(simAggregatedData)
 }
@@ -306,33 +330,35 @@
   }
 
   if (!all(is.na(data$yErrorValues)) && !all(is.na(data$yErrorType))) {
-    data <- dplyr::mutate(data,
-      # If the error values are 0, the error bar caps will be displayed even
-      # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
-      # problem.
-      #
-      # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
-      yErrorValues = dplyr::case_when(
-        dplyr::near(yErrorValues, 0) ~ NA_real_,
-        TRUE ~ yErrorValues
-      ),
-      # For compuring uncertainty, there are only three possibilities:
-      #
-      # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
-      # - The error type is geometric (`DataErrorType$GeometricStdDev`).
-      # - If the errors are none of these, then add `NA`s (of type `double`),
-      #   since these are the only error types supported in `DataErrorType`.
-      yValuesLower = dplyr::case_when(
-        yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
-        yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
-        TRUE ~ NA_real_
-      ),
-      yValuesHigher = dplyr::case_when(
-        yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
-        yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
-        TRUE ~ NA_real_
+    data <-
+      dplyr::mutate(
+        data,
+        # If the error values are 0, the error bar caps will be displayed even
+        # when there are no error bars. Replacing `0`s with `NA`s gets rid of this
+        # problem.
+        #
+        # For more, see: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/348
+        yErrorValues = dplyr::case_when(
+          dplyr::near(yErrorValues, 0) ~ NA_real_,
+          TRUE ~ yErrorValues
+        ),
+        # For compuring uncertainty, there are only three possibilities:
+        #
+        # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
+        # - The error type is geometric (`DataErrorType$GeometricStdDev`).
+        # - If the errors are none of these, then add `NA`s (of type `double`),
+        #   since these are the only error types supported in `DataErrorType`.
+        yValuesLower = dplyr::case_when(
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
+          TRUE ~ NA_real_
+        ),
+        yValuesHigher = dplyr::case_when(
+          yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
+          yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
+          TRUE ~ NA_real_
+        )
       )
-    )
   } else {
     # These columns should always be present in the data frame because they are
     # part of `{tlf}` mapping.
@@ -397,7 +423,7 @@
 
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
-    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$linesColor <- "black"
     generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
@@ -407,7 +433,7 @@
 
   # For `plotResidualsVsTime()` and `plotResidualsVsSimulated()`
   if (plotType %in% c("ResVsTimePlotConfiguration", "ResVsPredPlotConfiguration")) {
-    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% "black"
+    generalPlotConfiguration$linesColor <- "black"
     generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
     generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
     generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
@@ -422,7 +448,8 @@
     fontFace = generalPlotConfiguration$titleFontFace,
     fontFamily = generalPlotConfiguration$titleFontFamily,
     angle = generalPlotConfiguration$titleAngle,
-    align = generalPlotConfiguration$titleAlign
+    align = generalPlotConfiguration$titleAlign,
+    margin = generalPlotConfiguration$titleMargin
   )
 
   labelSubtitle <- tlf::Label$new(
@@ -432,7 +459,8 @@
     fontFace = generalPlotConfiguration$subtitleFontFace,
     fontFamily = generalPlotConfiguration$subtitleFontFamily,
     angle = generalPlotConfiguration$subtitleAngle,
-    align = generalPlotConfiguration$subtitleAlign
+    align = generalPlotConfiguration$subtitleAlign,
+    margin = generalPlotConfiguration$subtitleMargin
   )
 
   labelCaption <- tlf::Label$new(
@@ -442,7 +470,8 @@
     fontFace = generalPlotConfiguration$captionFontFace,
     fontFamily = generalPlotConfiguration$captionFontFamily,
     angle = generalPlotConfiguration$captionAngle,
-    align = generalPlotConfiguration$captionAlign
+    align = generalPlotConfiguration$captionAlign,
+    margin = generalPlotConfiguration$captionMargin
   )
 
   labelXLabel <- tlf::Label$new(
@@ -452,7 +481,8 @@
     fontFace = generalPlotConfiguration$xLabelFontFace,
     fontFamily = generalPlotConfiguration$xLabelFontFamily,
     angle = generalPlotConfiguration$xLabelAngle,
-    align = generalPlotConfiguration$xLabelAlign
+    align = generalPlotConfiguration$xLabelAlign,
+    margin = generalPlotConfiguration$xLabelMargin
   )
 
   labelYLabel <- tlf::Label$new(
@@ -462,7 +492,8 @@
     fontFace = generalPlotConfiguration$yLabelFontFace,
     fontFamily = generalPlotConfiguration$yLabelFontFamily,
     angle = generalPlotConfiguration$yLabelAngle,
-    align = generalPlotConfiguration$yLabelAlign
+    align = generalPlotConfiguration$yLabelAlign,
+    margin = generalPlotConfiguration$yLabelMargin
   )
 
   labelConfiguration <- tlf::LabelConfiguration$new(
@@ -481,7 +512,8 @@
     fontFamily = generalPlotConfiguration$legendTitleFontFamily,
     fontFace = generalPlotConfiguration$legendTitleFontFace,
     angle = generalPlotConfiguration$legendTitleAngle,
-    align = generalPlotConfiguration$legendTitleAlign
+    align = generalPlotConfiguration$legendTitleAlign,
+    margin = generalPlotConfiguration$legendTitleMargin
   )
 
   legendTitleLabel <- tlf::Label$new(
@@ -495,7 +527,8 @@
     fontFamily = generalPlotConfiguration$legendKeysFontFamily,
     fontFace = generalPlotConfiguration$legendKeysFontFace,
     angle = generalPlotConfiguration$legendKeysAngle,
-    align = generalPlotConfiguration$legendKeysAlign
+    align = generalPlotConfiguration$legendKeysAlign,
+    margin = generalPlotConfiguration$legendKeysMargin
   )
 
   legendConfiguration <- tlf::LegendConfiguration$new(
@@ -503,7 +536,15 @@
     caption = NULL,
     title = legendTitleLabel, # for legend title aesthetics
     font = legendKeysFont, # for legend keys aesthetics
-    background = NULL
+    background = tlf::BackgroundElement$new(
+      color = generalPlotConfiguration$legendBorderColor,
+      fill = ggplot2::alpha(
+        colour = generalPlotConfiguration$legendBackgroundColor,
+        alpha = generalPlotConfiguration$legendBackgroundAlpha
+      ),
+      linetype = generalPlotConfiguration$legendBorderType,
+      size = generalPlotConfiguration$legendBorderSize
+    )
   )
 
   # background objects -----------------------------------
@@ -515,7 +556,8 @@
     fontFace = generalPlotConfiguration$watermarkFontFace,
     fontFamily = generalPlotConfiguration$watermarkFontFamily,
     angle = generalPlotConfiguration$watermarkAngle,
-    align = generalPlotConfiguration$watermarkAlign
+    align = generalPlotConfiguration$watermarkAlign,
+    margin = generalPlotConfiguration$watermarkMargin
   )
 
   plotBackground <- tlf::BackgroundElement$new(
@@ -574,15 +616,17 @@
     fontFamily = generalPlotConfiguration$xAxisLabelTicksFontFamily,
     fontFace = generalPlotConfiguration$xAxisLabelTicksFontFace,
     angle = generalPlotConfiguration$xAxisLabelTicksAngle,
-    align = generalPlotConfiguration$xAxisLabelTicksAlign
+    align = generalPlotConfiguration$xAxisLabelTicksAlign,
+    margin = generalPlotConfiguration$xAxisLabelTicksMargin
   )
 
   xAxisConfiguration <- tlf::XAxisConfiguration$new(
-    limits = generalPlotConfiguration$xAxisLimits,
+    axisLimits = generalPlotConfiguration$xAxisLimits,
+    valuesLimits = generalPlotConfiguration$xValuesLimits,
     scale = generalPlotConfiguration$xAxisScale,
     ticks = generalPlotConfiguration$xAxisTicks,
     ticklabels = generalPlotConfiguration$xAxisTicksLabels,
-    font = generalPlotConfiguration$xAxisFont,
+    font = xAxisFont,
     expand = generalPlotConfiguration$xAxisExpand
   )
 
@@ -594,15 +638,17 @@
     fontFamily = generalPlotConfiguration$yAxisLabelTicksFontFamily,
     fontFace = generalPlotConfiguration$yAxisLabelTicksFontFace,
     angle = generalPlotConfiguration$yAxisLabelTicksAngle,
-    align = generalPlotConfiguration$yAxisLabelTicksAlign
+    align = generalPlotConfiguration$yAxisLabelTicksAlign,
+    margin = generalPlotConfiguration$yAxisLabelTicksMargin
   )
 
   yAxisConfiguration <- tlf::YAxisConfiguration$new(
-    limits = generalPlotConfiguration$yAxisLimits,
+    axisLimits = generalPlotConfiguration$yAxisLimits,
+    valuesLimits = generalPlotConfiguration$yValuesLimits,
     scale = generalPlotConfiguration$yAxisScale,
     ticks = generalPlotConfiguration$yAxisTicks,
     ticklabels = generalPlotConfiguration$yAxisTicksLabels,
-    font = generalPlotConfiguration$yAxisFont,
+    font = yAxisFont,
     expand = generalPlotConfiguration$yAxisExpand
   )
 
@@ -645,6 +691,14 @@
     alpha = generalPlotConfiguration$errorbarsAlpha
   )
 
+  # LLOQ
+  .updateSpecificSetting("displayLLOQ", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting("lloqDirection", specificPlotConfiguration, generalPlotConfiguration)
+
+  # foldDistance
+  .updateSpecificSetting("foldLinesLegend", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting("foldLinesLegendDiagonal", specificPlotConfiguration, generalPlotConfiguration)
+
   # Update specific plot configuration object ----------------------
 
   # Do one-to-one mappings of public fields
@@ -659,4 +713,75 @@
   specificPlotConfiguration$errorbars <- errorbarsConfiguration
 
   return(specificPlotConfiguration)
+}
+
+.updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
+  if (!is.null(specificPlotConfiguration[[specificSetting]]) &
+    !is.null(generalPlotConfiguration[[specificSetting]])) {
+    if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
+      specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
+    }
+  }
+}
+
+#' Names of aggregation available for plotPopulationTimeProfile()
+#'
+#' @export
+DataAggregationMethods <-
+  ospsuite.utils::enum(c(
+    "quantiles",
+    "arithmetic",
+    "geometric"
+  ))
+
+#' Quantile Range
+#'
+#' @inheritParams stats::quantile
+#' @param ... further arguments passed to stats::quantile.
+#'
+#' @return numeric vector of length 3 representing the computed quantiles of x.
+#' @noRd
+.quantRange <- function(x, probs = c(0.05, 0.5, 0.95), na.rm = FALSE, ...) {
+  validateIsNumeric(probs, nullAllowed = FALSE)
+  validateIsOfLength(probs, 3L)
+  stats::quantile(x, probs, na.rm = na.rm, ...)
+}
+
+#' Normal Range
+#'
+#' @param x numeric vector to compute normal range from
+#' @param n the number of standard deviation to add/substract from mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param ... further arguments passed to mean and sd functions.
+#'
+#' @return numeric vector of length 3 representing the min, mean and max of the normal range.
+#' @noRd
+.normRange <- function(x, n = 1, na.rm = FALSE, ...) {
+  mean <- mean(x, na.rm = na.rm, ...)
+  sd <- sd(x, na.rm = na.rm)
+  return(c(mean - (n * sd), mean, mean + (n * sd)))
+}
+
+#' Geometric Range
+#'
+#' @param x numeric vector to compute geometric range from
+#' @param n the number of geometric standard deviation to add/substract from mean
+#' @param na.rm a logical evaluating to TRUE or FALSE indicating whether NA values should be stripped before the computation proceeds.
+#' @param ... further arguments passed to mean and sd functions.
+#'
+#' @return numeric vector of length 3 representing the min, mean and max of the geometric range.
+#' @noRd
+.geoRange <- function(x, n = 1, na.rm = FALSE, ...) {
+  mean <- .geoMean(x, na.rm = na.rm, ...)
+  sd <- .geoSD(x, na.rm = na.rm)
+  return(c(mean - (n * sd), mean, mean + (n * sd)))
+}
+
+
+.geoMean <- function(x, na.rm = FALSE, ...) {
+  exp(mean(log(x), na.rm = na.rm, ...))
+}
+
+.geoSD <- function(x, na.rm = FALSE, ...) {
+  exp(sd(log(x), na.rm = na.rm, ...))
 }

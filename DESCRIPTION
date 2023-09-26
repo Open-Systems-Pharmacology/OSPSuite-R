@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 11.1.0
+Version: 12.0.0
 Authors@R: 
     c(person("Open-Systems-Pharmacology Community", role = "cph"),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -29,13 +29,16 @@ Imports:
     tidyr,
     ggplot2,
     rlang,
-    tlf (>= 1.4.0)
+    tlf (>= 1.5.0),
+    data.table
 Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0),
-    withr
+    withr,
+    showtext,
+    sysfonts
 Language: en-US
 Encoding: UTF-8
 LazyData: true
@@ -101,6 +104,7 @@ Collate:
     'utilities-path.R'
     'standard-path.R'
     'table-formula.R'
+    'tasks-env.R'
     'user-defined-pk-parameter.R'
     'utilities-container.R'
     'utilities-data-combined.R'

@@ -2,8 +2,8 @@ image: Visual Studio 2019
 
 
 # uncomment to use global ospsuite version (and comment line underneath)
-# version: '{build}' 
-version: '11.1.{build}'
+# version: '{build}'
+version: '12.0.{build}'
 
 # Download script file from GitHub
 init:
@@ -24,19 +24,21 @@ environment:
   NOT_CRAN: true
   KEEP_VIGNETTES: false
   R_BUILD_ARGS: --no-build-vignettes --no-manual
-  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_ARCH: x64
-  R_VERSION: 4.1.0
-  #We use this variale to skip some long lasting tests using "skip_on_ci"
-  CI: true 
+  R_VERSION: 4.3.1
+  #We use this variable to skip some long lasting tests using "skip_on_ci"
+  CI: true
+  R_PKGTYPE: binary
+  # This enables performance tests, that are potentially machine-specific
+  # Following a discussion in https://github.com/Open-Systems-Pharmacology/OSPSuite-R/pull/1288,
+  # we want to run them in CI builds, but not locally or nightly
+  OSPSUITE-BENCHMARK-TESTS: TRUE
 
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
-  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/ospsuite-rutils/artifacts/ospsuite.utils.zip', repos = NULL, type = 'binary')"
-  - Rscript -e "install.packages('https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/tlf-library/artifacts/tlf.zip', repos = NULL, type = 'binary')"
-  - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
+  - Rscript install_dependencies.R
 
 test_script:
   - travis-tool.sh run_tests
@@ -47,7 +49,7 @@ on_failure:
 
 on_success:
   - Rscript -e "spelling::spell_check_package()"
-  
+
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs

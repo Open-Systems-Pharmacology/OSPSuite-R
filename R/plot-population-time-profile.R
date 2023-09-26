@@ -1,10 +1,19 @@
 #' Time-values profile plot for population simulations
 #'
 #' @inheritParams plotIndividualTimeProfile
+#' @inheritParams .extractAggregatedSimulatedData
+#'
 #' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
-#'   0.50, 0.95)`), with the quantile values defining the aggregation of
-#'   individual data. In the profile plot, the middle value will be used to draw
-#'   a line, while the lower and upper values will be used to create a ribbon.
+#'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
+#'
+#' @details
+#' For `aggregation = arithmetic`, arithmetic mean with arithmetic standard deviation (SD)
+#' will be plotted.
+#' For `aggregation = geometric`, geometric mean with geo SD will be plotted
+#' For `aggregation = quantiles`, the quantile values defined in the argument `quantiles`
+#' will be used. In the profile plot, the middle value will be used to draw
+#'  a line, while the lower and upper values will be used as the lower und upper ranges.
+#'
 #'
 #' @import tlf
 #'
@@ -23,21 +32,28 @@
 #' myDataComb <- DataCombined$new()
 #' myDataComb$addSimulationResults(populationResults)
 #'
-#' # Create a new instance of `DefaultPlotConfiguration` class
-#' myPlotConfiguration <- DefaultPlotConfiguration$new()
-#' myPlotConfiguration$title <- "My Plot Title"
-#' myPlotConfiguration$subtitle <- "My Plot Subtitle"
-#' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotPopulationTimeProfile(myDataComb, myPlotConfiguration)
+#' plotPopulationTimeProfile(myDataComb)
+#'
+#' # plot with other quantiles
+#' plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
+#'
+#' # plot with arithmetic mean
+#' plotPopulationTimeProfile(myDataComb,
+#'   aggregation = "arithmetic"
+#' )
 #'
 #' @export
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
-                                      quantiles = c(0.05, 0.5, 0.95)) {
-  validateIsNumeric(quantiles, nullAllowed = FALSE)
-  validateIsOfLength(quantiles, 3L)
-
-  .plotTimeProfile(dataCombined, defaultPlotConfiguration, quantiles)
+                                      aggregation = "quantiles",
+                                      quantiles = c(0.05, 0.5, 0.95),
+                                      ...) {
+  .plotTimeProfile(
+    dataCombined,
+    defaultPlotConfiguration,
+    aggregation,
+    probs = quantiles
+  )
 }

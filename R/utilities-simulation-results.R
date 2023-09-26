@@ -12,21 +12,7 @@
 #' Results of a simulation of a single individual is treated as a population
 #' simulation with only one individual.
 #'
-#' @param simulationResults Object of type `SimulationResults` produced by
-#'   calling `runSimulation` on a `Simulation` object.
-#' @param quantitiesOrPaths Quantity instances (element or vector) typically
-#'   retrieved using `getAllQuantitiesMatching` or quantity path (element or
-#'   vector of strings) for which the results are to be returned. (optional)
-#'   When providing the paths, only absolute full paths are supported (i.e., no
-#'   matching with '*' possible). If quantitiesOrPaths is `NULL` (default
-#'   value), returns the results for all output defined in the results.
-#' @param individualIds `numeric` IDs of individuals for which the results
-#'   should be extracted. By default, all individuals from the results are
-#'   considered. If the individual with the provided ID is not found, the ID is
-#'   ignored.
-#' @param population population used to calculate the `simulationResults`
-#'   (optional). This is used only to add the population covariates to the
-#'   resulting data table.
+#' @template simulation_results
 #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results
 #'   exist for any `path`. If `FALSE`, a list of `NA` values is returned for the
 #'   respective path.
@@ -109,7 +95,7 @@ getOutputValues <- function(simulationResults,
   names(values) <- paths
 
   # Use low-level methods to get unit and dimension
-  task <- .getContainerTask()
+  task <- .getNetTaskFromCache("ContainerTask")
   metaData <- NULL
   if (addMetaData) {
     metaData <- lapply(paths, function(path) {
@@ -237,59 +223,28 @@ simulationResultsToDataFrame <- function(simulationResults,
     values_to = "simulationValues"
   )
 
-  # Extract units and dimensions for paths in a separate data frame
-  # iterate over the list (in `.x`) using index (names for list elements)
-  # and apply function in `.f` to each element.
-  #
-  # The result will be a list of data frames, which will be row-wise glued into
-  # a single data frame with the `_dfr` variant of this function.
-  simMetaData <- purrr::imap_dfr(
-    .x = simList$metaData,
-    .f = ~ as.data.frame(.x, row.names = NULL, stringsAsFactors = FALSE),
-    .id = "paths"
-  )
+  units <- purrr::map(simList$metaData, "unit")
+  dims <- purrr::map(simList$metaData, "dimension")
+  molWeights <-
+    unique(simData$paths) %>%
+    purrr::set_names() %>%
+    purrr::map(~ ospsuite::toUnit(
+      quantityOrDimension = ospDimensions$`Molecular weight`,
+      values              = simulationResults$simulation$molWeightFor(.x),
+      targetUnit          = ospUnits$`Molecular weight`$`g/mol`
+    ))
 
-  # Leave out time units and dimensions since time is not a path; they will be
-  # added at a later stage.
-  simMetaData <- dplyr::filter(simMetaData, paths != "Time")
-
-  # Combine data frame with simulated data and meta data.
-  simData <- dplyr::left_join(simData, simMetaData, by = "paths")
-
-  # Add back in the previously left out time meta data to the combined data frame.
-  simData <- dplyr::bind_cols(
-    simData,
-    dplyr::tibble(
-      "TimeUnit" = simList$metaData$Time$unit[[1]],
-      "TimeDimension" = simList$metaData$Time$dimension[[1]]
-    )
-  )
-
-  # For each path, extract the molecular weight based on that path string
-  #
-  # This involves first grouping and nesting the data by path. Note that
-  # `nest()` here will have a better performance than `rowwise()`. E.g., if
-  # there are 100 rows, `rowwise()` will run the computation 100 times, while
-  # with `nest()`, the computation only be carried for the same number of
-  # times as the number of `paths` present.
-  simData <- simData %>%
-    dplyr::group_by(paths) %>%
-    tidyr::nest() %>%
-    # Add a new column for molecular weight.
-    # When you call `molWeightFor()`, it returns the value in the base unit -
-    # which is `kg/µmol`. This is not the unit the user would expect, so we
-    # convert it first to the common unit `g/mol`.
-    dplyr::mutate(
-      molWeight = ospsuite::toUnit(
-        quantityOrDimension = ospDimensions$`Molecular weight`,
-        values              = simulationResults$simulation$molWeightFor(paths),
-        targetUnit          = ospUnits$`Molecular weight`$`g/mol`
-      )
-    ) %>%
-    tidyr::unnest(cols = c(data)) %>%
-    dplyr::ungroup()
-
-  # consistently return a (classical) data frame
+  simData <- data.table::as.data.table(simData)
+  simData <- simData[, `:=`(
+    TimeDimension = dims$Time,
+    TimeUnit = units$Time,
+    dimension = dims[[paths]],
+    unit = units[[paths]],
+    molWeight = molWeights[[paths]]
+  ),
+  by = paths
+  ]
+  # # consistently return a (classical) data frame
   return(as.data.frame(simData, stringsAsFactors = FALSE))
 }
 

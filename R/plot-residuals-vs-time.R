@@ -2,6 +2,7 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotResVsTime
+#' @param scaling A character of length one specifying the scale type for residual. can be lin or log.
 #'
 #' @import tlf
 #'
@@ -42,12 +43,16 @@
 #' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotResidualsVsTime(myDataCombined, myPlotConfiguration)
+#' plotResidualsVsTime(myDataCombined, scaling = "lin", defaultPlotConfiguration = myPlotConfiguration)
 #'
 #' @export
 plotResidualsVsTime <- function(dataCombined,
-                                defaultPlotConfiguration = NULL) {
+                                defaultPlotConfiguration = NULL,
+                                scaling = "lin") {
   # validation -----------------------------
+
+
+  rlang::arg_match(scaling, values = c("lin", "log"))
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
@@ -77,7 +82,7 @@ plotResidualsVsTime <- function(dataCombined,
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
   pairedData <- calculateResiduals(dataCombined,
-    scaling = resVsTimePlotConfiguration$yAxis$scale,
+    scaling = scaling,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit
   )
@@ -95,12 +100,16 @@ plotResidualsVsTime <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = resVsTimePlotConfiguration$points$shape[1:nrow(.)]) %>%
+    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[resVsTimePlotConfiguration$points$shape[1:nrow(.)]])) %>%
     dplyr::filter(!duplicated(group))
 
   # axes labels -----------------------------
 
   resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsTimePlotConfiguration)
+
+  if (scaling == "log") {
+    resVsTimePlotConfiguration$labels$ylabel$text <- paste(resVsTimePlotConfiguration$labels$ylabel$text, "(log)")
+  }
 
   # plot -----------------------------
 
@@ -119,7 +128,7 @@ plotResidualsVsTime <- function(dataCombined,
     shape = "none",
     col = ggplot2::guide_legend(
       title = resVsTimePlotConfiguration$legend$title$text,
-      title.theme = resVsTimePlotConfiguration$legend$title$createPlotFont(),
+      title.theme = resVsTimePlotConfiguration$legend$title$createPlotTextFont(),
       override.aes = list(shape = overrideShapeAssignment$shapeAssn)
     )
   )

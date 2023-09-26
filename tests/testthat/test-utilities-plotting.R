@@ -111,3 +111,34 @@ test_that("It adds dataset names as groups when grouping is missing", {
     df_new$group[missing_idx]
   )
 })
+
+test_that("xAxisLabelTicksSize is correctly passed to plot configurations", {
+  plotConfig <- DefaultPlotConfiguration$new()
+  plotConfig$xAxisLabelTicksSize <- 12
+  timeProfilePlotConfig <- ospsuite:::.convertGeneralToSpecificPlotConfiguration(
+    specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
+    generalPlotConfiguration = plotConfig
+  )
+  expect_equal(
+    timeProfilePlotConfig$xAxis$font$size, 12
+  )
+})
+
+
+test_that("Normal range works", {
+  expect_equal(
+    c(mean(randu$x) - sd(randu$x), mean(randu$x), mean(randu$x) + sd(randu$x)),
+    .normRange(randu$x)
+  )
+})
+
+test_that("Geometric range works", {
+  expect_equal(
+    c(
+      exp(mean(log(randu$x))) - exp(sd(log(randu$x))),
+      exp(mean(log(randu$x))),
+      exp(mean(log((randu$x)))) + exp(sd(log(randu$x)))
+    ),
+    .geoRange(randu$x)
+  )
+})

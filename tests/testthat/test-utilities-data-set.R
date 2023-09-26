@@ -32,8 +32,8 @@ test_that("It can convert an empty data set", {
       xUnit = character(0),
       yDimension = character(0),
       yUnit = character(0),
-      yErrorType = numeric(0),
-      yErrorUnit = numeric(0),
+      yErrorType = character(0),
+      yErrorUnit = character(0),
       molWeight = numeric(0),
       lloq = numeric(0),
       stringsAsFactors = FALSE
@@ -54,8 +54,8 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
       xUnit = rep(dataSet$xUnit, 5),
       yDimension = rep(dataSet$yDimension, 5),
       yUnit = rep(dataSet$yUnit, 5),
-      yErrorType = rep(NA_real_, 5),
-      yErrorUnit = rep(NA_real_, 5),
+      yErrorType = rep(NA_character_, 5),
+      yErrorUnit = rep(NA_character_, 5),
       molWeight = rep(NA_real_, 5),
       lloq = rep(NA_real_, 5),
       stringsAsFactors = FALSE
@@ -263,7 +263,7 @@ test_that("It can convert an empty data set", {
     dplyr::tibble(
       name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
       xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = numeric(0), yErrorUnit = numeric(0), molWeight = numeric(0),
+      yUnit = character(0), yErrorType = character(0), yErrorUnit = character(0), molWeight = numeric(0),
       lloq = numeric(0)
     )
   )
