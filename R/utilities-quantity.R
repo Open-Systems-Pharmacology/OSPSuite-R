@@ -1,3 +1,4 @@
+
 #' Retrieve all quantities of a container (simulation or container instance)
 #' matching the given path criteria
 #'
@@ -148,7 +149,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     validateIsString(units)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getContainerTask()
   for (i in seq_along(quantityPaths)) {
     path <- enc2utf8(quantityPaths[[i]])
     value <- values[[i]]
@@ -164,27 +165,23 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
         mw <- simulation$molWeightFor(path)
         # Try to convert to base unit. If the provided unit is not valid for the
         # quantity dimension, throw an error
-        tryCatch(
-          {
-            value <- toBaseUnit(
-              quantityOrDimension = dimension,
-              values = value,
-              unit = units[[i]],
-              molWeight = mw
-            )
-          },
-          error = function(e) {
-            stop(paste0(
-              messages$wrongUnitForQuantity(
-                quantityPath = path,
-                unit = units[[i]]
-              ),
-              "\n",
-              "Original error message:\n",
-              e$message
-            ))
-          }
-        )
+        tryCatch({
+          value <- toBaseUnit(
+            quantityOrDimension = dimension,
+            values = value,
+            unit = units[[i]],
+            molWeight = mw
+          )
+        }, error = function(e) {
+          stop(paste0(
+            messages$wrongUnitForQuantity(quantityPath = path,
+                                          unit = units[[i]]
+            ),
+            "\n",
+            "Original error message:\n",
+            e$message
+          ))
+        })
       }
     }
 
@@ -227,7 +224,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
     validateIsString(units, nullAllowed = TRUE)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getContainerTask()
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- enc2utf8(quantityPaths[[i]])
@@ -347,7 +344,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
   validateIsString(path, nullAllowed = FALSE)
   validateIsOfType(simulation, "Simulation")
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getContainerTask()
   # Check if the quantity is defined by an explicit formula
   isFormulaExplicit <- rClr::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
 
