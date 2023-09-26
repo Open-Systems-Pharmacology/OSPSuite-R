@@ -41,12 +41,10 @@ articles:
 
 figures:
   dev: ragg::agg_png
-  dpi: 96
-  dev.args: []
   fig.ext: png
-  fig.width: 8
-  fig.height: ~
+  dev.args: []
+  fig.width: 10
+  fig.asp: 0.618
   fig.retina: 1
-  fig.asp: 1
   bg: NA
   other.parameters: []
