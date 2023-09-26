@@ -249,11 +249,13 @@ test_that("It returns TRUE when the quantity is an explicit formula", {
 test_that("It shows an expected message when setting a value with wrong unit", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
   expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "mol"),
-               regexp = paste0(
-                 messages$wrongUnitForQuantity(quantityPath = parameterPath,
-                                               unit = "mol"
-                 ),
-                 "\n",
-                 "Original error message:\n*"
-               ))
+    regexp = paste0(
+      messages$wrongUnitForQuantity(
+        quantityPath = parameterPath,
+        unit = "mol"
+      ),
+      "\n",
+      "Original error message:\n*"
+    )
+  )
 })
