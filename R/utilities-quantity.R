@@ -174,15 +174,13 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
             )
           },
           error = function(e) {
-            stop(paste0(
+            stop(
               messages$wrongUnitForQuantity(
                 quantityPath = path,
-                unit = units[[i]]
-              ),
-              "\n",
-              "Original error message:\n",
-              e$message
-            ))
+                unit = units[[i]],
+                dimension = dimension
+              )
+            )
           }
         )
       }
