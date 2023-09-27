@@ -11,7 +11,7 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 APPVEYOR_ACCOUNT_NAME = 'open-systems-pharmacology-ci'
 
 task :prepare_for_build, [:build_version, :pksim_branch] do |t, args|
-  args.with_defaults(:pksim_branch => 'develop')
+  args.with_defaults(:pksim_branch => 'master')
   update_package_version(args.build_version, description_file)
   install_pksim(args.pksim_branch)
 end
@@ -21,7 +21,7 @@ end
 # that are necessary to run OSPSuite-R without any further
 # PK-Sim installation.
 task :download_portable, [:pksim_branch] do |t, args|
-  args.with_defaults(:pksim_branch => 'develop')
+  args.with_defaults(:pksim_branch => 'master')
   download_pksim_portable(args.pksim_branch)
 end
 
