@@ -155,15 +155,15 @@ test_that("Normal range works with different nsd argument", {
 })
 
 test_that("Geometric range works with default options", {
-
-
   gm <- exp(mean(log(randu$x)))
   gsd <- exp(sd(log(randu$x)))
 
   expect_equal(
-    c(gm/gsd,
+    c(
+      gm / gsd,
       gm,
-      gm*gsd),
+      gm * gsd
+    ),
     .geoRange(randu$x)
   )
 })

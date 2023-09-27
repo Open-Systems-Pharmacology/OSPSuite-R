@@ -150,11 +150,10 @@
 #' # aggregated data
 #' ospsuite:::.extractAggregatedSimulatedData(df)
 #'
-#'@keywords internal
+#' @keywords internal
 .extractAggregatedSimulatedData <- function(simData,
                                             aggregation = "quantiles",
                                             ...) {
-
   ospsuite.utils::validateEnumValue(
     value       = aggregation,
     enum        = DataAggregationMethods,
@@ -165,9 +164,9 @@
   simAggregatedData <- data.table::as.data.table(simData)
 
   aggregation_function <- switch(aggregation,
-                                 "quantiles"  = .quantRange,
-                                 "arithmetic" = .normRange,
-                                 "geometric"  = .geoRange
+    "quantiles"  = .quantRange,
+    "arithmetic" = .normRange,
+    "geometric"  = .geoRange
   )
 
   # For each dataset, compute quantiles across all individuals for each time point
@@ -246,19 +245,19 @@
 
   if (!all(is.na(data$yDimension))) {
     data <- dplyr::mutate(data,
-                          yDimension = dplyr::case_when(
-                            yDimension %in% concDimensions ~ "Concentration",
-                            TRUE ~ yDimension
-                          )
+      yDimension = dplyr::case_when(
+        yDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ yDimension
+      )
     )
   }
 
   if (!all(is.na(data$xDimension))) {
     data <- dplyr::mutate(data,
-                          xDimension = dplyr::case_when(
-                            xDimension %in% concDimensions ~ "Concentration",
-                            TRUE ~ xDimension
-                          )
+      xDimension = dplyr::case_when(
+        xDimension %in% concDimensions ~ "Concentration",
+        TRUE ~ xDimension
+      )
     )
   }
 
@@ -290,23 +289,23 @@
 
   # X-axis label
   xLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = ,
-                   "ResVsTimePlotConfiguration" = xUnitString,
-                   # Note that `yUnitString` here is deliberate.
-                   #
-                   # In case of an observed versus simulated plot, `yValues` are plotted on
-                   # both x- and y-axes, and therefore the units strings are going to be the
-                   # same for both axes.
-                   "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
-                   "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "TimeProfilePlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = xUnitString,
+    # Note that `yUnitString` here is deliberate.
+    #
+    # In case of an observed versus simulated plot, `yValues` are plotted on
+    # both x- and y-axes, and therefore the units strings are going to be the
+    # same for both axes.
+    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
+    "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   # Y-axis label
   yLabel <- switch(plotType,
-                   "TimeProfilePlotConfiguration" = yUnitString,
-                   "ResVsPredPlotConfiguration" = ,
-                   "ResVsTimePlotConfiguration" = "Residuals",
-                   "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "TimeProfilePlotConfiguration" = yUnitString,
+    "ResVsPredPlotConfiguration" = ,
+    "ResVsTimePlotConfiguration" = "Residuals",
+    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
   )
 
   return(list("xLabel" = xLabel, "yLabel" = yLabel))
@@ -727,7 +726,7 @@
 
 .updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
   if (!is.null(specificPlotConfiguration[[specificSetting]]) &
-      !is.null(generalPlotConfiguration[[specificSetting]])) {
+    !is.null(generalPlotConfiguration[[specificSetting]])) {
     if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
       specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
     }
