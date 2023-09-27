@@ -70,3 +70,7 @@ messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, fol
 messages$wrongUnitForQuantity <- function(quantityPath, unit) {
   paste0("Unit '", unit, "' is not valid for quantity with path '", quantityPath, "'")
 }
+
+messages$wrongUnitForQuantity <- function(quantityPath, unit) {
+  paste0("Unit '", unit, "' is not valid for quantity with path '", quantityPath, "'")
+}
