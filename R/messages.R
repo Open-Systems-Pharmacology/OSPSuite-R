@@ -77,3 +77,7 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
     "Existing data will be overwritten."
   ))
 }
+
+messages$wrongUnitForQuantity <- function(quantityPath, unit) {
+  paste0("Unit '", unit, "' is not valid for quantity with path '", quantityPath, "'")
+}
