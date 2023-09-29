@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">11.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,47 +73,45 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="12.0" id="ospsuite-120-development">ospsuite 12.0 (development)<a class="anchor" aria-label="anchor" href="#ospsuite-120-development"></a></h2>
 <div class="section level3">
-<h3 id="new-features-12-0">New features<a class="anchor" aria-label="anchor" href="#new-features-12-0"></a></h3>
-<ul><li>Lower limit of quantification (LLOQ) is plotted as dotted lines for <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>.</li>
-<li>
-<code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> provides two new aggregations methods: <code>arithmetic</code> and <code>geometric</code> average and the ability to chose the number of standard deviations to display around the mean through the <code>nsd</code> argument.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="breaking-changes-12-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-12-0"></a></h3>
 <ul><li>The single argument of the <code><a href="../reference/getBaseUnit.html">getBaseUnit()</a></code> function is now named <code>quantityOrDimension</code> (was <code>dimension</code> previously). It can now use objects of class <code>Quantity</code> as inputs, to be consistent with the <code><a href="../reference/toBaseUnit.html">toBaseUnit()</a></code> function.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="major-changes-12-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-0"></a></h3>
-<ul><li>Function <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> uses natural logarithm (<code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>) when calculating residuals with <code>scaling = "log"</code> as opposed to <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> as it was done before. This also affects figures created by <code><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated()</a></code>, <code><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated()</a></code>, and <code><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime()</a></code>. See discusssions <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1091</a> and <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1087</a>.</li>
+<ul><li>Lower limit of quantification (LLOQ) is plotted as dotted lines for <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>.</li>
+<li>
+<code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> provides two new aggregations methods: <code>arithmetic</code> and <code>geometric</code> average and the ability to chose the number of standard deviations to display around the mean through the <code>nsd</code> argument.</li>
+<li>Function <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> uses natural logarithm (<code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>) when calculating residuals with <code>scaling = "log"</code> as opposed to <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> as it was done before. This also affects figures created by <code><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated()</a></code>, <code><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated()</a></code>, and <code><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime()</a></code>. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1091" class="external-link">#1091</a>, <a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1087" class="external-link">#1087</a>).</li>
 <li>
 <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> has a new <code>aggregation</code> argument that allow the user to choose between quantiles, arithmetic and geometric aggregations of y.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-12-0">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-12-0"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-12-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-0"></a></h3>
 <ul><li>The order of columns of the data frame returned by <code>DataCombined$toDataFrame()</code> has changed.</li>
 <li>
 <code>DataCombined$toDataFrame()</code> shows the data in the order as the data sets were added and not alphabetically sorted.</li>
 <li>
-<code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.</li>
+<code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.<br></li>
 <li>
 <code>DataCombined$removeGroupAssignment()</code> does not produce an error if specified names are not unique.</li>
-<li>Fixed Passing font size options from plotConfiguration objects to tlf objects <a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1198" class="external-link">#1198</a></li>
-<li>Legend now have transparent background by default and can be customized through new <code>DefaultPlotConfiguration</code> fields <a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1216" class="external-link">#1216</a></li>
+<li>Fixed Passing font size options from plotConfiguration objects to tlf objects (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1198" class="external-link">#1198</a>)</li>
+<li>Legend now have transparent background by default and can be customized through new <code>DefaultPlotConfiguration</code> fields (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1216" class="external-link">#1216</a>)</li>
 <li>
 <code>plotObsVsPred()</code> now have foldDistance argument set to <code>NULL</code> by default (previously 2). The function will not add any fold lines on the plot by default.</li>
 <li>
 <code>DefaultPlotConfiguration</code> has a new setting: <code>displayLLOQ</code> (default TRUE) to control plotting of LLOQ lines.</li>
 <li>
-<code>DefaultPlotConfiguration</code>’s <code>xLimits</code> and <code>yLimits</code> arguments are deprecated and replaced by <code>xAxisLimits</code> and <code>yAxisLimits</code>. Use them to zoom in the plot while preserving all data points. Use <code>xValuesLimits</code> and <code>yValuesLimits</code> to filter out data point outside of these range. More detailed explanations <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples" class="external-link">here</a>
-</li>
+<code>DefaultPlotConfiguration</code>’s <code>xLimits</code> and <code>yLimits</code> arguments are deprecated and replaced by <code>xAxisLimits</code> and <code>yAxisLimits</code>. Use them to zoom in the plot while preserving all data points. Use <code>xValuesLimits</code> and <code>yValuesLimits</code> to filter out data point outside of these range. More detailed explanations <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples" class="external-link">here</a>.</li>
 <li>
 <code>addSimulationResults</code> and <code>addDataSets</code> methods of the <code>DataCombined</code> class now support an optional <code>silent</code> argument which silences the checks for data set names. If you expect to replace data sets in <code>DataCombined</code> objects repeatedly, consider switching the parameter from the default <code>FALSE</code> value to <code>TRUE</code>.</li>
+<li>
+<code><a href="../reference/simulationResultsToDataFrame.html">simulationResultsToDataFrame()</a></code> is faster than before (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1317" class="external-link">#1317</a>, <a href="https://github.com/Felixmil" class="external-link">@Felixmil</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="11.1.197" id="ospsuite-111197">ospsuite 11.1.197<a class="anchor" aria-label="anchor" href="#ospsuite-111197"></a></h2>
 <div class="section level3">
-<h3 id="new-features-11-1-197">New features<a class="anchor" aria-label="anchor" href="#new-features-11-1-197"></a></h3>
+<h3 id="major-changes-11-1-197">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-1-197"></a></h3>
 <ul><li>
 <p>Adds new visualization functions:</p>
 <ul><li>
@@ -130,19 +128,15 @@
 <li>
 <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> to calculate residuals for datasets in <code>DataCombined</code>.</li>
 </ul></li>
-</ul></div>
-<div class="section level3">
-<h3 id="major-changes-11-1-197">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-1-197"></a></h3>
-<ul><li><p>The class <code>SimulationBatch</code> gets a new property <code>id</code>.</p></li>
+<li><p>The class <code>SimulationBatch</code> gets a new property <code>id</code>.</p></li>
 <li><p>The output of <code><a href="../reference/runSimulationBatches.html">runSimulationBatches()</a></code> is now a named list with names being the ids of <code>SimulationBatch</code>.</p></li>
 <li><p><code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> now uses <code>log(base = 10)</code> for calculation of residuals in logarithmic scale instead if <code>log(base = exp(1))</code></p></li>
 <li><p><code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> does also return residuals for entries where simulated or observed value is 0 in logarithmic scale. These values were ignored in previous versions. If the observed or simulated value is zero or negative, it is replaced by an arbitrary small value <code>getOSPSuiteSetting("LOG_SAFE_EPSILON")</code> (1e-20 by default).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-11-1-197">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-11-1-197"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-11-1-197">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-11-1-197"></a></h3>
 <ul><li>
-<code>SimulationBatch$addRunValues()</code> will throw an error when any start value is <code>NaN</code>
-</li>
+<code>SimulationBatch$addRunValues()</code> will throw an error when any start value is <code>NaN</code>.</li>
 <li>
 <code>SimulatioBatch</code> gets methods <code>getVariableParameters()</code> and <code>getVariableMolecules()</code> that return list of parameter resp. molecule paths that are defined variable.</li>
 </ul></div>
@@ -150,60 +144,58 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="11.0.123" id="ospsuite-110123">ospsuite 11.0.123<a class="anchor" aria-label="anchor" href="#ospsuite-110123"></a></h2>
 <div class="section level3">
-<h3 id="new-features-11-0-123">New features<a class="anchor" aria-label="anchor" href="#new-features-11-0-123"></a></h3>
-<ul><li><p>Adds new <code>DataCombined</code> class that combines observed data (<code>DataSet</code>) and simulated data (<code>SimulationResults</code>) into a single object. Especially important is the <code>$toDataFrame()</code> method of this object that returns a data frame containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.</p></li>
-<li>
-<p>Adds new visualization functions:</p>
-<ul><li>
-<code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> to create time-profile plots.</li>
-</ul></li>
-<li><p>Adds a new class <code>DefaultPlotConfiguration</code> to provide plot configurations for plotting functions.</p></li>
-<li><p>Adds <code><a href="../reference/simulationResultsToDataFrame.html">simulationResultsToDataFrame()</a></code> function to convert <code>SimulationResults</code> objects into a data frame.</p></li>
-<li><p>All <code>*ToDataFrame()</code> functions also get <code>*ToTibble()</code> variants to extract a tibble data frame instead of a classical data frame.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="major-changes-11-0-123">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-0-123"></a></h3>
-<ul><li>
-<p>Following functions are marked for deprecation and will be removed in future releases:</p>
-<ul><li><p><code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> is now <code><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame()</a></code></p></li>
-<li><p><code><a href="../reference/ospsuite_deprecated.html">populationAsDataFrame()</a></code> is now <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code></p></li>
-</ul></li>
-</ul></div>
-<div class="section level3">
 <h3 id="breaking-changes-11-0-123">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-11-0-123"></a></h3>
 <ul><li><p>Signature for <code>toUnit</code> function has changed. <code>molWeight</code> is now the fifth, while <code>sourceUnit</code> is the fourth parameter (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/837" class="external-link">#837</a>).</p></li>
 <li><p><code>DataImporterConfiguration</code>: fields <code>timeUnitFromColumn</code> and <code>measurementUnitFromColumn</code> are renamed to <code>isTimeUnitFromColumn</code> and <code>isMeasurementUnitFromColumn</code></p></li>
 <li><p>The constructor for <code>DataImporterConfiguration</code> does not accept a path to a configuration file any more. Use the function <code><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration()</a></code> to create a configuration object from a file.</p></li>
 <li><p>The constructor for <code>DataSet</code> objects requires a <code>name</code> argument.</p></li>
 <li><p>All <code>validate*()</code> helper functions and <code>"%||%"</code> infix operators are no longer exported. Please have a look at the new utility package, from which these functions are now exported: <a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/" class="external-link uri">https://www.open-systems-pharmacology.org/OSPSuite.RUtils/</a>.</p></li>
-<li><p>The <code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> function changes column data types for <code>QuantityPath</code>, <code>Parameter</code>, and <code>Unit</code> from <code>factor</code> to <code>character</code> (<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/673" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/673</a>).</p></li>
+<li><p>The <code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> function changes column data types for <code>QuantityPath</code>, <code>Parameter</code>, and <code>Unit</code> from <code>factor</code> to <code>character</code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/673" class="external-link">#673</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="major-changes-11-0-123">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-11-0-123"></a></h3>
+<ul><li><p>Adds new <code>DataCombined</code> class that combines observed data (<code>DataSet</code>) and simulated data (<code>SimulationResults</code>) into a single object. Especially important is the <code>$toDataFrame()</code> method of this object that returns a data frame containing combined data from observed and simulated data, which can be further used for visualizations or other analysis.</p></li>
+<li><p>Adds new visualization functions:</p></li>
+<li><p><code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> to create time-profile plots.</p></li>
+<li><p>Adds a new class <code>DefaultPlotConfiguration</code> to provide plot configurations for plotting functions.</p></li>
+<li><p>Adds <code><a href="../reference/simulationResultsToDataFrame.html">simulationResultsToDataFrame()</a></code> function to convert <code>SimulationResults</code> objects into a data frame.</p></li>
+<li><p>All <code>*ToDataFrame()</code> functions also get <code>*ToTibble()</code> variants to extract a tibble data frame instead of a classical data frame.</p></li>
+<li>
+<p>Following functions are marked for deprecation and will be removed in future releases:</p>
+<ul><li>
+<code><a href="../reference/ospsuite_deprecated.html">pkAnalysesAsDataFrame()</a></code> is now <code><a href="../reference/pkAnalysesToDataFrame.html">pkAnalysesToDataFrame()</a></code>
+</li>
+<li>
+<code><a href="../reference/ospsuite_deprecated.html">populationAsDataFrame()</a></code> is now <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>
+</li>
+</ul></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="10.0" id="ospsuite-100">ospsuite 10.0<a class="anchor" aria-label="anchor" href="#ospsuite-100"></a></h2>
 <p>Version compatible with the OSPSuite V10.</p>
 <div class="section level3">
-<h3 id="new-features-10-0">New features<a class="anchor" aria-label="anchor" href="#new-features-10-0"></a></h3>
-<ul><li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/444" class="external-link">Enable Batch Simulation Run</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/423" class="external-link">Export of population to CSV</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/295" class="external-link">Support aging data for population calculation</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/478" class="external-link">Enums to look up units and dimensions</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/531" class="external-link">Support R4</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/541" class="external-link">extend setParameterValuesByPath function</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/575" class="external-link">DataSet: load from PKML</a></li>
-<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html">Efficient calculations</a></li>
+<h3 id="major-changes-10-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-10-0"></a></h3>
+<ul><li>Enable Batch Simulation Run (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/444" class="external-link">#444</a>).</li>
+<li>Export of population to CSV (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/423" class="external-link">#423</a>).</li>
+<li>Support aging data for population calculation (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/295" class="external-link">#295</a>).</li>
+<li>Enums to look up units and dimensions (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/478" class="external-link">#478</a>).</li>
+<li>Support R4 (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/531" class="external-link">#531</a>).</li>
+<li>extend setParameterValuesByPath function (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/541" class="external-link">#541</a>).</li>
+<li>DataSet: load from PKML (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/575" class="external-link">#575</a>).</li>
+<li>Efficient calculations, see <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html">this vignette</a>.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-10-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-10-0"></a></h3>
-<ul><li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/436" class="external-link">Cannot calculate PK-Parameters of a population when one individual simulation failed</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/473" class="external-link">Usability issue when creating a population</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/503" class="external-link">Unnecessary Debug output in some plot tasks</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/515" class="external-link">uniqueEntities: Error when passing only one entity</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/428" class="external-link">R-Toolbox bug? getAllParametersMatching()</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/582" class="external-link">Add CL parameter to the list of StandardPKPArameters</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/583" class="external-link">toBaseUnit and toUnit should support null as input (and return null)</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/614" class="external-link">ospsuite::toBaseUnit should be case insensitive</a></li>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/553" class="external-link">Integer variables not handled by some functions</a></li>
+<h3 id="minor-improvements-and-bug-fixes-10-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-10-0"></a></h3>
+<ul><li>Cannot calculate PK-Parameters of a population when one individual simulation failed (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/436" class="external-link">#436</a>).</li>
+<li>Usability issue when creating a population (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/473" class="external-link">#473</a>).</li>
+<li>Unnecessary Debug output in some plot tasks (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/503" class="external-link">#503</a>).</li>
+<li>uniqueEntities: Error when passing only one entity (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/515" class="external-link">#515</a>).</li>
+<li>R-Toolbox bug? getAllParametersMatching(). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/428" class="external-link">#428</a>).</li>
+<li>Add CL parameter to the list of StandardPKPArameters (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/582" class="external-link">#582</a>).</li>
+<li>toBaseUnit and toUnit should support null as input (and return null). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/583" class="external-link">#583</a>).</li>
+<li>ospsuite::toBaseUnit should be case insensitive (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/614" class="external-link">#614</a>).</li>
+<li>Integer variables not handled by some functions (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/553" class="external-link">#553</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
