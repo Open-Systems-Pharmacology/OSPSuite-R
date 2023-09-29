@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">11.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,12 +92,13 @@
 <h3 id="minor-changes-12-0">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-12-0"></a></h3>
 <ul><li>The order of columns of the data frame returned by <code>DataCombined$toDataFrame()</code> has changed.</li>
 <li>
-<code>DataCombined$toDataFrame()</code> shows the data in the order as the data sets were added and not alphabetically sorted.</li>
-<li>
+<code>DataCombined$toDataFrame()</code> shows the data in the order as the data sets were added and not alphabetically sorted.
+<ul><li>
 <code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.</li>
+</ul></li>
 <li>
-<code>DataCombined$removeGroupAssignment()</code> does not produce an error if specified names are not unique.</li>
-<li>Fixed Passing font size options from plotConfiguration objects to tlf objects <a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1198" class="external-link">#1198</a></li>
+<code>DataCombined$removeGroupAssignment()</code> does not produce an error if specified names are not unique.
+<ul><li>Fixed Passing font size options from plotConfiguration objects to tlf objects <a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1198" class="external-link">#1198</a></li>
 <li>Legend now have transparent background by default and can be customized through new <code>DefaultPlotConfiguration</code> fields <a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1216" class="external-link">#1216</a></li>
 <li>
 <code>plotObsVsPred()</code> now have foldDistance argument set to <code>NULL</code> by default (previously 2). The function will not add any fold lines on the plot by default.</li>
@@ -108,6 +109,8 @@
 </li>
 <li>
 <code>addSimulationResults</code> and <code>addDataSets</code> methods of the <code>DataCombined</code> class now support an optional <code>silent</code> argument which silences the checks for data set names. If you expect to replace data sets in <code>DataCombined</code> objects repeatedly, consider switching the parameter from the default <code>FALSE</code> value to <code>TRUE</code>.</li>
+<li>Now checks if the unit selected for conversion is compatible with the quantity path. If not, a comprehensible error message is shown to the user. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1311" class="external-link">#1311</a>, <a href="https://github.com/PavelBal" class="external-link">@PavelBal</a>)</li>
+</ul></li>
 </ul></div>
 </div>
     <div class="section level2">
