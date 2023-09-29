@@ -215,38 +215,39 @@ simulationResultsToDataFrame <- function(simulationResults,
     individualIds     = individualIds
   )
 
-  # convert data to long format with a new column for paths
-  simData <- tidyr::pivot_longer(
-    simList$data,
-    cols = -c("IndividualId", "Time"),
-    names_to = "paths",
-    values_to = "simulationValues"
-  )
+  # use data.table to pivot simList$data to long format, all columns except
+  # "IndividualId" and "Time" to "paths" column and their value to
+  # "simulationValues"
+  simData <-
+    data.table::melt(as.data.table(simList$data),
+      id.vars = c("IndividualId", "Time"),
+      variable.name = "paths",
+      value.name = "simulationValues",
+      variable.factor = FALSE
+    )
 
-  units <- purrr::map(simList$metaData, "unit")
-  dims <- purrr::map(simList$metaData, "dimension")
-  molWeights <-
-    unique(simData$paths) %>%
-    purrr::set_names() %>%
-    purrr::map(~ ospsuite::toUnit(
-      quantityOrDimension = ospDimensions$`Molecular weight`,
-      values              = simulationResults$simulation$molWeightFor(.x),
-      targetUnit          = ospUnits$`Molecular weight`$`g/mol`
-    ))
+  # set order of simData by Time
+  simData <- data.table::setorder(simData, Time)
 
-  simData <- data.table::as.data.table(simData)
+  # add columns to simData
   simData <- simData[, `:=`(
-    TimeDimension = dims$Time,
-    TimeUnit = units$Time,
-    dimension = dims[[paths]],
-    unit = units[[paths]],
-    molWeight = molWeights[[paths]]
+    TimeDimension = simList$metaData$Time$dimension,
+    TimeUnit = simList$metaData$Time$unit,
+    dimension = simList$metaData[[paths]]$dimension,
+    unit = simList$metaData[[paths]]$unit,
+    molWeight = ospsuite::toUnit(
+      quantityOrDimension = ospDimensions$`Molecular weight`,
+      values              = simulationResults$simulation$molWeightFor(paths),
+      targetUnit          = ospUnits$`Molecular weight`$`g/mol`
+    )
   ),
   by = paths
   ]
+
   # # consistently return a (classical) data frame
   return(as.data.frame(simData, stringsAsFactors = FALSE))
 }
+
 
 #' @rdname simulationResultsToDataFrame
 #'
