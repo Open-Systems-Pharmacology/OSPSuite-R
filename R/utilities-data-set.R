@@ -1,34 +1,3 @@
-.makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
-  columForDataSet <- function(dataSet) {
-    # check length of entry for a certain property of this data set, i.e. if it exists
-    if (is.null(metaDataName)) {
-      len <- length(dataSet[[property]])
-    } else {
-      len <- length(dataSet[[property]][[metaDataName]])
-    }
-
-    if (len == 0) {
-      if (property %in% c("yErrorType", "yErrorUnit")) {
-        rep(NA_character_, length(dataSet$xValues))
-      } else {
-        rep(NA_real_, length(dataSet$xValues))
-      }
-    } else if (len == 1) {
-      if (is.null(metaDataName)) {
-        rep(dataSet[[property]], length(dataSet$xValues))
-      } else {
-        rep(dataSet[[property]][[metaDataName]], length(dataSet$xValues))
-      }
-    } else {
-      dataSet[[property]]
-    }
-  }
-
-  unlist(lapply(dataSets, function(x) {
-    columForDataSet(x)
-  }), use.names = FALSE)
-}
-
 #' Loads data (typically observed data) from a PKML file and creates a `DataSet` from it.
 #' The pkml files are typically exported from PK-Sim or MoBi.
 #'
@@ -81,49 +50,76 @@ dataSetToDataFrame <- function(dataSets) {
   dataSets <- c(dataSets)
   validateIsOfType(dataSets, "DataSet")
 
-  name <- .makeDataFrameColumn(dataSets, "name")
-  xUnit <- .makeDataFrameColumn(dataSets, "xUnit")
-  yUnit <- .makeDataFrameColumn(dataSets, "yUnit")
-  yErrorUnit <- .makeDataFrameColumn(dataSets, "yErrorUnit")
-  xDimension <- .makeDataFrameColumn(dataSets, "xDimension")
-  yDimension <- .makeDataFrameColumn(dataSets, "yDimension")
-  yErrorType <- .makeDataFrameColumn(dataSets, "yErrorType")
-  molWeight <- .makeDataFrameColumn(dataSets, "molWeight")
-  xValues <- .makeDataFrameColumn(dataSets, "xValues")
-  yValues <- .makeDataFrameColumn(dataSets, "yValues")
-  yErrorValues <- .makeDataFrameColumn(dataSets, "yErrorValues")
-  lloq <- .makeDataFrameColumn(dataSets, "LLOQ")
-
   obsData <- data.frame(
-    name,
-    xValues,
-    yValues,
-    yErrorValues,
-    xDimension,
-    xUnit,
-    yDimension,
-    yUnit,
-    yErrorType,
-    yErrorUnit,
-    molWeight,
-    lloq,
+    name = .makeDataFrameColumn(dataSets, "name"),
+    xValues = .makeDataFrameColumn(dataSets, "xValues"),
+    yValues = .makeDataFrameColumn(dataSets, "yValues"),
+    yErrorValues = .makeDataFrameColumn(dataSets, "yErrorValues"),
+    xDimension = .makeDataFrameColumn(dataSets, "xDimension"),
+    xUnit = .makeDataFrameColumn(dataSets, "xUnit"),
+    yDimension = .makeDataFrameColumn(dataSets, "yDimension"),
+    yUnit = .makeDataFrameColumn(dataSets, "yUnit"),
+    yErrorType = .makeDataFrameColumn(dataSets, "yErrorType"),
+    yErrorUnit = .makeDataFrameColumn(dataSets, "yErrorUnit"),
+    molWeight = .makeDataFrameColumn(dataSets, "molWeight"),
+    lloq = .makeDataFrameColumn(dataSets, "LLOQ"),
     stringsAsFactors = FALSE
   )
 
-  # get all names of meta data entries from all data sets
-  metaDataNames <- unique(unlist(lapply(dataSets, function(dataSets) {
-    names(dataSets[["metaData"]])
-  }), use.names = FALSE))
-
-  # add one column for each one
-  for (name in metaDataNames) {
-    col <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
-    obsData[[name]] <- col
+  # add one column for each metaData that is present in any DataSet
+  for (name in unique(unlist(lapply(dataSets, \(x) names(x$metaData)), use.names = F))) {
+    obsData[[name]] <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
   }
 
   # consistently return a (classical) data frame
   return(obsData)
 }
+
+#' Create a vector of the right length for a certain property of a `DataSet`
+#'
+#' @param dataSets A list of `dataSet` objects or a single `dataSet`.
+#' @param property The property to create the vector for.
+#' @param metaDataName The name of the metaData to create the vector for.
+#'
+#' @return A vector of length corresponding to dataSet$xValues containing the property values.
+#'
+#' @keywords internal
+.makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
+  unlist( # unlist to return a vector containing all dataSets data
+    lapply(
+      dataSets,
+      function(dataSet) {
+        # check length of entry for a certain property of this data set.
+        if (is.null(metaDataName)) {
+          len <- length(dataSet[[property]])
+        } else {
+          len <- length(dataSet[[property]][[metaDataName]])
+        }
+
+        if (len == 0) {
+          # If property is empty, return NA vector of xValues length
+          if (property %in% c("yErrorType", "yErrorUnit")) {
+            rep(NA_character_, length(dataSet$xValues))
+          } else {
+            rep(NA_real_, length(dataSet$xValues))
+          }
+        } else if (len == 1) {
+          # if property is a single value, return value vector of xValues length
+          if (is.null(metaDataName)) {
+            rep(dataSet[[property]], length(dataSet$xValues))
+          } else {
+            rep(dataSet[[property]][[metaDataName]], length(dataSet$xValues))
+          }
+        } else {
+          # if property is a vector, return it directly
+          dataSet[[property]]
+        }
+      }
+    ),
+    use.names = FALSE
+  )
+}
+
 
 #' @rdname dataSetToDataFrame
 #'
