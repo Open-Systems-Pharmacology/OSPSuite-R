@@ -109,8 +109,9 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 # LLOQ
 
 test_that("LLOQ is plotted", {
+  set.seed(42)
   dataSet <- DataSet$new("ds with lloq")
-  dataSet$setValues(1:7, c(10 * exp(-1:-7) + rnorm(7, 0, .25)), abs(rnorm(7, 0, 0.1)))
+  dataSet$setValues(1:7, c(10 * exp(1:-5) + rnorm(7, 0, .25)), abs(rnorm(7, 0, 0.1)))
   dataSet$LLOQ <- 0.15
 
 
