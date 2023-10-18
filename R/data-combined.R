@@ -254,6 +254,14 @@ DataCombined <- R6::R6Class(
       # for method chaining
       invisible(self)
     },
+    #' @description set the type of data (observed or simulated) for datasets.
+    #'
+    #' @param names a character vector of dataset names which dataTypes need to
+    #' be changed.
+    #' @param dataTypes a character vector of dataTypes (`"observed"` or
+    #' `"simulated"`) to be assigned to the datasets (in order of `names`.
+    #'
+    #' @return `DataCombined` object with modified dataTypes datasets.
     setDataTypes = function(names, dataTypes) {
       # Sanitize vector arguments of `character` type
       names <- .cleanVectorArgs(names, type = "character")
