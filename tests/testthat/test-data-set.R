@@ -1,7 +1,7 @@
 tolerance <- 0.0001
 dataSetName <- "MyDataSet"
 
-context("DataSet from scratch")
+# DataSet from scratch
 
 test_that("it cannot create a new data set from scratch without a name", {
   expect_error(capture.output(DataSet$new()), regexp = messages$errorDataSetNameMissing)
@@ -35,19 +35,19 @@ test_that("it can set the name of the data set", {
 test_that("it can work when setting a single value", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$setValues(xValues = 1, yValues = 10)
-  expect_equal(dataSet$xValues, 1, tolerance)
-  expect_equal(dataSet$yValues, 10, tolerance)
+  expect_equal(dataSet$xValues, 1, tolerance =  tolerance)
+  expect_equal(dataSet$yValues, 10, tolerance = tolerance)
 
   dataSet2 <- DataSet$new(name = dataSetName)
   dataSet2$setValues(xValues = c(1), yValues = c(10))
-  expect_equal(dataSet2$xValues, 1, tolerance)
-  expect_equal(dataSet2$yValues, 10, tolerance)
+  expect_equal(dataSet2$xValues, 1, tolerance = tolerance)
+  expect_equal(dataSet2$yValues, 10, tolerance = tolerance)
 })
 
 test_that("it can update the dimension of the xValues when no values are set", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$xDimension <- ospDimensions$Ampere
-  expect_equal(dataSet$xValues, numeric(), tolerance)
+  expect_equal(dataSet$xValues, numeric(), tolerance = tolerance)
   expect_equal(dataSet$xUnit, ospUnits$Ampere$A)
 })
 
@@ -56,14 +56,14 @@ test_that("it can update the dimension of the xValues and this does not change t
   # this will be Time in h
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
   dataSet$xDimension <- ospDimensions$Ampere
-  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance)
+  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance = tolerance)
   expect_equal(dataSet$xUnit, ospUnits$Ampere$A)
 })
 
 test_that("it can update the unit of the xValues when no values are set", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$xUnit <- ospUnits$Time$`week(s)`
-  expect_equal(dataSet$xValues, numeric(), tolerance)
+  expect_equal(dataSet$xValues, numeric(), tolerance = tolerance)
   expect_equal(dataSet$xUnit, ospUnits$Time$`week(s)`)
 })
 
@@ -71,14 +71,14 @@ test_that("it can update the unit of the xValues and this does not change the re
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
   dataSet$xUnit <- ospUnits$Time$`week(s)`
-  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance)
+  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance = tolerance)
   expect_equal(dataSet$xUnit, ospUnits$Time$`week(s)`)
 })
 
 test_that("it can update the dimension of the yValues when no values are set", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$yDimension <- ospDimensions$Ampere
-  expect_equal(dataSet$yValues, numeric(), tolerance)
+  expect_equal(dataSet$yValues, numeric(), tolerance = tolerance)
   expect_equal(dataSet$yUnit, ospUnits$Ampere$A)
 })
 
@@ -86,8 +86,8 @@ test_that("it can update the dimension of the yValues and this does not change t
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
   dataSet$yDimension <- ospDimensions$Ampere
-  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
-  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
+  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance = tolerance)
+  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
   expect_equal(dataSet$yUnit, ospUnits$Ampere$A)
   expect_equal(dataSet$yErrorUnit, ospUnits$Ampere$A)
 })
@@ -99,8 +99,8 @@ test_that("it does not change the display unit when updating the dimension with 
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
   dataSet$yDimension <- ospDimensions$`Concentration (mass)`
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
-  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
-  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
+  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance = tolerance)
+  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
 
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
 })
@@ -108,7 +108,7 @@ test_that("it does not change the display unit when updating the dimension with 
 test_that("it can update the unit of the yValues when no values are set", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
-  expect_equal(dataSet$yValues, numeric(), tolerance)
+  expect_equal(dataSet$yValues, numeric(), tolerance = tolerance)
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 })
 
@@ -116,7 +116,7 @@ test_that("it can update the unit of the yValues and this does not change the re
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
   dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
-  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
+  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance = tolerance)
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
 })
@@ -133,7 +133,7 @@ test_that("it can update the dimension of the yValues and this does not change t
   dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   dataSet$yDimension <- ospDimensions$Amount
 
-  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance = tolerance)
 })
 
 test_that("it can update the unit of the yErrorValues and this does not change the returned value", {
@@ -146,12 +146,12 @@ test_that("it can update the unit of the yErrorValues and this does not change t
   )
   # Change units of y error values - actual values are converted
   dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
-  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance = tolerance)
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 
   # Also test for dimension change
   dataSet$yDimension <- ospDimensions$Amount
-  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance)
+  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance = tolerance)
 })
 
 test_that("Empty error with defined y values", {
@@ -180,7 +180,7 @@ test_that("arithmetic to geometric error changes the dimension of yError", {
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
+  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
   expect_equal(dataSet$yErrorUnit, "")
 })
 
@@ -193,7 +193,7 @@ test_that("geometric to arithmetic error sets the dimension and unit of yError t
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance)
+  expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 })
 
@@ -244,7 +244,7 @@ test_that("it can get and set molWeight", {
   expect_equal(dataSet$molWeight, 123)
 })
 
-context("DataSet from pkml without error")
+# DataSet from pkml without error
 obsDataFile <- getTestDataFilePath("obs_data_no_error.pkml")
 obsData <- .loadDataRepositoryFromPKML(obsDataFile)
 
@@ -258,7 +258,7 @@ test_that("it does not overwrite a name when creating from an existing repositor
   expect_equal(dataSet$name, "ObservedData_noError")
 })
 
-context("DataSet from pkml with error")
+# DataSet from pkml with error
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
@@ -310,7 +310,7 @@ test_that("it can update the dimension of the xValues and this does not change t
   obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(dataRepository = obsData)
   dataSet$xDimension <- ospDimensions$Ampere
-  expect_equal(dataSet$xValues, xValues, tolerance)
+  expect_equal(dataSet$xValues, xValues, tolerance = tolerance)
   expect_equal(dataSet$xUnit, ospUnits$Ampere$A)
 })
 
@@ -318,8 +318,8 @@ test_that("it can update x and y values and remove y error", {
   obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(dataRepository = obsData)
   dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50))
-  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance)
-  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance)
+  expect_equal(dataSet$xValues, c(1, 2, 3, 4, 5), tolerance = tolerance)
+  expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance = tolerance)
   expect_equal(dataSet$yErrorValues, NULL)
 })
 
@@ -336,7 +336,7 @@ test_that("arithmetic to geometric error changes the dimension of yError", {
   dataSet <- DataSet$new(dataRepository = obsData)
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSet$yErrorValues, yError, tolerance)
+  expect_equal(dataSet$yErrorValues, yError, tolerance = tolerance)
   expect_equal(dataSet$yErrorUnit, "")
 })
 
@@ -351,7 +351,7 @@ test_that("it can set the llog value", {
   obsData <- .loadDataRepositoryFromPKML(obsDataFile)
   dataSet <- DataSet$new(dataRepository = obsData)
   dataSet$LLOQ <- 0.25
-  expect_equal(dataSet$LLOQ, 0.25, tolerance)
+  expect_equal(dataSet$LLOQ, 0.25, tolerance = tolerance)
 })
 
 test_that("it throws an error when a vector of LLOQ is provided", {

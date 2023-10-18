@@ -1,4 +1,4 @@
-context("loadDataSetFromPKML")
+# loadDataSetFromPKML
 
 test_that("It can load a valid observed data file and create a DataSet object", {
   file <- getTestDataFilePath("obs_data.pkml")
@@ -15,7 +15,7 @@ test_that("It correctly gets the yValues column for a certain type of DataReposi
   expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
 })
 
-context("dataSetToDataFrame")
+# dataSetToDataFrame
 
 dataSetName <- "NewDataSet"
 dataSet <- DataSet$new(name = dataSetName)
@@ -143,7 +143,7 @@ test_that("It can convert a list of data sets", {
   )
 })
 
-context("saveDataSetToPKML")
+# saveDataSetToPKML
 
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
@@ -193,7 +193,7 @@ test_that("it can save the data set as pkml", {
   capture.output(file.remove(filePath))
 })
 
-context("loadDataSetsFromExcel")
+# loadDataSetsFromExcel
 configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
 importerConfiguration <- loadDataImporterConfiguration(configurationPath)
@@ -251,7 +251,7 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
   )
 })
 
-context("dataSetToTibble")
+# dataSetToTibble
 
 dataSetName <- "NewDataSet"
 dataSet <- DataSet$new(name = dataSetName)

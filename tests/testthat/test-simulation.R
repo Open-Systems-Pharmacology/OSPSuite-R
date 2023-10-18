@@ -1,4 +1,4 @@
-context("Simulation")
+# Simulation
 
 quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 sim <- loadTestSimulation("S1")

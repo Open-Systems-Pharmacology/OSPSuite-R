@@ -1,4 +1,4 @@
-context("SimulationRunOptions")
+# SimulationRunOptions
 
 runOptions <- SimulationRunOptions$new()
 test_that("It has the expected default value", {

@@ -125,6 +125,27 @@ test_that("data frame column and dataset names are as expected when only `DataSe
   expect_equal(unique(df$name), names(dataSet)[[1]])
 })
 
+
+test_that("dataType can be changed after dataset is added", {
+  myDC <- DataCombined$new()
+
+  simData <- DataSet$new(name = "Simulated")
+  simData$setValues(xValues = c(0, 2, 4), yValues = c(0, 4, 8))
+
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+
+  myDC$addDataSets(c(obsData, simData), groups = "myGroup")
+
+  expect_snapshot({
+    myDC$setDataTypes(
+      names = c("Observed", "Simulated"),
+      dataTypes = c("observed", "simulated")
+    )
+  })
+})
+
 # only `SimulationResults` ---------------------------------------
 
 test_that("data transformations work as expected when only `SimulationResults` is provided", {

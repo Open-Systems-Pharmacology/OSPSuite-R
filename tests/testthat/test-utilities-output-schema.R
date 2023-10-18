@@ -1,14 +1,14 @@
 sim <- loadTestSimulation("S1")
 outputSchema <- sim$outputSchema
 
-context("clearOutputIntervals")
+# clearOutputIntervals
 test_that("It can clear intervals defined in the schema of the simulation", {
   expect_gt(length(outputSchema$intervals), 0)
   clearOutputIntervals(sim)
   expect_equal(length(outputSchema$intervals), 0)
 })
 
-context("addOutputInterval")
+# addOutputInterval
 
 test_that("It can add intervals to the output", {
   clearOutputIntervals(sim)
@@ -37,7 +37,7 @@ test_that("It throws an exception when adding two intervals with the same name",
 })
 
 
-context("setOutputInterval")
+# setOutputInterval
 
 test_that("It can set directl output interval into a simulatin", {
   clearOutputIntervals(sim)

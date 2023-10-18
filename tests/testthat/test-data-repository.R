@@ -1,4 +1,4 @@
-context("DataRepository")
+# DataRepository
 
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 obsData <- .loadDataRepositoryFromPKML(obsDataFile)

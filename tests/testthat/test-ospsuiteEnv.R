@@ -1,4 +1,4 @@
-context("ospsuiteEnv")
+# ospsuiteEnv
 
 test_that("It returns a value of a setting", {
   expect_equal(getOSPSuiteSetting("suiteVersion"), ospsuiteEnv$suiteVersion)

@@ -1,4 +1,4 @@
-context("createImporterConfigurationForFile")
+# createImporterConfigurationForFile
 filePath <- getTestDataFilePath("CompiledDataSet.xlsx")
 
 test_that("It can create a DataImporterConfiguration from a XLS file", {
@@ -46,7 +46,7 @@ test_that("It throws an error when the file sheet has wrong format", {
   expect_error(createImporterConfigurationForFile(filePath, "MetaInfo"))
 })
 
-context("DataImporterConfiguration from file")
+# DataImporterConfiguration from file
 
 test_that("it can load a data importer configuration", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux

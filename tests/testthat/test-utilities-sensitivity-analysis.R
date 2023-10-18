@@ -4,13 +4,13 @@ sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(showProgress = F
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
 
 
-context("potentialVariableParameterPathsFor")
+# potentialVariableParameterPathsFor
 test_that("It returns an array of parameter path that can potentially be varied in the simulation", {
   parameterPath <- potentialVariableParameterPathsFor(sim)
   expect_gt(length(parameterPath), 0)
 })
 
-context("exportSensitivityAnalysisResultsToCSV")
+# exportSensitivityAnalysisResultsToCSV
 
 test_that("It can export valid simulation results to CSV", {
   executeWithTestFile(function(csvFile) {
@@ -19,7 +19,7 @@ test_that("It can export valid simulation results to CSV", {
   })
 })
 
-context("importSensitivityAnalysisResultsFromCSV")
+# importSensitivityAnalysisResultsFromCSV
 
 test_that("It can import valid simulation results from one CSV file", {
   resFile <- getTestDataFilePath("sa.csv")

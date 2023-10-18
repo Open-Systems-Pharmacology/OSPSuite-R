@@ -1,6 +1,6 @@
 # data to be used ---------------------------------------
 
-context("plotResidualsVsSimulated")
+# plotResidualsVsSimulated")
 
 
 skip_if(getRversion() < "4.1")

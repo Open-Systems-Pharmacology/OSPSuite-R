@@ -1,4 +1,4 @@
-context("SolverSettings")
+# SolverSettings
 
 sim <- loadTestSimulation("S1")
 solver <- sim$solver
@@ -40,7 +40,7 @@ test_that("It can set the  solver parameters from the simulation", {
   expect_equal(sim$solver$h0, 1e-6)
 })
 
-context("SolverSettings$print")
+# SolverSettings$print
 
 test_that("It can print solver settings", {
   expect_error(capture.output(solver$print()), NA)

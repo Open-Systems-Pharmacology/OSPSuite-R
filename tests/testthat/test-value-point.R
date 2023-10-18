@@ -1,4 +1,4 @@
-context("ValuePoint$print")
+# ValuePoint$print
 
 simple <- loadTestSimulation("simple")
 tableParameter <- getParameter("Organism|TableParameter", simple)

@@ -1,4 +1,4 @@
-context("TableFormula")
+# TableFormula
 
 simple <- loadTestSimulation("simple")
 tableParameter <- getParameter("Organism|TableParameter", simple)

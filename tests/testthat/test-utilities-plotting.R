@@ -1,4 +1,4 @@
-context(".createAxesLabels")
+# .createAxesLabels
 
 df <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
@@ -54,7 +54,7 @@ test_that("It works correctly when multiple dimensions are present and max frequ
   expect_equal(labs$yLabel, "Concentration [mg/l]")
 })
 
-context(".convertGeneralToSpecificPlotConfiguration")
+# .convertGeneralToSpecificPlotConfiguration")
 
 test_that("It returns correct subclass instance of `PlotConfiguration`", {
   expect_s3_class(
@@ -75,7 +75,7 @@ test_that("It returns correct subclass instance of `PlotConfiguration`", {
 })
 
 
-context(".addMissingGroupings")
+# .addMissingGroupings")
 
 test_that("It adds dataset names as groups when grouping is missing", {
   df <- dplyr::tibble(

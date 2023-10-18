@@ -45,6 +45,7 @@ LazyData: true
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
 Collate: 
     'aging-data.R'
     'api-config.R'

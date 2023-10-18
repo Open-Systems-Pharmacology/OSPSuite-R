@@ -1,4 +1,4 @@
-context("Quantity")
+# Quantity
 
 sim <- loadTestSimulation("S1")
 

@@ -1,4 +1,4 @@
-context("addUserDefinedPKParameter")
+# addUserDefinedPKParameter
 
 test_that("It can add a user defined pk-parameter by name and type", {
   userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max)
@@ -38,7 +38,7 @@ test_that("It calculates the pk parameters in the expected units", {
 })
 
 
-context("updatePKParameter")
+# updatePKParameter")
 test_that("It can update a pk parameter by name", {
   userDefinedPKParameter <- addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max, displayName = "MyTmaxDisplay", displayUnit = "min")
   updatePKParameter("MyTmax", displayName = "TOTO", displayUnit = "h")
@@ -48,7 +48,7 @@ test_that("It can update a pk parameter by name", {
 })
 
 
-context("removeAllUserDefinedPKParameters")
+# removeAllUserDefinedPKParameters")
 
 test_that("It can remove all user defined pk parameters", {
   addUserDefinedPKParameter("MyTmax", StandardPKParameter$t_max, displayName = "MyTmaxDisplay", displayUnit = "min")
@@ -59,7 +59,7 @@ test_that("It can remove all user defined pk parameters", {
   expect_null(pkParam)
 })
 
-context("pkParameterByName")
+# pkParameterByName")
 
 test_that("It should return null When returning a pk parameter by name that does not exist and no exception should be thrown", {
   pkParam <- pkParameterByName("MyTmax", stopIfNotFound = FALSE)
