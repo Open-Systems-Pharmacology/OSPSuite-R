@@ -106,6 +106,8 @@
 <code>addSimulationResults</code> and <code>addDataSets</code> methods of the <code>DataCombined</code> class now support an optional <code>silent</code> argument which silences the checks for data set names. If you expect to replace data sets in <code>DataCombined</code> objects repeatedly, consider switching the parameter from the default <code>FALSE</code> value to <code>TRUE</code>.</li>
 <li>
 <code><a href="../reference/simulationResultsToDataFrame.html">simulationResultsToDataFrame()</a></code> is faster than before (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1317" class="external-link">#1317</a>, <a href="https://github.com/Felixmil" class="external-link">@Felixmil</a>).</li>
+<li>
+<code>DataCombined</code> gets a new method <code>setDataTypes()</code> to change data types (observed or simulated) for existing data sets. This method is useful when you want to enforce a certain data type, e.g., for adding artificial data set as simulated results.</li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -244,6 +244,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-loadDataRepositoryFromPKML.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-makeDataFrameColumn.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-netEnumName.html</loc>
   </url>
   <url>

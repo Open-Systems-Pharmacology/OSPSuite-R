@@ -135,6 +135,7 @@ values were specified by the user for each dataset.</p></dd>
 <ul><li><p><a href="#method-DataCombined-addDataSets"><code>DataCombined$addDataSets()</code></a></p></li>
 <li><p><a href="#method-DataCombined-addSimulationResults"><code>DataCombined$addSimulationResults()</code></a></p></li>
 <li><p><a href="#method-DataCombined-setGroups"><code>DataCombined$setGroups()</code></a></p></li>
+<li><p><a href="#method-DataCombined-setDataTypes"><code>DataCombined$setDataTypes()</code></a></p></li>
 <li><p><a href="#method-DataCombined-removeGroupAssignment"><code>DataCombined$removeGroupAssignment()</code></a></p></li>
 <li><p><a href="#method-DataCombined-setDataTransformations"><code>DataCombined$setDataTransformations()</code></a></p></li>
 <li><p><a href="#method-DataCombined-toDataFrame"><code>DataCombined$toDataFrame()</code></a></p></li>
@@ -303,15 +304,41 @@ other groupings.</p></dd>
 <p><code>DataCombined</code> object with grouped datasets.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
-<h3 id="method-removegroupassignment-">Method <code>removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#method-removegroupassignment-"></a></h3>
-<p>Remove existing groupings for (observed and/or simulated) datasets.</p><div class="section">
+</div><p></p><hr><a id="method-DataCombined-setDataTypes"></a><div class="section">
+<h3 id="method-setdatatypes-">Method <code>setDataTypes()</code><a class="anchor" aria-label="anchor" href="#method-setdatatypes-"></a></h3>
+<p>set the type of data (observed or simulated) for datasets.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">removeGroupAssignment</span><span class="op">(</span><span class="va">names</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setDataTypes</span><span class="op">(</span><span class="va">names</span>, <span class="va">dataTypes</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>names</code></dt>
+<dd><p>a character vector of dataset names which dataTypes need to
+be changed.</p></dd>
+
+
+<dt><code>dataTypes</code></dt>
+<dd><p>a character vector of dataTypes (<code>"observed"</code> or
+<code>"simulated"</code>) to be assigned to the datasets (in order of <code>names</code>.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<p><code>DataCombined</code> object with modified dataTypes datasets.</p>
+</div>
+
+</div><p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
+<h3 id="method-removegroupassignment-">Method <code>removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#method-removegroupassignment-"></a></h3>
+<p>Remove existing groupings for (observed and/or simulated) datasets.</p><div class="section">
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">removeGroupAssignment</span><span class="op">(</span><span class="va">names</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>names</code></dt>
 <dd><p>A list of dataset names whose group assignment needs to be
 removed. Note that if you have specified new <code>names</code> while adding
@@ -323,14 +350,14 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
 <p><code>DataCombined</code> object with updated group assignments.</p>
 </div>
 
 </div><p></p><hr><a id="method-DataCombined-setDataTransformations"></a><div class="section">
 <h3 id="method-setdatatransformations-">Method <code>setDataTransformations()</code><a class="anchor" aria-label="anchor" href="#method-setdatatransformations-"></a></h3>
 <p>Transform raw data with required offsets and scale factors.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setDataTransformations</span><span class="op">(</span></span>
 <span>  forNames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xOffsets <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -342,7 +369,7 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>forNames</code></dt>
 <dd><p>A list of names specifying which observed datasets and/or
 paths in simulated dataset to transform with the specified
@@ -384,12 +411,12 @@ offset and scale factor values.</p><ul><li><p>For X and Y variables:
 <p>Note that the order in which you enter different object doesn't matter
 because the returned data frame is arranged alphabetically by dataset
 name.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>In the returned tibble data frame, the following columns will always be present:</p>
 <p>name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
@@ -398,7 +425,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div><p></p><hr><a id="method-DataCombined-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -406,12 +433,12 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div><p></p><hr><a id="method-DataCombined-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
