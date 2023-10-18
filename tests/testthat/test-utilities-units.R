@@ -1,4 +1,4 @@
-context("toUnit")
+# toUni
 
 sim <- loadTestSimulation("S1")
 volumePath <- toPathString(c("Organism", "Liver", "Volume"))
@@ -68,7 +68,7 @@ test_that("It can convert from Concentration (molar) to Concentration (mass)", {
   ), 1.8e-8)
 })
 
-context("toBaseUnit")
+# toBaseUnit
 test_that("It can convert from one given value in a unit to a base unit", {
   expect_equal(toBaseUnit(par, 1000, "ml"), 1)
   expect_equal(toBaseUnit(par, 100, "l"), 100)
@@ -131,18 +131,18 @@ test_that("µtants are converted to the right unicode", {
   expect_identical(object = .encodeUnit(unit3), expected)
 })
 
-context("toDisplayUnit")
+# toDisplayUnit
 
 test_that("It can convert from a value in base unit to display unit", {
   expect_equal(toDisplayUnit(par, 1), 1)
 })
 
-context("allAvailableDimensions")
+# allAvailableDimensions
 test_that("It should be able to return the name of all dimensions defined in the system", {
   expect_gt(length(allAvailableDimensions()), 0)
 })
 
-context("getDimensionForUnit")
+# getDimensionForUnit
 
 test_that("It can return the expected dimension for a given unit", {
   expect_equal(getDimensionForUnit("mg"), "Mass")
@@ -152,7 +152,7 @@ test_that("It returns null if the dimension is not found for the unit", {
   expect_null(getDimensionForUnit("toto"))
 })
 
-context("getUnitsForDimension")
+# getUnitsForDimension
 
 test_that("It can return the expected dimension for a given unit", {
   expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", .encodeUnit("µg"), "ng", "pg"))
@@ -171,33 +171,33 @@ test_that("It throws an error if the dimension is not found", {
   expect_error(getUnitsForDimension("toto"))
 })
 
-context("hasDimension")
+# hasDimension
 test_that("It returns true for an existing dimension, false otherwise", {
   expect_true(hasDimension("Amount"))
   expect_false(hasDimension("AAmount"))
 })
 
-context("validateDimension")
+# validateDimension
 test_that("It returns NULL when the dimension exists,
           or throws an error otherwise", {
   expect_null(validateDimension("Amount"))
   expect_error(validateDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
 })
 
-context("hasUnit")
+# hasUnit
 test_that("It returns true for an existing unit in the dimension, false otherwise", {
   expect_true(hasUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
   expect_false(hasUnit(unit = "g", "Amount"))
 })
 
-context("validateUnit")
+# validateUnit
 test_that("It returns NULL when the unit exists in the dimension,
           or throws an error otherwise", {
   expect_null(validateUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
   expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
 })
 
-context("getBaseUnit")
+# getBaseUnit
 test_that("It returns the correct base unit when supplied with dimension", {
   expect_equal(getBaseUnit(quantityOrDimension = "Amount"), .encodeUnit("µmol"))
 })
@@ -208,7 +208,7 @@ test_that("It returns the correct base unit when supplied with quantity", {
 
 # .unitConverter -------------------------------------------
 
-context(".unitConverter")
+# .unitConverter
 
 # small data frame to illustrate the conversion
 df <- dplyr::tibble(

@@ -1,7 +1,7 @@
 skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
 skip_on_ci()
 
-context("createPopulation")
+# createPopulation
 
 test_that("It can create a standard dog population", {
   dog <- createPopulationCharacteristics(
@@ -79,7 +79,7 @@ test_that("It can create a standard human population  with predefined ontogenies
 })
 
 
-context("loadPopulation")
+# loadPopulation
 
 test_that("It can load a valid csv population file", {
   populationFileName <- getTestDataFilePath("pop.csv")
@@ -93,7 +93,7 @@ test_that("It throws an exception when loading an invalid population file", {
 })
 
 
-context("splitPopulationFile")
+# splitPopulationFile
 test_that("It can split a valid csv file to split files", {
   populationFileName <- getTestDataFilePath("pop.csv")
   splitFiles <- splitPopulationFile(populationFileName, 3, tempdir(), "SplitFile")
@@ -101,7 +101,7 @@ test_that("It can split a valid csv file to split files", {
 })
 
 
-context("populationToDataFrame")
+# populationToDataFrame
 test_that("It can convert a population to data frame", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
@@ -111,7 +111,7 @@ test_that("It can convert a population to data frame", {
 })
 
 
-context("populationToTibble")
+# populationToTibble
 test_that("It can convert a population to tibble data frame", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)

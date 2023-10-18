@@ -56,6 +56,9 @@ not present in the `DataCombined`.
     repeatedly, consider switching the parameter from the default `FALSE` value
     to `TRUE`.
   - `simulationResultsToDataFrame()` is faster than before (\#1317, @Felixmil).
+  - `DataCombined` gets a new method `setDataTypes()` to change data types (observed
+  or simulated) for existing data sets. This method is useful when you want to
+  enforce a certain data type, e.g., for adding artificial data set as simulated results.
 
 # ospsuite 11.1.197
 

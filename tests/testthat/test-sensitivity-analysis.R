@@ -1,6 +1,6 @@
 simple <- loadTestSimulation("simple")
 
-context("SensitivityAnalysis")
+# SensitivityAnalysis
 
 test_that("It can create a sensitivity analysis for a given simulation without any other parameter in the constructor", {
   sa <- SensitivityAnalysis$new(simple)

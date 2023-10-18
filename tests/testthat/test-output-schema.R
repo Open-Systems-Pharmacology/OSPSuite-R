@@ -1,7 +1,7 @@
 sim <- loadTestSimulation("S1")
 outputSchema <- sim$outputSchema
 
-context("OutputSchema")
+# OutputSchema
 
 test_that("it can retrieve the list of all intervals", {
   expect_gt(length(outputSchema$intervals), 0)

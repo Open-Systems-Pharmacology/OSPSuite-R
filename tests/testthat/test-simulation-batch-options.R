@@ -1,4 +1,4 @@
-context("SimulationBatchOptions")
+# SimulationBatchOptions
 
 test_that("It has the expected default value", {
   batchOptions <- SimulationBatchOptions$new()

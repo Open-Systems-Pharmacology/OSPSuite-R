@@ -1,4 +1,4 @@
-context("MoleculeOntogeny")
+# MoleculeOntogeny
 
 test_that("It can create a molecule ontogeny for a predefined ontogeny", {
   moleculeOntogeny <- MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = StandardOntogeny$CYP2C18)

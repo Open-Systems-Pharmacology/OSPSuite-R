@@ -1,4 +1,4 @@
-context(".homogenizePath")
+# .homogenizePath
 
 test_that("Homogenizing an R path returns an R Path", {
   expect_equal(.homogenizePath("C:/temp/test.xml"), "C:/temp/test.xml")

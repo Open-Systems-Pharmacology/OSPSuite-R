@@ -1,4 +1,4 @@
-context("Container")
+# Container
 
 sim <- loadTestSimulation("S1")
 liverPath <- toPathString(c("Organism", "Liver"))

@@ -1,4 +1,4 @@
-context("QuantityPKParameter")
+# QuantityPKParameter
 
 sim <- loadTestSimulation("S1")
 clearOutputs(sim)

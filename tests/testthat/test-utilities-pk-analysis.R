@@ -1,4 +1,4 @@
-context("calculatePKAnalyses")
+# calculatePKAnalyses
 
 sim <- loadTestSimulation("S1")
 clearOutputs(sim)
@@ -44,7 +44,7 @@ test_that("It should an empty list of parameters for an output that is not part 
   expect_equal(length(pkAnalysesForOutput), 0)
 })
 
-context("exportPKAnalysesToCSV")
+# exportPKAnalysesToCSV
 
 test_that("It can export valid pk-analyses results to CSV", {
   executeWithTestFile(function(csvFile) {
@@ -53,7 +53,7 @@ test_that("It can export valid pk-analyses results to CSV", {
   })
 })
 
-context("pkAnalysesToDataFrame")
+# pkAnalysesToDataFrame
 
 test_that("It can convert valid pk-analysis results to data frame", {
   df <- pkAnalysesToDataFrame(pkAnalyses = pkAnalyses)

@@ -86,6 +86,7 @@ values were specified by the user for each dataset.}
 \item \href{#method-DataCombined-addDataSets}{\code{DataCombined$addDataSets()}}
 \item \href{#method-DataCombined-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
 \item \href{#method-DataCombined-setGroups}{\code{DataCombined$setGroups()}}
+\item \href{#method-DataCombined-setDataTypes}{\code{DataCombined$setDataTypes()}}
 \item \href{#method-DataCombined-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
 \item \href{#method-DataCombined-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
 \item \href{#method-DataCombined-toDataFrame}{\code{DataCombined$toDataFrame()}}
@@ -234,6 +235,30 @@ other groupings.}
 }
 \subsection{Returns}{
 \code{DataCombined} object with grouped datasets.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataCombined-setDataTypes"></a>}}
+\if{latex}{\out{\hypertarget{method-DataCombined-setDataTypes}{}}}
+\subsection{Method \code{setDataTypes()}}{
+set the type of data (observed or simulated) for datasets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTypes(names, dataTypes)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{a character vector of dataset names which dataTypes need to
+be changed.}
+
+\item{\code{dataTypes}}{a character vector of dataTypes (\code{"observed"} or
+\code{"simulated"}) to be assigned to the datasets (in order of \code{names}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{DataCombined} object with modified dataTypes datasets.
 }
 }
 \if{html}{\out{<hr>}}

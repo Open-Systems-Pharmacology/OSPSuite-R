@@ -1,6 +1,6 @@
 sim <- loadTestSimulation("S1")
 
-context("getAllMoleculesMatching")
+# getAllMoleculesMatching
 
 test_that("It can retrieve molecule with absolute path", {
   molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
@@ -17,7 +17,7 @@ test_that("It returns an empty array if the molecule with the given path is not 
   expect_length(molecules, 0)
 })
 
-context("getMolecule")
+# getMolecule
 
 test_that("It can retrieve a single molecule with absolute path", {
   molecule <- getMolecule("Organism|VenousBlood|Plasma|Caffeine", sim)
@@ -25,7 +25,7 @@ test_that("It can retrieve a single molecule with absolute path", {
 })
 
 
-context("getAllMoleculePathsIn")
+# getAllMoleculePathsIn
 
 test_that("It can retrieve all molecule paths defined in the simulation", {
   paths <- getAllMoleculePathsIn(sim)
@@ -37,7 +37,7 @@ test_that("It can retrieve all molecule paths defined in a container", {
   expect_gt(length(paths), 0)
 })
 
-context("setMoleculeInitialValues")
+# setMoleculeInitialValues
 
 test_that("It throws an error when no valid molecule objects are provided", {
   expect_error(setMoleculeInitialValues("quantity", 1))
@@ -70,7 +70,7 @@ test_that("It can set the values of multiple molecules", {
   expect_equal(newVals, c(1:2))
 })
 
-context("setMoleculeScaleDivisors")
+# setMoleculeScaleDivisors
 
 test_that("It throws an error when no valid molecule objects are provided", {
   expect_error(setMoleculeScaleDivisors("quantity", 1))

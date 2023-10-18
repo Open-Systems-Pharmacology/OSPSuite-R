@@ -1,4 +1,4 @@
-context("Interval")
+# Interval
 
 sim <- loadTestSimulation("S1")
 interval <- sim$outputSchema$intervals[[1]]

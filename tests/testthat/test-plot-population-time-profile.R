@@ -1,6 +1,6 @@
 # data to be used ---------------------------------------
 
-context("plotPopulationTimeProfile")
+# plotPopulationTimeProfile
 
 skip_on_os("linux") # TODO enable again as soon as `createPopulation()` runs under Linux
 

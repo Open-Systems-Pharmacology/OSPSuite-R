@@ -81,3 +81,7 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
 messages$wrongUnitForQuantity <- function(quantityPath, unit, dimension) {
   paste0("Unit '", unit, "' is not valid for quantity with path '", quantityPath, "' and dimension '", dimension, "'")
 }
+
+messages$invalidDataType <- function(name, dataType) {
+  paste0("Data type '", dataType, "' specified for data set '", name, "' is not valid. Valid data types are: 'simulated' or 'observed'.")
+}

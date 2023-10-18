@@ -1,4 +1,4 @@
-context("SimulationResults")
+# SimulationResults
 
 sim <- loadTestSimulation("S1")
 simResults <- runSimulation(sim)

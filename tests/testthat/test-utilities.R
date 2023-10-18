@@ -1,4 +1,4 @@
-context(".netEnumName")
+# .netEnumName
 enumType <- "OSPSuite.Core.Domain.Data.AuxiliaryType"
 
 test_that("It returns the correct name of an enum entry", {

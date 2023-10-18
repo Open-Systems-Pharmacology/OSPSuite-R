@@ -1,4 +1,4 @@
-context("QuantitySelection$print")
+# QuantitySelection$print
 
 sim <- loadTestSimulation("S1")
 
