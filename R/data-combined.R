@@ -254,6 +254,29 @@ DataCombined <- R6::R6Class(
       # for method chaining
       invisible(self)
     },
+    setDataTypes = function(names, dataTypes) {
+      # Sanitize vector arguments of `character` type
+      names <- .cleanVectorArgs(names, type = "character")
+      dataTypes <- .cleanVectorArgs(dataTypes, type = "character")
+
+      # Cycle through each name and set the data type
+      for (idx in seq_along(names)) {
+        name <- names[[idx]]
+        dataType <- dataTypes[[idx]]
+        if (!dataType %in% c("observed", "simulated")) {
+          stop(messages$invalidDataType(name, dataType))
+        }
+
+        # Do nothing if the type does not change
+        if (dataType == private$.dataType[[name]]) {
+          next
+        }
+
+        # If the type changes, then the data frame needs to be updated
+        private$.dataType[[name]] <- dataType
+        private$.dataCombined$dataType[private$.dataCombined$name == name] <- dataType
+      }
+    },
 
     #' @param names A list of dataset names whose group assignment needs to be
     #'   removed. Note that if you have specified new `names` while adding
