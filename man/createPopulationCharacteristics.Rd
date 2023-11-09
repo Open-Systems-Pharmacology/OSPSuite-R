@@ -59,7 +59,7 @@ createPopulationCharacteristics(
 
 \item{BMIMax}{max BMI for the population (optional, for human species only)}
 
-\item{BMIUnit}{Unit in which the BMI value is defined. Default is kg/m²}
+\item{BMIUnit}{Unit in which the BMI value is defined. Default is kg/m2}
 
 \item{gestationalAgeMin}{min gestational age for the population (optional, for human species only)}
 
