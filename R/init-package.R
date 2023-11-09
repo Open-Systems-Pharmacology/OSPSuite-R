@@ -19,6 +19,4 @@
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
   rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
-
-  .initializeDimensionAndUnitLists()
 }

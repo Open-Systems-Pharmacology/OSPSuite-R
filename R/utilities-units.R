@@ -378,20 +378,13 @@ getDimensionByName <- function(name) {
 #' ospDimensions$Mass => "Mass"
 #'
 #' @export
-ospDimensions <- list()
+"ospDimensions"
 
 #' Supported units defined as a named list of lists
 #'
 #' ospUnits$Mass$kg => "kg"
 #' @export
-ospUnits <- list()
-
-.initializeDimensionAndUnitLists <- function() {
-  # This initializes the two lists in the parent environment which is the package environments
-  ospDimensions <<- .getDimensionsEnum()
-  ospUnits <<- .getUnitsEnum()
-}
-
+"ospUnits"
 
 #' Convert a data frame to common units
 #'
