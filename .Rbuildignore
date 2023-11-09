@@ -32,3 +32,4 @@ tests\^spelling
 ^old/.
 ^install_dependencies\.R$
 ^man-roxygen/.
+^BinaryFiles$
