@@ -650,12 +650,21 @@ test_that("it retains multiple concentration dimensions", {
 
 test_that("stored version of ospUnits is up to date", {
 
+  print(ospUnits)
+
+  print(.getUnitsEnum())
+
   expect_identical(ospUnits, .getUnitsEnum(),
                    info = "This error means ospUnits is not up to date. Run `data-raw/sysdata.R` script to update it.")
 
 })
 
 test_that("stored version of ospDimensions is up to date", {
+
+  print(ospDimensions)
+
+  print(.getDimensionsEnum())
+
   expect_identical(ospDimensions, .getDimensionsEnum(),
                    info = "This error means ospUnits is not up to date. ospDimensions is not up to date. Run `data-raw/sysdata.R` to update it.")
 })
