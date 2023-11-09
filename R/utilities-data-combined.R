@@ -211,7 +211,7 @@ calculateResiduals <- function(dataCombined,
   # Add predicted values
   # the approx function with a default rule = 1 argument returns NA for extrapolated points
   pairedData <- dplyr::mutate(pairedData,
-    "yValuesSimulated" = approx(
+    "yValuesSimulated" = stats::approx(
       simulatedData$xValues, simulatedData$yValues,
       observedData$xValues
     )$y

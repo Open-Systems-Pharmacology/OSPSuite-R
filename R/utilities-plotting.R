@@ -178,7 +178,7 @@
   # is because it is mapped to linetype property in population profile type.
   simAggregatedData <-
     simAggregatedData[,
-      setNames(
+      stats::setNames(
         as.list(aggregation_function(yValues, ...)),
         valueNames
       ),
@@ -770,7 +770,7 @@ DataAggregationMethods <-
 #' @keywords internal
 .normRange <- function(x, nsd = 1, na.rm = FALSE, ...) {
   mean <- mean(x, na.rm = na.rm, ...)
-  sd <- sd(x, na.rm = na.rm)
+  sd <- stats::sd(x, na.rm = na.rm)
   return(c(mean - (abs(nsd) * sd), mean, mean + (abs(nsd) * sd)))
 }
 
@@ -802,5 +802,5 @@ DataAggregationMethods <-
 }
 
 .geoSD <- function(x, na.rm = FALSE, ...) {
-  exp(sd(log(x), na.rm = na.rm, ...))
+  exp(stats::sd(log(x), na.rm = na.rm, ...))
 }
