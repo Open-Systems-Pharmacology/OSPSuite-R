@@ -372,6 +372,21 @@ getDimensionByName <- function(name) {
   enum(allAvailableDimensions())
 }
 
+
+#' @title Supported dimensions defined as a named list
+#'
+#' @details
+#' ospDimensions$Mass => "Mass"
+#'
+#' @export
+ospDimensions <- NULL
+
+#' Supported units defined as a named list of lists
+#'
+#' ospUnits$Mass$kg => "kg"
+#' @export
+ospUnits <- NULL
+
 #' parse OSPSuite.Dimensions.xml containing dimensions and units
 #'
 #' @return An XML document
@@ -449,19 +464,13 @@ getDimensionByName <- function(name) {
   return(ospUnits)
 }
 
-#' @title Supported dimensions defined as a named list
-#'
-#' @details
-#' ospDimensions$Mass => "Mass"
-#'
-#' @export
-ospDimensions <- NULL
+.initializeDimensionAndUnitLists <- function() {
+  # This initializes the two lists in the parent environment which is the package environments
+  xmlData <- .parseDimensionsXML()
 
-#' Supported units defined as a named list of lists
-#'
-#' ospUnits$Mass$kg => "kg"
-#' @export
-ospUnits <- NULL
+  utils::assignInMyNamespace("ospDimensions", .getOspDimensions(xmlData))
+  utils::assignInMyNamespace("ospUnits", .getOspUnits(xmlData))
+}
 
 #' Convert a data frame to common units
 #'
