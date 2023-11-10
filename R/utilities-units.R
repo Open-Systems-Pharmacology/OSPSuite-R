@@ -372,19 +372,96 @@ getDimensionByName <- function(name) {
   enum(allAvailableDimensions())
 }
 
+#' parse OSPSuite.Dimensions.xml containing dimensions and units
+#'
+#' @return An XML document
+#' @import xml2
+#'
+#' @examples
+.parseDimensionsXML <- function() {
+  # Read the XML file
+  xmlFile <- system.file("lib/OSPSuite.Dimensions.xml", package = "ospsuite")
+  xmlData <- xml2::read_xml(xmlFile)
+
+  return(xmlData)
+}
+
+#' get OSP Dimensions from OSPSuite.Dimensions.xml data
+#'
+#' @param xmlData XML data from `.parseDimensionsXML()`
+#'
+#' @return a list of supported dimensions
+.getOspDimensions <- function(xmlData) {
+  ospDimensions <- list()
+
+  dimensionsNodes <- xmlData %>%
+    xml2::xml_find_all(".//Dimension")
+
+  for (dimNode in dimensionsNodes) {
+    name <- xml2::xml_attr(dimNode, "name")
+    ospDimensions[[name]] <- name
+  }
+
+  ospDimensions[["Dimensionless"]] <- "Dimensionless"
+
+  ospDimensions <- ospDimensions[order(names(ospDimensions))]
+
+  return(ospDimensions)
+}
+
+#' get OSP Units from OSPSuite.Dimensions.xml data
+#'
+#' @param xmlData XML data from `.parseDimensionsXML()`
+#'
+#' @return a list of supported units
+.getOspUnits <- function(xmlData) {
+  # Extract information from the XML
+  dimensionsNodes <- xmlData %>%
+    xml2::xml_find_all(".//Dimension")
+
+  ospUnits <- list()
+
+  for (dim in dimensionsNodes) {
+    dim_name <- dim %>%
+      xml2::xml_attr("name") %>%
+      gsub(pattern = "[(]", replacement = "[") %>%
+      gsub(pattern = "[)]", replacement = "]")
+    dim_units <- dim %>%
+      xml2::xml_find_all(".//Unit")
+
+    unit_list <- list()
+
+    for (unit in dim_units) {
+      unit_name <- unit %>% xml2::xml_attr("name")
+      # if unit_name equals "" replace by Unitless
+      if (unit_name == "") {
+        unit_name <- "Unitless"
+      }
+      unit_list[[unit_name]] <- unit_name
+    }
+    ospUnits[[dim_name]] <- unit_list
+  }
+
+  ospUnits[["Dimensionless"]] <- list("Unitless" = "Unitless")
+
+  ospUnits <- ospUnits[order(names(ospUnits))]
+
+  return(ospUnits)
+}
+
 #' @title Supported dimensions defined as a named list
 #'
 #' @details
 #' ospDimensions$Mass => "Mass"
 #'
 #' @export
-"ospDimensions"
+ospDimensions <- NULL
 
 #' Supported units defined as a named list of lists
 #'
 #' ospUnits$Mass$kg => "kg"
 #' @export
-"ospUnits"
+ospUnits <- NULL
 
 #' Convert a data frame to common units
 #'
