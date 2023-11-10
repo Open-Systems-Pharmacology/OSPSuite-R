@@ -18,8 +18,8 @@
   # Initialize OSPSuite dimensions and units
   xmlData <- .parseDimensionsXML()
 
-  assignInMyNamespace("ospDimensions", .getOspDimensions(xmlData))
-  assignInMyNamespace("ospUnits", .getOspUnits(xmlData))
+  utils::assignInMyNamespace("ospDimensions", .getOspDimensions(xmlData))
+  utils::assignInMyNamespace("ospUnits", .getOspUnits(xmlData))
 
 }
 # nocov end
