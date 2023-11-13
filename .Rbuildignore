@@ -30,3 +30,6 @@ tests\^spelling
 ^\.lintr$
 ^WIP/.
 ^old/.
+^install_dependencies\.R$
+^man-roxygen/.
+^BinaryFiles$

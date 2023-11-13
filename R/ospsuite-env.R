@@ -1,7 +1,7 @@
 #' @keywords internal
 .getSuiteVersion <- function() {
   version <- getNamespaceVersion("ospsuite")
-  first <- head(unlist(gregexpr(pattern = "\\.", version)), 1)
+  first <- utils::head(unlist(gregexpr(pattern = "\\.", version)), 1)
   return(unname(substr(version, 1, first - 1)))
 }
 
@@ -27,7 +27,7 @@ ospsuiteEnv$numberOfCores <- function() {
 ospsuiteEnv$showProgress <- FALSE
 
 # Specifies the symbol used for µ. This will be set by the .NET layer
-ospsuiteEnv$muSymbol <- "µ"
+ospsuiteEnv$muSymbol <- "\U00B5"
 
 # Cache of the so far loaded simulations. The keys are the paths to the pkml file.
 ospsuiteEnv$loadedSimulationsCache <- Cache$new("Simulation")
