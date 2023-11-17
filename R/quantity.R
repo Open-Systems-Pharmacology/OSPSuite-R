@@ -111,14 +111,18 @@ Quantity <- R6::R6Class(
       self$printQuantityValue(self$name)
     },
     #' @description
-    #' Print the the value and unit of the quantity
+    #' Print the value (in scientific notation with 2 digits when needed) and unit of the quantity
     #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
-      if (self$unit == "") {
-        private$printLine(caption, formatNumerics(self$value))
-      } else {
-        private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
+      if (self$value >= 10000 | self$value < 0.01) {
+        QuantityValue <- formatNumerics(self$value, scientific = TRUE)
+      }else{
+        QuantityValue <- formatNumerics(self$value)
       }
+      if (self$unit != "") {
+        QuantityValue = paste0(QuantityValue, " [", self$unit, "]")
+      }
+      private$printLine(caption, QuantityValue)
     },
     #' @description
     #' Convert value from unit to the base unit and sets the value in base unit.
