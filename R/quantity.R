@@ -111,7 +111,7 @@ Quantity <- R6::R6Class(
       self$printQuantityValue(self$name)
     },
     #' @description
-    #' Print the the value and unit of the quantity
+    #' Print the the value (in scientific notation with 2 digits when needed) and unit of the quantity
     #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
       if (self$value >= 10000 | self$value < 0.01) {
