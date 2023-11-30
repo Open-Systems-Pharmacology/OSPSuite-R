@@ -78,6 +78,12 @@ Must be downloaded manually:
 
 ## Under Windows
 
+
+The package requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
+
+
+### From package archive files
+
 The release version of the package comes as a binary `*.zip` and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 
 If you use [RStudio IDE](https://www.rstudio.com/), you can use the *Install* option in the *Packages* pane and select the option *Install from -> Package Archive File* to install a package from binary `*.zip` files.
@@ -105,7 +111,21 @@ install.packages(pathTo_tlf.zip, repos = NULL)
 install.packages(pathToOSPSuite.zip, repos = NULL)
 ```
 
-The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
+### From GitHub
+
+The latest released version of the package can also be installed directly from GitHub:
+
+```r
+install.packages("remotes")
+install.packages("https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip",
+                 repos = NULL,
+                 type = "binary"
+)
+
+remotes::install_github("Open-Systems-Pharmacology/OSPSuite.RUtils@*release")
+remotes::install_github("Open-Systems-Pharmacology/TLF-Library@*release")
+remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
+```
 
 ## Under Linux
 
