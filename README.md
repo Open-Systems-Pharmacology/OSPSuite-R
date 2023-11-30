@@ -46,25 +46,6 @@ In particular, we would recommend that you read the articles in the following or
 
 The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.x of R. One of its dependency, **rClr** needs to be installed specifically for the targeted R version. Please follow the installation instructions below.
 
-**ospsuite** requires following packages to be installed:
-
-From CRAN:
-
-- [dplyr](https://cran.r-project.org/web/packages/dplyr/index.html)
-- [purrr](https://cran.r-project.org/web/packages/purrr/index.html)
-- [R6](https://cran.r-project.org/web/packages/R6/index.html)
-- [readr](https://cran.r-project.org/web/packages/readr/index.html)
-- [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
-- [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)
-- [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html)
-- [rlang](https://cran.r-project.org/web/packages/rlang/index.html)
-- [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html)
-- [patchwork](https://cran.r-project.org/web/packages/patchwork/index.html)
-- [cowplot](https://cran.r-project.org/web/packages/cowplot/index.html)
-- [scales](https://cran.r-project.org/web/packages/scales/index.html)
-- [data.table](https://cran.r-project.org/web/packages/data.table/index.html)
-
-
 Must be downloaded manually:
 
 - rClr
