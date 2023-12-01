@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # OSPSuite-R
 
 <!-- badges: start -->
@@ -29,7 +23,7 @@ Pharmacology Software tools PK-Sim and MoBi.
 -   [Contribution](#contribution)
 -   [Licence](#licence)
 
-# Documentation {#documentation}
+# Documentation
 
 If you are reading this on GitHub README, please refer to the [online
 documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/)
@@ -67,10 +61,10 @@ following order:
 -   [Visualizations with
     `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
 
-# Installation {#installation}
+# Installation
 
 The **ospsuite** package is compatible with R version 3.6.x **AND**
-4.x.x and can be used on [Windows](#on-windows) and [Linux](on-linux)
+4.x.x and can be used on [Windows](#on-windows) and [Linux](#on-linux)
 operating systems.
 
 `ospsuite` depends on three packages that are not available on CRAN and
@@ -88,7 +82,7 @@ need to be installed separately:
 
 -   [`tlf`](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
 
-## On Windows {#on-windows}
+## On Windows
 
 ### Pre-requisites
 
@@ -181,7 +175,7 @@ You can clone the GIT repository and build the package from source.
     will update all nuget packages and copy the dependencies in the
     package `inst/lib` folder.
 
-# Usage {#usage}
+# Usage
 
 In general, every workflow starts with loading a simulation that has
 been exported to the `*.pkml` format. The method `loadSimulation()`
@@ -231,7 +225,7 @@ To open a specific vignette, call-
 vignette("introduction-ospsuite")
 ```
 
-# Known issues {#known-issues}
+# Known issues
 
 -   Loading `ospsuite` might fail if your systems locale is not set to
     *English*, e.g.:
@@ -268,14 +262,14 @@ export LC_ALL=en_US.UTF-8
     workspace at startup" in the options of RStudio. Keep in mind that
     you can also change this setting for specific projects.
 
-# Code of Conduct {#code-of-conduct}
+# Code of Conduct
 
 Everyone interacting in the Open Systems Pharmacology community
 (codebases, issue trackers, chat rooms, mailing lists etc.) is expected
 to follow the Open Systems Pharmacology [code of
 conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
 
-# Contribution {#contribution}
+# Contribution
 
 We encourage contribution to the Open Systems Pharmacology community.
 Before getting started please read the [contribution
