@@ -33,3 +33,4 @@ tests\^spelling
 ^install_dependencies\.R$
 ^man-roxygen/.
 ^BinaryFiles$
+^README\.Rmd$
