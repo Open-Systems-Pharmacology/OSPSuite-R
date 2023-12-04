@@ -143,7 +143,7 @@ manually first.
 
 library(pacman)
 
-non_cran_deps <- c("rClr", "ospsuite.utils", "tlf")
+non_cran_deps <- c("rClr", "ospsuite.utils", "tlf", "ospsuite")
 deps <- c()
 
 for (non_cran_dep in non_cran_deps) {

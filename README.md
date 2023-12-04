@@ -123,13 +123,19 @@ installed manually first.
 
 ``` r
 # Install dependencies (e.g. R6) which are on CRAN
+install.packages("data.table")
+install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("ggtext")
 install.packages("jsonlite")
 install.packages("patchwork")
 install.packages("purrr")
 install.packages("R6")
+install.packages("readr")
+install.packages("rlang")
 install.packages("stringr")
+install.packages("tidyr")
+install.packages("xml2")
 ```
 
 #### Install non-CRAN dependencies
