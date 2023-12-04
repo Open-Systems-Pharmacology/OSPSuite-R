@@ -20,7 +20,6 @@ Pharmacology Software tools PK-Sim and MoBi.
 
 - [Documentation](#documentation)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Known issues](#known-issues)
 - [Code of conduct](#code-of-conduct)
 - [Contribution](#contribution)
@@ -117,7 +116,7 @@ remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
 It is also possible to install manually from archive pre-built archive
 files.
 
-### Install CRAN dependencies
+#### Install CRAN dependencies
 
 When installing from such files, the CRAN dependencies need to be
 installed manually first.
@@ -133,7 +132,7 @@ install.packages("R6")
 install.packages("stringr")
 ```
 
-### Install non-CRAN dependencies
+#### Install non-CRAN dependencies
 
 Each of the pre-built released packages are available as a a binary
 `*.zip`. OSPSuite-R binary archive can be downloaded from

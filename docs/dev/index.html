@@ -103,7 +103,6 @@
 <ul>
 <li><a href="#documentation">Documentation</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a></li>
 <li><a href="#known-issues">Known issues</a></li>
 <li><a href="#code-of-conduct">Code of conduct</a></li>
 <li><a href="#contribution">Contribution</a></li>
@@ -177,10 +176,9 @@
 <h3 id="from-package-archive-files">From package archive files<a class="anchor" aria-label="anchor" href="#from-package-archive-files"></a>
 </h3>
 <p>It is also possible to install manually from archive pre-built archive files.</p>
-</div>
-<div class="section level3">
-<h3 id="install-cran-dependencies">Install CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-cran-dependencies"></a>
-</h3>
+<div class="section level4">
+<h4 id="install-cran-dependencies">Install CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-cran-dependencies"></a>
+</h4>
 <p>When installing from such files, the CRAN dependencies need to be installed manually first.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install dependencies (e.g. R6) which are on CRAN</span></span>
@@ -192,9 +190,9 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"R6"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="install-non-cran-dependencies">Install non-CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-non-cran-dependencies"></a>
-</h3>
+<div class="section level4">
+<h4 id="install-non-cran-dependencies">Install non-CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-non-cran-dependencies"></a>
+</h4>
 <p>Each of the pre-built released packages are available as a a binary <code>*.zip</code>. OSPSuite-R binary archive can be downloaded from <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link">here</a>. The other non-CRAN dependencies needed for OSPSuite-R also have to be downloaded and manually installed:</p>
 <ul>
 <li>
@@ -225,6 +223,7 @@
 <span><span class="co"># Install `{ospsuite}` from local file</span></span>
 <span><span class="co"># (`pathToOSPSuite.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathToOSPSuite.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
 <div class="section level2">
