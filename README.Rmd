@@ -136,7 +136,6 @@ When installing from such files, the CRAN dependencies need to be installed
 manually first.
 
 ```{r, echo = FALSE, results="asis"}
-
 # This code chunck gathers all Depends and Imports dependencies of **installed**
 # versions of the packages and generate a string that is printed in the README.md
 # file.
@@ -147,13 +146,13 @@ non_cran_deps <- c("rClr", "ospsuite.utils", "tlf", "ospsuite")
 deps <- c()
 
 for (non_cran_dep in non_cran_deps) {
-    package_deps <- p_depends(non_cran_dep, local = T, character.only = T)
-   deps <- sort(unique(c(deps, package_deps$Depends, package_deps$Imports)))
+  package_deps <- p_depends(non_cran_dep, local = T, character.only = T)
+  deps <- sort(unique(c(deps, package_deps$Depends, package_deps$Imports)))
 }
 
 deps <- deps[!deps %in% c("methods", non_cran_deps)]
 
-dep_install <- paste('install.packages("', deps, '")', sep = '', collapse = "\n")
+dep_install <- paste('install.packages("', deps, '")', sep = "", collapse = "\n")
 
 
 
@@ -161,7 +160,6 @@ cat("```r \n")
 cat("# Install dependencies (e.g. R6) which are on CRAN\n")
 cat(dep_install)
 cat("\n``` \n")
-
 ```
 
 #### Install non-CRAN dependencies

@@ -752,9 +752,12 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 
 #' Get the steady-state values of species and state variable parameters.
 #'
-#' @details The steady-state is considered to be the last value of the
-#'   simulation with sufficiently long simulation time, i.e., where the rates of
-#'   the processes do not (significantly) change.
+#' @details The steady-state is considered to be the last values of the molecules
+#' amounts and state variable parameters in the simulation with sufficiently long
+#' simulation time, i.e., where the rates of
+#'   the processes do not (significantly) change. The steady-state is NOT analytically
+#'   calculated or estimated in any other way than simulating for the given time.
+#'
 #'
 #' @param steadyStateTime Simulation time (minutes). Must be long enough for
 #'   system to reach a steady-state. 1000 by default. Either a single value (will
@@ -782,11 +785,20 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #' @return A named list, where the names are the IDs of the simulations and the
 #'   entries are lists containing `paths` and their `values` at the end of the
 #'   simulation.
-#' @import rClr ospsuite.utils
+#' @import ospsuite.utils
 #' @export
+#' @examples
+#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' steadyState <- getSteadyState(simulations = sim)
+#' # Set initial values for steady-state simulations
+#' setQuantityValuesByPath(
+#'   quantityPaths = steadyState[[sim$id]]$paths,
+#'   values = steadyState[[sim$id]]$values, simulation = sim
+#' )
 getSteadyState <- function(quantitiesPaths = NULL,
                            simulations,
-                           steadyStateTime,
+                           steadyStateTime = 1000,
                            ignoreIfFormula = TRUE,
                            stopIfNotFound = TRUE,
                            lowerThreshold = 1e-15,
@@ -885,4 +897,82 @@ getSteadyState <- function(quantitiesPaths = NULL,
     names(outputMap)[[idx]] <- simId
   }
   return(outputMap)
+}
+
+#' Stores current simulation output state
+#'
+#' @description Stores simulation output intervals, output time points,
+#' and output selections in the current state.
+#'
+#' @param simulations List of `Simulation` objects
+#'
+#' @return A named list with entries `outputIntervals`, `timePoints`, and
+#' `outputSelections`. Every entry is a named list with names being the IDs
+#' of the simulations.
+#' @keywords internal
+.storeSimulationState <- function(simulations) {
+  simulations <- c(simulations)
+  # Create named vectors for the output intervals, time points, and output
+  # selections of the simulations in their initial state. Names are IDs of
+  # simulations.
+  oldOutputIntervals <-
+    oldTimePoints <-
+    oldOutputSelections <-
+    ids <- vector("list", length(simulations))
+
+  for (idx in seq_along(simulations)) {
+    simulation <- simulations[[idx]]
+    simId <- simulation$id
+    # Have to reset both the output intervals and the time points!
+    oldOutputIntervals[[idx]] <- simulation$outputSchema$intervals
+    oldTimePoints[[idx]] <- simulation$outputSchema$timePoints
+    oldOutputSelections[[idx]] <- simulation$outputSelections$allOutputs
+    ids[[idx]] <- simId
+  }
+  names(oldOutputIntervals) <-
+    names(oldTimePoints) <-
+    names(oldOutputSelections) <- ids
+
+  return(list(
+    outputIntervals = oldOutputIntervals,
+    timePoints = oldTimePoints,
+    outputSelections = oldOutputSelections
+  ))
+}
+
+
+#' Restore simulation output state
+#'
+#' @description Restores simulation output intervals, output time points,
+#' and output selections to the values stored in `simStateList`.
+#' @inheritParams .storeSimulationState
+#' @param simStateList Output of the function `.storeSimulationState`.
+#' A named list with entries `outputIntervals`, `timePoints`, and
+#' `outputSelections`. Every entry is a named list with names being the IDs of
+#' the simulations.
+#'
+#' @keywords internal
+.restoreSimulationState <- function(simulations, simStateList) {
+  simulations <- c(simulations)
+  for (simulation in simulations) {
+    simId <- simulation$id
+    # reset the output intervals
+    simulation$outputSchema$clear()
+    for (outputInterval in simStateList$outputIntervals[[simId]]) {
+      ospsuite::addOutputInterval(
+        simulation = simulation,
+        startTime = outputInterval$startTime$value,
+        endTime = outputInterval$endTime$value,
+        resolution = outputInterval$resolution$value
+      )
+    }
+    if (length(simStateList$timePoints[[simId]]) > 0) {
+      simulation$outputSchema$addTimePoints(simStateList$timePoints[[simId]])
+    }
+    # Reset output selections
+    ospsuite::clearOutputs(simulation)
+    for (outputSelection in simStateList$outputSelections[[simId]]) {
+      ospsuite::addOutputs(quantitiesOrPaths = outputSelection$path, simulation = simulation)
+    }
+  }
 }
