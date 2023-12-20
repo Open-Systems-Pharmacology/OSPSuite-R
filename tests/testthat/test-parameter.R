@@ -1,4 +1,4 @@
-context("Parameter")
+# Parameter
 
 sim <- loadTestSimulation("S1")
 simple <- loadTestSimulation("simple")

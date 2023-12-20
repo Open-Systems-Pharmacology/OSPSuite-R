@@ -1,4 +1,4 @@
-context(".createAxesLabels")
+# .createAxesLabels
 
 df <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
@@ -54,7 +54,7 @@ test_that("It works correctly when multiple dimensions are present and max frequ
   expect_equal(labs$yLabel, "Concentration [mg/l]")
 })
 
-context(".convertGeneralToSpecificPlotConfiguration")
+# .convertGeneralToSpecificPlotConfiguration")
 
 test_that("It returns correct subclass instance of `PlotConfiguration`", {
   expect_s3_class(
@@ -75,7 +75,7 @@ test_that("It returns correct subclass instance of `PlotConfiguration`", {
 })
 
 
-context(".addMissingGroupings")
+# .addMissingGroupings")
 
 test_that("It adds dataset names as groups when grouping is missing", {
   df <- dplyr::tibble(
@@ -121,5 +121,76 @@ test_that("xAxisLabelTicksSize is correctly passed to plot configurations", {
   )
   expect_equal(
     timeProfilePlotConfig$xAxis$font$size, 12
+  )
+})
+
+
+test_that("Normal range works with default options", {
+  expect_equal(
+    c(mean(randu$x) - sd(randu$x), mean(randu$x), mean(randu$x) + sd(randu$x)),
+    .normRange(randu$x)
+  )
+})
+
+test_that("Normal range works with different nsd argument", {
+  nsd <- 2
+  expect_equal(
+    c(
+      mean(randu$x) - nsd * sd(randu$x),
+      mean(randu$x),
+      mean(randu$x) + nsd * sd(randu$x)
+    ),
+    .normRange(randu$x, nsd = nsd)
+  )
+
+  nsd <- -2
+  expect_equal(
+    c(
+      mean(randu$x) - abs(nsd) * sd(randu$x),
+      mean(randu$x),
+      mean(randu$x) + abs(nsd) * sd(randu$x)
+    ),
+    .normRange(randu$x, nsd = nsd)
+  )
+})
+
+test_that("Geometric range works with default options", {
+  gm <- exp(mean(log(randu$x)))
+  gsd <- exp(sd(log(randu$x)))
+
+  expect_equal(
+    c(
+      gm / gsd,
+      gm,
+      gm * gsd
+    ),
+    .geoRange(randu$x)
+  )
+})
+
+test_that("Geometric range works with different nsd argument", {
+  nsd <- 2
+
+  gm <- exp(mean(log(randu$x)))
+  gsd <- exp(sd(log(randu$x)))
+
+
+  expect_equal(
+    c(
+      gm / gsd^nsd,
+      gm,
+      gm * gsd^nsd
+    ),
+    .geoRange(randu$x, nsd = nsd)
+  )
+
+  nsd <- -2
+  expect_equal(
+    c(
+      gm / gsd^abs(nsd),
+      gm,
+      gm * gsd^abs(nsd)
+    ),
+    .geoRange(randu$x, nsd = nsd)
   )
 })

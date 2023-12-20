@@ -1,4 +1,4 @@
-context("DotNetWrapper")
+#  DotNetWrapper
 
 sim <- loadTestSimulation("S1")
 sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)

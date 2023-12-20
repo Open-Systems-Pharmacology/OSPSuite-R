@@ -65,11 +65,16 @@ validateUnit <- function(unit, dimension) {
 
 #' Get base unit of a dimension
 #'
-#' @param dimension Dimension (string name) for which the base unit is returned.
+#' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #'
 #' @return String name of the base unit.
 #' @export
-getBaseUnit <- function(dimension) {
+getBaseUnit <- function(quantityOrDimension) {
+  if (isOfType(quantityOrDimension, "Quantity")) {
+    dimension <- quantityOrDimension$dimension
+  } else {
+    dimension <- quantityOrDimension
+  }
   validateDimension(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
   rClr::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
@@ -97,11 +102,7 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
 
   # Get the base unit of the dimension and call `toUnit()`
-  dimension <- quantityOrDimension
-  if (isOfType(quantityOrDimension, "Quantity")) {
-    dimension <- quantityOrDimension$dimension
-  }
-  baseUnit <- getBaseUnit(dimension)
+  baseUnit <- getBaseUnit(quantityOrDimension)
 
   toUnit(
     quantityOrDimension = quantityOrDimension,
@@ -371,26 +372,105 @@ getDimensionByName <- function(name) {
   enum(allAvailableDimensions())
 }
 
+
 #' @title Supported dimensions defined as a named list
 #'
 #' @details
 #' ospDimensions$Mass => "Mass"
 #'
 #' @export
-ospDimensions <- list()
+ospDimensions <- NULL
 
 #' Supported units defined as a named list of lists
 #'
 #' ospUnits$Mass$kg => "kg"
 #' @export
-ospUnits <- list()
+ospUnits <- NULL
+
+#' parse OSPSuite.Dimensions.xml containing dimensions and units
+#'
+#' @return An XML document
+#' @import xml2
+#'
+#' @examples
+.parseDimensionsXML <- function() {
+  # Read the XML file
+  xmlFile <- system.file("lib/OSPSuite.Dimensions.xml", package = "ospsuite")
+  xmlData <- xml2::read_xml(xmlFile)
+
+  return(xmlData)
+}
+
+#' get OSP Dimensions from OSPSuite.Dimensions.xml data
+#'
+#' @param xmlData XML data from `.parseDimensionsXML()`
+#'
+#' @return a list of supported dimensions
+.getOspDimensions <- function(xmlData) {
+  ospDimensions <- list()
+
+  dimensionsNodes <- xmlData %>%
+    xml2::xml_find_all(".//Dimension")
+
+  for (dimNode in dimensionsNodes) {
+    name <- xml2::xml_attr(dimNode, "name")
+    ospDimensions[[name]] <- name
+  }
+
+  ospDimensions[["Dimensionless"]] <- "Dimensionless"
+
+  ospDimensions <- ospDimensions[order(names(ospDimensions))]
+
+  return(ospDimensions)
+}
+
+#' get OSP Units from OSPSuite.Dimensions.xml data
+#'
+#' @param xmlData XML data from `.parseDimensionsXML()`
+#'
+#' @return a list of supported units
+.getOspUnits <- function(xmlData) {
+  # Extract information from the XML
+  dimensionsNodes <- xmlData %>%
+    xml2::xml_find_all(".//Dimension")
+
+  ospUnits <- list()
+
+  for (dim in dimensionsNodes) {
+    dim_name <- dim %>%
+      xml2::xml_attr("name") %>%
+      gsub(pattern = "[(]", replacement = "[") %>%
+      gsub(pattern = "[)]", replacement = "]")
+    dim_units <- dim %>%
+      xml2::xml_find_all(".//Unit")
+
+    unit_list <- list()
+
+    for (unit in dim_units) {
+      unit_name <- unit %>% xml2::xml_attr("name")
+      # if unit_name equals "" replace by Unitless
+      if (unit_name == "") {
+        unit_name <- "Unitless"
+      }
+      unit_list[[unit_name]] <- unit_name
+    }
+    ospUnits[[dim_name]] <- unit_list
+  }
+
+  ospUnits[["Dimensionless"]] <- list("Unitless" = "Unitless")
+
+  ospUnits <- ospUnits[order(names(ospUnits))]
+
+  return(ospUnits)
+}
 
 .initializeDimensionAndUnitLists <- function() {
   # This initializes the two lists in the parent environment which is the package environments
-  ospDimensions <<- .getDimensionsEnum()
-  ospUnits <<- .getUnitsEnum()
-}
+  xmlData <- .parseDimensionsXML()
 
+  utils::assignInMyNamespace("ospDimensions", .getOspDimensions(xmlData))
+  utils::assignInMyNamespace("ospUnits", .getOspUnits(xmlData))
+}
 
 #' Convert a data frame to common units
 #'

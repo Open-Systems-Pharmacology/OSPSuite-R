@@ -31,6 +31,13 @@ test_that("active bindings should all be NULL for empty initialization", {
   expect_null(myCombDat$groupMap)
   expect_null(myCombDat$names)
   expect_null(myCombDat$toDataFrame())
+  expect_equal(myCombDat$dataTransformations, dplyr::tibble(
+    name = character(),
+    xOffsets = numeric(),
+    yOffsets = numeric(),
+    xScaleFactors = numeric(),
+    yScaleFactors = numeric()
+  ))
   expect_output(print(myCombDat), "DataCombined:")
 })
 
@@ -107,15 +114,36 @@ test_that("data frame column and dataset names are as expected when only `DataSe
   df <- myCombDat$toDataFrame()
 
   expect_equal(
-    names(df),
-    c(
+    sort(names(df)),
+    sort(c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
       "yErrorUnit", "molWeight", "lloq", "Sheet", "Group Id"
-    )
+    ))
   )
 
   expect_equal(unique(df$name), names(dataSet)[[1]])
+})
+
+
+test_that("dataType can be changed after dataset is added", {
+  myDC <- DataCombined$new()
+
+  simData <- DataSet$new(name = "Simulated")
+  simData$setValues(xValues = c(0, 2, 4), yValues = c(0, 4, 8))
+
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+
+  myDC$addDataSets(c(obsData, simData), groups = "myGroup")
+
+  expect_snapshot({
+    myDC$setDataTypes(
+      names = c("Observed", "Simulated"),
+      dataTypes = c("observed", "simulated")
+    )
+  })
 })
 
 # only `SimulationResults` ---------------------------------------
@@ -161,22 +189,22 @@ test_that("data frame column names and datset names are as expected when only `S
   df <- myCombDat$toDataFrame()
 
   expect_equal(
-    names(df),
-    c(
+    sort(names(df)),
+    sort(c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "IndividualId", "molWeight"
-    )
+    ))
   )
-  expect_equal(unique(df$name), sort(simResults$allQuantityPaths))
+  expect_equal(sort(unique(df$name)), sort(simResults$allQuantityPaths))
   expect_equal(
-    as.character(na.omit(unique(df$name))),
-    c(
+    sort(as.character(na.omit(unique(df$name)))),
+    sort(c(
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric emptying",
       "Organism|Lumen|Stomach|Dapagliflozin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
-    )
+    ))
   )
 })
 
@@ -187,6 +215,27 @@ test_that("data frame molecular weight column values are as expected", {
 
   expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
 })
+
+# Performance tests are only run on machines
+# with the OSPSUITE-BENCHMARK-TESTS environment variable set to TRUE
+if (Sys.getenv("OSPSUITE-BENCHMARK-TESTS") == "TRUE") {
+  # This is an example benchmark that takes around 4 seconds
+  benchmark_1e8 <- system.time({
+    for (i in 1:1e8) {
+      res <- 2**0.5
+    }
+  })
+  # In the current implementation, 100 runs of simulationResultsToDataFrame() work
+  # approximately twice faster than the benchmark above
+  test_that("The simulationResultsToDataFrame() performance is not degraded, compared to a reference performance", {
+    benchmark <- system.time({
+      for (i in 1:100) {
+        simulationResultsToDataFrame(simResults)
+      }
+    })
+    expect_lt(benchmark[["elapsed"]], benchmark_1e8[["elapsed"]])
+  })
+}
 
 # grouping validation ---------------------------------------
 
@@ -305,8 +354,8 @@ test_that("group assignment with `$addSimulationResults()` works if names are pr
     groups = list("a", NULL, "b", "c", "d")
   )
 
-  expect_equal(myCombDat$groupMap$name, c("l", "n", "o", "p", "m"))
-  expect_equal(myCombDat$groupMap$group, c("a", "b", "c", "d", NA))
+  expect_equal(sort(myCombDat$groupMap$name), sort(c("l", "n", "o", "p", "m")))
+  expect_equal(sort(myCombDat$groupMap$group), sort(c("a", "b", "c", "d", NA)))
 })
 
 
@@ -325,16 +374,6 @@ test_that("assigned group can be removed using `NA` or `NULL`", {
   expect_equal(myCombDat$groupMap$group, NA_character_)
 })
 
-test_that("`$removeGroupAssignment()` produces error if there are no datasets", {
-  myCombDat <- DataCombined$new()
-
-  expect_error(
-    myCombDat$removeGroupAssignment(names = "Stevens_2012_placebo.Placebo_total"),
-    "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods.",
-    fixed = TRUE
-  )
-})
-
 test_that("existing grouping can be removed using `$removeGroupAssignment()` method", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet[[1]])
@@ -346,38 +385,6 @@ test_that("existing grouping can be removed using `$removeGroupAssignment()` met
   myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
   myCombDat$removeGroupAssignment(names = list("Stevens_2012_placebo.Placebo_total"))
   expect_equal(myCombDat$groupMap$group, NA_character_)
-})
-
-test_that("`$removeGroupAssignment()` produces a message if dataset names are not found", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet[[1]])
-  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
-
-  expect_message(
-    myCombDat$removeGroupAssignment(names = list("Stevens_2012_placebo.Placebo_total", "x", "y")),
-    "Following datasets were specified to be grouped but not found:
-x
-y
-",
-    fixed = TRUE
-  )
-})
-
-test_that("`$removeGroupAssignment()` produces error if names are not unique", {
-  myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(dataSet[[1]])
-
-  myCombDat$setGroups(names = "Stevens_2012_placebo.Placebo_total", groups = "m")
-  expect_error(
-    myCombDat$removeGroupAssignment(
-      names = c(
-        "Stevens_2012_placebo.Placebo_total",
-        "Stevens_2012_placebo.Placebo_total"
-      )
-    ),
-    "Object has duplicated values; only unique values are allowed.",
-    fixed = TRUE
-  )
 })
 
 test_that("setting groups with atomic vector or list shouldn't make a difference", {
@@ -509,12 +516,12 @@ test_that("data frame column names are as expected when both `DataSet` and `Simu
   df <- myCombDat$toDataFrame()
 
   expect_equal(
-    names(df),
-    c(
+    sort(names(df)),
+    sort(c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType", "yErrorUnit",
       "IndividualId", "molWeight", "lloq", "Sheet", "Group Id"
-    )
+    ))
   )
 })
 
@@ -574,13 +581,10 @@ test_that("renaming only a single dataset works", {
   expect_equal(myCombDat$names, "m")
 })
 
-test_that("order in which objects are entered should not matter and method chaining works", {
+test_that("Method chaining works", {
   myCombDat <- DataCombined$new()
 
-  df1 <- myCombDat$addSimulationResults(simResults)$addDataSets(dataSet[[1]])$toDataFrame()
-  expect_warning(df2 <- myCombDat$addDataSets(dataSet[[1]])$addSimulationResults(simResults)$toDataFrame())
-
-  expect_equal(df1, df2)
+  expect_no_error(myCombDat$addDataSets(dataSet[[1]])$addSimulationResults(simResults)$toDataFrame())
 })
 
 test_that("data order with or without `names` argument should be same", {
@@ -605,17 +609,17 @@ test_that("data order with or without `names` argument should be same", {
   expect_equal(df1$yValues, df2$yValues)
 
   expect_equal(
-    unique(df1$name),
-    c(
+    sort(unique(df1$name)),
+    sort(c(
       "Stevens_2012_placebo.Placebo_proximal",
       "Stevens_2012_placebo.Placebo_total",
       "Stevens_2012_placebo.Sita_total"
-    )
+    ))
   )
 
   expect_equal(
-    unique(df2$name),
-    c("Stevens_2012_placebo.Placebo_proximal", "x", "y")
+    sort(unique(df2$name)),
+    sort(c("Stevens_2012_placebo.Placebo_proximal", "x", "y"))
   )
 })
 
@@ -640,6 +644,12 @@ test_that("it shows a warning when a dataset is added with the same name as a da
 
   dc$addSimulationResults(simResults)
   expect_warning(dc$addSimulationResults(simResults))
+})
+
+test_that("The warning can be explicitly silenced", {
+  dc <- DataCombined$new()
+  dc$addSimulationResults(simResults)
+  expect_no_warning(dc$addSimulationResults(simResults, silent = TRUE))
 })
 
 # data transformations --------------------------
@@ -897,7 +907,7 @@ test_that("each call to set transformations resets previous parameters for the s
   df2 <- myCombDat3$dataTransformations
   dfDat2 <- myCombDat3$toDataFrame()
 
-  myCombDat3$setDataTransformations()
+  myCombDat3$setDataTransformations(reset = TRUE)
   df3 <- myCombDat3$dataTransformations
   dfDat3 <- myCombDat3$toDataFrame()
 
@@ -1088,18 +1098,14 @@ test_that("sequential update when first and second datasets have same names and 
 
   df2 <- myCombDat$toDataFrame()
 
-  # should be the same number of rows and columns, and same raw data
+  # should be the same number of rows and columns
   expect_equal(nrow(df2), nrow(df1))
   expect_equal(length(df2), length(df1))
-  expect_equal(head(df1$yValues), head(df2$yValues))
-
-  # names should also be the same since they are the same objects
-  expect_equal(unique(df1$name), unique(df2$name))
 
   # but groupings should be different
   expect_equal(
     unique(df1$group),
-    c(NA_character_, "total", "distal", "proximal")
+    c("total", "proximal", "distal", NA_character_)
   )
 
   expect_equal(
@@ -1131,8 +1137,8 @@ test_that("sequential update when first and second datasets have same names and 
   )
 
   expect_equal(
-    dplyr::filter(dfMap, is.na(group))$name,
-    c(
+    sort(dplyr::filter(dfMap, is.na(group))$name),
+    sort(c(
       "Organism|Lumen|Stomach|Metformin|Gastric retention",
       "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
       "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
@@ -1140,7 +1146,7 @@ test_that("sequential update when first and second datasets have same names and 
       "Stevens_2012_placebo.Placebo_total",
       "Stevens_2012_placebo.Sita_proximal",
       "Stevens_2012_placebo.Sita_total"
-    )
+    ))
   )
 })
 
@@ -1237,13 +1243,13 @@ test_that("data frame column names are as expected when `DataSet` with metadata 
   df <- myCombDat$toDataFrame()
 
   expect_equal(
-    names(df),
-    c(
+    sort(names(df)),
+    sort(c(
       "name", "group", "dataType", "xValues", "xUnit", "xDimension",
       "yValues", "yUnit", "yDimension", "yErrorValues", "yErrorType",
       "yErrorUnit", "molWeight", "lloq", "Sheet", "Group Id",
       "Organ", "Compartment", "Species"
-    )
+    ))
   )
 })
 

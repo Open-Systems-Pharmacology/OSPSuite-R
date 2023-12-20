@@ -1,21 +1,25 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # OSPSuite-R
 
-  <!-- badges: start -->
+<!-- badges: start -->
 
 <a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/OSPSuite-R/branch/develop" class="pkgdown-devel">
-<img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status" /></a>
+<img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"/></a>
 <a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="pkgdown-devel">
-<img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov" /></a>
+<img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"/></a>
 
-  <!-- badges: end -->
+<!-- badges: end -->
 
 # Overview
 
-The **ospsuite-R** package provides the functionality of loading, manipulating, and simulating the simulations created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
+The **ospsuite-R** package provides the functionality of loading,
+manipulating, and simulating the simulations created in the Open Systems
+Pharmacology Software tools PK-Sim and MoBi.
 
 - [Documentation](#documentation)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Known issues](#known-issues)
 - [Code of conduct](#code-of-conduct)
 - [Contribution](#contribution)
@@ -23,71 +27,142 @@ The **ospsuite-R** package provides the functionality of loading, manipulating, 
 
 # Documentation
 
-If you are reading this on GitHub README, please refer to the [online documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/) for more details on the package. 
+If you are reading this on GitHub README, please refer to the [online
+documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/)
+for more details on the package.
 
-In particular, we would recommend that you read the articles in the following order:
+In particular, we would recommend that you read the articles in the
+following order:
 
-* [Get Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html)
-* [Loading a simulation and accessing entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
-* [Changing parameter and molecule start values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
-* [Running a simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
-* [Efficient calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
-* [Creating individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
-* [Population simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
-* [PK Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
-* [Sensitivity analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
-* [Table parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
-* [Dimensions and Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
-* [Working with data sets and import from excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
-* [Working with `DataCombined` class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
-* [Visualizations with `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
+- [Get
+  Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html)
+- [Loading a simulation and accessing
+  entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
+- [Changing parameter and molecule start
+  values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
+- [Running a
+  simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
+- [Efficient
+  calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
+- [Creating
+  individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
+- [Population
+  simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
+- [PK
+  Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
+- [Sensitivity
+  analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
+- [Table
+  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
+- [Dimensions and
+  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+- [Working with data sets and import from
+  excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
+- [Working with `DataCombined`
+  class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
+- [Visualizations with
+  `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
 
 # Installation
 
-The **ospsuite-R** package is compatible with version 3.6.x **AND** version 4.x.x of R. One of its dependency, **rClr** needs to be installed specifically for the targeted R version. Please follow the installation instructions below.
+The **ospsuite** package is compatible with R version 3.6.x **AND**
+4.x.x and can be used on [Windows](#on-windows) and [Linux](#on-linux)
+operating systems.
 
-**ospsuite** requires following packages to be installed:
+`ospsuite` is not available on CRAN and also depends on three packages
+that are not available on CRAN. Thus the installation process is a bit
+unconventional, please follow carefully the instructions below.
 
-From CRAN:
+## On Windows
 
-- [dplyr](https://cran.r-project.org/web/packages/dplyr/index.html)
-- [purrr](https://cran.r-project.org/web/packages/purrr/index.html)
-- [R6](https://cran.r-project.org/web/packages/R6/index.html)
-- [readr](https://cran.r-project.org/web/packages/readr/index.html)
-- [stringr](https://cran.r-project.org/web/packages/stringr/index.html)
-- [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)
-- [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html)
-- [rlang](https://cran.r-project.org/web/packages/rlang/index.html)
-- [jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html)
-- [patchwork](https://cran.r-project.org/web/packages/patchwork/index.html)
-- [cowplot](https://cran.r-project.org/web/packages/cowplot/index.html)
-- [scales](https://cran.r-project.org/web/packages/scales/index.html)
-- [data.table](https://cran.r-project.org/web/packages/data.table/index.html)
+### Pre-requisites
 
+The package requires additional software installations:
 
-Must be downloaded manually:
+- Visual C++ Runtime available
+  [here](https://aka.ms/vs/16/release/vc_redist.x64.exe)
+- .NET Framework 4.7.2 available
+  [here](https://go.microsoft.com/fwlink/?LinkID=863265)
 
-- rClr
-  - [For R 4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip)
-  - [For R 3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+**NB**: These pre-requisites are already installed if the OSP Suite was
+installed before.
 
-- [ospsuite.utils](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest)
+### From GitHub (recommended)
 
-- [tlf](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
+The latest released version of the package can be installed from GitHub
+using the `{remotes}` package. The code below will download and install
+all the required dependencies.
 
+``` r
+install.packages("remotes")
+rClrURL <- if (R.Version()$major >= 4) {
+  "https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip"
+} else {
+  "https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip"
+}
 
-## Under Windows
+install.packages(rClrURL,
+  repos = NULL,
+  type = "binary"
+)
 
-The release version of the package comes as a binary `*.zip` and can be downloaded from [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
+remotes::install_github("Open-Systems-Pharmacology/OSPSuite.RUtils@*release")
+remotes::install_github("Open-Systems-Pharmacology/TLF-Library@*release")
+remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
+```
 
-If you use [RStudio IDE](https://www.rstudio.com/), you can use the *Install* option in the *Packages* pane and select the option *Install from -> Package Archive File* to install a package from binary `*.zip` files.
+### From package archive files
 
-To install manually, follow these instructions:
+It is also possible to install manually from archive pre-built archive
+files.
 
-```r
+#### Install CRAN dependencies
+
+When installing from such files, the CRAN dependencies need to be
+installed manually first.
+
+``` r
 # Install dependencies (e.g. R6) which are on CRAN
-install.packages('R6')
+install.packages("data.table")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("ggtext")
+install.packages("jsonlite")
+install.packages("patchwork")
+install.packages("purrr")
+install.packages("R6")
+install.packages("readr")
+install.packages("rlang")
+install.packages("stringr")
+install.packages("tidyr")
+install.packages("xml2")
+```
 
+#### Install non-CRAN dependencies
+
+Each of the pre-built released packages are available as a a binary
+`*.zip`. OSPSuite-R binary archive can be downloaded from
+[here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
+The other non-CRAN dependencies needed for OSPSuite-R also have to be
+downloaded and manually installed:
+
+- `rClr`
+  - [For R
+    4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip)
+  - [For R
+    3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+- [`ospsuite.utils`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest)
+- [`tlf`](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
+
+If you use [RStudio IDE](https://www.rstudio.com/), you can use the
+*Install* option in the *Packages* pane and select the option *Install
+from -\> Package Archive File* to install a package from binary `*.zip`
+files.
+
+**NB**: The CRAN dependencies of rClr, ospuite.utils and tlf were
+already installed during the previous step.
+
+``` r
 # Install `{rClr}` from local file 
 # (`pathTo_rCLR.zip` here should be replaced with the actual path to the `.zip` file)
 install.packages(pathTo_rCLR.zip, repos = NULL)
@@ -105,12 +180,22 @@ install.packages(pathTo_tlf.zip, repos = NULL)
 install.packages(pathToOSPSuite.zip, repos = NULL)
 ```
 
-The package also requires the Visual C++ Runtime that is installed with OSPS and can be manually downloaded [here](https://aka.ms/vs/16/release/vc_redist.x64.exe).
+## On Linux
 
-## Under Linux
+The **ospsuite** package has been tested under Linux distributions
+**CentOS 7** and **Ubuntu 18**. Some functionality, such as creating
+individuals or populations, is not available under Linux. Installation
+under Linux requires several prerequisites, the detailed instructions
+can be found in the Wiki:
 
-The **ospsuite** package has been tested under Linux distributions CentOS 7 and Ubuntu 18. Some functionality, such as creating individuals, is not available under Linux. Installation under Linux requires several prerequisites, the detailed instructions can be found in the [Wiki](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu).
-For other Linux distributions Docker containers can be used (Dockerfiles based on CentOS 7 and Ubuntu 18 are available under https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases )
+- [Setup OSPSuite-R on
+  CentOS](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-CentOS7)
+- [Setup OSPSuite-R on
+  Ubuntu](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu)
+
+For other Linux distributions Docker containers can be used (Dockerfiles
+based on CentOS 7 and Ubuntu 18 are available under
+<https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases>)
 
 ## Build from source
 
@@ -119,59 +204,17 @@ You can clone the GIT repository and build the package from source.
 ### How to update dependencies from nuget?
 
 - `git submodule update --init --recursive` to install all submodules
-- Make sure you have [ruby](https://www.ruby-lang.org/de/downloads/) install and that it is available in your path
-- Run `rake postclean` or simply double click on `postclean.bat`. This will update all nuget packages and copy the dependencies in the package `inst/lib` folder.
-
-# Usage
-
-In general, every workflow starts with loading a simulation that has been exported to the `*.pkml` format. The method `loadSimulation()` returns the corresponding simulation that is used as input of other methods. The user can then change values of parameters and initial conditions, run the simulation, and retrieve the simulated results.
-
-```r
-library(ospsuite)
-
-# Load a simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
-
-# Get the parameter "Dose"
-doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
-doseParam <- getParameter(doseParamPath, sim)
-
-# Change the dose to 350mg. The values has to be converted to base unit, first
-newValue <- toBaseUnit(quantity = doseParam, values = 350, unit = "mg")
-setParameterValues(parameters = doseParam, values = newValue)
-
-# Simulate
-simResults <- runSimulation(simulation = sim)
-# Retrieve the results
-simulatedValues <- getOutputValues(simulationResults = simResults)
-
-# Plot time-concentration profile
-plot(simulatedValues$data$Time, simulatedValues$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`,
-type = "l",
-xlab = "Time [min]",
-ylab = "Concentration [µmol/l]")
-```
-
-More detailed description of the methods and the typical workflows can be found in the vignettes. You can see the list of all vignettes available for **ospsuite** by calling-
-
-```r
-vignette(package = "ospsuite")
-```
-
-To open a specific vignette, call-
-
-```r
-# Insert the name of the vignette you want to view as the argument
-vignette("introduction-ospsuite")
-```
+- Make sure you have [ruby](https://www.ruby-lang.org/de/downloads/)
+  install and that it is available in your path
+- Run `rake postclean` or simply double click on `postclean.bat`. This
+  will update all nuget packages and copy the dependencies in the
+  package `inst/lib` folder.
 
 # Known issues
 
+## Loading `ospsuite` might fail if your systems locale is not set to English
 
-- Loading `ospsuite` might fail if your systems locale is not set to *English*, e.g.: 
-
-```ibrary(ospsuite)
+``` ibrary(ospsuite)
 载入需要的程辑包：rClr
 Loading the dynamic library for Microsoft .NET runtime...
 Loaded Common Language Runtime version 4.0.30319.42000
@@ -184,22 +227,39 @@ Message: Dimension 'CV mmHg*s虏/ml' not available in DimensionFactory.
 ...
 ```
 
--- On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs` 
-to `English (United States)` and reboot.
--- On Linux, set the environment variable `LC_ALL` before starting R:
-```
-export LC_ALL=en_US.UTF-8
-```
+– On Windows, set
+`Settings > Language > Administrative language settings > Current language for non-Unicode programs`
+to `English (United States)` and reboot. – On Linux, set the environment
+variable `LC_ALL` before starting R:
 
-- **RStudio crashes when trying to load a workspace.** The ospsuite package uses the features implemented in PK-Sim and MoBi by creating `.NET` objects (e.g. a simulation) and using them from R. These objects cannot be saved as part of the workspace and reloaded on next start. When trying to do so, RStudio simply crashes. There is no possibility to overcome this limitation. To prevent RStudio from crashing, make sure to disable the check-box "Restore `.RData` into workspace at startup" in the options of RStudio. Keep in mind that you can also change this setting for specific projects.
+    export LC_ALL=en_US.UTF-8
+
+## RStudio crashes when trying to load a workspace.
+
+The ospsuite package uses the features implemented in PK-Sim and MoBi by
+creating `.NET` objects (e.g. a simulation) and using them from R. These
+objects cannot be saved as part of the workspace and reloaded on next
+start. When trying to do so, RStudio simply crashes. There is no
+possibility to overcome this limitation. To prevent RStudio from
+crashing, make sure to disable the check-box “Restore `.RData` into
+workspace at startup” in the options of RStudio. Keep in mind that you
+can also change this setting for specific projects.
 
 # Code of Conduct
 
-Everyone interacting in the Open Systems Pharmacology community (codebases, issue trackers, chat rooms, mailing lists etc.) is expected to follow the Open Systems Pharmacology [code of conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Open Systems Pharmacology community
+(codebases, issue trackers, chat rooms, mailing lists etc.) is expected
+to follow the Open Systems Pharmacology [code of
+conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_CONDUCT.md).
 
 # Contribution
 
-We encourage contribution to the Open Systems Pharmacology community. Before getting started please read the [contribution guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md). If you are contributing code, please be familiar with the [coding standards](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODING_STANDARDS_R.md).
+We encourage contribution to the Open Systems Pharmacology community.
+Before getting started please read the [contribution
+guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md).
+If you are contributing to the codebase, please be familiar with the
+[coding
+standards](https://github.com/Open-Systems-Pharmacology/developer-docs/blob/main/ospsuite-r-specifics/CODING_STANDARDS_R.md).
 
 # License
 

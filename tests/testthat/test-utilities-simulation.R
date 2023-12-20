@@ -1,4 +1,4 @@
-context("exportIndividualSimulations")
+# exportIndividualSimulations
 
 test_that("It can export the simulation for file for given individual in a population", {
   populationFileName <- getTestDataFilePath(fileName = "pop.csv")
@@ -19,7 +19,7 @@ test_that("It throws an exception when trying to export for an individual id tha
   expect_error(exportIndividualSimulations(population = population, individualIds = c(50, 2), outputFolder = tempdir(), simulation = sim))
 })
 
-context("loadSimulation")
+# loadSimulation
 
 test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {
   resetSimulationCache()
@@ -97,7 +97,7 @@ test_that("It returns false when attempting to remove a simulation from cache th
   expect_false(removeSimulationFromCache(sim2))
 })
 
-context("runSimulation")
+# runSimulation
 test_that("It can run a valid individual simulation and returns results", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   results <- runSimulation(simulation = sim)
@@ -232,7 +232,7 @@ test_that("It throws an error when running the same instance of a simulation mul
   expect_error(runSimulations(simulations = c(sim1, sim2)))
 })
 
-context("getStandardMoleculeParameters")
+# getStandardMoleculeParameters
 test_that("It returns all molecule parameters for an existing molecule in a simulation", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameters <- getStandardMoleculeParameters(moleculeName = "CYP3A4", simulation = sim)
@@ -245,7 +245,7 @@ test_that("It returns an empty list of parameters for a molecule that does not e
   expect_equal(length(parameters), 0)
 })
 
-context("getAllParametersForSensitivityAnalysisMatching")
+# getAllParametersForSensitivityAnalysisMatching
 test_that("It returns all parameter potentially interesting for sensitivity analysis for a given wild card path", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameters <- getAllParametersMatching(paths = "**|Volume", container = sim)
@@ -253,7 +253,7 @@ test_that("It returns all parameter potentially interesting for sensitivity anal
   expect_gt(length(parameters), length(variableParameters))
 })
 
-context("createSimulationBatch")
+# createSimulationBatch
 test_that("It throws an error when initializing a simulation batch without any variable parameter or molecule", {
   sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   expect_error(createSimulationBatch(simulation = sim))
@@ -288,7 +288,7 @@ test_that("It creates a simulation batch when using only molecule instances", {
 })
 
 
-context("runSimulationBatches")
+# runSimulationBatches
 sim <- loadTestSimulation("simple", loadFromCache = TRUE)
 
 test_that("It can run a simulation batch by varying some parameters and molecules", {
@@ -417,7 +417,7 @@ test_that("Throws an error when a simulation does not succeed", {
   expect_error(runSimulationBatches(simulationBatch, stopIfFails = TRUE))
 })
 
-context("getAllStateVariablesPaths")
+# getAllStateVariablesPaths
 
 test_that("It returns the correct paths of the state variables", {
   sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
@@ -431,7 +431,7 @@ test_that("It returns the correct paths of the state variables", {
   expect_equal(length(stateVariableParametersPaths), 1)
 })
 
-context("getSimulationTree")
+# getSimulationTree
 
 test_that("it can explore a simulation by path", {
   simPath <- getSimulationFilePath("simple")

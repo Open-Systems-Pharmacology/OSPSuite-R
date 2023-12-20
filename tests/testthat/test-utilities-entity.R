@@ -1,4 +1,4 @@
-context("uniqueEntities")
+# uniqueEntities
 
 sim <- loadTestSimulation("S1")
 

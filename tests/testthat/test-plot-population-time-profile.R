@@ -1,6 +1,6 @@
 # data to be used ---------------------------------------
 
-context("plotPopulationTimeProfile")
+# plotPopulationTimeProfile
 
 skip_on_os("linux") # TODO enable again as soon as `createPopulation()` runs under Linux
 
@@ -191,13 +191,6 @@ test_that("Aggregations are computed and displayed correctly", {
   )
 
   vdiffr::expect_doppelganger(
-    title = "use old quantiles argument",
-    fig = plotPopulationTimeProfile(myDataComb,
-      quantiles = c(0.1, 0.5, 0.9)
-    )
-  )
-
-  vdiffr::expect_doppelganger(
     title = "arithmetic mean",
     fig =
       plotPopulationTimeProfile(myDataComb,
@@ -205,19 +198,28 @@ test_that("Aggregations are computed and displayed correctly", {
       )
   )
 
-  # vdiffr::expect_doppelganger(
-  #   title = "arithmetic mean with 3 sd",
-  #   fig =
-  #     plotPopulationTimeProfile(myDataComb,
-  #       aggregation = "arithmetic",
-  #       n = 3
-  #     )
-  # )
+  vdiffr::expect_doppelganger(
+    title = "arithmetic mean with 2sd",
+    fig =
+      plotPopulationTimeProfile(myDataComb,
+        aggregation = "arithmetic",
+        nsd = 2
+      )
+  )
+
 
   vdiffr::expect_doppelganger(
     title = "geometric mean",
     fig = plotPopulationTimeProfile(myDataComb,
       aggregation = "geometric"
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "geometric mean with 2sd",
+    fig = plotPopulationTimeProfile(myDataComb,
+      aggregation = "geometric",
+      nsd = 2
     )
   )
 })

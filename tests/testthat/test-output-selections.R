@@ -1,7 +1,7 @@
 sim <- loadTestSimulation("S1")
 
 outputSelections <- sim$outputSelections
-context("OutputSelections")
+# OutputSelections
 
 test_that("It remove all outputs when outputs are cleared", {
   addOutputs("Organism|Weight", sim)

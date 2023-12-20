@@ -26,8 +26,9 @@ environment:
   NOT_CRAN: true
   KEEP_VIGNETTES: true
   R_ARCH: x64
-  R_VERSION: 4.1.0
-  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran
+  R_VERSION: 4.3.1
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
+  R_PKGTYPE: binary
   COVERALLS_TOKEN:
     secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
 

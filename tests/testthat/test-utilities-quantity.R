@@ -1,4 +1,4 @@
-context("getAllQuantitiesMatching")
+# getAllQuantitiesMatching
 
 sim <- loadTestSimulation("S1")
 
@@ -13,7 +13,7 @@ test_that("It can retrieve quantities with generic path path", {
 })
 
 
-context("getAllQuantityPathsIn")
+# getAllQuantityPathsIn
 
 test_that("It can retrieve all quantity paths defined in the simulation", {
   paths <- getAllQuantityPathsIn(sim)
@@ -26,7 +26,7 @@ test_that("It can retrieve all quantity paths defined in a container", {
 })
 
 
-context("getAllObserverPathsIn")
+# getAllObserverPathsIn
 
 test_that("It can retrieve all quantity paths defined in the simulation", {
   paths <- getAllObserverPathsIn(sim)
@@ -39,7 +39,7 @@ test_that("It can retrieve all quantity paths defined in a container", {
 })
 
 
-context("getQuantity")
+# getQuantity
 
 test_that("It can retrieve a single quantity by path if it exists", {
   quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
@@ -60,7 +60,7 @@ test_that("It throws an error when trying to retrieve a quantity by path that wo
 })
 
 
-context("setQuantityValuesByPath")
+# setQuantityValuesByPath
 sim <- loadTestSimulation("S1", loadFromCache = TRUE)
 
 test_that("It can set single parameter value", {
@@ -121,7 +121,7 @@ test_that("It throws an error when the number of quantity paths differs from the
   expect_error(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"))
 })
 
-context("getQuantityValuesByPath")
+# getQuantityValuesByPath
 test_that("It can get single parameter value", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
   value <- getQuantityValuesByPath(parameterPath, sim)
@@ -244,4 +244,16 @@ test_that("It returns TRUE when the quantity is an explicit formula", {
     path = formulaPath,
     simulation = sim
   ))
+})
+
+test_that("It shows an expected message when setting a value with wrong unit", {
+  parameterPath <- "Organism|Liver|Intracellular|Volume"
+  expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "mol"),
+    regexp = messages$wrongUnitForQuantity(
+      quantityPath = parameterPath,
+      unit = "mol",
+      dimension = ospDimensions$Volume
+    ),
+    fixed = TRUE
+  )
 })

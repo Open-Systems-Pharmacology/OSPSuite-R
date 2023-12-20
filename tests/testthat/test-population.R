@@ -1,4 +1,4 @@
-context("Population")
+# Population
 populationFileName <- getTestDataFilePath("pop.csv")
 simuation <- loadTestSimulation("S1")
 venousBloodVolume <- getParameter("Organism|VenousBlood|Volume", simuation)
@@ -93,7 +93,7 @@ test_that("It throws an exception when retrieving all parameter values for an in
   expect_error(parameterValues <- population$getParameterValuesForIndividual(666))
 })
 
-context("Covariates")
+# Covariates
 population <- loadPopulation(populationFileName)
 
 test_that("It can retrieve the covariates names defined in a population", {
@@ -121,7 +121,7 @@ test_that("It can retrieve all ids define ina population", {
   expect_length(population$allIndividualIds, 10)
 })
 
-context("exportPopulationToCSV")
+# exportPopulationToCSV
 
 test_that("It can export valid population to CSV", {
   executeWithTestFile(function(csvFile) {

@@ -2,18 +2,9 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams .extractAggregatedSimulatedData
+#' @param ... additionnal arguments to pass to `.extractAggregatedSimulatedData()`
 #'
-#' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
-#'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
-#'
-#' @details
-#' For `aggregation = arithmetic`, arithmetic mean with arithmetic standard deviation (SD)
-#' will be plotted.
-#' For `aggregation = geometric`, geometric mean with geo SD will be plotted
-#' For `aggregation = quantiles`, the quantile values defined in the argument `quantiles`
-#' will be used. In the profile plot, the middle value will be used to draw
-#'  a line, while the lower and upper values will be used as the lower und upper ranges.
-#'
+#' @inherit .extractAggregatedSimulatedData details
 #'
 #' @import tlf
 #'
@@ -48,12 +39,13 @@
 plotPopulationTimeProfile <- function(dataCombined,
                                       defaultPlotConfiguration = NULL,
                                       aggregation = "quantiles",
-                                      quantiles = c(0.05, 0.5, 0.95)) {
-  probs <- quantiles
+                                      quantiles = c(0.05, 0.5, 0.95),
+                                      ...) {
   .plotTimeProfile(
     dataCombined,
     defaultPlotConfiguration,
     aggregation,
-    probs
+    probs = quantiles,
+    ...
   )
 }

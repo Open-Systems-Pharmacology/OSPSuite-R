@@ -142,33 +142,33 @@ Other plotting:
 string providing plot annotations for plot title, subtitle, caption, x-axis
 label, y-axis label, plot legend, watermark, respectively.}
 
-\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign}}{Aesthetic properties for the plot title.}
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin}}{Aesthetic properties for the plot title.}
 
-\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign}}{Aesthetic properties for the plot subtitle.}
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
 
-\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign}}{Aesthetic properties for the plot caption.}
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin}}{Aesthetic properties for the plot caption.}
 
-\item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign}}{Aesthetic properties for the plot xLabel.}
+\item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin}}{Aesthetic properties for the plot xLabel.}
 
-\item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign}}{Aesthetic properties for the plot yLabel.}
+\item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin}}{Aesthetic properties for the plot yLabel.}
 
 \item{\code{legendPosition}}{A character string defining the legend position.
 Available options can be seen using \code{tlf::LegendPositions} list.}
 
-\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
+\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
+\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin}}{Aesthetic properties for the legend caption.}
 
 \item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively. This will preserve all data points but zoom in the plot.}
 
-\item{\code{xAxisValuesLimits, yAxisValuesLimits}}{A numeric vector of values limits for the x-and
+\item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.}
 
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
@@ -177,7 +177,7 @@ position x-and y-axis ticks, respectively.}
 \item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
 Available options can be seen using \code{tlf::Scaling} list.}
 
-\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign}}{A character string specifying the aesthetic properties for the watermark.}
+\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin}}{A character string specifying the aesthetic properties for the watermark.}
 
 \item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
 
@@ -218,30 +218,30 @@ Available options can be seen using \code{tlf::Scaling} list.}
 string providing plot annotations for plot title, subtitle, caption, x-axis
 label, y-axis label, plot legend, watermark, respectively.}
 
-\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign}}{Aesthetic properties for the plot title.}
+\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin}}{Aesthetic properties for the plot title.}
 
-\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign}}{Aesthetic properties for the plot subtitle.}
+\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
 
-\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign}}{Aesthetic properties for the plot caption.}
+\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin}}{Aesthetic properties for the plot caption.}
 
-\item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign}}{Aesthetic properties for the plot xLabel.}
+\item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin}}{Aesthetic properties for the plot xLabel.}
 
-\item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign}}{Aesthetic properties for the plot yLabel.}
+\item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin}}{Aesthetic properties for the plot yLabel.}
 
-\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign}}{Aesthetic properties for the legend title.}
+\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign}}{Aesthetic properties for the legend caption.}
+\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin}}{Aesthetic properties for the legend caption.}
 
 \item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisExpand}}{Aesthetic properties for the x-axis label.}
+\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisExpand}}{Aesthetic properties for the y-axis label.}
+\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
 \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively. This will preserve all data points but zoom in the plot.}
 
-\item{\code{xAxisValuesLimits, yAxisValuesLimits}}{A numeric vector of values limits for the x-and
+\item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.}
 
 \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
@@ -250,7 +250,7 @@ position x-and y-axis ticks, respectively.}
 \item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
 Available options can be seen using \code{tlf::Scaling} list.}
 
-\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign}}{A character string specifying the aesthetic properties for the watermark.}
+\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin}}{A character string specifying the aesthetic properties for the watermark.}
 
 \item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
 

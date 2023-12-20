@@ -12,11 +12,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
-  dpi = 300,
   comment = "#>",
   out.width = "100%",
   fig.height = 6,
-  fig.width = 8
+  fig.width = 8,
+  fig.showtext = TRUE
 )
 ```
 
@@ -122,8 +122,8 @@ myPlotConfiguration$yUnit <- ospUnits$`Concentration [mass]`$`µg/l`
 myPlotConfiguration$yAxisScale <- tlf::Scaling$log
 
 myPlotConfiguration$title <- "Example: Customizing a Plot"
-myPlotConfiguration$subtitle <- "Using `DefaultPlotConfiguration` class"
-myPlotConfiguration$caption <- "Source: `Aciclovir` data"
+myPlotConfiguration$subtitle <- "Using DefaultPlotConfiguration class"
+myPlotConfiguration$caption <- "Source: Aciclovir data"
 
 myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
 ```
@@ -149,7 +149,7 @@ resVsTime <- plotResidualsVsTime(myDataCombined)
 These plots can be combined into a multi-panel figure using the `PlotGridConfiguration` 
 and then used with `plotGrid()` function to create a figure.
 
-```{r}
+```{r,  fig.width=10, fig.asp = 1}
 plotGridConfiguration <- PlotGridConfiguration$new()
 plotGridConfiguration$tagLevels <- "a"
 plotGridConfiguration$title <- "Multiple plots in one figure"
@@ -163,8 +163,8 @@ The function will try to arrange the panels such that the number of rows equals
 to the number of colums. You can also specify the number of rows or columns through 
 the `PlotGridConfiguration`:
 
-```{r}
-plotGridConfiguration$nRows <- 1
+```{r,  fig.width=10, fig.asp = 1.5}
+plotGridConfiguration$nColumns <- 1
 
 plotGrid(plotGridConfiguration)
 ```

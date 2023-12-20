@@ -1,4 +1,4 @@
-context("Cache")
+#  Cache
 
 sim <- loadTestSimulation("S1")
 cache <- ospsuiteEnv$loadedSimulationsCache

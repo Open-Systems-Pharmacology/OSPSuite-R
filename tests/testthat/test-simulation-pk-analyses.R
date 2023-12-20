@@ -1,4 +1,4 @@
-context("SimulationPKAnalyses")
+# SimulationPKAnalyses
 
 sim <- loadTestSimulation("S1")
 clearOutputs(sim)

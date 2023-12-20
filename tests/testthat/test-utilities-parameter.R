@@ -1,4 +1,4 @@
-context("getAllParametersMatching")
+# getAllParametersMatching
 
 sim <- loadTestSimulation("S1")
 
@@ -49,7 +49,7 @@ test_that("It throws an error when no valid path is provided", {
   expect_error(parameters <- getAllParametersMatching(NULL, sim))
 })
 
-context("getAllParameterPathsIn")
+# getAllParameterPathsIn
 
 test_that("It can retrieve all parameter paths defined in the simulation", {
   paths <- getAllParameterPathsIn(sim)
@@ -61,7 +61,7 @@ test_that("It can retrieve all parameter paths defined in a container", {
   expect_gt(length(paths), 0)
 })
 
-context("getParameter")
+# getParameter
 
 test_that("It can retrieve a single parameter by path if it exists", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
@@ -81,7 +81,7 @@ test_that("It throws an error when trying to retrieve a parameter by path that w
   expect_error(getParameter(toPathString(c("Organism", "Liver", "*")), sim))
 })
 
-context("setParameterValues")
+# setParameterValues
 
 test_that("It throws an error when no valid parameter objects are provided", {
   expect_error(setParameterValues("parameter", 1))
@@ -146,7 +146,7 @@ test_that("It can set a single values in multiple parameters", {
   expect_equal(newVals, rep(10, 6))
 })
 
-context("setParameterValuesByPath")
+# setParameterValuesByPath
 
 test_that("It can set single parameter values", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
@@ -183,7 +183,7 @@ test_that("It can get the value of an individual from a population and set them 
   expect_equal(parameter$value, individualValues$values[1])
 })
 
-context("scaleParameterValues")
+# scaleParameterValues
 
 test_that("It can scale a single parameter with a given factor", {
   parameter <- getParameter(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
@@ -201,7 +201,7 @@ test_that("It can scale mulstiple parameters with a given factor", {
 })
 
 
-context("getParameterDisplayPaths")
+# getParameterDisplayPaths
 
 test_that("It return the display path for an existing parameter", {
   path <- toPathString(c("Organism", "Liver", "Intracellular", "Volume"))

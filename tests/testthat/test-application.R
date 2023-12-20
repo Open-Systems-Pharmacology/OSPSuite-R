@@ -1,4 +1,4 @@
-context("Application")
+#  Application
 
 quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 sim <- loadTestSimulation("S1")
@@ -15,7 +15,7 @@ test_that("It can set the value of the start time for the application", {
 })
 
 
-context("Application$print")
+# Application$print
 
 test_that("It can print an application", {
   expect_error(capture.output(application$print()), NA)

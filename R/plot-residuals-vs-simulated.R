@@ -44,7 +44,9 @@
 #' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotResidualsVsSimulated(myDataCombined, scaling = "log", defaultPlotConfiguration = myPlotConfiguration)
+#' plotResidualsVsSimulated(myDataCombined,
+#' scaling = "log",
+#' defaultPlotConfiguration = myPlotConfiguration)
 #'
 #' @export
 plotResidualsVsSimulated <- function(dataCombined,
@@ -130,7 +132,7 @@ plotResidualsVsSimulated <- function(dataCombined,
     shape = "none",
     col = ggplot2::guide_legend(
       title = resVsPredPlotConfiguration$legend$title$text,
-      title.theme = resVsPredPlotConfiguration$legend$title$createPlotFont(),
+      title.theme = resVsPredPlotConfiguration$legend$title$createPlotTextFont(),
       override.aes = list(shape = overrideShapeAssignment$shapeAssn)
     )
   )

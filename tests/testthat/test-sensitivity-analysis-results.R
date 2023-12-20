@@ -4,7 +4,7 @@ sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(showProgress = F
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
 parameters <- getAllParameterPathsIn(sim)
 
-context("SensitivityAnalysisResults")
+# SensitivityAnalysisResults
 
 test_that("It returns the name of all pk parameters available in the SA results", {
   pkParameterNames <- results$allPKParameterNames
@@ -15,7 +15,7 @@ test_that("It returns the number of QuantityPKParameters calculated", {
   expect_gt(length(results$count), 0)
 })
 
-context("pkParameterSensitivityValueFor")
+# pkParameterSensitivityValueFor
 
 test_that("It produces error when both parameter path and name are specified", {
   expect_error(

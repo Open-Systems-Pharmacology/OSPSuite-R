@@ -99,7 +99,7 @@ exportPopulationToCSV <- function(population, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   df <- populationToDataFrame(population)
-  write.csv(df, file = filePath, row.names = FALSE, fileEncoding = "UTF-8")
+  utils::write.csv(df, file = filePath, row.names = FALSE, fileEncoding = "UTF-8")
   invisible()
 }
 
@@ -203,7 +203,7 @@ createPopulation <- function(populationCharacteristics) {
 #' @param ageUnit Unit in which the age value is defined. Default is year(s)
 #' @param BMIMin min BMI for the population (optional, for human species only)
 #' @param BMIMax max BMI for the population (optional, for human species only)
-#' @param BMIUnit Unit in which the BMI value is defined. Default is kg/m²
+#' @param BMIUnit Unit in which the BMI value is defined. Default is kg/m2
 #' @param gestationalAgeMin min gestational age for the population (optional, for human species only)
 #' @param gestationalAgeMax max gestational age for the population (optional, for human species only)
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is kg/m2
@@ -228,7 +228,7 @@ createPopulationCharacteristics <- function(species,
                                             ageUnit = "year(s)",
                                             BMIMin = NULL,
                                             BMIMax = NULL,
-                                            BMIUnit = "kg/m²",
+                                            BMIUnit = "kg/m\U00B2",
                                             gestationalAgeMin = NULL,
                                             gestationalAgeMax = NULL,
                                             gestationalAgeUnit = "week(s)",

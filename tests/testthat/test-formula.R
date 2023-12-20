@@ -1,4 +1,4 @@
-context("Formula")
+# Formula
 
 sim <- loadTestSimulation("S1")
 distributedFormula <- getParameter("Organism|Liver|Volume", sim)$formula

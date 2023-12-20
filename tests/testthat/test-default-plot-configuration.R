@@ -1,4 +1,4 @@
-context("DefaultPlotConfiguration")
+# DefaultPlotConfiguration
 
 test_that("It stores new values when defaults are changed", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()

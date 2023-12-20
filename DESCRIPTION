@@ -8,7 +8,8 @@ Authors@R:
       person("Pavel", "Balazki", role = "aut"),
       person("Juri", "Solodenko", role = "aut", comment = c(ORCID = "0000-0001-6922-588X")),
       person("Indrajeet", "Patil", , "patilindrajeet.science@gmail.com", role = "aut",
-           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")))
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")),
+      person("Felix", "MIL", role = "aut"))
 Description: The ospsuite-R package provides the functionality of loading, manipulating, and simulating the simulations 
   created in the Open Systems Pharmacology Software tools PK-Sim and MoBi.
 License: GPL-2 | file LICENSE
@@ -29,9 +30,11 @@ Imports:
     tidyr,
     ggplot2,
     rlang,
-    tlf (>= 1.4.0),
-    data.table
+    tlf (>= 1.5.0),
+    data.table,
+    xml2
 Suggests:
+    pacman,
     knitr,
     rmarkdown,
     testthat (>= 3.0.3),
@@ -45,6 +48,7 @@ LazyData: true
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
 Collate: 
     'aging-data.R'
     'api-config.R'
@@ -61,6 +65,7 @@ Collate:
     'entity.R'
     'formula.R'
     'get-net-task.R'
+    'globals.R'
     'individual-characteristics.R'
     'init-package.R'
     'interval.R'

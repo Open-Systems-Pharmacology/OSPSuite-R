@@ -202,7 +202,7 @@ model outputs.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SensitivityAnalysisResults: </span></span>
 <span><span class="co">#&gt;    Number of calculated sensitivities: 72 </span></span>
-<span><span class="co">#&gt;    Available PK parameters: C_max t_max C_tEnd AUC_tEnd Thalf AUC_inf MRT FractionAucLastToInf</span></span></code></pre></div>
+<span><span class="co">#&gt;    Available PK parameters: C_max                t_max                C_tEnd               AUC_tEnd             Thalf                AUC_inf              MRT                  FractionAucLastToInf</span></span></code></pre></div>
 <p>The method <code>allPKParameterSensitivitiesFor()</code> returns a
 list of <code>PKParameterSensitivity</code> objects.
 <code>PKParameterSensitivity</code> describes the sensitivity (field
@@ -238,7 +238,7 @@ value is used.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span></span>
 <span><span class="co">#&gt; SensitivityAnalysisResults: </span></span>
 <span><span class="co">#&gt;    Number of calculated sensitivities: 11 </span></span>
-<span><span class="co">#&gt;    Available PK parameters: C_max t_max C_tEnd AUC_tEnd AUC_inf MRT Thalf FractionAucLastToInf CL Vss Vd</span></span>
+<span><span class="co">#&gt;    Available PK parameters: C_max                t_max                C_tEnd               AUC_tEnd             AUC_inf              MRT                  Thalf                FractionAucLastToInf CL                   Vss                  Vd</span></span>
 <span></span>
 <span><span class="co"># Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8</span></span>
 <span><span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span><span class="op">$</span><span class="va">allOutputs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">path</span></span>
@@ -249,7 +249,7 @@ value is used.</p>
 <span><span class="co">#&gt;    Parameter name: Aciclovir-Lipophilicity </span></span>
 <span><span class="co">#&gt;    PK-Parameter: AUC_inf </span></span>
 <span><span class="co">#&gt;    Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) </span></span>
-<span><span class="co">#&gt;    Value: 0.00470852808265833</span></span></code></pre></div>
+<span><span class="co">#&gt;    Value: 0.004708528</span></span></code></pre></div>
 <p>The value <code>-1</code> for the sensitivity of “AUC_inf” of the
 output
 <code>Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</code>

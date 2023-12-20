@@ -1,7 +1,7 @@
 sim <- loadTestSimulation("S1")
 outputSelections <- sim$outputSelections
 
-context("addOutputs")
+# addOutputs
 
 test_that("It can add multiple outputs by path", {
   outputSelections$clear()
@@ -43,7 +43,7 @@ test_that("It throws an exception if the parameters do not have the expect type"
 })
 
 
-context("clearOutputs")
+# clearOutputs
 
 test_that("It can clear all outputs of a given simulation", {
   addOutputs(c("Organism|Liver|Volume"), sim)

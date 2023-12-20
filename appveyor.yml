@@ -3,7 +3,7 @@ image: Visual Studio 2019
 
 # uncomment to use global ospsuite version (and comment line underneath)
 # version: '{build}'
-version: '12.0.{build}'
+version: '11.2.{build}'
 
 # Download script file from GitHub
 init:
@@ -24,11 +24,16 @@ environment:
   NOT_CRAN: true
   KEEP_VIGNETTES: false
   R_BUILD_ARGS: --no-build-vignettes --no-manual
-  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_ARCH: x64
-  R_VERSION: 4.1.0
+  R_VERSION: 4.3.1
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: true
+  R_PKGTYPE: binary
+  # This enables performance tests, that are potentially machine-specific
+  # Following a discussion in https://github.com/Open-Systems-Pharmacology/OSPSuite-R/pull/1288,
+  # we want to run them in CI builds, but not locally or nightly
+  OSPSUITE-BENCHMARK-TESTS: TRUE
 
 build_script:
   - travis-tool.sh install_deps

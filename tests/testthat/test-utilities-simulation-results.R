@@ -10,7 +10,7 @@ NUMBER_OF_COVARIATES_COLUMNS <- 3
 NUMBER_OF_STATIC_COLUMNS <- 2
 NUMBER_OF_EXTRA_COLUMNS <- NUMBER_OF_STATIC_COLUMNS + NUMBER_OF_COVARIATES_COLUMNS
 
-context("getOutputValues")
+# getOutputValues
 
 test_that("It throws an error when no valid simulation results are provided", {
   expect_error(getOutputValues(individualResults, "NoPath"))
@@ -92,7 +92,7 @@ test_that("It can retrieve results with provided individual id", {
 })
 
 
-context("exportResultsToCSV")
+# exportResultsToCSV
 
 test_that("It can export valid simulation results to CSV", {
   executeWithTestFile(function(csvFile) {
@@ -101,7 +101,7 @@ test_that("It can export valid simulation results to CSV", {
   })
 })
 
-context("importResultsFromCSV")
+# importResultsFromCSV
 
 test_that("It can import valid simulation results from one CSV file", {
   resFile <- getTestDataFilePath("res_10.csv")
@@ -166,13 +166,10 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   expect_equal(unique(df2$paths), "Organism|A")
 
   # names
-  expect_equal(
-    names(df1),
-    c(
-      "paths", "IndividualId", "Time", "simulationValues", "unit",
-      "dimension", "TimeUnit", "TimeDimension", "molWeight"
-    )
-  )
+  expect_equal(sort(names(df1)), sort(c(
+    "paths", "IndividualId", "Time", "simulationValues", "unit",
+    "dimension", "TimeUnit", "TimeDimension", "molWeight"
+  )))
 })
 
 test_that("simulationResultsToDataFrame works as expected - Aciclovir", {

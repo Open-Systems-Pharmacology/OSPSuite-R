@@ -1,4 +1,4 @@
-context("Unicode support")
+# Unicode support
 
 test_that("It can load a simulation whose name contains unicode characters", {
   # The unicoße file is created on the fly for this file impact other aspects of the package like installation from github on non utf8 systems.

@@ -57,7 +57,9 @@ myPlotConfiguration$subtitle <- "My Plot Subtitle"
 myPlotConfiguration$caption <- "My Sources"
 
 # plot
-plotResidualsVsSimulated(myDataCombined, scaling = "log", defaultPlotConfiguration = myPlotConfiguration)
+plotResidualsVsSimulated(myDataCombined,
+scaling = "log",
+defaultPlotConfiguration = myPlotConfiguration)
 
 }
 \seealso{

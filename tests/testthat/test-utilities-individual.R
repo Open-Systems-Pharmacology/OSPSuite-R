@@ -1,7 +1,7 @@
 skip_on_os("linux") # TODO enable again as soon as createIndividual/createPopulation runs under Linux
 skip_on_ci()
 
-context("createIndividualCharacteristics")
+# createIndividualCharacteristics
 
 test_that("It does not throw an error when species is not human and no population is provided", {
   expect_output(individualCharacteristics <- createIndividualCharacteristics(species = Species$Beagle, height = NULL), NA)
@@ -25,7 +25,7 @@ test_that("It throws an error when species is Human and wrong is provided", {
   )
 })
 
-context("createIndividual")
+# createIndividual
 
 test_that("It can create a standard dog for a given bodyweight", {
   dog <- createIndividualCharacteristics(

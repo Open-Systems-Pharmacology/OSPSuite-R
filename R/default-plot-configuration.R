@@ -112,27 +112,27 @@
 #' @field title,subtitle,caption,xLabel,yLabel,legendTitle,watermark A character
 #'   string providing plot annotations for plot title, subtitle, caption, x-axis
 #'   label, y-axis label, plot legend, watermark, respectively.
-#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle,titleAlign Aesthetic properties for the plot title.
-#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle,subtitleAlign Aesthetic properties for the plot subtitle.
-#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionAngle,captionAlign Aesthetic properties for the plot caption.
-#' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle,xLabelAlign Aesthetic properties for the plot xLabel.
-#' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle,yLabelAlign Aesthetic properties for the plot yLabel.
+#' @field titleColor,titleSize,titleFontFace,titleFontFamily,titleAngle,titleAlign,titleMargin Aesthetic properties for the plot title.
+#' @field subtitleColor,subtitleSize,subtitleFontFace,subtitleFontFamily,subtitleAngle,subtitleAlign,subtitleMargin Aesthetic properties for the plot subtitle.
+#' @field captionColor,captionSize,captionFontFace,captionFontFamily,captionAngle,captionAlign,captionMargin Aesthetic properties for the plot caption.
+#' @field xLabelColor,xLabelSize,xLabelFontFace,xLabelFontFamily,xLabelAngle,xLabelAlign,xLabelMargin Aesthetic properties for the plot xLabel.
+#' @field yLabelColor,yLabelSize,yLabelFontFace,yLabelFontFamily,yLabelAngle,yLabelAlign,yLabelMargin Aesthetic properties for the plot yLabel.
 #' @field legendPosition A character string defining the legend position.
 #'   Available options can be seen using `tlf::LegendPositions` list.
-#' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign Aesthetic properties for the legend title.
-#' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign Aesthetic properties for the legend caption.
+#' @field legendTitleSize,legendTitleColor,legendTitleFontFamily,legendTitleFontFace,legendTitleAngle,legendTitleAlign,legendTitleMargin Aesthetic properties for the legend title.
+#' @field legendKeysSize,legendKeysColor,legendKeysFontFamily,legendKeysFontFace,legendKeysAngle,legendKeysAlign,legendKeysMargin Aesthetic properties for the legend caption.
 #' @field legendBackgroundColor,legendBackgroundAlpha,legendBorderColor,legendBorderType,legendBorderSize Aesthetic properties for the legend box
-#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisExpand Aesthetic properties for the x-axis label.
-#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisExpand Aesthetic properties for the y-axis label.
+#' @field xAxisTicksLabels,xAxisLabelTicksSize,xAxisLabelTicksColor,xAxisLabelTicksFontFamily,xAxisLabelTicksFontFace,xAxisLabelTicksAngle,xAxisLabelTicksAlign,xAxisLabelTicksMargin,xAxisExpand Aesthetic properties for the x-axis label.
+#' @field yAxisTicksLabels,yAxisLabelTicksSize,yAxisLabelTicksColor,yAxisLabelTicksFontFamily,yAxisLabelTicksFontFace,yAxisLabelTicksAngle,yAxisLabelTicksAlign,yAxisLabelTicksMargin,yAxisExpand Aesthetic properties for the y-axis label.
 #' @field xAxisLimits,yAxisLimits A numeric vector of axis limits for the x-and
 #'   y-axis, respectively. This will preserve all data points but zoom in the plot.
-#' @field xAxisValuesLimits,yAxisValuesLimits A numeric vector of values limits for the x-and
+#' @field xValuesLimits,yValuesLimits A numeric vector of values limits for the x-and
 #'   y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.
 #' @field xAxisTicks,yAxisTicks A numeric vector or a function defining where to
 #'   position x-and y-axis ticks, respectively.
 #' @field xAxisScale,yAxisScale A character string defining axis scale.
 #'   Available options can be seen using `tlf::Scaling` list.
-#' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle,watermarkAlign A character string specifying the aesthetic properties for the watermark.
+#' @field watermarkSize,watermarkColor,watermarkFontFamily,watermarkFontFace,watermarkAngle,watermarkAlign,watermarkMargin A character string specifying the aesthetic properties for the watermark.
 #' @field plotBackgroundFill,plotBackgroundColor,plotBackgroundSize,plotBackgroundLinetype A character string specifying the aesthetic properties for the plot background.
 #' @field plotPanelBackgroundFill,plotPanelBackgroundColor,plotPanelBackgroundSize,plotPanelBackgroundLinetype A character string specifying the aesthetic properties for the plot panel (inside of plot) background.
 #' @field xAxisColor,xAxisSize,xAxisLinetype A character string specifying the aesthetic properties for the x-axis.
@@ -182,6 +182,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     titleFontFamily = "",
     titleAngle = 0,
     titleAlign = tlf::Alignments$left,
+    titleMargin = c(20, 2, 10, 2), # top, right, bottom, left
 
     # subtitle ------------------------------------
 
@@ -192,6 +193,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     subtitleFontFamily = "",
     subtitleAngle = 0,
     subtitleAlign = tlf::Alignments$left,
+    subtitleMargin = c(0, 2, 10, 2),
 
     # caption ------------------------------------
 
@@ -202,6 +204,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     captionFontFamily = "",
     captionAngle = 0,
     captionAlign = tlf::Alignments$right,
+    captionMargin = c(2, 2, 5, 2),
 
     # xLabel ------------------------------------
 
@@ -212,6 +215,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     xLabelFontFamily = "",
     xLabelAngle = 0,
     xLabelAlign = tlf::Alignments$center,
+    xLabelMargin = c(10, 2, 5, 2),
 
     # yLabel ------------------------------------
 
@@ -222,8 +226,9 @@ DefaultPlotConfiguration <- R6::R6Class(
     yLabelFontFamily = "",
     yLabelAngle = 90,
     yLabelAlign = tlf::Alignments$center,
+    yLabelMargin = c(5, 2, 10, 2),
 
-    # legend ------------------------------------
+    # legendTitle ------------------------------------
 
     legendPosition = NULL,
     legendTitle = NULL,
@@ -233,6 +238,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendTitleFontFace = tlf::FontFaces$plain,
     legendTitleAngle = 0,
     legendTitleAlign = tlf::Alignments$left,
+    legendTitleMargin = c(2, 2, 2, 2),
 
     # legendBox ------------------------------------
 
@@ -250,34 +256,37 @@ DefaultPlotConfiguration <- R6::R6Class(
     legendKeysFontFace = tlf::FontFaces$plain,
     legendKeysAngle = 0,
     legendKeysAlign = tlf::Alignments$left,
+    legendKeysMargin = c(2, 0, 2, 0),
 
     # XAxisConfiguration ------------------------------------
 
     xAxisLimits = NULL,
-    xAxisValuesLimits = NULL,
+    xValuesLimits = NULL,
     xAxisScale = NULL,
     xAxisTicks = NULL,
     xAxisTicksLabels = tlf::TickLabelTransforms$identity,
-    xAxisLabelTicksSize = NULL,
+    xAxisLabelTicksSize = 8,
     xAxisLabelTicksColor = "black",
     xAxisLabelTicksFontFamily = "",
     xAxisLabelTicksFontFace = tlf::FontFaces$plain,
     xAxisLabelTicksAngle = 0,
     xAxisLabelTicksAlign = tlf::Alignments$center,
+    xAxisLabelTicksMargin = c(2, 2, 2, 2),
 
     # YAxisConfiguration ------------------------------------
 
     yAxisLimits = NULL,
-    yAxisValuesLimits = NULL,
+    yValuesLimits = NULL,
     yAxisScale = NULL,
     yAxisTicks = NULL,
     yAxisTicksLabels = tlf::TickLabelTransforms$identity,
-    yAxisLabelTicksSize = NULL,
+    yAxisLabelTicksSize = 8,
     yAxisLabelTicksColor = "black",
     yAxisLabelTicksFontFamily = "",
     yAxisLabelTicksFontFace = tlf::FontFaces$plain,
     yAxisLabelTicksAngle = 90,
     yAxisLabelTicksAlign = tlf::Alignments$center,
+    yAxisLabelTicksMargin = c(2, 2, 2, 2),
 
     # watermark ------------------------------------
 
@@ -288,6 +297,7 @@ DefaultPlotConfiguration <- R6::R6Class(
     watermarkFontFace = tlf::FontFaces$plain,
     watermarkAngle = 30,
     watermarkAlign = tlf::Alignments$center,
+    watermarkMargin = c(1, 1, 1, 1),
 
     # plotBackground ------------------------------------
 

@@ -1,4 +1,4 @@
-context("DataColumn")
+# DataColumn
 
 createBaseGrid <- function() {
   DataColumn$new(rClr::clrNew("OSPSuite.Core.Domain.Data.BaseGrid", "baseGrid", getDimensionByName(ospDimensions$Time)))

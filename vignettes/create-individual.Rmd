@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.showtext = TRUE
 )
 ```
 
@@ -22,7 +23,7 @@ If the portable version of PK-Sim is used instead,  one must specify the path to
 
 ## Creating individuals
 
-The physiology of an individual is defined by the values of the simulation parameters. To simulate a specific individual, one has to generate a set of parameter values and apply these values to the model. **NOTE**: Currently, only individuals of the *same* species as in the original *.pkml simulation can be applied. I.e., if the simulation exported from PK-Sim represents a human individual, it is possible to simulate another human individual of different race, gender, etc., but it is not possible to simulate a rat. Though it is technically possible, and the simulation will produce some results, these will not valid.
+The physiology of an individual is defined by the values of the simulation parameters. To simulate a specific individual, one has to generate a set of parameter values and apply these values to the model. **NOTE**: Currently, only individuals of the *same* species as in the original *.pkml simulation can be applied. I.e., if the simulation exported from PK-Sim represents a human individual, it is possible to simulate another human individual of different population, gender, etc., but it is not possible to simulate a rat. Though it is technically possible, and the simulation will produce some results, these will not valid.
 
 The first step is creating an object describing *individual characteristics*. To see the list of available values for the arguments `species`, `population` (only for human), and `gender` (only for human), use the [enums](https://en.wikipedia.org/wiki/Enumerated_type) `Species`, `HumanPopulation`, and `Gender`, respectively. This object is then passed to the function `createIndividual` to generate a set of parameter values. The algorithm behind is the same used in PK-Sim when creating an Individual-Building Block.
 

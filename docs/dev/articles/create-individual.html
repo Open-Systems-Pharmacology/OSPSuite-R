@@ -121,10 +121,10 @@ generate a set of parameter values and apply these values to the model.
 <strong>NOTE</strong>: Currently, only individuals of the <em>same</em>
 species as in the original *.pkml simulation can be applied. I.e., if
 the simulation exported from PK-Sim represents a human individual, it is
-possible to simulate another human individual of different race, gender,
-etc., but it is not possible to simulate a rat. Though it is technically
-possible, and the simulation will produce some results, these will not
-valid.</p>
+possible to simulate another human individual of different population,
+gender, etc., but it is not possible to simulate a rat. Though it is
+technically possible, and the simulation will produce some results,
+these will not valid.</p>
 <p>The first step is creating an object describing <em>individual
 characteristics</em>. To see the list of available values for the
 arguments <code>species</code>, <code>population</code> (only for
@@ -185,7 +185,7 @@ Generated parameter values can be conveniently applied using the
 <span><span class="co"># Load simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "C:/Temp/RtmpElybQG/temp_libpath31c02dba7628/ospsuite/extdata/Aciclovir.pkml"</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Felix/AppData/Local/R/win-library/4.3/ospsuite/extdata/Aciclovir.pkml"</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Apply individual parameters</span></span>
@@ -286,7 +286,7 @@ individual. The list of supported ontogenies is stored in the
 <span><span class="co">#&gt;    Gestational age: 40.00 [week(s)] </span></span>
 <span><span class="co">#&gt;    Weight: 75.00 [kg] </span></span>
 <span><span class="co">#&gt;    Height: 1.75 [m] </span></span>
-<span><span class="co">#&gt;    Molecule MyProtein with ontogeny CYP3A4:</span></span>
+<span><span class="co">#&gt;    Molecule MyProtein with ontogeny CYP3A4: NULL</span></span>
 <span></span>
 <span><span class="va">individual</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividual.html">createIndividual</a></span><span class="op">(</span>individualCharacteristics <span class="op">=</span> <span class="va">individualCharacterstics</span><span class="op">)</span></span></code></pre></div>
 </div>

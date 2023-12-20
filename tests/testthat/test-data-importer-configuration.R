@@ -1,4 +1,4 @@
-context("New DataImporterConfiguration")
+# New DataImporterConfiguration
 
 test_that("it can create a new data importer configuration", {
   skip_on_os("linux") # TODO enable again as soon as npoi works under linux

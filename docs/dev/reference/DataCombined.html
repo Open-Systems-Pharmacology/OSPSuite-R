@@ -135,6 +135,7 @@ values were specified by the user for each dataset.</p></dd>
 <ul><li><p><a href="#method-DataCombined-addDataSets"><code>DataCombined$addDataSets()</code></a></p></li>
 <li><p><a href="#method-DataCombined-addSimulationResults"><code>DataCombined$addSimulationResults()</code></a></p></li>
 <li><p><a href="#method-DataCombined-setGroups"><code>DataCombined$setGroups()</code></a></p></li>
+<li><p><a href="#method-DataCombined-setDataTypes"><code>DataCombined$setDataTypes()</code></a></p></li>
 <li><p><a href="#method-DataCombined-removeGroupAssignment"><code>DataCombined$removeGroupAssignment()</code></a></p></li>
 <li><p><a href="#method-DataCombined-setDataTransformations"><code>DataCombined$setDataTransformations()</code></a></p></li>
 <li><p><a href="#method-DataCombined-toDataFrame"><code>DataCombined$toDataFrame()</code></a></p></li>
@@ -144,7 +145,7 @@ values were specified by the user for each dataset.</p></dd>
 <h3 id="method-adddatasets-">Method <code>addDataSets()</code><a class="anchor" aria-label="anchor" href="#method-adddatasets-"></a></h3>
 <p>Adds observed data.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span>, groups <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span>, groups <span class="op">=</span> <span class="cn">NULL</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -174,6 +175,11 @@ If no grouping is specified for any of the dataset, the column <code>group</code
 the data frame output will be all <code>NA</code>.</p></dd>
 
 
+<dt><code>silent</code></dt>
+<dd><p>A binary flag showing if warnings should be triggered when
+data sets are overwritten in the <code>DataCombined</code> object</p></dd>
+
+
 </dl><p></p></div>
 </div>
 <div class="section">
@@ -191,7 +197,8 @@ the data frame output will be all <code>NA</code>.</p></dd>
 <span>  population <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  individualIds <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  groups <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  silent <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -244,6 +251,11 @@ If no grouping is specified for any of the dataset, the column <code>group</code
 the data frame output will be all <code>NA</code>.</p></dd>
 
 
+<dt><code>silent</code></dt>
+<dd><p>A binary flag showing if warnings should be triggered when
+data sets are overwritten in the <code>DataCombined</code> object</p></dd>
+
+
 </dl><p></p></div>
 </div>
 <div class="section">
@@ -292,15 +304,41 @@ other groupings.</p></dd>
 <p><code>DataCombined</code> object with grouped datasets.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
-<h3 id="method-removegroupassignment-">Method <code>removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#method-removegroupassignment-"></a></h3>
-<p>Remove existing groupings for (observed and/or simulated) datasets.</p><div class="section">
+</div><p></p><hr><a id="method-DataCombined-setDataTypes"></a><div class="section">
+<h3 id="method-setdatatypes-">Method <code>setDataTypes()</code><a class="anchor" aria-label="anchor" href="#method-setdatatypes-"></a></h3>
+<p>set the type of data (observed or simulated) for datasets.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">removeGroupAssignment</span><span class="op">(</span><span class="va">names</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setDataTypes</span><span class="op">(</span><span class="va">names</span>, <span class="va">dataTypes</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>names</code></dt>
+<dd><p>a character vector of dataset names which dataTypes need to
+be changed.</p></dd>
+
+
+<dt><code>dataTypes</code></dt>
+<dd><p>a character vector of dataTypes (<code>"observed"</code> or
+<code>"simulated"</code>) to be assigned to the datasets (in order of <code>names</code>.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<p><code>DataCombined</code> object with modified dataTypes datasets.</p>
+</div>
+
+</div><p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
+<h3 id="method-removegroupassignment-">Method <code>removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#method-removegroupassignment-"></a></h3>
+<p>Remove existing groupings for (observed and/or simulated) datasets.</p><div class="section">
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">removeGroupAssignment</span><span class="op">(</span><span class="va">names</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>names</code></dt>
 <dd><p>A list of dataset names whose group assignment needs to be
 removed. Note that if you have specified new <code>names</code> while adding
@@ -312,14 +350,14 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
 <p><code>DataCombined</code> object with updated group assignments.</p>
 </div>
 
 </div><p></p><hr><a id="method-DataCombined-setDataTransformations"></a><div class="section">
 <h3 id="method-setdatatransformations-">Method <code>setDataTransformations()</code><a class="anchor" aria-label="anchor" href="#method-setdatatransformations-"></a></h3>
 <p>Transform raw data with required offsets and scale factors.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setDataTransformations</span><span class="op">(</span></span>
 <span>  forNames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xOffsets <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -331,7 +369,7 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>forNames</code></dt>
 <dd><p>A list of names specifying which observed datasets and/or
 paths in simulated dataset to transform with the specified
@@ -373,12 +411,12 @@ offset and scale factor values.</p><ul><li><p>For X and Y variables:
 <p>Note that the order in which you enter different object doesn't matter
 because the returned data frame is arranged alphabetically by dataset
 name.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>In the returned tibble data frame, the following columns will always be present:</p>
 <p>name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
@@ -387,7 +425,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div><p></p><hr><a id="method-DataCombined-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -395,12 +433,12 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div><p></p><hr><a id="method-DataCombined-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -444,10 +482,10 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span><span class="co"># Looking at group mappings</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">groupMap</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   group         name                                                    dataType</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Aciclovir PVB Organism|PeripheralVenousBlood|Aciclovir|Plasma (Perip… simulat…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Aciclovir PVB Vergin 1995.Iv                                          observed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name                                                            group dataType</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Ve… Acic… simulat…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Vergin 1995.Iv                                                  Acic… observed</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Looking at the applied transformations</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">dataTransformations</span></span></span>
@@ -460,23 +498,24 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span><span class="co"># Accessing the combined data frame</span></span></span>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 × 27</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name         group dataType xValues xUnit xDimension yValues yUnit yDimension</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Organism|Pe… Acic… simulat…       0 min   Time          0    µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Organism|Pe… Acic… simulat…       1 min   Time          3.25 µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Organism|Pe… Acic… simulat…       2 min   Time          9.10 µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Organism|Pe… Acic… simulat…       3 min   Time         15.0  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Organism|Pe… Acic… simulat…       4 min   Time         20.7  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Organism|Pe… Acic… simulat…       5 min   Time         26.2  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Organism|Pe… Acic… simulat…       6 min   Time         31.4  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Organism|Pe… Acic… simulat…       7 min   Time         36.4  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Organism|Pe… Acic… simulat…       8 min   Time         41.1  µmol… Concentra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Organism|Pe… Acic… simulat…       9 min   Time         45.5  µmol… Concentra…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>            0       0 Organism|Peri…    0    Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>            0       1 Organism|Peri…    3.25 Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>            0       2 Organism|Peri…    9.10 Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>            0       3 Organism|Peri…   15.0  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>            0       4 Organism|Peri…   20.7  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>            0       5 Organism|Peri…   26.2  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>            0       6 Organism|Peri…   31.4  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>            0       7 Organism|Peri…   36.4  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>            0       8 Organism|Peri…   41.1  Time       min   Concentra… µmol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>            0       9 Organism|Peri…   45.5  Time       min   Concentra… µmol…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 494 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 18 more variables: yErrorValues &lt;dbl&gt;, yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IndividualId &lt;int&gt;, molWeight &lt;dbl&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more variables: molWeight &lt;dbl&gt;, dataType &lt;chr&gt;, yErrorValues &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;, `Patient Id` &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

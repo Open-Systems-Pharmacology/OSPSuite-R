@@ -1,6 +1,6 @@
 # data to be used ---------------------------------------
 
-context("plotResidualsVsTime")
+# plotResidualsVsTime
 
 
 skip_if(getRversion() < "4.1")

@@ -1,4 +1,4 @@
-context("AgingData")
+# AgingData
 
 test_that("Creating an aging data and setting values works", {
   agingData <- AgingData$new()
