@@ -796,8 +796,8 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #'   quantityPaths = steadyState[[sim$id]]$paths,
 #'   values = steadyState[[sim$id]]$values, simulation = sim
 #' )
-getSteadyState <- function(quantitiesPaths = NULL,
-                           simulations,
+getSteadyState <- function(simulations,
+                           quantitiesPaths = NULL,
                            steadyStateTime = 1000,
                            ignoreIfFormula = TRUE,
                            stopIfNotFound = TRUE,
