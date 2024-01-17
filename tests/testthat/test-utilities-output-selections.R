@@ -50,4 +50,18 @@ test_that("It can clear all outputs of a given simulation", {
   expect_gt(length(outputSelections$allOutputs), 0)
   clearOutputs(sim)
   expect_equal(length(outputSelections$allOutputs), 0)
+}) # test for setOutputs()
+test_that("It can set outputs of a given simulation", {
+  addOutputs(c("Organism|Liver|Volume", "Organism|ArterialBlood|Plasma|Caffeine"), sim)
+  setOutputs(c("Organism|Liver|Volume"), sim)
+  expect_equal(length(outputSelections$allOutputs), 1)
+  expect_equal(sim$outputSelections$allOutputs[[1]]$path, "Organism|Liver|Volume")
+})
+
+# test for setOutputs()
+test_that("It can set outputs of a given simulation", {
+  addOutputs(c("Organism|Liver|Volume", "Organism|ArterialBlood|Plasma|Caffeine"), sim)
+  setOutputs(c("Organism|Liver|Volume"), sim)
+  expect_equal(length(outputSelections$allOutputs), 1)
+  expect_equal(sim$outputSelections$allOutputs[[1]]$path, "Organism|Liver|Volume")
 })

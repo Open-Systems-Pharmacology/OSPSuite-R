@@ -45,8 +45,9 @@
 #'
 #' # plot
 #' plotResidualsVsSimulated(myDataCombined,
-#' scaling = "log",
-#' defaultPlotConfiguration = myPlotConfiguration)
+#'   scaling = "log",
+#'   defaultPlotConfiguration = myPlotConfiguration
+#' )
 #'
 #' @export
 plotResidualsVsSimulated <- function(dataCombined,

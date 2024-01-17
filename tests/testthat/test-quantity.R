@@ -20,11 +20,11 @@ test_that("It can retrieve the parent of an entity", {
 test_that("It print the Scientific value of the Quantity", {
   quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
   quantity$value <- 0.001
-  expect_equal(capture.output(print(quantity))[3],"   Value: 1.00e-03 [l] ")
+  expect_equal(capture.output(print(quantity))[3], "   Value: 1.00e-03 [l] ")
   quantity$value <- 2
-  expect_equal(capture.output(print(quantity))[3],"   Value: 2.00 [l] ")
+  expect_equal(capture.output(print(quantity))[3], "   Value: 2.00 [l] ")
   quantity$value <- 10000
-  expect_equal(capture.output(print(quantity))[3],"   Value: 1.00e+04 [l] ")
+  expect_equal(capture.output(print(quantity))[3], "   Value: 1.00e+04 [l] ")
   quantity$value <- 10001.1
-  expect_equal(capture.output(print(quantity))[3],"   Value: 1.00e+04 [l] ")
+  expect_equal(capture.output(print(quantity))[3], "   Value: 1.00e+04 [l] ")
 })
