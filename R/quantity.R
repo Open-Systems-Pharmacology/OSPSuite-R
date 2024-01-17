@@ -116,11 +116,11 @@ Quantity <- R6::R6Class(
     printQuantityValue = function(caption) {
       if (self$value >= 10000 | self$value < 0.01) {
         QuantityValue <- formatNumerics(self$value, scientific = TRUE)
-      }else{
+      } else {
         QuantityValue <- formatNumerics(self$value)
       }
       if (self$unit != "") {
-        QuantityValue = paste0(QuantityValue, " [", self$unit, "]")
+        QuantityValue <- paste0(QuantityValue, " [", self$unit, "]")
       }
       private$printLine(caption, QuantityValue)
     },

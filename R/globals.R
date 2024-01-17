@@ -23,5 +23,3 @@ utils::globalVariables(
   package = "ospsuite",
   add = FALSE
 )
-
-

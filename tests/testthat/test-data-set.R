@@ -35,7 +35,7 @@ test_that("it can set the name of the data set", {
 test_that("it can work when setting a single value", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$setValues(xValues = 1, yValues = 10)
-  expect_equal(dataSet$xValues, 1, tolerance =  tolerance)
+  expect_equal(dataSet$xValues, 1, tolerance = tolerance)
   expect_equal(dataSet$yValues, 10, tolerance = tolerance)
 
   dataSet2 <- DataSet$new(name = dataSetName)

@@ -14,6 +14,5 @@
   }
 
   .initPackage()
-
 }
 # nocov end
