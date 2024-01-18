@@ -391,8 +391,6 @@ ospUnits <- NULL
 #'
 #' @return An XML document
 #' @import xml2
-#'
-#' @examples
 .parseDimensionsXML <- function() {
   # Read the XML file
   xmlFile <- system.file("lib/OSPSuite.Dimensions.xml", package = "ospsuite")
