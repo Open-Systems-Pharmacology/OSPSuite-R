@@ -467,9 +467,8 @@ test_that("It calculates steady-state for multiple simulations, multiple steadyS
   sim2 <- loadSimulation(simFilePath)
   output <- getSteadyState(
     simulations = c(sim1, sim2),
-    steadyStateTime = c(1, 2)
+    steadyStateTime = list(1, NULL)
   )
   expect_equal(names(output), c(sim1$id, sim2$id))
-
   expect_equal(names(output[[sim1$id]]), c("paths", "values"))
 })

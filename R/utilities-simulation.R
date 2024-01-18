@@ -759,10 +759,13 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #'   calculated or estimated in any other way than simulating for the given time.
 #'
 #'
-#' @param steadyStateTime Simulation time (minutes). Must be long enough for
-#'   system to reach a steady-state. 1000 by default. Either a single value (will
-#'   be applied for all simulations), or a vector of values specific for each
-#'   simulation. In latter case, must have equal size as `simulations`.
+#' @param steadyStateTime Simulation time (minutes). In `NULL` (default), the
+#' default simulation time is the start time of the last application plus three
+#' days. The simulated time must be long enough for the system to reach a steady-state.
+#' Either a single value (will be applied for all simulations), or a list of
+#' values specific for each simulation. In latter case, must have equal size as
+#' `simulations`. When providing a list, `NULL` is allowed to calculate the
+#' time based on the last application.
 #' @param quantitiesPaths List of quantity paths (molecules and/or parameters)
 #'   for which the steady-state will be simulated. If `NULL` (default), all
 #'   molecules and state variable parameters are considered. The same list is
@@ -798,21 +801,25 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #' )
 getSteadyState <- function(simulations,
                            quantitiesPaths = NULL,
-                           steadyStateTime = 1000,
+                           steadyStateTime = NULL,
                            ignoreIfFormula = TRUE,
                            stopIfNotFound = TRUE,
                            lowerThreshold = 1e-15,
                            simulationRunOptions = NULL) {
+  # Default time that is added to the time of the last administration for steady-state
+  DELTA_STEADY_STATE <- 3*24*60 # 3 days in minutes
+
   ospsuite.utils::validateIsOfType(simulations, type = "Simulation")
   ospsuite.utils::validateIsString(quantitiesPaths, nullAllowed = TRUE)
-  ospsuite.utils::validateIsNumeric(steadyStateTime, nullAllowed = FALSE)
+  # Unlisting `steadyStateTime` because it can be a list of values, including NULL
+  ospsuite.utils::validateIsNumeric(unlist(steadyStateTime), nullAllowed = FALSE)
   simulations <- ospsuite.utils::toList(simulations)
 
-  if (any(steadyStateTime <= 0)) {
+  if (any(unlist(steadyStateTime) <= 0)) {
     stop(messages$steadyStateTimeNotPositive(steadyStateTime))
   }
 
-  # If `steadyStateTime` is a vector of values, it must be of the same size as
+  # If `steadyStateTime` is a list of values, it must be of the same size as
   # the list of simulations.
   # Otherwise, repeat the value for the number of simulations
   if (length(steadyStateTime) > 1) {
@@ -830,8 +837,30 @@ getSteadyState <- function(simulations,
     simulation <- simulations[[idx]]
     simId <- simulation$id
     # Set simulation time to the steady-state value.
+    # If the specified steady-state time is NULL, the simulation time is set to
+    # the time of the last application plus a specified delta.
     clearOutputIntervals(simulation = simulation)
-    simulation$outputSchema$addTimePoints(timePoints = steadyStateTime[[idx]])
+    if (is.null(steadyStateTime[[idx]])){
+      latestAdministration <- 0
+      # get the list of all administered molecules in the simulation
+      administeredMolecules <- simulation$allXenobioticFloatingMoleculeNames()
+      for (mol in administeredMolecules) {
+        # Iterate through all applications of each molecule
+        applications <- simulation$allApplicationsFor(mol)
+        for (app in applications) {
+          # if the time of the application is later than the latest administration
+          if (app$startTime$value > latestAdministration) {
+            # set the latest administration to the time of the application
+            latestAdministration <- app$startTime$value
+          }
+        }
+      }
+      # set the simulation time to the time of the last application plus the delta
+      simulation$outputSchema$addTimePoints(timePoints = latestAdministration + DELTA_STEADY_STATE)
+    } else {
+      simulation$outputSchema$addTimePoints(timePoints = steadyStateTime[[idx]])
+    }
+
     # If no quantities are explicitly specified, simulate all outputs.
     if (is.null(quantitiesPaths)) {
       quantitiesPathsMap[[idx]] <- getAllStateVariablesPaths(simulation)
