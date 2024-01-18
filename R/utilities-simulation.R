@@ -830,21 +830,20 @@ getSteadyState <- function(simulations,
     simulation <- simulations[[idx]]
     simId <- simulation$id
     # Set simulation time to the steady-state value.
-    ospsuite::clearOutputIntervals(simulation = simulation)
+    clearOutputIntervals(simulation = simulation)
     simulation$outputSchema$addTimePoints(timePoints = steadyStateTime[[idx]])
     # If no quantities are explicitly specified, simulate all outputs.
     if (is.null(quantitiesPaths)) {
-      quantitiesPathsMap[[idx]] <- ospsuite::getAllStateVariablesPaths(simulation)
+      quantitiesPathsMap[[idx]] <- getAllStateVariablesPaths(simulation)
     } else {
       quantitiesPathsMap[[idx]] <- quantitiesPaths
     }
     names(quantitiesPathsMap)[[idx]] <- simId
-    ospsuite::clearOutputs(simulation)
-    ospsuite::addOutputs(quantitiesOrPaths = quantitiesPathsMap[[idx]], simulation = simulation)
+    setOutputs(quantitiesOrPaths = quantitiesPathsMap[[idx]], simulation = simulation)
   }
 
   # Run simulations concurrently
-  simulationResults <- ospsuite::runSimulations(
+  simulationResults <- runSimulations(
     simulations = simulations,
     simulationRunOptions = simulationRunOptions
   )
@@ -856,7 +855,7 @@ getSteadyState <- function(simulations,
     simId <- simulation$id
     simResults <- simulationResults[[simId]]
 
-    allOutputs <- ospsuite::getOutputValues(
+    allOutputs <- getOutputValues(
       simResults,
       quantitiesOrPaths = quantitiesPathsMap[[simId]],
       stopIfNotFound = stopIfNotFound,
@@ -866,7 +865,7 @@ getSteadyState <- function(simulations,
     # Get the end values of all outputs
     endValues <- lapply(quantitiesPathsMap[[simId]], function(path) {
       # Check if the quantity is defined by an explicit formula
-      isFormulaExplicit <- ospsuite::isExplicitFormulaByPath(
+      isFormulaExplicit <- isExplicitFormulaByPath(
         path = enc2utf8(path),
         simulation = simulation,
         stopIfNotFound = stopIfNotFound
@@ -959,7 +958,7 @@ getSteadyState <- function(simulations,
     # reset the output intervals
     simulation$outputSchema$clear()
     for (outputInterval in simStateList$outputIntervals[[simId]]) {
-      ospsuite::addOutputInterval(
+      addOutputInterval(
         simulation = simulation,
         startTime = outputInterval$startTime$value,
         endTime = outputInterval$endTime$value,
@@ -970,9 +969,9 @@ getSteadyState <- function(simulations,
       simulation$outputSchema$addTimePoints(simStateList$timePoints[[simId]])
     }
     # Reset output selections
-    ospsuite::clearOutputs(simulation)
+    clearOutputs(simulation)
     for (outputSelection in simStateList$outputSelections[[simId]]) {
-      ospsuite::addOutputs(quantitiesOrPaths = outputSelection$path, simulation = simulation)
+      addOutputs(quantitiesOrPaths = outputSelection$path, simulation = simulation)
     }
   }
 }
