@@ -71,6 +71,9 @@ not present in the `DataCombined`.
   - `DataCombined` gets a new method `setDataTypes()` to change data types (observed
   or simulated) for existing data sets. This method is useful when you want to
   enforce a certain data type, e.g., for adding artificial data set as simulated results.
+  - New function `setOutputs()` to change outputs of `SimulationBatch` objects.
+  It combines `clearOutputs()` and `setOutputs()` in one function.
+  
 
 # ospsuite 11.1.197
 
