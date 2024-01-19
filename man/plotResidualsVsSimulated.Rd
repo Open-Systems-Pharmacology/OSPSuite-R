@@ -58,8 +58,9 @@ myPlotConfiguration$caption <- "My Sources"
 
 # plot
 plotResidualsVsSimulated(myDataCombined,
-scaling = "log",
-defaultPlotConfiguration = myPlotConfiguration)
+  scaling = "log",
+  defaultPlotConfiguration = myPlotConfiguration
+)
 
 }
 \seealso{
