@@ -39,12 +39,16 @@ Depending on the simulation of interest, some steps might take much longer than 
 This is by far the easiest use cases. A simulation is loaded from a .pkml file and the outputs are calculated. In this use case, step 4 and 5 are automatically lumped together in one single call
 (See [Run Simulations](run-simulation.html) for more details).
 
+![](images/simple_simulation.drawio.png)
+
 ## Running a single simulation multiple times and varying some parameters/initial values between each run
 
 This is already a use case where the optimal and most efficient way depends drastically on the simulation at hand.
 Let's assume that we want to calculate the outputs of a simulation for different doses.
 
 A simple implementation could follow the following idea, where a simulation is loaded once, the dose value is updated and the simulation is calculated for each dose of interest. 
+
+![](images/iterative_simulation.drawio.png)
 
 ```{r SequentialRun}
 library(ospsuite)
@@ -73,6 +77,9 @@ This implementation is fairly easy to understand, but has potentially one big pe
 If the simulation only takes a few seconds to run, this solution is absolutely acceptable. However, if we assume that a simulation takes 1h to run, this code would take over 5h to complete, as each `runSimulations` call would be executed sequentially. 
 
 When the simulation run time (5) is much greater than the loading (1) and initialization time (4), a better approach is to load the simulation multiple times and run the simulation concurrently (i.e. in parallel).
+
+![](images/parallel_simulation.drawio.png)
+
 
 Consider the following implementation:
 
@@ -108,6 +115,9 @@ This implementation is also fairly straight forward. We load the simulation mult
 ## Optimized loading for running simulations with predefined set of variable parameters
 
 This is a more advanced use case, typically when implementing some kind of optimization or sensitivity algorithms. The `{ospsuite}` package introduces the concept of a **simulation batch**. With a simulation batch, the variable parameters (or initial values) of a simulation to vary between each run are specified explicitly during the creation of the simulation batch. This allows the simulation engine to speed up the system significantly as some equations can be rewritten and simplified. A simulation batch also keeps the simplified simulation in memory. That means that running a simulation again with a new set of values will be much faster, as the initialization phase (4) is only done if required and not for every run. 
+
+![](images/batch_simulation.drawio.png)
+
 
 Consider the following implementation. We first create two simulation batches for the same model
 and define the parameter values that can be changed between runs. Note that, as opposed to 

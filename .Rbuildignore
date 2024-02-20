@@ -34,3 +34,4 @@ tests\^spelling
 ^man-roxygen/.
 ^BinaryFiles$
 ^README\.Rmd$
+^vignettes/images/simulation_lifecycle_flowcharts\.drawio$

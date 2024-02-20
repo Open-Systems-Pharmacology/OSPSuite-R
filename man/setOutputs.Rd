@@ -20,5 +20,4 @@ The quantities can either be specified using explicit instances or using paths.
 This function clears the output selection before adding the new quantities.
 See \code{addOutputs} for adding quantities without clearing the output selection.
 See \code{clearOutputs} for clearing the output selection without adding new quantities.
-@export
 }

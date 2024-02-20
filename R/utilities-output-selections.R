@@ -71,7 +71,7 @@ clearOutputs <- function(simulation) {
 #'  This function clears the output selection before adding the new quantities.
 #'  See `addOutputs` for adding quantities without clearing the output selection.
 #'  See `clearOutputs` for clearing the output selection without adding new quantities.
-#'  @export
+#' @export
 setOutputs <- function(quantitiesOrPaths, simulation) {
   clearOutputs(simulation)
   addOutputs(quantitiesOrPaths, simulation)
