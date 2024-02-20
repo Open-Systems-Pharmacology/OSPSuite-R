@@ -801,7 +801,7 @@ getSteadyState <- function(simulations,
                            lowerThreshold = 1e-15,
                            simulationRunOptions = NULL) {
   # Default time that is added to the time of the last administration for steady-state
-  DELTA_STEADY_STATE <- 3*24*60 # 3 days in minutes
+  DELTA_STEADY_STATE <- 3 * 24 * 60 # 3 days in minutes
 
   ospsuite.utils::validateIsOfType(simulations, type = "Simulation")
   ospsuite.utils::validateIsString(quantitiesPaths, nullAllowed = TRUE)
@@ -834,7 +834,7 @@ getSteadyState <- function(simulations,
     # If the specified steady-state time is NULL, the simulation time is set to
     # the time of the last application plus a specified delta.
     clearOutputIntervals(simulation = simulation)
-    if (is.null(steadyStateTime[[idx]])){
+    if (is.null(steadyStateTime[[idx]])) {
       latestAdministration <- 0
       # get the list of all administered molecules in the simulation
       administeredMolecules <- simulation$allXenobioticFloatingMoleculeNames()
