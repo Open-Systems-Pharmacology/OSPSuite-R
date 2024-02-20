@@ -472,3 +472,14 @@ test_that("It calculates steady-state for multiple simulations, multiple steadyS
   expect_equal(names(output), c(sim1$id, sim2$id))
   expect_equal(names(output[[sim1$id]]), c("paths", "values"))
 })
+
+test_that("`exportSteadyStateToXLS` generates excel sheet path", {
+  withr::with_tempdir(
+    code = {
+      simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+      sim <- loadSimulation(simFilePath)
+      path <- exportSteadyStateToXLS(sim)
+      expect_true(endsWith(path, "Aciclovir_SS.xlsx"))
+    }
+  )
+})
