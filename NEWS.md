@@ -1,5 +1,17 @@
 # ospsuite 12.0 (development)
 
+## New features
+
+- Added a function `getSteadyState()` to calculate steady state values for simulations.
+This function is of particular use for models of endogenous substrates, where changing
+a parameter value (e.g., the production rate) will change the steady-state values of
+the substrate.
+The steady-state is considered to be the last values of the molecules amounts 
+  and state variable parameters in the simulation with sufficiently long simulation
+  time, i.e., where the rates of the processes do not (significantly) change.
+  The steady-state is NOT analytically calculated or estimated in any other way 
+  than simulating for the given time.
+
 ## Breaking Changes
 
   - The single argument of the `getBaseUnit()` function is now named

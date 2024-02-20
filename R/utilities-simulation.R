@@ -749,3 +749,247 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 
   return(pathEnumList)
 }
+
+#' Get the steady-state values of species and state variable parameters.
+#'
+#' @details The steady-state is considered to be the last values of the molecules
+#' amounts and state variable parameters in the simulation with sufficiently long
+#' simulation time, i.e., where the rates of
+#'   the processes do not (significantly) change. The steady-state is NOT analytically
+#'   calculated or estimated in any other way than simulating for the given time.
+#'
+#'
+#' @param steadyStateTime Simulation time (minutes). In `NULL` (default), the
+#' default simulation time is the start time of the last application plus three
+#' days. The simulated time must be long enough for the system to reach a steady-state.
+#' Either a single value (will be applied for all simulations), or a list of
+#' values specific for each simulation. In latter case, must have equal size as
+#' `simulations`. When providing a list, `NULL` is allowed to calculate the
+#' time based on the last application.
+#' @param quantitiesPaths List of quantity paths (molecules and/or parameters)
+#'   for which the steady-state will be simulated. If `NULL` (default), all
+#'   molecules and state variable parameters are considered. The same list is
+#'   applied for all simulations.
+#' @param simulations `Simulation` object or a list of `Simulation` objects
+#' @param ignoreIfFormula If `TRUE` (default), species and parameters with
+#'   initial values defined by a formula are not included.
+#' @param lowerThreshold Numerical value (in default unit of the output).
+#' Any steady-state values below this value are considered as numerical noise
+#' and replaced by 0. If `lowerThreshold` is `NULL`, no cut-off is applied.
+#' Default value is 1e-15.
+#' @param simulationRunOptions Optional instance of a `SimulationRunOptions`
+#'  used during the simulation run.
+#'
+#' @return A named list, where the names are the IDs of the simulations and the
+#'   entries are lists containing `paths` and their `values` at the end of the
+#'   simulation.
+#' @import ospsuite.utils
+#' @export
+#' @examples
+#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' steadyState <- getSteadyState(simulations = sim)
+#' # Set initial values for steady-state simulations
+#' setQuantityValuesByPath(
+#'   quantityPaths = steadyState[[sim$id]]$paths,
+#'   values = steadyState[[sim$id]]$values, simulation = sim
+#' )
+getSteadyState <- function(simulations,
+                           quantitiesPaths = NULL,
+                           steadyStateTime = NULL,
+                           ignoreIfFormula = TRUE,
+                           lowerThreshold = 1e-15,
+                           simulationRunOptions = NULL) {
+  # Default time that is added to the time of the last administration for steady-state
+  DELTA_STEADY_STATE <- 3 * 24 * 60 # 3 days in minutes
+
+  ospsuite.utils::validateIsOfType(simulations, type = "Simulation")
+  ospsuite.utils::validateIsString(quantitiesPaths, nullAllowed = TRUE)
+  # Unlisting `steadyStateTime` because it can be a list of values, including NULL
+  ospsuite.utils::validateIsNumeric(unlist(steadyStateTime), nullAllowed = TRUE)
+  simulations <- ospsuite.utils::toList(simulations)
+
+  if (any(unlist(steadyStateTime) <= 0)) {
+    stop(messages$steadyStateTimeNotPositive(steadyStateTime))
+  }
+
+  # If `steadyStateTime` is a list of values, it must be of the same size as
+  # the list of simulations.
+  # Otherwise, repeat the value for the number of simulations
+  if (length(steadyStateTime) > 1) {
+    ospsuite.utils::validateIsSameLength(simulations, steadyStateTime)
+  } else {
+    steadyStateTime <- rep(steadyStateTime, length(simulations))
+  }
+
+  # First prepare all simulations by setting their outputs and time intervals
+  # If no quantities have been specified, the quantities paths may be different
+  # for each simulation and must be stored separately
+  simulationState <- .storeSimulationState(simulations)
+  quantitiesPathsMap <- vector(mode = "list", length = length(simulations))
+  for (idx in seq_along(simulations)) {
+    simulation <- simulations[[idx]]
+    simId <- simulation$id
+    # Set simulation time to the steady-state value.
+    # If the specified steady-state time is NULL, the simulation time is set to
+    # the time of the last application plus a specified delta.
+    clearOutputIntervals(simulation = simulation)
+    if (is.null(steadyStateTime[[idx]])) {
+      latestAdministration <- 0
+      # get the list of all administered molecules in the simulation
+      administeredMolecules <- simulation$allXenobioticFloatingMoleculeNames()
+      for (mol in administeredMolecules) {
+        # Iterate through all applications of each molecule
+        applications <- simulation$allApplicationsFor(mol)
+        for (app in applications) {
+          # if the time of the application is later than the latest administration
+          if (app$startTime$value > latestAdministration) {
+            # set the latest administration to the time of the application
+            latestAdministration <- app$startTime$value
+          }
+        }
+      }
+      # set the simulation time to the time of the last application plus the delta
+      simulation$outputSchema$addTimePoints(timePoints = latestAdministration + DELTA_STEADY_STATE)
+    } else {
+      simulation$outputSchema$addTimePoints(timePoints = steadyStateTime[[idx]])
+    }
+
+    # If no quantities are explicitly specified, simulate all outputs.
+    if (is.null(quantitiesPaths)) {
+      quantitiesPathsMap[[idx]] <- getAllStateVariablesPaths(simulation)
+    } else {
+      quantitiesPathsMap[[idx]] <- quantitiesPaths
+    }
+    names(quantitiesPathsMap)[[idx]] <- simId
+    setOutputs(quantitiesOrPaths = quantitiesPathsMap[[idx]], simulation = simulation)
+  }
+
+  # Run simulations concurrently
+  simulationResults <- runSimulations(
+    simulations = simulations,
+    simulationRunOptions = simulationRunOptions
+  )
+
+  # Iterate through simulations and get their outputs
+  outputMap <- vector(mode = "list", length = length(simulations))
+  for (idx in seq_along(simulations)) {
+    simulation <- simulations[[idx]]
+    simId <- simulation$id
+    simResults <- simulationResults[[simId]]
+
+    allOutputs <- getOutputValues(
+      simResults,
+      quantitiesOrPaths = quantitiesPathsMap[[simId]],
+      addMetaData = FALSE
+    )
+
+    # Get the end values of all outputs
+    endValues <- lapply(quantitiesPathsMap[[simId]], function(path) {
+      # Check if the quantity is defined by an explicit formula
+      isFormulaExplicit <- isExplicitFormulaByPath(
+        path = enc2utf8(path),
+        simulation = simulation
+      )
+
+      if (ignoreIfFormula && isFormulaExplicit) {
+        return(NULL)
+      }
+      value <- tail(allOutputs$data[path][[1]], 1)
+      # If the value is below the cut-off threshold, replace it by 0
+      if (!is.null(lowerThreshold) && value < lowerThreshold) {
+        value <- 0
+      }
+      return(value)
+    })
+
+    # Get the indices for which the outputs have been calculated
+    indices <- which(lengths(endValues) != 0)
+
+    # Reset simulation output intervals and output selections
+    .restoreSimulationState(simulations, simulationState)
+    outputMap[[idx]] <- list(paths = quantitiesPathsMap[[simId]][indices], values = endValues[indices])
+    names(outputMap)[[idx]] <- simId
+  }
+  return(outputMap)
+}
+
+#' Stores current simulation output state
+#'
+#' @description Stores simulation output intervals, output time points,
+#' and output selections in the current state.
+#'
+#' @param simulations List of `Simulation` objects
+#'
+#' @return A named list with entries `outputIntervals`, `timePoints`, and
+#' `outputSelections`. Every entry is a named list with names being the IDs
+#' of the simulations.
+#' @keywords internal
+#' @noRd
+.storeSimulationState <- function(simulations) {
+  simulations <- c(simulations)
+  # Create named vectors for the output intervals, time points, and output
+  # selections of the simulations in their initial state. Names are IDs of
+  # simulations.
+  oldOutputIntervals <-
+    oldTimePoints <-
+    oldOutputSelections <-
+    ids <- vector("list", length(simulations))
+
+  for (idx in seq_along(simulations)) {
+    simulation <- simulations[[idx]]
+    simId <- simulation$id
+    # Have to reset both the output intervals and the time points!
+    oldOutputIntervals[[idx]] <- simulation$outputSchema$intervals
+    oldTimePoints[[idx]] <- simulation$outputSchema$timePoints
+    oldOutputSelections[[idx]] <- simulation$outputSelections$allOutputs
+    ids[[idx]] <- simId
+  }
+  names(oldOutputIntervals) <-
+    names(oldTimePoints) <-
+    names(oldOutputSelections) <- ids
+
+  return(list(
+    outputIntervals = oldOutputIntervals,
+    timePoints = oldTimePoints,
+    outputSelections = oldOutputSelections
+  ))
+}
+
+
+#' Restore simulation output state
+#'
+#' @description Restores simulation output intervals, output time points,
+#' and output selections to the values stored in `simStateList`.
+#' @inheritParams .storeSimulationState
+#' @param simStateList Output of the function `.storeSimulationState`.
+#' A named list with entries `outputIntervals`, `timePoints`, and
+#' `outputSelections`. Every entry is a named list with names being the IDs of
+#' the simulations.
+#'
+#' @keywords internal
+#' @noRd
+.restoreSimulationState <- function(simulations, simStateList) {
+  simulations <- c(simulations)
+  for (simulation in simulations) {
+    simId <- simulation$id
+    # reset the output intervals
+    simulation$outputSchema$clear()
+    for (outputInterval in simStateList$outputIntervals[[simId]]) {
+      addOutputInterval(
+        simulation = simulation,
+        startTime = outputInterval$startTime$value,
+        endTime = outputInterval$endTime$value,
+        resolution = outputInterval$resolution$value
+      )
+    }
+    if (length(simStateList$timePoints[[simId]]) > 0) {
+      simulation$outputSchema$addTimePoints(simStateList$timePoints[[simId]])
+    }
+    # Reset output selections
+    clearOutputs(simulation)
+    for (outputSelection in simStateList$outputSelections[[simId]]) {
+      addOutputs(quantitiesOrPaths = outputSelection$path, simulation = simulation)
+    }
+  }
+}

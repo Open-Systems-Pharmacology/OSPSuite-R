@@ -449,3 +449,26 @@ test_that("it can explore a simulation by instance", {
   path <- tree$Organism$Liver$Volume$path
   expect_equal(path, "Organism|Liver|Volume")
 })
+
+test_that("It calculates steady-state for multiple simulations, single steadyStateTime", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim1 <- loadSimulation(simFilePath)
+  sim2 <- loadSimulation(simFilePath)
+  output <- getSteadyState(
+    simulations = c(sim1, sim2),
+    steadyStateTime = 1
+  )
+  expect_equal(names(output), c(sim1$id, sim2$id))
+})
+
+test_that("It calculates steady-state for multiple simulations, multiple steadyStateTime", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim1 <- loadSimulation(simFilePath)
+  sim2 <- loadSimulation(simFilePath)
+  output <- getSteadyState(
+    simulations = c(sim1, sim2),
+    steadyStateTime = list(1, NULL)
+  )
+  expect_equal(names(output), c(sim1$id, sim2$id))
+  expect_equal(names(output[[sim1$id]]), c("paths", "values"))
+})
