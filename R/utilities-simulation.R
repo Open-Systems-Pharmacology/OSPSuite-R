@@ -806,7 +806,7 @@ getSteadyState <- function(simulations,
   ospsuite.utils::validateIsOfType(simulations, type = "Simulation")
   ospsuite.utils::validateIsString(quantitiesPaths, nullAllowed = TRUE)
   # Unlisting `steadyStateTime` because it can be a list of values, including NULL
-  ospsuite.utils::validateIsNumeric(unlist(steadyStateTime), nullAllowed = FALSE)
+  ospsuite.utils::validateIsNumeric(unlist(steadyStateTime), nullAllowed = TRUE)
   simulations <- ospsuite.utils::toList(simulations)
 
   if (any(unlist(steadyStateTime) <= 0)) {
