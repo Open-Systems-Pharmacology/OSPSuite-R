@@ -925,6 +925,7 @@ getSteadyState <- function(simulations,
 #' `outputSelections`. Every entry is a named list with names being the IDs
 #' of the simulations.
 #' @keywords internal
+#' @noRd
 .storeSimulationState <- function(simulations) {
   simulations <- c(simulations)
   # Create named vectors for the output intervals, time points, and output
@@ -967,6 +968,7 @@ getSteadyState <- function(simulations,
 #' the simulations.
 #'
 #' @keywords internal
+#' @noRd
 .restoreSimulationState <- function(simulations, simStateList) {
   simulations <- c(simulations)
   for (simulation in simulations) {
