@@ -773,11 +773,6 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #' @param simulations `Simulation` object or a list of `Simulation` objects
 #' @param ignoreIfFormula If `TRUE` (default), species and parameters with
 #'   initial values defined by a formula are not included.
-#' @param stopIfNotFound Boolean. If `TRUE` (default), an error is thrown when
-#'   results for certain species were not generated. This may happen when due to
-#'   numerical problems some values cannot be calculated, though the whole
-#'   simulation converges. Setting this argument to `FALSE` allows to ignore
-#'   such errors. Check the outputs for empty values when using this option.
 #' @param lowerThreshold Numerical value (in default unit of the output).
 #' Any steady-state values below this value are considered as numerical noise
 #' and replaced by 0. If `lowerThreshold` is `NULL`, no cut-off is applied.
@@ -803,7 +798,6 @@ getSteadyState <- function(simulations,
                            quantitiesPaths = NULL,
                            steadyStateTime = NULL,
                            ignoreIfFormula = TRUE,
-                           stopIfNotFound = TRUE,
                            lowerThreshold = 1e-15,
                            simulationRunOptions = NULL) {
   # Default time that is added to the time of the last administration for steady-state
@@ -887,7 +881,6 @@ getSteadyState <- function(simulations,
     allOutputs <- getOutputValues(
       simResults,
       quantitiesOrPaths = quantitiesPathsMap[[simId]],
-      stopIfNotFound = stopIfNotFound,
       addMetaData = FALSE
     )
 
@@ -896,19 +889,13 @@ getSteadyState <- function(simulations,
       # Check if the quantity is defined by an explicit formula
       isFormulaExplicit <- isExplicitFormulaByPath(
         path = enc2utf8(path),
-        simulation = simulation,
-        stopIfNotFound = stopIfNotFound
+        simulation = simulation
       )
 
       if (ignoreIfFormula && isFormulaExplicit) {
         return(NULL)
       }
       value <- tail(allOutputs$data[path][[1]], 1)
-      # Skip if value is NA. This happens if stopIfNotFound = FALSE and some
-      # species are not calculated
-      if (is.na(value)) {
-        return(NULL)
-      }
       # If the value is below the cut-off threshold, replace it by 0
       if (!is.null(lowerThreshold) && value < lowerThreshold) {
         value <- 0
