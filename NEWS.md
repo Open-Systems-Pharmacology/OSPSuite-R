@@ -1,7 +1,7 @@
 # ospsuite 12.0 (development)
 
 ## New dependencies
-- `{writexl}`
+- `{openxlsx}`
 
 ## New features
 

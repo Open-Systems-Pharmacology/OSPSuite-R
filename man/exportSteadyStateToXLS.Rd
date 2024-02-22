@@ -48,7 +48,7 @@ Default value is 1e-15.}
 used during the simulation run.}
 }
 \value{
-The path to the created Excel file.
+An \code{openxlsx} workbook object.
 }
 \description{
 Export steady-state to Excel in the format that can be imported in MoBi.

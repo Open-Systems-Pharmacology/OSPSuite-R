@@ -1009,7 +1009,7 @@ getSteadyState <- function(simulations,
 #' In contrast to `getSteadyState()`, only one simulation is supported.
 #' @inheritParams getSteadyState
 #' @import ospsuite.utils
-#' @returns The path to the created Excel file.
+#' @returns An `openxlsx` workbook object.
 #' @export
 exportSteadyStateToXLS <- function(simulation,
                                    quantitiesPaths = NULL,
@@ -1128,5 +1128,5 @@ exportSteadyStateToXLS <- function(simulation,
   }
 
   # Write the data into an excel file.
-  writexl::write_xlsx(data, path = resultsXLSPath, col_names = TRUE)
+  openxlsx::write.xlsx(x = data, file = resultsXLSPath, colNames = TRUE)
 }
