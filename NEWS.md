@@ -74,6 +74,8 @@ not present in the `DataCombined`.
   - New function `setOutputs()` to change outputs of `SimulationBatch` objects.
   It combines `clearOutputs()` and `setOutputs()` in one function.
   - New simulations life cycle flowcharts in the `vignette("efficient-calculations")` vignette.
+  - New internal function `.setEndSimulationTime()` to set the end time of the
+    simulation. The function will either extend or shorten the simulation time to the specified end time.
   
 
 # ospsuite 11.1.197
