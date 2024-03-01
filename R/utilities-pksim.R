@@ -23,8 +23,8 @@ initPKSim <- function(pksimFolderPath = NULL) {
   if (!file.exists(pksimR)) {
     stop(messages$pkSimRPathInvalid(pksimR))
   }
-  rSharp::clrLoadAssembly(pksimR)
-  rSharp::clrCallStatic("PKSim.R.Api", "InitializeOnce")
+  rSharp::loadAssembly(pksimR)
+  rSharp::callStatic("PKSim.R.Api", "InitializeOnce")
 
   # Only set the flag if initialization was successful
   ospsuiteEnv$isPKSimLoaded <- TRUE

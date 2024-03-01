@@ -11,7 +11,7 @@
 
   .addPackageLibToPath()
 
-  rSharp::clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
+  rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
 
   # Initialize once
   apiConfig <- ApiConfig$new()
