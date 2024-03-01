@@ -14,7 +14,7 @@ SimulationBatchOptions <- R6::R6Class(
     #' @param variableMolecules Vector of absolute molecule paths to be varied in a simulation batch
     #' @return A new `SimulationBatchOptions` object.
     initialize = function(variableParameters = NULL, variableMolecules = NULL) {
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationBatchOptions")
+      ref <- rSharp::clrNew("OSPSuite.R.Domain.SimulationBatchOptions")
       super$initialize(ref)
 
       if (!is.null(variableMolecules)) {

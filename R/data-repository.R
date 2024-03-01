@@ -46,9 +46,9 @@ DataRepository <- R6::R6Class(
       if (missing(value)) {
         if (is.null(private$.metaData)) {
           netExtendedProperties <- private$wrapReadOnlyProperty("ExtendedProperties", value)
-          netMetaData <- rClr::clrGet(netExtendedProperties, "All")
-          names <- unlist(lapply(netMetaData, function(data) rClr::clrGet(data, "Name")), use.names = FALSE)
-          metaData <- lapply(netMetaData, function(data) rClr::clrGet(data, "ValueAsObject"))
+          netMetaData <- rSharp::clrGet(netExtendedProperties, "All")
+          names <- unlist(lapply(netMetaData, function(data) rSharp::clrGet(data, "Name")), use.names = FALSE)
+          metaData <- lapply(netMetaData, function(data) rSharp::clrGet(data, "ValueAsObject"))
           names(metaData) <- names
           private$.metaData <- metaData
         }
@@ -63,7 +63,7 @@ DataRepository <- R6::R6Class(
     #' @param column Column to add
     addColumn = function(column) {
       validateIsOfType(column, "DataColumn")
-      rClr::clrCall(self$ref, "Add", column$ref)
+      rSharp::clrCall(self$ref, "Add", column$ref)
       # we need to reset the cache when adding a new column
       private$.columns <- NULL
       private$.baseGrid <- NULL
@@ -73,7 +73,7 @@ DataRepository <- R6::R6Class(
     #' @param ref Optional underlying DataRepository. If it is not provided, a new instance will be created
     #' @return A new `DataRepository` object.
     initialize = function(ref = NULL) {
-      super$initialize(ref %||% rClr::clrNew("OSPSuite.Core.Domain.Data.DataRepository"))
+      super$initialize(ref %||% rSharp::clrNew("OSPSuite.Core.Domain.Data.DataRepository"))
     },
     #' @description
     #' Print the object to the console
@@ -94,7 +94,7 @@ DataRepository <- R6::R6Class(
       validateIsString(name)
       validateIsString(value)
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      rClr::clrCall(dataRepositoryTask, "AddMetaData", self$ref, name, value)
+      rSharp::clrCall(dataRepositoryTask, "AddMetaData", self$ref, name, value)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
     },
@@ -108,7 +108,7 @@ DataRepository <- R6::R6Class(
       }
       validateIsString(name)
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      rClr::clrCall(dataRepositoryTask, "RemoveMetaData", self$ref, name)
+      rSharp::clrCall(dataRepositoryTask, "RemoveMetaData", self$ref, name)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
     }

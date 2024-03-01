@@ -100,8 +100,8 @@ DataSet <- R6::R6Class(
           return(NULL)
         }
 
-        dataInfo <- rClr::clrGet(private$.yErrorColumn$ref, "DataInfo")
-        errorTypeEnumVal <- rClr::clrGet(dataInfo, "AuxiliaryType")
+        dataInfo <- rSharp::clrGet(private$.yErrorColumn$ref, "DataInfo")
+        errorTypeEnumVal <- rSharp::clrGet(dataInfo, "AuxiliaryType")
         return(.netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
       }
       private$.setErrorType(value)
@@ -252,7 +252,7 @@ DataSet <- R6::R6Class(
       # yErrorColumn already
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
         dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-        rClr::clrCall(
+        rSharp::clrCall(
           dataRepositoryTask,
           "RemoveColumn",
           private$.dataRepository$ref,
@@ -350,9 +350,9 @@ DataSet <- R6::R6Class(
       validateEnumValue(errorType, DataErrorType)
       column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
-      dataInfo <- rClr::clrGet(column$ref, "DataInfo")
-      auxType <- rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
-      rClr::clrSet(dataInfo, "AuxiliaryType", auxType)
+      dataInfo <- rSharp::clrGet(column$ref, "DataInfo")
+      auxType <- rSharp::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
+      rSharp::clrSet(dataInfo, "AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
       if (errorType == DataErrorType$ArithmeticStdDev) {
@@ -369,16 +369,16 @@ DataSet <- R6::R6Class(
     },
     .createDataRepository = function() {
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      dataRepository <- rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues")
+      dataRepository <- rSharp::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues")
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
 
-      netYColumn <- rClr::clrCall(dataRepositoryTask, "GetMeasurementColumn", private$.dataRepository$ref)
+      netYColumn <- rSharp::clrCall(dataRepositoryTask, "GetMeasurementColumn", private$.dataRepository$ref)
       private$.yColumn <- DataColumn$new(netYColumn)
-      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", netYColumn)
+      netYErrorColumn <- rSharp::clrCall(dataRepositoryTask, "GetErrorColumn", netYColumn)
 
       if (!is.null(netYErrorColumn)) {
         private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
@@ -390,7 +390,7 @@ DataSet <- R6::R6Class(
       }
 
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      netYErrorColumn <- rClr::clrCall(
+      netYErrorColumn <- rSharp::clrCall(
         dataRepositoryTask,
         "AddErrorColumn",
         private$.yColumn$ref,

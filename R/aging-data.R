@@ -29,7 +29,7 @@ AgingData <- R6::R6Class("AgingData",
     #' Initialize a new instance of the class
     #' @return A new `OSPSuite.R.Domain.AgingData` object.
     initialize = function() {
-      ref <- rClr::clrNew("OSPSuite.R.Domain.AgingData")
+      ref <- rSharp::clrNew("OSPSuite.R.Domain.AgingData")
       super$initialize(ref)
     },
 

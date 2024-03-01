@@ -12,10 +12,10 @@ DataImporterConfiguration <- R6::R6Class(
     timeColumn = function(value) {
       column <- private$.timeColumn()
       if (missing(value)) {
-        return(rClr::clrGet(column, "ColumnName"))
+        return(rSharp::clrGet(column, "ColumnName"))
       }
       validateIsString(value)
-      rClr::clrSet(column, "ColumnName", enc2utf8(value))
+      rSharp::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
     #' @field timeUnit If `isTimeUnitFromColumn` is `FALSE`, unit of the values
@@ -23,14 +23,14 @@ DataImporterConfiguration <- R6::R6Class(
     #'   with units of the values in time column.
     timeUnit = function(value) {
       column <- private$.timeColumn()
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
-      unit <- rClr::clrGet(mappedColumn, "Unit")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      unit <- rSharp::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
-          return(rClr::clrGet(unit, "ColumnName"))
+          return(rSharp::clrGet(unit, "ColumnName"))
         }
-        return(rClr::clrGet(unit, "SelectedUnit"))
+        return(rSharp::clrGet(unit, "SelectedUnit"))
       }
       validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
@@ -45,17 +45,17 @@ DataImporterConfiguration <- R6::R6Class(
         return(private$.isUnitFromColumn(column))
       }
       validateIsLogical(value)
-      rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
+      rSharp::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
     },
 
     #' @field measurementColumn Name of the column for measurement values
     measurementColumn = function(value) {
       column <- private$.measurementColumn()
       if (missing(value)) {
-        return(rClr::clrGet(column, "ColumnName"))
+        return(rSharp::clrGet(column, "ColumnName"))
       }
       validateIsString(value)
-      rClr::clrSet(column, "ColumnName", enc2utf8(value))
+      rSharp::clrSet(column, "ColumnName", enc2utf8(value))
     },
 
     #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`,
@@ -66,15 +66,15 @@ DataImporterConfiguration <- R6::R6Class(
     #'   unit is set to the base unit of this dimension.
     measurementDimension = function(value) {
       column <- private$.measurementColumn()
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
-      unit <- rClr::clrGet(mappedColumn, "Unit")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      unit <- rSharp::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
           return(NULL)
         }
-        dimension <- rClr::clrGet(mappedColumn, "Dimension")
-        return(ifNotNull(dimension, rClr::clrGet(dimension, "DisplayName")))
+        dimension <- rSharp::clrGet(mappedColumn, "Dimension")
+        return(ifNotNull(dimension, rSharp::clrGet(dimension, "DisplayName")))
       }
       validateIsString(value)
       # Fixed unit or from column?
@@ -84,15 +84,15 @@ DataImporterConfiguration <- R6::R6Class(
       }
       value <- enc2utf8(value)
       validateDimension(value)
-      rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
-      rClr::clrSet(unit, "SelectedUnit", getBaseUnit(value))
+      rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
+      rSharp::clrSet(unit, "SelectedUnit", getBaseUnit(value))
 
       # also change dimension of the error
       column <- private$.errorColumn()
       if (!is.null(column)) {
-        mappedColumn <- rClr::clrGet(column, "MappedColumn")
-        unit <- rClr::clrGet(mappedColumn, "Unit")
-        rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
+        mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+        unit <- rSharp::clrGet(mappedColumn, "Unit")
+        rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
         private$.setColumnUnit(column, getBaseUnit(value))
       }
     },
@@ -101,14 +101,14 @@ DataImporterConfiguration <- R6::R6Class(
     #' If `isMeasurementUnitFromColumn` is `TRUE`, name of the column with units of the values in measurement column
     measurementUnit = function(value) {
       column <- private$.measurementColumn()
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
-      unit <- rClr::clrGet(mappedColumn, "Unit")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      unit <- rSharp::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
-          return(rClr::clrGet(unit, "ColumnName"))
+          return(rSharp::clrGet(unit, "ColumnName"))
         }
-        return(rClr::clrGet(unit, "SelectedUnit"))
+        return(rSharp::clrGet(unit, "SelectedUnit"))
       }
       validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
@@ -123,10 +123,10 @@ DataImporterConfiguration <- R6::R6Class(
         return(private$.isUnitFromColumn(column))
       }
       validateIsLogical(value)
-      rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
+      rSharp::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
       # Also change isUnitFromColumn for error column
       if (!is.null(private$.errorColumn())) {
-        rClr::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", private$.errorColumn(), value)
+        rSharp::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", private$.errorColumn(), value)
       }
     },
 
@@ -136,18 +136,18 @@ DataImporterConfiguration <- R6::R6Class(
     errorColumn = function(value) {
       column <- private$.errorColumn()
       if (missing(value)) {
-        return(ifNotNull(column, rClr::clrGet(column, "ColumnName")))
+        return(ifNotNull(column, rSharp::clrGet(column, "ColumnName")))
       }
       # If value is NULL, remove the error column
       if (is.null(value)) {
-        rClr::clrCall(private$.dataImporterTask, "RemoveError", self$ref)
+        rSharp::clrCall(private$.dataImporterTask, "RemoveError", self$ref)
       } else {
         validateIsString(value)
         # Create an error column if none is present in the configuration
         if (is.null(column)) {
           private$.addErrorColumn()
         }
-        rClr::clrSet(private$.errorColumn(), "ColumnName", enc2utf8(value))
+        rSharp::clrSet(private$.errorColumn(), "ColumnName", enc2utf8(value))
       }
     },
 
@@ -163,14 +163,14 @@ DataImporterConfiguration <- R6::R6Class(
         return(invisible(self))
       }
 
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
-      unit <- rClr::clrGet(mappedColumn, "Unit")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      unit <- rSharp::clrGet(mappedColumn, "Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
-          return(rClr::clrGet(unit, "ColumnName"))
+          return(rSharp::clrGet(unit, "ColumnName"))
         }
-        return(rClr::clrGet(unit, "SelectedUnit"))
+        return(rSharp::clrGet(unit, "SelectedUnit"))
       }
       validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
@@ -189,14 +189,14 @@ DataImporterConfiguration <- R6::R6Class(
         return(invisible(self))
       }
 
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
       if (missing(value)) {
-        errorType <- rClr::clrGet(mappedColumn, "ErrorStdDev")
+        errorType <- rSharp::clrGet(mappedColumn, "ErrorStdDev")
         # The string returned must be mapped to the naming used in DataSet (resp. data repository)
         return(.ImporterErrorTypeToDataSetErrorType[[errorType]])
       }
       validateEnumValue(value, .ImporterErrorTypeToDataSetErrorType)
-      rClr::clrSet(
+      rSharp::clrSet(
         mappedColumn, "ErrorStdDev",
         getEnumKey(enum = .ImporterErrorTypeToDataSetErrorType, value)
       )
@@ -205,7 +205,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @field groupingColumns Column names by which the data will be grouped
     groupingColumns = function(value) {
       if (missing(value)) {
-        return(rClr::clrCall(private$.dataImporterTask, "GetAllGroupingColumns", self$ref))
+        return(rSharp::clrCall(private$.dataImporterTask, "GetAllGroupingColumns", self$ref))
       }
       private$throwPropertyIsReadonly("groupingColumns")
     },
@@ -214,14 +214,14 @@ DataImporterConfiguration <- R6::R6Class(
     #' configuration will be applied.
     sheets = function(value) {
       if (missing(value)) {
-        return(rClr::clrCall(private$.dataImporterTask, "GetAllLoadedSheets", self$ref))
+        return(rSharp::clrCall(private$.dataImporterTask, "GetAllLoadedSheets", self$ref))
       }
       if (length(value) == 0) {
-        rClr::clrCall(self$ref, "ClearLoadedSheets")
+        rSharp::clrCall(self$ref, "ClearLoadedSheets")
         return(invisible(self))
       }
       validateIsString(value)
-      rClr::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)
+      rSharp::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)
     },
     #' @field namingPattern Regular expression used for naming of loaded data sets.
     #' Words between curly brackets (e.g. `{Group Id}`) will be replaced by the value
@@ -229,16 +229,16 @@ DataImporterConfiguration <- R6::R6Class(
     #' and `{Sheet}` for sheet name.
     namingPattern = function(value) {
       if (missing(value)) {
-        pattern <- rClr::clrGet(self$ref, "NamingConventions")
+        pattern <- rSharp::clrGet(self$ref, "NamingConventions")
         # Create a default pattern if no is defined
         if (is.null(pattern)) {
           pattern <- "{Source}.{Sheet}"
-          rClr::clrSet(self$ref, "NamingConventions", pattern)
+          rSharp::clrSet(self$ref, "NamingConventions", pattern)
         }
         return(pattern)
       }
       validateIsString(value)
-      rClr::clrSet(self$ref, "NamingConventions", enc2utf8(value))
+      rSharp::clrSet(self$ref, "NamingConventions", enc2utf8(value))
     }
   ),
   public = list(
@@ -251,7 +251,7 @@ DataImporterConfiguration <- R6::R6Class(
     initialize = function(ref = NULL) {
       importerTask <- .getNetTaskFromCache("DataImporterTask")
       if (is.null(ref)) {
-        ref <- rClr::clrCall(importerTask, "CreateConfiguration")
+        ref <- rSharp::clrCall(importerTask, "CreateConfiguration")
       }
       super$initialize(ref)
       private$.dataImporterTask <- importerTask
@@ -262,9 +262,9 @@ DataImporterConfiguration <- R6::R6Class(
       # Because the user cannot set the Dimension if time values, this must be
       # done during initialization phase.
       if (self$timeUnit == "?") {
-        column <- rClr::clrCall(importerTask, "GetTime", ref)
-        mappedColumn <- rClr::clrGet(column, "MappedColumn")
-        rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(ospDimensions$Time)))
+        column <- rSharp::clrCall(importerTask, "GetTime", ref)
+        mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+        rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(ospDimensions$Time)))
         self$timeUnit <- ospUnits$Time$h
       }
     },
@@ -277,7 +277,7 @@ DataImporterConfiguration <- R6::R6Class(
       validateIsString(filePath)
       filePath <- .expandPath(filePath)
 
-      rClr::clrCall(private$.dataImporterTask, "SaveConfiguration", self$ref, filePath)
+      rSharp::clrCall(private$.dataImporterTask, "SaveConfiguration", self$ref, filePath)
       invisible(self)
     },
 
@@ -286,7 +286,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     addGroupingColumn = function(column) {
       validateIsString(column)
-      rClr::clrCall(private$.dataImporterTask, "AddGroupingColumn", self$ref, enc2utf8(column))
+      rSharp::clrCall(private$.dataImporterTask, "AddGroupingColumn", self$ref, enc2utf8(column))
       invisible(self)
     },
 
@@ -295,7 +295,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     removeGroupingColumn = function(column) {
       validateIsString(column)
-      rClr::clrCall(private$.dataImporterTask, "RemoveGroupingColumn", self$ref, enc2utf8(column))
+      rSharp::clrCall(private$.dataImporterTask, "RemoveGroupingColumn", self$ref, enc2utf8(column))
       invisible(self)
     },
 
@@ -323,38 +323,38 @@ DataImporterConfiguration <- R6::R6Class(
   private = list(
     .dataImporterTask = NULL,
     .timeColumn = function() {
-      return(rClr::clrCall(private$.dataImporterTask, "GetTime", self$ref))
+      return(rSharp::clrCall(private$.dataImporterTask, "GetTime", self$ref))
     },
     .measurementColumn = function() {
-      return(rClr::clrCall(private$.dataImporterTask, "GetMeasurement", self$ref))
+      return(rSharp::clrCall(private$.dataImporterTask, "GetMeasurement", self$ref))
     },
     .errorColumn = function() {
-      return(rClr::clrCall(private$.dataImporterTask, "GetError", self$ref))
+      return(rSharp::clrCall(private$.dataImporterTask, "GetError", self$ref))
     },
     .addErrorColumn = function() {
-      rClr::clrCall(private$.dataImporterTask, "AddError", self$ref)
-      mappedColumn <- rClr::clrGet(private$.errorColumn(), "MappedColumn")
-      rClr::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(self$measurementDimension)))
+      rSharp::clrCall(private$.dataImporterTask, "AddError", self$ref)
+      mappedColumn <- rSharp::clrGet(private$.errorColumn(), "MappedColumn")
+      rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(self$measurementDimension)))
     },
     .setColumnUnit = function(column, value) {
       value <- enc2utf8(value)
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
-      dimension <- rClr::clrGet(mappedColumn, "Dimension")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      dimension <- rSharp::clrGet(mappedColumn, "Dimension")
       # Fixed unit or from column?
       if (private$.isUnitFromColumn(column)) {
         # Get the old unit and set it as default unit
-        unit <- rClr::clrGet(mappedColumn, "Unit")
-        unitDescription <- rClr::clrNew("OSPSuite.Core.Import.UnitDescription", enc2utf8(rClr::clrGet(unit, "SelectedUnit")), value)
+        unit <- rSharp::clrGet(mappedColumn, "Unit")
+        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", enc2utf8(rSharp::clrGet(unit, "SelectedUnit")), value)
       } else {
-        validateUnit(value, rClr::clrGet(dimension, "Name"))
-        unitDescription <- rClr::clrNew("OSPSuite.Core.Import.UnitDescription", value)
+        validateUnit(value, rSharp::clrGet(dimension, "Name"))
+        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", value)
       }
-      rClr::clrSet(mappedColumn, "Unit", unitDescription)
+      rSharp::clrSet(mappedColumn, "Unit", unitDescription)
     },
     .isUnitFromColumn = function(column) {
-      mappedColumn <- rClr::clrGet(column, "MappedColumn")
-      unit <- rClr::clrGet(mappedColumn, "Unit")
-      columnName <- rClr::clrGet(unit, "ColumnName")
+      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      unit <- rSharp::clrGet(mappedColumn, "Unit")
+      columnName <- rSharp::clrGet(unit, "ColumnName")
       return(!(is.null(columnName) || nchar(columnName) == 0))
     }
   )

@@ -16,9 +16,9 @@ SensitivityAnalysis <- R6::R6Class(
       if (length(parameterPaths) == 0) {
         return()
       }
-      # Issue with .NET rCLR casting array with one value directly as single value instead of array
+      # Issue with .NET rSharp casting array with one value directly as single value instead of array
       methodName <- if (length(parameterPaths) > 1) "AddParameterPaths" else "AddParameterPath"
-      rClr::clrCall(obj = self$ref, methodName = methodName, parameterPaths)
+      rSharp::clrCall(obj = self$ref, methodName = methodName, parameterPaths)
       invisible(self)
     }
   ),
@@ -38,7 +38,7 @@ SensitivityAnalysis <- R6::R6Class(
                           variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
       validateIsOfType(simulation, "Simulation")
       validateIsString(parameterPaths, nullAllowed = TRUE)
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
+      ref <- rSharp::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
       super$initialize(ref)
       private$.simulation <- simulation
       private$.parameterPaths <- c(parameterPaths)
@@ -62,7 +62,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' Removes all parameter paths defined in the Sensitivity Analysis
     clearParameterPaths = function() {
       private$.parameterPaths <- NULL
-      rClr::clrCall(self$ref, "ClearParameterPaths")
+      rSharp::clrCall(self$ref, "ClearParameterPaths")
       invisible(self)
     },
     #' @description

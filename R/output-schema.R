@@ -11,7 +11,7 @@ OutputSchema <- R6::R6Class(
     #' @field intervals All intervals defined in the schema (Read-Only)
     intervals = function(value) {
       if (missing(value)) {
-        intervals <- rClr::clrGet(self$ref, "IntervalsAsArray")
+        intervals <- rSharp::clrGet(self$ref, "IntervalsAsArray")
         .toObjectType(intervals, Interval)
       } else {
         private$throwPropertyIsReadonly("intervals")
@@ -30,7 +30,7 @@ OutputSchema <- R6::R6Class(
     #' @description
     #' Clears all intervals and time points
     clear = function() {
-      rClr::clrCall(self$ref, "Clear")
+      rSharp::clrCall(self$ref, "Clear")
       invisible(self)
     },
     #' @description
@@ -38,7 +38,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to add
     addInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      rClr::clrCall(self$ref, "AddInterval", interval$ref)
+      rSharp::clrCall(self$ref, "AddInterval", interval$ref)
       invisible(self)
     },
     #' @description
@@ -46,7 +46,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to remove
     removeInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      rClr::clrCall(self$ref, "RemoveInterval", interval$ref)
+      rSharp::clrCall(self$ref, "RemoveInterval", interval$ref)
       invisible(self)
     },
 
@@ -58,9 +58,9 @@ OutputSchema <- R6::R6Class(
       timePoints <- c(timePoints)
       validateIsNumeric(timePoints)
       if (length(timePoints) > 1) {
-        rClr::clrCall(self$ref, "AddTimePoints", timePoints)
+        rSharp::clrCall(self$ref, "AddTimePoints", timePoints)
       } else {
-        rClr::clrCall(self$ref, "AddTimePoint", timePoints)
+        rSharp::clrCall(self$ref, "AddTimePoint", timePoints)
       }
       invisible(self)
     },

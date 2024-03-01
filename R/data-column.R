@@ -34,11 +34,11 @@ DataColumn <- R6::R6Class(
       value <- enc2utf8(value)
       dimension <- getDimensionByName(self$dimension)
       # we use the ignore case parameter set  to true so that we do not have to worry about casing when set via scripts
-      unit <- rClr::clrCall(dimension, "FindUnit", value, TRUE)
+      unit <- rSharp::clrCall(dimension, "FindUnit", value, TRUE)
       if (is.null(unit)) {
         stop(messages$errorUnitNotSupported(unit = value, dimension = self$dimension))
       }
-      rClr::clrSet(self$ref, "DisplayUnit", unit)
+      rSharp::clrSet(self$ref, "DisplayUnit", unit)
     },
     #' @field dimension The dimension of the values
     dimension = function(value) {
@@ -50,31 +50,31 @@ DataColumn <- R6::R6Class(
       }
       value <- enc2utf8(value)
       # updating the dimension
-      rClr::clrSet(self$ref, "Dimension", getDimensionByName(value))
+      rSharp::clrSet(self$ref, "Dimension", getDimensionByName(value))
       private$.dimension <- NULL
       private$.unit <- NULL
     },
     #' @field molWeight Molecular weight of associated observed data in internal unit
     #' In no molecular weight is defined, the value is `NULL`
     molWeight = function(value) {
-      dataInfo <- rClr::clrGet(self$ref, "DataInfo")
+      dataInfo <- rSharp::clrGet(self$ref, "DataInfo")
       if (missing(value)) {
-        return(rClr::clrGet(dataInfo, "MolWeight"))
+        return(rSharp::clrGet(dataInfo, "MolWeight"))
       }
 
       validateIsNumeric(value)
-      rClr::clrSet(dataInfo, "MolWeight", value)
+      rSharp::clrSet(dataInfo, "MolWeight", value)
     },
     #' @field LLOQ Lower Limit Of Quantification.
     #' In no LLOQ is defined, the value is `NULL`
     LLOQ = function(value) {
-      dataInfo <- rClr::clrGet(self$ref, "DataInfo")
+      dataInfo <- rSharp::clrGet(self$ref, "DataInfo")
       if (missing(value)) {
-        return(rClr::clrGet(dataInfo, "LLOQAsDouble"))
+        return(rSharp::clrGet(dataInfo, "LLOQAsDouble"))
       }
 
       validateIsNumeric(value)
-      rClr::clrSet(dataInfo, "LLOQAsDouble", value)
+      rSharp::clrSet(dataInfo, "LLOQAsDouble", value)
     }
   ),
   public = list(

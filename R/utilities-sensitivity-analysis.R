@@ -21,7 +21,7 @@ runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOp
   options <- sensitivityAnalysisRunOptions %||% SensitivityAnalysisRunOptions$new()
   sensitivityAnalysisRunner <- .getNetTask("SensitivityAnalysisRunner")
 
-  results <- rClr::clrCall(sensitivityAnalysisRunner, "Run", sensitivityAnalysis$ref, options$ref)
+  results <- rSharp::clrCall(sensitivityAnalysisRunner, "Run", sensitivityAnalysis$ref, options$ref)
 
   SensitivityAnalysisResults$new(results, sensitivityAnalysis$simulation)
 }
@@ -51,7 +51,7 @@ exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
-  rClr::clrCall(sensitivityAnalysisTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
+  rSharp::clrCall(sensitivityAnalysisTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
 
@@ -84,7 +84,7 @@ importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
   filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
 
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
-  results <- rClr::clrCall(sensitivityAnalysisTask, "ImportResultsFromCSV", simulation$ref, filePaths)
+  results <- rSharp::clrCall(sensitivityAnalysisTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SensitivityAnalysisResults$new(results, simulation)
 }
 
@@ -104,5 +104,5 @@ importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
 potentialVariableParameterPathsFor <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
-  rClr::clrCall(sensitivityAnalysisTask, "PotentialVariableParameterPathsFor", simulation$ref)
+  rSharp::clrCall(sensitivityAnalysisTask, "PotentialVariableParameterPathsFor", simulation$ref)
 }

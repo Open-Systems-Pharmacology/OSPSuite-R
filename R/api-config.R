@@ -21,7 +21,7 @@ ApiConfig <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `ApiConfig` object.
     initialize = function() {
-      ref <- rClr::clrNew("OSPSuite.R.ApiConfig")
+      ref <- rSharp::clrNew("OSPSuite.R.ApiConfig")
       super$initialize(ref)
     }
   )

@@ -12,11 +12,11 @@ SimulationResults <- R6::R6Class(
     .individualResultsCache = NULL,
     getResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
-      rClr::clrCall(self$ref, "ResultsFor", as.integer(individualId))
+      rSharp::clrCall(self$ref, "ResultsFor", as.integer(individualId))
     },
     allIndividualResults = function(value) {
       if (missing(value)) {
-        rClr::clrCall(self$ref, "IndividualResultsAsArray")
+        rSharp::clrCall(self$ref, "IndividualResultsAsArray")
       } else {
         private$throwPropertyIsReadonly("allIndividualResults")
       }
@@ -39,7 +39,7 @@ SimulationResults <- R6::R6Class(
     #' @param individualId Id of the individual
     hasResultsForIndividual = function(individualId) {
       validateIsNumeric(individualId)
-      rClr::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
+      rSharp::clrCall(self$ref, "HasResultsFor", as.integer(individualId))
     },
     #' @description
     #' Returns `TRUE` if results are available for the individual with id `individualId` otherwise `FALSE`
@@ -50,7 +50,7 @@ SimulationResults <- R6::R6Class(
     getValuesByPath = function(path, individualIds, stopIfNotFound = TRUE) {
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
-      values <- rClr::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
+      values <- rSharp::clrCall(self$ref, "AllValuesFor", path, as.integer(individualIds))
 
       if (all(is.nan(values)) && stopIfNotFound) {
         stop(messages$errorResultNotFound(path, individualIds))
@@ -95,12 +95,12 @@ SimulationResults <- R6::R6Class(
       if (is.null(quantityValuesTime)) {
         return(NULL)
       }
-      rClr::clrGet(quantityValuesTime, "Values")
+      rSharp::clrGet(quantityValuesTime, "Values")
     },
     #' @field allQuantityPaths List of all paths for which results are defined.
     allQuantityPaths = function(value) {
       if (missing(value)) {
-        rClr::clrCall(self$ref, "AllQuantityPaths")
+        rSharp::clrCall(self$ref, "AllQuantityPaths")
       } else {
         private$throwPropertyIsReadonly("allQuantityPaths")
       }
@@ -108,7 +108,7 @@ SimulationResults <- R6::R6Class(
     #' @field allIndividualIds List of Ids of all individuals that have been simulated
     allIndividualIds = function(value) {
       if (missing(value)) {
-        rClr::clrCall(self$ref, "AllIndividualIds")
+        rSharp::clrCall(self$ref, "AllIndividualIds")
       } else {
         private$throwPropertyIsReadonly("allIndividualIds")
       }

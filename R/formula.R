@@ -41,7 +41,7 @@ Formula <- R6::R6Class(
     formulaString = function(value) {
       if (missing(value)) {
         if (self$isExplicit) {
-          return(rClr::clrGet(self$ref, "FormulaString"))
+          return(rSharp::clrGet(self$ref, "FormulaString"))
         }
         return(NULL)
       } else {

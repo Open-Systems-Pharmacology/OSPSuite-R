@@ -104,8 +104,8 @@ getOutputValues <- function(simulationResults,
       # Get the dimension and unit from path if the results are obtained. If the results
       # are NA, the entity with such path does not exist
       if (!all(is.na(values[[path]]))) {
-        unit <- rClr::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
-        dimension <- rClr::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
+        unit <- rSharp::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
+        dimension <- rSharp::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
       }
       list(unit = unit, dimension = dimension)
     })
@@ -143,7 +143,7 @@ exportResultsToCSV <- function(results, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
-  rClr::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
+  rSharp::clrCall(simulationResultsTask, "ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
   invisible()
 }
 
@@ -175,7 +175,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
   filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
 
-  results <- rClr::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
+  results <- rSharp::clrCall(simulationResultsTask, "ImportResultsFromCSV", simulation$ref, filePaths)
   SimulationResults$new(results, simulation)
 }
 

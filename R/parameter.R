@@ -39,7 +39,7 @@ Parameter <- R6::R6Class(
 
       # we are deleting the RHS Formula
       private$.rhsFormula <- NULL
-      rClr::clrCall(self$ref, "ClearRHSFormula")
+      rSharp::rSharp(self$ref, "ClearRHSFormula")
     },
     #' @field rhsFormula An instance of a `Formula` object representing the RHS Formula (Read-Only)
     rhsFormula = function(value) {
@@ -53,7 +53,7 @@ Parameter <- R6::R6Class(
     #' @return A new `Parameter` object.
     initialize = function(ref) {
       super$initialize(ref)
-      rhsFormula <- rClr::clrGet(ref, "RHSFormula")
+      rhsFormula <- rSharp::clrGet(ref, "RHSFormula")
       private$.rhsFormula <- ifNotNull(rhsFormula, Formula$new(rhsFormula))
     },
     #' @description

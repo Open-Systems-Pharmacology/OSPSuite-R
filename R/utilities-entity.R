@@ -124,7 +124,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
-    .toObjectType(rClr::clrCall(task, method, container$ref, enc2utf8(path)), entityType)
+    .toObjectType(rSharp::clrCall(task, method, container$ref, enc2utf8(path)), entityType)
   }
 
   return(.unify(findEntitiesByPath, paths))
@@ -157,7 +157,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   task <- .getNetTaskFromCache("ContainerTask")
   method <- method %||% AllPathsInMethod[[className]]
 
-  rClr::clrCall(task, method, container$ref)
+  rSharp::clrCall(task, method, container$ref)
 }
 
 #' Retrieve a single entity by path in the given container

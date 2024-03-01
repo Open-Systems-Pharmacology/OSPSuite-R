@@ -28,7 +28,7 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param quantityPath Path for which pkParameters should be retrieved
     allPKParametersFor = function(quantityPath) {
       validateIsString(quantityPath)
-      private$toPKParameter(rClr::clrCall(self$ref, "AllPKParametersFor", quantityPath))
+      private$toPKParameter(rSharp::clrCall(self$ref, "AllPKParametersFor", quantityPath))
     },
     #' @description
     #' The pK Parameter defined for the given path and name
@@ -38,7 +38,7 @@ SimulationPKAnalyses <- R6::R6Class(
     pKParameterFor = function(quantityPath, pkParameter) {
       validateIsString(quantityPath)
       validateIsString(pkParameter)
-      private$toPKParameter(rClr::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
+      private$toPKParameter(rSharp::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
     },
 
     #' @description
@@ -64,11 +64,11 @@ SimulationPKAnalyses <- R6::R6Class(
     },
     #' @field allPKParameterNames Returns the name of all pk parameters for which a value is available
     allPKParameterNames = function(value) {
-      private$readOnlyProperty("allPKParameterNames", value, rClr::clrGet(self$ref, "AllPKParameterNames"))
+      private$readOnlyProperty("allPKParameterNames", value, rSharp::clrGet(self$ref, "AllPKParameterNames"))
     },
     #' @field allQuantityPaths Returns the path of all quantities for which pk parameters were calculated
     allQuantityPaths = function(value) {
-      private$readOnlyProperty("allQuantityPaths", value, rClr::clrGet(self$ref, "AllQuantityPaths"))
+      private$readOnlyProperty("allQuantityPaths", value, rSharp::clrGet(self$ref, "AllQuantityPaths"))
     }
   )
 )

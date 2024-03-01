@@ -31,7 +31,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsOfType(dataSet, "DataSet")
   filePath <- .expandPath(filePath)
   dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-  rClr::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
+  rSharp::clrCall(dataRepositoryTask, "SaveDataRepository", dataSet$dataRepository$ref, filePath)
 }
 
 #' Converts a list of `DataSet` objects to a data.frame
@@ -182,8 +182,8 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, impo
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
-  rClr::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
-  dataRepositories <- rClr::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
+  rSharp::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
+  dataRepositories <- rSharp::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)

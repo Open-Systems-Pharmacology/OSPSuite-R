@@ -56,12 +56,12 @@ IndividualCharacteristics <- R6::R6Class(
     },
     parameterProperty = function(parameterName, value) {
       if (missing(value)) {
-        SnapshotParameter$new(ref = rClr::clrGet(self$ref, parameterName))
+        SnapshotParameter$new(ref = rSharp::clrGet(self$ref, parameterName))
       } else {
         if (is.null(value)) {
           return()
         }
-        rClr::clrSet(self$ref, name = parameterName, value = value$ref)
+        rSharp::clrSet(self$ref, name = parameterName, value = value$ref)
       }
     }
   ),
@@ -70,7 +70,7 @@ IndividualCharacteristics <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `IndividualCharacteristics` object.
     initialize = function() {
-      ref <- rClr::clrNew("PKSim.R.Domain.IndividualCharacteristics")
+      ref <- rSharp::clrNew("PKSim.R.Domain.IndividualCharacteristics")
       super$initialize(ref)
     },
     #' @description
@@ -100,10 +100,10 @@ IndividualCharacteristics <- R6::R6Class(
     addMoleculeOntogeny = function(moleculeOntogeny) {
       validateIsOfType(moleculeOntogeny, "MoleculeOntogeny")
       private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
-      netMoleculeOntogeny <- rClr::clrNew("PKSim.R.Domain.MoleculeOntogeny")
-      rClr::clrSet(netMoleculeOntogeny, "Molecule", moleculeOntogeny$molecule)
-      rClr::clrSet(netMoleculeOntogeny, "Ontogeny", moleculeOntogeny$ontogeny)
-      rClr::clrCall(self$ref, "AddMoleculeOntogeny", netMoleculeOntogeny)
+      netMoleculeOntogeny <- rSharp::clrNew("PKSim.R.Domain.MoleculeOntogeny")
+      rSharp::clrSet(netMoleculeOntogeny, "Molecule", moleculeOntogeny$molecule)
+      rSharp::clrSet(netMoleculeOntogeny, "Ontogeny", moleculeOntogeny$ontogeny)
+      rSharp::clrCall(self$ref, "AddMoleculeOntogeny", netMoleculeOntogeny)
     }
   )
 )

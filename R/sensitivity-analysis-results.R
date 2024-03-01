@@ -71,7 +71,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       validateIsString(outputPath)
       validateIsNumeric(totalSensitivityThreshold)
 
-      pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
+      pkParameterSentitivities <- rSharp::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
 
       .toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
@@ -102,7 +102,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       }
 
       if (!is.null(parameterName)) {
-        value <- rClr::clrCall(
+        value <- rSharp::clrCall(
           self$ref,
           "PKParameterSensitivityValueBySensitivityParameterName",
           pkParameterName,
@@ -112,7 +112,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       }
 
       if (!is.null(parameterPath)) {
-        value <- rClr::clrCall(
+        value <- rSharp::clrCall(
           self$ref,
           "PKParameterSensitivityValueByParameterPath",
           pkParameterName,

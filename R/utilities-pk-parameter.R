@@ -37,9 +37,9 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   displayName <- enc2utf8(displayName %||% "")
 
   pkParameterTask <- .getNetTask("PKParameterTask")
-  netUserDefinedPKParameter <- rClr::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
+  netUserDefinedPKParameter <- rSharp::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
   userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
-  rClr::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
+  rSharp::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
   return(userDefinedPKParameter)
 }
 
@@ -48,7 +48,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
 #' @export
 removeAllUserDefinedPKParameters <- function() {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  rClr::clrCall(pkParameterTask, "RemoveAllUserDefinedPKParameters")
+  rSharp::clrCall(pkParameterTask, "RemoveAllUserDefinedPKParameters")
 }
 
 #' @title Updates some properties of a PK-Parameter (displayName and displayUnit)
@@ -92,7 +92,7 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' @export
 pkParameterByName <- function(name, stopIfNotFound = TRUE) {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  pkParameter <- rClr::clrCall(pkParameterTask, "PKParameterByName", name)
+  pkParameter <- rSharp::clrCall(pkParameterTask, "PKParameterByName", name)
   pkParameter <- .toObjectType(pkParameter, PKParameter)
 
   if (!is.null(pkParameter) || !stopIfNotFound) {
@@ -111,5 +111,5 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
 #' @export
 allPKParameterNames <- function() {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  rClr::clrCall(pkParameterTask, "AllPKParameterNames")
+  rSharp::clrCall(pkParameterTask, "AllPKParameterNames")
 }

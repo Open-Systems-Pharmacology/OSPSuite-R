@@ -13,15 +13,15 @@ Population <- R6::R6Class(
     },
     #' @field allCovariateNames the names of all covariates defined in the population
     allCovariateNames = function(value) {
-      private$readOnlyProperty("allCovariateNames", value, rClr::clrCall(self$ref, "AllCovariatesNames"))
+      private$readOnlyProperty("allCovariateNames", value, rSharp::clrCall(self$ref, "AllCovariatesNames"))
     },
     #' @field allParameterPaths the paths of all parameters defined in the population
     allParameterPaths = function(value) {
-      private$readOnlyProperty("allParameterPaths", value, rClr::clrCall(self$ref, "AllParameterPaths"))
+      private$readOnlyProperty("allParameterPaths", value, rSharp::clrCall(self$ref, "AllParameterPaths"))
     },
     #' @field allIndividualIds Ids of individuals defined in the population
     allIndividualIds = function(value) {
-      private$readOnlyProperty("allIndividualIds", value, rClr::clrCall(self$ref, "AllIndividualIds"))
+      private$readOnlyProperty("allIndividualIds", value, rSharp::clrCall(self$ref, "AllIndividualIds"))
     }
   ),
   public = list(
@@ -30,7 +30,7 @@ Population <- R6::R6Class(
     #' @param parameterOrPath Parameter instance of parameter path
     has = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)
-      rClr::clrCall(self$ref, "Has", parameterPath)
+      rSharp::clrCall(self$ref, "Has", parameterPath)
     },
     #' @description
     #' Updates or adds the variability values in the population for `parameterOrPath`.
@@ -40,7 +40,7 @@ Population <- R6::R6Class(
     setParameterValues = function(parameterOrPath, values) {
       parameterPath <- private$getPathFrom(parameterOrPath)
       validateIsNumeric(values)
-      rClr::clrCall(self$ref, "SetValues", parameterPath, values)
+      rSharp::clrCall(self$ref, "SetValues", parameterPath, values)
       invisible(self)
     },
     #' @description
@@ -48,32 +48,32 @@ Population <- R6::R6Class(
     #' @param parameterOrPath Parameter instance of parameter path
     getParameterValues = function(parameterOrPath) {
       parameterPath <- private$getPathFrom(parameterOrPath)
-      rClr::clrCall(self$ref, "GetValues", parameterPath)
+      rSharp::clrCall(self$ref, "GetValues", parameterPath)
     },
     #' @description
     #' Returns the values defined in the population for the covariate named `covariateName`
     #' @param covariateName Name of covariate for which values should be retrieved
     getCovariateValues = function(covariateName) {
-      rClr::clrCall(self$ref, "GetCovariateValues", covariateName)
+      rSharp::clrCall(self$ref, "GetCovariateValues", covariateName)
     },
     #' @description
     #' Returns the values defined in the population for the covariate named `covariateName` and individual with id `individualId`
     #' @param covariateName Name of covariate for which values should be retrieved
     #' @param individualId Id of individual for which the value for covariate `covariateName` should be retrieved
     getCovariateValue = function(covariateName, individualId) {
-      rClr::clrCall(self$ref, "CovariateValueFor", covariateName, as.integer(individualId))
+      rSharp::clrCall(self$ref, "CovariateValueFor", covariateName, as.integer(individualId))
     },
     #' @description
     #' Returns all values defined in the population the individual with id `individualId`
     #' @param individualId Id of individual for which all values should be returned
     getParameterValuesForIndividual = function(individualId) {
-      .parameterValueListFrom(rClr::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
+      .parameterValueListFrom(rSharp::clrCall(self$ref, "AllParameterValuesForIndividual", as.integer(individualId)))
     },
     #' @description
     #' Removes the value of a parameter by path
     #' @param parameterPath Path of the parameter values to remove
     remove = function(parameterPath) {
-      rClr::clrCall(self$ref, "Remove", parameterPath)
+      rSharp::clrCall(self$ref, "Remove", parameterPath)
     },
     #' @description
     #' Print the object to the console

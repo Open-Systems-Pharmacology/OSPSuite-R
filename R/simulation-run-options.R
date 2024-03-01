@@ -17,7 +17,7 @@ SimulationRunOptions <- R6::R6Class(
     initialize = function(numberOfCores = NULL,
                           checkForNegativeValues = NULL,
                           showProgress = NULL) {
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationRunOptions")
+      ref <- rSharp::clrNew("OSPSuite.R.Domain.SimulationRunOptions")
       super$initialize(ref)
       self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")

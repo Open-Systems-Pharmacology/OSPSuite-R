@@ -14,7 +14,7 @@ SimulationBatchRunValues <- R6::R6Class(
     #' @param initialValues Vector of molecule initial values
     #' @return A new `SimulationBatchRunValues` object.
     initialize = function(parameterValues = NULL, initialValues = NULL) {
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationBatchRunValues")
+      ref <- rSharp::clrNew("OSPSuite.R.Domain.SimulationBatchRunValues")
       super$initialize(ref)
       if (!is.null(parameterValues)) {
         self$parameterValues <- parameterValues

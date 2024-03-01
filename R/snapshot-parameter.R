@@ -28,7 +28,7 @@ SnapshotParameter <- R6::R6Class(
     initialize = function(ref = NULL, value = NULL, unit = NULL) {
       validateIsNumeric(value, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
-      ref <- ref %||% rClr::clrNew("PKSim.Core.Snapshots.Parameter")
+      ref <- ref %||% rSharp::clrNew("PKSim.Core.Snapshots.Parameter")
       super$initialize(ref)
       # Because of weird issue with nullable value in rClr
       if (!is.null(value)) {

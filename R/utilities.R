@@ -46,7 +46,7 @@
 #' Retrieves the name of the constant in the specified enumeration that has the
 #' specified value.
 #'
-#' @inheritParams rClr::clrGetEnumNames
+#' @inheritParams rSharp::clrGetEnumNames
 #' @param enumValue The value of a particular enumerated constant in terms of
 #'   its underlying type. Typically an integer.
 #'
@@ -60,8 +60,8 @@
 #'
 #' @keywords internal
 .netEnumName <- function(enumType, enumValue) {
-  netTypeObj <- rClr::clrGetType(enumType)
-  rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
+  netTypeObj <- rSharp::clrGetType(enumType)
+  rSharp::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }
 
 
@@ -94,6 +94,6 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   gc()
 
   # then forces `.NET` garbage collection
-  rClr::clrCallStatic("OSPSuite.R.Api", "ForceGC")
+  rSharp::clrCallStatic("OSPSuite.R.Api", "ForceGC")
   invisible()
 }

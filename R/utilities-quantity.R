@@ -153,7 +153,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     path <- enc2utf8(quantityPaths[[i]])
     value <- values[[i]]
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
+      dimension <- rSharp::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
       # Dimension ca be be empty if the path was not found
       if (dimension == "") {
         next
@@ -186,7 +186,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       }
     }
 
-    rClr::clrCall(
+    rSharp::clrCall(
       task, "SetValueByPath",
       simulation$ref,
       path,
@@ -229,9 +229,9 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- enc2utf8(quantityPaths[[i]])
-    value <- rClr::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
+    value <- rSharp::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(
+      dimension <- rSharp::clrCall(
         task, "DimensionNameByPath",
         simulation$ref,
         path,
@@ -297,7 +297,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
       return(path)
     }
 
-    return(rClr::clrCall(displayResolver, "FullPathFor", quantity$ref))
+    return(rSharp::clrCall(displayResolver, "FullPathFor", quantity$ref))
   })
 
   return(unlist(displayPaths, use.names = FALSE))
@@ -347,7 +347,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
-  isFormulaExplicit <- rClr::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
+  isFormulaExplicit <- rSharp::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
 
   return(isFormulaExplicit)
 }

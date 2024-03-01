@@ -24,9 +24,9 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   validateIsString(filePath)
   importerTask <- .getNetTaskFromCache("DataImporterTask")
   if (is.null(sheet)) {
-    ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath)
+    ref <- rSharp::clrCall(importerTask, "CreateConfigurationFor", filePath)
   } else {
-    ref <- rClr::clrCall(importerTask, "CreateConfigurationFor", filePath, sheet)
+    ref <- rSharp::clrCall(importerTask, "CreateConfigurationFor", filePath, sheet)
   }
   return(DataImporterConfiguration$new(ref))
 }
@@ -61,6 +61,6 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 loadDataImporterConfiguration <- function(configurationFilePath) {
   validateIsString(configurationFilePath)
   importerTask <- .getNetTaskFromCache("DataImporterTask")
-  ref <- rClr::clrCall(importerTask, "GetConfiguration", configurationFilePath)
+  ref <- rSharp::clrCall(importerTask, "GetConfiguration", configurationFilePath)
   return(DataImporterConfiguration$new(ref))
 }

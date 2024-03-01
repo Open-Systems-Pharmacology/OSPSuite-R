@@ -2,7 +2,7 @@
 #'
 #' This will be called once when the package is loaded
 #'
-#' @import rClr
+#' @import rSharp
 #' @keywords internal
 .initPackage <- function() {
   filePathFor <- function(name) {
@@ -11,14 +11,14 @@
 
   .addPackageLibToPath()
 
-  rClr::clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
+  rSharp::clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
 
   # Initialize once
   apiConfig <- ApiConfig$new()
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
-  rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
+  rSharp::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
 
   .initializeDimensionAndUnitLists()
 }

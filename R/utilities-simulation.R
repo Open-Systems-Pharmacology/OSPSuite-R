@@ -55,7 +55,7 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
   simulationPersister <- .getNetTask("SimulationPersister")
 
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
-  netSim <- rClr::clrCall(simulationPersister, "LoadSimulation", .expandPath(filePath), resetIds)
+  netSim <- rSharp::clrCall(simulationPersister, "LoadSimulation", .expandPath(filePath), resetIds)
 
   simulation <- Simulation$new(netSim, filePath)
 
@@ -78,7 +78,7 @@ saveSimulation <- function(simulation, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationPersister <- .getNetTask("SimulationPersister")
-  rClr::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
+  rSharp::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
   invisible()
 }
 
@@ -217,19 +217,19 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
   simulationRunner <- .getNetTask("SimulationRunner")
-  simulationRunArgs <- rClr::clrNew("OSPSuite.R.Services.SimulationRunArgs")
-  rClr::clrSet(simulationRunArgs, "Simulation", simulation$ref)
-  rClr::clrSet(simulationRunArgs, "SimulationRunOptions", simulationRunOptions$ref)
+  simulationRunArgs <- rSharp::clrNew("OSPSuite.R.Services.SimulationRunArgs")
+  rSharp::clrSet(simulationRunArgs, "Simulation", simulation$ref)
+  rSharp::clrSet(simulationRunArgs, "SimulationRunOptions", simulationRunOptions$ref)
 
   if (!is.null(population)) {
-    rClr::clrSet(simulationRunArgs, "Population", population$ref)
+    rSharp::clrSet(simulationRunArgs, "Population", population$ref)
   }
 
   if (!is.null(agingData)) {
-    rClr::clrSet(simulationRunArgs, "AgingData", agingData$ref)
+    rSharp::clrSet(simulationRunArgs, "AgingData", agingData$ref)
   }
 
-  results <- rClr::clrCall(simulationRunner, "Run", simulationRunArgs)
+  results <- rSharp::clrCall(simulationRunner, "Run", simulationRunArgs)
 
   SimulationResults$new(results, simulation)
 }
@@ -239,7 +239,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
-      rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+      rSharp::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
       # Map of simulations ids to simulations objects
       simulationIdSimulationMap <- vector("list", length(simulations))
@@ -250,10 +250,10 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
         simulationIdSimulationMap[[simulationIdx]] <- simulation
         names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 
-        rClr::clrCall(simulationRunner, "AddSimulation", simulation$ref)
+        rSharp::clrCall(simulationRunner, "AddSimulation", simulation$ref)
       }
       # Run all simulations
-      results <- rClr::clrCall(simulationRunner, "RunConcurrently")
+      results <- rSharp::clrCall(simulationRunner, "RunConcurrently")
 
       # Ids of the results are Ids of the simulations
       resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
@@ -270,7 +270,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     },
     finally = {
       # Dispose of the runner to release any possible instances still in memory (.NET side)
-      rClr::clrCall(simulationRunner, "Dispose")
+      rSharp::clrCall(simulationRunner, "Dispose")
     }
   )
 }
@@ -331,7 +331,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules = variableMolecules
   )
 
-  net <- rClr::clrNew("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
+  net <- rSharp::clrNew("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
   SimulationBatch$new(net, simulation)
 }
 
@@ -380,7 +380,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
-  rClr::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+  rSharp::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
 
   simulationBatches <- c(simulationBatches)
   # Result Id <-> simulation batch id map to get the correct simulation for the results.
@@ -401,11 +401,11 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
     # All results of this batch have the id of the same simulation
     resultsIdSimulationBatchIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
-    rClr::clrCall(simulationRunner, "AddSimulationBatch", simBatch$ref)
+    rSharp::clrCall(simulationRunner, "AddSimulationBatch", simBatch$ref)
   }
 
   # Run the batch with the ConcurrentSimulationRunner
-  results <- rClr::clrCall(simulationRunner, "RunConcurrently")
+  results <- rSharp::clrCall(simulationRunner, "RunConcurrently")
   simulationResults <- .getConcurrentSimulationRunnerResults(
     results = results,
     resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
@@ -421,7 +421,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   names(output) <- names(simulationBatchIdSimulationMap)
 
   # Dispose of the runner to release any possible instances still in memory (.NET side)
-  rClr::clrCall(simulationRunner, "Dispose")
+  rSharp::clrCall(simulationRunner, "Dispose")
 
   return(output)
 }
@@ -608,17 +608,17 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
   names(simulationResults) <- names(resultsIdSimulationIdMap)
 
   for (resultObject in results) {
-    resultsId <- rClr::clrGet(resultObject, "Id")
-    succeeded <- rClr::clrGet(resultObject, "Succeeded")
+    resultsId <- rSharp::clrGet(resultObject, "Id")
+    succeeded <- rSharp::clrGet(resultObject, "Succeeded")
     if (succeeded) {
       # Id of the simulation of the batch
       simId <- resultsIdSimulationIdMap[[resultsId]]
       # Get the correct simulation and create a SimulationResults object
-      simulationResults[[resultsId]] <- SimulationResults$new(ref = rClr::clrGet(resultObject, "Result"), simulation = simulationIdSimulationMap[[simId]])
+      simulationResults[[resultsId]] <- SimulationResults$new(ref = rSharp::clrGet(resultObject, "Result"), simulation = simulationIdSimulationMap[[simId]])
       next()
     }
     # If the simulation run failed, show a warning or an error
-    errorMessage <- rClr::clrGet(resultObject, "ErrorMessage")
+    errorMessage <- rSharp::clrGet(resultObject, "ErrorMessage")
     if (stopIfFails) {
       stop(errorMessage)
     } else if (!silentMode) {
