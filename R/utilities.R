@@ -46,7 +46,7 @@
 #' Retrieves the name of the constant in the specified enumeration that has the
 #' specified value.
 #'
-#' @inheritParams rSharp::clrGetEnumNames
+#' @inheritParams rSharp::getEnumNames
 #' @param enumValue The value of a particular enumerated constant in terms of
 #'   its underlying type. Typically an integer.
 #'

@@ -8,6 +8,8 @@ specified value.}
 .netEnumName(enumType, enumValue)
 }
 \arguments{
+\item{enumType}{a .NET object, System.Type or type name, possibly namespace and assembly qualified type name, e.g. 'My.Namespace.MyClass,MyAssemblyName'.}
+
 \item{enumValue}{The value of a particular enumerated constant in terms of
 its underlying type. Typically an integer.}
 }
