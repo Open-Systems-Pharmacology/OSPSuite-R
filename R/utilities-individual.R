@@ -16,7 +16,7 @@
 createIndividual <- function(individualCharacteristics) {
   validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
-  individualFactory <- rSharp::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
+  individualFactory <- rSharp::callStatic("PKSim.R.Api", "GetIndividualFactory")
   createIndividualResults <- rSharp::clrCall(individualFactory, "CreateIndividual", individualCharacteristics$ref)
 
   distributedParameters <- .getPropertyValue(createIndividualResults, "DistributedParameters")
@@ -39,7 +39,7 @@ createIndividual <- function(individualCharacteristics) {
 createDistributions <- function(individualCharacteristics) {
   validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
-  individualFactory <- rSharp::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")
+  individualFactory <- rSharp::callStatic("PKSim.R.Api", "GetIndividualFactory")
   distributedParameters <- rSharp::clrCall(individualFactory, "DistributionsFor", individualCharacteristics$ref)
 
   list(

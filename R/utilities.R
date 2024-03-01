@@ -61,7 +61,7 @@
 #' @keywords internal
 .netEnumName <- function(enumType, enumValue) {
   netTypeObj <- rSharp::clrGetType(enumType)
-  rSharp::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
+  rSharp::callStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }
 
 
@@ -94,6 +94,6 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   gc()
 
   # then forces `.NET` garbage collection
-  rSharp::clrCallStatic("OSPSuite.R.Api", "ForceGC")
+  rSharp::callStatic("OSPSuite.R.Api", "ForceGC")
   invisible()
 }

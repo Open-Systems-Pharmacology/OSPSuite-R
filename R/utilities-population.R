@@ -143,7 +143,7 @@ loadAgingDataFromCSV <- function(filePath) {
 createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
-  populationFactory <- rSharp::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
+  populationFactory <- rSharp::callStatic("PKSim.R.Api", "GetPopulationFactory")
   results <- rSharp::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
   netPopulation <- .getPropertyValue(results, "IndividualValuesCache")
   seed <- .getPropertyValue(results, "Seed")

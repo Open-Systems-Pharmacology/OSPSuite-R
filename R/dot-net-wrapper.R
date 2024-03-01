@@ -66,7 +66,7 @@ DotNetWrapper <- R6::R6Class(
     },
     wrapExtensionMethod = function(typename, methodName, propertyName, value) {
       if (missing(value)) {
-        rSharp::clrCallStatic(typename, methodName, self$ref)
+        rSharp::callStatic(typename, methodName, self$ref)
       } else {
         private$throwPropertyIsReadonly(propertyName)
       }
@@ -74,7 +74,7 @@ DotNetWrapper <- R6::R6Class(
     wrapExtensionMethodCached = function(typename, methodName, propertyName, cachedValue, value) {
       if (missing(value)) {
         if (is.null(cachedValue)) {
-          return(rSharp::clrCallStatic(typename, methodName, self$ref))
+          return(rSharp::callStatic(typename, methodName, self$ref))
         }
         return(cachedValue)
       } else {
