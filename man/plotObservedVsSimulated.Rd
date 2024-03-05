@@ -18,7 +18,7 @@ an \code{R6} class object that defines plot properties.}
 
 \item{foldDistance}{A vector for plotting lines at required fold distances
 around the identity line (\code{x=y}). Set to NULL (default) to only draw identity
-line.
+line. Set to FALSE to not draw any lines.
 The vector can include only fold distance values \verb{>1}. An \code{x}-fold distance
 is defined as all simulated values within the range between \code{x}-fold
 (depicted by the upper fold range line) and \code{1/x}-fold
