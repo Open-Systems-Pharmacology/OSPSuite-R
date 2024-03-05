@@ -58,6 +58,14 @@ test_that("It creates default plots as expected", {
   )
 })
 
+test_that("It creates default plots as expected without any identity or foldDistance line", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults without lines",
+    fig = plotObservedVsSimulated(myCombDat, foldDistance = FALSE)
+  )
+})
+
 test_that("It creates default plots as expected with 1 fold distance", {
   set.seed(123)
   vdiffr::expect_doppelganger(
@@ -87,6 +95,21 @@ test_that("It issues warning when scale is linear", {
 
   vdiffr::expect_doppelganger(
     title = "linear scale",
+    fig = plot
+  )
+})
+
+test_that("It does not issue warning when no foldDistance are defined with linear scale", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$xAxisScale <- tlf::Scaling$lin
+  myPlotConfiguration$yAxisScale <- tlf::Scaling$lin
+
+  set.seed(123)
+
+  plot <- plotObservedVsSimulated(myCombDat, myPlotConfiguration)
+
+  vdiffr::expect_doppelganger(
+    title = "linear scale without foldDistance",
     fig = plot
   )
 })
