@@ -42,11 +42,11 @@ SimulationRunOptions <- R6::R6Class(
     },
     #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is `TRUE`
     checkForNegativeValues = function(value) {
-      private$wrapProperty("CheckForNegativeValues", value)
+      private$.wrapProperty("CheckForNegativeValues", value)
     },
     #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is `getOSPSuiteSetting("showProgress")`
     showProgress = function(value) {
-      private$wrapProperty("ShowProgress", value)
+      private$.wrapProperty("ShowProgress", value)
     }
   )
 )

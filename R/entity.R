@@ -28,7 +28,7 @@ Entity <- R6::R6Class(
     #' pointing to the same .NET container
     parentContainer = function(value) {
       if (is.null(private$.parentContainer)) {
-        netParentContainer <- private$wrapProperty("ParentContainer")
+        netParentContainer <- private$.wrapProperty("ParentContainer")
         if (is.null(netParentContainer)) {
           return(NULL)
         }

@@ -11,15 +11,15 @@ ParameterRange <- R6::R6Class(
   active = list(
     #' @field min Minimum value for the parameter range
     min = function(value) {
-      private$wrapProperty("Min", value)
+      private$.wrapProperty("Min", value)
     },
     #' @field max Maximum value for the parameter range
     max = function(value) {
-      private$wrapProperty("Max", value)
+      private$.wrapProperty("Max", value)
     },
     #' @field unit Unit in which the value is defined
     unit = function(value) {
-      private$wrapProperty("Unit", value)
+      private$.wrapProperty("Unit", value)
     }
   ),
   public = list(

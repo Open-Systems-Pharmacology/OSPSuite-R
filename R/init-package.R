@@ -14,11 +14,11 @@
   rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
 
   # Initialize once
-  apiConfig <- ApiConfig$new()
+  apiConfig <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig", R6objectClass = ApiConfig)
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
-  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
+  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$pointer)
 
   .initializeDimensionAndUnitLists()
 }

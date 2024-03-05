@@ -9,7 +9,7 @@ SolverSettings <- R6::R6Class(
   active = list(
     #' @field useJacobian Use of Jacobian matrix during calculations
     useJacobian = function(value) {
-      private$wrapProperty("UseJacobian", value)
+      private$.wrapProperty("UseJacobian", value)
     },
     #' @field h0 Initial time step size
     h0 = function(value) {
@@ -17,23 +17,23 @@ SolverSettings <- R6::R6Class(
     },
     #' @field hMin Minimum absolute value of step size allowed
     hMin = function(value) {
-      private$wrapProperty("HMin", value)
+      private$.wrapProperty("HMin", value)
     },
     #' @field hMax Maximum absolute value of step size allowed
     hMax = function(value) {
-      private$wrapProperty("HMax", value)
+      private$.wrapProperty("HMax", value)
     },
     #' @field mxStep Maximum number of internal steps to be taken by the solver in its attempt to reach tout
     mxStep = function(value) {
-      private$wrapIntegerProperty("MxStep", value)
+      private$.wrapProperty("MxStep", value, asInteger = TRUE)
     },
     #' @field relTol Relative tolerance of unknowns
     relTol = function(value) {
-      private$wrapProperty("RelTol", value)
+      private$.wrapProperty("RelTol", value)
     },
     #' @field absTol Absolute tolerance of unknowns
     absTol = function(value) {
-      private$wrapProperty("AbsTol", value)
+      private$.wrapProperty("AbsTol", value)
     }
   ),
   public = list(

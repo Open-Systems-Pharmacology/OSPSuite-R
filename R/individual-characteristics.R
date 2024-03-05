@@ -11,15 +11,15 @@ IndividualCharacteristics <- R6::R6Class(
   active = list(
     #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see `Species`)
     species = function(value) {
-      private$wrapProperty("Species", value)
+      private$.wrapProperty("Species", value)
     },
     #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see `HumanPopulation`)
     population = function(value) {
-      private$wrapProperty("Population", value, shouldSetNull = FALSE)
+      private$.wrapProperty("Population", value, shouldSetNull = FALSE)
     },
     #' @field gender Gender of the individual. It should be defined for the species in PK-Sim  (see `Gender`)
     gender = function(value) {
-      private$wrapProperty("Gender", value, shouldSetNull = FALSE)
+      private$.wrapProperty("Gender", value, shouldSetNull = FALSE)
     },
     #' @field age Age of the individual as in instance of a `SnapshotParameter` (optional)
     age = function(value) {

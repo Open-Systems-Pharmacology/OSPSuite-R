@@ -22,7 +22,7 @@ Interval <- R6::R6Class(
     },
     #' @field name Name of the interval
     name = function(value) {
-      private$wrapProperty("Name", value)
+      private$.wrapProperty("Name", value)
     }
   ),
   public = list(

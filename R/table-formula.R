@@ -18,11 +18,11 @@ TableFormula <- R6::R6Class(
     },
     #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is `TRUE`
     useDerivedValues = function(value) {
-      private$wrapProperty("UseDerivedValues", value)
+      private$.wrapProperty("UseDerivedValues", value)
     },
     #' @field xDimension The dimension in which the x values are defined (Read-Only).
     xDimension = function(value) {
-      dim <- private$wrapReadOnlyProperty("XDimension", value)
+      dim <- private$.wrapReadOnlyProperty("XDimension", value)
       rSharp::clrGet(dim, "Name")
     }
   ),

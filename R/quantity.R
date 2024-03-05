@@ -13,7 +13,7 @@ Quantity <- R6::R6Class(
   active = list(
     #' @field value The value of the quantity in unit
     value = function(value) {
-      private$wrapProperty("Value", value)
+      private$.wrapProperty("Value", value)
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
@@ -65,7 +65,7 @@ Quantity <- R6::R6Class(
     },
     #' @field isFixedValue Returns `TRUE` if the formula was overridden by a constant value, otherwise `FALSE`
     isFixedValue = function(value) {
-      private$wrapProperty("IsFixedValue", value)
+      private$.wrapProperty("IsFixedValue", value)
     }
   ),
   private = list(

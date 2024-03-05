@@ -9,13 +9,13 @@ DataRepository <- R6::R6Class(
   active = list(
     #' @field name The name of the object.
     name = function(value) {
-      private$wrapProperty("Name", value)
+      private$.wrapProperty("Name", value)
     },
     #' @field baseGrid Returns the base column for the data repository (typically time column).
     baseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.baseGrid)) {
-          private$.baseGrid <- DataColumn$new(private$wrapProperty("BaseGrid", value))
+          private$.baseGrid <- DataColumn$new(private$.wrapProperty("BaseGrid", value))
         }
         return(private$.baseGrid)
       }

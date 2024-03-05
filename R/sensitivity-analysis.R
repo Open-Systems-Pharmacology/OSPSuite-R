@@ -88,7 +88,7 @@ SensitivityAnalysis <- R6::R6Class(
     },
     #' @field variationRange Variation applied to the parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     variationRange = function(value) {
-      private$wrapProperty("VariationRange", value)
+      private$.wrapProperty("VariationRange", value)
     },
     #' @field parameterPaths  List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
     #' on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter

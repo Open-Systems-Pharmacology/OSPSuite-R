@@ -37,11 +37,11 @@ PKParameter <- R6::R6Class("PKParameter",
   active = list(
     #' @field name Name of the PK-Parameter
     name = function(value) {
-      private$wrapProperty("Name", value)
+      private$.wrapProperty("Name", value)
     },
     #' @field displayName Display Name of the PK-Parameter. If not set, Name will be used
     displayName = function(value) {
-      private$wrapProperty("DisplayName", value)
+      private$.wrapProperty("DisplayName", value)
     },
     #' @field dimension Dimension instance used by the PK-Parameter (Read-Only)
     dimension = function(value) {
@@ -49,11 +49,11 @@ PKParameter <- R6::R6Class("PKParameter",
     },
     #' @field unit Unit of the PK-Parameter (Read-Only)
     unit = function(value) {
-      private$wrapReadOnlyProperty("BaseUnit", value)
+      private$.wrapReadOnlyProperty("BaseUnit", value)
     },
     #' @field displayUnit Display Unit used for the PK-Parameter
     displayUnit = function(value) {
-      private$wrapProperty("DisplayUnit", value)
+      private$.wrapProperty("DisplayUnit", value)
     }
   ),
   private = list(

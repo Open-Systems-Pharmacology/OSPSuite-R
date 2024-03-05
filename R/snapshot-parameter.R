@@ -11,11 +11,11 @@ SnapshotParameter <- R6::R6Class(
   active = list(
     #' @field value Parameter value
     value = function(value) {
-      private$wrapProperty("Value", value)
+      private$.wrapProperty("Value", value)
     },
     #' @field unit Unit in which the value is defined
     unit = function(value) {
-      private$wrapProperty("Unit", value)
+      private$.wrapProperty("Unit", value)
     }
   ),
   public = list(

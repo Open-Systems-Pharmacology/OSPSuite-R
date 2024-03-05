@@ -19,11 +19,11 @@ PopulationCharacteristics <- R6::R6Class(
     },
     #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see `Species`)
     species = function(value) {
-      private$wrapProperty("Species", value)
+      private$.wrapProperty("Species", value)
     },
     #' @field population For a Human species, the population of interest. It should be a population available in PK-Sim (see `HumanPopulation`)
     population = function(value) {
-      private$wrapProperty("Population", value, shouldSetNull = FALSE)
+      private$.wrapProperty("Population", value, shouldSetNull = FALSE)
     },
     #' @field age Age range of the population as in instance of a `ParameterRange` (optional)
     age = function(value) {
