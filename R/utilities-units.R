@@ -6,7 +6,7 @@
 hasDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "HasDimension", enc2utf8(dimension))
+  rSharp::clrCall(dimensionTask, "HasDimension", dimension)
 }
 
 #' Validate dimension
@@ -31,7 +31,7 @@ hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "HasUnit", enc2utf8(dimension), .encodeUnit(unit))
+  rSharp::clrCall(dimensionTask, "HasUnit", dimension, .encodeUnit(unit))
 }
 
 #' Validate unit
@@ -77,7 +77,7 @@ getBaseUnit <- function(quantityOrDimension) {
   }
   validateDimension(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "BaseUnitFor", enc2utf8(dimension))
+  rSharp::clrCall(dimensionTask, "BaseUnitFor", dimension)
 }
 
 #' Converts a value given in a specified unit into the base unit of a quantity
@@ -293,7 +293,7 @@ getDimensionForUnit <- function(unit) {
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
+  rSharp::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
 }
 
 #' @title Get dimension by name
@@ -312,7 +312,7 @@ getUnitsForDimension <- function(dimension) {
 getDimensionByName <- function(name) {
   validateIsString(name)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "DimensionByName", enc2utf8(name))
+  rSharp::clrCall(dimensionTask, "DimensionByName", name)
 }
 
 

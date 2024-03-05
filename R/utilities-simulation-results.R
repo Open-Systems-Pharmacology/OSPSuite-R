@@ -104,8 +104,8 @@ getOutputValues <- function(simulationResults,
       # Get the dimension and unit from path if the results are obtained. If the results
       # are NA, the entity with such path does not exist
       if (!all(is.na(values[[path]]))) {
-        unit <- rSharp::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
-        dimension <- rSharp::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, enc2utf8(path), stopIfNotFound)
+        unit <- rSharp::clrCall(task, "BaseUnitNameByPath", simulationResults$simulation$ref, path, stopIfNotFound)
+        dimension <- rSharp::clrCall(task, "DimensionNameByPath", simulationResults$simulation$ref, path, stopIfNotFound)
       }
       list(unit = unit, dimension = dimension)
     })

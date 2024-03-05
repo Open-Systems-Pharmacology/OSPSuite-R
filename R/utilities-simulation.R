@@ -888,7 +888,7 @@ getSteadyState <- function(simulations,
     endValues <- lapply(quantitiesPathsMap[[simId]], function(path) {
       # Check if the quantity is defined by an explicit formula
       isFormulaExplicit <- isExplicitFormulaByPath(
-        path = enc2utf8(path),
+        path = path,
         simulation = simulation
       )
 

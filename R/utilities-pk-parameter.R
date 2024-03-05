@@ -34,7 +34,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateIsString(displayUnit, nullAllowed = TRUE)
 
   displayUnit <- .encodeUnit(displayUnit %||% "")
-  displayName <- enc2utf8(displayName %||% "")
+  displayName <- displayName %||% ""
 
   pkParameterTask <- .getNetTask("PKParameterTask")
   netUserDefinedPKParameter <- rSharp::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)

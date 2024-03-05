@@ -35,7 +35,6 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsString(outputFolder)
   validateIsString(outputFileName)
   csvPopulationFile <- .expandPath(csvPopulationFile)
-  outputFileName <- enc2utf8(outputFileName)
   populationTask <- .getNetTask("PopulationTask")
   rSharp::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }

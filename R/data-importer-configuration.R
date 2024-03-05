@@ -15,7 +15,7 @@ DataImporterConfiguration <- R6::R6Class(
         return(rSharp::clrGet(column, "ColumnName"))
       }
       validateIsString(value)
-      rSharp::clrSet(column, "ColumnName", enc2utf8(value))
+      rSharp::clrSet(column, "ColumnName", value)
     },
 
     #' @field timeUnit If `isTimeUnitFromColumn` is `FALSE`, unit of the values
@@ -55,7 +55,7 @@ DataImporterConfiguration <- R6::R6Class(
         return(rSharp::clrGet(column, "ColumnName"))
       }
       validateIsString(value)
-      rSharp::clrSet(column, "ColumnName", enc2utf8(value))
+      rSharp::clrSet(column, "ColumnName", value)
     },
 
     #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`,
@@ -82,7 +82,6 @@ DataImporterConfiguration <- R6::R6Class(
         # do nothing as it should be NULL
         return(invisible(self))
       }
-      value <- enc2utf8(value)
       validateDimension(value)
       rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
       rSharp::clrSet(unit, "SelectedUnit", getBaseUnit(value))
@@ -147,7 +146,7 @@ DataImporterConfiguration <- R6::R6Class(
         if (is.null(column)) {
           private$.addErrorColumn()
         }
-        rSharp::clrSet(private$.errorColumn(), "ColumnName", enc2utf8(value))
+        rSharp::clrSet(private$.errorColumn(), "ColumnName", value)
       }
     },
 
@@ -238,7 +237,7 @@ DataImporterConfiguration <- R6::R6Class(
         return(pattern)
       }
       validateIsString(value)
-      rSharp::clrSet(self$ref, "NamingConventions", enc2utf8(value))
+      rSharp::clrSet(self$ref, "NamingConventions", value)
     }
   ),
   public = list(
@@ -264,7 +263,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (self$timeUnit == "?") {
         column <- rSharp::clrCall(importerTask, "GetTime", ref)
         mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-        rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(ospDimensions$Time)))
+        rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(ospDimensions$Time))
         self$timeUnit <- ospUnits$Time$h
       }
     },
@@ -286,7 +285,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     addGroupingColumn = function(column) {
       validateIsString(column)
-      rSharp::clrCall(private$.dataImporterTask, "AddGroupingColumn", self$ref, enc2utf8(column))
+      rSharp::clrCall(private$.dataImporterTask, "AddGroupingColumn", self$ref, column)
       invisible(self)
     },
 
@@ -295,7 +294,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     removeGroupingColumn = function(column) {
       validateIsString(column)
-      rSharp::clrCall(private$.dataImporterTask, "RemoveGroupingColumn", self$ref, enc2utf8(column))
+      rSharp::clrCall(private$.dataImporterTask, "RemoveGroupingColumn", self$ref, column)
       invisible(self)
     },
 
@@ -334,17 +333,16 @@ DataImporterConfiguration <- R6::R6Class(
     .addErrorColumn = function() {
       rSharp::clrCall(private$.dataImporterTask, "AddError", self$ref)
       mappedColumn <- rSharp::clrGet(private$.errorColumn(), "MappedColumn")
-      rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(enc2utf8(self$measurementDimension)))
+      rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(self$measurementDimension))
     },
     .setColumnUnit = function(column, value) {
-      value <- enc2utf8(value)
       mappedColumn <- rSharp::clrGet(column, "MappedColumn")
       dimension <- rSharp::clrGet(mappedColumn, "Dimension")
       # Fixed unit or from column?
       if (private$.isUnitFromColumn(column)) {
         # Get the old unit and set it as default unit
         unit <- rSharp::clrGet(mappedColumn, "Unit")
-        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", enc2utf8(rSharp::clrGet(unit, "SelectedUnit")), value)
+        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", rSharp::clrGet(unit, "SelectedUnit"), value)
       } else {
         validateUnit(value, rSharp::clrGet(dimension, "Name"))
         unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", value)

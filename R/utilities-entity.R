@@ -124,7 +124,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
-    .toObjectType(rSharp::clrCall(task, method, container$ref, enc2utf8(path)), entityType)
+    .toObjectType(rSharp::clrCall(task, method, container$ref, path), entityType)
   }
 
   return(.unify(findEntitiesByPath, paths))

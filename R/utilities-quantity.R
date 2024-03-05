@@ -150,7 +150,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 
   task <- .getNetTaskFromCache("ContainerTask")
   for (i in seq_along(quantityPaths)) {
-    path <- enc2utf8(quantityPaths[[i]])
+    path <- quantityPaths[[i]]
     value <- values[[i]]
     if (!is.null(units)) {
       dimension <- rSharp::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
@@ -228,7 +228,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
   task <- .getNetTaskFromCache("ContainerTask")
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
-    path <- enc2utf8(quantityPaths[[i]])
+    path <- quantityPaths[[i]]
     value <- rSharp::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
     if (!is.null(units)) {
       dimension <- rSharp::clrCall(
@@ -347,7 +347,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
-  isFormulaExplicit <- rSharp::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
+  isFormulaExplicit <- rSharp::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, path, stopIfNotFound)
 
   return(isFormulaExplicit)
 }
