@@ -10,7 +10,7 @@ OutputSelections <- R6::R6Class(
     #' @field allOutputs Returns all outputs defined in the selection
     allOutputs = function(value) {
       if (missing(value)) {
-        .toObjectType(rSharp::clrGet(self$ref, "OutputsAsArray"), QuantitySelection)
+        .toObjectType(self$get("OutputsAsArray"), QuantitySelection)
       } else {
         stop(messages$errorPropertyReadOnly("allOutputs"))
       }

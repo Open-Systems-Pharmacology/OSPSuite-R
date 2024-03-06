@@ -23,7 +23,7 @@ TableFormula <- R6::R6Class(
     #' @field xDimension The dimension in which the x values are defined (Read-Only).
     xDimension = function(value) {
       dim <- private$.wrapReadOnlyProperty("XDimension", value)
-      rSharp::clrGet(dim, "Name")
+      dim$get("Name")
     }
   ),
   public = list(

@@ -11,7 +11,7 @@ OutputSchema <- R6::R6Class(
     #' @field intervals All intervals defined in the schema (Read-Only)
     intervals = function(value) {
       if (missing(value)) {
-        intervals <- rSharp::clrGet(self$ref, "IntervalsAsArray")
+        intervals <- self$get("IntervalsAsArray")
         .toObjectType(intervals, Interval)
       } else {
         private$throwPropertyIsReadonly("intervals")

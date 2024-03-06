@@ -39,7 +39,7 @@ IndividualCharacteristics <- R6::R6Class(
     },
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
-      private$readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
+      private$.readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
     },
     #' @field seed Seed used to generate the population
     seed = function(value) {
@@ -56,7 +56,7 @@ IndividualCharacteristics <- R6::R6Class(
     },
     parameterProperty = function(parameterName, value) {
       if (missing(value)) {
-        SnapshotParameter$new(ref = rSharp::clrGet(self$ref, parameterName))
+        SnapshotParameter$new(ref = self$get(parameterName))
       } else {
         if (is.null(value)) {
           return()

@@ -12,7 +12,7 @@ DataColumn <- R6::R6Class(
   active = list(
     #' @field values Returns the values defined in the column
     values = function(value) {
-      private$wrapVectorProperty("Value", "ValuesAsArray", value, "ValuesAsArray")
+      private$.wrapVectorProperty("Value", "ValuesAsArray", value, "ValuesAsArray")
     },
     #' @field name Returns the name of the column  (Read-Only)
     name = function(value) {
@@ -20,13 +20,13 @@ DataColumn <- R6::R6Class(
     },
     #' @field unit The base unit in which the values are defined (Read-Only)
     unit = function(value) {
-      private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
+      private$.unit <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
       return(private$.unit)
     },
     #' @field displayUnit The unit in which the values should be displayed
     displayUnit = function(value) {
       if (missing(value)) {
-        return(private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value))
+        return(private$.wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value))
       }
       dimension <- getDimensionByName(self$dimension)
       # we use the ignore case parameter set  to true so that we do not have to worry about casing when set via scripts
@@ -40,7 +40,7 @@ DataColumn <- R6::R6Class(
     dimension = function(value) {
       if (missing(value)) {
         if (is.null(private$.dimension)) {
-          private$.dimension <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
+          private$.dimension <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
         }
         return(private$.dimension)
       }
@@ -52,9 +52,9 @@ DataColumn <- R6::R6Class(
     #' @field molWeight Molecular weight of associated observed data in internal unit
     #' In no molecular weight is defined, the value is `NULL`
     molWeight = function(value) {
-      dataInfo <- rSharp::clrGet(self$ref, "DataInfo")
+      dataInfo <- self$get("DataInfo")
       if (missing(value)) {
-        return(rSharp::clrGet(dataInfo, "MolWeight"))
+        return(dataInfo$get("MolWeight"))
       }
 
       validateIsNumeric(value)
@@ -63,9 +63,9 @@ DataColumn <- R6::R6Class(
     #' @field LLOQ Lower Limit Of Quantification.
     #' In no LLOQ is defined, the value is `NULL`
     LLOQ = function(value) {
-      dataInfo <- rSharp::clrGet(self$ref, "DataInfo")
+      dataInfo <-self$get("DataInfo")
       if (missing(value)) {
-        return(rSharp::clrGet(dataInfo, "LLOQAsDouble"))
+        return(dataInfo$get("LLOQAsDouble"))
       }
 
       validateIsNumeric(value)

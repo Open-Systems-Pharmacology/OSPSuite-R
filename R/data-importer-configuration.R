@@ -12,7 +12,7 @@ DataImporterConfiguration <- R6::R6Class(
     timeColumn = function(value) {
       column <- private$.timeColumn()
       if (missing(value)) {
-        return(rSharp::clrGet(column, "ColumnName"))
+        return(column$get("ColumnName"))
       }
       validateIsString(value)
       rSharp::clrSet(column, "ColumnName", value)
@@ -23,14 +23,14 @@ DataImporterConfiguration <- R6::R6Class(
     #'   with units of the values in time column.
     timeUnit = function(value) {
       column <- private$.timeColumn()
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-      unit <- rSharp::clrGet(mappedColumn, "Unit")
+      mappedColumn <- column$get("MappedColumn")
+      unit <- mappedColumn$get("Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
-          return(rSharp::clrGet(unit, "ColumnName"))
+          return(unit$get("ColumnName"))
         }
-        return(rSharp::clrGet(unit, "SelectedUnit"))
+        return(unit$get("SelectedUnit"))
       }
       validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
@@ -52,7 +52,7 @@ DataImporterConfiguration <- R6::R6Class(
     measurementColumn = function(value) {
       column <- private$.measurementColumn()
       if (missing(value)) {
-        return(rSharp::clrGet(column, "ColumnName"))
+        return(column$get, "ColumnName"))
       }
       validateIsString(value)
       rSharp::clrSet(column, "ColumnName", value)
@@ -66,15 +66,15 @@ DataImporterConfiguration <- R6::R6Class(
     #'   unit is set to the base unit of this dimension.
     measurementDimension = function(value) {
       column <- private$.measurementColumn()
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-      unit <- rSharp::clrGet(mappedColumn, "Unit")
+      mappedColumn <- column$get("MappedColumn")
+      unit <- mappedColumn$get("Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
           return(NULL)
         }
-        dimension <- rSharp::clrGet(mappedColumn, "Dimension")
-        return(ifNotNull(dimension, rSharp::clrGet(dimension, "DisplayName")))
+        dimension <- mappedColumn$get("Dimension")
+        return(ifNotNull(dimension, dimension$get("DisplayName")))
       }
       validateIsString(value)
       # Fixed unit or from column?
@@ -89,8 +89,8 @@ DataImporterConfiguration <- R6::R6Class(
       # also change dimension of the error
       column <- private$.errorColumn()
       if (!is.null(column)) {
-        mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-        unit <- rSharp::clrGet(mappedColumn, "Unit")
+        mappedColumn <- column$get("MappedColumn")
+        unit <- mappedColumn$get("Unit")
         rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(value))
         private$.setColumnUnit(column, getBaseUnit(value))
       }
@@ -100,14 +100,14 @@ DataImporterConfiguration <- R6::R6Class(
     #' If `isMeasurementUnitFromColumn` is `TRUE`, name of the column with units of the values in measurement column
     measurementUnit = function(value) {
       column <- private$.measurementColumn()
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-      unit <- rSharp::clrGet(mappedColumn, "Unit")
+      mappedColumn <- column$get("MappedColumn")
+      unit <- mappedColumn$get("Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
-          return(rSharp::clrGet(unit, "ColumnName"))
+          return(unit$get("ColumnName"))
         }
-        return(rSharp::clrGet(unit, "SelectedUnit"))
+        return(unit$get("SelectedUnit"))
       }
       validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
@@ -135,7 +135,7 @@ DataImporterConfiguration <- R6::R6Class(
     errorColumn = function(value) {
       column <- private$.errorColumn()
       if (missing(value)) {
-        return(ifNotNull(column, rSharp::clrGet(column, "ColumnName")))
+        return(ifNotNull(column, column$get("ColumnName")))
       }
       # If value is NULL, remove the error column
       if (is.null(value)) {
@@ -162,14 +162,14 @@ DataImporterConfiguration <- R6::R6Class(
         return(invisible(self))
       }
 
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-      unit <- rSharp::clrGet(mappedColumn, "Unit")
+      mappedColumn <- column$get("MappedColumn")
+      unit <- mappedColumn$get("Unit")
       if (missing(value)) {
         # Fixed unit or from column?
         if (private$.isUnitFromColumn(column)) {
-          return(rSharp::clrGet(unit, "ColumnName"))
+          return(unit$get("ColumnName"))
         }
-        return(rSharp::clrGet(unit, "SelectedUnit"))
+        return(unit$get("SelectedUnit"))
       }
       validateIsString(value)
       private$.setColumnUnit(column = column, value = value)
@@ -188,9 +188,9 @@ DataImporterConfiguration <- R6::R6Class(
         return(invisible(self))
       }
 
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+      mappedColumn <- column$get("MappedColumn")
       if (missing(value)) {
-        errorType <- rSharp::clrGet(mappedColumn, "ErrorStdDev")
+        errorType <- mappedColumn$get("ErrorStdDev")
         # The string returned must be mapped to the naming used in DataSet (resp. data repository)
         return(.ImporterErrorTypeToDataSetErrorType[[errorType]])
       }
@@ -228,7 +228,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' and `{Sheet}` for sheet name.
     namingPattern = function(value) {
       if (missing(value)) {
-        pattern <- rSharp::clrGet(self$ref, "NamingConventions")
+        pattern <- self$get("NamingConventions")
         # Create a default pattern if no is defined
         if (is.null(pattern)) {
           pattern <- "{Source}.{Sheet}"
@@ -262,7 +262,7 @@ DataImporterConfiguration <- R6::R6Class(
       # done during initialization phase.
       if (self$timeUnit == "?") {
         column <- rSharp::clrCall(importerTask, "GetTime", ref)
-        mappedColumn <- rSharp::clrGet(column, "MappedColumn")
+        mappedColumn <- column$get("MappedColumn")
         rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(ospDimensions$Time))
         self$timeUnit <- ospUnits$Time$h
       }
@@ -332,27 +332,27 @@ DataImporterConfiguration <- R6::R6Class(
     },
     .addErrorColumn = function() {
       rSharp::clrCall(private$.dataImporterTask, "AddError", self$ref)
-      mappedColumn <- rSharp::clrGet(private$.errorColumn(), "MappedColumn")
+      mappedColumn <- private$.errorColumn()$get("MappedColumn")
       rSharp::clrSet(mappedColumn, "Dimension", getDimensionByName(self$measurementDimension))
     },
     .setColumnUnit = function(column, value) {
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-      dimension <- rSharp::clrGet(mappedColumn, "Dimension")
+      mappedColumn <- column$get("MappedColumn")
+      dimension <- mappedColumn$get("Dimension")
       # Fixed unit or from column?
       if (private$.isUnitFromColumn(column)) {
         # Get the old unit and set it as default unit
-        unit <- rSharp::clrGet(mappedColumn, "Unit")
-        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", rSharp::clrGet(unit, "SelectedUnit"), value)
+        unit <- mappedColumn$get("Unit")
+        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", unit$get("SelectedUnit"), value)
       } else {
-        validateUnit(value, rSharp::clrGet(dimension, "Name"))
+        validateUnit(value, dimension$get("Name"))
         unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", value)
       }
       rSharp::clrSet(mappedColumn, "Unit", unitDescription)
     },
     .isUnitFromColumn = function(column) {
-      mappedColumn <- rSharp::clrGet(column, "MappedColumn")
-      unit <- rSharp::clrGet(mappedColumn, "Unit")
-      columnName <- rSharp::clrGet(unit, "ColumnName")
+      mappedColumn <- column$get("MappedColumn")
+      unit <- mappedColumn$get("Unit")
+      columnName <- unit$get("ColumnName")
       return(!(is.null(columnName) || nchar(columnName) == 0))
     }
   )

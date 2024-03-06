@@ -15,7 +15,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @field simulation Reference to the `Simulation` used to calculate or
     #'   import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
-      private$readOnlyProperty("simulation", value, private$.simulation)
+      private$.readOnlyProperty("simulation", value, private$.simulation)
     },
 
     #' @field count the number of pk parameter sensitivity entries

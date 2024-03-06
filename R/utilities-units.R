@@ -275,7 +275,7 @@ getDimensionForUnit <- function(unit) {
   unit <- .encodeUnit(unit)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
   dim <- rSharp::clrCall(dimensionTask, "DimensionForUnit", unit)
-  ifNotNull(dim, rSharp::clrGet(dim, "Name"))
+  ifNotNull(dim, dim$get("Name"))
 }
 
 #' @title Get units for a given dimension

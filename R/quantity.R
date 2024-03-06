@@ -17,22 +17,22 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
+      private$.unit <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
       return(private$.unit)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
     displayUnit = function(value) {
-      private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value)
+      private$.wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value)
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      private$.dimension <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
+      private$.dimension <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
       return(private$.dimension)
     },
     #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
       # Optimized implementation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
-      private$.allUnits <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", private$.allUnits, value)
+      private$.allUnits <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", private$.allUnits, value)
       return(private$.allUnits)
     },
     #' @field quantityType The type of the quantity (Read-Only)
@@ -41,27 +41,27 @@ Quantity <- R6::R6Class(
     },
     #' @field formula An instance of a `Formula` object used by this quantity (Read-Only)
     formula = function(value) {
-      private$readOnlyProperty("formula", value, private$.formula)
+      private$.readOnlyProperty("formula", value, private$.formula)
     },
     #' @field isTable Returns `TRUE` if the formula used by this quantity is a table formula otherwise `FALSE`
     isTable = function(value) {
-      private$readOnlyProperty("isTable", value, self$formula$isTable)
+      private$.readOnlyProperty("isTable", value, self$formula$isTable)
     },
     #' @field isConstant Returns `TRUE` if the formula used by this quantity is a constant formula otherwise `FALSE`
     isConstant = function(value) {
-      private$readOnlyProperty("isConstant", value, self$formula$isConstant)
+      private$.readOnlyProperty("isConstant", value, self$formula$isConstant)
     },
     #' @field isFormula Returns `TRUE` if the formula used by this quantity is an explicit formula (e.g an equation) otherwise `FALSE`
     isFormula = function(value) {
-      private$readOnlyProperty("isFormula", value, self$formula$isExplicit)
+      private$.readOnlyProperty("isFormula", value, self$formula$isExplicit)
     },
     #' @field isDistributed Returns `TRUE` if the quantity represents a quantity with an underlying distribution otherwise `FALSE`
     isDistributed = function(value) {
-      private$readOnlyProperty("isDistributed", value, self$formula$isDistributed)
+      private$.readOnlyProperty("isDistributed", value, self$formula$isDistributed)
     },
     #' @field formulaString Returns the equation of the formula for a quantity using an explicit formula (e.g. `isFormula == TRUE`) or `NULL` for a quantity that does not use an explicit formula.
     formulaString = function(value) {
-      private$readOnlyProperty("formulaString", value, self$formula$formulaString)
+      private$.readOnlyProperty("formulaString", value, self$formula$formulaString)
     },
     #' @field isFixedValue Returns `TRUE` if the formula was overridden by a constant value, otherwise `FALSE`
     isFixedValue = function(value) {
@@ -92,7 +92,7 @@ Quantity <- R6::R6Class(
     initialize = function(ref) {
       super$initialize(ref)
       # Cannot use property Formula directly from the quantity because of new override in Distributed Parameter
-      formula <- private$wrapExtensionMethod(QUANTITY_EXTENSIONS, "GetFormula")
+      formula <- private$.wrapExtensionMethod(QUANTITY_EXTENSIONS, "GetFormula")
       private$.formula <- Formula$new(formula)
       if (self$isTable) {
         private$.formula <- TableFormula$new(formula)

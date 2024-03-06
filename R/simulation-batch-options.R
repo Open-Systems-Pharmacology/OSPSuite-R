@@ -37,11 +37,11 @@ SimulationBatchOptions <- R6::R6Class(
   active = list(
     #' @field variableParameters Vector of absolute parameter paths to be varied in a simulation batch
     variableParameters = function(value) {
-      private$wrapVectorProperty("VariableParameter", "VariableParameters", value, "Parameters")
+      private$.wrapVectorProperty("VariableParameter", "VariableParameters", value, "Parameters")
     },
     #' @field variableMolecules Vector of absolute molecule paths to be varied in a simulation batch
     variableMolecules = function(value) {
-      private$wrapVectorProperty("VariableMolecule", "VariableMolecules", value, "Molecules")
+      private$.wrapVectorProperty("VariableMolecule", "VariableMolecules", value, "Molecules")
     }
   )
 )

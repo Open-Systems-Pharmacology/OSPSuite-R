@@ -10,7 +10,7 @@ Container <- R6::R6Class(
   active = list(
     #' @field containerType Type of container
     containerType = function(value) {
-      private$wrapReadOnlyProperty("ContainerTypeAsString", value)
+      private$.wrapReadOnlyProperty("ContainerTypeAsString", value)
     }
   ),
   public = list(

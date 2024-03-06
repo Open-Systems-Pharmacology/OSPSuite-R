@@ -80,7 +80,7 @@ SensitivityAnalysis <- R6::R6Class(
   active = list(
     #' @field simulation Reference to the `Simulation` used to calculate or import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
-      private$readOnlyProperty("simulation", value, private$.simulation)
+      private$.readOnlyProperty("simulation", value, private$.simulation)
     },
     #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     numberOfSteps = function(value) {
@@ -94,7 +94,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
     parameterPaths = function(value) {
-      private$readOnlyProperty("parameterPaths", value, private$.parameterPaths)
+      private$.readOnlyProperty("parameterPaths", value, private$.parameterPaths)
     }
   )
 )

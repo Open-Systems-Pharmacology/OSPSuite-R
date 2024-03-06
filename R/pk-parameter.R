@@ -45,7 +45,7 @@ PKParameter <- R6::R6Class("PKParameter",
     },
     #' @field dimension Dimension instance used by the PK-Parameter (Read-Only)
     dimension = function(value) {
-      private$readOnlyProperty("Dimension", value, rSharp::clrGet(private$.dimension(), "Name"))
+      private$.readOnlyProperty("Dimension", value, private$.dimension()$get("Name"))
     },
     #' @field unit Unit of the PK-Parameter (Read-Only)
     unit = function(value) {
@@ -58,7 +58,7 @@ PKParameter <- R6::R6Class("PKParameter",
   ),
   private = list(
     .dimension = function() {
-      rSharp::clrGet(self$ref, "Dimension")
+      self$get("Dimension")
     }
   ),
   public = list(

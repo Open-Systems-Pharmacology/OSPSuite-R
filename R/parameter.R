@@ -43,7 +43,7 @@ Parameter <- R6::R6Class(
     },
     #' @field rhsFormula An instance of a `Formula` object representing the RHS Formula (Read-Only)
     rhsFormula = function(value) {
-      private$readOnlyProperty("rhsFormula", value, private$.rhsFormula)
+      private$.readOnlyProperty("rhsFormula", value, private$.rhsFormula)
     }
   ),
   public = list(
@@ -53,7 +53,7 @@ Parameter <- R6::R6Class(
     #' @return A new `Parameter` object.
     initialize = function(ref) {
       super$initialize(ref)
-      rhsFormula <- rSharp::clrGet(ref, "RHSFormula")
+      rhsFormula <- self$get("RHSFormula")
       private$.rhsFormula <- ifNotNull(rhsFormula, Formula$new(rhsFormula))
     },
     #' @description

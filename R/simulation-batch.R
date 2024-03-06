@@ -92,10 +92,10 @@ SimulationBatch <- R6::R6Class(
     #' @return List of parameter paths, or `NULL` if no parameter is variable.
     #' @export
     getVariableParameters = function() {
-      simulationBatchOptions <- rSharp::clrGet(self$ref, "SimulationBatchOptions")
+      simulationBatchOptions <- self$get("SimulationBatchOptions")
 
-      rSharp::clrGet(simulationBatchOptions, "VariableParameters") %||%
-        rSharp::clrGet(simulationBatchOptions, "VariableParameter")
+      simulationBatchOptions$get("VariableParameters") %||%
+       simulationBatchOptions$get("VariableParameter")
     },
 
     #' @description Returns a list of molecules paths that are variable in this batch
@@ -106,10 +106,10 @@ SimulationBatch <- R6::R6Class(
     #' @return List of parameter paths, or `NULL` if no molecule is variable.
     #' @export
     getVariableMolecules = function() {
-      simulationBatchOptions <- rSharp::clrGet(self$ref, "SimulationBatchOptions")
+      simulationBatchOptions <- self$get("SimulationBatchOptions")
 
-      rSharp::clrGet(simulationBatchOptions, "VariableMolecules") %||%
-        rSharp::clrGet(simulationBatchOptions, "VariableMolecule")
+      simulationBatchOptions$get("VariableMolecules") %||%
+        simulationBatchOptions$get("VariableMolecule")
     },
 
     #' @description
@@ -141,7 +141,7 @@ SimulationBatch <- R6::R6Class(
     #' @field runValuesIds Ids of the run values that will be executed on next run
     runValuesIds = function(value) {
       if (missing(value)) {
-        rSharp::clrGet(self$ref, "RunValuesIds")
+        self$get("RunValuesIds")
       } else {
         private$throwPropertyIsReadonly("runValuesIds")
       }

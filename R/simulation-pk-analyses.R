@@ -60,15 +60,15 @@ SimulationPKAnalyses <- R6::R6Class(
   active = list(
     #' @field simulation Reference to the `Simulation` used to calculate or import the PK-Analyses (Read-Only)
     simulation = function(value) {
-      private$readOnlyProperty("simulation", value, private$.simulation)
+      private$.readOnlyProperty("simulation", value, private$.simulation)
     },
     #' @field allPKParameterNames Returns the name of all pk parameters for which a value is available
     allPKParameterNames = function(value) {
-      private$readOnlyProperty("allPKParameterNames", value, rSharp::clrGet(self$ref, "AllPKParameterNames"))
+      private$.readOnlyProperty("allPKParameterNames", value, self$get("AllPKParameterNames"))
     },
     #' @field allQuantityPaths Returns the path of all quantities for which pk parameters were calculated
     allQuantityPaths = function(value) {
-      private$readOnlyProperty("allQuantityPaths", value, rSharp::clrGet(self$ref, "AllQuantityPaths"))
+      private$.readOnlyProperty("allQuantityPaths", value, self$get("AllQuantityPaths"))
     }
   )
 )

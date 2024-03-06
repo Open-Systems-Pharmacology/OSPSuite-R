@@ -23,11 +23,11 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
     },
     #' @field unit Base unit in which the pk parameter was calculated
     unit = function(value) {
-      private$readOnlyProperty("unit", value, private$.unit)
+      private$.readOnlyProperty("unit", value, private$.unit)
     },
     #' @field dimension Dimension in which the pk parameter was calculated
     dimension = function(value) {
-      private$readOnlyProperty("dimension", value, private$.dimension)
+      private$.readOnlyProperty("dimension", value, private$.dimension)
     }
   ),
   public = list(

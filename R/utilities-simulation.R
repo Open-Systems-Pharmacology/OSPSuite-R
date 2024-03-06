@@ -53,11 +53,11 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
   simulationPersister <- .getNetTask("SimulationPersister")
-
+browser()
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
-  netSim <- rSharp::clrCall(simulationPersister, "LoadSimulation", .expandPath(filePath), resetIds)
+netSim <- simulationPersister$call("LoadSimulation", .expandPath(filePath), resetIds)
 
-  simulation <- Simulation$new(netSim, filePath)
+  simulation <- Simulation$new(netSim$pointer, filePath)
 
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {
@@ -608,17 +608,17 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
   names(simulationResults) <- names(resultsIdSimulationIdMap)
 
   for (resultObject in results) {
-    resultsId <- rSharp::clrGet(resultObject, "Id")
-    succeeded <- rSharp::clrGet(resultObject, "Succeeded")
+    resultsId <- resultObject$get("Id")
+    succeeded <- resultObject$get("Succeeded")
     if (succeeded) {
       # Id of the simulation of the batch
       simId <- resultsIdSimulationIdMap[[resultsId]]
       # Get the correct simulation and create a SimulationResults object
-      simulationResults[[resultsId]] <- SimulationResults$new(ref = rSharp::clrGet(resultObject, "Result"), simulation = simulationIdSimulationMap[[simId]])
+      simulationResults[[resultsId]] <- SimulationResults$new(ref = resultObject$get("Result"), simulation = simulationIdSimulationMap[[simId]])
       next()
     }
     # If the simulation run failed, show a warning or an error
-    errorMessage <- rSharp::clrGet(resultObject, "ErrorMessage")
+    errorMessage <- resultObject$get("ErrorMessage")
     if (stopIfFails) {
       stop(errorMessage)
     } else if (!silentMode) {

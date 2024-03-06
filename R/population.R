@@ -13,15 +13,15 @@ Population <- R6::R6Class(
     },
     #' @field allCovariateNames the names of all covariates defined in the population
     allCovariateNames = function(value) {
-      private$readOnlyProperty("allCovariateNames", value, rSharp::clrCall(self$ref, "AllCovariatesNames"))
+      private$.readOnlyProperty("allCovariateNames", value, rSharp::clrCall(self$ref, "AllCovariatesNames"))
     },
     #' @field allParameterPaths the paths of all parameters defined in the population
     allParameterPaths = function(value) {
-      private$readOnlyProperty("allParameterPaths", value, rSharp::clrCall(self$ref, "AllParameterPaths"))
+      private$.readOnlyProperty("allParameterPaths", value, rSharp::clrCall(self$ref, "AllParameterPaths"))
     },
     #' @field allIndividualIds Ids of individuals defined in the population
     allIndividualIds = function(value) {
-      private$readOnlyProperty("allIndividualIds", value, rSharp::clrCall(self$ref, "AllIndividualIds"))
+      private$.readOnlyProperty("allIndividualIds", value, rSharp::clrCall(self$ref, "AllIndividualIds"))
     }
   ),
   public = list(

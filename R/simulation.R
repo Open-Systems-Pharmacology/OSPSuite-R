@@ -12,16 +12,16 @@ Simulation <- R6::R6Class(
     #' @field root Root container of the simulation (read-only)
     root = function(value) {
       if (missing(value)) {
-        model <- rSharp::clrGet(self$ref, "Model")
-        root <- rSharp::clrGet(model, "Root")
-        Container$new(root)
+        model <- self$get("Model")
+        root <- model$get("Root")
+        Container$new(root$pointer)
       } else {
-        private$throwPropertyIsReadonly("root")
+        private$.throwPropertyIsReadonly("root")
       }
     },
     #' @field path Path of the root container of the simulation (read-only)
     path = function(value) {
-      private$readOnlyProperty("path", value, self$root$path)
+      private$.readOnlyProperty("path", value, self$root$path)
     },
     #' @field solver SimulationSolver object for the simulation (read-only)
     solver = function(value) {
@@ -31,15 +31,15 @@ Simulation <- R6::R6Class(
     },
     #' @field outputSchema outputSchema object for the simulation (read-only)
     outputSchema = function(value) {
-      private$readOnlyProperty("outputSchema", value, private$.settings$outputSchema)
+      private$.readOnlyProperty("outputSchema", value, private$.settings$outputSchema)
     },
     #' @field outputSelections outputSelections object for the simulation (read-only)
     outputSelections = function(value) {
-      private$readOnlyProperty("outputSelections", value, private$.settings$outputSelections)
+      private$.readOnlyProperty("outputSelections", value, private$.settings$outputSelections)
     },
     #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
-      private$readOnlyProperty("sourceFile", value, private$.sourceFile)
+      private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
     }
   ),
   public = list(
@@ -51,8 +51,8 @@ Simulation <- R6::R6Class(
     initialize = function(ref, sourceFile = NULL) {
       super$initialize(ref)
       private$.sourceFile <- sourceFile
-      private$.buildConfiguration <- rSharp::clrGet(self$ref, "BuildConfiguration")
-      private$.settings <- SimulationSettings$new(rSharp::clrGet(self$ref, "Settings"))
+      private$.buildConfiguration <- self$get("BuildConfiguration")
+      private$.settings <- SimulationSettings$new(self$get("Settings"))
     },
     #' @description
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)

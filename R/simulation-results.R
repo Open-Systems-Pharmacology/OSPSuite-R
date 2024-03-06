@@ -87,7 +87,7 @@ SimulationResults <- R6::R6Class(
     },
     #' @field simulation Reference to the `Simulation` used to calculate or import the results (Read-Only).
     simulation = function(value) {
-      private$readOnlyProperty("simulation", value, private$.simulation)
+      private$.readOnlyProperty("simulation", value, private$.simulation)
     },
     #' @field timeValues Vector of simulated time output values
     timeValues = function(value) {
@@ -95,7 +95,7 @@ SimulationResults <- R6::R6Class(
       if (is.null(quantityValuesTime)) {
         return(NULL)
       }
-      rSharp::clrGet(quantityValuesTime, "Values")
+      quantityValuesTime$get("Values")
     },
     #' @field allQuantityPaths List of all paths for which results are defined.
     allQuantityPaths = function(value) {

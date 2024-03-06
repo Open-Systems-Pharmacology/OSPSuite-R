@@ -100,8 +100,8 @@ DataSet <- R6::R6Class(
           return(NULL)
         }
 
-        dataInfo <- rSharp::clrGet(private$.yErrorColumn$ref, "DataInfo")
-        errorTypeEnumVal <- rSharp::clrGet(dataInfo, "AuxiliaryType")
+        dataInfo <- private$.yErrorColumn$get("DataInfo")
+        errorTypeEnumVal <- dataInfo$get("AuxiliaryType")
         return(.netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
       }
       private$.setErrorType(value)
@@ -350,8 +350,8 @@ DataSet <- R6::R6Class(
       validateEnumValue(errorType, DataErrorType)
       column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
-      dataInfo <- rSharp::clrGet(column$ref, "DataInfo")
-      auxType <- rSharp::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
+      dataInfo <- column$get("DataInfo")
+      auxType <- rSharp::getStatic("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
       rSharp::clrSet(dataInfo, "AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
