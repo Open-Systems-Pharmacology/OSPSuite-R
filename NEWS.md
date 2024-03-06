@@ -1,5 +1,8 @@
 # ospsuite 12.0 (development)
 
+## New dependencies
+- `{openxlsx}`
+
 ## New features
 
 - Added a function `getSteadyState()` to calculate steady state values for simulations.
@@ -11,6 +14,9 @@ The steady-state is considered to be the last values of the molecules amounts
   time, i.e., where the rates of the processes do not (significantly) change.
   The steady-state is NOT analytically calculated or estimated in any other way 
   than simulating for the given time.
+  
+- Added a function `exportSteadyStateToXLS()` to export steady state values calculated 
+for one simulation using the `getSteadyState()` to an Excel file that can be imported in MoBi.
 
 ## Breaking Changes
 
