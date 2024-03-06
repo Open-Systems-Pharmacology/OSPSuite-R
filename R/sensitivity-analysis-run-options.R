@@ -34,7 +34,7 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
   active = list(
     #' @field numberOfCores (Maximal) number of cores to be used. Per default set to `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
-      private$wrapIntegerProperty("NumberOfCoresToUse", value)
+      private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
     },
     #' @field showProgress  Specifies whether progress bar should be shown during sensitivity analysis run. Default is `getOSPSuiteSetting("showProgress")`.
     showProgress = function(value) {

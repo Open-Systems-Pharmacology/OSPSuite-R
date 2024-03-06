@@ -9,7 +9,7 @@ AgingData <- R6::R6Class("AgingData",
   active = list(
     #' @field individualIds Array of individual ids (corresponding to the individualId column of the aging table)
     individualIds = function(value) {
-      private$wrapIntegerProperty("IndividualIds", value)
+      private$.wrapProperty("IndividualIds", value, asInteger = TRUE)
     },
     #' @field parameterPaths Array of parameter paths (corresponding to the ParameterPath column of the aging table)
     parameterPaths = function(value) {
@@ -29,15 +29,15 @@ AgingData <- R6::R6Class("AgingData",
     #' Initialize a new instance of the class
     #' @return A new `OSPSuite.R.Domain.AgingData` object.
     initialize = function() {
-      ref <- rSharp::clrNew("OSPSuite.R.Domain.AgingData")
-      super$initialize(ref)
+      ptr <- rSharp::newPointerFromName("OSPSuite.R.Domain.AgingData")
+      super$initialize(ptr)
     },
 
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       invisible(self)
     }
   )

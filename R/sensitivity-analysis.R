@@ -84,7 +84,7 @@ SensitivityAnalysis <- R6::R6Class(
     },
     #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     numberOfSteps = function(value) {
-      private$wrapIntegerProperty("NumberOfSteps", value)
+      private$.wrapProperty("NumberOfSteps", value, asInteger = TRUE)
     },
     #' @field variationRange Variation applied to the parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     variationRange = function(value) {

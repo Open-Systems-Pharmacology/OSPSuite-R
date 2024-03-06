@@ -38,7 +38,7 @@ SimulationRunOptions <- R6::R6Class(
     #' @field numberOfCores (Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
     #' Default is `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
-      private$wrapIntegerProperty("NumberOfCoresToUse", value)
+      private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
     },
     #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is `TRUE`
     checkForNegativeValues = function(value) {

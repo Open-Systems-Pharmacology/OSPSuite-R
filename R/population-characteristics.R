@@ -11,11 +11,11 @@ PopulationCharacteristics <- R6::R6Class(
   active = list(
     #' @field numberOfIndividuals Number of individuals in the population
     numberOfIndividuals = function(value) {
-      private$wrapIntegerProperty("NumberOfIndividuals", value)
+      private$.wrapProperty("NumberOfIndividuals", value, asInteger = TRUE)
     },
     #' @field proportionOfFemales Proportion of female in the population
     proportionOfFemales = function(value) {
-      private$wrapIntegerProperty("ProportionOfFemales", value)
+      private$.wrapProperty("ProportionOfFemales", value, asInteger = TRUE)
     },
     #' @field species Specifies the species of the individual. It should be a species available in PK-Sim (see `Species`)
     species = function(value) {
