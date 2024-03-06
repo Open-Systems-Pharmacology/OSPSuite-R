@@ -23,7 +23,12 @@ OutputSchema <- R6::R6Class(
     },
     #' @field endTime Returns the end time of the simulation in kernel unit (Read-Only)
     endTime = function(value) {
-      private$wrapReadOnlyProperty("EndTime", value)
+      # Workaround until this is fixed in core: https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1365
+      endTime <- private$wrapReadOnlyProperty("EndTime", value)
+      if (length(self$timePoints) > 0) {
+        endTime <- max(endTime, max(self$timePoints))
+      }
+      return(endTime)
     }
   ),
   public = list(

@@ -39,7 +39,7 @@ test_that("It throws an exception when adding two intervals with the same name",
 
 # setOutputInterval
 
-test_that("It can set directl output interval into a simulatin", {
+test_that("It can set direct output interval into a simulation", {
   clearOutputIntervals(sim)
   addOutputInterval(sim, 10, 20, 1, intervalName = "Int1")
   addOutputInterval(sim, 10, 20, 1, intervalName = "Int2")

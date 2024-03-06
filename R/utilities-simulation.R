@@ -810,7 +810,7 @@ getSteadyState <- function(simulations,
   simulations <- ospsuite.utils::toList(simulations)
 
   if (any(unlist(steadyStateTime) <= 0)) {
-    stop(messages$steadyStateTimeNotPositive(steadyStateTime))
+    stop(messages$valueNotPositive(steadyStateTime, "steadyStateTime"))
   }
 
   # If `steadyStateTime` is a list of values, it must be of the same size as
@@ -830,12 +830,12 @@ getSteadyState <- function(simulations,
   for (idx in seq_along(simulations)) {
     simulation <- simulations[[idx]]
     simId <- simulation$id
-    # Set simulation time to the steady-state value.
+    # Extend simulation time to the steady-state value.
     # If the specified steady-state time is NULL, the simulation time is set to
     # the time of the last application plus a specified delta.
-    clearOutputIntervals(simulation = simulation)
-    if (is.null(steadyStateTime[[idx]])) {
-      latestAdministration <- 0
+    latestTime <- steadyStateTime[[idx]]
+    if (is.null(latestTime)) {
+      latestTime <- 0
       # get the list of all administered molecules in the simulation
       administeredMolecules <- simulation$allXenobioticFloatingMoleculeNames()
       for (mol in administeredMolecules) {
@@ -843,17 +843,18 @@ getSteadyState <- function(simulations,
         applications <- simulation$allApplicationsFor(mol)
         for (app in applications) {
           # if the time of the application is later than the latest administration
-          if (app$startTime$value > latestAdministration) {
+          if (app$startTime$value > latestTime) {
             # set the latest administration to the time of the application
-            latestAdministration <- app$startTime$value
+            latestTime <- app$startTime$value
           }
         }
       }
       # set the simulation time to the time of the last application plus the delta
-      simulation$outputSchema$addTimePoints(timePoints = latestAdministration + DELTA_STEADY_STATE)
-    } else {
-      simulation$outputSchema$addTimePoints(timePoints = steadyStateTime[[idx]])
+      latestTime <- latestTime + DELTA_STEADY_STATE
     }
+
+    # Set the simulation time
+    .setEndSimulationTime(simulation, latestTime)
 
     # If no quantities are explicitly specified, simulate all outputs.
     if (is.null(quantitiesPaths)) {
@@ -980,7 +981,8 @@ getSteadyState <- function(simulations,
         simulation = simulation,
         startTime = outputInterval$startTime$value,
         endTime = outputInterval$endTime$value,
-        resolution = outputInterval$resolution$value
+        resolution = outputInterval$resolution$value,
+        intervalName = outputInterval$intervalName
       )
     }
     if (length(simStateList$timePoints[[simId]]) > 0) {

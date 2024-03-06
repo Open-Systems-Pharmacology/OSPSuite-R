@@ -28,7 +28,6 @@
 tests\^spelling
 ^LICENSE\.md$
 ^\.lintr$
-^WIP/.
 ^old/.
 ^install_dependencies\.R$
 ^man-roxygen/.
