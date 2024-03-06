@@ -53,7 +53,8 @@ not present in the `DataCombined`.
     through new `DefaultPlotConfiguration` fields (\#1216)
   - `plotObsVsPred()` now have foldDistance argument set to `NULL` by default
     (previously 2). The function will not add any fold lines on the plot by
-    default.
+    default but display identity line. Set this argument to `FALSE` to not draw 
+    any lines.
   - `DefaultPlotConfiguration` has a new setting: `displayLLOQ` (default TRUE)
     to control plotting of LLOQ lines.
   - `DefaultPlotConfiguration`'s `xLimits` and `yLimits` arguments are
