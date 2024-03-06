@@ -69,7 +69,7 @@ PopulationCharacteristics <- R6::R6Class(
         if (is.null(value)) {
           return()
         }
-        rSharp::clrSet(self$ref, name = parameterName, value = value$ref)
+        self$set(name = parameterName, value = value$ref)
       }
     }
   ),
@@ -112,8 +112,8 @@ PopulationCharacteristics <- R6::R6Class(
       validateIsOfType(moleculeOntogeny, "MoleculeOntogeny")
       private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
       netMoleculeOntogeny <- rSharp::clrNew("PKSim.R.Domain.MoleculeOntogeny")
-      rSharp::clrSet(netMoleculeOntogeny, "Molecule", moleculeOntogeny$molecule)
-      rSharp::clrSet(netMoleculeOntogeny, "Ontogeny", moleculeOntogeny$ontogeny)
+      netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
+      netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
       rSharp::clrCall(self$ref, "AddMoleculeOntogeny", netMoleculeOntogeny)
     }
   )

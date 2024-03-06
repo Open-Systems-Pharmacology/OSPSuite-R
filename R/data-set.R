@@ -352,7 +352,7 @@ DataSet <- R6::R6Class(
       values <- private$.getColumnValues(column)
       dataInfo <- column$get("DataInfo")
       auxType <- rSharp::getStatic("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
-      rSharp::clrSet(dataInfo, "AuxiliaryType", auxType)
+      dataInfo$set("AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
       if (errorType == DataErrorType$ArithmeticStdDev) {

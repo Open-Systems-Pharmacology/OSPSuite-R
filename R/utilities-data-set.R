@@ -182,7 +182,7 @@ loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, impo
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
-  rSharp::clrSet(dataImporterTask, "IgnoreSheetNamesAtImport", importAllSheets)
+  dataImporterTask$set("IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- rSharp::clrCall(dataImporterTask, "ImportExcelFromConfiguration", importerConfiguration$ref, xlsFilePath)
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)

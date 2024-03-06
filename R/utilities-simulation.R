@@ -218,15 +218,15 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
   simulationRunner <- .getNetTask("SimulationRunner")
   simulationRunArgs <- rSharp::clrNew("OSPSuite.R.Services.SimulationRunArgs")
-  rSharp::clrSet(simulationRunArgs, "Simulation", simulation$ref)
-  rSharp::clrSet(simulationRunArgs, "SimulationRunOptions", simulationRunOptions$ref)
+  simulationRunArgs$set("Simulation", simulation$ref)
+  simulationRunArgs$set("SimulationRunOptions", simulationRunOptions$ref)
 
   if (!is.null(population)) {
-    rSharp::clrSet(simulationRunArgs, "Population", population$ref)
+    simulationRunArgs$set("Population", population$ref)
   }
 
   if (!is.null(agingData)) {
-    rSharp::clrSet(simulationRunArgs, "AgingData", agingData$ref)
+    simulationRunArgs$set("AgingData", agingData$ref)
   }
 
   results <- rSharp::clrCall(simulationRunner, "Run", simulationRunArgs)
@@ -239,7 +239,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
-      rSharp::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+      simulationRunner$set("SimulationRunOptions", simulationRunOptions$ref)
 
       # Map of simulations ids to simulations objects
       simulationIdSimulationMap <- vector("list", length(simulations))
@@ -380,7 +380,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
-  rSharp::clrSet(simulationRunner, "SimulationRunOptions", simulationRunOptions$ref)
+  simulationRunner$set("SimulationRunOptions", simulationRunOptions$ref)
 
   simulationBatches <- c(simulationBatches)
   # Result Id <-> simulation batch id map to get the correct simulation for the results.

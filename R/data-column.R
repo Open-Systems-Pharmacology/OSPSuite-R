@@ -34,7 +34,7 @@ DataColumn <- R6::R6Class(
       if (is.null(unit)) {
         stop(messages$errorUnitNotSupported(unit = value, dimension = self$dimension))
       }
-      rSharp::clrSet(self$ref, "DisplayUnit", unit)
+      self$set("DisplayUnit", unit)
     },
     #' @field dimension The dimension of the values
     dimension = function(value) {
@@ -45,7 +45,7 @@ DataColumn <- R6::R6Class(
         return(private$.dimension)
       }
       # updating the dimension
-      rSharp::clrSet(self$ref, "Dimension", getDimensionByName(value))
+      self$set("Dimension", getDimensionByName(value))
       private$.dimension <- NULL
       private$.unit <- NULL
     },
@@ -58,7 +58,7 @@ DataColumn <- R6::R6Class(
       }
 
       validateIsNumeric(value)
-      rSharp::clrSet(dataInfo, "MolWeight", value)
+      dataInfo$set("MolWeight", value)
     },
     #' @field LLOQ Lower Limit Of Quantification.
     #' In no LLOQ is defined, the value is `NULL`
@@ -69,7 +69,7 @@ DataColumn <- R6::R6Class(
       }
 
       validateIsNumeric(value)
-      rSharp::clrSet(dataInfo, "LLOQAsDouble", value)
+      dataInfo$set("LLOQAsDouble", value)
     }
   ),
   public = list(
