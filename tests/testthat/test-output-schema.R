@@ -74,3 +74,16 @@ test_that(".setEndSimulationTime adds a new time point smaller than the current 
 
   expect_equal(outputSchema$endTime, 119)
 })
+
+
+test_that(".setEndSimulationTime sets the end time when the provided value is smaller than the only defined interval", {
+  sim <- loadTestSimulation("S1")
+  outputSchema <- sim$outputSchema
+  # Remove the first interval
+  oldIntervals <- outputSchema$intervals
+  outputSchema$removeInterval(oldIntervals[[1]])
+
+  # Try to set end time to 100, which is before the first interval
+  .setEndSimulationTime(sim, 100)
+  expect_equal(outputSchema$endTime, 100)
+})

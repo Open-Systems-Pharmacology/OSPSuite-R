@@ -86,6 +86,6 @@ messages$invalidDataType <- function(name, dataType) {
   paste0("Data type '", dataType, "' specified for data set '", name, "' is not valid. Valid data types are: 'simulated' or 'observed'.")
 }
 
-messages$steadyStateTimeNotPositive <- function(value) {
-  paste0("The value of `steadyStateTime` must be > 0, but it is '", paste(value, collapse = ", "), "'")
+messages$valueNotPositive <- function(value, propertyName) {
+  paste0("The value of `", propertyName, "` must be > 0, but it is '", paste(value, collapse = ", "), "'")
 }

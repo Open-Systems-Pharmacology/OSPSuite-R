@@ -810,7 +810,7 @@ getSteadyState <- function(simulations,
   simulations <- ospsuite.utils::toList(simulations)
 
   if (any(unlist(steadyStateTime) <= 0)) {
-    stop(messages$steadyStateTimeNotPositive(steadyStateTime))
+    stop(messages$valueNotPositive(steadyStateTime, "steadyStateTime"))
   }
 
   # If `steadyStateTime` is a list of values, it must be of the same size as

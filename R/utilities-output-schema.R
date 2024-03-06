@@ -88,8 +88,11 @@ clearOutputIntervals <- function(simulation) {
 #' @param simulation Simulation for which the end time should be set
 #' @param endTime End time of the simulation in min
 .setEndSimulationTime <- function(simulation, endTime) {
-  validateIsOfType(simulation, "Simulation")
-  validateIsNumeric(endTime)
+  ospsuite.utils::validateIsOfType(simulation, "Simulation")
+  ospsuite.utils::validateIsNumeric(endTime)
+  if (endTime <= 0) {
+    stop(messages$valueNotPositive(endTime, "endTime"))
+  }
 
   # If the specified end time is outside of the current end time,
   # extend the simulation time to the specified end time.
