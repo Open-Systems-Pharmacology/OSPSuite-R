@@ -15,8 +15,8 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @return A new `SensitivityAnalysisRunOptions` object.
     initialize = function(numberOfCores = NULL,
                           showProgress = NULL) {
-      ref <- rSharp::clrNew("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
-      super$initialize(ref)
+      pointer <- rSharp::newPointerFromName("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
+      super$initialize(pointer)
 
       self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")

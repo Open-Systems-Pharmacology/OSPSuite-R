@@ -38,8 +38,8 @@ SensitivityAnalysis <- R6::R6Class(
                           variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
       validateIsOfType(simulation, "Simulation")
       validateIsString(parameterPaths, nullAllowed = TRUE)
-      ref <- rSharp::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
-      super$initialize(ref)
+      pointer <- rSharp::newPointerFromName("OSPSuite.R.Domain.SensitivityAnalysis", simulation$pointer)
+      super$initialize(pointer)
       private$.simulation <- simulation
       private$.parameterPaths <- c(parameterPaths)
       self$numberOfSteps <- numberOfSteps

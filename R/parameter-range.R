@@ -25,17 +25,17 @@ ParameterRange <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref Optional .NET reference object. If not defined, a new instance will be created
+    #' @param pointer Optional .NET pointer. If not defined, a new instance will be created
     #' @param min Optional minimum value for the range
     #' @param max Optional minimum value for the range
     #' @param unit Optional unit of the specified min and max
     #' @return A new `ParameterRange` object.
-    initialize = function(ref = NULL, min = NULL, max = NULL, unit = NULL) {
+    initialize = function(pointer = NULL, min = NULL, max = NULL, unit = NULL) {
       validateIsNumeric(min, nullAllowed = TRUE)
       validateIsNumeric(max, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
-      ref <- ref %||% rSharp::clrNew("PKSim.Core.Snapshots.ParameterRange")
-      super$initialize(ref)
+      pointer <- pointer %||% rSharp::newPointerFromName("PKSim.Core.Snapshots.ParameterRange")
+      super$initialize(pointer)
       # Because of weird issue with nullable value in rClr
       if (!is.null(min)) {
         self$min <- min

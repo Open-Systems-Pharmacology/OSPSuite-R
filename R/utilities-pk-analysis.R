@@ -17,7 +17,7 @@
 calculatePKAnalyses <- function(results) {
   validateIsOfType(results, "SimulationResults")
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-  calculatePKAnalysisArgs <- rSharp::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
+  calculatePKAnalysisArgs <- rSharp::newObjectFromName("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   calculatePKAnalysisArgs$set("Simulation", results$simulation$ref)
   calculatePKAnalysisArgs$set("SimulationResults", results$ref)
   pkAnalyses <- pkAnalysisTask$call("CalculateFor", calculatePKAnalysisArgs)

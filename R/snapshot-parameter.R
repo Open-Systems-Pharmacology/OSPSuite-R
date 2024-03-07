@@ -21,15 +21,15 @@ SnapshotParameter <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref Optional .NET reference object. If not defined, a new instance will be created
+    #' @param pointer Optional .NET pointer. If not defined, a new instance will be created
     #' @param value Optional value of the parameter.
     #' @param unit Optional unit of the value specified.
     #' @return A new `SnapshotParameter` object.
-    initialize = function(ref = NULL, value = NULL, unit = NULL) {
+    initialize = function(pointer = NULL, value = NULL, unit = NULL) {
       validateIsNumeric(value, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
-      ref <- ref %||% rSharp::clrNew("PKSim.Core.Snapshots.Parameter")
-      super$initialize(ref)
+      pointer <- pointer %||% rSharp::newPointerFromName("PKSim.Core.Snapshots.Parameter")
+      super$initialize(pointer)
       # Because of weird issue with nullable value in rClr
       if (!is.null(value)) {
         self$value <- value

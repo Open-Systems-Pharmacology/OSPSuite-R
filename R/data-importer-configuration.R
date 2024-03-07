@@ -341,10 +341,10 @@ DataImporterConfiguration <- R6::R6Class(
       if (private$.isUnitFromColumn(column)) {
         # Get the old unit and set it as default unit
         unit <- mappedColumn$get("Unit")
-        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", unit$get("SelectedUnit"), value)
+        unitDescription <- rSharp::newObjectFromName("OSPSuite.Core.Import.UnitDescription", unit$get("SelectedUnit"), value)
       } else {
         validateUnit(value, dimension$get("Name"))
-        unitDescription <- rSharp::clrNew("OSPSuite.Core.Import.UnitDescription", value)
+        unitDescription <- rSharp::newObjectFromName("OSPSuite.Core.Import.UnitDescription", value)
       }
       mappedColumn$set("Unit", unitDescription)
     },

@@ -70,8 +70,8 @@ IndividualCharacteristics <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `IndividualCharacteristics` object.
     initialize = function() {
-      ref <- rSharp::clrNew("PKSim.R.Domain.IndividualCharacteristics")
-      super$initialize(ref)
+      pointer <- rSharp::newPointerFromName("PKSim.R.Domain.IndividualCharacteristics")
+      super$initialize(pointer)
     },
     #' @description
     #' Print the object to the console
@@ -100,7 +100,7 @@ IndividualCharacteristics <- R6::R6Class(
     addMoleculeOntogeny = function(moleculeOntogeny) {
       validateIsOfType(moleculeOntogeny, "MoleculeOntogeny")
       private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
-      netMoleculeOntogeny <- rSharp::clrNew("PKSim.R.Domain.MoleculeOntogeny")
+      netMoleculeOntogeny <- rSharp::newObjectFromName("PKSim.R.Domain.MoleculeOntogeny")
       netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
       netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
       self$call("AddMoleculeOntogeny", netMoleculeOntogeny)

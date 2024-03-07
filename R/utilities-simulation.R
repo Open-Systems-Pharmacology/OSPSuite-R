@@ -217,16 +217,16 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
   simulationRunner <- .getNetTask("SimulationRunner")
-  simulationRunArgs <- rSharp::clrNew("OSPSuite.R.Services.SimulationRunArgs")
-  simulationRunArgs$set("Simulation", simulation$ref)
-  simulationRunArgs$set("SimulationRunOptions", simulationRunOptions$ref)
+  simulationRunArgs <- rSharp::newObjectFromName("OSPSuite.R.Services.SimulationRunArgs")
+  simulationRunArgs$set("Simulation", simulation)
+  simulationRunArgs$set("SimulationRunOptions", simulationRunOptions)
 
   if (!is.null(population)) {
-    simulationRunArgs$set("Population", population$ref)
+    simulationRunArgs$set("Population", population)
   }
 
   if (!is.null(agingData)) {
-    simulationRunArgs$set("AgingData", agingData$ref)
+    simulationRunArgs$set("AgingData", agingData)
   }
 
   results <- simulationRunner$call("Run", simulationRunArgs)
@@ -331,7 +331,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules = variableMolecules
   )
 
-  net <- rSharp::clrNew("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation$ref, simulationBatchOptions$ref)
+  net <- rSharp::newPointerFromName("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation, simulationBatchOptions)
   SimulationBatch$new(net, simulation)
 }
 
