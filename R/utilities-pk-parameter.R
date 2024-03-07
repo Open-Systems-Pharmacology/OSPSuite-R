@@ -37,9 +37,9 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   displayName <- displayName %||% ""
 
   pkParameterTask <- .getNetTask("PKParameterTask")
-  netUserDefinedPKParameter <- rSharp::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
+  netUserDefinedPKParameter <- pkParameterTask$call("CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
   userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
-  rSharp::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
+  pkParameterTask$call("AddUserDefinedPKParameter", netUserDefinedPKParameter)
   return(userDefinedPKParameter)
 }
 
@@ -48,7 +48,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
 #' @export
 removeAllUserDefinedPKParameters <- function() {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  rSharp::clrCall(pkParameterTask, "RemoveAllUserDefinedPKParameters")
+  pkParameterTask$call("RemoveAllUserDefinedPKParameters")
 }
 
 #' @title Updates some properties of a PK-Parameter (displayName and displayUnit)
@@ -92,7 +92,7 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' @export
 pkParameterByName <- function(name, stopIfNotFound = TRUE) {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  pkParameter <- rSharp::clrCall(pkParameterTask, "PKParameterByName", name)
+  pkParameter <- pkParameterTask$call("PKParameterByName", name)
   pkParameter <- .toObjectType(pkParameter, PKParameter)
 
   if (!is.null(pkParameter) || !stopIfNotFound) {
@@ -111,5 +111,5 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
 #' @export
 allPKParameterNames <- function() {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  rSharp::clrCall(pkParameterTask, "AllPKParameterNames")
+  pkParameterTask$call("AllPKParameterNames")
 }

@@ -78,7 +78,7 @@ saveSimulation <- function(simulation, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationPersister <- .getNetTask("SimulationPersister")
-  rSharp::clrCall(simulationPersister, "SaveSimulation", simulation$ref, filePath)
+  simulationPersister$call("SaveSimulation", simulation, filePath)
   invisible()
 }
 
@@ -229,7 +229,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     simulationRunArgs$set("AgingData", agingData$ref)
   }
 
-  results <- rSharp::clrCall(simulationRunner, "Run", simulationRunArgs)
+  results <- simulationRunner$call("Run", simulationRunArgs)
 
   SimulationResults$new(results, simulation)
 }
@@ -250,10 +250,10 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
         simulationIdSimulationMap[[simulationIdx]] <- simulation
         names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 
-        rSharp::clrCall(simulationRunner, "AddSimulation", simulation$ref)
+        simulationRunner$call("AddSimulation", simulation$ref)
       }
       # Run all simulations
-      results <- rSharp::clrCall(simulationRunner, "RunConcurrently")
+      results <- simulationRunner$call("RunConcurrently")
 
       # Ids of the results are Ids of the simulations
       resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
@@ -270,7 +270,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     },
     finally = {
       # Dispose of the runner to release any possible instances still in memory (.NET side)
-      rSharp::clrCall(simulationRunner, "Dispose")
+      simulationRunner$call("Dispose")
     }
   )
 }
@@ -401,11 +401,11 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
     # All results of this batch have the id of the same simulation
     resultsIdSimulationBatchIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
-    rSharp::clrCall(simulationRunner, "AddSimulationBatch", simBatch$ref)
+    simulationRunner$call("AddSimulationBatch", simBatch$ref)
   }
 
   # Run the batch with the ConcurrentSimulationRunner
-  results <- rSharp::clrCall(simulationRunner, "RunConcurrently")
+  results <- simulationRunner$call("RunConcurrently")
   simulationResults <- .getConcurrentSimulationRunnerResults(
     results = results,
     resultsIdSimulationIdMap = resultsIdSimulationBatchIdMap,
@@ -421,7 +421,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   names(output) <- names(simulationBatchIdSimulationMap)
 
   # Dispose of the runner to release any possible instances still in memory (.NET side)
-  rSharp::clrCall(simulationRunner, "Dispose")
+  simulationRunner$call("Dispose")
 
   return(output)
 }

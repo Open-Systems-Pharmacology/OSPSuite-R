@@ -30,7 +30,7 @@ DataColumn <- R6::R6Class(
       }
       dimension <- getDimensionByName(self$dimension)
       # we use the ignore case parameter set  to true so that we do not have to worry about casing when set via scripts
-      unit <- rSharp::clrCall(dimension, "FindUnit", value, TRUE)
+      unit <- dimension$call("FindUnit", value, TRUE)
       if (is.null(unit)) {
         stop(messages$errorUnitNotSupported(unit = value, dimension = self$dimension))
       }

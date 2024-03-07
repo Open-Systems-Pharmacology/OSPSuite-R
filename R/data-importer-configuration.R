@@ -45,7 +45,7 @@ DataImporterConfiguration <- R6::R6Class(
         return(private$.isUnitFromColumn(column))
       }
       validateIsLogical(value)
-      rSharp::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
+      private$.dataImporterTask$call("SetIsUnitFromColumn", column, value)
     },
 
     #' @field measurementColumn Name of the column for measurement values
@@ -122,10 +122,10 @@ DataImporterConfiguration <- R6::R6Class(
         return(private$.isUnitFromColumn(column))
       }
       validateIsLogical(value)
-      rSharp::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", column, value)
+      private$.dataImporterTask$call("SetIsUnitFromColumn", column, value)
       # Also change isUnitFromColumn for error column
       if (!is.null(private$.errorColumn())) {
-        rSharp::clrCall(private$.dataImporterTask, "SetIsUnitFromColumn", private$.errorColumn(), value)
+        private$.dataImporterTask$call("SetIsUnitFromColumn", private$.errorColumn(), value)
       }
     },
 
@@ -139,7 +139,7 @@ DataImporterConfiguration <- R6::R6Class(
       }
       # If value is NULL, remove the error column
       if (is.null(value)) {
-        rSharp::clrCall(private$.dataImporterTask, "RemoveError", self$ref)
+        private$.dataImporterTask$call("RemoveError", self$ref)
       } else {
         validateIsString(value)
         # Create an error column if none is present in the configuration
@@ -203,7 +203,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @field groupingColumns Column names by which the data will be grouped
     groupingColumns = function(value) {
       if (missing(value)) {
-        return(rSharp::clrCall(private$.dataImporterTask, "GetAllGroupingColumns", self$ref))
+        return(private$.dataImporterTask$call("GetAllGroupingColumns", self$ref))
       }
       private$throwPropertyIsReadonly("groupingColumns")
     },
@@ -212,14 +212,14 @@ DataImporterConfiguration <- R6::R6Class(
     #' configuration will be applied.
     sheets = function(value) {
       if (missing(value)) {
-        return(rSharp::clrCall(private$.dataImporterTask, "GetAllLoadedSheets", self$ref))
+        return(private$.dataImporterTask$call("GetAllLoadedSheets", self$ref))
       }
       if (length(value) == 0) {
-        rSharp::clrCall(self$ref, "ClearLoadedSheets")
+        self$call("ClearLoadedSheets")
         return(invisible(self))
       }
       validateIsString(value)
-      rSharp::clrCall(private$.dataImporterTask, "SetAllLoadedSheet", self$ref, value)
+      private$.dataImporterTask$call("SetAllLoadedSheet", self$ref, value)
     },
     #' @field namingPattern Regular expression used for naming of loaded data sets.
     #' Words between curly brackets (e.g. `{Group Id}`) will be replaced by the value
@@ -249,9 +249,9 @@ DataImporterConfiguration <- R6::R6Class(
     initialize = function(ref = NULL) {
       importerTask <- .getNetTaskFromCache("DataImporterTask")
       if (is.null(ref)) {
-        ref <- rSharp::clrCall(importerTask, "CreateConfiguration")
+        ref <- importerTask$call("CreateConfiguration")
       }
-      super$initialize(ref)
+      super$initialize(ref$pointer)
       private$.dataImporterTask <- importerTask
 
       # set timeColumn dimension and unit to default ("Time" and "h") if it is
@@ -260,7 +260,7 @@ DataImporterConfiguration <- R6::R6Class(
       # Because the user cannot set the Dimension if time values, this must be
       # done during initialization phase.
       if (self$timeUnit == "?") {
-        column <- rSharp::clrCall(importerTask, "GetTime", ref)
+        column <- importerTask$call("GetTime", ref)
         mappedColumn <- column$get("MappedColumn")
         mappedColumn$set("Dimension", getDimensionByName(ospDimensions$Time))
         self$timeUnit <- ospUnits$Time$h
@@ -275,7 +275,7 @@ DataImporterConfiguration <- R6::R6Class(
       validateIsString(filePath)
       filePath <- .expandPath(filePath)
 
-      rSharp::clrCall(private$.dataImporterTask, "SaveConfiguration", self$ref, filePath)
+      private$.dataImporterTask$call("SaveConfiguration", self$ref, filePath)
       invisible(self)
     },
 
@@ -284,7 +284,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     addGroupingColumn = function(column) {
       validateIsString(column)
-      rSharp::clrCall(private$.dataImporterTask, "AddGroupingColumn", self$ref, column)
+      private$.dataImporterTask$call("AddGroupingColumn", self$ref, column)
       invisible(self)
     },
 
@@ -293,7 +293,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     removeGroupingColumn = function(column) {
       validateIsString(column)
-      rSharp::clrCall(private$.dataImporterTask, "RemoveGroupingColumn", self$ref, column)
+      private$.dataImporterTask$call("RemoveGroupingColumn", self$ref, column)
       invisible(self)
     },
 
@@ -321,16 +321,16 @@ DataImporterConfiguration <- R6::R6Class(
   private = list(
     .dataImporterTask = NULL,
     .timeColumn = function() {
-      return(rSharp::clrCall(private$.dataImporterTask, "GetTime", self$ref))
+      return(private$.dataImporterTask$call("GetTime", self$ref))
     },
     .measurementColumn = function() {
-      return(rSharp::clrCall(private$.dataImporterTask, "GetMeasurement", self$ref))
+      return(private$.dataImporterTask$call("GetMeasurement", self$ref))
     },
     .errorColumn = function() {
-      return(rSharp::clrCall(private$.dataImporterTask, "GetError", self$ref))
+      return(private$.dataImporterTask$call("GetError", self$ref))
     },
     .addErrorColumn = function() {
-      rSharp::clrCall(private$.dataImporterTask, "AddError", self$ref)
+      private$.dataImporterTask$call("AddError", self$ref)
       mappedColumn <- private$.errorColumn()$get("MappedColumn")
       mappedColumn$set("Dimension", getDimensionByName(self$measurementDimension))
     },

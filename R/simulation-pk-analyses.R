@@ -28,7 +28,7 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param quantityPath Path for which pkParameters should be retrieved
     allPKParametersFor = function(quantityPath) {
       validateIsString(quantityPath)
-      private$toPKParameter(rSharp::clrCall(self$ref, "AllPKParametersFor", quantityPath))
+      private$toPKParameter(self$call("AllPKParametersFor", quantityPath))
     },
     #' @description
     #' The pK Parameter defined for the given path and name
@@ -38,7 +38,7 @@ SimulationPKAnalyses <- R6::R6Class(
     pKParameterFor = function(quantityPath, pkParameter) {
       validateIsString(quantityPath)
       validateIsString(pkParameter)
-      private$toPKParameter(rSharp::clrCall(self$ref, "PKParameterFor", quantityPath, pkParameter))
+      private$toPKParameter(self$call("PKParameterFor", quantityPath, pkParameter))
     },
 
     #' @description

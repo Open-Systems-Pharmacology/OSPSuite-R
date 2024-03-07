@@ -153,7 +153,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     path <- quantityPaths[[i]]
     value <- values[[i]]
     if (!is.null(units)) {
-      dimension <- rSharp::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
+      dimension <- task$call("DimensionNameByPath", simulation$ref, path, stopIfNotFound)
       # Dimension ca be be empty if the path was not found
       if (dimension == "") {
         next
@@ -186,8 +186,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       }
     }
 
-    rSharp::clrCall(
-      task, "SetValueByPath",
+    task$call("SetValueByPath",
       simulation$ref,
       path,
       value,
@@ -229,10 +228,9 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
-    value <- rSharp::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
+    value <- task$call("GetValueByPath", simulation$ref, path, stopIfNotFound)
     if (!is.null(units)) {
-      dimension <- rSharp::clrCall(
-        task, "DimensionNameByPath",
+      dimension <- task$call("DimensionNameByPath",
         simulation$ref,
         path,
         stopIfNotFound
@@ -297,7 +295,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
       return(path)
     }
 
-    return(rSharp::clrCall(displayResolver, "FullPathFor", quantity$ref))
+    return(displayResolver$call("FullPathFor", quantity$ref))
   })
 
   return(unlist(displayPaths, use.names = FALSE))
@@ -347,7 +345,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
-  isFormulaExplicit <- rSharp::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, path, stopIfNotFound)
+  isFormulaExplicit <- task$call("IsExplicitFormulaByPath", simulation$ref, path, stopIfNotFound)
 
   return(isFormulaExplicit)
 }

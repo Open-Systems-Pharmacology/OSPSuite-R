@@ -20,7 +20,7 @@ calculatePKAnalyses <- function(results) {
   calculatePKAnalysisArgs <- rSharp::clrNew("OSPSuite.R.Services.CalculatePKAnalysisArgs")
   calculatePKAnalysisArgs$set("Simulation", results$simulation$ref)
   calculatePKAnalysisArgs$set("SimulationResults", results$ref)
-  pkAnalyses <- rSharp::clrCall(pkAnalysisTask, "CalculateFor", calculatePKAnalysisArgs)
+  pkAnalyses <- pkAnalysisTask$call("CalculateFor", calculatePKAnalysisArgs)
   SimulationPKAnalyses$new(pkAnalyses, results$simulation)
 }
 
@@ -35,7 +35,7 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-  rSharp::clrCall(pkAnalysisTask, "ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
+  pkAnalysisTask$call("ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
   invisible()
 }
 
@@ -56,7 +56,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-  pkAnalyses <- rSharp::clrCall(pkAnalysisTask, "ImportPKAnalysesFromCSV", filePath, simulation$ref)
+  pkAnalyses <- pkAnalysisTask$call("ImportPKAnalysesFromCSV", filePath, simulation$ref)
   SimulationPKAnalyses$new(pkAnalyses, simulation)
 }
 

@@ -6,7 +6,7 @@
 hasDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "HasDimension", dimension)
+  dimensionTask$call("HasDimension", dimension)
 }
 
 #' Validate dimension
@@ -31,7 +31,7 @@ hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "HasUnit", dimension, .encodeUnit(unit))
+  dimensionTask$call("HasUnit", dimension, .encodeUnit(unit))
 }
 
 #' Validate unit
@@ -77,7 +77,7 @@ getBaseUnit <- function(quantityOrDimension) {
   }
   validateDimension(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "BaseUnitFor", dimension)
+  dimensionTask$call("BaseUnitFor", dimension)
 }
 
 #' Converts a value given in a specified unit into the base unit of a quantity
@@ -189,32 +189,32 @@ toUnit <- function(quantityOrDimension,
   if (is.null(molWeight)) {
     # Convert values to base unit first if the source unit is provided
     if (!is.null(sourceUnit)) {
-      values <- rSharp::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values)
+      values <- dimensionTask$call("ConvertToBaseUnit", dimension, sourceUnit, values)
     }
     # Return early if target unit is the base unit
     if (targetUnit == baseUnit) {
       return(values)
     }
 
-    return(rSharp::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values))
+    return(dimensionTask$call("ConvertToUnit", dimension, targetUnit, values))
   }
 
   # Case - molecular weight is provided
   # Convert molWeight value to base unit if a unit is provided
   if (!is.null(molWeightUnit)) {
-    molWeight <- rSharp::clrCall(dimensionTask, "ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
+    molWeight <- dimensionTask$call("ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
   }
 
   # Convert values to base unit first if the source unit is provided
   if (!is.null(sourceUnit)) {
-    values <- rSharp::clrCall(dimensionTask, "ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
+    values <- dimensionTask$call("ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
   }
   # Return early if target unit is the base unit
   if (targetUnit == baseUnit) {
     return(values)
   }
 
-  rSharp::clrCall(dimensionTask, "ConvertToUnit", dimension, targetUnit, values, molWeight)
+  dimensionTask$call("ConvertToUnit", dimension, targetUnit, values, molWeight)
 }
 
 #' @title Convert base unit to display unit
@@ -254,7 +254,7 @@ toDisplayUnit <- function(quantity, values) {
 #' @export
 allAvailableDimensions <- function() {
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "AllAvailableDimensionNames")
+  dimensionTask$call("AllAvailableDimensionNames")
 }
 
 #' @title Get dimension for a given unit
@@ -274,7 +274,7 @@ getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- .encodeUnit(unit)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  dim <- rSharp::clrCall(dimensionTask, "DimensionForUnit", unit)
+  dim <- dimensionTask$call("DimensionForUnit", unit)
   ifNotNull(dim, dim$get("Name"))
 }
 
@@ -293,7 +293,7 @@ getDimensionForUnit <- function(unit) {
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "AllAvailableUnitNamesFor", dimension)
+  dimensionTask$call("AllAvailableUnitNamesFor", dimension)
 }
 
 #' @title Get dimension by name
@@ -312,7 +312,7 @@ getUnitsForDimension <- function(dimension) {
 getDimensionByName <- function(name) {
   validateIsString(name)
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  rSharp::clrCall(dimensionTask, "DimensionByName", name)
+  dimensionTask$call("DimensionByName", name)
 }
 
 

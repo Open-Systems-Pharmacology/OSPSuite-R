@@ -36,7 +36,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   for (path in paths) {
-    rSharp::clrCall(task, "AddQuantitiesToSimulationOutputByPath", simulation$ref, path)
+    task$call("AddQuantitiesToSimulationOutputByPath", simulation, path)
   }
 }
 

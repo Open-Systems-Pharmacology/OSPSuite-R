@@ -18,7 +18,7 @@ SensitivityAnalysis <- R6::R6Class(
       }
       # Issue with .NET rSharp casting array with one value directly as single value instead of array
       methodName <- if (length(parameterPaths) > 1) "AddParameterPaths" else "AddParameterPath"
-      rSharp::clrCall(obj = self$ref, methodName = methodName, parameterPaths)
+      self$call(methodName = methodName, parameterPaths)
       invisible(self)
     }
   ),
@@ -62,7 +62,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' Removes all parameter paths defined in the Sensitivity Analysis
     clearParameterPaths = function() {
       private$.parameterPaths <- NULL
-      rSharp::clrCall(self$ref, "ClearParameterPaths")
+      self$call("ClearParameterPaths")
       invisible(self)
     },
     #' @description

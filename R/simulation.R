@@ -58,30 +58,30 @@ Simulation <- R6::R6Class(
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
     #' This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
     allEndogenousStationaryMoleculeNames = function() {
-      rSharp::clrCall(private$.buildConfiguration, "AllPresentEndogenousStationaryMoleculeNames")
+      private$.buildConfiguration$call("AllPresentEndogenousStationaryMoleculeNames")
     },
     #' @description
     #' Returns the name of all xenobiotic floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
     #' This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
     allXenobioticFloatingMoleculeNames = function() {
-      rSharp::clrCall(private$.buildConfiguration, "AllPresentXenobioticFloatingMoleculeNames")
+      private$.buildConfiguration$call("AllPresentXenobioticFloatingMoleculeNames")
     },
     #' @description
     #' Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
     allStationaryMoleculeNames = function() {
-      rSharp::clrCall(private$.buildConfiguration, "AllPresentStationaryMoleculeNames")
+      private$.buildConfiguration$call("AllPresentStationaryMoleculeNames")
     },
     #' @description
     #' Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
     allFloatingMoleculeNames = function() {
-      rSharp::clrCall(private$.buildConfiguration, "AllPresentFloatingMoleculeNames")
+     private$.buildConfiguration$call("AllPresentFloatingMoleculeNames")
     },
     #' @description
     #' Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
     #' @param quantityPath Path of quantity used to retrieve the molecular weight
     molWeightFor = function(quantityPath) {
       validateIsString(quantityPath)
-      mw <- rSharp::clrCall(self$ref, "MolWeightFor", quantityPath)
+      mw <- self$call("MolWeightFor", quantityPath)
       mw %||% NA_real_
     },
     #' @description

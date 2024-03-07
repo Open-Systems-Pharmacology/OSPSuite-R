@@ -103,7 +103,7 @@ IndividualCharacteristics <- R6::R6Class(
       netMoleculeOntogeny <- rSharp::clrNew("PKSim.R.Domain.MoleculeOntogeny")
       netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
       netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
-      rSharp::clrCall(self$ref, "AddMoleculeOntogeny", netMoleculeOntogeny)
+      self$call("AddMoleculeOntogeny", netMoleculeOntogeny)
     }
   )
 )

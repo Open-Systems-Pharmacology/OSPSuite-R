@@ -13,7 +13,7 @@ SimulationBatch <- R6::R6Class(
     finalize = function() {
       private$.simulation <- NULL
       # SimulationBatch are disposable object and should be disposed
-      rSharp::clrCall(self$ref, "Dispose")
+      self$call("Dispose")
       super$finalize()
     }
   ),
@@ -81,7 +81,7 @@ SimulationBatch <- R6::R6Class(
       }
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
-      rSharp::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
+      self$call("AddSimulationBatchRunValues", batchRunValues$ref)
       return(batchRunValues$id)
     },
 

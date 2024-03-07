@@ -20,21 +20,21 @@ OutputSelections <- R6::R6Class(
     #' @description
     #' Removes all selected output from the selection
     clear = function() {
-      rSharp::clrCall(self$ref, "Clear")
+      self$call("Clear")
     },
     #' @description
     #' Adds a quantity as selected
     #' @param quantity Quantity to add to the selection
     addQuantity = function(quantity) {
       validateIsOfType(quantity, "Quantity")
-      rSharp::clrCall(self$ref, "AddQuantity", quantity$ref)
+      self$call("AddQuantity", quantity$ref)
     },
     #' @description
     #' Removes a quantity from the selection
     #' @param quantity Quantity to remove from the selection
     removeQuantity = function(quantity) {
       validateIsOfType(quantity, "Quantity")
-      rSharp::clrCall(self$ref, "RemoveQuantity", quantity$ref)
+      self$call("RemoveQuantity", quantity$ref)
     },
     #' @description
     #' Print the object to the console

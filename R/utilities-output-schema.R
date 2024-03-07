@@ -29,7 +29,7 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
   validateIsNumeric(c(startTime, endTime, resolution))
   schema <- simulation$outputSchema
   outputIntervalFactory <- .getNetTask("OutputIntervalFactory")
-  netIntervals <- rSharp::clrCall(outputIntervalFactory, "CreateFor", schema$ref, startTime, endTime, resolution)
+  netIntervals <- outputIntervalFactory$call("CreateFor", schema$ref, startTime, endTime, resolution)
   interval <- .toObjectType(netIntervals, Interval)
   if (!is.null(intervalName)) {
     interval$name <- intervalName

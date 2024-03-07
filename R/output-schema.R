@@ -30,7 +30,7 @@ OutputSchema <- R6::R6Class(
     #' @description
     #' Clears all intervals and time points
     clear = function() {
-      rSharp::clrCall(self$ref, "Clear")
+      self$call("Clear")
       invisible(self)
     },
     #' @description
@@ -38,7 +38,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to add
     addInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      rSharp::clrCall(self$ref, "AddInterval", interval$ref)
+      self$call("AddInterval", interval$ref)
       invisible(self)
     },
     #' @description
@@ -46,7 +46,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to remove
     removeInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      rSharp::clrCall(self$ref, "RemoveInterval", interval$ref)
+      self$call("RemoveInterval", interval$ref)
       invisible(self)
     },
 
@@ -58,9 +58,9 @@ OutputSchema <- R6::R6Class(
       timePoints <- c(timePoints)
       validateIsNumeric(timePoints)
       if (length(timePoints) > 1) {
-        rSharp::clrCall(self$ref, "AddTimePoints", timePoints)
+        self$call("AddTimePoints", timePoints)
       } else {
-        rSharp::clrCall(self$ref, "AddTimePoint", timePoints)
+        self$call("AddTimePoint", timePoints)
       }
       invisible(self)
     },

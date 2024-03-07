@@ -7,6 +7,6 @@
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-  dataRepository <- rSharp::clrCall(dataRepositoryTask, "LoadDataRepository", filePath)
+  dataRepository <- dataRepositoryTask$call("LoadDataRepository", filePath)
   DataRepository$new(dataRepository)
 }

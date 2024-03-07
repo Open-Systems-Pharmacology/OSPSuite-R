@@ -11,7 +11,7 @@ loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
   csvPopulationFile <- .expandPath(csvPopulationFile)
   populationTask <- .getNetTask("PopulationTask")
-  population <- rSharp::clrCall(populationTask, "ImportPopulation", csvPopulationFile)
+  population <- populationTask$call("ImportPopulation", csvPopulationFile)
   Population$new(population)
 }
 
@@ -36,7 +36,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsString(outputFileName)
   csvPopulationFile <- .expandPath(csvPopulationFile)
   populationTask <- .getNetTask("PopulationTask")
-  rSharp::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
+  populationTask$call("SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }
 
 
@@ -143,7 +143,7 @@ createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
   populationFactory <- rSharp::callStatic("PKSim.R.Api", "GetPopulationFactory")
-  results <- rSharp::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
+  results <- populationFactory$call("CreatePopulation", populationCharacteristics$ref)
   netPopulation <- .getPropertyValue(results, "IndividualValuesCache")
   seed <- .getPropertyValue(results, "Seed")
   population <- Population$new(netPopulation)

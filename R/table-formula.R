@@ -11,7 +11,7 @@ TableFormula <- R6::R6Class(
     #' @field allPoints Returns all points defined in the table formula for a `TableFormula` or `NULL`  otherwise (Read-Only).
     allPoints = function(value) {
       if (missing(value)) {
-        .toObjectType(rSharp::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
+        .toObjectType(self$call("AllPointsAsArray"), ValuePoint)
       } else {
         private$throwPropertyIsReadonly("allPoints")
       }
@@ -38,7 +38,7 @@ TableFormula <- R6::R6Class(
       validateIsNumeric(yValues)
       validateIsSameLength(xValues, yValues)
       for (i in seq_along(xValues)) {
-        rSharp::clrCall(self$ref, "AddPoint", xValues[i], yValues[i])
+        self$call("AddPoint", xValues[i], yValues[i])
       }
       invisible(self)
     },
@@ -47,13 +47,13 @@ TableFormula <- R6::R6Class(
     #' @param xValue xValue value in base unit for XDimension
     #' @param yValue yValue value in base unit for Dimension
     removePoint = function(xValue, yValue) {
-      rSharp::clrCall(self$ref, "RemovePoint", xValue, yValue)
+      self$call("RemovePoint", xValue, yValue)
       invisible(self)
     },
     #' @description
     #' Remove all points from the table
     clearPoints = function() {
-      rSharp::clrCall(self$ref, "ClearPoints")
+      self$call("ClearPoints")
       invisible(self)
     },
     #' @description
@@ -78,7 +78,7 @@ TableFormula <- R6::R6Class(
     #' If the table contains no point, 0 is returned
     #' @param xValue x value for in base unit for which the yValue should be returned
     valueAt = function(xValue) {
-      rSharp::clrCall(self$ref, "ValueAt", xValue)
+      self$call("ValueAt", xValue)
     },
     #' @description
     #' Print the formula to the console
