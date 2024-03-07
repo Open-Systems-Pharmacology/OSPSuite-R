@@ -18,7 +18,7 @@
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
-  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$pointer)
+  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
 }

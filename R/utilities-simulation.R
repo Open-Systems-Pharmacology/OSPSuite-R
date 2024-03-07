@@ -331,7 +331,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules = variableMolecules
   )
 
-  net <- rSharp::newPointerFromName("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation, simulationBatchOptions)
+  net <- rSharp::newObjectFromName("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation, simulationBatchOptions)
   SimulationBatch$new(net, simulation)
 }
 
