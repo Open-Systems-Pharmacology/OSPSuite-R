@@ -20,7 +20,7 @@ SimulationBatch <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @inheritParams ObjectBase$initialize
+    #' @param netObject An `rSharp::NetObject` object.
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
     initialize = function(netObject, simulation) {

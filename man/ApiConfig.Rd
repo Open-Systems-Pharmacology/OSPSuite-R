@@ -9,7 +9,7 @@ Global configuration for the OSPSuite .NET API
 }
 \keyword{internal}
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ApiConfig}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ApiConfig}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -19,24 +19,4 @@ Global configuration for the OSPSuite .NET API
 \item{\code{dimensionFilePath}}{Full path of the dimension file}
 }
 \if{html}{\out{</div>}}
-}
-\section{Methods}{
-\subsection{Public methods}{
-\itemize{
-\item \href{#method-ApiConfig-new}{\code{ApiConfig$new()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ApiConfig-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ApiConfig-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ApiConfig$new()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A new \code{ApiConfig} object.
-}
-}
 }

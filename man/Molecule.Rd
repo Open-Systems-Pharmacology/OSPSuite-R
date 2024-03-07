@@ -12,7 +12,7 @@ Derived from \link{Quantity}, please see base class documentation.
 }
 \keyword{internal}
 \section{Super classes}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Molecule}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Molecule}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -32,8 +32,15 @@ see \url{https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-docum
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></span></li>
@@ -48,13 +55,13 @@ see \url{https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-docum
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Molecule$new(ref)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Molecule$new(netObject)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ref}}{.NET reference object.}
+\item{\code{netObject}}{An \code{rSharp::NetObject} object.}
 }
 \if{html}{\out{</div>}}
 }

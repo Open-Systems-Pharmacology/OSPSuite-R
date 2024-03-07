@@ -38,7 +38,7 @@ Molecule <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @inheritParams DotNetWrapper$initialize
+    #' @param netObject An `rSharp::NetObject` object.
     #' @return A new `Molecule` object.
     initialize = function(netObject) {
       super$initialize(netObject)

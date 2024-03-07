@@ -49,7 +49,7 @@ Parameter <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @inheritParams Quantity$initialize
+    #' @param netObject An `rSharp::NetObject` object.
     #' @return A new `Parameter` object.
     initialize = function(netObject) {
       super$initialize(netObject)

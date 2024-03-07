@@ -25,7 +25,7 @@ SimulationResults <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @inheritParams ObjectBase$initialize
+    #' @param netObject An `rSharp::NetObject` object.
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SimulationResults` object.
     initialize = function(netObject, simulation) {
