@@ -63,7 +63,7 @@ DataColumn <- R6::R6Class(
     #' @field LLOQ Lower Limit Of Quantification.
     #' In no LLOQ is defined, the value is `NULL`
     LLOQ = function(value) {
-      dataInfo <-self$get("DataInfo")
+      dataInfo <- self$get("DataInfo")
       if (missing(value)) {
         return(dataInfo$get("LLOQAsDouble"))
       }

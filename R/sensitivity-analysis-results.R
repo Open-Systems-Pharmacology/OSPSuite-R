@@ -102,7 +102,8 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       }
 
       if (!is.null(parameterName)) {
-        value <- self$call("PKParameterSensitivityValueBySensitivityParameterName",
+        value <- self$call(
+          "PKParameterSensitivityValueBySensitivityParameterName",
           pkParameterName,
           outputPath,
           parameterName
@@ -110,7 +111,8 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       }
 
       if (!is.null(parameterPath)) {
-        value <- self$call("PKParameterSensitivityValueByParameterPath",
+        value <- self$call(
+          "PKParameterSensitivityValueByParameterPath",
           pkParameterName,
           outputPath,
           parameterPath

@@ -186,7 +186,8 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       }
     }
 
-    task$call("SetValueByPath",
+    task$call(
+      "SetValueByPath",
       simulation,
       path,
       value,
@@ -230,7 +231,8 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
     path <- quantityPaths[[i]]
     value <- task$call("GetValueByPath", simulation, path, stopIfNotFound)
     if (!is.null(units)) {
-      dimension <- task$call("DimensionNameByPath",
+      dimension <- task$call(
+        "DimensionNameByPath",
         simulation,
         path,
         stopIfNotFound

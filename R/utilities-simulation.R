@@ -53,9 +53,9 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
   simulationPersister <- .getNetTask("SimulationPersister")
-browser()
+  browser()
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
-netSim <- simulationPersister$call("LoadSimulation", .expandPath(filePath), resetIds)
+  netSim <- simulationPersister$call("LoadSimulation", .expandPath(filePath), resetIds)
 
   simulation <- Simulation$new(netSim, filePath)
 

@@ -195,7 +195,8 @@ DataImporterConfiguration <- R6::R6Class(
         return(.ImporterErrorTypeToDataSetErrorType[[errorType]])
       }
       validateEnumValue(value, .ImporterErrorTypeToDataSetErrorType)
-        mappedColumn$set("ErrorStdDev",
+      mappedColumn$set(
+        "ErrorStdDev",
         getEnumKey(enum = .ImporterErrorTypeToDataSetErrorType, value)
       )
     },

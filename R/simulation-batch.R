@@ -95,7 +95,7 @@ SimulationBatch <- R6::R6Class(
       simulationBatchOptions <- self$get("SimulationBatchOptions")
 
       simulationBatchOptions$get("VariableParameters") %||%
-       simulationBatchOptions$get("VariableParameter")
+        simulationBatchOptions$get("VariableParameter")
     },
 
     #' @description Returns a list of molecules paths that are variable in this batch

@@ -61,7 +61,7 @@ IndividualCharacteristics <- R6::R6Class(
         if (is.null(value)) {
           return()
         }
-       self$set(name = parameterName, value = value)
+        self$set(name = parameterName, value = value)
       }
     }
   ),
