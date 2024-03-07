@@ -251,7 +251,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (is.null(netObject)) {
         netObject <- importerTask$call("CreateConfiguration")
       }
-      super$initialize(netObject$pointer)
+      super$initialize(netObject)
       private$.dataImporterTask <- importerTask
 
       # set timeColumn dimension and unit to default ("Time" and "h") if it is

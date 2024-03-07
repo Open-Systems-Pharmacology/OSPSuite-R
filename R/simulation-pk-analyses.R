@@ -15,13 +15,13 @@ SimulationPKAnalyses <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param pointer .NET pointer
+    #' @param netObject A `NetObject`
     #' @param simulation Simulation for which the pkParameters were calculated
     #' @return A new `SimulationPKAnalyses` object.
-    initialize = function(pointer, simulation) {
+    initialize = function(netObject, simulation) {
       validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
-      super$initialize(pointer)
+      super$initialize(netObject)
     },
     #' @description
     #' Returns all QuantityPKParameter defined for a given path

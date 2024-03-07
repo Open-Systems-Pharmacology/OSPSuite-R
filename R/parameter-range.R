@@ -25,7 +25,7 @@ ParameterRange <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param pointer Optional `NetObject` of `ParameterRange`. If not defined, a new instance will be created
+    #' @param netObject Optional `NetObject` of `ParameterRange`. If not defined, a new instance will be created
     #' @param min Optional minimum value for the range
     #' @param max Optional minimum value for the range
     #' @param unit Optional unit of the specified min and max
@@ -34,8 +34,8 @@ ParameterRange <- R6::R6Class(
       validateIsNumeric(min, nullAllowed = TRUE)
       validateIsNumeric(max, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
-      pointer <- netObject$pointer %||% rSharp::newPointerFromName("PKSim.Core.Snapshots.ParameterRange")
-      super$initialize(pointer)
+      netObject <- netObject %||% rSharp::newObjectFromName("PKSim.Core.Snapshots.ParameterRange")
+      super$initialize(netObject)
       # Because of weird issue with nullable value in rClr
       if (!is.null(min)) {
         self$min <- min

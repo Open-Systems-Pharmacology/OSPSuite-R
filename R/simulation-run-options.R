@@ -17,8 +17,8 @@ SimulationRunOptions <- R6::R6Class(
     initialize = function(numberOfCores = NULL,
                           checkForNegativeValues = NULL,
                           showProgress = NULL) {
-      pointer <- rSharp::newPointerFromName("OSPSuite.R.Domain.SimulationRunOptions")
-      super$initialize(pointer)
+      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SimulationRunOptions")
+      super$initialize(netObject)
       self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
       self$checkForNegativeValues <- checkForNegativeValues %||% TRUE

@@ -39,14 +39,14 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param pointer A `.NET` pointer.
+    #' @param netObject A `NetObject`.
     #' @param simulation Reference to the simulation object used to calculated
     #'   the results.
     #' @return A new `SensitivityAnalysisResults` object.
-    initialize = function(pointer, simulation) {
+    initialize = function(netObject, simulation) {
       validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
-      super$initialize(pointer)
+      super$initialize(netObject)
     },
 
     #' @description

@@ -29,8 +29,8 @@ AgingData <- R6::R6Class("AgingData",
     #' Initialize a new instance of the class
     #' @return A new `OSPSuite.R.Domain.AgingData` object.
     initialize = function() {
-      ptr <- rSharp::newPointerFromName("OSPSuite.R.Domain.AgingData")
-      super$initialize(ptr)
+      netObj <- rSharp::newObjectFromName("OSPSuite.R.Domain.AgingData")
+      super$initialize(netObj)
     },
 
     #' @description

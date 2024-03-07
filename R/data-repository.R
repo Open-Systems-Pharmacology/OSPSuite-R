@@ -70,11 +70,11 @@ DataRepository <- R6::R6Class(
     },
     #' @description
     #' Initialize a new instance of the class
-    #' @param pointer Optional underlying to the underlying `DataRepository`.
+    #' @param netObj Optional `NetObject` to the pointer of the underlying `DataRepository`.
     #' If it is not provided, a new instance will be created
     #' @return A new `DataRepository` object.
-    initialize = function(pointer = NULL) {
-      super$initialize(pointer %||% rSharp::newPointerFromName("OSPSuite.Core.Domain.Data.DataRepository"))
+    initialize = function(netObj = NULL) {
+      super$initialize(netObj %||% rSharp::newObjectFromName("OSPSuite.Core.Domain.Data.DataRepository"))
     },
     #' @description
     #' Print the object to the console
