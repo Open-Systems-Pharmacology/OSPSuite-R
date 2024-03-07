@@ -9,7 +9,7 @@
 #' sim$pointer
 #'
 #' # create a new instance of `DotNetWrapper` class using this reference
-#' DotNetWrapper$new(sim$pointer)
+#' DotNetWrapper$new(sim)
 #'
 #' @export
 DotNetWrapper <- R6::R6Class(
@@ -66,6 +66,16 @@ DotNetWrapper <- R6::R6Class(
           self$set(propertyNamePlural, value)
         }
       }
+    }
+  ),
+  public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #' @param netObject An `rSharp::NetObject` object.
+    #' @return A new `Molecule` object.
+    initialize = function(netObject) {
+      validateIsOfType(netObject, "NetObject")
+      super$initialize(netObject$pointer)
     }
   )
 )

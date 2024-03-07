@@ -1,10 +1,10 @@
 # DataColumn
 
 createBaseGrid <- function() {
-  DataColumn$new(rSharp::newPointerFromName("OSPSuite.Core.Domain.Data.BaseGrid", "baseGrid", getDimensionByName(ospDimensions$Time)))
+  DataColumn$new(rSharp::newObjectFromName("OSPSuite.Core.Domain.Data.BaseGrid", "baseGrid", getDimensionByName(ospDimensions$Time)))
 }
 createColumn <- function(baseGrid) {
-  DataColumn$new(rSharp::newPointerFromName("OSPSuite.Core.Domain.Data.DataColumn", "column", getDimensionByName(ospDimensions$`Concentration (mass)`), baseGrid$ref))
+  DataColumn$new(rSharp::newObjectFromName("OSPSuite.Core.Domain.Data.DataColumn", "column", getDimensionByName(ospDimensions$`Concentration (mass)`), baseGrid))
 }
 
 test_that("it can set and retrieve the dimension of a data column", {

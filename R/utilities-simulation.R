@@ -57,7 +57,7 @@ browser()
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
 netSim <- simulationPersister$call("LoadSimulation", .expandPath(filePath), resetIds)
 
-  simulation <- Simulation$new(netSim$pointer, filePath)
+  simulation <- Simulation$new(netSim, filePath)
 
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {
@@ -614,7 +614,7 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
       # Id of the simulation of the batch
       simId <- resultsIdSimulationIdMap[[resultsId]]
       # Get the correct simulation and create a SimulationResults object
-      simulationResults[[resultsId]] <- SimulationResults$new(ref = resultObject$get("Result"), simulation = simulationIdSimulationMap[[simId]])
+      simulationResults[[resultsId]] <- SimulationResults$new(netObject = resultObject$get("Result"), simulation = simulationIdSimulationMap[[simId]])
       next()
     }
     # If the simulation run failed, show a warning or an error

@@ -18,8 +18,8 @@ calculatePKAnalyses <- function(results) {
   validateIsOfType(results, "SimulationResults")
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
   calculatePKAnalysisArgs <- rSharp::newObjectFromName("OSPSuite.R.Services.CalculatePKAnalysisArgs")
-  calculatePKAnalysisArgs$set("Simulation", results$simulation$ref)
-  calculatePKAnalysisArgs$set("SimulationResults", results$ref)
+  calculatePKAnalysisArgs$set("Simulation", results$simulation)
+  calculatePKAnalysisArgs$set("SimulationResults", results)
   pkAnalyses <- pkAnalysisTask$call("CalculateFor", calculatePKAnalysisArgs)
   SimulationPKAnalyses$new(pkAnalyses, results$simulation)
 }
@@ -56,7 +56,7 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-  pkAnalyses <- pkAnalysisTask$call("ImportPKAnalysesFromCSV", filePath, simulation$ref)
+  pkAnalyses <- pkAnalysisTask$call("ImportPKAnalysesFromCSV", filePath, simulation)
   SimulationPKAnalyses$new(pkAnalyses, simulation)
 }
 

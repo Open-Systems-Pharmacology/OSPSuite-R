@@ -64,12 +64,12 @@ PopulationCharacteristics <- R6::R6Class(
     },
     parameterRangeProperty = function(parameterName, value) {
       if (missing(value)) {
-        ParameterRange$new(ref = self$get(parameterName))
+        ParameterRange$new(netObject = self$get(parameterName))
       } else {
         if (is.null(value)) {
           return()
         }
-        self$set(name = parameterName, value = value$ref)
+        self$set(name = parameterName, value = value)
       }
     }
   ),

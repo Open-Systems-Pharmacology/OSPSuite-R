@@ -56,7 +56,7 @@ IndividualCharacteristics <- R6::R6Class(
     },
     parameterProperty = function(parameterName, value) {
       if (missing(value)) {
-        SnapshotParameter$new(ref = self$get(parameterName))
+        SnapshotParameter$new(netObject = self$get(parameterName))
       } else {
         if (is.null(value)) {
           return()

@@ -87,10 +87,10 @@ Quantity <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET Instance
+    #' @param netObject A `NetObject` object with the pointer to the .NET `Quantity`
     #' @return A new `Quantity` object.
-    initialize = function(ref) {
-      super$initialize(ref)
+    initialize = function(netObject) {
+      super$initialize(netObject)
       # Cannot use property Formula directly from the quantity because of new override in Distributed Parameter
       formula <- private$.wrapExtensionMethod(QUANTITY_EXTENSIONS, "GetFormula")
       private$.formula <- Formula$new(formula)

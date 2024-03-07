@@ -14,7 +14,7 @@ Simulation <- R6::R6Class(
       if (missing(value)) {
         model <- self$get("Model")
         root <- model$get("Root")
-        Container$new(root$pointer)
+        Container$new(root)
       } else {
         private$.throwPropertyIsReadonly("root")
       }
@@ -45,11 +45,11 @@ Simulation <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref Reference to .NET simulation object
+    #' @param netObject Reference to `NetObject` .NET simulation object
     #' @param sourceFile (Optional) File used to load the simulation
     #' @return A new `Simulation` object.
-    initialize = function(ref, sourceFile = NULL) {
-      super$initialize(ref)
+    initialize = function(netObject, sourceFile = NULL) {
+      super$initialize(netObject)
       private$.sourceFile <- sourceFile
       private$.buildConfiguration <- self$get("BuildConfiguration")
       private$.settings <- SimulationSettings$new(self$get("Settings"))

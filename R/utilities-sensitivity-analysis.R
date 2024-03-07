@@ -21,7 +21,7 @@ runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOp
   options <- sensitivityAnalysisRunOptions %||% SensitivityAnalysisRunOptions$new()
   sensitivityAnalysisRunner <- .getNetTask("SensitivityAnalysisRunner")
 
-  results <- sensitivityAnalysisRunner$call("Run", sensitivityAnalysis$ref, options$ref)
+  results <- sensitivityAnalysisRunner$call("Run", sensitivityAnalysis, options)
 
   SensitivityAnalysisResults$new(results, sensitivityAnalysis$simulation)
 }
