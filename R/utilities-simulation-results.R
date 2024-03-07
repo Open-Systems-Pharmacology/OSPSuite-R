@@ -143,7 +143,7 @@ exportResultsToCSV <- function(results, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
-  simulationResultsTask$call("ExportResultsToCSV", results$ref, results$simulation$ref, filePath)
+  simulationResultsTask$call("ExportResultsToCSV", results, results$simulation, filePath)
   invisible()
 }
 

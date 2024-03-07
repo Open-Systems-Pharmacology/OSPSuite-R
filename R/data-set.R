@@ -253,8 +253,8 @@ DataSet <- R6::R6Class(
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
         dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
         dataRepositoryTask$call("RemoveColumn",
-          private$.dataRepository$ref,
-          private$.yErrorColumn$ref
+          private$.dataRepository,
+          private$.yErrorColumn
         )
         private$.yErrorColumn <- NULL
       }
@@ -374,7 +374,7 @@ DataSet <- R6::R6Class(
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
 
-      netYColumn <- dataRepositoryTask$call("GetMeasurementColumn", private$.dataRepository$ref)
+      netYColumn <- dataRepositoryTask$call("GetMeasurementColumn", private$.dataRepository)
       private$.yColumn <- DataColumn$new(netYColumn)
       netYErrorColumn <- dataRepositoryTask$call("GetErrorColumn", netYColumn)
 
@@ -389,7 +389,7 @@ DataSet <- R6::R6Class(
 
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       netYErrorColumn <- dataRepositoryTask$call("AddErrorColumn",
-        private$.yColumn$ref,
+        private$.yColumn,
         "yErrorValues",
         DataErrorType$ArithmeticStdDev
       )

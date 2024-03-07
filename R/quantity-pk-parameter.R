@@ -33,10 +33,10 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET Instance
+    #' @inheritParams ObjectBase$initialize
     #' @return A new `QuantityPKParameter` object.
-    initialize = function(ref) {
-      super$initialize(ref)
+    initialize = function(netObject) {
+      super$initialize(netObject)
       pkParameter <- pkParameterByName(self$name, stopIfNotFound = FALSE)
       if (!is.null(pkParameter)) {
         private$.unit <- pkParameter$unit

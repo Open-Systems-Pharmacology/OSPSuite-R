@@ -89,7 +89,7 @@ Simulation <- R6::R6Class(
     #' @param quantityPath Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)
     allApplicationsFor = function(quantityPath) {
       validateIsString(quantityPath)
-      netApplicationParameters <- rSharp::callStatic(MODEL_CORE_SIMULATION_EXTENSIONS, "AllApplicationParametersOrderedByStartTimeForQuantityPath", self$ref, quantityPath)
+      netApplicationParameters <- rSharp::callStatic(MODEL_CORE_SIMULATION_EXTENSIONS, "AllApplicationParametersOrderedByStartTimeForQuantityPath", self, quantityPath)
       .toObjectType(netApplicationParameters, Application)
     },
     #' @description

@@ -17,7 +17,7 @@ createIndividual <- function(individualCharacteristics) {
   validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
   individualFactory <- rSharp::callStatic("PKSim.R.Api", "GetIndividualFactory")
-  createIndividualResults <- individualFactory$call("CreateIndividual", individualCharacteristics$ref)
+  createIndividualResults <- individualFactory$call("CreateIndividual", individualCharacteristics)
 
   distributedParameters <- .getPropertyValue(createIndividualResults, "DistributedParameters")
   derivedParameters <- .getPropertyValue(createIndividualResults, "DerivedParameters")

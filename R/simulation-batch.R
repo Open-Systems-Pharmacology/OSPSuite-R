@@ -20,12 +20,12 @@ SimulationBatch <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET reference object.
+    #' @inheritParams ObjectBase$initialize
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
-    initialize = function(ref, simulation) {
+    initialize = function(netObject, simulation) {
       validateIsOfType(simulation, "Simulation")
-      super$initialize(ref)
+      super$initialize(netObject)
       private$.simulation <- simulation
     },
 
@@ -81,7 +81,7 @@ SimulationBatch <- R6::R6Class(
       }
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
-      self$call("AddSimulationBatchRunValues", batchRunValues$ref)
+      self$call("AddSimulationBatchRunValues", batchRunValues)
       return(batchRunValues$id)
     },
 

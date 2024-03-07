@@ -25,14 +25,14 @@ SimulationResults <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET Instance
+    #' @inheritParams ObjectBase$initialize
     #' @param simulation Reference to the simulation object used to calculated the results
     #' @return A new `SimulationResults` object.
-    initialize = function(ref, simulation) {
+    initialize = function(netObject, simulation) {
       validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
       private$.individualResultsCache <- Cache$new()
-      super$initialize(ref)
+      super$initialize(netObject)
     },
     #' @description
     #' Returns `TRUE` if results are available for the individual with id `individualId` otherwise `FALSE`

@@ -35,7 +35,7 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-  pkAnalysisTask$call("ExportPKAnalysesToCSV", pkAnalyses$ref, pkAnalyses$simulation$ref, filePath)
+  pkAnalysisTask$call("ExportPKAnalysesToCSV", pkAnalyses, pkAnalyses$simulation, filePath)
   invisible()
 }
 

@@ -134,7 +134,7 @@ Quantity <- R6::R6Class(
       if (!is.null(unit)) {
         unit <- .encodeUnit(unit)
         .validateHasUnit(self, unit)
-        value <- rSharp::callStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self$ref, value, unit)
+        value <- rSharp::callStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self, value, unit)
       }
       self$value <- value
     },

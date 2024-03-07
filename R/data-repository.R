@@ -63,7 +63,7 @@ DataRepository <- R6::R6Class(
     #' @param column Column to add
     addColumn = function(column) {
       validateIsOfType(column, "DataColumn")
-      self$call("Add", column$ref)
+      self$call("Add", column)
       # we need to reset the cache when adding a new column
       private$.columns <- NULL
       private$.baseGrid <- NULL
@@ -95,7 +95,7 @@ DataRepository <- R6::R6Class(
       validateIsString(name)
       validateIsString(value)
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      dataRepositoryTask$call("AddMetaData", self$ref, name, value)
+      dataRepositoryTask$call("AddMetaData", self, name, value)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
     },
@@ -109,7 +109,7 @@ DataRepository <- R6::R6Class(
       }
       validateIsString(name)
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      dataRepositoryTask$call("RemoveMetaData", self$ref, name)
+      dataRepositoryTask$call("RemoveMetaData", self, name)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
     }

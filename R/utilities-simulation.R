@@ -239,7 +239,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
-      simulationRunner$set("SimulationRunOptions", simulationRunOptions$ref)
+      simulationRunner$set("SimulationRunOptions", simulationRunOptions)
 
       # Map of simulations ids to simulations objects
       simulationIdSimulationMap <- vector("list", length(simulations))
@@ -250,7 +250,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
         simulationIdSimulationMap[[simulationIdx]] <- simulation
         names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 
-        simulationRunner$call("AddSimulation", simulation$ref)
+        simulationRunner$call("AddSimulation", simulation)
       }
       # Run all simulations
       results <- simulationRunner$call("RunConcurrently")
@@ -380,7 +380,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
-  simulationRunner$set("SimulationRunOptions", simulationRunOptions$ref)
+  simulationRunner$set("SimulationRunOptions", simulationRunOptions)
 
   simulationBatches <- c(simulationBatches)
   # Result Id <-> simulation batch id map to get the correct simulation for the results.
@@ -401,7 +401,7 @@ runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL,
     # All results of this batch have the id of the same simulation
     resultsIdSimulationBatchIdMap[valuesIds] <- simBatchId
     # Add the batch to concurrent runner
-    simulationRunner$call("AddSimulationBatch", simBatch$ref)
+    simulationRunner$call("AddSimulationBatch", simBatch)
   }
 
   # Run the batch with the ConcurrentSimulationRunner

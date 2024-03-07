@@ -39,7 +39,7 @@ Parameter <- R6::R6Class(
 
       # we are deleting the RHS Formula
       private$.rhsFormula <- NULL
-      rSharp::rSharp(self$ref, "ClearRHSFormula")
+      self$call("ClearRHSFormula")
     },
     #' @field rhsFormula An instance of a `Formula` object representing the RHS Formula (Read-Only)
     rhsFormula = function(value) {
@@ -49,10 +49,10 @@ Parameter <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET Instance
+    #' @inheritParams Quantity$initialize
     #' @return A new `Parameter` object.
-    initialize = function(ref) {
-      super$initialize(ref)
+    initialize = function(netObject) {
+      super$initialize(netObject)
       rhsFormula <- self$get("RHSFormula")
       private$.rhsFormula <- ifNotNull(rhsFormula, Formula$new(rhsFormula))
     },

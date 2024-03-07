@@ -143,7 +143,7 @@ createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
   populationFactory <- rSharp::callStatic("PKSim.R.Api", "GetPopulationFactory")
-  results <- populationFactory$call("CreatePopulation", populationCharacteristics$ref)
+  results <- populationFactory$call("CreatePopulation", populationCharacteristics)
   netPopulation <- .getPropertyValue(results, "IndividualValuesCache")
   seed <- .getPropertyValue(results, "Seed")
   population <- Population$new(netPopulation)

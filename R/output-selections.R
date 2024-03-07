@@ -27,14 +27,14 @@ OutputSelections <- R6::R6Class(
     #' @param quantity Quantity to add to the selection
     addQuantity = function(quantity) {
       validateIsOfType(quantity, "Quantity")
-      self$call("AddQuantity", quantity$ref)
+      self$call("AddQuantity", quantity)
     },
     #' @description
     #' Removes a quantity from the selection
     #' @param quantity Quantity to remove from the selection
     removeQuantity = function(quantity) {
       validateIsOfType(quantity, "Quantity")
-      self$call("RemoveQuantity", quantity$ref)
+      self$call("RemoveQuantity", quantity)
     },
     #' @description
     #' Print the object to the console

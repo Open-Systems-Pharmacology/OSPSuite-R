@@ -38,10 +38,10 @@ Molecule <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET reference object.
+    #' @inheritParams DotNetWrapper$initialize
     #' @return A new `Molecule` object.
-    initialize = function(ref) {
-      super$initialize(ref)
+    initialize = function(netObject) {
+      super$initialize(netObject)
       # Is only set for a molecule representing a concenctration based molecule (e.g unit is umol)
       private$.startValue <- getParameter("Start value", self, stopIfNotFound = FALSE)
     },

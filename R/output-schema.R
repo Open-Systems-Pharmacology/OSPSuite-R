@@ -38,7 +38,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to add
     addInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      self$call("AddInterval", interval$ref)
+      self$call("AddInterval", interval)
       invisible(self)
     },
     #' @description
@@ -46,7 +46,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to remove
     removeInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      self$call("RemoveInterval", interval$ref)
+      self$call("RemoveInterval", interval)
       invisible(self)
     },
 

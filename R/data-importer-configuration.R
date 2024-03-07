@@ -139,7 +139,7 @@ DataImporterConfiguration <- R6::R6Class(
       }
       # If value is NULL, remove the error column
       if (is.null(value)) {
-        private$.dataImporterTask$call("RemoveError", self$ref)
+        private$.dataImporterTask$call("RemoveError", self)
       } else {
         validateIsString(value)
         # Create an error column if none is present in the configuration
@@ -203,7 +203,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @field groupingColumns Column names by which the data will be grouped
     groupingColumns = function(value) {
       if (missing(value)) {
-        return(private$.dataImporterTask$call("GetAllGroupingColumns", self$ref))
+        return(private$.dataImporterTask$call("GetAllGroupingColumns", self))
       }
       private$throwPropertyIsReadonly("groupingColumns")
     },
@@ -212,14 +212,14 @@ DataImporterConfiguration <- R6::R6Class(
     #' configuration will be applied.
     sheets = function(value) {
       if (missing(value)) {
-        return(private$.dataImporterTask$call("GetAllLoadedSheets", self$ref))
+        return(private$.dataImporterTask$call("GetAllLoadedSheets", self))
       }
       if (length(value) == 0) {
         self$call("ClearLoadedSheets")
         return(invisible(self))
       }
       validateIsString(value)
-      private$.dataImporterTask$call("SetAllLoadedSheet", self$ref, value)
+      private$.dataImporterTask$call("SetAllLoadedSheet", self, value)
     },
     #' @field namingPattern Regular expression used for naming of loaded data sets.
     #' Words between curly brackets (e.g. `{Group Id}`) will be replaced by the value
@@ -240,18 +240,18 @@ DataImporterConfiguration <- R6::R6Class(
     }
   ),
   public = list(
-    #' @param ref Reference to .NET DataImporterConfiguration object
+    #' @param netObject A `NetObject` with the reference to .NET DataImporterConfiguration object
     #' If `NULL` (default), an empty configuration with columns "Time" and
     #' "Measurement" is created.
     #' @description
     #' Initialize a new instance of the class
     #' @return A new `DataImporterConfiguration` object.
-    initialize = function(ref = NULL) {
+    initialize = function(netObject = NULL) {
       importerTask <- .getNetTaskFromCache("DataImporterTask")
-      if (is.null(ref)) {
-        ref <- importerTask$call("CreateConfiguration")
+      if (is.null(netObject)) {
+        netObject <- importerTask$call("CreateConfiguration")
       }
-      super$initialize(ref$pointer)
+      super$initialize(netObject$pointer)
       private$.dataImporterTask <- importerTask
 
       # set timeColumn dimension and unit to default ("Time" and "h") if it is
@@ -260,7 +260,7 @@ DataImporterConfiguration <- R6::R6Class(
       # Because the user cannot set the Dimension if time values, this must be
       # done during initialization phase.
       if (self$timeUnit == "?") {
-        column <- importerTask$call("GetTime", ref)
+        column <- importerTask$call("GetTime", netObject)
         mappedColumn <- column$get("MappedColumn")
         mappedColumn$set("Dimension", getDimensionByName(ospDimensions$Time))
         self$timeUnit <- ospUnits$Time$h
@@ -275,7 +275,7 @@ DataImporterConfiguration <- R6::R6Class(
       validateIsString(filePath)
       filePath <- .expandPath(filePath)
 
-      private$.dataImporterTask$call("SaveConfiguration", self$ref, filePath)
+      private$.dataImporterTask$call("SaveConfiguration", self, filePath)
       invisible(self)
     },
 
@@ -284,7 +284,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     addGroupingColumn = function(column) {
       validateIsString(column)
-      private$.dataImporterTask$call("AddGroupingColumn", self$ref, column)
+      private$.dataImporterTask$call("AddGroupingColumn", self, column)
       invisible(self)
     },
 
@@ -293,7 +293,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param column Name of the column
     removeGroupingColumn = function(column) {
       validateIsString(column)
-      private$.dataImporterTask$call("RemoveGroupingColumn", self$ref, column)
+      private$.dataImporterTask$call("RemoveGroupingColumn", self, column)
       invisible(self)
     },
 
@@ -321,16 +321,16 @@ DataImporterConfiguration <- R6::R6Class(
   private = list(
     .dataImporterTask = NULL,
     .timeColumn = function() {
-      return(private$.dataImporterTask$call("GetTime", self$ref))
+      return(private$.dataImporterTask$call("GetTime", self))
     },
     .measurementColumn = function() {
-      return(private$.dataImporterTask$call("GetMeasurement", self$ref))
+      return(private$.dataImporterTask$call("GetMeasurement", self))
     },
     .errorColumn = function() {
-      return(private$.dataImporterTask$call("GetError", self$ref))
+      return(private$.dataImporterTask$call("GetError", self))
     },
     .addErrorColumn = function() {
-      private$.dataImporterTask$call("AddError", self$ref)
+      private$.dataImporterTask$call("AddError", self)
       mappedColumn <- private$.errorColumn()$get("MappedColumn")
       mappedColumn$set("Dimension", getDimensionByName(self$measurementDimension))
     },
