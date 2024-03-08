@@ -39,7 +39,7 @@ SimulationSettings <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       invisible(self)
     }
   )

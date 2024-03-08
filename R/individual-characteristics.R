@@ -77,19 +77,19 @@ IndividualCharacteristics <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Species", self$species)
-      private$printLine("Population", self$population)
-      private$printLine("Gender", self$gender)
-      private$printParam("Age", self$age)
-      private$printParam("Gestational age", self$gestationalAge)
-      private$printParam("Weight", self$weight)
-      private$printParam("Height", self$height)
+      private$.printClass()
+      private$.printLine("Species", self$species)
+      private$.printLine("Population", self$population)
+      private$.printLine("Gender", self$gender)
+      private$.printParam("Age", self$age)
+      private$.printParam("Gestational age", self$gestationalAge)
+      private$.printParam("Weight", self$weight)
+      private$.printParam("Height", self$height)
       for (moleculeOntogeny in self$allMoleculeOntogenies) {
         moleculeOntogeny$printMoleculeOntogeny()
       }
       if (!is.null(self$seed)) {
-        private$printLine("Seed", self$seed)
+        private$.printLine("Seed", self$seed)
       }
       invisible(self)
     },

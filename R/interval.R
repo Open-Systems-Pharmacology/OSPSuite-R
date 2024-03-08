@@ -30,8 +30,8 @@ Interval <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Name", self$name)
+      private$.printClass()
+      private$.printLine("Name", self$name)
       self$startTime$printValue()
       self$endTime$printValue()
       self$resolution$printValue()

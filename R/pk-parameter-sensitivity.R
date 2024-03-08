@@ -28,11 +28,11 @@ PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Parameter name", self$parameterName)
-      private$printLine("PK-Parameter", self$pkParameterName)
-      private$printLine("Output path", self$outputPath)
-      private$printLine("Value", self$value)
+      private$.printClass()
+      private$.printLine("Parameter name", self$parameterName)
+      private$.printLine("PK-Parameter", self$pkParameterName)
+      private$.printLine("Output path", self$outputPath)
+      private$.printLine("Value", self$value)
       invisible(self)
     }
   )

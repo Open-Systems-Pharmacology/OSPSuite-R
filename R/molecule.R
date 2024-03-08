@@ -50,8 +50,8 @@ Molecule <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Path", self$path)
+      private$.printClass()
+      private$.printLine("Path", self$path)
       initialStartValue <- private$.startValue %||% self
       initialStartValue$printQuantityValue("Initial Value")
       invisible(self)

@@ -78,9 +78,9 @@ DataColumn <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       if (self$unit == "") {
-        private$printLine(self$name)
+        private$.printLine(self$name)
       } else {
-        private$printLine(self$name, paste0("base unit: [", self$unit, "]"))
+        private$.printLine(self$name, paste0("base unit: [", self$unit, "]"))
       }
       invisible(self)
     }

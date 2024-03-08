@@ -73,13 +73,13 @@ Quantity <- R6::R6Class(
     .allUnits = NULL,
     .unit = NULL,
     .dimension = NULL,
-    printQuantity = function(valueCaption = "Value") {
-      private$printClass()
-      private$printLine("Path", self$path)
+    .printQuantity = function(valueCaption = "Value") {
+      private$.printClass()
+      private$.printLine("Path", self$path)
       self$printQuantityValue(valueCaption)
       self$formula$printFormula()
       if (!self$isConstant && !self$isDistributed) {
-        private$printLine("Value overrides formula", self$isFixedValue)
+        private$.printLine("Value overrides formula", self$isFixedValue)
       }
       invisible(self)
     }
@@ -102,8 +102,8 @@ Quantity <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printQuantity()
-      private$printLine("Quantity Type", self$quantityType)
+      private$.printQuantity()
+      private$.printLine("Quantity Type", self$quantityType)
     },
     #' @description
     #' Print the name of the quantity and its value
@@ -122,7 +122,7 @@ Quantity <- R6::R6Class(
       if (self$unit != "") {
         QuantityValue <- paste0(QuantityValue, " [", self$unit, "]")
       }
-      private$printLine(caption, QuantityValue)
+      private$.printLine(caption, QuantityValue)
     },
     #' @description
     #' Convert value from unit to the base unit and sets the value in base unit.

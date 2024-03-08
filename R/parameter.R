@@ -60,10 +60,10 @@ Parameter <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printQuantity()
-      private$printLine("isStateVariable", self$isStateVariable)
+      private$.printQuantity()
+      private$.printLine("isStateVariable", self$isStateVariable)
       if (self$isStateVariable) {
-        private$printLine("RHSFormula")
+        private$.printLine("RHSFormula")
         self$rhsFormula$printFormula()
       }
     }

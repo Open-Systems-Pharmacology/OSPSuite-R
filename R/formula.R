@@ -54,25 +54,25 @@ Formula <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       self$printFormula()
     },
     #' @description
     #' Print the formula to the console without the name of the class
     printFormula = function() {
       if (self$isConstant) {
-        private$printLine("isConstant", TRUE)
+        private$.printLine("isConstant", TRUE)
       } else if (self$isExplicit) {
-        private$printLine("isFormula", TRUE)
-        private$printLine("formula", self$formulaString)
+        private$.printLine("isFormula", TRUE)
+        private$.printLine("formula", self$formulaString)
       } else if (self$isTable) {
-        private$printLine("isTable", TRUE)
+        private$.printLine("isTable", TRUE)
       } else if (self$isDistributed) {
-        private$printLine("isDistributed", TRUE)
+        private$.printLine("isDistributed", TRUE)
       } else if (self$isTableWithOffSet) {
-        private$printLine("isTableWithOffSet", TRUE)
+        private$.printLine("isTableWithOffSet", TRUE)
       } else if (self$isTableWithXArgument) {
-        private$printLine("isTableWithXArgument", TRUE)
+        private$.printLine("isTableWithXArgument", TRUE)
       }
       invisible(self)
     }

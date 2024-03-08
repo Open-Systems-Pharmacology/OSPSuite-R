@@ -28,9 +28,9 @@ SimulationBatchOptions <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("variableParameters", self$variableParameters)
-      private$printLine("variableMolecules", self$variableMolecules)
+      private$.printClass()
+      private$.printLine("variableParameters", self$variableParameters)
+      private$.printLine("variableMolecules", self$variableMolecules)
       invisible(self)
     }
   ),

@@ -270,17 +270,17 @@ DataSet <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Name", self$name)
-      private$printLine("X dimension", self$xDimension)
-      private$printLine("X unit", self$xUnit)
-      private$printLine("Y dimension", self$yDimension)
-      private$printLine("Y unit", self$yUnit)
-      private$printLine("Error type", self$yErrorType)
-      private$printLine("Error unit", self$yErrorUnit)
-      private$printLine("Molecular weight", self$molWeight)
-      private$printLine("LLOQ", self$LLOQ)
-      private$printLine("Meta data")
+      private$.printClass()
+      private$.printLine("Name", self$name)
+      private$.printLine("X dimension", self$xDimension)
+      private$.printLine("X unit", self$xUnit)
+      private$.printLine("Y dimension", self$yDimension)
+      private$.printLine("Y unit", self$yUnit)
+      private$.printLine("Error type", self$yErrorType)
+      private$.printLine("Error unit", self$yErrorUnit)
+      private$.printLine("Molecular weight", self$molWeight)
+      private$.printLine("LLOQ", self$LLOQ)
+      private$.printLine("Meta data")
       print(self$metaData)
       invisible(self)
     }

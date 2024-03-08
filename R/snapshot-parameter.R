@@ -42,16 +42,16 @@ SnapshotParameter <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Value", self$value)
-      private$printLine("Unit", self$unit)
+      private$.printClass()
+      private$.printLine("Value", self$value)
+      private$.printLine("Unit", self$unit)
       invisible(self)
     },
     #' @description
     #' Print the the parameter in one line
     #' @param caption Caption to display before the value of the parameter
     printValue = function(caption) {
-      private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
+      private$.printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
     }
   )
 )

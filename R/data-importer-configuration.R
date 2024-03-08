@@ -302,19 +302,19 @@ DataImporterConfiguration <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Time column", self$timeColumn)
-      private$printLine("Time unit", self$timeUnit)
-      private$printLine("Time unit from column", self$isTimeUnitFromColumn)
-      private$printLine("Measurement column", self$measurementColumn)
-      private$printLine("Measurement unit", self$measurementUnit)
-      private$printLine("Measurement unit from column", self$isMeasurementUnitFromColumn)
-      private$printLine("Error column", self$errorColumn)
-      private$printLine("Error type", self$errorType)
-      private$printLine("Error unit", self$errorUnit)
-      private$printLine("Grouping columns", self$groupingColumns)
-      private$printLine("Sheets", self$sheets)
-      private$printLine("Naming pattern", self$namingPattern)
+      private$.printClass()
+      private$.printLine("Time column", self$timeColumn)
+      private$.printLine("Time unit", self$timeUnit)
+      private$.printLine("Time unit from column", self$isTimeUnitFromColumn)
+      private$.printLine("Measurement column", self$measurementColumn)
+      private$.printLine("Measurement unit", self$measurementUnit)
+      private$.printLine("Measurement unit from column", self$isMeasurementUnitFromColumn)
+      private$.printLine("Error column", self$errorColumn)
+      private$.printLine("Error type", self$errorType)
+      private$.printLine("Error unit", self$errorUnit)
+      private$.printLine("Grouping columns", self$groupingColumns)
+      private$.printLine("Sheets", self$sheets)
+      private$.printLine("Naming pattern", self$namingPattern)
 
       invisible(self)
     }

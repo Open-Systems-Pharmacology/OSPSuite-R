@@ -32,7 +32,7 @@ Application <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       self$startTime$printValue()
 
       if (!is.null(self$infusionTime)) {

@@ -51,10 +51,10 @@ ParameterRange <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Min", self$min)
-      private$printLine("Max", self$max)
-      private$printLine("Unit", self$unit)
+      private$.printClass()
+      private$.printLine("Min", self$min)
+      private$.printLine("Max", self$max)
+      private$.printLine("Unit", self$unit)
       invisible(self)
     },
     #' @description
@@ -63,7 +63,7 @@ ParameterRange <- R6::R6Class(
     printValue = function(caption) {
       minDisplay <- if (is.null(self$min)) "]-Inf" else paste0("[", formatNumerics(self$min), " ", self$unit)
       maxDisplay <- if (is.null(self$max)) "+Inf[" else paste0(formatNumerics(self$max), " ", self$unit, "]")
-      private$printLine(caption, paste0(minDisplay, "..", maxDisplay))
+      private$.printLine(caption, paste0(minDisplay, "..", maxDisplay))
     }
   )
 )

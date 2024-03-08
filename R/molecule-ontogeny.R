@@ -31,15 +31,15 @@ MoleculeOntogeny <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Molecule", self$molecule)
-      private$printLine("Ontogeny", self$ontogeny)
+      private$.printClass()
+      private$.printLine("Molecule", self$molecule)
+      private$.printLine("Ontogeny", self$ontogeny)
       invisible(self)
     },
     #' @description
     #' Print the `MoleculeOntogeny` on one line
     printMoleculeOntogeny = function() {
-      private$printLine(paste("Molecule", self$molecule, "with ontogeny", self$ontogeny))
+      private$.printLine(paste("Molecule", self$molecule, "with ontogeny", self$ontogeny))
     }
   )
 )

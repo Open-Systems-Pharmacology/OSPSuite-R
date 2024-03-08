@@ -47,10 +47,10 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine(self$quantityPath, self$name)
-      private$printLine("Dimension", self$dimension)
-      private$printLine("Unit", self$unit)
+      private$.printClass()
+      private$.printLine(self$quantityPath, self$name)
+      private$.printLine("Dimension", self$dimension)
+      private$.printLine("Unit", self$unit)
       invisible(self)
     }
   )

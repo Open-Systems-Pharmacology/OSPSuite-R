@@ -68,9 +68,9 @@ OutputSchema <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       if (length(self$timePoints) > 0) {
-        private$printLine("Time points", paste0(self$timePoints, collapse = ", "))
+        private$.printLine("Time points", paste0(self$timePoints, collapse = ", "))
       }
       for (interval in self$intervals) {
         print(interval)

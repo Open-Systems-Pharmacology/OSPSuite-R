@@ -70,7 +70,7 @@ TableFormula <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       self$printFormula()
     },
     #' @description
@@ -84,8 +84,8 @@ TableFormula <- R6::R6Class(
     #' Print the formula to the console
     printFormula = function() {
       super$printFormula()
-      private$printLine("XDimension", self$xDimension)
-      private$printLine("UseDerivedValues", self$useDerivedValues)
+      private$.printLine("XDimension", self$xDimension)
+      private$.printLine("UseDerivedValues", self$useDerivedValues)
       for (point in self$allPoints) {
         print(point)
       }

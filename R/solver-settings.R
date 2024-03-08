@@ -41,14 +41,14 @@ SolverSettings <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("useJacobian", self$useJacobian)
-      private$printLine("h0", self$h0)
-      private$printLine("hMin", self$hMin)
-      private$printLine("hMax", self$hMax)
-      private$printLine("mxStep", self$mxStep)
-      private$printLine("relTol", self$relTol)
-      private$printLine("absTol", self$absTol)
+      private$.printClass()
+      private$.printLine("useJacobian", self$useJacobian)
+      private$.printLine("h0", self$h0)
+      private$.printLine("hMin", self$hMin)
+      private$.printLine("hMax", self$hMax)
+      private$.printLine("mxStep", self$mxStep)
+      private$.printLine("relTol", self$relTol)
+      private$.printLine("absTol", self$absTol)
       invisible(self)
     }
   )

@@ -69,11 +69,11 @@ SensitivityAnalysis <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Number of steps", self$numberOfSteps)
-      private$printLine("Variation range", self$variationRange)
+      private$.printClass()
+      private$.printLine("Number of steps", self$numberOfSteps)
+      private$.printLine("Variation range", self$variationRange)
       parameterLength <- length(private$.parameterPaths)
-      private$printLine("Number of parameters to vary", if (parameterLength > 0) parameterLength else "Will be estimated at run time")
+      private$.printLine("Number of parameters to vary", if (parameterLength > 0) parameterLength else "Will be estimated at run time")
       invisible(self)
     }
   ),
