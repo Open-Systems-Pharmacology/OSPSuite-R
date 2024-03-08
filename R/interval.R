@@ -43,7 +43,7 @@ Interval <- R6::R6Class(
       if (missing(value)) {
         .toObjectType(self$get(parameterName), Parameter)
       } else {
-        private$throwPropertyIsReadonly(parameterName)
+        private$.throwPropertyIsReadonly(parameterName)
       }
     }
   )

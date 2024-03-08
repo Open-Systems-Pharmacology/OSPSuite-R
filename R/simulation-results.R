@@ -18,7 +18,7 @@ SimulationResults <- R6::R6Class(
       if (missing(value)) {
         self$call("IndividualResultsAsArray")
       } else {
-        private$throwPropertyIsReadonly("allIndividualResults")
+        private$.throwPropertyIsReadonly("allIndividualResults")
       }
     }
   ),

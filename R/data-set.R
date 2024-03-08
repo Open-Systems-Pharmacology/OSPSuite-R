@@ -31,7 +31,7 @@ DataSet <- R6::R6Class(
       if (missing(value)) {
         return(private$.dataRepository)
       }
-      private$throwPropertyIsReadonly("dataRepository")
+      private$.throwPropertyIsReadonly("dataRepository")
     },
 
     #' @field xDimension Dimension in which the xValues are defined
@@ -56,7 +56,7 @@ DataSet <- R6::R6Class(
       if (missing(values)) {
         return(private$.getColumnValues(private$.xColumn))
       }
-      private$throwPropertyIsReadonly("xValues")
+      private$.throwPropertyIsReadonly("xValues")
     },
 
     #' @field yDimension Dimension in which the yValues are defined
@@ -85,7 +85,7 @@ DataSet <- R6::R6Class(
       if (missing(values)) {
         return(private$.getColumnValues(private$.yColumn))
       }
-      private$throwPropertyIsReadonly("yValues")
+      private$.throwPropertyIsReadonly("yValues")
     },
 
     #' @field yErrorType Type of the error - geometric or arithmetic.
@@ -135,7 +135,7 @@ DataSet <- R6::R6Class(
 
         return(private$.getColumnValues(private$.yErrorColumn))
       }
-      private$throwPropertyIsReadonly("yErrorValues")
+      private$.throwPropertyIsReadonly("yErrorValues")
     },
 
     #' @field molWeight Molecular weight of the yValues in g/mol
@@ -184,7 +184,7 @@ DataSet <- R6::R6Class(
       if (missing(value)) {
         return(private$.dataRepository$metaData)
       }
-      private$throwPropertyIsReadonly("metaData")
+      private$.throwPropertyIsReadonly("metaData")
     }
   ),
   public = list(

@@ -13,7 +13,7 @@ TableFormula <- R6::R6Class(
       if (missing(value)) {
         .toObjectType(self$call("AllPointsAsArray"), ValuePoint)
       } else {
-        private$throwPropertyIsReadonly("allPoints")
+        private$.throwPropertyIsReadonly("allPoints")
       }
     },
     #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is `TRUE`

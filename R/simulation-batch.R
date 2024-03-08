@@ -135,7 +135,7 @@ SimulationBatch <- R6::R6Class(
       if (missing(value)) {
         private$.simulation
       } else {
-        private$throwPropertyIsReadonly("simulation")
+        private$.throwPropertyIsReadonly("simulation")
       }
     },
     #' @field runValuesIds Ids of the run values that will be executed on next run
@@ -143,7 +143,7 @@ SimulationBatch <- R6::R6Class(
       if (missing(value)) {
         self$get("RunValuesIds")
       } else {
-        private$throwPropertyIsReadonly("runValuesIds")
+        private$.throwPropertyIsReadonly("runValuesIds")
       }
     },
     #' @field id The id of the .NET wrapped object. (read-only)

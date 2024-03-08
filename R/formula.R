@@ -45,7 +45,7 @@ Formula <- R6::R6Class(
         }
         return(NULL)
       } else {
-        private$throwPropertyIsReadonly("formulaString")
+        private$.throwPropertyIsReadonly("formulaString")
       }
     }
   ),

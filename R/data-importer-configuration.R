@@ -206,7 +206,7 @@ DataImporterConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.dataImporterTask$call("GetAllGroupingColumns", self))
       }
-      private$throwPropertyIsReadonly("groupingColumns")
+      private$.throwPropertyIsReadonly("groupingColumns")
     },
 
     #' @field sheets Names of the sheets (list of strings) of the excel workbook for which the

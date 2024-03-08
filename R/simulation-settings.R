@@ -12,7 +12,7 @@ SimulationSettings <- R6::R6Class(
         solver <- self$get("Solver")
         SolverSettings$new(solver)
       } else {
-        private$throwPropertyIsReadonly("solver")
+        private$.throwPropertyIsReadonly("solver")
       }
     },
     #' @field outputSelections All selected quantities (species, observers, parameters) that will be part of the simulated results
@@ -21,7 +21,7 @@ SimulationSettings <- R6::R6Class(
         outputSelections <- self$get("OutputSelections")
         OutputSelections$new(outputSelections)
       } else {
-        private$throwPropertyIsReadonly("outputSelections")
+        private$.throwPropertyIsReadonly("outputSelections")
       }
     },
     #' @field outputSchema OutputSchema object containing the output intervals used to generate simulation data
@@ -30,7 +30,7 @@ SimulationSettings <- R6::R6Class(
         outputSchema <- self$get("OutputSchema")
         OutputSchema$new(outputSchema)
       } else {
-        private$throwPropertyIsReadonly("outputSchema")
+        private$.throwPropertyIsReadonly("outputSchema")
       }
     }
   ),

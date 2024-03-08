@@ -28,7 +28,7 @@ DataRepository <- R6::R6Class(
         }
         return(private$.columns)
       }
-      private$throwPropertyIsReadonly("columns")
+      private$.throwPropertyIsReadonly("columns")
     },
     #' @field allButBaseGrid Returns all columns excluding baseGrid defined on the data repository.
     allButBaseGrid = function(value) {
@@ -38,7 +38,7 @@ DataRepository <- R6::R6Class(
         }
         return(private$.allButBaseGrid)
       }
-      private$throwPropertyIsReadonly("columns")
+      private$.throwPropertyIsReadonly("columns")
     },
     #' @field metaData Returns a named list of meta data defined for the data repository.
     #' where the name is the name of the metaData and the value is the meta data value.
@@ -54,7 +54,7 @@ DataRepository <- R6::R6Class(
         }
         return(private$.metaData)
       }
-      private$throwPropertyIsReadonly("metaData")
+      private$.throwPropertyIsReadonly("metaData")
     }
   ),
   public = list(
