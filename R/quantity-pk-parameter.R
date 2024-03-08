@@ -11,15 +11,15 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
   active = list(
     #' @field values All values for `quantityPath` and `name`
     values = function(value) {
-      private$wrapReadOnlyProperty("ValuesAsArray", value)
+      private$.wrapReadOnlyProperty("ValuesAsArray", value)
     },
     #' @field quantityPath The path of the quantity for which the values were calculated
     quantityPath = function(value) {
-      private$wrapReadOnlyProperty("QuantityPath", value)
+      private$.wrapReadOnlyProperty("QuantityPath", value)
     },
     #' @field name The name of the pK-Parameter (AUC, Cmax, Tmax etc...)
     name = function(value) {
-      private$wrapReadOnlyProperty("Name", value)
+      private$.wrapReadOnlyProperty("Name", value)
     },
     #' @field unit Base unit in which the pk parameter was calculated
     unit = function(value) {

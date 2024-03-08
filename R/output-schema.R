@@ -19,11 +19,11 @@ OutputSchema <- R6::R6Class(
     },
     #' @field timePoints All single time points defined in the schema (Read-Only)
     timePoints = function(value) {
-      private$wrapReadOnlyProperty("TimePoints", value)
+      private$.wrapReadOnlyProperty("TimePoints", value)
     },
     #' @field endTime Returns the end time of the simulation in kernel unit (Read-Only)
     endTime = function(value) {
-      private$wrapReadOnlyProperty("EndTime", value)
+      private$.wrapReadOnlyProperty("EndTime", value)
     }
   ),
   public = list(

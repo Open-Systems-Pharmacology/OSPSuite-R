@@ -9,11 +9,11 @@ QuantitySelection <- R6::R6Class(
   active = list(
     #' @field path Path of selected quantity
     path = function(value) {
-      private$wrapReadOnlyProperty("Path", value)
+      private$.wrapReadOnlyProperty("Path", value)
     },
     #' @field quantityType Type of selected quantity
     quantityType = function(value) {
-      private$wrapReadOnlyProperty("QuantityTypeAsString", value)
+      private$.wrapReadOnlyProperty("QuantityTypeAsString", value)
     }
   ),
   public = list(

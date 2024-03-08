@@ -148,7 +148,7 @@ SimulationBatch <- R6::R6Class(
     },
     #' @field id The id of the .NET wrapped object. (read-only)
     id = function(value) {
-      private$wrapReadOnlyProperty("Id", value)
+      private$.wrapReadOnlyProperty("Id", value)
     }
   ),
 )

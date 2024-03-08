@@ -16,7 +16,7 @@ DataColumn <- R6::R6Class(
     },
     #' @field name Returns the name of the column  (Read-Only)
     name = function(value) {
-      private$wrapReadOnlyProperty("Name", value)
+      private$.wrapReadOnlyProperty("Name", value)
     },
     #' @field unit The base unit in which the values are defined (Read-Only)
     unit = function(value) {

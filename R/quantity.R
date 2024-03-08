@@ -37,7 +37,7 @@ Quantity <- R6::R6Class(
     },
     #' @field quantityType The type of the quantity (Read-Only)
     quantityType = function(value) {
-      private$wrapReadOnlyProperty("QuantityTypeAsString", value)
+      private$.wrapReadOnlyProperty("QuantityTypeAsString", value)
     },
     #' @field formula An instance of a `Formula` object used by this quantity (Read-Only)
     formula = function(value) {

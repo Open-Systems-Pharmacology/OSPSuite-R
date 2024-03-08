@@ -13,7 +13,7 @@
 
   rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
   # Initialize once
-netObject  <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig")
+  netObject <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig")
   apiConfig <- ApiConfig$new(netObject)
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")

@@ -34,7 +34,7 @@ DataRepository <- R6::R6Class(
     allButBaseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.allButBaseGrid)) {
-          private$.allButBaseGrid <- .toObjectType(private$wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
+          private$.allButBaseGrid <- .toObjectType(private$.wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
         }
         return(private$.allButBaseGrid)
       }
@@ -45,7 +45,7 @@ DataRepository <- R6::R6Class(
     metaData = function(value) {
       if (missing(value)) {
         if (is.null(private$.metaData)) {
-          netExtendedProperties <- private$wrapReadOnlyProperty("ExtendedProperties", value)
+          netExtendedProperties <- private$.wrapReadOnlyProperty("ExtendedProperties", value)
           netMetaData <- netExtendedProperties$get("All")
           names <- unlist(lapply(netMetaData, function(data) data$get("Name")), use.names = FALSE)
           metaData <- lapply(netMetaData, function(data) data$get("ValueAsObject"))

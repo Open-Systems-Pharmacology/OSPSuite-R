@@ -83,7 +83,7 @@ SimulationResults <- R6::R6Class(
   active = list(
     #' @field count the number of individual results (`Count==1` generally means that we are dealing with an individual simulation results).
     count = function(value) {
-      private$wrapReadOnlyProperty("Count", value)
+      private$.wrapReadOnlyProperty("Count", value)
     },
     #' @field simulation Reference to the `Simulation` used to calculate or import the results (Read-Only).
     simulation = function(value) {
@@ -91,7 +91,7 @@ SimulationResults <- R6::R6Class(
     },
     #' @field timeValues Vector of simulated time output values
     timeValues = function(value) {
-      quantityValuesTime <- private$wrapReadOnlyProperty("Time", value)
+      quantityValuesTime <- private$.wrapReadOnlyProperty("Time", value)
       if (is.null(quantityValuesTime)) {
         return(NULL)
       }
@@ -102,7 +102,7 @@ SimulationResults <- R6::R6Class(
       if (missing(value)) {
         self$call("AllQuantityPaths")
       } else {
-        private$throwPropertyIsReadonly("allQuantityPaths")
+        private$.throwPropertyIsReadonly("allQuantityPaths")
       }
     },
     #' @field allIndividualIds List of Ids of all individuals that have been simulated
@@ -110,7 +110,7 @@ SimulationResults <- R6::R6Class(
       if (missing(value)) {
         self$call("AllIndividualIds")
       } else {
-        private$throwPropertyIsReadonly("allIndividualIds")
+        private$.throwPropertyIsReadonly("allIndividualIds")
       }
     }
   )

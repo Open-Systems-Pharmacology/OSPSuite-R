@@ -9,7 +9,7 @@ Population <- R6::R6Class(
   active = list(
     #' @field count the number of individual in the population
     count = function(value) {
-      private$wrapReadOnlyProperty("Count", value)
+      private$.wrapReadOnlyProperty("Count", value)
     },
     #' @field allCovariateNames the names of all covariates defined in the population
     allCovariateNames = function(value) {
