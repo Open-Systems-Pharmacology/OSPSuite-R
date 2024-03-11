@@ -60,7 +60,7 @@
 #'
 #' @keywords internal
 .netEnumName <- function(enumType, enumValue) {
-  netTypeObj <- rSharp::clrGetType(enumType)
+  netTypeObj <- rSharp::getType(enumType)
   rSharp::callStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }
 
