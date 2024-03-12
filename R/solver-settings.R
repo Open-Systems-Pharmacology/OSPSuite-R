@@ -13,7 +13,7 @@ SolverSettings <- R6::R6Class(
     },
     #' @field h0 Initial time step size
     h0 = function(value) {
-      private$wrapProperty("H0", value)
+      private$.wrapProperty("H0", value)
     },
     #' @field hMin Minimum absolute value of step size allowed
     hMin = function(value) {
