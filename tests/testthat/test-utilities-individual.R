@@ -4,7 +4,7 @@ skip_on_ci()
 # createIndividualCharacteristics
 
 test_that("It does not throw an error when species is not human and no population is provided", {
-  expect_output(individualCharacteristics <- createIndividualCharacteristics(species = Species$Beagle, height = NULL), NA)
+  expect_no_error(individualCharacteristics <- createIndividualCharacteristics(species = Species$Beagle, height = NULL), NA)
 })
 
 test_that("It throws an error when species is Human and no population is provided", {
