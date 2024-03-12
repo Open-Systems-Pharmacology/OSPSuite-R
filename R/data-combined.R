@@ -457,8 +457,8 @@ DataCombined <- R6::R6Class(
     print = function() {
       # Group map contains names, types, and groupings for all datasets, providing
       # the most succinct snapshot of the object.
-      private$.printClass()
-      private$.printLine("Datasets and groupings", addTab = FALSE)
+      private$printClass()
+      private$printLine("Datasets and groupings", addTab = FALSE)
       cat("\n")
       print(self$groupMap)
 
