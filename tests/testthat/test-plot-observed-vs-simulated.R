@@ -281,9 +281,9 @@ test_that("LLOQ is plotted", {
 
   simData <- withr::with_tempdir({
     df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+      IndividualId = c(0, 0, 0, 0),
+      `Time [min]` = c(1, 2, 4, 10),
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(1, 4, 8, 10)
     )
     readr::write_csv(df, "SimResults.csv")
     importResultsFromCSV(sim, "SimResults.csv")
