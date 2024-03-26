@@ -91,6 +91,22 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <g clip-path='url(#cpMzYuMDF8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzYuMDF8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzYuMDF8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzYuMDF8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzYuMDF8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 <line x1='66.85' y1='186.22' x2='66.85' y2='108.11' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <line x1='73.62' y1='329.63' x2='73.62' y2='284.81' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <line x1='80.39' y1='387.25' x2='80.39' y2='353.95' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
@@ -182,9 +198,9 @@
 <text x='709.62' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>25</text>
 <text x='375.27' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='36.12px' lengthAdjust='spacingAndGlyphs'>Time [h]</text>
 <text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='89.50px' lengthAdjust='spacingAndGlyphs'>Concentration [mg/l]</text>
-<rect x='599.35' y='18.97' width='98.21' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='604.82' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='613.46' cy='38.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<text x='627.58' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='64.49px' lengthAdjust='spacingAndGlyphs'>Vergin 1995.Iv</text>
+<rect x='599.35' y='18.97' width='98.21' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='604.82' y='24.45' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<circle cx='613.46' cy='33.09' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='627.58' y='36.53' style='font-size: 10.00px; font-family: sans;' textLength='64.49px' lengthAdjust='spacingAndGlyphs'>Vergin 1995.Iv</text>
 </g>
 </svg>
