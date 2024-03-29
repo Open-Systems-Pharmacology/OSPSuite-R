@@ -8,7 +8,7 @@ calculatePKAnalyses(results)
 }
 \arguments{
 \item{results}{Results of simulation. Typically the \code{results} are calculated
-using \code{runSimulation} or imported from csv file via \code{importResults}.}
+using \code{runSimulations} or imported from csv file via \code{importResults}.}
 }
 \value{
 An instance of \code{SimulationPKAnalyses} class.
@@ -22,6 +22,6 @@ simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 addOutputs("Organism|VenousBlood|*|Caffeine", sim)
-results <- runSimulation(sim)
+results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 }
