@@ -104,12 +104,13 @@ saveSimulation <- function(simulation, filePath) {
 #' @return SimulationResults (one entry per Individual) for a single simulation
 #'
 #' @examples
+#'\dontrun{
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
 #' # results is an instance of `SimulationResults`
-#' results <- runSimulations(sim)[[1]]
+#' results <- runSimulation(sim)
 #'
 #' # Creating custom simulation run options
 #'
@@ -121,6 +122,7 @@ saveSimulation <- function(simulation, filePath) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
+#'}
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
   lifecycle::deprecate_soft(when = "12.0.0",
                             what = "runSimulation()",
