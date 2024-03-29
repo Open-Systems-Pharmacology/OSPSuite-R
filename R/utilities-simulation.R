@@ -85,6 +85,11 @@ saveSimulation <- function(simulation, filePath) {
 
 #' @title Run a single simulation
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' @keywords internal
+#'
 #' @details
 #'
 #' Runs one simulation (individual or population) and returns a
@@ -104,7 +109,7 @@ saveSimulation <- function(simulation, filePath) {
 #'
 #' # Running an individual simulation
 #' # results is an instance of `SimulationResults`
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)[[1]]
 #'
 #' # Creating custom simulation run options
 #'
@@ -116,8 +121,11 @@ saveSimulation <- function(simulation, filePath) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
-#' @export
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
+  lifecycle::deprecate_soft(when = "12.0.0",
+                            what = "runSimulation()",
+                            with = "runSimulations()")
+
   # Check that only one simulation is passed
   simulation <- c(simulation)
   validateIsOfLength(simulation, 1)

@@ -4,7 +4,7 @@ sim <- loadTestSimulation("S1")
 clearOutputs(sim)
 outputs <- "Organism|VenousBlood|*|*"
 addOutputs(outputs, sim)
-results <- runSimulation(sim)
+results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 
 test_that("It should be able to calculate the PK-Analyses each output of a simulation", {
@@ -26,7 +26,7 @@ test_that("it can return pk analysis for sparse population and only return ids d
   clearOutputs(sim)
   addOutputs(outputs, sim)
   population <- loadPopulation(getTestDataFilePath("pop_5_spared_id.csv"))
-  results <- runSimulation(sim, population = population)
+  results <- runSimulations(sim, population = population)[[1]]
   pkAnalyses <- calculatePKAnalyses(results = results)
   df <- pkAnalysesToDataFrame(pkAnalyses)
   d <- dplyr::distinct(df, IndividualId)
@@ -37,7 +37,7 @@ test_that("it can return pk analysis for sparse population and only return ids d
 test_that("It should an empty list of parameters for an output that is not part of the calculated results", {
   clearOutputs(sim)
   addOutputs(outputs, sim)
-  results <- runSimulation(sim)
+  results <- runSimulations(sim)[[1]]
   pkAnalyses <- calculatePKAnalyses(results)
 
   pkAnalysesForOutput <- pkAnalyses$allPKParametersFor("Another output that does not exist")
