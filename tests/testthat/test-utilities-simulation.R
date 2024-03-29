@@ -156,13 +156,6 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   expect_true(isOfType(results, "SimulationResults"))
 })
 
-test_that("It throws an error when trying to run multiple simulations", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_error(results <- runSimulations(simulations = c(sim, sim2))[[1]])
-})
-
 test_that("runSimulations returns a named list for one simulation", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
@@ -486,10 +479,29 @@ test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
 })
 
 # runSimulation
+
 test_that("`runSimulation()` is deprecated", {
   expect_snapshot({
     sim <- loadTestSimulation("S1", loadFromCache = TRUE)
     results <- runSimulation(sim)
     expect_equal(results$count, 1)
   })
+})
+
+
+test_that("runSimulation can run one simulation", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_warning(
+    results <- runSimulation(sim)
+  )
+})
+
+test_that("It throws an error when trying to run multiple simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_warning(
+    expect_error(results <- runSimulation(c(sim, sim2)))
+  )
 })
