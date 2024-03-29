@@ -32,12 +32,13 @@ Runs one simulation (individual or population) and returns a
 \code{SimulationResults} object containing all results of the simulation.
 }
 \examples{
+\dontrun{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
 # Running an individual simulation
 # results is an instance of `SimulationResults`
-results <- runSimulations(sim)[[1]]
+results <- runSimulation(sim)
 
 # Creating custom simulation run options
 
@@ -49,5 +50,6 @@ simRunOptions$showProgress <- TRUE
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
+}
 }
 \keyword{internal}

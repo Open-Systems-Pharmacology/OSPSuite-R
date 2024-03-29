@@ -50,7 +50,7 @@ preterm <- createPopulationCharacteristics(
 
 result <- createPopulation(populationCharacteristics = preterm)
 
-res <- runSimulations(simulation = sim, population = result)[[1]]
+res <- runSimulations(simulations = sim, population = result)[[1]]
 
 populationPreterm <- result$population
 

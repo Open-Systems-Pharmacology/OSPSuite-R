@@ -125,7 +125,7 @@ Sensitivity analysis calculated in R can be exported to a *.csv file, which can 
 # Load and run the simulation
 simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simulationResults <- runSimulations(simulation = sim)[[1]]
+simulationResults <- runSimulations(simulations = sim)[[1]]
 
 # Create a `SensitivityAnalysis` with all constant parameters and run it
 sa <- SensitivityAnalysis$new(simulation = sim)

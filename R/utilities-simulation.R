@@ -104,7 +104,7 @@ saveSimulation <- function(simulation, filePath) {
 #' @return SimulationResults (one entry per Individual) for a single simulation
 #'
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -174,13 +174,13 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' # Running a population simulation
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
-#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
+#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)[[1]]
 #'
 #' # Running multiple simulations in parallel
 #' sim2 <- loadSimulation(simPath)
 #' sim3 <- loadSimulation(simPath)
 #'
-#' # Results is an array of `SimulationResults`
+#' # Results is a list of `SimulationResults`
 #' results <- runSimulations(list(sim, sim2, sim3))
 #' @export
 runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {

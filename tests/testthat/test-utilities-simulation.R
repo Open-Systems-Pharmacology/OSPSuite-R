@@ -160,7 +160,7 @@ test_that("It throws an error when trying to run multiple simulations", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_error(results <- runSimulations(simulation = c(sim, sim2))[[1]])
+  expect_error(results <- runSimulations(simulations = c(sim, sim2))[[1]])
 })
 
 test_that("runSimulations returns a named list for one simulation", {

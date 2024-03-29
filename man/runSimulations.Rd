@@ -61,12 +61,12 @@ simRunOptions$showProgress <- TRUE
 # Running a population simulation
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
-results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
+results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)[[1]]
 
 # Running multiple simulations in parallel
 sim2 <- loadSimulation(simPath)
 sim3 <- loadSimulation(simPath)
 
-# Results is an array of `SimulationResults`
+# Results is a list of `SimulationResults`
 results <- runSimulations(list(sim, sim2, sim3))
 }
