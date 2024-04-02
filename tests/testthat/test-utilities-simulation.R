@@ -171,6 +171,41 @@ test_that("runSimulations returns a named list for one simulation", {
   expect_true(isOfType(results[[1]], "SimulationResults"))
 })
 
+test_that("runSimulations returns named list using input list names", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+
+
+  # No names
+  expect_contains(
+    names(runSimulations(list(sim1, sim2))),
+    c(sim1$id, sim2$id)
+  )
+
+  # One name element
+  expect_equal(
+    names(runSimulations(list(sim1 = sim1))),
+    "sim1"
+  )
+
+  # Full named list
+  expect_equal(
+    names(runSimulations(list(sim1 = sim1, sim2 = sim2))),
+    c("sim1", "sim2")
+  )
+
+  # Partially named list
+  expect_equal(
+    names(runSimulations(list(sim1 = sim1, sim2))),
+    c("sim1", sim2$id)
+  )
+  expect_equal(
+    names(runSimulations(list(sim1, sim2 = sim2))),
+    c(sim1$id, "sim2")
+  )
+})
+
 test_that("It runs multiple individual simulations", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)

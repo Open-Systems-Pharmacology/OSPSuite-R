@@ -132,8 +132,8 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' For single simulation, either individual or population simulations can be
 #' performed.
 #'
-#' @param simulations One `Simulation` or a list of `Simulation` objects
-#' to simulate. List can be named, in which case the names will reused in the `simulationResults` output list.
+#' @param simulations One `Simulation` or a list or vector of `Simulation` objects
+#' to simulate. List or vector can be named, in which case the names will reused in the `simulationResults` output list.
 #' If not named, the output list will use simulation ids.
 #' @param population Optional instance of a `Population` to use for the simulation.
 #' Only allowed when simulating one simulation.
