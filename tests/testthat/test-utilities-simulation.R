@@ -173,7 +173,7 @@ test_that("runSimulations returns a named list for one simulation", {
 
 test_that("runSimulations returns named list using input list names", {
   resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
 
 
