@@ -2,6 +2,7 @@
 
 ## New dependencies
 - `{openxlsx}`
+- `{lifecyle}`
 
 ## New features
 
@@ -83,6 +84,7 @@ not present in the `DataCombined`.
   - New simulations life cycle flowcharts in the `vignette("efficient-calculations")` vignette.
   - New internal function `.setEndSimulationTime()` to set the end time of the
     simulation. The function will either extend or shorten the simulation time to the specified end time.
+  - Using `runSimulation()` is now soft deprecated in favor of `runSimulations()`.
   
 
 # ospsuite 11.1.197
