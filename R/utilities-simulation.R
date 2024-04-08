@@ -142,8 +142,9 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' For single simulation, either individual or population simulations can be
 #' performed.
 #'
-#' @param simulations One `Simulation` or list of `Simulation` objects
-#' to simulate.
+#' @param simulations One `Simulation` or a list or vector of `Simulation` objects
+#' to simulate. List or vector can be named, in which case the names will reused in the `simulationResults` output list.
+#' If not named, the output list will use simulation ids.
 #' @param population Optional instance of a `Population` to use for the simulation.
 #' Only allowed when simulating one simulation.
 #' Alternatively, you can also pass the result of `createPopulation` directly.
@@ -198,21 +199,38 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     )
     outputList <- list()
     outputList[[simulations[[1]]$id]] <- results
-    return(outputList)
+  } else {
+
+    # more than one simulation? This is a concurrent run.
+
+    # We do not allow population variation
+    if (!is.null(population)) {
+      stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+    }
+
+    # we are now running the simulations concurrently
+    outputList <- .runSimulationsConcurrently(
+      simulations = simulations,
+      simulationRunOptions = simulationRunOptions,
+      silentMode = silentMode,
+      stopIfFails = stopIfFails
+    )
   }
 
-  # more than one simulation? This is a concurrent run. We do not allow population variation
-  if (!is.null(population)) {
-    stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+
+  simulationNames <- names(simulations)
+
+  if (!is.null(simulationNames)) {
+    for (i in seq_along(outputList)) {
+      if (simulationNames[i] != "") {
+        names(outputList)[i] <- simulationNames[i]
+      }
+    }
   }
 
-  # we are now running the simulations concurrently
-  return(.runSimulationsConcurrently(
-    simulations = simulations,
-    simulationRunOptions = simulationRunOptions,
-    silentMode = silentMode,
-    stopIfFails = stopIfFails
-  ))
+
+
+  return(outputList)
 }
 
 .runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
