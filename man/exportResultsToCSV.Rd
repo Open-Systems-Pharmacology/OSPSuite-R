@@ -7,7 +7,7 @@
 exportResultsToCSV(results, filePath)
 }
 \arguments{
-\item{results}{Results to export (typically calculated using \code{runSimulation}
+\item{results}{Results to export (typically calculated using \code{runSimulations}
 or imported from file).}
 
 \item{filePath}{Full path where the results will be saved.}
@@ -25,7 +25,7 @@ sim <- loadSimulation(simPath)
 addOutputs("Organism|**|*", sim)
 
 # Run the simulation
-results <- runSimulation(sim)
+results <- runSimulations(sim)[[1]]
 
 # Export the results to csv file
 exportResultsToCSV(results, tempfile())

@@ -1,7 +1,7 @@
 #' @title Calculates the pkAnalyses for all output values available in `results`.
 #'
 #' @param results Results of simulation. Typically the `results` are calculated
-#'   using `runSimulation` or imported from csv file via `importResults`.
+#'   using `runSimulations` or imported from csv file via `importResults`.
 #'
 #' @return An instance of `SimulationPKAnalyses` class.
 #'
@@ -11,7 +11,7 @@
 #' sim <- loadSimulation(simPath)
 #'
 #' addOutputs("Organism|VenousBlood|*|Caffeine", sim)
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)[[1]]
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {

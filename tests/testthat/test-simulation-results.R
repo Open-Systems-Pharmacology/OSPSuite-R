@@ -1,7 +1,7 @@
 # SimulationResults
 
 sim <- loadTestSimulation("S1")
-simResults <- runSimulation(sim)
+simResults <- runSimulations(sim)[[1]]
 
 resultsPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 

@@ -15,7 +15,7 @@ getOutputValues(
 }
 \arguments{
 \item{simulationResults}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulation} on a \code{Simulation} object.}
+calling \code{runSimulations} on a \code{Simulation} object.}
 
 \item{quantitiesOrPaths}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
@@ -60,7 +60,7 @@ sim <- loadSimulation(simPath)
 
 # Running an individual simulation
 # results is an instance of `SimulationResults`
-results <- runSimulation(sim)
+results <- runSimulations(sim)[[1]]
 
 getOutputValues(results)
 }

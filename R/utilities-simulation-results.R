@@ -29,7 +29,7 @@
 #'
 #' # Running an individual simulation
 #' # results is an instance of `SimulationResults`
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)[[1]]
 #'
 #' getOutputValues(results)
 #' @export
@@ -119,7 +119,7 @@ getOutputValues <- function(simulationResults,
 
 #' Saves the simulation results to csv file
 #'
-#' @param results Results to export (typically calculated using `runSimulation`
+#' @param results Results to export (typically calculated using `runSimulations`
 #'   or imported from file).
 #' @param filePath Full path where the results will be saved.
 #'
@@ -133,7 +133,7 @@ getOutputValues <- function(simulationResults,
 #' addOutputs("Organism|**|*", sim)
 #'
 #' # Run the simulation
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)[[1]]
 #'
 #' # Export the results to csv file
 #' exportResultsToCSV(results, tempfile())
@@ -192,7 +192,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #'
 #' # Running an individual simulation
 #' # results is an instance of `SimulationResults`
-#' results <- runSimulation(sim)
+#' results <- runSimulations(sim)[[1]]
 #'
 #' # convert to a dataframe
 #' simulationResultsToDataFrame(results)

@@ -24,7 +24,7 @@ test_that("It calculates the pk parameters in the expected units", {
   myCmax <- addUserDefinedPKParameter(name = "MyCMax", standardPKParameter = StandardPKParameter$C_max, displayUnit = "mg/l")
   quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
   mw <- sim$molWeightFor(quantityPath)
-  results <- runSimulation(sim)
+  results <- runSimulations(sim)[[1]]
   pkAnalyses <- calculatePKAnalyses(results)
   c_max_base_value <- pkAnalyses$pKParameterFor(quantityPath, c_max_base$name)$values[1]
   c_max_mg_l_value <- c_max_base_value * mw * 1E6

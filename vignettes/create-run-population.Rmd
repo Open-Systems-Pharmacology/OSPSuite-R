@@ -21,7 +21,7 @@ Population simulations can be easily performed in R by combining the simulation 
 
 ### Loading population file
 
-The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulation()` method (see [Running simulations and retrieving the results](run-simulation.html)).
+The method `loadPopulation` creates an object of the `Population` class that can be passed to the `runSimulations()` method (see [Running simulations and retrieving the results](run-simulation.html)).
 
 ```{r loadPop}
 library(ospsuite)
@@ -73,7 +73,7 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
-simulationResults <- runSimulation(simulation = sim, population = myPopulation)
+simulationResults <- runSimulations(simulations = sim, population = myPopulation)[[1]]
 print(simulationResults)
 ```
 
@@ -95,7 +95,7 @@ simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with custom options
-populationResults <- runSimulation(simulation = sim, population = myPopulation, simulationRunOptions = simRunOptions)
+populationResults <- runSimulations(simulations = sim, population = myPopulation, simulationRunOptions = simRunOptions)[[1]]
 print(populationResults)
 ```
 
