@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpNDQuMzZ8NjA5LjgxfDM2LjE1fDUzMi4yOQ=='>
@@ -27,6 +27,22 @@
 </defs>
 <g clip-path='url(#cpNDQuMzZ8NjA5LjgxfDM2LjE1fDUzMi4yOQ==)'>
 <rect x='44.36' y='36.15' width='565.46' height='496.14' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDQuMzZ8NjA5LjgxfDM2LjE1fDUzMi4yOQ==)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDQuMzZ8NjA5LjgxfDM2LjE1fDUzMi4yOQ==)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDQuMzZ8NjA5LjgxfDM2LjE1fDUzMi4yOQ==)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDQuMzZ8NjA5LjgxfDM2LjE1fDUzMi4yOQ==)'>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -233,11 +249,11 @@
 <text x='605.53' y='545.14' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='22.25px' lengthAdjust='spacingAndGlyphs'>1500</text>
 <text x='327.08' y='556.84' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='46.67px' lengthAdjust='spacingAndGlyphs'>Time [min]</text>
 <text transform='translate(13.40,284.22) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='97.48px' lengthAdjust='spacingAndGlyphs'>Concentration [µmol/l]</text>
-<rect x='620.77' y='267.36' width='93.75' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='626.25' y='278.32' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='627.98' y1='286.96' x2='641.80' y2='286.96' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
-<circle cx='634.89' cy='286.96' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<text x='649.01' y='290.40' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
+<rect x='620.77' y='270.10' width='93.75' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='626.25' y='275.58' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='627.98' y1='284.22' x2='641.80' y2='284.22' style='stroke-width: 2.13; stroke: #5050FF; stroke-opacity: 0.75; stroke-linecap: butt;' />
+<circle cx='634.89' cy='284.22' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='649.01' y='287.66' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
 <text x='44.36' y='29.63' style='font-size: 10.00px; font-family: sans;' textLength='69.48px' lengthAdjust='spacingAndGlyphs'>My Plot Subtitle</text>
 <text x='44.36' y='14.98' style='font-size: 12.00px; font-family: sans;' textLength='66.02px' lengthAdjust='spacingAndGlyphs'>My Plot Title</text>
 <text x='609.81' y='569.69' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='42.25px' lengthAdjust='spacingAndGlyphs'>My Sources</text>

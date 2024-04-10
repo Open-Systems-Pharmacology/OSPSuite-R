@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpMzMuMjN8NzE0LjUyfDUuNDh8NTQ0Ljkz'>
@@ -27,6 +27,22 @@
 </defs>
 <g clip-path='url(#cpMzMuMjN8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 <rect x='33.23' y='5.48' width='681.29' height='539.45' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzMuMjN8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzMuMjN8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzMuMjN8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzMuMjN8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -148,9 +164,9 @@
 <text x='653.16' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>20</text>
 <text x='373.88' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='36.12px' lengthAdjust='spacingAndGlyphs'>Time [h]</text>
 <text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='89.50px' lengthAdjust='spacingAndGlyphs'>Concentration [mg/l]</text>
-<rect x='603.74' y='18.97' width='93.75' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='609.22' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='617.86' cy='38.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<text x='631.98' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
+<rect x='603.74' y='18.97' width='93.75' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='609.22' y='24.45' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<circle cx='617.86' cy='33.09' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='631.98' y='36.53' style='font-size: 10.00px; font-family: sans;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Aciclovir PVB</text>
 </g>
 </svg>

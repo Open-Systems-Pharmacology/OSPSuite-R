@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpMzguNzl8NTY3LjIwfDM2LjE1fDUzMi4yOQ=='>
@@ -27,6 +27,22 @@
 </defs>
 <g clip-path='url(#cpMzguNzl8NTY3LjIwfDM2LjE1fDUzMi4yOQ==)'>
 <rect x='38.79' y='36.15' width='528.40' height='496.14' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzguNzl8NTY3LjIwfDM2LjE1fDUzMi4yOQ==)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzguNzl8NTY3LjIwfDM2LjE1fDUzMi4yOQ==)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzguNzl8NTY3LjIwfDM2LjE1fDUzMi4yOQ==)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzguNzl8NTY3LjIwfDM2LjE1fDUzMi4yOQ==)'>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -342,17 +358,17 @@
 <text x='549.30' y='545.14' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='16.69px' lengthAdjust='spacingAndGlyphs'>100</text>
 <text x='303.00' y='556.84' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='137.85px' lengthAdjust='spacingAndGlyphs'>Observed values (Fraction [%])</text>
 <text transform='translate(13.40,284.22) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='138.95px' lengthAdjust='spacingAndGlyphs'>Simulated values (Fraction [%])</text>
-<rect x='578.16' y='241.67' width='136.36' height='85.10' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<text x='583.64' y='259.82' style='font-size: 16.00px; fill: #FF0000; font-family: sans;' textLength='125.40px' lengthAdjust='spacingAndGlyphs'>My legendary title</text>
-<rect x='583.64' y='269.45' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='592.28' cy='278.09' r='3.02' style='stroke-width: 0.71; stroke: #0078D7; stroke-opacity: 0.75; fill: #0078D7; fill-opacity: 0.75;' />
-<rect x='583.64' y='286.73' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polygon points='589.25,298.39 595.30,298.39 595.30,292.35 589.25,292.35 ' style='stroke-width: 0.71; stroke: none; fill: #D83B01; fill-opacity: 0.75;' />
-<rect x='583.64' y='304.01' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polygon points='592.28,307.95 596.35,315.00 588.21,315.00 ' style='stroke-width: 0.71; stroke: none; fill: #107C10; fill-opacity: 0.75;' />
-<text x='608.89' y='281.53' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
-<text x='608.89' y='298.81' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='62.81px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>
-<text x='608.89' y='316.09' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='43.91px' lengthAdjust='spacingAndGlyphs'>Solid total</text>
+<rect x='578.16' y='242.91' width='136.36' height='82.61' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<text x='583.64' y='261.06' style='font-size: 16.00px; fill: #FF0000; font-family: sans;' textLength='125.40px' lengthAdjust='spacingAndGlyphs'>My legendary title</text>
+<rect x='583.64' y='268.20' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<circle cx='592.28' cy='276.84' r='3.02' style='stroke-width: 0.71; stroke: #0078D7; stroke-opacity: 0.75; fill: #0078D7; fill-opacity: 0.75;' />
+<rect x='583.64' y='285.48' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<polygon points='589.25,297.14 595.30,297.14 595.30,291.10 589.25,291.10 ' style='stroke-width: 0.71; stroke: none; fill: #D83B01; fill-opacity: 0.75;' />
+<rect x='583.64' y='302.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<polygon points='592.28,306.70 596.35,313.75 588.21,313.75 ' style='stroke-width: 0.71; stroke: none; fill: #107C10; fill-opacity: 0.75;' />
+<text x='606.40' y='280.28' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Solid distal</text>
+<text x='606.40' y='297.56' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='62.81px' lengthAdjust='spacingAndGlyphs'>Solid proximal</text>
+<text x='606.40' y='314.84' style='font-size: 10.00px; fill: #A52A2A; font-family: sans;' textLength='43.91px' lengthAdjust='spacingAndGlyphs'>Solid total</text>
 <text x='38.79' y='29.63' style='font-size: 10.00px; font-family: sans;' textLength='69.48px' lengthAdjust='spacingAndGlyphs'>My Plot Subtitle</text>
 <text x='38.79' y='14.98' style='font-size: 12.00px; font-family: sans;' textLength='66.02px' lengthAdjust='spacingAndGlyphs'>My Plot Title</text>
 <text x='567.20' y='569.69' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='42.25px' lengthAdjust='spacingAndGlyphs'>My Sources</text>

@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpMjcuNjd8NzE0LjUyfDUuNDh8NTQ0Ljkz'>
@@ -27,6 +27,22 @@
 </defs>
 <g clip-path='url(#cpMjcuNjd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 <rect x='27.67' y='5.48' width='686.85' height='539.45' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMjcuNjd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMjcuNjd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMjcuNjd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMjcuNjd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -138,7 +154,7 @@
 <text x='230.52' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>1</text>
 <text x='371.10' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='173.99px' lengthAdjust='spacingAndGlyphs'>Observed values (Concentration [mg/l])</text>
 <text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='175.10px' lengthAdjust='spacingAndGlyphs'>Simulated values (Concentration [mg/l])</text>
-<rect x='622.49' y='497.73' width='74.85' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='622.49' y='503.21' width='74.85' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='627.97' y='508.69' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='636.61' cy='517.33' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <text x='650.73' y='520.77' style='font-size: 10.00px; font-family: sans;' textLength='41.14px' lengthAdjust='spacingAndGlyphs'>myGroup</text>

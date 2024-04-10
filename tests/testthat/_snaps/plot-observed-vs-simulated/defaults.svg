@@ -91,6 +91,22 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <g clip-path='url(#cpNDEuNTd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDEuNTd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDEuNTd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDEuNTd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpNDEuNTd8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 <line x1='-631.38' y1='1084.39' x2='1387.47' y2='-533.97' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-linecap: butt;' />
 <line x1='-631.38' y1='1017.27' x2='1387.47' y2='-601.09' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
 <line x1='-631.38' y1='1151.51' x2='1387.47' y2='-466.85' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
@@ -340,7 +356,7 @@
 <text x='691.73' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>1</text>
 <text x='378.05' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='120.62px' lengthAdjust='spacingAndGlyphs'>Observed values (Fraction)</text>
 <text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='121.73px' lengthAdjust='spacingAndGlyphs'>Simulated values (Fraction)</text>
-<rect x='601.17' y='463.17' width='96.53' height='68.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='601.17' y='468.65' width='96.53' height='62.80' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='606.65' y='474.13' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='615.29' cy='482.77' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <rect x='606.65' y='491.41' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />

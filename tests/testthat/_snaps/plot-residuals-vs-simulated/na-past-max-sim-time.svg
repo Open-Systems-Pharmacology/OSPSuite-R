@@ -91,6 +91,22 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <g clip-path='url(#cpMzEuMDB8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzEuMDB8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzEuMDB8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzEuMDB8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<g clip-path='url(#cpMzEuMDB8NzE0LjUyfDUuNDh8NTQ0Ljkz)'>
 <line x1='31.00' y1='275.21' x2='714.52' y2='275.21' style='stroke-width: 2.13; stroke: #000000; stroke-opacity: 0.75; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
 <circle cx='62.07' cy='330.76' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
 <circle cx='476.32' cy='457.19' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
@@ -116,9 +132,9 @@
 <text x='590.71' y='557.78' text-anchor='middle' style='font-size: 10.00px; fill: #333333; font-family: sans;' textLength='13.90px' lengthAdjust='spacingAndGlyphs'>1.6</text>
 <text x='372.76' y='569.48' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='175.10px' lengthAdjust='spacingAndGlyphs'>Simulated values (Concentration [mg/l])</text>
 <text transform='translate(13.40,275.21) rotate(-90)' text-anchor='middle' style='font-size: 10.00px; font-family: sans;' textLength='43.92px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
-<rect x='622.58' y='18.97' width='74.85' height='33.72' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='628.06' y='29.92' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='636.70' cy='38.56' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
-<text x='650.82' y='42.01' style='font-size: 10.00px; font-family: sans;' textLength='41.14px' lengthAdjust='spacingAndGlyphs'>myGroup</text>
+<rect x='622.58' y='18.97' width='74.85' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='628.06' y='24.45' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<circle cx='636.70' cy='33.09' r='3.56' style='stroke-width: 0.71; stroke: #5050FF; stroke-opacity: 0.75; fill: #5050FF; fill-opacity: 0.75;' />
+<text x='650.82' y='36.53' style='font-size: 10.00px; font-family: sans;' textLength='41.14px' lengthAdjust='spacingAndGlyphs'>myGroup</text>
 </g>
 </svg>
