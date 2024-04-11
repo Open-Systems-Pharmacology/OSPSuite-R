@@ -26,14 +26,14 @@ environment:
   R_BUILD_ARGS: --no-build-vignettes --no-manual
   R_CHECK_ARGS: --no-multiarch --no-manual --as-cran
   R_ARCH: x64
-  R_VERSION: 4.1.0
+  R_VERSION: 4.3.1
   #We use this variale to skip some long lasting tests using "skip_on_ci"
   CI: true 
 
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
-  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1/rClr_0.9.1.zip', repos = NULL, type = 'binary')"
+  - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/download/v1.4.23/ospsuite.utils_1.4.23.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages('https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/download/v1.5.125/tlf_1.5.125.zip', repos = NULL, type = 'binary')"
   - Rscript -e "install.packages(c('ggplot2', 'patchwork', 'vdiffr', 'spelling'), repos = 'http://cran.us.r-project.org')"
