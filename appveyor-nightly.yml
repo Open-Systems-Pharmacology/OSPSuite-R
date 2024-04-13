@@ -20,15 +20,20 @@ install:
 
 platform: x64
 
- #We use this set of variables to bypass issue with PK-Sim build. This should be removed when dealt with
 environment:
   USE_RTOOLS: true
   NOT_CRAN: true
   KEEP_VIGNETTES: true
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_ARCH: x64
   R_VERSION: 4.3.1
-  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
+  #We use this variable to skip some long lasting tests using "skip_on_ci"
+  CI: false
   R_PKGTYPE: binary
+  # This enables performance tests, that are potentially machine-specific
+  # Following a discussion in https://github.com/Open-Systems-Pharmacology/OSPSuite-R/pull/1288,
+  # we want to run them in CI builds, but not locally or nightly
+  OSPSUITE-BENCHMARK-TESTS: FALSE
   COVERALLS_TOKEN:
     secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
 
