@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.0.0
+Version: 12.0.0.9000
 Authors@R: 
     c(person("Open-Systems-Pharmacology Community", role = "cph"),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -23,7 +23,7 @@ Depends:
     rClr (>= 0.9.1)
 Imports: 
     dplyr (>= 1.0.0),
-    ospsuite.utils (>= 1.4.0),
+    ospsuite.utils (>= 1.5.0),
     purrr,
     readr,
     stringr,
@@ -140,3 +140,6 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
+Remotes:  
+    Open-Systems-Pharmacology/OSPSuite.RUtils,
+    Open-Systems-Pharmacology/TLF-Library

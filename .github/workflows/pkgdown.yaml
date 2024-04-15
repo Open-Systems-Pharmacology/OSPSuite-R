@@ -1,0 +1,16 @@
+name: pkgdown
+
+on:
+  push:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+jobs:
+  pkgdown:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yml@main
+    with:
+      install-pksim: true
+      install-rClr: true
+      extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library

@@ -1,0 +1,18 @@
+name: test-pkg-and-coverage
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+jobs:
+  test-pkg-and-coverage:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-pkg-and-coverage.yml@main
+    with:
+      install-pksim: true
+      install-rClr: true
+      extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library
