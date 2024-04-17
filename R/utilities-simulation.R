@@ -103,6 +103,8 @@ saveSimulation <- function(simulation, filePath) {
 #'
 #' @return SimulationResults (one entry per Individual) for a single simulation
 #'
+#' @export
+#'
 #' @examples
 #' \dontrun{
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
