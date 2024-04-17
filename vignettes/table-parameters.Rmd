@@ -81,7 +81,7 @@ tableParam
 
 To change the values of the table, a set of methods of the `TableFormula` is available. The method `addPoints()` adds a set of x-y values to the existing table. If trying to add a point with the x-value already present in the table, an error is thrown:
 
-```{r addPoints, error=TRUE}
+```{r addPoints, error = TRUE, purl = FALSE}
 tableParam <- getParameter("Organism|TableParameter", sim)
 tableParam
 
