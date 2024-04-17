@@ -20,7 +20,7 @@ install:
 platform: x64
 
 environment:
-  R_VERSION: 4.3.1
+  R_VERSION: 4.3.3
   R_ARCH: x64
   USE_RTOOLS: true
   R_BUILD_ARGS: --no-build-vignettes --no-manual
