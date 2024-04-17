@@ -20,17 +20,17 @@ install:
 platform: x64
 
 environment:
+  R_VERSION: 4.3.1
+  R_ARCH: x64
   USE_RTOOLS: true
-  NOT_CRAN: true
-  # Do not update vignettes after each commit. Vignettes are only generated for nightly builds.
-  KEEP_VIGNETTES: false
   R_BUILD_ARGS: --no-build-vignettes --no-manual
   R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
-  R_ARCH: x64
-  R_VERSION: 4.3.1
+  R_PKGTYPE: binary
+  NOT_CRAN: true
+  # Do not update vignettes after each commit. Vignettes are only generated for nightly builds.
+  KEEP_VIGNETTES:
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: true
-  R_PKGTYPE: binary
   # This enables performance tests, that are potentially machine-specific
   # Following a discussion in https://github.com/Open-Systems-Pharmacology/OSPSuite-R/pull/1288,
   # we want to run them in CI builds, but not locally or nightly
