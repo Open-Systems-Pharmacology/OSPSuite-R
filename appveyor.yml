@@ -23,34 +23,58 @@ environment:
   R_VERSION: 4.3.3
   R_ARCH: x64
   USE_RTOOLS: true
-  R_BUILD_ARGS: --no-build-vignettes --no-manual
   R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_PKGTYPE: binary
   NOT_CRAN: true
-  # Do not update vignettes after each commit. Vignettes are only generated for nightly builds.
-  KEEP_VIGNETTES:
+  KEEP_VIGNETTES: true
   #We use this variable to skip some long lasting tests using "skip_on_ci"
-  CI: true
+  CI: false
   # This enables performance tests, that are potentially machine-specific
   # Following a discussion in https://github.com/Open-Systems-Pharmacology/OSPSuite-R/pull/1288,
   # we want to run them in CI builds, but not locally or nightly
-  OSPSUITE-BENCHMARK-TESTS: TRUE
+  OSPSUITE-BENCHMARK-TESTS: FALSE
+  COVERALLS_TOKEN:
+    secure: xIz/WZT0ex3bs/CMBJTzzdXLhl3sqfSqJ3MshlSY03pZKuyYQN7Z1FprVgnlFMUZ
+
+before_build:
+  - nuget sources add -name utility -source https://ci.appveyor.com/nuget/ospsuite-utility
+  - nuget sources add -name serializer -source https://ci.appveyor.com/nuget/ospsuite-serializer
+  - nuget sources add -name funcparser -source https://ci.appveyor.com/nuget/ospsuite-funcparser
+  - nuget sources add -name simmodel -source https://ci.appveyor.com/nuget/ospsuite-simmodel
+  - nuget sources add -name cvodes -source https://ci.appveyor.com/nuget/ospsuite-simmodel-solver-cvodes
+  - nuget sources add -name core -source https://ci.appveyor.com/nuget/ospsuite-core
+  - nuget sources add -name centos -source https://ci.appveyor.com/nuget/ospsuite-centos
+  - nuget install packages.config -OutputDirectory packages # cannot use automatic artifact publish because it's not recognized in a C++/CLI project
+  - rake "prepare_for_build[%APPVEYOR_BUILD_VERSION%]"
 
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript install_dependencies.R
 
+before_test:
+  - cinst pandoc
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
+
 on_success:
-  - Rscript -e "spelling::spell_check_package()"
+  - Rscript -e "covr::codecov(function_exclusions = c('print.*'))"
+
 test_script:
   - travis-tool.sh run_tests
+
+after_test:
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu18]"
+  - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, centOS7]"
+  - rake "download_portable[develop]"
+  - appveyor PushArtifact "C:/projects/ospsuite-r/pksim_minimal.zip"
+  - ps: copy ospsuite_*.zip ospsuite.zip
+  - ps: copy ospsuite_*ubuntu18.tar.gz ospsuite_ubuntu18.tar.gz
+  - ps: copy ospsuite_*centOS7.tar.gz ospsuite_centOS7.tar.gz
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
-
-
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
@@ -65,18 +89,11 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
+  - path: "ospsuite_*ubuntu18.tar.gz"
+    name: Ubuntu18
 
-skip_commits:
-  files:
-    - "*.md"
+  - path: "ospsuite_*centOS7.tar.gz"
+    name: CentOS7
 
-skip_branch_with_pr: true
-
-skip_tags: true
-
-branches:
-  only:
-    - develop
-
-pull_requests:
-  do_not_increment_build_number: true
+  - path: '\ospsuite*.zip'
+    name: Win
