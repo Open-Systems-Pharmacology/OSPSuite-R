@@ -51,6 +51,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh r_binary_install curl
   - Rscript install_dependencies.R
+  - Rscript -e "Sys.setlocale(category = 'LC_ALL', 'en_US.UTF-8')"
 
 before_test:
   - cinst pandoc
