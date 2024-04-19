@@ -5,6 +5,10 @@ version: '{build}' # comment to use specific version and uncomment the next line
 
 # Download script file from GitHub
 init:
+  # Trying to enforce unicode support
+  - ps: Set-WinSystemLocale en-US.UTF-8
+  - ps: Start-Sleep -s 5; Restart-Computer
+  - ps: Start-Sleep -s 5
 # Comment next line if specific version is used and not the global ospsuite version
   - ps: Update-AppveyorBuild -Version "$($env:ospsuite_version).$($env:appveyor_build_version)"
   - ps: |
