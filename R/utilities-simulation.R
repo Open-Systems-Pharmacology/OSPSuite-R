@@ -124,11 +124,13 @@ saveSimulation <- function(simulation, filePath) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
-#'}
+#' }
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
-  lifecycle::deprecate_soft(when = "12.0.0",
-                            what = "runSimulation()",
-                            with = "runSimulations()")
+  lifecycle::deprecate_soft(
+    when = "12.0.0",
+    what = "runSimulation()",
+    with = "runSimulations()"
+  )
 
   # Check that only one simulation is passed
   simulation <- c(simulation)
@@ -202,7 +204,6 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     outputList <- list()
     outputList[[simulations[[1]]$id]] <- results
   } else {
-
     # more than one simulation? This is a concurrent run.
 
     # We do not allow population variation
@@ -338,7 +339,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 createSimulationBatch <- function(simulation, parametersOrPaths = NULL, moleculesOrPaths = NULL) {
   validateIsOfType(simulation, "Simulation")
   validateIsOfType(parametersOrPaths, c("Parameter", "character"), nullAllowed = TRUE)
-  validateIsOfType(moleculesOrPaths, c("Molecule", "character"), nullAllowed = TRUE)
+  validateIsOfType(moleculesOrPaths, c("Quantity", "character"), nullAllowed = TRUE)
 
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
     stop(messages$errorSimulationBatchNothingToVary)
@@ -352,7 +353,9 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 
   variableMolecules <- c(moleculesOrPaths)
 
-  if (isOfType(variableMolecules, "Molecule")) {
+  # Checking for Quantity instead of Molecule because state variable parameters must
+  # be added as molecules
+  if (isOfType(variableMolecules, "Quantity")) {
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path), use.names = FALSE)
   }
 
