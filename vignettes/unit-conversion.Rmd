@@ -54,18 +54,18 @@ The `{ospuite}` package provides a set of methods for conversion between differe
 
 ```{r unitConversion}
 # Get the BMI parameter
-bmiParam <- getParameter("Organism|BMI", sim)
-print(bmiParam)
+heightParam <- getParameter("Organism|Height", sim)
+print(heightParam)
 
 # Print the base and the default display units
-bmiParam$unit
-bmiParam$displayUnit
+heightParam$unit
+heightParam$displayUnit
 
 # Convert the value from the base into the default display unit
-toDisplayUnit(quantity = bmiParam, values = bmiParam$value)
+toDisplayUnit(quantity = heightParam, values = heightParam$value)
 
 # Convert the value to the base unit, that can be used. e.g. for setting new parameter value
-toBaseUnit(quantity = bmiParam, values = 30, unit = "kg/m²")
+toBaseUnit(quantity = heightParam, values = 180, unit = "cm")
 
 liverVolume <- getParameter("Organism|Liver|Volume", sim)
 print(liverVolume)
