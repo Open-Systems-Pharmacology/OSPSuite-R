@@ -178,7 +178,6 @@ results <- runSimulationBatches(simulationBatches)
 print(names(unlist(results)))
 ```
 
-
 The enqueued run values are cleared after calling `runSimulationBatches()`, so executing the run
 again would result in an empty results list. We can now set more values to the batches and run them again. 
 Notes: 
@@ -204,4 +203,33 @@ rm(simBatch2)
 
 Usage of `SimulationBatch` is recommended for advanced scenarios where simulations
 expected to be run hundreds of times and where each second that can be spared
-will impact the performance significantly. 
+will impact the performance significantly.
+
+### Varying state variable parameters with SimulationBatch
+
+State variable parameters, i.e., those defined by a right hand side (RHS), are treated as molecules internally. Trying to create and run a simulation batch with a state variable parameter set as a variable parameter
+will result in an error:
+
+```{r BatchRunStateVarParam, eval=TRUE, error = TRUE, purl = FALSE}
+stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
+print(stateVariableParam)
+
+# Create simulation batch with state variable parameter set as a variable parameter
+simBatch <- createSimulationBatch(simulation = sim1, parametersOrPaths = stateVariableParam)
+
+# Add run values
+resId <- simBatch$addRunValues(parameterValues = 0.5)
+# Try to run batch
+results <- runSimulationBatches(simBatch)
+```
+
+Instead, the state variable parameter should be treated as a species and set as a variable molecule start value.
+
+```{r BatchRunStateVarMolecule, eval=TRUE}
+# Create simulation batch with state variable parameter set as a variable molecule
+simBatch <- createSimulationBatch(simulation = sim1, moleculesOrPaths = stateVariableParam)
+# Add run values
+resId <- simBatch$addRunValues(initialValues = 0.5)
+# Try to run batch
+results <- runSimulationBatches(simBatch)
+```
