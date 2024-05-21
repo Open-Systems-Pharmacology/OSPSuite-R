@@ -80,7 +80,8 @@ test_that("Two sims not from cache and third from cache", {
 
 test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
   expect_error(loadTestSimulation("molecules"),
-               regexp =  "Could not load simulation")
+    regexp = "Could not load simulation"
+  )
 })
 
 test_that("It can remove simulation from cache", {
