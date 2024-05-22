@@ -120,3 +120,64 @@ test_that("It can convert a population to tibble data frame", {
   expect_s3_class(df, "tbl_df")
   expect_equal(nrow(df), 10)
 })
+
+test_that("simulationResultsToDataFrame with population", {
+  skip_on_os("linux")
+  skip_on_ci()
+
+  # If no unit is specified, the default units are used. For "height" it is "dm",
+  # for "weight" it is "kg", for "age" it is "year(s)".
+  populationCharacteristics <- createPopulationCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$Asian_Tanaka_1996,
+    numberOfIndividuals = 50,
+    proportionOfFemales = 50,
+    weightMin = 30,
+    weightMax = 98,
+    weightUnit = "kg",
+    heightMin = NULL,
+    heightMax = NULL,
+    ageMin = 0,
+    ageMax = 80,
+    ageUnit = "year(s)"
+  )
+
+  # Create population from population characteristics
+  result <- createPopulation(populationCharacteristics = populationCharacteristics)
+  myPopulation <- result$population
+
+  # Load simulation
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  populationResults <- runSimulations(
+    simulations = sim,
+    population = myPopulation
+  )[[1]]
+
+  df1 <- simulationResultsToDataFrame(populationResults)
+
+  expect_equal(dim(df1), c(24550L, 9L))
+  expect_equal(
+    unique(df1$paths),
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  )
+  expect_equal(min(df1$IndividualId), 0)
+  expect_equal(max(df1$IndividualId), 49)
+  expect_equal(unique(df1$unit), .encodeUnit("µmol/l"))
+  expect_equal(unique(df1$dimension), "Concentration (molar)")
+  expect_equal(unique(df1$TimeUnit), "min")
+
+  df2 <- simulationResultsToDataFrame(populationResults, individualIds = c(1, 4, 5))
+
+  expect_equal(dim(df2), c(1473L, 9L))
+  expect_equal(
+    unique(df2$paths),
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  )
+  expect_equal(min(df2$IndividualId), 1)
+  expect_equal(max(df2$IndividualId), 5)
+  expect_equal(unique(df2$unit), .encodeUnit("µmol/l"))
+  expect_equal(unique(df2$dimension), "Concentration (molar)")
+  expect_equal(unique(df2$TimeUnit), "min")
+})
