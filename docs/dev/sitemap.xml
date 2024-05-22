@@ -286,6 +286,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-scaleQuantityValues.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-setEndSimulationTime.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-setQuantityValues.html</loc>
   </url>
   <url>
@@ -320,6 +323,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSensitivityAnalysisResultsToCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSteadyStateToXLS.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Formula.html</loc>
@@ -401,6 +407,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getStandardMoleculeParameters.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getSteadyState.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getUnitsForDimension.html</loc>
