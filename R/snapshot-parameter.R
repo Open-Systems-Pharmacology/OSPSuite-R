@@ -31,6 +31,7 @@ SnapshotParameter <- R6::R6Class(
       netObject <- netObject %||% rSharp::newObjectFromName("PKSim.Core.Snapshots.Parameter")
       super$initialize(netObject)
       # Because of weird issue with nullable value in rClr
+      # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1369
       if (!is.null(value)) {
         self$value <- value
       }
