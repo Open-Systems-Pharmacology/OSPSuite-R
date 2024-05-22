@@ -84,6 +84,11 @@ saveSimulation <- function(simulation, filePath) {
 
 #' @title Run a single simulation
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' @keywords internal
+#'
 #' @details
 #'
 #' Runs one simulation (individual or population) and returns a
@@ -97,7 +102,10 @@ saveSimulation <- function(simulation, filePath) {
 #'
 #' @return SimulationResults (one entry per Individual) for a single simulation
 #'
+#' @export
+#'
 #' @examples
+#' \dontrun{
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -115,8 +123,14 @@ saveSimulation <- function(simulation, filePath) {
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
-#' @export
+#' }
 runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
+  lifecycle::deprecate_soft(
+    when = "12.0.0",
+    what = "runSimulation()",
+    with = "runSimulations()"
+  )
+
   # Check that only one simulation is passed
   simulation <- c(simulation)
   validateIsOfLength(simulation, 1)
@@ -131,8 +145,9 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' For single simulation, either individual or population simulations can be
 #' performed.
 #'
-#' @param simulations One `Simulation` or list of `Simulation` objects
-#' to simulate.
+#' @param simulations One `Simulation` or a list or vector of `Simulation` objects
+#' to simulate. List or vector can be named, in which case the names will reused in the `simulationResults` output list.
+#' If not named, the output list will use simulation ids.
 #' @param population Optional instance of a `Population` to use for the simulation.
 #' Only allowed when simulating one simulation.
 #' Alternatively, you can also pass the result of `createPopulation` directly.
@@ -163,13 +178,13 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' # Running a population simulation
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
-#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
+#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)[[1]]
 #'
 #' # Running multiple simulations in parallel
 #' sim2 <- loadSimulation(simPath)
 #' sim3 <- loadSimulation(simPath)
 #'
-#' # Results is an array of `SimulationResults`
+#' # Results is a list of `SimulationResults`
 #' results <- runSimulations(list(sim, sim2, sim3))
 #' @export
 runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
@@ -187,21 +202,37 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     )
     outputList <- list()
     outputList[[simulations[[1]]$id]] <- results
-    return(outputList)
+  } else {
+    # more than one simulation? This is a concurrent run.
+
+    # We do not allow population variation
+    if (!is.null(population)) {
+      stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+    }
+
+    # we are now running the simulations concurrently
+    outputList <- .runSimulationsConcurrently(
+      simulations = simulations,
+      simulationRunOptions = simulationRunOptions,
+      silentMode = silentMode,
+      stopIfFails = stopIfFails
+    )
   }
 
-  # more than one simulation? This is a concurrent run. We do not allow population variation
-  if (!is.null(population)) {
-    stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+
+  simulationNames <- names(simulations)
+
+  if (!is.null(simulationNames)) {
+    for (i in seq_along(outputList)) {
+      if (simulationNames[i] != "") {
+        names(outputList)[i] <- simulationNames[i]
+      }
+    }
   }
 
-  # we are now running the simulations concurrently
-  return(.runSimulationsConcurrently(
-    simulations = simulations,
-    simulationRunOptions = simulationRunOptions,
-    silentMode = silentMode,
-    stopIfFails = stopIfFails
-  ))
+
+
+  return(outputList)
 }
 
 .runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
@@ -307,7 +338,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 createSimulationBatch <- function(simulation, parametersOrPaths = NULL, moleculesOrPaths = NULL) {
   validateIsOfType(simulation, "Simulation")
   validateIsOfType(parametersOrPaths, c("Parameter", "character"), nullAllowed = TRUE)
-  validateIsOfType(moleculesOrPaths, c("Molecule", "character"), nullAllowed = TRUE)
+  validateIsOfType(moleculesOrPaths, c("Quantity", "character"), nullAllowed = TRUE)
 
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
     stop(messages$errorSimulationBatchNothingToVary)
@@ -321,7 +352,9 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 
   variableMolecules <- c(moleculesOrPaths)
 
-  if (isOfType(variableMolecules, "Molecule")) {
+  # Checking for Quantity instead of Molecule because state variable parameters must
+  # be added as molecules
+  if (isOfType(variableMolecules, "Quantity")) {
     variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path), use.names = FALSE)
   }
 
@@ -809,7 +842,7 @@ getSteadyState <- function(simulations,
   simulations <- ospsuite.utils::toList(simulations)
 
   if (any(unlist(steadyStateTime) <= 0)) {
-    stop(messages$steadyStateTimeNotPositive(steadyStateTime))
+    stop(messages$valueNotPositive(steadyStateTime, "steadyStateTime"))
   }
 
   # If `steadyStateTime` is a list of values, it must be of the same size as
@@ -829,12 +862,12 @@ getSteadyState <- function(simulations,
   for (idx in seq_along(simulations)) {
     simulation <- simulations[[idx]]
     simId <- simulation$id
-    # Set simulation time to the steady-state value.
+    # Extend simulation time to the steady-state value.
     # If the specified steady-state time is NULL, the simulation time is set to
     # the time of the last application plus a specified delta.
-    clearOutputIntervals(simulation = simulation)
-    if (is.null(steadyStateTime[[idx]])) {
-      latestAdministration <- 0
+    latestTime <- steadyStateTime[[idx]]
+    if (is.null(latestTime)) {
+      latestTime <- 0
       # get the list of all administered molecules in the simulation
       administeredMolecules <- simulation$allXenobioticFloatingMoleculeNames()
       for (mol in administeredMolecules) {
@@ -842,17 +875,18 @@ getSteadyState <- function(simulations,
         applications <- simulation$allApplicationsFor(mol)
         for (app in applications) {
           # if the time of the application is later than the latest administration
-          if (app$startTime$value > latestAdministration) {
+          if (app$startTime$value > latestTime) {
             # set the latest administration to the time of the application
-            latestAdministration <- app$startTime$value
+            latestTime <- app$startTime$value
           }
         }
       }
       # set the simulation time to the time of the last application plus the delta
-      simulation$outputSchema$addTimePoints(timePoints = latestAdministration + DELTA_STEADY_STATE)
-    } else {
-      simulation$outputSchema$addTimePoints(timePoints = steadyStateTime[[idx]])
+      latestTime <- latestTime + DELTA_STEADY_STATE
     }
+
+    # Set the simulation time
+    .setEndSimulationTime(simulation, latestTime)
 
     # If no quantities are explicitly specified, simulate all outputs.
     if (is.null(quantitiesPaths)) {
@@ -979,7 +1013,8 @@ getSteadyState <- function(simulations,
         simulation = simulation,
         startTime = outputInterval$startTime$value,
         endTime = outputInterval$endTime$value,
-        resolution = outputInterval$resolution$value
+        resolution = outputInterval$resolution$value,
+        intervalName = outputInterval$intervalName
       )
     }
     if (length(simStateList$timePoints[[simId]]) > 0) {
@@ -991,4 +1026,141 @@ getSteadyState <- function(simulations,
       addOutputs(quantitiesOrPaths = outputSelection$path, simulation = simulation)
     }
   }
+}
+
+#' Export steady-state to Excel in the format that can be imported in MoBi.
+#'
+#' @details Simulates a given model to its steady-state and creates an
+#' Excel-file with the end values of molecules amounts in all containers and
+#' parameter values that have a right-hand-side (state variable parameters).
+#' The excel file contains two sheets - one for the molecules and one for the
+#' parameters.
+#' @param resultsXLSPath Path to the xls-file where the results will be written
+#'   to. If the file does not exist, a new file is created. If no path is
+#'   provided, the file will be created in the same directory where the model
+#'   file is located. The name of the file will be `<SimulationFileName>_SS.xlsx`.
+#' @param simulation A `Simulation` object for which the steady-state will be simulated.
+#' In contrast to `getSteadyState()`, only one simulation is supported.
+#' @inheritParams getSteadyState
+#' @import ospsuite.utils
+#' @returns An `openxlsx` workbook object.
+#' @export
+exportSteadyStateToXLS <- function(simulation,
+                                   quantitiesPaths = NULL,
+                                   resultsXLSPath = "",
+                                   steadyStateTime = NULL,
+                                   ignoreIfFormula = TRUE,
+                                   lowerThreshold = 1e-15,
+                                   simulationRunOptions = NULL) {
+  # If no explicit path to the results-file is provided, store the results file
+  # in the same folder as the model file.
+  if (resultsXLSPath == "") {
+    simulationPath <- tools::file_path_sans_ext(simulation$sourceFile)
+    resultsXLSPath <- paste0(simulationPath, "_SS.xlsx")
+  }
+
+  initialValues <- getSteadyState(
+    simulations = simulation,
+    quantitiesPaths = quantitiesPaths,
+    steadyStateTime = steadyStateTime,
+    ignoreIfFormula = ignoreIfFormula,
+    lowerThreshold = lowerThreshold,
+    simulationRunOptions = simulationRunOptions
+  )[[simulation$id]]
+
+  nrOfEntries <- length(initialValues$paths)
+
+  # For each simulated species, the output contains the path, species name, the
+  # "isPresent"-flag, the value, the unit, the scale divisor value, and the
+  # "negative values allowed"-flag.
+  moleculeContainerPath <- c()
+  moleculeName <- c()
+  moleculeIsPresent <- c()
+  moleculeValue <- c()
+  moleculeUnits <- c()
+  moleculeScaleDivisor <- c()
+  moleculeNegValsAllowed <- c()
+
+  # Initial values of state variable parameters
+  parameterContainerPath <- c()
+  parameterName <- c()
+  parameterValue <- c()
+  parameterUnits <- c()
+
+  # Iterate through all quantities
+  for (i in 1:nrOfEntries) {
+    # Try to get the quantity as a molecules from the simulation.
+    # If it fails (the value is `NULL`), try to get it as a parameter.
+    quantity <- ospsuite::getMolecule(
+      path = initialValues$paths[[i]],
+      container = simulation,
+      stopIfNotFound = FALSE
+    ) %||%
+      ospsuite::getParameter(
+        path = initialValues$paths[[i]],
+        container = simulation,
+        stopIfNotFound = FALSE
+      )
+
+    value <- initialValues$values[[i]]
+
+    if (ospsuite.utils::isOfType(quantity, "Molecule")) {
+      moleculeValue <- append(moleculeValue, value)
+      moleculeContainerPath <- append(moleculeContainerPath, quantity$parentContainer$path)
+      moleculeName <- append(moleculeName, quantity$name)
+      moleculeIsPresent <- append(moleculeIsPresent, TRUE)
+      moleculeUnits <- append(moleculeUnits, quantity$unit)
+      moleculeScaleDivisor <- append(moleculeScaleDivisor, quantity$scaleDivisor)
+      # Leaving the "negative values allowed" field empty, as it is not accessible.
+      # If empty, the property will not be updated when importing.
+      moleculeNegValsAllowed <- append(moleculeNegValsAllowed, "")
+    } else {
+      parameterValue <- append(parameterValue, value)
+      parameterContainerPath <- append(parameterContainerPath, quantity$parentContainer$path)
+      parameterName <- append(parameterName, quantity$name)
+      parameterUnits <- append(parameterUnits, quantity$unit)
+    }
+  }
+
+  # Create the data frame for molecule start values
+  speciesInitVals <- data.frame(
+    unlist(moleculeContainerPath, use.names = FALSE),
+    unlist(moleculeName, use.names = FALSE),
+    unlist(moleculeIsPresent, use.names = FALSE),
+    unlist(moleculeValue, use.names = FALSE),
+    unlist(moleculeUnits, use.names = FALSE),
+    unlist(moleculeScaleDivisor, use.names = FALSE),
+    unlist(moleculeNegValsAllowed, use.names = FALSE)
+  )
+
+  # Set the column names
+  if (length(speciesInitVals) > 0) {
+    colnames(speciesInitVals) <-
+      c("Container Path", "Molecule Name", "Is Present", "Value", "Units", "Scale Divisor", "Neg. Values Allowed")
+  }
+
+  # Create the data frame for parameter start values
+  parameterInitVals <- data.frame(
+    unlist(parameterContainerPath, use.names = FALSE),
+    unlist(parameterName, use.names = FALSE),
+    unlist(parameterValue, use.names = FALSE),
+    unlist(parameterUnits, use.names = FALSE)
+  )
+
+  # Set the column names
+  if (length(parameterInitVals) > 0) {
+    colnames(parameterInitVals) <- c("Container Path", "Parameter Name", "Value", "Units")
+  }
+
+  # Write the results into an excel file.
+  data <- list("Molecules" = speciesInitVals, "Parameters" = parameterInitVals)
+  # If the provided path to the output file targets a non-existent directory,
+  # try to create the directory
+  resultsDir <- dirname(resultsXLSPath)
+  if (!file.exists(resultsDir)) {
+    dir.create(resultsDir, recursive = TRUE)
+  }
+
+  # Write the data into an excel file.
+  openxlsx::write.xlsx(x = data, file = resultsXLSPath, colNames = TRUE)
 }

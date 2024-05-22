@@ -32,7 +32,9 @@ Imports:
     rlang,
     tlf (>= 1.5.0),
     data.table,
-    xml2
+    xml2,
+    openxlsx,
+    lifecycle
 Suggests:
     pacman,
     knitr,

@@ -1,5 +1,5 @@
 #' @param simulationResults Object of type `SimulationResults` produced by
-#'   calling `runSimulation` on a `Simulation` object.
+#'   calling `runSimulations` on a `Simulation` object.
 #' @param quantitiesOrPaths Quantity instances (element or vector) typically
 #'   retrieved using `getAllQuantitiesMatching` or quantity path (element or
 #'   vector of strings) for which the results are to be returned. (optional)

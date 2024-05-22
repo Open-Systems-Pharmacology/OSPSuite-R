@@ -25,13 +25,14 @@ Alternatively, you can also pass the result of \code{createPopulation} directly.
 SimulationResults (one entry per Individual) for a single simulation
 }
 \description{
-Run a single simulation
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
 Runs one simulation (individual or population) and returns a
 \code{SimulationResults} object containing all results of the simulation.
 }
 \examples{
+\dontrun{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
@@ -50,3 +51,5 @@ popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 }
+}
+\keyword{internal}

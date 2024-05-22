@@ -7,10 +7,10 @@ path <- testthat::test_path("../data")
 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simResultsOne <- runSimulation(sim)
+simResultsOne <- runSimulations(sim)[[1]]
 
 
-simResultsMany <- runSimulation(sim)
+simResultsMany <- runSimulations(sim)[[1]][[1]]
 
 outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 outputPaths <- c(

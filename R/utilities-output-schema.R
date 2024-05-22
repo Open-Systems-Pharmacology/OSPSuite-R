@@ -77,3 +77,53 @@ clearOutputIntervals <- function(simulation) {
   simulation$outputSchema$clear()
   invisible(simulation)
 }
+
+#' Set end time of the simulation
+#' @description
+#' Either extends or shortens the simulation time to the specified end time.
+#' Time points that are later than the specified end time are removed.
+#' Intervals that start after the specified end time are removed.
+#' Intervals that start before the specified end time are shortened to the specified end time.
+#'
+#' @param simulation Simulation for which the end time should be set
+#' @param endTime End time of the simulation in min
+.setEndSimulationTime <- function(simulation, endTime) {
+  ospsuite.utils::validateIsOfType(simulation, "Simulation")
+  ospsuite.utils::validateIsNumeric(endTime)
+  if (endTime <= 0) {
+    stop(messages$valueNotPositive(endTime, "endTime"))
+  }
+
+  # If the specified end time is outside of the current end time,
+  # extend the simulation time to the specified end time.
+  if (endTime > simulation$outputSchema$endTime) {
+    simulation$outputSchema$addTimePoints(timePoints = endTime)
+  } else {
+    # Otherwise, shorten the simulation time to the specified end time.
+    # First remove the time points that are later than the specified steady-state time.
+    timePoints <- simulation$outputSchema$timePoints
+    timePoints <- timePoints[timePoints <= endTime]
+
+    # Get the old output intervals
+    oldOutputIntervals <- simulation$outputSchema$intervals
+
+    # Clear the output schema
+    simulation$outputSchema$clear()
+    # Iterate through output intervals and only add those that start before the
+    # specified steady-state time.
+    for (outputInterval in oldOutputIntervals) {
+      if (outputInterval$startTime$value <= endTime) {
+        addOutputInterval(
+          simulation = simulation,
+          startTime = outputInterval$startTime$value,
+          endTime = min(outputInterval$endTime$value, endTime),
+          resolution = outputInterval$resolution$value,
+          intervalName = outputInterval$name
+        )
+      }
+    }
+
+    # Don't forget to add latest time
+    simulation$outputSchema$addTimePoints(c(timePoints, endTime))
+  }
+}

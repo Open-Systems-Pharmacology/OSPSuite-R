@@ -3,7 +3,7 @@
 #' @inheritParams plotIndividualTimeProfile
 #' @param foldDistance A vector for plotting lines at required fold distances
 #' around the identity line (`x=y`). Set to NULL (default) to only draw identity
-#' line.
+#' line. Set to FALSE to not draw any lines.
 #' The vector can include only fold distance values `>1`. An `x`-fold distance
 #' is defined as all simulated values within the range between `x`-fold
 #' (depicted by the upper fold range line) and `1/x`-fold
@@ -18,7 +18,7 @@
 #' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
-#' simResults <- runSimulation(sim)
+#' simResults <- runSimulations(sim)[[1]]
 #' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 #'
 #' # observed data
@@ -82,20 +82,25 @@ plotObservedVsSimulated <- function(dataCombined,
   # - For logarithmic scale: `0`
   identity <- ifelse(is_any_scale_linear, 0, 1)
 
-  # foldDistance should be above 1
-  if (any(foldDistance <= 1)) {
-    stop(messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", foldDistance))
-  }
+  # If user has set `foldDistance` to `FALSE`, then do not draw any lines.
+  if (FALSE %in% foldDistance) {
+    foldDistance <- NULL
+  } else {
+    # foldDistance should be above 1
+    if (any(foldDistance <= 1)) {
+      stop(messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", foldDistance))
+    }
 
-  # The argument `foldDistance` should only include fold values different from
-  # the abline, which must always be present.
-  if (!any(dplyr::near(identity, foldDistance))) {
-    foldDistance <- c(identity, foldDistance)
-  }
+    # The argument `foldDistance` should only include fold values different from
+    # the abline, which must always be present.
+    if (!any(dplyr::near(identity, foldDistance))) {
+      foldDistance <- c(identity, foldDistance)
+    }
 
-  if (is_any_scale_linear && !is.null(foldDistance)) {
-    warning(messages$linearScaleWithFoldDistance())
-    foldDistance <- 0
+    if (is_any_scale_linear && any(foldDistance != 0)) {
+      warning(messages$linearScaleWithFoldDistance())
+      foldDistance <- 0
+    }
   }
 
   # data frames -----------------------------

@@ -1,14 +1,12 @@
 image: Visual Studio 2019
 
-
-# uncomment to use global ospsuite version (and comment line underneath)
-# version: '{build}'
-version: '11.2.{build}'
+version: '{build}' # comment to use specific version and uncomment the next line
+#version: '12.0.{build}' # comment to use global ospsuite verion und uncomment the previous line
 
 # Download script file from GitHub
 init:
-# uncomment to use global ospsuite version
-#  - ps: Update-AppveyorBuild -Version "$($env:ospsuite_version).$($env:appveyor_build_version)"
+# Comment next line if specific version is used and not the global ospsuite version
+  - ps: Update-AppveyorBuild -Version "$($env:ospsuite_version).$($env:appveyor_build_version)"
   - ps: |
       $ErrorActionPreference = "Stop"
       Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
@@ -19,17 +17,20 @@ install:
   - ps: Bootstrap
   - git submodule update --init --recursive
 
+platform: x64
+
 environment:
+  R_VERSION: 4.3.1
+  R_ARCH: x64
   USE_RTOOLS: true
-  NOT_CRAN: true
-  KEEP_VIGNETTES: false
   R_BUILD_ARGS: --no-build-vignettes --no-manual
   R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
-  R_ARCH: x64
-  R_VERSION: 4.3.1
+  R_PKGTYPE: binary
+  NOT_CRAN: true
+  # Do not update vignettes after each commit. Vignettes are only generated for nightly builds.
+  KEEP_VIGNETTES:
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: true
-  R_PKGTYPE: binary
   # This enables performance tests, that are potentially machine-specific
   # Following a discussion in https://github.com/Open-Systems-Pharmacology/OSPSuite-R/pull/1288,
   # we want to run them in CI builds, but not locally or nightly
@@ -40,6 +41,8 @@ build_script:
   - travis-tool.sh r_binary_install curl
   - Rscript install_dependencies.R
 
+on_success:
+  - Rscript -e "spelling::spell_check_package()"
 test_script:
   - travis-tool.sh run_tests
 
@@ -47,8 +50,7 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
-on_success:
-  - Rscript -e "spelling::spell_check_package()"
+
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
@@ -63,7 +65,6 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-platform: x64
 
 skip_commits:
   files:
