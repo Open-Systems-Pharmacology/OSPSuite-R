@@ -504,11 +504,12 @@ test_that("It calculates steady-state for multiple simulations, multiple steadyS
 })
 
 test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
-  withr::with_tempdir(
+  withr::with_tempfile("resultsXLSPath",
     code = {
       simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
       sim <- loadSimulation(simFilePath)
-      wb <- exportSteadyStateToXLS(sim)
+      wb <- exportSteadyStateToXLS(sim, resultsXLSPath = resultsXLSPath)
+      expect_true(file.exists(resultsXLSPath))
       expect_equal(wb$sheet_names, c("Molecules", "Parameters"))
     }
   )
