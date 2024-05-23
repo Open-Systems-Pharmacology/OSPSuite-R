@@ -28,7 +28,7 @@
     `quantityOrDimension` (was `dimension` previously). It can now use objects
     of class `Quantity` as inputs, to be consistent with the `toBaseUnit()`
     function.
-  - The package gains a new dependency `{rShapr}`
+  - The package gains a new dependency `{rSharp}`
 
 ## Major Changes
 
