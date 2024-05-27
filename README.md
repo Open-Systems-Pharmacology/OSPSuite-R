@@ -220,19 +220,6 @@ You can clone the GIT repository and build the package from source.
 
 ## Loading `ospsuite` might fail if your systems locale is not set to English
 
-``` ibrary(ospsuite)
-载入需要的程辑包：rClr
-Loading the dynamic library for Microsoft .NET runtime...
-Loaded Common Language Runtime version 4.0.30319.42000
-
-Error: package or namespace load failed for ‘ospsuite’:
-loadNamespace()里算'ospsuite'时.onLoad失败了，详细内容：
-调用: rClr::clrCall(dimensionTask, "AllAvailableUnitNamesFor", enc2utf8(dimension))
-错误: Type: System.Collections.Generic.KeyNotFoundException
-Message: Dimension 'CV mmHg*s虏/ml' not available in DimensionFactory.
-...
-```
-
 – On Windows, set
 `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
 to `English (United States)` and reboot. – On Linux, set the environment

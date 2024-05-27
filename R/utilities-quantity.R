@@ -150,10 +150,10 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 
   task <- .getNetTaskFromCache("ContainerTask")
   for (i in seq_along(quantityPaths)) {
-    path <- enc2utf8(quantityPaths[[i]])
+    path <- quantityPaths[[i]]
     value <- values[[i]]
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(task, "DimensionNameByPath", simulation$ref, path, stopIfNotFound)
+      dimension <- task$call("DimensionNameByPath", simulation, path, stopIfNotFound)
       # Dimension ca be be empty if the path was not found
       if (dimension == "") {
         next
@@ -186,9 +186,9 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
       }
     }
 
-    rClr::clrCall(
-      task, "SetValueByPath",
-      simulation$ref,
+    task$call(
+      "SetValueByPath",
+      simulation,
       path,
       value,
       stopIfNotFound
@@ -228,12 +228,12 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
   task <- .getNetTaskFromCache("ContainerTask")
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
-    path <- enc2utf8(quantityPaths[[i]])
-    value <- rClr::clrCall(task, "GetValueByPath", simulation$ref, path, stopIfNotFound)
+    path <- quantityPaths[[i]]
+    value <- task$call("GetValueByPath", simulation, path, stopIfNotFound)
     if (!is.null(units)) {
-      dimension <- rClr::clrCall(
-        task, "DimensionNameByPath",
-        simulation$ref,
+      dimension <- task$call(
+        "DimensionNameByPath",
+        simulation,
         path,
         stopIfNotFound
       )
@@ -297,7 +297,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
       return(path)
     }
 
-    return(rClr::clrCall(displayResolver, "FullPathFor", quantity$ref))
+    return(displayResolver$call("FullPathFor", quantity))
   })
 
   return(unlist(displayPaths, use.names = FALSE))
@@ -347,7 +347,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
-  isFormulaExplicit <- rClr::clrCall(task, "IsExplicitFormulaByPath", simulation$ref, enc2utf8(path), stopIfNotFound)
+  isFormulaExplicit <- task$call("IsExplicitFormulaByPath", simulation, path, stopIfNotFound)
 
   return(isFormulaExplicit)
 }

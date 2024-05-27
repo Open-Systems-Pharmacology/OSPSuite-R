@@ -1,6 +1,6 @@
 #' @title MoleculeOntogeny
 #' @docType class
-#' @description  Use when retrieving individual values using the createIndividualAlgorithm. This class is a simple pair {MoleculeName, Ontogeny}
+#' @description  Use when retrieving individual values using the createIndividualAlgorithm. This class is a simple pair \{MoleculeName, Ontogeny\}
 #' allowing the user to retrieve potential ontogeny values.
 #'
 #' @format NULL
@@ -31,15 +31,15 @@ MoleculeOntogeny <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Molecule", self$molecule)
-      private$printLine("Ontogeny", self$ontogeny)
+      private$.printClass()
+      private$.printLine("Molecule", self$molecule)
+      private$.printLine("Ontogeny", self$ontogeny)
       invisible(self)
     },
     #' @description
     #' Print the `MoleculeOntogeny` on one line
     printMoleculeOntogeny = function() {
-      private$printLine(paste("Molecule", self$molecule, "with ontogeny", self$ontogeny))
+      private$.printLine(paste("Molecule", self$molecule, "with ontogeny", self$ontogeny))
     }
   )
 )
