@@ -11,32 +11,32 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
   active = list(
     #' @field values All values for `quantityPath` and `name`
     values = function(value) {
-      private$.wrapReadOnlyProperty("ValuesAsArray", value)
+      private$wrapReadOnlyProperty("ValuesAsArray", value)
     },
     #' @field quantityPath The path of the quantity for which the values were calculated
     quantityPath = function(value) {
-      private$.wrapReadOnlyProperty("QuantityPath", value)
+      private$wrapReadOnlyProperty("QuantityPath", value)
     },
     #' @field name The name of the pK-Parameter (AUC, Cmax, Tmax etc...)
     name = function(value) {
-      private$.wrapReadOnlyProperty("Name", value)
+      private$wrapReadOnlyProperty("Name", value)
     },
     #' @field unit Base unit in which the pk parameter was calculated
     unit = function(value) {
-      private$.readOnlyProperty("unit", value, private$.unit)
+      private$readOnlyProperty("unit", value, private$.unit)
     },
     #' @field dimension Dimension in which the pk parameter was calculated
     dimension = function(value) {
-      private$.readOnlyProperty("dimension", value, private$.dimension)
+      private$readOnlyProperty("dimension", value, private$.dimension)
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param netObject An `rSharp::NetObject` object.
+    #' @param ref .NET Instance
     #' @return A new `QuantityPKParameter` object.
-    initialize = function(netObject) {
-      super$initialize(netObject)
+    initialize = function(ref) {
+      super$initialize(ref)
       pkParameter <- pkParameterByName(self$name, stopIfNotFound = FALSE)
       if (!is.null(pkParameter)) {
         private$.unit <- pkParameter$unit
@@ -47,10 +47,10 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine(self$quantityPath, self$name)
-      private$.printLine("Dimension", self$dimension)
-      private$.printLine("Unit", self$unit)
+      private$printClass()
+      private$printLine(self$quantityPath, self$name)
+      private$printLine("Dimension", self$dimension)
+      private$printLine("Unit", self$unit)
       invisible(self)
     }
   )

@@ -208,7 +208,7 @@ def copy_packages_files
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
 
     #special case for NPOI that does not work in .net standard mode
-    # copy_files 'NPOI*/**/net45', 'dll'
+    copy_files 'NPOI*/**/net45', 'dll'
   end
 
 end

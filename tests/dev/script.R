@@ -109,13 +109,13 @@ outputValues <- getOutputValues(populationResults, populationResults$allQuantity
 
 # individualResults <- results[[1]]
 #
-# time <- individualResults$get("Time")
+# time <- rClr::clrGet(individualResults, "Time")
 #
-# allValues <- individualResults$call("ValuesAsArray")
+# allValues <- rClr::clrCall(individualResults, "ValuesAsArray")
 #
 # firstOutput <- allValues[[1]]
-# path <- firstOutput$get("QuantityPath")
-# values <- firstOutput$get("Values")
+# path <- rClr::clrGet(firstOutput, "QuantityPath")
+# values <- rClr::clrGet(firstOutput, "Values")
 
 
 # saveSimulation(sim, "c:/temp/export/toto.xml")

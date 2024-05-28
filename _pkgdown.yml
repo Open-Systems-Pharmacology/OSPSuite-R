@@ -7,18 +7,6 @@ development:
   mode: devel
 
 authors:
-  Open-Systems-Pharmacology Community:
-    href: https://www.open-systems-pharmacology.org/
-    html: <img src='https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png'
-      style='max-width:33px'>Open Systems Pharmacology
-  Pavel Balazki:
-    href: https://github.com/PavelBal
-  Michael Sevestre:
-    href: https://github.com/msevestre
-  Juri Solodenko:
-    href: https://github.com/Yuri05
-  Felix Mil:
-    href: https://github.com/Felixmil
   Indrajeet Patil:
     href: https://sites.google.com/site/indrajeetspatilmorality/
 
@@ -33,8 +21,8 @@ articles:
     - run-simulation
     - pk-analysis
     - sensitivity-analysis
-#    - create-individual
-#    - create-run-population
+    - create-individual
+    - create-run-population
   - title: Figure creation
     navbar: Figure creation
     desc: How to create standard figures

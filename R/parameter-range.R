@@ -11,33 +11,32 @@ ParameterRange <- R6::R6Class(
   active = list(
     #' @field min Minimum value for the parameter range
     min = function(value) {
-      private$.wrapProperty("Min", value)
+      private$wrapProperty("Min", value)
     },
     #' @field max Maximum value for the parameter range
     max = function(value) {
-      private$.wrapProperty("Max", value)
+      private$wrapProperty("Max", value)
     },
     #' @field unit Unit in which the value is defined
     unit = function(value) {
-      private$.wrapProperty("Unit", value)
+      private$wrapProperty("Unit", value)
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param netObject Optional `NetObject` of `ParameterRange`. If not defined, a new instance will be created
+    #' @param ref Optional .NET reference object. If not defined, a new instance will be created
     #' @param min Optional minimum value for the range
     #' @param max Optional minimum value for the range
     #' @param unit Optional unit of the specified min and max
     #' @return A new `ParameterRange` object.
-    initialize = function(netObject = NULL, min = NULL, max = NULL, unit = NULL) {
+    initialize = function(ref = NULL, min = NULL, max = NULL, unit = NULL) {
       validateIsNumeric(min, nullAllowed = TRUE)
       validateIsNumeric(max, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
-      netObject <- netObject %||% rSharp::newObjectFromName("PKSim.Core.Snapshots.ParameterRange")
-      super$initialize(netObject)
+      ref <- ref %||% rClr::clrNew("PKSim.Core.Snapshots.ParameterRange")
+      super$initialize(ref)
       # Because of weird issue with nullable value in rClr
-      # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1369
       if (!is.null(min)) {
         self$min <- min
       }
@@ -52,10 +51,10 @@ ParameterRange <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Min", self$min)
-      private$.printLine("Max", self$max)
-      private$.printLine("Unit", self$unit)
+      private$printClass()
+      private$printLine("Min", self$min)
+      private$printLine("Max", self$max)
+      private$printLine("Unit", self$unit)
       invisible(self)
     },
     #' @description
@@ -64,7 +63,7 @@ ParameterRange <- R6::R6Class(
     printValue = function(caption) {
       minDisplay <- if (is.null(self$min)) "]-Inf" else paste0("[", formatNumerics(self$min), " ", self$unit)
       maxDisplay <- if (is.null(self$max)) "+Inf[" else paste0(formatNumerics(self$max), " ", self$unit, "]")
-      private$.printLine(caption, paste0(minDisplay, "..", maxDisplay))
+      private$printLine(caption, paste0(minDisplay, "..", maxDisplay))
     }
   )
 )

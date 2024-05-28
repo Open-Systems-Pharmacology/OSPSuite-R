@@ -343,7 +343,7 @@ calculateResiduals <- function(dataCombined,
 #' - Making sure that an atomic vector is always returned, irrespective of if
 #'   the input was a list or an atomic vector.
 #'
-#' @param arg A vector of arguments.
+#' @param x A vector of arguments.
 #' @param expectedLength An integer to denote the expected length of the vector.
 #' @inheritParams ospsuite.utils::validateIsOfType
 #'

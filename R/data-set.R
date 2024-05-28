@@ -31,7 +31,7 @@ DataSet <- R6::R6Class(
       if (missing(value)) {
         return(private$.dataRepository)
       }
-      private$.throwPropertyIsReadonly("dataRepository")
+      private$throwPropertyIsReadonly("dataRepository")
     },
 
     #' @field xDimension Dimension in which the xValues are defined
@@ -56,7 +56,7 @@ DataSet <- R6::R6Class(
       if (missing(values)) {
         return(private$.getColumnValues(private$.xColumn))
       }
-      private$.throwPropertyIsReadonly("xValues")
+      private$throwPropertyIsReadonly("xValues")
     },
 
     #' @field yDimension Dimension in which the yValues are defined
@@ -85,7 +85,7 @@ DataSet <- R6::R6Class(
       if (missing(values)) {
         return(private$.getColumnValues(private$.yColumn))
       }
-      private$.throwPropertyIsReadonly("yValues")
+      private$throwPropertyIsReadonly("yValues")
     },
 
     #' @field yErrorType Type of the error - geometric or arithmetic.
@@ -100,8 +100,8 @@ DataSet <- R6::R6Class(
           return(NULL)
         }
 
-        dataInfo <- private$.yErrorColumn$get("DataInfo")
-        errorTypeEnumVal <- dataInfo$get("AuxiliaryType")
+        dataInfo <- rClr::clrGet(private$.yErrorColumn$ref, "DataInfo")
+        errorTypeEnumVal <- rClr::clrGet(dataInfo, "AuxiliaryType")
         return(.netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
       }
       private$.setErrorType(value)
@@ -135,7 +135,7 @@ DataSet <- R6::R6Class(
 
         return(private$.getColumnValues(private$.yErrorColumn))
       }
-      private$.throwPropertyIsReadonly("yErrorValues")
+      private$throwPropertyIsReadonly("yErrorValues")
     },
 
     #' @field molWeight Molecular weight of the yValues in g/mol
@@ -184,7 +184,7 @@ DataSet <- R6::R6Class(
       if (missing(value)) {
         return(private$.dataRepository$metaData)
       }
-      private$.throwPropertyIsReadonly("metaData")
+      private$throwPropertyIsReadonly("metaData")
     }
   ),
   public = list(
@@ -252,10 +252,11 @@ DataSet <- R6::R6Class(
       # yErrorColumn already
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
         dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-        dataRepositoryTask$call(
+        rClr::clrCall(
+          dataRepositoryTask,
           "RemoveColumn",
-          private$.dataRepository,
-          private$.yErrorColumn
+          private$.dataRepository$ref,
+          private$.yErrorColumn$ref
         )
         private$.yErrorColumn <- NULL
       }
@@ -270,17 +271,17 @@ DataSet <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Name", self$name)
-      private$.printLine("X dimension", self$xDimension)
-      private$.printLine("X unit", self$xUnit)
-      private$.printLine("Y dimension", self$yDimension)
-      private$.printLine("Y unit", self$yUnit)
-      private$.printLine("Error type", self$yErrorType)
-      private$.printLine("Error unit", self$yErrorUnit)
-      private$.printLine("Molecular weight", self$molWeight)
-      private$.printLine("LLOQ", self$LLOQ)
-      private$.printLine("Meta data")
+      private$printClass()
+      private$printLine("Name", self$name)
+      private$printLine("X dimension", self$xDimension)
+      private$printLine("X unit", self$xUnit)
+      private$printLine("Y dimension", self$yDimension)
+      private$printLine("Y unit", self$yUnit)
+      private$printLine("Error type", self$yErrorType)
+      private$printLine("Error unit", self$yErrorUnit)
+      private$printLine("Molecular weight", self$molWeight)
+      private$printLine("LLOQ", self$LLOQ)
+      private$printLine("Meta data")
       print(self$metaData)
       invisible(self)
     }
@@ -349,9 +350,9 @@ DataSet <- R6::R6Class(
       validateEnumValue(errorType, DataErrorType)
       column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
-      dataInfo <- column$get("DataInfo")
-      auxType <- rSharp::getStatic("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
-      dataInfo$set("AuxiliaryType", auxType)
+      dataInfo <- rClr::clrGet(column$ref, "DataInfo")
+      auxType <- rClr::clrGet("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
+      rClr::clrSet(dataInfo, "AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
       if (errorType == DataErrorType$ArithmeticStdDev) {
@@ -368,16 +369,16 @@ DataSet <- R6::R6Class(
     },
     .createDataRepository = function() {
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      dataRepository <- dataRepositoryTask$call("CreateEmptyObservationRepository", "xValues", "yValues")
+      dataRepository <- rClr::clrCall(dataRepositoryTask, "CreateEmptyObservationRepository", "xValues", "yValues")
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
 
-      netYColumn <- dataRepositoryTask$call("GetMeasurementColumn", private$.dataRepository)
+      netYColumn <- rClr::clrCall(dataRepositoryTask, "GetMeasurementColumn", private$.dataRepository$ref)
       private$.yColumn <- DataColumn$new(netYColumn)
-      netYErrorColumn <- dataRepositoryTask$call("GetErrorColumn", netYColumn)
+      netYErrorColumn <- rClr::clrCall(dataRepositoryTask, "GetErrorColumn", netYColumn)
 
       if (!is.null(netYErrorColumn)) {
         private$.yErrorColumn <- DataColumn$new(netYErrorColumn)
@@ -389,9 +390,10 @@ DataSet <- R6::R6Class(
       }
 
       dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-      netYErrorColumn <- dataRepositoryTask$call(
+      netYErrorColumn <- rClr::clrCall(
+        dataRepositoryTask,
         "AddErrorColumn",
-        private$.yColumn,
+        private$.yColumn$ref,
         "yErrorValues",
         DataErrorType$ArithmeticStdDev
       )

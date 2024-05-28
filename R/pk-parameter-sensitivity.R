@@ -8,19 +8,19 @@ PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
   active = list(
     #' @field parameterName  Unique name of parameter in sensitivity analysis
     parameterName = function(value) {
-      private$.wrapReadOnlyProperty("ParameterName", value)
+      private$wrapReadOnlyProperty("ParameterName", value)
     },
     #' @field pkParameterName  Name of PK Output (Cmax, Tmax etc...)
     pkParameterName = function(value) {
-      private$.wrapReadOnlyProperty("PKParameterName", value)
+      private$wrapReadOnlyProperty("PKParameterName", value)
     },
     #' @field outputPath  Path of underlying quantity for which pk-analyses were performed
     outputPath = function(value) {
-      private$.wrapReadOnlyProperty("QuantityPath", value)
+      private$wrapReadOnlyProperty("QuantityPath", value)
     },
     #' @field value  Value of sensitivity
     value = function(value) {
-      private$.wrapReadOnlyProperty("Value", value)
+      private$wrapReadOnlyProperty("Value", value)
     }
   ),
   public = list(
@@ -28,11 +28,11 @@ PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Parameter name", self$parameterName)
-      private$.printLine("PK-Parameter", self$pkParameterName)
-      private$.printLine("Output path", self$outputPath)
-      private$.printLine("Value", self$value)
+      private$printClass()
+      private$printLine("Parameter name", self$parameterName)
+      private$printLine("PK-Parameter", self$pkParameterName)
+      private$printLine("Output path", self$outputPath)
+      private$printLine("Value", self$value)
       invisible(self)
     }
   )

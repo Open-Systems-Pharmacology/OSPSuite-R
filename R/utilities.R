@@ -14,10 +14,10 @@
 #' @keywords internal
 .toObjectType <- function(netObject, class) {
   if (!is.list(netObject)) {
-    return(ifNotNull(netObject, class$new(netObject = netObject)))
+    return(ifNotNull(netObject, class$new(ref = netObject)))
   }
 
-  sapply(c(netObject), function(x) class$new(netObject = x))
+  sapply(c(netObject), function(x) class$new(ref = x))
 }
 
 
@@ -46,7 +46,7 @@
 #' Retrieves the name of the constant in the specified enumeration that has the
 #' specified value.
 #'
-#' @inheritParams rSharp::getEnumNames
+#' @inheritParams rClr::clrGetEnumNames
 #' @param enumValue The value of a particular enumerated constant in terms of
 #'   its underlying type. Typically an integer.
 #'
@@ -60,8 +60,8 @@
 #'
 #' @keywords internal
 .netEnumName <- function(enumType, enumValue) {
-  netTypeObj <- rSharp::getType(enumType)
-  rSharp::callStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
+  netTypeObj <- rClr::clrGetType(enumType)
+  rClr::clrCallStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
 }
 
 
@@ -94,6 +94,6 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   gc()
 
   # then forces `.NET` garbage collection
-  rSharp::callStatic("OSPSuite.R.Api", "ForceGC")
+  rClr::clrCallStatic("OSPSuite.R.Api", "ForceGC")
   invisible()
 }

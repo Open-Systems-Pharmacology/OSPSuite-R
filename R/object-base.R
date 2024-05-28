@@ -11,11 +11,11 @@ ObjectBase <- R6::R6Class(
   active = list(
     #' @field name The name of the object. (read-only)
     name = function(value) {
-      private$.wrapReadOnlyProperty("Name", value)
+      private$wrapReadOnlyProperty("Name", value)
     },
     #' @field id The id of the .NET wrapped object. (read-only)
     id = function(value) {
-      private$.wrapReadOnlyProperty("Id", value)
+      private$wrapReadOnlyProperty("Id", value)
     }
   )
 )

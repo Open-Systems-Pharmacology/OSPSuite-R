@@ -22,7 +22,7 @@ Interval <- R6::R6Class(
     },
     #' @field name Name of the interval
     name = function(value) {
-      private$.wrapProperty("Name", value)
+      private$wrapProperty("Name", value)
     }
   ),
   public = list(
@@ -30,8 +30,8 @@ Interval <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Name", self$name)
+      private$printClass()
+      private$printLine("Name", self$name)
       self$startTime$printValue()
       self$endTime$printValue()
       self$resolution$printValue()
@@ -41,9 +41,9 @@ Interval <- R6::R6Class(
   private = list(
     readOnlyParameterProperty = function(parameterName, value) {
       if (missing(value)) {
-        .toObjectType(self$get(parameterName), Parameter)
+        .toObjectType(rClr::clrGet(self$ref, parameterName), Parameter)
       } else {
-        private$.throwPropertyIsReadonly(parameterName)
+        private$throwPropertyIsReadonly(parameterName)
       }
     }
   )

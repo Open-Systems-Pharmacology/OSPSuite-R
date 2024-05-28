@@ -22,15 +22,15 @@ ValuePoint <- R6::R6Class(
   active = list(
     #' @field x The x value of the point.
     x = function(value) {
-      private$.wrapProperty("X", value)
+      private$wrapProperty("X", value)
     },
     #' @field y the y value of the point.
     y = function(value) {
-      private$.wrapProperty("Y", value)
+      private$wrapProperty("Y", value)
     },
     #' @field restartSolver Indicates whether the solver should be restarted when this point is reached. Default is `FALSE`
     restartSolver = function(value) {
-      private$.wrapProperty("RestartSolver", value)
+      private$wrapProperty("RestartSolver", value)
     }
   )
 )

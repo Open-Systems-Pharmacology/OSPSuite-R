@@ -10,7 +10,7 @@ OutputSelections <- R6::R6Class(
     #' @field allOutputs Returns all outputs defined in the selection
     allOutputs = function(value) {
       if (missing(value)) {
-        .toObjectType(self$get("OutputsAsArray"), QuantitySelection)
+        .toObjectType(rClr::clrGet(self$ref, "OutputsAsArray"), QuantitySelection)
       } else {
         stop(messages$errorPropertyReadOnly("allOutputs"))
       }
@@ -20,27 +20,27 @@ OutputSelections <- R6::R6Class(
     #' @description
     #' Removes all selected output from the selection
     clear = function() {
-      self$call("Clear")
+      rClr::clrCall(self$ref, "Clear")
     },
     #' @description
     #' Adds a quantity as selected
     #' @param quantity Quantity to add to the selection
     addQuantity = function(quantity) {
       validateIsOfType(quantity, "Quantity")
-      self$call("AddQuantity", quantity)
+      rClr::clrCall(self$ref, "AddQuantity", quantity$ref)
     },
     #' @description
     #' Removes a quantity from the selection
     #' @param quantity Quantity to remove from the selection
     removeQuantity = function(quantity) {
       validateIsOfType(quantity, "Quantity")
-      self$call("RemoveQuantity", quantity)
+      rClr::clrCall(self$ref, "RemoveQuantity", quantity$ref)
     },
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
+      private$printClass()
       for (output in self$allOutputs) {
         print(output)
       }
