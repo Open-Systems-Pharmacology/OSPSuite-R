@@ -11,19 +11,19 @@ TableFormula <- R6::R6Class(
     #' @field allPoints Returns all points defined in the table formula for a `TableFormula` or `NULL`  otherwise (Read-Only).
     allPoints = function(value) {
       if (missing(value)) {
-        .toObjectType(self$call("AllPointsAsArray"), ValuePoint)
+        .toObjectType(rClr::clrCall(self$ref, "AllPointsAsArray"), ValuePoint)
       } else {
-        private$.throwPropertyIsReadonly("allPoints")
+        private$throwPropertyIsReadonly("allPoints")
       }
     },
     #' @field useDerivedValues Indicates whether table values should be derived during solving. the ODE system. Default value is `TRUE`
     useDerivedValues = function(value) {
-      private$.wrapProperty("UseDerivedValues", value)
+      private$wrapProperty("UseDerivedValues", value)
     },
     #' @field xDimension The dimension in which the x values are defined (Read-Only).
     xDimension = function(value) {
-      dim <- private$.wrapReadOnlyProperty("XDimension", value)
-      dim$get("Name")
+      dim <- private$wrapReadOnlyProperty("XDimension", value)
+      rClr::clrGet(dim, "Name")
     }
   ),
   public = list(
@@ -38,7 +38,7 @@ TableFormula <- R6::R6Class(
       validateIsNumeric(yValues)
       validateIsSameLength(xValues, yValues)
       for (i in seq_along(xValues)) {
-        self$call("AddPoint", xValues[i], yValues[i])
+        rClr::clrCall(self$ref, "AddPoint", xValues[i], yValues[i])
       }
       invisible(self)
     },
@@ -47,13 +47,13 @@ TableFormula <- R6::R6Class(
     #' @param xValue xValue value in base unit for XDimension
     #' @param yValue yValue value in base unit for Dimension
     removePoint = function(xValue, yValue) {
-      self$call("RemovePoint", xValue, yValue)
+      rClr::clrCall(self$ref, "RemovePoint", xValue, yValue)
       invisible(self)
     },
     #' @description
     #' Remove all points from the table
     clearPoints = function() {
-      self$call("ClearPoints")
+      rClr::clrCall(self$ref, "ClearPoints")
       invisible(self)
     },
     #' @description
@@ -70,7 +70,7 @@ TableFormula <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
+      private$printClass()
       self$printFormula()
     },
     #' @description
@@ -78,14 +78,14 @@ TableFormula <- R6::R6Class(
     #' If the table contains no point, 0 is returned
     #' @param xValue x value for in base unit for which the yValue should be returned
     valueAt = function(xValue) {
-      self$call("ValueAt", xValue)
+      rClr::clrCall(self$ref, "ValueAt", xValue)
     },
     #' @description
     #' Print the formula to the console
     printFormula = function() {
       super$printFormula()
-      private$.printLine("XDimension", self$xDimension)
-      private$.printLine("UseDerivedValues", self$useDerivedValues)
+      private$printLine("XDimension", self$xDimension)
+      private$printLine("UseDerivedValues", self$useDerivedValues)
       for (point in self$allPoints) {
         print(point)
       }

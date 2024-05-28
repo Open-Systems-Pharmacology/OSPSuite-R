@@ -36,7 +36,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   for (path in paths) {
-    task$call("AddQuantitiesToSimulationOutputByPath", simulation, path)
+    rClr::clrCall(task, "AddQuantitiesToSimulationOutputByPath", simulation$ref, enc2utf8(path))
   }
 }
 

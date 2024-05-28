@@ -11,20 +11,20 @@ OutputSchema <- R6::R6Class(
     #' @field intervals All intervals defined in the schema (Read-Only)
     intervals = function(value) {
       if (missing(value)) {
-        intervals <- self$get("IntervalsAsArray")
+        intervals <- rClr::clrGet(self$ref, "IntervalsAsArray")
         .toObjectType(intervals, Interval)
       } else {
-        private$.throwPropertyIsReadonly("intervals")
+        private$throwPropertyIsReadonly("intervals")
       }
     },
     #' @field timePoints All single time points defined in the schema (Read-Only)
     timePoints = function(value) {
-      private$.wrapReadOnlyProperty("TimePoints", value)
+      private$wrapReadOnlyProperty("TimePoints", value)
     },
     #' @field endTime Returns the end time of the simulation in kernel unit (Read-Only)
     endTime = function(value) {
       # Workaround until this is fixed in core: https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1365
-      endTime <- private$.wrapReadOnlyProperty("EndTime", value)
+      endTime <- private$wrapReadOnlyProperty("EndTime", value)
       if (length(self$timePoints) > 0) {
         endTime <- max(endTime, max(self$timePoints))
       }
@@ -35,7 +35,7 @@ OutputSchema <- R6::R6Class(
     #' @description
     #' Clears all intervals and time points
     clear = function() {
-      self$call("Clear")
+      rClr::clrCall(self$ref, "Clear")
       invisible(self)
     },
     #' @description
@@ -43,7 +43,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to add
     addInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      self$call("AddInterval", interval)
+      rClr::clrCall(self$ref, "AddInterval", interval$ref)
       invisible(self)
     },
     #' @description
@@ -51,7 +51,7 @@ OutputSchema <- R6::R6Class(
     #' @param interval Interval to remove
     removeInterval = function(interval) {
       validateIsOfType(interval, "Interval")
-      self$call("RemoveInterval", interval)
+      rClr::clrCall(self$ref, "RemoveInterval", interval$ref)
       invisible(self)
     },
 
@@ -63,9 +63,9 @@ OutputSchema <- R6::R6Class(
       timePoints <- c(timePoints)
       validateIsNumeric(timePoints)
       if (length(timePoints) > 1) {
-        self$call("AddTimePoints", timePoints)
+        rClr::clrCall(self$ref, "AddTimePoints", timePoints)
       } else {
-        self$call("AddTimePoint", timePoints)
+        rClr::clrCall(self$ref, "AddTimePoint", timePoints)
       }
       invisible(self)
     },
@@ -73,9 +73,9 @@ OutputSchema <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
+      private$printClass()
       if (length(self$timePoints) > 0) {
-        private$.printLine("Time points", paste0(self$timePoints, collapse = ", "))
+        private$printLine("Time points", paste0(self$timePoints, collapse = ", "))
       }
       for (interval in self$intervals) {
         print(interval)

@@ -34,12 +34,12 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   validateIsString(displayUnit, nullAllowed = TRUE)
 
   displayUnit <- .encodeUnit(displayUnit %||% "")
-  displayName <- displayName %||% ""
+  displayName <- enc2utf8(displayName %||% "")
 
   pkParameterTask <- .getNetTask("PKParameterTask")
-  netUserDefinedPKParameter <- pkParameterTask$call("CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
+  netUserDefinedPKParameter <- rClr::clrCall(pkParameterTask, "CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
   userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
-  pkParameterTask$call("AddUserDefinedPKParameter", netUserDefinedPKParameter)
+  rClr::clrCall(pkParameterTask, "AddUserDefinedPKParameter", netUserDefinedPKParameter)
   return(userDefinedPKParameter)
 }
 
@@ -48,7 +48,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
 #' @export
 removeAllUserDefinedPKParameters <- function() {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  pkParameterTask$call("RemoveAllUserDefinedPKParameters")
+  rClr::clrCall(pkParameterTask, "RemoveAllUserDefinedPKParameters")
 }
 
 #' @title Updates some properties of a PK-Parameter (displayName and displayUnit)
@@ -92,7 +92,7 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' @export
 pkParameterByName <- function(name, stopIfNotFound = TRUE) {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  pkParameter <- pkParameterTask$call("PKParameterByName", name)
+  pkParameter <- rClr::clrCall(pkParameterTask, "PKParameterByName", name)
   pkParameter <- .toObjectType(pkParameter, PKParameter)
 
   if (!is.null(pkParameter) || !stopIfNotFound) {
@@ -111,5 +111,5 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
 #' @export
 allPKParameterNames <- function() {
   pkParameterTask <- .getNetTask("PKParameterTask")
-  pkParameterTask$call("AllPKParameterNames")
+  rClr::clrCall(pkParameterTask, "AllPKParameterNames")
 }

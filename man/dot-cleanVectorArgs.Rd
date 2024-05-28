@@ -7,12 +7,12 @@
 .cleanVectorArgs(arg = NULL, expectedLength = NULL, type)
 }
 \arguments{
-\item{arg}{A vector of arguments.}
-
 \item{expectedLength}{An integer to denote the expected length of the vector.}
 
 \item{type}{A single string or a vector of string representation or class of
 the type that should be checked for.}
+
+\item{x}{A vector of arguments.}
 }
 \value{
 An atomic vector of desired data type.

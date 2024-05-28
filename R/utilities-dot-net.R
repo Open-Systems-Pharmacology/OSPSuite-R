@@ -13,5 +13,5 @@
 #' @param  propertyName Property name that should be retrieved from the `netObject`
 #' @keywords internal
 .getPropertyValue <- function(netObject, propertyName) {
-  netObject$get(name = propertyName)
+  rClr::clrGet(netObject, name = propertyName)
 }

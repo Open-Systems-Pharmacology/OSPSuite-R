@@ -11,7 +11,7 @@ loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
   csvPopulationFile <- .expandPath(csvPopulationFile)
   populationTask <- .getNetTask("PopulationTask")
-  population <- populationTask$call("ImportPopulation", csvPopulationFile)
+  population <- rClr::clrCall(populationTask, "ImportPopulation", csvPopulationFile)
   Population$new(population)
 }
 
@@ -35,8 +35,9 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsString(outputFolder)
   validateIsString(outputFileName)
   csvPopulationFile <- .expandPath(csvPopulationFile)
+  outputFileName <- enc2utf8(outputFileName)
   populationTask <- .getNetTask("PopulationTask")
-  populationTask$call("SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
+  rClr::clrCall(populationTask, "SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }
 
 
@@ -142,8 +143,8 @@ loadAgingDataFromCSV <- function(filePath) {
 createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
-  populationFactory <- rSharp::callStatic("PKSim.R.Api", "GetPopulationFactory")
-  results <- populationFactory$call("CreatePopulation", populationCharacteristics)
+  populationFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetPopulationFactory")
+  results <- rClr::clrCall(populationFactory, "CreatePopulation", populationCharacteristics$ref)
   netPopulation <- .getPropertyValue(results, "IndividualValuesCache")
   seed <- .getPropertyValue(results, "Seed")
   population <- Population$new(netPopulation)
