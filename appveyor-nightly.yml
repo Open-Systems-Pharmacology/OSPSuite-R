@@ -24,10 +24,10 @@ environment:
   R_ARCH: x64
   USE_RTOOLS: true
   R_BUILD_ARGS: --no-build-vignettes #TODO remove the line as soon as vignettes build issue is fixed
-  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
+  R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-vignettes
   R_PKGTYPE: binary
   NOT_CRAN: true
-  KEEP_VIGNETTES: true
+  KEEP_VIGNETTES: 
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: false
   # This enables performance tests, that are potentially machine-specific
