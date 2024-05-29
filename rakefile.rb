@@ -42,7 +42,7 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
   puts "Build dir is #{build_dir}".light_blue
 
   #TEMP
-  build_dir = "C:/projects/ospsuite-r"
+#  build_dir = "C:/projects/ospsuite-r"
 
   #run nuget to get linux packages
   nuget_restore linux_distro
