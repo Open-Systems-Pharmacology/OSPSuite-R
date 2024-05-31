@@ -41,6 +41,7 @@ task :create_linux_build, [:product_version, :build_dir, :linux_distro] do |t, a
 
   puts "Build dir is #{build_dir}".light_blue
 
+  #TODO this should be taken from APPVEYOR_BUILD_FOLDER env variable 
   build_dir = "C:/projects/ospsuite-r-rsharp"
 
   #run nuget to get linux packages
@@ -123,11 +124,13 @@ def download_pksim_portable(branch)
   appveyor_project_name = 'pk-sim'
   portable_uri = "https://ci.appveyor.com/api/projects/#{APPVEYOR_ACCOUNT_NAME}/#{appveyor_project_name}/artifacts/#{portable_file_name}?branch=#{branch}"
 
+  #TODO this should be taken from APPVEYOR_BUILD_FOLDER env variable 
   download_dir = "C:/projects/ospsuite-r-rsharp"
   portable_zip_package = download_file(appveyor_project_name, portable_file_name, portable_uri, download_dir)
 
   Utils.run_cmd('7z', %W[e #{portable_zip_package}])
 
+  #TODO this should be taken from APPVEYOR_BUILD_FOLDER env variable 
   pksim_minimal_dir = "C:/projects/ospsuite-r-rsharp/pksim_minimal.zip"
   command_line = %W[
     a

@@ -66,7 +66,7 @@ test_script:
 after_test:
   - rake "create_linux_build[%APPVEYOR_BUILD_VERSION%, %APPVEYOR_BUILD_FOLDER%, ubuntu22]"
   - rake "download_portable[develop]"
-  - appveyor PushArtifact "C:/projects/ospsuite-r-rsharp/pksim_minimal.zip"
+  - appveyor PushArtifact "C:/projects/ospsuite-r-rsharp/pksim_minimal.zip" #TODO this should be taken from APPVEYOR_BUILD_FOLDER env variable 
   - ps: copy ospsuite_*.zip ospsuite.zip
   - ps: copy ospsuite_*ubuntu22.tar.gz ospsuite_ubuntu22.tar.gz
 
