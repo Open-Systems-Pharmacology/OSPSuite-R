@@ -58,7 +58,7 @@ before_test:
   - pandoc -v
 
 on_success:
-  - Rscript -e "covr::codecov(function_exclusions = c('print.*'))"
+#  - Rscript -e "covr::codecov(function_exclusions = c('print.*'))"
 
 test_script:
   - travis-tool.sh run_tests
