@@ -28,9 +28,9 @@
 tests\^spelling
 ^LICENSE\.md$
 ^\.lintr$
-^WIP/.
 ^old/.
 ^install_dependencies\.R$
 ^man-roxygen/.
 ^BinaryFiles$
 ^README\.Rmd$
+^vignettes/images/simulation_lifecycle_flowcharts\.drawio$

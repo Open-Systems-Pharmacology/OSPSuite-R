@@ -104,7 +104,7 @@ Print the name of the quantity and its value
 \if{html}{\out{<a id="method-Quantity-printQuantityValue"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-printQuantityValue}{}}}
 \subsection{Method \code{printQuantityValue()}}{
-Print the the value and unit of the quantity
+Print the value (in scientific notation with 2 digits when needed) and unit of the quantity
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Quantity$printQuantityValue(caption)}\if{html}{\out{</div>}}
 }

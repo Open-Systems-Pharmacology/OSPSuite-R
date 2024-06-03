@@ -85,3 +85,7 @@ messages$wrongUnitForQuantity <- function(quantityPath, unit, dimension) {
 messages$invalidDataType <- function(name, dataType) {
   paste0("Data type '", dataType, "' specified for data set '", name, "' is not valid. Valid data types are: 'simulated' or 'observed'.")
 }
+
+messages$valueNotPositive <- function(value, propertyName) {
+  paste0("The value of `", propertyName, "` must be > 0, but it is '", paste(value, collapse = ", "), "'")
+}

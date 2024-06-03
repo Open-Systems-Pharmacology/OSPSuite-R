@@ -32,7 +32,9 @@ Imports:
     rlang,
     tlf (>= 1.5.0),
     data.table,
-    xml2
+    xml2,
+    openxlsx,
+    lifecycle
 Suggests:
     pacman,
     knitr,
@@ -45,7 +47,7 @@ Suggests:
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3

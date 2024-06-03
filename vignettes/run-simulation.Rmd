@@ -155,6 +155,8 @@ resultsData <- getOutputValues(simulationResults)
 names(resultsData$data)
 ```
 
+`clearOutputs()` and `addOutputs()` can be combined with the function `setOutputs()`.
+
 ## Changing simulation intervals
 
 The simulation interval (i.e., the simulation times at which results are stored) are stored as the property `$outputSchema` of a `Simulation` object.

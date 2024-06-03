@@ -3,7 +3,7 @@ sim <- loadSimulation("tests/data/S1.pkml")
 
 sim$solver$absTol <- 1e-13
 
-individualResults <- runSimulation(sim)
+individualResults <- runSimulations(sim)[[1]][[1]]
 resultsPaths <- individualResults$allQuantityPaths
 
 tlf <- getOutputValues(individualResults)
@@ -11,7 +11,7 @@ print(tlf)
 
 popFile <- getTestDataFilePath("pop.csv")
 population <- loadPopulation(popFile)
-populationResults <- runSimulation(sim, population)
+populationResults <- runSimulations(sim, population)[[1]]
 resultsPaths <- populationResults$allQuantityPaths
 
 path <- resultsPaths[[1]]

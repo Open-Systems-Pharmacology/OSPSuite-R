@@ -79,7 +79,9 @@ test_that("Two sims not from cache and third from cache", {
 })
 
 test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
-  expect_that(loadTestSimulation("molecules"), throws_error("Could not load simulation"))
+  expect_error(loadTestSimulation("molecules"),
+    regexp = "Could not load simulation"
+  )
 })
 
 test_that("It can remove simulation from cache", {
@@ -97,10 +99,10 @@ test_that("It returns false when attempting to remove a simulation from cache th
   expect_false(removeSimulationFromCache(sim2))
 })
 
-# runSimulation
+# runSimulations
 test_that("It can run a valid individual simulation and returns results", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim)
+  results <- runSimulations(simulations = sim)[[1]]
   expect_equal(results$count, 1)
 })
 
@@ -108,7 +110,7 @@ test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim, population = population)
+  results <- runSimulations(simulations = sim, population = population)[[1]]
   expect_equal(results$count, population$count)
 })
 
@@ -119,7 +121,7 @@ test_that("It can run a valid population simulation with aging data and returns 
   agingData <- loadAgingDataFromCSV(filePath = agingDataFileName)
 
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim, population = population, agingData = agingData)
+  results <- runSimulations(simulations = sim, population = population, agingData = agingData)[[1]]
   expect_equal(results$count, population$count)
 })
 
@@ -128,7 +130,7 @@ test_that("It can run a valid population simulation created directly from create
   population <- loadPopulation(csvPopulationFile = populationFileName)
   list <- list(population = population)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulation(simulation = sim, population = list)
+  results <- runSimulations(simulations = sim, population = list)[[1]]
   expect_equal(results$count, population$count)
 })
 
@@ -136,14 +138,14 @@ test_that("It throws an exception when running a population simulation with the 
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  expect_error(runSimulation(simulation = population, population = simulation))
+  expect_error(runSimulations(simulations = population, population = simulation)[[1]])
 })
 
 test_that("It runs one individual simulation without simulationRunOptions", {
   resetSimulationCache()
 
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulation(simulation = sim)
+  results <- runSimulations(simulations = sim)[[1]]
   expect_true(isOfType(results, "SimulationResults"))
 })
 
@@ -151,15 +153,8 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   resetSimulationCache()
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   simRunOptions <- SimulationRunOptions$new()
-  results <- runSimulation(simulation = sim, simulationRunOptions = simRunOptions)
+  results <- runSimulations(simulations = sim, simulationRunOptions = simRunOptions)[[1]]
   expect_true(isOfType(results, "SimulationResults"))
-})
-
-test_that("It throws an error when trying to run multiple simulations", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_error(results <- runSimulation(simulation = c(sim, sim2)))
 })
 
 test_that("runSimulations returns a named list for one simulation", {
@@ -169,6 +164,41 @@ test_that("runSimulations returns a named list for one simulation", {
   # Check the ids
   expect_equal(names(results)[[1]], sim$id)
   expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("runSimulations returns named list using input list names", {
+  resetSimulationCache()
+  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+
+
+  # No names
+  expect_contains(
+    names(runSimulations(list(sim1, sim2))),
+    c(sim1$id, sim2$id)
+  )
+
+  # One name element
+  expect_equal(
+    names(runSimulations(list(sim1 = sim1))),
+    "sim1"
+  )
+
+  # Full named list
+  expect_equal(
+    names(runSimulations(list(sim1 = sim1, sim2 = sim2))),
+    c("sim1", "sim2")
+  )
+
+  # Partially named list
+  expect_equal(
+    names(runSimulations(list(sim1 = sim1, sim2))),
+    c("sim1", sim2$id)
+  )
+  expect_equal(
+    names(runSimulations(list(sim1, sim2 = sim2))),
+    c(sim1$id, "sim2")
+  )
 })
 
 test_that("It runs multiple individual simulations", {
@@ -448,4 +478,66 @@ test_that("it can explore a simulation by instance", {
 
   path <- tree$Organism$Liver$Volume$path
   expect_equal(path, "Organism|Liver|Volume")
+})
+
+test_that("It calculates steady-state for multiple simulations, single steadyStateTime", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim1 <- loadSimulation(simFilePath)
+  sim2 <- loadSimulation(simFilePath)
+  output <- getSteadyState(
+    simulations = c(sim1, sim2),
+    steadyStateTime = 1
+  )
+  expect_equal(names(output), c(sim1$id, sim2$id))
+})
+
+test_that("It calculates steady-state for multiple simulations, multiple steadyStateTime", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim1 <- loadSimulation(simFilePath)
+  sim2 <- loadSimulation(simFilePath)
+  output <- getSteadyState(
+    simulations = c(sim1, sim2),
+    steadyStateTime = list(1, NULL)
+  )
+  expect_equal(names(output), c(sim1$id, sim2$id))
+  expect_equal(names(output[[sim1$id]]), c("paths", "values"))
+})
+
+test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
+  withr::with_tempdir(
+    code = {
+      simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+      sim <- loadSimulation(simFilePath)
+      wb <- exportSteadyStateToXLS(sim)
+      expect_equal(wb$sheet_names, c("Molecules", "Parameters"))
+    }
+  )
+})
+
+# runSimulation
+
+test_that("`runSimulation()` is deprecated", {
+  expect_snapshot({
+    sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+    results <- runSimulation(sim)
+    expect_equal(results$count, 1)
+  })
+})
+
+
+test_that("runSimulation can run one simulation", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_warning(
+    results <- runSimulation(sim)
+  )
+})
+
+test_that("It throws an error when trying to run multiple simulations", {
+  resetSimulationCache()
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_warning(
+    expect_error(results <- runSimulation(c(sim, sim2)))
+  )
 })

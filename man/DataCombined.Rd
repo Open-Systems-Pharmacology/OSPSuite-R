@@ -21,7 +21,7 @@ The molecular weight (in \code{molWeight} column) is in \code{g/mol} units.
 # simulated data
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-simResults <- runSimulation(sim)
+simResults <- runSimulations(sim)[[1]]
 outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
 # observed data
@@ -155,7 +155,7 @@ Add simulated data using instance of \code{SimulationResults} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulation} on a \code{Simulation} object.}
+calling \code{runSimulations} on a \code{Simulation} object.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or

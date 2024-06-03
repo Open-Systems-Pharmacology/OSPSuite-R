@@ -1,5 +1,27 @@
 # ospsuite 12.0 (development)
 
+## New dependencies
+
+  - `{openxlsx}`
+  - `{lifecyle}`
+
+
+## New features
+
+  - Added a function `getSteadyState()` to calculate steady state values for
+    simulations. This function is of particular use for models of endogenous
+    substrates, where changing a parameter value (e.g., the production rate)
+    will change the steady-state values of the substrate. The steady-state is
+    considered to be the last values of the molecules amounts and state variable
+    parameters in the simulation with sufficiently long simulation time, i.e.,
+    where the rates of the processes do not (significantly) change. The
+    steady-state is NOT analytically calculated or estimated in any other way
+    than simulating for the given time.
+  
+  - Added a function `exportSteadyStateToXLS()` to export steady state values
+    calculated for one simulation using the `getSteadyState()` to an Excel file
+    that can be imported in MoBi.
+
 ## Breaking Changes
 
   - The single argument of the `getBaseUnit()` function is now named
@@ -25,7 +47,11 @@
 
 
 ## Minor improvements and bug fixes
-
+  
+  - Named `Simulation` lists can be passed to `runSimulations()` so that the
+    results are returned as a named list using the same names instead of the
+    simulation id. If no name is provided, the simulation id is used as before.
+    (\#1383)
   - The order of columns of the data frame returned by
     `DataCombined$toDataFrame()` has changed.
   - `DataCombined$toDataFrame()`
@@ -41,7 +67,8 @@ not present in the `DataCombined`.
     through new `DefaultPlotConfiguration` fields (\#1216)
   - `plotObsVsPred()` now have foldDistance argument set to `NULL` by default
     (previously 2). The function will not add any fold lines on the plot by
-    default.
+    default but display identity line. Set this argument to `FALSE` to not draw
+    any lines.
   - `DefaultPlotConfiguration` has a new setting: `displayLLOQ` (default TRUE)
     to control plotting of LLOQ lines.
   - `DefaultPlotConfiguration`'s `xLimits` and `yLimits` arguments are
@@ -56,9 +83,18 @@ not present in the `DataCombined`.
     repeatedly, consider switching the parameter from the default `FALSE` value
     to `TRUE`.
   - `simulationResultsToDataFrame()` is faster than before (\#1317, @Felixmil).
-  - `DataCombined` gets a new method `setDataTypes()` to change data types (observed
-  or simulated) for existing data sets. This method is useful when you want to
-  enforce a certain data type, e.g., for adding artificial data set as simulated results.
+  - `DataCombined` gets a new method `setDataTypes()` to change data types
+    (observed or simulated) for existing data sets. This method is useful when
+    you want to enforce a certain data type, e.g., for adding artificial data
+    set as simulated results.
+  - New function `setOutputs()` to change outputs of `SimulationBatch` objects.
+    It combines `clearOutputs()` and `setOutputs()` in one function.
+  - New simulations life cycle flowcharts in the
+    `vignette("efficient-calculations")` vignette.
+  - New internal function `.setEndSimulationTime()` to set the end time of the
+    simulation. The function will either extend or shorten the simulation time to the specified end time.
+  - Using `runSimulation()` is now soft deprecated in favor of `runSimulations()`.
+  
 
 # ospsuite 11.1.197
 

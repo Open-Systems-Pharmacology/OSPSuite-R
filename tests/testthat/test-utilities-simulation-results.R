@@ -1,9 +1,9 @@
 sim <- loadTestSimulation("S1")
-individualResults <- runSimulation(sim)
+individualResults <- runSimulations(sim)[[1]]
 resultsPaths <- individualResults$allQuantityPaths
 
 population <- loadPopulation(getTestDataFilePath("pop.csv"))
-populationResults <- runSimulation(sim, population)
+populationResults <- runSimulations(sim, population)[[1]]
 
 
 NUMBER_OF_COVARIATES_COLUMNS <- 3
@@ -140,7 +140,7 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulation(sim)
+  results <- runSimulations(sim)[[1]]
 
   df1 <- simulationResultsToDataFrame(results)
   df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
@@ -178,7 +178,7 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulation(sim)
+  results <- runSimulations(sim)[[1]]
 
   df1 <- simulationResultsToDataFrame(results)
 
@@ -201,7 +201,7 @@ test_that("simulationResultsToTibble works as expected - Aciclovir", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulation(sim)
+  results <- runSimulations(sim)[[1]]
 
   df1 <- simulationResultsToTibble(results)
 
@@ -255,10 +255,10 @@ test_that("simulationResultsToDataFrame with population", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  populationResults <- runSimulation(
-    simulation = sim,
+  populationResults <- runSimulations(
+    simulations = sim,
     population = myPopulation
-  )
+  )[[1]]
 
   df1 <- simulationResultsToDataFrame(populationResults)
 

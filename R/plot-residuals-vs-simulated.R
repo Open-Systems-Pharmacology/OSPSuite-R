@@ -13,7 +13,7 @@
 #' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
-#' simResults <- runSimulation(sim)
+#' simResults <- runSimulations(sim)[[1]]
 #' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 #'
 #' # observed data
@@ -45,8 +45,9 @@
 #'
 #' # plot
 #' plotResidualsVsSimulated(myDataCombined,
-#' scaling = "log",
-#' defaultPlotConfiguration = myPlotConfiguration)
+#'   scaling = "log",
+#'   defaultPlotConfiguration = myPlotConfiguration
+#' )
 #'
 #' @export
 plotResidualsVsSimulated <- function(dataCombined,

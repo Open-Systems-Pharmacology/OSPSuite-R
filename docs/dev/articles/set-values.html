@@ -8,10 +8,10 @@
 <meta name="description" content="ospsuite">
 <title>Changing parameter and molecule start values • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Changing parameter and molecule start values">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Changing parameter and molecule start values">
 <meta property="og:description" content="ospsuite">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -23,7 +23,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
@@ -119,8 +119,9 @@ value <code>TRUE</code>.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: rClr</span></span>
 <span><span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span></span>
-<span><span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span></span>
-<span></span>
+<span><span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Load simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
@@ -132,8 +133,9 @@ value <code>TRUE</code>.</p>
 <span><span class="co">#&gt;    Path: Organism|Age </span></span>
 <span><span class="co">#&gt;    Value: 25.70 [year(s)] </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span><span class="va">ageParam</span><span class="op">$</span><span class="va">isConstant</span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ageParam</span><span class="op">$</span><span class="va">isConstant</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>If the value is not constant, it is described by one of the formula
 types:</p>
@@ -141,7 +143,7 @@ types:</p>
 variation around a constant value or between two numerical limits. In
 the simulation, the behavior equals that of constant values. See <a href="https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#working-with-constant-and-distributed-parameters" class="external-link">OSPS
 documentation</a> for more information.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter "Volume" of the Liver</span></span>
 <span><span class="va">liverVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverVolume</span><span class="op">)</span></span>
@@ -149,14 +151,15 @@ documentation</a> for more information.</p>
 <span><span class="co">#&gt;    Path: Organism|Liver|Volume </span></span>
 <span><span class="co">#&gt;    Value: 2.17 [l] </span></span>
 <span><span class="co">#&gt;    isDistributed: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span><span class="va">liverVolume</span><span class="op">$</span><span class="va">isDistributed</span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">liverVolume</span><span class="op">$</span><span class="va">isDistributed</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p><strong>Explicit formula</strong>: The value of the parameter is
 given by an explicit formula. The value of an explicit formula can
 change during the simulation. The string of the formula can be accessed
 via <code>parameter$formulaString</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter "Volume" of the Liver interstital</span></span>
 <span><span class="va">liverIntVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Interstitial|Volume"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span></span>
@@ -166,21 +169,22 @@ via <code>parameter$formulaString</code>.</p>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
 <span><span class="co">#&gt;    formula: f_int*V </span></span>
 <span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">formulaString</span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">formulaString</span></span>
 <span><span class="co">#&gt; [1] "f_int*V"</span></span></code></pre></div>
 <p><strong>Table formula</strong>: The value of the parameter is given
 by a table with x-y value pairs. X values usually refer to the
 simulation time. See <a href="table-parameters.html">Table
 parameters</a> for additional information on how to retrieve or change
 the table values.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter defined by a table.</span></span>
 <span><span class="va">tableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|TableParameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 0.00 </span></span>
+<span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
 <span><span class="co">#&gt;    isTable: TRUE </span></span>
 <span><span class="co">#&gt;    XDimension: Time </span></span>
 <span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
@@ -194,23 +198,25 @@ the table values.</p>
 variables</em>. In this case, the parameter has an <em>initial
 value</em> and a <em>right hand side (RHS)</em> formula, both of which
 can be any formula type.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter defined by a state variable.</span></span>
 <span><span class="va">stateVariableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|StateVariable_Parameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Organism|StateVariable_Parameter </span></span>
-<span><span class="co">#&gt;    Value: 0.00 </span></span>
+<span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
 <span><span class="co">#&gt;    RHSFormula: NULL </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: Time * 2</span></span>
-<span></span>
+<span><span class="co">#&gt;    formula: Time * 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># `value` refers to the initial value of the parameter</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">value</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="co"># `rhsFormula` is the right hand side of the parameter</span></span>
+<span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># `rhsFormula` is the right hand side of the parameter</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">rhsFormula</span></span>
 <span><span class="co">#&gt; Formula: </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
@@ -222,53 +228,56 @@ can be any formula type.</p>
 <p>The user can change initial values of parameters and molecules with
 the methods <code>setParameterValues</code> and
 <code>setMoleculeInitialValues</code>, respectively.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter Dose</span></span>
 <span><span class="va">doseParamPath</span> <span class="op">&lt;-</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span></span>
 <span><span class="va">doseParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="va">doseParamPath</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose </span></span>
-<span><span class="co">#&gt;    Value: 0.00 [kg] </span></span>
+<span><span class="co">#&gt;    Value: 2.50e-04 [kg] </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Change the dose to 350mg. The value has to be converted to base unit, first</span></span>
 <span><span class="va">newValue</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/toBaseUnit.html">toBaseUnit</a></span><span class="op">(</span>quantity <span class="op">=</span> <span class="va">doseParam</span>, values <span class="op">=</span> <span class="fl">350</span>, unit <span class="op">=</span> <span class="st">"mg"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span>parameters <span class="op">=</span> <span class="va">doseParam</span>, values <span class="op">=</span> <span class="va">newValue</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose </span></span>
-<span><span class="co">#&gt;    Value: 0.00 [kg] </span></span>
+<span><span class="co">#&gt;    Value: 3.50e-04 [kg] </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
 <p>Another way to change parameter values is to scale them. The scaling
 is always performed relative to the current value:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">doseParamPath</span> <span class="op">&lt;-</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span></span>
 <span><span class="va">doseParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="va">doseParamPath</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose </span></span>
-<span><span class="co">#&gt;    Value: 0.00 [kg] </span></span>
+<span><span class="co">#&gt;    Value: 3.50e-04 [kg] </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Double the dose</span></span>
 <span><span class="fu"><a href="../reference/scaleParameterValues.html">scaleParameterValues</a></span><span class="op">(</span><span class="va">doseParam</span>, factor <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose </span></span>
-<span><span class="co">#&gt;    Value: 0.00 [kg] </span></span>
+<span><span class="co">#&gt;    Value: 7.00e-04 [kg] </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Half the dose</span></span>
 <span><span class="fu"><a href="../reference/scaleParameterValues.html">scaleParameterValues</a></span><span class="op">(</span><span class="va">doseParam</span>, factor <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">doseParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose </span></span>
-<span><span class="co">#&gt;    Value: 0.00 [kg] </span></span>
+<span><span class="co">#&gt;    Value: 3.50e-04 [kg] </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
 <p>Only constant values can be set. If the parameters value is defined
@@ -277,7 +286,7 @@ the formula. This will be reflected by the field
 <code>isFixedValue</code>. Changing values of formula parameters should
 be done with caution, as the potential dependency on another simulation
 parameters will be destroyed.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter "Volume" of the Liver interstital</span></span>
 <span><span class="va">liverIntVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Interstitial|Volume"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span></span>
@@ -287,12 +296,14 @@ parameters will be destroyed.</p>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
 <span><span class="co">#&gt;    formula: f_int*V </span></span>
 <span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># isFixedValue is FALSE as the parameter is defined by its formula</span></span>
 <span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">isFixedValue</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">liverIntVolume</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
@@ -301,13 +312,14 @@ parameters will be destroyed.</p>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
 <span><span class="co">#&gt;    formula: f_int*V </span></span>
 <span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span><span class="co"># isFixedValue is TRUE as the value of parameter is overridden by the constant value</span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># isFixedValue is TRUE as the value of parameter is overridden by the constant value</span></span>
 <span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">isFixedValue</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>The parameter value can be reset to its formula after assigning a
 constant value:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Organism|Liver|Interstitial|Volume </span></span>
@@ -315,12 +327,14 @@ constant value:</p>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
 <span><span class="co">#&gt;    formula: f_int*V </span></span>
 <span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># isFixedValue is TRUE as the value of parameter is overridden by the constant value</span></span>
 <span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">isFixedValue</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">liverIntVolume</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverIntVolume</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
@@ -329,8 +343,9 @@ constant value:</p>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
 <span><span class="co">#&gt;    formula: f_int*V </span></span>
 <span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">isFixedValue</span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">liverIntVolume</span><span class="op">$</span><span class="va">isFixedValue</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p>Changing the value of a state variable parameter will only change its
 initial value, but not the right hand side (i.e., the value in the
@@ -339,19 +354,20 @@ RHS formula off and, by that, make the parameter be only dependent on
 its initial value, the field <code>isStateVariable</code> can be set to
 <code>FALSE</code>. This function is one-way only! It is not possible to
 re-activate the RHS formula after switching it off.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the parameter defined by a state variable.</span></span>
 <span><span class="va">stateVariableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|StateVariable_Parameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
 <span><span class="co">#&gt;    Path: Organism|StateVariable_Parameter </span></span>
-<span><span class="co">#&gt;    Value: 0.00 </span></span>
+<span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
 <span><span class="co">#&gt;    RHSFormula: NULL </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: Time * 2</span></span>
-<span></span>
+<span><span class="co">#&gt;    formula: Time * 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Setting its value only changes the initial value</span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">stateVariableParam</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span></span>
@@ -362,8 +378,9 @@ re-activate the RHS formula after switching it off.</p>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
 <span><span class="co">#&gt;    RHSFormula: NULL </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: Time * 2</span></span>
-<span></span>
+<span><span class="co">#&gt;    formula: Time * 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Switching the RHS formula off</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">isStateVariable</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span></span>
@@ -371,14 +388,15 @@ re-activate the RHS formula after switching it off.</p>
 <span><span class="co">#&gt;    Path: Organism|StateVariable_Parameter </span></span>
 <span><span class="co">#&gt;    Value: 10.00 </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
-<span></span>
+<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Switching it on is not supported</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">isStateVariable</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
 <span><span class="co">#&gt; Error in (function (value) : Creating a RHS Formula is not supported at the moment. This should be done in MoBi.</span></span></code></pre></div>
 <p>An example how to set the initial values of molecules in all
 containers to a certain value:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get objects representing the molecule Aciclovir in all containers</span></span>
 <span><span class="va">allAciclovirMolecules</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching</a></span><span class="op">(</span><span class="st">"Organism|**|Aciclovir"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span></span>
@@ -393,13 +411,11 @@ containers to a certain value:</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>.</p>
+  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
     </footer>

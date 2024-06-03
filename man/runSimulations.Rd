@@ -14,8 +14,9 @@ runSimulations(
 )
 }
 \arguments{
-\item{simulations}{One \code{Simulation} or list of \code{Simulation} objects
-to simulate.}
+\item{simulations}{One \code{Simulation} or a list or vector of \code{Simulation} objects
+to simulate. List or vector can be named, in which case the names will reused in the \code{simulationResults} output list.
+If not named, the output list will use simulation ids.}
 
 \item{population}{Optional instance of a \code{Population} to use for the simulation.
 Only allowed when simulating one simulation.
@@ -61,12 +62,12 @@ simRunOptions$showProgress <- TRUE
 # Running a population simulation
 popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
-results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
+results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)[[1]]
 
 # Running multiple simulations in parallel
 sim2 <- loadSimulation(simPath)
 sim3 <- loadSimulation(simPath)
 
-# Results is an array of `SimulationResults`
+# Results is a list of `SimulationResults`
 results <- runSimulations(list(sim, sim2, sim3))
 }

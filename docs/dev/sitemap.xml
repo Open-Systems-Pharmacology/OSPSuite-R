@@ -214,6 +214,12 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTaskFromCache.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspDimensions.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspUnits.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getPathToPKSimInstallDir.html</loc>
   </url>
   <url>
@@ -256,6 +262,9 @@
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-parameterValueListFrom.html</loc>
   </url>
   <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-parseDimensionsXML.html</loc>
+  </url>
+  <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-removeEmptyDataFrame.html</loc>
   </url>
   <url>
@@ -275,6 +284,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-scaleQuantityValues.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-setEndSimulationTime.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-setQuantityValues.html</loc>
@@ -311,6 +323,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSensitivityAnalysisResultsToCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSteadyStateToXLS.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Formula.html</loc>
@@ -392,6 +407,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getStandardMoleculeParameters.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getSteadyState.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getUnitsForDimension.html</loc>
@@ -587,6 +605,9 @@
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputInterval.html</loc>
+  </url>
+  <url>
+    <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputs.html</loc>
   </url>
   <url>
     <loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setParameterValues.html</loc>
