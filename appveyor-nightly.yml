@@ -92,3 +92,7 @@ artifacts:
 
   - path: '\ospsuite*.zip'
     name: Win
+
+branches:
+  only:
+    - r-sharp-r6  #TODO remove branch restriction before merging to develop
