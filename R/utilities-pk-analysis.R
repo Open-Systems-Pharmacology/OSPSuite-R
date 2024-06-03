@@ -86,7 +86,8 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
         pkParameterResultsFilePath,
         locale = readr::locale(encoding = "UTF-8"),
         comment = "#",
-        col_types = colTypes
+        col_types = colTypes,
+        na = c("NaN", "", NA, "NA", "Infinity", "-Infinity")
       )
 
       return(pkResultsDataFrame)
