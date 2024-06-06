@@ -860,13 +860,14 @@ getSteadyState <- function(simulations,
   # for each simulation and must be stored separately
   simulationState <- .storeSimulationState(simulations)
   quantitiesPathsMap <- vector(mode = "list", length = length(simulations))
-  for (idx in seq_along(simulations)) {
-    simulation <- simulations[[idx]]
-    simId <- simulation$id
+
+  for (i in seq_along(simulations)) {
+    simulation <- simulations[[i]]
+    simId <- names(simulations)[i] %||% simulation$id
     # Extend simulation time to the steady-state value.
     # If the specified steady-state time is NULL, the simulation time is set to
     # the time of the last application plus a specified delta.
-    latestTime <- steadyStateTime[[idx]]
+    latestTime <- steadyStateTime[[i]]
     if (is.null(latestTime)) {
       latestTime <- 0
       # get the list of all administered molecules in the simulation
@@ -891,12 +892,12 @@ getSteadyState <- function(simulations,
 
     # If no quantities are explicitly specified, simulate all outputs.
     if (is.null(quantitiesPaths)) {
-      quantitiesPathsMap[[idx]] <- getAllStateVariablesPaths(simulation)
+      quantitiesPathsMap[[i]] <- getAllStateVariablesPaths(simulation)
     } else {
-      quantitiesPathsMap[[idx]] <- quantitiesPaths
+      quantitiesPathsMap[[i]] <- quantitiesPaths
     }
-    names(quantitiesPathsMap)[[idx]] <- simId
-    setOutputs(quantitiesOrPaths = quantitiesPathsMap[[idx]], simulation = simulation)
+    names(quantitiesPathsMap)[[i]] <- simId
+    setOutputs(quantitiesOrPaths = quantitiesPathsMap[[i]], simulation = simulation)
   }
 
   # Run simulations concurrently
@@ -907,9 +908,9 @@ getSteadyState <- function(simulations,
 
   # Iterate through simulations and get their outputs
   outputMap <- vector(mode = "list", length = length(simulations))
-  for (idx in seq_along(simulations)) {
-    simulation <- simulations[[idx]]
-    simId <- simulation$id
+  for (i in seq_along(simulations)) {
+    simulation <- simulations[[i]]
+    simId <- names(simulations)[i] %||% simulation$id
     simResults <- simulationResults[[simId]]
 
     allOutputs <- getOutputValues(
@@ -942,8 +943,8 @@ getSteadyState <- function(simulations,
 
     # Reset simulation output intervals and output selections
     .restoreSimulationState(simulations, simulationState)
-    outputMap[[idx]] <- list(paths = quantitiesPathsMap[[simId]][indices], values = endValues[indices])
-    names(outputMap)[[idx]] <- simId
+    outputMap[[i]] <- list(paths = quantitiesPathsMap[[simId]][indices], values = endValues[indices])
+    names(outputMap)[[i]] <- simId
   }
   return(outputMap)
 }
