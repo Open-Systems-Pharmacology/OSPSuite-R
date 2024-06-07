@@ -147,8 +147,8 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' performed.
 #'
 #' @param simulations One `Simulation` or a list or vector of `Simulation` objects
-#' to simulate. List or vector can be named, in which case the names will reused in the `simulationResults` output list.
-#' If not named, the output list will use simulation ids.
+#' to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the `simulationResults` output list.
+#' If not named, the output list will use simulation ids for names.
 #' @param population Optional instance of a `Population` to use for the simulation.
 #' Only allowed when simulating one simulation.
 #' Alternatively, you can also pass the result of `createPopulation` directly.
@@ -191,6 +191,8 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
   simulations <- c(simulations)
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
+
+  ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
   # only one simulation? We allow population run
@@ -803,7 +805,9 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #'   for which the steady-state will be simulated. If `NULL` (default), all
 #'   molecules and state variable parameters are considered. The same list is
 #'   applied for all simulations.
-#' @param simulations `Simulation` object or a list of `Simulation` objects
+#' @param simulations `Simulation` object or a list or vector of `Simulation` objects
+#' to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the output list.
+#' If not named, the output list will use simulation ids for names.
 #' @param ignoreIfFormula If `TRUE` (default), species and parameters with
 #'   initial values defined by a formula are not included.
 #' @param lowerThreshold Numerical value (in default unit of the output).
@@ -836,6 +840,7 @@ getSteadyState <- function(simulations,
   # Default time that is added to the time of the last administration for steady-state
   DELTA_STEADY_STATE <- 3 * 24 * 60 # 3 days in minutes
 
+  ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   ospsuite.utils::validateIsOfType(simulations, type = "Simulation")
   ospsuite.utils::validateIsString(quantitiesPaths, nullAllowed = TRUE)
   # Unlisting `steadyStateTime` because it can be a list of values, including NULL
@@ -954,7 +959,9 @@ getSteadyState <- function(simulations,
 #' @description Stores simulation output intervals, output time points,
 #' and output selections in the current state.
 #'
-#' @param simulations List of `Simulation` objects
+#' @param simulations `Simulation` object or a list or vector of `Simulation` objects
+#' to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the output list.
+#' If not named, the output list will use simulation ids for names.
 #'
 #' @return A named list with entries `outputIntervals`, `timePoints`, and
 #' `outputSelections`. Every entry is a named list with names being the IDs
@@ -962,6 +969,7 @@ getSteadyState <- function(simulations,
 #' @keywords internal
 #' @noRd
 .storeSimulationState <- function(simulations) {
+  ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulations <- c(simulations)
   # Create named vectors for the output intervals, time points, and output
   # selections of the simulations in their initial state. Names are IDs of
@@ -973,7 +981,7 @@ getSteadyState <- function(simulations,
 
   for (idx in seq_along(simulations)) {
     simulation <- simulations[[idx]]
-    simId <- simulation$id
+    simId <- names(simulations)[idx] %||% simulation$id
     # Have to reset both the output intervals and the time points!
     oldOutputIntervals[[idx]] <- simulation$outputSchema$intervals
     oldTimePoints[[idx]] <- simulation$outputSchema$timePoints
@@ -1005,9 +1013,11 @@ getSteadyState <- function(simulations,
 #' @keywords internal
 #' @noRd
 .restoreSimulationState <- function(simulations, simStateList) {
+  ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulations <- c(simulations)
-  for (simulation in simulations) {
-    simId <- simulation$id
+  for (idx in seq_along(simulations)) {
+    simulation <- simulations[[idx]]
+    simId <- names(simulations)[idx] %||% simulation$id
     # reset the output intervals
     simulation$outputSchema$clear()
     for (outputInterval in simStateList$outputIntervals[[simId]]) {

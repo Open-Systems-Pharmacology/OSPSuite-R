@@ -15,8 +15,8 @@ runSimulations(
 }
 \arguments{
 \item{simulations}{One \code{Simulation} or a list or vector of \code{Simulation} objects
-to simulate. List or vector can be named, in which case the names will reused in the \code{simulationResults} output list.
-If not named, the output list will use simulation ids.}
+to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the \code{simulationResults} output list.
+If not named, the output list will use simulation ids for names.}
 
 \item{population}{Optional instance of a \code{Population} to use for the simulation.
 Only allowed when simulating one simulation.
