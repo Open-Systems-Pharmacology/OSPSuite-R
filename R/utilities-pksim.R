@@ -8,19 +8,20 @@
 #' @export
 initPKSim <- function(pksimFolderPath = NULL) {
   # pksimFolderPath <- "C:/dev/PK-Sim/src/PKSim/bin/Debug/net472"
-
+  browse()
   if (ospsuiteEnv$isPKSimLoaded) {
     return(invisible())
   }
 
-  pksimFolderPath <- pksimFolderPath %||% .getPathToPKSimInstallDir()
+  pksimFolderPath <- "C:/Users/BenjaminMarianoPerez/source/repos/OSPSuite-R/inst/lib"
   if (is.na(pksimFolderPath)) {
     stop(messages$pkSimInstallPathNotFound)
   }
-
+  browse()
   .addPathToSystemPath(pksimFolderPath)
   pksimR <- file.path(pksimFolderPath, "PKSim.R.dll")
   if (!file.exists(pksimR)) {
+    browse()
     stop(messages$pkSimRPathInvalid(pksimR))
   }
   rClr::clrLoadAssembly(pksimR)

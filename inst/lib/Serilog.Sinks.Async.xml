@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Serilog.Sinks.Async</name>
+    </assembly>
+    <members>
+        <member name="T:Serilog.LoggerConfigurationAsyncExtensions">
+            <summary>
+            Extends <see cref="T:Serilog.LoggerConfiguration"/> with methods for configuring asynchronous logging.
+            </summary>
+        </member>
+        <member name="M:Serilog.LoggerConfigurationAsyncExtensions.Async(Serilog.Configuration.LoggerSinkConfiguration,System.Action{Serilog.Configuration.LoggerSinkConfiguration},System.Int32)">
+            <summary>
+            Configure a sink to be invoked asynchronously, on a background worker thread.
+            </summary>
+            <param name="loggerSinkConfiguration">The <see cref="T:Serilog.Configuration.LoggerSinkConfiguration"/> being configured.</param>
+            <param name="configure">An action that configures the wrapped sink.</param>
+            <param name="bufferSize">The size of the concurrent queue used to feed the background worker thread. If
+            the thread is unable to process events quickly enough and the queue is filled, subsequent events will be
+            dropped until room is made in the queue.</param>
+            <returns>A <see cref="T:Serilog.LoggerConfiguration"/> allowing configuration to continue.</returns>
+        </member>
+    </members>
+</doc>

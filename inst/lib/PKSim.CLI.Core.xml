@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PKSim.CLI.Core</name>
+    </assembly>
+    <members>
+        <member name="P:PKSim.CLI.Core.RunOptions.ExportRunOptions.ExportAllSimulationsIfListIsEmpty">
+            <summary>
+            Specifies if all simulations should be exported if the provided list of Simulations is empty.
+            Default is true and will be overwritten for special use cases
+            </summary>
+        </member>
+        <member name="P:PKSim.CLI.Core.RunOptions.JsonRunOptions.RunForAllOutputs">
+            <summary>
+               Indicates whether all outputs of the simulation should be exported or only the one actually selected in the
+               simulation.
+               Default value is <c>TRUE</c>
+            </summary>
+        </member>
+        <member name="P:PKSim.CLI.Core.RunOptions.JsonRunOptions.JacobianUse">
+            <summary>
+               How do we deal with Jacobian. As is to stay compatible with version prior to v11
+            </summary>
+        </member>
+        <member name="P:PKSim.CLI.Core.RunOptions.QualificationRunOptions.ConfigurationFile">
+            <summary>
+               Json configuration file that will be converted into a configuration object
+            </summary>
+        </member>
+        <member name="P:PKSim.CLI.Core.RunOptions.QualificationRunOptions.Validate">
+            <summary>
+               Specifies a validation run (e.g. no actual calculation will be performed.). Default is <c>false</c>
+            </summary>
+        </member>
+        <member name="P:PKSim.CLI.Core.RunOptions.QualificationRunOptions.Run">
+            <summary>
+               Should simulation be performed as part of the run?
+            </summary>
+        </member>
+        <member name="P:PKSim.CLI.Core.RunOptions.QualificationRunOptions.ExportProjectFiles">
+            <summary>
+            Specifies if project files (snapshot and PK-Sim project file should be exported)
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SimulationExportMode.Json">
+            <summary>
+               Results as json
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SimulationExportMode.Csv">
+            <summary>
+               Results as CSV
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SimulationExportMode.Xml">
+            <summary>
+               Sim Model file (simulation used by sim model for Matlab and R)
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SimulationExportMode.Pkml">
+            <summary>
+               pkml Model (simulation used by mobi and pksim)
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SimulationExportMode.Xlsx">
+            <summary>
+               Export simulation results to excel (Individual simulations only)
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SnapshotExportMode.Project">
+            <summary>
+               Exports project files from json files
+            </summary>
+        </member>
+        <member name="F:PKSim.CLI.Core.Services.SnapshotExportMode.Snapshot">
+            <summary>
+               Exports json files from project files
+            </summary>
+        </member>
+    </members>
+</doc>

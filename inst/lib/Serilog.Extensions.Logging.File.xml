@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Serilog.Extensions.Logging.File</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Logging.FileLoggerExtensions">
+            <summary>
+            Extends <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> with methods for configuring file logging.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.FileLoggerExtensions.AddFile(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Configuration.IConfigurationSection)">
+            <summary>
+            Adds a file logger initialized from the supplied configuration section.
+            </summary>
+            <param name="loggerFactory">The logger factory.</param>
+            <param name="configuration">A configuration section with file parameters.</param>
+            <returns>A logger factory to allow further configuration.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.FileLoggerExtensions.AddFile(Microsoft.Extensions.Logging.ILoggerFactory,System.String,Microsoft.Extensions.Logging.LogLevel,System.Collections.Generic.IDictionary{System.String,Microsoft.Extensions.Logging.LogLevel},System.Boolean,System.Nullable{System.Int64},System.Nullable{System.Int32},System.String)">
+            <summary>
+            Adds a file logger initialized from the supplied configuration section.
+            </summary>
+            <param name="loggerFactory">The logger factory.</param>
+            <param name="pathFormat">Filname to write. The filename may include {Date} to specify how the date portion of the 
+            filename is calculated. May include environment variables.</param>
+            <param name="minimumLevel">The level below which events will be suppressed (the default is <see cref="F:Microsoft.Extensions.Logging.LogLevel.Information"/>).</param>
+            <param name="levelOverrides">A dictionary mapping logger name prefixes to minimum logging levels.</param>
+            <param name="isJson">If true, the log file will be written in JSON format.</param>
+            <param name="fileSizeLimitBytes">The maximum size, in bytes, to which any single log file will be allowed to grow.
+            For unrestricted growth, pass null. The default is 1 GB.</param>
+            <param name="retainedFileCountLimit">The maximum number of log files that will be retained, including the current
+            log file. For unlimited retention, pass null. The default is 31.</param>
+            <param name="outputTemplate">The template used for formatting plain text log output. The default is
+            "{Timestamp:o} {RequestId,13} [{Level:u3}] {Message} ({EventId:x8}){NewLine}{Exception}"</param>
+            <returns>A logger factory to allow further configuration.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.FileLoggerExtensions.AddFile(Microsoft.Extensions.Logging.ILoggingBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adds a file logger initialized from the supplied configuration section.
+            </summary>
+            <param name="loggingBuilder">The logging builder.</param>
+            <param name="configuration">A configuration section with file parameters.</param>
+            <returns>The logging builder to allow further configuration.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.FileLoggerExtensions.AddFile(Microsoft.Extensions.Logging.ILoggingBuilder,System.String,Microsoft.Extensions.Logging.LogLevel,System.Collections.Generic.IDictionary{System.String,Microsoft.Extensions.Logging.LogLevel},System.Boolean,System.Nullable{System.Int64},System.Nullable{System.Int32},System.String)">
+            <summary>
+            Adds a file logger initialized from the supplied configuration section.
+            </summary>
+            <param name="loggingBuilder">The logging builder.</param>
+            <param name="pathFormat">Filname to write. The filename may include {Date} to specify how the date portion of the 
+            filename is calculated. May include environment variables.</param>
+            <param name="minimumLevel">The level below which events will be suppressed (the default is <see cref="F:Microsoft.Extensions.Logging.LogLevel.Information"/>).</param>
+            <param name="levelOverrides">A dictionary mapping logger name prefixes to minimum logging levels.</param>
+            <param name="isJson">If true, the log file will be written in JSON format.</param>
+            <param name="fileSizeLimitBytes">The maximum size, in bytes, to which any single log file will be allowed to grow.
+            For unrestricted growth, pass null. The default is 1 GB.</param>
+            <param name="retainedFileCountLimit">The maximum number of log files that will be retained, including the current
+            log file. For unlimited retention, pass null. The default is 31.</param>
+            <param name="outputTemplate">The template used for formatting plain text log output. The default is
+            "{Timestamp:o} {RequestId,13} [{Level:u3}] {Message} ({EventId:x8}){NewLine}{Exception}"</param>
+            <returns>The logging builder to allow further configuration.</returns>
+        </member>
+        <member name="T:Serilog.Extensions.Logging.File.FileLoggingConfiguration">
+            <summary>
+            Configuration for the Serilog file logging.
+            </summary>
+        </member>
+        <member name="P:Serilog.Extensions.Logging.File.FileLoggingConfiguration.PathFormat">
+            <summary>
+            Filename to write. The filename may include <c>{Date}</c> to specify
+            how the date portion of the filename is calculated. May include
+            environment variables.
+            </summary>
+        </member>
+        <member name="P:Serilog.Extensions.Logging.File.FileLoggingConfiguration.Json">
+            <summary>
+            If <c>true</c>, the log file will be written in JSON format.
+            </summary>
+        </member>
+        <member name="P:Serilog.Extensions.Logging.File.FileLoggingConfiguration.FileSizeLimitBytes">
+            <summary>
+            The maximum size, in bytes, to which any single log file will be
+            allowed to grow. For unrestricted growth, pass <c>null</c>. The
+            default is 1 GiB.
+            </summary>
+        </member>
+        <member name="P:Serilog.Extensions.Logging.File.FileLoggingConfiguration.RetainedFileCountLimit">
+            <summary>
+            The maximum number of log files that will be retained, including
+            the current log file. For unlimited retention, pass <c>null</c>.
+            The default is 31.
+            </summary>
+        </member>
+        <member name="P:Serilog.Extensions.Logging.File.FileLoggingConfiguration.OutputTemplate">
+            <summary>
+            The template used for formatting plain text log output.
+            The default is "{Timestamp:o} {RequestId,13} [{Level:u3}] {Message} ({EventId:x8}){NewLine}{Exception}"
+            </summary>
+        </member>
+    </members>
+</doc>

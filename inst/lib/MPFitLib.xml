@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MPFitLib</name>
+    </assembly>
+    <members>
+        <member name="T:MPFitLib.DelimitedArray`1">
+            <summary>
+            Class that represents a "sub-array" within a larger array by implementing
+            appropriate indexing using an offset and sub-count. This was implemented in
+            the C# version in order to preserve the existing code semantics while also
+            allowing the code to be compiled w/o use of /unsafe compilation flag. This
+            permits execution of the code in low-trust environments, such as that required
+            by the CoreCLR runtime of Silverlight (Mac/PC) and Moonlight (Linux)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <remarks>Note - modifications to this structure will modify the parent (source) array!</remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MPFitLib.MPFit.Solve(MPFitLib.mp_func,System.Int32,System.Int32,System.Double[],MPFitLib.mp_par[],MPFitLib.mp_config,System.Object,MPFitLib.mp_result@,System.IO.TextWriter)" -->
+        <member name="T:MPFitLib.mp_func">
+            <summary>
+            User-function delegate structure required by MPFit.Solve
+            </summary>
+            <param name="m">Number of functions (elemens of fvec)</param>
+            <param name="npar">Number of variables (elements of x)</param>
+            <param name="a">I - Parameters</param>
+            <param name="fvec">O - function values</param>
+            <param name="dvec">
+            O - function derivatives (optional)
+            "Array of ILists" to accomodate DelimitedArray IList implementation
+            </param>
+            <param name="prv">I/O - function private data (cast to object type in user function)</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OSPSuite.Infrastructure.Import</name>
+    </assembly>
+    <members>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.ColumnInfo.RelatedColumnOf">
+            <summary>
+               Column name of related column. The related column must have an auxiliary type as meta data category.
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.ColumnInfo.SupportedDimensions">
+            <summary>
+               List of possible supported dimensions.This List may be empty if all dimensions are supported
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.DataImporterSettings.NamingConventions">
+            <summary>
+               Gets the default naming convention for the imported observed dataSheet
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.DataImporterSettings.Token">
+            <summary>
+               The token must include {0} to be useful. Ultimately, this is replaced by the naming algorithm.
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.DataImporterSettings.Delimiter">
+            <summary>
+               The delimiter is used between metadata values in the name
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Core.DataImporterSettings.AddNamingPatternMetaData(System.String[])">
+            <summary>
+               Add a metadata name that will be used to name the sheet once imported. The naming take place in the order that
+               strings are added
+            </summary>
+            <param name="metaDataNames">The list of the metadata names to be used when naming the import</param>
+        </member>
+        <member name="T:OSPSuite.Infrastructure.Import.Core.DataSheetCollection">
+            <summary>
+               a collection of excel dataSheet sheets
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Core.DataSheetCollection.AddNotExistingSheets(OSPSuite.Infrastructure.Import.Core.DataSheetCollection)">
+            <summary>
+               Adds the sheets of collection <paramref name="sheetsToBeAdded" /> to the current collection
+               Returns the names of the sheets added.
+            </summary>
+        </member>
+        <member name="T:OSPSuite.Infrastructure.Import.Core.IDataSource">
+            <summary>
+               Collection of DataSets
+            </summary>
+        </member>
+        <member name="T:OSPSuite.Infrastructure.Import.Core.IDataSourceFile">
+            <summary>
+               Single file containing the data, e.g. excel file or csv file
+            </summary>
+        </member>
+        <member name="T:OSPSuite.Infrastructure.Import.Core.IDataSet">
+            <summary>
+               Data from a single experiment
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.MetaDataCategory.ListOfValues">
+            <summary>
+               List of valid values, if available
+            </summary>
+            <remarks>The key is the real value. The value of the dictionary is the display text of the value in the gui.</remarks>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.MetaDataCategory.ListOfImages">
+            <summary>
+               List of images, if available
+            </summary>
+            <remarks>The images should be added with a key equal to the value key in <see cref="P:OSPSuite.Infrastructure.Import.Core.MetaDataCategory.ListOfValues" />.</remarks>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.MetaDataCategory.IsListOfValuesFixed">
+            <summary>
+               Is the list of values fixed or can the user enter values not in the list and the list is just a suggestion.
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.MetaDataCategory.MetaDataType">
+            <summary>
+               Type of meta data (string, double etc)
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Core.MetaDataCategory.MaxLength">
+            <summary>
+               This can be used to specify the maximum number of characters for string columns.
+            </summary>
+        </member>
+        <member name="T:OSPSuite.Infrastructure.Import.Core.MetaDataMappingConverter">
+            Helper class to keep track of the id of the data stored
+            and the column index it refers to
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.CsvReaderExtensions.DoubleAt(LumenWorks.Framework.IO.Csv.CsvReader,System.Int32)">
+            <summary>
+               Returns the double value define in the current record at the index <paramref name="fieldIndex" />
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.CsvReaderExtensions.DoubleAt(LumenWorks.Framework.IO.Csv.CsvReader,System.String)">
+            <summary>
+               Returns the double value define in the current record with field named <paramref name="fieldName" />
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.CsvReaderExtensions.FloatAt(LumenWorks.Framework.IO.Csv.CsvReader,System.Int32)">
+            <summary>
+               Returns the float value define in the current record at the index <paramref name="fieldIndex" />
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.CsvReaderExtensions.FloatAt(LumenWorks.Framework.IO.Csv.CsvReader,System.String)">
+            <summary>
+               Returns the float value define in the current record with field named <paramref name="fieldName" />
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.CsvReaderExtensions.IntAt(LumenWorks.Framework.IO.Csv.CsvReader,System.Int32)">
+            <summary>
+               Returns the int value define in the current record at the index <paramref name="fieldIndex" />
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.CsvReaderExtensions.IntAt(LumenWorks.Framework.IO.Csv.CsvReader,System.String)">
+            <summary>
+               Returns the int value define in the current record at the index <paramref name="fieldName" />
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Extensions.ImporterDataTableExtensions.AddRowToDataTable(System.Data.DataTable,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+               Adds a list of values as a row to a DataTable
+            </summary>
+            <param name="dataTable">Data Table to populate</param>
+            <param name="rowValues">The values to be added to the DataTable</param>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.ICsvSeparatorSelector.GetCsvSeparator(System.String)">
+            <summary>
+               Returns the separator to be used for the reading of the .csv file
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IDataImporter.ImportDataSets(System.Collections.Generic.IReadOnlyList{OSPSuite.Infrastructure.Import.Core.MetaDataCategory},System.Collections.Generic.IReadOnlyList{OSPSuite.Infrastructure.Import.Core.ColumnInfo},OSPSuite.Infrastructure.Import.Core.DataImporterSettings,System.String)">
+            <summary>
+               This function retrieves a list of imported DataRepositories.
+            </summary>
+            <param name="metaDataCategories">Specification of meta data of the table.</param>
+            <param name="columnInfos">Specification of columns including specification of meta data.</param>
+            <param name="dataImporterSettings">Settings used to initialize the view</param>
+            <param name="dataFileName">Path to the file containing the data</param>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IDataImporter.ImportFromConfiguration(OSPSuite.Core.Import.ImporterConfiguration,System.Collections.Generic.IReadOnlyList{OSPSuite.Infrastructure.Import.Core.MetaDataCategory},System.Collections.Generic.IReadOnlyList{OSPSuite.Infrastructure.Import.Core.ColumnInfo},OSPSuite.Infrastructure.Import.Core.DataImporterSettings,System.String)">
+            <summary>
+               This function retrieves a list of imported DataRepositories.
+            </summary>
+            <param name="configuration">Configuration to use</param>
+            <param name="metaDataCategories">Specification of meta data of the table.</param>
+            <param name="columnInfos">Specification of columns including specification of meta data.</param>
+            <param name="dataImporterSettings">Settings used to initialize the view</param>
+            <param name="dataFileName">Path to the file containing the data</param>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IDataImporter.DefaultMetaDataCategoriesForObservedData">
+            <summary>
+               Creates a default list of meta data categories that could still be modified by the caller
+            </summary>
+            <returns>a list of meta data categories</returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IDataImporter.ColumnInfosForObservedData">
+            <summary>
+               Creates a default list of ColumnInfos that could still be modified by the caller
+            </summary>
+            <returns>a list of meta data categories</returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IDataImporter.AreFromSameMetaDataCombination(OSPSuite.Core.Domain.Data.DataRepository,OSPSuite.Core.Domain.Data.DataRepository)">
+            <summary>
+               Compares if two data repositories come from the same data
+            </summary>
+            <param name="sourceDataRepository">source DataRepository to compare with</param>
+            <param name="targetDataRepository">target DataRepository to compare with</param>
+            <returns></returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IDataImporter.ConfigurationFromData(System.String,System.Collections.Generic.IReadOnlyList{OSPSuite.Infrastructure.Import.Core.ColumnInfo},System.Collections.Generic.IReadOnlyList{OSPSuite.Infrastructure.Import.Core.MetaDataCategory},System.String)">
+            <summary>
+               Returns a new Configuration auto discovered from the data contained in dataPath
+            </summary>
+            <param name="dataPath">File containing data</param>
+            <param name="columnInfos">Column infos description</param>
+            <param name="metaDataCategories">meta data description</param>
+            <param name="sheetName">name of the sheet to base the configuration on</param>
+            <returns></returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IImportFromExcelTask.RetrieveExcelSheets(System.String,System.Boolean)">
+            <summary>
+               Retrieves all the appropriate sheet names from an excel file
+            </summary>
+            <param name="fileName">The filename and path of the excel file</param>
+            <param name="excludeEmptySheets">Excludes empty sheets from the list if set to true</param>
+            <returns>The list of sheet names</returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IImportFromExcelTask.GetDataTables(System.String,System.String,System.Boolean)">
+            <summary>
+               Gets the DataTable for the filepath, and sheet indicated
+            </summary>
+            <param name="filePath">The path to the excel file</param>
+            <param name="sheetName">the sheet in the file to convert</param>
+            <param name="firstRowAsCaption">Whether or not the first row in the sheet should be interpreted as a caption</param>
+            <returns>Data table corresponding to the file and sheet</returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IImportFromExcelTask.GetAllDataTables(System.String,System.Boolean)">
+            <summary>
+               Gets all the DataTables from the Excel workbook at the specified filePath
+            </summary>
+            <param name="filePath">The path to the excel file</param>
+            <param name="firstRowAsCaption">Whether or not the first row in the sheet should be interpreted as a caption</param>
+            <returns>The data tables corresponding to the file</returns>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.IIndividualValuesCacheImporter.ImportFrom(System.String,OSPSuite.Infrastructure.Import.Services.IImportLogger,OSPSuite.Core.Domain.PathCache{OSPSuite.Core.Domain.IParameter})">
+            <summary>
+               Imports all parameters defined in the <paramref name="populationFileFullPath" />. If
+               <paramref name="allParameters" /> is defined,
+               the imported parameter path will be validated (unit removed, check for existence). Otherwise, parameters will be
+               imported as is
+            </summary>
+            <param name="populationFileFullPath">Full path of CSV File containing the population to import</param>
+            <param name="logger">Logger used to notify user of potential problem with the file</param>
+            <param name="allParameters">Optional cache of parameters used to validate the imported parameters</param>
+            <returns></returns>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Services.SensitivityAnalysisRunResultsImport.Status">
+            <summary>
+               Status of import action. Its value indicates whether the import was successful or not
+            </summary>
+        </member>
+        <member name="P:OSPSuite.Infrastructure.Import.Services.SimulationResultsImport.Status">
+            <summary>
+               Status of import action. Its value indicates whether the import was successful or not
+            </summary>
+        </member>
+        <member name="M:OSPSuite.Infrastructure.Import.Services.UnitExtractor.ExtractNameAndUnit(System.String)">
+            <summary>
+               Extracts the name and  unit from the given <paramref name="text" /> by matching unit has being the last entry in
+               [].
+               If not unit is found, return an empty string for the unit
+            </summary>
+            <example>
+               ExtractNameAndUnit("Concentration [mg/l]") => "Concentration" and "mg/l"
+            </example>
+        </member>
+    </members>
+</doc>
