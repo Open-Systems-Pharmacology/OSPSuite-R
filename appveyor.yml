@@ -17,11 +17,11 @@ install:
   - ps: Bootstrap
   - git submodule update --init --recursive
   - ps: |
-    $zipUrl = "https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip"
-    $zipPath = "$env:C:/projects/ospsuite-r/inst/lib/download.zip"
-    $extractPath = "$env:C:/projects/ospsuite-r/inst/lib"
-    Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
-    Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+      $zipUrl = "https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip"
+      $zipPath = "C:\projects\ospsuite-r\inst\lib\download.zip"
+      $extractPath = "C:\projects\ospsuite-r\inst\lib"
+      Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
+      Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
 
 platform: x64
 
