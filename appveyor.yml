@@ -18,9 +18,9 @@ install:
   - git submodule update --init --recursive
   - ps: |
       $zipUrl = "https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip"
-      ls
-      $zipPath = "\inst\lib\download.zip"
-      $extractPath = "\inst\lib"
+      $currentPath = Get-Location
+      $zipPath = Join-Path $currentPath "inst\lib\download.zip"
+      $extractPath = Join-Path $currentPath "inst\lib"
       Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
       Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
 
