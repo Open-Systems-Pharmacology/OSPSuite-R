@@ -23,6 +23,7 @@ install:
       Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
       Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
 
+
 platform: x64
 
 environment:
