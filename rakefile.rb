@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'openssl'
+require 'zip'
 
 require_relative 'scripts/copy-dependencies'
 require_relative 'scripts/utils'
@@ -30,6 +31,7 @@ task :postclean do
   clear_folders
   nuget_restore os
   copy_files_to_lib_folder
+  download_and_unzip_latest
 end
 
 # This task is temporary until we have an automated linux build
@@ -85,6 +87,45 @@ end
 
 
 private
+
+def download_and_unzip_latest()
+  zip_url = 'https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip'
+  current_path = Dir.pwd
+  zip_path = File.join(current_path, 'inst', 'lib', 'download.zip')
+  extract_path = File.join(current_path, 'inst', 'lib')
+  puts "downloading package from #{zip_url}".light_blue
+  download_zip(zip_url, zip_path)
+  puts "extracting package to #{extract_path}"
+  extract_zip(zip_path, extract_path)
+  puts "package updated correctly"
+end 
+
+def download_zip(url, path)
+  URI.open(url) do |u|
+    File.open(path, 'wb') { |f| f.write(u.read) }
+  end
+end
+
+# Helper method to extract a zip file
+def extract_zip(file, destination)
+  Zip::File.open(file) do |zip_file|
+    zip_file.each do |entry|
+      dest_file = File.join(destination, entry.name)
+      FileUtils.mkdir_p(File.dirname(dest_file))
+      
+      if File.exist?(dest_file)
+        begin
+          File.delete(dest_file)
+        rescue => e
+          puts "Error deleting file: #{dest_file}, #{e.message}"
+        end
+      end
+
+      entry.extract(dest_file) { true }  # Overwrite existing files
+    end
+  end
+end
+
 def copy_so(file, linux_distro, target_dir)
   native_folder = '/bin/native/x64/Release/'
   copy_dependencies packages_dir, target_dir do
@@ -117,6 +158,7 @@ def download_file(project_name, file_name, uri, download_dir)
   end
   file
 end
+
 
 def download_pksim_portable(branch)
   puts "Downloading PK-Sim portable".light_blue
@@ -189,6 +231,7 @@ end
 def copy_files_to_lib_folder
   copy_packages_files
   copy_modules_files
+
 end
 
 def clear_folders
@@ -201,14 +244,8 @@ end
 def copy_packages_files
   native_folder = '/bin/native/x64/Release/'
   copy_dependencies packages_dir, lib_dir do
-    # Copy all netstandard dlls. The higher version will win (e.g. 1.6 will be copied after 1.5)
-    copy_files '*/**/lib/netstandard2.0', 'dll'
-
     # Copy all x64 release dll and so from OSPSuite
     copy_files "OSPSuite.*#{native_folder}", ['dll', 'so']
-
-    #special case for NPOI that does not work in .net standard mode
-    copy_files 'NPOI*/**/net45', 'dll'
   end
 
 end
@@ -221,9 +258,6 @@ def copy_modules_files
 end
 
 def nuget_restore(os)
-  command_line = %W[install packages.config -OutputDirectory packages]
-  Utils.run_cmd('nuget', command_line)
-
   command_line = %W[install packages.#{os}.config -OutputDirectory packages]
   Utils.run_cmd('nuget', command_line)
 end
