@@ -14,7 +14,6 @@
 #'
 #' @export
 createIndividual <- function(individualCharacteristics) {
-  browser()
   validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
   individualFactory <- rClr::clrCallStatic("PKSim.R.Api", "GetIndividualFactory")

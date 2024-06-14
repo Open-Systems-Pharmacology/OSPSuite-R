@@ -1,29 +1,16 @@
 #' Loads the `PKSim.R` that will enable create individual and create population workflows.
-#' @param pksimFolderPath Path where PK-Sim is installed. If this is not specified, path will be read from registry using the package version
 #'
 #' @note  This will only work on Windows machine and should not be called on any other OS.
 #' This function should also only be called explicitly when using a portable install of the package
 #'
 #' @import rClr
 #' @export
-initPKSim <- function(pksimFolderPath = NULL) {
-  # pksimFolderPath <- "C:/dev/PK-Sim/src/PKSim/bin/Debug/net472"
-  browse()
+initPKSim <- function() {
   if (ospsuiteEnv$isPKSimLoaded) {
     return(invisible())
   }
 
-  pksimFolderPath <- "C:/Users/BenjaminMarianoPerez/source/repos/OSPSuite-R/inst/lib"
-  if (is.na(pksimFolderPath)) {
-    stop(messages$pkSimInstallPathNotFound)
-  }
-  browse()
-  .addPathToSystemPath(pksimFolderPath)
-  pksimR <- file.path(pksimFolderPath, "PKSim.R.dll")
-  if (!file.exists(pksimR)) {
-    browse()
-    stop(messages$pkSimRPathInvalid(pksimR))
-  }
+  pksimR <- system.file("lib", "PKSim.R.dll", package = ospsuiteEnv$packageName)
   rClr::clrLoadAssembly(pksimR)
   rClr::clrCallStatic("PKSim.R.Api", "InitializeOnce")
 
