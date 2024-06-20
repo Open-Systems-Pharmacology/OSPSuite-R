@@ -42,7 +42,7 @@ build_script:
   - Rscript install_dependencies.R
 
 before_test:
-  - cinst pandoc
+  - choco install pandoc
   - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
   - pandoc -v
 
