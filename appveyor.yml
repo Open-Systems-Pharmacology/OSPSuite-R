@@ -23,12 +23,12 @@ environment:
   R_VERSION: 4.3.1
   R_ARCH: x64
   USE_RTOOLS: true
-  R_BUILD_ARGS: --no-manual
+  R_BUILD_ARGS: --no-build-vignettes --no-manual
   R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_PKGTYPE: binary
   NOT_CRAN: true
   # Do not update vignettes after each commit. Vignettes are only generated for nightly builds.
-  KEEP_VIGNETTES: true
+  KEEP_VIGNETTES:
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: true
   # This enables performance tests, that are potentially machine-specific
@@ -41,11 +41,6 @@ build_script:
   - travis-tool.sh r_binary_install curl
   - Rscript install_dependencies.R
 
-before_test:
-  - choco install pandoc
-  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
-  - pandoc -v
-
 on_success:
   - Rscript -e "spelling::spell_check_package()"
 test_script:
@@ -54,8 +49,6 @@ test_script:
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
-
-
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
@@ -69,7 +62,6 @@ artifacts:
 
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
-
 
 skip_commits:
   files:
