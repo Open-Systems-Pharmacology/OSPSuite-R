@@ -226,6 +226,7 @@ results <- runSimulationBatches(simBatch)
 Instead, the state variable parameter should be treated as a species and set as a variable molecule start value.
 
 ```{r BatchRunStateVarMolecule, eval=TRUE}
+stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
 # Create simulation batch with state variable parameter set as a variable molecule
 simBatch <- createSimulationBatch(simulation = sim1, moleculesOrPaths = stateVariableParam)
 # Add run values
