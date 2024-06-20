@@ -28,7 +28,7 @@ environment:
   R_PKGTYPE: binary
   NOT_CRAN: true
   # Do not update vignettes after each commit. Vignettes are only generated for nightly builds.
-  KEEP_VIGNETTES:
+  KEEP_VIGNETTES: true
   #We use this variable to skip some long lasting tests using "skip_on_ci"
   CI: true
   # This enables performance tests, that are potentially machine-specific
