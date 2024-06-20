@@ -89,10 +89,10 @@ test_that("it can set measurement unit from column and change column name", {
   expect_equal(importerConfiguration$measurementDimension, NULL)
 
   importerConfiguration$isMeasurementUnitFromColumn <- FALSE
-  
-  #TODO enable tests!
-#  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
-#  expect_equal(importerConfiguration$measurementUnit, .encodeUnit("µmol/l"))
+
+  # TODO enable tests!
+  #  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
+  #  expect_equal(importerConfiguration$measurementUnit, .encodeUnit("µmol/l"))
 
   expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
