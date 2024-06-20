@@ -1,0 +1,230 @@
+---
+title: "Observed data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Observed data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.showtext = TRUE
+)
+```
+
+`{ospsuite}` offers a concept of storing and processing numerical x-y data in a 
+unified format by implementing a `DataSet` class. `DataSet` objects standardize 
+handling of (observed) data coming from different sources, such as excel files 
+using the data importer functionality of the OSPS, loaded from `*.pkml`, or manually 
+created. This vignette gives an overview of the options to create `DataSet` objects
+ and combine them into grouped data sets using the [`DataCombined`](data-combined.html) class.
+
+## DataSet
+
+A `DataSet` object stores numerical data pairs - typically time 
+as x values and measurement as y values - and optionally the measurement error . All values have a *dimension*  and a *unit* (see [Dimensions and Units](unit-conversion.html) 
+for more information). Furthermore, each `DataSet` must have a *name*. When creating 
+a `DataSet` from scratch (e.g. when the user wants to manually input observed data), 
+a name must be provided:
+
+```{r newDataSet}
+library(ospsuite)
+
+# Create an empty data set
+dataSet <- DataSet$new("My data set")
+```
+
+After creation, the `DataSet` does not hold any data. The default dimension and 
+unit for the x values is `Time` and `h`, respectively. The default dimension and 
+unit for the y values is `Concentration (mass)` and `mg/l`, respectively. The 
+dimension of the error values always corresponds to the dimension of the y values, 
+though the units may differ.
+
+Setting numerical values (or overwriting current values) is performed by the 
+`$setValues()` method:
+
+
+```{r setValues}
+dataSet$setValues(
+  xValues = c(1, 2, 3, 4),
+  yValues = c(0, 0.1, 0.6, 10),
+  yErrorValues = c(0.001, 0.001, 0.1, 1)
+)
+
+print(dataSet)
+```
+
+The user can change the dimensions and units of the values. After changing the 
+dimension, the unit is automatically set to the *base unit*  of the dimension. 
+Changing the dimension or unit *does not*  transform the values.
+
+
+```{r setDimensionUnit}
+# Print x, y, and error values
+dataSet$xValues
+dataSet$yValues
+dataSet$yErrorValues
+
+# Change the unit of x-values
+dataSet$xUnit <- ospUnits$Time$min
+# Print the x values - they did not change
+dataSet$xValues
+
+# Change dimension of y-values
+dataSet$yDimension <- ospDimensions$Amount
+
+print(dataSet)
+
+# Change the units of y values and error values - they are now different!
+dataSet$yUnit <- ospUnits$Amount$mol
+dataSet$yErrorUnit <- ospUnits$Amount$pmol
+
+print(dataSet)
+```
+
+Two types of error values are supported - arithmetic error (default) and geometric 
+error, the latter being given in fraction. The user can change the error type:
+
+```{r setErrorType}
+# Default error type is "ArithmeticStdDev"
+dataSet$yErrorType
+
+# Change error type to geometric
+dataSet$yErrorType <- DataErrorType$GeometricStdDev
+# Error unit is "Unitless" for dimension "Fraction".
+dataSet$yErrorUnit
+
+# Changing error type to arithmetic will set the dimension and unit of the error
+# to the same dimension and unit as the y values
+dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
+
+print(dataSet)
+```
+
+A `DataSet` can store any kind of text meta data as name-values pairs
+ and can be added by the `addMetaData()` method:
+ 
+```{r addMetaData}
+# Add new meta data entries
+dataSet$addMetaData(
+  name = "Molecule",
+  value = "Aciclovir"
+)
+dataSet$addMetaData(
+  name = "Organ",
+  value = "Muscle"
+)
+
+# Print meta data of the DataSet
+print(dataSet$metaData)
+```
+ 
+A `DataSet` or multiple `DataSet`s  can be converted to `data.frame` (or `tibble`) 
+to be processed in downstream analysis and visualization workflows:
+
+```{r dataSetToDataFrame}
+# Create a second data set
+dataSet2 <- DataSet$new(name = "Second data set")
+dataSet2$setValues(
+  xValues = c(1, 2, 3, 4, 5),
+  yValues = c(1, 0, 5, 8, 0.1)
+)
+
+# Convert data sets to a tibble
+myTibble <- dataSetToTibble(dataSets = c(dataSet, dataSet2))
+
+print(myTibble)
+```
+
+## Importing data
+
+Creating `DataSet` objects from scratch is a rather advanced use case. Typically, 
+observed data are loaded either from `*.pkml` files exported from PK-Sim or MoBi,
+ or imported from Excel files. The function `loadDataSetFromPKML()` loads data from
+ the `*.pkml` file. Complementary to this function is the function `saveDataSetToPKML()`
+ that allows to export any `DataSet` to a `*.pkml` that can be loaded e.g. in MoBi.
+
+```{r loadDataSetFromPKML}
+# Load a data set from PKML
+filePath <- system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite")
+
+dataSet <- loadDataSetFromPKML(filePath = filePath)
+
+print(dataSet)
+```
+
+Another (and probably the most important) way to create `DataSet` objects is by 
+importing data from excel files. The function `loadDataSetsFromExcel()` utilizes the 
+data import functionality implemented in PK-Sim and MoBi and returns a set of 
+`DataSet` objects. For description of the supported file formats and configurations, 
+please refer to the [OSPS documentation](https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/import-edit-observed-data).
+
+Loading observed data from an Excel sheet requires an `ImporterConfiguration`. 
+The configuration describes mapping of excel sheet columns to numerical data (e.g. 
+which column contains the x values) or meta data (e.g., description of the 
+applied dose). One way to obtain such configuration is to create it in PK-Sim 
+or MoBi, save it (as an `*.xml`) file, and load it in R with the `loadDataImporterConfiguration()` 
+function:
+
+```{r loadDataImporterConfiguration}
+# Load a configuration from xml file
+filePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
+importerConfiguration <- loadDataImporterConfiguration(configurationFilePath = filePath)
+
+print(importerConfiguration)
+```
+
+A data importer configuration can also be created from scratch and has to be 
+manually populated by the user. Alternatively, the user can let the software 
+"guess" the configuration for a given excel sheet:
+
+```{r createDataImporterConfigurationFor}
+# Excel file
+excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+sheetName <- "TestSheet_1"
+
+# Create importer configuration for the excel sheet
+importerConfiguration_guessed <- createImporterConfigurationForFile(
+  filePath = excelFilePath,
+  sheet = sheetName
+)
+
+print(importerConfiguration)
+```
+
+It is important to manually check the created configuration, as the automated 
+configuration recognition cannot cover all possible cases.
+
+If only specific sheets from the excel file should be imported, they can be 
+specified in the `ImporterConfiguration`. The following example loads the sheets 
+`TestSheet_1` and `TestSheet_1_withMW`:
+
+```{r loadSheets}
+# Excel file
+excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+sheetName <- "TestSheet_1"
+
+# Create importer configuration for the excel sheet
+importerConfiguration_guessed <- createImporterConfigurationForFile(
+  filePath = excelFilePath,
+  sheet = sheetName
+)
+# Add sheet names to the configuration
+importerConfiguration_guessed$sheets <- c("TestSheet_1", "TestSheet_1_withMW")
+
+# Load data
+dataSets <- loadDataSetsFromExcel(
+  xlsFilePath = excelFilePath,
+  importerConfigurationOrPath = importerConfiguration_guessed
+)
+```
+
+Currently, `DataImporterConfiguration` created from scratch or for a specific 
+data sheet does not support all features of importer configuration, such as 
+specifying the column containing the molecular weight of the measured molecule 
+or the LLOQ values. It is therefore recommended that you use importer configurations 
+created in PK-Si or MoBi.
