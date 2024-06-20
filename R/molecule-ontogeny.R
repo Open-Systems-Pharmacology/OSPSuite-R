@@ -1,6 +1,6 @@
 #' @title MoleculeOntogeny
 #' @docType class
-#' @description  Use when retrieving individual values using the createIndividualAlgorithm. This class is a simple pair \{MoleculeName, Ontogeny\}
+#' @description  Use when retrieving individual values using the createIndividualAlgorithm. This class is a simple pair (MoleculeName, Ontogeny)
 #' allowing the user to retrieve potential ontogeny values.
 #'
 #' @format NULL

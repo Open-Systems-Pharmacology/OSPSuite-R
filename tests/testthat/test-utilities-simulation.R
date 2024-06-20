@@ -166,7 +166,7 @@ test_that("runSimulations returns a named list for one simulation", {
   expect_true(isOfType(results[[1]], "SimulationResults"))
 })
 
-test_that("runSimulations returns named list using input list names", {
+test_that("runSimulations returns named list using input list names without duplicates", {
   resetSimulationCache()
   sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
   sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
@@ -198,6 +198,12 @@ test_that("runSimulations returns named list using input list names", {
   expect_equal(
     names(runSimulations(list(sim1, sim2 = sim2))),
     c(sim1$id, "sim2")
+  )
+
+  # Not unique names
+  expect_error(
+    runSimulations(list(sim1 = sim1, sim1 = sim2)),
+    regexp = "Object has duplicated values; only unique values are allowed. "
   )
 })
 
@@ -501,6 +507,25 @@ test_that("It calculates steady-state for multiple simulations, multiple steadyS
   )
   expect_equal(names(output), c(sim1$id, sim2$id))
   expect_equal(names(output[[sim1$id]]), c("paths", "values"))
+})
+
+
+test_that("Getting Steady State works with named simulations without duplicated names", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim1 <- loadSimulation(simFilePath)
+  sim2 <- loadSimulation(simFilePath)
+  output <- getSteadyState(
+    simulations = c("sim1" = sim1, "sim2" = sim2),
+    steadyStateTime = 1
+  )
+  expect_equal(names(output), c("sim1", "sim2"))
+
+  expect_error({
+    getSteadyState(
+      simulations = c("sim1" = sim1, "sim1" = sim2),
+      steadyStateTime = 1
+    )
+  })
 })
 
 test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
