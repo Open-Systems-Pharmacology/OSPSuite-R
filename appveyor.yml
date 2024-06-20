@@ -23,7 +23,7 @@ environment:
   R_VERSION: 4.3.1
   R_ARCH: x64
   USE_RTOOLS: true
-  R_BUILD_ARGS: --no-build-vignettes --no-manual
+  R_BUILD_ARGS: --no-manual
   R_CHECK_ARGS: --no-multiarch --no-manual --as-cran --no-build-vignettes
   R_PKGTYPE: binary
   NOT_CRAN: true
