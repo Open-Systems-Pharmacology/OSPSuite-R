@@ -210,7 +210,7 @@ will impact the performance significantly.
 State variable parameters, i.e., those defined by a right hand side (RHS), are treated as molecules internally. Trying to create and run a simulation batch with a state variable parameter set as a variable parameter
 will result in an error:
 
-```{r BatchRunStateVarParam, eval=TRUE, error = TRUE, purl = FALSE}
+```{r BatchRunStateVarParam, eval = TRUE, error = TRUE, purl = TRUE}
 stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
 print(stateVariableParam)
 
