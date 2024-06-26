@@ -38,5 +38,5 @@
 #'
 #' @param  path Path to expand
 .expandPath <- function(path) {
-  path.expand(enc2utf8(path))
+  path.expand(path)
 }

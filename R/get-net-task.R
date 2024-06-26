@@ -7,7 +7,7 @@
 #'
 #' @keywords internal
 .getNetTask <- function(taskName) {
-  rClr::clrCallStatic("OSPSuite.R.Api", paste0("Get", taskName))
+  rSharp::callStatic("OSPSuite.R.Api", paste0("Get", taskName))
 }
 
 #' @title .getNetTaskFromCache

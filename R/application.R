@@ -11,19 +11,19 @@ Application <- R6::R6Class(
     #' @field startTime Start time of application instance (Read-Only)
     startTime = function(value) {
       if (missing(value)) {
-        .toObjectType(private$wrapReadOnlyProperty("StartTime", value), Parameter)
+        .toObjectType(private$.wrapReadOnlyProperty("StartTime", value), Parameter)
       }
     },
     #' @field infusionTime Infusion time of application instance or null if undefined (Read-Only)
     infusionTime = function(value) {
       if (missing(value)) {
-        .toObjectType(private$wrapReadOnlyProperty("InfusionTime", value), Parameter)
+        .toObjectType(private$.wrapReadOnlyProperty("InfusionTime", value), Parameter)
       }
     },
     #' @field drugMass Applied drugmass of the application instance of null if undefined (Read-Only)
     drugMass = function(value) {
       if (missing(value)) {
-        .toObjectType(private$wrapReadOnlyProperty("DrugMass", value), Parameter)
+        .toObjectType(private$.wrapReadOnlyProperty("DrugMass", value), Parameter)
       }
     }
   ),
@@ -32,7 +32,7 @@ Application <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       self$startTime$printValue()
 
       if (!is.null(self$infusionTime)) {

@@ -10,7 +10,7 @@ Container <- R6::R6Class(
   active = list(
     #' @field containerType Type of container
     containerType = function(value) {
-      private$wrapReadOnlyProperty("ContainerTypeAsString", value)
+      private$.wrapReadOnlyProperty("ContainerTypeAsString", value)
     }
   ),
   public = list(
@@ -18,9 +18,9 @@ Container <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Container type", self$containerType)
-      private$printLine("Path", self$path)
+      private$.printClass()
+      private$.printLine("Container type", self$containerType)
+      private$.printLine("Path", self$path)
       invisible(self)
     }
   )

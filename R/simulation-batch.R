@@ -13,19 +13,19 @@ SimulationBatch <- R6::R6Class(
     finalize = function() {
       private$.simulation <- NULL
       # SimulationBatch are disposable object and should be disposed
-      rClr::clrCall(self$ref, "Dispose")
+      self$call("Dispose")
       super$finalize()
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET reference object.
+    #' @param netObject An `rSharp::NetObject` object.
     #' @param simulation Simulation used in the batch run
     #' @return A new `SimulationBatch` object.
-    initialize = function(ref, simulation) {
+    initialize = function(netObject, simulation) {
       validateIsOfType(simulation, "Simulation")
-      super$initialize(ref)
+      super$initialize(netObject)
       private$.simulation <- simulation
     },
 
@@ -81,7 +81,7 @@ SimulationBatch <- R6::R6Class(
       }
 
       batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
-      rClr::clrCall(self$ref, "AddSimulationBatchRunValues", batchRunValues$ref)
+      self$call("AddSimulationBatchRunValues", batchRunValues)
       return(batchRunValues$id)
     },
 
@@ -92,10 +92,10 @@ SimulationBatch <- R6::R6Class(
     #' @return List of parameter paths, or `NULL` if no parameter is variable.
     #' @export
     getVariableParameters = function() {
-      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
+      simulationBatchOptions <- self$get("SimulationBatchOptions")
 
-      rClr::clrGet(simulationBatchOptions, "VariableParameters") %||%
-        rClr::clrGet(simulationBatchOptions, "VariableParameter")
+      simulationBatchOptions$get("VariableParameters") %||%
+        simulationBatchOptions$get("VariableParameter")
     },
 
     #' @description Returns a list of molecules paths that are variable in this batch
@@ -106,24 +106,24 @@ SimulationBatch <- R6::R6Class(
     #' @return List of parameter paths, or `NULL` if no molecule is variable.
     #' @export
     getVariableMolecules = function() {
-      simulationBatchOptions <- rClr::clrGet(self$ref, "SimulationBatchOptions")
+      simulationBatchOptions <- self$get("SimulationBatchOptions")
 
-      rClr::clrGet(simulationBatchOptions, "VariableMolecules") %||%
-        rClr::clrGet(simulationBatchOptions, "VariableMolecule")
+      simulationBatchOptions$get("VariableMolecules") %||%
+        simulationBatchOptions$get("VariableMolecule")
     },
 
     #' @description
     #' Print the object to the console
     #' @param ... Additional arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Id", self$id)
-      private$printLine("Simulation", self$simulation$name)
-      private$printLine("runValuesIds", self$runValuesIds)
-      private$printLine(
+      private$.printClass()
+      private$.printLine("Id", self$id)
+      private$.printLine("Simulation", self$simulation$name)
+      private$.printLine("runValuesIds", self$runValuesIds)
+      private$.printLine(
         "Parameters", self$getVariableParameters()
       )
-      private$printLine(
+      private$.printLine(
         "Molecules", self$getVariableMolecules()
       )
       invisible(self)
@@ -135,20 +135,20 @@ SimulationBatch <- R6::R6Class(
       if (missing(value)) {
         private$.simulation
       } else {
-        private$throwPropertyIsReadonly("simulation")
+        private$.throwPropertyIsReadonly("simulation")
       }
     },
     #' @field runValuesIds Ids of the run values that will be executed on next run
     runValuesIds = function(value) {
       if (missing(value)) {
-        rClr::clrGet(self$ref, "RunValuesIds")
+        self$get("RunValuesIds")
       } else {
-        private$throwPropertyIsReadonly("runValuesIds")
+        private$.throwPropertyIsReadonly("runValuesIds")
       }
     },
     #' @field id The id of the .NET wrapped object. (read-only)
     id = function(value) {
-      private$wrapReadOnlyProperty("Id", value)
+      private$.wrapReadOnlyProperty("Id", value)
     }
   ),
 )

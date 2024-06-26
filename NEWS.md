@@ -28,6 +28,7 @@
     `quantityOrDimension` (was `dimension` previously). It can now use objects
     of class `Quantity` as inputs, to be consistent with the `toBaseUnit()`
     function.
+  - The package gains a new dependency `{rSharp}`
 
 ## Major Changes
 
@@ -44,6 +45,7 @@
   - `plotPopulationTimeProfile()` has a new `aggregation` argument that allow
     the user to choose between quantiles, arithmetic and geometric aggregations
     of y.
+  - The package loses dependency `{rClr}`
 
 
 ## Minor improvements and bug fixes

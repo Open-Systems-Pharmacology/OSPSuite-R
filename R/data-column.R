@@ -12,69 +12,64 @@ DataColumn <- R6::R6Class(
   active = list(
     #' @field values Returns the values defined in the column
     values = function(value) {
-      private$wrapVectorProperty("Value", "ValuesAsArray", value, "ValuesAsArray")
+      private$.wrapVectorProperty("Value", "ValuesAsArray", value, "ValuesAsArray")
     },
     #' @field name Returns the name of the column  (Read-Only)
     name = function(value) {
-      private$wrapReadOnlyProperty("Name", value)
+      private$.wrapReadOnlyProperty("Name", value)
     },
     #' @field unit The base unit in which the values are defined (Read-Only)
     unit = function(value) {
-      if (!missing(value)) {
-        value <- enc2utf8(value)
-      }
-      private$.unit <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
+      private$.unit <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
       return(private$.unit)
     },
     #' @field displayUnit The unit in which the values should be displayed
     displayUnit = function(value) {
       if (missing(value)) {
-        return(private$wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value))
+        return(private$.wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value))
       }
-      value <- enc2utf8(value)
       dimension <- getDimensionByName(self$dimension)
       # we use the ignore case parameter set  to true so that we do not have to worry about casing when set via scripts
-      unit <- rClr::clrCall(dimension, "FindUnit", value, TRUE)
+      unit <- dimension$call("FindUnit", value, TRUE)
       if (is.null(unit)) {
         stop(messages$errorUnitNotSupported(unit = value, dimension = self$dimension))
       }
-      rClr::clrSet(self$ref, "DisplayUnit", unit)
+      self$set("DisplayUnit", unit)
     },
     #' @field dimension The dimension of the values
     dimension = function(value) {
       if (missing(value)) {
         if (is.null(private$.dimension)) {
-          private$.dimension <- private$wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
+          private$.dimension <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
         }
         return(private$.dimension)
       }
-      value <- enc2utf8(value)
       # updating the dimension
-      rClr::clrSet(self$ref, "Dimension", getDimensionByName(value))
+      self$set("Dimension", getDimensionByName(value))
       private$.dimension <- NULL
       private$.unit <- NULL
     },
     #' @field molWeight Molecular weight of associated observed data in internal unit
     #' In no molecular weight is defined, the value is `NULL`
     molWeight = function(value) {
-      dataInfo <- rClr::clrGet(self$ref, "DataInfo")
+      dataInfo <- self$get("DataInfo")
       if (missing(value)) {
-        return(rClr::clrGet(dataInfo, "MolWeight"))
+        return(dataInfo$get("MolWeight"))
       }
 
       validateIsNumeric(value)
-      rClr::clrSet(dataInfo, "MolWeight", value)
+      dataInfo$set("MolWeight", value)
     },
     #' @field LLOQ Lower Limit Of Quantification.
     #' In no LLOQ is defined, the value is `NULL`
     LLOQ = function(value) {
-      dataInfo <- rClr::clrGet(self$ref, "DataInfo")
+      dataInfo <- self$get("DataInfo")
       if (missing(value)) {
-        return(rClr::clrGet(dataInfo, "LLOQAsDouble"))
+        return(dataInfo$get("LLOQAsDouble"))
       }
 
       validateIsNumeric(value)
-      rClr::clrSet(dataInfo, "LLOQAsDouble", value)
+      dataInfo$set("LLOQAsDouble", value)
     }
   ),
   public = list(
@@ -83,9 +78,9 @@ DataColumn <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       if (self$unit == "") {
-        private$printLine(self$name)
+        private$.printLine(self$name)
       } else {
-        private$printLine(self$name, paste0("base unit: [", self$unit, "]"))
+        private$.printLine(self$name, paste0("base unit: [", self$unit, "]"))
       }
       invisible(self)
     }

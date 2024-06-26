@@ -14,8 +14,8 @@ SimulationBatchOptions <- R6::R6Class(
     #' @param variableMolecules Vector of absolute molecule paths to be varied in a simulation batch
     #' @return A new `SimulationBatchOptions` object.
     initialize = function(variableParameters = NULL, variableMolecules = NULL) {
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SimulationBatchOptions")
-      super$initialize(ref)
+      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SimulationBatchOptions")
+      super$initialize(netObject)
 
       if (!is.null(variableMolecules)) {
         self$variableMolecules <- variableMolecules
@@ -28,20 +28,20 @@ SimulationBatchOptions <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("variableParameters", self$variableParameters)
-      private$printLine("variableMolecules", self$variableMolecules)
+      private$.printClass()
+      private$.printLine("variableParameters", self$variableParameters)
+      private$.printLine("variableMolecules", self$variableMolecules)
       invisible(self)
     }
   ),
   active = list(
     #' @field variableParameters Vector of absolute parameter paths to be varied in a simulation batch
     variableParameters = function(value) {
-      private$wrapVectorProperty("VariableParameter", "VariableParameters", value, "Parameters")
+      private$.wrapVectorProperty("VariableParameter", "VariableParameters", value, "Parameters")
     },
     #' @field variableMolecules Vector of absolute molecule paths to be varied in a simulation batch
     variableMolecules = function(value) {
-      private$wrapVectorProperty("VariableMolecule", "VariableMolecules", value, "Molecules")
+      private$.wrapVectorProperty("VariableMolecule", "VariableMolecules", value, "Molecules")
     }
   )
 )
