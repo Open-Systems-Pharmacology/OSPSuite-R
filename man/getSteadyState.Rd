@@ -14,7 +14,9 @@ getSteadyState(
 )
 }
 \arguments{
-\item{simulations}{\code{Simulation} object or a list of \code{Simulation} objects}
+\item{simulations}{\code{Simulation} object or a list or vector of \code{Simulation} objects
+to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the output list.
+If not named, the output list will use simulation ids for names.}
 
 \item{quantitiesPaths}{List of quantity paths (molecules and/or parameters)
 for which the steady-state will be simulated. If \code{NULL} (default), all
