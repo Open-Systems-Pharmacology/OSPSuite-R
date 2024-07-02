@@ -5,16 +5,9 @@
 
 <!-- badges: start -->
 
-<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases/latest" class="pkgdown-devel">
-<img src="https://img.shields.io/github/downloads/Open-Systems-Pharmacology/OSPSuite-R/latest/total?label=%E2%AD%B3%20Downloads%20latest%20release"/></a>
-<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="pkgdown-devel">
-<img src="https://img.shields.io/github/downloads/Open-Systems-Pharmacology/OSPSuite-R/total?label=%E2%AD%B3%20Downloads%20total"/></a>
-<br>
-<a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/OSPSuite-R/branch/develop" class="pkgdown-devel">
-<img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"/></a>
-<a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="pkgdown-devel">
-<img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"/></a>
-
+[![R-CMD-check](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=develop)
 <!-- badges: end -->
 
 # Overview
@@ -127,21 +120,22 @@ When installing from such files, the CRAN dependencies need to be
 installed manually first.
 
 ``` r
-    # Install dependencies (e.g. R6) which are on CRAN
-    install.packages("data.table")
-    install.packages("dplyr")
-    install.packages("ggplot2")
-    install.packages("ggtext")
-    install.packages("jsonlite")
-    install.packages("lifecycle")
-    install.packages("patchwork")
-    install.packages("purrr")
-    install.packages("R6")
-    install.packages("readr")
-    install.packages("rlang")
-    install.packages("stringr")
-    install.packages("tidyr")
-    install.packages("xml2")
+# Install dependencies (e.g. R6) which are on CRAN
+install.packages("data.table")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("ggtext")
+install.packages("jsonlite")
+install.packages("lifecycle")
+install.packages("openxlsx")
+install.packages("patchwork")
+install.packages("purrr")
+install.packages("R6")
+install.packages("readr")
+install.packages("rlang")
+install.packages("stringr")
+install.packages("tidyr")
+install.packages("xml2")
 ```
 
 #### Install non-CRAN dependencies
