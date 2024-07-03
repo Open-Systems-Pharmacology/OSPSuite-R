@@ -8,11 +8,12 @@ on:
 
 
 jobs:
-  increase-dev-version: # only do that when actually merging in main/develop branch
+  bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
-    uses: ./.github/workflows/increase-dev-version.yaml
+    uses: ./.github/workflows/bump-dev-version.yaml
   R-CMD-Check:
     if: ${{ always() }}
+    needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yml@main
     with:
       install-pksim: true
