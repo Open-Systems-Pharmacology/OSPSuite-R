@@ -21,7 +21,6 @@ BugReports:
 Depends: 
     R (>= 3.6),
     rClr (>= 0.9.1),
-    rSharp
 Imports: 
     dplyr (>= 1.0.0),
     ospsuite.utils (>= 1.5.0),
@@ -142,6 +141,5 @@ Collate:
     'zzz.R'
     'zzz_deprecated.R'
 Remotes:  
-    Open-Systems-Pharmacology/rSharp,
     Open-Systems-Pharmacology/OSPSuite.RUtils,
     Open-Systems-Pharmacology/TLF-Library
