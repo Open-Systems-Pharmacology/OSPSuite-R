@@ -20,12 +20,11 @@ jobs:
 
       - name: Unzip package
         run: |
-          unzip /tmp/package.zip -d inst/lib > unzip_log.txt 2>&1 || (cat unzip_log.txt && exit 1)
+          unzip -o /tmp/package.zip -d inst/lib > unzip_log.txt 2>&1 || (cat unzip_log.txt && exit 1)
 
       - name: Display unzip log if failed
         if: failure()
         run: cat unzip_log.txt
-
 
       - name: Commit changes
         run: |
