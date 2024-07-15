@@ -5,85 +5,68 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="ospsuite">
 <title>Efficient calculation • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Efficient calculation">
-<meta property="og:description" content="ospsuite">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Efficient calculation">
 <meta name="robots" content="noindex">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
     <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0.9000</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/ospsuite.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/ospsuite.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Primary functions</h6>
-    <a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a>
-    <a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a>
-    <a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a>
-    <a class="dropdown-item" href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
-    <a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
-    <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
-    <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Figure creation</h6>
-    <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
-    <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
-    <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6>
-    <a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a>
-    <a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a>
-    <a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
+    <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
+    <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
+    <li><a class="dropdown-item" href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a></li>
+    <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
+    <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
+    <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
+    <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
+    <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
+    <li><a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a></li>
+    <li><a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/open-systems-pharmacology/ospsuite-r/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/open-systems-pharmacology/ospsuite-r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -92,10 +75,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Efficient calculation</h1>
+
+      <h1>Efficient calculation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/HEAD/vignettes/efficient-calculations.Rmd" class="external-link"><code>vignettes/efficient-calculations.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/efficient-calculations.Rmd" class="external-link"><code>vignettes/efficient-calculations.Rmd</code></a></small>
       <div class="d-none name"><code>efficient-calculations.Rmd</code></div>
     </div>
 
@@ -151,9 +135,8 @@ is calculated for each dose of interest.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: rClr</span></span>
 <span><span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span></span>
-<span><span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span></span>
+<span></span>
 <span><span class="co"># Load and run the simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
@@ -187,7 +170,7 @@ multiple times and run the simulation concurrently (i.e. in
 parallel).</p>
 <p><img src="images/parallel_simulation.drawio.png"></p>
 <p>Consider the following implementation:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span><span class="co"># Load and run the simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
@@ -243,7 +226,7 @@ changed between runs. Note that, as opposed to the
 <code>Simulation</code> object, we do not have access to any
 parameter/species values nor can we change the outputs or simulation
 time.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span></span>
@@ -270,50 +253,44 @@ of values correspond to one run. The benefit of this approach is that
 the initialization steps (1 and 4) are only performed once. After that,
 only the execution time (step 5) will have an impact on the total
 performance.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># now setting some parameter run values (the size of the array should match</span></span>
 <span><span class="co"># the number of parameters to vary for each batch</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "800a0899-a3e3-4440-83a8-0b41cc1090f1"</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "3f10a632-e82a-4c1d-b73e-e0ca30c49916"</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "04bc4f93-8826-40ca-affc-be1751061bde"</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; [1] "d8e76948-9e3e-4738-8d9c-124101bc04e6"</span></span>
+<span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "b9e49ffe-99fa-4b50-a65b-22aa4f79cf37"</span></span>
+<span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "38245ff1-b449-4970-91b1-49ba9d456f0e"</span></span>
+<span></span>
 <span><span class="co"># We only have one parameter to vary for simBatch2, therefore only one value to set</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "89c8c0b3-eb51-49c0-921b-66d07e3da51c"</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "c6dab22a-6a4d-4df6-87af-7ec9c673ec1e"</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2f00121d-41e0-42da-9e26-137363b44cb3"</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "96920ed3-7708-4b41-b221-6da09126bb3c"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "771e01bd-b0a9-40d2-9dfb-ba9cf27ed0d2"</span></span>
+<span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "abd26598-27e7-4f46-ade9-b97a8c15e6f1"</span></span>
+<span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "9be85058-0df8-4c8f-a72b-4cd29b8e9af6"</span></span>
+<span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "0208124e-71ef-4940-ac52-dd8899ac9c00"</span></span></code></pre></div>
 <p>So far, we created 2 simulation batches, one with 3 parameter sets
 and the other one with 4. That means that 3 runs will be enqueued for
 simBatch1 and 4 will be enqueued for simBatch2. Each run gets a unique
 id that can later be used to correctly assign simulation results to the
 simulated set of parameters.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Now we run the simulation batches.</span></span>
 <span><span class="co"># By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel.</span></span>
 <span><span class="co"># Please see documentation of runSimulationBatches for more details.</span></span>
 <span><span class="co"># The resulting output is a named list, where the names are the ids of the enqueued runs.</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span><span class="va">simulationBatches</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "ee3cbb6c-b75b-4d28-b60b-21a7223b307b.800a0899-a3e3-4440-83a8-0b41cc1090f1"</span></span>
-<span><span class="co">#&gt; [2] "ee3cbb6c-b75b-4d28-b60b-21a7223b307b.3f10a632-e82a-4c1d-b73e-e0ca30c49916"</span></span>
-<span><span class="co">#&gt; [3] "ee3cbb6c-b75b-4d28-b60b-21a7223b307b.04bc4f93-8826-40ca-affc-be1751061bde"</span></span>
-<span><span class="co">#&gt; [4] "8891da2f-114c-461c-a4b8-0fa72c03a023.89c8c0b3-eb51-49c0-921b-66d07e3da51c"</span></span>
-<span><span class="co">#&gt; [5] "8891da2f-114c-461c-a4b8-0fa72c03a023.c6dab22a-6a4d-4df6-87af-7ec9c673ec1e"</span></span>
-<span><span class="co">#&gt; [6] "8891da2f-114c-461c-a4b8-0fa72c03a023.2f00121d-41e0-42da-9e26-137363b44cb3"</span></span>
-<span><span class="co">#&gt; [7] "8891da2f-114c-461c-a4b8-0fa72c03a023.96920ed3-7708-4b41-b221-6da09126bb3c"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "47f5b4ea-8c97-4960-9b88-ec829a178e32.d8e76948-9e3e-4738-8d9c-124101bc04e6"</span></span>
+<span><span class="co">#&gt; [2] "47f5b4ea-8c97-4960-9b88-ec829a178e32.b9e49ffe-99fa-4b50-a65b-22aa4f79cf37"</span></span>
+<span><span class="co">#&gt; [3] "47f5b4ea-8c97-4960-9b88-ec829a178e32.38245ff1-b449-4970-91b1-49ba9d456f0e"</span></span>
+<span><span class="co">#&gt; [4] "ee0ce04a-1539-4d8c-9d34-9614f96d5d83.771e01bd-b0a9-40d2-9dfb-ba9cf27ed0d2"</span></span>
+<span><span class="co">#&gt; [5] "ee0ce04a-1539-4d8c-9d34-9614f96d5d83.abd26598-27e7-4f46-ade9-b97a8c15e6f1"</span></span>
+<span><span class="co">#&gt; [6] "ee0ce04a-1539-4d8c-9d34-9614f96d5d83.9be85058-0df8-4c8f-a72b-4cd29b8e9af6"</span></span>
+<span><span class="co">#&gt; [7] "ee0ce04a-1539-4d8c-9d34-9614f96d5d83.0208124e-71ef-4940-ac52-dd8899ac9c00"</span></span></code></pre></div>
 <p>The enqueued run values are cleared after calling
 <code><a href="../reference/runSimulationBatches.html">runSimulationBatches()</a></code>, so executing the run again would
 result in an empty results list. We can now set more values to the
@@ -321,20 +298,16 @@ batches and run them again. Notes: - We do not have to always set the
 same number of values at the same time - Previous <code>runValues</code>
 are automatically cleared when <code><a href="../reference/runSimulationBatches.html">runSimulationBatches()</a></code> is
 called.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "cdef7e2e-e6b3-4d46-a75a-a2dea3f9ea8b"</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "b50244f6-2ed3-4f10-8b51-9cf30f2937d1"</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "d0f3b705-5ebd-4538-95fc-f386e46f4a85"</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "57a85943-00d0-4d08-82e2-25509f90b2c9"</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; [1] "09ad7c6b-d105-42cd-948a-4171c44b081d"</span></span>
+<span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "49765152-8ef5-445b-96bd-b51f0c521265"</span></span>
+<span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "16191727-8882-40d1-bfb4-4f711d1f1526"</span></span>
+<span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "84c3b883-5ff2-4936-afd6-cef1a2413ccc"</span></span>
+<span></span>
 <span><span class="co"># this run will be much faster as the simulation won't be initialized again.</span></span>
 <span><span class="co"># Only the new value will be set as specified when adding new run values with addRunValues</span></span>
 <span><span class="va">results2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span><span class="va">simulationBatches</span><span class="op">)</span></span>
@@ -355,7 +328,7 @@ significantly.</p>
 (RHS), are treated as molecules internally. Trying to create and run a
 simulation batch with a state variable parameter set as a variable
 parameter will result in an error:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stateVariableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"Organism|Lumen|Stomach|Liquid"</span>, container <span class="op">=</span> <span class="va">sim1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">stateVariableParam</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter: </span></span>
@@ -367,9 +340,8 @@ parameter will result in an error:</p>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
 <span><span class="co">#&gt;    RHSFormula: NULL </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: OralApplicationsEnabled ? -LT_sto + Inflow*FillLevelFlag : 0</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt;    formula: OralApplicationsEnabled ? -LT_sto + Inflow*FillLevelFlag : 0</span></span>
+<span></span>
 <span><span class="co"># Create simulation batch with state variable parameter set as a variable parameter</span></span>
 <span><span class="va">simBatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulationBatch.html">createSimulationBatch</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim1</span>, parametersOrPaths <span class="op">=</span> <span class="va">stateVariableParam</span><span class="op">)</span></span>
 <span></span>
@@ -389,7 +361,7 @@ parameter will result in an error:</p>
 <span><span class="co">#&gt;    at OSPSuite.R.Servi</span></span></code></pre></div>
 <p>Instead, the state variable parameter should be treated as a species
 and set as a variable molecule start value.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stateVariableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"Organism|Lumen|Stomach|Liquid"</span>, container <span class="op">=</span> <span class="va">sim1</span><span class="op">)</span></span>
 <span><span class="co"># Create simulation batch with state variable parameter set as a variable molecule</span></span>
 <span><span class="va">simBatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulationBatch.html">createSimulationBatch</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim1</span>, moleculesOrPaths <span class="op">=</span> <span class="va">stateVariableParam</span><span class="op">)</span></span>
@@ -399,7 +371,7 @@ and set as a variable molecule start value.</p>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span><span class="va">simBatch</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -410,15 +382,15 @@ and set as a variable molecule start value.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
