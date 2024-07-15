@@ -29,13 +29,17 @@ jobs:
         if: failure()
         run: cat unzip_log.txt
         
+      - name: Get branch name
+        id: vars
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add inst/lib
           git commit -m "Add downloaded package"
-          git push origin HEAD:${GITHUB_REF##*/}          
+          git push origin HEAD:${{ steps.vars.outputs.branch }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
