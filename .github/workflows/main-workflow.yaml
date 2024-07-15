@@ -18,6 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Download package
+        run: wget https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip -O /tmp/package.zip
+
       - name: Unzip package
         run: |
           unzip -o /tmp/package.zip -d inst/lib > unzip_log.txt 2>&1 || (cat unzip_log.txt && exit 1)
@@ -25,7 +28,7 @@ jobs:
       - name: Display unzip log if failed
         if: failure()
         run: cat unzip_log.txt
-
+        
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -36,7 +39,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-
   R-CMD-Check:
     if: ${{ always() }}
     needs: [bump-dev-version]
@@ -45,8 +47,6 @@ jobs:
       install-pksim: true
       install-rClr: false
       extra-packages: |
-        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
-        tlf=github::Open-Systems-Pharmacology/TLF-Library
 
   test-coverage:
     if: ${{ always() }}
@@ -56,8 +56,6 @@ jobs:
       install-pksim: true
       install-rClr: false
       extra-packages: |
-        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
-        tlf=github::Open-Systems-Pharmacology/TLF-Library
 
   pkgdown:
     if: ${{ always() }}
