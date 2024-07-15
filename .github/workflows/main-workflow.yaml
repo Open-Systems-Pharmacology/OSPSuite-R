@@ -30,7 +30,7 @@ jobs:
         run: cat unzip_log.txt
         
       - name: Test C# binaries
-      - uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v9
         with:
           message: 'Update Windows C# binaries (Commit from Github Actions).'
           default_author: github_actions
