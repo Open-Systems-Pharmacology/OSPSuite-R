@@ -29,19 +29,12 @@ jobs:
         if: failure()
         run: cat unzip_log.txt
         
-      - name: Get branch name
-        id: vars
-        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
-
-      - name: Commit changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add inst/lib
-          git commit -m "Add downloaded package"
-          git push origin HEAD:${{ steps.vars.outputs.branch }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test C# binaries
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Update Windows C# binaries (Commit from Github Actions).'
+          default_author: github_actions
+          add: '*.dll'
 
   R-CMD-Check:
     if: ${{ always() }}
