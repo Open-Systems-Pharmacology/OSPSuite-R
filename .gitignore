@@ -44,6 +44,8 @@ vignettes/*.pdf
 rsconnect/
 doc
 Meta
+docs
 
 # test artifacts
 tests/testthat/*.pdf
+
