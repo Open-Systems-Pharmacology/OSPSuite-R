@@ -14,8 +14,8 @@ jobs:
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
-          app-id: ${{ vars.ACTIONS_MANAGER_APPID }}
-          private-key: ${{ secrets.ACTIONS_MANAGER_TOKEN }}
+          app-id: ${{ vars.VERSION_BUMPER_APPID }}
+          private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
       - uses: actions/checkout@v4
         with:
