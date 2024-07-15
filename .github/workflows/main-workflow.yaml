@@ -18,11 +18,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Download package
-        run: wget https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip -O /tmp/package.zip
-
       - name: Unzip package
-        run: unzip /tmp/package.zip -d inst/lib
+        run: |
+          unzip /tmp/package.zip -d inst/lib > unzip_log.txt 2>&1 || (cat unzip_log.txt && exit 1)
+
+      - name: Display unzip log if failed
+        if: failure()
+        run: cat unzip_log.txt
+
 
       - name: Commit changes
         run: |
