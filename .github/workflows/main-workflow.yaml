@@ -34,6 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
   R-CMD-Check:
     if: ${{ always() }}
     needs: [bump-dev-version]
@@ -42,6 +43,8 @@ jobs:
       install-pksim: true
       install-rClr: false
       extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library
 
   test-coverage:
     if: ${{ always() }}
@@ -51,6 +54,8 @@ jobs:
       install-pksim: true
       install-rClr: false
       extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library
 
   pkgdown:
     if: ${{ always() }}
