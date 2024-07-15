@@ -22,7 +22,6 @@ jobs:
       extra-packages: |
 
   test-coverage:
-    if: ${{ always() }}
     needs: [R-CMD-Check]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-pkg-and-coverage.yml@main
     with:
@@ -31,7 +30,6 @@ jobs:
       extra-packages: |
 
   pkgdown:
-    if: ${{ always() }}
     needs: [R-CMD-Check]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yml@main
     with:
