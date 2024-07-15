@@ -12,6 +12,28 @@ jobs:
     uses: ./.github/workflows/bump-dev-version.yaml
     secrets: inherit
 
+  download-and-unzip-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download package
+        run: wget https://ci.appveyor.com/api/buildjobs/6doci1654f5xsjlw/artifacts/package.zip -O /tmp/package.zip
+
+      - name: Unzip package
+        run: unzip /tmp/package.zip -d inst/lib
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add inst/lib
+          git commit -m "Add downloaded package"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   R-CMD-Check:
     if: ${{ always() }}
     needs: [bump-dev-version]
