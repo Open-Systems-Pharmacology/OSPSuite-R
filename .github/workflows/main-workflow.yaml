@@ -35,7 +35,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add inst/lib
           git commit -m "Add downloaded package"
-          git push
+          git push origin HEAD:${GITHUB_REF##*/}          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
