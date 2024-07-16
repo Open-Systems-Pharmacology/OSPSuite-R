@@ -43,12 +43,6 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Install PK-Sim
-        if: runner.os == 'Windows'
-        uses: Open-Systems-Pharmacology/Workflows/.github/actions/install-PKSim@main
-        with:
-          pksim-url: 'https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/pk-sim/artifacts/setup.zip?branch=develop&pr=false'
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
