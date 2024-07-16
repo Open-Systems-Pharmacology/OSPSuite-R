@@ -89,24 +89,19 @@ installed before.
 ### From GitHub (recommended)
 
 The latest released version of the package can be installed from GitHub
-using the `{remotes}` package. The code below will download and install
-all the required dependencies.
+using the `{pak}` package. The code below will download and install all
+the required dependencies.
 
 ``` r
-install.packages("remotes")
-remotes::install_github("Open-Systems-Pharmacology/rSharp@*release")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite.RUtils@*release")
-remotes::install_github("Open-Systems-Pharmacology/TLF-Library@*release")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
+install.packages("pak")
+pak::pak("Open-Systems-Pharmacology/OSPSuite-R@*release")
 ```
 
 Get the latest development version with:
 
 ``` r
-remotes::install_github("Open-Systems-Pharmacology/rSharp")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite.RUtils")
-remotes::install_github("Open-Systems-Pharmacology/TLF-Library")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R")
+install.packages("pak")
+pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
 ```
 
 ### From package archive files
