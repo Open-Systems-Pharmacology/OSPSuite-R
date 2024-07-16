@@ -16,18 +16,18 @@ jobs:
 # commit to branch
 
   R-CMD-Check:
-    if: ${{ always() && !cancelled() }}
+    if: ${{ !cancelled() }}
     needs: [bump-dev-version]
     uses: ./.github/workflows/R-CMD-check.yaml
 
   test-coverage:
-    if: ${{ always() && !cancelled() }}
+    if: ${{ !cancelled() }}
     needs: [bump-dev-version]
     uses: ./.github/workflows/test-coverage.yaml
 
 
   pkgdown:
-    if: ${{ always() && !cancelled() }}
+    if: ${{ !cancelled() }}
     needs: [bump-dev-version]
     uses: ./.github/workflows/pkgdown.yaml
 
