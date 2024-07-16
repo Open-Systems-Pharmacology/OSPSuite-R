@@ -34,9 +34,6 @@ tests\^spelling
 ^BinaryFiles$
 ^README\.Rmd$
 ^vignettes/images/simulation_lifecycle_flowcharts\.drawio$
-<<<<<<< HEAD
 ^\.github$
 ^codecov\.yml$
-=======
 ^update_core_files.R
->>>>>>> r-sharp-r6
