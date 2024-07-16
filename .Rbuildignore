@@ -35,3 +35,5 @@ tests\^spelling
 ^README\.Rmd$
 ^vignettes/images/simulation_lifecycle_flowcharts\.drawio$
 ^update_core_files.R
+^\.github$
+^codecov\.yml$

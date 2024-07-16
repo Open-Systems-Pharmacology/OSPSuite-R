@@ -5,16 +5,9 @@
 
 <!-- badges: start -->
 
-<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases/latest" class="pkgdown-devel">
-<img src="https://img.shields.io/github/downloads/Open-Systems-Pharmacology/OSPSuite-R/latest/total?label=%E2%AD%B3%20Downloads%20latest%20release"/></a>
-<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="pkgdown-devel">
-<img src="https://img.shields.io/github/downloads/Open-Systems-Pharmacology/OSPSuite-R/total?label=%E2%AD%B3%20Downloads%20total"/></a>
-<br>
-<a href="https://ci.appveyor.com/project/open-systems-pharmacology-ci/OSPSuite-R/branch/develop" class="pkgdown-devel">
-<img src="https://ci.appveyor.com/api/projects/status/github/Open-Systems-Pharmacology/OSPSuite-R?branch=develop&amp;svg=true" alt="AppVeyor build status"/></a>
-<a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R" class="pkgdown-devel">
-<img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="codecov"/></a>
-
+[![R-CMD-check](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=develop)
 <!-- badges: end -->
 
 # Overview
@@ -70,13 +63,13 @@ following order:
 
 # Installation
 
-The **ospsuite** package is compatible with R version 3.6.x **AND**
-4.x.x and can be used on [Windows](#on-windows) and [Linux](#on-linux)
-operating systems.
+The **ospsuite** package is compatible with R version 4.x.x and can be
+used on [Windows](#on-windows) and [Linux](#on-linux) operating systems.
 
-`ospsuite` is not available on CRAN and also depends on three packages
-that are not available on CRAN. Thus the installation process is a bit
-unconventional, please follow carefully the instructions below.
+`ospsuite` is not available on CRAN and also depends on packages from
+the OSP ecosystem that are not available on CRAN. Please follow the
+instructions below to install the packages and all required
+dependencies.
 
 ## On Windows
 
@@ -84,10 +77,11 @@ unconventional, please follow carefully the instructions below.
 
 The package requires additional software installations:
 
-- Visual C++ Runtime available
-  [here](https://aka.ms/vs/16/release/vc_redist.x64.exe)
-- .NET Framework 4.7.2 available
-  [here](https://go.microsoft.com/fwlink/?LinkID=863265)
+- Latest Microsoft Visual C++ Redistributable for Visual Studio 2015,
+  2017 and 2019 available
+  [here](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
+- .NET 8 runtime available
+  [here](https://dotnet.microsoft.com/download/dotnet/8.0/runtime).
 
 **NB**: These pre-requisites are already installed if the OSP Suite was
 installed before.
@@ -100,36 +94,39 @@ all the required dependencies.
 
 ``` r
 install.packages("remotes")
-rClrURL <- if (R.Version()$major >= 4) {
-  "https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip"
-} else {
-  "https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip"
-}
-
-install.packages(rClrURL,
-  repos = NULL,
-  type = "binary"
-)
-
+remotes::install_github("Open-Systems-Pharmacology/rSharp@*release")
 remotes::install_github("Open-Systems-Pharmacology/OSPSuite.RUtils@*release")
 remotes::install_github("Open-Systems-Pharmacology/TLF-Library@*release")
 remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
 ```
 
+Get the latest development version with:
+
+``` r
+remotes::install_github("Open-Systems-Pharmacology/rSharp")
+remotes::install_github("Open-Systems-Pharmacology/OSPSuite.RUtils")
+remotes::install_github("Open-Systems-Pharmacology/TLF-Library")
+remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R")
+```
+
 ### From package archive files
 
 It is also possible to install manually from archive pre-built archive
-files.
+files provided with the
+[release](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 
 #### Install CRAN dependencies
 
 When installing from such files, the CRAN dependencies need to be
 installed manually first.
 
-``` r
+    #> Warning in utils::packageDescription(package): DESCRIPTION file of package
+    #> 'ospsuite' is missing or broken
+    #> Warning in utils::packageDescription(package): DESCRIPTION file of package
+    #> 'ospsuite' is missing or broken
+    #> Warning in utils::packageDescription(package): DESCRIPTION file of package
+    #> 'ospsuite' is missing or broken
     # Install dependencies (e.g. R6) which are on CRAN
-    install.packages("data.table")
-    install.packages("dplyr")
     install.packages("ggplot2")
     install.packages("ggtext")
     install.packages("jsonlite")
@@ -137,12 +134,8 @@ installed manually first.
     install.packages("patchwork")
     install.packages("purrr")
     install.packages("R6")
-    install.packages("readr")
     install.packages("rlang")
     install.packages("stringr")
-    install.packages("tidyr")
-    install.packages("xml2")
-```
 
 #### Install non-CRAN dependencies
 
@@ -152,11 +145,7 @@ Each of the pre-built released packages are available as a a binary
 The other non-CRAN dependencies needed for OSPSuite-R also have to be
 downloaded and manually installed:
 
-- `rClr`
-  - [For R
-    4.x.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.2/rClr_0.9.2.zip)
-  - [For R
-    3.6.x](https://github.com/Open-Systems-Pharmacology/rClr/releases/download/v0.9.1-R3/rClr_0.9.1.zip)
+- [`rSharp`](https://github.com/Open-Systems-Pharmacology/rSharp/releases/latest)
 - [`ospsuite.utils`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest)
 - [`tlf`](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
 
@@ -165,13 +154,13 @@ If you use [RStudio IDE](https://www.rstudio.com/), you can use the
 from -\> Package Archive File* to install a package from binary `*.zip`
 files.
 
-**NB**: The CRAN dependencies of rClr, ospuite.utils and tlf were
+**NB**: The CRAN dependencies of rSharp, ospuite.utils and tlf were
 already installed during the previous step.
 
 ``` r
-# Install `{rClr}` from local file 
-# (`pathTo_rCLR.zip` here should be replaced with the actual path to the `.zip` file)
-install.packages(pathTo_rCLR.zip, repos = NULL)
+# Install `{rSharp}` from local file 
+# (`pathTo_rSharp.zip` here should be replaced with the actual path to the `.zip` file)
+install.packages(pathTo_rSharp.zip, repos = NULL)
 
 # Install `{ospsuite.utils}` from local file 
 # (`pathTo_ospsuite.utils.zip` here should be replaced with the actual path to the `.zip` file)
