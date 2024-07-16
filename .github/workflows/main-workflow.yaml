@@ -23,6 +23,7 @@ jobs:
 
   test-coverage:
     needs: [R-CMD-Check]
+    if: ${{ success() }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-pkg-and-coverage.yml@main
     with:
       install-pksim: true
@@ -31,6 +32,7 @@ jobs:
 
   pkgdown:
     needs: [R-CMD-Check]
+    if: ${{ success() }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yml@main
     with:
       install-pksim: true
