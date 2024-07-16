@@ -12,22 +12,24 @@ jobs:
     uses: ./.github/workflows/bump-dev-version.yaml
     secrets: inherit
 
-# get latest dlls
-# commit to branch
+  update-core-files:
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+    needs: [bump-dev-version]
+    uses: ./github/workflows/update-core-files.yaml
 
   R-CMD-Check:
     if: ${{ !cancelled() }}
-    needs: [bump-dev-version]
+    needs: [update-core-files]
     uses: ./.github/workflows/R-CMD-check.yaml
 
   test-coverage:
     if: ${{ !cancelled() }}
-    needs: [bump-dev-version]
+    needs: [update-core-files]
     uses: ./.github/workflows/test-coverage.yaml
 
 
   pkgdown:
     if: ${{ !cancelled() }}
-    needs: [bump-dev-version]
+    needs: [update-core-files]
     uses: ./.github/workflows/pkgdown.yaml
 
