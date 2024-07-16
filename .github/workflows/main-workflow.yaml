@@ -18,7 +18,7 @@ jobs:
   R-CMD-Check:
     if: ${{ always() }}
     needs: [bump-dev-version]
-    uses: ./.github/workflows/R-CMD-check-build.yaml
+    uses: ./.github/workflows/R-CMD-check.yaml
 
   test-coverage:
     needs: [R-CMD-Check]
