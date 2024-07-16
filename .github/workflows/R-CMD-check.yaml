@@ -45,7 +45,7 @@ jobs:
 
       - name: Install PK-Sim
         if: ${{runner.os}} == "Windows"
-        uses: Open-Systems-Pharmacology/Workflows/.github/actions/install-PKSIM@main
+        uses: Open-Systems-Pharmacology/Workflows/.github/actions/install-PKSim@main
         with:
           pksim-url: 'https://ci.appveyor.com/api/projects/open-systems-pharmacology-ci/pk-sim/artifacts/setup.zip?branch=develop&pr=false'
 
