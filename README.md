@@ -94,14 +94,14 @@ the required dependencies.
 
 ``` r
 install.packages("pak")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
+pak::pak("Open-Systems-Pharmacology/OSPSuite-R@*release")
 ```
 
 Get the latest development version with:
 
 ``` r
 install.packages("pak")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
+pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
 ```
 
 ### From package archive files

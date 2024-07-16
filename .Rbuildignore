@@ -37,3 +37,5 @@ tests\^spelling
 ^\.github$
 ^codecov\.yml$
 ^update_core_files.R
+^\.github$
+^codecov\.yml$

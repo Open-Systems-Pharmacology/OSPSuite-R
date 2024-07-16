@@ -32,4 +32,3 @@ jobs:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
     uses: ./.github/workflows/pkgdown.yaml
-

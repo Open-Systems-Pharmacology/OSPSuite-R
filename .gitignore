@@ -42,9 +42,12 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
-doc
+
 Meta
+
+# Website output folder
 docs
+doc
 
 # test artifacts
 tests/testthat/*.pdf
