@@ -12,29 +12,22 @@ jobs:
     uses: ./.github/workflows/bump-dev-version.yaml
     secrets: inherit
 
+# get latest dlls
+# commit to branch
+
   R-CMD-Check:
     if: ${{ always() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yml@main
-    with:
-      install-pksim: true
-      install-rClr: false
-      extra-packages: |
+    uses: ./.github/workflows/R-CMD-check-build.yaml
 
   test-coverage:
     needs: [R-CMD-Check]
     if: ${{  !failure() && !cancelled() }}}}
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-pkg-and-coverage.yml@main
-    with:
-      install-pksim: true
-      install-rClr: false
-      extra-packages: |
+    uses: ./.github/workflows/test-coverage.yaml
+
 
   pkgdown:
     needs: [R-CMD-Check]
     if: ${{ !failure() && !cancelled() }}}}
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yml@main
-    with:
-      install-pksim: true
-      install-rClr: false
-      extra-packages: |
+    uses: ./.github/workflows/pkgdown.yaml
+
