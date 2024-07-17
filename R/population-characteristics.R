@@ -51,7 +51,7 @@ PopulationCharacteristics <- R6::R6Class(
     },
     #' @field seed Seed used to generate the population
     seed = function(value) {
-      private$wrapNullableIntegerProperty("Seed", value)
+      private$.wrapProperty("Seed", value, asInteger = TRUE)
     }
   ),
   private = list(
