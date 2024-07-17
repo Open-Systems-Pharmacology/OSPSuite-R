@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PKSim.R</name>
+    </assembly>
+    <members>
+        <member name="T:PKSim.R.Domain.IndividualCharacteristics">
+            <summary>
+               Wrapper object for .net that encapsulates origin data and molecule ontogenies
+            </summary>
+        </member>
+        <member name="P:PKSim.R.Domain.MoleculeOntogeny.Molecule">
+            <summary>
+               Name of the molecule being used in the model
+            </summary>
+        </member>
+        <member name="P:PKSim.R.Domain.MoleculeOntogeny.Ontogeny">
+            <summary>
+               Name of the ontogeny associated with the molecule
+            </summary>
+        </member>
+        <member name="T:PKSim.R.Domain.PopulationCharacteristics">
+            <summary>
+               Wrapper object for .net that encapsulates population settings and molecule ontogenies
+            </summary>
+        </member>
+        <member name="M:PKSim.R.Services.IIndividualFactory.CreateIndividual(PKSim.R.Domain.IndividualCharacteristics)">
+            <summary>
+               Returns the <seealso cref="T:PKSim.R.Services.CreateIndividualResults" /> representing an individual with the characteristics defined
+               in <paramref name="individualCharacteristics" />.
+            </summary>
+        </member>
+        <member name="M:PKSim.R.Services.IOntogenyFactorsRetriever.FactorsFor(PKSim.Core.Model.OriginData,System.Collections.Generic.IEnumerable{PKSim.R.Domain.MoleculeOntogeny})">
+            <summary>
+               Returns the ontogeny factor for each molecule
+               For instance, for CYP3A4, the call will return CYP3A4|Ontogeny Factor and CYP3A4|Ontogeny Factor GI
+            </summary>
+        </member>
+    </members>
+</doc>

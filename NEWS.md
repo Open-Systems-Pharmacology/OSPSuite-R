@@ -4,6 +4,7 @@
 
   - `{openxlsx}`
   - `{lifecyle}`
+  - `{rSharp`}
 
 
 ## New features
@@ -21,6 +22,11 @@
   - Added a function `exportSteadyStateToXLS()` to export steady state values
     calculated for one simulation using the `getSteadyState()` to an Excel file
     that can be imported in MoBi.
+    
+  - The package does not require a local installation of PK-Sim any more. All required 
+  dependencies are shipped with the package.
+  
+  - The package fully supports Linux.
 
 ## Breaking Changes
 
@@ -28,6 +34,7 @@
     `quantityOrDimension` (was `dimension` previously). It can now use objects
     of class `Quantity` as inputs, to be consistent with the `toBaseUnit()`
     function.
+  - The package gains a new dependency `{rSharp}`
 
 ## Major Changes
 
@@ -44,6 +51,7 @@
   - `plotPopulationTimeProfile()` has a new `aggregation` argument that allow
     the user to choose between quantiles, arithmetic and geometric aggregations
     of y.
+  - The package loses dependency `{rClr}`
 
 
 ## Minor improvements and bug fixes

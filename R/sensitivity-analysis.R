@@ -16,9 +16,9 @@ SensitivityAnalysis <- R6::R6Class(
       if (length(parameterPaths) == 0) {
         return()
       }
-      # Issue with .NET rCLR casting array with one value directly as single value instead of array
+      # Issue with .NET rSharp casting array with one value directly as single value instead of array
       methodName <- if (length(parameterPaths) > 1) "AddParameterPaths" else "AddParameterPath"
-      rClr::clrCall(obj = self$ref, methodName = methodName, parameterPaths)
+      self$call(methodName = methodName, parameterPaths)
       invisible(self)
     }
   ),
@@ -38,8 +38,8 @@ SensitivityAnalysis <- R6::R6Class(
                           variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
       validateIsOfType(simulation, "Simulation")
       validateIsString(parameterPaths, nullAllowed = TRUE)
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysis", simulation$ref)
-      super$initialize(ref)
+      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SensitivityAnalysis", simulation)
+      super$initialize(netObject)
       private$.simulation <- simulation
       private$.parameterPaths <- c(parameterPaths)
       self$numberOfSteps <- numberOfSteps
@@ -62,39 +62,39 @@ SensitivityAnalysis <- R6::R6Class(
     #' Removes all parameter paths defined in the Sensitivity Analysis
     clearParameterPaths = function() {
       private$.parameterPaths <- NULL
-      rClr::clrCall(self$ref, "ClearParameterPaths")
+      self$call("ClearParameterPaths")
       invisible(self)
     },
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Number of steps", self$numberOfSteps)
-      private$printLine("Variation range", self$variationRange)
+      private$.printClass()
+      private$.printLine("Number of steps", self$numberOfSteps)
+      private$.printLine("Variation range", self$variationRange)
       parameterLength <- length(private$.parameterPaths)
-      private$printLine("Number of parameters to vary", if (parameterLength > 0) parameterLength else "Will be estimated at run time")
+      private$.printLine("Number of parameters to vary", if (parameterLength > 0) parameterLength else "Will be estimated at run time")
       invisible(self)
     }
   ),
   active = list(
     #' @field simulation Reference to the `Simulation` used to calculate or import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
-      private$readOnlyProperty("simulation", value, private$.simulation)
+      private$.readOnlyProperty("simulation", value, private$.simulation)
     },
     #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     numberOfSteps = function(value) {
-      private$wrapIntegerProperty("NumberOfSteps", value)
+      private$.wrapProperty("NumberOfSteps", value, asInteger = TRUE)
     },
     #' @field variationRange Variation applied to the parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
     variationRange = function(value) {
-      private$wrapProperty("VariationRange", value)
+      private$.wrapProperty("VariationRange", value)
     },
     #' @field parameterPaths  List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
     #' on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
     parameterPaths = function(value) {
-      private$readOnlyProperty("parameterPaths", value, private$.parameterPaths)
+      private$.readOnlyProperty("parameterPaths", value, private$.parameterPaths)
     }
   )
 )

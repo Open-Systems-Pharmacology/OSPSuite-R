@@ -29,7 +29,7 @@ Molecule <- R6::R6Class(
     #' @field  scaleDivisor Scale divisor. Its purpose is to reduce numerical noise and to enhance computation performance.
     #' see \url{https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/model-building-components#import-molecule-and-parameter-start-values-from-excel}
     scaleDivisor = function(value) {
-      private$wrapProperty("ScaleDivisor", value)
+      private$.wrapProperty("ScaleDivisor", value)
     }
   ),
   private = list(
@@ -38,10 +38,10 @@ Molecule <- R6::R6Class(
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET reference object.
+    #' @param netObject An `rSharp::NetObject` object.
     #' @return A new `Molecule` object.
-    initialize = function(ref) {
-      super$initialize(ref)
+    initialize = function(netObject) {
+      super$initialize(netObject)
       # Is only set for a molecule representing a concenctration based molecule (e.g unit is umol)
       private$.startValue <- getParameter("Start value", self, stopIfNotFound = FALSE)
     },
@@ -50,8 +50,8 @@ Molecule <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Path", self$path)
+      private$.printClass()
+      private$.printLine("Path", self$path)
       initialStartValue <- private$.startValue %||% self
       initialStartValue$printQuantityValue("Initial Value")
       invisible(self)
