@@ -38,6 +38,7 @@ articles:
     - efficient-calculations
     - table-parameters
     - unit-conversion
+    - PKSim-installation
 
 figures:
   dev: ragg::agg_png
