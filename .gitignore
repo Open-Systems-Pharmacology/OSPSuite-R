@@ -51,4 +51,3 @@ doc
 
 # test artifacts
 tests/testthat/*.pdf
-
