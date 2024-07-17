@@ -172,9 +172,8 @@ install.packages(pathToOSPSuite.zip, repos = NULL)
 
 ## On Linux
 
-The **ospsuite** package has been tested under Linux distributions
-**CentOS 7** and **Ubuntu 18**. Some functionality, such as creating
-individuals or populations, is not available under Linux. Installation
+The **ospsuite** package has been tested under Linux distribution
+**Ubuntu 22**. Installation
 under Linux requires several prerequisites, the detailed instructions
 can be found in the Wiki:
 
@@ -211,16 +210,13 @@ variable `LC_ALL` before starting R:
 
     export LC_ALL=en_US.UTF-8
 
-## RStudio crashes when trying to load a workspace.
+## Saving and loading the workspace in RStudio does not restore objects
 
 The ospsuite package uses the features implemented in PK-Sim and MoBi by
 creating `.NET` objects (e.g. a simulation) and using them from R. These
 objects cannot be saved as part of the workspace and reloaded on next
-start. When trying to do so, RStudio simply crashes. There is no
-possibility to overcome this limitation. To prevent RStudio from
-crashing, make sure to disable the check-box “Restore `.RData` into
-workspace at startup” in the options of RStudio. Keep in mind that you
-can also change this setting for specific projects.
+start. Upon restoring the workspace, the objects will be `NULL` and cannot be
+re-used.
 
 # Code of Conduct
 
