@@ -5,7 +5,6 @@
 #' @import rSharp
 #' @export
 initPKSim <- function() {
-
   if (ospsuiteEnv$isPKSimLoaded) {
     return(invisible())
   }
