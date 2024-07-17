@@ -114,11 +114,12 @@ Quantity <- R6::R6Class(
     #' Print the value (in scientific notation with 2 digits when needed) and unit of the quantity
     #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
-      if (self$value >= 10000 | self$value < 0.01) {
-        QuantityValue <- formatNumerics(self$value, scientific = TRUE)
-      } else {
-        QuantityValue <- formatNumerics(self$value)
+      scientific <- FALSE
+      if (!is.nan(self$value) & (self$value >= 10000 | self$value < 0.01)) {
+        scientific = TRUE
       }
+      QuantityValue <- formatNumerics(self$value, scientific = scientific)
+
       if (self$unit != "") {
         QuantityValue <- paste0(QuantityValue, " [", self$unit, "]")
       }
