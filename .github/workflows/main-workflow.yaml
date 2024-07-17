@@ -1,0 +1,46 @@
+name: Main-Workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+
+jobs:
+  bump-dev-version: # only do that when actually merging in main/develop branch
+    if: github.event_name != 'pull_request'
+    uses: ./.github/workflows/bump-dev-version.yaml
+    secrets: inherit
+
+  R-CMD-Check:
+    if: ${{ always() }}
+    needs: [bump-dev-version]
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yml@main
+    with:
+      install-pksim: true
+      install-rClr: true
+      extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library
+
+  test-coverage:
+    if: ${{ always() }}
+    needs: [R-CMD-Check]
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-pkg-and-coverage.yml@main
+    with:
+      install-pksim: true
+      install-rClr: true
+      extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library
+
+  pkgdown:
+    if: ${{ always() }}
+    needs: [R-CMD-Check]
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yml@main
+    with:
+      install-pksim: true
+      install-rClr: true
+      extra-packages: |
+        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
+        tlf=github::Open-Systems-Pharmacology/TLF-Library

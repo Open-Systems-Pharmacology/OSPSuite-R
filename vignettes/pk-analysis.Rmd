@@ -137,7 +137,7 @@ myCMax <- addUserDefinedPKParameter(
   standardPKParameter = StandardPKParameter$C_max
 )
 
-# Specifies start application (4th) and end applicaiton (5th)
+# Specifies start application (4th) and end application (5th)
 myCMax$startApplicationIndex <- 4
 myCMax$endApplicationIndex <- 5
 ```
@@ -154,14 +154,14 @@ myCMax <- addUserDefinedPKParameter(
   standardPKParameter = StandardPKParameter$C_max
 )
 
-# Specifies start application (4th) and end applicaiton (5th)
+# Specifies start application (4th) and end application (5th)
 myCMax$startApplicationIndex <- 4
 myCMax$endApplicationIndex <- 5
 
-# Specifies start time offset. The PK calculations wil effectively start at StartTime of 4th Application + 10 min
+# Specifies start time offset. The PK calculations will effectively start at StartTime of 4th Application + 10 min
 myCMax$startTimeOffset <- 10
 
-# Specifies end time offset . The PK calculations wil effectively ends at StartTime of 5th Application + 20 min
+# Specifies end time offset. The PK calculations will effectively ends at StartTime of 5th Application + 20 min
 myCMax$endTimeOffset <- 20
 ```
 
