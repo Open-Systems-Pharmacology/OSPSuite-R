@@ -276,7 +276,7 @@ test_that("setting groups fails when arguments are not of `character` type", {
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet)
 
-  # TODO: Include full error messages in the following tests once
+  # TODO 2DO: Include full error messages in the following tests once
   # https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/issues/77
   # has been resolved
 

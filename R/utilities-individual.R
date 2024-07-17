@@ -92,7 +92,6 @@ createIndividualCharacteristics <- function(species,
   # Assuming that if this function is called directly, PK-Sim was either initialized already
   # or should be initialized automatically
   initPKSim()
-
   validateIsString(species)
   validateIsString(population, nullAllowed = TRUE)
   validateIsString(gender, nullAllowed = TRUE)

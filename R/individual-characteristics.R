@@ -43,12 +43,12 @@ IndividualCharacteristics <- R6::R6Class(
     },
     #' @field seed Seed used to generate the population
     seed = function(value) {
-      private$wrapNullableIntegerProperty("Seed", value)
+      private$.wrapProperty("Seed", value, asInteger = TRUE)
     }
   ),
   private = list(
     .moleculeOntogenies = NULL,
-    printParam = function(caption, param) {
+    .printParam = function(caption, param) {
       if (is.null(param)) {
         return()
       }
