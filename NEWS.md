@@ -4,6 +4,7 @@
 
   - `{openxlsx}`
   - `{lifecyle}`
+  - `{rSharp`}
 
 
 ## New features
@@ -21,6 +22,11 @@
   - Added a function `exportSteadyStateToXLS()` to export steady state values
     calculated for one simulation using the `getSteadyState()` to an Excel file
     that can be imported in MoBi.
+    
+  - The package does not require a local installation of PK-Sim any more. All required 
+  dependencies are shipped with the package.
+  
+  - The package fully supports Linux.
 
 ## Breaking Changes
 
