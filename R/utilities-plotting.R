@@ -694,7 +694,7 @@
 
   errorbarsConfiguration <- tlf::ThemeAestheticSelections$new(
     size = generalPlotConfiguration$errorbarsSize,
-    # TODO: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/347
+    # TODO 2DO: https://github.com/Open-Systems-Pharmacology/TLF-Library/issues/347
     # capSize = generalPlotConfiguration$errorbarsCapSize,
     linetype = generalPlotConfiguration$errorbarsLinetype,
     alpha = generalPlotConfiguration$errorbarsAlpha
