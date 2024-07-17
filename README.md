@@ -115,22 +115,25 @@ files provided with the
 When installing from such files, the CRAN dependencies need to be
 installed manually first.
 
-    #> Warning in utils::packageDescription(package): DESCRIPTION file of package
-    #> 'ospsuite' is missing or broken
-    #> Warning in utils::packageDescription(package): DESCRIPTION file of package
-    #> 'ospsuite' is missing or broken
-    #> Warning in utils::packageDescription(package): DESCRIPTION file of package
-    #> 'ospsuite' is missing or broken
-    # Install dependencies (e.g. R6) which are on CRAN
-    install.packages("ggplot2")
-    install.packages("ggtext")
-    install.packages("jsonlite")
-    install.packages("lifecycle")
-    install.packages("patchwork")
-    install.packages("purrr")
-    install.packages("R6")
-    install.packages("rlang")
-    install.packages("stringr")
+``` r
+# Install dependencies (e.g. R6) which are on CRAN
+install.packages("data.table")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("ggtext")
+install.packages("jsonlite")
+install.packages("lifecycle")
+install.packages("openxlsx")
+install.packages("patchwork")
+install.packages("purrr")
+install.packages("R6")
+install.packages("rClr")
+install.packages("readr")
+install.packages("rlang")
+install.packages("stringr")
+install.packages("tidyr")
+install.packages("xml2")
+```
 
 #### Install non-CRAN dependencies
 
@@ -173,9 +176,8 @@ install.packages(pathToOSPSuite.zip, repos = NULL)
 ## On Linux
 
 The **ospsuite** package has been tested under Linux distribution
-**Ubuntu 22**. Installation
-under Linux requires several prerequisites, the detailed instructions
-can be found in the Wiki:
+**Ubuntu 22**. Installation under Linux requires several prerequisites,
+the detailed instructions can be found in the Wiki:
 
 - [Setup OSPSuite-R on
   CentOS](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-CentOS7)
@@ -215,8 +217,8 @@ variable `LC_ALL` before starting R:
 The ospsuite package uses the features implemented in PK-Sim and MoBi by
 creating `.NET` objects (e.g. a simulation) and using them from R. These
 objects cannot be saved as part of the workspace and reloaded on next
-start. Upon restoring the workspace, the objects will be `NULL` and cannot be
-re-used.
+start. Upon restoring the workspace, the objects will be `NULL` and
+cannot be re-used.
 
 # Code of Conduct
 
