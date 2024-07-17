@@ -17,7 +17,7 @@ test_that("It can retrieve the parent of an entity", {
 })
 
 
-test_that("It print the Scientific value of the Quantity", {
+test_that("It prints the Scientific value of the Quantity", {
   quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
   quantity$value <- 0.001
   expect_equal(capture.output(print(quantity))[3], "   Value: 1.00e-03 [l] ")
@@ -27,4 +27,9 @@ test_that("It print the Scientific value of the Quantity", {
   expect_equal(capture.output(print(quantity))[3], "   Value: 1.00e+04 [l] ")
   quantity$value <- 10001.1
   expect_equal(capture.output(print(quantity))[3], "   Value: 1.00e+04 [l] ")
+})
+
+test_that("It prints the NaN value of the Quantity", {
+  quantity <- getQuantity("AADAC|Lipophilicity", sim)
+  expect_error(capture.output(quantity$print()), NA)
 })
