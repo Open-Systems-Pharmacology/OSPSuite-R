@@ -39,10 +39,15 @@ jobs:
           }
         shell: Rscript {0}
 
-      - name: commit modified DESCRIPTION file
-        uses: EndBug/add-and-commit@v9
+      - name: Get package version from DESCRIPTION file and set as environment variable
+        run: |
+          echo "PKG_VERSION=$(grep -oP '(?<=Version: )\d+\.\d+\.\d+\.*\d*' DESCRIPTION)" >> $GITHUB_ENV
+        shell: bash
+
+      - uses: EndBug/add-and-commit@v9
         if: ${{ success() }}
         with:
-          message: '🤖 Bump development version. [skip actions]'
+          message: '🤖 Bump version. [skip actions]'
           default_author: github_actions
           add: 'DESCRIPTION'
+          tag: 'v${{ env.PKG_VERSION }}'
