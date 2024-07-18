@@ -1,10 +1,27 @@
-# ospsuite 12.0 (development)
+# ospsuite 12.1.0
+
+## New dependencies
+
+  - `{rSharp}`
+  
+## New features
+
+  - The package does not require a local installation of PK-Sim any more. All required 
+  dependencies are shipped with the package.
+  
+  - The package fully supports Linux.
+  
+## Major Changes
+
+  - The package loses dependency `{rClr}`
+
+
+# ospsuite 12.0.0
 
 ## New dependencies
 
   - `{openxlsx}`
   - `{lifecyle}`
-  - `{rSharp`}
 
 
 ## New features
@@ -23,10 +40,7 @@
     calculated for one simulation using the `getSteadyState()` to an Excel file
     that can be imported in MoBi.
     
-  - The package does not require a local installation of PK-Sim any more. All required 
-  dependencies are shipped with the package.
-  
-  - The package fully supports Linux.
+
 
 ## Breaking Changes
 
@@ -34,7 +48,7 @@
     `quantityOrDimension` (was `dimension` previously). It can now use objects
     of class `Quantity` as inputs, to be consistent with the `toBaseUnit()`
     function.
-  - The package gains a new dependency `{rSharp}`
+
 
 ## Major Changes
 
@@ -51,7 +65,6 @@
   - `plotPopulationTimeProfile()` has a new `aggregation` argument that allow
     the user to choose between quantiles, arithmetic and geometric aggregations
     of y.
-  - The package loses dependency `{rClr}`
 
 
 ## Minor improvements and bug fixes
