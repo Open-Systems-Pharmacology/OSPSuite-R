@@ -22,7 +22,7 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check.yaml@main
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   test-coverage:
     if: ${{ !cancelled() }}
