@@ -32,4 +32,4 @@ jobs:
   pkgdown:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses:  Felixmil/Workflows/./.github/workflows/pkgdown.yaml@rSharp-actions
+    uses:  Felixmil/Workflows/.github/workflows/pkgdown.yaml@rSharp-actions
