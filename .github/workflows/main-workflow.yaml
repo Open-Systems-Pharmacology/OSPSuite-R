@@ -20,6 +20,7 @@ jobs:
   update-core-files:
     if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     needs: [bump-dev-version]
+    permissions: write-all
     uses: ./.github/workflows/update-core-files.yaml
 
   R-CMD-Check:
