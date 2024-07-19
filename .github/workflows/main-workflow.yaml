@@ -9,7 +9,7 @@ on:
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
-    uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml@rSharp-actions
+    uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
@@ -22,14 +22,14 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check.yaml@rSharp-actions
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check.yaml
 
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: Felixmil/Workflows/.github/workflows/test-coverage.yaml@rSharp-actions
+    uses: Felixmil/Workflows/.github/workflows/test-coverage.yaml
 
   pkgdown:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses:  Felixmil/Workflows/.github/workflows/pkgdown.yaml@rSharp-actions
+    uses:  Felixmil/Workflows/.github/workflows/pkgdown.yaml
