@@ -11,6 +11,12 @@
 
   .addPackageLibToPath()
 
+  if (.Platform$OS.type == "unix") {
+    dyn.load(system.file("lib","libOSPSuite.SimModelSolver_CVODES.so", package = ospsuiteEnv$packageName))
+    dyn.load(system.file("lib","libOSPSuite.FuncParserNative.so", package = ospsuiteEnv$packageName))
+    dyn.load(system.file("lib","libOSPSuite.SimModelNative.so", package = ospsuiteEnv$packageName))
+  }
+
   rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
   # Initialize once
   netObject <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig")
