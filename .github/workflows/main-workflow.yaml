@@ -9,7 +9,7 @@ on:
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
-    uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml@main
+    uses: Felixmil/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
