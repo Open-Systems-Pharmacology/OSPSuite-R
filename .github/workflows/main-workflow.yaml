@@ -12,6 +12,7 @@ jobs:
     uses: Felixmil/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
   update-core-files:
