@@ -9,12 +9,19 @@
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
 
-  .addPackageLibToPath()
 
+  # Make .dll binaries available on windows by extending PATH
+  if (.Platform$OS.type == "windows"){
+    Sys.setenv(PATH = paste(system.file("lib", package = ospsuiteEnv$packageName),
+                            Sys.getenv("PATH"),
+                            sep = ";"))
+  }
+
+  # Load the .so binary files on unix
   if (.Platform$OS.type == "unix") {
-    dyn.load(system.file("lib","libOSPSuite.SimModelSolver_CVODES.so", package = ospsuiteEnv$packageName))
-    dyn.load(system.file("lib","libOSPSuite.FuncParserNative.so", package = ospsuiteEnv$packageName))
-    dyn.load(system.file("lib","libOSPSuite.SimModelNative.so", package = ospsuiteEnv$packageName))
+    for (soFile in list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = "\\.so$", full.names = TRUE)) {
+      dyn.load(soFile)
+    }
   }
 
   rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
