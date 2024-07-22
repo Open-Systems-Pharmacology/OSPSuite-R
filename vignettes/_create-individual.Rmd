@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Creating individuals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+draft: true
 ---
 
 ```{r, include = FALSE}
