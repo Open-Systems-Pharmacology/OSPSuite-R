@@ -43,7 +43,8 @@ Suggests:
     vdiffr (>= 1.0.0),
     withr,
     showtext,
-    sysfonts
+    sysfonts,
+    devtools (>= 2.4.5)
 Language: en-US
 Encoding: UTF-8
 LazyData: true
@@ -140,7 +141,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
-Remotes: 
+Remotes:  
     Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library
