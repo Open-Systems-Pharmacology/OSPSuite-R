@@ -1,6 +1,4 @@
 # plotIndividualTimeProfile
-skip_on_os("linux") # `loadDataSetsFromExcel()` does not work for non-Windows platforms
-skip_if(getRversion() < "4.1")
 
 # `DataCombined` objects ------------------------
 

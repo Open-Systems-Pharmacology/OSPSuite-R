@@ -1,6 +1,3 @@
-skip_on_os("linux") # TODO 2DO enable again as soon as createIndividual/createPopulation runs under Linux
-skip_on_ci()
-
 # createPopulation
 
 test_that("It can create a standard dog population", {
@@ -121,8 +118,6 @@ test_that("It can convert a population to tibble data frame", {
 })
 
 test_that("simulationResultsToDataFrame with population", {
-  skip_on_os("linux")
-  skip_on_ci()
 
   # If no unit is specified, the default units are used. For "height" it is "dm",
   # for "weight" it is "kg", for "age" it is "year(s)".

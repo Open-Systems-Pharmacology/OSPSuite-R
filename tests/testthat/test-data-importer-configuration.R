@@ -1,7 +1,7 @@
 # New DataImporterConfiguration
 
 test_that("it can create a new data importer configuration", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_equal(importerConfiguration$timeColumn, "Time")
@@ -22,7 +22,7 @@ test_that("it can create a new data importer configuration", {
 })
 
 test_that("it can get and set time column name", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$timeColumn <- "foo"
@@ -32,7 +32,7 @@ test_that("it can get and set time column name", {
 })
 
 test_that("it can get and set time unit", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_error(importerConfiguration$timeUnit <- "foo")
@@ -43,7 +43,7 @@ test_that("it can get and set time unit", {
 })
 
 test_that("it can set time unit from column and change column name", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$isTimeUnitFromColumn <- TRUE
@@ -58,7 +58,7 @@ test_that("it can set time unit from column and change column name", {
 })
 
 test_that("it can get and set measurement column name", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$measurementColumn <- "foo"
@@ -68,7 +68,7 @@ test_that("it can get and set measurement column name", {
 })
 
 test_that("it can get and set measurement unit", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_error(importerConfiguration$measurementUnit <- "foo")
@@ -79,7 +79,7 @@ test_that("it can get and set measurement unit", {
 })
 
 test_that("it can set measurement unit from column and change column name", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$isMeasurementUnitFromColumn <- TRUE
@@ -97,7 +97,7 @@ test_that("it can set measurement unit from column and change column name", {
 })
 
 test_that("it can add an error column", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$errorColumn <- "Error"
@@ -107,7 +107,7 @@ test_that("it can add an error column", {
 })
 
 test_that("it can remove an error column", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$errorColumn <- "Error"
@@ -118,7 +118,7 @@ test_that("it can remove an error column", {
 })
 
 test_that("it can change measurement dimension without error", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_error(importerConfiguration$measurementDimension <- "foo")
@@ -147,7 +147,7 @@ test_that("it can change measurement dimension without error", {
 })
 
 test_that("it can change measurement dimension with error", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$errorColumn <- "Error"
@@ -170,7 +170,7 @@ test_that("it can change measurement dimension with error", {
 })
 
 test_that("it can change error type", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$errorColumn <- "Error"
@@ -182,7 +182,7 @@ test_that("it can change error type", {
 })
 
 test_that("it can add grouping columns", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_equal(importerConfiguration$groupingColumns, character())
@@ -196,7 +196,7 @@ test_that("it can add grouping columns", {
 })
 
 test_that("it does not fail when trying to remove a grouping column that is not present", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_error(importerConfiguration$removeGroupingColumn(column = "tata"), regexp = NA)
@@ -205,7 +205,7 @@ test_that("it does not fail when trying to remove a grouping column that is not 
 })
 
 test_that("it can remove grouping columns", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$addGroupingColumn("foo")
@@ -218,7 +218,7 @@ test_that("it can remove grouping columns", {
 })
 
 test_that("it can add sheet", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$sheets <- "S1"
@@ -232,7 +232,7 @@ test_that("it can add sheet", {
 })
 
 test_that("it can remove all sheets", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$sheets <- NULL
@@ -247,7 +247,7 @@ test_that("it can remove all sheets", {
 })
 
 test_that("it can change naming pattern", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- DataImporterConfiguration$new()
   expect_equal(importerConfiguration$namingPattern, "{Source}.{Sheet}")

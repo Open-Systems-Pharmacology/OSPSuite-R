@@ -89,7 +89,7 @@ test_that("It can convert a data set with only non-empty fields, except for meta
 })
 
 test_that("It can convert a data set with metaData", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+ 
 
   dataSet$addMetaData("Organ", "Blood")
   expect_equal(
@@ -114,7 +114,7 @@ test_that("It can convert a data set with metaData", {
 })
 
 test_that("It can convert a list of data sets", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+ 
 
   dataSet2 <- DataSet$new(name = "SecondDataSet")
   dataSet2$setValues(xValues = c(6, 7, 8), yValues = c(11, 21, 31))
@@ -200,7 +200,7 @@ importerConfiguration <- loadDataImporterConfiguration(configurationPath)
 
 test_that("it returns an empty list when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+ 
 
   expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration), character())
   expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath), character())
@@ -208,7 +208,7 @@ test_that("it returns an empty list when loading from file with one sheet withou
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+ 
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
   expect_true(isOfType(dataSets, "DataSet"))
@@ -219,7 +219,7 @@ test_that("it can load when loading from file with one sheet without
 })
 
 test_that("it can convert DataSets loaded from excel to data.frame", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+ 
 
   dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
   dataSetsFrame <- dataSetToDataFrame(dataSets)
@@ -257,7 +257,7 @@ dataSetName <- "NewDataSet"
 dataSet <- DataSet$new(name = dataSetName)
 
 test_that("It can convert an empty data set", {
-  skip_on_os("linux") # TODO enable again as soon as NPOI runs under Linux; s. https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/647
+ 
   expect_equal(
     dataSetToTibble(dataSet),
     dplyr::tibble(

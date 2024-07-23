@@ -2,7 +2,7 @@
 filePath <- getTestDataFilePath("CompiledDataSet.xlsx")
 
 test_that("It can create a DataImporterConfiguration from a XLS file", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- createImporterConfigurationForFile(filePath = filePath, sheet = "TestSheet_1")
   expect_equal(importerConfiguration$timeColumn, "Time [h]")
@@ -20,7 +20,7 @@ test_that("It can create a DataImporterConfiguration from a XLS file", {
 
 test_that("It can create a DataImporterConfiguration from a XLS file when dimensions
           and units can not be retrieved, they can be set afterwards", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   importerConfiguration <- createImporterConfigurationForFile(filePath = filePath, sheet = "DefaultConfig")
   expect_equal(importerConfiguration$timeColumn, "Time")
@@ -42,14 +42,14 @@ test_that("It can create a DataImporterConfiguration from a XLS file when dimens
 })
 
 test_that("It throws an error when the file sheet has wrong format", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
   expect_error(createImporterConfigurationForFile(filePath, "MetaInfo"))
 })
 
 # DataImporterConfiguration from file
 
 test_that("it can load a data importer configuration", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   configurationPath <- getTestDataFilePath("dataImporterConfiguration.xml")
   importerConfiguration <- loadDataImporterConfiguration(configurationPath)
@@ -72,7 +72,7 @@ test_that("it can load a data importer configuration", {
 })
 
 test_that("it can load a data importer configuration with units from columns", {
-  skip_on_os("linux") # TODO enable again as soon as npoi works under linux
+  
 
   configurationPath <- getTestDataFilePath("dataImporterConfiguration_UnitFromColumn.xml")
   importerConfiguration <- loadDataImporterConfiguration(configurationPath)
