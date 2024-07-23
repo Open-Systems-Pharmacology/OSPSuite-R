@@ -130,7 +130,6 @@ Collate:
     'utilities-parameter.R'
     'utilities-pk-analysis.R'
     'utilities-pk-parameter.R'
-    'utilities-pksim.R'
     'utilities-plotting.R'
     'utilities-population.R'
     'utilities-quantity.R'
@@ -141,7 +140,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
-Remotes:  
+Remotes: 
     Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library
