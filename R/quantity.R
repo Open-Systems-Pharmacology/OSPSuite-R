@@ -116,7 +116,7 @@ Quantity <- R6::R6Class(
     printQuantityValue = function(caption) {
       scientific <- FALSE
       if (!is.nan(self$value) & (self$value >= 10000 | self$value < 0.01)) {
-        scientific = TRUE
+        scientific <- TRUE
       }
       QuantityValue <- formatNumerics(self$value, scientific = scientific)
 

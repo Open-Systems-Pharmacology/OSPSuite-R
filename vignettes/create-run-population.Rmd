@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Population simulations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+draft: true
 ---
 
 ```{r, include = FALSE}

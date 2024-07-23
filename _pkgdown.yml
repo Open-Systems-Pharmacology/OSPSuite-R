@@ -10,7 +10,7 @@ authors:
   Open-Systems-Pharmacology Community:
     href: https://www.open-systems-pharmacology.org/
     html: <img src='https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png'
-      style='max-width:33px'>Open Systems Pharmacology
+      style='max-width:33px' alt="Open System Pharmacology Logo">Open Systems Pharmacology
   Pavel Balazki:
     href: https://github.com/PavelBal
   Michael Sevestre:
@@ -35,6 +35,7 @@ articles:
     - sensitivity-analysis
     - create-individual
     - create-run-population
+
   - title: Figure creation
     navbar: Figure creation
     desc: How to create standard figures
@@ -61,3 +62,4 @@ figures:
   fig.retina: 1
   bg: NA
   other.parameters: []
+>>>>>>> f610a38f5a9878f8e13d2a0445066cbe1077167d

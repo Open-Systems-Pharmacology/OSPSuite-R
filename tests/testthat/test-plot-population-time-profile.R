@@ -2,9 +2,6 @@
 
 # plotPopulationTimeProfile
 
-skip_on_os("linux") # TODO enable again as soon as `createPopulation()` runs under Linux
-
-skip_if(getRversion() < "4.1")
 
 # only simulated ------------------------
 

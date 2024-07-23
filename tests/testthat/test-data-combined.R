@@ -1,8 +1,6 @@
 # data to be used ---------------------------------------
 
 # `loadDataSetsFromExcel()` does not work for non-Windows platforms
-skip_on_os("linux")
-skip_on_ci()
 
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")

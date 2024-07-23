@@ -1,6 +1,3 @@
-skip_on_os("linux")
-skip_on_ci()
-
 tolerance <- 0.0001
 
 # load the simulation
