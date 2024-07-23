@@ -15,8 +15,8 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @return A new `SensitivityAnalysisRunOptions` object.
     initialize = function(numberOfCores = NULL,
                           showProgress = NULL) {
-      ref <- rClr::clrNew("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
-      super$initialize(ref)
+      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
+      super$initialize(netObject)
 
       self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
@@ -25,20 +25,20 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("numberOfCores", self$numberOfCores)
-      private$printLine("showProgress", self$showProgress)
+      private$.printClass()
+      private$.printLine("numberOfCores", self$numberOfCores)
+      private$.printLine("showProgress", self$showProgress)
       invisible(self)
     }
   ),
   active = list(
     #' @field numberOfCores (Maximal) number of cores to be used. Per default set to `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
-      private$wrapIntegerProperty("NumberOfCoresToUse", value)
+      private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
     },
     #' @field showProgress  Specifies whether progress bar should be shown during sensitivity analysis run. Default is `getOSPSuiteSetting("showProgress")`.
     showProgress = function(value) {
-      private$wrapProperty("ShowProgress", value)
+      private$.wrapProperty("ShowProgress", value)
     }
   )
 )

@@ -39,31 +39,31 @@ Parameter <- R6::R6Class(
 
       # we are deleting the RHS Formula
       private$.rhsFormula <- NULL
-      rClr::clrCall(self$ref, "ClearRHSFormula")
+      self$call("ClearRHSFormula")
     },
     #' @field rhsFormula An instance of a `Formula` object representing the RHS Formula (Read-Only)
     rhsFormula = function(value) {
-      private$readOnlyProperty("rhsFormula", value, private$.rhsFormula)
+      private$.readOnlyProperty("rhsFormula", value, private$.rhsFormula)
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref .NET Instance
+    #' @param netObject An `rSharp::NetObject` object.
     #' @return A new `Parameter` object.
-    initialize = function(ref) {
-      super$initialize(ref)
-      rhsFormula <- rClr::clrGet(ref, "RHSFormula")
+    initialize = function(netObject) {
+      super$initialize(netObject)
+      rhsFormula <- self$get("RHSFormula")
       private$.rhsFormula <- ifNotNull(rhsFormula, Formula$new(rhsFormula))
     },
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printQuantity()
-      private$printLine("isStateVariable", self$isStateVariable)
+      private$.printQuantity()
+      private$.printLine("isStateVariable", self$isStateVariable)
       if (self$isStateVariable) {
-        private$printLine("RHSFormula")
+        private$.printLine("RHSFormula")
         self$rhsFormula$printFormula()
       }
     }

@@ -2,23 +2,37 @@
 #'
 #' This will be called once when the package is loaded
 #'
-#' @import rClr
+#' @import rSharp
 #' @keywords internal
 .initPackage <- function() {
   filePathFor <- function(name) {
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
 
-  .addPackageLibToPath()
 
-  rClr::clrLoadAssembly(filePathFor("OSPSuite.R.dll"))
+  # Make .dll binaries available on windows by extending PATH
+  if (.Platform$OS.type == "windows") {
+    Sys.setenv(PATH = paste(system.file("lib", package = ospsuiteEnv$packageName),
+      Sys.getenv("PATH"),
+      sep = ";"
+    ))
+  }
 
+  # Load the .so binary files on unix
+  if (.Platform$OS.type == "unix") {
+    for (soFile in list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = "\\.so$", full.names = TRUE)) {
+      dyn.load(soFile)
+    }
+  }
+
+  rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
   # Initialize once
-  apiConfig <- ApiConfig$new()
+  netObject <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig")
+  apiConfig <- ApiConfig$new(netObject)
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
-  rClr::clrCallStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig$ref)
+  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
 }

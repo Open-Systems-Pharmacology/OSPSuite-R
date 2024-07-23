@@ -15,38 +15,38 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' @field simulation Reference to the `Simulation` used to calculate or
     #'   import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
-      private$readOnlyProperty("simulation", value, private$.simulation)
+      private$.readOnlyProperty("simulation", value, private$.simulation)
     },
 
     #' @field count the number of pk parameter sensitivity entries
     count = function(value) {
-      private$wrapReadOnlyProperty("Count", value)
+      private$.wrapReadOnlyProperty("Count", value)
     },
 
     #' @field allPKParameterNames Returns the name of all PK-Parameters
     #'   available in this results. This will be a subset of all potential
     #'   PK-Parameters available in the system.
     allPKParameterNames = function(value) {
-      private$wrapReadOnlyProperty("AllPKParameterNames", value)
+      private$.wrapReadOnlyProperty("AllPKParameterNames", value)
     },
 
     #' @field allQuantityPaths Returns the path of all outputs available in this
     #'   results.
     allQuantityPaths = function(value) {
-      private$wrapReadOnlyProperty("AllQuantityPaths", value)
+      private$.wrapReadOnlyProperty("AllQuantityPaths", value)
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref A `.NET` Instance.
+    #' @param netObject A `NetObject`.
     #' @param simulation Reference to the simulation object used to calculated
     #'   the results.
     #' @return A new `SensitivityAnalysisResults` object.
-    initialize = function(ref, simulation) {
+    initialize = function(netObject, simulation) {
       validateIsOfType(simulation, "Simulation")
       private$.simulation <- simulation
-      super$initialize(ref)
+      super$initialize(netObject)
     },
 
     #' @description
@@ -71,7 +71,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       validateIsString(outputPath)
       validateIsNumeric(totalSensitivityThreshold)
 
-      pkParameterSentitivities <- rClr::clrCall(self$ref, "AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
+      pkParameterSentitivities <- self$call("AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
 
       .toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
@@ -102,8 +102,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       }
 
       if (!is.null(parameterName)) {
-        value <- rClr::clrCall(
-          self$ref,
+        value <- self$call(
           "PKParameterSensitivityValueBySensitivityParameterName",
           pkParameterName,
           outputPath,
@@ -112,8 +111,7 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       }
 
       if (!is.null(parameterPath)) {
-        value <- rClr::clrCall(
-          self$ref,
+        value <- self$call(
           "PKParameterSensitivityValueByParameterPath",
           pkParameterName,
           outputPath,
@@ -130,9 +128,9 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Number of calculated sensitivities", self$count)
-      private$printLine("Available PK parameters", self$allPKParameterNames)
+      private$.printClass()
+      private$.printLine("Number of calculated sensitivities", self$count)
+      private$.printLine("Available PK parameters", self$allPKParameterNames)
       invisible(self)
     }
   )

@@ -3,7 +3,7 @@
 # plotResidualsVsTime
 
 
-skip_if(getRversion() < "4.1")
+
 
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")

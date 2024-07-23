@@ -1,5 +1,4 @@
 #  Application
-
 quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 sim <- loadTestSimulation("S1")
 applications <- sim$allApplicationsFor(quantityPath)

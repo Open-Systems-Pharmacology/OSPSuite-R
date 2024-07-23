@@ -11,26 +11,27 @@ SnapshotParameter <- R6::R6Class(
   active = list(
     #' @field value Parameter value
     value = function(value) {
-      private$wrapProperty("Value", value)
+      private$.wrapProperty("Value", value)
     },
     #' @field unit Unit in which the value is defined
     unit = function(value) {
-      private$wrapProperty("Unit", value)
+      private$.wrapProperty("Unit", value)
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
-    #' @param ref Optional .NET reference object. If not defined, a new instance will be created
+    #' @param netObject Optional `NetObject`. If not defined, a new instance will be created
     #' @param value Optional value of the parameter.
     #' @param unit Optional unit of the value specified.
     #' @return A new `SnapshotParameter` object.
-    initialize = function(ref = NULL, value = NULL, unit = NULL) {
+    initialize = function(netObject = NULL, value = NULL, unit = NULL) {
       validateIsNumeric(value, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
-      ref <- ref %||% rClr::clrNew("PKSim.Core.Snapshots.Parameter")
-      super$initialize(ref)
+      netObject <- netObject %||% rSharp::newObjectFromName("PKSim.Core.Snapshots.Parameter")
+      super$initialize(netObject)
       # Because of weird issue with nullable value in rClr
+      # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1369
       if (!is.null(value)) {
         self$value <- value
       }
@@ -42,16 +43,16 @@ SnapshotParameter <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Value", self$value)
-      private$printLine("Unit", self$unit)
+      private$.printClass()
+      private$.printLine("Value", self$value)
+      private$.printLine("Unit", self$unit)
       invisible(self)
     },
     #' @description
     #' Print the the parameter in one line
     #' @param caption Caption to display before the value of the parameter
     printValue = function(caption) {
-      private$printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
+      private$.printLine(caption, paste0(formatNumerics(self$value), " [", self$unit, "]"))
     }
   )
 )

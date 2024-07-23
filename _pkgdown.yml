@@ -7,6 +7,18 @@ development:
   mode: devel
 
 authors:
+  Open-Systems-Pharmacology Community:
+    href: https://www.open-systems-pharmacology.org/
+    html: <img src='https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png'
+      style='max-width:33px' alt="Open System Pharmacology Logo">Open Systems Pharmacology
+  Pavel Balazki:
+    href: https://github.com/PavelBal
+  Michael Sevestre:
+    href: https://github.com/msevestre
+  Juri Solodenko:
+    href: https://github.com/Yuri05
+  Felix Mil:
+    href: https://github.com/Felixmil
   Indrajeet Patil:
     href: https://sites.google.com/site/indrajeetspatilmorality/
 
@@ -23,6 +35,7 @@ articles:
     - sensitivity-analysis
     - create-individual
     - create-run-population
+
   - title: Figure creation
     navbar: Figure creation
     desc: How to create standard figures
@@ -38,6 +51,7 @@ articles:
     - efficient-calculations
     - table-parameters
     - unit-conversion
+    - PKSim-installation
 
 figures:
   dev: ragg::agg_png

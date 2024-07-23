@@ -9,28 +9,28 @@ SimulationSettings <- R6::R6Class(
     #' @field solver Container containing all solver parameters for the simulation (read-only)
     solver = function(value) {
       if (missing(value)) {
-        solver <- rClr::clrGet(self$ref, "Solver")
+        solver <- self$get("Solver")
         SolverSettings$new(solver)
       } else {
-        private$throwPropertyIsReadonly("solver")
+        private$.throwPropertyIsReadonly("solver")
       }
     },
     #' @field outputSelections All selected quantities (species, observers, parameters) that will be part of the simulated results
     outputSelections = function(value) {
       if (missing(value)) {
-        outputSelections <- rClr::clrGet(self$ref, "OutputSelections")
+        outputSelections <- self$get("OutputSelections")
         OutputSelections$new(outputSelections)
       } else {
-        private$throwPropertyIsReadonly("outputSelections")
+        private$.throwPropertyIsReadonly("outputSelections")
       }
     },
     #' @field outputSchema OutputSchema object containing the output intervals used to generate simulation data
     outputSchema = function(value) {
       if (missing(value)) {
-        outputSchema <- rClr::clrGet(self$ref, "OutputSchema")
+        outputSchema <- self$get("OutputSchema")
         OutputSchema$new(outputSchema)
       } else {
-        private$throwPropertyIsReadonly("outputSchema")
+        private$.throwPropertyIsReadonly("outputSchema")
       }
     }
   ),
@@ -39,7 +39,7 @@ SimulationSettings <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
+      private$.printClass()
       invisible(self)
     }
   )

@@ -5,42 +5,29 @@ on:
     branches: [main]
   pull_request:
 
-
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
     uses: ./.github/workflows/bump-dev-version.yaml
     secrets: inherit
 
-  R-CMD-Check:
-    if: ${{ always() }}
+  update-core-files:
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yml@main
-    with:
-      install-pksim: true
-      install-rClr: true
-      extra-packages: |
-        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
-        tlf=github::Open-Systems-Pharmacology/TLF-Library
+    uses: ./.github/workflows/update-core-files.yaml
+
+  R-CMD-Check:
+    if: ${{ !cancelled() }}
+    needs: [update-core-files]
+    uses: ./.github/workflows/R-CMD-check.yaml
 
   test-coverage:
-    if: ${{ always() }}
-    needs: [R-CMD-Check]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-pkg-and-coverage.yml@main
-    with:
-      install-pksim: true
-      install-rClr: true
-      extra-packages: |
-        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
-        tlf=github::Open-Systems-Pharmacology/TLF-Library
+    if: ${{ !cancelled() }}
+    needs: [update-core-files]
+    uses: ./.github/workflows/test-coverage.yaml
+
 
   pkgdown:
-    if: ${{ always() }}
-    needs: [R-CMD-Check]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yml@main
-    with:
-      install-pksim: true
-      install-rClr: true
-      extra-packages: |
-        ospsuite.utils=github::Open-Systems-Pharmacology/OSPSuite.RUtils
-        tlf=github::Open-Systems-Pharmacology/TLF-Library
+    if: ${{ !cancelled() }}
+    needs: [update-core-files]
+    uses: ./.github/workflows/pkgdown.yaml
