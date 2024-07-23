@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
     <li><a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a></li>
     <li><a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a></li>
+    <li><a class="dropdown-item" href="../articles/PKSim-installation.html">PKSim Installation</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -96,9 +97,7 @@ simulation and accessing entities</a>), it can be run using
 <code>SimulationResults</code> objects.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: rClr</span></span>
-<span><span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span></span>
-<span><span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span></span>
+<span><span class="co">#&gt; Loading required package: rSharp</span></span>
 <span></span>
 <span><span class="co"># Load the simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
@@ -214,11 +213,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "f4fzCYtK8E6kxMrhUuThcA"</span></span>
+<span><span class="co">#&gt; [1] "eCe0aGWFDUivEib0PjN_qA"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "f4fzCYtK8E6kxMrhUuThcA"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "eCe0aGWFDUivEib0PjN_qA"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -297,16 +296,20 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <code class="sourceCode R"><span><span class="co"># Remove all output intervals - simulation not possible!</span></span>
 <span><span class="fu"><a href="../reference/clearOutputIntervals.html">clearOutputIntervals</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in rClr::clrCall(simulationRunner, "Run", simulationRunArgs): Type:    OSPSuite.Utility.Exceptions.OSPSuiteException</span></span>
+<span><span class="co">#&gt; Error in do.call(".External", c(list("r_call_method", self$pointer, methodName), : Type:    OSPSuite.Utility.Exceptions.OSPSuiteException</span></span>
 <span><span class="co">#&gt; Message: Time points output schema is empty</span></span>
-<span><span class="co">#&gt; Method:  Void RunSimulation()</span></span>
+<span><span class="co">#&gt; Method:  Void EvaluateCppCallResult(Boolean, System.String)</span></span>
 <span><span class="co">#&gt; Stack trace:</span></span>
+<span><span class="co">#&gt;    at OSPSuite.SimModel.PInvokeHelper.EvaluateCppCallResult(Boolean success, String errorMessage)</span></span>
+<span><span class="co">#&gt;    at OSPSuite.SimModel.Simulation.evaluateCppCallResult(Boolean success, String errorMessage)</span></span>
 <span><span class="co">#&gt;    at OSPSuite.SimModel.Simulation.RunSimulation()</span></span>
 <span><span class="co">#&gt;    at OSPSuite.Core.Domain.Services.SimModelManager.simulate()</span></span>
 <span><span class="co">#&gt;    at OSPSuite.Core.Domain.Services.SimModelManager.doIfNotCanceled(Action actionToExecute)</span></span>
 <span><span class="co">#&gt;    at OSPSuite.Core.Domain.Services.SimModelManager.RunSimulation(IModelCoreSimulation simulation, SimulationRunOptions simulationRunOptions)</span></span>
 <span><span class="co">#&gt;    at OSPSuite.R.Services.SimulationRunner.run(IModelCoreSimulation simulation, SimulationRunOptions simulationRunOptions)</span></span>
 <span><span class="co">#&gt;    at OSPSuite.R.Services.SimulationRunner.Run(SimulationRunArgs simulationRunArgs)</span></span>
+<span><span class="co">#&gt;    at InvokeStub_SimulationRunner.Run(Object, Span`1)</span></span>
+<span><span class="co">#&gt;    at System.Reflection.M</span></span>
 <span></span>
 <span><span class="co"># Add an interval</span></span>
 <span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">20</span>, resolution <span class="op">=</span> <span class="fl">60</span>, intervalName <span class="op">=</span> <span class="st">"highRes"</span><span class="op">)</span></span>
@@ -350,7 +353,7 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png" style="max-width:33px" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

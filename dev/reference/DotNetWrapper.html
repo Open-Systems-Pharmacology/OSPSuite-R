@@ -9,7 +9,7 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,7 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
     <li><a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a></li>
     <li><a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a></li>
+    <li><a class="dropdown-item" href="../articles/PKSim-installation.html">PKSim Installation</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -66,15 +67,7 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/Printable.html" class="external-link">ospsuite.utils::Printable</a></code> -&gt; <code>DotNetWrapper</code></p>
-    </div>
-    <div class="section level2">
-    <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
-    <p></p><div class="r6-active-bindings"><dl><dt><code>ref</code></dt>
-<dd><p>Underlying <code>.NET</code> reference (read-only)</p></dd>
-
-
-</dl><p></p></div>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code>DotNetWrapper</code></p>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
@@ -83,24 +76,36 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-DotNetWrapper-new"><code>DotNetWrapper$new()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-DotNetWrapper-new"></a><div class="section">
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="../../rSharp/html/NetObject.html#method-NetObject-call"><code>rSharp::NetObject$call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="finalize"><a href="../../rSharp/html/NetObject.html#method-NetObject-finalize"><code>rSharp::NetObject$finalize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="../../rSharp/html/NetObject.html#method-NetObject-get"><code>rSharp::NetObject$get()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="../../rSharp/html/NetObject.html#method-NetObject-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="../../rSharp/html/NetObject.html#method-NetObject-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="../../rSharp/html/NetObject.html#method-NetObject-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="../../rSharp/html/NetObject.html#method-NetObject-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="print"><a href="../../rSharp/html/NetObject.html#method-NetObject-print"><code>rSharp::NetObject$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="../../rSharp/html/NetObject.html#method-NetObject-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-DotNetWrapper-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/DotNetWrapper.html">DotNetWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ref</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/DotNetWrapper.html">DotNetWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">netObject</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>ref</code></dt>
-<dd><p>Instance of the <code>.NET</code> object to wrap.</p></dd>
+<p></p><div class="arguments"><dl><dt><code>netObject</code></dt>
+<dd><p>An <code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> object.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 <div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
-<p>A new <code>DotNetWrapper</code> object.</p>
+<p>A new <code>Molecule</code> object.</p>
 </div>
 
 </div>
@@ -113,37 +118,16 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># looking at a reference to `.NET` simulation object</span></span></span>
-<span class="r-in"><span><span class="va">sim</span><span class="op">$</span><span class="va">ref</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "cobjRef"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slot "clrobj":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;pointer: 0x000001d6d50f7560&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slot "clrtype":</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "OSPSuite.R.Domain.Simulation"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">sim</span><span class="op">$</span><span class="va">pointer</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;pointer: 0x562c3138d210&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create a new instance of `DotNetWrapper` class using this reference</span></span></span>
-<span class="r-in"><span><span class="va">DotNetWrapper</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">ref</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;DotNetWrapper&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Inherits from: &lt;Printable&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (ref) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ref: active binding</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     .ref: cobjRef</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     finalize: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     printClass: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     printLine: function (entry, value = NULL, addTab = TRUE) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     readOnlyProperty: function (propertyName, value, returnValue) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     throwPropertyIsReadonly: function (propertyName) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapExtensionMethod: function (typename, methodName, propertyName, value) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapExtensionMethodCached: function (typename, methodName, propertyName, cachedValue, value) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapIndexProperty: function (propertyName, value) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapIntegerProperty: function (propertyName, value) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapNullableIntegerProperty: function (propertyName, value) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapProperty: function (propertyName, value, shouldSetNull = TRUE) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapReadOnlyProperty: function (propertyName, value) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wrapVectorProperty: function (propertyNameSingular, propertyNamePlural, value, returnPropertyName) </span>
+<span class="r-in"><span><span class="va">DotNetWrapper</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DotNetWrapper: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Type: OSPSuite.R.Domain.Simulation </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Methods:: AcceptVisitor             add_Changed               add_PropertyChanged       AddAnalysis               All                       Equals                    get_Analyses              get_BodyWeight            get_BuildConfiguration    get_Charts                get_ComesFromPKSim        get_CompoundNames         get_Configuration         get_CoreSimulation        get_Creation              get_Description           get_EndTime               get_HasChanged            get_HasUpToDateResults    get_Icon                  get_Id                    get_IsLoaded              get_Model                 get_Name                  get_OutputMappings        get_OutputSelections      get_Reactions             get_ResultsDataRepository get_Settings              GetHashCode               GetType                   MolWeightFor              MolWeightFor              remove_Changed            remove_PropertyChanged    RemoveAnalysis            RemoveOutputMappings      RemoveUsedObservedData    set_Configuration         set_Creation              set_Description           set_HasChanged            set_Icon                  set_Id                    set_IsLoaded              set_Model                 set_Name                  set_OutputMappings        set_ResultsDataRepository ToString                  TotalDrugMassFor          UpdatePropertiesFrom      UsesObservedData          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Fields: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Properties: Analyses              BodyWeight            BuildConfiguration    Charts                ComesFromPKSim        CompoundNames         Configuration         CoreSimulation        Creation              Description           EndTime               HasChanged            HasUpToDateResults    Icon                  Id                    IsLoaded              Model                 Name                  OutputMappings        OutputSelections      Reactions             ResultsDataRepository Settings              </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -152,7 +136,7 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png" style="max-width:33px" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

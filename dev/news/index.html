@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
     <li><a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a></li>
     <li><a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a></li>
+    <li><a class="dropdown-item" href="../articles/PKSim-installation.html">PKSim Installation</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -56,23 +57,40 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="12.0" id="ospsuite-120-development">ospsuite 12.0 (development)<a class="anchor" aria-label="anchor" href="#ospsuite-120-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="12.1.0" id="ospsuite-1210">ospsuite 12.1.0<a class="anchor" aria-label="anchor" href="#ospsuite-1210"></a></h2>
 <div class="section level3">
-<h3 id="new-dependencies-12-0">New dependencies<a class="anchor" aria-label="anchor" href="#new-dependencies-12-0"></a></h3>
+<h3 id="new-dependencies-12-1-0">New dependencies<a class="anchor" aria-label="anchor" href="#new-dependencies-12-1-0"></a></h3>
+<ul><li><a href="https://github.com/Open-Systems-Pharmacology/rsharp/" class="external-link">rSharp</a></li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-12-1-0">New features<a class="anchor" aria-label="anchor" href="#new-features-12-1-0"></a></h3>
+<ul><li><p>The package does not require a local installation of PK-Sim any more. All required dependencies are shipped with the package.</p></li>
+<li><p>The package fully supports Linux.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="major-changes-12-1-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-1-0"></a></h3>
+<ul><li>The package loses dependency <code>{rClr}</code>
+</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="12.0.0" id="ospsuite-1200">ospsuite 12.0.0<a class="anchor" aria-label="anchor" href="#ospsuite-1200"></a></h2>
+<div class="section level3">
+<h3 id="new-dependencies-12-0-0">New dependencies<a class="anchor" aria-label="anchor" href="#new-dependencies-12-0-0"></a></h3>
 <ul><li><a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a></li>
 <li><code>{lifecyle}</code></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-12-0">New features<a class="anchor" aria-label="anchor" href="#new-features-12-0"></a></h3>
+<h3 id="new-features-12-0-0">New features<a class="anchor" aria-label="anchor" href="#new-features-12-0-0"></a></h3>
 <ul><li><p>Added a function <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to calculate steady state values for simulations. This function is of particular use for models of endogenous substrates, where changing a parameter value (e.g., the production rate) will change the steady-state values of the substrate. The steady-state is considered to be the last values of the molecules amounts and state variable parameters in the simulation with sufficiently long simulation time, i.e., where the rates of the processes do not (significantly) change. The steady-state is NOT analytically calculated or estimated in any other way than simulating for the given time.</p></li>
 <li><p>Added a function <code><a href="../reference/exportSteadyStateToXLS.html">exportSteadyStateToXLS()</a></code> to export steady state values calculated for one simulation using the <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to an Excel file that can be imported in MoBi.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="breaking-changes-12-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-12-0"></a></h3>
+<h3 id="breaking-changes-12-0-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-12-0-0"></a></h3>
 <ul><li>The single argument of the <code><a href="../reference/getBaseUnit.html">getBaseUnit()</a></code> function is now named <code>quantityOrDimension</code> (was <code>dimension</code> previously). It can now use objects of class <code>Quantity</code> as inputs, to be consistent with the <code><a href="../reference/toBaseUnit.html">toBaseUnit()</a></code> function.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="major-changes-12-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-0"></a></h3>
+<h3 id="major-changes-12-0-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-0-0"></a></h3>
 <ul><li>Lower limit of quantification (LLOQ) is plotted as dotted lines for <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>.</li>
 <li>
 <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> provides two new aggregations methods: <code>arithmetic</code> and <code>geometric</code> average and the ability to chose the number of standard deviations to display around the mean through the <code>nsd</code> argument.</li>
@@ -81,7 +99,7 @@
 <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> has a new <code>aggregation</code> argument that allow the user to choose between quantiles, arithmetic and geometric aggregations of y.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-12-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-0"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-12-0-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-0-0"></a></h3>
 <ul><li>Named <code>Simulation</code> lists can be passed to <code><a href="../reference/runSimulations.html">runSimulations()</a></code> so that the results are returned as a named list using the same names instead of the simulation id. If no name is provided, the simulation id is used as before. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1383" class="external-link">#1383</a>)</li>
 <li>The order of columns of the data frame returned by <code>DataCombined$toDataFrame()</code> has changed.</li>
 <li>
@@ -210,7 +228,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png" style="max-width:33px" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">
