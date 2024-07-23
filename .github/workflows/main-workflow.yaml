@@ -5,11 +5,16 @@ on:
     branches: [main]
   pull_request:
 
+permissions: write-all
+
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
-    uses: ./.github/workflows/bump-dev-version.yaml
-    secrets: inherit
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
+    with:
+      app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
+      private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
   update-core-files:
     if: ${{ !cancelled() && github.event_name == 'pull_request' }}
@@ -19,15 +24,16 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: ./.github/workflows/R-CMD-check.yaml
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: ./.github/workflows/test-coverage.yaml
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
 
 
   pkgdown:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: ./.github/workflows/pkgdown.yaml
+    uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
+
