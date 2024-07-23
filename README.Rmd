@@ -207,14 +207,11 @@ based on CentOS 7 and Ubuntu 18 are available under
 
 You can clone the GIT repository and build the package from source.
 
-### How to update dependencies from nuget?
+### How to update the libraries?
 
--   `git submodule update --init --recursive` to install all submodules
--   Make sure you have [ruby](https://www.ruby-lang.org/de/downloads/)
-    install and that it is available in your path
--   Run `rake postclean` or simply double click on `postclean.bat`. This
-    will update all nuget packages and copy the dependencies in the
-    package `inst/lib` folder.
+The `{ospsuite}` package requires some shared libraries to get access to PK-Sim 
+functionality. To get the latest libraries(dll on Windows or so on Linux), run
+the script file `update_core_files.R' provided with this package.
 
 
 # Known issues
