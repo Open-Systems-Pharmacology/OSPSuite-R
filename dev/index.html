@@ -217,14 +217,9 @@
 </h2>
 <p>You can clone the GIT repository and build the package from source.</p>
 <div class="section level3">
-<h3 id="how-to-update-dependencies-from-nuget">How to update dependencies from nuget?<a class="anchor" aria-label="anchor" href="#how-to-update-dependencies-from-nuget"></a>
+<h3 id="how-to-update-the-libraries">How to update the libraries?<a class="anchor" aria-label="anchor" href="#how-to-update-the-libraries"></a>
 </h3>
-<ul>
-<li>
-<code>git submodule update --init --recursive</code> to install all submodules</li>
-<li>Make sure you have <a href="https://www.ruby-lang.org/de/downloads/" class="external-link">ruby</a> install and that it is available in your path</li>
-<li>Run <code>rake postclean</code> or simply double click on <code>postclean.bat</code>. This will update all nuget packages and copy the dependencies in the package <code>inst/lib</code> folder.</li>
-</ul>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires some shared libraries to get access to PK-Sim functionality. To get the latest libraries(dll on Windows or so on Linux), run the script file `update_core_files.R’ provided with this package.</p>
 </div>
 </div>
 </div>
