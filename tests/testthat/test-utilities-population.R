@@ -118,7 +118,6 @@ test_that("It can convert a population to tibble data frame", {
 })
 
 test_that("simulationResultsToDataFrame with population", {
-
   # If no unit is specified, the default units are used. For "height" it is "dm",
   # for "weight" it is "kg", for "age" it is "year(s)".
   populationCharacteristics <- createPopulationCharacteristics(

@@ -11,10 +11,11 @@
 
 
   # Make .dll binaries available on windows by extending PATH
-  if (.Platform$OS.type == "windows"){
+  if (.Platform$OS.type == "windows") {
     Sys.setenv(PATH = paste(system.file("lib", package = ospsuiteEnv$packageName),
-                            Sys.getenv("PATH"),
-                            sep = ";"))
+      Sys.getenv("PATH"),
+      sep = ";"
+    ))
   }
 
   # Load the .so binary files on unix
