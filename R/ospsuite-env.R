@@ -45,9 +45,6 @@ ospsuiteEnv$sensitivityAnalysisConfig$variationRange <- 0.1
 # A value of 0.9 will select all parameters contributing to 90% total sensitivity
 ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 
-# Indicates whether PK-Sim was loaded already. This will prevent unnecessary initialization of the PK-Sim assemblies
-ospsuiteEnv$isPKSimLoaded <- FALSE
-
 # Small value added to zero when calculating log
 ospsuiteEnv$LOG_SAFE_EPSILON <- 1e-20
 

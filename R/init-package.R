@@ -35,4 +35,9 @@
   rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
+
+  # Load PK-Sim library
+  pksimR <- system.file("lib", "PKSim.R.dll", package = ospsuiteEnv$packageName)
+  rSharp::loadAssembly(pksimR)
+  rSharp::callStatic("PKSim.R.Api", "InitializeOnce")
 }

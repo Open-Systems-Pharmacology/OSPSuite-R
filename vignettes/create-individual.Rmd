@@ -17,10 +17,6 @@ knitr::opts_chunk$set(
 ```
 
 The `{ospsuite}` package provides an interface to the PK-Sim physiology database to create parameter sets describing a certain **individual**. By applying these parameter values to a simulation, it is possible to simulate different individuals based on one exported *.pkml simulation. 
-This functionality is only available when PK-Sim is installed on the system.
-
-The easier way to get started is to install the [OSPSuite Setup](https://github.com/Open-Systems-Pharmacology/Suite/releases/). This will link PK-Sim to your `{ospsuite}` installation automatically. 
-If the portable version of PK-Sim is used instead,  one must specify the path to the PK-Sim folder by calling the function `initPKSim()`.
 
 ## Creating individuals
 
