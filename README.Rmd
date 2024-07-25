@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
 # OSPSuite-R
 
 <!-- badges: start -->
-[![Main-Workflow](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml/badge.svg)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
+[![](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&label=Build
+)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
 [![Codecov test coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
 <!-- badges: end -->
 

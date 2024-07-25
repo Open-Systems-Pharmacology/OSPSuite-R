@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml)
+[![](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=develop)
+coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
 <!-- badges: end -->
 
 # Overview
@@ -64,7 +64,8 @@ following order:
 # Installation
 
 The **ospsuite** package is compatible with R version 4.x.x and can be
-used on [Windows](#on-windows) and [Linux](#on-linux) operating systems.
+used on [Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
+systems.
 
 `ospsuite` is not available on CRAN and also depends on packages from
 the OSP ecosystem that are not available on CRAN. Please follow the
@@ -78,7 +79,7 @@ dependencies.
 The package requires additional software installations:
 
 - Latest Microsoft Visual C++ Redistributable for Visual Studio 2015,
-  2017 and 2019 available
+  2017, 2019 and 2022 available
   [here](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
 - .NET 8 runtime available
   [here](https://dotnet.microsoft.com/download/dotnet/8.0/runtime).
@@ -115,25 +116,23 @@ files provided with the
 When installing from such files, the CRAN dependencies need to be
 installed manually first.
 
-``` r
-# Install dependencies (e.g. R6) which are on CRAN
-install.packages("data.table")
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("ggtext")
-install.packages("jsonlite")
-install.packages("lifecycle")
-install.packages("openxlsx")
-install.packages("patchwork")
-install.packages("purrr")
-install.packages("R6")
-install.packages("rClr")
-install.packages("readr")
-install.packages("rlang")
-install.packages("stringr")
-install.packages("tidyr")
-install.packages("xml2")
-```
+    #> Warning: package 'pacman' was built under R version 4.2.3
+    # Install dependencies (e.g. R6) which are on CRAN
+    install.packages("data.table")
+    install.packages("dplyr")
+    install.packages("ggplot2")
+    install.packages("ggtext")
+    install.packages("jsonlite")
+    install.packages("lifecycle")
+    install.packages("openxlsx")
+    install.packages("patchwork")
+    install.packages("purrr")
+    install.packages("R6")
+    install.packages("readr")
+    install.packages("rlang")
+    install.packages("stringr")
+    install.packages("tidyr")
+    install.packages("xml2")
 
 #### Install non-CRAN dependencies
 
@@ -176,16 +175,14 @@ install.packages(pathToOSPSuite.zip, repos = NULL)
 ## On Linux
 
 The **ospsuite** package has been tested under Linux distribution
-**Ubuntu 22**. Installation under Linux requires several prerequisites,
-the detailed instructions can be found in the Wiki:
+**Ubuntu 22.04**. Installation under Linux requires several
+prerequisites, the detailed instructions can be found in the Wiki:
 
-- [Setup OSPSuite-R on
-  CentOS](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-CentOS7)
 - [Setup OSPSuite-R on
   Ubuntu](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu)
 
-For other Linux distributions Docker containers can be used (Dockerfiles
-based on CentOS 7 and Ubuntu 18 are available under
+For other Linux distributions Docker containers can be used (Docker
+container based on Ubuntu 22 is available under
 <https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases>)
 
 ## Build from source
@@ -195,9 +192,9 @@ You can clone the GIT repository and build the package from source.
 ### How to update the libraries?
 
 The `{ospsuite}` package requires some shared libraries to get access to
-PK-Sim functionality. To get the latest libraries(dll on Windows or so
-on Linux), run the script file \`update_core_files.R’ provided with this
-package.
+PK-Sim functionality. To get the latest libraries(**.dll** on Windows or
+**.so** on Linux), run the script file \`update_core_files.R’ provided
+with this package.
 
 # Known issues
 
