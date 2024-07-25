@@ -117,7 +117,7 @@
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p>The <strong>ospsuite</strong> package is compatible with R version 4.x.x and can be used on <a href="#on-windows">Windows</a> and <a href="#on-linux">Linux</a> operating systems.</p>
+<p>The <strong>ospsuite</strong> package is compatible with R version 4.x.x and can be used on <a href="#on-windows">Windows</a> and <a href="#on-linux">Linux (Ubuntu)</a> operating systems.</p>
 <p><code>ospsuite</code> is not available on CRAN and also depends on packages from the OSP ecosystem that are not available on CRAN. Please follow the instructions below to install the packages and all required dependencies.</p>
 <div class="section level2">
 <h2 id="on-windows">On Windows<a class="anchor" aria-label="anchor" href="#on-windows"></a>
@@ -127,7 +127,7 @@
 </h3>
 <p>The package requires additional software installations:</p>
 <ul>
-<li>Latest Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019 available <a href="https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads" class="external-link">here</a>
+<li>Latest Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017, 2019 and 2022 available <a href="https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads" class="external-link">here</a>
 </li>
 <li>.NET 8 runtime available <a href="https://dotnet.microsoft.com/download/dotnet/8.0/runtime" class="external-link">here</a>.</li>
 </ul>
@@ -153,24 +153,23 @@
 <h4 id="install-cran-dependencies">Install CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-cran-dependencies"></a>
 </h4>
 <p>When installing from such files, the CRAN dependencies need to be installed manually first.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install dependencies (e.g. R6) which are on CRAN</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"data.table"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggtext"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"lifecycle"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"openxlsx"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"purrr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"R6"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rClr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"readr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rlang"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"xml2"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; Warning: package 'pacman' was built under R version 4.2.3</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># Install dependencies (e.g. R6) which are on CRAN</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"data.table"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggtext"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"jsonlite"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"lifecycle"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"openxlsx"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"patchwork"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"purrr"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"R6"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readr"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rlang"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"stringr"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyr"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"xml2"</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="install-non-cran-dependencies">Install non-CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-non-cran-dependencies"></a>
@@ -205,12 +204,11 @@
 <div class="section level2">
 <h2 id="on-linux">On Linux<a class="anchor" aria-label="anchor" href="#on-linux"></a>
 </h2>
-<p>The <strong>ospsuite</strong> package has been tested under Linux distribution <strong>Ubuntu 22</strong>. Installation under Linux requires several prerequisites, the detailed instructions can be found in the Wiki:</p>
+<p>The <strong>ospsuite</strong> package has been tested under Linux distribution <strong>Ubuntu 22.04</strong>. Installation under Linux requires several prerequisites, the detailed instructions can be found in the Wiki:</p>
 <ul>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-CentOS7" class="external-link">Setup OSPSuite-R on CentOS</a></li>
 <li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/wiki/Setup-ospsuite-R-on-Ubuntu" class="external-link">Setup OSPSuite-R on Ubuntu</a></li>
 </ul>
-<p>For other Linux distributions Docker containers can be used (Dockerfiles based on CentOS 7 and Ubuntu 18 are available under <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases</a>)</p>
+<p>For other Linux distributions Docker containers can be used (Docker container based on Ubuntu 22 is available under <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases</a>)</p>
 </div>
 <div class="section level2">
 <h2 id="build-from-source">Build from source<a class="anchor" aria-label="anchor" href="#build-from-source"></a>
@@ -219,7 +217,7 @@
 <div class="section level3">
 <h3 id="how-to-update-the-libraries">How to update the libraries?<a class="anchor" aria-label="anchor" href="#how-to-update-the-libraries"></a>
 </h3>
-<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires some shared libraries to get access to PK-Sim functionality. To get the latest libraries(dll on Windows or so on Linux), run the script file `update_core_files.R’ provided with this package.</p>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires some shared libraries to get access to PK-Sim functionality. To get the latest libraries(<strong>.dll</strong> on Windows or <strong>.so</strong> on Linux), run the script file `update_core_files.R’ provided with this package.</p>
 </div>
 </div>
 </div>
@@ -301,8 +299,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=develop" class="external-link"><img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/develop/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml" class="external-link"><img src="https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&amp;label=Build"></a></li>
+<li><a href="https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main" class="external-link"><img src="https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
