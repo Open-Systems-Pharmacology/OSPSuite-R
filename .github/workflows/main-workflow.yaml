@@ -29,7 +29,7 @@ jobs:
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [update-core-files]
-    uses: Felixmil/Workflows/.github/workflows/test-coverage.yaml@main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
