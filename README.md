@@ -116,23 +116,24 @@ files provided with the
 When installing from such files, the CRAN dependencies need to be
 installed manually first.
 
-    #> Warning: package 'pacman' was built under R version 4.2.3
-    # Install dependencies (e.g. R6) which are on CRAN
-    install.packages("data.table")
-    install.packages("dplyr")
-    install.packages("ggplot2")
-    install.packages("ggtext")
-    install.packages("jsonlite")
-    install.packages("lifecycle")
-    install.packages("openxlsx")
-    install.packages("patchwork")
-    install.packages("purrr")
-    install.packages("R6")
-    install.packages("readr")
-    install.packages("rlang")
-    install.packages("stringr")
-    install.packages("tidyr")
-    install.packages("xml2")
+``` r
+# Install dependencies (e.g. R6) which are on CRAN
+install.packages("data.table")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("ggtext")
+install.packages("jsonlite")
+install.packages("lifecycle")
+install.packages("openxlsx")
+install.packages("patchwork")
+install.packages("purrr")
+install.packages("R6")
+install.packages("readr")
+install.packages("rlang")
+install.packages("stringr")
+install.packages("tidyr")
+install.packages("xml2")
+```
 
 #### Install non-CRAN dependencies
 
@@ -227,9 +228,11 @@ conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_
 We encourage contribution to the Open Systems Pharmacology community.
 Before getting started please read the [contribution
 guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md).
-If you are contributing to the codebase, please be familiar with the
-[coding
-standards](https://github.com/Open-Systems-Pharmacology/developer-docs/blob/main/ospsuite-r-specifics/CODING_STANDARDS_R.md).
+If you are contributing to the codebase, please be familiar with the [R
+coding
+standards](https://dev.open-systems-pharmacology.org/r-development-resources/coding_standards_r)
+as well as the [collaboration
+guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide).
 
 # License
 

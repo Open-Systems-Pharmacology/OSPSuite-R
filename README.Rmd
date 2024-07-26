@@ -246,8 +246,8 @@ conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_
 We encourage contribution to the Open Systems Pharmacology community.
 Before getting started please read the [contribution
 guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md).
-If you are contributing to the codebase, please be familiar with the [coding
-standards](https://github.com/Open-Systems-Pharmacology/developer-docs/blob/main/ospsuite-r-specifics/CODING_STANDARDS_R.md).
+If you are contributing to the codebase, please be familiar with the [R coding
+standards](https://dev.open-systems-pharmacology.org/r-development-resources/coding_standards_r) as well as the [collaboration guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide).
 
 # License
 
