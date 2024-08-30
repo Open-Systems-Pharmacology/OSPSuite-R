@@ -22,7 +22,7 @@ test_that("Convert project to snapshot works", {
   path <- getTestDataFilePath("test_project.pksim5")
   temp_dir <- withr::local_tempdir()
   convertSnapshot(path, output = temp_dir, format = "snapshot")
-  list.files(temp_dir)
+
   expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
