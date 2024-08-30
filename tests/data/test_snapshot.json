@@ -1,0 +1,776 @@
+{
+  "Version": 79,
+  "Individuals": [
+    {
+      "Name": "Mouse",
+      "Seed": 712090093,
+      "OriginData": {
+        "CalculationMethods": [
+          "SurfaceAreaPlsInt_VAR1"
+        ],
+        "Species": "Mouse"
+      },
+      "ExpressionProfiles": []
+    }
+  ],
+  "Compounds": [
+    {
+      "Name": "Generic_compound",
+      "IsSmallMolecule": true,
+      "PlasmaProteinBindingPartner": "Albumin",
+      "Lipophilicity": [
+        {
+          "Name": "Measurement",
+          "Parameters": [
+            {
+              "Name": "Lipophilicity",
+              "Value": 4.0,
+              "Unit": "Log Units"
+            }
+          ]
+        }
+      ],
+      "FractionUnbound": [
+        {
+          "Name": "Measurement",
+          "Species": "Mouse",
+          "Parameters": [
+            {
+              "Name": "Fraction unbound (plasma, reference value)",
+              "Value": 0.05
+            }
+          ]
+        }
+      ],
+      "Solubility": [
+        {
+          "Name": "Measurement",
+          "Parameters": [
+            {
+              "Name": "Solubility at reference pH",
+              "Value": 0.01,
+              "Unit": "mg/ml"
+            },
+            {
+              "Name": "Reference pH",
+              "Value": 7.0
+            }
+          ]
+        }
+      ],
+      "IntestinalPermeability": [
+        {
+          "Name": "Peff",
+          "Parameters": [
+            {
+              "Name": "Specific intestinal permeability (transcellular)",
+              "Value": 0.0004,
+              "Unit": "cm/s"
+            }
+          ]
+        }
+      ],
+      "Permeability": [
+        {
+          "Name": "Perm",
+          "Parameters": [
+            {
+              "Name": "Permeability",
+              "Value": 2E-05,
+              "Unit": "cm/s"
+            }
+          ]
+        }
+      ],
+      "PkaTypes": [
+        {
+          "Type": "Acid",
+          "Pka": 4.5,
+          "ValueOrigin": {
+            "Source": "Unknown"
+          }
+        }
+      ],
+      "Processes": [
+        {
+          "InternalName": "LiverClearance",
+          "DataSource": "LiverPlasmaClearance",
+          "Species": "Mouse",
+          "Parameters": [
+            {
+              "Name": "Fraction unbound (experiment)",
+              "Value": 0.05
+            },
+            {
+              "Name": "Lipophilicity (experiment)",
+              "Value": 4.0,
+              "Unit": "Log Units"
+            },
+            {
+              "Name": "Plasma clearance",
+              "Value": 0.0,
+              "Unit": "ml/min/kg"
+            },
+            {
+              "Name": "Specific clearance",
+              "Value": 2.5,
+              "Unit": "1/min",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            }
+          ]
+        }
+      ],
+      "CalculationMethods": [
+        "Cellular partition coefficient method - PK-Sim Standard",
+        "Cellular permeability - PK-Sim Standard"
+      ],
+      "Parameters": [
+        {
+          "Name": "Cl",
+          "Value": 1.0,
+          "ValueOrigin": {
+            "Source": "Unknown"
+          }
+        },
+        {
+          "Name": "Molecular weight",
+          "Value": 500.0,
+          "Unit": "g/mol"
+        }
+      ]
+    }
+  ],
+  "Formulations": [
+    {
+      "Name": "Default Weibull",
+      "FormulationType": "Formulation_Tablet_Weibull",
+      "Parameters": [
+        {
+          "Name": "Dissolution time (50% dissolved)",
+          "Value": 240.0,
+          "Unit": "min"
+        },
+        {
+          "Name": "Lag time",
+          "Value": 0.0,
+          "Unit": "min"
+        },
+        {
+          "Name": "Dissolution shape",
+          "Value": 0.92
+        },
+        {
+          "Name": "Use as suspension",
+          "Value": 1.0
+        }
+      ]
+    }
+  ],
+  "Protocols": [
+    {
+      "Name": "IV only",
+      "ApplicationType": "IntravenousBolus",
+      "DosingInterval": "Single",
+      "Parameters": [
+        {
+          "Name": "Start time",
+          "Value": 0.0,
+          "Unit": "h"
+        },
+        {
+          "Name": "InputDose",
+          "Value": 1.0,
+          "Unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "Name": "IV + Weibull",
+      "DosingInterval": "Single",
+      "Schemas": [
+        {
+          "Name": "Schema 1",
+          "SchemaItems": [
+            {
+              "Name": "Schema Item 1",
+              "ApplicationType": "IntravenousBolus",
+              "Parameters": [
+                {
+                  "Name": "Start time",
+                  "Value": 0.0,
+                  "Unit": "h"
+                },
+                {
+                  "Name": "InputDose",
+                  "Value": 1.0,
+                  "Unit": "mg/kg"
+                }
+              ]
+            }
+          ],
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h"
+            },
+            {
+              "Name": "NumberOfRepetitions",
+              "Value": 1.0
+            },
+            {
+              "Name": "TimeBetweenRepetitions",
+              "Value": 0.0,
+              "Unit": "h"
+            }
+          ]
+        },
+        {
+          "Name": "Schema 2",
+          "SchemaItems": [
+            {
+              "Name": "Schema Item 1",
+              "ApplicationType": "Oral",
+              "FormulationKey": "Formulation",
+              "Parameters": [
+                {
+                  "Name": "Start time",
+                  "Value": 0.0,
+                  "Unit": "h"
+                },
+                {
+                  "Name": "InputDose",
+                  "Value": 0.0,
+                  "Unit": "mg/kg"
+                },
+                {
+                  "Name": "Volume of water/body weight",
+                  "Value": 0.0,
+                  "Unit": "ml/kg"
+                }
+              ]
+            }
+          ],
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h"
+            },
+            {
+              "Name": "NumberOfRepetitions",
+              "Value": 1.0
+            },
+            {
+              "Name": "TimeBetweenRepetitions",
+              "Value": 0.0,
+              "Unit": "h"
+            }
+          ]
+        }
+      ],
+      "TimeUnit": "h"
+    }
+  ],
+  "Simulations": [
+    {
+      "Name": "Simulation - IV + Weibull - Default tolerance",
+      "Model": "4Comp",
+      "Solver": {},
+      "OutputSchema": [
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h"
+            },
+            {
+              "Name": "End time",
+              "Value": 24.0,
+              "Unit": "h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            },
+            {
+              "Name": "Resolution",
+              "Value": 20.0,
+              "Unit": "pts/h"
+            }
+          ]
+        }
+      ],
+      "Parameters": [
+        {
+          "Path": "Applications|IV + Weibull|Default Weibull|Application_2|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 0.0,
+          "Unit": "ml/kg"
+        },
+        {
+          "Path": "Undefined Liver|Reference concentration",
+          "Value": 1.0,
+          "Unit": "µmol/l"
+        },
+        {
+          "Path": "Undefined Liver|t1/2 (intestine)",
+          "Value": 1380.0,
+          "Unit": "min"
+        },
+        {
+          "Path": "Undefined Liver|t1/2 (liver)",
+          "Value": 2160.0,
+          "Unit": "min"
+        }
+      ],
+      "OutputSelections": [
+        "Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+        "Organism|Skin|Intracellular|Generic_compound|Concentration in container"
+      ],
+      "Individual": "Mouse",
+      "Compounds": [
+        {
+          "Name": "Generic_compound",
+          "CalculationMethods": [
+            "Cellular partition coefficient method - Rodgers and Rowland",
+            "Cellular permeability - PK-Sim Standard"
+          ],
+          "Alternatives": [
+            {
+              "AlternativeName": "Perm",
+              "GroupName": "COMPOUND_PERMEABILITY"
+            },
+            {
+              "AlternativeName": "Peff",
+              "GroupName": "COMPOUND_INTESTINAL_PERMEABILITY"
+            }
+          ],
+          "Processes": [
+            {
+              "Name": "Total Hepatic Clearance-LiverPlasmaClearance",
+              "SystemicProcessType": "Hepatic"
+            }
+          ],
+          "Protocol": {
+            "Name": "IV + Weibull",
+            "Formulations": [
+              {
+                "Name": "Default Weibull",
+                "Key": "Formulation"
+              }
+            ]
+          }
+        }
+      ],
+      "HasResults": true,
+      "IndividualAnalyses": [
+        {
+          "Axes": [
+            {
+              "Unit": "h",
+              "Dimension": "Time",
+              "Type": "X",
+              "GridLines": false,
+              "Visible": true,
+              "DefaultColor": "#FFFFFF",
+              "DefaultLineStyle": "None",
+              "Scaling": "Linear",
+              "NumberMode": "Normal"
+            },
+            {
+              "Unit": "µmol/l",
+              "Dimension": "Concentration (molar)",
+              "Type": "Y",
+              "GridLines": false,
+              "Visible": true,
+              "DefaultColor": "#FFFFFF",
+              "DefaultLineStyle": "Solid",
+              "Scaling": "Log",
+              "NumberMode": "Normal"
+            }
+          ],
+          "Curves": [
+            {
+              "Name": "Generic_compound-Venous Blood-Plasma-Concentration",
+              "X": "Time",
+              "Y": "Simulation - IV + Weibull - Default tolerance|Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+              "CurveOptions": {
+                "Color": "#FF0000",
+                "LegendIndex": 1
+              }
+            },
+            {
+              "Name": "Generic_compound-Skin-Intracellular-Concentration",
+              "X": "Time",
+              "Y": "Simulation - IV + Weibull - Default tolerance|Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+              "CurveOptions": {
+                "Color": "#0000FF",
+                "LegendIndex": 2
+              }
+            }
+          ],
+          "Name": "Time Profile Analysis",
+          "FontAndSize": {
+            "Fonts": {
+              "AxisSize": 10,
+              "LegendSize": 8,
+              "TitleSize": 16,
+              "DescriptionSize": 12,
+              "OriginSize": 8,
+              "FontFamilyName": "Microsoft Sans Serif",
+              "WatermarkSize": 32
+            }
+          },
+          "Settings": {
+            "SideMarginsEnabled": true,
+            "LegendPosition": "RightInside",
+            "BackColor": "#FFFFFF",
+            "DiagramBackColor": "#FFFFFF"
+          },
+          "OriginText": "Comparison advanced admin with weibull\nSimulation - IV + Weibull - Default tolerance\n2024-08-30 09:51"
+        }
+      ]
+    },
+    {
+      "Name": "Simulation - IV only - Default tolerance",
+      "Model": "4Comp",
+      "Solver": {},
+      "OutputSchema": [
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h"
+            },
+            {
+              "Name": "End time",
+              "Value": 24.0,
+              "Unit": "h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            },
+            {
+              "Name": "Resolution",
+              "Value": 20.0,
+              "Unit": "pts/h"
+            }
+          ]
+        }
+      ],
+      "Parameters": [
+        {
+          "Path": "Undefined Liver|Reference concentration",
+          "Value": 1.0,
+          "Unit": "µmol/l"
+        },
+        {
+          "Path": "Undefined Liver|t1/2 (intestine)",
+          "Value": 1380.0,
+          "Unit": "min"
+        },
+        {
+          "Path": "Undefined Liver|t1/2 (liver)",
+          "Value": 2160.0,
+          "Unit": "min"
+        }
+      ],
+      "OutputSelections": [
+        "Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+        "Organism|VenousBlood|Plasma|Generic_compound|Concentration in container"
+      ],
+      "Individual": "Mouse",
+      "Compounds": [
+        {
+          "Name": "Generic_compound",
+          "CalculationMethods": [
+            "Cellular partition coefficient method - Rodgers and Rowland",
+            "Cellular permeability - PK-Sim Standard"
+          ],
+          "Alternatives": [
+            {
+              "AlternativeName": "Perm",
+              "GroupName": "COMPOUND_PERMEABILITY"
+            },
+            {
+              "AlternativeName": "Peff",
+              "GroupName": "COMPOUND_INTESTINAL_PERMEABILITY"
+            }
+          ],
+          "Processes": [
+            {
+              "Name": "Total Hepatic Clearance-LiverPlasmaClearance",
+              "SystemicProcessType": "Hepatic"
+            }
+          ],
+          "Protocol": {
+            "Name": "IV only"
+          }
+        }
+      ],
+      "HasResults": true,
+      "IndividualAnalyses": [
+        {
+          "Axes": [
+            {
+              "Unit": "h",
+              "Dimension": "Time",
+              "Type": "X",
+              "GridLines": false,
+              "Visible": true,
+              "DefaultColor": "#FFFFFF",
+              "DefaultLineStyle": "None",
+              "Scaling": "Linear",
+              "NumberMode": "Normal"
+            },
+            {
+              "Unit": "µmol/l",
+              "Dimension": "Concentration (molar)",
+              "Type": "Y",
+              "GridLines": false,
+              "Visible": true,
+              "DefaultColor": "#FFFFFF",
+              "DefaultLineStyle": "Solid",
+              "Scaling": "Log",
+              "NumberMode": "Normal"
+            }
+          ],
+          "Curves": [
+            {
+              "Name": "Generic_compound-Skin-Intracellular-Concentration",
+              "X": "Time",
+              "Y": "Simulation - IV only - Default tolerance|Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+              "CurveOptions": {
+                "Color": "#FF0000",
+                "LegendIndex": 1
+              }
+            },
+            {
+              "Name": "Generic_compound-Venous Blood-Plasma-Concentration",
+              "X": "Time",
+              "Y": "Simulation - IV only - Default tolerance|Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+              "CurveOptions": {
+                "Color": "#0000FF",
+                "LegendIndex": 2
+              }
+            }
+          ],
+          "Name": "Time Profile Analysis",
+          "FontAndSize": {
+            "Fonts": {
+              "AxisSize": 10,
+              "LegendSize": 8,
+              "TitleSize": 16,
+              "DescriptionSize": 12,
+              "OriginSize": 8,
+              "FontFamilyName": "Microsoft Sans Serif",
+              "WatermarkSize": 32
+            }
+          },
+          "Settings": {
+            "SideMarginsEnabled": true,
+            "LegendPosition": "RightInside",
+            "BackColor": "#FFFFFF",
+            "DiagramBackColor": "#FFFFFF"
+          },
+          "OriginText": "Comparison advanced admin with weibull\nSimulation - IV only - Default tolerance\n2024-08-30 09:51"
+        }
+      ]
+    }
+  ],
+  "SimulationComparisons": [
+    {
+      "Name": "Simulation Comparison - Tolerance reduced",
+      "Simulations": [
+        "Simulation - IV + Weibull - Tolerance reduced",
+        "Simulation - IV only - Tolerance reduced"
+      ],
+      "IndividualComparison": {
+        "Axes": [
+          {
+            "Unit": "h",
+            "Dimension": "Time",
+            "Type": "X",
+            "GridLines": false,
+            "Visible": true,
+            "Min": 15.53561,
+            "Max": 25.05864,
+            "DefaultColor": "#FFFFFF",
+            "DefaultLineStyle": "None",
+            "Scaling": "Linear",
+            "NumberMode": "Normal"
+          },
+          {
+            "Unit": "µmol/l",
+            "Dimension": "Concentration (molar)",
+            "Type": "Y",
+            "GridLines": false,
+            "Visible": true,
+            "Min": 5.034298E-07,
+            "Max": 0.3479374,
+            "DefaultColor": "#FFFFFF",
+            "DefaultLineStyle": "Solid",
+            "Scaling": "Log",
+            "NumberMode": "Normal"
+          }
+        ],
+        "Curves": [
+          {
+            "Name": "Simulation - IV only-Generic_compound-Venous Blood-Plasma-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV only - Tolerance reduced|Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#800080",
+              "LegendIndex": 2
+            }
+          },
+          {
+            "Name": "Simulation - IV only-Generic_compound-Skin-Intracellular-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV only - Tolerance reduced|Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#0000FF",
+              "LegendIndex": 3
+            }
+          },
+          {
+            "Name": "Simulation - IV + Weibull-Generic_compound-Venous Blood-Plasma-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV + Weibull - Tolerance reduced|Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#FF00FF",
+              "LegendIndex": 1,
+              "LineStyle": "Dash"
+            }
+          },
+          {
+            "Name": "Simulation - IV + Weibull-Generic_compound-Skin-Intracellular-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV + Weibull - Tolerance reduced|Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#008000",
+              "LegendIndex": 2,
+              "LineStyle": "Dash"
+            }
+          }
+        ],
+        "Name": "Simulation Comparison - Tolerance reduced",
+        "FontAndSize": {
+          "Fonts": {
+            "AxisSize": 10,
+            "LegendSize": 8,
+            "TitleSize": 16,
+            "DescriptionSize": 12,
+            "OriginSize": 8,
+            "FontFamilyName": "Microsoft Sans Serif",
+            "WatermarkSize": 32
+          }
+        },
+        "Settings": {
+          "SideMarginsEnabled": true,
+          "LegendPosition": "RightInside",
+          "BackColor": "#FFFFFF",
+          "DiagramBackColor": "#FFFFFF"
+        }
+      }
+    },
+    {
+      "Name": "Simulation Comparison - Default tolerance",
+      "Simulations": [
+        "Simulation - IV only - Default tolerance",
+        "Simulation - IV + Weibull - Default tolerance"
+      ],
+      "IndividualComparison": {
+        "Axes": [
+          {
+            "Unit": "h",
+            "Dimension": "Time",
+            "Type": "X",
+            "GridLines": false,
+            "Visible": true,
+            "Min": 15.75082,
+            "Max": 23.63288,
+            "DefaultColor": "#FFFFFF",
+            "DefaultLineStyle": "None",
+            "Scaling": "Linear",
+            "NumberMode": "Normal"
+          },
+          {
+            "Unit": "µmol/l",
+            "Dimension": "Concentration (molar)",
+            "Type": "Y",
+            "GridLines": false,
+            "Visible": true,
+            "Min": 4.803477E-07,
+            "Max": 0.3479376,
+            "DefaultColor": "#FFFFFF",
+            "DefaultLineStyle": "Solid",
+            "Scaling": "Log",
+            "NumberMode": "Normal"
+          }
+        ],
+        "Curves": [
+          {
+            "Name": "Simulation - IV only - Default tolerance-Generic_compound-Skin-Intracellular-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV only - Default tolerance|Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#0000FF",
+              "LegendIndex": 1
+            }
+          },
+          {
+            "Name": "Simulation - IV only - Default tolerance-Generic_compound-Venous Blood-Plasma-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV only - Default tolerance|Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#800080",
+              "LegendIndex": 2
+            }
+          },
+          {
+            "Name": "Simulation - IV + Weibull - Default tolerance-Generic_compound-Venous Blood-Plasma-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV + Weibull - Default tolerance|Organism|VenousBlood|Plasma|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#FF00FF",
+              "LegendIndex": 1,
+              "LineStyle": "Dash"
+            }
+          },
+          {
+            "Name": "Simulation - IV + Weibull - Default tolerance-Generic_compound-Skin-Intracellular-Concentration",
+            "X": "Time",
+            "Y": "Simulation - IV + Weibull - Default tolerance|Organism|Skin|Intracellular|Generic_compound|Concentration in container",
+            "CurveOptions": {
+              "Color": "#008000",
+              "LegendIndex": 2,
+              "LineStyle": "Dash"
+            }
+          }
+        ],
+        "Name": "Simulation Comparison - Default tolerance",
+        "FontAndSize": {
+          "Fonts": {
+            "AxisSize": 10,
+            "LegendSize": 8,
+            "TitleSize": 16,
+            "DescriptionSize": 12,
+            "OriginSize": 8,
+            "FontFamilyName": "Microsoft Sans Serif",
+            "WatermarkSize": 32
+          }
+        },
+        "Settings": {
+          "SideMarginsEnabled": true,
+          "LegendPosition": "RightInside",
+          "BackColor": "#FFFFFF",
+          "DiagramBackColor": "#FFFFFF"
+        }
+      }
+    }
+  ]
+}
