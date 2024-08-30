@@ -108,6 +108,7 @@ Collate:
     'simulation-settings.R'
     'simulation.R'
     'snapshot-parameter.R'
+    'snapshots.R'
     'solver-settings.R'
     'utilities-path.R'
     'standard-path.R'
