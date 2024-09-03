@@ -10,6 +10,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
+#' }
 runSimulationsFromSnapshot <- function(..., output = ".", csv = TRUE, pkml = FALSE, xml = FALSE){
   
   initPKSim()
@@ -59,6 +62,10 @@ runSimulationsFromSnapshot <- function(..., output = ".", csv = TRUE, pkml = FAL
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' convertSnapshot("path/to/snapshot.json", format = "project")
+#' convertSnapshot("path/to/project.pksim5", format = "snapshot")
+#' }
 convertSnapshot <- function(..., format, output = "."){
   
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
