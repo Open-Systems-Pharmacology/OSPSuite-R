@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>PKSim Installation • ospsuite</title>
+<title>PK-Sim Installation • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="PKSim Installation">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="PK-Sim Installation">
 <meta name="robots" content="noindex">
 </head>
 <body>
@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.1.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.1.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
     <li><a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a></li>
     <li><a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a></li>
-    <li><a class="dropdown-item" href="../articles/PKSim-installation.html">PKSim Installation</a></li>
+    <li><a class="dropdown-item" href="../articles/PKSim-installation.html">PK-Sim Installation</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -77,7 +77,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>PKSim Installation</h1>
+      <h1>PK-Sim Installation</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/PKSim-installation.Rmd" class="external-link"><code>vignettes/PKSim-installation.Rmd</code></a></small>
@@ -91,12 +91,12 @@
 12.1.0<a class="anchor" aria-label="anchor" href="#not-required-for-ospsuite-version-equal-or-above-12-1-0"></a>
 </h2>
 <p>Since <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> was released in version 12.1.0, all the
-necessary OSPSuite and PKSim dependencies are included in the package.
+necessary OSPSuite and PK-Sim dependencies are included in the package.
 Therefore, there is no need to install extra software to use
 <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a>.</p>
 <p>Also, <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> is fully self contained and is
-independant from any version of OSPSuite and PKSim installed on the user
-computer.</p>
+independant from any version of OSPSuite and PK-Sim installed on the
+user computer.</p>
 <p>However, a script is provided in the package for developpers in order
 to get/update the latest dependencies (or core files): <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/update_core_files.R" class="external-link">here</a></p>
 </div>
@@ -105,9 +105,10 @@ to get/update the latest dependencies (or core files): <a href="https://github.c
 </h2>
 <p>Some features available in <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> require the
 installation of <a href="https://github.com/Open-Systems-Pharmacology/PK-Sim" class="external-link">PK-Sim</a>.</p>
-<p>It is necessary to have a PKSim installation that matches the version
-of <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> (<em>i.e</em> to use <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a>
-v11.y.z, you need to have PKSim v11 installed).</p>
+<p>It is necessary to have a PK-Sim installation that matches the
+version of <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> (<em>i.e</em> to use
+<a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> v11.y.z, you need to have PK-Sim v11
+installed).</p>
 <p>It is possible to install PK-Sim globally for the whole system, but
 also locally on a per-project basis. The following sections describe
 both options.</p>
@@ -150,7 +151,7 @@ example, if you downloaded PK-Sim 11.3.208, the folder name should be
 <h2 id="install-and-use-pk-sim-in-a-project">Install and use PK-Sim in a project<a class="anchor" aria-label="anchor" href="#install-and-use-pk-sim-in-a-project"></a>
 </h2>
 <p>Follow the steps from the previous section to download and extract
-PKSim to a <code>PKSim</code> folder in your project folder.</p>
+PK-Sim to a <code>PKSim</code> folder in your project folder.</p>
 <p>Then, include the following code lines at the beginning of the
 projects scripts:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -167,7 +168,7 @@ issue</a>)</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://open-systems-pharmacology.github.io/ospsuiteR/reference/figures/osp.png" style="max-width:33px" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">
