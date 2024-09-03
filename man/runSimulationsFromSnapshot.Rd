@@ -26,3 +26,8 @@ runSimulationsFromSnapshot(
 \description{
 Run Simulations From Snapshot Files
 }
+\examples{
+\dontrun{
+runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
+}
+}

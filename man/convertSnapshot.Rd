@@ -16,3 +16,9 @@ convertSnapshot(..., format, output = ".")
 \description{
 Convert between snapshot and project formats
 }
+\examples{
+\dontrun{
+convertSnapshot("path/to/snapshot.json", format = "project")
+convertSnapshot("path/to/project.pksim5", format = "snapshot")
+}
+}
