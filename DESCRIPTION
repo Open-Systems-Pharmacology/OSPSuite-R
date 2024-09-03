@@ -34,7 +34,8 @@ Imports:
     data.table,
     xml2,
     openxlsx,
-    lifecycle
+    lifecycle,
+    showtext
 Suggests:
     pacman,
     knitr,
@@ -42,7 +43,6 @@ Suggests:
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0),
     withr,
-    showtext,
     sysfonts,
     devtools (>= 2.4.5)
 Language: en-US
