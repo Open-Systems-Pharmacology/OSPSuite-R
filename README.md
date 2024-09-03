@@ -1,17 +1,18 @@
 
-# OSPSuite-R
+# OSPSuite R package
 
 <!-- badges: start -->
 
-[![](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
+[![Build
+Badge](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
+[![Codecov test coverage
+Badge](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
 
 <!-- badges: end -->
 
 # Overview
 
-The **ospsuite-R** package provides the functionality of loading,
+The `{ospsuite}`R package provides the functionality of loading,
 manipulating, and running the simulations created in the Open Systems
 Pharmacology Software tools PK-Sim and MoBi.
 
@@ -168,7 +169,7 @@ install.packages(pathTo_OSPSuite.zip, repos = NULL)
 
 - On Linux, set the environment variable `LC_ALL` before starting R:
 
-  export LC_ALL=en_US.UTF-8
+  `export LC_ALL=en_US.UTF-8`
 
 ## Saving and loading the workspace in RStudio does not restore objects
 
