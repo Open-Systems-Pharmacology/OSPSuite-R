@@ -12,7 +12,7 @@ coverage](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main
 # Overview
 
 The **ospsuite-R** package provides the functionality of loading,
-manipulating, and simulating the simulations created in the Open Systems
+manipulating, and running the simulations created in the Open Systems
 Pharmacology Software tools PK-Sim and MoBi.
 
 - [Documentation](#documentation)
@@ -32,34 +32,24 @@ for more details on the package.
 In particular, we would recommend that you read the articles in the
 following order:
 
-- [Get
-  Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html)
-- [Loading a simulation and accessing
-  entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
+- [Get Started](articles/ospsuite.html)
+- [Loading a simulation and accessing entities](articles/load-get.html)
 - [Changing parameter and molecule start
-  values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
-- [Running a
-  simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
-- [Efficient
-  calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
-- [Creating
-  individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
-- [Population
-  simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
-- [PK
-  Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
-- [Sensitivity
-  analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
-- [Table
-  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
-- [Dimensions and
-  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+  values](articles/set-values.html)
+- [Running a simulation](articles/run-simulation.html)
+- [Efficient calculations](articles/efficient-calculations.html)
+- [Creating individuals](articles/create-individual.html)
+- [Population simulations](articles/create-run-population.html)
+- [PK Analysis](articles/pk-analysis.html)
+- [Sensitivity analysis](articles/sensitivity-analysis.html)
+- [Table parameters](articles/table-parameters.html)
+- [Dimensions and Units](articles/unit-conversion.html)
 - [Working with data sets and import from
-  excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
-- [Working with `DataCombined`
-  class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
+  excel](articles/observed-data.html)
+- [Working with `DataCombined` class](articles/data-combined.html)
 - [Visualizations with
-  `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
+  `DataCombined`](articles/data-combined-plotting.html)
+- [PK-Sim Installation](articles/PKSim-installation.html)
 
 # Installation
 
