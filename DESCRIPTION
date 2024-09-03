@@ -34,7 +34,8 @@ Imports:
     data.table,
     xml2,
     openxlsx,
-    lifecycle
+    lifecycle,
+    cli
 Suggests:
     pacman,
     knitr,
