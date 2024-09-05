@@ -71,10 +71,23 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
   # 15: all
 
   JsonRunOptions$set("ExportMode", ExportMode)
-  #16: nothing
-  
-  cli::cli_process_start(msg = "Running simulations from {length(list.files(temp_dir))} snapshots")
-  rSharp::callStatic("PKSim.R.Api", "RunJson", JsonRunOptions)
+
+  cli::cli_process_start(
+    msg = "Running simulations from {length(list.files(temp_dir))} snapshot{?s}",
+    msg_done = "Simulations completed",
+    msg_failed = "An error occured while running simulation"
+  )
+
+  tryCatch(
+    {
+      invisible(rSharp::callStatic("PKSim.R.Api", "RunJson", JsonRunOptions))
+    },
+    error = function(e) {
+      message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
+
+      cli::cli_abort(message = message, call = rlang::caller_env(n = 4))
+    }
+  )
 }
 
 #' Convert between snapshot and project formats
