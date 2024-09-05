@@ -1,10 +1,11 @@
 #' Run Simulations From Snapshot Files
 #'
-#' @param ... character strings, path to snapshot files or a directory containing snapshot files 
+#' @param ... character strings, path to snapshot files or a directory containing snapshot files
 #' @param output character string, path to the output directory where to write simulation results
-#' @param csv logical, whether to export the results as csv (default = TRUE)
-#' @param pkml logical, whether to export the results as pkml (default = FALSE)
-#' @param xml logical, whether to export the results as xml (default = FALSE)
+#' @param exportCSV logical, whether to export the results as csv (default = TRUE)
+#' @param exportPKML logical, whether to export the results as pkml (default = FALSE)
+#' @param exportJSON logical, whether to export simulation results as json (default = FALSE)
+#' @param exportXML logical, whether to export the results as xml (default = FALSE)
 #'
 #' @return NULL
 #' @export
@@ -13,8 +14,7 @@
 #' \dontrun{
 #' runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
 #' }
-runSimulationsFromSnapshot <- function(..., output = ".", csv = TRUE, pkml = FALSE, xml = FALSE){
-  
+runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
   initPKSim()
 
   temp_dir <- .gatherFiles(c(...))
@@ -23,29 +23,45 @@ runSimulationsFromSnapshot <- function(..., output = ".", csv = TRUE, pkml = FAL
   JsonRunOptions$set("InputFolder", temp_dir)
   JsonRunOptions$set("OutputFolder", normalizePath(output))
 
-  if (isTRUE(csv)){ csv <- 2L } else { csv <- 0L }
-  if (isTRUE(xml)){ xml <- 4L } else { xml <- 0L }
-  if (isTRUE(pkml)){ pkml <- 8L } else { pkml <- 0L }
-  
-  ExportMode <- csv + xml + pkml
-  
+  if (isTRUE(exportJSON)) {
+    exportJSON <- 1L
+  } else {
+    exportJSON <- 0L
+  }
+  if (isTRUE(exportCSV)) {
+    exportCSV <- 2L
+  } else {
+    exportCSV <- 0L
+  }
+  if (isTRUE(exportXML)) {
+    exportXML <- 4L
+  } else {
+    exportXML <- 0L
+  }
+  if (isTRUE(exportPKML)) {
+    exportPKML <- 8L
+  } else {
+    exportPKML <- 0L
+  }
+
+  ExportMode <- exportJSON + exportCSV + exportXML + exportPKML
+  # 1: json
+  # 2: csv
+  # 3: json + csv
+  # 4: xml
+  # 5: xml + json
+  # 6: xml + csv
+  # 7: json + csv + xml
+  # 8: pkml
+  # 9: pkml + json
+  # 10: pkml + csv
+  # 11: pkml + json + csv
+  # 12: pkml + xml
+  # 13: pkml + xml + json
+  # 14: pkml + xml + csv
+  # 15: all
+
   JsonRunOptions$set("ExportMode", ExportMode)
-  #0: nothing
-  #1: json
-  #2: csv
-  #3: json + csv
-  #4: xml
-  #5: xml + json
-  #6: xml + csv
-  #7: json + csv + xml
-  #8: pkml
-  #9: pkml + json
-  #10: pkml + csv
-  #11: pkml + json + csv
-  #12: pkml + xml
-  #13: pkml + xml + json
-  #14: pkml + xml + csv
-  #15: all
   #16: nothing
   
   cli::cli_process_start(msg = "Running simulations from {length(list.files(temp_dir))} snapshots")

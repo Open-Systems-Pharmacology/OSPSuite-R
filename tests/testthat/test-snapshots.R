@@ -1,12 +1,14 @@
-test_that("Run simulation from snapshot works",{
+test_that("Run simulation from snapshot works", {
   path <- getTestDataFilePath("test_snapshot.json")
-  
+
   temp_dir <- withr::local_tempdir()
 
-  runSimulationsFromSnapshot(path, output = temp_dir, csv = TRUE, pkml = TRUE, xml = TRUE)
+  runSimulationsFromSnapshot(path, output = temp_dir, exportCSV = TRUE, exportPKML = TRUE, exportJSON = TRUE, exportXML = TRUE)
   expect_length(list.files(temp_dir, pattern = ".csv"), 3)
   expect_length(list.files(temp_dir, pattern = ".pkml"), 2)
+  expect_length(list.files(temp_dir, pattern = ".json"), 2)
   expect_length(list.files(temp_dir, pattern = ".xml"), 2)
+})
 
 })
 
