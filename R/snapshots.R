@@ -15,10 +15,19 @@
 #' runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
 #' }
 runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
+  ospsuite.utils::validateIsLogical(object = c(exportCSV, exportPKML, exportXML))
+  ospsuite.utils::validateIsCharacter(object = c(..., output))
+
+  paths_exist <- file.exists(c(..., output))
+  if (!all(paths_exist)) {
+    missing_paths <- c(..., output)[!paths_exist]
+    cli::cli_abort(message = c("x" = "Some of the paths provided do not exist: {.file {missing_paths}}"))
+  }
+
   initPKSim()
 
   temp_dir <- .gatherFiles(c(...))
-  
+
   JsonRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.JsonRunOptions")
   JsonRunOptions$set("InputFolder", temp_dir)
   JsonRunOptions$set("OutputFolder", normalizePath(output))

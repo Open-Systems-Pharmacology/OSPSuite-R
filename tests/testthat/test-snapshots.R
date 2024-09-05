@@ -10,6 +10,18 @@ test_that("Run simulation from snapshot works", {
   expect_length(list.files(temp_dir, pattern = ".xml"), 2)
 })
 
+test_that("runSimulationsFromSnapshot arguments are checked", {
+  path <- getTestDataFilePath("test_snapshot.json")
+
+  temp_dir <- withr::local_tempdir()
+
+  expect_error(runSimulationsFromSnapshot(path, exportCSV = "path/to/my.csv"))
+  expect_error(runSimulationsFromSnapshot(path, output = 1))
+
+  # provide wrong input/output paths
+  expect_error(runSimulationsFromSnapshot("wrong_file.json", "wrong/path",
+    output = "wrong/output/path"
+  ))
 })
 
 test_that("Convert snapshot to project works", {
