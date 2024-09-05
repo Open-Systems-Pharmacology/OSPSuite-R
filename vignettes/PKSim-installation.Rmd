@@ -1,8 +1,8 @@
 ---
-title: "PKSim Installation"
+title: "PK-Sim Installation"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PKSim_installation}
+  %\VignetteIndexEntry{PK-Sim_installation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,11 +17,11 @@ knitr::opts_chunk$set(
 # Not required for `{ospsuite}` version equal or above 12.1.0
 
 Since `{ospsuite}` was released in version 12.1.0, all the necessary OSPSuite 
-and PKSim dependencies are included in the package. Therefore, there is no need
+and PK-Sim dependencies are included in the package. Therefore, there is no need
 to install extra software to use `{ospsuite}`.
 
 Also, `{ospsuite}` is fully self contained and is independant from any  version 
-of OSPSuite and PKSim installed on the user computer.
+of OSPSuite and PK-Sim installed on the user computer.
 
 
 However, a script is provided in the package for developpers in order to get/update the latest dependencies (or core files): [here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/update_core_files.R)
@@ -34,8 +34,8 @@ However, a script is provided in the package for developpers in order to get/upd
 Some features available in `{ospsuite}` require the installation of
 [PK-Sim](https://github.com/Open-Systems-Pharmacology/PK-Sim). 
 
-It is necessary to have a PKSim installation that matches the version of 
-`{ospsuite}` (*i.e* to use `{ospsuite}` v11.y.z, you need to have PKSim v11 installed).
+It is necessary to have a PK-Sim installation that matches the version of 
+`{ospsuite}` (*i.e* to use `{ospsuite}` v11.y.z, you need to have PK-Sim v11 installed).
 
 It is possible to install PK-Sim globally for the whole system, but also 
 locally on a per-project basis. The following sections describe both options.
@@ -72,7 +72,7 @@ PK-Sim 11.3.208, the folder name should be `PK-Sim 11.0`.
 
 # Install and use PK-Sim in a project
 
-Follow the steps from the previous section to download and extract PKSim to 
+Follow the steps from the previous section to download and extract PK-Sim to 
  a `PKSim` folder in your project folder.
 
 

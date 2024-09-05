@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.1.0.9002
+Version: 12.1.0.9003
 Authors@R: 
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -35,7 +35,8 @@ Imports:
     xml2,
     openxlsx,
     lifecycle,
-    cli
+    cli,
+    showtext
 Suggests:
     pacman,
     knitr,
@@ -43,7 +44,6 @@ Suggests:
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0),
     withr,
-    showtext,
     sysfonts,
     devtools (>= 2.4.5)
 Language: en-US
