@@ -104,25 +104,31 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' convertSnapshot("path/to/snapshot.json", format = "project")
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
-convertSnapshot <- function(..., format, output = "."){
-  
+convertSnapshot <- function(..., format, output = ".") {
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
-  
+
   initPKSim()
-  
+
   temp_dir <- .gatherFiles(c(...))
-  
+
   SnapshotRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.SnapshotRunOptions")
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
-  
-  if (format == "project"){
+
+  if (format == "project") {
     SnapshotRunOptions$set("ExportMode", 0L)
-  } else  if (format == "snapshot") {
+    nfiles <- length(list.files(temp_dir, pattern = ".json"))
+  } else if (format == "snapshot") {
     SnapshotRunOptions$set("ExportMode", 1L)
+    nfiles <- length(list.files(temp_dir, pattern = ".pksim5"))
   }
 
-  cli::cli_process_start(msg = "Converting to {format} format")
+  cli::cli_process_start(
+    msg = "Converting {nfiles} files{?s} to {format} format",
+    msg_done = "Conversion completed",
+    msg_failed = "An error occured while converting files"
+  )
+
   rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions)
 }
 
@@ -132,20 +138,20 @@ convertSnapshot <- function(..., format, output = "."){
 #' @param ... character strings of file paths or folder paths
 #'
 #' @return A temporary directory with all files copied to it
-.gatherFiles <- function(...){
+.gatherFiles <- function(...) {
   temp_dir <- tempfile()
   dir.create(temp_dir)
-  for (element in c(...)){
+  for (element in c(...)) {
     # if the element is a folder, list all files in it and copy them to the temp directory
-    if (dir.exists(element)){
+    if (dir.exists(element)) {
       files <- list.files(element, full.names = TRUE, recursive = TRUE)
-      for (file in files){
+      for (file in files) {
         file.copy(from = file, to = temp_dir)
       }
       next
     }
     # if the element is a file, copy it to the temp directory
-    else if (file.exists(element)){
+    else if (file.exists(element)) {
       file.copy(from = element, to = temp_dir)
       next
     }
