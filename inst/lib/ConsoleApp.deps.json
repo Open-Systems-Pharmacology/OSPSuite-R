@@ -12,7 +12,7 @@
           "OSPSuite.R": "12.0.313",
           "OSPSuite.SimModel.Ubuntu22": "4.0.0.59",
           "OSPSuite.SimModelSolver_CVODES.Ubuntu22": "4.1.0.9",
-          "PKSim.R": "12.0.326"
+          "PKSim.R": "12.0.328"
         },
         "runtime": {
           "ConsoleApp.dll": {}
@@ -1348,38 +1348,47 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "PKSim.Assets/12.0.326": {
+      "PKSim.Assets/12.0.328": {
         "dependencies": {
           "OSPSuite.Assets": "12.0.313",
           "OSPSuite.Assets.Images": "12.0.313",
           "OSPSuite.Core": "12.0.313"
         },
         "runtime": {
-          "PKSim.Assets.dll": {}
+          "PKSim.Assets.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       },
-      "PKSim.Assets.Images/12.0.326": {
+      "PKSim.Assets.Images/12.0.328": {
         "dependencies": {
           "OSPSuite.Assets": "12.0.313",
           "OSPSuite.Assets.Images": "12.0.313",
           "System.Resources.Extensions": "8.0.0"
         },
         "runtime": {
-          "PKSim.Assets.Images.dll": {}
+          "PKSim.Assets.Images.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       },
-      "PKSim.CLI.Core/12.0.326": {
+      "PKSim.CLI.Core/12.0.328": {
         "dependencies": {
           "OSPSuite.Assets": "12.0.313",
           "OSPSuite.Core": "12.0.313",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Core": "12.0.326"
+          "PKSim.Core": "12.0.328"
         },
         "runtime": {
-          "PKSim.CLI.Core.dll": {}
+          "PKSim.CLI.Core.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       },
-      "PKSim.Core/12.0.326": {
+      "PKSim.Core/12.0.328": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
           "OSPSuite.Assets": "12.0.313",
@@ -1387,14 +1396,17 @@
           "OSPSuite.Core": "12.0.313",
           "OSPSuite.Infrastructure.Import": "12.0.313",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Assets": "12.0.326",
+          "PKSim.Assets": "12.0.328",
           "System.ComponentModel.Annotations": "4.7.0"
         },
         "runtime": {
-          "PKSim.Core.dll": {}
+          "PKSim.Core.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       },
-      "PKSim.Infrastructure/12.0.326": {
+      "PKSim.Infrastructure/12.0.328": {
         "dependencies": {
           "FluentNHibernate": "3.4.0",
           "LumenWorksCsvReader": "4.0.0",
@@ -1413,30 +1425,36 @@
           "OSPSuite.Infrastructure.Serialization": "12.0.313",
           "OSPSuite.Presentation.Serialization": "12.0.313",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Assets": "12.0.326",
-          "PKSim.Core": "12.0.326",
-          "PKSim.Presentation": "12.0.326"
+          "PKSim.Assets": "12.0.328",
+          "PKSim.Core": "12.0.328",
+          "PKSim.Presentation": "12.0.328"
         },
         "runtime": {
-          "PKSim.Infrastructure.dll": {}
+          "PKSim.Infrastructure.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       },
-      "PKSim.Presentation/12.0.326": {
+      "PKSim.Presentation/12.0.328": {
         "dependencies": {
           "OSPSuite.Assets": "12.0.313",
           "OSPSuite.Core": "12.0.313",
           "OSPSuite.Presentation": "12.0.313",
           "OSPSuite.TeXReporting": "3.0.0.5",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Assets": "12.0.326",
-          "PKSim.Assets.Images": "12.0.326",
-          "PKSim.Core": "12.0.326"
+          "PKSim.Assets": "12.0.328",
+          "PKSim.Assets.Images": "12.0.328",
+          "PKSim.Core": "12.0.328"
         },
         "runtime": {
-          "PKSim.Presentation.dll": {}
+          "PKSim.Presentation.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       },
-      "PKSim.R/12.0.326": {
+      "PKSim.R/12.0.328": {
         "dependencies": {
           "OSPSuite.Assets": "12.0.313",
           "OSPSuite.Core": "12.0.313",
@@ -1444,13 +1462,16 @@
           "OSPSuite.SimModel": "4.0.0.59",
           "OSPSuite.SimModelSolver_CVODES": "4.1.0.9",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.CLI.Core": "12.0.326",
-          "PKSim.Core": "12.0.326",
-          "PKSim.Infrastructure": "12.0.326",
+          "PKSim.CLI.Core": "12.0.328",
+          "PKSim.Core": "12.0.328",
+          "PKSim.Infrastructure": "12.0.328",
           "System.Data.SQLite.Core": "1.0.118"
         },
         "runtime": {
-          "PKSim.R.dll": {}
+          "PKSim.R.dll": {
+            "assemblyVersion": "12.0.328",
+            "fileVersion": "12.0.328"
+          }
         }
       }
     }
@@ -2350,37 +2371,37 @@
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
     },
-    "PKSim.Assets/12.0.326": {
+    "PKSim.Assets/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Assets.Images/12.0.326": {
+    "PKSim.Assets.Images/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.CLI.Core/12.0.326": {
+    "PKSim.CLI.Core/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Core/12.0.326": {
+    "PKSim.Core/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Infrastructure/12.0.326": {
+    "PKSim.Infrastructure/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Presentation/12.0.326": {
+    "PKSim.Presentation/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.R/12.0.326": {
+    "PKSim.R/12.0.328": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
