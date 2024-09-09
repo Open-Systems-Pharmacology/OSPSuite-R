@@ -1,5 +1,10 @@
 # ospsuite (development version)
 
+## Major Changes
+
+- New `runSimulationsFromSnapshot()` to run simulations from `.json` snapshots files,
+- New `convertSnapshot()` to convert project snapshots between `.json` and `.pksim5` files.
+
 # ospsuite 12.1.0
 
 ## Major Changes
