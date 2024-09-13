@@ -95,6 +95,7 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' @param ... character strings, path to files or a directory containing files to convert
 #' @param format, character string, target format either "snapshot" or "project".
 #' @param output character string, path to the output directory where to write the converted files
+#' @param runSimuations logical, whether to run simulations during conversion (default = FALSE)
 #'
 #' @return NULL
 #' @export
@@ -104,7 +105,7 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' convertSnapshot("path/to/snapshot.json", format = "project")
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
-convertSnapshot <- function(..., format, output = ".") {
+convertSnapshot <- function(..., format, output = ".", runSimuations = FALSE) {
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
   initPKSim()
@@ -114,6 +115,12 @@ convertSnapshot <- function(..., format, output = ".") {
   SnapshotRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.SnapshotRunOptions")
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
+  
+  if (isTRUE(runSimuations)) {
+    SnapshotRunOptions$set(name = "RunSimulations", value = TRUE)
+  } else {
+    SnapshotRunOptions$set(name = "RunSimulations", value = FALSE)
+  }
 
   if (format == "project") {
     SnapshotRunOptions$set("ExportMode", 0L)
