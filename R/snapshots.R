@@ -95,7 +95,8 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' @param ... character strings, path to files or a directory containing files to convert
 #' @param format, character string, target format either "snapshot" or "project".
 #' @param output character string, path to the output directory where to write the converted files
-#' @param runSimulations logical, whether to run simulations during conversion (default = FALSE)
+#' @param runSimulations logical, whether to run simulations during conversion (default = FALSE).
+#' Only when converting from snapshot to project.
 #'
 #' @return NULL
 #' @export
@@ -135,18 +136,17 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
     msg_done = "Conversion completed",
     msg_failed = "An error occured while converting files"
   )
-  
+
   tryCatch(
     {
       invisible(rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions))
     },
     error = function(e) {
       message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
-      
+
       cli::cli_abort(message = message, call = rlang::caller_env(n = 4))
     }
   )
-  
 }
 
 
