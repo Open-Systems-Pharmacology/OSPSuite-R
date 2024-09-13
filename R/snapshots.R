@@ -95,7 +95,7 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' @param ... character strings, path to files or a directory containing files to convert
 #' @param format, character string, target format either "snapshot" or "project".
 #' @param output character string, path to the output directory where to write the converted files
-#' @param runSimuations logical, whether to run simulations during conversion (default = FALSE)
+#' @param runSimulations logical, whether to run simulations during conversion (default = FALSE)
 #'
 #' @return NULL
 #' @export
@@ -105,7 +105,7 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' convertSnapshot("path/to/snapshot.json", format = "project")
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
-convertSnapshot <- function(..., format, output = ".", runSimuations = FALSE) {
+convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
   initPKSim()
@@ -115,8 +115,8 @@ convertSnapshot <- function(..., format, output = ".", runSimuations = FALSE) {
   SnapshotRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.SnapshotRunOptions")
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
-  
-  if (isTRUE(runSimuations)) {
+
+  if (isTRUE(runSimulations)) {
     SnapshotRunOptions$set(name = "RunSimulations", value = TRUE)
   } else {
     SnapshotRunOptions$set(name = "RunSimulations", value = FALSE)
@@ -135,8 +135,18 @@ convertSnapshot <- function(..., format, output = ".", runSimuations = FALSE) {
     msg_done = "Conversion completed",
     msg_failed = "An error occured while converting files"
   )
-
-  rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions)
+  
+  tryCatch(
+    {
+      invisible(rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions))
+    },
+    error = function(e) {
+      message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
+      
+      cli::cli_abort(message = message, call = rlang::caller_env(n = 4))
+    }
+  )
+  
 }
 
 
