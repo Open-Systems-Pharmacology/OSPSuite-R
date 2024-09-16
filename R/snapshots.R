@@ -132,7 +132,7 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   }
 
   cli::cli_process_start(
-    msg = "Converting {nfiles} files{?s} to {format} format",
+    msg = "Converting {nfiles} file{?s} to {format} format",
     msg_done = "Conversion completed",
     msg_failed = "An error occured while converting files"
   )
