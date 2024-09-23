@@ -95,6 +95,8 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' @param ... character strings, path to files or a directory containing files to convert
 #' @param format, character string, target format either "snapshot" or "project".
 #' @param output character string, path to the output directory where to write the converted files
+#' @param runSimulations logical, whether to run simulations during conversion (default = FALSE).
+#' Only when converting from snapshot to project.
 #'
 #' @return NULL
 #' @export
@@ -104,7 +106,7 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
 #' convertSnapshot("path/to/snapshot.json", format = "project")
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
-convertSnapshot <- function(..., format, output = ".") {
+convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
   initPKSim()
@@ -115,6 +117,12 @@ convertSnapshot <- function(..., format, output = ".") {
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
 
+  if (isTRUE(runSimulations)) {
+    SnapshotRunOptions$set(name = "RunSimulations", value = TRUE)
+  } else {
+    SnapshotRunOptions$set(name = "RunSimulations", value = FALSE)
+  }
+
   if (format == "project") {
     SnapshotRunOptions$set("ExportMode", 0L)
     nfiles <- length(list.files(temp_dir, pattern = ".json"))
@@ -124,12 +132,25 @@ convertSnapshot <- function(..., format, output = ".") {
   }
 
   cli::cli_process_start(
-    msg = "Converting {nfiles} files{?s} to {format} format",
+    msg = "Converting {nfiles} file{?s} to {format} format",
     msg_done = "Conversion completed",
     msg_failed = "An error occured while converting files"
   )
 
-  rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions)
+  tryCatch(
+    {
+      invisible(rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions))
+    },
+    error = function(e) {
+      message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
+      
+      if (is.na(message)){
+        message <- e
+      }
+
+      cli::cli_abort(message = message, call = rlang::caller_env(n = 4))
+    }
+  )
 }
 
 

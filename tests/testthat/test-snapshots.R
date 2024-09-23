@@ -40,6 +40,15 @@ test_that("Convert project to snapshot works", {
   expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
+test_that("RunSimulations argument is supported", {
+  path <- getTestDataFilePath("test_snapshot.json")
+  temp_dir <- withr::local_tempdir()
+  expect_no_error({
+    convertSnapshot(path, output = temp_dir, format = "project", runSimulations = TRUE)
+    convertSnapshot(path, output = temp_dir, format = "project", runSimulations = FALSE)
+  })
+})
+
 test_that("gather files  handles one file path", {
   # create a temporary file
   temp_file <- withr::local_tempfile(fileext = ".json", lines = "content")
