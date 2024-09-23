@@ -144,9 +144,9 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
     error = function(e) {
       message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
       
-      if (is.na(message){
+      if (is.na(message)){
         message <- e
-      })
+      }
 
       cli::cli_abort(message = message, call = rlang::caller_env(n = 4))
     }
