@@ -23,7 +23,7 @@ test_that("RunForAllOutputs argument works",{
   
   for (file_name in list.files(temp_dir1, pattern = "Results.csv")) {
     # test if the number of columns are differents in files in temp_dir1 and temp_dir2
-    expect_true(ncol(read.csv(file.path(temp_dir1, file_name))) != ncol(read.csv(file.path(temp_dir2, file_name))))
+    expect_true(ncol(read.csv(file.path(temp_dir1, file_name))) < ncol(read.csv(file.path(temp_dir2, file_name))))
   }
 })
 
