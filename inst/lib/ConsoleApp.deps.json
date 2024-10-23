@@ -9,10 +9,10 @@
       "ConsoleApp/1.0.0": {
         "dependencies": {
           "OSPSuite.FuncParser.Ubuntu22": "4.0.0.59",
-          "OSPSuite.R": "12.0.328",
+          "OSPSuite.R": "12.0.330",
           "OSPSuite.SimModel.Ubuntu22": "4.0.0.59",
           "OSPSuite.SimModelSolver_CVODES.Ubuntu22": "4.1.0.9",
-          "PKSim.R": "12.0.360"
+          "PKSim.R": "12.0.361"
         },
         "runtime": {
           "ConsoleApp.dll": {}
@@ -374,36 +374,36 @@
           }
         }
       },
-      "OSPSuite.Assets/12.0.328": {
+      "OSPSuite.Assets/12.0.330": {
         "dependencies": {
           "OSPSuite.Utility": "4.1.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Assets.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Assets.Images/12.0.328": {
+      "OSPSuite.Assets.Images/12.0.330": {
         "dependencies": {
           "DevExpress.Data": "21.2.3",
-          "OSPSuite.Assets": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6",
           "System.Drawing.Common": "6.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Assets.Images.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Core/12.0.328": {
+      "OSPSuite.Core/12.0.330": {
         "dependencies": {
           "MathNet.Numerics": "4.15.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.1.0",
-          "OSPSuite.Assets": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
           "OSPSuite.FuncParser": "4.0.0.59",
           "OSPSuite.Serializer": "3.0.0.1",
           "OSPSuite.SimModel": "4.0.0.59",
@@ -412,8 +412,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Core.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
@@ -426,11 +426,11 @@
         }
       },
       "OSPSuite.FuncParser.Ubuntu22/4.0.0.59": {},
-      "OSPSuite.Infrastructure/12.0.328": {
+      "OSPSuite.Infrastructure/12.0.330": {
         "dependencies": {
           "Microsoft.Extensions.Logging": "3.1.0",
           "Newtonsoft.Json": "12.0.3",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6",
           "Serilog": "2.10.0",
           "Serilog.Extensions.Logging.File": "2.0.0",
@@ -439,137 +439,137 @@
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Infrastructure.Autofac/12.0.328": {
+      "OSPSuite.Infrastructure.Autofac/12.0.330": {
         "dependencies": {
           "Autofac": "4.9.4",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.Autofac.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Infrastructure.Castle/12.0.328": {
+      "OSPSuite.Infrastructure.Castle/12.0.330": {
         "dependencies": {
           "Castle.Windsor": "5.0.1",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.Castle.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Infrastructure.Export/12.0.328": {
+      "OSPSuite.Infrastructure.Export/12.0.330": {
         "dependencies": {
           "NPOI": "2.5.5",
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.Export.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Infrastructure.Import/12.0.328": {
+      "OSPSuite.Infrastructure.Import/12.0.330": {
         "dependencies": {
           "LumenWorksCsvReader": "4.0.0",
           "NPOI": "2.5.5",
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Assets.Images": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Assets.Images": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.Import.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Infrastructure.Reporting/12.0.328": {
+      "OSPSuite.Infrastructure.Reporting/12.0.330": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.TeXReporting": "3.0.0.5"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.Reporting.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Infrastructure.Serialization/12.0.328": {
+      "OSPSuite.Infrastructure.Serialization/12.0.330": {
         "dependencies": {
           "Dapper": "2.0.123",
           "NHibernate": "5.4.9",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Core": "12.0.330",
           "System.Data.SQLite.Core": "1.0.118"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Infrastructure.Serialization.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Presentation/12.0.328": {
+      "OSPSuite.Presentation/12.0.330": {
         "dependencies": {
           "DevExpress.Data": "21.2.3",
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Assets.Images": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
-          "OSPSuite.Infrastructure.Import": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Assets.Images": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
+          "OSPSuite.Infrastructure.Import": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6",
           "System.Runtime": "4.3.1"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Presentation.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.Presentation.Serialization/12.0.328": {
+      "OSPSuite.Presentation.Serialization/12.0.330": {
         "dependencies": {
-          "OSPSuite.Core": "12.0.328",
-          "OSPSuite.Presentation": "12.0.328",
+          "OSPSuite.Core": "12.0.330",
+          "OSPSuite.Presentation": "12.0.330",
           "OSPSuite.Serializer": "3.0.0.1"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.Presentation.Serialization.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
-      "OSPSuite.R/12.0.328": {
+      "OSPSuite.R/12.0.330": {
         "dependencies": {
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
-          "OSPSuite.Infrastructure": "12.0.328",
-          "OSPSuite.Infrastructure.Autofac": "12.0.328",
-          "OSPSuite.Infrastructure.Import": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
+          "OSPSuite.Infrastructure": "12.0.330",
+          "OSPSuite.Infrastructure.Autofac": "12.0.330",
+          "OSPSuite.Infrastructure.Import": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/OSPSuite.R.dll": {
-            "assemblyVersion": "12.0.328.0",
-            "fileVersion": "12.0.328.0"
+            "assemblyVersion": "12.0.330.0",
+            "fileVersion": "12.0.330.0"
           }
         }
       },
@@ -1348,65 +1348,65 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "PKSim.Assets/12.0.360": {
+      "PKSim.Assets/12.0.361": {
         "dependencies": {
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Assets.Images": "12.0.328",
-          "OSPSuite.Core": "12.0.328"
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Assets.Images": "12.0.330",
+          "OSPSuite.Core": "12.0.330"
         },
         "runtime": {
           "PKSim.Assets.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       },
-      "PKSim.Assets.Images/12.0.360": {
+      "PKSim.Assets.Images/12.0.361": {
         "dependencies": {
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Assets.Images": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Assets.Images": "12.0.330",
           "System.Resources.Extensions": "8.0.0"
         },
         "runtime": {
           "PKSim.Assets.Images.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       },
-      "PKSim.CLI.Core/12.0.360": {
+      "PKSim.CLI.Core/12.0.361": {
         "dependencies": {
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Core": "12.0.360"
+          "PKSim.Core": "12.0.361"
         },
         "runtime": {
           "PKSim.CLI.Core.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       },
-      "PKSim.Core/12.0.360": {
+      "PKSim.Core/12.0.361": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Assets.Images": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
-          "OSPSuite.Infrastructure.Import": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Assets.Images": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
+          "OSPSuite.Infrastructure.Import": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Assets": "12.0.360",
+          "PKSim.Assets": "12.0.361",
           "System.ComponentModel.Annotations": "4.7.0"
         },
         "runtime": {
           "PKSim.Core.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       },
-      "PKSim.Infrastructure/12.0.360": {
+      "PKSim.Infrastructure/12.0.361": {
         "dependencies": {
           "FluentNHibernate": "3.4.0",
           "LumenWorksCsvReader": "4.0.0",
@@ -1415,62 +1415,62 @@
           "Microsoft.Extensions.Logging.Abstractions": "3.1.0",
           "Newtonsoft.Json": "12.0.3",
           "Newtonsoft.Json.Schema": "3.0.13",
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
-          "OSPSuite.Infrastructure": "12.0.328",
-          "OSPSuite.Infrastructure.Castle": "12.0.328",
-          "OSPSuite.Infrastructure.Export": "12.0.328",
-          "OSPSuite.Infrastructure.Import": "12.0.328",
-          "OSPSuite.Infrastructure.Reporting": "12.0.328",
-          "OSPSuite.Infrastructure.Serialization": "12.0.328",
-          "OSPSuite.Presentation.Serialization": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
+          "OSPSuite.Infrastructure": "12.0.330",
+          "OSPSuite.Infrastructure.Castle": "12.0.330",
+          "OSPSuite.Infrastructure.Export": "12.0.330",
+          "OSPSuite.Infrastructure.Import": "12.0.330",
+          "OSPSuite.Infrastructure.Reporting": "12.0.330",
+          "OSPSuite.Infrastructure.Serialization": "12.0.330",
+          "OSPSuite.Presentation.Serialization": "12.0.330",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Assets": "12.0.360",
-          "PKSim.Core": "12.0.360",
-          "PKSim.Presentation": "12.0.360"
+          "PKSim.Assets": "12.0.361",
+          "PKSim.Core": "12.0.361",
+          "PKSim.Presentation": "12.0.361"
         },
         "runtime": {
           "PKSim.Infrastructure.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       },
-      "PKSim.Presentation/12.0.360": {
+      "PKSim.Presentation/12.0.361": {
         "dependencies": {
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
-          "OSPSuite.Presentation": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
+          "OSPSuite.Presentation": "12.0.330",
           "OSPSuite.TeXReporting": "3.0.0.5",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.Assets": "12.0.360",
-          "PKSim.Assets.Images": "12.0.360",
-          "PKSim.Core": "12.0.360"
+          "PKSim.Assets": "12.0.361",
+          "PKSim.Assets.Images": "12.0.361",
+          "PKSim.Core": "12.0.361"
         },
         "runtime": {
           "PKSim.Presentation.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       },
-      "PKSim.R/12.0.360": {
+      "PKSim.R/12.0.361": {
         "dependencies": {
-          "OSPSuite.Assets": "12.0.328",
-          "OSPSuite.Core": "12.0.328",
+          "OSPSuite.Assets": "12.0.330",
+          "OSPSuite.Core": "12.0.330",
           "OSPSuite.FuncParser": "4.0.0.59",
           "OSPSuite.SimModel": "4.0.0.59",
           "OSPSuite.SimModelSolver_CVODES": "4.1.0.9",
           "OSPSuite.Utility": "4.1.0.6",
-          "PKSim.CLI.Core": "12.0.360",
-          "PKSim.Core": "12.0.360",
-          "PKSim.Infrastructure": "12.0.360",
+          "PKSim.CLI.Core": "12.0.361",
+          "PKSim.Core": "12.0.361",
+          "PKSim.Infrastructure": "12.0.361",
           "System.Data.SQLite.Core": "1.0.118"
         },
         "runtime": {
           "PKSim.R.dll": {
-            "assemblyVersion": "12.0.360",
-            "fileVersion": "12.0.360"
+            "assemblyVersion": "12.0.361",
+            "fileVersion": "12.0.361"
           }
         }
       }
@@ -1706,26 +1706,26 @@
       "path": "npoi/2.5.5",
       "hashPath": "npoi.2.5.5.nupkg.sha512"
     },
-    "OSPSuite.Assets/12.0.328": {
+    "OSPSuite.Assets/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wGfQd8EH/HTjvlSjViOOgfUDuW8sbtCn/OcYa+su/V2YycZQia/BVh14Xs5mDz5ZO4T8QIw7i4VAsAl6jv8Vqg==",
-      "path": "ospsuite.assets/12.0.328",
-      "hashPath": "ospsuite.assets.12.0.328.nupkg.sha512"
+      "sha512": "sha512-vHvWM8ygmgKzYbA2z27cZ1ScjLF4cGKXmxzR+wYblo/ly6+OgeTRtg/dUVj4vHH6QjfjvhSTnZgPjzJIZSTeTA==",
+      "path": "ospsuite.assets/12.0.330",
+      "hashPath": "ospsuite.assets.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Assets.Images/12.0.328": {
+    "OSPSuite.Assets.Images/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BOwY7aDHEKAUlWNP3LzIID+68UjEBCglTpVRPrXXOVvDBCDiuIIewgJKBl1NOdzIEPZlEH0EMLp20tAxuc4szQ==",
-      "path": "ospsuite.assets.images/12.0.328",
-      "hashPath": "ospsuite.assets.images.12.0.328.nupkg.sha512"
+      "sha512": "sha512-OUY0Lpy2dFHOPKLy2OD1LSU5F5ez1EqIIc+/cR2NNmp53HPQui9lt+0F6hHazuXCt74AGmgBTJGGHVf9x36ggQ==",
+      "path": "ospsuite.assets.images/12.0.330",
+      "hashPath": "ospsuite.assets.images.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Core/12.0.328": {
+    "OSPSuite.Core/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TaWWOP4436cX7TQOhVHJGoLOU59s8d//omNZEVWQyzdkR4an3zoobnieZDZVbtdjuQlpwbHcCa7cOXsoOt0v1w==",
-      "path": "ospsuite.core/12.0.328",
-      "hashPath": "ospsuite.core.12.0.328.nupkg.sha512"
+      "sha512": "sha512-ybHwucy/sIcUDvvzWUtW6+YgiLtf4zr5AOffZTWvdQEPHTUSJ5MWY4GzNJKYF1E39L0I0WAlk1Pkk4e7U1cVsA==",
+      "path": "ospsuite.core/12.0.330",
+      "hashPath": "ospsuite.core.12.0.330.nupkg.sha512"
     },
     "OSPSuite.FuncParser/4.0.0.59": {
       "type": "package",
@@ -1741,75 +1741,75 @@
       "path": "ospsuite.funcparser.ubuntu22/4.0.0.59",
       "hashPath": "ospsuite.funcparser.ubuntu22.4.0.0.59.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure/12.0.328": {
+    "OSPSuite.Infrastructure/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-QTEj9hCnSpSS9nr66H2CWI3KVbkqZk56mEde9YIilJpwCecTJ8QkyfEIpwXayRRCHUj9aj3VPWrLaG86Ed8tAg==",
-      "path": "ospsuite.infrastructure/12.0.328",
-      "hashPath": "ospsuite.infrastructure.12.0.328.nupkg.sha512"
+      "sha512": "sha512-LGOmXpneORNzUA+tVVMbXP3ol54pdF+02ZlmJOq+RjeyWzYWDszvFg6jF74r0paXpd3YWU64RSVl6cza5xiPpA==",
+      "path": "ospsuite.infrastructure/12.0.330",
+      "hashPath": "ospsuite.infrastructure.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure.Autofac/12.0.328": {
+    "OSPSuite.Infrastructure.Autofac/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-cOnj6YBr2YzdENoJdDCRgg1czzYg3xyzqGAcv2lpI0Y7s0LO4i18M5E/WkJgRi94ifwz97Q49YsKvlF3gX8c5g==",
-      "path": "ospsuite.infrastructure.autofac/12.0.328",
-      "hashPath": "ospsuite.infrastructure.autofac.12.0.328.nupkg.sha512"
+      "sha512": "sha512-8slj0mFkA0cOQ8EPqL034ARXybBSyBRKBbrcYJIBH5Q3ttme/fUEKc1ta1O/U4xcVPGGf/oaX1VGQzSXu8Lm/A==",
+      "path": "ospsuite.infrastructure.autofac/12.0.330",
+      "hashPath": "ospsuite.infrastructure.autofac.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure.Castle/12.0.328": {
+    "OSPSuite.Infrastructure.Castle/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Lsmt8BU+qPYs1ejRYcoGjfJshc0tSaTV8bYsmM9EyP5GXxPTovQMUSdIRsGonCmRANsWwMc1Kn2IKlb1SRtlXw==",
-      "path": "ospsuite.infrastructure.castle/12.0.328",
-      "hashPath": "ospsuite.infrastructure.castle.12.0.328.nupkg.sha512"
+      "sha512": "sha512-lRf9pSzFnnallKTZxerrdbu+2KiypLZl0XI9Tlx5QSRVkIYvAmaGZs1sZkXhMu2eIrt9NY3aDqlSor4B6eGsxw==",
+      "path": "ospsuite.infrastructure.castle/12.0.330",
+      "hashPath": "ospsuite.infrastructure.castle.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure.Export/12.0.328": {
+    "OSPSuite.Infrastructure.Export/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zWA8YR0uSj49EmQF3VYCYfh8gnogwBzwQxSua9gBNEhGFU9wuXBGkzaFK+C0ibOfoRAkRdmy2HW5V3JsdbPafA==",
-      "path": "ospsuite.infrastructure.export/12.0.328",
-      "hashPath": "ospsuite.infrastructure.export.12.0.328.nupkg.sha512"
+      "sha512": "sha512-KAKV+UT9Pc3UkkVr430+wFSkXixE28S/VQFmDrKKflpRuIjyMQCl/9jW6/W3nP6rg5cIrLA02EX4PjHDlS9/Rg==",
+      "path": "ospsuite.infrastructure.export/12.0.330",
+      "hashPath": "ospsuite.infrastructure.export.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure.Import/12.0.328": {
+    "OSPSuite.Infrastructure.Import/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JUloucZUfx06KRy8S3BHxwaskKVXiy5yITMf1THWuS/1rIyzOt7PrB1OWmqz+rU+kUM6rmYqRhqLZEN0aWTpXg==",
-      "path": "ospsuite.infrastructure.import/12.0.328",
-      "hashPath": "ospsuite.infrastructure.import.12.0.328.nupkg.sha512"
+      "sha512": "sha512-gRQ2itO3jTPZXbRyQC966LOgzKFu7t2AKZ4VEIPja+53PGl9MMK5qSCEm1sEnyDLTNupHTO0BqWfYFAyP+P7Mw==",
+      "path": "ospsuite.infrastructure.import/12.0.330",
+      "hashPath": "ospsuite.infrastructure.import.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure.Reporting/12.0.328": {
+    "OSPSuite.Infrastructure.Reporting/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Nku98ckN+DWNiDSqMQml5YOrwE+kl3hGRxbIOCUJy1I8LUUVtqf+2rXytL/fmmTHi/8cKIJFx/dBf5veKUJHMA==",
-      "path": "ospsuite.infrastructure.reporting/12.0.328",
-      "hashPath": "ospsuite.infrastructure.reporting.12.0.328.nupkg.sha512"
+      "sha512": "sha512-3CmlCXMDuoA5uMMnEslWwyhx5PoB5Q1mqJ4VWWmvKpOFTndEwFWxaY8NjqkysLQTIpl9O2JolXWYqdoIT9twSw==",
+      "path": "ospsuite.infrastructure.reporting/12.0.330",
+      "hashPath": "ospsuite.infrastructure.reporting.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Infrastructure.Serialization/12.0.328": {
+    "OSPSuite.Infrastructure.Serialization/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-RhGSShJWvQLI7ZeLd06AY4XJm/WE/64Q03iY5mqat1zmy/qprHtH4Mk9MIhyO7o7McVVprsnS+OSeK9riSfYvA==",
-      "path": "ospsuite.infrastructure.serialization/12.0.328",
-      "hashPath": "ospsuite.infrastructure.serialization.12.0.328.nupkg.sha512"
+      "sha512": "sha512-yFBqC95GA6NmDFmXHsz4AVt5SFl7hl5AbpjA0XUl+9Az9YiPgjf/YXykmwNaoJwbyj+mxcdciTtEWk4BahBgoQ==",
+      "path": "ospsuite.infrastructure.serialization/12.0.330",
+      "hashPath": "ospsuite.infrastructure.serialization.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Presentation/12.0.328": {
+    "OSPSuite.Presentation/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JsOCT1qWQGO9zVQLGP04LMOJiq8ovxCVkrRuQxpCB0cizLm5kCIlMM0Z2v2fVM3rfKEBUA312VWzbRxMV6MmwQ==",
-      "path": "ospsuite.presentation/12.0.328",
-      "hashPath": "ospsuite.presentation.12.0.328.nupkg.sha512"
+      "sha512": "sha512-Yl3u2wpJy6Ui5EKbfgf9A9Pu0OkUIvnGAPMpI3rmQTLNHwHIarsqXCsYlZqaYfr9mwN+5lUEG8nDNUQuEA3BBQ==",
+      "path": "ospsuite.presentation/12.0.330",
+      "hashPath": "ospsuite.presentation.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.Presentation.Serialization/12.0.328": {
+    "OSPSuite.Presentation.Serialization/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sbxNjeynDrzJzDkoc3VK9Q80jFP4dbHSvm81wW4wuCAhfgGtFHF5pLIDVrwRtyML1D3OS+cjrptz/rDrXeBdOg==",
-      "path": "ospsuite.presentation.serialization/12.0.328",
-      "hashPath": "ospsuite.presentation.serialization.12.0.328.nupkg.sha512"
+      "sha512": "sha512-Y46K09r8cu/3APrIDLO3ROa6/O/eafIfW/6NDKyB+HNILqtNZnMofkUkN2KM+kXwGndHy6FGzHimrZnJTONeSw==",
+      "path": "ospsuite.presentation.serialization/12.0.330",
+      "hashPath": "ospsuite.presentation.serialization.12.0.330.nupkg.sha512"
     },
-    "OSPSuite.R/12.0.328": {
+    "OSPSuite.R/12.0.330": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sDbdvXC3cXscl24OSDCUkd+kiqQEsBahQRgUk4NKdQRx2iDXrUPsBJs7RsNkd4Ses/Pq36NUtUqP8Ltk0wRO8Q==",
-      "path": "ospsuite.r/12.0.328",
-      "hashPath": "ospsuite.r.12.0.328.nupkg.sha512"
+      "sha512": "sha512-rKF259pZlPYVxCY8LXiUGDROGak5kNIIxOlHf/Os3mideD9MbhbtAGl5NawBDfVgGH/lC7MbOnHfYPHNujDdOw==",
+      "path": "ospsuite.r/12.0.330",
+      "hashPath": "ospsuite.r.12.0.330.nupkg.sha512"
     },
     "OSPSuite.Serializer/3.0.0.1": {
       "type": "package",
@@ -2371,37 +2371,37 @@
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
     },
-    "PKSim.Assets/12.0.360": {
+    "PKSim.Assets/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Assets.Images/12.0.360": {
+    "PKSim.Assets.Images/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.CLI.Core/12.0.360": {
+    "PKSim.CLI.Core/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Core/12.0.360": {
+    "PKSim.Core/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Infrastructure/12.0.360": {
+    "PKSim.Infrastructure/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.Presentation/12.0.360": {
+    "PKSim.Presentation/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "PKSim.R/12.0.360": {
+    "PKSim.R/12.0.361": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
