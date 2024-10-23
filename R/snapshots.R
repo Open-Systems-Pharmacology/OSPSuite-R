@@ -2,6 +2,7 @@
 #'
 #' @param ... character strings, path to snapshot files or a directory containing snapshot files
 #' @param output character string, path to the output directory where to write simulation results
+#' @param RunForAllOutputs logical, whether to run the simulation for all outputs or only OutputSelections (default = FALSE)
 #' @param exportCSV logical, whether to export the results as csv (default = TRUE)
 #' @param exportPKML logical, whether to export the results as pkml (default = FALSE)
 #' @param exportJSON logical, whether to export simulation results as json (default = FALSE)
@@ -14,8 +15,8 @@
 #' \dontrun{
 #' runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
 #' }
-runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
-  ospsuite.utils::validateIsLogical(object = c(exportCSV, exportPKML, exportXML))
+runSimulationsFromSnapshot <- function(..., output = ".", RunForAllOutputs = FALSE, exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
+  ospsuite.utils::validateIsLogical(object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs))
   ospsuite.utils::validateIsCharacter(object = c(..., output))
 
   paths_exist <- file.exists(c(..., output))
@@ -31,6 +32,7 @@ runSimulationsFromSnapshot <- function(..., output = ".", exportCSV = TRUE, expo
   JsonRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.JsonRunOptions")
   JsonRunOptions$set("InputFolder", temp_dir)
   JsonRunOptions$set("OutputFolder", normalizePath(output))
+  JsonRunOptions$set("RunForAllOutputs", RunForAllOutputs)
 
   if (isTRUE(exportJSON)) {
     exportJSON <- 1L
@@ -143,8 +145,8 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
     },
     error = function(e) {
       message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
-      
-      if (is.na(message)){
+
+      if (is.na(message)) {
         message <- e
       }
 
