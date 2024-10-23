@@ -10,17 +10,17 @@ test_that("Run simulation from snapshot works", {
   expect_length(list.files(temp_dir, pattern = ".xml"), 2)
 })
 
-test_that("RunForAllOutputs argument works",{
+test_that("RunForAllOutputs argument works", {
   path <- getTestDataFilePath("test_snapshot.json")
-  
+
   temp_dir1 <- withr::local_tempdir()
-  
+
   runSimulationsFromSnapshot(path, output = temp_dir1, RunForAllOutputs = FALSE, exportCSV = TRUE)
-  
+
   temp_dir2 <- withr::local_tempdir()
-  
+
   runSimulationsFromSnapshot(path, output = temp_dir2, RunForAllOutputs = TRUE, exportCSV = TRUE)
-  
+
   for (file_name in list.files(temp_dir1, pattern = "Results.csv")) {
     # test if the number of columns are differents in files in temp_dir1 and temp_dir2
     expect_true(ncol(read.csv(file.path(temp_dir1, file_name))) < ncol(read.csv(file.path(temp_dir2, file_name))))

@@ -15,7 +15,7 @@
 #' \dontrun{
 #' runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
 #' }
-runSimulationsFromSnapshot <- function(..., output = ".", RunForAllOutputs   = FALSE, exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
+runSimulationsFromSnapshot <- function(..., output = ".", RunForAllOutputs = FALSE, exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
   ospsuite.utils::validateIsLogical(object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs))
   ospsuite.utils::validateIsCharacter(object = c(..., output))
 
@@ -145,8 +145,8 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
     },
     error = function(e) {
       message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
-      
-      if (is.na(message)){
+
+      if (is.na(message)) {
         message <- e
       }
 
