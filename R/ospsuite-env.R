@@ -20,7 +20,7 @@ ospsuiteEnv$pathSeparator <- "|"
 
 # Number of cores to use for simulations and sensitivity. Default to number of cores on the machine - 1
 ospsuiteEnv$numberOfCores <- function() {
-  parallel::detectCores() - 1
+  max(parallel::detectCores() - 1, 1)
 }
 
 # Specifies the default behavior fo progress visualization. By default FALSE
