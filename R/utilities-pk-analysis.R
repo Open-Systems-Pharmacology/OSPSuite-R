@@ -101,6 +101,58 @@ pkAnalysesToDataFrame <- function(pkAnalyses) {
   return(pkAnalysesData)
 }
 
+#' @title Convert the pk-Analysis to data frame
+#'
+#' @param pkAnalyses pK-Analyses to convert to data frame (typically calculated
+#'   using `calculatePKAnalyses` or imported from file).
+#'
+#' @export
+pkAnalysesToDataFrame_ <- function(pkAnalyses) {
+  validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
+  pkDataTable <- pkAnalysisTask$call(
+    "ConvertToDataTable",
+    pkAnalyses, pkAnalyses$simulation
+  )
+
+  rows <- pkDataTable$call("get_Rows")
+  rowCount <- rows$call("get_Count")
+
+  columns <- pkDataTable$call("get_Columns")
+  columnCount <- columns$call("get_Count")
+
+  columnNames <- sapply(0:(columnCount - 1), function(i) {
+    columns$call("get_Item", as.integer(i))$call("get_ColumnName")
+  })
+
+  data <- lapply(0:(rowCount - 1), function(j) {
+    row <- rows$call("get_Item", as.integer(j))
+    sapply(columnNames, function(colName) {
+      row$call("get_Item", colName)
+    })
+  })
+
+  pkAnalysesDf <- dplyr::bind_rows(data) |>
+    dplyr::mutate(
+      dplyr::across(dplyr::everything(), ~ gsub('^"|"$', "", .)),
+      dplyr::across(
+        dplyr::everything(),
+        ~ dplyr::case_when(
+          . %in% c("NaN", "", "NA", "Infinity", "-Infinity") ~ NA_character_,
+          TRUE ~ .
+        )
+      ),
+      dplyr::across(dplyr::where(is.character), enc2utf8),
+      IndividualId = as.integer(IndividualId),
+      QuantityPath = as.character(QuantityPath),
+      Parameter = as.character(Parameter),
+      Value = as.numeric(Value),
+      Unit = as.character(Unit)
+    )
+
+  return(pkAnalysesDf)
+}
+
 #' @rdname pkAnalysesToDataFrame
 #'
 #' @export
