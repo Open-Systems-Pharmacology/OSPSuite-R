@@ -89,3 +89,7 @@ messages$invalidDataType <- function(name, dataType) {
 messages$valueNotPositive <- function(value, propertyName) {
   paste0("The value of `", propertyName, "` must be > 0, but it is '", paste(value, collapse = ", "), "'")
 }
+
+messages$molWeightErrorMessage <- function(quantityPath) {
+  paste0("Unable to retrieve the molecular weight for: ", quantityPath)
+}
