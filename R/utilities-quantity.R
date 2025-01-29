@@ -351,3 +351,28 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   return(isFormulaExplicit)
 }
+#' Get the parent container of a specific type for a given Entity
+#'
+#' @description Recursively retrieves the parent container of the specified type
+#' for a given `Entity`.
+#'
+#' @param entity An `Entity` object or an object inheriting from `Entity`
+#' @param type A string representing the container type to find (e.g.,
+#' "Simulation", "Molecule").
+#' @return The closest parent container of the specified type or `NA` if not found.
+#' @keywords internal
+.getParentContainerByType <- function(entity, type) {
+  if (is.null(entity)) {
+    return(NA)
+  }
+  ospsuite.utils::validateIsOfType(entity, "Entity")
+  ospsuite.utils::validateIsCharacter(type)
+
+  if (ospsuite.utils::isOfType(entity, "Container")) {
+    if (entity$containerType == type) {
+      return(entity)
+    }
+  }
+
+  return(.getParentContainerByType(entity$parentContainer, type))
+}
