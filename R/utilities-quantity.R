@@ -362,6 +362,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 #' @param stopIfNotFound Logical. If `TRUE`, throws an error when the molecular
 #' weight cannot be retrieved. If `FALSE`, returns `NA`. Default is `FALSE`.
 #' @return The molecular weight in the specified unit or `NA` if not found.
+#' @export
 #'
 #' @examples
 #' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
