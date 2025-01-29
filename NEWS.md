@@ -4,6 +4,7 @@
 
 - New `runSimulationsFromSnapshot()` to run simulations from `.json` snapshots files,
 - New `convertSnapshot()` to convert project snapshots between `.json` and `.pksim5` files.
+- New `getMolWeightFor()` to retrieve molecular weight for molecule of `Quantity`.
 
 # ospsuite 12.1.0
 
