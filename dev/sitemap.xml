@@ -118,6 +118,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTaskFromCache.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspDimensions.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspUnits.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getParentContainerByType.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getPropertyValue.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getPropertyValues.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getQuantityDisplayPaths.html</loc></url>
@@ -164,6 +165,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getContainer.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getDimensionByName.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getDimensionForUnit.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getMolWeightFor.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getMolecule.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getOSPSuiteSetting.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getOutputValues.html</loc></url>
