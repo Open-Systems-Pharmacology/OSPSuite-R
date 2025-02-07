@@ -23,14 +23,14 @@ Depends:
     rSharp
 Imports: 
     dplyr (>= 1.0.0),
-    ospsuite.utils (>= 1.5.0),
+    ospsuite.utils (>= 1.6.0),
     purrr,
     readr,
     stringr,
     tidyr,
     ggplot2,
     rlang,
-    tlf (>= 1.5.0),
+    tlf (>= 1.6.0),
     data.table,
     xml2,
     openxlsx,
