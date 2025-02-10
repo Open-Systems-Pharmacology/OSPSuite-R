@@ -1,4 +1,4 @@
-# ospsuite (development version)
+# ospsuite 12.2.0
 
 ## Major Changes
 

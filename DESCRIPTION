@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.1.0.9008
+Version: 12.2.0
 Authors@R: 
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -23,14 +23,14 @@ Depends:
     rSharp
 Imports: 
     dplyr (>= 1.0.0),
-    ospsuite.utils (>= 1.5.0),
+    ospsuite.utils (>= 1.6.0),
     purrr,
     readr,
     stringr,
     tidyr,
     ggplot2,
     rlang,
-    tlf (>= 1.5.0),
+    tlf (>= 1.6.0),
     data.table,
     xml2,
     openxlsx,
