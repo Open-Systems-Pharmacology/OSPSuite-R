@@ -1,5 +1,5 @@
-pandoc: 2.9.2.1
-pkgdown: 2.0.6
+pandoc: '3.2'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   create-individual: create-individual.html
@@ -11,13 +11,13 @@ articles:
   observed-data: observed-data.html
   ospsuite: ospsuite.html
   pk-analysis: pk-analysis.html
+  PKSim-installation: PKSim-installation.html
   run-simulation: run-simulation.html
   sensitivity-analysis: sensitivity-analysis.html
   set-values: set-values.html
   table-parameters: table-parameters.html
   unit-conversion: unit-conversion.html
-last_built: 2023-01-30T17:01Z
+last_built: 2025-02-10T16:33Z
 urls:
   reference: https://www.open-systems-pharmacology.org/OSPSuite-R/reference
   article: https://www.open-systems-pharmacology.org/OSPSuite-R/articles
-

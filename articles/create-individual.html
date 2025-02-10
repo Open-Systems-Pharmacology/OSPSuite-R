@@ -5,92 +5,78 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="ospsuite">
 <title>Creating individuals • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Creating individuals">
-<meta property="og:description" content="ospsuite">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Creating individuals">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">11.1.197</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.2.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/ospsuite.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/ospsuite.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Primary functions</h6>
-    <a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a>
-    <a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a>
-    <a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a>
-    <a class="dropdown-item" href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a>
-    <a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a>
-    <a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a>
-    <a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Figure creation</h6>
-    <a class="dropdown-item" href="../articles/observed-data.html">Observed data</a>
-    <a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a>
-    <a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6>
-    <a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a>
-    <a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a>
-    <a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
+    <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
+    <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
+    <li><a class="dropdown-item" href="../articles/pk-analysis.html">Calculating PK parameters of simulation outputs</a></li>
+    <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
+    <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
+    <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
+    <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
+    <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
+    <li><a class="dropdown-item" href="../articles/table-parameters.html">Table parameters</a></li>
+    <li><a class="dropdown-item" href="../articles/unit-conversion.html">Dimensions and Units</a></li>
+    <li><a class="dropdown-item" href="../articles/PKSim-installation.html">PK-Sim Installation</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/open-systems-pharmacology/ospsuite-r/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/open-systems-pharmacology/ospsuite-r/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
 
 
-<script src="create-individual_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Creating individuals</h1>
+
+      <h1>Creating individuals</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/HEAD/vignettes/create-individual.Rmd" class="external-link"><code>vignettes/create-individual.Rmd</code></a></small>
@@ -99,18 +85,42 @@
 
     
     
-<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package provides an interface to the PK-Sim physiology database to create parameter sets describing a certain <strong>individual</strong>. By applying these parameter values to a simulation, it is possible to simulate different individuals based on one exported *.pkml simulation. This functionality is only available when PK-Sim is installed on the system.</p>
-<p>The easier way to get started is to install the <a href="https://github.com/Open-Systems-Pharmacology/Suite/releases/" class="external-link">OSPSuite Setup</a>. This will link PK-Sim to your <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> installation automatically. If the portable version of PK-Sim is used instead, one must specify the path to the PK-Sim folder by calling the function <code><a href="../reference/initPKSim.html">initPKSim()</a></code>.</p>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package provides an interface to the
+PK-Sim physiology database to create parameter sets describing a certain
+<strong>individual</strong>. By applying these parameter values to a
+simulation, it is possible to simulate different individuals based on
+one exported *.pkml simulation. This functionality is only available
+when PK-Sim is installed on the system.</p>
+<p>The easier way to get started is to install the <a href="https://github.com/Open-Systems-Pharmacology/Suite/releases/" class="external-link">OSPSuite
+Setup</a>. This will link PK-Sim to your <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a>
+installation automatically. If the portable version of PK-Sim is used
+instead, one must specify the path to the PK-Sim folder by calling the
+function <code><a href="../reference/initPKSim.html">initPKSim()</a></code>.</p>
 <div class="section level2">
 <h2 id="creating-individuals">Creating individuals<a class="anchor" aria-label="anchor" href="#creating-individuals"></a>
 </h2>
-<p>The physiology of an individual is defined by the values of the simulation parameters. To simulate a specific individual, one has to generate a set of parameter values and apply these values to the model. <strong>NOTE</strong>: Currently, only individuals of the <em>same</em> species as in the original *.pkml simulation can be applied. I.e., if the simulation exported from PK-Sim represents a human individual, it is possible to simulate another human individual of different race, gender, etc., but it is not possible to simulate a rat. Though it is technically possible, and the simulation will produce some results, these will not valid.</p>
-<p>The first step is creating an object describing <em>individual characteristics</em>. To see the list of available values for the arguments <code>species</code>, <code>population</code> (only for human), and <code>gender</code> (only for human), use the <a href="https://en.wikipedia.org/wiki/Enumerated_type" class="external-link">enums</a> <code>Species</code>, <code>HumanPopulation</code>, and <code>Gender</code>, respectively. This object is then passed to the function <code>createIndividual</code> to generate a set of parameter values. The algorithm behind is the same used in PK-Sim when creating an Individual-Building Block.</p>
+<p>The physiology of an individual is defined by the values of the
+simulation parameters. To simulate a specific individual, one has to
+generate a set of parameter values and apply these values to the model.
+<strong>NOTE</strong>: Currently, only individuals of the <em>same</em>
+species as in the original *.pkml simulation can be applied. I.e., if
+the simulation exported from PK-Sim represents a human individual, it is
+possible to simulate another human individual of different population,
+gender, etc., but it is not possible to simulate a rat. Though it is
+technically possible, and the simulation will produce some results,
+these will not valid.</p>
+<p>The first step is creating an object describing <em>individual
+characteristics</em>. To see the list of available values for the
+arguments <code>species</code>, <code>population</code> (only for
+human), and <code>gender</code> (only for human), use the <a href="https://en.wikipedia.org/wiki/Enumerated_type" class="external-link">enums</a>
+<code>Species</code>, <code>HumanPopulation</code>, and
+<code>Gender</code>, respectively. This object is then passed to the
+function <code>createIndividual</code> to generate a set of parameter
+values. The algorithm behind is the same used in PK-Sim when creating an
+Individual-Building Block.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: rClr</span></span>
-<span><span class="co">#&gt; Loading the dynamic library for Microsoft .NET runtime...</span></span>
-<span><span class="co">#&gt; Loaded Common Language Runtime version 4.0.30319.42000</span></span>
+<span><span class="co">#&gt; Loading required package: rSharp</span></span>
 <span></span>
 <span><span class="co"># If no unit is specified, the default units are used. For "weight" it is "kg", for "age" it is "year(s)".</span></span>
 <span><span class="va">individualCharacteristics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividualCharacteristics.html">createIndividualCharacteristics</a></span><span class="op">(</span></span>
@@ -140,18 +150,24 @@
 <p>The output contains two lists of parameters:</p>
 <ul>
 <li>
-<code>distributedParameters</code>: parameters that differ between the individuals of the selected species</li>
+<code>distributedParameters</code>: parameters that differ between
+the individuals of the selected species</li>
 <li>
-<code>derivedParameters</code>: parameters defined by formulas in the simulation</li>
+<code>derivedParameters</code>: parameters defined by formulas in
+the simulation</li>
 </ul>
-<p>When applying the generated individual parameter set to a simulation in R, only parameters from the <code>distributedParameters</code> should be overwritten, otherwise formula dependencies may be destroyed. Generated parameter values can be conveniently applied using the <code>setParameterValuesByPath</code> method:</p>
+<p>When applying the generated individual parameter set to a simulation
+in R, only parameters from the <code>distributedParameters</code> should
+be overwritten, otherwise formula dependencies may be destroyed.
+Generated parameter values can be conveniently applied using the
+<code>setParameterValuesByPath</code> method:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "C:/Users/ztsoj/AppData/Local/Temp/Rtmpk9FdFk/temp_libpath2f242797740e/ospsuite/extdata/Aciclovir.pkml"</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Felix/AppData/Local/Temp/RtmpIxz3oM/temp_libpath54c059714853/ospsuite/extdata/Aciclovir.pkml"</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Apply individual parameters</span></span>
@@ -164,7 +180,14 @@
 <div class="section level2">
 <h2 id="adding-enzyme-ontogenies">Adding enzyme ontogenies<a class="anchor" aria-label="anchor" href="#adding-enzyme-ontogenies"></a>
 </h2>
-<p>The PK-Sim database includes ontogeny information for some proteins (see (PK-Sim Ontogeny Database)[<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf</a>]). For a protein molecule present in the simulation, it is possible to add the ontogeny information on one of the predefined proteins. For example, it is possible to set the ontogeny of the protein <code>MyProtein</code> to the value of the ontogeny of a CYP3A4 enzyme for the specified individual. The list of supported ontogenies is stored in the <code>StandardOntogeny</code>-list.</p>
+<p>The PK-Sim database includes ontogeny information for some proteins
+(see (PK-Sim Ontogeny Database)[<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf</a>]).
+For a protein molecule present in the simulation, it is possible to add
+the ontogeny information on one of the predefined proteins. For example,
+it is possible to set the ontogeny of the protein <code>MyProtein</code>
+to the value of the ontogeny of a CYP3A4 enzyme for the specified
+individual. The list of supported ontogenies is stored in the
+<code>StandardOntogeny</code>-list.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span></span>
@@ -245,32 +268,30 @@
 <span><span class="co">#&gt;    Gestational age: 40.00 [week(s)] </span></span>
 <span><span class="co">#&gt;    Weight: 75.00 [kg] </span></span>
 <span><span class="co">#&gt;    Height: 1.75 [m] </span></span>
-<span><span class="co">#&gt;    Molecule MyProtein with ontogeny CYP3A4:</span></span>
+<span><span class="co">#&gt;    Molecule MyProtein with ontogeny CYP3A4: NULL</span></span>
 <span></span>
 <span><span class="va">individual</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividual.html">createIndividual</a></span><span class="op">(</span>individualCharacteristics <span class="op">=</span> <span class="va">individualCharacterstics</span><span class="op">)</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Michael Sevestre, Pavel Balazki, Juri Solodenko, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
