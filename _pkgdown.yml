@@ -4,7 +4,7 @@ template:
   bootstrap: 5
 
 development:
-  mode: devel
+  mode: auto
 
 authors:
   Open-Systems-Pharmacology Community:
