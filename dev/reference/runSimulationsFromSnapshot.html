@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.1.0.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,9 +66,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">runSimulationsFromSnapshot</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"."</span>,</span>
-<span>  csv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  pkml <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  xml <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  RunForAllOutputs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  exportCSV <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  exportPKML <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  exportJSON <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  exportXML <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -84,15 +86,23 @@
 <dd><p>character string, path to the output directory where to write simulation results</p></dd>
 
 
-<dt id="arg-csv">csv<a class="anchor" aria-label="anchor" href="#arg-csv"></a></dt>
+<dt id="arg-runforalloutputs">RunForAllOutputs<a class="anchor" aria-label="anchor" href="#arg-runforalloutputs"></a></dt>
+<dd><p>logical, whether to run the simulation for all outputs or only OutputSelections (default = FALSE)</p></dd>
+
+
+<dt id="arg-exportcsv">exportCSV<a class="anchor" aria-label="anchor" href="#arg-exportcsv"></a></dt>
 <dd><p>logical, whether to export the results as csv (default = TRUE)</p></dd>
 
 
-<dt id="arg-pkml">pkml<a class="anchor" aria-label="anchor" href="#arg-pkml"></a></dt>
+<dt id="arg-exportpkml">exportPKML<a class="anchor" aria-label="anchor" href="#arg-exportpkml"></a></dt>
 <dd><p>logical, whether to export the results as pkml (default = FALSE)</p></dd>
 
 
-<dt id="arg-xml">xml<a class="anchor" aria-label="anchor" href="#arg-xml"></a></dt>
+<dt id="arg-exportjson">exportJSON<a class="anchor" aria-label="anchor" href="#arg-exportjson"></a></dt>
+<dd><p>logical, whether to export simulation results as json (default = FALSE)</p></dd>
+
+
+<dt id="arg-exportxml">exportXML<a class="anchor" aria-label="anchor" href="#arg-exportxml"></a></dt>
 <dd><p>logical, whether to export the results as xml (default = FALSE)</p></dd>
 
 </dl></div>
