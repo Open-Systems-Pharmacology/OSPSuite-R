@@ -47,6 +47,10 @@ SimulationRunOptions <- R6::R6Class(
     #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is `getOSPSuiteSetting("showProgress")`
     showProgress = function(value) {
       private$.wrapProperty("ShowProgress", value)
+    },
+    #' @field autoReduceTolerances Specifies whether tolerances should be automatically reduced if the simulation fails. Default is `TRUE`
+    autoReduceTolerances = function(value) {
+      private$.wrapProperty("AutoReduceTolerances", value)
     }
   )
 )

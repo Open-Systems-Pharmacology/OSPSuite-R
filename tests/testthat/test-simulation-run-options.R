@@ -13,3 +13,17 @@ test_that("It can set the basic options parameters", {
   runOptions$numberOfCores <- 5
   expect_equal(runOptions$numberOfCores, 5)
 })
+
+test_that("It can set autoReduceTolerances option correctly", {
+  runOptions <- SimulationRunOptions$new()
+  runOptions$autoReduceTolerances <- FALSE
+  sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"), loadFromCache = FALSE)
+  # Setting relative tolerance to a high value to enforce error reduction
+  sim$solver$relTol <- 5
+  expect_error(runSimulations(sim))
+
+  # Allow reducing tolerances
+  runOptions$autoReduceTolerances <- TRUE
+  results <- runSimulations(simulations = sim)[[1]]
+  expect_equal(results$count, 1)
+})
