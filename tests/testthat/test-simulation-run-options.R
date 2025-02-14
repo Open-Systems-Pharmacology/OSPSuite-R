@@ -20,10 +20,10 @@ test_that("It can set autoReduceTolerances option correctly", {
   sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"), loadFromCache = FALSE)
   # Setting relative tolerance to a high value to enforce error reduction
   sim$solver$relTol <- 5
-  expect_error(runSimulations(sim))
+  expect_error(runSimulations(sim, simulationRunOptions = runOptions))
 
   # Allow reducing tolerances
   runOptions$autoReduceTolerances <- TRUE
-  results <- runSimulations(simulations = sim)[[1]]
+  results <- runSimulations(simulations = sim, simulationRunOptions = runOptions)[[1]]
   expect_equal(results$count, 1)
 })
