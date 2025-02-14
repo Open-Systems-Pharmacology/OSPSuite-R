@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,9 +186,11 @@ can be any formula type.</p>
 <span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
-<span><span class="co">#&gt;    RHSFormula: NULL </span></span>
+<span><span class="co">#&gt;    RHSFormula:  </span></span>
+<span><span class="co">#&gt;    ------- : ------- </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: Time * 2</span></span>
+<span><span class="co">#&gt;    formula: Time * 2 </span></span>
+<span><span class="co">#&gt;    ------- : -------</span></span>
 <span></span>
 <span><span class="co"># `value` refers to the initial value of the parameter</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">value</span></span>
@@ -331,9 +333,11 @@ re-activate the RHS formula after switching it off.</p>
 <span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
-<span><span class="co">#&gt;    RHSFormula: NULL </span></span>
+<span><span class="co">#&gt;    RHSFormula:  </span></span>
+<span><span class="co">#&gt;    ------- : ------- </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: Time * 2</span></span>
+<span><span class="co">#&gt;    formula: Time * 2 </span></span>
+<span><span class="co">#&gt;    ------- : -------</span></span>
 <span></span>
 <span><span class="co"># Setting its value only changes the initial value</span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">stateVariableParam</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -343,9 +347,11 @@ re-activate the RHS formula after switching it off.</p>
 <span><span class="co">#&gt;    Value: 10.00 </span></span>
 <span><span class="co">#&gt;    isConstant: TRUE </span></span>
 <span><span class="co">#&gt;    isStateVariable: TRUE </span></span>
-<span><span class="co">#&gt;    RHSFormula: NULL </span></span>
+<span><span class="co">#&gt;    RHSFormula:  </span></span>
+<span><span class="co">#&gt;    ------- : ------- </span></span>
 <span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: Time * 2</span></span>
+<span><span class="co">#&gt;    formula: Time * 2 </span></span>
+<span><span class="co">#&gt;    ------- : -------</span></span>
 <span></span>
 <span><span class="co"># Switching the RHS formula off</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">isStateVariable</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
