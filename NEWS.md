@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- Improve printing of parameters with RHS formulas (\#1511)
+
 # ospsuite 12.2.0
 
 ## Major Changes
