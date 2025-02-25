@@ -7,9 +7,11 @@
 runSimulationsFromSnapshot(
   ...,
   output = ".",
-  csv = TRUE,
-  pkml = FALSE,
-  xml = FALSE
+  RunForAllOutputs = FALSE,
+  exportCSV = TRUE,
+  exportPKML = FALSE,
+  exportJSON = FALSE,
+  exportXML = FALSE
 )
 }
 \arguments{
@@ -17,11 +19,15 @@ runSimulationsFromSnapshot(
 
 \item{output}{character string, path to the output directory where to write simulation results}
 
-\item{csv}{logical, whether to export the results as csv (default = TRUE)}
+\item{RunForAllOutputs}{logical, whether to run the simulation for all outputs or only OutputSelections (default = FALSE)}
 
-\item{pkml}{logical, whether to export the results as pkml (default = FALSE)}
+\item{exportCSV}{logical, whether to export the results as csv (default = TRUE)}
 
-\item{xml}{logical, whether to export the results as xml (default = FALSE)}
+\item{exportPKML}{logical, whether to export the results as pkml (default = FALSE)}
+
+\item{exportJSON}{logical, whether to export simulation results as json (default = FALSE)}
+
+\item{exportXML}{logical, whether to export the results as xml (default = FALSE)}
 }
 \description{
 Run Simulations From Snapshot Files

@@ -63,8 +63,10 @@ Parameter <- R6::R6Class(
       private$.printQuantity()
       private$.printLine("isStateVariable", self$isStateVariable)
       if (self$isStateVariable) {
-        private$.printLine("RHSFormula")
+        private$.printLine("RHSFormula", "")
+        private$.printLine("------- ", "-------")
         self$rhsFormula$printFormula()
+        private$.printLine("------- ", "-------")
       }
     }
   )

@@ -351,3 +351,94 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   return(isFormulaExplicit)
 }
+
+#' Retrieve molecular weight for a quantity's molecule
+#'
+#' @description Returns the molecular weight of the molecule for a given quantity.
+#' If no unit is provided, the value is returned in the base unit (`kg/µmol`).
+#'
+#' @param quantity A `Quantity` object.
+#' @param unit Optional. Target unit for the molecular weight. Defaults to `kg/µmol`.
+#' @param stopIfNotFound Logical. If `TRUE`, throws an error when the molecular
+#' weight cannot be retrieved. If `FALSE`, returns `NA`. Default is `FALSE`.
+#' @return The molecular weight in the specified unit or `NA` if not found.
+#' @export
+#'
+#' @examples
+#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' sim <- loadSimulation(simPath)
+#' parameterPath <- "Organism|VenousBlood|Plasma|Aciclovir|Concentration"
+#' quantity <- getQuantity(parameterPath, container = sim)
+#' getMolWeightFor(quantity, unit = "g/mol")
+getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {
+  ospsuite.utils::validateIsOfType(quantity, "Quantity")
+  ospsuite.utils::validateIsCharacter(unit, nullAllowed = TRUE)
+
+  unit <- unit %||% getBaseUnit(ospDimensions$`Molecular weight`)
+
+  isMolecule <- try(
+    quantity$call("get_ContainerTypeAsString") == "Molecule",
+    silent = TRUE
+  )
+
+  if (inherits(isMolecule, "try-error") || !isMolecule) {
+    moleculeContainer <- .getParentContainerByType(quantity, "Molecule")
+  } else {
+    moleculeContainer <- quantity
+  }
+
+  if (!ospsuite.utils::isOfType(moleculeContainer, "Entity")) {
+    if (stopIfNotFound) {
+      stop(messages$molWeightErrorMessage(quantity$path))
+    }
+    return(NA)
+  }
+
+  paramPath <- paste(moleculeContainer$name, "Molecular weight", sep = "|")
+
+  rootContainer <- .getParentContainerByType(quantity, "Simulation")
+  task <- .getNetTask("ContainerTask")
+  paramMW <- task$call("AllParametersMatching", rootContainer, paramPath)
+
+  if (length(paramMW) == 0) {
+    if (stopIfNotFound) {
+      stop(messages$molWeightErrorMessage(quantity$path))
+    }
+    return(NA)
+  }
+
+  molWeight <- paramMW[[1]]$call("get_Value")
+  molWeightConverted <- toUnit(ospDimensions$`Molecular weight`,
+    values = molWeight,
+    targetUnit = unit,
+    sourceUnit = "kg/µmol"
+  )
+
+  return(molWeightConverted)
+}
+
+#' Get the parent container of a specific type for a given Entity
+#'
+#' @description Recursively retrieves the parent container of the specified type
+#' for a given `Entity`.
+#'
+#' @param entity An `Entity` object or an object inheriting from `Entity`
+#' @param type A string representing the container type to find (e.g.,
+#' "Simulation", "Molecule").
+#' @return The closest parent container of the specified type or `NA` if not found.
+#' @keywords internal
+.getParentContainerByType <- function(entity, type) {
+  if (is.null(entity)) {
+    return(NA)
+  }
+  ospsuite.utils::validateIsOfType(entity, "Entity")
+  ospsuite.utils::validateIsCharacter(type)
+
+  if (ospsuite.utils::isOfType(entity, "Container")) {
+    if (entity$containerType == type) {
+      return(entity)
+    }
+  }
+
+  return(.getParentContainerByType(entity$parentContainer, type))
+}

@@ -257,3 +257,37 @@ test_that("It shows an expected message when setting a value with wrong unit", {
     fixed = TRUE
   )
 })
+
+# getMolWeightFor
+test_that("It can retrieve the molecular weight for molecule of quantity", {
+  quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+  quantity <- getQuantity(quantityPath, sim)
+  expect_equal(getMolWeightFor(quantity), 1.942e-07)
+})
+
+test_that("It can retrieve the molecular weight for molecule of `MoleculeAmount` type quantity", {
+  quantityPath <- "Organism|VenousBlood|Plasma|Caffeine"
+  quantity <- getQuantity(quantityPath, sim)
+  expect_equal(getMolWeightFor(quantity), 1.942e-07)
+})
+
+test_that("It can retrieve the molecular weight for molecule of quantity with unit", {
+  quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+  quantity <- getQuantity(quantityPath, sim)
+  expect_equal(getMolWeightFor(quantity, unit = "g/mol"), 194.2)
+})
+
+test_that("It returns `NA` if no molecule in quantity path", {
+  quantityPath <- "Organism|Heart|Plasma|Volume"
+  quantity <- getQuantity(quantityPath, sim)
+  expect_equal(getMolWeightFor(quantity), NA)
+})
+
+test_that("It throws expected error message if no molecule in quantity path and stopIfNotFound", {
+  quantityPath <- "Organism|Heart|Plasma|Volume"
+  quantity <- getQuantity(quantityPath, sim)
+  expect_error(
+    getMolWeightFor(quantity, stopIfNotFound = TRUE),
+    "Unable to retrieve the molecular weight for.*Heart.*Plasma.*Volume"
+  )
+})

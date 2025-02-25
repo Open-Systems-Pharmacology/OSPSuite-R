@@ -4,7 +4,7 @@
 \alias{convertSnapshot}
 \title{Convert between snapshot and project formats}
 \usage{
-convertSnapshot(..., format, output = ".")
+convertSnapshot(..., format, output = ".", runSimulations = FALSE)
 }
 \arguments{
 \item{...}{character strings, path to files or a directory containing files to convert}
@@ -12,6 +12,9 @@ convertSnapshot(..., format, output = ".")
 \item{format, }{character string, target format either "snapshot" or "project".}
 
 \item{output}{character string, path to the output directory where to write the converted files}
+
+\item{runSimulations}{logical, whether to run simulations during conversion (default = FALSE).
+Only when converting from snapshot to project.}
 }
 \description{
 Convert between snapshot and project formats
