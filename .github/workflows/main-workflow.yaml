@@ -24,7 +24,7 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    uses: ./.github/workflows/R-CMD-check-build.yaml
 
   test-coverage:
     if: ${{ !cancelled() }}
@@ -32,7 +32,6 @@ jobs:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
 
   pkgdown:
     if: ${{ !cancelled() }}
