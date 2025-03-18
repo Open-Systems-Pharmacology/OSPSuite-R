@@ -280,7 +280,7 @@ DataSet <- R6::R6Class(
       private$.printLine("Error unit", self$yErrorUnit)
       private$.printLine("Molecular weight", self$molWeight)
       private$.printLine("LLOQ", self$LLOQ)
-      private$.printLine("Meta data")
+      private$.printLine("Meta data:")
       print(self$metaData)
       invisible(self)
     }

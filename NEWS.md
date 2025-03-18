@@ -1,9 +1,13 @@
 # ospsuite (development version)
 
+## Breaking changes
+
+- ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.6.2.
+
 ## Minor improvements and bug fixes
 
 - Improve printing of parameters with RHS formulas (\#1511)
-- Improve printing of `DataCombined` objects (\#1514)
+- Improve printing of various classes (\#1519)
 
 # ospsuite 12.2.0
 
