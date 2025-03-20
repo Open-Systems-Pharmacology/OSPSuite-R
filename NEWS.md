@@ -2,7 +2,7 @@
 
 ## Breaking changes
 
-- ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.6.2.
+- ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
 
 ## Minor improvements and bug fixes
 

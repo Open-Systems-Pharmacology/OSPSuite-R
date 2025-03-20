@@ -23,7 +23,7 @@ Depends:
     rSharp
 Imports: 
     dplyr (>= 1.0.0),
-    ospsuite.utils (>= 1.6.2),
+    ospsuite.utils (>= 1.7.0),
     purrr,
     readr,
     stringr,
