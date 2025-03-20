@@ -3,6 +3,11 @@
 sim <- loadTestSimulation("S1")
 liverPath <- toPathString(c("Organism", "Liver"))
 
+test_that("Printing of the container", {
+  container <- getContainer(liverPath, sim)
+  expect_snapshot(container$print())
+})
+
 test_that("It can retrieve the name of a container", {
   container <- getContainer(liverPath, sim)
   expect_equal(container$name, "Liver")
@@ -47,5 +52,5 @@ test_that("It throws an error when trying to set the name of a container", {
 
 test_that("It can print container", {
   container <- getContainer(liverPath, sim)
-  expect_error(capture.output(container$print()), NA)
+  expect_snapshot(container$print())
 })

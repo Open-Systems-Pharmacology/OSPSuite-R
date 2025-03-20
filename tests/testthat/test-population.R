@@ -113,7 +113,7 @@ test_that("It retrieve an empty string for an non existant covariate", {
 
 test_that("It can print population", {
   population <- loadPopulation(populationFileName)
-  expect_error(capture.output(population$print()), NA)
+  expect_snapshot(population$print())
 })
 
 test_that("It can retrieve all ids define ina population", {

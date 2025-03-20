@@ -80,8 +80,7 @@ DataRepository <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      invisible(self)
+      ospsuite.utils::osp_print_class(self)
     },
     #' @description
     #' Adds a new entry to meta data list or changes its value if the name is already present.

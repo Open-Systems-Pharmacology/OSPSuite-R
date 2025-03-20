@@ -13,7 +13,7 @@ test_that("It throws an error when trying to set file source", {
 })
 
 test_that("It can print the simulation", {
-  expect_error(capture.output(sim$print()), NA)
+  expect_snapshot(sim$print())
 })
 
 test_that("It can retrieve the name of all stationary molecules used in the model", {

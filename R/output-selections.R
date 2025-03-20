@@ -40,7 +40,7 @@ OutputSelections <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
+      ospsuite.utils::osp_print_class(self)
       for (output in self$allOutputs) {
         print(output)
       }

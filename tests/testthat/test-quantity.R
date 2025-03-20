@@ -4,7 +4,7 @@ sim <- loadTestSimulation("S1")
 
 test_that("It can print Quantity", {
   quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
-  expect_error(capture.output(quantity$print()), NA)
+  expect_snapshot(quantity$print())
 })
 
 test_that("It can retrieve the parent of an entity", {
@@ -31,5 +31,5 @@ test_that("It prints the Scientific value of the Quantity", {
 
 test_that("It prints the NaN value of the Quantity", {
   quantity <- getQuantity("AADAC|Lipophilicity", sim)
-  expect_error(capture.output(quantity$print()), NA)
+  expect_snapshot(quantity$print())
 })

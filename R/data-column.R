@@ -77,12 +77,14 @@ DataColumn <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      if (self$unit == "") {
-        private$.printLine(self$name)
-      } else {
-        private$.printLine(self$name, paste0("base unit: [", self$unit, "]"))
-      }
-      invisible(self)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list(
+        "Name" = self$name,
+        "Dimension" = self$dimension,
+        "Unit" = self$unit,
+        "DisplayUnit" = self$displayUnit
+      ),
+      print_empty = TRUE)
     }
   ),
   private = list(

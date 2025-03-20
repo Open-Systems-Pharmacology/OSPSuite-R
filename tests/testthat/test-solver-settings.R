@@ -43,5 +43,5 @@ test_that("It can set the  solver parameters from the simulation", {
 # SolverSettings$print
 
 test_that("It can print solver settings", {
-  expect_error(capture.output(solver$print()), NA)
+  expect_snapshot(print(solver))
 })

@@ -73,7 +73,6 @@
 #' @export
 DataCombined <- R6::R6Class(
   classname = "DataCombined",
-  inherit = Printable,
 
   # public fields and methods ------------------------------------
 
@@ -457,8 +456,8 @@ DataCombined <- R6::R6Class(
     print = function() {
       # Group map contains names, types, and groupings for all datasets, providing
       # the most succinct snapshot of the object.
-      private$printClass()
-      private$printLine("Datasets and groupings:", addTab = FALSE)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_header("Datasets and groupings:")
       cat("\n")
       print(self$groupMap)
 

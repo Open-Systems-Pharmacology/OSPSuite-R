@@ -11,7 +11,7 @@ allPKParameters <- pkAnalyses$allPKParametersFor(quantityPath = "Organism|Venous
 pkParameter <- allPKParameters[[1]]
 
 test_that("It can print a quantity PK parameter", {
-  expect_error(capture.output(pkParameter$print()), NA)
+  expect_snapshot(pkParameter$print())
 })
 
 test_that("It can resolve the unit and dimension of a quantity PK-Parameter", {

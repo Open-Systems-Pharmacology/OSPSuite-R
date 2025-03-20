@@ -15,3 +15,9 @@ test_that("It stores new values when defaults are changed", {
   expect_equal(myPlotConfiguration$pointsSize, myNewPointSize)
   expect_equal(myPlotConfiguration$legendTitle, myNewLegendTitle)
 })
+
+test_that("Defaults of the plot configuration", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+
+expect_snapshot(myPlotConfiguration)
+})

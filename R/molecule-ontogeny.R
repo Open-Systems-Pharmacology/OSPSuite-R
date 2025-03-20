@@ -7,7 +7,6 @@
 #' @export
 MoleculeOntogeny <- R6::R6Class(
   "MoleculeOntogeny",
-  inherit = Printable,
   cloneable = FALSE,
   public = list(
     #' @field molecule Name of the molecule in the model
@@ -31,15 +30,16 @@ MoleculeOntogeny <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$printClass()
-      private$printLine("Molecule", self$molecule)
-      private$printLine("Ontogeny", self$ontogeny)
-      invisible(self)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list(
+        "Molecule" = self$molecule,
+        "Ontogeny" = self$ontogeny
+      ))
     },
     #' @description
     #' Print the `MoleculeOntogeny` on one line
     printMoleculeOntogeny = function() {
-      private$printLine(paste("Molecule", self$molecule, "with ontogeny", self$ontogeny))
+      print(paste0("Molecule '", self$molecule, "' with ontogeny '", self$ontogeny, "'"))
     }
   )
 )

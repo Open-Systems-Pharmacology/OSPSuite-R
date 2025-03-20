@@ -75,9 +75,11 @@ SimulationResults <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Number of individuals", self$count)
-      invisible(self)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list(
+        "Number of individuals" = self$count
+      ))
+      ospsuite.utils::osp_print_items(self$allQuantityPaths, title = "For paths")
     }
   ),
   active = list(

@@ -72,17 +72,7 @@ Quantity <- R6::R6Class(
     .formula = NULL,
     .allUnits = NULL,
     .unit = NULL,
-    .dimension = NULL,
-    .printQuantity = function(valueCaption = "Value") {
-      private$.printClass()
-      private$.printLine("Path", self$path)
-      self$printQuantityValue(valueCaption)
-      self$formula$printFormula()
-      if (!self$isConstant && !self$isDistributed) {
-        private$.printLine("Value overrides formula", self$isFixedValue)
-      }
-      invisible(self)
-    }
+    .dimension = NULL
   ),
   public = list(
     #' @description
@@ -102,28 +92,52 @@ Quantity <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printQuantity()
-      private$.printLine("Quantity Type", self$quantityType)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list("Quantity Type" = self$quantityType))
+      ospsuite.utils::osp_print_items(list("Path" = self$path))
+      ospsuite.utils::osp_print_items(list("Value" = self$getPrintValue()))
+      ospsuite.utils::osp_print_header("Formula", level = 2)
+      self$formula$printFormula()
+      if (!self$isConstant && !self$isDistributed) {
+        ospsuite.utils::osp_print_items(list("Value overrides formula" = self$isFixedValue))
+      }
     },
     #' @description
     #' Print the name of the quantity and its value
     printValue = function() {
+      lifecycle::deprecate_warn(
+        when = "12.2.0.9006",
+        what = I("ospsuite::Quantity$printValue()")
+      )
       self$printQuantityValue(self$name)
     },
     #' @description
     #' Print the value (in scientific notation with 2 digits when needed) and unit of the quantity
     #' @param  caption Text to prepend to the value
     printQuantityValue = function(caption) {
+      lifecycle::deprecate_warn(
+        when = "12.2.0.9006",
+        what = I("ospsuite::Quantity$printQuantityValue()"),
+        with = I("ospsuite::Quantity$getPrintValue()")
+      )
+      ospsuite.utils::osp_print_items(list(caption = self$getPrintValue()))
+    },
+
+    #' @description
+    #' Return a string for printing the value (in scientific notation with 2 digits when needed) and unit of the quantity
+    #' @param  caption Text to prepend to the value
+    #' @return A string for printing the quantity in one line
+    getPrintValue = function(){
       scientific <- FALSE
       if (!is.nan(self$value) & (self$value >= 10000 | self$value < 0.01)) {
         scientific <- TRUE
       }
-      QuantityValue <- formatNumerics(self$value, scientific = scientific)
+      quantityValue <- formatNumerics(self$value, scientific = scientific)
 
       if (self$unit != "") {
-        QuantityValue <- paste0(QuantityValue, " [", self$unit, "]")
+        quantityValue <- paste0(quantityValue, " [", self$unit, "]")
       }
-      private$.printLine(caption, QuantityValue)
+      return(quantityValue)
     },
     #' @description
     #' Convert value from unit to the base unit and sets the value in base unit.

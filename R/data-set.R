@@ -270,19 +270,20 @@ DataSet <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Name", self$name)
-      private$.printLine("X dimension", self$xDimension)
-      private$.printLine("X unit", self$xUnit)
-      private$.printLine("Y dimension", self$yDimension)
-      private$.printLine("Y unit", self$yUnit)
-      private$.printLine("Error type", self$yErrorType)
-      private$.printLine("Error unit", self$yErrorUnit)
-      private$.printLine("Molecular weight", self$molWeight)
-      private$.printLine("LLOQ", self$LLOQ)
-      private$.printLine("Meta data:")
-      print(self$metaData)
-      invisible(self)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list(
+        "Name" = self$name,
+        "X dimension" = self$xDimension,
+        "X unit" = self$xUnit,
+        "Y dimension" = self$yDimension,
+        "Y unit" = self$yUnit,
+        "Error type" = self$yErrorType,
+        "Error unit" = self$yErrorUnit,
+        "Molecular weight" = self$molWeight,
+        "LLOQ" = self$LLOQ
+      ),
+      print_empty = TRUE)
+      ospsuite.utils::osp_print_items(self$metaData, title = "Meta data")
     }
   ),
   private = list(

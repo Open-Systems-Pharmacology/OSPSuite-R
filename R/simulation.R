@@ -96,10 +96,11 @@ Simulation <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Name", self$name)
-      private$.printLine("Source file", self$sourceFile)
-      invisible(self)
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list(
+"Name" = self$name,
+      "Source file" = self$sourceFile
+))
     }
   ),
   private = list(

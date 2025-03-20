@@ -6,6 +6,10 @@ parameters <- getAllParameterPathsIn(sim)
 
 # SensitivityAnalysisResults
 
+test_that("It can print sensitivity analysis results", {
+  expect_snapshot(results$print())
+})
+
 test_that("It returns the name of all pk parameters available in the SA results", {
   pkParameterNames <- results$allPKParameterNames
   expect_gt(length(pkParameterNames), 0)

@@ -23,7 +23,6 @@ test_that("it can create a new data set from scratch", {
   expect_identical(dataSet$yErrorValues, NULL)
   expect_identical(dataSet$lloq, NULL)
   expect_identical(dataSet$yValues, numeric())
-  expect_error(capture.output(print(dataSet)), regexp = NA)
 })
 
 test_that("it can set the name of the data set", {
@@ -345,6 +344,7 @@ test_that("it can add a new meta data", {
   dataSet <- DataSet$new(dataRepository = obsData)
   dataSet$addMetaData("Meta", "Value")
   expect_equal(dataSet$metaData[["Meta"]], "Value")
+  expect_snapshot(print(dataSet))
 })
 
 test_that("it can set the llog value", {

@@ -21,8 +21,9 @@ QuantitySelection <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printLine(self$path, self$quantityType)
-      invisible(self)
+      outList <- list()
+      outList[[self$path]] <- self$quantityType
+      ospsuite.utils::osp_print_items(outList)
     }
   )
 )

@@ -116,17 +116,19 @@ SimulationBatch <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Additional arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Id", self$id)
-      private$.printLine("Simulation", self$simulation$name)
-      private$.printLine("runValuesIds", self$runValuesIds)
-      private$.printLine(
-        "Parameters", self$getVariableParameters()
+      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::osp_print_items(list(
+        "Id" = self$id,
+        "runValuesIds" = self$runValuesIds
+      ))
+      ospsuite.utils::osp_print_items(self$getVariableParameters(), title = "Variable parameters")
+      ospsuite.utils::osp_print_items(self$getVariableMolecules(), title = "Variable start values")
+      ospsuite.utils::osp_print_items(list(
+        "Name" = self$simulation$name,
+        "File path" = self$simulation$sourceFile,
+        "Id" = self$simulation$id
+      ), title = "Simulation"
       )
-      private$.printLine(
-        "Molecules", self$getVariableMolecules()
-      )
-      invisible(self)
     }
   ),
   active = list(
