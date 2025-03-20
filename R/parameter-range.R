@@ -56,12 +56,14 @@ ParameterRange <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Min" = self$min,
-        "Max" = self$max,
-        "Unit" = self$unit
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Min" = self$min,
+          "Max" = self$max,
+          "Unit" = self$unit
+        ),
+        print_empty = TRUE
+      )
     },
     #' @description
     #' Print  the parameter in one line
@@ -72,13 +74,13 @@ ParameterRange <- R6::R6Class(
         what = I("ospsuite::ParameterRange$printValue()"),
         with = I("ospsuite::ParameterRange$getPrintValue()")
       )
-      caption = print(paste0(caption, ": ", minDisplay, "..", maxDisplay))
+      caption <- print(paste0(caption, ": ", minDisplay, "..", maxDisplay))
     },
 
     #' @description
     #' Return a string for printing the parameter in one line
     #' @return A string for printing the parameter in one line
-    getPrintValue = function(){
+    getPrintValue = function() {
       minDisplay <- if (is.null(self$min)) "]-Inf" else paste0("[", formatNumerics(self$min), " ", self$unit)
       maxDisplay <- if (is.null(self$max)) "+Inf[" else paste0(formatNumerics(self$max), " ", self$unit, "]")
       return(paste0(minDisplay, "..", maxDisplay))

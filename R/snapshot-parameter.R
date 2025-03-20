@@ -47,11 +47,13 @@ SnapshotParameter <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Value" = self$value,
-        "Unit" = self$unit
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Value" = self$value,
+          "Unit" = self$unit
+        ),
+        print_empty = TRUE
+      )
     },
     #' @description
     #' Print the parameter in one line

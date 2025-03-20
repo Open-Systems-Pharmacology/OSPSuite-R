@@ -303,21 +303,23 @@ DataImporterConfiguration <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Time column" = self$timeColumn,
-        "Time unit" = self$timeUnit,
-        "Time unit from column" = self$isTimeUnitFromColumn,
-        "Measurement column" = self$measurementColumn,
-        "Measurement unit" = self$measurementUnit,
-        "Measurement unit from column" = self$isMeasurementUnitFromColumn,
-        "Error column" = self$errorColumn,
-        "Error type" = self$errorType,
-        "Error unit" = self$errorUnit,
-        "Grouping columns" = self$groupingColumns,
-        "Sheets" = self$sheets,
-        "Naming pattern" = self$namingPattern
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Time column" = self$timeColumn,
+          "Time unit" = self$timeUnit,
+          "Time unit from column" = self$isTimeUnitFromColumn,
+          "Measurement column" = self$measurementColumn,
+          "Measurement unit" = self$measurementUnit,
+          "Measurement unit from column" = self$isMeasurementUnitFromColumn,
+          "Error column" = self$errorColumn,
+          "Error type" = self$errorType,
+          "Error unit" = self$errorUnit,
+          "Grouping columns" = self$groupingColumns,
+          "Sheets" = self$sheets,
+          "Naming pattern" = self$namingPattern
+        ),
+        print_empty = TRUE
+      )
     }
   ),
   private = list(

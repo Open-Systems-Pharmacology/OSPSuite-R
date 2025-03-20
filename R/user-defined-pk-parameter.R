@@ -60,18 +60,18 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
         "DisplayName" = self$displayName,
-      "Dimension" = self$dimension,
-      "DisplayUnit" = self$displayUnit,
-      "StandardPKParameter" = getEnumKey(StandardPKParameter, self$standardPKParameter),
-      "StartTime" = self$startTime,
-      "StartTimeOffset" = self$startTimeOffset,
-      "EndTime" = self$endTime,
-      "EndTimeOffset" = self$endTimeOffset,
-      "StartApplicationIndex" = self$startApplicationIndex,
-      "EndApplicationIndex" = self$endApplicationIndex,
-      "NormalizationFactor" = self$normalizationFactor,
-      "ConcentrationThreshold" = self$concentrationThreshold
-))
+        "Dimension" = self$dimension,
+        "DisplayUnit" = self$displayUnit,
+        "StandardPKParameter" = getEnumKey(StandardPKParameter, self$standardPKParameter),
+        "StartTime" = self$startTime,
+        "StartTimeOffset" = self$startTimeOffset,
+        "EndTime" = self$endTime,
+        "EndTimeOffset" = self$endTimeOffset,
+        "StartApplicationIndex" = self$startApplicationIndex,
+        "EndApplicationIndex" = self$endApplicationIndex,
+        "NormalizationFactor" = self$normalizationFactor,
+        "ConcentrationThreshold" = self$concentrationThreshold
+      ))
     }
   )
 )

@@ -16,9 +16,9 @@ rhsParameter <- getParameter("Organism|RHSParameter", simple)
 test_that("It can print parameters", {
   expect_snapshot(volumeParameter$print())
   expect_snapshot(formulaParameter$print())
-                  expect_snapshot(constantParameter$print())
-                                  expect_snapshot(tableParameter$print())
-                                                  expect_snapshot(rhsParameter$print())
+  expect_snapshot(constantParameter$print())
+  expect_snapshot(tableParameter$print())
+  expect_snapshot(rhsParameter$print())
 })
 
 test_that("It can retrieve name of a parameter", {

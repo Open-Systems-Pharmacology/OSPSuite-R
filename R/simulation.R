@@ -98,9 +98,9 @@ Simulation <- R6::R6Class(
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
-"Name" = self$name,
-      "Source file" = self$sourceFile
-))
+        "Name" = self$name,
+        "Source file" = self$sourceFile
+      ))
     }
   ),
   private = list(

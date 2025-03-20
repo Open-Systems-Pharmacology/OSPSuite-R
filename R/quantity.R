@@ -127,7 +127,7 @@ Quantity <- R6::R6Class(
     #' Return a string for printing the value (in scientific notation with 2 digits when needed) and unit of the quantity
     #' @param  caption Text to prepend to the value
     #' @return A string for printing the quantity in one line
-    getPrintValue = function(){
+    getPrintValue = function() {
       scientific <- FALSE
       if (!is.nan(self$value) & (self$value >= 10000 | self$value < 0.01)) {
         scientific <- TRUE

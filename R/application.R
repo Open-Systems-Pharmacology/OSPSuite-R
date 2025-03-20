@@ -43,13 +43,15 @@ Application <- R6::R6Class(
       if (!is.null(self$infusionTime)) {
         infusionTime <- self$infusionTime$getPrintValue()
       }
-      ospsuite.utils::ospPrintItems(list(
-        "Path" = container$path,
-        "Start time" = self$startTime$getPrintValue(),
-        "Infusion time" = infusionTime,
-        "Drug mass" = self$drugMass$getPrintValue()
-      ),
-      print_empty = FALSE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Path" = container$path,
+          "Start time" = self$startTime$getPrintValue(),
+          "Infusion time" = infusionTime,
+          "Drug mass" = self$drugMass$getPrintValue()
+        ),
+        print_empty = FALSE
+      )
     }
   )
 )

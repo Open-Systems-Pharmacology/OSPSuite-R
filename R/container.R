@@ -19,11 +19,13 @@ Container <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Container type" = self$containerType,
-        "Path" = self$path
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Container type" = self$containerType,
+          "Path" = self$path
+        ),
+        print_empty = TRUE
+      )
     }
   )
 )

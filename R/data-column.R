@@ -78,13 +78,15 @@ DataColumn <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Name" = self$name,
-        "Dimension" = self$dimension,
-        "Unit" = self$unit,
-        "DisplayUnit" = self$displayUnit
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Name" = self$name,
+          "Dimension" = self$dimension,
+          "Unit" = self$unit,
+          "DisplayUnit" = self$displayUnit
+        ),
+        print_empty = TRUE
+      )
     }
   ),
   private = list(

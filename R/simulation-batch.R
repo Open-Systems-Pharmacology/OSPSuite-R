@@ -127,8 +127,7 @@ SimulationBatch <- R6::R6Class(
         "Name" = self$simulation$name,
         "File path" = self$simulation$sourceFile,
         "Id" = self$simulation$id
-      ), title = "Simulation"
-      )
+      ), title = "Simulation")
     }
   ),
   active = list(

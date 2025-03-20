@@ -19,5 +19,5 @@ test_that("It stores new values when defaults are changed", {
 test_that("Defaults of the plot configuration", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
 
-expect_snapshot(myPlotConfiguration)
+  expect_snapshot(myPlotConfiguration)
 })

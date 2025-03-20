@@ -11,16 +11,18 @@ test_that("It can print simulation batch", {
     simulation = sim,
     parametersOrPaths = parameterPaths,
     moleculesOrPaths = moleculePaths
-                                    )
+  )
 
-  id <- simBatch$addRunValues(parameterValues = getQuantityValuesByPath(
-    quantityPaths = parameterPaths,
-    simulation = sim
-  ),
-                        initialValues = getQuantityValuesByPath(
-                          quantityPaths = moleculePaths,
-                          simulation = sim
-                        ))
+  id <- simBatch$addRunValues(
+    parameterValues = getQuantityValuesByPath(
+      quantityPaths = parameterPaths,
+      simulation = sim
+    ),
+    initialValues = getQuantityValuesByPath(
+      quantityPaths = moleculePaths,
+      simulation = sim
+    )
+  )
 
   # Print simulation batch
   expect_snapshot(print(simBatch))

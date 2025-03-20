@@ -271,18 +271,20 @@ DataSet <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Name" = self$name,
-        "X dimension" = self$xDimension,
-        "X unit" = self$xUnit,
-        "Y dimension" = self$yDimension,
-        "Y unit" = self$yUnit,
-        "Error type" = self$yErrorType,
-        "Error unit" = self$yErrorUnit,
-        "Molecular weight" = self$molWeight,
-        "LLOQ" = self$LLOQ
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Name" = self$name,
+          "X dimension" = self$xDimension,
+          "X unit" = self$xUnit,
+          "Y dimension" = self$yDimension,
+          "Y unit" = self$yUnit,
+          "Error type" = self$yErrorType,
+          "Error unit" = self$yErrorUnit,
+          "Molecular weight" = self$molWeight,
+          "LLOQ" = self$LLOQ
+        ),
+        print_empty = TRUE
+      )
       ospsuite.utils::ospPrintItems(self$metaData, title = "Meta data")
     }
   ),

@@ -83,18 +83,20 @@ PopulationCharacteristics <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Species" = self$species,
-        "Population" = self$population,
-        "Number of individuals" = self$numberOfIndividuals,
-        "Proportion of females" = self$proportionOfFemales,
-        "Age" = self$age$getPrintValue(),
-        "Gestational age" = self$gestationalAge$getPrintValue(),
-        "Weight" = self$weight$getPrintValue(),
-        "Height" = self$height$getPrintValue(),
-        "BMI" = self$BMI$getPrintValue()
-      ),
-      print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Species" = self$species,
+          "Population" = self$population,
+          "Number of individuals" = self$numberOfIndividuals,
+          "Proportion of females" = self$proportionOfFemales,
+          "Age" = self$age$getPrintValue(),
+          "Gestational age" = self$gestationalAge$getPrintValue(),
+          "Weight" = self$weight$getPrintValue(),
+          "Height" = self$height$getPrintValue(),
+          "BMI" = self$BMI$getPrintValue()
+        ),
+        print_empty = TRUE
+      )
 
       if (!is.null(self$allMoleculeOntogenies)) {
         ospsuite.utils::ospPrintHeader("Molecule Ontogenies")
