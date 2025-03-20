@@ -7,9 +7,9 @@
         * Species: NULL
         * Population: NULL
         * Gender: NULL
-        * Age: Age: []
-        * Gestational age: Gestational age: []
-        * Weight: Weight: []
-        * Height: Height: []
+        * Age: []
+        * Gestational age: []
+        * Weight: []
+        * Height: []
       Molecule Ontogenies:
 

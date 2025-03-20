@@ -14,5 +14,6 @@ test_that("Creating an aging data and setting values works", {
 })
 
 test_that("It can print aging data", {
+  agingData <- AgingData$new()
   expect_snapshot(agingData$print())
 })

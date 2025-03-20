@@ -107,12 +107,12 @@ test_that("It throws an exception when setting values for a quantity that does n
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist with unit", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "ml", stopIfNotFound = FALSE), NA)
+  expect_no_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "ml", stopIfNotFound = FALSE))
 })
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist and the stopIfnotFound flag is set to false", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, stopIfNotFound = FALSE), NA)
+  expect_no_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, stopIfNotFound = FALSE))
 })
 
 test_that("It throws an error when the number of quantity paths differs from the number units", {
@@ -203,7 +203,7 @@ test_that("It throws an exception when getting values for a quantity that does n
 
 test_that("It does not throw an exception when getting values for a quantity that does not exist with unit and the stopIfnotFound flag is set to fals", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_error(getQuantityValuesByPath(quantityPaths = parameterPath, simulation = sim, units = "ml", stopIfNotFound = FALSE), NA)
+  expect_no_error(getQuantityValuesByPath(quantityPaths = parameterPath, simulation = sim, units = "ml", stopIfNotFound = FALSE))
 })
 
 test_that("It throws an error when the number of quantity paths differs from the number units", {

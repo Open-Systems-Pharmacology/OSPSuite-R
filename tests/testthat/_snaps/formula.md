@@ -1,3 +1,12 @@
+# It can print an explicit  formula
+
+    Code
+      print(explicitFormula)
+    Message
+      <Formula>
+        * isExplicit: TRUE
+        * formula: f_vas*(1-HCT)*V_org
+
 # It can print a constant formula
 
     Code

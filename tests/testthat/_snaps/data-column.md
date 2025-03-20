@@ -1,4 +1,4 @@
-# Printing of DataColumn
+# It can print a DataColumn
 
     Code
       print(baseGrid)

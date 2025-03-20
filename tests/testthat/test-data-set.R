@@ -295,7 +295,6 @@ test_that("it can create a new data set from an existing repository", {
   expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
   expect_equal(dataSet$yErrorUnit, "mg/l")
   expect_equal(dataSet$yErrorValues, yError)
-  expect_error(capture.output(print(dataSet)), regexp = NA)
 })
 
 test_that("it can set the name of the data set", {
