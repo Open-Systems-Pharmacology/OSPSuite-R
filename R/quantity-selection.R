@@ -23,7 +23,7 @@ QuantitySelection <- R6::R6Class(
     print = function(...) {
       outList <- list()
       outList[[self$path]] <- self$quantityType
-      ospsuite.utils::osp_print_items(outList)
+      ospsuite.utils::ospPrintItems(outList)
     }
   )
 )

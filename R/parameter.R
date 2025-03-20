@@ -62,11 +62,11 @@ Parameter <- R6::R6Class(
     print = function(...) {
       super$print()
       if (self$isStateVariable) {
-        ospsuite.utils::osp_print_header("State variable", level = 2)
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintHeader("State variable", level = 2)
+        ospsuite.utils::ospPrintItems(list(
           "isStateVariable" = self$isStateVariable
         ))
-        ospsuite.utils::osp_print_header("RHSFormula", level = 3)
+        ospsuite.utils::ospPrintHeader("RHSFormula", level = 3)
         self$rhsFormula$printFormula()
       }
     }

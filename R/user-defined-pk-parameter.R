@@ -56,9 +56,8 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      browser()
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
         "DisplayName" = self$displayName,
       "Dimension" = self$dimension,

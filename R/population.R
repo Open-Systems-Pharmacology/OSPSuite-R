@@ -79,8 +79,8 @@ Population <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(list("Number of Individuals" = self$count))
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list("Number of Individuals" = self$count))
     }
   ),
   private = list(

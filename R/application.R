@@ -32,7 +32,7 @@ Application <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::ospPrintClass(self)
       # Get the container of the application to get its path. Using the parameter
       # of the application to get the parent container.
       container <- self$startTime$parentContainer
@@ -43,7 +43,7 @@ Application <- R6::R6Class(
       if (!is.null(self$infusionTime)) {
         infusionTime <- self$infusionTime$getPrintValue()
       }
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintItems(list(
         "Path" = container$path,
         "Start time" = self$startTime$getPrintValue(),
         "Infusion time" = infusionTime,

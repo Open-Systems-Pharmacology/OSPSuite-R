@@ -28,8 +28,8 @@ PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
         "Parameter name" = self$parameterName,
         "PK-Parameter" = self$pkParameterName,
         "Output path" = self$outputPath,

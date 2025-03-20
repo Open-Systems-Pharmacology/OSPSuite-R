@@ -45,9 +45,9 @@ SimulationPKAnalyses <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(self$allQuantityPaths, title = "For outputs:")
-      ospsuite.utils::osp_print_items(self$allPKParameterNames, title = "For pK-Parameters:")
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(self$allQuantityPaths, title = "For outputs:")
+      ospsuite.utils::ospPrintItems(self$allPKParameterNames, title = "For pK-Parameters:")
     }
   ),
   active = list(

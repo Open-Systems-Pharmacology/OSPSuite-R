@@ -47,8 +47,8 @@ QuantityPKParameter <- R6::R6Class("QuantityPKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
         "QuantityPath" = self$quantityPath,
         "Dimension" = self$dimension,

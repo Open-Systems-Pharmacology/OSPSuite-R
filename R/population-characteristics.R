@@ -82,8 +82,8 @@ PopulationCharacteristics <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
         "Species" = self$species,
         "Population" = self$population,
         "Number of individuals" = self$numberOfIndividuals,
@@ -97,13 +97,13 @@ PopulationCharacteristics <- R6::R6Class(
       print_empty = TRUE)
 
       if (!is.null(self$allMoleculeOntogenies)) {
-        ospsuite.utils::osp_print_header("Molecule Ontogenies")
+        ospsuite.utils::ospPrintHeader("Molecule Ontogenies")
         for (moleculeOntogeny in self$allMoleculeOntogenies) {
           moleculeOntogeny$printMoleculeOntogeny()
         }
       }
       if (!is.null(self$seed)) {
-        ospsuite.utils::osp_print_items(list("Seed" = self$seed))
+        ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
       }
       invisible(self)
     },

@@ -73,13 +73,13 @@ OutputSchema <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::ospPrintClass(self)
       if (length(self$timePoints) > 0) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "Time points" = paste0(self$timePoints, collapse = ", ")
         ))
       }
-      ospsuite.utils::osp_print_header("Output intervals", level = 2)
+      ospsuite.utils::ospPrintHeader("Output intervals", level = 2)
       for (interval in self$intervals) {
         print(interval)
       }

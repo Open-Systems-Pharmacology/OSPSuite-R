@@ -456,8 +456,8 @@ DataCombined <- R6::R6Class(
     print = function() {
       # Group map contains names, types, and groupings for all datasets, providing
       # the most succinct snapshot of the object.
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_header("Datasets and groupings:")
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintHeader("Datasets and groupings:")
       cat("\n")
       print(self$groupMap)
 

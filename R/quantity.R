@@ -92,14 +92,14 @@ Quantity <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(list("Quantity Type" = self$quantityType))
-      ospsuite.utils::osp_print_items(list("Path" = self$path))
-      ospsuite.utils::osp_print_items(list("Value" = self$getPrintValue()))
-      ospsuite.utils::osp_print_header("Formula", level = 2)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list("Quantity Type" = self$quantityType))
+      ospsuite.utils::ospPrintItems(list("Path" = self$path))
+      ospsuite.utils::ospPrintItems(list("Value" = self$getPrintValue()))
+      ospsuite.utils::ospPrintHeader("Formula", level = 2)
       self$formula$printFormula()
       if (!self$isConstant && !self$isDistributed) {
-        ospsuite.utils::osp_print_items(list("Value overrides formula" = self$isFixedValue))
+        ospsuite.utils::ospPrintItems(list("Value overrides formula" = self$isFixedValue))
       }
     },
     #' @description
@@ -120,7 +120,7 @@ Quantity <- R6::R6Class(
         what = I("ospsuite::Quantity$printQuantityValue()"),
         with = I("ospsuite::Quantity$getPrintValue()")
       )
-      ospsuite.utils::osp_print_items(list(caption = self$getPrintValue()))
+      ospsuite.utils::ospPrintItems(list(caption = self$getPrintValue()))
     },
 
     #' @description

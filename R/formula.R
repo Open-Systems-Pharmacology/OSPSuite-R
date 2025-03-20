@@ -54,35 +54,35 @@ Formula <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::ospPrintClass(self)
       self$printFormula()
     },
     #' @description
     #' Print the formula to the console without the name of the class
     printFormula = function() {
       if (self$isConstant) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "isConstant" = TRUE
         ))
       } else if (self$isExplicit) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "isExplicit" = TRUE,
           "formula" = self$formulaString
         ))
       } else if (self$isTable) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "isTable" = TRUE
         ))
       } else if (self$isDistributed) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "isDistributed" = TRUE
         ))
       } else if (self$isTableWithOffSet) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "isTableWithOffSet" = TRUE
         ))
       } else if (self$isTableWithXArgument) {
-        ospsuite.utils::osp_print_items(list(
+        ospsuite.utils::ospPrintItems(list(
           "isTableWithXArgument" = TRUE
         ))
       }

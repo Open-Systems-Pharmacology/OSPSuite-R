@@ -74,20 +74,20 @@ IndividualCharacteristics <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
         "Species" = self$species,
         "Population" = self$population,
         "Gender" = self$gender
       ), print_empty = TRUE)
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintItems(list(
         "Age" = self$age$getPrintValue(),
         "Gestational age" = self$gestationalAge$getPrintValue(),
         "Weight" = self$weight$getPrintValue(),
         "Height" = self$height$getPrintValue()
       ))
-      ospsuite.utils::osp_print_items(self$allMoleculeOntogenies, title = "Molecule Ontogenies")
-      ospsuite.utils::osp_print_items(list("Seed" = self$seed))
+      ospsuite.utils::ospPrintItems(self$allMoleculeOntogenies, title = "Molecule Ontogenies")
+      ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
     },
 
     #' @description

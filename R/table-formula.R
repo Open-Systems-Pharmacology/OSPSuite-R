@@ -70,7 +70,7 @@ TableFormula <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      ospsuite.utils::osp_print_class(self)
+      ospsuite.utils::ospPrintClass(self)
       self$printFormula()
     },
     #' @description
@@ -84,11 +84,11 @@ TableFormula <- R6::R6Class(
     #' Print the formula to the console
     printFormula = function() {
       super$printFormula()
-      ospsuite.utils::osp_print_items(list(
+      ospsuite.utils::ospPrintItems(list(
         "XDimension" = self$xDimension,
         "UseDerivedValues" = self$useDerivedValues
       ))
-      ospsuite.utils::osp_print_header("Table values")
+      ospsuite.utils::ospPrintHeader("Table values")
       for (point in self$allPoints) {
         print(point)
       }
