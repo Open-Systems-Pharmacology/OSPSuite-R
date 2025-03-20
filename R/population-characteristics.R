@@ -97,15 +97,13 @@ PopulationCharacteristics <- R6::R6Class(
         ),
         print_empty = TRUE
       )
+      ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
 
       if (!is.null(self$allMoleculeOntogenies)) {
         ospsuite.utils::ospPrintHeader("Molecule Ontogenies")
         for (moleculeOntogeny in self$allMoleculeOntogenies) {
           moleculeOntogeny$printMoleculeOntogeny()
         }
-      }
-      if (!is.null(self$seed)) {
-        ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
       }
       invisible(self)
     },

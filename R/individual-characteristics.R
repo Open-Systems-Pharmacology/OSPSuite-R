@@ -86,8 +86,14 @@ IndividualCharacteristics <- R6::R6Class(
         "Weight" = self$weight$getPrintValue(),
         "Height" = self$height$getPrintValue()
       ))
-      ospsuite.utils::ospPrintItems(self$allMoleculeOntogenies, title = "Molecule Ontogenies")
       ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
+
+      if (!is.null(self$allMoleculeOntogenies)) {
+        ospsuite.utils::ospPrintHeader("Molecule Ontogenies", level = 2)
+        for (ontogeny in self$allMoleculeOntogenies) {
+          ontogeny$printMoleculeOntogeny()
+        }
+      }
     },
 
     #' @description
