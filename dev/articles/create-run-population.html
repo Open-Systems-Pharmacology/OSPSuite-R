@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,8 +108,8 @@ results</a>).</p>
 <span><span class="va">popFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pop.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">myPopulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadPopulation.html">loadPopulation</a></span><span class="op">(</span>csvPopulationFile <span class="op">=</span> <span class="va">popFilePath</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Population: </span></span>
-<span><span class="co">#&gt;    Number of Individuals: 10</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Population&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of Individuals: 10</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -146,23 +146,23 @@ individuals</a>.</p>
 <span>  ageUnit             <span class="op">=</span> <span class="st">"year(s)"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">populationCharacteristics</span><span class="op">)</span></span>
-<span><span class="co">#&gt; PopulationCharacteristics: </span></span>
-<span><span class="co">#&gt;    Species: Human </span></span>
-<span><span class="co">#&gt;    Population: Asian_Tanaka_1996 </span></span>
-<span><span class="co">#&gt;    Number of individuals: 50 </span></span>
-<span><span class="co">#&gt;    Proportion of females: 50 </span></span>
-<span><span class="co">#&gt;    Age: [0.00 year(s)..80.00 year(s)] </span></span>
-<span><span class="co">#&gt;    Gestational age: ]-Inf..+Inf[ </span></span>
-<span><span class="co">#&gt;    Weight: [30.00 kg..98.00 kg] </span></span>
-<span><span class="co">#&gt;    Height: ]-Inf..+Inf[ </span></span>
-<span><span class="co">#&gt;    BMI: ]-Inf..+Inf[</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;PopulationCharacteristics&gt;</span></span></span>
+<span><span class="co">#&gt;   • Species: Human</span></span>
+<span><span class="co">#&gt;   • Population: Asian_Tanaka_1996</span></span>
+<span><span class="co">#&gt;   • Number of individuals: 50</span></span>
+<span><span class="co">#&gt;   • Proportion of females: 50</span></span>
+<span><span class="co">#&gt;   • Age: [0.00 year(s)..80.00 year(s)]</span></span>
+<span><span class="co">#&gt;   • Gestational age: ]-Inf..+Inf[</span></span>
+<span><span class="co">#&gt;   • Weight: [30.00 kg..98.00 kg]</span></span>
+<span><span class="co">#&gt;   • Height: ]-Inf..+Inf[</span></span>
+<span><span class="co">#&gt;   • BMI: ]-Inf..+Inf[</span></span>
 <span></span>
 <span><span class="co"># Create population from population characteristics</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createPopulation.html">createPopulation</a></span><span class="op">(</span>populationCharacteristics <span class="op">=</span> <span class="va">populationCharacteristics</span><span class="op">)</span></span>
 <span><span class="va">myPopulation</span> <span class="op">&lt;-</span> <span class="va">result</span><span class="op">$</span><span class="va">population</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">myPopulation</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Population: </span></span>
-<span><span class="co">#&gt;    Number of Individuals: 50</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Population&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of Individuals: 50</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="running-population-simulation">Running population simulation<a class="anchor" aria-label="anchor" href="#running-population-simulation"></a>
@@ -180,8 +180,10 @@ the <code><a href="../reference/runSimulation.html">runSimulation()</a></code> m
 <span><span class="co"># Run population simulation</span></span>
 <span><span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span>, population <span class="op">=</span> <span class="va">myPopulation</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SimulationResults: </span></span>
-<span><span class="co">#&gt;    Number of individuals: 50</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of individuals: 50</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
 <p>Population simulations are run in parallel on multi-core machines -
 one core simulates a subset of all individuals defined in the
 population. By default, the number of cores used equals the maximal
@@ -196,10 +198,10 @@ number of logical cores available minus one.</p>
 <span><span class="co"># Create a SimulationRunOptions object</span></span>
 <span><span class="va">simRunOptions</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimulationRunOptions.html">SimulationRunOptions</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simRunOptions</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SimulationRunOptions: </span></span>
-<span><span class="co">#&gt;    numberOfCores: 3 </span></span>
-<span><span class="co">#&gt;    checkForNegativeValues: TRUE </span></span>
-<span><span class="co">#&gt;    showProgress: FALSE</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationRunOptions&gt;</span></span></span>
+<span><span class="co">#&gt;   • numberOfCores: 3</span></span>
+<span><span class="co">#&gt;   • checkForNegativeValues: TRUE</span></span>
+<span><span class="co">#&gt;   • showProgress: FALSE</span></span>
 <span></span>
 <span><span class="co"># Change the maximal number of cores to use and show a progress bar during simulation</span></span>
 <span><span class="va">simRunOptions</span><span class="op">$</span><span class="va">numberOfCores</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
@@ -208,8 +210,10 @@ number of logical cores available minus one.</p>
 <span><span class="co"># Run population simulation with custom options</span></span>
 <span><span class="va">populationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span>, population <span class="op">=</span> <span class="va">myPopulation</span>, simulationRunOptions <span class="op">=</span> <span class="va">simRunOptions</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">populationResults</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SimulationResults: </span></span>
-<span><span class="co">#&gt;    Number of individuals: 50</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of individuals: 50</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
 <p>Simulated time-value pairs for a specific output from the
 <code>SimulationResults</code>-object returned by the
 <code>runSimulation</code> method can be accessed with the method

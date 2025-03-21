@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,96 +123,125 @@ documentation</a>.</p>
 <span><span class="va">allPkParams</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">allPKParametersFor</span><span class="op">(</span><span class="va">outputPath</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">allPkParams</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max </span></span>
-<span><span class="co">#&gt;    Dimension: Concentration (molar) </span></span>
-<span><span class="co">#&gt;    Unit: µmol/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: C_max</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Concentration (molar)</span></span>
+<span><span class="co">#&gt;   • Unit: µmol/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max_norm </span></span>
-<span><span class="co">#&gt;    Dimension: Concentration (mass) </span></span>
-<span><span class="co">#&gt;    Unit: kg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: C_max_norm</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Concentration (mass)</span></span>
+<span><span class="co">#&gt;   • Unit: kg/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): t_max </span></span>
-<span><span class="co">#&gt;    Dimension: Time </span></span>
-<span><span class="co">#&gt;    Unit: min </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: t_max</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Time</span></span>
+<span><span class="co">#&gt;   • Unit: min</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[4]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_tEnd </span></span>
-<span><span class="co">#&gt;    Dimension: Concentration (molar) </span></span>
-<span><span class="co">#&gt;    Unit: µmol/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: C_tEnd</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Concentration (molar)</span></span>
+<span><span class="co">#&gt;   • Unit: µmol/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[5]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_tEnd </span></span>
-<span><span class="co">#&gt;    Dimension: AUC (molar) </span></span>
-<span><span class="co">#&gt;    Unit: µmol*min/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: AUC_tEnd</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: AUC (molar)</span></span>
+<span><span class="co">#&gt;   • Unit: µmol*min/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[6]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_tEnd_norm </span></span>
-<span><span class="co">#&gt;    Dimension: AUC (mass) </span></span>
-<span><span class="co">#&gt;    Unit: kg*min/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: AUC_tEnd_norm</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: AUC (mass)</span></span>
+<span><span class="co">#&gt;   • Unit: kg*min/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[7]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_inf </span></span>
-<span><span class="co">#&gt;    Dimension: AUC (molar) </span></span>
-<span><span class="co">#&gt;    Unit: µmol*min/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: AUC_inf</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: AUC (molar)</span></span>
+<span><span class="co">#&gt;   • Unit: µmol*min/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[8]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): AUC_inf_norm </span></span>
-<span><span class="co">#&gt;    Dimension: AUC (mass) </span></span>
-<span><span class="co">#&gt;    Unit: kg*min/l </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: AUC_inf_norm</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: AUC (mass)</span></span>
+<span><span class="co">#&gt;   • Unit: kg*min/l</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[9]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): MRT </span></span>
-<span><span class="co">#&gt;    Dimension: Time </span></span>
-<span><span class="co">#&gt;    Unit: min </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: MRT</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Time</span></span>
+<span><span class="co">#&gt;   • Unit: min</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[10]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Thalf </span></span>
-<span><span class="co">#&gt;    Dimension: Time </span></span>
-<span><span class="co">#&gt;    Unit: min </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Thalf</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Time</span></span>
+<span><span class="co">#&gt;   • Unit: min</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[11]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): FractionAucLastToInf </span></span>
-<span><span class="co">#&gt;    Dimension: Fraction </span></span>
-<span><span class="co">#&gt;    Unit:  </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: FractionAucLastToInf</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Fraction</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[12]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): CL </span></span>
-<span><span class="co">#&gt;    Dimension: Flow per weight </span></span>
-<span><span class="co">#&gt;    Unit: l/min/kg </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: CL</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Flow per weight</span></span>
+<span><span class="co">#&gt;   • Unit: l/min/kg</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[13]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Vss </span></span>
-<span><span class="co">#&gt;    Dimension: Volume per body weight </span></span>
-<span><span class="co">#&gt;    Unit: l/kg </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Vss</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Volume per body weight</span></span>
+<span><span class="co">#&gt;   • Unit: l/kg</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[14]]</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): Vd </span></span>
-<span><span class="co">#&gt;    Dimension: Volume per body weight </span></span>
-<span><span class="co">#&gt;    Unit: l/kg</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Vd</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Volume per body weight</span></span>
+<span><span class="co">#&gt;   • Unit: l/kg</span></span>
 <span></span>
 <span><span class="co"># Get C_max parameter</span></span>
 <span><span class="va">c_max</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">pKParameterFor</span><span class="op">(</span>quantityPath <span class="op">=</span> <span class="va">outputPath</span>, pkParameter <span class="op">=</span> <span class="st">"C_max"</span><span class="op">)</span></span>
 <span><span class="va">c_max</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max </span></span>
-<span><span class="co">#&gt;    Dimension: Concentration (molar) </span></span>
-<span><span class="co">#&gt;    Unit: µmol/l</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: C_max</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Concentration (molar)</span></span>
+<span><span class="co">#&gt;   • Unit: µmol/l</span></span></code></pre></div>
 <p>The function <code>calculatePKAnalyses</code> returns an object of
 the class <code>SimulationPKAnalyses</code>, which allows to retrieve
 either a certain PK parameter for an output path, or all calculated PK
@@ -229,10 +258,12 @@ for a population simulation).</p>
 <span><span class="va">c_max</span> <span class="op">&lt;-</span> <span class="va">pkAnalysis</span><span class="op">$</span><span class="fu">pKParameterFor</span><span class="op">(</span>quantityPath <span class="op">=</span> <span class="va">outputPath</span>, pkParameter <span class="op">=</span> <span class="st">"C_max"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">c_max</span><span class="op">)</span></span>
-<span><span class="co">#&gt; QuantityPKParameter: </span></span>
-<span><span class="co">#&gt;    Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood): C_max </span></span>
-<span><span class="co">#&gt;    Dimension: Concentration (molar) </span></span>
-<span><span class="co">#&gt;    Unit: µmol/l</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;QuantityPKParameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: C_max</span></span>
+<span><span class="co">#&gt;   • QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Dimension: Concentration (molar)</span></span>
+<span><span class="co">#&gt;   • Unit: µmol/l</span></span>
 <span></span>
 <span><span class="va">c_max</span><span class="op">$</span><span class="va">name</span></span>
 <span><span class="co">#&gt; [1] "C_max"</span></span>

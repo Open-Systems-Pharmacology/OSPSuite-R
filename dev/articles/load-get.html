@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,28 +123,32 @@ the <code>Container</code>-class within the model structure the path is
 <code class="sourceCode R"><span><span class="co"># Get the molecule Aciclovir located in kidney intracellular space</span></span>
 <span><span class="va">moleculeInKid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getMolecule.html">getMolecule</a></span><span class="op">(</span><span class="st">"Organism|Kidney|Intracellular|Aciclovir"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">moleculeInKid</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Molecule: </span></span>
-<span><span class="co">#&gt;    Path: Organism|Kidney|Intracellular|Aciclovir </span></span>
-<span><span class="co">#&gt;    Initial Value: 0.00e+00 [µmol]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Molecule&gt;</span></span></span>
+<span><span class="co">#&gt;   • Path: Organism|Kidney|Intracellular|Aciclovir</span></span>
+<span><span class="co">#&gt;   • Scale Divisor: 1</span></span>
+<span><span class="co">#&gt;   • Initial Value: 0.00e+00 [µmol]</span></span>
 <span></span>
 <span><span class="co"># Get the container "Liver"</span></span>
 <span><span class="va">livContainer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getContainer.html">getContainer</a></span><span class="op">(</span><span class="st">"Organism|Liver"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">livContainer</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Container: </span></span>
-<span><span class="co">#&gt;    Container type: Organ </span></span>
-<span><span class="co">#&gt;    Path: Organism|Liver</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Container&gt;</span></span></span>
+<span><span class="co">#&gt;   • Container type: Organ</span></span>
+<span><span class="co">#&gt;   • Path: Organism|Liver</span></span>
 <span></span>
 <span><span class="co"># Get the parameter volume of the liver interstitial space</span></span>
 <span><span class="co"># Note that the path used is relative to the liver container</span></span>
 <span><span class="va">livParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Interstitial|Volume"</span>, <span class="va">livContainer</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">livParam</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|Liver|Interstitial|Volume </span></span>
-<span><span class="co">#&gt;    Value: 0.35 [l] </span></span>
-<span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: f_int*V </span></span>
-<span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|Liver|Interstitial|Volume</span></span>
+<span><span class="co">#&gt;   • Value: 0.35 [l]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isExplicit: TRUE</span></span>
+<span><span class="co">#&gt;   • formula: f_int*V</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: FALSE</span></span></code></pre></div>
 <p>The functions <code><a href="../reference/getAllContainersMatching.html">getAllContainersMatching()</a></code>,
 <code><a href="../reference/getAllMoleculesMatching.html">getAllMoleculesMatching()</a></code>, and
 <code><a href="../reference/getAllParametersMatching.html">getAllParametersMatching()</a></code> return a list of objects
@@ -186,14 +190,16 @@ entities from multiple paths:</p>
 <span><span class="op">)</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">molecules</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; Molecule: </span></span>
-<span><span class="co">#&gt;    Path: Organism|Liver|Periportal|Intracellular|Aciclovir </span></span>
-<span><span class="co">#&gt;    Initial Value: 0.00e+00 [µmol] </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Molecule&gt;</span></span></span>
+<span><span class="co">#&gt;   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir</span></span>
+<span><span class="co">#&gt;   • Scale Divisor: 1</span></span>
+<span><span class="co">#&gt;   • Initial Value: 0.00e+00 [µmol]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; Molecule: </span></span>
-<span><span class="co">#&gt;    Path: Organism|VenousBlood|Plasma|Aciclovir </span></span>
-<span><span class="co">#&gt;    Initial Value: 0.00e+00 [µmol]</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Molecule&gt;</span></span></span>
+<span><span class="co">#&gt;   • Path: Organism|VenousBlood|Plasma|Aciclovir</span></span>
+<span><span class="co">#&gt;   • Scale Divisor: 1</span></span>
+<span><span class="co">#&gt;   • Initial Value: 0.00e+00 [µmol]</span></span></code></pre></div>
 <p>The entities possess various properties that can be accessed through
 their objects. The most important properties for a container are:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -203,9 +209,9 @@ their objects. The most important properties for a container are:</p>
 <span></span>
 <span><span class="co"># Parent container</span></span>
 <span><span class="va">livContainer</span><span class="op">$</span><span class="va">parentContainer</span></span>
-<span><span class="co">#&gt; Container: </span></span>
-<span><span class="co">#&gt;    Container type: Organism </span></span>
-<span><span class="co">#&gt;    Path: Organism</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Container&gt;</span></span></span>
+<span><span class="co">#&gt;   • Container type: Organism</span></span>
+<span><span class="co">#&gt;   • Path: Organism</span></span></code></pre></div>
 <p>The most important properties for a molecule are:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Initial value of the molecule</span></span>
@@ -222,8 +228,8 @@ their objects. The most important properties for a container are:</p>
 <span></span>
 <span><span class="co"># Type of the formula. CONSTANT if the value is defined by a constant.</span></span>
 <span><span class="va">moleculeInKid</span><span class="op">$</span><span class="va">formula</span></span>
-<span><span class="co">#&gt; Formula: </span></span>
-<span><span class="co">#&gt;    isConstant: TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Formula&gt;</span></span></span>
+<span><span class="co">#&gt;   • isConstant: TRUE</span></span></code></pre></div>
 <p>The most important properties for a parameter are:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Initial value of the parameter</span></span>
@@ -244,9 +250,9 @@ their objects. The most important properties for a container are:</p>
 <span></span>
 <span><span class="co"># Type of the formula. CONSTANT if the value is defined by a constant.</span></span>
 <span><span class="va">livParam</span><span class="op">$</span><span class="va">formula</span></span>
-<span><span class="co">#&gt; Formula: </span></span>
-<span><span class="co">#&gt;    isFormula: TRUE </span></span>
-<span><span class="co">#&gt;    formula: f_int*V</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Formula&gt;</span></span></span>
+<span><span class="co">#&gt;   • isExplicit: TRUE</span></span>
+<span><span class="co">#&gt;   • formula: f_int*V</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="loading-simulation-tree">Loading simulation tree<a class="anchor" aria-label="anchor" href="#loading-simulation-tree"></a>

@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,11 +103,14 @@ certain dimension, like <em>Amount</em>, <em>Concentration</em>, or
 <span><span class="co"># Get the parameter volume of the liver.</span></span>
 <span><span class="va">livParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">livParam</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|Liver|Volume </span></span>
-<span><span class="co">#&gt;    Value: 2.17 [l] </span></span>
-<span><span class="co">#&gt;    isDistributed: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|Liver|Volume</span></span>
+<span><span class="co">#&gt;   • Value: 2.17 [l]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isDistributed: TRUE</span></span>
 <span></span>
 <span><span class="co"># Dimension of the parameter</span></span>
 <span><span class="va">livParam</span><span class="op">$</span><span class="va">dimension</span></span>
@@ -142,11 +145,14 @@ change the value of the quantity!</p>
 <code class="sourceCode R"><span><span class="co"># Get the BMI parameter</span></span>
 <span><span class="va">heightParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Height"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">heightParam</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|Height </span></span>
-<span><span class="co">#&gt;    Value: 17.00 [dm] </span></span>
-<span><span class="co">#&gt;    isConstant: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|Height</span></span>
+<span><span class="co">#&gt;   • Value: 17.00 [dm]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isConstant: TRUE</span></span>
 <span></span>
 <span><span class="co"># Print the base and the default display units</span></span>
 <span><span class="va">heightParam</span><span class="op">$</span><span class="va">unit</span></span>
@@ -164,11 +170,14 @@ change the value of the quantity!</p>
 <span></span>
 <span><span class="va">liverVolume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">liverVolume</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|Liver|Volume </span></span>
-<span><span class="co">#&gt;    Value: 2.17 [l] </span></span>
-<span><span class="co">#&gt;    isDistributed: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|Liver|Volume</span></span>
+<span><span class="co">#&gt;   • Value: 2.17 [l]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isDistributed: TRUE</span></span>
 <span></span>
 <span><span class="va">liverVolume</span><span class="op">$</span><span class="va">allUnits</span></span>
 <span><span class="co">#&gt; [1] "l"  "ml" "µl"</span></span>

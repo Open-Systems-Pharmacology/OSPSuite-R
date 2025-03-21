@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,18 +102,23 @@ to the simulation time.</p>
 <span><span class="co"># Get the parameter defined by a table.</span></span>
 <span><span class="va">tableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|TableParameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 0.00e+00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Value overrides formula: FALSE</span></span></code></pre></div>
 <p>Direct access to the value points is possible through the
 <code>TableFormula</code> of the table parameter. All x- or y-values
 stored in the table can be conveniently retrieved using the
@@ -122,18 +127,23 @@ stored in the table can be conveniently retrieved using the
 <code class="sourceCode R"><span><span class="co"># Get the parameter defined by a table</span></span>
 <span><span class="va">tableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|TableParameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tableParam</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 0.00e+00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: FALSE</span></span>
 <span></span>
 <span><span class="co"># Get all value points</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="va">allPoints</span></span>
@@ -207,34 +217,44 @@ parameter constant.</p>
 <code class="sourceCode R"><span><span class="co"># Get the parameter defined by a table.</span></span>
 <span><span class="va">tableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|TableParameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 0.00e+00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 0.00e+00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: FALSE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: FALSE</span></span>
 <span></span>
 <span><span class="co"># Set value to a constant. tableParam$isFixedValue is now TRUE</span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">tableParam</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span></code></pre></div>
 <p>To change the values of the table, a set of methods of the
 <code>TableFormula</code> is available. The method
 <code>addPoints()</code> adds a set of x-y values to the existing table.
@@ -243,28 +263,39 @@ an error is thrown:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tableParam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|TableParameter"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="co"># Add new points</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">addPoints</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
@@ -272,8 +303,7 @@ an error is thrown:</p>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="co"># Try to add points with existing x-values</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">addPoints</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
@@ -290,12 +320,18 @@ an error is thrown:</p>
 in the table and has the provided y.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 0, y= 0, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
@@ -303,108 +339,137 @@ in the table and has the provided y.</p>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="co"># Remove the point (0, 0)</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">removePoint</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 3, y= 7, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="co"># Try to remove the point (1, 1). Note that the value for x = 1 is x = 5 in the original table,</span></span>
 <span><span class="co"># and no point is removed.</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">removePoint</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 3, y= 7, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="co"># Try to remove a non-existing point (0, 1). No point is removed.</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">removePoint</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 3, y= 7, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span></code></pre></div>
 <p>The <code>clearPoints()</code> method removes all points from the
 table, while <code>setPoints()</code> method is a combination of
 clearing the table and adding new points:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 3, y= 7, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 60, y= 1, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 120, y= 2, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 180, y= 3, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">setPoints</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;   x= 1, y= 5, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 2, y= 6, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 3, y= 7, restartSolver= FALSE</span></span>
 <span><span class="co">#&gt;   x= 4, y= 8, restartSolver= FALSE</span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span>
 <span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">clearPoints</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">tableParam</span></span>
-<span><span class="co">#&gt; Parameter: </span></span>
-<span><span class="co">#&gt;    Path: Organism|TableParameter </span></span>
-<span><span class="co">#&gt;    Value: 10.00 </span></span>
-<span><span class="co">#&gt;    isTable: TRUE </span></span>
-<span><span class="co">#&gt;    XDimension: Time </span></span>
-<span><span class="co">#&gt;    UseDerivedValues: FALSE </span></span>
-<span><span class="co">#&gt;    Value overrides formula: TRUE </span></span>
-<span><span class="co">#&gt;    isStateVariable: FALSE</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Organism|TableParameter</span></span>
+<span><span class="co">#&gt;   • Value: 10.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isTable: TRUE</span></span>
+<span><span class="co">#&gt;   • XDimension: Time</span></span>
+<span><span class="co">#&gt;   • UseDerivedValues: FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Table values</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt;   • Value overrides formula: TRUE</span></span></code></pre></div>
 </div>
   </main>
 </div>

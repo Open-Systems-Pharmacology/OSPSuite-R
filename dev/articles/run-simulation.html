@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,8 +107,10 @@ simulation and accessing entities</a>), it can be run using
 <span><span class="co"># Extract `SimulationResults` by simulation id</span></span>
 <span><span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">sim</span><span class="op">$</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simulationResults</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SimulationResults: </span></span>
-<span><span class="co">#&gt;    Number of individuals: 1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of individuals: 1</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
 <p>The advantage of storing the results in a object is the option to
 keep different results of the same simulation produced with different
 settings (e.g., model parameters).</p>
@@ -176,8 +178,10 @@ methods <code>exportResultsToCSV</code> and
 <span><span class="co"># Load from csv</span></span>
 <span><span class="va">resultsLoaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importResultsFromCSV.html">importResultsFromCSV</a></span><span class="op">(</span>filePaths <span class="op">=</span> <span class="va">csvResultsPath</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsLoaded</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SimulationResults: </span></span>
-<span><span class="co">#&gt;    Number of individuals: 1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of individuals: 1</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="running-multiple-individual-simulations-and-retrieving-the-results">Running multiple individual simulations and retrieving the
@@ -213,11 +217,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "wS0E8Pf0_0iz4dlrh9gazQ"</span></span>
+<span><span class="co">#&gt; [1] "Mf32l-PjvEKyPfyQlAR5Zw"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "wS0E8Pf0_0iz4dlrh9gazQ"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Mf32l-PjvEKyPfyQlAR5Zw"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -272,22 +276,25 @@ are stored) are stored as the property <code>$outputSchema</code> of a
 <code>Simulation</code> object.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
-<span><span class="co">#&gt; OutputSchema: </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: Simulation interval high resolution </span></span>
-<span><span class="co">#&gt;    Start time: 0.00e+00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 15.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 1.00 [pts/min] </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: Simulation Interval 1 </span></span>
-<span><span class="co">#&gt;    Start time: 15.00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 1440.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 0.33 [pts/min] </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: Simulation Interval 2 </span></span>
-<span><span class="co">#&gt;    Start time: 120.00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 1440.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 0.07 [pts/min]</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Simulation interval high resolution</span></span>
+<span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 15.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 1.00 [pts/min]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
+<span><span class="co">#&gt;   • Start time: 15.00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 0.33 [pts/min]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
+<span><span class="co">#&gt;   • Start time: 120.00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 0.07 [pts/min]</span></span></code></pre></div>
 <p>To change the simulation interval, the user can use one of the
 functions <code><a href="../reference/clearOutputIntervals.html">clearOutputIntervals()</a></code>,
 <code><a href="../reference/addOutputInterval.html">addOutputInterval()</a></code>, and
@@ -314,37 +321,46 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <span><span class="co"># Add an interval</span></span>
 <span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">20</span>, resolution <span class="op">=</span> <span class="fl">60</span>, intervalName <span class="op">=</span> <span class="st">"highRes"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
-<span><span class="co">#&gt; OutputSchema: </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: highRes </span></span>
-<span><span class="co">#&gt;    Start time: 0.00e+00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 20.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 60.00 [pts/min]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: highRes</span></span>
+<span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 20.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 60.00 [pts/min]</span></span>
 <span></span>
 <span><span class="co"># Add a second interval</span></span>
 <span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">30</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span>, intervalName <span class="op">=</span> <span class="st">"lowRes"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
-<span><span class="co">#&gt; OutputSchema: </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: highRes </span></span>
-<span><span class="co">#&gt;    Start time: 0.00e+00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 20.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 60.00 [pts/min] </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: lowRes </span></span>
-<span><span class="co">#&gt;    Start time: 30.00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 2000.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 4.00 [pts/min]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: highRes</span></span>
+<span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 20.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 60.00 [pts/min]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: lowRes</span></span>
+<span><span class="co">#&gt;   • Start time: 30.00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 2000.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 4.00 [pts/min]</span></span>
 <span></span>
 <span><span class="co"># Replace the existing interval(s) with a new one</span></span>
 <span><span class="fu"><a href="../reference/setOutputInterval.html">setOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
-<span><span class="co">#&gt; OutputSchema: </span></span>
-<span><span class="co">#&gt; Interval: </span></span>
-<span><span class="co">#&gt;    Name: Output interval </span></span>
-<span><span class="co">#&gt;    Start time: 0.00e+00 [min] </span></span>
-<span><span class="co">#&gt;    End time: 2000.00 [min] </span></span>
-<span><span class="co">#&gt;    Resolution: 4.00 [pts/min]</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Output interval</span></span>
+<span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
+<span><span class="co">#&gt;   • End time: 2000.00 [min]</span></span>
+<span><span class="co">#&gt;   • Resolution: 4.00 [pts/min]</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

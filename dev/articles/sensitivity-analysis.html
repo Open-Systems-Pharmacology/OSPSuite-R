@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,18 +125,18 @@ paths for a simulation can be accessed with the method
 <span><span class="co"># Create a default `SensitivityAnalysis` for the simulation</span></span>
 <span><span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SensitivityAnalysis: </span></span>
-<span><span class="co">#&gt;    Number of steps: 2 </span></span>
-<span><span class="co">#&gt;    Variation range: 0.1 </span></span>
-<span><span class="co">#&gt;    Number of parameters to vary: Will be estimated at run time</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysis&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of steps: 2</span></span>
+<span><span class="co">#&gt;   • Variation range: 0.1</span></span>
+<span><span class="co">#&gt;   • Number of parameters to vary: Will be estimated at run time</span></span>
 <span></span>
 <span><span class="co"># Create a `SensitivityAnalysis` with specified parameters</span></span>
 <span><span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>, <span class="st">"Organism|Volume"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SensitivityAnalysis: </span></span>
-<span><span class="co">#&gt;    Number of steps: 2 </span></span>
-<span><span class="co">#&gt;    Variation range: 0.1 </span></span>
-<span><span class="co">#&gt;    Number of parameters to vary: 2</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysis&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of steps: 2</span></span>
+<span><span class="co">#&gt;   • Variation range: 0.1</span></span>
+<span><span class="co">#&gt;   • Number of parameters to vary: 2</span></span>
 <span></span>
 <span><span class="co"># Show which parameters will be varied</span></span>
 <span><span class="va">sa</span><span class="op">$</span><span class="va">parameterPaths</span></span>
@@ -183,9 +183,22 @@ model outputs.</p>
 <span><span class="co"># Run the sensitivity analysis</span></span>
 <span><span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SensitivityAnalysisResults: </span></span>
-<span><span class="co">#&gt;    Number of calculated sensitivities: 72 </span></span>
-<span><span class="co">#&gt;    Available PK parameters: C_max                t_max                C_tEnd               AUC_tEnd             Thalf                AUC_inf              MRT                  FractionAucLastToInf</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysisResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of calculated sensitivities: 72</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Available PK Parameters</span>:</span></span>
+<span><span class="co">#&gt;   • C_max</span></span>
+<span><span class="co">#&gt;   • t_max</span></span>
+<span><span class="co">#&gt;   • C_tEnd</span></span>
+<span><span class="co">#&gt;   • AUC_tEnd</span></span>
+<span><span class="co">#&gt;   • Thalf</span></span>
+<span><span class="co">#&gt;   • AUC_inf</span></span>
+<span><span class="co">#&gt;   • MRT</span></span>
+<span><span class="co">#&gt;   • FractionAucLastToInf</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For the following outputs</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|B</span></span>
+<span><span class="co">#&gt;   • Organism|A</span></span>
+<span><span class="co">#&gt;   • Organism|Liver|A</span></span>
+<span><span class="co">#&gt;   • Organism|Liver|B</span></span></code></pre></div>
 <p>The method <code>allPKParameterSensitivitiesFor()</code> returns a
 list of <code>PKParameterSensitivity</code> objects.
 <code>PKParameterSensitivity</code> describes the sensitivity (field
@@ -219,20 +232,34 @@ value is used.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span></span>
-<span><span class="co">#&gt; SensitivityAnalysisResults: </span></span>
-<span><span class="co">#&gt;    Number of calculated sensitivities: 11 </span></span>
-<span><span class="co">#&gt;    Available PK parameters: C_max                t_max                C_tEnd               AUC_tEnd             AUC_inf              MRT                  Thalf                FractionAucLastToInf CL                   Vss                  Vd</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysisResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of calculated sensitivities: 11</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Available PK Parameters</span>:</span></span>
+<span><span class="co">#&gt;   • C_max</span></span>
+<span><span class="co">#&gt;   • t_max</span></span>
+<span><span class="co">#&gt;   • C_tEnd</span></span>
+<span><span class="co">#&gt;   • AUC_tEnd</span></span>
+<span><span class="co">#&gt;   • AUC_inf</span></span>
+<span><span class="co">#&gt;   • MRT</span></span>
+<span><span class="co">#&gt;   • Thalf</span></span>
+<span><span class="co">#&gt;   • FractionAucLastToInf</span></span>
+<span><span class="co">#&gt;   • CL</span></span>
+<span><span class="co">#&gt;   • Vss</span></span>
+<span><span class="co">#&gt;   • Vd</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For the following outputs</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
 <span></span>
 <span><span class="co"># Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8</span></span>
 <span><span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span><span class="op">$</span><span class="va">allOutputs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">path</span></span>
 <span><span class="va">sensitivities</span> <span class="op">&lt;-</span> <span class="va">saResult</span><span class="op">$</span><span class="fu">allPKParameterSensitivitiesFor</span><span class="op">(</span>pkParameterName <span class="op">=</span> <span class="st">"AUC_inf"</span>, outputPath <span class="op">=</span> <span class="va">outputPath</span>, totalSensitivityThreshold <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sensitivities</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; PKParameterSensitivity: </span></span>
-<span><span class="co">#&gt;    Parameter name: Aciclovir-Lipophilicity </span></span>
-<span><span class="co">#&gt;    PK-Parameter: AUC_inf </span></span>
-<span><span class="co">#&gt;    Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) </span></span>
-<span><span class="co">#&gt;    Value: 0.004708528</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;PKParameterSensitivity&gt;</span></span></span>
+<span><span class="co">#&gt;   • Parameter name: Aciclovir-Lipophilicity</span></span>
+<span><span class="co">#&gt;   • PK-Parameter: AUC_inf</span></span>
+<span><span class="co">#&gt;   • Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
+<span><span class="co">#&gt;   Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Value: 0.00470852808265833</span></span></code></pre></div>
 <p>The value <code>-1</code> for the sensitivity of “AUC_inf” of the
 output
 <code>Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</code>

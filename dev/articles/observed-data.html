@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,18 +127,17 @@ by the <code>$setValues()</code> method:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSet</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataSet: </span></span>
-<span><span class="co">#&gt;    Name: My data set </span></span>
-<span><span class="co">#&gt;    X dimension: Time </span></span>
-<span><span class="co">#&gt;    X unit: h </span></span>
-<span><span class="co">#&gt;    Y dimension: Concentration (mass) </span></span>
-<span><span class="co">#&gt;    Y unit: mg/l </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: mg/l </span></span>
-<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
-<span><span class="co">#&gt;    LLOQ: NULL </span></span>
-<span><span class="co">#&gt;    Meta data: NULL </span></span>
-<span><span class="co">#&gt; list()</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: My data set</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: h</span></span>
+<span><span class="co">#&gt;   • Y dimension: Concentration (mass)</span></span>
+<span><span class="co">#&gt;   • Y unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Molecular weight: NULL</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span></code></pre></div>
 <p>The user can change the dimensions and units of the values. After
 changing the dimension, the unit is automatically set to the <em>base
 unit</em> of the dimension. Changing the dimension or unit <em>does
@@ -162,36 +161,34 @@ not</em> transform the values.</p>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">yDimension</span> <span class="op">&lt;-</span> <span class="va">ospDimensions</span><span class="op">$</span><span class="va">Amount</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSet</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataSet: </span></span>
-<span><span class="co">#&gt;    Name: My data set </span></span>
-<span><span class="co">#&gt;    X dimension: Time </span></span>
-<span><span class="co">#&gt;    X unit: min </span></span>
-<span><span class="co">#&gt;    Y dimension: Amount </span></span>
-<span><span class="co">#&gt;    Y unit: µmol </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: µmol </span></span>
-<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
-<span><span class="co">#&gt;    LLOQ: NULL </span></span>
-<span><span class="co">#&gt;    Meta data: NULL </span></span>
-<span><span class="co">#&gt; list()</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: My data set</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: min</span></span>
+<span><span class="co">#&gt;   • Y dimension: Amount</span></span>
+<span><span class="co">#&gt;   • Y unit: µmol</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: µmol</span></span>
+<span><span class="co">#&gt;   • Molecular weight: NULL</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span>
 <span></span>
 <span><span class="co"># Change the units of y values and error values - they are now different!</span></span>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">yUnit</span> <span class="op">&lt;-</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Amount</span><span class="op">$</span><span class="va">mol</span></span>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">yErrorUnit</span> <span class="op">&lt;-</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Amount</span><span class="op">$</span><span class="va">pmol</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSet</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataSet: </span></span>
-<span><span class="co">#&gt;    Name: My data set </span></span>
-<span><span class="co">#&gt;    X dimension: Time </span></span>
-<span><span class="co">#&gt;    X unit: min </span></span>
-<span><span class="co">#&gt;    Y dimension: Amount </span></span>
-<span><span class="co">#&gt;    Y unit: mol </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: pmol </span></span>
-<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
-<span><span class="co">#&gt;    LLOQ: NULL </span></span>
-<span><span class="co">#&gt;    Meta data: NULL </span></span>
-<span><span class="co">#&gt; list()</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: My data set</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: min</span></span>
+<span><span class="co">#&gt;   • Y dimension: Amount</span></span>
+<span><span class="co">#&gt;   • Y unit: mol</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: pmol</span></span>
+<span><span class="co">#&gt;   • Molecular weight: NULL</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span></code></pre></div>
 <p>Two types of error values are supported - arithmetic error (default)
 and geometric error, the latter being given in fraction. The user can
 change the error type:</p>
@@ -211,18 +208,17 @@ change the error type:</p>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">yErrorType</span> <span class="op">&lt;-</span> <span class="va">DataErrorType</span><span class="op">$</span><span class="va">ArithmeticStdDev</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSet</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataSet: </span></span>
-<span><span class="co">#&gt;    Name: My data set </span></span>
-<span><span class="co">#&gt;    X dimension: Time </span></span>
-<span><span class="co">#&gt;    X unit: min </span></span>
-<span><span class="co">#&gt;    Y dimension: Amount </span></span>
-<span><span class="co">#&gt;    Y unit: mol </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: mol </span></span>
-<span><span class="co">#&gt;    Molecular weight: NULL </span></span>
-<span><span class="co">#&gt;    LLOQ: NULL </span></span>
-<span><span class="co">#&gt;    Meta data: NULL </span></span>
-<span><span class="co">#&gt; list()</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: My data set</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: min</span></span>
+<span><span class="co">#&gt;   • Y dimension: Amount</span></span>
+<span><span class="co">#&gt;   • Y unit: mol</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: mol</span></span>
+<span><span class="co">#&gt;   • Molecular weight: NULL</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span></code></pre></div>
 <p>A <code>DataSet</code> can store any kind of text meta data as
 name-values pairs and can be added by the <code>addMetaData()</code>
 method:</p>
@@ -292,52 +288,31 @@ MoBi.</p>
 <span><span class="va">dataSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataSetFromPKML.html">loadDataSetFromPKML</a></span><span class="op">(</span>filePath <span class="op">=</span> <span class="va">filePath</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSet</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataSet: </span></span>
-<span><span class="co">#&gt;    Name: Vergin 1995.Iv </span></span>
-<span><span class="co">#&gt;    X dimension: Time </span></span>
-<span><span class="co">#&gt;    X unit: h </span></span>
-<span><span class="co">#&gt;    Y dimension: Concentration (mass) </span></span>
-<span><span class="co">#&gt;    Y unit: mg/l </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: mg/l </span></span>
-<span><span class="co">#&gt;    Molecular weight: 225.21 </span></span>
-<span><span class="co">#&gt;    LLOQ: NULL </span></span>
-<span><span class="co">#&gt;    Meta data: NULL </span></span>
-<span><span class="co">#&gt; $Source</span></span>
-<span><span class="co">#&gt; [1] "X:\\Orga\\BTS-TD\\ET\\TP CSB\\Projects\\Internal Projects\\MagenDarm\\TestSubstanzen\\Acyclovir\\Rohdaten_Acyclovir.xls.Vergin 1995 250 mg iv"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $File</span></span>
-<span><span class="co">#&gt; [1] "Rohdaten_Acyclovir"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Sheet</span></span>
-<span><span class="co">#&gt; [1] "Vergin 1995 250 mg iv"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Molecule</span></span>
-<span><span class="co">#&gt; [1] "Aciclovir"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Species</span></span>
-<span><span class="co">#&gt; [1] "Human"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Organ</span></span>
-<span><span class="co">#&gt; [1] "Peripheral Venous Blood"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Compartment</span></span>
-<span><span class="co">#&gt; [1] "Plasma"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`Study Id`</span></span>
-<span><span class="co">#&gt; [1] "Vergin 1995"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Gender</span></span>
-<span><span class="co">#&gt; [1] "Undefined"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Dose</span></span>
-<span><span class="co">#&gt; [1] "250 mg"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $Route</span></span>
-<span><span class="co">#&gt; [1] "IV"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`Patient Id`</span></span>
-<span><span class="co">#&gt; [1] "Iv"</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Vergin 1995.Iv</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: h</span></span>
+<span><span class="co">#&gt;   • Y dimension: Concentration (mass)</span></span>
+<span><span class="co">#&gt;   • Y unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Molecular weight: 225.21</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span>
+<span><span class="co">#&gt;   • Source: X:\Orga\BTS-TD\ET\TP CSB\Projects\Internal</span></span>
+<span><span class="co">#&gt;   Projects\MagenDarm\TestSubstanzen\Acyclovir\Rohdaten_Acyclovir.xls.Vergin</span></span>
+<span><span class="co">#&gt;   1995 250 mg iv</span></span>
+<span><span class="co">#&gt;   • File: Rohdaten_Acyclovir</span></span>
+<span><span class="co">#&gt;   • Sheet: Vergin 1995 250 mg iv</span></span>
+<span><span class="co">#&gt;   • Molecule: Aciclovir</span></span>
+<span><span class="co">#&gt;   • Species: Human</span></span>
+<span><span class="co">#&gt;   • Organ: Peripheral Venous Blood</span></span>
+<span><span class="co">#&gt;   • Compartment: Plasma</span></span>
+<span><span class="co">#&gt;   • Study Id: Vergin 1995</span></span>
+<span><span class="co">#&gt;   • Gender: Undefined</span></span>
+<span><span class="co">#&gt;   • Dose: 250 mg</span></span>
+<span><span class="co">#&gt;   • Route: IV</span></span>
+<span><span class="co">#&gt;   • Patient Id: Iv</span></span></code></pre></div>
 <p>Another (and probably the most important) way to create
 <code>DataSet</code> objects is by importing data from excel files. The
 function <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> utilizes the data import
@@ -358,19 +333,22 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration</a></span><span class="op">(</span>configurationFilePath <span class="op">=</span> <span class="va">filePath</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">importerConfiguration</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataImporterConfiguration: </span></span>
-<span><span class="co">#&gt;    Time column: Time [h] </span></span>
-<span><span class="co">#&gt;    Time unit: h </span></span>
-<span><span class="co">#&gt;    Time unit from column: FALSE </span></span>
-<span><span class="co">#&gt;    Measurement column: Concentration (mass)[ng/ml] </span></span>
-<span><span class="co">#&gt;    Measurement unit: ng/ml </span></span>
-<span><span class="co">#&gt;    Measurement unit from column: FALSE </span></span>
-<span><span class="co">#&gt;    Error column: Error [ng/ml] </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: ng/ml </span></span>
-<span><span class="co">#&gt;    Grouping columns: Study Id    Organ       Compartment Species     Gender      Molecule    Route       MW          Patient Id  Dose [unit] </span></span>
-<span><span class="co">#&gt;    Sheets: </span></span>
-<span><span class="co">#&gt;    Naming pattern: {Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataImporterConfiguration&gt;</span></span></span>
+<span><span class="co">#&gt;   • Time column: Time [h]</span></span>
+<span><span class="co">#&gt;   • Time unit: h</span></span>
+<span><span class="co">#&gt;   • Time unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • Measurement column: Concentration (mass)[ng/ml]</span></span>
+<span><span class="co">#&gt;   • Measurement unit: ng/ml</span></span>
+<span><span class="co">#&gt;   • Measurement unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
+<span><span class="co">#&gt;   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,</span></span>
+<span><span class="co">#&gt;   Route, MW, Patient Id, Dose [unit]</span></span>
+<span><span class="co">#&gt;   • Sheets: &lt;empty vector&gt;</span></span>
+<span><span class="co">#&gt;   • Naming pattern: {Source}.{Sheet}.{Study</span></span>
+<span><span class="co">#&gt;   Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular</span></span>
+<span><span class="co">#&gt;   Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
 <p>A data importer configuration can also be created from scratch and
 has to be manually populated by the user. Alternatively, the user can
 let the software “guess” the configuration for a given excel sheet:</p>
@@ -386,19 +364,22 @@ let the software “guess” the configuration for a given excel sheet:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">importerConfiguration</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataImporterConfiguration: </span></span>
-<span><span class="co">#&gt;    Time column: Time [h] </span></span>
-<span><span class="co">#&gt;    Time unit: h </span></span>
-<span><span class="co">#&gt;    Time unit from column: FALSE </span></span>
-<span><span class="co">#&gt;    Measurement column: Concentration (mass)[ng/ml] </span></span>
-<span><span class="co">#&gt;    Measurement unit: ng/ml </span></span>
-<span><span class="co">#&gt;    Measurement unit from column: FALSE </span></span>
-<span><span class="co">#&gt;    Error column: Error [ng/ml] </span></span>
-<span><span class="co">#&gt;    Error type: ArithmeticStdDev </span></span>
-<span><span class="co">#&gt;    Error unit: ng/ml </span></span>
-<span><span class="co">#&gt;    Grouping columns: Study Id    Organ       Compartment Species     Gender      Molecule    Route       MW          Patient Id  Dose [unit] </span></span>
-<span><span class="co">#&gt;    Sheets: </span></span>
-<span><span class="co">#&gt;    Naming pattern: {Source}.{Sheet}.{Study Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataImporterConfiguration&gt;</span></span></span>
+<span><span class="co">#&gt;   • Time column: Time [h]</span></span>
+<span><span class="co">#&gt;   • Time unit: h</span></span>
+<span><span class="co">#&gt;   • Time unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • Measurement column: Concentration (mass)[ng/ml]</span></span>
+<span><span class="co">#&gt;   • Measurement unit: ng/ml</span></span>
+<span><span class="co">#&gt;   • Measurement unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
+<span><span class="co">#&gt;   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,</span></span>
+<span><span class="co">#&gt;   Route, MW, Patient Id, Dose [unit]</span></span>
+<span><span class="co">#&gt;   • Sheets: &lt;empty vector&gt;</span></span>
+<span><span class="co">#&gt;   • Naming pattern: {Source}.{Sheet}.{Study</span></span>
+<span><span class="co">#&gt;   Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular</span></span>
+<span><span class="co">#&gt;   Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
 <p>It is important to manually check the created configuration, as the
 automated configuration recognition cannot cover all possible cases.</p>
 <p>If only specific sheets from the excel file should be imported, they

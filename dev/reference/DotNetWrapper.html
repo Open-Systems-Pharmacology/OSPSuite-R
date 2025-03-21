@@ -9,7 +9,7 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,8 +76,9 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-DotNetWrapper-new"><code>DotNetWrapper$new()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="../../rSharp/html/NetObject.html#method-NetObject-call"><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="finalize"><a href="../../rSharp/html/NetObject.html#method-NetObject-finalize"><code>rSharp::NetObject$finalize()</code></a></span></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="../../rSharp/html/NetObject.html#method-NetObject-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="../../rSharp/html/NetObject.html#method-NetObject-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="../../rSharp/html/NetObject.html#method-NetObject-call"><code>rSharp::NetObject$call()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="../../rSharp/html/NetObject.html#method-NetObject-get"><code>rSharp::NetObject$get()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="../../rSharp/html/NetObject.html#method-NetObject-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
@@ -119,15 +120,94 @@ Wrapper class for .NET objects"><meta name="robots" content="noindex"></head><bo
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># looking at a reference to `.NET` simulation object</span></span></span>
 <span class="r-in"><span><span class="va">sim</span><span class="op">$</span><span class="va">pointer</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;pointer: 0x55c9d1974740&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;pointer: 0x55a495ed00f0&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create a new instance of `DotNetWrapper` class using this reference</span></span></span>
 <span class="r-in"><span><span class="va">DotNetWrapper</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> DotNetWrapper: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Type: OSPSuite.R.Domain.Simulation </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Methods:: AcceptVisitor             add_Changed               add_PropertyChanged       AddAnalysis               All                       Equals                    get_Analyses              get_BodyWeight            get_BuildConfiguration    get_Charts                get_ComesFromPKSim        get_CompoundNames         get_Configuration         get_CoreSimulation        get_Creation              get_Description           get_EndTime               get_HasChanged            get_HasUpToDateResults    get_Icon                  get_Id                    get_IsLoaded              get_Model                 get_Name                  get_OutputMappings        get_OutputSelections      get_Reactions             get_ResultsDataRepository get_Settings              GetHashCode               GetType                   MolWeightFor              MolWeightFor              remove_Changed            remove_PropertyChanged    RemoveAnalysis            RemoveOutputMappings      RemoveUsedObservedData    set_Configuration         set_Creation              set_Description           set_HasChanged            set_Icon                  set_Id                    set_IsLoaded              set_Model                 set_Name                  set_OutputMappings        set_ResultsDataRepository ToString                  TotalDrugMassFor          UpdatePropertiesFrom      UsesObservedData          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Fields: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Properties: Analyses              BodyWeight            BuildConfiguration    Charts                ComesFromPKSim        CompoundNames         Configuration         CoreSimulation        Creation              Description           EndTime               HasChanged            HasUpToDateResults    Icon                  Id                    IsLoaded              Model                 Name                  OutputMappings        OutputSelections      Reactions             ResultsDataRepository Settings              </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="color: #0000BB; font-weight: bold;">&lt;DotNetWrapper&gt;</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Type: <span style="color: #00BB00;">OSPSuite.R.Domain.Simulation</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Available Methods </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `AcceptVisitor()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `add_Changed()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `add_PropertyChanged()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `AddAnalysis()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `All()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `Equals()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Analyses()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_BodyWeight()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_BuildConfiguration()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Charts()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_ComesFromPKSim()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_CompoundNames()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Configuration()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_CoreSimulation()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Creation()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Description()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_EndTime()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_HasChanged()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_HasUpToDateResults()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Icon()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Id()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_IsLoaded()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Model()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Name()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_OutputMappings()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_OutputSelections()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Reactions()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_ResultsDataRepository()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Settings()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `GetHashCode()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `GetType()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `MolWeightFor()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `MolWeightFor()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `remove_Changed()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `remove_PropertyChanged()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `RemoveAnalysis()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `RemoveOutputMappings()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `RemoveUsedObservedData()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Configuration()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Creation()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Description()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_HasChanged()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Icon()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Id()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_IsLoaded()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Model()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Name()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_OutputMappings()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_ResultsDataRepository()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `ToString()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `TotalDrugMassFor()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `UpdatePropertiesFrom()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `UsesObservedData()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Available Properties </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Analyses</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">BodyWeight</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">BuildConfiguration</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Charts</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">ComesFromPKSim</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">CompoundNames</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Configuration</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">CoreSimulation</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Creation</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Description</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">EndTime</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">HasChanged</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">HasUpToDateResults</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Icon</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Id</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">IsLoaded</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Model</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Name</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">OutputMappings</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">OutputSelections</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Reactions</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">ResultsDataRepository</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Settings</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
