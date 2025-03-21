@@ -8,9 +8,6 @@
 Use when retrieving individual values using the createIndividualAlgorithm. This class is a simple pair (MoleculeName, Ontogeny)
 allowing the user to retrieve potential ontogeny values.
 }
-\section{Super class}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{MoleculeOntogeny}
-}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

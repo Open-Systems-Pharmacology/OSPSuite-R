@@ -21,15 +21,15 @@ test_that("it does not duplicate entries", {
   expect_identical(outputSchema$timePoints, c(10, 20, 30))
 })
 
+test_that("It can print output schema", {
+  expect_snapshot(outputSchema$print())
+})
+
 test_that("it can remove interval references", {
   count <- length(outputSchema$intervals)
   int <- outputSchema$intervals[[1]]
   outputSchema$removeInterval(int)
   expect_equal(length(outputSchema$intervals), count - 1)
-})
-
-test_that("It can print output schema", {
-  expect_error(capture.output(outputSchema$print()), NA)
 })
 
 test_that("it correctly returns the end time", {

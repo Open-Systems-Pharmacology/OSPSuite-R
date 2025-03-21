@@ -128,10 +128,12 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Number of calculated sensitivities", self$count)
-      private$.printLine("Available PK parameters", self$allPKParameterNames)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Number of calculated sensitivities" = self$count
+      ))
+      ospsuite.utils::ospPrintItems(self$allPKParameterNames, title = "Available PK Parameters")
+      ospsuite.utils::ospPrintItems(self$allQuantityPaths, title = "For the following outputs")
     }
   )
 )

@@ -27,25 +27,25 @@ PopulationCharacteristics <- R6::R6Class(
     },
     #' @field age Age range of the population as in instance of a `ParameterRange` (optional)
     age = function(value) {
-      private$parameterRangeProperty("Age", value)
+      private$.parameterRangeProperty("Age", value)
     },
     #' @field gestationalAge Gestational Age range of the population as in instance of a `ParameterRange` (optional)
     gestationalAge = function(value) {
-      private$parameterRangeProperty("GestationalAge", value)
+      private$.parameterRangeProperty("GestationalAge", value)
     },
     #' @field weight Weight range of the population as in instance of a `ParameterRange` (optional)
     weight = function(value) {
-      private$parameterRangeProperty("Weight", value)
+      private$.parameterRangeProperty("Weight", value)
     },
     #' @field height Height range of the population as in instance of a `ParameterRange` (optional)
     height = function(value) {
-      private$parameterRangeProperty("Height", value)
+      private$.parameterRangeProperty("Height", value)
     },
     #' @field BMI BMI range of the population as in instance of a `ParameterRange` (optional)
     BMI = function(value) {
-      private$parameterRangeProperty("BMI", value)
+      private$.parameterRangeProperty("BMI", value)
     },
-    #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
+    #' @field allMoleculeOntogenies All molecule ontogenies defined for this population characteristics.
     allMoleculeOntogenies = function(value) {
       private$.readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
     },
@@ -56,13 +56,7 @@ PopulationCharacteristics <- R6::R6Class(
   ),
   private = list(
     .moleculeOntogenies = NULL,
-    .printRange = function(caption, range) {
-      if (is.null(range)) {
-        return()
-      }
-      range$printValue(caption)
-    },
-    parameterRangeProperty = function(parameterName, value) {
+    .parameterRangeProperty = function(parameterName, value) {
       if (missing(value)) {
         ParameterRange$new(netObject = self$get(parameterName))
       } else {
@@ -78,6 +72,9 @@ PopulationCharacteristics <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `PopulationCharacteristics` object.
     initialize = function() {
+      # Assuming that if this function is called directly, PK-Sim was either initialized already
+      # or should be initialized automatically
+      initPKSim()
       netObject <- rSharp::newObjectFromName("PKSim.R.Domain.PopulationCharacteristics")
       super$initialize(netObject)
     },
@@ -85,22 +82,28 @@ PopulationCharacteristics <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Species", self$species)
-      private$.printLine("Population", self$population)
-      private$.printLine("Number of individuals", self$numberOfIndividuals)
-      private$.printLine("Proportion of females", self$proportionOfFemales)
-      private$.printRange("Age", self$age)
-      private$.printRange("Gestational age", self$gestationalAge)
-      private$.printRange("Weight", self$weight)
-      private$.printRange("Height", self$height)
-      private$.printRange("BMI", self$BMI)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Species" = self$species,
+          "Population" = self$population,
+          "Number of individuals" = self$numberOfIndividuals,
+          "Proportion of females" = self$proportionOfFemales,
+          "Age" = self$age$getPrintValue(),
+          "Gestational age" = self$gestationalAge$getPrintValue(),
+          "Weight" = self$weight$getPrintValue(),
+          "Height" = self$height$getPrintValue(),
+          "BMI" = self$BMI$getPrintValue()
+        ),
+        print_empty = TRUE
+      )
+      ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
 
-      for (moleculeOntogeny in self$allMoleculeOntogenies) {
-        moleculeOntogeny$printMoleculeOntogeny()
-      }
-      if (!is.null(self$seed)) {
-        private$.printLine("Seed", self$seed)
+      if (!is.null(self$allMoleculeOntogenies)) {
+        ospsuite.utils::ospPrintHeader("Molecule Ontogenies")
+        for (moleculeOntogeny in self$allMoleculeOntogenies) {
+          moleculeOntogeny$printMoleculeOntogeny()
+        }
       }
       invisible(self)
     },
@@ -114,7 +117,7 @@ PopulationCharacteristics <- R6::R6Class(
       netMoleculeOntogeny <- rSharp::newObjectFromName("PKSim.R.Domain.MoleculeOntogeny")
       netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
       netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
-      self$call("AddMoleculeOntogeny", netMoleculeOntogeny)
+      invisible(self$call("AddMoleculeOntogeny", netMoleculeOntogeny))
     }
   )
 )

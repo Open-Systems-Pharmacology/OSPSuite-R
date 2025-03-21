@@ -13,3 +13,7 @@ test_that("It can set the basic options parameters", {
   runOptions$numberOfCores <- 5
   expect_equal(runOptions$numberOfCores, 5)
 })
+
+test_that("It can print simulation run options", {
+  expect_snapshot(runOptions$print())
+})

@@ -50,11 +50,15 @@ Molecule <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Path", self$path)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Path" = self$path,
+        "Scale Divisor" = self$scaleDivisor
+      ))
       initialStartValue <- private$.startValue %||% self
-      initialStartValue$printQuantityValue("Initial Value")
-      invisible(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Initial Value" = initialStartValue$getPrintValue()
+      ))
     }
   )
 )

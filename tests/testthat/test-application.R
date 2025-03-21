@@ -13,9 +13,7 @@ test_that("It can set the value of the start time for the application", {
   expect_equal(application$startTime$value, 10)
 })
 
-
 # Application$print
-
 test_that("It can print an application", {
-  expect_error(capture.output(application$print()), NA)
+  expect_snapshot(application$print())
 })

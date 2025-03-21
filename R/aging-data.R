@@ -37,8 +37,7 @@ AgingData <- R6::R6Class("AgingData",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
     }
   )
 )

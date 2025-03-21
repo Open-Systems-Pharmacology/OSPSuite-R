@@ -18,5 +18,5 @@ test_that("It returns the name of all pk parameters for which PK-Analyses were c
 })
 
 test_that("It can print the pk Analysis", {
-  expect_error(capture.output(print(pkAnalyses)), NA)
+  expect_snapshot(print(pkAnalyses))
 })

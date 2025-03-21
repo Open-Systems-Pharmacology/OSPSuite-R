@@ -48,6 +48,7 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \item \href{#method-Quantity-print}{\code{Quantity$print()}}
 \item \href{#method-Quantity-printValue}{\code{Quantity$printValue()}}
 \item \href{#method-Quantity-printQuantityValue}{\code{Quantity$printQuantityValue()}}
+\item \href{#method-Quantity-getPrintValue}{\code{Quantity$getPrintValue()}}
 \item \href{#method-Quantity-setValue}{\code{Quantity$setValue()}}
 \item \href{#method-Quantity-hasUnit}{\code{Quantity$hasUnit()}}
 \item \href{#method-Quantity-reset}{\code{Quantity$reset()}}
@@ -56,8 +57,9 @@ A quantity of the model (with unit, value) such as a Parameter or an Amount
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="finalize"><a href='../../rSharp/html/NetObject.html#method-NetObject-finalize'><code>rSharp::NetObject$finalize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
@@ -132,6 +134,26 @@ Print the value (in scientific notation with 2 digits when needed) and unit of t
 \item{\code{caption}}{Text to prepend to the value}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Quantity-getPrintValue"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-getPrintValue}{}}}
+\subsection{Method \code{getPrintValue()}}{
+Return a string for printing the value (in scientific notation with 2 digits when needed) and unit of the quantity
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Quantity$getPrintValue()}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{caption}}{Text to prepend to the value}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A string for printing the quantity in one line
 }
 }
 \if{html}{\out{<hr>}}

@@ -27,10 +27,11 @@ SimulationBatchRunValues <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("parameterValues", self$parameterValues)
-      private$.printLine("initialValues", self$initialValues)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "parameterValues" = self$parameterValues,
+        "initialValues" = self$initialValues
+      ))
     }
   ),
   active = list(

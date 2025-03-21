@@ -60,8 +60,6 @@ test_that("it can load a data importer configuration", {
   # names is not obvious
   expect_equal(length(importerConfiguration$groupingColumns), 10)
   expect_equal(importerConfiguration$sheets, character())
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can load a data importer configuration with units from columns", {
@@ -81,6 +79,4 @@ test_that("it can load a data importer configuration with units from columns", {
   # names is not obvious
   expect_equal(length(importerConfiguration$groupingColumns), 11)
   expect_equal(importerConfiguration$sheets, c("UnitsFromColumn", "UnitsFromColumn_secondSheet"))
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })

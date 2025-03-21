@@ -7,6 +7,11 @@ createColumn <- function(baseGrid) {
   DataColumn$new(rSharp::newObjectFromName("OSPSuite.Core.Domain.Data.DataColumn", "column", getDimensionByName(ospDimensions$`Concentration (mass)`), baseGrid))
 }
 
+test_that("It can print a DataColumn", {
+  baseGrid <- createBaseGrid()
+  expect_snapshot(print(baseGrid))
+})
+
 test_that("it can set and retrieve the dimension of a data column", {
   baseGrid <- createBaseGrid()
   expect_equal(baseGrid$dimension, ospDimensions$Time)
@@ -52,10 +57,4 @@ test_that("it throws an error when setting a unit thast does not exist in the di
   baseGrid <- createBaseGrid()
   baseGrid$dimension <- ospDimensions$Time
   expect_error(baseGrid$displayUnit <- ospUnits$Amount$mmol)
-})
-
-test_that("it can print a data column", {
-  baseGrid <- createBaseGrid()
-  column <- createColumn(baseGrid)
-  expect_error(capture.output(print(column)), regexp = NA)
 })

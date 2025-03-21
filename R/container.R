@@ -18,10 +18,14 @@ Container <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Container type", self$containerType)
-      private$.printLine("Path", self$path)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Container type" = self$containerType,
+          "Path" = self$path
+        ),
+        print_empty = TRUE
+      )
     }
   )
 )

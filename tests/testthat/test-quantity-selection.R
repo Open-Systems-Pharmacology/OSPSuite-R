@@ -2,7 +2,7 @@
 
 sim <- loadTestSimulation("S1")
 
-test_that("It can print Quantity", {
+test_that("It can print Quantity Selection", {
   quantitySelection <- sim$outputSelections$allOutputs[[1]]
-  expect_error(capture.output(quantitySelection$print()), NA)
+  expect_snapshot(quantitySelection$print())
 })

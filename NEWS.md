@@ -1,9 +1,21 @@
 # ospsuite (development version)
 
+## Breaking changes
+
+- ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
+
 ## Minor improvements and bug fixes
 
-- Improve printing of parameters with RHS formulas (\#1511)
-- Improve printing of `DataCombined` objects (\#1514)
+- Improved print outputs for all classes
+- Classes do not inherit from the deprecated `Printable` class from the `{ospsuite.utils}` package.
+- Print methods for all classes are now implemented using the `ospPrint\*` functions 
+introduced in version 1.6.2. of the `{ospsuite.utils}` package.
+
+- `ParameterRange$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
+-  Private method `Quantity$printQuantity()` removed. `Quantity$printValue()` and `Quantity$printQuantityValue()` are 
+deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
+- `SnapshotParameter$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
+- Added snapshot tests for all print methods.
 
 # ospsuite 12.2.0
 

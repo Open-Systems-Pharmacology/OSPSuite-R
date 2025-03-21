@@ -183,7 +183,6 @@ test_that("it can save the data set as pkml", {
   expect_equal(dataSet$yErrorType, DataErrorType$ArithmeticStdDev)
   expect_equal(dataSet$yErrorUnit, "mg/l")
   expect_equal(dataSet$yErrorValues, yError)
-  expect_error(capture.output(print(dataSet)), regexp = NA)
 
   # remove the temp file
   capture.output(file.remove(filePath))

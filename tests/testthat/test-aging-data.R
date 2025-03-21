@@ -12,3 +12,8 @@ test_that("Creating an aging data and setting values works", {
   expect_equal(agingData$values, c(1.5, 2.5, 3.54))
   expect_equal(agingData$times, c(1, 2.5, 3))
 })
+
+test_that("It can print aging data", {
+  agingData <- AgingData$new()
+  expect_snapshot(agingData$print())
+})

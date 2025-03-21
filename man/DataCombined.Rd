@@ -61,9 +61,6 @@ Other data-combined:
 \code{\link{convertUnits}()}
 }
 \concept{data-combined}
-\section{Super class}{
-\code{\link[ospsuite.utils:Printable]{ospsuite.utils::Printable}} -> \code{DataCombined}
-}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{

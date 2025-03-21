@@ -81,5 +81,5 @@ test_that("It can update all points at once in a table", {
 })
 
 test_that("It can print the table", {
-  expect_error(capture.output(tableFormula$print()), NA)
+  expect_snapshot(print(tableFormula))
 })
