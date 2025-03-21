@@ -5,6 +5,6 @@
     Message
       <Molecule>
         * Path: Organism|M
-        * ScaleDivisor: 1
+        * Scale Divisor: 1
         * Initial Value: 50.00 [µmol/l]
 
