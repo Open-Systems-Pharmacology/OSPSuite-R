@@ -3,6 +3,8 @@
 ## Breaking changes
 
 - ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
+- Classes `SimulationBatchRunValues` and `SimulationBatchOptions` are not exported any more.
+They should not be used directly.
 
 ## Minor improvements and bug fixes
 

@@ -1,7 +1,6 @@
 #' @title SimulationBatchOptions
 #' @docType class
 #' @description Options to be passed to the `SimulationBatch`.
-#' @export
 #' @format NULL
 SimulationBatchOptions <- R6::R6Class(
   "SimulationBatchOptions",
