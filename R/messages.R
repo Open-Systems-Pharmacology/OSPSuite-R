@@ -10,10 +10,6 @@ messages$errorOneOfNameAndPathMustBeSpecified <- function() {
   "One of the `parameterName` or `parameterPath` must be specified, but not both."
 }
 
-messages$noDatasetsPresentInDataCombined <- function() {
-  "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
-}
-
 messages$noDatasetsToGroup <- function() {
   "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
 }
@@ -24,10 +20,6 @@ messages$datasetsToGroupNotFound <- function() {
 
 messages$unpairableDatasetsRemoved <- function() {
   "Following non-grouped or unpairable datasets have been removed"
-}
-
-messages$valuesNotInterpolated <- function() {
-  "Predicted values couldn't be interpolated at following time points"
 }
 
 messages$printMultipleEntries <- function(header, entries) {
