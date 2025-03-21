@@ -53,7 +53,7 @@ Molecule <- R6::R6Class(
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Path" = self$path,
-        "ScaleDivisor" = self$scaleDivisor
+        "Scale Divisor" = self$scaleDivisor
       ))
       initialStartValue <- private$.startValue %||% self
       ospsuite.utils::ospPrintItems(list(
