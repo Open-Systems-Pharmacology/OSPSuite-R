@@ -40,6 +40,9 @@ Simulation <- R6::R6Class(
     #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
+    },
+    #' @field simulationConfiguration
+    simulationConfiguration = function(value){
     }
   ),
   public = list(
