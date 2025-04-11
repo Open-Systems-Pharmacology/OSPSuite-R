@@ -18,6 +18,7 @@ introduced in version 1.6.2. of the `{ospsuite.utils}` package.
 deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 - `SnapshotParameter$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 - Added snapshot tests for all print methods.
+- `legendLabel` field added in `DefaultPlotConfiguration`
 
 # ospsuite 12.2.0
 
