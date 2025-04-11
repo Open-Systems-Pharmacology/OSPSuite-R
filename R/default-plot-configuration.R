@@ -232,6 +232,7 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     legendPosition = NULL,
     legendTitle = NULL,
+    legendLabel = NULL,
     legendTitleSize = tlf::PlotAnnotationTextSize$plotLegendTitleSize,
     legendTitleColor = "black",
     legendTitleFontFamily = "",
