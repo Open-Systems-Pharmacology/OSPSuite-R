@@ -11,7 +11,7 @@ They should not be used directly.
 of Quantification (LLOQ) column name via
 a new field `lloqColumn`. If the column name is not set (value `NULL`), LLOQ values
 will be imported from the measurement column if values are written in the form '< xxx' (e.g., '<0.001').
-Otherwise, the values will be imported from the specified column
+Otherwise, the values will be imported from the specified column (\#722)
 
 ## Minor improvements and bug fixes
 
