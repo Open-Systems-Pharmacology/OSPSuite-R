@@ -10,6 +10,7 @@
         * Measurement column: Measurement
         * Measurement unit: µmol/l
         * Measurement unit from column: FALSE
+        * LLOQ column: NULL
         * Error column: NULL
         * Error type: NULL
         * Error unit: NULL
