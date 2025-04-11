@@ -38,31 +38,31 @@ following order:
 - [Loading a simulation and accessing
   entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
 - [Changing parameter and molecule start
-  values](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
+  values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
 - [Running a
-  simulation](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
+  simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
 - [Efficient
-  calculations](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
+  calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
 - [Creating
-  individuals](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
+  individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
 - [Population
-  simulations](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
+  simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
 - [PK
-  Analysis](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
+  Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
 - [Sensitivity
-  analysis](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
+  analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
 - [Table
-  parameters](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
+  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
 - [Dimensions and
-  Units](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
 - [Working with data sets and import from
-  excel](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
+  excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
 - [Working with `DataCombined`
-  class](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
+  class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
 - [Visualizations with
-  `DataCombined`](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
+  `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
 - [PK-Sim
-  Installation](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html)
+  Installation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html)
 
 # Installation
 
@@ -214,7 +214,7 @@ guide](https://dev.open-systems-pharmacology.org/r-development-resources/collabo
 
 For development version, each time a pull request is merged, [this
 github
-action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/73f0687bad4671430468c24d1038b45dd6e73b0d/.github/workflows/main-workflow.yaml#L11-L17)
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
 automatically bumps the `.9000` version suffix by one.
 
 # Code of Conduct
