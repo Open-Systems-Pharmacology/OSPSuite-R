@@ -33,6 +33,7 @@
           legendKeysFontFamily: 
           legendKeysMargin: 2 0 2 0
           legendKeysSize: 10
+          legendLabel: NULL
           legendPosition: NULL
           legendTitle: NULL
           legendTitleAlign: left
