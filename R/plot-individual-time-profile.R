@@ -47,8 +47,9 @@
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration = NULL) {
-  .plotTimeProfile(dataCombined, defaultPlotConfiguration)
+                                      defaultPlotConfiguration = NULL,
+                                      showLegendPerDataset = FALSE) {
+  .plotTimeProfile(dataCombined, defaultPlotConfiguration, showLegendPerDataset)
 }
 
 
@@ -58,6 +59,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 #' @noRd
 .plotTimeProfile <- function(dataCombined,
                              defaultPlotConfiguration = NULL,
+                             showLegendPerDataset,
                              aggregation = NULL,
                              ...) {
   # validation -----------------------------
@@ -127,7 +129,6 @@ plotIndividualTimeProfile <- function(dataCombined,
     lloq <- "lloq"
   }
 
-
   # population time profile mappings with ribbon ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
@@ -163,7 +164,11 @@ plotIndividualTimeProfile <- function(dataCombined,
   )
 
   # Suppress certain mappings in the legend
-  profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
+  if (showLegendPerDataset) {
+    profilePlot <- profilePlot + ggplot2::guides(linetype = "none")
+  } else {
+    profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
+  }
 
   return(profilePlot)
 }

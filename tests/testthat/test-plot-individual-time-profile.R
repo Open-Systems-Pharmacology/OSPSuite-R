@@ -33,6 +33,14 @@ test_that("It creates default plots as expected for multiple observed datasets",
   )
 })
 
+test_that("It plots multiple observed datasets with separate legend entries", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple obs - separate legend",
+    fig = plotIndividualTimeProfile(manyObsDC, showLegendPerDataset = TRUE)
+  )
+})
+
 # only simulated ------------------------
 
 test_that("It creates default plots as expected for single simulated dataset", {
