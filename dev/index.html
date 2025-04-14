@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,21 +100,21 @@
 <p>If you are reading this on GitHub README, please refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/">online documentation</a> for more details on the package.</p>
 <p>In particular, we would recommend that you read the articles in the following order:</p>
 <ul>
-<li><a href="articles/ospsuite.html">Get Started</a></li>
-<li><a href="articles/load-get.html">Loading a simulation and accessing entities</a></li>
-<li><a href="articles/set-values.html">Changing parameter and molecule start values</a></li>
-<li><a href="articles/run-simulation.html">Running a simulation</a></li>
-<li><a href="articles/efficient-calculations.html">Efficient calculations</a></li>
-<li><a href="articles/create-individual.html">Creating individuals</a></li>
-<li><a href="articles/create-run-population.html">Population simulations</a></li>
-<li><a href="articles/pk-analysis.html">PK Analysis</a></li>
-<li><a href="articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
-<li><a href="articles/table-parameters.html">Table parameters</a></li>
-<li><a href="articles/unit-conversion.html">Dimensions and Units</a></li>
-<li><a href="articles/observed-data.html">Working with data sets and import from excel</a></li>
-<li><a href="articles/data-combined.html">Working with <code>DataCombined</code> class</a></li>
-<li><a href="articles/data-combined-plotting.html">Visualizations with <code>DataCombined</code></a></li>
-<li><a href="articles/PKSim-installation.html">PK-Sim Installation</a></li>
+<li><a href="ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html">Get Started</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html">Loading a simulation and accessing entities</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html">Changing parameter and molecule start values</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html">Running a simulation</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html">Efficient calculations</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html">Creating individuals</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html">Population simulations</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html">PK Analysis</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html">Table parameters</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html">Dimensions and Units</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html">Working with data sets and import from excel</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html">Working with <code>DataCombined</code> class</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html">Visualizations with <code>DataCombined</code></a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html">PK-Sim Installation</a></li>
 </ul>
 </div>
 <div class="section level1">
@@ -153,6 +153,7 @@
 <p>When installing from such files, the CRAN dependencies need to be installed manually first.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install dependencies (e.g. R6) which are on CRAN</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cli"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"data.table"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span></span>
@@ -165,6 +166,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"R6"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"readr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rlang"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"showtext"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stringi"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stringr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"xml2"</span><span class="op">)</span></span></code></pre></div>
@@ -232,7 +235,7 @@
 <h2 id="versionning">Versionning<a class="anchor" aria-label="anchor" href="#versionning"></a>
 </h2>
 <p>The package follows the versioning process described in the <a href="https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions" class="external-link">OSP R collaboration guide</a>.</p>
-<p>For development version, each time a pull request is merged, <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/73f0687bad4671430468c24d1038b45dd6e73b0d/.github/workflows/main-workflow.yaml#L11-L17" class="external-link">this github action</a> automatically bumps the <code>.9000</code> version suffix by one.</p>
+<p>For development version, each time a pull request is merged, <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17" class="external-link">this github action</a> automatically bumps the <code>.9000</code> version suffix by one.</p>
 </div>
 </div>
 <div class="section level1">
