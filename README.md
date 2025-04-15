@@ -33,24 +33,36 @@ for more details on the package.
 In particular, we would recommend that you read the articles in the
 following order:
 
-- [Get Started](articles/ospsuite.html)
-- [Loading a simulation and accessing entities](articles/load-get.html)
+- [Get
+  Started](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html)
+- [Loading a simulation and accessing
+  entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
 - [Changing parameter and molecule start
-  values](articles/set-values.html)
-- [Running a simulation](articles/run-simulation.html)
-- [Efficient calculations](articles/efficient-calculations.html)
-- [Creating individuals](articles/create-individual.html)
-- [Population simulations](articles/create-run-population.html)
-- [PK Analysis](articles/pk-analysis.html)
-- [Sensitivity analysis](articles/sensitivity-analysis.html)
-- [Table parameters](articles/table-parameters.html)
-- [Dimensions and Units](articles/unit-conversion.html)
+  values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
+- [Running a
+  simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
+- [Efficient
+  calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
+- [Creating
+  individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html)
+- [Population
+  simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html)
+- [PK
+  Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
+- [Sensitivity
+  analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
+- [Table
+  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
+- [Dimensions and
+  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
 - [Working with data sets and import from
-  excel](articles/observed-data.html)
-- [Working with `DataCombined` class](articles/data-combined.html)
+  excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
+- [Working with `DataCombined`
+  class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
 - [Visualizations with
-  `DataCombined`](articles/data-combined-plotting.html)
-- [PK-Sim Installation](articles/PKSim-installation.html)
+  `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
+- [PK-Sim
+  Installation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html)
 
 # Installation
 
@@ -104,6 +116,7 @@ installed manually first.
 
 ``` r
 # Install dependencies (e.g. R6) which are on CRAN
+install.packages("cli")
 install.packages("data.table")
 install.packages("dplyr")
 install.packages("ggplot2")
@@ -116,6 +129,8 @@ install.packages("purrr")
 install.packages("R6")
 install.packages("readr")
 install.packages("rlang")
+install.packages("showtext")
+install.packages("stringi")
 install.packages("stringr")
 install.packages("tidyr")
 install.packages("xml2")
@@ -199,7 +214,7 @@ guide](https://dev.open-systems-pharmacology.org/r-development-resources/collabo
 
 For development version, each time a pull request is merged, [this
 github
-action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/73f0687bad4671430468c24d1038b45dd6e73b0d/.github/workflows/main-workflow.yaml#L11-L17)
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
 automatically bumps the `.9000` version suffix by one.
 
 # Code of Conduct
