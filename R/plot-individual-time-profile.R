@@ -66,6 +66,7 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
+  validateIsLogical(showLegendPerDataset)
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
@@ -164,9 +165,7 @@ plotIndividualTimeProfile <- function(dataCombined,
   )
 
   # Suppress certain mappings in the legend
-  if (showLegendPerDataset) {
-    profilePlot <- profilePlot + ggplot2::guides(linetype = "none")
-  } else {
+  if (!showLegendPerDataset) {
     profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
   }
 
