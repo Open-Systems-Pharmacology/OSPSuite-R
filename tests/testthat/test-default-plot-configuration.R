@@ -21,3 +21,16 @@ test_that("Defaults of the plot configuration", {
 
   expect_snapshot(myPlotConfiguration)
 })
+
+test_that("suppressNameInLegend default is TRUE", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+
+  expect_true(myPlotConfiguration$suppressNameInLegend)
+})
+
+test_that("suppressNameInLegend can be set to FALSE", {
+  myPlotConfiguration <- DefaultPlotConfiguration$new()
+  myPlotConfiguration$suppressNameInLegend <- FALSE
+
+  expect_false(myPlotConfiguration$suppressNameInLegend)
+})

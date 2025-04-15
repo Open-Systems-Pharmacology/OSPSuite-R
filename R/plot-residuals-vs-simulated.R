@@ -50,21 +50,22 @@
 #' )
 #'
 #' @export
-plotResidualsVsSimulated <- function(dataCombined,
-                                     defaultPlotConfiguration = NULL,
-                                     scaling = "lin") {
+plotResidualsVsSimulated <- function(
+    dataCombined,
+    defaultPlotConfiguration = NULL,
+    scaling = "lin") {
   # validation -----------------------------
 
   rlang::arg_match(scaling, values = c("lin", "log"))
 
-  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(
+    defaultPlotConfiguration
+  )
 
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
   }
-
-
 
   # `ResVsPredPlotConfiguration` object -----------------------------
 
@@ -86,7 +87,8 @@ plotResidualsVsSimulated <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- calculateResiduals(dataCombined,
+  pairedData <- calculateResiduals(
+    dataCombined,
     scaling = scaling,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit
@@ -105,15 +107,25 @@ plotResidualsVsSimulated <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[resVsPredPlotConfiguration$points$shape[1:nrow(.)]])) %>%
+    dplyr::mutate(
+      shapeAssn = unlist(tlf::Shapes[resVsPredPlotConfiguration$points$shape[
+        1:nrow(.)
+      ]])
+    ) %>%
     dplyr::filter(!duplicated(group))
 
   # axes labels -----------------------------
 
-  resVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsPredPlotConfiguration)
+  resVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(
+    pairedData,
+    resVsPredPlotConfiguration
+  )
 
   if (scaling == "log") {
-    resVsPredPlotConfiguration$labels$ylabel$text <- paste(resVsPredPlotConfiguration$labels$ylabel$text, "(log)")
+    resVsPredPlotConfiguration$labels$ylabel$text <- paste(
+      resVsPredPlotConfiguration$labels$ylabel$text,
+      "(log)"
+    )
   }
 
   # plot -----------------------------
@@ -129,12 +141,17 @@ plotResidualsVsSimulated <- function(dataCombined,
       shape = "name"
     ),
     plotConfiguration = resVsPredPlotConfiguration
-  ) + ggplot2::guides(
-    shape = "none",
-    col = ggplot2::guide_legend(
-      title = resVsPredPlotConfiguration$legend$title$text,
-      title.theme = resVsPredPlotConfiguration$legend$title$createPlotTextFont(),
-      override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+  ) +
+    ggplot2::guides(
+      shape = if (defaultPlotConfiguration$suppressNameInLegend) {
+        "none"
+      } else {
+        "legend"
+      },
+      col = ggplot2::guide_legend(
+        title = resVsPredPlotConfiguration$legend$title$text,
+        title.theme = resVsPredPlotConfiguration$legend$title$createPlotTextFont(),
+        override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+      )
     )
-  )
 }

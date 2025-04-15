@@ -51,12 +51,15 @@
 #' # plot
 #' plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
 #' @export
-plotObservedVsSimulated <- function(dataCombined,
-                                    defaultPlotConfiguration = NULL,
-                                    foldDistance = NULL) {
+plotObservedVsSimulated <- function(
+    dataCombined,
+    defaultPlotConfiguration = NULL,
+    foldDistance = NULL) {
   # validation -----------------------------
 
-  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(
+    defaultPlotConfiguration
+  )
 
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
@@ -72,10 +75,9 @@ plotObservedVsSimulated <- function(dataCombined,
   )
 
   # Linear scaling is stored as identity scaling in `{tlf}`
-  is_any_scale_linear <- (
-    obsVsPredPlotConfiguration$xAxis$scale == tlf::Scaling$identity ||
-      obsVsPredPlotConfiguration$yAxis$scale == tlf::Scaling$identity
-  )
+  is_any_scale_linear <- (obsVsPredPlotConfiguration$xAxis$scale ==
+    tlf::Scaling$identity ||
+    obsVsPredPlotConfiguration$yAxis$scale == tlf::Scaling$identity)
 
   # Identity Line (x=y) definition. Its value depends on the scale:
   # - For linear scale: `1`
@@ -88,7 +90,10 @@ plotObservedVsSimulated <- function(dataCombined,
   } else {
     # foldDistance should be above 1
     if (any(foldDistance <= 1)) {
-      stop(messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", foldDistance))
+      stop(messages$plotObservedVsSimulatedWrongFoldDistance(
+        "foldDistance",
+        foldDistance
+      ))
     }
 
     # The argument `foldDistance` should only include fold values different from
@@ -109,7 +114,8 @@ plotObservedVsSimulated <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- calculateResiduals(dataCombined,
+  pairedData <- calculateResiduals(
+    dataCombined,
     scaling = obsVsPredPlotConfiguration$yAxis$scale,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit
@@ -123,10 +129,14 @@ plotObservedVsSimulated <- function(dataCombined,
   # In logarithmic scale, if any of the values are `0`, plotting will fail.
   #
   # To avoid this, just remove rows where any of the quantities are `0`s.
-  if (obsVsPredPlotConfiguration$yAxis$scale %in% c(tlf::Scaling$log, tlf::Scaling$ln)) {
+  if (
+    obsVsPredPlotConfiguration$yAxis$scale %in%
+      c(tlf::Scaling$log, tlf::Scaling$ln)
+  ) {
     pairedData <- dplyr::filter(
       pairedData,
-      yValuesObserved != 0, yValuesSimulated != 0
+      yValuesObserved != 0,
+      yValuesSimulated != 0
     )
   }
 
@@ -157,7 +167,10 @@ plotObservedVsSimulated <- function(dataCombined,
 
   # axes labels -----------------------------
 
-  obsVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, obsVsPredPlotConfiguration)
+  obsVsPredPlotConfiguration <- .updatePlotConfigurationAxesLabels(
+    pairedData,
+    obsVsPredPlotConfiguration
+  )
 
   # plot -----------------------------
 
@@ -171,18 +184,23 @@ plotObservedVsSimulated <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[obsVsPredPlotConfiguration$points$shape[1:nrow(.)]])) %>%
+    dplyr::mutate(
+      shapeAssn = unlist(tlf::Shapes[obsVsPredPlotConfiguration$points$shape[
+        1:nrow(.)
+      ]])
+    ) %>%
     dplyr::filter(!duplicated(group))
 
   # LLOQ is not mapped by default
   lloq <- NULL
   # Map LLOQ if defaultPlotConfiguration$displayLLOQ is set to TRUE and lloq
   # column contains at least one non NA value.
-  if (defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(pairedData$lloq)))) {
+  if (
+    defaultPlotConfiguration$displayLLOQ &
+      !all(is.na(unique(pairedData$lloq)))
+  ) {
     lloq <- "lloq"
   }
-
-
 
   plotObject <- tlf::plotObsVsPred(
     data = as.data.frame(pairedData),
@@ -199,12 +217,21 @@ plotObservedVsSimulated <- function(dataCombined,
     plotConfiguration = obsVsPredPlotConfiguration
   )
 
-  return(plotObject + ggplot2::guides(
-    shape = "none",
-    col = ggplot2::guide_legend(
-      title = obsVsPredPlotConfiguration$legend$title$text,
-      title.theme = obsVsPredPlotConfiguration$legend$title$createPlotTextFont(),
-      override.aes = list(shape = overrideShapeAssignment$shapeAssn)
-    )
-  ))
+  return(
+    plotObject +
+      ggplot2::guides(
+        shape = if (defaultPlotConfiguration$suppressNameInLegend) {
+          "none"
+        } else {
+          "legend"
+        },
+        col = ggplot2::guide_legend(
+          title = obsVsPredPlotConfiguration$legend$title$text,
+          title.theme = obsVsPredPlotConfiguration$legend$title$createPlotTextFont(),
+          override.aes = list(
+            shape = overrideShapeAssignment$shapeAssn
+          )
+        )
+      )
+  )
 }

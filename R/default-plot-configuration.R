@@ -147,6 +147,7 @@
 #' @field lloqDirection A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.
 #' @field foldLinesLegend A Boolean controlling the drawing of the fold lines in the legend. Default to False.
 #' @field foldLinesLegendDiagonal A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.
+#' @field suppressNameInLegend A Boolean controlling whether to suppress the "name" mapping to linetype and shape in the legend.
 #' @examples
 #'
 #' # Create a new instance of this class
@@ -381,6 +382,9 @@ DefaultPlotConfiguration <- R6::R6Class(
 
     # Fold Distance Lines --------------------------
     foldLinesLegend = FALSE,
-    foldLinesLegendDiagonal = FALSE
+    foldLinesLegendDiagonal = FALSE,
+
+    # Mapping suppression in legend ---------------
+    suppressNameInLegend = TRUE
   )
 )

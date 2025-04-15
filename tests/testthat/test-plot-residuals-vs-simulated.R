@@ -2,9 +2,6 @@
 
 # plotResidualsVsSimulated")
 
-
-
-
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")
 simResults <- importResultsFromCSV(
@@ -15,7 +12,9 @@ simResults <- importResultsFromCSV(
 # import observed data (will return a list of DataSet objects)
 dataSet <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath(
+    "ImporterConfiguration.xml"
+  ))
 )
 
 # create a new instance and add datasets
@@ -39,7 +38,14 @@ myCombDat$setGroups(
     "Stevens_2012_placebo.Placebo_distal",
     "Stevens_2012_placebo.Placebo_proximal"
   ),
-  groups = c("Solid total", "Solid distal", "Solid proximal", "Solid total", "Solid distal", "Solid proximal")
+  groups = c(
+    "Solid total",
+    "Solid distal",
+    "Solid proximal",
+    "Solid total",
+    "Solid distal",
+    "Solid proximal"
+  )
 )
 
 test_that("It creates default plots as expected", {
@@ -55,7 +61,10 @@ test_that("It doesn't work with log scale for Y-axis", {
   myPlotConfiguration <- DefaultPlotConfiguration$new()
   myPlotConfiguration$yAxisScale <- tlf::Scaling$log
   expect_error(
-    plotResidualsVsSimulated(myCombDat, defaultPlotConfiguration = myPlotConfiguration),
+    plotResidualsVsSimulated(
+      myCombDat,
+      defaultPlotConfiguration = myPlotConfiguration
+    ),
     messages$logScaleNotAllowed()
   )
 })
@@ -95,21 +104,32 @@ test_that("It respects custom plot configuration", {
 # edge cases ------------------------
 
 test_that("It doesn't extrapolate past maximum simulated time point", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  simFilePath <- system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  )
   sim <- loadSimulation(simFilePath)
 
   simData <- withr::with_tempdir({
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
       `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
     )
     readr::write_csv(df, "SimResults.csv")
     importResultsFromCSV(sim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
   obsData$xUnit <- "min"
 
   myDC <- DataCombined$new()
@@ -151,21 +171,32 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
 })
 
 test_that("Different symbols for data sets within one group", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  simFilePath <- system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  )
   sim <- loadSimulation(simFilePath)
 
   simData <- withr::with_tempdir({
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
       `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
     )
     readr::write_csv(df, "SimResults.csv")
     importResultsFromCSV(sim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
   obsData$xUnit <- "min"
   obsData$yDimension <- ospDimensions$`Concentration (molar)`
 
@@ -175,7 +206,10 @@ test_that("Different symbols for data sets within one group", {
 
   # Add second obs data
   obsData2 <- DataSet$new(name = "Observed 2")
-  obsData2$setValues(xValues = c(0, 3, 4, 4.5, 5.5), yValues = c(2.9, 5.1, 3, 8.2, 1))
+  obsData2$setValues(
+    xValues = c(0, 3, 4, 4.5, 5.5),
+    yValues = c(2.9, 5.1, 3, 8.2, 1)
+  )
   obsData2$xUnit <- "min"
   obsData2$yDimension <- ospDimensions$`Concentration (molar)`
   myDC$addDataSets(obsData2, groups = "myGroup")
@@ -192,5 +226,37 @@ test_that("scaling residuals argument works with log", {
   vdiffr::expect_doppelganger(
     title = "log-residuals",
     fig = plotResidualsVsSimulated(myCombDat, scaling = "log")
+  )
+})
+
+# Name mapping in legend
+
+test_that("Name mapping in legend can be controlled", {
+  # Create a test configuration with suppressNameInLegend set to FALSE
+  showNameConfig <- DefaultPlotConfiguration$new()
+  showNameConfig$suppressNameInLegend <- FALSE
+
+  # Create a test configuration with suppressNameInLegend set to TRUE (default)
+  hideNameConfig <- DefaultPlotConfiguration$new()
+  hideNameConfig$suppressNameInLegend <- TRUE
+
+  set.seed(123)
+
+  # Test with name visible in legend
+  vdiffr::expect_doppelganger(
+    title = "name shown in legend residuals vs simulated",
+    fig = plotResidualsVsSimulated(
+      manyObsSimDC,
+      defaultPlotConfiguration = showNameConfig
+    )
+  )
+
+  # Test with name hidden in legend (default behavior)
+  vdiffr::expect_doppelganger(
+    title = "name hidden in legend residuals vs simulated",
+    fig = plotResidualsVsSimulated(
+      manyObsSimDC,
+      defaultPlotConfiguration = hideNameConfig
+    )
   )
 })

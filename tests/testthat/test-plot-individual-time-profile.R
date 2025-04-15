@@ -109,9 +109,12 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 test_that("LLOQ is plotted", {
   set.seed(42)
   dataSet <- DataSet$new("ds with lloq")
-  dataSet$setValues(1:7, c(10 * exp(1:-5) + rnorm(7, 0, .25)), abs(rnorm(7, 0, 0.1)))
+  dataSet$setValues(
+    1:7,
+    c(10 * exp(1:-5) + rnorm(7, 0, .25)),
+    abs(rnorm(7, 0, 0.1))
+  )
   dataSet$LLOQ <- 0.15
-
 
   dc <- DataCombined$new()
   dc$addDataSets(dataSet)
@@ -129,6 +132,41 @@ test_that("LLOQ is plotted", {
 
   vdiffr::expect_doppelganger(
     title = "no lloq",
-    fig = plotIndividualTimeProfile(dc, defaultPlotConfiguration = noLLOQ_DPC)
+    fig = plotIndividualTimeProfile(
+      dc,
+      defaultPlotConfiguration = noLLOQ_DPC
+    )
+  )
+})
+
+# Name mapping in legend
+
+test_that("Name mapping in legend can be controlled", {
+  # Create a test configuration with suppressNameInLegend set to FALSE
+  showNameConfig <- DefaultPlotConfiguration$new()
+  showNameConfig$suppressNameInLegend <- FALSE
+
+  # Create a test configuration with suppressNameInLegend set to TRUE (default)
+  hideNameConfig <- DefaultPlotConfiguration$new()
+  hideNameConfig$suppressNameInLegend <- TRUE
+
+  set.seed(123)
+
+  # Test with name visible in legend
+  vdiffr::expect_doppelganger(
+    title = "name shown in legend",
+    fig = plotIndividualTimeProfile(
+      manyObsSimDC,
+      defaultPlotConfiguration = showNameConfig
+    )
+  )
+
+  # Test with name hidden in legend (default behavior)
+  vdiffr::expect_doppelganger(
+    title = "name hidden in legend",
+    fig = plotIndividualTimeProfile(
+      manyObsSimDC,
+      defaultPlotConfiguration = hideNameConfig
+    )
   )
 })

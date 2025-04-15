@@ -46,8 +46,9 @@
 #' plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
 #'
 #' @export
-plotIndividualTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration = NULL) {
+plotIndividualTimeProfile <- function(
+    dataCombined,
+    defaultPlotConfiguration = NULL) {
   .plotTimeProfile(dataCombined, defaultPlotConfiguration)
 }
 
@@ -56,13 +57,16 @@ plotIndividualTimeProfile <- function(dataCombined,
 #'
 #' @keywords internal
 #' @noRd
-.plotTimeProfile <- function(dataCombined,
-                             defaultPlotConfiguration = NULL,
-                             aggregation = NULL,
-                             ...) {
+.plotTimeProfile <- function(
+    dataCombined,
+    defaultPlotConfiguration = NULL,
+    aggregation = NULL,
+    ...) {
   # validation -----------------------------
 
-  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(
+    defaultPlotConfiguration
+  )
 
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
@@ -80,7 +84,11 @@ plotIndividualTimeProfile <- function(dataCombined,
   # data frames -----------------------------
 
   # Getting all units on the same scale
-  combinedData <- convertUnits(dataCombined, defaultPlotConfiguration$xUnit, defaultPlotConfiguration$yUnit)
+  combinedData <- convertUnits(
+    dataCombined,
+    defaultPlotConfiguration$xUnit,
+    defaultPlotConfiguration$yUnit
+  )
 
   # Datasets which haven't been assigned to any group will be plotted as a group
   # on its own. That is, the `group` column entries for them will be their names.
@@ -88,11 +96,17 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # axes labels -----------------------------
 
-  timeProfilePlotConfiguration <- .updatePlotConfigurationAxesLabels(combinedData, timeProfilePlotConfiguration)
+  timeProfilePlotConfiguration <- .updatePlotConfigurationAxesLabels(
+    combinedData,
+    timeProfilePlotConfiguration
+  )
 
   # plot -----------------------------
 
-  obsData <- as.data.frame(dplyr::filter(combinedData, dataType == "observed"))
+  obsData <- as.data.frame(dplyr::filter(
+    combinedData,
+    dataType == "observed"
+  ))
 
   if (nrow(obsData) == 0) {
     obsData <- NULL
@@ -100,7 +114,10 @@ plotIndividualTimeProfile <- function(dataCombined,
     obsData <- .computeBoundsFromErrorType(obsData)
   }
 
-  simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
+  simData <- as.data.frame(dplyr::filter(
+    combinedData,
+    dataType == "simulated"
+  ))
 
   if (nrow(simData) == 0) {
     simData <- NULL
@@ -108,7 +125,11 @@ plotIndividualTimeProfile <- function(dataCombined,
 
   # Extract aggregated simulated data (relevant only for the population plot)
   if (!is.null(aggregation) && !is.null(simData)) {
-    simData <- as.data.frame(.extractAggregatedSimulatedData(simData, aggregation, ...))
+    simData <- as.data.frame(.extractAggregatedSimulatedData(
+      simData,
+      aggregation,
+      ...
+    ))
   }
 
   # To avoid repetition, assign column names to variables and use them instead
@@ -123,30 +144,41 @@ plotIndividualTimeProfile <- function(dataCombined,
   lloq <- NULL
   # Map LLOQ if defaultPlotConfiguration$displayLLOQ is set to TRUE and lloq
   # column contains at least one non NA value.
-  if (defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(obsData$lloq)))) {
+  if (
+    defaultPlotConfiguration$displayLLOQ & !all(is.na(unique(obsData$lloq)))
+  ) {
     lloq <- "lloq"
   }
-
 
   # population time profile mappings with ribbon ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
   # of a given type present per group
   if (!is.null(aggregation)) {
-    simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y, ymin, ymax,
+    simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
+      x,
+      y,
+      ymin,
+      ymax,
       color = color,
       linetype = linetype,
       fill = fill
     )
     # individual time profile mappings ------------------------------------------
   } else {
-    simulatedDataMapping <- tlf::TimeProfileDataMapping$new(x, y,
+    simulatedDataMapping <- tlf::TimeProfileDataMapping$new(
+      x,
+      y,
       color = color,
       linetype = linetype
     )
   }
 
-  observedDataMapping <- tlf::ObservedDataMapping$new(x, y, ymin, ymax,
+  observedDataMapping <- tlf::ObservedDataMapping$new(
+    x,
+    y,
+    ymin,
+    ymax,
     shape = shape,
     color = color,
     lloq = lloq
@@ -162,8 +194,11 @@ plotIndividualTimeProfile <- function(dataCombined,
     plotConfiguration = timeProfilePlotConfiguration
   )
 
-  # Suppress certain mappings in the legend
-  profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
+  # Suppress certain mappings in the legend based on configuration
+  if (defaultPlotConfiguration$suppressNameInLegend) {
+    profilePlot <- profilePlot +
+      ggplot2::guides(linetype = "none", shape = "none")
+  }
 
   return(profilePlot)
 }

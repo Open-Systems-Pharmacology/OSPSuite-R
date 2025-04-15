@@ -46,15 +46,17 @@
 #' plotResidualsVsTime(myDataCombined, scaling = "lin", defaultPlotConfiguration = myPlotConfiguration)
 #'
 #' @export
-plotResidualsVsTime <- function(dataCombined,
-                                defaultPlotConfiguration = NULL,
-                                scaling = "lin") {
+plotResidualsVsTime <- function(
+    dataCombined,
+    defaultPlotConfiguration = NULL,
+    scaling = "lin") {
   # validation -----------------------------
-
 
   rlang::arg_match(scaling, values = c("lin", "log"))
 
-  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
+  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(
+    defaultPlotConfiguration
+  )
 
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
@@ -81,7 +83,8 @@ plotResidualsVsTime <- function(dataCombined,
   #
   # `DefaultPlotConfiguration` provides units for conversion.
   # `PlotConfiguration` provides scaling details needed while computing residuals.
-  pairedData <- calculateResiduals(dataCombined,
+  pairedData <- calculateResiduals(
+    dataCombined,
     scaling = scaling,
     xUnit = defaultPlotConfiguration$xUnit,
     yUnit = defaultPlotConfiguration$yUnit
@@ -100,15 +103,25 @@ plotResidualsVsTime <- function(dataCombined,
     dplyr::select(name, group) %>%
     dplyr::distinct() %>%
     dplyr::arrange(name) %>%
-    dplyr::mutate(shapeAssn = unlist(tlf::Shapes[resVsTimePlotConfiguration$points$shape[1:nrow(.)]])) %>%
+    dplyr::mutate(
+      shapeAssn = unlist(tlf::Shapes[resVsTimePlotConfiguration$points$shape[
+        1:nrow(.)
+      ]])
+    ) %>%
     dplyr::filter(!duplicated(group))
 
   # axes labels -----------------------------
 
-  resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(pairedData, resVsTimePlotConfiguration)
+  resVsTimePlotConfiguration <- .updatePlotConfigurationAxesLabels(
+    pairedData,
+    resVsTimePlotConfiguration
+  )
 
   if (scaling == "log") {
-    resVsTimePlotConfiguration$labels$ylabel$text <- paste(resVsTimePlotConfiguration$labels$ylabel$text, "(log)")
+    resVsTimePlotConfiguration$labels$ylabel$text <- paste(
+      resVsTimePlotConfiguration$labels$ylabel$text,
+      "(log)"
+    )
   }
 
   # plot -----------------------------
@@ -124,12 +137,17 @@ plotResidualsVsTime <- function(dataCombined,
       shape = "name"
     ),
     plotConfiguration = resVsTimePlotConfiguration
-  ) + ggplot2::guides(
-    shape = "none",
-    col = ggplot2::guide_legend(
-      title = resVsTimePlotConfiguration$legend$title$text,
-      title.theme = resVsTimePlotConfiguration$legend$title$createPlotTextFont(),
-      override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+  ) +
+    ggplot2::guides(
+      shape = if (defaultPlotConfiguration$suppressNameInLegend) {
+        "none"
+      } else {
+        "legend"
+      },
+      col = ggplot2::guide_legend(
+        title = resVsTimePlotConfiguration$legend$title$text,
+        title.theme = resVsTimePlotConfiguration$legend$title$createPlotTextFont(),
+        override.aes = list(shape = overrideShapeAssignment$shapeAssn)
+      )
     )
-  )
 }
