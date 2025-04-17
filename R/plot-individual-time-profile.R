@@ -3,6 +3,10 @@
 #' @inheritParams calculateResiduals
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
 #'   an `R6` class object that defines plot properties.
+#' @param showLegendPerDataset Logical flag to display separate legend entries
+#' for observed and simulated datasets, if available. This is experimental and
+#' may not work reliably when both observed and simulated datasets > 1. Defaults
+#' to `FALSE`.
 #'
 #' @import tlf
 #'

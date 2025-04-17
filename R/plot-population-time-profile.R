@@ -2,6 +2,10 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams .extractAggregatedSimulatedData
+#' @param showLegendPerDataset Logical flag to display separate legend entries
+#' for observed and simulated datasets, if available. This is experimental and
+#' may not work reliably when both observed and simulated datasets > 1. Defaults
+#' to `FALSE`.
 #' @param ... additionnal arguments to pass to `.extractAggregatedSimulatedData()`
 #'
 #' @inherit .extractAggregatedSimulatedData details
