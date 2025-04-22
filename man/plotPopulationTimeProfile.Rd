@@ -9,6 +9,7 @@ plotPopulationTimeProfile(
   defaultPlotConfiguration = NULL,
   aggregation = "quantiles",
   quantiles = c(0.05, 0.5, 0.95),
+  showLegendPerDataset = FALSE,
   ...
 )
 }
@@ -25,6 +26,11 @@ arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yValuesLower} and \code{yValuesHigher}).}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
+
+\item{showLegendPerDataset}{Logical flag to display separate legend entries
+for observed and simulated datasets, if available. This is experimental and
+may not work reliably when both observed and simulated datasets > 1. Defaults
+to \code{FALSE}.}
 
 \item{...}{additionnal arguments to pass to \code{.extractAggregatedSimulatedData()}}
 }

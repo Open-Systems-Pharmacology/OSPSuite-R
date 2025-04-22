@@ -15,6 +15,9 @@ Otherwise, the values will be imported from the specified column (\#722)
 
 ## Minor improvements and bug fixes
 
+- Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and 
+`plotPupulationTimeProfile()` to optionally display separate legend entries for 
+each dataset. This is experimental.
 - Improved print outputs for all classes
 - Classes do not inherit from the deprecated `Printable` class from the `{ospsuite.utils}` package.
 - Print methods for all classes are now implemented using the `ospPrint\*` functions 
