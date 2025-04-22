@@ -8,7 +8,7 @@ They should not be used directly.
 
 ## Minor improvements and bug fixes
 
-- - Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and 
+- Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and 
 `plotPupulationTimeProfile()` to optionally display separate legend entries for 
 each dataset. This is experimental.
 - Improved print outputs for all classes
