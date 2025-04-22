@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -340,6 +340,7 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <span><span class="co">#&gt;   • Measurement column: Concentration (mass)[ng/ml]</span></span>
 <span><span class="co">#&gt;   • Measurement unit: ng/ml</span></span>
 <span><span class="co">#&gt;   • Measurement unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • LLOQ column: NULL</span></span>
 <span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
 <span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
 <span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
@@ -371,6 +372,7 @@ let the software “guess” the configuration for a given excel sheet:</p>
 <span><span class="co">#&gt;   • Measurement column: Concentration (mass)[ng/ml]</span></span>
 <span><span class="co">#&gt;   • Measurement unit: ng/ml</span></span>
 <span><span class="co">#&gt;   • Measurement unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • LLOQ column: NULL</span></span>
 <span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
 <span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
 <span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
@@ -404,12 +406,6 @@ following example loads the sheets <code>TestSheet_1</code> and
 <span>  xlsFilePath <span class="op">=</span> <span class="va">excelFilePath</span>,</span>
 <span>  importerConfigurationOrPath <span class="op">=</span> <span class="va">importerConfiguration_guessed</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Currently, <code>DataImporterConfiguration</code> created from
-scratch or for a specific data sheet does not support all features of
-importer configuration, such as specifying the column containing the
-molecular weight of the measured molecule or the LLOQ values. It is
-therefore recommended that you use importer configurations created in
-PK-Si or MoBi.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
