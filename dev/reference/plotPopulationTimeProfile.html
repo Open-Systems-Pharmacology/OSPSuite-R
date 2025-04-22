@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9014</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,6 +68,7 @@
 <span>  defaultPlotConfiguration <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  aggregation <span class="op">=</span> <span class="st">"quantiles"</span>,</span>
 <span>  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span><span class="op">)</span>,</span>
+<span>  showLegendPerDataset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -95,6 +96,13 @@ arithmetic or geometric average and add a set of upper and lower bounds
 
 <dt id="arg-quantiles">quantiles<a class="anchor" aria-label="anchor" href="#arg-quantiles"></a></dt>
 <dd><p>A numerical vector with quantile values (Default: <code>c(0.05, 0.50, 0.95)</code>) to be plotted. Ignored if <code>aggregation</code> is not <code>quantiles</code>.</p></dd>
+
+
+<dt id="arg-showlegendperdataset">showLegendPerDataset<a class="anchor" aria-label="anchor" href="#arg-showlegendperdataset"></a></dt>
+<dd><p>Logical flag to display separate legend entries
+for observed and simulated datasets, if available. This is experimental and
+may not work reliably when both observed and simulated datasets &gt; 1. Defaults
+to <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
