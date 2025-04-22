@@ -58,6 +58,19 @@ DataImporterConfiguration <- R6::R6Class(
       column$set("ColumnName", value)
     },
 
+    #' @field lloqColumn Name of the column for LLOQ values
+    #' If the column name is not set (value `NULL`), LLOQ values
+    #' will be imported from the measurement column if values are written in the form '< xxx' (e.g., '<0.001').
+    #' Otherwise, the values will be imported from the specified column
+    lloqColumn = function(value) {
+      column <- private$.measurementColumn()$get("MappedColumn")
+      if (missing(value)) {
+        return(column$get("LloqColumn"))
+      }
+      validateIsString(value, nullAllowed = TRUE)
+      column$set("LloqColumn", value)
+    },
+
     #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`,
     #'   dimension of the values in measurement column If
     #'   `isMeasurementUnitFromColumn` is `TRUE`, the dimension is guessed from
@@ -311,6 +324,7 @@ DataImporterConfiguration <- R6::R6Class(
           "Measurement column" = self$measurementColumn,
           "Measurement unit" = self$measurementUnit,
           "Measurement unit from column" = self$isMeasurementUnitFromColumn,
+          "LLOQ column" = self$lloqColumn,
           "Error column" = self$errorColumn,
           "Error type" = self$errorType,
           "Error unit" = self$errorUnit,

@@ -196,3 +196,12 @@ test_that("it can change naming pattern", {
   importerConfiguration$namingPattern <- "foo"
   expect_equal(importerConfiguration$namingPattern, "foo")
 })
+
+test_that("it can get and set the lloq column", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  expect_equal(importerConfiguration$lloqColumn, NULL)
+  importerConfiguration$lloqColumn <- "LLOQ"
+  expect_equal(importerConfiguration$lloqColumn, "LLOQ")
+  importerConfiguration$lloqColumn <- NULL
+  expect_equal(importerConfiguration$lloqColumn, NULL)
+})
