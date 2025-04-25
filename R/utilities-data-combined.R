@@ -167,7 +167,8 @@ calculateResiduals <- function(dataCombined,
   pairedData <- combinedData %>%
     dplyr::group_by(group) %>%
     dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
-    dplyr::ungroup()
+    dplyr::ungroup() %>%
+    dplyr::relocate(group, name, nameSimulated)
 
   return(pairedData)
 }
@@ -180,64 +181,80 @@ calculateResiduals <- function(dataCombined,
 #'
 #' @keywords internal
 .extractResidualsToTibble <- function(data, scaling) {
-  # Since the data frames will be fed to `matrix()`, make sure that data has
-  # `data.frame` class. That is, if tibbles are supplied, coerce them to a
-  # simple data frame.
-  observedData <- as.data.frame(dplyr::filter(data, dataType == "observed"))
-  simulatedData <- as.data.frame(dplyr::filter(data, dataType == "simulated"))
+  observedList <- split(dplyr::filter(data, dataType == "observed"), ~name)
+  simulatedList <- split(dplyr::filter(data, dataType == "simulated"), ~name)
 
-  # If available, error values will be useful for plotting error bars in the
-  # scatter plot. Even if not available, add missing values to be consistent.
-  if ("yErrorValues" %in% colnames(data)) {
-    yErrorValues <- data$yErrorValues[data$dataType == "observed"]
-  } else {
-    yErrorValues <- rep(NA_real_, nrow(observedData))
-  }
-
-  # Most of the columns in the observed data frame should also be included in
-  # the paired data frame for completeness.
-  pairedData <- dplyr::select(
-    observedData,
-    # Identifier column
-    name,
-    # Everything related to the X-variable
-    "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
-    # Everything related to the Y-variable
-    "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
-    # lower limit of quantification
-    "lloq"
+  obsSimPairs <- purrr::cross2(names(observedList), names(simulatedList),
+    .filter = NULL
   )
 
-  # Add predicted values
-  # the approx function with a default rule = 1 argument returns NA for extrapolated points
-  pairedData <- dplyr::mutate(pairedData,
-    "yValuesSimulated" = stats::approx(
-      simulatedData$xValues, simulatedData$yValues,
-      observedData$xValues
-    )$y
-  )
-  # Residual computation will depend on the scaling.
-  if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
-    pairedData <- dplyr::mutate(pairedData, residualValues = yValuesSimulated - yValuesObserved)
-  } else {
-    # Epsilon for safe log calculation should be converted to the units of the values
-    epsilon <- toUnit(
-      quantityOrDimension = pairedData$yDimension[[1]],
-      values = ospsuiteEnv$LOG_SAFE_EPSILON,
-      targetUnit = pairedData$yUnit[[1]],
-      molWeight = 1
+  resultList <- vector("list", length(obsSimPairs))
+
+  for (i in seq_along(obsSimPairs)) {
+    observedName <- obsSimPairs[[i]][[1]]
+    simulatedName <- obsSimPairs[[i]][[2]]
+
+    observedData <- observedList[[observedName]]
+    simulatedData <- simulatedList[[simulatedName]]
+
+
+    # If available, error values will be useful for plotting error bars in the
+    # scatter plot. Even if not available, add missing values to be consistent.
+    if ("yErrorValues" %in% colnames(data)) {
+      yErrorValues <- data$yErrorValues[data$dataType == "observed"]
+    } else {
+      yErrorValues <- rep(NA_real_, nrow(observedData))
+    }
+
+    # Most of the columns in the observed data frame should also be included in
+    # the paired data frame for completeness.
+    pairedData <- dplyr::select(
+      observedData,
+      # Identifier column
+      name,
+      # Everything related to the X-variable
+      "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+      # Everything related to the Y-variable
+      "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
+      # lower limit of quantification
+      "lloq"
     )
-    pairedData <- dplyr::mutate(pairedData, residualValues = ospsuite.utils::logSafe(yValuesSimulated, epsilon = epsilon, base = exp(1)) - ospsuite.utils::logSafe(yValuesObserved, epsilon = epsilon, base = exp(1)))
+
+    pairedData$nameSimulated <- simulatedName
+
+    # Add predicted values
+    # the approx function with a default rule = 1 argument returns NA for extrapolated points
+    pairedData$yValuesSimulated <- stats::approx(
+      x = simulatedData$xValues,
+      y = simulatedData$yValues,
+      xout = observedData$xValues,
+      rule = 1
+    )$y
+
+    # Residual computation will depend on the scaling.
+    if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
+      pairedData <- dplyr::mutate(
+        pairedData,
+        residualValues = yValuesSimulated - yValuesObserved
+      )
+    } else {
+      # Epsilon for safe log calculation should be converted to the units of the values
+      epsilon <- toUnit(
+        quantityOrDimension = pairedData$yDimension[[1]],
+        values = ospsuiteEnv$LOG_SAFE_EPSILON,
+        targetUnit = pairedData$yUnit[[1]],
+        molWeight = 1
+      )
+      pairedData$residualValues <- ospsuite.utils::logSafe(pairedData$yValuesSimulated, epsilon, base = exp(1)) -
+        ospsuite.utils::logSafe(pairedData$yValuesObserved, epsilon, base = exp(1))
+    }
+
+    # some residual values might turn out to be NA (for example, when extrapolating)
+    # they are not returned in the output tibble
+    resultList[[i]] <- dplyr::filter(pairedData, !is.na(residualValues))
   }
 
-  # some residual values might turn out to be NA (for example, when extrapolating)
-  # they are not returned in the output tibble
-  pairedData <- dplyr::filter(
-    pairedData,
-    !is.na(residualValues)
-  )
-
-  return(pairedData)
+  return(dplyr::bind_rows(resultList))
 }
 
 #' Remove unpairable datasets for computing residuals
