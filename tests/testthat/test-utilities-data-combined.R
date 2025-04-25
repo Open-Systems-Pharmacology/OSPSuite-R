@@ -32,13 +32,9 @@ test_that(
   }
 )
 
-test_that("calculateResiduals returns a dataframe", {
-  expect_true(
-    "data.frame" %in% class(calculateResiduals(myDC, scaling = "lin"))
-  )
+test_that("calculateResiduals returns a data frame", {
+  expect_s3_class(calculateResiduals(myDC, scaling = "lin"), "data.frame")
 })
-
-
 
 test_that("calculateResiduals returns expected columns", {
   expected_column_names <- c(
