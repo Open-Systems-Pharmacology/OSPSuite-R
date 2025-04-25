@@ -184,15 +184,16 @@ calculateResiduals <- function(dataCombined,
   observedList <- split(dplyr::filter(data, dataType == "observed"), ~name)
   simulatedList <- split(dplyr::filter(data, dataType == "simulated"), ~name)
 
-  obsSimPairs <- purrr::cross2(names(observedList), names(simulatedList),
-    .filter = NULL
+  obsSimPairs <- tidyr::expand_grid(
+    observedName = names(observedList),
+    simulatedName = names(simulatedList)
   )
 
-  resultList <- vector("list", length(obsSimPairs))
+  resultList <- vector("list", nrow(obsSimPairs))
 
-  for (i in seq_along(obsSimPairs)) {
-    observedName <- obsSimPairs[[i]][[1]]
-    simulatedName <- obsSimPairs[[i]][[2]]
+  for (i in seq_len(nrow(obsSimPairs))) {
+    observedName <- obsSimPairs$observedName[[i]]
+    simulatedName <- obsSimPairs$simulatedName[[i]]
 
     observedData <- observedList[[observedName]]
     simulatedData <- simulatedList[[simulatedName]]
