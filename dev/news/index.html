@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,14 +70,18 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li><p>Added <code>showLegendPerDataset</code> parameter to <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code>plotPupulationTimeProfile()</code> to optionally display separate legend entries for each dataset. This is experimental.</p></li>
-<li><p>Improved print outputs for all classes</p></li>
-<li><p>Classes do not inherit from the deprecated <code>Printable</code> class from the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</p></li>
-<li><p>Print methods for all classes are now implemented using the <code>ospPrint\*</code> functions introduced in version 1.6.2. of the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</p></li>
-<li><p><code>ParameterRange$printValue()</code> is deprecated. Use <code>getPrintValue()</code> in conjunction with a print method of your choice.</p></li>
-<li><p>Private method <code>Quantity$printQuantity()</code> removed. <code>Quantity$printValue()</code> and <code>Quantity$printQuantityValue()</code> are deprecated. Use <code>getPrintValue()</code> in conjunction with a print method of your choice.</p></li>
-<li><p><code>SnapshotParameter$printValue()</code> is deprecated. Use <code>getPrintValue()</code> in conjunction with a print method of your choice.</p></li>
-<li><p>Added snapshot tests for all print methods.</p></li>
+<ul><li>Added <code>showLegendPerDataset</code> parameter to <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code>plotPupulationTimeProfile()</code> to optionally display separate legend entries for each dataset. This is experimental.</li>
+<li>Improved print outputs for all classes</li>
+<li>Classes do not inherit from the deprecated <code>Printable</code> class from the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</li>
+<li>Print methods for all classes are now implemented using the <code>ospPrint\*</code> functions introduced in version 1.6.2. of the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</li>
+<li>
+<code>ParameterRange$printValue()</code> is deprecated. Use <code>getPrintValue()</code> in conjunction with a print method of your choice.</li>
+<li>Private method <code>Quantity$printQuantity()</code> removed. <code>Quantity$printValue()</code> and <code>Quantity$printQuantityValue()</code> are deprecated. Use <code>getPrintValue()</code> in conjunction with a print method of your choice.</li>
+<li>
+<code>SnapshotParameter$printValue()</code> is deprecated. Use <code>getPrintValue()</code> in conjunction with a print method of your choice.</li>
+<li>Added snapshot tests for all print methods.</li>
+<li>
+<code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> for <code>DataCombined</code> now supports full pairwise residual computation between multiple observed and simulated datasets within a group.</li>
 </ul></div>
 </div>
     <div class="section level2">
