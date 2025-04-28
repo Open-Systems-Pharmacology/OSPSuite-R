@@ -22,12 +22,13 @@ each dataset. This is experimental.
 - Classes do not inherit from the deprecated `Printable` class from the `{ospsuite.utils}` package.
 - Print methods for all classes are now implemented using the `ospPrint\*` functions 
 introduced in version 1.6.2. of the `{ospsuite.utils}` package.
-
 - `ParameterRange$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 -  Private method `Quantity$printQuantity()` removed. `Quantity$printValue()` and `Quantity$printQuantityValue()` are 
 deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 - `SnapshotParameter$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 - Added snapshot tests for all print methods.
+- `calculateResiduals()` for `DataCombined` now supports full pairwise residual 
+computation between multiple observed and simulated datasets within a group.
 
 # ospsuite 12.2.0
 
