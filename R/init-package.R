@@ -35,4 +35,6 @@
   rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
+
+  ospsuiteEnv$illegalCharacters <- .getIllegalCharacters()
 }

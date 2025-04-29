@@ -25,9 +25,7 @@ Simulation <- R6::R6Class(
     },
     #' @field solver SimulationSolver object for the simulation (read-only)
     solver = function(value) {
-      if (missing(value)) {
-        private$.settings$solver
-      }
+      private$.readOnlyProperty("solver", value, private$.settings$solver)
     },
     #' @field outputSchema outputSchema object for the simulation (read-only)
     outputSchema = function(value) {
@@ -40,6 +38,18 @@ Simulation <- R6::R6Class(
     #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
+    },
+    #' @field name Name of the simulation
+    name = function(value) {
+      if (missing(value)) {
+        return(self$get("Name"))
+      } else {
+        # Check for illegal characters
+        if (any(stringr::str_detect(value, paste0("[", getOSPSuiteSetting("illegalCharacters"), "]")))) {
+          stop(messages$illegalCharactersInName(value))
+        }
+        self$set("Name", value)
+      }
     }
   ),
   public = list(
