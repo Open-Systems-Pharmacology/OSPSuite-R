@@ -233,17 +233,18 @@ test_that("It retrieves simulation results of an individual simulation after cha
   expect_no_error(resultValues <- getOutputValues(
     simulationResults = res[[1]],
     quantitiesOrPaths = res[[1]]$allQuantityPaths
-  )
-  )
+  ))
 })
 
-test_that("It retrieves simulation results of an individual simulation after changing simulation name", {
+test_that("It retrieves simulation results of a population simulation after changing simulation name", {
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
+  population <- loadPopulation(csvPopulationFile = populationFileName)
   sim$name <- "foo"
 
-  simResults <- runSimulations(sim)
-  resultValues <- getOutputValues(
+  simResults <- runSimulations(sim, population = population)
+  expect_no_error(resultValues <- getOutputValues(
     simulationResults = simResults[[1]],
     quantitiesOrPaths = simResults[[1]]$allQuantityPaths
-  )
+  ))
 })
