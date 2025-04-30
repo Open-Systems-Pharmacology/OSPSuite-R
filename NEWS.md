@@ -30,7 +30,7 @@ deprecated. Use `getPrintValue()` in conjunction with a print method of your cho
 - `calculateResiduals()` for `DataCombined` now supports full pairwise residual 
 computation between multiple observed and simulated datasets within a group.
 - Added a new property `illegalCharacters` that can be retrieved with `getOSPSuiteSetting("illegalCharacters")` 
-to get the list characters that are not allowed to be used in simulation names.
+to get the list of characters that are not allowed to be used in simulation names.
 - The `name` property of a `Simulation` can now be changed (#1245)
 
 # ospsuite 12.2.0
