@@ -57,7 +57,7 @@ test_that("It can set a new name to the simulation", {
   expect_equal(sim$name, newName)
 })
 
-# test_that("It throws an error when trying to set a new name with illegal characters", {
-#   newName <- "NewName|"
-#   expect_error(sim$name <- newName, messages$illegalCharactersInName(newName))
-# })
+test_that("It throws an error when trying to set a new name with illegal characters", {
+  newName <- "NewName|"
+  expect_error(sim$name <- newName, messages$illegalCharactersInName(newName))
+})
