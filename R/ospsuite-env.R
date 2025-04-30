@@ -51,6 +51,8 @@ ospsuiteEnv$isPKSimLoaded <- FALSE
 # Small value added to zero when calculating log
 ospsuiteEnv$LOG_SAFE_EPSILON <- 1e-20
 
+ospsuiteEnv$illegalCharacters <- NULL
+
 #' Names of the settings stored in ospsuiteEnv. Can be used with `getOSPSuiteSetting()`
 #' @include utilities.R
 #' @export

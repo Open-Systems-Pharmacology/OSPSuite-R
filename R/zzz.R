@@ -14,5 +14,6 @@
   }
 
   .initPackage()
+  ospsuiteEnv$illegalCharacters <- .getIllegalCharacters()
 }
 # nocov end
