@@ -47,7 +47,8 @@ Simulation <- R6::R6Class(
         return(self$get("Name"))
       } else {
         # Check for illegal characters
-        if (any(stringr::str_detect(value, paste0("[", getOSPSuiteSetting("illegalCharacters"), "]")))) {
+        illegalChars <- .getIllegalCharacters()
+        if (any(stringr::str_detect(value, paste0("[", illegalChars, "]")))) {
           stop(messages$illegalCharactersInName(value))
         }
         self$set("Name", value)
