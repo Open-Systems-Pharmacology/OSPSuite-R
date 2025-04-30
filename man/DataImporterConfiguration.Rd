@@ -25,6 +25,11 @@ the value of \code{timeUnit}.}
 
 \item{\code{measurementColumn}}{Name of the column for measurement values}
 
+\item{\code{lloqColumn}}{Name of the column for LLOQ values
+If the column name is not set (value \code{NULL}), LLOQ values
+will be imported from the measurement column if values are written in the form '< xxx' (e.g., '<0.001').
+Otherwise, the values will be imported from the specified column}
+
 \item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE},
 dimension of the values in measurement column If
 \code{isMeasurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from

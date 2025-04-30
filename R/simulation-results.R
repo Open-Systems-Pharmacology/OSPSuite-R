@@ -51,7 +51,6 @@ SimulationResults <- R6::R6Class(
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
       values <- self$call("AllValuesFor", path, as.integer(individualIds))
-
       if (all(is.nan(values)) && stopIfNotFound) {
         stop(messages$errorResultNotFound(path, individualIds))
       }

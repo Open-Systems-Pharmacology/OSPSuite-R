@@ -97,3 +97,15 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   rSharp::callStatic("OSPSuite.R.Api", "ForceGC")
   invisible()
 }
+
+#' Get characters that are not allowed in simulation naming.
+#'
+#' The characteres are extracted from OSPSuite.Core.Domain.Constants.ILLEGAL_CHARACTERS
+#'
+#' @returns A vector of characters.
+#' @noRd
+.getIllegalCharacters <- function() {
+  netList <- rSharp::getStatic("OSPSuite.Core.Domain.Constants", "ILLEGAL_CHARACTERS")
+
+  return(netList$call("ToArray"))
+}

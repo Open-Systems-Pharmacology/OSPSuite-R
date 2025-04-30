@@ -40,6 +40,19 @@ Simulation <- R6::R6Class(
     #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
+    },
+    #' @field name Name of the simulation
+    name = function(value) {
+      if (missing(value)) {
+        return(self$get("Name"))
+      } else {
+        # Check for illegal characters
+        illegalChars <- .getIllegalCharacters()
+        if (any(stringr::str_detect(value, paste0("[", illegalChars, "]")))) {
+          stop(messages$illegalCharactersInName(value))
+        }
+        self$set("Name", value)
+      }
     }
   ),
   public = list(

@@ -24,6 +24,8 @@ An OSPSuite simulation
 \item{\code{outputSelections}}{outputSelections object for the simulation (read-only)}
 
 \item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
+
+\item{\code{name}}{Name of the simulation}
 }
 \if{html}{\out{</div>}}
 }

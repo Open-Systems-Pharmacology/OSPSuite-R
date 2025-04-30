@@ -224,3 +224,27 @@ test_that("simulationResultsToDataFrame with lists", {
   simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
   expect_error(simulationResultsToDataFrame(simulationResults))
 })
+
+test_that("It retrieves simulation results of an individual simulation after changing simulation name", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim$name <- "foo"
+
+  res <- runSimulations(sim)
+  expect_no_error(resultValues <- getOutputValues(
+    simulationResults = res[[1]],
+    quantitiesOrPaths = res[[1]]$allQuantityPaths
+  ))
+})
+
+test_that("It retrieves simulation results of a population simulation after changing simulation name", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
+  population <- loadPopulation(csvPopulationFile = populationFileName)
+  sim$name <- "foo"
+
+  simResults <- runSimulations(sim, population = population)
+  expect_no_error(resultValues <- getOutputValues(
+    simulationResults = simResults[[1]],
+    quantitiesOrPaths = simResults[[1]]$allQuantityPaths
+  ))
+})
