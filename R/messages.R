@@ -85,3 +85,11 @@ messages$valueNotPositive <- function(value, propertyName) {
 messages$molWeightErrorMessage <- function(quantityPath) {
   paste0("Unable to retrieve the molecular weight for: ", quantityPath)
 }
+
+messages$illegalCharactersInName <- function(name) {
+  paste0("The name '", name, "' contains illegal characters. Illegal characters are: '", paste0(.getIllegalCharacters(), collapse = ", "), "'.")
+}
+
+messages$forbiddenSimulationName <- function(name, sim) {
+  paste0("The name '", name, "' is not allowed for this simulation. Forbidden names for this simulation are: '", paste0(.getIllegalSimulationNames(sim), collapse = ", "), "'.")
+}

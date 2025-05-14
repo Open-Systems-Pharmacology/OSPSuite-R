@@ -40,6 +40,33 @@ Simulation <- R6::R6Class(
     #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
+    },
+    #' @field name Name of the simulation
+    name = function(value) {
+      if (missing(value)) {
+        return(self$get("Name"))
+      } else {
+        validateIsString(value)
+        # Trim the name of ws
+        value <- trimws(value, which = "both")
+        # Check if the name actually changes
+        if (self$name == value) {
+          return(invisible(self))
+        }
+
+        # Check for forbidden names
+        forbiddenNames <- .getIllegalSimulationNames(self)
+        if (value %in% forbiddenNames) {
+          stop(messages$forbiddenSimulationName(value, self))
+        }
+
+        # Check for illegal characters
+        illegalChars <- .getIllegalCharacters()
+        if (any(stringr::str_detect(value, paste0("[", illegalChars, "]")))) {
+          stop(messages$illegalCharactersInName(value))
+        }
+        self$set("Name", value)
+      }
     }
   ),
   public = list(
