@@ -109,3 +109,21 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
 
   return(netList$call("ToArray"))
 }
+
+#' Get illegal simulation names
+#'
+#' Illegal names are the names of all direct child containers of the top container of the simulation,
+#' plus the reserved word `MoleculeProperties`.
+#'
+#' @param sim A `Simulation` object.
+#'
+#' @returns A vector of illegal names.
+#' @noRd
+.getIllegalSimulationNames <- function(sim) {
+  # Get all direct child containers of the top container of the simulation
+  topContainer <- getAllContainersMatching("*", sim)
+  # Extract the paths
+  illegalNames <- sapply(topContainer, function(x) x$path)
+  # Add the keyword `MoleculeProperties` to the list of illegal names
+  illegalNames <- c(illegalNames, "MoleculeProperties")
+}

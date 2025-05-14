@@ -248,3 +248,9 @@ test_that("It retrieves simulation results of a population simulation after chan
     quantitiesOrPaths = simResults[[1]]$allQuantityPaths
   ))
 })
+
+test_that("It throws an error when trying to change the name of the simulation to a forbidden name", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  expect_error(sim$name <- "MoleculeProperties", regexp = messages$forbiddenSimulationName("MoleculeProperties", sim))
+  expect_error(sim$name <- "CYP3A4", regexp = messages$forbiddenSimulationName("CYP3A4", sim))
+})

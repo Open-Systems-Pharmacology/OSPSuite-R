@@ -46,6 +46,20 @@ Simulation <- R6::R6Class(
       if (missing(value)) {
         return(self$get("Name"))
       } else {
+        validateIsString(value)
+        # Trim the name of ws
+        value <- trimws(value, which = "both")
+        # Check if the name actually changes
+        if (self$name == value) {
+          return(invisible(self))
+        }
+
+        # Check for forbidden names
+        forbiddenNames <- .getIllegalSimulationNames(self)
+        if (value %in% forbiddenNames) {
+          stop(messages$forbiddenSimulationName(value, self))
+        }
+
         # Check for illegal characters
         illegalChars <- .getIllegalCharacters()
         if (any(stringr::str_detect(value, paste0("[", illegalChars, "]")))) {
