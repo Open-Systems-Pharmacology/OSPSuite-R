@@ -64,7 +64,7 @@ deleteInitialConditions <- function(icBuildingBlock,
 #' @param moleculeNames Optional list of molecule names. If provided, only the molecules
 #' with these names will be added to the `icBuildingBlock`.
 #'
-#' @returns Path of entries added to the building block.
+#' @returns Paths of entries added to the building block.
 #' @export
 #'
 #' @examples
@@ -91,12 +91,14 @@ extendInitialConditions <- function(icBuildingBlock,
 #' @param dimensions A single dimension or a list of dimensions (string names)
 #' of parameter values. Supported dimensions are listed in `ospDimension`. By default,
 #' new entries get the `Dimensionless` dimension.
+#' @param quantityValues A list of values for the quantities. The length of this list should be equal to the length of `quantityPaths`.
 #'
 #' @export
 #'
 #' @examples
 setParameterValues <- function(pvBuildingBlock,
                                  quantityPaths,
+                               quantityValues,
                                dimensions = ospDimensions$Dimensionless,
                                  formula = NULL){
 
@@ -147,15 +149,20 @@ addLocalMoleculeParameters <- function(pvBuildingBlock,
 #' Option 2 - provide a spatial structure and then define organ paths. Entries will
 #' be created for all sub-organs.
 #'
-#' @param icBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
+#' TBD: Is a molecules BB required? Or just molecule names?
+#'
 #' @param spatialStructureBB A `BuildingBlock` object of type `Spatial Structure`.
 #' Entries will be created for the selected molecules in all physical containers of this
 #' spatial structure.
 #' @param moleculesBB A `BuildingBlock` object of type `Molecules`. The entries will be
-#' created for all molecules from this building block, or for a subset of molecules
+#' created for all proteins from this building block, or for a subset of protein molecules
 #' defined in the `moleculeNames` argument.
-#' @param moleculeNames Optional list of molecule names. If provided, only the molecules
-#' with these names will be added to the `icBuildingBlock`.
+#' @param moleculeNames Optional list of protein molecule names. If provided, only the molecules
+#' with these names will be added to the `pvBuildingBlock`.
+#' @param pvBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
+#' @param organPaths A vector of paths to the organs for which the expression paramters
+#' will be created. If any of the provided path is not an organ, an error is thrown.
+#' If `NULL` (default), the function will use all organs from the spatial structure.
 #'
 #' @returns Path of entries added to the building block.
 #' @export
@@ -163,6 +170,7 @@ addLocalMoleculeParameters <- function(pvBuildingBlock,
 #' @examples
 addProteinExpressionToParameterValuesBB <- function(pvBuildingBlock,
                                     spatialStructureBB,
+                                    organPaths = NULL,
                                     moleculesBB,
                                     moleculeNames = NULL){
 }

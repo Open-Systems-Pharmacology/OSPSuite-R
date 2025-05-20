@@ -119,7 +119,7 @@ select the expression profiles "UDPGT1|Human|Healthy", "DIO1|Human|Healthy", "DI
 module "Thyroid":
 
 ```{r createSimulationFromProject}
-sim1 <- createSimulation(simulationName = "Thyroid_QST_rat", 
+sim1 <- myProject$createSimulation(simulationName = "Thyroid_QST_rat", 
                          modulesNames = c("Thyroid_QST",
                                           "Rat physiology",
                                           "Thyroid",
@@ -144,7 +144,7 @@ create a simulation using the modules from the project as in the example before,
 but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will
 be created.
 
-```{r createSimulationFromModules}
+```{r extractModulesAndCreateIndividual}
 # Get modules from the project
 modules <- myProject$getModules()
 # Get the expression profiles from the project
@@ -193,20 +193,74 @@ thyroidModule <- loadModuleFromPKML(system.file("extdata", "Thyroid.pkml", packa
 ```
 
 Then we extend the initial conditions BB of the loaded module by molecules defined 
-in the other modules of our project:
+in other modules of our project:
 
 ```{r extendICBB}
 # Get the IC BB from the Thyroid module
 icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
 newPaths <- extendInitialConditions(icBB,
-                                    spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure")[[1]],
-                                    moleculesBB = thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]],
-                                    moleculeNames = NULL
+                                    spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
+                                    moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
+                                    moleculeNames = c("DIO1", "T3", "T4", "TSH")
+)
 ```
 
-# create simulation with new individual
-# create simulation with new expression profiles
-# Create individuals
-# Create expression profiles
+The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module 
+"Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles,
+parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()`
+function: 
+
+```{r addProteinExpressionToPVBB}
+# Get the PV BB from the Thyroid module
+pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
+# Add protein expression to the PV BB
+proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(pvBB,
+                                                                  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
+                                                                  moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
+                                                                  moleculeNames = c("DIO1")
+)
+
+# EXPECTED BEHAVIOR
+proteinExpressionPaths <- c("Organism|Thyroid|Plasma|DIO1|Initial concentration",
+                            "Organism|Thyroid|BloodCells|DIO1|Initial concentration",
+                            "Organism|Thyroid|Interstitial|DIO1|Initial concentration",
+                            "Organism|Thyroid|Intracellular|DIO1|Initial concentration",
+                            "Organism|Thyroid|Endosome|DIO1|Initial concentration",
+                            "Organism|Thyroid|Lumen|DIO1|Initial concentration",
+                            "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",
+                            "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",
+                            "Organism|Thyroid|Intracellular|DIO1|Relative expression"
+)
+```
+
+and overwrite the value of "Relative expression":
+
+```{r setRelativeExpressionValue}
+setParameterValues(pvBuildingBlock = pvBB,
+                                 quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
+                               dimensions = ospDimensions$Fraction,
+                   quantityValues = 1.33)
+```
+
+Finally, we can create a simulation from the modules and the individual we created:
+
+```{r createSimulationFromModules}
+simulationHuman <- createSimulationFromModules(simulationName = "Thyroid_QST_human",
+                                            modules = c(modules[["Thyroid_QST"]],
+                                                        thyroidModule,
+                                                        modules[["Pituitary"]],
+                                                        modules[["Endogenous_TH"]],
+                                                        modules[["TH_activeTransports"]],
+                                                        modules[["TH_plasma_binding"]]),
+                                          
+                                            individual = myIndividual,
+                                            expressionProfiles = expressionProfiles,
+                                            selectedParameterValues = list("Thyroid" = "Human")
+)
+```
+
+Expression profile BBs cannot be created from R but can be loaded from PKML. (Tier 3 or so).
+
 # selecting calculation methods for molecules!!!!
+# create simulations based on configurations from a project, e.g., by exchangin one of the modules, or modifying it

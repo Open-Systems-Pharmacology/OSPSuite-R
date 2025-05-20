@@ -4,7 +4,7 @@
 #' ARE INDIVIDUAL AND EXPRESSION PROFILE ALSO A BB TYPE?
 #'
 #' @export
-BuildingBlockTypes <- enum("Spatial Structure",
+BuildingBlockTypes <- enum(c("Spatial Structure",
                            "Reactions",
                            "Molecules",
                            "Passive Transports",
@@ -14,7 +14,7 @@ BuildingBlockTypes <- enum("Spatial Structure",
                            "Parameter Values",
                            "Expression Profile",
                            "Individual"
-)
+))
 
 
 #' @title Building block # ONLY MOBI BBs, or should we consider having PK-Sim BBs as pkml export in the future?
