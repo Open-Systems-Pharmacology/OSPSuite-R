@@ -29,6 +29,7 @@ deprecated. Use `getPrintValue()` in conjunction with a print method of your cho
 - Added snapshot tests for all print methods.
 - `calculateResiduals()` for `DataCombined` now supports full pairwise residual 
 computation between multiple observed and simulated datasets within a group.
+- The `name` property of a `Simulation` can now be changed (#1245)
 
 # ospsuite 12.2.0
 
