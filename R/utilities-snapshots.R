@@ -15,21 +15,43 @@
 #' \dontrun{
 #' runSimulationsFromSnapshot("path/to/my_snapshot.json", csv = TRUE, pkml = TRUE)
 #' }
-runSimulationsFromSnapshot <- function(..., output = ".", RunForAllOutputs = FALSE, exportCSV = TRUE, exportPKML = FALSE, exportJSON = FALSE, exportXML = FALSE) {
-  ospsuite.utils::validateIsLogical(object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs))
+runSimulationsFromSnapshot <- function(
+  ...,
+  output = ".",
+  RunForAllOutputs = FALSE,
+  exportCSV = TRUE,
+  exportPKML = FALSE,
+  exportJSON = FALSE,
+  exportXML = FALSE
+) {
+  if (Sys.info()[["sysname"]] == "Darwin") {
+    cli::cli_abort(
+      "runSimulationsFromSnapshot is currently not supported on macOS."
+    )
+  }
+
+  ospsuite.utils::validateIsLogical(
+    object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs)
+  )
   ospsuite.utils::validateIsCharacter(object = c(..., output))
 
   paths_exist <- file.exists(c(..., output))
   if (!all(paths_exist)) {
     missing_paths <- c(..., output)[!paths_exist]
-    cli::cli_abort(message = c("x" = "Some of the paths provided do not exist: {.file {missing_paths}}"))
+    cli::cli_abort(
+      message = c(
+        "x" = "Some of the paths provided do not exist: {.file {missing_paths}}"
+      )
+    )
   }
 
   initPKSim()
 
   temp_dir <- .gatherFiles(c(...))
 
-  JsonRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.JsonRunOptions")
+  JsonRunOptions <- rSharp::newObjectFromName(
+    "PKSim.CLI.Core.RunOptions.JsonRunOptions"
+  )
   JsonRunOptions$set("InputFolder", temp_dir)
   JsonRunOptions$set("OutputFolder", normalizePath(output))
   JsonRunOptions$set("RunForAllOutputs", RunForAllOutputs)
@@ -109,13 +131,19 @@ runSimulationsFromSnapshot <- function(..., output = ".", RunForAllOutputs = FAL
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
 convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
+  if (sys.info()[["sysname"]] == "Darwin") {
+    cli::cli_abort("runSimulations is currently not supported on macOS.")
+  }
+
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
   initPKSim()
 
   temp_dir <- .gatherFiles(c(...))
 
-  SnapshotRunOptions <- rSharp::newObjectFromName("PKSim.CLI.Core.RunOptions.SnapshotRunOptions")
+  SnapshotRunOptions <- rSharp::newObjectFromName(
+    "PKSim.CLI.Core.RunOptions.SnapshotRunOptions"
+  )
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
 
@@ -141,7 +169,11 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 
   tryCatch(
     {
-      invisible(rSharp::callStatic("PKSim.R.Api", "RunSnapshot", SnapshotRunOptions))
+      invisible(rSharp::callStatic(
+        "PKSim.R.Api",
+        "RunSnapshot",
+        SnapshotRunOptions
+      ))
     },
     error = function(e) {
       message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
@@ -172,9 +204,8 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
         file.copy(from = file, to = temp_dir)
       }
       next
-    }
-    # if the element is a file, copy it to the temp directory
-    else if (file.exists(element)) {
+    } else if (file.exists(element)) {
+      # if the element is a file, copy it to the temp directory
       file.copy(from = element, to = temp_dir)
       next
     }
