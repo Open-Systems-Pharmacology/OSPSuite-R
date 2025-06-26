@@ -80,21 +80,14 @@ jobs:
 
       - name: Copy artifacts
         run: |
-          mkdir -p inst/lib/arm64
-          mkdir -p inst/lib/x86_64
-          cp artifacts/System.Data.SQLite.dll inst/lib/
-          cp artifacts/System.Data.SQLite.pdb inst/lib/
-          cp artifacts/arm64/SQLite.Interop.mac.dylib inst/lib/arm64/
-          cp artifacts/x86_64/SQLite.Interop.mac.dylib inst/lib/x86_64/
+          mkdir -p inst/lib
+          cp artifacts/System.Data.SQLite.dll inst/lib/System.Data.SQLite.mac.dll
+          cp artifacts/arm64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.arm64.dylib
+          cp artifacts/x86_64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.x64.dylib
 
       - name: Commit and push changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add inst/lib
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "build: update SQLite libraries for macOS" -m "- Built SQLite for arm64 and x86_64 on macOS." -m "- Added managed and native libraries to inst/lib."
-            git push
-          fi 
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'build: update SQLite libraries for macOS'
+          add: 'inst/lib'
+          token: ${{ secrets.token }} 
