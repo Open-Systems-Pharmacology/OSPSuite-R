@@ -11,10 +11,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout OSPSuite-R repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.token }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
