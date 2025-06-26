@@ -131,7 +131,7 @@ runSimulationsFromSnapshot <- function(
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
 convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
-  if (sys.info()[["sysname"]] == "Darwin") {
+  if (Sys.info()[["sysname"]] == "Darwin") {
     cli::cli_abort("runSimulations is currently not supported on macOS.")
   }
 
