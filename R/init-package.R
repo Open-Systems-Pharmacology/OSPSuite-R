@@ -6,44 +6,89 @@
 #' @import rSharp
 #' @keywords internal
 .initPackage <- function() {
+  libDir <- system.file("lib", package = ospsuiteEnv$packageName)
+  # Rename platform-specific SQLite dll
+  targetDll <- file.path(libDir, "System.Data.SQLite.dll")
+
+  if (Sys.info()[["sysname"]] == "Darwin") {
+    macDll <- file.path(libDir, "System.Data.SQLite.mac.dll")
+    file.copy(macDll, targetDll, overwrite = TRUE)
+  } else {
+    othersDll <- file.path(libDir, "System.Data.SQLite.others.dll")
+    file.copy(othersDll, targetDll, overwrite = TRUE)
+  }
+
   filePathFor <- function(name) {
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
 
-
   # Make .dll binaries available on windows by extending PATH
   if (.Platform$OS.type == "windows") {
-    Sys.setenv(PATH = paste(system.file("lib", package = ospsuiteEnv$packageName),
-                            Sys.getenv("PATH"),
-                            sep = ";"
-    ))
+    Sys.setenv(
+      PATH = paste(
+        system.file("lib", package = ospsuiteEnv$packageName),
+        Sys.getenv("PATH"),
+        sep = ";"
+      )
+    )
   }
 
   if (.Platform$OS.type == "unix") {
-
-    if (Sys.info()[['sysname']] == "Linux"){
+    if (Sys.info()[['sysname']] == "Linux") {
       # Load the .so binary files on unix/linux
-      for (soFile in list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = "\\.so$", full.names = TRUE)) {
+      for (soFile in list.files(
+        system.file("lib", package = ospsuiteEnv$packageName),
+        pattern = "\\.so$",
+        full.names = TRUE
+      )) {
         dyn.load(soFile)
       }
-    } else if(Sys.info()[['sysname']] == "Darwin"){
+    } else if (Sys.info()[['sysname']] == "Darwin") {
+      # Handle SQLite interop separately
+      lib_path <- system.file("lib", package = ospsuiteEnv$packageName)
+      sqlite_interop_target_name <- "SQLite.Interop.dll.dylib"
+      sqlite_interop_target_path <- file.path(
+        lib_path,
+        sqlite_interop_target_name
+      )
 
-      # if ARM64 architecture, rename *Arm64.dylib files into *.dylib
       if (Sys.info()[['machine']] == "arm64") {
-        for (arm64File in list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = "Arm64.dylib$", full.names = TRUE)) {
-          file.copy(arm64File, gsub(".Arm64.dylib", ".dylib", arm64File),overwrite = TRUE)
+        sqlite_interop_source_name <- "SQLite.Interop.arm64.dylib"
+        sqlite_interop_source_path <- file.path(
+          lib_path,
+          sqlite_interop_source_name
+        )
+        if (file.exists(sqlite_interop_source_path)) {
+          file.copy(
+            sqlite_interop_source_path,
+            sqlite_interop_target_path,
+            overwrite = TRUE
+          )
         }
-      }
-      # if x64 architecture, rename *x64.dylib files to *.dylib
-      else if (Sys.info()[['machine']] == "x86_64") {
-        for (x64File in list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = "x64.dylib$", full.names = TRUE)) {
-          file.copy(x64File, gsub(".x64.dylib", ".dylib",  x64File), overwrite = TRUE)
+      } else if (Sys.info()[['machine']] == "x86_64") {
+        sqlite_interop_source_name <- "SQLite.Interop.64.dylib"
+        sqlite_interop_source_path <- file.path(
+          lib_path,
+          sqlite_interop_source_name
+        )
+        if (file.exists(sqlite_interop_source_path)) {
+          file.copy(
+            sqlite_interop_source_path,
+            sqlite_interop_target_path,
+            overwrite = TRUE
+          )
         }
       }
 
       # Load the .dylib (not x64.dylib nor Arm64.dylib) binary files on mac
-      dylibFile <- list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = ".dylib$", full.names = TRUE)
-      filtered_dylibFile <- dylibFile[!grepl("\\.(x64|Arm64)\\.dylib$", dylibFile)]
+      dylibFile <- list.files(
+        system.file("lib", package = ospsuiteEnv$packageName),
+        pattern = ".dylib$",
+        full.names = TRUE
+      )
+      filtered_dylibFile <- dylibFile[
+        !grepl("\\.(x64|Arm64)\\.dylib$", dylibFile)
+      ]
       for (dylibFile in filtered_dylibFile) {
         dyn.load(dylibFile)
       }

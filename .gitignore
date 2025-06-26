@@ -54,3 +54,9 @@ tests/testthat/*.pdf
 
 # Files renamed during package load (on macos)
 inst/lib/*dylib
+inst/lib/SQLite.Interop.dll.dylib
+inst/lib/System.Data.SQLite.dll
+
+# Don't ignore these files
+!inst/lib/SQLite.Interop.x64.dylib
+!inst/lib/SQLite.Interop.Arm64.dylib
