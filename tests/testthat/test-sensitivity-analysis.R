@@ -44,5 +44,5 @@ test_that("It can add a multiple parameter paths", {
 
 test_that("It can print a sensitivity analysis", {
   sa <- SensitivityAnalysis$new(simple)
-  expect_error(capture.output(sa$print()), NA)
+  expect_snapshot(sa$print())
 })

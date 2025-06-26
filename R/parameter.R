@@ -60,13 +60,14 @@ Parameter <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printQuantity()
-      private$.printLine("isStateVariable", self$isStateVariable)
+      super$print()
       if (self$isStateVariable) {
-        private$.printLine("RHSFormula", "")
-        private$.printLine("------- ", "-------")
+        ospsuite.utils::ospPrintHeader("State variable", level = 2)
+        ospsuite.utils::ospPrintItems(list(
+          "isStateVariable" = self$isStateVariable
+        ))
+        ospsuite.utils::ospPrintHeader("RHSFormula", level = 3)
         self$rhsFormula$printFormula()
-        private$.printLine("------- ", "-------")
       }
     }
   )

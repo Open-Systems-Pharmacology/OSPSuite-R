@@ -58,6 +58,19 @@ DataImporterConfiguration <- R6::R6Class(
       column$set("ColumnName", value)
     },
 
+    #' @field lloqColumn Name of the column for LLOQ values
+    #' If the column name is not set (value `NULL`), LLOQ values
+    #' will be imported from the measurement column if values are written in the form '< xxx' (e.g., '<0.001').
+    #' Otherwise, the values will be imported from the specified column
+    lloqColumn = function(value) {
+      column <- private$.measurementColumn()$get("MappedColumn")
+      if (missing(value)) {
+        return(column$get("LloqColumn"))
+      }
+      validateIsString(value, nullAllowed = TRUE)
+      column$set("LloqColumn", value)
+    },
+
     #' @field measurementDimension If `isMeasurementUnitFromColumn` is `FALSE`,
     #'   dimension of the values in measurement column If
     #'   `isMeasurementUnitFromColumn` is `TRUE`, the dimension is guessed from
@@ -302,21 +315,25 @@ DataImporterConfiguration <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Time column", self$timeColumn)
-      private$.printLine("Time unit", self$timeUnit)
-      private$.printLine("Time unit from column", self$isTimeUnitFromColumn)
-      private$.printLine("Measurement column", self$measurementColumn)
-      private$.printLine("Measurement unit", self$measurementUnit)
-      private$.printLine("Measurement unit from column", self$isMeasurementUnitFromColumn)
-      private$.printLine("Error column", self$errorColumn)
-      private$.printLine("Error type", self$errorType)
-      private$.printLine("Error unit", self$errorUnit)
-      private$.printLine("Grouping columns", self$groupingColumns)
-      private$.printLine("Sheets", self$sheets)
-      private$.printLine("Naming pattern", self$namingPattern)
-
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Time column" = self$timeColumn,
+          "Time unit" = self$timeUnit,
+          "Time unit from column" = self$isTimeUnitFromColumn,
+          "Measurement column" = self$measurementColumn,
+          "Measurement unit" = self$measurementUnit,
+          "Measurement unit from column" = self$isMeasurementUnitFromColumn,
+          "LLOQ column" = self$lloqColumn,
+          "Error column" = self$errorColumn,
+          "Error type" = self$errorType,
+          "Error unit" = self$errorUnit,
+          "Grouping columns" = self$groupingColumns,
+          "Sheets" = self$sheets,
+          "Naming pattern" = self$namingPattern
+        ),
+        print_empty = TRUE
+      )
     }
   ),
   private = list(

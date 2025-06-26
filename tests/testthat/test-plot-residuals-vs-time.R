@@ -15,7 +15,7 @@ simResults <- importResultsFromCSV(
 # import observed data (will return a list of DataSet objects)
 dataSet <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfigurationOrPath = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
 )
 
 # create a new instance and add datasets

@@ -33,5 +33,5 @@ test_that("it retrives the meta data associated with the data repository", {
 })
 
 test_that("it can print a data repository", {
-  expect_error(capture.output(print(obsData)), regexp = NA)
+  expect_snapshot(print(obsData))
 })

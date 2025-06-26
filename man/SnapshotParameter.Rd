@@ -25,13 +25,15 @@ A parameter typically used in the definition of \code{IndividualCharacteristics}
 \item \href{#method-SnapshotParameter-new}{\code{SnapshotParameter$new()}}
 \item \href{#method-SnapshotParameter-print}{\code{SnapshotParameter$print()}}
 \item \href{#method-SnapshotParameter-printValue}{\code{SnapshotParameter$printValue()}}
+\item \href{#method-SnapshotParameter-getPrintValue}{\code{SnapshotParameter$getPrintValue()}}
 }
 }
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="finalize"><a href='../../rSharp/html/NetObject.html#method-NetObject-finalize'><code>rSharp::NetObject$finalize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
@@ -89,7 +91,7 @@ Print the object to the console
 \if{html}{\out{<a id="method-SnapshotParameter-printValue"></a>}}
 \if{latex}{\out{\hypertarget{method-SnapshotParameter-printValue}{}}}
 \subsection{Method \code{printValue()}}{
-Print the the parameter in one line
+Print the parameter in one line
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$printValue(caption)}\if{html}{\out{</div>}}
 }
@@ -100,6 +102,19 @@ Print the the parameter in one line
 \item{\code{caption}}{Caption to display before the value of the parameter}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SnapshotParameter-getPrintValue"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-getPrintValue}{}}}
+\subsection{Method \code{getPrintValue()}}{
+Return a string for printing the parameter in one line
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$getPrintValue()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string for printing the parameter in one line
 }
 }
 }

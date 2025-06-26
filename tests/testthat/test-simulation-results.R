@@ -5,6 +5,10 @@ simResults <- runSimulations(sim)[[1]]
 
 resultsPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 
+test_that("It can print simulation results", {
+  expect_snapshot(simResults$print())
+})
+
 test_that("It returns TRUE if results for an individual exist", {
   expect_true(simResults$hasResultsForIndividual(0))
 })
@@ -67,8 +71,4 @@ test_that("It can retrieve the list of all individual ids", {
 
 test_that("It throws an error when trying to set individual ids", {
   expect_error(simResults$allIndividualIds <- c(0, 1, 2))
-})
-
-test_that("It can print simulation results", {
-  expect_error(capture.output(simResults$print()), NA)
 })

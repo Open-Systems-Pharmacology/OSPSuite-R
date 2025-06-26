@@ -34,6 +34,9 @@ ParameterRange <- R6::R6Class(
       validateIsNumeric(min, nullAllowed = TRUE)
       validateIsNumeric(max, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
+      # Assuming that if this function is called directly, PK-Sim was either initialized already
+      # or should be initialized automatically
+      initPKSim()
       netObject <- netObject %||% rSharp::newObjectFromName("PKSim.Core.Snapshots.ParameterRange")
       super$initialize(netObject)
       # Because of weird issue with nullable value in rClr
@@ -52,19 +55,35 @@ ParameterRange <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Min", self$min)
-      private$.printLine("Max", self$max)
-      private$.printLine("Unit", self$unit)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Min" = self$min,
+          "Max" = self$max,
+          "Unit" = self$unit
+        ),
+        print_empty = TRUE
+      )
     },
     #' @description
-    #' Print the the parameter in one line
+    #' Print  the parameter in one line
     #' @param caption Caption to display before the value of the parameter
     printValue = function(caption) {
+      lifecycle::deprecate_warn(
+        when = "12.2.0.9006",
+        what = I("ospsuite::ParameterRange$printValue()"),
+        with = I("ospsuite::ParameterRange$getPrintValue()")
+      )
+      caption <- print(paste0(caption, ": ", minDisplay, "..", maxDisplay))
+    },
+
+    #' @description
+    #' Return a string for printing the parameter in one line
+    #' @return A string for printing the parameter in one line
+    getPrintValue = function() {
       minDisplay <- if (is.null(self$min)) "]-Inf" else paste0("[", formatNumerics(self$min), " ", self$unit)
       maxDisplay <- if (is.null(self$max)) "+Inf[" else paste0(formatNumerics(self$max), " ", self$unit, "]")
-      private$.printLine(caption, paste0(minDisplay, "..", maxDisplay))
+      return(paste0(minDisplay, "..", maxDisplay))
     }
   )
 )

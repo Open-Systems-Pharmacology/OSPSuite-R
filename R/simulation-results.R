@@ -51,7 +51,6 @@ SimulationResults <- R6::R6Class(
       validateIsNumeric(individualIds)
       individualIds <- c(individualIds)
       values <- self$call("AllValuesFor", path, as.integer(individualIds))
-
       if (all(is.nan(values)) && stopIfNotFound) {
         stop(messages$errorResultNotFound(path, individualIds))
       }
@@ -75,9 +74,11 @@ SimulationResults <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Number of individuals", self$count)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Number of individuals" = self$count
+      ))
+      ospsuite.utils::ospPrintItems(self$allQuantityPaths, title = "For paths")
     }
   ),
   active = list(

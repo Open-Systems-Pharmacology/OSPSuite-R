@@ -27,13 +27,15 @@ A parameter range typically used in the definition of \code{PopulationCharacteri
 \item \href{#method-ParameterRange-new}{\code{ParameterRange$new()}}
 \item \href{#method-ParameterRange-print}{\code{ParameterRange$print()}}
 \item \href{#method-ParameterRange-printValue}{\code{ParameterRange$printValue()}}
+\item \href{#method-ParameterRange-getPrintValue}{\code{ParameterRange$getPrintValue()}}
 }
 }
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="finalize"><a href='../../rSharp/html/NetObject.html#method-NetObject-finalize'><code>rSharp::NetObject$finalize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
@@ -93,7 +95,7 @@ Print the object to the console
 \if{html}{\out{<a id="method-ParameterRange-printValue"></a>}}
 \if{latex}{\out{\hypertarget{method-ParameterRange-printValue}{}}}
 \subsection{Method \code{printValue()}}{
-Print the the parameter in one line
+Print  the parameter in one line
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParameterRange$printValue(caption)}\if{html}{\out{</div>}}
 }
@@ -104,6 +106,19 @@ Print the the parameter in one line
 \item{\code{caption}}{Caption to display before the value of the parameter}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ParameterRange-getPrintValue"></a>}}
+\if{latex}{\out{\hypertarget{method-ParameterRange-getPrintValue}{}}}
+\subsection{Method \code{getPrintValue()}}{
+Return a string for printing the parameter in one line
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParameterRange$getPrintValue()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string for printing the parameter in one line
 }
 }
 }

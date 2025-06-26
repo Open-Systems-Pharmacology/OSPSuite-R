@@ -66,12 +66,13 @@ PKParameter <- R6::R6Class("PKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Name", self$name)
-      private$.printLine("DisplayName", self$displayName)
-      private$.printLine("Dimension", self$dimension)
-      private$.printLine("DisplayUnit", self$displayUnit)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Name" = self$name,
+        "DisplayName" = self$displayName,
+        "Dimension" = self$dimension,
+        "DisplayUnit" = self$displayUnit
+      ))
     }
   )
 )

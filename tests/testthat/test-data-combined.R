@@ -36,7 +36,6 @@ test_that("active bindings should all be NULL for empty initialization", {
     xScaleFactors = numeric(),
     yScaleFactors = numeric()
   ))
-  expect_output(print(myCombDat), "DataCombined:")
 })
 
 test_that("active bindings are read-only", {
@@ -1323,4 +1322,24 @@ test_that("It can add a data set without error type after adding a data set with
   dataCombined$addDataSets(ds)
 
   expect_warning(dataCombined$addDataSets(ds))
+})
+
+test_that("It can print data combined", {
+  dataCombined <- DataCombined$new()
+  ds <- DataSet$new(name = "withError")
+  ds$setValues(
+    xValues = c(1, 2),
+    yValues = c(1, 2),
+    yErrorValues = c(1, 2)
+  )
+  dataCombined$addDataSets(ds, groups = "firstGroup")
+
+  ds <- DataSet$new(name = "withoutError")
+  ds$setValues(
+    xValues = c(1, 2),
+    yValues = c(1, 2)
+  )
+  dataCombined$addDataSets(ds)
+
+  expect_snapshot(print(dataCombined))
 })

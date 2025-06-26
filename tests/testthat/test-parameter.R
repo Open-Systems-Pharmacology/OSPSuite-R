@@ -13,6 +13,14 @@ constantParameter <- getParameter("Organism|Age", sim)
 tableParameter <- getParameter("Organism|TableParameter", simple)
 rhsParameter <- getParameter("Organism|RHSParameter", simple)
 
+test_that("It can print parameters", {
+  expect_snapshot(volumeParameter$print())
+  expect_snapshot(formulaParameter$print())
+  expect_snapshot(constantParameter$print())
+  expect_snapshot(tableParameter$print())
+  expect_snapshot(rhsParameter$print())
+})
+
 test_that("It can retrieve name of a parameter", {
   par <- getParameter(toPathString(c(liverPathArray, "Blood flow rate")), sim)
   expect_equal(par$name, "Blood flow rate")

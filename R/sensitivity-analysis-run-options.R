@@ -25,10 +25,11 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("numberOfCores", self$numberOfCores)
-      private$.printLine("showProgress", self$showProgress)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "numberOfCores" = self$numberOfCores,
+        "showProgress" = self$showProgress
+      ))
     }
   ),
   active = list(

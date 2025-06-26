@@ -10,10 +10,6 @@ messages$errorOneOfNameAndPathMustBeSpecified <- function() {
   "One of the `parameterName` or `parameterPath` must be specified, but not both."
 }
 
-messages$noDatasetsPresentInDataCombined <- function() {
-  "There are currently no datasets. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
-}
-
 messages$noDatasetsToGroup <- function() {
   "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
 }
@@ -24,10 +20,6 @@ messages$datasetsToGroupNotFound <- function() {
 
 messages$unpairableDatasetsRemoved <- function() {
   "Following non-grouped or unpairable datasets have been removed"
-}
-
-messages$valuesNotInterpolated <- function() {
-  "Predicted values couldn't be interpolated at following time points"
 }
 
 messages$printMultipleEntries <- function(header, entries) {
@@ -92,4 +84,12 @@ messages$valueNotPositive <- function(value, propertyName) {
 
 messages$molWeightErrorMessage <- function(quantityPath) {
   paste0("Unable to retrieve the molecular weight for: ", quantityPath)
+}
+
+messages$illegalCharactersInName <- function(name) {
+  paste0("The name '", name, "' contains illegal characters. Illegal characters are: '", paste0(.getIllegalCharacters(), collapse = ", "), "'.")
+}
+
+messages$forbiddenSimulationName <- function(name, sim) {
+  paste0("The name '", name, "' is not allowed for this simulation. Forbidden names for this simulation are: '", paste0(.getIllegalSimulationNames(sim), collapse = ", "), "'.")
 }

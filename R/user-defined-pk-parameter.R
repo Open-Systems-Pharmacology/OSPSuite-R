@@ -56,21 +56,22 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Name", self$name)
-      private$.printLine("DisplayName", self$displayName)
-      private$.printLine("Dimension", self$dimension)
-      private$.printLine("DisplayUnit", self$displayUnit)
-      private$.printLine("StandardPKParameter", getEnumKey(StandardPKParameter, self$standardPKParameter))
-      private$.printLine("StartTime", self$startTime)
-      private$.printLine("StartTimeOffset", self$startTimeOffset)
-      private$.printLine("EndTime", self$endTime)
-      private$.printLine("EndTimeOffset", self$endTimeOffset)
-      private$.printLine("StartApplicationIndex", self$startApplicationIndex)
-      private$.printLine("EndApplicationIndex", self$endApplicationIndex)
-      private$.printLine("NormalizationFactor", self$normalizationFactor)
-      private$.printLine("ConcentrationThreshold", self$concentrationThreshold)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Name" = self$name,
+        "DisplayName" = self$displayName,
+        "Dimension" = self$dimension,
+        "DisplayUnit" = self$displayUnit,
+        "StandardPKParameter" = getEnumKey(StandardPKParameter, self$standardPKParameter),
+        "StartTime" = self$startTime,
+        "StartTimeOffset" = self$startTimeOffset,
+        "EndTime" = self$endTime,
+        "EndTimeOffset" = self$endTimeOffset,
+        "StartApplicationIndex" = self$startApplicationIndex,
+        "EndApplicationIndex" = self$endApplicationIndex,
+        "NormalizationFactor" = self$normalizationFactor,
+        "ConcentrationThreshold" = self$concentrationThreshold
+      ))
     }
   )
 )

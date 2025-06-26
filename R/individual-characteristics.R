@@ -48,12 +48,6 @@ IndividualCharacteristics <- R6::R6Class(
   ),
   private = list(
     .moleculeOntogenies = NULL,
-    .printParam = function(caption, param) {
-      if (is.null(param)) {
-        return()
-      }
-      param$printValue(caption)
-    },
     parameterProperty = function(parameterName, value) {
       if (missing(value)) {
         SnapshotParameter$new(netObject = self$get(parameterName))
@@ -70,6 +64,9 @@ IndividualCharacteristics <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `IndividualCharacteristics` object.
     initialize = function() {
+      # Assuming that if this function is called directly, PK-Sim was either initialized already
+      # or should be initialized automatically
+      initPKSim()
       netObject <- rSharp::newObjectFromName("PKSim.R.Domain.IndividualCharacteristics")
       super$initialize(netObject)
     },
@@ -77,21 +74,26 @@ IndividualCharacteristics <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("Species", self$species)
-      private$.printLine("Population", self$population)
-      private$.printLine("Gender", self$gender)
-      private$.printParam("Age", self$age)
-      private$.printParam("Gestational age", self$gestationalAge)
-      private$.printParam("Weight", self$weight)
-      private$.printParam("Height", self$height)
-      for (moleculeOntogeny in self$allMoleculeOntogenies) {
-        moleculeOntogeny$printMoleculeOntogeny()
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Species" = self$species,
+        "Population" = self$population,
+        "Gender" = self$gender
+      ), print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(list(
+        "Age" = self$age$getPrintValue(),
+        "Gestational age" = self$gestationalAge$getPrintValue(),
+        "Weight" = self$weight$getPrintValue(),
+        "Height" = self$height$getPrintValue()
+      ))
+      ospsuite.utils::ospPrintItems(list("Seed" = self$seed))
+
+      if (!is.null(self$allMoleculeOntogenies)) {
+        ospsuite.utils::ospPrintHeader("Molecule Ontogenies", level = 2)
+        for (ontogeny in self$allMoleculeOntogenies) {
+          ontogeny$printMoleculeOntogeny()
+        }
       }
-      if (!is.null(self$seed)) {
-        private$.printLine("Seed", self$seed)
-      }
-      invisible(self)
     },
 
     #' @description

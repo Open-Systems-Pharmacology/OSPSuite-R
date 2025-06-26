@@ -13,7 +13,7 @@ test_that("It throws an error when trying to set file source", {
 })
 
 test_that("It can print the simulation", {
-  expect_error(capture.output(sim$print()), NA)
+  expect_snapshot(sim$print())
 })
 
 test_that("It can retrieve the name of all stationary molecules used in the model", {
@@ -49,4 +49,15 @@ test_that("It returns NA if the path is not valid for mol weight", {
 test_that("It returns the applications defined for the simulation", {
   applications <- sim$allApplicationsFor(quantityPath)
   expect_gt(length(applications), 0)
+})
+
+test_that("It can set a new name to the simulation", {
+  newName <- "NewName"
+  sim$name <- newName
+  expect_equal(sim$name, newName)
+})
+
+test_that("It throws an error when trying to set a new name with illegal characters", {
+  newName <- "NewName|"
+  expect_error(sim$name <- newName, messages$illegalCharactersInName(newName))
 })

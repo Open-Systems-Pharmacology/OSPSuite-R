@@ -15,16 +15,20 @@ test_that("it can create a new data importer configuration", {
   expect_equal(importerConfiguration$groupingColumns, character())
   expect_equal(importerConfiguration$sheets, character())
   expect_equal(importerConfiguration$namingPattern, "{Source}.{Sheet}")
+})
 
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
+test_that("It can print the configuration", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$addGroupingColumn("foo")
+  importerConfiguration$addGroupingColumn("tata")
+
+  expect_snapshot(print(importerConfiguration))
 })
 
 test_that("it can get and set time column name", {
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$timeColumn <- "foo"
   expect_equal(importerConfiguration$timeColumn, "foo")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can get and set time unit", {
@@ -32,8 +36,6 @@ test_that("it can get and set time unit", {
   expect_error(importerConfiguration$timeUnit <- "foo")
   importerConfiguration$timeUnit <- "min"
   expect_equal(importerConfiguration$timeUnit, "min")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can set time unit from column and change column name", {
@@ -45,16 +47,12 @@ test_that("it can set time unit from column and change column name", {
 
   importerConfiguration$isTimeUnitFromColumn <- FALSE
   expect_equal(importerConfiguration$timeUnit, "h")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can get and set measurement column name", {
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$measurementColumn <- "foo"
   expect_equal(importerConfiguration$measurementColumn, "foo")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can get and set measurement unit", {
@@ -62,8 +60,6 @@ test_that("it can get and set measurement unit", {
   expect_error(importerConfiguration$measurementUnit <- "foo")
   importerConfiguration$measurementUnit <- "mol/l"
   expect_equal(importerConfiguration$measurementUnit, "mol/l")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can set measurement unit from column and change column name", {
@@ -78,8 +74,6 @@ test_that("it can set measurement unit from column and change column name", {
 
   expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
   expect_equal(importerConfiguration$measurementUnit, .encodeUnit("µmol/l"))
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can add an error column", {
@@ -122,8 +116,6 @@ test_that("it can change measurement dimension without error", {
   expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (mass)`)
   expect_equal(importerConfiguration$measurementUnit, "kg/l")
   expect_equal(importerConfiguration$errorUnit, NULL)
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can change measurement dimension with error", {
@@ -143,8 +135,6 @@ test_that("it can change measurement dimension with error", {
 
   importerConfiguration$isMeasurementUnitFromColumn <- FALSE
   expect_equal(importerConfiguration$errorUnit, "kg/l")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can change error type", {
@@ -153,8 +143,6 @@ test_that("it can change error type", {
   expect_error(importerConfiguration$errorType <- "foo")
   importerConfiguration$errorType <- DataErrorType$GeometricStdDev
   expect_equal(importerConfiguration$errorType, DataErrorType$GeometricStdDev)
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can add grouping columns", {
@@ -165,15 +153,11 @@ test_that("it can add grouping columns", {
   # adding the same group does not create duplicates
   importerConfiguration$addGroupingColumn("foo")
   expect_equal(importerConfiguration$groupingColumns, "foo")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it does not fail when trying to remove a grouping column that is not present", {
   importerConfiguration <- DataImporterConfiguration$new()
   expect_error(importerConfiguration$removeGroupingColumn(column = "tata"), regexp = NA)
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can remove grouping columns", {
@@ -183,8 +167,6 @@ test_that("it can remove grouping columns", {
   expect_equal(importerConfiguration$groupingColumns, c("foo", "tata"))
   importerConfiguration$removeGroupingColumn(column = "tata")
   expect_equal(importerConfiguration$groupingColumns, "foo")
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can add sheet", {
@@ -195,8 +177,6 @@ test_that("it can add sheet", {
   expect_equal(importerConfiguration$sheets, "S2")
   importerConfiguration$sheets <- c("S1", "S2")
   expect_equal(importerConfiguration$sheets, c("S1", "S2"))
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can remove all sheets", {
@@ -208,8 +188,6 @@ test_that("it can remove all sheets", {
   expect_equal(importerConfiguration$sheets, c("S1", "S2"))
   importerConfiguration$sheets <- c()
   expect_equal(importerConfiguration$sheets, character())
-
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
 })
 
 test_that("it can change naming pattern", {
@@ -217,5 +195,13 @@ test_that("it can change naming pattern", {
   expect_equal(importerConfiguration$namingPattern, "{Source}.{Sheet}")
   importerConfiguration$namingPattern <- "foo"
   expect_equal(importerConfiguration$namingPattern, "foo")
-  expect_error(capture.output(print(importerConfiguration)), regexp = NA)
+})
+
+test_that("it can get and set the lloq column", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  expect_equal(importerConfiguration$lloqColumn, NULL)
+  importerConfiguration$lloqColumn <- "LLOQ"
+  expect_equal(importerConfiguration$lloqColumn, "LLOQ")
+  importerConfiguration$lloqColumn <- NULL
+  expect_equal(importerConfiguration$lloqColumn, NULL)
 })

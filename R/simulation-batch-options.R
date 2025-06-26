@@ -1,7 +1,6 @@
 #' @title SimulationBatchOptions
 #' @docType class
 #' @description Options to be passed to the `SimulationBatch`.
-#' @export
 #' @format NULL
 SimulationBatchOptions <- R6::R6Class(
   "SimulationBatchOptions",
@@ -28,10 +27,11 @@ SimulationBatchOptions <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      private$.printClass()
-      private$.printLine("variableParameters", self$variableParameters)
-      private$.printLine("variableMolecules", self$variableMolecules)
-      invisible(self)
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "variableParameters" = self$variableParameters,
+        "variableMolecules" = self$variableMolecules
+      ))
     }
   ),
   active = list(
