@@ -17,6 +17,13 @@ jobs:
     secrets:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
+  build-sqlite:
+    if: ${{ !cancelled() }}
+    needs: [bump-dev-version]
+    uses: ./.github/workflows/build-sqlite-macos.yml
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+
   # update-core-files:
   #   if: ${{ !cancelled() && github.event_name == 'pull_request' }}
   #   needs: [bump-dev-version]
