@@ -90,4 +90,4 @@ jobs:
         with:
           message: 'build: update SQLite libraries for macOS'
           add: 'inst/lib'
-          token: ${{ secrets.token }} 
+          github_token: ${{ secrets.token }} 
