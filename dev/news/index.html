@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9016</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,6 +83,8 @@
 <li>
 <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> for <code>DataCombined</code> now supports full pairwise residual computation between multiple observed and simulated datasets within a group.</li>
 <li>The <code>name</code> property of a <code>Simulation</code> can now be changed (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1245" class="external-link">#1245</a>)</li>
+<li>
+<code>calculateResiduals</code> now handles single-point simulated datasets via direct x-value matching instead of interpolation. Unmatched observed x-values return <code>NA</code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1559" class="external-link">#1559</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
