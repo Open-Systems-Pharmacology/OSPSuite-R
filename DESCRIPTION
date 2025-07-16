@@ -19,8 +19,7 @@ URL: https://github.com/open-systems-pharmacology/ospsuite-r,
 BugReports: 
     https://github.com/open-systems-pharmacology/ospsuite-r/issues
 Depends: 
-    R (>= 4.1),
-    rSharp
+    R (>= 4.1)
 Imports: 
     dplyr (>= 1.0.0),
     ospsuite.utils (>= 1.7.0),
@@ -36,6 +35,7 @@ Imports:
     openxlsx,
     lifecycle,
     cli,
+    rSharp,
     showtext
 Suggests:
     pacman,
