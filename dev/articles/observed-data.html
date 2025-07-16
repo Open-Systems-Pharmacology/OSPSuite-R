@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9017</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.2.0.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,6 @@ scratch (e.g. when the user wants to manually input observed data), a
 name must be provided:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: rSharp</span></span>
 <span></span>
 <span><span class="co"># Create an empty data set</span></span>
 <span><span class="va">dataSet</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataSet.html">DataSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My data set"</span><span class="op">)</span></span></code></pre></div>
@@ -258,15 +257,15 @@ processed in downstream analysis and visualization workflows:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 14</span></span></span>
 <span><span class="co">#&gt;   name            xValues yValues yErrorValues xDimension xUnit yDimension yUnit</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> My data set           1   0          0.001<span style="text-decoration: underline;">00</span> Time       min   Amount     mol  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> My data set           2   0.1        0.001<span style="text-decoration: underline;">00</span> Time       min   Amount     mol  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> My data set           3   0.6        0.1     Time       min   Amount     mol  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> My data set           4  10          1       Time       min   Amount     mol  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Second data set       1   1.00      <span style="color: #BB0000;">NA</span>       Time       h     Concentra… mg/l </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Second data set       2   0         <span style="color: #BB0000;">NA</span>       Time       h     Concentra… mg/l </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Second data set       3   5.00      <span style="color: #BB0000;">NA</span>       Time       h     Concentra… mg/l </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Second data set       4   8.00      <span style="color: #BB0000;">NA</span>       Time       h     Concentra… mg/l </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Second data set       5   0.100     <span style="color: #BB0000;">NA</span>       Time       h     Concentra… mg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> My data set           1   0         0.001<span style="text-decoration: underline;">000</span> Time       min   Amount     mol  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> My data set           2   0.1       0.001<span style="text-decoration: underline;">000</span> Time       min   Amount     mol  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> My data set           3   0.6       0.1      Time       min   Amount     mol  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> My data set           4  10         1        Time       min   Amount     mol  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Second data set       1   1.000    <span style="color: #BB0000;">NA</span>        Time       h     Concentra… mg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Second data set       2   0        <span style="color: #BB0000;">NA</span>        Time       h     Concentra… mg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Second data set       3   5.00     <span style="color: #BB0000;">NA</span>        Time       h     Concentra… mg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Second data set       4   8.00     <span style="color: #BB0000;">NA</span>        Time       h     Concentra… mg/l </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Second data set       5   0.100    <span style="color: #BB0000;">NA</span>        Time       h     Concentra… mg/l </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, molWeight &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   lloq &lt;dbl&gt;, Molecule &lt;chr&gt;, Organ &lt;chr&gt;</span></span></span></code></pre></div>
 </div>
