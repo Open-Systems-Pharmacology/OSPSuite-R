@@ -1,4 +1,4 @@
-#' Create an Individual Buildgin Block
+#' Create an Individual Building Block
 #'
 #' @param species
 #' @param population
