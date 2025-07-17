@@ -101,7 +101,7 @@ paramValuesBBs <- modulesInProject[["Thyroid"]]$getBuildingBlocks(type = "Parame
 We can retrieve simulations from the project:
 
 ```{r getSimulation}
-simulation <- myProject$getSimulation[[simulationsInProject[[1]]]]
+simulation <- myProject$getSimulation(simulationsInProject[[1]])
 ```
 
 and the observed data as `DataSet` objects:
