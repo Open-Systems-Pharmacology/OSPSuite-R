@@ -52,6 +52,9 @@ print(names(obsData))
 
 get the list of individuals and expression profiles from the project:
 
+TBD: should this return only the names of the Individuals and Expression Profiles,
+or the  full objects (of type `BuildingBlock`)?
+
 ```{r getIndividualsExpressions}
 individualsInProject <- myProject$Individuals
 expProfilesInProject <- myProject$ExpressionProfiles
@@ -65,7 +68,6 @@ expProfilesInProject <- c("UDPGT1|Human|Healthy",
                           "UGT1A1|Rat|Healthy",
                           "PB-LiverBindingPartner|Human|Healthy")
 ```
-
 
 get the modules present in the project:
 
@@ -82,7 +84,6 @@ names(modulesInProject) <- c("Endogenous_TH",
                              "TH_plasma_binding",
                              "Thyroid",
                              "Thyroid_QST")
-
 ```
 
 and get the building blocks defined for the modules:
@@ -110,17 +111,46 @@ and the observed data as `DataSet` objects:
 obsData <- myProject$getObservedData()
 ```
 
-## Creating simulations
+Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, Individual, Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
 
-The user can create new simulation from the modules available in the project. In this example,
-we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding". We will
-select the expression profiles "UDPGT1|Human|Healthy", "DIO1|Human|Healthy", "DIO3|Human|Healthy",
+## Creating simulation configurations
+
+The user can create a new simulation configuration either from scratch, or alter 
+an existing configuration retrieved from a simulation, or create a configuration from
+modules in a project.
+
+### Create simulation configuration from simulation
+
+One way to get a simulation configuration is to retrieve a simulation either from 
+a project or by loading a simulation from a pkml file. The simulation configuration can then be 
+altered afterwards.
+
+```{r getSimulationConfigurationFromPKML}
+simulation <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+configuration <- simulation$configuration
+
+print(configuration)
+```
+
+```{r getSimulationConfigurationFromProject}
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+configuration <- simulation$configuration
+
+print(configuration)
+```
+
+
+
+### Create simulation configuration from the project
+
+The user can create new simulation configuration from the modules available in the project. In this example,
+we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding". 
+We will select the expression profiles "UDPGT1|Human|Healthy", "DIO1|Human|Healthy", "DIO3|Human|Healthy",
 "UDPGT2|Human|Healthy", and specify the parameter values building block "Rat" from the 
 module "Thyroid":
 
 ```{r createSimulationFromProject}
-sim1 <- myProject$createSimulation(simulationName = "Thyroid_QST_rat", 
-                         modulesNames = c("Thyroid_QST",
+sim1 <- myProject$createSimulationConfiguration(modulesNames = c("Thyroid_QST",
                                           "Rat physiology",
                                           "Thyroid",
                                           "Pituitary",
@@ -136,11 +166,13 @@ sim1 <- myProject$createSimulation(simulationName = "Thyroid_QST_rat",
 )
 ```
 
-An alternative to creating simulations from modules from a project is to use the 
-function `createSimulationFromModules()` and provide a list of `Module` objects. 
+### Create simulation configuration from modules
+
+An alternative to creating simulation configurations from modules from a project is to use the 
+function `createSimulationConfiguration()` and provide a list of `Module` objects. 
 This allows to create simulations from modules contained in different projects,
 or from modules that are stored as pkml files. In the following example, we will
-create a simulation using the modules from the project as in the example before,
+create a simulation configuration using the modules from the project as in the example before,
 but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will
 be created.
 
@@ -163,10 +195,10 @@ myIndividual <- createIndividualBuildingBlock(species = Species$Human,
 
 Modules that are intended to be used in combination with a variety of other modules,
 especially with every generic PBPK module, are usually set up in a generic way 
-and require some extensions to be used directly. For example, the module "Thyroid"
-must be extended by the molecules of the model it will be used with. Similarly, some
-compound-specific parameter could require manual adjustments. Therefore, intial conditions 
-and parameter values building block can be modified from R.
+and require some extensions in order to be used directly. For example, the initial 
+conditions of the module "Thyroid" must be extended by the molecules of the model
+it will be used with. Similarly, some compound-specific parameter could require 
+manual adjustments. Therefore, intial conditions and parameter values building block can be modified from R.
 
 Following functionalities are available for the Initial Conditions BBs:
 
@@ -243,10 +275,10 @@ setParameterValues(pvBuildingBlock = pvBB,
                    quantityValues = 1.33)
 ```
 
-Finally, we can create a simulation from the modules and the individual we created:
+Finally, we can create a simulation configuration from the modules and the individual we created:
 
 ```{r createSimulationFromModules}
-simulationHuman <- createSimulationFromModules(simulationName = "Thyroid_QST_human",
+simulationConfigurationHuman <- createSimulationConfiguration(simulationName = "Thyroid_QST_human",
                                             modules = c(modules[["Thyroid_QST"]],
                                                         thyroidModule,
                                                         modules[["Pituitary"]],
@@ -262,5 +294,23 @@ simulationHuman <- createSimulationFromModules(simulationName = "Thyroid_QST_hum
 
 Expression profile BBs cannot be created from R but can be loaded from PKML. (Tier 3 or so).
 
-# selecting calculation methods for molecules!!!!
-# create simulations based on configurations from a project, e.g., by exchangin one of the modules, or modifying it
+## Creating simulations
+
+The simulation configuration can be used to create a simulation. The simulation can then be saved to a pkml file, or used for further analysis.
+
+Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation.
+Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
+
+```{r changeClculationMethodsAndCreateSimulatoin}
+simulationConfigurationHuman$partitionCoefficientMethods(
+  list("T3" = PartitionCoefficientMethods$Berezhkovskiy,
+       "T4" = PartitionCoefficientMethods$`PK-Sim Standard`)
+)
+
+simulationConfigurationHuman$cellularPermeabilityMethods(
+  list("T3" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`,
+       "T4" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`)
+)
+
+sim1 <- createSimulation(simulationName = "Thyroid_QST_human", )
+```

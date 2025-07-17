@@ -107,12 +107,11 @@ MoBiProject <- R6::R6Class(
     #' @returns A named list of objects of the type `BuildingBlock`. `NULL` for each
     #' specified expression profile that is not present in the project  if `stopIfNotFound = FALSE`.
     getExpressionProfiles = function(names, stopInfNotFound = TRUE){
-    }
+    },
 
     #' @description
-    #' Create a simulation from simulation configuration.
+    #' Create a simulation configuration.
     #'
-    #' Simulation is NOT added to the project!
     #'
     #' @param modulesNames A list of the modules from which to create in simulation.
     #' All defined modules must be present in the project. The order of module names defines the order in which the modules will be combined to a simulation!
@@ -128,10 +127,20 @@ MoBiProject <- R6::R6Class(
     #' PV BBs, it is possible to specify which PV BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the PV BB.
     #' By setting the value to `NULL`, no PV BB from the specified module will be applied.
-    #' @param simulationName Name of the simulation.
     #'
-    #' @returns A `Simulation` object.
-     createSimulation = function(simulationName, modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL){
+    #' @returns A `SimulationConfiguration` object.
+     createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL){
+       modules <- self$getModules(moduleNames)
+       individual <- self$getIndividual(individualName, stopIfNotFound = FALSE)
+       expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = FALSE)
+
+       configuration <- createSimulationConfiguration(modules = modules,
+                                                      individual = individual,
+                                                      expressionProfiles = expressionProfiles,
+                                                      selectedInitialConditions = selectedInitialConditions,
+                                                      selectedParameterValues = selectedParameterValues)
+
+       return(configuration)
     },
 
     #' @description

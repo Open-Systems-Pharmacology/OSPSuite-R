@@ -29,6 +29,10 @@ BuildingBlock <- R6::R6Class(
     #' @field type Type of the building block (Spatial structure, molecules, reactions, etc)
     type = function(value){
       private$.readOnlyProperty("type", value, self$get("type"))
+    },
+    #' @field id ID of the building block
+    id = function(value){
+      private$.readOnlyProperty("type", value, self$get("type"))
     }
 
   ),

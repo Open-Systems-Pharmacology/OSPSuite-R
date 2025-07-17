@@ -7,6 +7,14 @@ MoBiModule <- R6::R6Class(
   cloneable = FALSE,
   inherit = ObjectBase,
   active = list(
+    mergeBehavior = function(value) {
+      if (missing(value)) {
+        return(self$get("MergeBehavior"))
+      } else {
+        # Check that the provided merge behavior is either "Extend" or "Overwrite".
+        self$set("MergeBehavior", value)
+      }
+    },
 
   ),
   public = list(
