@@ -34,7 +34,7 @@ MoBiProject <- R6::R6Class(
       if (missing(value)) {
         model <- self$get("Individuals")
       } else {
-        private$.throwPropertyIsReadonly("Indivduals")
+        private$.throwPropertyIsReadonly("Individuals")
       }
     },
     #' @field ExpressionProfiles Names of the expression profiles that are present in the project
