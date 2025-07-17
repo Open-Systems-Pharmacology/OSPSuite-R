@@ -91,7 +91,7 @@ and get the building blocks defined for the modules:
 bbs <- modulesInProject[["Thyroid"]]$getBuildingBlocks()
 
 for (bbName in names(bbs)){
-  print(name, ": ", bbs[[name]]$type)
+  print(bbName, ": ", bbs[[bbName]]$type)
 }
 
 # Get all parameter values BBs
