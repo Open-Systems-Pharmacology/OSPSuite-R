@@ -111,6 +111,12 @@ test_that("It produces expected plot for multple simulated datasets per group", 
     title = "multiple sim",
     fig = plotPopulationTimeProfile(myDataCombined)
   )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple sim - dataset legend",
+    fig = plotPopulationTimeProfile(myDataCombined, showLegendPerDataset = TRUE)
+  )
 })
 
 test_that("It produces expected plot for multple simulated and observed datasets per group", {

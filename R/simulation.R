@@ -41,6 +41,33 @@ Simulation <- R6::R6Class(
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
     },
+    #' @field name Name of the simulation
+    name = function(value) {
+      if (missing(value)) {
+        return(self$get("Name"))
+      } else {
+        validateIsString(value)
+        # Trim the name of ws
+        value <- trimws(value, which = "both")
+        # Check if the name actually changes
+        if (self$name == value) {
+          return(invisible(self))
+        }
+
+        # Check for forbidden names
+        forbiddenNames <- .getIllegalSimulationNames(self)
+        if (value %in% forbiddenNames) {
+          stop(messages$forbiddenSimulationName(value, self))
+        }
+
+        # Check for illegal characters
+        illegalChars <- .getIllegalCharacters()
+        if (any(stringr::str_detect(value, paste0("[", illegalChars, "]")))) {
+          stop(messages$illegalCharactersInName(value))
+        }
+        self$set("Name", value)
+      }
+    },
     #' @field configuration An object of the type `SimulationConfiguration`,
     #' describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and molecule calculation methods.
     configuration = function(value) {

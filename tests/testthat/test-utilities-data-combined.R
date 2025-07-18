@@ -32,18 +32,15 @@ test_that(
   }
 )
 
-test_that("calculateResiduals returns a dataframe", {
-  expect_true(
-    "data.frame" %in% class(calculateResiduals(myDC, scaling = "lin"))
-  )
+test_that("calculateResiduals returns a data frame", {
+  expect_s3_class(calculateResiduals(myDC, scaling = "lin"), "data.frame")
 })
-
-
 
 test_that("calculateResiduals returns expected columns", {
   expected_column_names <- c(
     "group",
     "name",
+    "nameSimulated",
     "xValues",
     "xUnit",
     "xDimension",
@@ -120,3 +117,55 @@ test_that(
     )
   }
 )
+
+test_that("calculateResiduals computes all observed, simulated data pairs correctly", {
+  myDC$addSimulationResults(simData, groups = "myGroup", names = "secondSimResults")
+  residuals <- calculateResiduals(myDC, scaling = "lin")
+
+  expect_setequal(residuals$nameSimulated, c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "secondSimResults"
+  ))
+
+  expect_equal(
+    residuals$residualValues,
+    rep(c(0, 0.1000000, -0.0999999, 0.0, -0.1999998, -1), 2),
+    tolerance = 1e-5
+  )
+})
+
+test_that("calculateResiduals handles single-point observed and simulated
+          datasets correctly", {
+  myDataSet <- DataSet$new("myDataSet")
+  myDataSet$setValues(1, 1)
+
+  simDataSet <- DataSet$new("simDataSet")
+  simDataSet$setValues(1, 1)
+
+  myDC <- DataCombined$new()
+  myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
+  myDC$setDataTypes(
+    c("myDataSet", "simDataSet"), dataTypes = c("observed", "simulated")
+  )
+
+  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+
+  expect_equal(residuals$residualValues, 0, tolerance = 1e-5)
+})
+
+test_that("calculateResiduals drops points when simulated dataset contains a
+          single point with non-matching x-value", {
+  myDataSet <- DataSet$new("myDataSet")
+  myDataSet$setValues(1, 1)
+
+  simDataSet <- DataSet$new("simDataSet")
+  simDataSet$setValues(2, 2)
+
+  myDC <- DataCombined$new()
+  myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
+  myDC$setDataTypes(c("myDataSet", "simDataSet"), dataTypes = c("observed", "simulated"))
+
+  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+
+  expect_equal(nrow(residuals), 0)
+})

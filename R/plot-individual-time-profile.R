@@ -3,6 +3,10 @@
 #' @inheritParams calculateResiduals
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
 #'   an `R6` class object that defines plot properties.
+#' @param showLegendPerDataset Logical flag to display separate legend entries
+#' for observed and simulated datasets, if available. This is experimental and
+#' may not work reliably when both observed and simulated datasets > 1. Defaults
+#' to `FALSE`.
 #'
 #' @import tlf
 #'
@@ -47,8 +51,9 @@
 #'
 #' @export
 plotIndividualTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration = NULL) {
-  .plotTimeProfile(dataCombined, defaultPlotConfiguration)
+                                      defaultPlotConfiguration = NULL,
+                                      showLegendPerDataset = FALSE) {
+  .plotTimeProfile(dataCombined, defaultPlotConfiguration, showLegendPerDataset)
 }
 
 
@@ -58,12 +63,14 @@ plotIndividualTimeProfile <- function(dataCombined,
 #' @noRd
 .plotTimeProfile <- function(dataCombined,
                              defaultPlotConfiguration = NULL,
+                             showLegendPerDataset,
                              aggregation = NULL,
                              ...) {
   # validation -----------------------------
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
 
+  validateIsLogical(showLegendPerDataset)
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
     return(NULL)
@@ -127,7 +134,6 @@ plotIndividualTimeProfile <- function(dataCombined,
     lloq <- "lloq"
   }
 
-
   # population time profile mappings with ribbon ------------------------------
 
   # The exact mappings chosen will depend on whether there are multiple datasets
@@ -163,7 +169,9 @@ plotIndividualTimeProfile <- function(dataCombined,
   )
 
   # Suppress certain mappings in the legend
-  profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
+  if (!showLegendPerDataset) {
+    profilePlot <- profilePlot + ggplot2::guides(linetype = "none", shape = "none")
+  }
 
   return(profilePlot)
 }

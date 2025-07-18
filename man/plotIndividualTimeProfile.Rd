@@ -4,13 +4,22 @@
 \alias{plotIndividualTimeProfile}
 \title{Time-profile plot of individual data}
 \usage{
-plotIndividualTimeProfile(dataCombined, defaultPlotConfiguration = NULL)
+plotIndividualTimeProfile(
+  dataCombined,
+  defaultPlotConfiguration = NULL,
+  showLegendPerDataset = FALSE
+)
 }
 \arguments{
 \item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
+
+\item{showLegendPerDataset}{Logical flag to display separate legend entries
+for observed and simulated datasets, if available. This is experimental and
+may not work reliably when both observed and simulated datasets > 1. Defaults
+to \code{FALSE}.}
 }
 \description{
 Time-profile plot of individual data

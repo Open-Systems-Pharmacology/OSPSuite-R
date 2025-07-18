@@ -3,19 +3,36 @@
 ## Breaking changes
 
 - ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
+- Classes `SimulationBatchRunValues` and `SimulationBatchOptions` are not exported any more.
+They should not be used directly.
+
+## Major changes
+- `DataImporterConfiguration` now supports getting and setting of the Lower Limit 
+of Quantification (LLOQ) column name via
+a new field `lloqColumn`. If the column name is not set (value `NULL`), LLOQ values
+will be imported from the measurement column if values are written in the form '< xxx' (e.g., '<0.001').
+Otherwise, the values will be imported from the specified column (\#722)
 
 ## Minor improvements and bug fixes
 
+- Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and 
+`plotPupulationTimeProfile()` to optionally display separate legend entries for 
+each dataset. This is experimental.
 - Improved print outputs for all classes
 - Classes do not inherit from the deprecated `Printable` class from the `{ospsuite.utils}` package.
 - Print methods for all classes are now implemented using the `ospPrint\*` functions 
 introduced in version 1.6.2. of the `{ospsuite.utils}` package.
-
 - `ParameterRange$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 -  Private method `Quantity$printQuantity()` removed. `Quantity$printValue()` and `Quantity$printQuantityValue()` are 
 deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 - `SnapshotParameter$printValue()` is deprecated. Use `getPrintValue()` in conjunction with a print method of your choice.
 - Added snapshot tests for all print methods.
+- `calculateResiduals()` for `DataCombined` now supports full pairwise residual 
+computation between multiple observed and simulated datasets within a group.
+- The `name` property of a `Simulation` can now be changed (#1245)
+- `calculateResiduals`  now handles single-point simulated datasets via direct 
+x-value matching instead of interpolation. Unmatched observed x-values return 
+`NA` (#1559).
 
 # ospsuite 12.2.0
 
