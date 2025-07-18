@@ -245,7 +245,7 @@ in other modules of our project:
 icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
 newPaths <- extendInitialConditions(icBB,
-  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
+  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spatial Structure"),
   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
   moleculeNames = c("DIO1", "T3", "T4", "TSH")
 )
@@ -261,7 +261,7 @@ function:
 pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
 # Add protein expression to the PV BB
 proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(pvBB,
-  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
+  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spatial Structure"),
   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
   moleculeNames = c("DIO1")
 )
@@ -319,7 +319,7 @@ The simulation configuration can be used to create a simulation. The simulation 
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation.
 Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
 
-```{r changeClculationMethodsAndCreateSimulatoin}
+```{r changeCalculationMethodsAndCreateSimulatoin}
 simulationConfigurationHuman$partitionCoefficientMethods(
   list(
     "T3" = PartitionCoefficientMethods$Berezhkovskiy,

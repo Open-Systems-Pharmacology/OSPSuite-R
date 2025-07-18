@@ -9,7 +9,7 @@
 #'
 #' @examples
 createSimulation <- function(simulationName, simulationConfiguration, createAllProcessRateParameters = FALSE) {
-  return(simulationConfiguration)
+  return(simulation)
 }
 
 #' @title Load a simulation from a pkml file

@@ -11,7 +11,7 @@ PartitionCoefficientMethods <- enum(c(
   "Berezhkovskiy" = "Cellular partition coefficient method - Berezhkovskiy"
 ))
 
-#' Available methods for calculation of cellularw permeabilities.
+#' Available methods for calculation of cellular permeabilities.
 #'
 #' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
 #'
@@ -32,7 +32,7 @@ SimulationConfiguration <- R6::R6Class(
   cloneable = FALSE,
   inherit = ObjectBase,
   active = list(
-    #' @field indivdual A building block of type "Individual" used in the configuration.
+    #' @field individual A building block of type "Individual" used in the configuration.
     #' Can be `NULL` if no Individual should be applied.
     individual = function(value) {
       if (missing(value)) {
@@ -75,7 +75,7 @@ SimulationConfiguration <- R6::R6Class(
 
     #' @field selectedInitialConditions A named list with names being the names of the modules,
     #' and the values the names of Initial Conditions Building Blocks
-    selectedInitialCondistions = function(value) {
+    selectedInitialConditions = function(value) {
       if (missing(value)) {
         return(self$get("SelectedInitialConditions"))
       } else {

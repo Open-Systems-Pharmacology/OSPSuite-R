@@ -1,4 +1,4 @@
-#' Set or add initial conditions to an existing Intitial Conditions building block.
+#' Set or add initial conditions to an existing Initial Conditions building block.
 #'
 #' This functions allows adding or modifying initial condition entries.
 #'
@@ -80,7 +80,7 @@ extendInitialConditions <- function(initialConditionsBuildingBlock,
 
 
 
-#' Set or add parameter values to an existing Paramter Values building block.
+#' Set or add parameter values to an existing Parameter Values building block.
 #'
 #' This functions allows adding or modifying parameter values entries.
 #'
