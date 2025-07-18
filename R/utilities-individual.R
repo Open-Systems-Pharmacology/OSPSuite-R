@@ -1,4 +1,16 @@
-#' Create an Individual Buildgin Block
+#' Available disease states
+#'
+#' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
+#'
+#' @export
+IndividualDiseaseStates <- enum(c(
+  "None",
+  "Renal impairment",
+  "Hepatic impairment"
+))
+
+
+#' Create an Individual Building Block
 #'
 #' @param species
 #' @param population
@@ -30,7 +42,9 @@ createIndividualBuildingBlock <- function(species,
                                           gestationalAge = 40,
                                           gestationalAgeUnit = "week(s)",
                                           moleculeOntogenies = NULL,
-                                          seed = NULL){
+                                          seed = NULL,
+                                          diseaseState = IndividualDiseaseStates$None) {
+  return(IndividualBuildingBlock)
 }
 
 #' Creates an individual using the PK-Sim Database

@@ -23,8 +23,7 @@ createSimulationConfiguration <- function(modules,
                                           individual = NULL,
                                           expressionProfiles = NULL,
                                           selectedInitialConditions = NULL,
-                                          selectedParameterValues = NULL){
-
+                                          selectedParameterValues = NULL) {
   # .NET CODE
 
   return(configuration)

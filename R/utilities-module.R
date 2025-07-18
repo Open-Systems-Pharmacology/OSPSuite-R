@@ -6,5 +6,5 @@
 #' @export
 #'
 #' @examples
-loadModuleFromPKML <- function(path){
+loadModuleFromPKML <- function(path) {
 }

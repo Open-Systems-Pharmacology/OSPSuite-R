@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-createSimulation <- function(simulationName, simulationConfiguration, createAllProcessRateParameters = FALSE){
+createSimulation <- function(simulationName, simulationConfiguration, createAllProcessRateParameters = FALSE) {
   return(simulationConfiguration)
 }
 

@@ -9,7 +9,7 @@
 #' projectPath <- system.file("extdata", "simple.mbp3", package = "ospsuite")
 #'
 #' myProject <- loadMoBiProject(projectPath)
-loadMoBiProject <- function(filePath){
+loadMoBiProject <- function(filePath) {
   # .NET task that handles loading of a MoBi project
   netTask <- .getNetTask("SomeMoBiTask")
 

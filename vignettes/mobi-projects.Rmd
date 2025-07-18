@@ -56,17 +56,19 @@ TBD: should this return only the names of the Individuals and Expression Profile
 or the  full objects (of type `BuildingBlock`)?
 
 ```{r getIndividualsExpressions}
-individualsInProject <- myProject$Individuals
-expProfilesInProject <- myProject$ExpressionProfiles
+individualsInProject <- myProject$individualsNames
+expProfilesInProject <- myProject$expressionProfilesNames
 
 # EXPECTED BEHAVIOR
 individualsInProject <- c("Human", "Rat")
-expProfilesInProject <- c("UDPGT1|Human|Healthy",
-                          "DIO1|Human|Healthy",
-                          "DIO3|Human|Healthy",
-                          "UDPGT2|Human|Healthy",
-                          "UGT1A1|Rat|Healthy",
-                          "PB-LiverBindingPartner|Human|Healthy")
+expProfilesInProject <- c(
+  "UDPGT1|Human|Healthy",
+  "DIO1|Human|Healthy",
+  "DIO3|Human|Healthy",
+  "UDPGT2|Human|Healthy",
+  "UGT1A1|Rat|Healthy",
+  "PB-LiverBindingPartner|Human|Healthy"
+)
 ```
 
 get the modules present in the project:
@@ -75,15 +77,17 @@ get the modules present in the project:
 modulesInProject <- myProject$Modules
 
 # EXPECTED BEHAVIOR
-names(modulesInProject) <- c("Endogenous_TH",
-                             "Phenobarbital_Extension",
-                             "Phenobarbital_PBPK",
-                             "Pituitary",
-                             "Rat physiology",
-                             "TH_activeTransports",
-                             "TH_plasma_binding",
-                             "Thyroid",
-                             "Thyroid_QST")
+names(modulesInProject) <- c(
+  "Endogenous_TH",
+  "Phenobarbital_Extension",
+  "Phenobarbital_PBPK",
+  "Pituitary",
+  "Rat physiology",
+  "TH_activeTransports",
+  "TH_plasma_binding",
+  "Thyroid",
+  "Thyroid_QST"
+)
 ```
 
 and get the building blocks defined for the modules:
@@ -91,8 +95,8 @@ and get the building blocks defined for the modules:
 ```{r getBuildingBlocksFromModule}
 bbs <- modulesInProject[["Thyroid"]]$getBuildingBlocks()
 
-for (bbName in names(bbs)){
-  print(name, ": ", bbs[[name]]$type)
+for (bbName in names(bbs)) {
+  print(bbName, ": ", bbs[[bbName]]$type)
 }
 
 # Get all parameter values BBs
@@ -102,7 +106,7 @@ paramValuesBBs <- modulesInProject[["Thyroid"]]$getBuildingBlocks(type = "Parame
 We can retrieve simulations from the project:
 
 ```{r getSimulation}
-simulation <- myProject$getSimulation[[simulationsInProject[[1]]]]
+simulation <- myProject$getSimulation(simulationsInProject[[1]])
 ```
 
 and the observed data as `DataSet` objects:
@@ -150,19 +154,24 @@ We will select the expression profiles "UDPGT1|Human|Healthy", "DIO1|Human|Healt
 module "Thyroid":
 
 ```{r createSimulationFromProject}
-sim1 <- myProject$createSimulationConfiguration(modulesNames = c("Thyroid_QST",
-                                          "Rat physiology",
-                                          "Thyroid",
-                                          "Pituitary",
-                                          "Endogenous_TH",
-                                          "TH_activeTransports",
-                                          "TH_plasma_binding"),
-                        individualName = "Rat",
-                        expressionProfilesNames = c("UDPGT1|Human|Healthy",
-                                                    "DIO1|Human|Healthy", 
-                                                    "DIO3|Human|Healthy",
-                                                    "UDPGT2|Human|Healthy"),
-                        selectedParameterValues = list("Thyroid" = "Rat")
+sim1 <- myProject$createSimulationConfiguration(
+  modulesNames = c(
+    "Thyroid_QST",
+    "Rat physiology",
+    "Thyroid",
+    "Pituitary",
+    "Endogenous_TH",
+    "TH_activeTransports",
+    "TH_plasma_binding"
+  ),
+  individualName = "Rat",
+  expressionProfilesNames = c(
+    "UDPGT1|Human|Healthy",
+    "DIO1|Human|Healthy",
+    "DIO3|Human|Healthy",
+    "UDPGT2|Human|Healthy"
+  ),
+  selectedParameterValues = list("Thyroid" = "Rat")
 )
 ```
 
@@ -180,17 +189,21 @@ be created.
 # Get modules from the project
 modules <- myProject$getModules()
 # Get the expression profiles from the project
-expressionProfiles <- myProject$getExpressionProfiles(names = c("UDPGT1|Human|Healthy",
-                                                    "DIO1|Human|Healthy", 
-                                                    "DIO3|Human|Healthy",
-                                                    "UDPGT2|Human|Healthy"))
+expressionProfiles <- myProject$getExpressionProfiles(names = c(
+  "UDPGT1|Human|Healthy",
+  "DIO1|Human|Healthy",
+  "DIO3|Human|Healthy",
+  "UDPGT2|Human|Healthy"
+))
 # Create an individual building block
-myIndividual <- createIndividualBuildingBlock(species = Species$Human,
-                                              population = HumanPopulation$Asian_Tanaka_1996,
-                                              gender = Gender$Male,
-                                              weight = 79,
-                                              height = 175,
-                                              age = 35)
+myIndividual <- createIndividualBuildingBlock(
+  species = Species$Human,
+  population = HumanPopulation$Asian_Tanaka_1996,
+  gender = Gender$Male,
+  weight = 79,
+  height = 175,
+  age = 35
+)
 ```
 
 Modules that are intended to be used in combination with a variety of other modules,
@@ -232,9 +245,9 @@ in other modules of our project:
 icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
 newPaths <- extendInitialConditions(icBB,
-                                    spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
-                                    moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
-                                    moleculeNames = c("DIO1", "T3", "T4", "TSH")
+  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
+  moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
+  moleculeNames = c("DIO1", "T3", "T4", "TSH")
 )
 ```
 
@@ -248,47 +261,52 @@ function:
 pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
 # Add protein expression to the PV BB
 proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(pvBB,
-                                                                  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
-                                                                  moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
-                                                                  moleculeNames = c("DIO1")
+  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spacial Structure"),
+  moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
+  moleculeNames = c("DIO1")
 )
 
 # EXPECTED BEHAVIOR
-proteinExpressionPaths <- c("Organism|Thyroid|Plasma|DIO1|Initial concentration",
-                            "Organism|Thyroid|BloodCells|DIO1|Initial concentration",
-                            "Organism|Thyroid|Interstitial|DIO1|Initial concentration",
-                            "Organism|Thyroid|Intracellular|DIO1|Initial concentration",
-                            "Organism|Thyroid|Endosome|DIO1|Initial concentration",
-                            "Organism|Thyroid|Lumen|DIO1|Initial concentration",
-                            "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",
-                            "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",
-                            "Organism|Thyroid|Intracellular|DIO1|Relative expression"
+proteinExpressionPaths <- c(
+  "Organism|Thyroid|Plasma|DIO1|Initial concentration",
+  "Organism|Thyroid|BloodCells|DIO1|Initial concentration",
+  "Organism|Thyroid|Interstitial|DIO1|Initial concentration",
+  "Organism|Thyroid|Intracellular|DIO1|Initial concentration",
+  "Organism|Thyroid|Endosome|DIO1|Initial concentration",
+  "Organism|Thyroid|Lumen|DIO1|Initial concentration",
+  "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",
+  "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",
+  "Organism|Thyroid|Intracellular|DIO1|Relative expression"
 )
 ```
 
 and overwrite the value of "Relative expression":
 
 ```{r setRelativeExpressionValue}
-setParameterValues(pvBuildingBlock = pvBB,
-                                 quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
-                               dimensions = ospDimensions$Fraction,
-                   quantityValues = 1.33)
+setParameterValues(
+  parameterValuesBuildingBlock = pvBB,
+  quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
+  dimensions = ospDimensions$Fraction,
+  quantityValues = 1.33
+)
 ```
 
 Finally, we can create a simulation configuration from the modules and the individual we created:
 
 ```{r createSimulationFromModules}
-simulationConfigurationHuman <- createSimulationConfiguration(simulationName = "Thyroid_QST_human",
-                                            modules = c(modules[["Thyroid_QST"]],
-                                                        thyroidModule,
-                                                        modules[["Pituitary"]],
-                                                        modules[["Endogenous_TH"]],
-                                                        modules[["TH_activeTransports"]],
-                                                        modules[["TH_plasma_binding"]]),
-                                          
-                                            individual = myIndividual,
-                                            expressionProfiles = expressionProfiles,
-                                            selectedParameterValues = list("Thyroid" = "Human")
+simulationConfigurationHuman <- createSimulationConfiguration(
+  simulationName = "Thyroid_QST_human",
+  modules = c(
+    modules[["Thyroid_QST"]],
+    thyroidModule,
+    modules[["Pituitary"]],
+    modules[["Endogenous_TH"]],
+    modules[["TH_activeTransports"]],
+    modules[["TH_plasma_binding"]]
+  ),
+  individual = myIndividual,
+  expressionProfiles = expressionProfiles,
+  selectedParameterValues = list("Thyroid" = "Human")
 )
 ```
 
@@ -303,14 +321,18 @@ Available methods are listed in the enums `MoleculeCalculationMethod` and `Parti
 
 ```{r changeClculationMethodsAndCreateSimulatoin}
 simulationConfigurationHuman$partitionCoefficientMethods(
-  list("T3" = PartitionCoefficientMethods$Berezhkovskiy,
-       "T4" = PartitionCoefficientMethods$`PK-Sim Standard`)
+  list(
+    "T3" = PartitionCoefficientMethods$Berezhkovskiy,
+    "T4" = PartitionCoefficientMethods$`PK-Sim Standard`
+  )
 )
 
 simulationConfigurationHuman$cellularPermeabilityMethods(
-  list("T3" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`,
-       "T4" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`)
+  list(
+    "T3" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`,
+    "T4" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`
+  )
 )
 
-sim1 <- createSimulation(simulationName = "Thyroid_QST_human", )
+sim1 <- createSimulation(simulationName = "Thyroid_QST_human", simulationConfigurationHuman)
 ```

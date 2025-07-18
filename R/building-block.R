@@ -4,16 +4,17 @@
 #' ARE INDIVIDUAL AND EXPRESSION PROFILE ALSO A BB TYPE?
 #'
 #' @export
-BuildingBlockTypes <- enum(c("Spatial Structure",
-                           "Reactions",
-                           "Molecules",
-                           "Passive Transports",
-                           "Observer",
-                           "Events",
-                           "Initial Conditions",
-                           "Parameter Values",
-                           "Expression Profile",
-                           "Individual"
+BuildingBlockTypes <- enum(c(
+  "Spatial Structure",
+  "Reactions",
+  "Molecules",
+  "Passive Transports",
+  "Observer",
+  "Events",
+  "Initial Conditions",
+  "Parameter Values",
+  "Expression Profile",
+  "Individual"
 ))
 
 
@@ -27,14 +28,13 @@ BuildingBlock <- R6::R6Class(
   inherit = ObjectBase,
   active = list(
     #' @field type Type of the building block (Spatial structure, molecules, reactions, etc)
-    type = function(value){
+    type = function(value) {
       private$.readOnlyProperty("type", value, self$get("type"))
     },
     #' @field id ID of the building block
-    id = function(value){
+    id = function(value) {
       private$.readOnlyProperty("type", value, self$get("type"))
     }
-
   ),
   public = list(
     #' @description
@@ -57,7 +57,5 @@ BuildingBlock <- R6::R6Class(
       ))
     }
   ),
-  private = list(
-
-  )
+  private = list()
 )

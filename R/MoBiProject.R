@@ -20,8 +20,6 @@ MoBiProject <- R6::R6Class(
       }
     },
     #' @field parameterIdentificationNames Names of the parameter identifications that are present in the project
-    #'
-    #' PRIO 2
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
         model <- self$get("ParameterIdentificationNames")
@@ -29,16 +27,16 @@ MoBiProject <- R6::R6Class(
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
       }
     },
-    #' @field Individuals Names of the individuals that are present in the project
-    Individuals = function(value) {
+    #' @field individualsNames Names of the individuals that are present in the project
+    individuals = function(value) {
       if (missing(value)) {
         model <- self$get("Individuals")
       } else {
-        private$.throwPropertyIsReadonly("Indivduals")
+        private$.throwPropertyIsReadonly("Individuals")
       }
     },
-    #' @field ExpressionProfiles Names of the expression profiles that are present in the project
-    ExpressionProfiles = function(value) {
+    #' @field expressionProfilesNames Names of the expression profiles that are present in the project
+    expressionProfiles = function(value) {
       if (missing(value)) {
         model <- self$get("ExpressionProfiles")
       } else {
@@ -106,7 +104,7 @@ MoBiProject <- R6::R6Class(
     #' expression profiles is not present in the project.
     #' @returns A named list of objects of the type `BuildingBlock`. `NULL` for each
     #' specified expression profile that is not present in the project  if `stopIfNotFound = FALSE`.
-    getExpressionProfiles = function(names, stopInfNotFound = TRUE){
+    getExpressionProfiles = function(names, stopIfNotFound = TRUE){
     },
 
     #' @description
