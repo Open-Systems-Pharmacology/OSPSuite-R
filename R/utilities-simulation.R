@@ -1,3 +1,17 @@
+#' Create a new simulation from a simulation configuration
+#'
+#' @param simulationName Name of the simulation.
+#' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
+#' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
+#'
+#' @returns A `Simulation` object
+#' @export
+#'
+#' @examples
+createSimulation <- function(simulationName, simulationConfiguration, createAllProcessRateParameters = FALSE) {
+  return(simulation)
+}
+
 #' @title Load a simulation from a pkml file
 #'
 #' @description
