@@ -1,5 +1,7 @@
 # ospsuite (development version)
 
+# ospsuite 12.3.0
+
 ## Breaking changes
 
 - ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
