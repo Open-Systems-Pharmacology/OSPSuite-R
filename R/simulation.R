@@ -67,6 +67,12 @@ Simulation <- R6::R6Class(
         }
         self$set("Name", value)
       }
+    },
+    #' @field configuration An object of the type `SimulationConfiguration`,
+    #' describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and molecule calculation methods.
+    configuration = function(value) {
+      self$get("SimulationConfiguration")
+      # 2DO read only
     }
   ),
   public = list(
