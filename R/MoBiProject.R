@@ -128,7 +128,7 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns A `SimulationConfiguration` object.
      createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL){
-       modules <- self$getModules(moduleNames)
+       modules <- self$getModules(modulesNames)
        individual <- self$getIndividual(individualName, stopIfNotFound = FALSE)
        expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = FALSE)
 
@@ -150,7 +150,7 @@ MoBiProject <- R6::R6Class(
     #' @param filePath Path to the file, including file name, where the project should be saved to.
     #' If `NULL` (default), the project is saved to the same file it was loaded from.
     #' @returns Path of the file to which the project is saved.
-    saveProject = function(filePath = NULL(){
+    saveProject = function(filePath = NULL) {
 
       return(filePath)
     },
