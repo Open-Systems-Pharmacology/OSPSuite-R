@@ -133,3 +133,39 @@ test_that("calculateResiduals computes all observed, simulated data pairs correc
     tolerance = 1e-5
   )
 })
+
+test_that("calculateResiduals handles single-point observed and simulated
+          datasets correctly", {
+  myDataSet <- DataSet$new("myDataSet")
+  myDataSet$setValues(1, 1)
+
+  simDataSet <- DataSet$new("simDataSet")
+  simDataSet$setValues(1, 1)
+
+  myDC <- DataCombined$new()
+  myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
+  myDC$setDataTypes(
+    c("myDataSet", "simDataSet"), dataTypes = c("observed", "simulated")
+  )
+
+  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+
+  expect_equal(residuals$residualValues, 0, tolerance = 1e-5)
+})
+
+test_that("calculateResiduals drops points when simulated dataset contains a
+          single point with non-matching x-value", {
+  myDataSet <- DataSet$new("myDataSet")
+  myDataSet$setValues(1, 1)
+
+  simDataSet <- DataSet$new("simDataSet")
+  simDataSet$setValues(2, 2)
+
+  myDC <- DataCombined$new()
+  myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
+  myDC$setDataTypes(c("myDataSet", "simDataSet"), dataTypes = c("observed", "simulated"))
+
+  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+
+  expect_equal(nrow(residuals), 0)
+})

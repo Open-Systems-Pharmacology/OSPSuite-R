@@ -224,13 +224,30 @@ calculateResiduals <- function(dataCombined,
     pairedData$nameSimulated <- simulatedName
 
     # Add predicted values
-    # the approx function with a default rule = 1 argument returns NA for extrapolated points
-    pairedData$yValuesSimulated <- stats::approx(
-      x = simulatedData$xValues,
-      y = simulatedData$yValues,
-      xout = observedData$xValues,
-      rule = 1
-    )$y
+
+    # Interpolation with stats::approx requires at least 2 simulated points.
+    # With 2 or more points, perform linear interpolation.
+    if (nrow(simulatedData) >= 2) {
+      # `rule = 1` returning NA for any observed points outside the simulated x-range
+      interpolatedYValues <- stats::approx(
+        x = simulatedData$xValues,
+        y = simulatedData$yValues,
+        xout = observedData$xValues,
+        rule = 1
+      )$y
+    } else if (nrow(simulatedData) == 1) {
+      # With exactly 1 simulated point, assign the simulated yValue to observed xValues that exactly match the simulated xValue.
+      interpolatedYValues <- ifelse(
+        observedData$xValues == simulatedData$xValues,
+        simulatedData$yValues,
+        NA_real_
+      )
+    } else {
+      # No simulated data points: all interpolated values should be NA.
+      interpolatedYValues <- rep(NA_real_, length(observedData$xValues))
+    }
+
+    pairedData$yValuesSimulated <- interpolatedYValues
 
     # Residual computation will depend on the scaling.
     if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {

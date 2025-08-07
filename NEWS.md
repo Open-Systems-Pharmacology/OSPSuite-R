@@ -1,5 +1,7 @@
 # ospsuite (development version)
 
+# ospsuite 12.3.0
+
 ## Breaking changes
 
 - ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
@@ -30,6 +32,9 @@ deprecated. Use `getPrintValue()` in conjunction with a print method of your cho
 - `calculateResiduals()` for `DataCombined` now supports full pairwise residual 
 computation between multiple observed and simulated datasets within a group.
 - The `name` property of a `Simulation` can now be changed (#1245)
+- `calculateResiduals`  now handles single-point simulated datasets via direct 
+x-value matching instead of interpolation. Unmatched observed x-values return 
+`NA` (#1559).
 
 # ospsuite 12.2.0
 
