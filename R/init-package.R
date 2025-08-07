@@ -34,5 +34,11 @@
 
   rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
 
+  # Load MoBi.R
+  mobiR <- system.file("lib", "MoBi.R.dll", package = ospsuiteEnv$packageName)
+
+  rSharp::loadAssembly(mobiR)
+  rSharp::callStatic("MoBi.R.Api", "InitializeOnce", apiConfig)
+
   .initializeDimensionAndUnitLists()
 }

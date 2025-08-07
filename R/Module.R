@@ -14,7 +14,7 @@ MoBiModule <- R6::R6Class(
         # Check that the provided merge behavior is either "Extend" or "Overwrite".
         self$set("MergeBehavior", value)
       }
-    },
+    }
 
   ),
   public = list(
@@ -35,13 +35,13 @@ MoBiModule <- R6::R6Class(
     #' @return A named list of building block objects.
     getBuildingBlocks = function(type = NULL){
 
-    }
+    },
 
     #' @description
         #' Is this module a PK-Sim module?
         #'
     isPkSimModule = function(){
-    }
+    },
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.

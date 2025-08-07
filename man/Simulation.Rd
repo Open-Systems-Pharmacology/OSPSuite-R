@@ -26,6 +26,9 @@ An OSPSuite simulation
 \item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
 
 \item{\code{name}}{Name of the simulation}
+
+\item{\code{configuration}}{An object of the type \code{SimulationConfiguration},
+describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and molecule calculation methods.}
 }
 \if{html}{\out{</div>}}
 }
