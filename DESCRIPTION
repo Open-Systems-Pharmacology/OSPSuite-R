@@ -56,6 +56,7 @@ Config/testthat/edition: 3
 Collate: 
     'MoBiProject.R'
     'Module.R'
+    'SimulationConfiguration.R'
     'aging-data.R'
     'api-config.R'
     'application.R'
@@ -142,6 +143,7 @@ Collate:
     'utilities-population.R'
     'utilities-quantity.R'
     'utilities-sensitivity-analysis.R'
+    'utilities-simulation-configuration.R'
     'utilities-simulation-results.R'
     'utilities-simulation.R'
     'utilities-snapshots.R'

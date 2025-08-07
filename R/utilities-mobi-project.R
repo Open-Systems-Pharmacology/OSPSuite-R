@@ -11,7 +11,7 @@
 #' myProject <- loadMoBiProject(projectPath)
 loadMoBiProject <- function(filePath) {
   # .NET task that handles loading of a MoBi project
-  netTask <- .getNetTask("SomeMoBiTask")
+  netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
 
   netObject <- netTask$call("LoadMoBiProject", .expandPath(filePath))
   mobiProject <- MoBiProject$new(netObject, filePath)
