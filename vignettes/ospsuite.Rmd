@@ -98,7 +98,7 @@ getAllParametersMatching("**|Dose*", sim)
 grep("Dose", getAllParameterPathsIn(container = sim), value = TRUE)
 ```
 
-**Note:** Parameter paths in ospsuite match those displayed in PK-Sim or MoBi.
+**Note:** Parameter paths in ospsuite match those displayed in PK-Sim or MoBi. Starting with MoBi 12.0, parameter paths can be copied by right-clicking the parameter in the simulation tree and selecting "Copy Path".
 
 ### Modifying Parameters
 
@@ -130,8 +130,15 @@ print(dose)
 Adjust simulation outputs and solver settings:
 
 ```{r, echo=TRUE, message=TRUE}
+
+# Originally, the simulation outputs plasma concentrations
+sim$outputSelections
+
 # Add new outputs to track
 addOutputs(c("Organism|Lumen|Stomach|Aciclovir"), simulation = sim)
+
+# Now, the simulation will compute two outputs
+sim$outputSelections
 
 # Adjust solver precision if needed
 sim$solver$absTol <- 1e-12
@@ -316,6 +323,7 @@ After mastering the basics, explore these advanced topics:
 ### Essential Next Steps:
 - **[Loading a simulation and accessing entities](load-get.html)** - Deep dive into model exploration
 - **[Changing parameter and molecule start values](set-values.html)** - Advanced parameter manipulation
+- **[Table parameters](table-parameters.html)** - Working with parameter tables and bulk operations
 - **[Running a simulation](run-simulation.html)** - Simulation options and batch processing
 
 ### Population Studies:
@@ -329,6 +337,7 @@ After mastering the basics, explore these advanced topics:
 ### Data Integration:
 - **[Working with observed data](observed-data.html)** - Import experimental data
 - **[DataCombined workflows](data-combined.html)** - Combine simulations with observations
+- **[Visualizations with DataCombined](data-combined-plotting.html)** - Advanced plotting with DataCombined objects
 
 ### Advanced Topics:
 - **[Efficient calculations](efficient-calculations.html)** - Performance optimization

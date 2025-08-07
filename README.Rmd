@@ -81,7 +81,7 @@ to install the package and all required dependencies.
 
 ## Pre-requisites
 
-The `{ospsuite}` package requires `{rSharp}` external dependencies (Visual
+The `{ospsuite}` package requires `{rSharp}` and its external dependencies (Visual
 C++ Redistributable and .NET 8). Install these dependencies using the following instructions:
 
   - [For
@@ -132,8 +132,13 @@ for (non_cran_dep in non_cran_deps) {
 
 deps <- deps[!deps %in% c("methods", non_cran_deps)]
 
-dep_install <- paste('install.packages("', deps, '")', sep = "", collapse = "\n")
-
+dep_install <- paste(
+  'install.packages("',
+  deps,
+  '")',
+  sep = "",
+  collapse = "\n"
+)
 
 
 cat("```r \n")
@@ -144,7 +149,7 @@ cat("\n``` \n")
 
 #### Install non-CRAN dependencies
 
-Pre-built packages are available as binary `*.zip` files.
+Pre-built packages are available as binary files (*.zip for Windows, *.tar.gz for Linux)
 Download the OSPSuite-R binary archive from the
 [releases page](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases). Download and install these additional non-CRAN dependencies:
 
@@ -154,26 +159,26 @@ Download the OSPSuite-R binary archive from the
 
 In [RStudio IDE](https://www.rstudio.com/), use the *Install*
 option in the *Packages* pane and select *Install from -> Package
-Archive File* to install packages from binary `*.zip` files.
+Archive File* to install packages from binary files.
 
 **Note**: CRAN dependencies for `{rSharp}`, `{ospuite.utils}`, and `{tlf}` were installed in the previous step.
 
 
 ``` r
 # Install rSharp from local file 
-# Replace pathTo_rSharp.zip with the actual path to the .zip file
+# Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_rSharp.zip, repos = NULL)
 
 # Install ospsuite.utils from local file
-# Replace pathTo_ospsuite.utils.zip with the actual path to the .zip file
+# Replace pathTo_ospsuite.utils.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_ospsuite.utils.zip, repos = NULL)
 
 # Install tlf from local file
-# Replace pathTo_tlf.zip with the actual path to the .zip file
+# Replace pathTo_tlf.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_tlf.zip, repos = NULL)
 
 # Install ospsuite from local file
-# Replace pathToOSPSuite.zip with the actual path to the .zip file
+# Replace pathToOSPSuite.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_OSPSuite.zip, repos = NULL)
 
 ```
@@ -185,9 +190,12 @@ install.packages(pathTo_OSPSuite.zip, repos = NULL)
   - On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs` 
   to `English (United States)` and reboot.
 
-  - On Linux, set the environment variable `LC_ALL` before starting R:
+  - On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before starting R:
 
     `export LC_ALL=en_US.UTF-8`
+
+  -  add the path to the lib subfolder of installed ospsuite package to LD_LIBRARY_PATH
+    `export LD_LIBRARY_PATH=/usr/local/lib/R/site-library/ospsuite/lib/:$LD_LIBRARY_PATH`
 
 ## Saving and loading the workspace in RStudio does not restore objects
 
