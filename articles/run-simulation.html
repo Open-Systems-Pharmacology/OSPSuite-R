@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -215,11 +215,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2AGhcLnuOUGx9J0HmxVSuw"</span></span>
+<span><span class="co">#&gt; [1] "i6piTSgc5EWm_84xmU-BYw"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2AGhcLnuOUGx9J0HmxVSuw"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "i6piTSgc5EWm_84xmU-BYw"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -309,11 +309,11 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <span><span class="co">#&gt;    at OSPSuite.SimModel.Simulation.evaluateCppCallResult(Boolean success, String errorMessage)</span></span>
 <span><span class="co">#&gt;    at OSPSuite.SimModel.Simulation.RunSimulation()</span></span>
 <span><span class="co">#&gt;    at OSPSuite.Core.Domain.Services.SimModelManager.simulate()</span></span>
-<span><span class="co">#&gt;    at OSPSuite.Core.Domain.Services.SimModelManager.&lt;&gt;c__DisplayClass13_0.&lt;loadAndRunSimulationAsync&gt;b__0()</span></span>
 <span><span class="co">#&gt;    at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)</span></span>
 <span><span class="co">#&gt; --- End of stack trace from previous location ---</span></span>
 <span><span class="co">#&gt;    at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)</span></span>
-<span><span class="co">#&gt;    at System.Threading</span></span>
+<span><span class="co">#&gt;    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&amp; currentTaskSlot, Thread threadPoolThread)</span></span>
+<span><span class="co">#&gt; --- End of stack trace fr</span></span>
 <span></span>
 <span><span class="co"># Add an interval</span></span>
 <span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">20</span>, resolution <span class="op">=</span> <span class="fl">60</span>, intervalName <span class="op">=</span> <span class="st">"highRes"</span><span class="op">)</span></span>
