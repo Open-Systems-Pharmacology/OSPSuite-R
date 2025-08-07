@@ -11,7 +11,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.showtext = TRUE
+  fig.showtext = TRUE,
+  message = FALSE,
+  warning = FALSE
 )
 ```
 
@@ -35,12 +37,11 @@ system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 ```
 
 
-
 ## Quick Start: Basic Simulation
 
 This example demonstrates the essential ospsuite workflow. Detailed explanations follow in subsequent sections.
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, results='hide'}
 # Load the ospsuite package
 library(ospsuite)
 
@@ -67,7 +68,7 @@ The following sections detail each workflow step and demonstrate ospsuite capabi
 
 Simulations require a **.pkml** format file (exported from PK-Sim or MoBi):
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=TRUE}
 # Using the included example
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -83,7 +84,7 @@ print(sim)
 
 After loading, explore the simulation structure and parameters:
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE}
 # Get the simulation tree structure
 simTree <- getSimulationTree(sim)
 
@@ -103,7 +104,7 @@ grep("Dose", getAllParameterPathsIn(container = sim), value = TRUE)
 
 Retrieve and modify parameter values:
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=TRUE}
 # Get a specific parameter
 dose <- getParameter(
   path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
@@ -112,11 +113,11 @@ dose <- getParameter(
 print(dose)
 
 # Change the dose value
-setParameterValues(dose, 0.004)  # New dose: 4 mg/kg
+setParameterValues(dose, 0.004) # New dose: 4 mg/kg
 print(dose)
 
 # Scale a parameter by a factor
-scaleParameterValues(dose, factor = 2)  # Double the dose
+scaleParameterValues(dose, factor = 2) # Double the dose
 print(dose)
 
 # Reset to original value
@@ -128,7 +129,7 @@ print(dose)
 
 Adjust simulation outputs and solver settings:
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=TRUE}
 # Add new outputs to track
 addOutputs(c("Organism|Lumen|Stomach|Aciclovir"), simulation = sim)
 
@@ -139,9 +140,9 @@ sim$solver$relTol <- 1e-8
 # Add custom output intervals for higher resolution
 addOutputInterval(
   simulation = sim,
-  startTime = 1440,    # 1 day
-  endTime = 3000,      # ~2 days  
-  resolution = 10,     # Every 10 minutes
+  startTime = 1440, # 1 day
+  endTime = 3000, # ~2 days
+  resolution = 10, # Every 10 minutes
   intervalName = "highRes"
 )
 
@@ -153,7 +154,7 @@ print(sim$outputSchema)
 
 After setting parameters, run the simulation:
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, warning=FALSE}
 # Run the simulation
 results <- runSimulations(sim)
 
@@ -174,7 +175,7 @@ ospsuite provides multiple visualization options:
 
 #### Option 1: Built-in Plotting Functions
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE}
 # Create a DataCombined object for plotting
 myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(
@@ -192,20 +193,18 @@ plotIndividualTimeProfile(dataCombined = myDataCombined)
 
 #### Option 2: Custom Plotting with ggplot2
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE}
 library(ggplot2)
 
-# Extract time and concentration data
-Time <- results[[1]]$timeValues / (60 * 24)  # Convert to days
-PK <- results[[1]]$getValuesByPath(
-  "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-  individualIds = 0
+# Transform simulation results to a dataframe
+results_df <- simulationResultsToDataFrame(
+  results[[1]],
+  quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 )
 
-# Create a custom plot
-results_df <- data.frame(Time = Time, Concentration = PK)
+results_df$Time <- results_df$Time / (60 * 24) # Convert to days
 
-ggplot(results_df, aes(x = Time, y = Concentration)) +
+ggplot(results_df, aes(x = Time, y = simulationValues)) +
   geom_line(color = "blue", size = 1) +
   labs(
     title = "Aciclovir Plasma Concentration over Time",
@@ -220,7 +219,7 @@ ggplot(results_df, aes(x = Time, y = Concentration)) +
 
 This complete example demonstrates the typical ospsuite workflow:
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, message=TRUE}
 # 1. Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -230,7 +229,7 @@ dose <- getParameter(
   path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
-setParameterValues(dose, 0.006)  # 6 mg/kg dose
+setParameterValues(dose, 0.006) # 6 mg/kg dose
 
 # 3. Run simulation
 results <- runSimulations(sim)
