@@ -21,20 +21,28 @@ MoBiProject <- R6::R6Class(
         private$.throwPropertyIsReadonly("simulationNames")
       }
     },
-    #' @field parameterIdentificationNames Names of the parameter identifications that are present in the project
+    #' @field parameterIdentificationNames Names of the parameter identifications
+    #' that are present in the project (read-only)
+    #' 2DO
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        model <- self$get("ParameterIdentificationNames")
+        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        values <- netTask$call("AllParameterIdentificationNames", self)
+        # Convert to R character vector
+        return(values$call("ToArray"))
       } else {
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
       }
     },
-    #' @field individualsNames Names of the individuals that are present in the project
-    individuals = function(value) {
+    #' @field individualsNames Names of the individuals that are present in the project (read-only)
+    individualsNames = function(value) {
       if (missing(value)) {
-        model <- self$get("Individuals")
+        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        values <- netTask$call("AllIndividualNames", self)
+        # Convert to R character vector
+        return(values$call("ToArray"))
       } else {
-        private$.throwPropertyIsReadonly("Individuals")
+        private$.throwPropertyIsReadonly("individualsNames")
       }
     },
     #' @field expressionProfilesNames Names of the expression profiles that are present in the project

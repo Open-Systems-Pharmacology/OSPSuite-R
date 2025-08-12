@@ -35,8 +35,6 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{individualsNames}}{Names of the individuals that are present in the project}
-
 \item{\code{expressionProfilesNames}}{Names of the expression profiles that are present in the project}
 }
 \if{html}{\out{</div>}}
@@ -48,9 +46,11 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 
 \item{\code{simulationNames}}{Names of the simulations that are present in the project (read-only)}
 
-\item{\code{parameterIdentificationNames}}{Names of the parameter identifications that are present in the project}
+\item{\code{parameterIdentificationNames}}{Names of the parameter identifications
+that are present in the project (read-only)
+2DO}
 
-\item{\code{individualsNames}}{Names of the individuals that are present in the project}
+\item{\code{individualsNames}}{Names of the individuals that are present in the project (read-only)}
 
 \item{\code{expressionProfilesNames}}{Names of the expression profiles that are present in the project}
 }
