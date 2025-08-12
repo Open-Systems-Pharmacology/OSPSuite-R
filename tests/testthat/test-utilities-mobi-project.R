@@ -35,3 +35,17 @@ test_that("It can get individuals names from a MoBi project", {
   expect_error(defaultMoBiProject$individualsNames <- "NewIndividual",
                "Property 'individualsNames' is read-only")
 })
+
+# Test for MoBiProject$expressionProfilesNames
+test_that("It can get expression profiles names from a MoBi project", {
+  expectedNames <- c("UDPGT1|Human|Healthy",
+                     "DIO1|Human|Healthy",
+                     "DIO3|Human|Healthy",
+                     "UDPGT2|Human|Healthy",
+                     "UGT1A1|Rat|Healthy",
+                     "PB-LiverBindingPartner|Human|Healthy")
+  expect_equal(defaultMoBiProject$expressionProfilesNames, expectedNames)
+  # Test that expressionProfilesNames is read-only
+  expect_error(defaultMoBiProject$expressionProfilesNames <- "NewExpressionProfile",
+               "Property 'expressionProfilesNames' is read-only")
+})

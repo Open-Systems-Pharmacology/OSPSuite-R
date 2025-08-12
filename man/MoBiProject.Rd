@@ -32,13 +32,6 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 \section{Super classes}{
 \code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{MoBiProject}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{expressionProfilesNames}}{Names of the expression profiles that are present in the project}
-}
-\if{html}{\out{</div>}}
-}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -52,7 +45,8 @@ that are present in the project (read-only)
 
 \item{\code{individualsNames}}{Names of the individuals that are present in the project (read-only)}
 
-\item{\code{expressionProfilesNames}}{Names of the expression profiles that are present in the project}
+\item{\code{expressionProfilesNames}}{Names of the expression profiles that are
+present in the project (read-only)}
 }
 \if{html}{\out{</div>}}
 }

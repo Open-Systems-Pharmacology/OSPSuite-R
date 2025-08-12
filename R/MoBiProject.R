@@ -45,12 +45,16 @@ MoBiProject <- R6::R6Class(
         private$.throwPropertyIsReadonly("individualsNames")
       }
     },
-    #' @field expressionProfilesNames Names of the expression profiles that are present in the project
-    expressionProfiles = function(value) {
+    #' @field expressionProfilesNames Names of the expression profiles that are
+    #' present in the project (read-only)
+    expressionProfilesNames = function(value) {
       if (missing(value)) {
-        model <- self$get("ExpressionProfiles")
+        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        values <- netTask$call("AllExpressionProfileNames", self)
+        # Convert to R character vector
+        return(values$call("ToArray"))
       } else {
-        private$.throwPropertyIsReadonly("ExpressionProfiles")
+        private$.throwPropertyIsReadonly("expressionProfilesNames")
       }
     }
   ),
