@@ -46,7 +46,7 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 \describe{
 \item{\code{sourceFile}}{Path to the file the project was loaded from (read-only)}
 
-\item{\code{simulationNames}}{Names of the simulations that are present in the project}
+\item{\code{simulationNames}}{Names of the simulations that are present in the project (read-only)}
 
 \item{\code{parameterIdentificationNames}}{Names of the parameter identifications that are present in the project}
 

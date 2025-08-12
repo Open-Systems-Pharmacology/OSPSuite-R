@@ -11,10 +11,12 @@ MoBiProject <- R6::R6Class(
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
     },
-    #' @field simulationNames Names of the simulations that are present in the project
+    #' @field simulationNames Names of the simulations that are present in the project (read-only)
     simulationNames = function(value) {
       if (missing(value)) {
-        model <- self$get("SimulationNames")
+        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        values <- netTask$call("AllSimulationNames", self)
+        return(values$call("ToArray"))
       } else {
         private$.throwPropertyIsReadonly("simulationNames")
       }
