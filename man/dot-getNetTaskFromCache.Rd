@@ -4,7 +4,7 @@
 \alias{.getNetTaskFromCache}
 \title{.getNetTaskFromCache}
 \usage{
-.getNetTaskFromCache(taskName)
+.getNetTaskFromCache(taskName, isMoBiR = FALSE)
 }
 \arguments{
 \item{taskName}{The name of the task to retrieve (\strong{without} \code{Get} prefix).}

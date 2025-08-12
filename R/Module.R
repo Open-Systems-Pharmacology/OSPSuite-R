@@ -15,7 +15,6 @@ MoBiModule <- R6::R6Class(
         self$set("MergeBehavior", value)
       }
     }
-
   ),
   public = list(
     #' @description
@@ -33,14 +32,14 @@ MoBiModule <- R6::R6Class(
     #' @param type Optional, type of building blocks to return. Must be one of `BuildingBlockTypes`.
     #' If `NULL` (default), all building blocks of the module are returned.
     #' @return A named list of building block objects.
-    getBuildingBlocks = function(type = NULL){
+    getBuildingBlocks = function(type = NULL) {
 
     },
 
     #' @description
-        #' Is this module a PK-Sim module?
-        #'
-    isPkSimModule = function(){
+    #' Is this module a PK-Sim module?
+    #'
+    isPkSimModule = function() {
     },
     #' @description
     #' Print the object to the console
@@ -52,8 +51,6 @@ MoBiModule <- R6::R6Class(
         "PK-Sim module" = self$isPkSimModule()
       ))
     }
-    ),
-    private = list(
-
-    )
-  )
+  ),
+  private = list()
+)

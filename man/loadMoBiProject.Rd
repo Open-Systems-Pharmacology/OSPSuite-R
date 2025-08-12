@@ -16,7 +16,9 @@ An object of the \code{MoBiProject} type.
 Load a MoBi project
 }
 \examples{
+\dontrun{
 projectPath <- system.file("extdata", "simple.mbp3", package = "ospsuite")
 
 myProject <- loadMoBiProject(projectPath)
+}
 }

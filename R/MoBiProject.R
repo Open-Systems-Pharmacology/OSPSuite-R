@@ -76,7 +76,7 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns A named list of `DataSet` objects. `NULL` if the project does not contain
     #' any observed data or no specified data sets are found.
-    getObservedData = function(dataSetNames = NULL){
+    getObservedData = function(dataSetNames = NULL) {
     },
 
     #' @description
@@ -84,7 +84,7 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns A named list of `MoBiModule` objects. `NULL` if the project does not contain
     #' any module.
-    getModules = function(){
+    getModules = function() {
     },
 
     #' @description
@@ -95,7 +95,7 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns An object of the type `BuildingBlock`. `NULL` if the project does not contain
     #' such an individual and `stopIfNotFound = FALSE`.
-    getIndividual = function(name, stopIfNotFound = TRUE){
+    getIndividual = function(name, stopIfNotFound = TRUE) {
     },
     #' @description
     #' Get specified expression profiles from the project.
@@ -104,7 +104,7 @@ MoBiProject <- R6::R6Class(
     #' expression profiles is not present in the project.
     #' @returns A named list of objects of the type `BuildingBlock`. `NULL` for each
     #' specified expression profile that is not present in the project  if `stopIfNotFound = FALSE`.
-    getExpressionProfiles = function(names, stopIfNotFound = TRUE){
+    getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
     },
 
     #' @description
@@ -127,18 +127,20 @@ MoBiProject <- R6::R6Class(
     #' By setting the value to `NULL`, no PV BB from the specified module will be applied.
     #'
     #' @returns A `SimulationConfiguration` object.
-     createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL){
-       modules <- self$getModules(modulesNames)
-       individual <- self$getIndividual(individualName, stopIfNotFound = FALSE)
-       expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = FALSE)
+    createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL) {
+      modules <- self$getModules(modulesNames)
+      individual <- self$getIndividual(individualName, stopIfNotFound = FALSE)
+      expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = FALSE)
 
-       configuration <- createSimulationConfiguration(modules = modules,
-                                                      individual = individual,
-                                                      expressionProfiles = expressionProfiles,
-                                                      selectedInitialConditions = selectedInitialConditions,
-                                                      selectedParameterValues = selectedParameterValues)
+      configuration <- createSimulationConfiguration(
+        modules = modules,
+        individual = individual,
+        expressionProfiles = expressionProfiles,
+        selectedInitialConditions = selectedInitialConditions,
+        selectedParameterValues = selectedParameterValues
+      )
 
-       return(configuration)
+      return(configuration)
     },
 
     #' @description
@@ -151,7 +153,6 @@ MoBiProject <- R6::R6Class(
     #' If `NULL` (default), the project is saved to the same file it was loaded from.
     #' @returns Path of the file to which the project is saved.
     saveProject = function(filePath = NULL) {
-
       return(filePath)
     },
     #' @description
