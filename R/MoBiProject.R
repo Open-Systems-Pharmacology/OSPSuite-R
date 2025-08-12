@@ -177,6 +177,12 @@ MoBiProject <- R6::R6Class(
       ospsuite.utils::ospPrintItems(list(
         "Source file" = self$sourceFile
       ))
+      ospsuite.utils::ospPrintItems(list(
+        "Simulation names" = self$simulationNames,
+        #"Parameter identification names" = self$parameterIdentificationNames,
+        "Individuals names" = self$individualsNames,
+        "Expression profiles names" = self$expressionProfilesNames
+      ))
     }
   ),
   private = list(

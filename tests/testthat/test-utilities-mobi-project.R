@@ -6,6 +6,10 @@ test_that("It can load a valid MoBi project", {
 
 defaultMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("TH_QST_Platform.mbp3"))
 
+test_that("It can print a MoBi project", {
+  expect_snapshot(print(defaultMoBiProject))
+})
+
 # Test for MoBiProject$simulationNames
 test_that("It can get simulation names from a MoBi project", {
   expectedNames <- c("Thyroid_QST_Human",
