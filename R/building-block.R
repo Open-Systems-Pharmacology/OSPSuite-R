@@ -49,6 +49,7 @@ BuildingBlock <- R6::R6Class(
     #' Must be one of the `BuildingBlockTypes`.
     #' @return A new `BuildingBlock` object.
     initialize = function(netObject, type = NULL) {
+      validateEnumValue(type, enum = BuildingBlockTypes, nullAllowed = TRUE)
       if (!is.null(type) && !type %in% BuildingBlockTypes) {
         stop(messages$invalidBuildingBlockType(type), call. = FALSE)
       }

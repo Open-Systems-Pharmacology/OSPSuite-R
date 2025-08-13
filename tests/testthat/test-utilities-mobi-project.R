@@ -82,7 +82,7 @@ test_that("It can get modules from a MoBi project", {
 test_that("It can get an individual from a MoBi project", {
   individual <- defaultMoBiProject$getIndividual("Human")
   expect_true(isOfType(individual, "BuildingBlock"))
-  expect_true(individual$type == "Individual")
+  expect_true(individual$type == BuildingBlockTypes$Individual)
   expect_equal(individual$name, "Human")
 
   # Test for non-existing individual
@@ -95,3 +95,36 @@ test_that("It correctly handles non-existing individuals", {
   individual <- defaultMoBiProject$getIndividual("NonExistingIndividual", stopIfNotFound = FALSE)
   expect_null(individual)
 })
+
+# Test for MoBiProject$getExpressionProfiles
+test_that("It can get expression profiles from a MoBi project", {
+  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy"))
+  expect_true(isOfType(expressionProfiles, "BuildingBlock"))
+  expect_true(expressionProfiles[[1]]$type == BuildingBlockTypes$`Expression Profile`)
+  expect_equal(names(expressionProfiles), c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy"))
+
+  # Test for non-existing expression profile
+  expect_error(defaultMoBiProject$getExpressionProfiles(names = "NonExistingProfile"),
+               messages$errorExpressionProfileNotFound(c("NonExistingProfile")),
+               fixed = TRUE)
+
+  # Test for a list of expression profiles where one profile is non-existant
+  expect_error(defaultMoBiProject$getExpressionProfiles(names = c("NonExistingProfile",
+                                                                  "DIO1|Human|Healthy",
+                                                                  "nonExistingTheSecond")),
+               messages$errorExpressionProfileNotFound(names = c("NonExistingProfile", "nonExistingTheSecond")),
+               fixed = TRUE)
+})
+
+test_that("It correctly handles non-existing expression profiles", {
+  # Test for non-existing expression profile with stopIfNotFound = FALSE
+  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c("NonExistingProfile"), stopIfNotFound = FALSE)
+  expect_vector(expressionProfiles, list(), size = 0)
+
+  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(names = c("NonExistingProfile",
+                                                                           "DIO1|Human|Healthy",
+                                                                           "nonExistingTheSecond"),
+                                                                 stopIfNotFound = FALSE)
+  expect_equal(names(expressionProfiles), "DIO1|Human|Healthy")
+})
+

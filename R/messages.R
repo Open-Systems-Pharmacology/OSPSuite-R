@@ -103,3 +103,7 @@ messages$errorIndividualNotFound <- function(name){
 messages$invalidBuildingBlockType <- function(type) {
   paste0("Invalid building block type: ", type, ". Must be one of: ", paste(BuildingBlockTypes, collapse = ", "))
 }
+
+messages$errorExpressionProfileNotFound <- function(names) {
+  paste0("Expression profile(s) with the name(s) ", paste(names, collapse = ", "), " is/are not present in the project!")
+}

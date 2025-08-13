@@ -136,9 +136,31 @@ MoBiProject <- R6::R6Class(
     #' @param names List of names of the expression profiles to retrieve.
     #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
     #' expression profiles is not present in the project.
-    #' @returns A named list of objects of the type `BuildingBlock`. `NULL` for each
-    #' specified expression profile that is not present in the project  if `stopIfNotFound = FALSE`.
+    #' @returns A named list of objects of the type `BuildingBlock`. If `stopIfNotFound = FALSE`,
+    #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
+      validateIsCharacter(names)
+      netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+      expressionProfiles <- netTask$call("ExpressionProfileBuildingBlocksByName", self, names)
+      expressionProfiles <- expressionProfiles$call("ToArray")
+
+      realNames <- vector("character", length(expressionProfiles))
+      profiles <- lapply(seq_along(expressionProfiles), function(idx) {
+        profile <- expressionProfiles[[idx]]
+        bb <- BuildingBlock$new(profile, type = BuildingBlockTypes$`Expression Profile`)
+        realNames[[idx]] <<- bb$name
+        return(bb)
+      })
+      names(profiles) <- realNames
+
+      # Check if all requested expression profiles were found
+      missingNames <- setdiff(names, realNames)
+      if (length(missingNames) > 0) {
+        if (stopIfNotFound) {
+          stop(messages$errorExpressionProfileNotFound(missingNames))
+      }
+
+      return(profiles)
     },
 
     #' @description
