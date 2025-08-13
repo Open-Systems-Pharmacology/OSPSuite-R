@@ -128,3 +128,16 @@ test_that("It correctly handles non-existing expression profiles", {
   expect_equal(names(expressionProfiles), "DIO1|Human|Healthy")
 })
 
+# Test for MoBiProject$createSimulationConfiguration
+test_that("It can create a simulation configuration from a MoBi project", {
+  modulesNames <- "Thyroid"
+
+  simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
+})
+
+
+
+
+##########
+
+

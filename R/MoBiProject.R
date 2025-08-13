@@ -158,6 +158,7 @@ MoBiProject <- R6::R6Class(
       if (length(missingNames) > 0) {
         if (stopIfNotFound) {
           stop(messages$errorExpressionProfileNotFound(missingNames))
+        }
       }
 
       return(profiles)
@@ -184,17 +185,36 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns A `SimulationConfiguration` object.
     createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL) {
-      modules <- self$getModules(modulesNames)
-      individual <- self$getIndividual(individualName, stopIfNotFound = FALSE)
-      expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = FALSE)
+      modules <- self$getModules()
+      missingModules <- setdiff(modulesNames, names(modules))
+      if (length(missingModules) > 0) {
+        stop(messages$modulesNotPresentInProject(missingModules))
+      }
 
-      configuration <- createSimulationConfiguration(
-        modules = modules,
-        individual = individual,
-        expressionProfiles = expressionProfiles,
-        selectedInitialConditions = selectedInitialConditions,
-        selectedParameterValues = selectedParameterValues
-      )
+      individual <- NULL
+      if (!is.null(individualName)) {
+        individual <- self$getIndividual(individualName, stopIfNotFound = TRUE)
+      }
+      expressionProfiles <- list()
+      if (!is.null(expressionProfilesNames)) {
+        expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = TRUE)
+      }
+
+      # Create module configurations for each module
+      moduleConfigurations <- lapply(modulesNames, function(moduleName) {
+        module <- modules[[moduleName]]
+        return(.createModuleConfiguration(module, selectedInitialConditions[[moduleName]], selectedParameterValues[[moduleName]]))
+      })
+
+      netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
+      # 2DO remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
+      netConfiguration <- netTask$call("CreateConfiguration", self,
+                                       "dummyName",
+                                       moduleConfigurations,
+                                       expressionProfiles,
+                                       individual
+                                       )
+      configuration <- SimulationConfiguration$new(netConfiguration)
 
       return(configuration)
     },

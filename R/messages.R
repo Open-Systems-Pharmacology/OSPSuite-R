@@ -99,6 +99,10 @@ messages$errorIndividualNotFound <- function(name){
   paste0("Individual with the name ", name, " is not present in the project!")
 }
 
+messages$modulesNotPresentInProject <- function(modules) {
+  paste0("Modules with the name(s) ", paste(modules, collapse = ", "), " is/are not present in the project!")
+}
+
 ##### BuildingBlock #####
 messages$invalidBuildingBlockType <- function(type) {
   paste0("Invalid building block type: ", type, ". Must be one of: ", paste(BuildingBlockTypes, collapse = ", "))
