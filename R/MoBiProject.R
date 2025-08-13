@@ -207,7 +207,7 @@ MoBiProject <- R6::R6Class(
       })
 
       netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
-      # 2DO remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
+      # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
       netConfiguration <- netTask$call(
         "CreateConfiguration", self,
         "dummyName",
