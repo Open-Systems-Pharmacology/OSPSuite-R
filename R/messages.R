@@ -98,3 +98,8 @@ messages$forbiddenSimulationName <- function(name, sim) {
 messages$errorIndividualNotFound <- function(name){
   paste0("Individual with the name ", name, " is not present in the project!")
 }
+
+##### BuildingBlock #####
+messages$invalidBuildingBlockType <- function(type) {
+  paste0("Invalid building block type: ", type, ". Must be one of: ", paste(BuildingBlockTypes, collapse = ", "))
+}

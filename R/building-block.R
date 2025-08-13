@@ -29,21 +29,32 @@ BuildingBlock <- R6::R6Class(
   active = list(
     #' @field type Type of the building block (Spatial structure, molecules, reactions, etc)
     type = function(value) {
-      private$.readOnlyProperty("type", value, self$get("type"))
+      private$.readOnlyProperty("type", value, private$.type)
     },
     #' @field id ID of the building block
     id = function(value) {
-      private$.readOnlyProperty("type", value, self$get("type"))
+      private$.readOnlyProperty("type", value, self$get("Id"))
+    },
+    #' @field name Name of the building block. Read-only.
+    name = function(value) {
+      private$.readOnlyProperty("name", value, self$get("Name"))
     }
   ),
   public = list(
     #' @description
     #' Initialize a new instance of the class
     #'
-    #' @param netObject Reference to `NetObject` .NET MoBi-module object
-    #' @return A new `MoBiModule` object.
-    initialize = function(netObject) {
+    #' @param netObject Reference to `NetObject` .NET object representing a building block.
+    #' @param type Type of the building block (optional, defaults to `NULL`).
+    #' Must be one of the `BuildingBlockTypes`.
+    #' @return A new `BuildingBlock` object.
+    initialize = function(netObject, type = NULL) {
+      if (!is.null(type) && !type %in% BuildingBlockTypes) {
+        stop(messages$invalidBuildingBlockType(type), call. = FALSE)
+      }
+
       super$initialize(netObject)
+        private$.type <- type
     },
 
     #' @description
@@ -57,5 +68,6 @@ BuildingBlock <- R6::R6Class(
       ))
     }
   ),
-  private = list()
+  private = list(
+    .type = NULL)
 )

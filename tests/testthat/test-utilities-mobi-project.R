@@ -60,7 +60,6 @@ test_that("It can get expression profiles names from a MoBi project", {
 })
 
 # Test for MoBiProject$getModules
-
 test_that("It can get modules from a MoBi project", {
   expectedNames <- c("Thyroid_QST",
                      "TH_activeTransports",
@@ -77,4 +76,22 @@ test_that("It can get modules from a MoBi project", {
   expect_equal(names(modules), expectedNames)
   modules <- emptyProject$getModules()
   expect_equal(names(modules), character(0))
+})
+
+# Test for MoBiProject$getIndividual
+test_that("It can get an individual from a MoBi project", {
+  individual <- defaultMoBiProject$getIndividual("Human")
+  expect_true(isOfType(individual, "BuildingBlock"))
+  expect_true(individual$type == "Individual")
+  expect_equal(individual$name, "Human")
+
+  # Test for non-existing individual
+  expect_error(defaultMoBiProject$getIndividual("NonExistingIndividual"),
+               messages$errorIndividualNotFound("NonExistingIndividual"))
+})
+
+test_that("It correctly handles non-existing individuals", {
+  # Test for non-existing individual with stopIfNotFound = FALSE
+  individual <- defaultMoBiProject$getIndividual("NonExistingIndividual", stopIfNotFound = FALSE)
+  expect_null(individual)
 })

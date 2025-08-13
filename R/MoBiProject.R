@@ -128,7 +128,7 @@ MoBiProject <- R6::R6Class(
         return(NULL)
       }
 
-      bb <- BuildingBlock$new(individual)
+      bb <- BuildingBlock$new(individual, type = BuildingBlockTypes$Individual)
       return(bb)
     },
     #' @description
