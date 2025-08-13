@@ -96,9 +96,17 @@ MoBiProject <- R6::R6Class(
     #' @description
     #' Get modules present in the project.
     #'
-    #' @returns A named list of `MoBiModule` objects. `NULL` if the project does not contain
-    #' any module.
+    #' @returns A named list of `MoBiModule` objects.
     getModules = function() {
+      netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+      names <- netTask$call("AllModuleNames", self)
+      names <- names$call("ToArray")
+      modules <- lapply(names, function(name) {
+        module <- netTask$call("ModuleByName", self, name)
+        return(MoBiModule$new(module))
+      })
+      names(modules) <- names
+      return(modules)
     },
 
     #' @description
