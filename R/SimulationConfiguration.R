@@ -127,8 +127,8 @@ SimulationConfiguration <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #'
-    #' 2DO Should not be directly used. Instead, use function `loadMoBiProject()`
-    #' to load a project.
+    #' Should not be directly used. Instead, use function `createSimulationConfiguration()` or the method `createSimulationConfiguration()`
+    #' from the class `MoBiProject`.
     #' @param netObject Reference to `NetObject` .NET Simulation configuration object
     #' @returns A new `SimulationConfiguration` object.
     initialize = function(netObject) {

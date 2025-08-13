@@ -77,8 +77,8 @@ To set the cellular permeability method for a molecule, provide a named list.}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 
-2DO Should not be directly used. Instead, use function \code{loadMoBiProject()}
-to load a project.
+Should not be directly used. Instead, use function \code{createSimulationConfiguration()} or the method \code{createSimulationConfiguration()}
+from the class \code{MoBiProject}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$new(netObject)}\if{html}{\out{</div>}}
 }
