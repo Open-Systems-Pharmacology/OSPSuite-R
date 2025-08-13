@@ -88,8 +88,7 @@ MoBiProject <- R6::R6Class(
     #' from project. If `NULL`, all data sets are returned. If a specified data set
     #' is not found, the name is ignored.
     #'
-    #' @returns A named list of `DataSet` objects. `NULL` if the project does not contain
-    #' any observed data or no specified data sets are found.
+    #' @returns A named list of `DataSet` objects.
     getObservedData = function(dataSetNames = NULL) {
     },
 
@@ -118,6 +117,19 @@ MoBiProject <- R6::R6Class(
     #' @returns An object of the type `BuildingBlock`. `NULL` if the project does not contain
     #' such an individual and `stopIfNotFound = FALSE`.
     getIndividual = function(name, stopIfNotFound = TRUE) {
+      validateIsCharacter(name)
+      netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+      individual <- netTask$call("IndividualBuildingBlockByName", self, name)
+
+      if (is.null(individual)) {
+        if (stopIfNotFound) {
+          stop(messages$errorIndividualNotFound(name))
+        }
+        return(NULL)
+      }
+
+      bb <- BuildingBlock$new(individual)
+      return(bb)
     },
     #' @description
     #' Get specified expression profiles from the project.
