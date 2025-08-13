@@ -220,18 +220,6 @@ MoBiProject <- R6::R6Class(
     },
 
     #' @description
-    #'
-    #' PRIO 2
-    #'
-    #' Save the project.
-    #'
-    #' @param filePath Path to the file, including file name, where the project should be saved to.
-    #' If `NULL` (default), the project is saved to the same file it was loaded from.
-    #' @returns Path of the file to which the project is saved.
-    saveProject = function(filePath = NULL) {
-      return(filePath)
-    },
-    #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
