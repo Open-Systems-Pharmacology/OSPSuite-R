@@ -163,4 +163,3 @@ test_that("It can create a simulation configuration from a MoBi project", {
 
 
 
-##########
