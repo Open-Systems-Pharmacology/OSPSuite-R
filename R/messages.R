@@ -94,8 +94,8 @@ messages$forbiddenSimulationName <- function(name, sim) {
   paste0("The name '", name, "' is not allowed for this simulation. Forbidden names for this simulation are: '", paste0(.getIllegalSimulationNames(sim), collapse = ", "), "'.")
 }
 
-#####MoBiProject#####
-messages$errorIndividualNotFound <- function(name){
+##### MoBiProject#####
+messages$errorIndividualNotFound <- function(name) {
   paste0("Individual with the name ", name, " is not present in the project!")
 }
 

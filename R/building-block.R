@@ -55,7 +55,7 @@ BuildingBlock <- R6::R6Class(
       }
 
       super$initialize(netObject)
-        private$.type <- type
+      private$.type <- type
     },
 
     #' @description
@@ -70,5 +70,6 @@ BuildingBlock <- R6::R6Class(
     }
   ),
   private = list(
-    .type = NULL)
+    .type = NULL
+  )
 )

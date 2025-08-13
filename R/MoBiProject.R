@@ -208,12 +208,13 @@ MoBiProject <- R6::R6Class(
 
       netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
       # 2DO remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
-      netConfiguration <- netTask$call("CreateConfiguration", self,
-                                       "dummyName",
-                                       moduleConfigurations,
-                                       expressionProfiles,
-                                       individual
-                                       )
+      netConfiguration <- netTask$call(
+        "CreateConfiguration", self,
+        "dummyName",
+        moduleConfigurations,
+        expressionProfiles,
+        individual
+      )
       configuration <- SimulationConfiguration$new(netConfiguration)
 
       return(configuration)
@@ -229,7 +230,7 @@ MoBiProject <- R6::R6Class(
       ))
       ospsuite.utils::ospPrintItems(list(
         "Simulation names" = self$simulationNames,
-        #"Parameter identification names" = self$parameterIdentificationNames,
+        # "Parameter identification names" = self$parameterIdentificationNames,
         "Individuals names" = self$individualsNames,
         "Expression profiles names" = self$expressionProfilesNames
       ))
