@@ -10,21 +10,17 @@ A new \code{MoBiProject} object.
 A \code{Simulation} object, if the simulation with the given name is present in the
 project. \code{NULL} if no such simulation is available.
 
-A named list of \code{DataSet} objects. \code{NULL} if the project does not contain
-any observed data or no specified data sets are found.
+A named list of \code{DataSet} objects.
 
-A named list of \code{MoBiModule} objects. \code{NULL} if the project does not contain
-any module.
+A named list of \code{MoBiModule} objects.
 
 An object of the type \code{BuildingBlock}. \code{NULL} if the project does not contain
 such an individual and \code{stopIfNotFound = FALSE}.
 
-A named list of objects of the type \code{BuildingBlock}. \code{NULL} for each
-specified expression profile that is not present in the project  if \code{stopIfNotFound = FALSE}.
+A named list of objects of the type \code{BuildingBlock}. If \code{stopIfNotFound = FALSE},
+only the expression profiles that are present in the project are returned.
 
 A \code{SimulationConfiguration} object.
-
-Path of the file to which the project is saved.
 }
 \description{
 A MoBi project, containing modules, building blocks, simulations, etc.
@@ -60,7 +56,6 @@ present in the project (read-only)}
 \item \href{#method-MoBiProject-getIndividual}{\code{MoBiProject$getIndividual()}}
 \item \href{#method-MoBiProject-getExpressionProfiles}{\code{MoBiProject$getExpressionProfiles()}}
 \item \href{#method-MoBiProject-createSimulationConfiguration}{\code{MoBiProject$createSimulationConfiguration()}}
-\item \href{#method-MoBiProject-saveProject}{\code{MoBiProject$saveProject()}}
 \item \href{#method-MoBiProject-print}{\code{MoBiProject$print()}}
 }
 }
@@ -226,26 +221,6 @@ By setting the value to \code{NULL}, no IC BB from the specified module will be 
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
 By setting the value to \code{NULL}, no PV BB from the specified module will be applied.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-MoBiProject-saveProject"></a>}}
-\if{latex}{\out{\hypertarget{method-MoBiProject-saveProject}{}}}
-\subsection{Method \code{saveProject()}}{
-PRIO 2
-
-Save the project.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$saveProject(filePath = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{filePath}}{Path to the file, including file name, where the project should be saved to.
-If \code{NULL} (default), the project is saved to the same file it was loaded from.}
 }
 \if{html}{\out{</div>}}
 }
