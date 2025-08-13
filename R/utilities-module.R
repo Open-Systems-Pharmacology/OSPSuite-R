@@ -22,7 +22,7 @@ loadModuleFromPKML <- function(path) {
 #' @noRd
 .createModuleConfiguration <- function(module, selectedParameterValue = NULL, selectedInitialCondition = NULL) {
   netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
-  # 2DO cannot pass NULL to a method?
+  # TODO: cannot pass NULL to a method?
   netModuleConfiguration <- netTask$call("CreateModuleConfiguration", module)
   netModuleConfiguration$set("SelectedParameterValue", selectedParameterValue)
   netModuleConfiguration$set("SelectedInitialCondition", selectedInitialCondition)
