@@ -52,10 +52,8 @@ get the names of individuals and expression profiles from the project:
 individualsInProject <- myProject$individualsNames
 expProfilesInProject <- myProject$expressionProfilesNames
 
-      ospsuite.utils::ospPrintItems(list(
-        "Individuals names" = individualsInProject,
-        "Expression profiles names" = expProfilesInProject
-      ))
+      ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")
+      ospsuite.utils::ospPrintItems(expProfilesInProject, title = "Expression profiles names")
 ```
 
 get the names of the modules in the project:
@@ -66,7 +64,13 @@ modulesInProject <- myProject$moduleNames
 ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
 ```
 
-and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`.
+and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`:
+
+```{r getSimulation}
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+print(simulation)
+```
+
 
 and get the building blocks defined for the modules:
 
@@ -79,18 +83,6 @@ for (bbName in names(bbs)) {
 
 # Get all parameter values BBs
 paramValuesBBs <- modulesInProject[["Thyroid"]]$getBuildingBlocks(type = "Parameter Values")
-```
-
-We can retrieve simulations from the project:
-
-```{r getSimulation}
-simulation <- myProject$getSimulation(simulationsInProject[[1]])
-```
-
-and the observed data as `DataSet` objects:
-
-```{r getObservedData}
-obsData <- myProject$getObservedData()
 ```
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, Individual, Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
