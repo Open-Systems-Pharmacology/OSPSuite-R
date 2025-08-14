@@ -145,7 +145,8 @@ test_that("calculateResiduals handles single-point observed and simulated
   myDC <- DataCombined$new()
   myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
   myDC$setDataTypes(
-    c("myDataSet", "simDataSet"), dataTypes = c("observed", "simulated")
+    c("myDataSet", "simDataSet"),
+    dataTypes = c("observed", "simulated")
   )
 
   residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
