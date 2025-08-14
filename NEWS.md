@@ -1,5 +1,13 @@
 # ospsuite (development version)
 
+# ospsuite 12.3.1
+
+## Minor improvements and bug fixes
+
+- Fixed tests expectations for better compatibility with latest version of
+  `{ospsuite.utils}` package. #1570
+- Revised "get started" (https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) documentation page to make it more accesible to new users. #1571
+
 # ospsuite 12.3.0
 
 ## Breaking changes

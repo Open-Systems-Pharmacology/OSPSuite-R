@@ -1,8 +1,8 @@
 ---
-title: "Introduction to ospsuite"
+title: "Getting Started with ospsuite"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to ospsuite}
+  %\VignetteIndexEntry{Getting Started with ospsuite}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,96 +11,348 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.showtext = TRUE
+  fig.showtext = TRUE,
+  message = FALSE,
+  warning = FALSE
 )
 ```
 
-The `{ospsuite}` R-package is part of the [Open Systems Pharmacology](http://www.open-systems-pharmacology.org/) Software (OSPS), an open-source suite of modeling and simulation tools for pharmaceutical and other life-sciences applications. This package provides the functionality of loading, manipulating, and simulating the simulations created in the software tools PK-Sim and MoBi. This document gives an overview of the general workflow and the most important methods.
+The `{ospsuite}` R-package is part of the [Open Systems Pharmacology](http://www.open-systems-pharmacology.org/) Software (OSPS), an open-source suite of modeling and simulation tools for pharmaceutical and other life-sciences applications. This package provides the functionality of loading, manipulating, and simulating the simulations created in the software tools PK-Sim and MoBi.
 
-## General information
+This guide demonstrates how to load, run, and visualize PBPK simulations using practical examples.
 
-In order to load a simulation in R, it must be present in the **\*.pkml** file format. Every simulation in PK-Sim or MoBi can be exported to the *.pkml file. Unless otherwise stated, the examples shown in the vignettes are based on the Aciclovir example model. The model can be found in the PK-Sim examples folder of the OSPS installation.
+## Overview
 
-The general workflow with the `{ospsuite}` package can be summarized in following steps:
+This tutorial covers:
 
-  1. Loading a simulation from .pkml file.
-  2. Accessing entities of the simulation, such as molecules, parameters, or containers, and reading information about them.
-  3. Changing simulation settings, parameter values, and molecules start values.
-  4. Retrieving the results and processing them.
+- Loading and running PBPK simulations
+- Exploring and modifying model parameters  
+- Visualizing simulation results
+- Understanding the basic ospsuite workflow
 
-The workflow steps are described in the following vignettes:
-
-* [Loading a simulation and accessing entities](load-get.html)
-* [Changing parameter and molecule start values](set-values.html)
-* [Running a simulation](run-simulation.html)
-* [Efficient calculations](efficient-calculations.html)
-* [Creating individuals](create-individual.html)
-* [Population simulations](create-run-population.html)
-* [PK Analysis](pk-analysis.html)
-* [Sensitivity analysis](sensitivity-analysis.html)
-* [Table parameters](table-parameters.html)
-* [Dimensions and Units](unit-conversion.html)
-* [Working with data sets and import from excel](observed-data.html)
-* [Working with `DataCombined` class](data-combined.html)
-* [Visualizations with `DataCombined`](data-combined-plotting.html)
-
-Some aspects of the `{ospsuite}` package may appear uncommon for the users not familiar with the object-oriented approach. It is recommended to read the following section to better understand some semantics and to get the most of the flexibility and efficiency of the package.
-
-## Object-oriented approach
-
-The `{ospsuite}` R-package utilizes the concept of object oriented (OO) programming based on the [R6 system](https://adv-r.hadley.nz/r6.html). While the philosophy of the package is to offer a functional programming workflow more common for the R users, it is important to understand some basic concepts of the OO programming. 
-
-Most of the functions implemented in `{ospsuite}` return an *instance* (or an *object*) of a *class*. These objects can be used as inputs for other functions. Additionally, each object offers a set of properties (which can be themselves other objects) and functions, accessible by the `$` sign:
+All examples in this tutorial and the rest of the documentation use the Aciclovir example model (unless stated otherwise), which is included in the package and can be accessed with:
 
 ```r
-object1           <- ClassName$new()
-aProperty         <- object1$property1
-resultOfAFunction <- object1$multiply(1,2)
+system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 ```
 
-Important information about the object can be printed out by calling `print(object)`.
 
-The most important classes are:
+## Quick Start: Basic Simulation
 
-  : `Simulation`
-    : Representation of the simulation loaded from the *.pkml file.
-  : `SimulationRunOptions`
-    : An object defining the options of a simulation run. The options are: `numberOfCores` the maximal number of (logical) cores that can be used by the (population) simulation; `checkForNegativeValues` a boolean defining if an error if thrown if some variables become negative for which the `"negativeValuesAllowed"`-flag is set to `FALSE` (can be used to ignore numerical noise); `showProgress` a Boolean if a "progress bar" is shown in the console representing the progress of the simulation.
-  : `SolverSettings`
-    : Object defining the settings of the solver. Stored in `SimulationSettings` of a `Simulation` (accessibly by field `$settings`).
-  : `OutputSchema`
-    : Definition of the output intervals of the simulation. The `OutputSchema` defines the total simulation time and the time points at which results are generated. Can be accessed as property of a `Simulation`-object.
-  : `OutputSelections`
-    : List of quantities (parameters and molecules) for which the outputs will be generated. Can be accessed as property of a `Simulation`-object.
-  : `SimulationResults`
-    : Results of a simulation, either individual or population. Holds the simulated values for all quantities defined in the `OutputSelections`. See [Running a simulation](run-simulation.html) for more information.
-  : `Entity`
-    : Every accessible distinct part of the model. Most prominent entities are `Molecule`, `Parameter`, `Container`. Every `Entity` has properties `$path` representing the path within the model structure and `$parentContainer` being the container this entity is located in.
-  : `Container`
-    : A `Container` is an element of model structure that contains other entities (e.g., spatial containers, molecules, parameters).
-    The most prominent containers are organs and compartments. A loaded `Simulation` is also a container.
-  : `Quantity`
-    : An `Entity` in the simulation that has a value - namely `Molecule` and `Parameter`. Every `Quantity` has a `$value` and a `$dimension`. Further important fields are `$unit`, which is the base unit of the dimension. See [Dimensions and Units](unit-conversion.html) for more information.
-  : `Molecule`
-    : A molecule located in a `Container`. The `$value`-property refers to the initial value in the simulation. Inherits from `Quantity`.
-  : `Parameter`
-    : A parameter. The `$value`-property refers to the initial value in the simulation. Inherits from `Quantity`.
-  : `Formula`
-    : The value of each `Quantity` is described by a `$formula`-property. There are different types of formulae, see [Changing parameter and molecule start values](set-values.html) for more information.
-  : `IndividualCharacteristics`
-    : An object used for creating of individual parameter sets with the `createIndividual`-method. See [Creating individuals](create-individual.html) for more information.
-  : `Population`
-    : An object describing a virtual population. Can be either loaded from a *.csv-file created by PK-Sim or created with the `createPopulation`-method. See [Population simulations](create-run-population.html) for more information.
-  : `PopulationCharacteristics`
-    : An object used for creating of population parameter sets with the `createPopulation`-method. See [Population simulations](create-run-population.html) for more information.
-  : `SimulationPKAnalyses`
-    : PK analyses for a simulations result.
-  : `QuantityPKParameter`
-    : A certain PK parameter for an output quantity. Has the fields `$name` which is the name of the PK parameter (e.g. "C_max"), `$quantityPath` the path of the output the parameter has been calculated for, and `$values` the value (or list of values for a population simulation).
-  : `SensitivityAnalysis`
-    : A class defining the analysis of which input parameters have most impact on the output curves of a simulation. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
-  : `SensitivityAnalysisResults`
-    : Results of running the `SensitivityAnalysis`
-  : `PKParameterSensitivity`
-    : The sensitivity (field `$value`) of a PK-Parameter (`$pkParameterName`) for the output `$outputPath` calculated for the varied parameter `$parameterName`. See [Sensitivity analysis](sensitivity-analysis.html) for more information.
+This example demonstrates the essential ospsuite workflow. Detailed explanations follow in subsequent sections.
+
+```{r, echo=TRUE, results='hide'}
+# Load the ospsuite package
+library(ospsuite)
+
+# Load the built-in example simulation
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+
+# Run the simulation
+results <- runSimulations(sim)
+
+# Create a quick visualization
+myDataCombined <- DataCombined$new()
+myDataCombined$addSimulationResults(results[[1]])
+plotIndividualTimeProfile(dataCombined = myDataCombined)
+```
+
+This example loads, runs, and visualizes a PBPK simulation. The plot shows the concentration-time profile for Aciclovir in plasma after IV administration.
+
+## Step-by-Step Tutorial
+
+The following sections detail each workflow step and demonstrate ospsuite capabilities.
+
+### Loading Simulations
+
+Simulations require a **.pkml** format file (exported from PK-Sim or MoBi):
+
+```{r, echo=TRUE, message=TRUE}
+# Using the included example
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+
+# For custom files, use:
+# sim <- loadSimulation("path/to/simulation.pkml")
+
+# Explore the simulation
+print(sim)
+```
+
+### Exploring Model Structure
+
+After loading, explore the simulation structure and parameters:
+
+```{r, echo=TRUE}
+# Get the simulation tree structure
+simTree <- getSimulationTree(sim)
+
+# Explore parameter paths
+simTree$Organism$Weight$path
+
+# Find parameters using wildcards
+getAllParametersMatching("**|Dose*", sim)
+
+# Or search for specific terms
+grep("Dose", getAllParameterPathsIn(container = sim), value = TRUE)
+```
+
+**Note:** Parameter paths in ospsuite match those displayed in PK-Sim or MoBi. Starting with MoBi 12.0, parameter paths can be copied by right-clicking the parameter in the simulation tree and selecting "Copy Path".
+
+### Modifying Parameters
+
+Retrieve and modify parameter values:
+
+```{r, echo=TRUE, message=TRUE}
+# Get a specific parameter
+dose <- getParameter(
+  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  sim
+)
+print(dose)
+
+# Change the dose value
+setParameterValues(dose, 0.004) # New dose: 4 mg/kg
+print(dose)
+
+# Scale a parameter by a factor
+scaleParameterValues(dose, factor = 2) # Double the dose
+print(dose)
+
+# Reset to original value
+dose$reset()
+print(dose)
+```
+
+### Customizing Simulation Settings
+
+Adjust simulation outputs and solver settings:
+
+```{r, echo=TRUE, message=TRUE}
+
+# Originally, the simulation outputs plasma concentrations
+sim$outputSelections
+
+# Add new outputs to track
+addOutputs(c("Organism|Lumen|Stomach|Aciclovir"), simulation = sim)
+
+# Now, the simulation will compute two outputs
+sim$outputSelections
+
+# Adjust solver precision if needed
+sim$solver$absTol <- 1e-12
+sim$solver$relTol <- 1e-8
+
+# Add custom output intervals for higher resolution
+addOutputInterval(
+  simulation = sim,
+  startTime = 1440, # 1 day
+  endTime = 3000, # ~2 days
+  resolution = 10, # Every 10 minutes
+  intervalName = "highRes"
+)
+
+# Check current output schema
+print(sim$outputSchema)
+```
+
+### Running Simulations
+
+After setting parameters, run the simulation:
+
+```{r, echo=TRUE, warning=FALSE}
+# Run the simulation
+results <- runSimulations(sim)
+
+# Examine the results structure
+print(results[[1]])
+
+# Extract specific concentration-time data
+plasmaConc <- results[[1]]$getValuesByPath(
+  "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+  individualIds = 0
+)
+head(plasmaConc)
+```
+
+### Visualizing Results
+
+ospsuite provides multiple visualization options:
+
+#### Option 1: Built-in Plotting Functions
+
+```{r, echo=TRUE}
+# Create a DataCombined object for plotting
+myDataCombined <- DataCombined$new()
+myDataCombined$addSimulationResults(
+  results[[1]],
+  quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+)
+
+# Convert to data frame if needed
+df_results <- myDataCombined$toDataFrame()
+head(df_results)
+
+# Create publication-ready plots
+plotIndividualTimeProfile(dataCombined = myDataCombined)
+```
+
+#### Option 2: Custom Plotting with ggplot2
+
+```{r, echo=TRUE}
+library(ggplot2)
+
+# Transform simulation results to a dataframe
+results_df <- simulationResultsToDataFrame(
+  results[[1]],
+  quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+)
+
+results_df$Time <- results_df$Time / (60 * 24) # Convert to days
+
+ggplot(results_df, aes(x = Time, y = simulationValues)) +
+  geom_line(color = "blue", size = 1) +
+  labs(
+    title = "Aciclovir Plasma Concentration over Time",
+    x = "Time (days)",
+    y = "Plasma Concentration (µmol/L)"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## Complete Workflow Example
+
+This complete example demonstrates the typical ospsuite workflow:
+
+```{r, echo=TRUE, message=TRUE}
+# 1. Load simulation
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+
+# 2. Modify parameters (e.g., change dose)
+dose <- getParameter(
+  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  sim
+)
+setParameterValues(dose, 0.006) # 6 mg/kg dose
+
+# 3. Run simulation
+results <- runSimulations(sim)
+
+# 4. Visualize results
+myDataCombined <- DataCombined$new()
+myDataCombined$addSimulationResults(results[[1]])
+plotIndividualTimeProfile(dataCombined = myDataCombined)
+
+# 5. Extract data for further analysis
+df_results <- myDataCombined$toDataFrame()
+print(paste("Peak concentration:", round(max(df_results$yValues), 2), "µmol/L"))
+```
+
+## Understanding ospsuite Objects
+
+This section explains the key concepts and object structure in ospsuite.
+
+### Object-Oriented Approach
+
+The `{ospsuite}` R-package utilizes object-oriented (OO) programming based on the [R6 system](https://adv-r.hadley.nz/r6.html). The package offers a functional programming workflow familiar to R users, but understanding basic OO concepts improves effectiveness.
+
+Most functions return an *instance* (or *object*) of a *class*. These objects have properties and methods accessible with the `$` sign:
+
+```r
+# Creating an object
+myData <- DataCombined$new()
+
+# Accessing a property
+simulationName <- myData$name
+
+# Calling a method
+myData$addSimulationResults(results[[1]])
+```
+
+Call `print(object)` to display detailed information about any object.
+
+### Key Classes
+
+Understanding these main classes improves workflow effectiveness:
+
+**Simulation Objects:**
+
+- **`Simulation`**: Your loaded PBPK model from the .pkml file
+- **`SimulationResults`**: Output from running simulations
+- **`SimulationRunOptions`**: Controls for how simulations run (cores, error checking, progress bars)
+
+**Model Structure:**
+
+- **`Entity`**: Any part of the model (parameters, molecules, containers)
+- **`Container`**: Model compartments that contain other entities (organs, compartments)
+- **`Quantity`**: Entities with values (Parameters and Molecules)
+- **`Parameter`**: Model parameters you can modify
+- **`Molecule`**: Drug molecules and their concentrations
+
+**Results and Analysis:**
+
+- **`DataCombined`**: Container for combining simulation results and observed data
+- **`SimulationPKAnalyses`**: PK parameter calculations (AUC, Cmax, etc.)
+- **`Population`**: Virtual population data for population simulations
+
+**Configuration:**
+
+- **`OutputSchema`**: Defines when simulation results are saved
+- **`OutputSelections`**: Which quantities to include in results
+- **`SolverSettings`**: Numerical solver configuration
+
+## General Workflow Summary
+
+The typical ospsuite workflow follows these steps:
+
+1. **Load simulation** from .pkml file
+2. **Explore entities** (parameters, molecules, containers)
+3. **Modify values** (parameter values, initial concentrations)
+4. **Configure outputs** (what to track, when to save results)
+5. **Run simulation** 
+6. **Analyze results** (extract data, calculate PK parameters)
+7. **Visualize** (built-in plots or custom graphics)
+
+## Next Steps
+
+After mastering the basics, explore these advanced topics:
+
+### Essential Next Steps:
+- **[Loading a simulation and accessing entities](load-get.html)** - Deep dive into model exploration
+- **[Changing parameter and molecule start values](set-values.html)** - Advanced parameter manipulation
+- **[Table parameters](table-parameters.html)** - Working with parameter tables and bulk operations
+- **[Running a simulation](run-simulation.html)** - Simulation options and batch processing
+
+### Population Studies:
+- **[Creating individuals](create-individual.html)** - Virtual patient creation
+- **[Population simulations](create-run-population.html)** - Large-scale population PK/PD
+
+### Analysis and Optimization:
+- **[PK Analysis](pk-analysis.html)** - Calculate pharmacokinetic parameters
+- **[Sensitivity analysis](sensitivity-analysis.html)** - Parameter importance analysis
+
+### Data Integration:
+- **[Working with observed data](observed-data.html)** - Import experimental data
+- **[DataCombined workflows](data-combined.html)** - Combine simulations with observations
+- **[Visualizations with DataCombined](data-combined-plotting.html)** - Advanced plotting with DataCombined objects
+
+### Advanced Topics:
+- **[Efficient calculations](efficient-calculations.html)** - Performance optimization
+- **[Dimensions and Units](unit-conversion.html)** - Unit conversion and validation
+
+## General Information
+
+In order to load a simulation in R, it must be present in the **\*.pkml** file format. Every simulation in PK-Sim or MoBi can be exported to the *.pkml format. Unless otherwise stated, the examples shown in the vignettes are based on the Aciclovir example model, which can be found in the PK-Sim examples folder of your OSPS installation.
+
+**Important Notes:**
+
+- Parameter paths in ospsuite exactly match those in PK-Sim/MoBi
+- You cannot add new model structure (like new administrations) - only modify existing parameters
+- For complex dosing regimens, create them in PK-Sim/MoBi first, then modify in R
+- Simulation files (.pkml) contain the complete model structure and cannot be modified structurally in R
+
+For detailed exploration of model structure and parameter access, see **[Loading a simulation and accessing entities](load-get.html)**.
 

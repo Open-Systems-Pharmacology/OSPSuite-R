@@ -38,12 +38,14 @@ test_that("It produces error when both parameter path and name are missing", {
 test_that("It produces error when either parameter path or name are not character", {
   expect_error(
     results$pkParameterSensitivityValueFor("C_max", "Organism|B", parameterName = 0),
-    messages$errorWrongType("parameterName", "numeric", "character")
+    messages$errorWrongType("parameterName", "numeric", "character"),
+    fixed = TRUE
   )
 
   expect_error(
     results$pkParameterSensitivityValueFor("C_max", "Organism|B", parameterPath = TRUE),
-    messages$errorWrongType("parameterPath", "logical", "character")
+    messages$errorWrongType("parameterPath", "logical", "character"),
+    fixed = TRUE
   )
 })
 
