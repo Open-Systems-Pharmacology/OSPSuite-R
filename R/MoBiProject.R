@@ -227,7 +227,7 @@ MoBiProject <- R6::R6Class(
 
         icBB <- NULL
         # If no IC BB is specified, use the first IC BB available in the module
-        if (is.null(selectedInitialConditions)){
+        if (is.null(selectedInitialConditions)) {
           # First get the list of all IC BBs
           icBBs <- modulesTask$call("AllInitialConditionsFromModule", module)
           icBBs <- icBBs$call("ToArray")
@@ -252,7 +252,7 @@ MoBiProject <- R6::R6Class(
 
         pvBB <- NULL
         # If no PV BB is specified, use the first PV BB available in the module
-        if (is.null(selectedParameterValues)){
+        if (is.null(selectedParameterValues)) {
           # First get the list of all PV BBs
           pvBBs <- modulesTask$call("AllParameterValuesFromModule", module)
           pvBBs <- pvBBs$call("ToArray")

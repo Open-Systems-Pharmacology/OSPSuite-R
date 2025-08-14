@@ -35,6 +35,8 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 
 \item{\code{simulationNames}}{Names of the simulations that are present in the project (read-only)}
 
+\item{\code{moduleNames}}{Names of the modules that are present in the project (read-only)}
+
 \item{\code{parameterIdentificationNames}}{Names of the parameter identifications
 that are present in the project (read-only)
 2DO}
@@ -214,13 +216,17 @@ All defined modules must be present in the project. The order of module names de
 (IC) building block (BB) of each module will be selected. If a module has multiple
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
-By setting the value to \code{NULL}, no IC BB from the specified module will be applied.}
+If \code{NULL}, all modules will use the first IC BB, if available. When providing a list,
+the value can also be set to \code{NULL}, which means that no IC BB from the specified module
+will be selected.}
 
 \item{\code{selectedParameterValues}}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
-By setting the value to \code{NULL}, no PV BB from the specified module will be applied.}
+If \code{NULL}, all modules will use the first PV BB, if available. When providing a list,
+the value can also be set to \code{NULL}, which means that no PV BB from the specified module
+will be selected.}
 }
 \if{html}{\out{</div>}}
 }
