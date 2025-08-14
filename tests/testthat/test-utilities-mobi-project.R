@@ -161,5 +161,8 @@ test_that("It can create a simulation configuration from a MoBi project", {
 })
 
 
+# test modules with no IC BB
+# test modules with no PV BB
+
 
 

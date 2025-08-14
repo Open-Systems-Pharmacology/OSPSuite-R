@@ -25,19 +25,13 @@ We can browse the contents of the project, e.g., get the list of simulations in 
 ```{r getSimulationNames, execute = FALSE}
 simulationsInProject <- myProject$simulationNames
 
-# EXPECTED BEHAVIOR
-simulationsInProject <- c("Thyroid_QST_Human", "Thyroid_QST_Phenobarbital")
-
 print(simulationsInProject)
 ```
 
 get the list of parameter identifications:
 
 ```{r getPInNames, execute = FALSE}
-PIs <- myProject$ParameterIdentificationNames
-
-# EXPECTED BEHAVIOR
-PIs <- c()
+PIs <- myProject$parameterIdentificationNames
 
 print(PIs)
 ```
