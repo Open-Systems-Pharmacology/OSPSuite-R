@@ -25,7 +25,7 @@ We can browse the contents of the project, e.g., get the list of simulations in 
 ```{r getSimulationNames, execute = FALSE}
 simulationsInProject <- myProject$simulationNames
 
-print(simulationsInProject)
+ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 ```
 
 get the list of parameter identifications:
@@ -33,7 +33,9 @@ get the list of parameter identifications:
 ```{r getPInNames, execute = FALSE}
 PIs <- myProject$parameterIdentificationNames
 
-print(PIs)
+      # ospsuite.utils::ospPrintItems(
+      #   PIs, title = "Parameter identifications"
+      # )
 ```
 
 get observed data from the project as `DataSet` objects:
@@ -44,45 +46,27 @@ obsData <- myProject$getObservedData()
 print(names(obsData))
 ```
 
-get the list of individuals and expression profiles from the project:
-
-TBD: should this return only the names of the Individuals and Expression Profiles,
-or the  full objects (of type `BuildingBlock`)?
+get the names of individuals and expression profiles from the project:
 
 ```{r getIndividualsExpressions}
 individualsInProject <- myProject$individualsNames
 expProfilesInProject <- myProject$expressionProfilesNames
 
-# EXPECTED BEHAVIOR
-individualsInProject <- c("Human", "Rat")
-expProfilesInProject <- c(
-  "UDPGT1|Human|Healthy",
-  "DIO1|Human|Healthy",
-  "DIO3|Human|Healthy",
-  "UDPGT2|Human|Healthy",
-  "UGT1A1|Rat|Healthy",
-  "PB-LiverBindingPartner|Human|Healthy"
-)
+      ospsuite.utils::ospPrintItems(list(
+        "Individuals names" = individualsInProject,
+        "Expression profiles names" = expProfilesInProject
+      ))
 ```
 
-get the modules present in the project:
+get the names of the modules in the project:
 
 ```{r getModulesNames}
-modulesInProject <- myProject$Modules
+modulesInProject <- myProject$moduleNames
 
-# EXPECTED BEHAVIOR
-names(modulesInProject) <- c(
-  "Endogenous_TH",
-  "Phenobarbital_Extension",
-  "Phenobarbital_PBPK",
-  "Pituitary",
-  "Rat physiology",
-  "TH_activeTransports",
-  "TH_plasma_binding",
-  "Thyroid",
-  "Thyroid_QST"
-)
+ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
 ```
+
+and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`.
 
 and get the building blocks defined for the modules:
 

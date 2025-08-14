@@ -106,13 +106,19 @@ MoBiProject <- R6::R6Class(
     #' @description
     #' Get modules present in the project.
     #'
+    #' @param names Optional. Names of the modules to retrieve. If `NULL`, all modules are returned.
     #' @returns A named list of `MoBiModule` objects.
-    getModules = function() {
+    getModules = function(names = NULL) {
       netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
-      names <- netTask$call("AllModuleNames", self)
-      names <- names$call("ToArray")
+      if (is.null(names)) {
+        names <- netTask$call("AllModuleNames", self)
+        names <- names$call("ToArray")
+      }
       modules <- lapply(names, function(name) {
         module <- netTask$call("ModuleByName", self, name)
+        if (is.null(module)) {
+          stop(messages$modulesNotPresentInProject(name))
+        }
         return(MoBiModule$new(module))
       })
       names(modules) <- names
@@ -301,13 +307,13 @@ MoBiProject <- R6::R6Class(
       ospsuite.utils::ospPrintItems(list(
         "Source file" = self$sourceFile
       ))
-      ospsuite.utils::ospPrintItems(list(
-        "Simulation names" = self$simulationNames,
-        # "Parameter identification names" = self$parameterIdentificationNames,
-        "Individuals names" = self$individualsNames,
-        "Expression profiles names" = self$expressionProfilesNames,
-        "Module names" = self$moduleNames
-      ))
+      ospsuite.utils::ospPrintItems(self$simulationNames, title = "Simulations")
+      # ospsuite.utils::ospPrintItems(
+      #   self$parameterIdentificationNames, title = "Parameter identifications"
+      # )
+      ospsuite.utils::ospPrintItems(self$individualsNames, title = "Individuals")
+      ospsuite.utils::ospPrintItems(self$expressionProfilesNames, title = "Expression profiles")
+      ospsuite.utils::ospPrintItems(self$moduleNames, title = "Modules")
     }
   ),
   private = list(
