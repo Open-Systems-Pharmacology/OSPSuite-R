@@ -95,12 +95,16 @@ messages$forbiddenSimulationName <- function(name, sim) {
 }
 
 ##### MoBiProject#####
-messages$errorIndividualNotFound <- function(name) {
-  paste0("Individual with the name ", name, " is not present in the project!")
-}
-
 messages$modulesNotPresentInProject <- function(modules) {
   paste0("Modules with the name(s) ", paste(modules, collapse = ", "), " is/are not present in the project!")
+}
+
+messages$icBBNotPresentInModule <- function(moduleName, icBBName) {
+  paste0("Initial Condition Building Block with the name '", icBBName, "' is not present in the module '", moduleName, "'!")
+}
+
+messages$pvBBNotPresentInModule <- function(moduleName, pvBBName) {
+  paste0("Parameter Value Building Block with the name '", pvBBName, "' is not present in the module '", moduleName, "'!")
 }
 
 ##### BuildingBlock #####
@@ -110,4 +114,8 @@ messages$invalidBuildingBlockType <- function(type) {
 
 messages$errorExpressionProfileNotFound <- function(names) {
   paste0("Expression profile(s) with the name(s) ", paste(names, collapse = ", "), " is/are not present in the project!")
+}
+
+messages$errorIndividualNotFound <- function(name) {
+  paste0("Individual with the name ", name, " is not present in the project!")
 }

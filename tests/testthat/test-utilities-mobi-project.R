@@ -1,7 +1,7 @@
 test_that("It can load a valid MoBi project", {
-  moBiProject <- loadMoBiProject(filePath = getTestDataFilePath("TH_QST_Platform.mbp3"))
+  moBiProject <- loadMoBiProject(filePath = getTestDataFilePath("Empty_Project.mbp3"))
   expect_true(isOfType(moBiProject, "MoBiProject"))
-  expect_equal(moBiProject$sourceFile, normalizePath(getTestDataFilePath("TH_QST_Platform.mbp3"), winslash = "/"))
+  expect_equal(moBiProject$sourceFile, normalizePath(getTestDataFilePath("Empty_Project.mbp3"), winslash = "/"))
 })
 
 defaultMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("TH_QST_Platform.mbp3"))
@@ -155,7 +155,7 @@ test_that("It correctly handles non-existing expression profiles", {
 
 # Test for MoBiProject$createSimulationConfiguration
 test_that("It can create a simulation configuration from a MoBi project", {
-  modulesNames <- "Thyroid"
+  modulesNames <- "Rat physiology"
 
   simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
 })

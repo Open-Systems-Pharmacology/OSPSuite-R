@@ -21,6 +21,17 @@ MoBiProject <- R6::R6Class(
         private$.throwPropertyIsReadonly("simulationNames")
       }
     },
+
+    #' @field moduleNames Names of the modules that are present in the project (read-only)
+    moduleNames = function(value) {
+      if (missing(value)) {
+        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        values <- netTask$call("AllModuleNames", self)
+        return(values$call("ToArray"))
+      } else {
+        private$.throwPropertyIsReadonly("moduleNames")
+      }
+    },
     #' @field parameterIdentificationNames Names of the parameter identifications
     #' that are present in the project (read-only)
     #' 2DO
@@ -212,7 +223,6 @@ MoBiProject <- R6::R6Class(
 
       # Create module configurations for each module
       moduleConfigurations <- lapply(modulesNames, function(moduleName) {
-        browser()
         module <- modules[[moduleName]]
 
         icBB <- NULL
@@ -227,14 +237,18 @@ MoBiProject <- R6::R6Class(
           }
         } else {
           # If initial conditions selection have been provided, use them.
-
           # If the name of the module is in the names of 'selectedInitialConditions',
           # get the value. The value could be NULL, of no IC BB should be selected.
           if (moduleName %in% names(selectedInitialConditions)) {
             selectedICName <- selectedInitialConditions[[moduleName]]
-            modulesTask$call("InitialConditionBuildingBlockByName", module, selectedICName
-                             }
+            icBB <- modulesTask$call("InitialConditionBuildingBlockByName", module, selectedICName)
+            # However, if the provided value for the name is NULL, use NULL to specify no IC BB
+            # Cannot create configuration if the speciefied IC BB is not available
+            if (is.null(icBB) && !is.null(selectedICName)) {
+              stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
+            }
           }
+        }
 
         pvBB <- NULL
         # If no PV BB is specified, use the first PV BB available in the module
@@ -246,38 +260,38 @@ MoBiProject <- R6::R6Class(
           if (length(pvBBs) > 0) {
             pvBB <- pvBBs[[1]]
           }
+        } else {
+          # If initial conditions selection have been provided, use them.
+          # If the name of the module is in the names of 'selectedParameterValues',
+          # get the value. The value could be NULL, of no PV BB should be selected.
+          if (moduleName %in% names(selectedParameterValues)) {
+            selectedPVName <- selectedParameterValues[[moduleName]]
+            pvBB <- modulesTask$call("ParameterValueBuildingBlockByName", module, selectedPVName)
+            # Cannot create configuration if the speciefied PV BB is not available
+            # However, if the provided value for the name is NULL, use NULL to specify no PV BB
+            if (is.null(pvBB) && !is.null(selectedPVName)) {
+              stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
+            }
+          }
         }
-
-
-
-        # && !is.null(selectedInitialConditions[[moduleName]])) {
-        #   selectedIC <- selectedInitialConditions[[moduleName]]
-        # } else {
-        #   selectedIC <- NULL
-        # }
-
-
-
-        # , selectedInitialConditions[[moduleName]], selectedParameterValues[[moduleName]]
-
         # Create module configuration with default IC and PV BBs
-        moduleConfiguration <- .createModuleConfiguration(module)
+        moduleConfiguration <- .createModuleConfiguration(module, selectedParameterValue = pvBB, selectedInitialCondition = icBB)
         return(moduleConfiguration)
-        })
+      })
+      netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
+      # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
+      # TODO: does not work until https://github.com/Open-Systems-Pharmacology/MoBi/issues/2024 is fixed
+      netConfiguration <- netTask$call(
+        "CreateConfiguration",
+        "dummyName",
+        moduleConfigurations,
+        expressionProfiles,
+        individual
+      )
+      configuration <- SimulationConfiguration$new(netConfiguration)
 
-            netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
-            # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
-            netConfiguration <- netTask$call(
-              "CreateConfiguration",
-              "dummyName",
-              moduleConfigurations,
-              expressionProfiles,
-              individual
-            )
-            configuration <- SimulationConfiguration$new(netConfiguration)
-
-            return(configuration)
-            },
+      return(configuration)
+    },
 
     #' @description
     #' Print the object to the console
@@ -291,11 +305,12 @@ MoBiProject <- R6::R6Class(
         "Simulation names" = self$simulationNames,
         # "Parameter identification names" = self$parameterIdentificationNames,
         "Individuals names" = self$individualsNames,
-        "Expression profiles names" = self$expressionProfilesNames
+        "Expression profiles names" = self$expressionProfilesNames,
+        "Module names" = self$moduleNames
       ))
     }
-    ),
-      private = list(
-        .sourceFile = NULL
-      )
+  ),
+  private = list(
+    .sourceFile = NULL
   )
+)
