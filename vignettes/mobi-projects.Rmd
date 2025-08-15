@@ -31,7 +31,7 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 get the list of parameter identifications:
 
 ```{r getPInNames, execute = FALSE}
-PIs <- myProject$parameterIdentificationNames
+#PIs <- myProject$parameterIdentificationNames
 
       # ospsuite.utils::ospPrintItems(
       #   PIs, title = "Parameter identifications"
@@ -41,9 +41,9 @@ PIs <- myProject$parameterIdentificationNames
 get observed data from the project as `DataSet` objects:
 
 ```{r getObservedData}
-obsData <- myProject$getObservedData()
+#obsData <- myProject$getObservedData()
 
-print(names(obsData))
+#print(names(obsData))
 ```
 
 get the names of individuals and expression profiles from the project:
@@ -64,25 +64,27 @@ modulesInProject <- myProject$moduleNames
 ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
 ```
 
-and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`:
-
-```{r getSimulation}
-simulation <- myProject$getSimulation("Thyroid_QST_Human")
-print(simulation)
-```
+and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`.
 
 
-and get the building blocks defined for the modules:
+For modules, it is possible to retrieve the initial conditions and parameter values
+building blocks:
 
 ```{r getBuildingBlocksFromModule}
-bbs <- modulesInProject[["Thyroid"]]$getBuildingBlocks()
+# Get the module "Thyroid" from the project
+module <- myProject$getModules("Thyroid")[[1]]
+print(module)
 
-for (bbName in names(bbs)) {
-  print(bbName, ": ", bbs[[bbName]]$type)
+icBBs <- module$getInitialConditionsBBs()
+for (bbName in names(icBBs)) {
+  print(paste0(bbName, ": ", icBBs[[bbName]]$type))
 }
 
 # Get all parameter values BBs
-paramValuesBBs <- modulesInProject[["Thyroid"]]$getBuildingBlocks(type = "Parameter Values")
+pvBBs <- module$getParameterValuesBBs()
+for (bbName in names(pvBBs)) {
+  print(paste0(bbName, ": ", pvBBs[[bbName]]$type))
+}
 ```
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, Individual, Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.

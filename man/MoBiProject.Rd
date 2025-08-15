@@ -143,9 +143,16 @@ is not found, the name is ignored.}
 \subsection{Method \code{getModules()}}{
 Get modules present in the project.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules(names = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{Optional. Names of the modules to retrieve. If \code{NULL}, all modules are returned.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiProject-getIndividual"></a>}}

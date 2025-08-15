@@ -1,16 +1,7 @@
-#' Types of building blocks.
-#'
-#' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
-#' ARE INDIVIDUAL AND EXPRESSION PROFILE ALSO A BB TYPE?
+#' Types of building blocks supported.
 #'
 #' @export
 BuildingBlockTypes <- enum(c(
-  "Spatial Structure",
-  "Reactions",
-  "Molecules",
-  "Passive Transports",
-  "Observer",
-  "Events",
   "Initial Conditions",
   "Parameter Values",
   "Expression Profile",

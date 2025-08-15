@@ -7,6 +7,18 @@
 #'
 #' @examples
 loadModuleFromPKML <- function(path) {
+  if (!file.exists(path)) {
+    stop(paste0("File does not exist: ", path))
+  }
+  validateIsFileExtension(path, "pkml")
+
+  # .NET task that handles loading of a MoBi module from pkml
+  netTask <- .getNetTaskFromCache("ModuleTask", isMoBiR = TRUE)
+
+  netObject <- netTask$call("LoadModuleFromPKML", .expandPath(path))
+  module <- MoBiModule$new(netObject)
+
+  return(module)
 }
 
 #' Create a ModuleConfiguration .net object
