@@ -18,7 +18,7 @@ loadMoBiProject <- function(filePath) {
   validateIsFileExtension(filePath, "mbp3")
   filePath <- normalizePath(filePath, winslash = "/")
   # .NET task that handles loading of a MoBi project
-  netTask <- .getMoBiTaskFromCache("ProjectTask", isMoBiR = TRUE)
+  netTask <- .getMoBiTaskFromCache("ProjectTask")
 
   netObject <- netTask$call("LoadProject", .expandPath(filePath))
   mobiProject <- MoBiProject$new(netObject, filePath)
