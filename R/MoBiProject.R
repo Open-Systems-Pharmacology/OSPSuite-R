@@ -276,7 +276,7 @@ MoBiProject <- R6::R6Class(
             # Cannot create configuration if the speciefied PV BB is not available
             # However, if the provided value for the name is NULL, use NULL to specify no PV BB
             if (is.null(pvBB) && !is.null(selectedPVName)) {
-              stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
+              stop(messages$pvBBNotPresentInModule(moduleName, selectedPVName))
             }
           }
         }
