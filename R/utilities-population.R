@@ -10,7 +10,7 @@
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
   csvPopulationFile <- .expandPath(csvPopulationFile)
-  populationTask <- .getNetTask("PopulationTask")
+  populationTask <- .getCoreTask("PopulationTask")
   population <- populationTask$call("ImportPopulation", csvPopulationFile)
   Population$new(population)
 }
@@ -35,7 +35,7 @@ splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, 
   validateIsString(outputFolder)
   validateIsString(outputFileName)
   csvPopulationFile <- .expandPath(csvPopulationFile)
-  populationTask <- .getNetTask("PopulationTask")
+  populationTask <- .getCoreTask("PopulationTask")
   populationTask$call("SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
 }
 

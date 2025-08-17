@@ -288,7 +288,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
 .getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
   validateIsOfType(simulation, "Simulation")
-  displayResolver <- .getNetTask("FullPathDisplayResolver")
+  displayResolver <- .getCoreTask("FullPathDisplayResolver")
   paths <- c(paths)
 
   displayPaths <- lapply(paths, function(path) {
@@ -397,7 +397,7 @@ getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {
   paramPath <- paste(moleculeContainer$name, "Molecular weight", sep = "|")
 
   rootContainer <- .getParentContainerByType(quantity, "Simulation")
-  task <- .getNetTask("ContainerTask")
+  task <- .getCoreTask("ContainerTask")
   paramMW <- task$call("AllParametersMatching", rootContainer, paramPath)
 
   if (length(paramMW) == 0) {

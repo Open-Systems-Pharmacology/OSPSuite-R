@@ -13,7 +13,7 @@
 returns an instance of of the specified \code{.NET} task.
 }
 \description{
-Get an instance of the specified \code{.NET} Task from OSPSuite.R that is retrieved
+Get an instance of the specified \code{.NET} Task from OSPSuite.R.Api that is retrieved
 from cache if already initiated. Otherwise a new task will be initiated and
 cached in the \code{tasksEnv}.
 }
