@@ -141,7 +141,7 @@ sim1 <- myProject$createSimulationConfiguration(
     "DIO3|Human|Healthy",
     "UDPGT2|Human|Healthy"
   ),
-  selectedParameterValues = list("Thyroid" = "Rat")
+  parameterValues = list("Thyroid" = "Rat")
 )
 ```
 
@@ -276,7 +276,7 @@ simulationConfigurationHuman <- createSimulationConfiguration(
   ),
   individual = myIndividual,
   expressionProfiles = expressionProfiles,
-  selectedParameterValues = list("Thyroid" = "Human")
+  parameterValues = list("Thyroid" = "Human")
 )
 ```
 
