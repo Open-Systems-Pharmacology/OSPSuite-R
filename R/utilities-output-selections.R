@@ -34,7 +34,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
   }
   paths <- unique(paths)
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   for (path in paths) {
     task$call("AddQuantitiesToSimulationOutputByPath", simulation, path)
   }

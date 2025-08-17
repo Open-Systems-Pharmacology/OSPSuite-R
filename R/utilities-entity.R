@@ -120,7 +120,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
@@ -154,7 +154,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   method <- method %||% AllPathsInMethod[[className]]
 
   task$call(method, container)

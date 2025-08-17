@@ -148,7 +148,7 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     validateIsString(units)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
     value <- values[[i]]
@@ -225,7 +225,7 @@ getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, sto
     validateIsString(units, nullAllowed = TRUE)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
@@ -345,7 +345,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
   validateIsString(path, nullAllowed = FALSE)
   validateIsOfType(simulation, "Simulation")
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
   isFormulaExplicit <- task$call("IsExplicitFormulaByPath", simulation, path, stopIfNotFound)
 
