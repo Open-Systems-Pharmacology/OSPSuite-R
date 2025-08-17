@@ -66,7 +66,7 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
 
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
   netSim <- simulationPersister$call("LoadSimulation", .expandPath(filePath), resetIds)
 
@@ -90,7 +90,7 @@ saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   simulationPersister$call("SaveSimulation", simulation, filePath)
   invisible()
 }
@@ -262,7 +262,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
-  simulationRunner <- .getNetTask("SimulationRunner")
+  simulationRunner <- .getCoreTask("SimulationRunner")
   simulationRunArgs <- rSharp::newObjectFromName("OSPSuite.R.Services.SimulationRunArgs")
   simulationRunArgs$set("Simulation", simulation)
   simulationRunArgs$set("SimulationRunOptions", simulationRunOptions)
@@ -281,7 +281,7 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 }
 
 .runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE, stopIfFails = FALSE) {
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
@@ -425,7 +425,7 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' }
 runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
   validateIsOfType(simulationBatches, "SimulationBatch")
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner$set("SimulationRunOptions", simulationRunOptions)
