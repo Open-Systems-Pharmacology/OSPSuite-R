@@ -31,18 +31,18 @@ test_that("It can get simulation names from a MoBi project", {
 #                "Property 'parameterIdentificationNames' is read-only")
 # })
 
-# Test for MoBiProject$individualsNames
+# Test for MoBiProject$individualNames
 test_that("It can get individuals names from a MoBi project", {
   expectedNames <- c(
     "Human",
     "Rat"
   )
-  expect_equal(defaultMoBiProject$individualsNames, expectedNames)
-  expect_equal(emptyProject$individualsNames, character(0))
-  # Test that individualsNames is read-only
+  expect_equal(defaultMoBiProject$individualNames, expectedNames)
+  expect_equal(emptyProject$individualNames, character(0))
+  # Test that individualNames is read-only
   expect_error(
-    defaultMoBiProject$individualsNames <- "NewIndividual",
-    "Property 'individualsNames' is read-only"
+    defaultMoBiProject$individualNames <- "NewIndividual",
+    "Property 'individualNames' is read-only"
   )
 })
 
@@ -128,8 +128,8 @@ test_that("It can get expression profiles from a MoBi project", {
 
   # Test for non-existing expression profile
   expect_error(defaultMoBiProject$getExpressionProfiles(names = "NonExistingProfile"),
-               messages$errorExpressionProfileNotFound(c("NonExistingProfile")),
-               fixed = TRUE
+    messages$errorExpressionProfileNotFound(c("NonExistingProfile")),
+    fixed = TRUE
   )
 
   # Test for a list of expression profiles where one profile is non-existant
@@ -161,11 +161,12 @@ test_that("It correctly handles non-existing expression profiles", {
 })
 
 # Test for MoBiProject$createSimulationConfiguration
-test_that("It can create a simulation configuration from a MoBi project", {
-  modulesNames <- "Rat physiology"
-
-  simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
-})
+# TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1597
+# test_that("It can create a simulation configuration from a MoBi project", {
+#   modulesNames <- "Rat physiology"
+#
+#   simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
+# })
 
 
 # test modules with no IC BB

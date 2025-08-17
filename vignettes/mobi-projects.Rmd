@@ -33,9 +33,9 @@ get the list of parameter identifications:
 ```{r getPInNames, execute = FALSE}
 #PIs <- myProject$parameterIdentificationNames
 
-      # ospsuite.utils::ospPrintItems(
-      #   PIs, title = "Parameter identifications"
-      # )
+# ospsuite.utils::ospPrintItems(
+#   PIs, title = "Parameter identifications"
+# )
 ```
 
 get observed data from the project as `DataSet` objects:
@@ -49,11 +49,11 @@ get observed data from the project as `DataSet` objects:
 get the names of individuals and expression profiles from the project:
 
 ```{r getIndividualsExpressions}
-individualsInProject <- myProject$individualsNames
+individualsInProject <- myProject$individualNames
 expProfilesInProject <- myProject$expressionProfilesNames
 
-      ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")
-      ospsuite.utils::ospPrintItems(expProfilesInProject, title = "Expression profiles names")
+ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")
+ospsuite.utils::ospPrintItems(expProfilesInProject, title = "Expression profiles names")
 ```
 
 get the names of the modules in the project:
@@ -143,7 +143,7 @@ sim1 <- myProject$createSimulationConfiguration(
     "DIO3|Human|Healthy",
     "UDPGT2|Human|Healthy"
   ),
-  selectedParameterValues = list("Thyroid" = "Rat")
+  parameterValues = list("Thyroid" = "Rat")
 )
 ```
 
@@ -278,7 +278,7 @@ simulationConfigurationHuman <- createSimulationConfiguration(
   ),
   individual = myIndividual,
   expressionProfiles = expressionProfiles,
-  selectedParameterValues = list("Thyroid" = "Human")
+  parameterValues = list("Thyroid" = "Human")
 )
 ```
 
