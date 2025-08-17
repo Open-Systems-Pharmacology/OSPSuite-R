@@ -31,18 +31,18 @@ test_that("It can get simulation names from a MoBi project", {
 #                "Property 'parameterIdentificationNames' is read-only")
 # })
 
-# Test for MoBiProject$individualsNames
+# Test for MoBiProject$individualNames
 test_that("It can get individuals names from a MoBi project", {
   expectedNames <- c(
     "Human",
     "Rat"
   )
-  expect_equal(defaultMoBiProject$individualsNames, expectedNames)
-  expect_equal(emptyProject$individualsNames, character(0))
-  # Test that individualsNames is read-only
+  expect_equal(defaultMoBiProject$individualNames, expectedNames)
+  expect_equal(emptyProject$individualNames, character(0))
+  # Test that individualNames is read-only
   expect_error(
-    defaultMoBiProject$individualsNames <- "NewIndividual",
-    "Property 'individualsNames' is read-only"
+    defaultMoBiProject$individualNames <- "NewIndividual",
+    "Property 'individualNames' is read-only"
   )
 })
 

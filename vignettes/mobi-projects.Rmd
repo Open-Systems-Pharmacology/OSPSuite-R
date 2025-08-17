@@ -49,7 +49,7 @@ print(names(obsData))
 get the names of individuals and expression profiles from the project:
 
 ```{r getIndividualsExpressions}
-individualsInProject <- myProject$individualsNames
+individualsInProject <- myProject$individualNames
 expProfilesInProject <- myProject$expressionProfilesNames
 
       ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")

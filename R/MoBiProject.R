@@ -42,13 +42,13 @@ MoBiProject <- R6::R6Class(
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
       }
     },
-    #' @field individualsNames Names of the individuals that are present in the project (read-only)
-    individualsNames = function(value) {
+    #' @field individualNames Names of the individuals that are present in the project (read-only)
+    individualNames = function(value) {
       if (missing(value)) {
         values <- .callProjectTaskAsArray(property = "AllIndividualNames", self)
         return(values)
       } else {
-        private$.throwPropertyIsReadonly("individualsNames")
+        private$.throwPropertyIsReadonly("individualNames")
       }
     },
     #' @field expressionProfilesNames Names of the expression profiles that are
@@ -299,7 +299,7 @@ MoBiProject <- R6::R6Class(
       # ospsuite.utils::ospPrintItems(
       #   self$parameterIdentificationNames, title = "Parameter identifications"
       # )
-      ospsuite.utils::ospPrintItems(self$individualsNames, title = "Individuals")
+      ospsuite.utils::ospPrintItems(self$individualNames, title = "Individuals")
       ospsuite.utils::ospPrintItems(self$expressionProfilesNames, title = "Expression profiles")
       ospsuite.utils::ospPrintItems(self$moduleNames, title = "Modules")
     }
