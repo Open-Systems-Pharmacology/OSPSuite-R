@@ -41,7 +41,7 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 that are present in the project (read-only)
 2DO}
 
-\item{\code{individualsNames}}{Names of the individuals that are present in the project (read-only)}
+\item{\code{individualNames}}{Names of the individuals that are present in the project (read-only)}
 
 \item{\code{expressionProfilesNames}}{Names of the expression profiles that are
 present in the project (read-only)}
@@ -143,9 +143,16 @@ is not found, the name is ignored.}
 \subsection{Method \code{getModules()}}{
 Get modules present in the project.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules(names = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{Optional. Names of the modules to retrieve. If \code{NULL}, all modules are returned.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiProject-getIndividual"></a>}}
@@ -197,8 +204,8 @@ Create a simulation configuration.
   modulesNames,
   individualName = NULL,
   expressionProfilesNames = NULL,
-  selectedInitialConditions = NULL,
-  selectedParameterValues = NULL
+  initialConditions = NULL,
+  parameterValues = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -212,7 +219,7 @@ All defined modules must be present in the project. The order of module names de
 
 \item{\code{expressionProfilesNames}}{Optional, list of expression profiles to apply to the simulation.}
 
-\item{\code{selectedInitialConditions}}{By default, the first Initial Conditions
+\item{\code{initialConditions}}{By default, the first Initial Conditions
 (IC) building block (BB) of each module will be selected. If a module has multiple
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
@@ -220,7 +227,7 @@ If \code{NULL}, all modules will use the first IC BB, if available. When providi
 the value can also be set to \code{NULL}, which means that no IC BB from the specified module
 will be selected.}
 
-\item{\code{selectedParameterValues}}{By default, the first Parameter Values
+\item{\code{parameterValues}}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.

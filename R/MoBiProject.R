@@ -94,7 +94,7 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns A named list of `DataSet` objects.
     getObservedData = function(dataSetNames = NULL) {
-      #TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1582
+      # TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1582
     },
 
     #' @description
