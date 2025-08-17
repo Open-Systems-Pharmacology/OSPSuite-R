@@ -14,9 +14,9 @@ MoBiProject <- R6::R6Class(
     #' @field simulationNames Names of the simulations that are present in the project (read-only)
     simulationNames = function(value) {
       if (missing(value)) {
-        netTask <- .getMoBiTaskFromCache("ProjectTask")
-        values <- netTask$call("AllSimulationNames", self)
-        return(values$call("ToArray"))
+        # Get ass simulation names using ProjectTask
+        values <- .callProjectTaskAsArray(property = "AllSimulationNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("simulationNames")
       }
@@ -25,9 +25,8 @@ MoBiProject <- R6::R6Class(
     #' @field moduleNames Names of the modules that are present in the project (read-only)
     moduleNames = function(value) {
       if (missing(value)) {
-        netTask <- .getMoBiTaskFromCache("ProjectTask")
-        values <- netTask$call("AllModuleNames", self)
-        return(values$call("ToArray"))
+        values <- .callProjectTaskAsArray(property = "AllModuleNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("moduleNames")
       }
@@ -37,10 +36,8 @@ MoBiProject <- R6::R6Class(
     #' 2DO
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        netTask <- .getMoBiTaskFromCache("ProjectTask")
-        values <- netTask$call("AllParameterIdentificationNames", self)
-        # Convert to R character vector
-        return(values$call("ToArray"))
+        values <- .callProjectTaskAsArray(property = "AllParameterIdentificationNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
       }
@@ -48,10 +45,8 @@ MoBiProject <- R6::R6Class(
     #' @field individualsNames Names of the individuals that are present in the project (read-only)
     individualsNames = function(value) {
       if (missing(value)) {
-        netTask <- .getMoBiTaskFromCache("ProjectTask")
-        values <- netTask$call("AllIndividualNames", self)
-        # Convert to R character vector
-        return(values$call("ToArray"))
+        values <- .callProjectTaskAsArray(property = "AllIndividualNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("individualsNames")
       }
@@ -60,10 +55,8 @@ MoBiProject <- R6::R6Class(
     #' present in the project (read-only)
     expressionProfilesNames = function(value) {
       if (missing(value)) {
-        netTask <- .getMoBiTaskFromCache("ProjectTask")
-        values <- netTask$call("AllExpressionProfileNames", self)
-        # Convert to R character vector
-        return(values$call("ToArray"))
+        values <- .callProjectTaskAsArray(property = "AllExpressionProfileNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("expressionProfilesNames")
       }
@@ -109,13 +102,11 @@ MoBiProject <- R6::R6Class(
     #' @param names Optional. Names of the modules to retrieve. If `NULL`, all modules are returned.
     #' @returns A named list of `MoBiModule` objects.
     getModules = function(names = NULL) {
-      netTask <- .getMoBiTaskFromCache("ProjectTask")
       if (is.null(names)) {
-        names <- netTask$call("AllModuleNames", self)
-        names <- names$call("ToArray")
+        names <- .callProjectTaskAsArray(property = "AllModuleNames", self)
       }
       modules <- lapply(names, function(name) {
-        module <- netTask$call("ModuleByName", self, name)
+        module <- .callProjectTask(property = "ModuleByName", self, name)
         if (is.null(module)) {
           stop(messages$modulesNotPresentInProject(name))
         }
@@ -135,8 +126,7 @@ MoBiProject <- R6::R6Class(
     #' such an individual and `stopIfNotFound = FALSE`.
     getIndividual = function(name, stopIfNotFound = TRUE) {
       validateIsCharacter(name)
-      netTask <- .getMoBiTaskFromCache("ProjectTask")
-      individual <- netTask$call("IndividualBuildingBlockByName", self, name)
+      individual <- .callProjectTask(property = "IndividualBuildingBlockByName", self, name)
 
       if (is.null(individual)) {
         if (stopIfNotFound) {
@@ -157,9 +147,7 @@ MoBiProject <- R6::R6Class(
     #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
       validateIsCharacter(names)
-      netTask <- .getMoBiTaskFromCache("ProjectTask")
-      expressionProfiles <- netTask$call("ExpressionProfileBuildingBlocksByName", self, names)
-      expressionProfiles <- expressionProfiles$call("ToArray")
+      expressionProfiles <- .callProjectTaskAsArray(property = "ExpressionProfileBuildingBlocksByName", self, names)
 
       realNames <- vector("character", length(expressionProfiles))
       profiles <- lapply(seq_along(expressionProfiles), function(idx) {
