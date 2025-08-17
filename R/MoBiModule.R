@@ -94,7 +94,7 @@ MoBiModule <- R6::R6Class(
     #' # @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
     #' # @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
     .getBBsWithNames = function(names = NULL, bbType){
-      modulesTask <- .getNetTaskFromCache("ModuleTask", isMoBiR = TRUE)
+      modulesTask <- .getMoBiTaskFromCache("ModuleTask")
       # First get the list of all BBs
       if (bbType == "Parameter Values") {
         bbs <- modulesTask$call("AllParameterValuesFromModule", self)
