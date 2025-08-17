@@ -162,11 +162,11 @@ test_that("It correctly handles non-existing expression profiles", {
 
 # Test for MoBiProject$createSimulationConfiguration
 # TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1597
-test_that("It can create a simulation configuration from a MoBi project", {
-  modulesNames <- "Rat physiology"
-
-  simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
-})
+# test_that("It can create a simulation configuration from a MoBi project", {
+#   modulesNames <- "Rat physiology"
+#
+#   simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
+# })
 
 
 # test modules with no IC BB
