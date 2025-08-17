@@ -14,7 +14,7 @@ MoBiProject <- R6::R6Class(
     #' @field simulationNames Names of the simulations that are present in the project (read-only)
     simulationNames = function(value) {
       if (missing(value)) {
-        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        netTask <- .getMoBiTaskFromCache("ProjectTask")
         values <- netTask$call("AllSimulationNames", self)
         return(values$call("ToArray"))
       } else {
@@ -25,7 +25,7 @@ MoBiProject <- R6::R6Class(
     #' @field moduleNames Names of the modules that are present in the project (read-only)
     moduleNames = function(value) {
       if (missing(value)) {
-        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        netTask <- .getMoBiTaskFromCache("ProjectTask")
         values <- netTask$call("AllModuleNames", self)
         return(values$call("ToArray"))
       } else {
@@ -37,7 +37,7 @@ MoBiProject <- R6::R6Class(
     #' 2DO
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        netTask <- .getMoBiTaskFromCache("ProjectTask")
         values <- netTask$call("AllParameterIdentificationNames", self)
         # Convert to R character vector
         return(values$call("ToArray"))
@@ -48,7 +48,7 @@ MoBiProject <- R6::R6Class(
     #' @field individualsNames Names of the individuals that are present in the project (read-only)
     individualsNames = function(value) {
       if (missing(value)) {
-        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        netTask <- .getMoBiTaskFromCache("ProjectTask")
         values <- netTask$call("AllIndividualNames", self)
         # Convert to R character vector
         return(values$call("ToArray"))
@@ -60,7 +60,7 @@ MoBiProject <- R6::R6Class(
     #' present in the project (read-only)
     expressionProfilesNames = function(value) {
       if (missing(value)) {
-        netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+        netTask <- .getMoBiTaskFromCache("ProjectTask")
         values <- netTask$call("AllExpressionProfileNames", self)
         # Convert to R character vector
         return(values$call("ToArray"))
@@ -109,7 +109,7 @@ MoBiProject <- R6::R6Class(
     #' @param names Optional. Names of the modules to retrieve. If `NULL`, all modules are returned.
     #' @returns A named list of `MoBiModule` objects.
     getModules = function(names = NULL) {
-      netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+      netTask <- .getMoBiTaskFromCache("ProjectTask")
       if (is.null(names)) {
         names <- netTask$call("AllModuleNames", self)
         names <- names$call("ToArray")
@@ -135,7 +135,7 @@ MoBiProject <- R6::R6Class(
     #' such an individual and `stopIfNotFound = FALSE`.
     getIndividual = function(name, stopIfNotFound = TRUE) {
       validateIsCharacter(name)
-      netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+      netTask <- .getMoBiTaskFromCache("ProjectTask")
       individual <- netTask$call("IndividualBuildingBlockByName", self, name)
 
       if (is.null(individual)) {
@@ -157,7 +157,7 @@ MoBiProject <- R6::R6Class(
     #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
       validateIsCharacter(names)
-      netTask <- .getNetTaskFromCache("ProjectTask", isMoBiR = TRUE)
+      netTask <- .getMoBiTaskFromCache("ProjectTask")
       expressionProfiles <- netTask$call("ExpressionProfileBuildingBlocksByName", self, names)
       expressionProfiles <- expressionProfiles$call("ToArray")
 
@@ -207,7 +207,7 @@ MoBiProject <- R6::R6Class(
     #' @returns A `SimulationConfiguration` object.
     createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL) {
       # Task used for getting information (IC and PV BBs) from modules
-      modulesTask <- .getNetTaskFromCache("ModuleTask", isMoBiR = TRUE)
+      modulesTask <- .getMoBiTaskFromCache("ModuleTask")
 
       modules <- self$getModules()
       # Throw an error when a specified module is not present in the project
@@ -284,7 +284,7 @@ MoBiProject <- R6::R6Class(
         moduleConfiguration <- .createModuleConfiguration(module, selectedParameterValue = pvBB, selectedInitialCondition = icBB)
         return(moduleConfiguration)
       })
-      netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
+      netTask <- .getMoBiTaskFromCache("SimulationTask")
       # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
       # TODO: does not work until https://github.com/Open-Systems-Pharmacology/MoBi/issues/2024 is fixed
       netConfiguration <- netTask$call(

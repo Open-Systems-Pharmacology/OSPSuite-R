@@ -21,7 +21,7 @@ loadModuleFromPKML <- function(path) {
 #' @internal
 #' @noRd
 .createModuleConfiguration <- function(module, selectedParameterValue = NULL, selectedInitialCondition = NULL) {
-  netTask <- .getNetTaskFromCache("SimulationTask", isMoBiR = TRUE)
+  netTask <- .getMoBiTaskFromCache("SimulationTask")
   netModuleConfiguration <- netTask$call("CreateModuleConfiguration", module)
 
   netModuleConfiguration$set("SelectedParameterValue", selectedParameterValue)
