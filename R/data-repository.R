@@ -93,7 +93,7 @@ DataRepository <- R6::R6Class(
       }
       validateIsString(name)
       validateIsString(value)
-      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
       dataRepositoryTask$call("AddMetaData", self, name, value)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
@@ -107,7 +107,7 @@ DataRepository <- R6::R6Class(
         stop(messages$errorMultipleMetaDataEntries())
       }
       validateIsString(name)
-      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
       dataRepositoryTask$call("RemoveMetaData", self, name)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL

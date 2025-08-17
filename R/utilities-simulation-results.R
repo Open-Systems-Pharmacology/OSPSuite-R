@@ -94,7 +94,7 @@ getOutputValues <- function(simulationResults,
   names(values) <- paths
 
   # Use low-level methods to get unit and dimension
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   metaData <- NULL
   if (addMetaData) {
     metaData <- lapply(paths, function(path) {
