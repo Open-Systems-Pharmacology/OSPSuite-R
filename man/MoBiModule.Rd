@@ -3,7 +3,7 @@
 \docType{class}
 \name{MoBiModule}
 \alias{MoBiModule}
-\title{MoBi Module # OR SHOULD WE CALL IT AN OspModule ?}
+\title{MoBi Module}
 \value{
 A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
 

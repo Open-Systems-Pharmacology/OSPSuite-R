@@ -1,4 +1,4 @@
-#' @title MoBi Module # OR SHOULD WE CALL IT AN OspModule ?
+#' @title MoBi Module
 #' @docType class
 #' @description  A MoBi module, either loaded from a project or from a pkml file
 #' @format NULL

@@ -127,8 +127,13 @@ Simulation <- R6::R6Class(
     },
     #' @description
     #' Print the object to the console
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' Useful for debugging.
     #' @param ... Rest arguments.
-    print = function(...) {
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
