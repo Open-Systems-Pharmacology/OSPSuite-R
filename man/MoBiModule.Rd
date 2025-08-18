@@ -4,6 +4,13 @@
 \name{MoBiModule}
 \alias{MoBiModule}
 \title{MoBi Module # OR SHOULD WE CALL IT AN OspModule ?}
+\value{
+A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
+
+A named list of \code{BuildingBlock} objects, with names being the names of the IC BBs.
+
+A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
+}
 \description{
 A MoBi module, either loaded from a project or from a pkml file
 }
@@ -73,34 +80,42 @@ A new \code{MoBiModule} object.
 \if{latex}{\out{\hypertarget{method-MoBiModule-getParameterValuesBBs}{}}}
 \subsection{Method \code{getParameterValuesBBs()}}{
 Get the list of Parameter Values Building Blocks (PV BBs) in the module.
-# @param names Optional names of the Parameter Values Building Block to retrieve.
-If `NULL`, returns all PV BBs.
-# @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getParameterValuesBBs(names = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{Optional names of the Parameter Values Building Block to retrieve.
+If \code{NULL}, returns all PV BBs.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiModule-getInitialConditionsBBs"></a>}}
 \if{latex}{\out{\hypertarget{method-MoBiModule-getInitialConditionsBBs}{}}}
 \subsection{Method \code{getInitialConditionsBBs()}}{
 Get the list of Initial Conditions Building Blocks (IC BBs) in the module.
-# @param names Optional names of the Initial Conditions Building Block to retrieve.
-If `NULL`, returns all IC BBs.
-# @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getInitialConditionsBBs(names = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{Optional names of the Initial Conditions Building Block to retrieve.
+If \code{NULL}, returns all IC BBs.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiModule-print"></a>}}
 \if{latex}{\out{\hypertarget{method-MoBiModule-print}{}}}
 \subsection{Method \code{print()}}{
 Print the object to the console
-#' @param printClassProperties Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
-Useful for debugging.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoBiModule$print(printClassProperties = FALSE, ...)}\if{html}{\out{</div>}}
 }
@@ -108,6 +123,9 @@ Useful for debugging.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
+Useful for debugging.}
+
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}

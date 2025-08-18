@@ -52,25 +52,27 @@ MoBiModule <- R6::R6Class(
 
     #' @description
     #' Get the list of Parameter Values Building Blocks (PV BBs) in the module.
-    #' # @param names Optional names of the Parameter Values Building Block to retrieve.
+    #'
+    #' @param names Optional names of the Parameter Values Building Block to retrieve.
     #' If `NULL`, returns all PV BBs.
-    #' # @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
+    #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
     getParameterValuesBBs = function(names = NULL) {
       private$.getBBsWithNames(names = names, bbType = "Parameter Values")
     },
 
     #' @description
     #' Get the list of Initial Conditions Building Blocks (IC BBs) in the module.
-    #' # @param names Optional names of the Initial Conditions Building Block to retrieve.
+    #'
+    #' @param names Optional names of the Initial Conditions Building Block to retrieve.
     #' If `NULL`, returns all IC BBs.
-    #' # @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
+    #' @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
     getInitialConditionsBBs = function(names = NULL) {
       private$.getBBsWithNames(names = names, bbType = "Initial Conditions")
     },
 
     #' @description
     #' Print the object to the console
-    #' #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
     #' Useful for debugging.
     #' @param ... Rest arguments.
     print = function(printClassProperties = FALSE, ...) {
@@ -89,22 +91,20 @@ MoBiModule <- R6::R6Class(
   private = list(
     #' @description
     #' Get the list of Parameter Values (PV) or Initial Conditions (IC) Building Blocks (BBs) in the module.
-    #' # @param names Optional names of the Parameter Values Building Block to retrieve.
+    #'
+    #' @param names Optional names of the Parameter Values Building Block to retrieve.
     #' If `NULL`, returns all PV BBs.
-    #' # @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
-    #' # @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
+    #' @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
+    #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
     .getBBsWithNames = function(names = NULL, bbType) {
-      modulesTask <- .getMoBiTaskFromCache("ModuleTask")
       # First get the list of all BBs
       if (bbType == "Parameter Values") {
-        bbs <- modulesTask$call("AllParameterValuesFromModule", self)
+        bbs <- .callModuleTaskAsArray("AllParameterValuesFromModule", self)
       } else if (bbType == "Initial Conditions") {
-        bbs <- modulesTask$call("AllInitialConditionsFromModule", self)
+        bbs <- .callModuleTaskAsArray("AllInitialConditionsFromModule", self)
       } else {
         stop("Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'.")
       }
-      # Convert to array
-      bbs <- bbs$call("ToArray")
 
       # Create a list of BuildingBlock objects
       # and filter by names if provided

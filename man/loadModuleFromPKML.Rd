@@ -2,7 +2,8 @@
 % Please edit documentation in R/utilities-mobi-module.R
 \name{loadModuleFromPKML}
 \alias{loadModuleFromPKML}
-\title{Load a MoBi module from pkml}
+\title{Load a MoBi module from pkml
+TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1590}
 \usage{
 loadModuleFromPKML(path)
 }
@@ -14,4 +15,5 @@ A \code{MoBiModule} object
 }
 \description{
 Load a MoBi module from pkml
+TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1590
 }

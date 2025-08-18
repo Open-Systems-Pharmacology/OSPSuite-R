@@ -1,4 +1,5 @@
 #' Load a MoBi module from pkml
+#' TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1590
 #'
 #' @param path Path to the pkml file
 #'
@@ -12,10 +13,7 @@ loadModuleFromPKML <- function(path) {
   }
   validateIsFileExtension(path, "pkml")
 
-  # .NET task that handles loading of a MoBi module from pkml
-  netTask <- .getMoBiTaskFromCache("ModuleTask")
-
-  netObject <- netTask$call("LoadModuleFromPKML", .expandPath(path))
+  netObject <- .callModuleTask("LoadModuleFromPKML", .expandPath(path))
   module <- MoBiModule$new(netObject)
 
   return(module)
@@ -30,7 +28,6 @@ loadModuleFromPKML <- function(path) {
 #' If `NULL`, no IC BB will be selected.
 #'
 #' @returns A `ModuleConfiguration` object representing the configuration of the module.
-#' @internal
 #' @noRd
 .createModuleConfiguration <- function(module, selectedParameterValue = NULL, selectedInitialCondition = NULL) {
   netTask <- .getMoBiTaskFromCache("SimulationTask")
@@ -40,4 +37,30 @@ loadModuleFromPKML <- function(path) {
   netModuleConfiguration$set("SelectedInitialCondition", selectedInitialCondition)
 
   return(netModuleConfiguration)
+}
+
+#' Call a method of a MoBi.CLI.Core.Services.ModuleTask
+#'
+#' @param property The name of the property or method to call on the `ModuleTask`.
+#' @param ... Additional arguments to pass to the method.
+#' @returns The result of the method call.
+#' @noRd
+.callModuleTask <- function(property, ...) {
+  netTask <- .getMoBiTaskFromCache("ModuleTask")
+  results <- netTask$call(property, ...)
+  return(results)
+}
+
+#' Call a method of a MoBi.CLI.Core.Services.ModuleTask and returns the results
+#' as an array.
+#'
+#' Used for methods that return lists and calls 'ToArray' on them.
+#'
+#' @param property The name of the property or method to call on the `ModuleTask`.
+#' @param ... Additional arguments to pass to the method.
+#' @returns The result of the method call.
+#' @noRd
+.callModuleTaskAsArray <- function(property, ...) {
+  results <- .callModuleTask(property, ...)
+  return(results$call("ToArray"))
 }

@@ -195,9 +195,6 @@ MoBiProject <- R6::R6Class(
     #'
     #' @returns A `SimulationConfiguration` object.
     createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, initialConditions = NULL, parameterValues = NULL) {
-      # Task used for getting information (IC and PV BBs) from modules
-      modulesTask <- .getMoBiTaskFromCache("ModuleTask")
-
       modules <- self$getModules()
       # Throw an error when a specified module is not present in the project
       missingModules <- setdiff(modulesNames, names(modules))
@@ -224,8 +221,7 @@ MoBiProject <- R6::R6Class(
         # If no IC BB is specified, use the first IC BB available in the module
         if (is.null(initialConditions)) {
           # First get the list of all IC BBs
-          icBBs <- modulesTask$call("AllInitialConditionsFromModule", module)
-          icBBs <- icBBs$call("ToArray")
+          icBBs <- .callModuleTaskAsArray("AllInitialConditionsFromModule", module)
           # Select the first IC BB if available
           if (length(icBBs) > 0) {
             icBB <- icBBs[[1]]
@@ -237,7 +233,7 @@ MoBiProject <- R6::R6Class(
           if (moduleName %in% names(initialConditions)) {
             selectedICName <- initialConditions[[moduleName]]
             if (!is.null(selectedICName)) {
-              icBB <- modulesTask$call("InitialConditionBuildingBlockByName", module, selectedICName)
+              icBB <- .callModuleTask("InitialConditionBuildingBlockByName", module, selectedICName)
               # Cannot create configuration if the speciefied IC BB is not available
               if (is.null(icBB)) {
                 stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
@@ -250,8 +246,7 @@ MoBiProject <- R6::R6Class(
         # If no PV BB is specified, use the first PV BB available in the module
         if (is.null(parameterValues)) {
           # First get the list of all PV BBs
-          pvBBs <- modulesTask$call("AllParameterValuesFromModule", module)
-          pvBBs <- pvBBs$call("ToArray")
+          pvBBs <- .callModuleTaskAsArray("AllParameterValuesFromModule", module)
           # Select the first IC BB if available
           if (length(pvBBs) > 0) {
             pvBB <- pvBBs[[1]]
@@ -263,7 +258,7 @@ MoBiProject <- R6::R6Class(
           if (moduleName %in% names(parameterValues)) {
             selectedPVName <- parameterValues[[moduleName]]
             if (!is.null(selectedPVName)) {
-              pvBB <- modulesTask$call("ParameterValueBuildingBlockByName", module, selectedPVName)
+              pvBB <- .callModuleTask("ParameterValueBuildingBlockByName", module, selectedPVName)
               # Cannot create configuration if the speciefied PV BB is not available
               if (is.null(pvBB) && !is.null(selectedPVName)) {
                 stop(messages$pvBBNotPresentInModule(moduleName, selectedPVName))

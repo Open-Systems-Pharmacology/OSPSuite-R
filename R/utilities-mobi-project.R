@@ -29,7 +29,6 @@ loadMoBiProject <- function(filePath) {
 #' @param property The name of the property or method to call on the `ProjectTask`.
 #' @param ... Additional arguments to pass to the method.
 #' @returns The result of the method call.
-#' @internal
 #' @noRd
 .callProjectTask <- function(property, ...) {
   netTask <- .getMoBiTaskFromCache("ProjectTask")
@@ -45,7 +44,6 @@ loadMoBiProject <- function(filePath) {
 #' @param property The name of the property or method to call on the `ProjectTask`.
 #' @param ... Additional arguments to pass to the method.
 #' @returns The result of the method call.
-#' @internal
 #' @noRd
 .callProjectTaskAsArray <- function(property, ...) {
   results <- .callProjectTask(property, ...)
