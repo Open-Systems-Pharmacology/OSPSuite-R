@@ -4,8 +4,7 @@
       print(defaultMoBiProject)
     Message
       <MoBiProject>
-        * Source file: D:/GitHub
-        repositories/OSP/OSPSuite-R/tests/data/TH_QST_Platform.mbp3
+        * Source file: ../data/TH_QST_Platform.mbp3
       Simulations:
         * Thyroid_QST_Human
         * Thyroid_QST_Phenobarbital

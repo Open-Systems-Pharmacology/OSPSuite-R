@@ -16,7 +16,6 @@ loadMoBiProject <- function(filePath) {
     stop(paste0("File does not exist: ", filePath))
   }
   validateIsFileExtension(filePath, "mbp3")
-  filePath <- normalizePath(filePath, winslash = "/")
 
   # Load the MoBi project using the ProjectTask
   netObject <- .callProjectTask("LoadProject", .expandPath(filePath))
