@@ -108,7 +108,7 @@ test_that("It returns the specified IC BBs when names are provided", {
   expect_true(isOfType(icBBs, "BuildingBlock"))
   expect_equal(icBBs$IC1$name, "IC1")
   expect_equal(icBBs$IC3$name, "IC3")
-  expect_equal(pvBBs[[1]]$type, "Initial Conditions")
+  expect_equal(icBBs[[1]]$type, "Initial Conditions")
 })
 
 test_that("getInitialConditionsBBs returns all IC BBs for module with multiple IC BBs", {
@@ -119,5 +119,5 @@ test_that("getInitialConditionsBBs returns all IC BBs for module with multiple I
   expect_equal(icBBs[[1]]$name, "IC1")
   expect_equal(icBBs[[2]]$name, "IC2")
   expect_equal(icBBs[[3]]$name, "IC3")
-  expect_equal(pvBBs[[1]]$type, "Initial Conditions")
+  expect_equal(icBBs[[1]]$type, "Initial Conditions")
 })
