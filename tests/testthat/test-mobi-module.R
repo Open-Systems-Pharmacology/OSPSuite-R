@@ -10,9 +10,9 @@ test_that("MoBiModule name is correct", {
 
 # Test for isPkSimModule
 test_that("MoBiModule isPkSimModule returns correct value", {
-  expect_false(testModule$IsPKSimModule)
+  expect_false(testModule$isPKSimModule)
   # test for read only
-  expect_error(testModule$IsPKSimModule <- TRUE, "Property 'isPkSimModule' is read-only")
+  expect_error(testModule$isPKSimModule <- TRUE, "Property 'isPkSimModule' is read-only")
 })
 
 # Snapshot test for printing a Module

@@ -15,7 +15,7 @@ A MoBi module, either loaded from a project or from a pkml file
 \describe{
 \item{\code{name}}{Name of the module (read-only)}
 
-\item{\code{IsPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
+\item{\code{isPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
 
 \item{\code{mergeBehavior}}{Merge behavior of the module (read/write)}
 }

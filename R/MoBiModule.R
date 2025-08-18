@@ -15,8 +15,8 @@ MoBiModule <- R6::R6Class(
         private$.throwPropertyIsReadonly("name")
       }
     },
-    #' @field IsPKSimModule Whether the module is a PK-Sim module (read-only)
-    IsPKSimModule = function(value) {
+    #' @field isPKSimModule Whether the module is a PK-Sim module (read-only)
+    isPKSimModule = function(value) {
       if (missing(value)) {
         self$get("IsPKSimModule")
       } else {
@@ -80,7 +80,7 @@ MoBiModule <- R6::R6Class(
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
-        "PK-Sim module" = self$IsPKSimModule,
+        "PK-Sim module" = self$sPKSimModule,
         "Merge behavior" = self$mergeBehavior
       ))
       # TODO: List names of IC and PV BBs
