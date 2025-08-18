@@ -8,8 +8,8 @@ createSimulationConfiguration(
   modules,
   individual = NULL,
   expressionProfiles = NULL,
-  selectedInitialConditions = NULL,
-  selectedParameterValues = NULL
+  initialConditions = NULL,
+  parameterValues = NULL
 )
 }
 \arguments{
@@ -20,13 +20,13 @@ The order of modules defines the order in which the modules will be combined to 
 
 \item{expressionProfiles}{Optional, a list of expression profiles to apply to the simulation.}
 
-\item{selectedInitialConditions}{By default, the first Initial Conditions
+\item{initialConditions}{By default, the first Initial Conditions
 (IC) building block (BB) of each module will be selected. If a module has multiple
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
 By setting the value to \code{NULL}, no IC BB from the specified module will be applied.}
 
-\item{selectedParameterValues}{By default, the first Parameter Values
+\item{parameterValues}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.

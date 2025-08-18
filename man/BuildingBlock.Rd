@@ -16,6 +16,8 @@ A representation of a building block
 \item{\code{type}}{Type of the building block (Spatial structure, molecules, reactions, etc)}
 
 \item{\code{id}}{ID of the building block}
+
+\item{\code{name}}{Name of the building block. Read-only.}
 }
 \if{html}{\out{</div>}}
 }
@@ -50,18 +52,21 @@ A representation of a building block
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BuildingBlock$new(netObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BuildingBlock$new(netObject, type = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{netObject}}{Reference to \code{NetObject} .NET MoBi-module object}
+\item{\code{netObject}}{Reference to \code{NetObject} .NET object representing a building block.}
+
+\item{\code{type}}{Type of the building block (optional, defaults to \code{NULL}).
+Must be one of the \code{BuildingBlockTypes}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{MoBiModule} object.
+A new \code{BuildingBlock} object.
 }
 }
 \if{html}{\out{<hr>}}

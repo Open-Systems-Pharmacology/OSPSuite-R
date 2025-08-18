@@ -10,21 +10,17 @@ A new \code{MoBiProject} object.
 A \code{Simulation} object, if the simulation with the given name is present in the
 project. \code{NULL} if no such simulation is available.
 
-A named list of \code{DataSet} objects. \code{NULL} if the project does not contain
-any observed data or no specified data sets are found.
+A named list of \code{DataSet} objects.
 
-A named list of \code{MoBiModule} objects. \code{NULL} if the project does not contain
-any module.
+A named list of \code{MoBiModule} objects.
 
 An object of the type \code{BuildingBlock}. \code{NULL} if the project does not contain
 such an individual and \code{stopIfNotFound = FALSE}.
 
-A named list of objects of the type \code{BuildingBlock}. \code{NULL} for each
-specified expression profile that is not present in the project  if \code{stopIfNotFound = FALSE}.
+A named list of objects of the type \code{BuildingBlock}. If \code{stopIfNotFound = FALSE},
+only the expression profiles that are present in the project are returned.
 
 A \code{SimulationConfiguration} object.
-
-Path of the file to which the project is saved.
 }
 \description{
 A MoBi project, containing modules, building blocks, simulations, etc.
@@ -32,27 +28,23 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 \section{Super classes}{
 \code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{MoBiProject}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{individualsNames}}{Names of the individuals that are present in the project}
-
-\item{\code{expressionProfilesNames}}{Names of the expression profiles that are present in the project}
-}
-\if{html}{\out{</div>}}
-}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{sourceFile}}{Path to the file the project was loaded from (read-only)}
 
-\item{\code{simulationNames}}{Names of the simulations that are present in the project}
+\item{\code{simulationNames}}{Names of the simulations that are present in the project (read-only)}
 
-\item{\code{parameterIdentificationNames}}{Names of the parameter identifications that are present in the project}
+\item{\code{moduleNames}}{Names of the modules that are present in the project (read-only)}
 
-\item{\code{individualsNames}}{Names of the individuals that are present in the project}
+\item{\code{parameterIdentificationNames}}{Names of the parameter identifications
+that are present in the project (read-only)
+2DO}
 
-\item{\code{expressionProfilesNames}}{Names of the expression profiles that are present in the project}
+\item{\code{individualNames}}{Names of the individuals that are present in the project (read-only)}
+
+\item{\code{expressionProfilesNames}}{Names of the expression profiles that are
+present in the project (read-only)}
 }
 \if{html}{\out{</div>}}
 }
@@ -66,7 +58,6 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 \item \href{#method-MoBiProject-getIndividual}{\code{MoBiProject$getIndividual()}}
 \item \href{#method-MoBiProject-getExpressionProfiles}{\code{MoBiProject$getExpressionProfiles()}}
 \item \href{#method-MoBiProject-createSimulationConfiguration}{\code{MoBiProject$createSimulationConfiguration()}}
-\item \href{#method-MoBiProject-saveProject}{\code{MoBiProject$saveProject()}}
 \item \href{#method-MoBiProject-print}{\code{MoBiProject$print()}}
 }
 }
@@ -152,9 +143,16 @@ is not found, the name is ignored.}
 \subsection{Method \code{getModules()}}{
 Get modules present in the project.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules(names = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{names}}{Optional. Names of the modules to retrieve. If \code{NULL}, all modules are returned.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiProject-getIndividual"></a>}}
@@ -206,8 +204,8 @@ Create a simulation configuration.
   modulesNames,
   individualName = NULL,
   expressionProfilesNames = NULL,
-  selectedInitialConditions = NULL,
-  selectedParameterValues = NULL
+  initialConditions = NULL,
+  parameterValues = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -221,37 +219,21 @@ All defined modules must be present in the project. The order of module names de
 
 \item{\code{expressionProfilesNames}}{Optional, list of expression profiles to apply to the simulation.}
 
-\item{\code{selectedInitialConditions}}{By default, the first Initial Conditions
+\item{\code{initialConditions}}{By default, the first Initial Conditions
 (IC) building block (BB) of each module will be selected. If a module has multiple
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
-By setting the value to \code{NULL}, no IC BB from the specified module will be applied.}
+If \code{NULL}, all modules will use the first IC BB, if available. When providing a list,
+the value can also be set to \code{NULL}, which means that no IC BB from the specified module
+will be selected.}
 
-\item{\code{selectedParameterValues}}{By default, the first Parameter Values
+\item{\code{parameterValues}}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
-By setting the value to \code{NULL}, no PV BB from the specified module will be applied.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-MoBiProject-saveProject"></a>}}
-\if{latex}{\out{\hypertarget{method-MoBiProject-saveProject}{}}}
-\subsection{Method \code{saveProject()}}{
-PRIO 2
-
-Save the project.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$saveProject(filePath = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{filePath}}{Path to the file, including file name, where the project should be saved to.
-If \code{NULL} (default), the project is saved to the same file it was loaded from.}
+If \code{NULL}, all modules will use the first PV BB, if available. When providing a list,
+the value can also be set to \code{NULL}, which means that no PV BB from the specified module
+will be selected.}
 }
 \if{html}{\out{</div>}}
 }

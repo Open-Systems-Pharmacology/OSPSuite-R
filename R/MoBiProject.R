@@ -11,36 +11,54 @@ MoBiProject <- R6::R6Class(
     sourceFile = function(value) {
       private$.readOnlyProperty("sourceFile", value, private$.sourceFile)
     },
-    #' @field simulationNames Names of the simulations that are present in the project
+    #' @field simulationNames Names of the simulations that are present in the project (read-only)
     simulationNames = function(value) {
       if (missing(value)) {
-        model <- self$get("SimulationNames")
+        # Get ass simulation names using ProjectTask
+        values <- .callProjectTaskAsArray(property = "AllSimulationNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("simulationNames")
       }
     },
-    #' @field parameterIdentificationNames Names of the parameter identifications that are present in the project
+
+    #' @field moduleNames Names of the modules that are present in the project (read-only)
+    moduleNames = function(value) {
+      if (missing(value)) {
+        values <- .callProjectTaskAsArray(property = "AllModuleNames", self)
+        return(values)
+      } else {
+        private$.throwPropertyIsReadonly("moduleNames")
+      }
+    },
+    #' @field parameterIdentificationNames Names of the parameter identifications
+    #' that are present in the project (read-only)
+    #' 2DO
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        model <- self$get("ParameterIdentificationNames")
+        values <- .callProjectTaskAsArray(property = "AllParameterIdentificationNames", self)
+        return(values)
       } else {
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
       }
     },
-    #' @field individualsNames Names of the individuals that are present in the project
-    individuals = function(value) {
+    #' @field individualNames Names of the individuals that are present in the project (read-only)
+    individualNames = function(value) {
       if (missing(value)) {
-        model <- self$get("Individuals")
+        values <- .callProjectTaskAsArray(property = "AllIndividualNames", self)
+        return(values)
       } else {
-        private$.throwPropertyIsReadonly("Individuals")
+        private$.throwPropertyIsReadonly("individualNames")
       }
     },
-    #' @field expressionProfilesNames Names of the expression profiles that are present in the project
-    expressionProfiles = function(value) {
+    #' @field expressionProfilesNames Names of the expression profiles that are
+    #' present in the project (read-only)
+    expressionProfilesNames = function(value) {
       if (missing(value)) {
-        model <- self$get("ExpressionProfiles")
+        values <- .callProjectTaskAsArray(property = "AllExpressionProfileNames", self)
+        return(values)
       } else {
-        private$.throwPropertyIsReadonly("ExpressionProfiles")
+        private$.throwPropertyIsReadonly("expressionProfilesNames")
       }
     }
   ),
@@ -74,17 +92,29 @@ MoBiProject <- R6::R6Class(
     #' from project. If `NULL`, all data sets are returned. If a specified data set
     #' is not found, the name is ignored.
     #'
-    #' @returns A named list of `DataSet` objects. `NULL` if the project does not contain
-    #' any observed data or no specified data sets are found.
+    #' @returns A named list of `DataSet` objects.
     getObservedData = function(dataSetNames = NULL) {
+      # TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1582
     },
 
     #' @description
     #' Get modules present in the project.
     #'
-    #' @returns A named list of `MoBiModule` objects. `NULL` if the project does not contain
-    #' any module.
-    getModules = function() {
+    #' @param names Optional. Names of the modules to retrieve. If `NULL`, all modules are returned.
+    #' @returns A named list of `MoBiModule` objects.
+    getModules = function(names = NULL) {
+      if (is.null(names)) {
+        names <- self$moduleNames
+      }
+      modules <- lapply(names, function(name) {
+        module <- .callProjectTask(property = "ModuleByName", self, name)
+        if (is.null(module)) {
+          stop(messages$modulesNotPresentInProject(name))
+        }
+        return(MoBiModule$new(module))
+      })
+      names(modules) <- names
+      return(modules)
     },
 
     #' @description
@@ -96,15 +126,48 @@ MoBiProject <- R6::R6Class(
     #' @returns An object of the type `BuildingBlock`. `NULL` if the project does not contain
     #' such an individual and `stopIfNotFound = FALSE`.
     getIndividual = function(name, stopIfNotFound = TRUE) {
+      validateIsCharacter(name)
+      individual <- .callProjectTask(property = "IndividualBuildingBlockByName", self, name)
+
+      if (is.null(individual)) {
+        if (stopIfNotFound) {
+          stop(messages$errorIndividualNotFound(name))
+        }
+        return(NULL)
+      }
+
+      bb <- BuildingBlock$new(individual, type = BuildingBlockTypes$Individual)
+      return(bb)
     },
     #' @description
     #' Get specified expression profiles from the project.
     #' @param names List of names of the expression profiles to retrieve.
     #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
     #' expression profiles is not present in the project.
-    #' @returns A named list of objects of the type `BuildingBlock`. `NULL` for each
-    #' specified expression profile that is not present in the project  if `stopIfNotFound = FALSE`.
+    #' @returns A named list of objects of the type `BuildingBlock`. If `stopIfNotFound = FALSE`,
+    #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
+      validateIsCharacter(names)
+      expressionProfiles <- .callProjectTaskAsArray(property = "ExpressionProfileBuildingBlocksByName", self, names)
+
+      realNames <- vector("character", length(expressionProfiles))
+      profiles <- lapply(seq_along(expressionProfiles), function(idx) {
+        profile <- expressionProfiles[[idx]]
+        bb <- BuildingBlock$new(profile, type = BuildingBlockTypes$`Expression Profile`)
+        realNames[[idx]] <<- bb$name
+        return(bb)
+      })
+      names(profiles) <- realNames
+
+      # Check if all requested expression profiles were found
+      missingNames <- setdiff(names, realNames)
+      if (length(missingNames) > 0) {
+        if (stopIfNotFound) {
+          stop(messages$errorExpressionProfileNotFound(missingNames))
+        }
+      }
+
+      return(profiles)
     },
 
     #' @description
@@ -115,46 +178,118 @@ MoBiProject <- R6::R6Class(
     #' All defined modules must be present in the project. The order of module names defines the order in which the modules will be combined to a simulation!
     #' @param individualName Optional, name of the individual.
     #' @param expressionProfilesNames Optional, list of expression profiles to apply to the simulation.
-    #' @param selectedInitialConditions By default, the first Initial Conditions
+    #' @param initialConditions By default, the first Initial Conditions
     #' (IC) building block (BB) of each module will be selected. If a module has multiple
     #' IC BBs, it is possible to specify which IC BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the IC BB.
-    #' By setting the value to `NULL`, no IC BB from the specified module will be applied.
-    #' @param selectedParameterValues By default, the first Parameter Values
+    #' If `NULL`, all modules will use the first IC BB, if available. When providing a list,
+    #' the value can also be set to `NULL`, which means that no IC BB from the specified module
+    #' will be selected.
+    #' @param parameterValues By default, the first Parameter Values
     #' (PV) building block (BB) of each module will be selected. If a module has multiple
     #' PV BBs, it is possible to specify which PV BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the PV BB.
-    #' By setting the value to `NULL`, no PV BB from the specified module will be applied.
+    #' If `NULL`, all modules will use the first PV BB, if available. When providing a list,
+    #' the value can also be set to `NULL`, which means that no PV BB from the specified module
+    #' will be selected.
     #'
     #' @returns A `SimulationConfiguration` object.
-    createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, selectedInitialConditions = NULL, selectedParameterValues = NULL) {
-      modules <- self$getModules(modulesNames)
-      individual <- self$getIndividual(individualName, stopIfNotFound = FALSE)
-      expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = FALSE)
+    createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, initialConditions = NULL, parameterValues = NULL) {
+      # Task used for getting information (IC and PV BBs) from modules
+      modulesTask <- .getMoBiTaskFromCache("ModuleTask")
 
-      configuration <- createSimulationConfiguration(
-        modules = modules,
-        individual = individual,
-        expressionProfiles = expressionProfiles,
-        selectedInitialConditions = selectedInitialConditions,
-        selectedParameterValues = selectedParameterValues
+      modules <- self$getModules()
+      # Throw an error when a specified module is not present in the project
+      missingModules <- setdiff(modulesNames, names(modules))
+      if (length(missingModules) > 0) {
+        stop(messages$modulesNotPresentInProject(missingModules))
+      }
+
+      # Get the specified individual
+      individual <- NULL
+      if (!is.null(individualName)) {
+        individual <- self$getIndividual(individualName, stopIfNotFound = TRUE)
+      }
+      # Get the specified expression profiles
+      expressionProfiles <- list()
+      if (!is.null(expressionProfilesNames)) {
+        expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = TRUE)
+      }
+
+      # Create module configurations for each module
+      moduleConfigurations <- lapply(modulesNames, function(moduleName) {
+        module <- modules[[moduleName]]
+
+        icBB <- NULL
+        # If no IC BB is specified, use the first IC BB available in the module
+        if (is.null(initialConditions)) {
+          # First get the list of all IC BBs
+          icBBs <- modulesTask$call("AllInitialConditionsFromModule", module)
+          icBBs <- icBBs$call("ToArray")
+          # Select the first IC BB if available
+          if (length(icBBs) > 0) {
+            icBB <- icBBs[[1]]
+          }
+        } else {
+          # If initial conditions selection have been provided, use them.
+          # If the name of the module is in the names of 'initialConditions',
+          # get the value. The value could be NULL, of no IC BB should be selected.
+          if (moduleName %in% names(initialConditions)) {
+            selectedICName <- initialConditions[[moduleName]]
+            if (!is.null(selectedICName)) {
+              icBB <- modulesTask$call("InitialConditionBuildingBlockByName", module, selectedICName)
+              # Cannot create configuration if the speciefied IC BB is not available
+              if (is.null(icBB)) {
+                stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
+              }
+            }
+          }
+        }
+
+        pvBB <- NULL
+        # If no PV BB is specified, use the first PV BB available in the module
+        if (is.null(parameterValues)) {
+          # First get the list of all PV BBs
+          pvBBs <- modulesTask$call("AllParameterValuesFromModule", module)
+          pvBBs <- pvBBs$call("ToArray")
+          # Select the first IC BB if available
+          if (length(pvBBs) > 0) {
+            pvBB <- pvBBs[[1]]
+          }
+        } else {
+          # If parameter values selection have been provided, use them.
+          # If the name of the module is in the names of 'parameterValues',
+          # get the value. The value could be NULL, of no PV BB should be selected.
+          if (moduleName %in% names(parameterValues)) {
+            selectedPVName <- parameterValues[[moduleName]]
+            if (!is.null(selectedPVName)) {
+              pvBB <- modulesTask$call("ParameterValueBuildingBlockByName", module, selectedPVName)
+              # Cannot create configuration if the speciefied PV BB is not available
+              if (is.null(pvBB) && !is.null(selectedPVName)) {
+                stop(messages$pvBBNotPresentInModule(moduleName, selectedPVName))
+              }
+            }
+          }
+        }
+        # Create module configuration with default IC and PV BBs
+        moduleConfiguration <- .createModuleConfiguration(module, selectedParameterValue = pvBB, selectedInitialCondition = icBB)
+        return(moduleConfiguration)
+      })
+      netTask <- .getMoBiTaskFromCache("SimulationTask")
+      # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
+      # TODO: does not work until https://github.com/Open-Systems-Pharmacology/MoBi/issues/2024 is fixed
+      netConfiguration <- netTask$call(
+        "CreateConfiguration",
+        "dummyName",
+        moduleConfigurations,
+        expressionProfiles,
+        individual
       )
+      configuration <- SimulationConfiguration$new(netConfiguration)
 
       return(configuration)
     },
 
-    #' @description
-    #'
-    #' PRIO 2
-    #'
-    #' Save the project.
-    #'
-    #' @param filePath Path to the file, including file name, where the project should be saved to.
-    #' If `NULL` (default), the project is saved to the same file it was loaded from.
-    #' @returns Path of the file to which the project is saved.
-    saveProject = function(filePath = NULL) {
-      return(filePath)
-    },
     #' @description
     #' Print the object to the console
     #' @param ... Rest arguments.
@@ -163,6 +298,13 @@ MoBiProject <- R6::R6Class(
       ospsuite.utils::ospPrintItems(list(
         "Source file" = self$sourceFile
       ))
+      ospsuite.utils::ospPrintItems(self$simulationNames, title = "Simulations")
+      # ospsuite.utils::ospPrintItems(
+      #   self$parameterIdentificationNames, title = "Parameter identifications"
+      # )
+      ospsuite.utils::ospPrintItems(self$individualNames, title = "Individuals")
+      ospsuite.utils::ospPrintItems(self$expressionProfilesNames, title = "Expression profiles")
+      ospsuite.utils::ospPrintItems(self$moduleNames, title = "Modules")
     }
   ),
   private = list(

@@ -141,7 +141,7 @@ exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SimulationResults")
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
-  simulationResultsTask <- .getNetTask("SimulationResultsTask")
+  simulationResultsTask <- .getCoreTask("SimulationResultsTask")
   simulationResultsTask$call("ExportResultsToCSV", results, results$simulation, filePath)
   invisible()
 }
@@ -171,7 +171,7 @@ exportResultsToCSV <- function(results, filePath) {
 importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
-  simulationResultsTask <- .getNetTask("SimulationResultsTask")
+  simulationResultsTask <- .getCoreTask("SimulationResultsTask")
   filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
 
   results <- simulationResultsTask$call("ImportResultsFromCSV", simulation, filePaths)

@@ -19,7 +19,7 @@ runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOp
   validateIsOfType(sensitivityAnalysis, "SensitivityAnalysis")
   validateIsOfType(sensitivityAnalysisRunOptions, "SensitivityAnalysisRunOptions", nullAllowed = TRUE)
   options <- sensitivityAnalysisRunOptions %||% SensitivityAnalysisRunOptions$new()
-  sensitivityAnalysisRunner <- .getNetTask("SensitivityAnalysisRunner")
+  sensitivityAnalysisRunner <- .getCoreTask("SensitivityAnalysisRunner")
 
   results <- sensitivityAnalysisRunner$call("Run", sensitivityAnalysis, options)
 
@@ -50,7 +50,7 @@ exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SensitivityAnalysisResults")
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
-  sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
+  sensitivityAnalysisTask <- .getCoreTask("SensitivityAnalysisTask")
   sensitivityAnalysisTask$call("ExportResultsToCSV", results, results$simulation, filePath)
   invisible()
 }
@@ -83,7 +83,7 @@ importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
   validateIsString(filePaths)
   filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
 
-  sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
+  sensitivityAnalysisTask <- .getCoreTask("SensitivityAnalysisTask")
   results <- sensitivityAnalysisTask$call("ImportResultsFromCSV", simulation, filePaths)
   SensitivityAnalysisResults$new(results, simulation)
 }
@@ -103,6 +103,6 @@ importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
 #' @export
 potentialVariableParameterPathsFor <- function(simulation) {
   validateIsOfType(simulation, "Simulation")
-  sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
+  sensitivityAnalysisTask <- .getCoreTask("SensitivityAnalysisTask")
   sensitivityAnalysisTask$call("PotentialVariableParameterPathsFor", simulation)
 }
