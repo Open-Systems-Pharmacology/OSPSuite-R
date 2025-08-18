@@ -13,7 +13,7 @@ loadModuleFromPKML <- function(path) {
   validateIsFileExtension(path, "pkml")
 
   # .NET task that handles loading of a MoBi module from pkml
-  netTask <- .getNetTaskFromCache("ModuleTask", isMoBiR = TRUE)
+  netTask <- .getMoBiTaskFromCache("ModuleTask")
 
   netObject <- netTask$call("LoadModuleFromPKML", .expandPath(path))
   module <- MoBiModule$new(netObject)
