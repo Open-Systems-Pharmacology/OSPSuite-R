@@ -121,4 +121,3 @@ test_that("getInitialConditionsBBs returns all IC BBs for module with multiple I
   expect_equal(icBBs[[3]]$name, "IC3")
   expect_equal(pvBBs[[1]]$type, "Initial Conditions")
 })
-

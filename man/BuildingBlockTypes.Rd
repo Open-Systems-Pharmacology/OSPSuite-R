@@ -3,15 +3,14 @@
 \docType{data}
 \name{BuildingBlockTypes}
 \alias{BuildingBlockTypes}
-\title{Types of building blocks.}
+\title{Types of building blocks supported.}
 \format{
-An object of class \code{list} of length 10.
+An object of class \code{list} of length 4.
 }
 \usage{
 BuildingBlockTypes
 }
 \description{
-MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
-ARE INDIVIDUAL AND EXPRESSION PROFILE ALSO A BB TYPE?
+Types of building blocks supported.
 }
 \keyword{datasets}

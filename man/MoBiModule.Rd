@@ -14,6 +14,10 @@ A MoBi module, either loaded from a project or from a pkml file
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{name}}{Name of the module (read-only)}
+
+\item{\code{IsPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
+
+\item{\code{mergeBehavior}}{Merge behavior of the module (read/write)}
 }
 \if{html}{\out{</div>}}
 }
@@ -21,8 +25,8 @@ A MoBi module, either loaded from a project or from a pkml file
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-MoBiModule-new}{\code{MoBiModule$new()}}
-\item \href{#method-MoBiModule-getBuildingBlocks}{\code{MoBiModule$getBuildingBlocks()}}
-\item \href{#method-MoBiModule-isPkSimModule}{\code{MoBiModule$isPkSimModule()}}
+\item \href{#method-MoBiModule-getParameterValuesBBs}{\code{MoBiModule$getParameterValuesBBs()}}
+\item \href{#method-MoBiModule-getInitialConditionsBBs}{\code{MoBiModule$getInitialConditionsBBs()}}
 \item \href{#method-MoBiModule-print}{\code{MoBiModule$print()}}
 }
 }
@@ -65,33 +69,28 @@ A new \code{MoBiModule} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-MoBiModule-getBuildingBlocks"></a>}}
-\if{latex}{\out{\hypertarget{method-MoBiModule-getBuildingBlocks}{}}}
-\subsection{Method \code{getBuildingBlocks()}}{
-Get the building blocks from the module.
+\if{html}{\out{<a id="method-MoBiModule-getParameterValuesBBs"></a>}}
+\if{latex}{\out{\hypertarget{method-MoBiModule-getParameterValuesBBs}{}}}
+\subsection{Method \code{getParameterValuesBBs()}}{
+Get the list of Parameter Values Building Blocks (PV BBs) in the module.
+# @param names Optional names of the Parameter Values Building Block to retrieve.
+If `NULL`, returns all PV BBs.
+# @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getBuildingBlocks(type = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getParameterValuesBBs(names = NULL)}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{type}}{Optional, type of building blocks to return. Must be one of \code{BuildingBlockTypes}.
-If \code{NULL} (default), all building blocks of the module are returned.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A named list of building block objects.
-}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-MoBiModule-isPkSimModule"></a>}}
-\if{latex}{\out{\hypertarget{method-MoBiModule-isPkSimModule}{}}}
-\subsection{Method \code{isPkSimModule()}}{
-Is this module a PK-Sim module?
+\if{html}{\out{<a id="method-MoBiModule-getInitialConditionsBBs"></a>}}
+\if{latex}{\out{\hypertarget{method-MoBiModule-getInitialConditionsBBs}{}}}
+\subsection{Method \code{getInitialConditionsBBs()}}{
+Get the list of Initial Conditions Building Blocks (IC BBs) in the module.
+# @param names Optional names of the Initial Conditions Building Block to retrieve.
+If `NULL`, returns all IC BBs.
+# @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$isPkSimModule()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getInitialConditionsBBs(names = NULL)}\if{html}{\out{</div>}}
 }
 
 }

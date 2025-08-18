@@ -31,7 +31,7 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 get the list of parameter identifications:
 
 ```{r getPInNames, execute = FALSE}
-#PIs <- myProject$parameterIdentificationNames
+# PIs <- myProject$parameterIdentificationNames
 
 # ospsuite.utils::ospPrintItems(
 #   PIs, title = "Parameter identifications"
@@ -41,9 +41,9 @@ get the list of parameter identifications:
 get observed data from the project as `DataSet` objects:
 
 ```{r getObservedData}
-#obsData <- myProject$getObservedData()
+# obsData <- myProject$getObservedData()
 
-#print(names(obsData))
+# print(names(obsData))
 ```
 
 get the names of individuals and expression profiles from the project:

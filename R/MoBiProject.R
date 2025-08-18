@@ -104,7 +104,7 @@ MoBiProject <- R6::R6Class(
     #' @returns A named list of `MoBiModule` objects.
     getModules = function(names = NULL) {
       if (is.null(names)) {
-        names <- .callProjectTaskAsArray(property = "AllModuleNames", self)
+        names <- self$moduleNames
       }
       modules <- lapply(names, function(name) {
         module <- .callProjectTask(property = "ModuleByName", self, name)
@@ -234,12 +234,11 @@ MoBiProject <- R6::R6Class(
           # If initial conditions selection have been provided, use them.
           # If the name of the module is in the names of 'initialConditions',
           # get the value. The value could be NULL, of no IC BB should be selected.
-          if (moduleName %in% names(initialConditions)) {
-            selectedICName <- initialConditions[[moduleName]]
+          selectedICName <- initialConditions[[moduleName]]
+          if (!is.null(selectedICName)) {
             icBB <- modulesTask$call("InitialConditionBuildingBlockByName", module, selectedICName)
-            # However, if the provided value for the name is NULL, use NULL to specify no IC BB
             # Cannot create configuration if the speciefied IC BB is not available
-            if (is.null(icBB) && !is.null(selectedICName)) {
+            if (is.null(icBB)) {
               stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
             }
           }
@@ -259,12 +258,11 @@ MoBiProject <- R6::R6Class(
           # If initial conditions selection have been provided, use them.
           # If the name of the module is in the names of 'parameterValues',
           # get the value. The value could be NULL, of no PV BB should be selected.
-          if (moduleName %in% names(parameterValues)) {
-            selectedPVName <- parameterValues[[moduleName]]
+          selectedPVName <- parameterValues[[moduleName]]
+          if (!is.null(selectedPVName)) {
             pvBB <- modulesTask$call("ParameterValueBuildingBlockByName", module, selectedPVName)
             # Cannot create configuration if the speciefied PV BB is not available
-            # However, if the provided value for the name is NULL, use NULL to specify no PV BB
-            if (is.null(pvBB) && !is.null(selectedPVName)) {
+            if (is.null(pvBB)) {
               stop(messages$pvBBNotPresentInModule(moduleName, selectedPVName))
             }
           }

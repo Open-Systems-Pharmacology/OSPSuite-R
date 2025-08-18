@@ -55,7 +55,7 @@ MoBiModule <- R6::R6Class(
     #' # @param names Optional names of the Parameter Values Building Block to retrieve.
     #' If `NULL`, returns all PV BBs.
     #' # @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
-    getParameterValuesBBs = function(names = NULL){
+    getParameterValuesBBs = function(names = NULL) {
       private$.getBBsWithNames(names = names, bbType = "Parameter Values")
     },
 
@@ -64,7 +64,7 @@ MoBiModule <- R6::R6Class(
     #' # @param names Optional names of the Initial Conditions Building Block to retrieve.
     #' If `NULL`, returns all IC BBs.
     #' # @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
-    getInitialConditionsBBs = function(names = NULL){
+    getInitialConditionsBBs = function(names = NULL) {
       private$.getBBsWithNames(names = names, bbType = "Initial Conditions")
     },
 
@@ -93,7 +93,7 @@ MoBiModule <- R6::R6Class(
     #' If `NULL`, returns all PV BBs.
     #' # @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
     #' # @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
-    .getBBsWithNames = function(names = NULL, bbType){
+    .getBBsWithNames = function(names = NULL, bbType) {
       modulesTask <- .getMoBiTaskFromCache("ModuleTask")
       # First get the list of all BBs
       if (bbType == "Parameter Values") {
@@ -124,7 +124,7 @@ MoBiModule <- R6::R6Class(
       # check if any passed names are not present
       if (!is.null(names)) {
         missingNames <- setdiff(names, newNames)
-        if (length(missingNames) > 0){
+        if (length(missingNames) > 0) {
           stop(paste("No", bbType, "Building Blocks found with names:", paste(names, collapse = ", ")))
         }
       }
