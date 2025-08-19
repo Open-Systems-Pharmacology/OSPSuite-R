@@ -37,6 +37,22 @@ MoBiModule <- R6::R6Class(
         #
         # self$set("MergeBehavior", enumGetValue(enum = MergeBehavior, key = value))
       }
+    },
+    #' @field parameterValuesBBnames Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)
+    parameterValuesBBnames = function(value) {
+      if (missing(value)) {
+        return(.callModuleTask("AllParameterValueBuildingBlockNames", self))
+      } else {
+        private$.throwPropertyIsReadonly("parameterValuesBBnames")
+      }
+    },
+    #' @field initialConditionsBBnames Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)
+    initialConditionsBBnames = function(value) {
+      if (missing(value)) {
+        return(.callModuleTask("AllInitialConditionBuildingBlockNames", self))
+      } else {
+        private$.throwPropertyIsReadonly("initialConditionsBBnames")
+      }
     }
   ),
   public = list(
@@ -129,8 +145,6 @@ MoBiModule <- R6::R6Class(
         }
       }
       return(bbs)
-    },
-    .icBBsNames = NULL,
-    .pvBBsNames = NULL
+    }
   )
 )

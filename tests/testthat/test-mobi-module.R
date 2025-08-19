@@ -121,3 +121,13 @@ test_that("getInitialConditionsBBs returns all IC BBs for module with multiple I
   expect_equal(icBBs[[3]]$name, "IC3")
   expect_equal(icBBs[[1]]$type, "Initial Conditions")
 })
+
+test_that("It returns the names of all IC BBs", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  icBBs <- testModule$initialConditionsBBnames
+  expect_equal(icBBs, c("IC1", "IC2", "IC3"))
+
+  # Test for read only
+  expect_error(testModule$initialConditionsBBnames <- c("NewIC1", "NewIC2"), "Property 'initialConditionsBBnames' is read-only")
+})
