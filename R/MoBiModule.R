@@ -45,15 +45,15 @@ MoBiModule <- R6::R6Class(
       } else {
         private$.throwPropertyIsReadonly("parameterValuesBBnames")
       }
-    }
+    },
     #' @field initialConditionsBBnames Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)
-    # initialConditionsBBnames = function(value) {
-    #   if (missing(value)) {
-    #     return(.callModuleTask("AllInitialConditionBuildingBlockNames", self))
-    #   } else {
-    #     private$.throwPropertyIsReadonly("initialConditionsBBnames")
-    #   }
-    # }
+    initialConditionsBBnames = function(value) {
+      if (missing(value)) {
+        return(.callModuleTask("AllInitialConditionsBuildingBlockNames", self))
+      } else {
+        private$.throwPropertyIsReadonly("initialConditionsBBnames")
+      }
+    }
   ),
   public = list(
     #' @description
@@ -63,7 +63,6 @@ MoBiModule <- R6::R6Class(
     #' @return A new `MoBiModule` object.
     initialize = function(netObject) {
       super$initialize(netObject)
-      # TODO: Initialize names once https://github.com/Open-Systems-Pharmacology/MoBi/issues/2029
     },
 
     #' @description
@@ -71,9 +70,11 @@ MoBiModule <- R6::R6Class(
     #'
     #' @param names Optional names of the Parameter Values Building Block to retrieve.
     #' If `NULL`, returns all PV BBs.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' parameter values BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
-    getParameterValuesBBs = function(names = NULL) {
-      private$.getBBsWithNames(names = names, bbType = "Parameter Values")
+    getParameterValuesBBs = function(names = NULL, stopIfNotFound = TRUE) {
+      private$.getBBsWithNames(names = names, bbType = "Parameter Values", stopIfNotFound)
     },
 
     #' @description
@@ -81,9 +82,11 @@ MoBiModule <- R6::R6Class(
     #'
     #' @param names Optional names of the Initial Conditions Building Block to retrieve.
     #' If `NULL`, returns all IC BBs.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' initial conditions BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
-    getInitialConditionsBBs = function(names = NULL) {
-      private$.getBBsWithNames(names = names, bbType = "Initial Conditions")
+    getInitialConditionsBBs = function(names = NULL, stopIfNotFound = TRUE) {
+      private$.getBBsWithNames(names = names, bbType = "Initial Conditions", stopIfNotFound)
     },
 
     #' @description
@@ -101,7 +104,8 @@ MoBiModule <- R6::R6Class(
         "PK-Sim module" = self$sPKSimModule,
         "Merge behavior" = self$mergeBehavior
       ))
-      # TODO: List names of IC and PV BBs
+      ospsuite.utils::ospPrintItems(self$parameterValuesBBnames, title = "Parameter Values Building Blocks", print_empty = FALSE)
+      ospsuite.utils::ospPrintItems(self$initialConditionsBBnames, title = "Initial Conditions Building Blocks", print_empty = FALSE)
     }
   ),
   private = list(
@@ -111,40 +115,48 @@ MoBiModule <- R6::R6Class(
     #' @param names Optional names of the Parameter Values Building Block to retrieve.
     #' If `NULL`, returns all PV BBs.
     #' @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
-    .getBBsWithNames = function(names = NULL, bbType) {
-      # First get the list of all BBs
+    .getBBsWithNames = function(names = NULL, bbType, stopIfNotFound) {
       if (bbType == "Parameter Values") {
-        bbs <- .callModuleTask("AllParameterValuesFromModule", self)
+        allNames <- self$parameterValuesBBnames
+        allMethodName <- "AllParameterValuesFromModule"
+        byNameMethodName <- "ParameterValueBuildingBlockByName"
+
       } else if (bbType == "Initial Conditions") {
-        bbs <- .callModuleTask("AllInitialConditionsFromModule", self)
+        allNames <- self$initialConditionsBBnames
+        allMethodName <- "AllInitialConditionsFromModule"
+        byNameMethodName <- "InitialConditionBuildingBlockByName"
       } else {
         stop("Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'.")
       }
 
-      # Create a list of BuildingBlock objects
-      # and filter by names if provided
-      newNames <- list()
-      bbs <- lapply(bbs, function(bb) {
-        bb <- BuildingBlock$new(bb, type = bbType)
-        if (is.null(names) || bb$name %in% names) {
-          newNames <<- c(newNames, bb$name)
-          return(bb)
-        }
-        return(NULL)
-      })
-      # remove NULL
-      bbs <- Filter(Negate(is.null), bbs)
-
-      names(bbs) <- newNames
-      # check if any passed names are not present
-      if (!is.null(names)) {
-        missingNames <- setdiff(names, newNames)
-        if (length(missingNames) > 0) {
-          stop(paste("No", bbType, "Building Blocks found with names:", paste(names, collapse = ", ")))
-        }
+      # Check if any of the provided names are not present in the module
+      missingNames <- setdiff(names, allNames)
+      if (length(missingNames) > 0) {
+        stop(paste("No", bbType, "Building Blocks found with names:", paste(missingNames, collapse = ", ")))
       }
+
+      # If stopIfNotFound is FALSE, filter only the names that are present in the project
+      if (is.null(names)) {
+        names <- allNames
+        # If no names are provided, just return all available BBs of this type
+        bbsNet <- .callModuleTask(allMethodName, self)
+      } else {
+        names <- intersect(names, allNames)
+        bbsNet <- lapply(names, function(name){
+          .callModuleTask(byNameMethodName, self, name)
+        })
+      }
+
+      # Create BuildingBlock objects
+      bbs <- lapply(bbsNet, function(bb) {
+        BuildingBlock$new(bb, type = bbType)
+      })
+      names(bbs) <- names
+
       return(bbs)
-    }
+      }
+    )
   )
-)

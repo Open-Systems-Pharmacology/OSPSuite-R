@@ -79,6 +79,20 @@ test_that("getParameterValuesBBs returns all PV BBs for module with multiple PV 
   expect_equal(pvBBs[[1]]$type, "Parameter Values")
 })
 
+test_that("It returns the names of all PV BBs", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  pvBBs <- testModule$parameterValuesBBnames
+  expect_equal(pvBBs, c("PV1", "PV2", "PV3"))
+
+  # Module with no PV BBs should return an empty character vector
+  testModuleNoPV <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  expect_equal(testModuleNoPV$parameterValuesBBnames, character(0))
+
+  # Test for read only
+  expect_error(testModule$parameterValuesBBnames <- c("NewPV1", "NewPV2"), "Property 'parameterValuesBBnames' is read-only")
+})
+
 # Test for getInitialConditionsBBs
 
 test_that("getInitialConditionsBBs returns an empty list for a module with no IC BBs", {
@@ -122,12 +136,16 @@ test_that("getInitialConditionsBBs returns all IC BBs for module with multiple I
   expect_equal(icBBs[[1]]$type, "Initial Conditions")
 })
 
-# test_that("It returns the names of all IC BBs", {
-#   testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
-#
-#   icBBs <- testModule$initialConditionsBBnames
-#   expect_equal(icBBs, c("IC1", "IC2", "IC3"))
-#
-#   # Test for read only
-#   expect_error(testModule$initialConditionsBBnames <- c("NewIC1", "NewIC2"), "Property 'initialConditionsBBnames' is read-only")
-# })
+test_that("It returns the names of all IC BBs", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  icBBs <- testModule$initialConditionsBBnames
+  expect_equal(icBBs, c("IC1", "IC2", "IC3"))
+
+  # Module with no IC BBs should return an empty character vector
+  testModuleNoIC <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  expect_equal(testModuleNoIC$initialConditionsBBnames, character(0))
+
+  # Test for read only
+  expect_error(testModule$initialConditionsBBnames <- c("NewIC1", "NewIC2"), "Property 'initialConditionsBBnames' is read-only")
+})
