@@ -29,25 +29,9 @@ loadMoBiProject <- function(filePath) {
 #' @param property The name of the property or method to call on the `ProjectTask`.
 #' @param ... Additional arguments to pass to the method.
 #' @returns The result of the method call.
-#' @internal
 #' @noRd
 .callProjectTask <- function(property, ...) {
   netTask <- .getMoBiTaskFromCache("ProjectTask")
   results <- netTask$call(property, ...)
   return(results)
-}
-
-#' Call a method of a MoBi.CLI.Core.Services.ProjectTask and returns the results
-#' as an array.
-#'
-#' Used for methods that return lists and calls 'ToArray' on them.
-#'
-#' @param property The name of the property or method to call on the `ProjectTask`.
-#' @param ... Additional arguments to pass to the method.
-#' @returns The result of the method call.
-#' @internal
-#' @noRd
-.callProjectTaskAsArray <- function(property, ...) {
-  results <- .callProjectTask(property, ...)
-  return(results$call("ToArray"))
 }

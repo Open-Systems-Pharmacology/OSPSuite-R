@@ -33,9 +33,10 @@ get the list of parameter identifications:
 ```{r getPInNames, execute = FALSE}
 PIs <- myProject$parameterIdentificationNames
 
-# ospsuite.utils::ospPrintItems(
-#   PIs, title = "Parameter identifications"
-# )
+ospsuite.utils::ospPrintItems(
+  PIs,
+  title = "Parameter identifications"
+)
 ```
 
 get observed data from the project as `DataSet` objects:

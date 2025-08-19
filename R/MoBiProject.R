@@ -15,7 +15,7 @@ MoBiProject <- R6::R6Class(
     simulationNames = function(value) {
       if (missing(value)) {
         # Get ass simulation names using ProjectTask
-        values <- .callProjectTaskAsArray(property = "AllSimulationNames", self)
+        values <- .callProjectTask(property = "AllSimulationNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("simulationNames")
@@ -25,7 +25,7 @@ MoBiProject <- R6::R6Class(
     #' @field moduleNames Names of the modules that are present in the project (read-only)
     moduleNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllModuleNames", self)
+        values <- .callProjectTask(property = "AllModuleNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("moduleNames")
@@ -33,10 +33,9 @@ MoBiProject <- R6::R6Class(
     },
     #' @field parameterIdentificationNames Names of the parameter identifications
     #' that are present in the project (read-only)
-    #' 2DO
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllParameterIdentificationNames", self)
+        values <- .callProjectTask(property = "AllParameterIdentificationNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
@@ -45,7 +44,7 @@ MoBiProject <- R6::R6Class(
     #' @field individualNames Names of the individuals that are present in the project (read-only)
     individualNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllIndividualNames", self)
+        values <- .callProjectTask(property = "AllIndividualNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("individualNames")
@@ -55,7 +54,7 @@ MoBiProject <- R6::R6Class(
     #' present in the project (read-only)
     expressionProfilesNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllExpressionProfileNames", self)
+        values <- .callProjectTask(property = "AllExpressionProfileNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("expressionProfilesNames")
@@ -80,36 +79,79 @@ MoBiProject <- R6::R6Class(
     #' Load a simulation from the project
     #'
     #' @param simulationName Name of the simulation.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if the simulation with the
+    #' given name is not present in the project. If `FALSE`, `NULL` is returned.
     #' @returns A `Simulation` object, if the simulation with the given name is present in the
-    #' project. `NULL` if no such simulation is available.
-    getSimulation = function(simulationName) {
+    #' project. `NULL` if no such simulation is available and `stopIfNotFound = FALSE`.
+    getSimulation = function(simulationName, stopIfNotFound = TRUE) {
+      validateIsCharacter(simulationName)
+      simulation <- .callProjectTask(property = "SimulationByName", self, simulationName)
+      if (is.null(simulation)) {
+        if (stopIfNotFound) {
+          stop(messages$errorSimulationNotFound(simulationName))
+        }
+        return(NULL)
+      }
+
+      sim <- Simulation$new(simulation)
+      return(sim)
     },
 
     #' @description
     #' Get observed data present in the project.
     #'
     #' @param dataSetNames Optional. List of names of observed data sets to retrieve
-    #' from project. If `NULL`, all data sets are returned. If a specified data set
-    #' is not found, the name is ignored.
+    #' from project. If `NULL`, all data sets are returned.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' data sets is not present in the project. Otherwise, `NULL` is returned for the data sets that are not found.
     #'
     #' @returns A named list of `DataSet` objects.
-    getObservedData = function(dataSetNames = NULL) {
-      # TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1582
+    getObservedData = function(dataSetNames = NULL, stopIfNotFound = TRUE) {
+      obsDataNet <- .callProjectTask(property = "AllObservedDataSets", self)
+
+      dataSets <- vector("list", length(obsDataNet))
+      names <- vector("list", length(obsDataNet))
+      for (idx in seq_along(obsDataNet)) {
+        dataSet <- obsDataNet[[idx]]
+        name <- dataSet$get("Name")
+        # Continue if names were specified but the name of the current data set
+        # is not in the list of names
+        if (!is.null(dataSetNames) && !(name %in% dataSetNames)) {
+          next
+        }
+        # Create DataSet object
+        dataSets[[idx]] <- DataSet$new(name = name, dataRepository = dataSet)
+        names[[idx]] <- name
+      }
+      names(dataSets) <- names
+      # Remove all NULLs
+      dataSets <- Filter(Negate(is.null), dataSets)
+      missingNames <- setdiff(dataSetNames, names)
+      if (length(missingNames) > 0 && stopIfNotFound) {
+        stop(messages$errorDataSetsNotPresentInProject(missingNames))
+      }
+
+      return(dataSets)
     },
 
     #' @description
     #' Get modules present in the project.
     #'
     #' @param names Optional. Names of the modules to retrieve. If `NULL`, all modules are returned.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' modules is not present in the project. Otherwise, `NULL` is returned for the modules that are not found.
     #' @returns A named list of `MoBiModule` objects.
-    getModules = function(names = NULL) {
+    getModules = function(names = NULL, stopIfNotFound = TRUE) {
       if (is.null(names)) {
         names <- self$moduleNames
       }
       modules <- lapply(names, function(name) {
         module <- .callProjectTask(property = "ModuleByName", self, name)
         if (is.null(module)) {
-          stop(messages$modulesNotPresentInProject(name))
+          if (stopIfNotFound) {
+            stop(messages$modulesNotPresentInProject(name))
+          }
+          return(NULL)
         }
         return(MoBiModule$new(module))
       })
@@ -148,7 +190,7 @@ MoBiProject <- R6::R6Class(
     #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
       validateIsCharacter(names)
-      expressionProfiles <- .callProjectTaskAsArray(property = "ExpressionProfileBuildingBlocksByName", self, names)
+      expressionProfiles <- .callProjectTask(property = "ExpressionProfileBuildingBlocksByName", self, names)
 
       realNames <- vector("character", length(expressionProfiles))
       profiles <- lapply(seq_along(expressionProfiles), function(idx) {
