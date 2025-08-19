@@ -152,7 +152,7 @@ test_that("It can get expression profiles from a MoBi project", {
     fixed = TRUE
   )
 
-  # Test for a list of expression profiles where one profile is non-existing
+  # Test for a list of expression profiles where one profile is non-existent
   expect_error(
     defaultMoBiProject$getExpressionProfiles(names = c(
       "NonExistingProfile",
