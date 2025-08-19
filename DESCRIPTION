@@ -54,8 +54,8 @@ Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Collate: 
+    'MoBiModule.R'
     'MoBiProject.R'
-    'Module.R'
     'SimulationConfiguration.R'
     'aging-data.R'
     'api-config.R'
@@ -129,8 +129,8 @@ Collate:
     'utilities-entity.R'
     'utilities-file.R'
     'utilities-individual.R'
+    'utilities-mobi-module.R'
     'utilities-mobi-project.R'
-    'utilities-module.R'
     'utilities-molecule.R'
     'utilities-output-schema.R'
     'utilities-output-selections.R'
