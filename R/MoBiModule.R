@@ -115,9 +115,9 @@ MoBiModule <- R6::R6Class(
     .getBBsWithNames = function(names = NULL, bbType) {
       # First get the list of all BBs
       if (bbType == "Parameter Values") {
-        bbs <- .callModuleTaskAsArray("AllParameterValuesFromModule", self)
+        bbs <- .callModuleTask("AllParameterValuesFromModule", self)
       } else if (bbType == "Initial Conditions") {
-        bbs <- .callModuleTaskAsArray("AllInitialConditionsFromModule", self)
+        bbs <- .callModuleTask("AllInitialConditionsFromModule", self)
       } else {
         stop("Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'.")
       }
