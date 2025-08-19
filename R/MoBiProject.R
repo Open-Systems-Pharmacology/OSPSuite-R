@@ -15,7 +15,7 @@ MoBiProject <- R6::R6Class(
     simulationNames = function(value) {
       if (missing(value)) {
         # Get ass simulation names using ProjectTask
-        values <- .callProjectTaskAsArray(property = "AllSimulationNames", self)
+        values <- .callProjectTask(property = "AllSimulationNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("simulationNames")
@@ -25,7 +25,7 @@ MoBiProject <- R6::R6Class(
     #' @field moduleNames Names of the modules that are present in the project (read-only)
     moduleNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllModuleNames", self)
+        values <- .callProjectTask(property = "AllModuleNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("moduleNames")
@@ -33,10 +33,9 @@ MoBiProject <- R6::R6Class(
     },
     #' @field parameterIdentificationNames Names of the parameter identifications
     #' that are present in the project (read-only)
-    #' 2DO
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllParameterIdentificationNames", self)
+        values <- .callProjectTask(property = "AllParameterIdentificationNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
@@ -45,7 +44,7 @@ MoBiProject <- R6::R6Class(
     #' @field individualNames Names of the individuals that are present in the project (read-only)
     individualNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllIndividualNames", self)
+        values <- .callProjectTask(property = "AllIndividualNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("individualNames")
@@ -55,7 +54,7 @@ MoBiProject <- R6::R6Class(
     #' present in the project (read-only)
     expressionProfilesNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTaskAsArray(property = "AllExpressionProfileNames", self)
+        values <- .callProjectTask(property = "AllExpressionProfileNames", self)
         return(values)
       } else {
         private$.throwPropertyIsReadonly("expressionProfilesNames")
@@ -148,7 +147,7 @@ MoBiProject <- R6::R6Class(
     #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
       validateIsCharacter(names)
-      expressionProfiles <- .callProjectTaskAsArray(property = "ExpressionProfileBuildingBlocksByName", self, names)
+      expressionProfiles <- .callProjectTask(property = "ExpressionProfileBuildingBlocksByName", self, names)
 
       realNames <- vector("character", length(expressionProfiles))
       profiles <- lapply(seq_along(expressionProfiles), function(idx) {

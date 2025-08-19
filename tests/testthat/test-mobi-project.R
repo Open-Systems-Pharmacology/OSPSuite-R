@@ -1,4 +1,4 @@
-defaultMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("TH_QST_Platform.mbp3"))
+defaultMoBiProject <- loadMoBiProject(filePath = system.file("extdata", "TH_QST_Platform.mbp3", package = "ospsuite"))
 emptyProject <- loadMoBiProject(filePath = getTestDataFilePath("Empty_Project.mbp3"))
 
 test_that("It can print a MoBi project", {
@@ -20,16 +20,14 @@ test_that("It can get simulation names from a MoBi project", {
   )
 })
 
-# Test for MoBiProject$parameterIdentificationNames 2DO
-# test_that("It can get parameter identification names from a MoBi project", {
-#   expectedNames <- c("Thyroid_QST_Human",
-#                      "Thyroid_QST_Phenobarbital")
-#   expect_equal(defaultMoBiProject$parameterIdentificationNames, expectedNames)
-#   expect_equal(emptyProject$parameterIdentificationNames, character(0))
-#   # Test that parameterIdentificationNames is read-only
-#   expect_error(defaultMoBiProject$parameterIdentificationNames <- "NewParameterIdentification",
-#                "Property 'parameterIdentificationNames' is read-only")
-# })
+test_that("It can get parameter identification names from a MoBi project", {
+  expectedNames <- "Parameter Identification 1"
+  expect_equal(defaultMoBiProject$parameterIdentificationNames, expectedNames)
+  expect_equal(emptyProject$parameterIdentificationNames, character(0))
+  # Test that parameterIdentificationNames is read-only
+  expect_error(defaultMoBiProject$parameterIdentificationNames <- "NewParameterIdentification",
+               "Property 'parameterIdentificationNames' is read-only")
+})
 
 # Test for MoBiProject$individualNames
 test_that("It can get individuals names from a MoBi project", {
