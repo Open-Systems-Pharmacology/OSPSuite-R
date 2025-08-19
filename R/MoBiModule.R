@@ -45,15 +45,15 @@ MoBiModule <- R6::R6Class(
       } else {
         private$.throwPropertyIsReadonly("parameterValuesBBnames")
       }
-    },
-    #' @field initialConditionsBBnames Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)
-    initialConditionsBBnames = function(value) {
-      if (missing(value)) {
-        return(.callModuleTask("AllInitialConditionBuildingBlockNames", self))
-      } else {
-        private$.throwPropertyIsReadonly("initialConditionsBBnames")
-      }
     }
+    #' @field initialConditionsBBnames Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)
+    # initialConditionsBBnames = function(value) {
+    #   if (missing(value)) {
+    #     return(.callModuleTask("AllInitialConditionBuildingBlockNames", self))
+    #   } else {
+    #     private$.throwPropertyIsReadonly("initialConditionsBBnames")
+    #   }
+    # }
   ),
   public = list(
     #' @description
