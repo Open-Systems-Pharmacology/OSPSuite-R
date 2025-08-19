@@ -1,4 +1,4 @@
-defaultMoBiProject <- loadMoBiProject(filePath = system.file("extdata", "TH_QST_Platform.mbp3", package = "ospsuite"))
+defaultMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("TH_QST_Platform.mbp3"))
 emptyProject <- loadMoBiProject(filePath = getTestDataFilePath("Empty_Project.mbp3"))
 
 test_that("It can print a MoBi project", {
@@ -117,6 +117,26 @@ test_that("It correctly handles non-existing individuals", {
   expect_null(individual)
 })
 
+# Test for MoBiProject$getSimulation
+test_that("It returns a simulation object for getSimulation with existing simulation", {
+  simulation <- defaultMoBiProject$getSimulation("Thyroid_QST_Human")
+  expect_true(isOfType(simulation, "Simulation"))
+  expect_equal(simulation$name, "Thyroid_QST_Human")
+
+  # Test for non-existing simulation
+  expect_error(
+    defaultMoBiProject$getSimulation("NonExistingSimulation"),
+    messages$errorSimulationNotFound("NonExistingSimulation"),
+    fixed = TRUE
+  )
+})
+
+test_that("It correctly handles non-existing simulations", {
+  # Test for non-existing simulation with stopIfNotFound = FALSE
+  simulation <- defaultMoBiProject$getSimulation("NonExistingSimulation", stopIfNotFound = FALSE)
+  expect_null(simulation)
+})
+
 # Test for MoBiProject$getExpressionProfiles
 test_that("It can get expression profiles from a MoBi project", {
   expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy"))
@@ -130,7 +150,7 @@ test_that("It can get expression profiles from a MoBi project", {
     fixed = TRUE
   )
 
-  # Test for a list of expression profiles where one profile is non-existant
+  # Test for a list of expression profiles where one profile is non-existing
   expect_error(
     defaultMoBiProject$getExpressionProfiles(names = c(
       "NonExistingProfile",

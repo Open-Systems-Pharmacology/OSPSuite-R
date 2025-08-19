@@ -79,9 +79,22 @@ MoBiProject <- R6::R6Class(
     #' Load a simulation from the project
     #'
     #' @param simulationName Name of the simulation.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if the simulation with the
+    #' given name is not present in the project. If `FALSE`, `NULL` is returned.
     #' @returns A `Simulation` object, if the simulation with the given name is present in the
-    #' project. `NULL` if no such simulation is available.
-    getSimulation = function(simulationName) {
+    #' project. `NULL` if no such simulation is available and `stopIfNotFound = FALSE`.
+    getSimulation = function(simulationName, stopIfNotFound = TRUE) {
+      validateIsCharacter(simulationName)
+      simulation <- .callProjectTask(property = "SimulationByName", self, simulationName)
+      if (is.null(simulation)) {
+        if (stopIfNotFound) {
+          stop(messages$errorSimulationNotFound(simulationName))
+        }
+        return(NULL)
+      }
+
+      sim <- Simulation$new(simulation)
+      return(sim)
     },
 
     #' @description
