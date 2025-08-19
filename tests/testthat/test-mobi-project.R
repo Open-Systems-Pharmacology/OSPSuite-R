@@ -20,16 +20,16 @@ test_that("It can get simulation names from a MoBi project", {
   )
 })
 
-# Test for MoBiProject$parameterIdentificationNames 2DO
-# test_that("It can get parameter identification names from a MoBi project", {
-#   expectedNames <- c("Thyroid_QST_Human",
-#                      "Thyroid_QST_Phenobarbital")
-#   expect_equal(defaultMoBiProject$parameterIdentificationNames, expectedNames)
-#   expect_equal(emptyProject$parameterIdentificationNames, character(0))
-#   # Test that parameterIdentificationNames is read-only
-#   expect_error(defaultMoBiProject$parameterIdentificationNames <- "NewParameterIdentification",
-#                "Property 'parameterIdentificationNames' is read-only")
-# })
+test_that("It can get parameter identification names from a MoBi project", {
+  expectedNames <- "Parameter Identification 1"
+  expect_equal(defaultMoBiProject$parameterIdentificationNames, expectedNames)
+  expect_equal(emptyProject$parameterIdentificationNames, character(0))
+  # Test that parameterIdentificationNames is read-only
+  expect_error(
+    defaultMoBiProject$parameterIdentificationNames <- "NewParameterIdentification",
+    "Property 'parameterIdentificationNames' is read-only"
+  )
+})
 
 # Test for MoBiProject$individualNames
 test_that("It can get individuals names from a MoBi project", {
@@ -119,6 +119,26 @@ test_that("It correctly handles non-existing individuals", {
   expect_null(individual)
 })
 
+# Test for MoBiProject$getSimulation
+test_that("It returns a simulation object for getSimulation with existing simulation", {
+  simulation <- defaultMoBiProject$getSimulation("Thyroid_QST_Human")
+  expect_true(isOfType(simulation, "Simulation"))
+  expect_equal(simulation$name, "Thyroid_QST_Human")
+
+  # Test for non-existing simulation
+  expect_error(
+    defaultMoBiProject$getSimulation("NonExistingSimulation"),
+    messages$errorSimulationNotFound("NonExistingSimulation"),
+    fixed = TRUE
+  )
+})
+
+test_that("It correctly handles non-existing simulations", {
+  # Test for non-existing simulation with stopIfNotFound = FALSE
+  simulation <- defaultMoBiProject$getSimulation("NonExistingSimulation", stopIfNotFound = FALSE)
+  expect_null(simulation)
+})
+
 # Test for MoBiProject$getExpressionProfiles
 test_that("It can get expression profiles from a MoBi project", {
   expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy"))
@@ -132,7 +152,7 @@ test_that("It can get expression profiles from a MoBi project", {
     fixed = TRUE
   )
 
-  # Test for a list of expression profiles where one profile is non-existant
+  # Test for a list of expression profiles where one profile is non-existent
   expect_error(
     defaultMoBiProject$getExpressionProfiles(names = c(
       "NonExistingProfile",
@@ -158,6 +178,71 @@ test_that("It correctly handles non-existing expression profiles", {
     stopIfNotFound = FALSE
   )
   expect_equal(names(expressionProfiles), "DIO1|Human|Healthy")
+})
+
+# Test for MoBiProject$getDataSets
+test_that("It can get all data sets from a MoBi project", {
+  allDataSetNames <- c(
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A",
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.5A",
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.5A",
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.5A",
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.5A",
+    "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.6",
+    "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.6",
+    "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.6",
+    "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.6",
+    "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.6",
+    "Liu 1995_Total T4__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.2",
+    "Liu 1995_Total T4__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.2",
+    "Liu 1995_Total T4__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.2",
+    "Liu 1995_Total T4__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.2",
+    "Liu 1995_Total T4__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.2"
+  )
+  dataSets <- defaultMoBiProject$getObservedData()
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(names(dataSets), allDataSetNames)
+
+  # Test for empty project
+  emptyDataSets <- emptyProject$getObservedData()
+  expect_length(emptyDataSets, 0)
+})
+
+test_that("It can get specific data sets from a MoBi project", {
+  dataSetNames <- c(
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A",
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.5A"
+  )
+  dataSets <- defaultMoBiProject$getObservedData(dataSetNames)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(names(dataSets), dataSetNames)
+
+  # Test for non-existing data set
+  expect_error(
+    defaultMoBiProject$getObservedData("NonExistingDataSet"),
+    messages$errorDataSetsNotPresentInProject(c("NonExistingDataSet")),
+    fixed = TRUE
+  )
+
+  # Test for a list of data sets where one is non-existing
+  expect_error(
+    defaultMoBiProject$getObservedData(c("NonExistingDataSet", "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A")),
+    messages$errorDataSetsNotPresentInProject(c("NonExistingDataSet")),
+    fixed = TRUE
+  )
+})
+
+test_that("It correctly handles non-existing data sets", {
+  # Test for non-existing data set with stopIfNotFound = FALSE
+  dataSets <- defaultMoBiProject$getObservedData("NonExistingDataSet", stopIfNotFound = FALSE)
+  expect_length(dataSets, 0)
+
+  # Test for a list of data sets where one is non-existing
+  dataSets <- defaultMoBiProject$getObservedData(
+    c("NonExistingDataSet", "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"),
+    stopIfNotFound = FALSE
+  )
+  expect_equal(names(dataSets), "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A")
 })
 
 # Test for MoBiProject$createSimulationConfiguration
