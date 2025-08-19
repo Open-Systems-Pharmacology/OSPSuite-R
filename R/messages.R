@@ -111,6 +111,10 @@ messages$errorSimulationNotFound <- function(simulationName) {
   paste0("Simulation with the name '", simulationName, "' is not present in the project!")
 }
 
+messages$errorDataSetsNotPresentInProject <- function(dataSetNames) {
+  paste0("Data set(s) with the name(s) ", paste(dataSetNames, collapse = ", "), " is/are not present in the project!")
+}
+
 ##### BuildingBlock #####
 messages$errorExpressionProfileNotFound <- function(names) {
   paste0("Expression profile(s) with the name(s) ", paste(names, collapse = ", "), " is/are not present in the project!")

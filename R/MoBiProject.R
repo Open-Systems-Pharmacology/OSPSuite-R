@@ -101,27 +101,57 @@ MoBiProject <- R6::R6Class(
     #' Get observed data present in the project.
     #'
     #' @param dataSetNames Optional. List of names of observed data sets to retrieve
-    #' from project. If `NULL`, all data sets are returned. If a specified data set
-    #' is not found, the name is ignored.
+    #' from project. If `NULL`, all data sets are returned.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' data sets is not present in the project. Otherwise, `NULL` is returned for the data sets that are not found.
     #'
     #' @returns A named list of `DataSet` objects.
-    getObservedData = function(dataSetNames = NULL) {
-      # TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1582
+    getObservedData = function(dataSetNames = NULL, stopIfNotFound = TRUE) {
+      obsDataNet <- .callProjectTask(property = "AllObservedDataSets", self)
+
+      dataSets <- vector("list", length(obsDataNet))
+      names <- vector("list", length(obsDataNet))
+      for (idx in seq_along(obsDataNet)) {
+        dataSet <- obsDataNet[[idx]]
+        name <- dataSet$get("Name")
+        # Continue if names were specified but the name of the current data set
+        # is not in the list of names
+        if (!is.null(dataSetNames) && !(name %in% dataSetNames)) {
+          next
+        }
+        # Create DataSet object
+        dataSets[[idx]] <- DataSet$new(name = name, dataRepository = dataSet)
+        names[[idx]] <- name
+      }
+      names(dataSets) <- names
+      # Remove all NULLs
+      dataSets <- Filter(Negate(is.null), dataSets)
+      missingNames <- setdiff(dataSetNames, names)
+      if (length(missingNames) > 0 && stopIfNotFound) {
+          stop(messages$errorDataSetsNotPresentInProject(missingNames))
+      }
+
+      return(dataSets)
     },
 
     #' @description
     #' Get modules present in the project.
     #'
     #' @param names Optional. Names of the modules to retrieve. If `NULL`, all modules are returned.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' modules is not present in the project. Otherwise, `NULL` is returned for the modules that are not found.
     #' @returns A named list of `MoBiModule` objects.
-    getModules = function(names = NULL) {
+    getModules = function(names = NULL, stopIfNotFound = TRUE) {
       if (is.null(names)) {
         names <- self$moduleNames
       }
       modules <- lapply(names, function(name) {
         module <- .callProjectTask(property = "ModuleByName", self, name)
         if (is.null(module)) {
+          if (stopIfNotFound) {
           stop(messages$modulesNotPresentInProject(name))
+          }
+          return(NULL)
         }
         return(MoBiModule$new(module))
       })
