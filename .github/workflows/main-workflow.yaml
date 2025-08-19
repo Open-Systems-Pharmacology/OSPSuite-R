@@ -17,19 +17,14 @@ jobs:
     secrets:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
-  update-core-files:
-    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
-    needs: [bump-dev-version]
-    uses: ./.github/workflows/update-core-files.yaml
-
   R-CMD-Check:
     if: ${{ !cancelled() }}
-    needs: [update-core-files]
+    needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   test-coverage:
     if: ${{ !cancelled() }}
-    needs: [update-core-files]
+    needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -37,6 +32,6 @@ jobs:
 
   pkgdown:
     if: ${{ !cancelled() }}
-    needs: [update-core-files]
+    needs: [bump-dev-version]
     uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
 

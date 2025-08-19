@@ -51,3 +51,9 @@ doc
 
 # test artifacts
 tests/testthat/*.pdf
+
+# visual studio
+**/bin/
+**/obj/
+*.user
+.vs

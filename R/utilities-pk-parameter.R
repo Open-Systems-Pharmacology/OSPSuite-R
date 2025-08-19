@@ -36,7 +36,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   displayUnit <- .encodeUnit(displayUnit %||% "")
   displayName <- displayName %||% ""
 
-  pkParameterTask <- .getNetTask("PKParameterTask")
+  pkParameterTask <- .getCoreTask("PKParameterTask")
   netUserDefinedPKParameter <- pkParameterTask$call("CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
   userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
   pkParameterTask$call("AddUserDefinedPKParameter", netUserDefinedPKParameter)
@@ -47,7 +47,7 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
 #'
 #' @export
 removeAllUserDefinedPKParameters <- function() {
-  pkParameterTask <- .getNetTask("PKParameterTask")
+  pkParameterTask <- .getCoreTask("PKParameterTask")
   pkParameterTask$call("RemoveAllUserDefinedPKParameters")
 }
 
@@ -62,7 +62,7 @@ removeAllUserDefinedPKParameters <- function() {
 #' updatePKParameter("t_max", "MyTmax", "min")
 #' @export
 updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
-  pkParameterTask <- .getNetTask("PKParameterTask")
+  pkParameterTask <- .getCoreTask("PKParameterTask")
   pkParameter <- pkParameterByName(name)
 
   .updatePKParameterProperties(pkParameter, displayName, displayUnit)
@@ -91,7 +91,7 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
 #' pkParameter <- pkParameterByName(name = "t_max")
 #' @export
 pkParameterByName <- function(name, stopIfNotFound = TRUE) {
-  pkParameterTask <- .getNetTask("PKParameterTask")
+  pkParameterTask <- .getCoreTask("PKParameterTask")
   pkParameter <- pkParameterTask$call("PKParameterByName", name)
   pkParameter <- .toObjectType(pkParameter, PKParameter)
 
@@ -110,6 +110,6 @@ pkParameterByName <- function(name, stopIfNotFound = TRUE) {
 #' pkParameterNames <- allPKParameterNames()
 #' @export
 allPKParameterNames <- function() {
-  pkParameterTask <- .getNetTask("PKParameterTask")
+  pkParameterTask <- .getCoreTask("PKParameterTask")
   pkParameterTask$call("AllPKParameterNames")
 }

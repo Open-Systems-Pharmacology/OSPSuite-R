@@ -28,7 +28,7 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
   validateIsOfType(simulation, "Simulation")
   validateIsNumeric(c(startTime, endTime, resolution))
   schema <- simulation$outputSchema
-  outputIntervalFactory <- .getNetTask("OutputIntervalFactory")
+  outputIntervalFactory <- .getCoreTask("OutputIntervalFactory")
   netIntervals <- outputIntervalFactory$call("CreateFor", schema, startTime, endTime, resolution)
   interval <- .toObjectType(netIntervals, Interval)
   if (!is.null(intervalName)) {

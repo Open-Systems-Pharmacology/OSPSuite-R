@@ -22,7 +22,7 @@
 #' @export
 createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   validateIsString(filePath)
-  importerTask <- .getNetTaskFromCache("DataImporterTask")
+  importerTask <- .getCoreTaskFromCache("DataImporterTask")
   if (is.null(sheet)) {
     ref <- importerTask$call("CreateConfigurationFor", filePath)
   } else {
@@ -60,7 +60,7 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
 #' @export
 loadDataImporterConfiguration <- function(configurationFilePath) {
   validateIsString(configurationFilePath)
-  importerTask <- .getNetTaskFromCache("DataImporterTask")
+  importerTask <- .getCoreTaskFromCache("DataImporterTask")
   ref <- importerTask$call("GetConfiguration", configurationFilePath)
   return(DataImporterConfiguration$new(ref))
 }

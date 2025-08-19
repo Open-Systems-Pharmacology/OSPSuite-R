@@ -93,3 +93,33 @@ messages$illegalCharactersInName <- function(name) {
 messages$forbiddenSimulationName <- function(name, sim) {
   paste0("The name '", name, "' is not allowed for this simulation. Forbidden names for this simulation are: '", paste0(.getIllegalSimulationNames(sim), collapse = ", "), "'.")
 }
+
+##### MoBiProject#####
+messages$modulesNotPresentInProject <- function(modules) {
+  paste0("Modules with the name(s) ", paste(modules, collapse = ", "), " is/are not present in the project!")
+}
+
+messages$icBBNotPresentInModule <- function(moduleName, icBBName) {
+  paste0("Initial Condition Building Block with the name '", icBBName, "' is not present in the module '", moduleName, "'!")
+}
+
+messages$pvBBNotPresentInModule <- function(moduleName, pvBBName) {
+  paste0("Parameter Value Building Block with the name '", pvBBName, "' is not present in the module '", moduleName, "'!")
+}
+
+messages$errorSimulationNotFound <- function(simulationName) {
+  paste0("Simulation with the name '", simulationName, "' is not present in the project!")
+}
+
+messages$errorDataSetsNotPresentInProject <- function(dataSetNames) {
+  paste0("Data set(s) with the name(s) ", paste(dataSetNames, collapse = ", "), " is/are not present in the project!")
+}
+
+##### BuildingBlock #####
+messages$errorExpressionProfileNotFound <- function(names) {
+  paste0("Expression profile(s) with the name(s) ", paste(names, collapse = ", "), " is/are not present in the project!")
+}
+
+messages$errorIndividualNotFound <- function(name) {
+  paste0("Individual with the name ", name, " is not present in the project!")
+}

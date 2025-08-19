@@ -32,7 +32,26 @@
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
 
-  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
+  # Load MoBi.R
+  mobiR <- system.file("lib", "MoBi.R.dll", package = ospsuiteEnv$packageName)
+
+  rSharp::loadAssembly(mobiR)
+  rSharp::callStatic("MoBi.R.Api", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
+  .loadEnums()
+}
+
+
+#' Load enums from .NET
+#' This function must be called after initializing the package.
+#' @noRd
+.loadEnums <- function() {
+  # MergeBehavior enum
+
+  # -1 because the indexing in .NET starts at 0
+  mergeBehaviorNetEnum <- seq_along(enum(rSharp::getEnumNames("OSPSuite.Core.Domain.MergeBehavior"))) - 1
+  names(mergeBehaviorNetEnum) <- enum(rSharp::getEnumNames("OSPSuite.Core.Domain.MergeBehavior"))
+  # Enum with the merge behaviors for modules available in MoBi
+  MergeBehavior <<- enum(mergeBehaviorNetEnum)
 }
