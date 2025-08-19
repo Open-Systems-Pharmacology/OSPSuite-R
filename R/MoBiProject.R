@@ -128,7 +128,7 @@ MoBiProject <- R6::R6Class(
       dataSets <- Filter(Negate(is.null), dataSets)
       missingNames <- setdiff(dataSetNames, names)
       if (length(missingNames) > 0 && stopIfNotFound) {
-          stop(messages$errorDataSetsNotPresentInProject(missingNames))
+        stop(messages$errorDataSetsNotPresentInProject(missingNames))
       }
 
       return(dataSets)
@@ -149,7 +149,7 @@ MoBiProject <- R6::R6Class(
         module <- .callProjectTask(property = "ModuleByName", self, name)
         if (is.null(module)) {
           if (stopIfNotFound) {
-          stop(messages$modulesNotPresentInProject(name))
+            stop(messages$modulesNotPresentInProject(name))
           }
           return(NULL)
         }

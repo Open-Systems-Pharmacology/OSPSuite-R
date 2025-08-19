@@ -8,7 +8,7 @@
 A new \code{MoBiProject} object.
 
 A \code{Simulation} object, if the simulation with the given name is present in the
-project. \code{NULL} if no such simulation is available.
+project. \code{NULL} if no such simulation is available and \code{stopIfNotFound = FALSE}.
 
 A named list of \code{DataSet} objects.
 
@@ -38,8 +38,7 @@ A MoBi project, containing modules, building blocks, simulations, etc.
 \item{\code{moduleNames}}{Names of the modules that are present in the project (read-only)}
 
 \item{\code{parameterIdentificationNames}}{Names of the parameter identifications
-that are present in the project (read-only)
-2DO}
+that are present in the project (read-only)}
 
 \item{\code{individualNames}}{Names of the individuals that are present in the project (read-only)}
 
@@ -107,13 +106,16 @@ to load a project.
 \subsection{Method \code{getSimulation()}}{
 Load a simulation from the project
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getSimulation(simulationName)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getSimulation(simulationName, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{simulationName}}{Name of the simulation.}
+
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default), an error is thrown if the simulation with the
+given name is not present in the project. If \code{FALSE}, \code{NULL} is returned.}
 }
 \if{html}{\out{</div>}}
 }
@@ -124,15 +126,17 @@ Load a simulation from the project
 \subsection{Method \code{getObservedData()}}{
 Get observed data present in the project.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getObservedData(dataSetNames = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getObservedData(dataSetNames = NULL, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{dataSetNames}}{Optional. List of names of observed data sets to retrieve
-from project. If \code{NULL}, all data sets are returned. If a specified data set
-is not found, the name is ignored.}
+from project. If \code{NULL}, all data sets are returned.}
+
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default), an error is thrown if any of the specified
+data sets is not present in the project. Otherwise, \code{NULL} is returned for the data sets that are not found.}
 }
 \if{html}{\out{</div>}}
 }
@@ -143,13 +147,16 @@ is not found, the name is ignored.}
 \subsection{Method \code{getModules()}}{
 Get modules present in the project.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules(names = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiProject$getModules(names = NULL, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{names}}{Optional. Names of the modules to retrieve. If \code{NULL}, all modules are returned.}
+
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default), an error is thrown if any of the specified
+modules is not present in the project. Otherwise, \code{NULL} is returned for the modules that are not found.}
 }
 \if{html}{\out{</div>}}
 }

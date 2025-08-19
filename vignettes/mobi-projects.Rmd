@@ -34,7 +34,8 @@ get the list of parameter identifications:
 PIs <- myProject$parameterIdentificationNames
 
 ospsuite.utils::ospPrintItems(
-  PIs, title = "Parameter identifications"
+  PIs,
+  title = "Parameter identifications"
 )
 ```
 
