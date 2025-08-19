@@ -36,13 +36,18 @@ SimulationConfiguration <- R6::R6Class(
     #' Can be `NULL` if no Individual should be applied.
     individual = function(value) {
       if (missing(value)) {
-        return(self$get("Individual"))
+        individual <- self$get("Individual")
+        if (!is.null(individual)) {
+          individual <- BuildingBlock$new(individual, type = BuildingBlockTypes$Individual)
+        }
+        return(individual)
       } else {
-        isOfType(value, "Individual", nullAllowed = TRUE)
+        validateIsOfType(value, "BuildingBlock", nullAllowed = TRUE)
         # Check for the correct BB type
         if (!is.null(value)) {
           if (value$type != "Individual") {
-            # 2DO throw error
+            # throw error
+            stop(messages$errorWrongBuildingBlockType(value$name, "Individual", value$type))
           }
         }
         self$set("Individual", value)
@@ -53,8 +58,11 @@ SimulationConfiguration <- R6::R6Class(
     #' used in the configuration. Only one profile per protein is allowed.
     expressionProfiles = function(value) {
       if (missing(value)) {
-        return(self$get("ExpressionProfiles"))
+        expProfiles <- self$get("ExpressionProfiles")
+        expProfiles <- expProfiles$call("ToArray")
+        return()
       } else {
+        validateIsOfType(value, "BuildingBlock", nullAllowed = TRUE)
         # Check for the correct type, list of ExpressionProfiles
         # 2DO Where to check that only one profile for each protein is passed?
         # In R, or .NET? Preferably .net?
@@ -140,9 +148,11 @@ SimulationConfiguration <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(self$individual$name, "Individual", print_empty = FALSE)
+      ospsuite.utils::ospPrintItems(self$expressionProfiles, title = "Expression profiles")
     }
   ),
   private = list(
-    .individual = NULL
+
   )
 )

@@ -115,3 +115,12 @@ messages$errorExpressionProfileNotFound <- function(names) {
 messages$errorIndividualNotFound <- function(name) {
   paste0("Individual with the name ", name, " is not present in the project!")
 }
+
+messages$errorWrongBuildingBlockType <- function(bbName, expectedType, actualType) {
+  paste0("Building Block with the name '", bbName, "' is of type '", actualType, "', but expected type is '", expectedType, "'.")
+}
+
+  ##### Simulation #####
+  messages$errorFeatureNotSupportedBySimulation <- function(featureName, version, requiredVersion) {
+    paste0("The feature '", featureName, "' is not supported by this simulation. The simulation was created with OSP version ", version, ". Minimal required OSP version is ", requiredVersion)
+  }
