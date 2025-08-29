@@ -65,12 +65,14 @@ test_that("add* methods error if anything but expected data types are entered", 
 
   expect_error(
     myCombDat$addSimulationResults(list("x", "y")),
-    "argument 'simulationResults' is of type 'list', but expected 'SimulationResults'"
+    messages$errorWrongType("simulationResults", type = "list", "SimulationResults"),
+    fixed = TRUE
   )
 
   expect_error(
     myCombDat$addDataSets(list(1, 2)),
-    "argument 'dataSets' is of type 'list', but expected 'DataSet'"
+    messages$errorWrongType("dataSets", type = "list", "DataSet"),
+    fixed = TRUE
   )
 })
 
@@ -260,12 +262,14 @@ test_that("grouping specification fails when arguments are empty", {
 
   expect_error(
     myCombDat$setGroups(names = character(), groups = c("a", "b")),
-    "argument 'arg' is empty"
+    messages$errorEmpty("arg"),
+    fixed = TRUE
   )
 
   expect_error(
     myCombDat$setGroups(names = c("a", "b"), groups = character()),
-    "argument 'arg' is empty"
+    messages$errorEmpty("arg"),
+    fixed = TRUE
   )
 })
 
@@ -281,12 +285,14 @@ test_that("setting groups fails when arguments are not of `character` type", {
 
   expect_error(
     myCombDat$setGroups(x, list("a", "b")),
-    "but expected 'character'"
+    messages$errorWrongType("arg", "list", "character"),
+    fixed = TRUE
   )
 
   expect_error(
     myCombDat$setGroups(list(names = "a", "b"), x),
-    "but expected 'character'"
+    messages$errorWrongType("arg", "list", "character"),
+    fixed = TRUE
   )
 })
 
