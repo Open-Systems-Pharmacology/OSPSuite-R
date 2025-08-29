@@ -324,6 +324,7 @@
         <Unit name="cm²/min" factor="1E-2" />
         <Unit name="cm²/s" factor="60*1E-2" />
         <Unit name="dm²/min" factor="1" />
+        <Unit name="m²/s" factor="60*1E2" />
       </Units>
     </Dimension>
     <Dimension name="Dose per body weight" baseUnit="kg/kg" defaultUnit="mg/kg">
@@ -362,6 +363,8 @@
         <Unit name="kcal" factor="4184*10*10*60*60" />
         <Unit name="cal" factor="4184*10*10*60*60*1E-3" />
         <Unit name="kg*dm²/min²" factor="1" visible="0" />
+        <Unit name="J" factor="1E2*60*60"/>
+        <Unit name="kJ" factor="1E3*1E2*60*60"/>
       </Units>
     </Dimension>
     <Dimension name="Flow" baseUnit="l/min">
@@ -918,6 +921,37 @@
         <Unit name="V*min" factor="1" />
         <Unit name="(kg*dm²)/(A*min²)" factor="1" />
         <Unit name="(kg*m²)/(A*s²)" factor="1E2*60*60" />
+      </Units>
+    </Dimension>
+    <Dimension name="Amount per area per time" baseUnit="µmol/dm²/min" defaultUnit="µmol/cm²/h">
+      <BaseRepresentation lengthExponent="-2" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µmol/cm²/h" factor="1E2/60" />
+        <Unit name="mmol/cm²/h" factor="1E3*1E2/60" />
+        <Unit name="mmol/m²/h" factor="1E3*1E-2/60" />
+        <Unit name="µmol/dm²/min" factor="1" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Amount per area" baseUnit="µmol/dm²" defaultUnit="µmol/cm²">
+      <BaseRepresentation lengthExponent="-2" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="µmol/µm²" factor="1E10" />
+        <Unit name="µmol/mm²" factor="1E4" />
+        <Unit name="µmol/cm²" factor="1E2" />
+        <Unit name="µmol/dm²" factor="1" visible="0" />
+        <Unit name="nmol/µm²" factor="1E-3*1E10" />
+        <Unit name="nmol/mm²" factor="1E-3*1E4" />
+        <Unit name="nmol/cm²" factor="1E-3*1E2" />
+        <Unit name="nmol/dm²" factor="1E-3" visible="0" />
+      </Units>
+    </Dimension>
+    <Dimension name="Inversed area" baseUnit="1/dm²" defaultUnit="1/cm²">
+      <BaseRepresentation lengthExponent="-2" massExponent="0" timeExponent="0" electricCurrentExponent="0" temperatureExponent="0" amountExponent="0" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="1/µm²" factor="1E10" />
+        <Unit name="1/mm²" factor="1E4" />
+        <Unit name="1/cm²" factor="1E2" />
+        <Unit name="1/dm²" factor="1" visible="0" />
       </Units>
     </Dimension>
   </Dimensions>
