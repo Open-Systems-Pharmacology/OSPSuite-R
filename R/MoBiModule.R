@@ -62,6 +62,7 @@ MoBiModule <- R6::R6Class(
     #' @param netObject Reference to `NetObject` .NET MoBi-module object
     #' @return A new `MoBiModule` object.
     initialize = function(netObject) {
+      browser()
       super$initialize(netObject)
     },
 

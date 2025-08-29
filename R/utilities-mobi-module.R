@@ -1,5 +1,4 @@
 #' Load a MoBi module from pkml
-#' TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1590
 #'
 #' @param path Path to the pkml file
 #'
@@ -7,13 +6,15 @@
 #' @export
 #'
 #' @examples
-loadModuleFromPKML <- function(path) {
+#' filePath <- system.file("extdata", "Thyroid.pkml", package = "ospsuite")
+#' module <- loadModuleFromPKML(filePath)
+loadModulesFromPKML <- function(path) {
   if (!file.exists(path)) {
     stop(paste0("File does not exist: ", path))
   }
   validateIsFileExtension(path, "pkml")
 
-  netObject <- .callModuleTask("LoadModuleFromPKML", .expandPath(path))
+  netObject <- .callModuleTask("LoadModulesFromFile", .expandPath(path))
   module <- MoBiModule$new(netObject)
 
   return(module)
