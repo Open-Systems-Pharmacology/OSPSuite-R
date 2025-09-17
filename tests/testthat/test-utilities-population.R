@@ -30,7 +30,7 @@ test_that("It returns the random seed used if not specified", {
     numberOfIndividuals = 10,
   )
   human_values <- createPopulation(populationCharacteristics = human)
-  expect_gt(human_values$seed, 0)
+  expect_type(human_values$seed, "integer")
 })
 
 test_that("It can create a standard human populaiton with weight constraints", {
