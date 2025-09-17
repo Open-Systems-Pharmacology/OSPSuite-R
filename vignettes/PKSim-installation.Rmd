@@ -2,7 +2,7 @@
 title: "PK-Sim Installation"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PK-Sim_installation}
+  %\VignetteIndexEntry{PK-Sim Installation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
