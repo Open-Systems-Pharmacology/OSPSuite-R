@@ -62,7 +62,6 @@ MoBiModule <- R6::R6Class(
     #' @param netObject Reference to `NetObject` .NET MoBi-module object
     #' @return A new `MoBiModule` object.
     initialize = function(netObject) {
-      browser()
       super$initialize(netObject)
     },
 
@@ -75,7 +74,11 @@ MoBiModule <- R6::R6Class(
     #' parameter values BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
     getParameterValuesBBs = function(names = NULL, stopIfNotFound = TRUE) {
-      private$.getBBsWithNames(names = names, bbType = "Parameter Values", stopIfNotFound)
+      private$.getBBsWithNames(
+        names = names,
+        bbType = "Parameter Values",
+        stopIfNotFound
+      )
     },
 
     #' @description
@@ -87,7 +90,11 @@ MoBiModule <- R6::R6Class(
     #' initial conditions BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
     getInitialConditionsBBs = function(names = NULL, stopIfNotFound = TRUE) {
-      private$.getBBsWithNames(names = names, bbType = "Initial Conditions", stopIfNotFound)
+      private$.getBBsWithNames(
+        names = names,
+        bbType = "Initial Conditions",
+        stopIfNotFound
+      )
     },
 
     #' @description
@@ -105,8 +112,16 @@ MoBiModule <- R6::R6Class(
         "PK-Sim module" = self$sPKSimModule,
         "Merge behavior" = self$mergeBehavior
       ))
-      ospsuite.utils::ospPrintItems(self$parameterValuesBBnames, title = "Parameter Values Building Blocks", print_empty = FALSE)
-      ospsuite.utils::ospPrintItems(self$initialConditionsBBnames, title = "Initial Conditions Building Blocks", print_empty = FALSE)
+      ospsuite.utils::ospPrintItems(
+        self$parameterValuesBBnames,
+        title = "Parameter Values Building Blocks",
+        print_empty = FALSE
+      )
+      ospsuite.utils::ospPrintItems(
+        self$initialConditionsBBnames,
+        title = "Initial Conditions Building Blocks",
+        print_empty = FALSE
+      )
     }
   ),
   private = list(
@@ -124,19 +139,25 @@ MoBiModule <- R6::R6Class(
         allNames <- self$parameterValuesBBnames
         allMethodName <- "AllParameterValuesFromModule"
         byNameMethodName <- "ParameterValueBuildingBlockByName"
-
       } else if (bbType == "Initial Conditions") {
         allNames <- self$initialConditionsBBnames
         allMethodName <- "AllInitialConditionsFromModule"
         byNameMethodName <- "InitialConditionBuildingBlockByName"
       } else {
-        stop("Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'.")
+        stop(
+          "Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'."
+        )
       }
 
       # Check if any of the provided names are not present in the module
       missingNames <- setdiff(names, allNames)
       if (length(missingNames) > 0) {
-        stop(paste("No", bbType, "Building Blocks found with names:", paste(missingNames, collapse = ", ")))
+        stop(paste(
+          "No",
+          bbType,
+          "Building Blocks found with names:",
+          paste(missingNames, collapse = ", ")
+        ))
       }
 
       # If stopIfNotFound is FALSE, filter only the names that are present in the project
@@ -146,7 +167,7 @@ MoBiModule <- R6::R6Class(
         bbsNet <- .callModuleTask(allMethodName, self)
       } else {
         names <- intersect(names, allNames)
-        bbsNet <- lapply(names, function(name){
+        bbsNet <- lapply(names, function(name) {
           .callModuleTask(byNameMethodName, self, name)
         })
       }
@@ -158,6 +179,6 @@ MoBiModule <- R6::R6Class(
       names(bbs) <- names
 
       return(bbs)
-      }
-    )
+    }
   )
+)

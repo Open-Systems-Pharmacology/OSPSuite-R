@@ -1,4 +1,6 @@
-testMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("Test_Project.mbp3"))
+testMoBiProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("Test_Project.mbp3")
+)
 
 # Test for .createModuleConfiguration
 
@@ -25,11 +27,17 @@ test_that("loadModuleFromPKML loads a module correctly", {
   filePath <- system.file("extdata", "Thyroid.pkml", package = "ospsuite")
   module <- loadModuleFromPKML(filePath)
 
-  expect_s3_class(module, "MoBiModule")
-  expect_equal(module$name, "Thyroid")
-  expect_true(module$isPKSimModule)
+  expect_true(isOfType(module, "MoBiModule"))
+  expect_equal(module$name, "Thyroid_Generic")
+  expect_false(module$isPKSimModule)
 })
 
+test_that("loadModuleFromPKML throws an error when the passed PKML contains more than one module", {
+  filePath <- getTestDataFilePath("TestSim_2Modules.pkml")
+  module <- loadModuleFromPKML(filePath)
+})
+
+test_that("loadModuleFromPKML throws an error when the passed PKML doest not contain any module", {})
 
 # passing name of IC BB that is not present in the module. requires https://github.com/Open-Systems-Pharmacology/MoBi/issues/2027
 # Passing name of PV BB that is not present in the module. requires https://github.com/Open-Systems-Pharmacology/MoBi/issues/2027

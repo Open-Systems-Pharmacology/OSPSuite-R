@@ -1,6 +1,6 @@
-#' Load a MoBi module from pkml
+#' Load a MoBi module from pkml.
 #'
-#' @param path Path to the pkml file
+#' @param path Path to the pkml file with a module export
 #'
 #' @returns A `MoBiModule` object
 #' @export
@@ -8,14 +8,23 @@
 #' @examples
 #' filePath <- system.file("extdata", "Thyroid.pkml", package = "ospsuite")
 #' module <- loadModuleFromPKML(filePath)
-loadModulesFromPKML <- function(path) {
+loadModuleFromPKML <- function(path) {
   if (!file.exists(path)) {
     stop(paste0("File does not exist: ", path))
   }
   validateIsFileExtension(path, "pkml")
-
+  browser()
   netObject <- .callModuleTask("LoadModulesFromFile", .expandPath(path))
-  module <- MoBiModule$new(netObject)
+  if (length(netObject) > 1) {
+    stop(
+      "The PKML you are trying to load the module from contains more than one module, but the 
+    function expects only one module.
+    Most probably you try to load a simulation export."
+    )
+  }
+  # .NET always returns an array, as it also returns multiple modules for a
+  # simulation export. In R, this function should only be used for loading single modules.
+  module <- MoBiModule$new(netObject[[1]])
 
   return(module)
 }
@@ -30,12 +39,19 @@ loadModulesFromPKML <- function(path) {
 #'
 #' @returns A `ModuleConfiguration` object representing the configuration of the module.
 #' @noRd
-.createModuleConfiguration <- function(module, selectedParameterValue = NULL, selectedInitialCondition = NULL) {
+.createModuleConfiguration <- function(
+  module,
+  selectedParameterValue = NULL,
+  selectedInitialCondition = NULL
+) {
   netTask <- .getMoBiTaskFromCache("SimulationTask")
   netModuleConfiguration <- netTask$call("CreateModuleConfiguration", module)
 
   netModuleConfiguration$set("SelectedParameterValue", selectedParameterValue)
-  netModuleConfiguration$set("SelectedInitialCondition", selectedInitialCondition)
+  netModuleConfiguration$set(
+    "SelectedInitialCondition",
+    selectedInitialCondition
+  )
 
   return(netModuleConfiguration)
 }
