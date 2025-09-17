@@ -35,20 +35,6 @@ jobs:
         run: |
           cd inst/lib
           dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
-        
-      - name: Verify binaries copied to inst/lib
-        run: |
-          echo "Verifying that binaries were copied to inst/lib/"
-          echo "Recent files in inst/lib/:"
-          ls -lt inst/lib/ | head -10
-          echo ""
-          echo "Total files in inst/lib/: $(ls inst/lib/ | wc -l)"
-          echo ""
-          echo "Key binary files present:"
-          ls inst/lib/*.dll inst/lib/*.so inst/lib/*.dylib 2>/dev/null | wc -l | xargs echo "Binary files count:"
-          echo ""
-          echo "Current working directory after build:"
-          pwd
 
       - name: Add and commit library changes
         uses: EndBug/add-and-commit@v9
