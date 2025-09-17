@@ -1,0 +1,59 @@
+on:
+  workflow_call:
+
+name: Build Libraries
+
+permissions: write-all
+
+jobs:
+  build-libraries:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Add GitHub NuGet source
+        run: |
+          dotnet nuget add source "https://nuget.pkg.github.com/Open-Systems-Pharmacology/index.json" \
+            --name "OSP-GitHub-Packages" \
+            --username "Open-Systems-Pharmacology" \
+            --password "${{ secrets.GITHUB_TOKEN }}" \
+            --store-password-in-clear-text
+          
+      - name: Build DependencyManager
+        run: |
+          cd inst/lib
+          dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
+        
+      - name: Verify binaries copied to inst/lib
+        run: |
+          echo "Verifying that binaries were copied to inst/lib/"
+          echo "Recent files in inst/lib/:"
+          ls -lt inst/lib/ | head -10
+          echo ""
+          echo "Total files in inst/lib/: $(ls inst/lib/ | wc -l)"
+          echo ""
+          echo "Key binary files present:"
+          ls inst/lib/*.dll inst/lib/*.so inst/lib/*.dylib 2>/dev/null | wc -l | xargs echo "Binary files count:"
+          echo ""
+          echo "Current working directory after build:"
+          pwd
+
+      - name: Add and commit library changes
+        uses: EndBug/add-and-commit@v9
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        with:
+          message: '🤖 Update library files.'
+          default_author: github_actions
+          add: 'inst/lib'
