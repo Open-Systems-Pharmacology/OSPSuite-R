@@ -17,11 +17,17 @@ test_that("It returns `NULL` when arguments are missing", {
 })
 
 test_that("It returns `NULL` when data frame is empty", {
-  expect_null(.createAxesLabels(data.frame(), TimeProfilePlotConfiguration$new()))
+  expect_null(.createAxesLabels(
+    data.frame(),
+    TimeProfilePlotConfiguration$new()
+  ))
 })
 
 test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Concentration' in plot axis labels", {
-  labels <- .createAxesLabels(.unitConverter(df), TimeProfilePlotConfiguration$new())
+  labels <- .createAxesLabels(
+    .unitConverter(df),
+    TimeProfilePlotConfiguration$new()
+  )
 
   expect_equal(labels$xLabel, "Time [min]")
   expect_equal(labels$yLabel, "Concentration [mol/ml]")
@@ -45,10 +51,17 @@ test_that("It works correctly when multiple dimensions are present and max frequ
   concentrationMassDataSet2$molWeight <- 1
 
   myCombDat <- DataCombined$new()
-  myCombDat$addDataSets(c(concentrationMolarDataSet, concentrationMassDataSet, concentrationMassDataSet2))
+  myCombDat$addDataSets(c(
+    concentrationMolarDataSet,
+    concentrationMassDataSet,
+    concentrationMassDataSet2
+  ))
 
   df <- myCombDat$toDataFrame()
-  labs <- .createAxesLabels(.unitConverter(df), tlf::TimeProfilePlotConfiguration$new())
+  labs <- .createAxesLabels(
+    .unitConverter(df),
+    tlf::TimeProfilePlotConfiguration$new()
+  )
 
   expect_equal(labs$xLabel, "Time [h]")
   expect_equal(labs$yLabel, "Concentration [mg/l]")
@@ -120,7 +133,8 @@ test_that("xAxisLabelTicksSize is correctly passed to plot configurations", {
     generalPlotConfiguration = plotConfig
   )
   expect_equal(
-    timeProfilePlotConfig$xAxis$font$size, 12
+    timeProfilePlotConfig$xAxis$font$size,
+    12
   )
 })
 
@@ -173,7 +187,6 @@ test_that("Geometric range works with different nsd argument", {
 
   gm <- exp(mean(log(randu$x)))
   gsd <- exp(sd(log(randu$x)))
-
 
   expect_equal(
     c(

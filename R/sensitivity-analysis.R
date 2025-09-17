@@ -17,7 +17,11 @@ SensitivityAnalysis <- R6::R6Class(
         return()
       }
       # Issue with .NET rSharp casting array with one value directly as single value instead of array
-      methodName <- if (length(parameterPaths) > 1) "AddParameterPaths" else "AddParameterPath"
+      methodName <- if (length(parameterPaths) > 1) {
+        "AddParameterPaths"
+      } else {
+        "AddParameterPath"
+      }
       self$call(methodName = methodName, parameterPaths)
       invisible(self)
     }
@@ -32,13 +36,18 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
     #' @param variationRange Variation applied to the parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
     #' @return A new `SensitivityAnalysis` object.
-    initialize = function(simulation,
-                          parameterPaths = NULL,
-                          numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
-                          variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange) {
+    initialize = function(
+      simulation,
+      parameterPaths = NULL,
+      numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
+      variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange
+    ) {
       validateIsOfType(simulation, "Simulation")
       validateIsString(parameterPaths, nullAllowed = TRUE)
-      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SensitivityAnalysis", simulation)
+      netObject <- rSharp::newObjectFromName(
+        "OSPSuite.R.Domain.SensitivityAnalysis",
+        simulation
+      )
       super$initialize(netObject)
       private$.simulation <- simulation
       private$.parameterPaths <- c(parameterPaths)
@@ -73,7 +82,13 @@ SensitivityAnalysis <- R6::R6Class(
       ospsuite.utils::ospPrintItems(list(
         "Number of steps" = self$numberOfSteps,
         "Variation range" = self$variationRange,
-        "Number of parameters to vary" = if (length(private$.parameterPaths) > 0) length(private$.parameterPaths) else "Will be estimated at run time"
+        "Number of parameters to vary" = if (
+          length(private$.parameterPaths) > 0
+        ) {
+          length(private$.parameterPaths)
+        } else {
+          "Will be estimated at run time"
+        }
       ))
     }
   ),
@@ -94,7 +109,11 @@ SensitivityAnalysis <- R6::R6Class(
     #' on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
     parameterPaths = function(value) {
-      private$.readOnlyProperty("parameterPaths", value, private$.parameterPaths)
+      private$.readOnlyProperty(
+        "parameterPaths",
+        value,
+        private$.parameterPaths
+      )
     }
   )
 )

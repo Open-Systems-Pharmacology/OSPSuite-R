@@ -55,8 +55,14 @@ test_that("It throwns an error when creating a human with population missing", {
 
 
 test_that("It can create a standard human population  with predefined ontogenies", {
-  moleculeOntogeny1 <- MoleculeOntogeny$new(molecule = "MyMolecule1", ontogeny = StandardOntogeny$CYP3A4)
-  moleculeOntogeny2 <- MoleculeOntogeny$new(molecule = "MyMolecule2", ontogeny = StandardOntogeny$CYP2C19)
+  moleculeOntogeny1 <- MoleculeOntogeny$new(
+    molecule = "MyMolecule1",
+    ontogeny = StandardOntogeny$CYP3A4
+  )
+  moleculeOntogeny2 <- MoleculeOntogeny$new(
+    molecule = "MyMolecule2",
+    ontogeny = StandardOntogeny$CYP2C19
+  )
 
   human <- createPopulationCharacteristics(
     species = Species$Human,
@@ -93,7 +99,12 @@ test_that("It throws an exception when loading an invalid population file", {
 # splitPopulationFile
 test_that("It can split a valid csv file to split files", {
   populationFileName <- getTestDataFilePath("pop.csv")
-  splitFiles <- splitPopulationFile(populationFileName, 3, tempdir(), "SplitFile")
+  splitFiles <- splitPopulationFile(
+    populationFileName,
+    3,
+    tempdir(),
+    "SplitFile"
+  )
   expect_equal(length(splitFiles), 3)
 })
 
@@ -136,7 +147,9 @@ test_that("simulationResultsToDataFrame with population", {
   )
 
   # Create population from population characteristics
-  result <- createPopulation(populationCharacteristics = populationCharacteristics)
+  result <- createPopulation(
+    populationCharacteristics = populationCharacteristics
+  )
   myPopulation <- result$population
 
   # Load simulation
@@ -161,7 +174,10 @@ test_that("simulationResultsToDataFrame with population", {
   expect_equal(unique(df1$dimension), "Concentration (molar)")
   expect_equal(unique(df1$TimeUnit), "min")
 
-  df2 <- simulationResultsToDataFrame(populationResults, individualIds = c(1, 4, 5))
+  df2 <- simulationResultsToDataFrame(
+    populationResults,
+    individualIds = c(1, 4, 5)
+  )
 
   expect_equal(dim(df2), c(1473L, 9L))
   expect_equal(

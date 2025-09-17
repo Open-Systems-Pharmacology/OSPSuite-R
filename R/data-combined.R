@@ -77,7 +77,6 @@ DataCombined <- R6::R6Class(
   # public fields and methods ------------------------------------
 
   public = list(
-
     #' @description
     #' Adds observed data.
     #'
@@ -87,7 +86,12 @@ DataCombined <- R6::R6Class(
     #' data sets are overwritten in the `DataCombined` object
     #'
     #' @return `DataCombined` object containing observed data.
-    addDataSets = function(dataSets, names = NULL, groups = NULL, silent = FALSE) {
+    addDataSets = function(
+      dataSets,
+      names = NULL,
+      groups = NULL,
+      silent = FALSE
+    ) {
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       numberOfDatasets <- objectCount(dataSets)
@@ -138,13 +142,15 @@ DataCombined <- R6::R6Class(
     #' data sets are overwritten in the `DataCombined` object
     #'
     #' @return `DataCombined` object containing simulated data.
-    addSimulationResults = function(simulationResults,
-                                    quantitiesOrPaths = NULL,
-                                    population = NULL,
-                                    individualIds = NULL,
-                                    names = NULL,
-                                    groups = NULL,
-                                    silent = FALSE) {
+    addSimulationResults = function(
+      simulationResults,
+      quantitiesOrPaths = NULL,
+      population = NULL,
+      individualIds = NULL,
+      names = NULL,
+      groups = NULL,
+      silent = FALSE
+    ) {
       # Validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -180,9 +186,9 @@ DataCombined <- R6::R6Class(
         dataNew = private$.simResultsToDataFrame(
           simulationResults = simulationResults,
           quantitiesOrPaths = quantitiesOrPaths,
-          population        = population,
-          individualIds     = individualIds,
-          names             = names
+          population = population,
+          individualIds = individualIds,
+          names = names
         ),
         silent = silent
       )
@@ -242,7 +248,7 @@ DataCombined <- R6::R6Class(
       missingNames <- names[!names %in% self$names]
       if (length(missingNames) > 0) {
         message(messages$printMultipleEntries(
-          header  = messages$datasetsToGroupNotFound(),
+          header = messages$datasetsToGroupNotFound(),
           entries = missingNames
         ))
       }
@@ -281,7 +287,9 @@ DataCombined <- R6::R6Class(
 
         # If the type changes, then the data frame needs to be updated
         private$.dataType[[name]] <- dataType
-        private$.dataCombined$dataType[private$.dataCombined$name == name] <- dataType
+        private$.dataCombined$dataType[
+          private$.dataCombined$name == name
+        ] <- dataType
       }
     },
 
@@ -332,12 +340,14 @@ DataCombined <- R6::R6Class(
     #'
     #' - For error term:
     #'   `newErrorValue = rawErrorValue * scaleFactor`
-    setDataTransformations = function(forNames = NULL,
-                                      xOffsets = 0,
-                                      yOffsets = 0,
-                                      xScaleFactors = 1,
-                                      yScaleFactors = 1,
-                                      reset = FALSE) {
+    setDataTransformations = function(
+      forNames = NULL,
+      xOffsets = 0,
+      yOffsets = 0,
+      xScaleFactors = 1,
+      yScaleFactors = 1,
+      reset = FALSE
+    ) {
       missingArgs <- list(
         xOffsets = missing(xOffsets),
         yOffsets = missing(yOffsets),
@@ -381,7 +391,13 @@ DataCombined <- R6::R6Class(
       if (length(yScaleFactors) == 1) {
         yScaleFactors <- rep(yScaleFactors, length(forNames))
       }
-      ospsuite.utils::validateIsSameLength(forNames, xOffsets, yOffsets, xScaleFactors, yScaleFactors)
+      ospsuite.utils::validateIsSameLength(
+        forNames,
+        xOffsets,
+        yOffsets,
+        xScaleFactors,
+        yScaleFactors
+      )
 
       # Store values
       for (idx in seq_along(forNames)) {
@@ -444,7 +460,9 @@ DataCombined <- R6::R6Class(
       # Fist add empty column
       private$.dataCombined$group <- NA_character_
       for (name in self$names) {
-        private$.dataCombined[private$.dataCombined$name == name, ]$group <- private$.groupMap[[name]] %||% NA_character_
+        private$.dataCombined[
+          private$.dataCombined$name == name,
+        ]$group <- private$.groupMap[[name]] %||% NA_character_
       }
 
       # Apply data transformations
@@ -522,10 +540,10 @@ DataCombined <- R6::R6Class(
 
         return(
           dplyr::tibble(
-            name          = self$names,
+            name = self$names,
             # For offsets: `0` (default for no change)
-            xOffsets      = 0,
-            yOffsets      = 0,
+            xOffsets = 0,
+            yOffsets = 0,
             # For scale factors: `1` (default for no change)
             xScaleFactors = 1,
             yScaleFactors = 1
@@ -567,11 +585,13 @@ DataCombined <- R6::R6Class(
     },
 
     # extract data frame from `SimulationResults` objects
-    .simResultsToDataFrame = function(simulationResults,
-                                      quantitiesOrPaths = NULL,
-                                      population = NULL,
-                                      individualIds = NULL,
-                                      names = NULL) {
+    .simResultsToDataFrame = function(
+      simulationResults,
+      quantitiesOrPaths = NULL,
+      population = NULL,
+      individualIds = NULL,
+      names = NULL
+    ) {
       # `simulationResultsToTibble()` can extract data frame only from a
       # single `SimulationResults` class instance, but this is not a problem
       # because the `$addSimulationResults()` method treats only a single
@@ -579,8 +599,8 @@ DataCombined <- R6::R6Class(
       simData <- simulationResultsToTibble(
         simulationResults = simulationResults,
         quantitiesOrPaths = quantitiesOrPaths,
-        population        = population,
-        individualIds     = individualIds
+        population = population,
+        individualIds = individualIds
       )
 
       # Simulated datasets and observed datasets are glued row-wise when a
@@ -589,7 +609,8 @@ DataCombined <- R6::R6Class(
       # glued appropriately. This requires renaming a few columns.
       # Also rename "paths to "names". If no custom names are specified, the names
       # are always the paths
-      simData <- dplyr::rename(simData,
+      simData <- dplyr::rename(
+        simData,
         "xValues" = "Time",
         "xUnit" = "TimeUnit",
         "xDimension" = "TimeDimension",
@@ -599,13 +620,10 @@ DataCombined <- R6::R6Class(
         "name" = "paths"
       )
 
-
       # Update names, if custom names are specified
       if (!is.null(names)) {
         new_names <- setNames(names, unique(simData$name))
-        simData <- dplyr::mutate(simData,
-          name = new_names[name]
-        )
+        simData <- dplyr::mutate(simData, name = new_names[name])
       }
 
       # Set type of data
@@ -617,7 +635,11 @@ DataCombined <- R6::R6Class(
     },
 
     # Update the combined data frame "in place"
-    .updateDataFrame = function(dataCurrent = NULL, dataNew = NULL, silent = FALSE) {
+    .updateDataFrame = function(
+      dataCurrent = NULL,
+      dataNew = NULL,
+      silent = FALSE
+    ) {
       # If there is existing data, it will be updated with the new data appended
       # at the bottom.
       if (!is.null(dataCurrent) && !is.null(dataNew)) {
@@ -681,14 +703,17 @@ DataCombined <- R6::R6Class(
 
       # Copy dataTransformations to not alter original object and turn into
       # data.table object
-      dataTransformations <- data.table::setDT(data.table::copy(self$dataTransformations))
+      dataTransformations <- data.table::setDT(data.table::copy(
+        self$dataTransformations
+      ))
       # Copy data to not alter original object (private$.dataCombined) and
       # transform into a data.table object
       data <- data.table::setDT(data.table::copy(data))
       # Update values by joining dataTransformations table (base on name column)
       # and apply transformations.
       data <-
-        data[dataTransformations,
+        data[
+          dataTransformations,
           `:=`(
             xValues = (xValues + xOffsets) * xScaleFactors,
             yValues = (yValues + yOffsets) * yScaleFactors,

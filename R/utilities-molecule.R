@@ -109,7 +109,13 @@ setMoleculeInitialValues <- function(molecules, values, units = NULL) {
 #'   units = c("µmol", "mmol")
 #' )
 #' @export
-setMoleculeValuesByPath <- function(moleculePaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
+setMoleculeValuesByPath <- function(
+  moleculePaths,
+  values,
+  simulation,
+  units = NULL,
+  stopIfNotFound = TRUE
+) {
   setQuantityValuesByPath(
     quantityPaths = moleculePaths,
     values = values,

@@ -58,14 +58,29 @@ test_that("It does not change the value of the quantity when converting to anoth
 })
 
 test_that("It can convert from a value in a non-base unit to another unit", {
-  expect_equal(toUnit(quantityOrDimension = ospDimensions$Amount, values = 1, targetUnit = "mol", sourceUnit = "pmol"), 1e-12)
+  expect_equal(
+    toUnit(
+      quantityOrDimension = ospDimensions$Amount,
+      values = 1,
+      targetUnit = "mol",
+      sourceUnit = "pmol"
+    ),
+    1e-12
+  )
 })
 
 test_that("It can convert from Concentration (molar) to Concentration (mass)", {
-  expect_equal(toUnit(
-    quantityOrDimension = ospDimensions$`Concentration (molar)`, values = 1, targetUnit = "mg/dl", sourceUnit = "pmol/l",
-    molWeight = 180, molWeightUnit = "g/mol"
-  ), 1.8e-8)
+  expect_equal(
+    toUnit(
+      quantityOrDimension = ospDimensions$`Concentration (molar)`,
+      values = 1,
+      targetUnit = "mg/dl",
+      sourceUnit = "pmol/l",
+      molWeight = 180,
+      molWeightUnit = "g/mol"
+    ),
+    1.8e-8
+  )
 })
 
 # toBaseUnit
@@ -107,7 +122,10 @@ test_that("It can convert NA in unit to NA", {
 })
 
 test_that("It can convert from an array of values with NULL entrues in a unit to base unit", {
-  expect_equal(toBaseUnit(par, c(1000, 2000, 3000, NULL), "ml"), c(1, 2, 3, NULL))
+  expect_equal(
+    toBaseUnit(par, c(1000, 2000, 3000, NULL), "ml"),
+    c(1, 2, 3, NULL)
+  )
 })
 
 test_that("It does not change the value of the quantity when converting to another unit", {
@@ -155,7 +173,10 @@ test_that("It returns null if the dimension is not found for the unit", {
 # getUnitsForDimension
 
 test_that("It can return the expected dimension for a given unit", {
-  expect_equal(getUnitsForDimension("Mass"), c("kg", "g", "mg", .encodeUnit("µg"), "ng", "pg"))
+  expect_equal(
+    getUnitsForDimension("Mass"),
+    c("kg", "g", "mg", .encodeUnit("µg"), "ng", "pg")
+  )
 })
 
 
@@ -181,7 +202,10 @@ test_that("It returns true for an existing dimension, false otherwise", {
 test_that("It returns NULL when the dimension exists,
           or throws an error otherwise", {
   expect_null(validateDimension("Amount"))
-  expect_error(validateDimension("AAmount"), regexp = messages$errorDimensionNotSupported("AAmount"))
+  expect_error(
+    validateDimension("AAmount"),
+    regexp = messages$errorDimensionNotSupported("AAmount")
+  )
 })
 
 # hasUnit
@@ -194,7 +218,10 @@ test_that("It returns true for an existing unit in the dimension, false otherwis
 test_that("It returns NULL when the unit exists in the dimension,
           or throws an error otherwise", {
   expect_null(validateUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
-  expect_error(validateUnit(unit = "g", dimension = "Amount"), regexp = messages$errorUnitNotSupported("g", "Amount"))
+  expect_error(
+    validateUnit(unit = "g", dimension = "Amount"),
+    regexp = messages$errorUnitNotSupported("g", "Amount")
+  )
 })
 
 # getBaseUnit
@@ -202,7 +229,13 @@ test_that("It returns the correct base unit when supplied with dimension", {
   expect_equal(getBaseUnit(quantityOrDimension = "Amount"), .encodeUnit("µmol"))
 })
 test_that("It returns the correct base unit when supplied with quantity", {
-  expect_equal(getBaseUnit(getQuantity("Organism|VenousBlood|Plasma|CYP3A4|Concentration in container", sim)), .encodeUnit("µmol/l"))
+  expect_equal(
+    getBaseUnit(getQuantity(
+      "Organism|VenousBlood|Plasma|CYP3A4|Concentration in container",
+      sim
+    )),
+    .encodeUnit("µmol/l")
+  )
 })
 
 
@@ -308,7 +341,11 @@ test_that(".unitConverter updates yUnit column as expected", {
 
 # both `xUnit` and `yUnit` -------------------
 
-dfXYConvert <- .unitConverter(df, xUnit = ospUnits$Time$h, yUnit = ospUnits$Fraction$`%`)
+dfXYConvert <- .unitConverter(
+  df,
+  xUnit = ospUnits$Time$h,
+  yUnit = ospUnits$Fraction$`%`
+)
 
 test_that(".unitConverter converts both xValues and yValues columns as expected", {
   expect_equal(dfXYConvert$xValues, df$xValues / 60)
@@ -387,8 +424,16 @@ test_that(".unitConverter changes error units as well - defaults", {
 
 test_that("Correct conversion for yValues having the same unit but different MW", {
   df <- dplyr::tibble(
-    xValues = c(15, 30, 60), xUnit = "min", xDimension = "Time",
-    yValues = c(1, 1, 1), yUnit = c("mol", "mol", "mol"), yDimension = c(ospDimensions$Amount, ospDimensions$Amount, ospDimensions$Amount),
+    xValues = c(15, 30, 60),
+    xUnit = "min",
+    xDimension = "Time",
+    yValues = c(1, 1, 1),
+    yUnit = c("mol", "mol", "mol"),
+    yDimension = c(
+      ospDimensions$Amount,
+      ospDimensions$Amount,
+      ospDimensions$Amount
+    ),
     molWeight = c(10, 10, 20)
   )
   dfConvert <- .unitConverter(df, yUnit = "g")
@@ -488,7 +533,8 @@ test_that("observed yValues are converted as expected in presence of missing val
 dfMolWeightNA <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
   xValues = c(0, 14.482, 28.965, 0, 1, 2),
-  xUnit = "min", xDimension = "Time",
+  xUnit = "min",
+  xDimension = "Time",
   yValues = c(1, 1, 1, 1, 1, 1),
   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
@@ -567,12 +613,19 @@ dfWeek <- dplyr::tibble(
   molWeight = c(10, 10, 10)
 )
 
-dfWeekConvert <- .unitConverter(dfWeek, xUnit = ospsuite::ospUnits$Time$`week(s)`)
+dfWeekConvert <- .unitConverter(
+  dfWeek,
+  xUnit = ospsuite::ospUnits$Time$`week(s)`
+)
 
 test_that("it can convert time to weeks", {
   expect_equal(unique(dfWeekConvert$xUnit), ospsuite::ospUnits$Time$`week(s)`)
   expect_equal(unique(dfWeekConvert$xDimension), unique(dfWeek$xDimension))
-  expect_equal(dfWeekConvert$xValues, c(0.001488, 0.002976, 0.005952), tolerance = 0.0001)
+  expect_equal(
+    dfWeekConvert$xValues,
+    c(0.001488, 0.002976, 0.005952),
+    tolerance = 0.0001
+  )
 })
 
 # geometric error --------------------------------
@@ -611,21 +664,39 @@ dfGeomError <- dplyr::tibble(
 dfGeomErrorConvert <- .unitConverter(dfGeomError, yUnit = "µmol/l")
 
 test_that("It shouldn't convert geometric error values or units, only `yValues`", {
-  expect_equal(unique(dfGeomError$yErrorValues), unique(dfGeomErrorConvert$yErrorValues))
-  expect_equal(unique(dfGeomError$yErrorUnit), unique(dfGeomErrorConvert$yErrorUnit))
-  expect_equal(unique(dfGeomError$yErrorType), unique(dfGeomErrorConvert$yErrorType))
+  expect_equal(
+    unique(dfGeomError$yErrorValues),
+    unique(dfGeomErrorConvert$yErrorValues)
+  )
+  expect_equal(
+    unique(dfGeomError$yErrorUnit),
+    unique(dfGeomErrorConvert$yErrorUnit)
+  )
+  expect_equal(
+    unique(dfGeomError$yErrorType),
+    unique(dfGeomErrorConvert$yErrorType)
+  )
 
   expect_equal(unique(dfGeomErrorConvert$yUnit), "µmol/l")
   expect_equal(
     dfGeomErrorConvert$yValues,
-    c(39.5815559184067, 60.8538700951183, 59.9579929775307, 56.5043725143431, 45.909774903701),
+    c(
+      39.5815559184067,
+      60.8538700951183,
+      59.9579929775307,
+      56.5043725143431,
+      45.909774903701
+    ),
     tolerance = 0.001
   )
 })
 
 # multiple concentration dims present --------------------------------
 
-concDims <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+concDims <- c(
+  ospDimensions$`Concentration (mass)`,
+  ospDimensions$`Concentration (molar)`
+)
 
 dfConc <- dplyr::tibble(
   xValues = c(15, 0.5),
