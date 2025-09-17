@@ -27,7 +27,7 @@ Imports:
     readr,
     stringr,
     tidyr,
-    ggplot2,
+    ggplot2 (< 4.0.0),
     rlang,
     tlf (>= 1.6.0),
     data.table,
