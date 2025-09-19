@@ -1,5 +1,10 @@
-benchmarkFunction <- function(quantityOrDimension, values, targetUnit, sourceUnit = NULL,
-                              nrIterations = 1000) {
+benchmarkFunction <- function(
+  quantityOrDimension,
+  values,
+  targetUnit,
+  sourceUnit = NULL,
+  nrIterations = 1000
+) {
   for (i in 1:nrIterations) {
     converted <- toUnit(
       quantityOrDimension = quantityOrDimension,

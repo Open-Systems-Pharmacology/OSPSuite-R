@@ -8,7 +8,8 @@ populationResults <- runSimulations(sim, population)[[1]]
 
 NUMBER_OF_COVARIATES_COLUMNS <- 3
 NUMBER_OF_STATIC_COLUMNS <- 2
-NUMBER_OF_EXTRA_COLUMNS <- NUMBER_OF_STATIC_COLUMNS + NUMBER_OF_COVARIATES_COLUMNS
+NUMBER_OF_EXTRA_COLUMNS <- NUMBER_OF_STATIC_COLUMNS +
+  NUMBER_OF_COVARIATES_COLUMNS
 
 # getOutputValues
 
@@ -17,7 +18,11 @@ test_that("It throws an error when no valid simulation results are provided", {
 })
 
 test_that("It returns an array of NA if specific result is not found and stopIfNotFound = FALSE", {
-  res <- getOutputValues(simulationResults = individualResults, quantitiesOrPaths = "NoPath", stopIfNotFound = FALSE)
+  res <- getOutputValues(
+    simulationResults = individualResults,
+    quantitiesOrPaths = "NoPath",
+    stopIfNotFound = FALSE
+  )
 
   data <- res$data
   expect_equal(length(data), 1 + NUMBER_OF_STATIC_COLUMNS)
@@ -42,13 +47,21 @@ test_that("It can retrieve results by paths", {
 })
 
 test_that("It can retrieve results by quantities", {
-  res <- getOutputValues(populationResults, population = population, getAllQuantitiesMatching(resultsPaths, sim))
+  res <- getOutputValues(
+    populationResults,
+    population = population,
+    getAllQuantitiesMatching(resultsPaths, sim)
+  )
   data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_EXTRA_COLUMNS)
 })
 
 test_that("It can retrieve correct unit and dimension", {
-  res <- getOutputValues(populationResults, population = population, getAllQuantitiesMatching(resultsPaths, sim))
+  res <- getOutputValues(
+    populationResults,
+    population = population,
+    getAllQuantitiesMatching(resultsPaths, sim)
+  )
   path <- resultsPaths[[1]]
   quantity <- getQuantity(path = path, sim)
 
@@ -59,7 +72,12 @@ test_that("It can retrieve correct unit and dimension", {
 
 test_that("It should return a data and meta data data frame per output paths", {
   path <- resultsPaths[[1]]
-  res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1))
+  res <- getOutputValues(
+    populationResults,
+    population = population,
+    path,
+    individualIds = c(0, 1)
+  )
   data <- res$data
   metaData <- res$metaData
   expect_equal(length(data), 1 + NUMBER_OF_EXTRA_COLUMNS)
@@ -70,7 +88,13 @@ test_that("It should return a data and meta data data frame per output paths", {
 
 test_that("It should return NULL for meta data if addMetaData = FALSE", {
   path <- resultsPaths[[1]]
-  res <- getOutputValues(populationResults, population = population, path, individualIds = c(0, 1), addMetaData = FALSE)
+  res <- getOutputValues(
+    populationResults,
+    population = population,
+    path,
+    individualIds = c(0, 1),
+    addMetaData = FALSE
+  )
   data <- res$data
   metaData <- res$metaData
   expect_equal(length(data), 1 + NUMBER_OF_EXTRA_COLUMNS)
@@ -80,7 +104,11 @@ test_that("It should return NULL for meta data if addMetaData = FALSE", {
 })
 
 test_that("It can retrieve results with provided individual id", {
-  res <- getOutputValues(populationResults, population = population, individualIds = c(1, 3, 5))
+  res <- getOutputValues(
+    populationResults,
+    population = population,
+    individualIds = c(1, 3, 5)
+  )
   data <- res$data
   expect_equal(length(data), length(resultsPaths) + NUMBER_OF_EXTRA_COLUMNS)
   indInd <- unique(data$IndividualId)
@@ -166,10 +194,20 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
   expect_equal(unique(df2$paths), "Organism|A")
 
   # names
-  expect_equal(sort(names(df1)), sort(c(
-    "paths", "IndividualId", "Time", "simulationValues", "unit",
-    "dimension", "TimeUnit", "TimeDimension", "molWeight"
-  )))
+  expect_equal(
+    sort(names(df1)),
+    sort(c(
+      "paths",
+      "IndividualId",
+      "Time",
+      "simulationValues",
+      "unit",
+      "dimension",
+      "TimeUnit",
+      "TimeDimension",
+      "molWeight"
+    ))
+  )
 })
 
 test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
@@ -230,10 +268,12 @@ test_that("It retrieves simulation results of an individual simulation after cha
   sim$name <- "foo"
 
   res <- runSimulations(sim)
-  expect_no_error(resultValues <- getOutputValues(
-    simulationResults = res[[1]],
-    quantitiesOrPaths = res[[1]]$allQuantityPaths
-  ))
+  expect_no_error(
+    resultValues <- getOutputValues(
+      simulationResults = res[[1]],
+      quantitiesOrPaths = res[[1]]$allQuantityPaths
+    )
+  )
 })
 
 test_that("It retrieves simulation results of a population simulation after changing simulation name", {
@@ -243,14 +283,22 @@ test_that("It retrieves simulation results of a population simulation after chan
   sim$name <- "foo"
 
   simResults <- runSimulations(sim, population = population)
-  expect_no_error(resultValues <- getOutputValues(
-    simulationResults = simResults[[1]],
-    quantitiesOrPaths = simResults[[1]]$allQuantityPaths
-  ))
+  expect_no_error(
+    resultValues <- getOutputValues(
+      simulationResults = simResults[[1]],
+      quantitiesOrPaths = simResults[[1]]$allQuantityPaths
+    )
+  )
 })
 
 test_that("It throws an error when trying to change the name of the simulation to a forbidden name", {
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_error(sim$name <- "MoleculeProperties", regexp = messages$forbiddenSimulationName("MoleculeProperties", sim))
-  expect_error(sim$name <- "CYP3A4", regexp = messages$forbiddenSimulationName("CYP3A4", sim))
+  expect_error(
+    sim$name <- "MoleculeProperties",
+    regexp = messages$forbiddenSimulationName("MoleculeProperties", sim)
+  )
+  expect_error(
+    sim$name <- "CYP3A4",
+    regexp = messages$forbiddenSimulationName("CYP3A4", sim)
+  )
 })

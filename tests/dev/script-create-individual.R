@@ -11,7 +11,10 @@ initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 #
 # print(individualCharacteristics)
 #
-moleculeOntogeny <- MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = StandardOntogeny$CYP3A4)
+moleculeOntogeny <- MoleculeOntogeny$new(
+  molecule = "MyMolecule",
+  ontogeny = StandardOntogeny$CYP3A4
+)
 
 dog <- createIndividualCharacteristics(
   species = Species$Dog,

@@ -24,7 +24,13 @@ DotNetWrapper <- R6::R6Class(
         private$.throwPropertyIsReadonly(propertyName)
       }
     },
-    .wrapExtensionMethodCached = function(typename, methodName, propertyName, cachedValue, value) {
+    .wrapExtensionMethodCached = function(
+      typename,
+      methodName,
+      propertyName,
+      cachedValue,
+      value
+    ) {
       if (missing(value)) {
         if (is.null(cachedValue)) {
           return(rSharp::callStatic(typename, methodName, self))
@@ -56,7 +62,12 @@ DotNetWrapper <- R6::R6Class(
     #
     # This method makes sure that the correct `.NET` method is called depending
     # on whether R vector (for `value`) is of length 1 or higher.
-    .wrapVectorProperty = function(propertyNameSingular, propertyNamePlural, value, returnPropertyName) {
+    .wrapVectorProperty = function(
+      propertyNameSingular,
+      propertyNamePlural,
+      value,
+      returnPropertyName
+    ) {
       if (missing(value)) {
         self$get(returnPropertyName)
       } else {

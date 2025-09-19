@@ -24,12 +24,24 @@
 #' # and a specified name
 #' addOutputInterval(sim, 10 * 60, 17 * 60, 4 / 60, intervalName = "Second Interval")
 #' @export
-addOutputInterval <- function(simulation, startTime, endTime, resolution, intervalName = NULL) {
+addOutputInterval <- function(
+  simulation,
+  startTime,
+  endTime,
+  resolution,
+  intervalName = NULL
+) {
   validateIsOfType(simulation, "Simulation")
   validateIsNumeric(c(startTime, endTime, resolution))
   schema <- simulation$outputSchema
   outputIntervalFactory <- .getNetTask("OutputIntervalFactory")
-  netIntervals <- outputIntervalFactory$call("CreateFor", schema, startTime, endTime, resolution)
+  netIntervals <- outputIntervalFactory$call(
+    "CreateFor",
+    schema,
+    startTime,
+    endTime,
+    resolution
+  )
   interval <- .toObjectType(netIntervals, Interval)
   if (!is.null(intervalName)) {
     interval$name <- intervalName
@@ -53,7 +65,13 @@ addOutputInterval <- function(simulation, startTime, endTime, resolution, interv
 #' # Adds a new interval starting at 1h and ending at 10h with a resolution of 10 points per hour
 #' setOutputInterval(sim, 1 * 60, 10 * 60, 1 / 6)
 #' @export
-setOutputInterval <- function(simulation, startTime, endTime, resolution, intervalName = NULL) {
+setOutputInterval <- function(
+  simulation,
+  startTime,
+  endTime,
+  resolution,
+  intervalName = NULL
+) {
   clearOutputIntervals(simulation)
   addOutputInterval(simulation, startTime, endTime, resolution, intervalName)
 }

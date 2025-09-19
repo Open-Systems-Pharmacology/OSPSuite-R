@@ -13,15 +13,27 @@ Population <- R6::R6Class(
     },
     #' @field allCovariateNames the names of all covariates defined in the population
     allCovariateNames = function(value) {
-      private$.readOnlyProperty("allCovariateNames", value, self$call("AllCovariatesNames"))
+      private$.readOnlyProperty(
+        "allCovariateNames",
+        value,
+        self$call("AllCovariatesNames")
+      )
     },
     #' @field allParameterPaths the paths of all parameters defined in the population
     allParameterPaths = function(value) {
-      private$.readOnlyProperty("allParameterPaths", value, self$call("AllParameterPaths"))
+      private$.readOnlyProperty(
+        "allParameterPaths",
+        value,
+        self$call("AllParameterPaths")
+      )
     },
     #' @field allIndividualIds Ids of individuals defined in the population
     allIndividualIds = function(value) {
-      private$.readOnlyProperty("allIndividualIds", value, self$call("AllIndividualIds"))
+      private$.readOnlyProperty(
+        "allIndividualIds",
+        value,
+        self$call("AllIndividualIds")
+      )
     }
   ),
   public = list(
@@ -67,7 +79,10 @@ Population <- R6::R6Class(
     #' Returns all values defined in the population the individual with id `individualId`
     #' @param individualId Id of individual for which all values should be returned
     getParameterValuesForIndividual = function(individualId) {
-      .parameterValueListFrom(self$call("AllParameterValuesForIndividual", as.integer(individualId)))
+      .parameterValueListFrom(self$call(
+        "AllParameterValuesForIndividual",
+        as.integer(individualId)
+      ))
     },
     #' @description
     #' Removes the value of a parameter by path

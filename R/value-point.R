@@ -15,7 +15,17 @@ ValuePoint <- R6::R6Class(
     #' Print the object to the console
     #' @param ... Rest arguments.
     print = function(...) {
-      cat("  ", "x= ", self$x, ", y= ", self$y, ", restartSolver= ", self$restartSolver, "\n", sep = "")
+      cat(
+        "  ",
+        "x= ",
+        self$x,
+        ", y= ",
+        self$y,
+        ", restartSolver= ",
+        self$restartSolver,
+        "\n",
+        sep = ""
+      )
       invisible(self)
     }
   ),

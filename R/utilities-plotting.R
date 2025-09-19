@@ -20,7 +20,8 @@
 #' @keywords internal
 #' @noRd
 .validateDefaultPlotConfiguration <- function(defaultPlotConfiguration = NULL) {
-  defaultPlotConfiguration <- defaultPlotConfiguration %||% DefaultPlotConfiguration$new()
+  defaultPlotConfiguration <- defaultPlotConfiguration %||%
+    DefaultPlotConfiguration$new()
   validateIsOfType(defaultPlotConfiguration, "DefaultPlotConfiguration")
 
   # Plotting functions should not update the configuration objects
@@ -151,22 +152,25 @@
 #' ospsuite:::.extractAggregatedSimulatedData(df)
 #'
 #' @keywords internal
-.extractAggregatedSimulatedData <- function(simData,
-                                            aggregation = "quantiles",
-                                            ...) {
+.extractAggregatedSimulatedData <- function(
+  simData,
+  aggregation = "quantiles",
+  ...
+) {
   ospsuite.utils::validateEnumValue(
-    value       = aggregation,
-    enum        = DataAggregationMethods,
+    value = aggregation,
+    enum = DataAggregationMethods,
     nullAllowed = FALSE
   )
 
   valueNames <- c("yValuesLower", "yValues", "yValuesHigher")
   simAggregatedData <- data.table::as.data.table(simData)
 
-  aggregation_function <- switch(aggregation,
-    "quantiles"  = .quantRange,
+  aggregation_function <- switch(
+    aggregation,
+    "quantiles" = .quantRange,
     "arithmetic" = .normRange,
-    "geometric"  = .geoRange
+    "geometric" = .geoRange
   )
 
   # For each dataset, compute quantiles across all individuals for each time point
@@ -184,7 +188,6 @@
       ),
       by = .(group, name, xValues)
     ]
-
 
   return(simAggregatedData)
 }
@@ -241,10 +244,14 @@
   #
   # For more, see:
   # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/938
-  concDimensions <- c(ospDimensions$`Concentration (mass)`, ospDimensions$`Concentration (molar)`)
+  concDimensions <- c(
+    ospDimensions$`Concentration (mass)`,
+    ospDimensions$`Concentration (molar)`
+  )
 
   if (!all(is.na(data$yDimension))) {
-    data <- dplyr::mutate(data,
+    data <- dplyr::mutate(
+      data,
       yDimension = dplyr::case_when(
         yDimension %in% concDimensions ~ "Concentration",
         TRUE ~ yDimension
@@ -253,7 +260,8 @@
   }
 
   if (!all(is.na(data$xDimension))) {
-    data <- dplyr::mutate(data,
+    data <- dplyr::mutate(
+      data,
       xDimension = dplyr::case_when(
         xDimension %in% concDimensions ~ "Concentration",
         TRUE ~ xDimension
@@ -275,9 +283,17 @@
 
   # If quantities are unitless, no unit information needs to be displayed.
   # Otherwise, `Dimension [Unit]` pattern is followed.
-  xUnitString <- ifelse(xUnitString == "", xUnitString, paste0(" [", xUnitString, "]"))
+  xUnitString <- ifelse(
+    xUnitString == "",
+    xUnitString,
+    paste0(" [", xUnitString, "]")
+  )
   xUnitString <- paste0(xDimensionString, xUnitString)
-  yUnitString <- ifelse(yUnitString == "", yUnitString, paste0(" [", yUnitString, "]"))
+  yUnitString <- ifelse(
+    yUnitString == "",
+    yUnitString,
+    paste0(" [", yUnitString, "]")
+  )
   yUnitString <- paste0(yDimensionString, yUnitString)
 
   # The exact axis label will depend on the type of the plot, and the type
@@ -288,7 +304,8 @@
   # in the `switch` below, the the labels will remain `NULL`.
 
   # X-axis label
-  xLabel <- switch(plotType,
+  xLabel <- switch(
+    plotType,
     "TimeProfilePlotConfiguration" = ,
     "ResVsTimePlotConfiguration" = xUnitString,
     # Note that `yUnitString` here is deliberate.
@@ -296,16 +313,29 @@
     # In case of an observed versus simulated plot, `yValues` are plotted on
     # both x- and y-axes, and therefore the units strings are going to be the
     # same for both axes.
-    "ObsVsPredPlotConfiguration" = paste0("Observed values (", yUnitString, ")"),
-    "ResVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "ObsVsPredPlotConfiguration" = paste0(
+      "Observed values (",
+      yUnitString,
+      ")"
+    ),
+    "ResVsPredPlotConfiguration" = paste0(
+      "Simulated values (",
+      yUnitString,
+      ")"
+    )
   )
 
   # Y-axis label
-  yLabel <- switch(plotType,
+  yLabel <- switch(
+    plotType,
     "TimeProfilePlotConfiguration" = yUnitString,
     "ResVsPredPlotConfiguration" = ,
     "ResVsTimePlotConfiguration" = "Residuals",
-    "ObsVsPredPlotConfiguration" = paste0("Simulated values (", yUnitString, ")")
+    "ObsVsPredPlotConfiguration" = paste0(
+      "Simulated values (",
+      yUnitString,
+      ")"
+    )
   )
 
   return(list("xLabel" = xLabel, "yLabel" = yLabel))
@@ -322,8 +352,10 @@
   axesLabels <- .createAxesLabels(data, plotConfiguration)
 
   # Update only if the user hasn't already specified labels.
-  plotConfiguration$labels$xlabel$text <- plotConfiguration$labels$xlabel$text %||% axesLabels$xLabel
-  plotConfiguration$labels$ylabel$text <- plotConfiguration$labels$ylabel$text %||% axesLabels$yLabel
+  plotConfiguration$labels$xlabel$text <- plotConfiguration$labels$xlabel$text %||%
+    axesLabels$xLabel
+  plotConfiguration$labels$ylabel$text <- plotConfiguration$labels$ylabel$text %||%
+    axesLabels$yLabel
 
   return(plotConfiguration)
 }
@@ -371,14 +403,15 @@
   } else {
     # These columns should always be present in the data frame because they are
     # part of `{tlf}` mapping.
-    data <- dplyr::mutate(data, yValuesLower = NA_real_, yValuesHigher = NA_real_)
+    data <- dplyr::mutate(
+      data,
+      yValuesLower = NA_real_,
+      yValuesHigher = NA_real_
+    )
   }
 
   return(data)
 }
-
-
-
 
 
 #' Create plot-specific `tlf::PlotConfiguration` object
@@ -412,8 +445,10 @@
 #' )
 #'
 #' @keywords internal
-.convertGeneralToSpecificPlotConfiguration <- function(specificPlotConfiguration,
-                                                       generalPlotConfiguration) {
+.convertGeneralToSpecificPlotConfiguration <- function(
+  specificPlotConfiguration,
+  generalPlotConfiguration
+) {
   # Plot-specific configuration defaults -----------------------------------
 
   # The type of plot can be guessed from the specific `PlotConfiguration` object
@@ -422,30 +457,44 @@
 
   # For `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`
   if (plotType == "TimeProfilePlotConfiguration") {
-    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||% tlf::ColorMaps$ospDefault
+    generalPlotConfiguration$linesColor <- generalPlotConfiguration$linesColor %||%
+      tlf::ColorMaps$ospDefault
     # This is especially necessary when multiple simulated datasets are present per group
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% names(tlf::Linetypes)
-    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideTopRight
-    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
-    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||%
+      names(tlf::Linetypes)
+    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||%
+      tlf::LegendPositions$insideTopRight
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||%
+      tlf::Scaling$lin
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||%
+      tlf::Scaling$lin
   }
 
   # For `plotObservedVsSimulated()`
   if (plotType == "ObsVsPredPlotConfiguration") {
     generalPlotConfiguration$linesColor <- "black"
-    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||% tlf::LegendPositions$insideBottomRight
-    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$log
-    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$log
+    generalPlotConfiguration$legendPosition <- generalPlotConfiguration$legendPosition %||%
+      tlf::LegendPositions$insideBottomRight
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||%
+      tlf::Scaling$log
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||%
+      tlf::Scaling$log
     # every fold distance line should get a unique type of line
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% names(tlf::Linetypes)
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||%
+      names(tlf::Linetypes)
   }
 
   # For `plotResidualsVsTime()` and `plotResidualsVsSimulated()`
-  if (plotType %in% c("ResVsTimePlotConfiguration", "ResVsPredPlotConfiguration")) {
+  if (
+    plotType %in% c("ResVsTimePlotConfiguration", "ResVsPredPlotConfiguration")
+  ) {
     generalPlotConfiguration$linesColor <- "black"
-    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||% tlf::Linetypes$dashed
-    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||% tlf::Scaling$lin
-    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||% tlf::Scaling$lin
+    generalPlotConfiguration$linesLinetype <- generalPlotConfiguration$linesLinetype %||%
+      tlf::Linetypes$dashed
+    generalPlotConfiguration$xAxisScale <- generalPlotConfiguration$xAxisScale %||%
+      tlf::Scaling$lin
+    generalPlotConfiguration$yAxisScale <- generalPlotConfiguration$yAxisScale %||%
+      tlf::Scaling$lin
   }
 
   # labels object ---------------------------------------
@@ -701,12 +750,28 @@
   )
 
   # LLOQ
-  .updateSpecificSetting("displayLLOQ", specificPlotConfiguration, generalPlotConfiguration)
-  .updateSpecificSetting("lloqDirection", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting(
+    "displayLLOQ",
+    specificPlotConfiguration,
+    generalPlotConfiguration
+  )
+  .updateSpecificSetting(
+    "lloqDirection",
+    specificPlotConfiguration,
+    generalPlotConfiguration
+  )
 
   # foldDistance
-  .updateSpecificSetting("foldLinesLegend", specificPlotConfiguration, generalPlotConfiguration)
-  .updateSpecificSetting("foldLinesLegendDiagonal", specificPlotConfiguration, generalPlotConfiguration)
+  .updateSpecificSetting(
+    "foldLinesLegend",
+    specificPlotConfiguration,
+    generalPlotConfiguration
+  )
+  .updateSpecificSetting(
+    "foldLinesLegendDiagonal",
+    specificPlotConfiguration,
+    generalPlotConfiguration
+  )
 
   # Update specific plot configuration object ----------------------
 
@@ -724,11 +789,22 @@
   return(specificPlotConfiguration)
 }
 
-.updateSpecificSetting <- function(specificSetting, specificPlotConfiguration, generalPlotConfiguration) {
-  if (!is.null(specificPlotConfiguration[[specificSetting]]) &
-    !is.null(generalPlotConfiguration[[specificSetting]])) {
-    if (generalPlotConfiguration[[specificSetting]] != specificPlotConfiguration[[specificSetting]]) {
-      specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[specificSetting]]
+.updateSpecificSetting <- function(
+  specificSetting,
+  specificPlotConfiguration,
+  generalPlotConfiguration
+) {
+  if (
+    !is.null(specificPlotConfiguration[[specificSetting]]) &
+      !is.null(generalPlotConfiguration[[specificSetting]])
+  ) {
+    if (
+      generalPlotConfiguration[[specificSetting]] !=
+        specificPlotConfiguration[[specificSetting]]
+    ) {
+      specificPlotConfiguration[[specificSetting]] <- generalPlotConfiguration[[
+        specificSetting
+      ]]
     }
   }
 }

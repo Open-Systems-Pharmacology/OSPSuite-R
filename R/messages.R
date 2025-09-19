@@ -3,7 +3,13 @@
 messages <- ospsuite.utils::messages
 
 messages$errorWrongPopulation <- function(species, population) {
-  paste0("Could not find population '", population, "' for species '", species, "'")
+  paste0(
+    "Could not find population '",
+    population,
+    "' for species '",
+    species,
+    "'"
+  )
 }
 
 messages$errorOneOfNameAndPathMustBeSpecified <- function() {
@@ -31,7 +37,10 @@ messages$linearScaleWithFoldDistance <- function() {
 }
 
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
-  messages$printMultipleEntries("Could not load units for the following dimensions", dimensions)
+  messages$printMultipleEntries(
+    "Could not load units for the following dimensions",
+    dimensions
+  )
 }
 
 messages$plottingWithEmptyDataCombined <- function() {
@@ -51,12 +60,25 @@ messages$lloqOnlyScalar <- function() {
 }
 
 messages$simBatchStartValueNaN <- function(entityPaths) {
-  paste0("Start values of the entities with paths '", paste(entityPaths, collapse = ", "), "' is `NaN`! Cannot add such run values set")
+  paste0(
+    "Start values of the entities with paths '",
+    paste(entityPaths, collapse = ", "),
+    "' is `NaN`! Cannot add such run values set"
+  )
 }
 
-messages$plotObservedVsSimulatedWrongFoldDistance <- function(parameterName, foldDistances) {
-  paste0("Parameter '", parameterName, "' should be >1! Following values have
-         been passed: '", paste(foldDistances, collapse = ", "), "'.")
+messages$plotObservedVsSimulatedWrongFoldDistance <- function(
+  parameterName,
+  foldDistances
+) {
+  paste0(
+    "Parameter '",
+    parameterName,
+    "' should be >1! Following values have
+         been passed: '",
+    paste(foldDistances, collapse = ", "),
+    "'."
+  )
 }
 
 messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
@@ -64,22 +86,43 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
     "\r\n",
     "The following name(s) already exist in DataCombined:",
     "\r\n",
-    "  - ", paste(DataFrameName, collapse = "\r\n  - "),
+    "  - ",
+    paste(DataFrameName, collapse = "\r\n  - "),
     "\r\n",
     "Existing data will be overwritten."
   ))
 }
 
 messages$wrongUnitForQuantity <- function(quantityPath, unit, dimension) {
-  paste0("Unit '", unit, "' is not valid for quantity with path '", quantityPath, "' and dimension '", dimension, "'")
+  paste0(
+    "Unit '",
+    unit,
+    "' is not valid for quantity with path '",
+    quantityPath,
+    "' and dimension '",
+    dimension,
+    "'"
+  )
 }
 
 messages$invalidDataType <- function(name, dataType) {
-  paste0("Data type '", dataType, "' specified for data set '", name, "' is not valid. Valid data types are: 'simulated' or 'observed'.")
+  paste0(
+    "Data type '",
+    dataType,
+    "' specified for data set '",
+    name,
+    "' is not valid. Valid data types are: 'simulated' or 'observed'."
+  )
 }
 
 messages$valueNotPositive <- function(value, propertyName) {
-  paste0("The value of `", propertyName, "` must be > 0, but it is '", paste(value, collapse = ", "), "'")
+  paste0(
+    "The value of `",
+    propertyName,
+    "` must be > 0, but it is '",
+    paste(value, collapse = ", "),
+    "'"
+  )
 }
 
 messages$molWeightErrorMessage <- function(quantityPath) {
@@ -87,9 +130,21 @@ messages$molWeightErrorMessage <- function(quantityPath) {
 }
 
 messages$illegalCharactersInName <- function(name) {
-  paste0("The name '", name, "' contains illegal characters. Illegal characters are: '", paste0(.getIllegalCharacters(), collapse = ", "), "'.")
+  paste0(
+    "The name '",
+    name,
+    "' contains illegal characters. Illegal characters are: '",
+    paste0(.getIllegalCharacters(), collapse = ", "),
+    "'."
+  )
 }
 
 messages$forbiddenSimulationName <- function(name, sim) {
-  paste0("The name '", name, "' is not allowed for this simulation. Forbidden names for this simulation are: '", paste0(.getIllegalSimulationNames(sim), collapse = ", "), "'.")
+  paste0(
+    "The name '",
+    name,
+    "' is not allowed for this simulation. Forbidden names for this simulation are: '",
+    paste0(.getIllegalSimulationNames(sim), collapse = ", "),
+    "'."
+  )
 }
