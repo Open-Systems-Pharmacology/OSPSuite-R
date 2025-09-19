@@ -138,7 +138,11 @@ DataImporterConfiguration <- R6::R6Class(
       private$.dataImporterTask$call("SetIsUnitFromColumn", column, value)
       # Also change isUnitFromColumn for error column
       if (!is.null(private$.errorColumn())) {
-        private$.dataImporterTask$call("SetIsUnitFromColumn", private$.errorColumn(), value)
+        private$.dataImporterTask$call(
+          "SetIsUnitFromColumn",
+          private$.errorColumn(),
+          value
+        )
       }
     },
 
@@ -350,7 +354,10 @@ DataImporterConfiguration <- R6::R6Class(
     .addErrorColumn = function() {
       private$.dataImporterTask$call("AddError", self)
       mappedColumn <- private$.errorColumn()$get("MappedColumn")
-      mappedColumn$set("Dimension", getDimensionByName(self$measurementDimension))
+      mappedColumn$set(
+        "Dimension",
+        getDimensionByName(self$measurementDimension)
+      )
     },
     .setColumnUnit = function(column, value) {
       mappedColumn <- column$get("MappedColumn")
@@ -359,10 +366,17 @@ DataImporterConfiguration <- R6::R6Class(
       if (private$.isUnitFromColumn(column)) {
         # Get the old unit and set it as default unit
         unit <- mappedColumn$get("Unit")
-        unitDescription <- rSharp::newObjectFromName("OSPSuite.Core.Import.UnitDescription", unit$get("SelectedUnit"), value)
+        unitDescription <- rSharp::newObjectFromName(
+          "OSPSuite.Core.Import.UnitDescription",
+          unit$get("SelectedUnit"),
+          value
+        )
       } else {
         validateUnit(value, dimension$get("Name"))
-        unitDescription <- rSharp::newObjectFromName("OSPSuite.Core.Import.UnitDescription", value)
+        unitDescription <- rSharp::newObjectFromName(
+          "OSPSuite.Core.Import.UnitDescription",
+          value
+        )
       }
       mappedColumn$set("Unit", unitDescription)
     },

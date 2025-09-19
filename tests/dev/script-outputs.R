@@ -15,4 +15,9 @@ populationResults <- runSimulations(sim, population)[[1]]
 resultsPaths <- populationResults$allQuantityPaths
 
 path <- resultsPaths[[1]]
-results <- getOutputValues(populationResults, path, population = population, individualIds = c(0, 1))
+results <- getOutputValues(
+  populationResults,
+  path,
+  population = population,
+  individualIds = c(0, 1)
+)

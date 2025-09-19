@@ -2,7 +2,6 @@
 
 # plotPopulationTimeProfile
 
-
 # only simulated ------------------------
 
 test_that("It respects custom plot configuration", {
@@ -12,7 +11,11 @@ test_that("It respects custom plot configuration", {
 
   populationResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+    filePaths = system.file(
+      "extdata",
+      "SimResults_pop.csv",
+      package = "ospsuite"
+    )
   )
 
   myDataComb <- DataCombined$new()
@@ -41,11 +44,24 @@ test_that("It produces expected plot for both observed and simulated datasets", 
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
-  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = system.file(
+      "extdata",
+      "SimResults_pop.csv",
+      package = "ospsuite"
+    )
+  )
 
   obsData <- lapply(
-    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    c(
+      "ObsDataAciclovir_1.pkml",
+      "ObsDataAciclovir_2.pkml",
+      "ObsDataAciclovir_3.pkml"
+    ),
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
   )
   names(obsData) <- lapply(obsData, function(x) x$name)
 
@@ -89,11 +105,20 @@ test_that("It produces expected plot for multple simulated datasets per group", 
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
-  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = system.file(
+      "extdata",
+      "SimResults_pop.csv",
+      package = "ospsuite"
+    )
+  )
 
   obsData <- lapply(
     c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
   )
 
   names(obsData) <- lapply(obsData, function(x) x$name)
@@ -128,11 +153,20 @@ test_that("It produces expected plot for multple simulated and observed datasets
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
-  simResults <- importResultsFromCSV(simulation = sim, filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite"))
+  simResults <- importResultsFromCSV(
+    simulation = sim,
+    filePaths = system.file(
+      "extdata",
+      "SimResults_pop.csv",
+      package = "ospsuite"
+    )
+  )
 
   obsData <- lapply(
     c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
   )
 
   names(obsData) <- lapply(obsData, function(x) x$name)
@@ -175,7 +209,11 @@ test_that("Aggregations are computed and displayed correctly", {
 
   populationResults <- importResultsFromCSV(
     simulation = sim,
-    filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+    filePaths = system.file(
+      "extdata",
+      "SimResults_pop.csv",
+      package = "ospsuite"
+    )
   )
 
   myDataComb <- DataCombined$new()
@@ -188,39 +226,32 @@ test_that("Aggregations are computed and displayed correctly", {
 
   vdiffr::expect_doppelganger(
     title = "modified quantiles",
-    fig = plotPopulationTimeProfile(myDataComb,
-      quantiles = c(0.1, 0.5, 0.9)
-    )
+    fig = plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
   )
 
   vdiffr::expect_doppelganger(
     title = "arithmetic mean",
-    fig =
-      plotPopulationTimeProfile(myDataComb,
-        aggregation = "arithmetic"
-      )
+    fig = plotPopulationTimeProfile(myDataComb, aggregation = "arithmetic")
   )
 
   vdiffr::expect_doppelganger(
     title = "arithmetic mean with 2sd",
-    fig =
-      plotPopulationTimeProfile(myDataComb,
-        aggregation = "arithmetic",
-        nsd = 2
-      )
-  )
-
-
-  vdiffr::expect_doppelganger(
-    title = "geometric mean",
-    fig = plotPopulationTimeProfile(myDataComb,
-      aggregation = "geometric"
+    fig = plotPopulationTimeProfile(
+      myDataComb,
+      aggregation = "arithmetic",
+      nsd = 2
     )
   )
 
   vdiffr::expect_doppelganger(
+    title = "geometric mean",
+    fig = plotPopulationTimeProfile(myDataComb, aggregation = "geometric")
+  )
+
+  vdiffr::expect_doppelganger(
     title = "geometric mean with 2sd",
-    fig = plotPopulationTimeProfile(myDataComb,
+    fig = plotPopulationTimeProfile(
+      myDataComb,
       aggregation = "geometric",
       nsd = 2
     )

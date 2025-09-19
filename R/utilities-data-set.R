@@ -31,7 +31,11 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsOfType(dataSet, "DataSet")
   filePath <- .expandPath(filePath)
   dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
-  dataRepositoryTask$call("SaveDataRepository", dataSet$dataRepository, filePath)
+  dataRepositoryTask$call(
+    "SaveDataRepository",
+    dataSet$dataRepository,
+    filePath
+  )
 }
 
 #' Converts a list of `DataSet` objects to a data.frame
@@ -67,8 +71,15 @@ dataSetToDataFrame <- function(dataSets) {
   )
 
   # add one column for each metaData that is present in any DataSet
-  for (name in unique(unlist(lapply(dataSets, \(x) names(x$metaData)), use.names = F))) {
-    obsData[[name]] <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
+  for (name in unique(unlist(
+    lapply(dataSets, \(x) names(x$metaData)),
+    use.names = F
+  ))) {
+    obsData[[name]] <- .makeDataFrameColumn(
+      dataSets,
+      "metaData",
+      metaDataName = name
+    )
   }
 
   # consistently return a (classical) data frame
@@ -85,7 +96,8 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' @keywords internal
 .makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
-  unlist( # unlist to return a vector containing all dataSets data
+  unlist(
+    # unlist to return a vector containing all dataSets data
     lapply(
       dataSets,
       function(dataSet) {
@@ -172,18 +184,28 @@ dataSetToTibble <- function(dataSets) {
 #'   importerConfigurationOrPath = importerConfigurationFilePath,
 #'   importAllSheets = FALSE
 #' )
-loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, importAllSheets = FALSE) {
+loadDataSetsFromExcel <- function(
+  xlsFilePath,
+  importerConfigurationOrPath,
+  importAllSheets = FALSE
+) {
   validateIsString(xlsFilePath)
   importerConfiguration <- importerConfigurationOrPath
   if (is.character(importerConfigurationOrPath)) {
-    importerConfiguration <- loadDataImporterConfiguration(importerConfigurationOrPath)
+    importerConfiguration <- loadDataImporterConfiguration(
+      importerConfigurationOrPath
+    )
   }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
   dataImporterTask$set("IgnoreSheetNamesAtImport", importAllSheets)
-  dataRepositories <- dataImporterTask$call("ImportExcelFromConfiguration", importerConfiguration, xlsFilePath)
+  dataRepositories <- dataImporterTask$call(
+    "ImportExcelFromConfiguration",
+    importerConfiguration,
+    xlsFilePath
+  )
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)

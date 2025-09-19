@@ -9,18 +9,24 @@
     system.file("lib", name, package = ospsuiteEnv$packageName)
   }
 
-
   # Make .dll binaries available on windows by extending PATH
   if (.Platform$OS.type == "windows") {
-    Sys.setenv(PATH = paste(system.file("lib", package = ospsuiteEnv$packageName),
-      Sys.getenv("PATH"),
-      sep = ";"
-    ))
+    Sys.setenv(
+      PATH = paste(
+        system.file("lib", package = ospsuiteEnv$packageName),
+        Sys.getenv("PATH"),
+        sep = ";"
+      )
+    )
   }
 
   # Load the .so binary files on unix
   if (.Platform$OS.type == "unix") {
-    for (soFile in list.files(system.file("lib", package = ospsuiteEnv$packageName), pattern = "\\.so$", full.names = TRUE)) {
+    for (soFile in list.files(
+      system.file("lib", package = ospsuiteEnv$packageName),
+      pattern = "\\.so$",
+      full.names = TRUE
+    )) {
       dyn.load(soFile)
     }
   }

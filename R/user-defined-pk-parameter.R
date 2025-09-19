@@ -1,7 +1,8 @@
 #' @title UserDefinedPKParameter
 #' @docType class
 #' @description  Definition of a user defined PKParameter that can be calculated on top of the standard PK Parameters
-UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
+UserDefinedPKParameter <- R6::R6Class(
+  "UserDefinedPKParameter",
   inherit = PKParameter,
   cloneable = FALSE,
   active = list(
@@ -62,7 +63,10 @@ UserDefinedPKParameter <- R6::R6Class("UserDefinedPKParameter",
         "DisplayName" = self$displayName,
         "Dimension" = self$dimension,
         "DisplayUnit" = self$displayUnit,
-        "StandardPKParameter" = getEnumKey(StandardPKParameter, self$standardPKParameter),
+        "StandardPKParameter" = getEnumKey(
+          StandardPKParameter,
+          self$standardPKParameter
+        ),
         "StartTime" = self$startTime,
         "StartTimeOffset" = self$startTimeOffset,
         "EndTime" = self$endTime,

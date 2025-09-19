@@ -40,7 +40,12 @@
 #' setParameterValues(parameters = parameter3, values = 1)
 #' parameter2$value == parameter3$value # FALSE#'
 #' @export
-loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, resetIds = TRUE) {
+loadSimulation <- function(
+  filePath,
+  loadFromCache = FALSE,
+  addToCache = TRUE,
+  resetIds = TRUE
+) {
   validateIsLogical(c(loadFromCache, addToCache))
   validateIsString(filePath)
   if (loadFromCache) {
@@ -54,7 +59,11 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
   # new simulation object will be created
   simulationPersister <- .getNetTask("SimulationPersister")
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
-  netSim <- simulationPersister$call("LoadSimulation", .expandPath(filePath), resetIds)
+  netSim <- simulationPersister$call(
+    "LoadSimulation",
+    .expandPath(filePath),
+    resetIds
+  )
 
   simulation <- Simulation$new(netSim, filePath)
 
@@ -124,7 +133,12 @@ saveSimulation <- function(simulation, filePath) {
 #' population <- loadPopulation(popPath)
 #' results <- runSimulation(sim, population, simulationRunOptions = simRunOptions)
 #' }
-runSimulation <- function(simulation, population = NULL, agingData = NULL, simulationRunOptions = NULL) {
+runSimulation <- function(
+  simulation,
+  population = NULL,
+  agingData = NULL,
+  simulationRunOptions = NULL
+) {
   lifecycle::deprecate_soft(
     when = "12.0.0",
     what = "runSimulation()",
@@ -136,7 +150,12 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
   validateIsOfLength(simulation, 1)
   # Returning the first element of `runSimulations` output, as the latter returns
   # a named list with ID of the simulation as element name.
-  runSimulations(simulations = simulation, population = population, agingData = agingData, simulationRunOptions = simulationRunOptions)[[1]]
+  runSimulations(
+    simulations = simulation,
+    population = population,
+    agingData = agingData,
+    simulationRunOptions = simulationRunOptions
+  )[[1]]
 }
 
 #' @title  Runs multiple simulations concurrently.
@@ -187,9 +206,20 @@ runSimulation <- function(simulation, population = NULL, agingData = NULL, simul
 #' # Results is a list of `SimulationResults`
 #' results <- runSimulations(list(sim, sim2, sim3))
 #' @export
-runSimulations <- function(simulations, population = NULL, agingData = NULL, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
+runSimulations <- function(
+  simulations,
+  population = NULL,
+  agingData = NULL,
+  simulationRunOptions = NULL,
+  silentMode = FALSE,
+  stopIfFails = FALSE
+) {
   simulations <- c(simulations)
-  validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
+  validateIsOfType(
+    simulationRunOptions,
+    "SimulationRunOptions",
+    nullAllowed = TRUE
+  )
 
   ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
@@ -221,7 +251,6 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     )
   }
 
-
   simulationNames <- names(simulations)
 
   if (!is.null(simulationNames)) {
@@ -232,12 +261,15 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
     }
   }
 
-
-
   return(outputList)
 }
 
-.runSingleSimulation <- function(simulation, simulationRunOptions, population = NULL, agingData = NULL) {
+.runSingleSimulation <- function(
+  simulation,
+  simulationRunOptions,
+  population = NULL,
+  agingData = NULL
+) {
   validateIsOfType(simulation, "Simulation")
   if (is.list(population)) {
     # if a list was given as parameter, we assume that the user wants to run a population simulation
@@ -249,7 +281,9 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
   simulationRunner <- .getNetTask("SimulationRunner")
-  simulationRunArgs <- rSharp::newObjectFromName("OSPSuite.R.Services.SimulationRunArgs")
+  simulationRunArgs <- rSharp::newObjectFromName(
+    "OSPSuite.R.Services.SimulationRunArgs"
+  )
   simulationRunArgs$set("Simulation", simulation)
   simulationRunArgs$set("SimulationRunOptions", simulationRunOptions)
 
@@ -266,7 +300,12 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
   SimulationResults$new(results, simulation)
 }
 
-.runSimulationsConcurrently <- function(simulations, simulationRunOptions, silentMode = FALSE, stopIfFails = FALSE) {
+.runSimulationsConcurrently <- function(
+  simulations,
+  simulationRunOptions,
+  silentMode = FALSE,
+  stopIfFails = FALSE
+) {
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
   tryCatch(
     {
@@ -337,10 +376,22 @@ runSimulations <- function(simulations, population = NULL, agingData = NULL, sim
 #'   c("Organism|Liver|A")
 #' )
 #' @export
-createSimulationBatch <- function(simulation, parametersOrPaths = NULL, moleculesOrPaths = NULL) {
+createSimulationBatch <- function(
+  simulation,
+  parametersOrPaths = NULL,
+  moleculesOrPaths = NULL
+) {
   validateIsOfType(simulation, "Simulation")
-  validateIsOfType(parametersOrPaths, c("Parameter", "character"), nullAllowed = TRUE)
-  validateIsOfType(moleculesOrPaths, c("Quantity", "character"), nullAllowed = TRUE)
+  validateIsOfType(
+    parametersOrPaths,
+    c("Parameter", "character"),
+    nullAllowed = TRUE
+  )
+  validateIsOfType(
+    moleculesOrPaths,
+    c("Quantity", "character"),
+    nullAllowed = TRUE
+  )
 
   if (length(parametersOrPaths) == 0 && length(moleculesOrPaths) == 0) {
     stop(messages$errorSimulationBatchNothingToVary)
@@ -349,7 +400,10 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
   variableParameters <- c(parametersOrPaths)
 
   if (isOfType(variableParameters, "Parameter")) {
-    variableParameters <- unlist(lapply(variableParameters, function(x) x$path), use.names = FALSE)
+    variableParameters <- unlist(
+      lapply(variableParameters, function(x) x$path),
+      use.names = FALSE
+    )
   }
 
   variableMolecules <- c(moleculesOrPaths)
@@ -357,7 +411,10 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
   # Checking for Quantity instead of Molecule because state variable parameters must
   # be added as molecules
   if (isOfType(variableMolecules, "Quantity")) {
-    variableMolecules <- unlist(lapply(variableMolecules, function(x) x$path), use.names = FALSE)
+    variableMolecules <- unlist(
+      lapply(variableMolecules, function(x) x$path),
+      use.names = FALSE
+    )
   }
 
   simulationBatchOptions <- SimulationBatchOptions$new(
@@ -365,7 +422,11 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
     variableMolecules = variableMolecules
   )
 
-  net <- rSharp::newObjectFromName("OSPSuite.R.Domain.ConcurrentRunSimulationBatch", simulation, simulationBatchOptions)
+  net <- rSharp::newObjectFromName(
+    "OSPSuite.R.Domain.ConcurrentRunSimulationBatch",
+    simulation,
+    simulationBatchOptions
+  )
   SimulationBatch$new(net, simulation)
 }
 
@@ -409,10 +470,19 @@ createSimulationBatch <- function(simulation, parametersOrPaths = NULL, molecule
 #' ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
 #' res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 #' }
-runSimulationBatches <- function(simulationBatches, simulationRunOptions = NULL, silentMode = FALSE, stopIfFails = FALSE) {
+runSimulationBatches <- function(
+  simulationBatches,
+  simulationRunOptions = NULL,
+  silentMode = FALSE,
+  stopIfFails = FALSE
+) {
   validateIsOfType(simulationBatches, "SimulationBatch")
   simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
-  validateIsOfType(simulationRunOptions, "SimulationRunOptions", nullAllowed = TRUE)
+  validateIsOfType(
+    simulationRunOptions,
+    "SimulationRunOptions",
+    nullAllowed = TRUE
+  )
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
   simulationRunner$set("SimulationRunOptions", simulationRunOptions)
 
@@ -566,7 +636,11 @@ getAllParametersForSensitivityAnalysisMatching <- function(paths, simulation) {
 getAllStateVariablesPaths <- function(simulation) {
   validateIsOfType(simulation, type = "Simulation")
   allMoleculesPaths <- getAllMoleculePathsIn(container = simulation)
-  allStateVariableParamsPaths <- .getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
+  allStateVariableParamsPaths <- .getAllEntityPathsIn(
+    container = simulation,
+    entityType = Parameter,
+    method = "AllStateVariableParameterPathsIn"
+  )
   allQantitiesPaths <- append(allMoleculesPaths, allStateVariableParamsPaths)
   return(allQantitiesPaths)
 }
@@ -580,7 +654,11 @@ getAllStateVariablesPaths <- function(simulation) {
 #' @export
 getAllStateVariableParametersPaths <- function(simulation) {
   validateIsOfType(simulation, type = "Simulation")
-  allStateVariableParamsPaths <- .getAllEntityPathsIn(container = simulation, entityType = Parameter, method = "AllStateVariableParameterPathsIn")
+  allStateVariableParamsPaths <- .getAllEntityPathsIn(
+    container = simulation,
+    entityType = Parameter,
+    method = "AllStateVariableParameterPathsIn"
+  )
   return(allStateVariableParamsPaths)
 }
 
@@ -602,7 +680,12 @@ getAllStateVariableParametersPaths <- function(simulation) {
 #'
 #' exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
 #' @export
-exportIndividualSimulations <- function(population, individualIds, outputFolder, simulation) {
+exportIndividualSimulations <- function(
+  population,
+  individualIds,
+  outputFolder,
+  simulation
+) {
   validateIsString(outputFolder)
   validateIsNumeric(individualIds)
   validateIsOfType(simulation, "Simulation")
@@ -612,10 +695,17 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
 
   simuationPaths <- NULL
   for (individualId in individualIds) {
-    simulationPath <- file.path(outputFolder, paste0(simulation$name, "_", individualId, ".pkml"))
+    simulationPath <- file.path(
+      outputFolder,
+      paste0(simulation$name, "_", individualId, ".pkml")
+    )
     simuationPaths <- c(simuationPaths, simulationPath)
     parameterValues <- population$getParameterValuesForIndividual(individualId)
-    setParameterValuesByPath(parameterValues$paths, parameterValues$values, simulation)
+    setParameterValuesByPath(
+      parameterValues$paths,
+      parameterValues$values,
+      simulation
+    )
     saveSimulation(simulation, simulationPath)
   }
 
@@ -635,7 +725,13 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
 #'
 #' @return A named list of `SimulationResults` objects with the names being the ids of simulations or
 #' simulation-batch values pairs they were produced by
-.getConcurrentSimulationRunnerResults <- function(results, resultsIdSimulationIdMap, simulationIdSimulationMap, silentMode, stopIfFails) {
+.getConcurrentSimulationRunnerResults <- function(
+  results,
+  resultsIdSimulationIdMap,
+  simulationIdSimulationMap,
+  silentMode,
+  stopIfFails
+) {
   # Pre-allocate lists for SimulationResult
   simulationResults <- vector("list", length(results))
   # Set the correct order of IDs
@@ -648,7 +744,10 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
       # Id of the simulation of the batch
       simId <- resultsIdSimulationIdMap[[resultsId]]
       # Get the correct simulation and create a SimulationResults object
-      simulationResults[[resultsId]] <- SimulationResults$new(netObject = resultObject$get("Result"), simulation = simulationIdSimulationMap[[simId]])
+      simulationResults[[resultsId]] <- SimulationResults$new(
+        netObject = resultObject$get("Result"),
+        simulation = simulationIdSimulationMap[[simId]]
+      )
       next()
     }
     # If the simulation run failed, show a warning or an error
@@ -680,7 +779,10 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
     # sub-branch list corresponding to the structure of the remaining elements
     # of arrayToGo
     newBranch <- list()
-    newBranch[[arrayToGo[1]]] <- .addBranch(originalPathString, tail(arrayToGo, -1))
+    newBranch[[arrayToGo[1]]] <- .addBranch(
+      originalPathString,
+      tail(arrayToGo, -1)
+    )
 
     return(newBranch)
   }
@@ -700,13 +802,19 @@ exportIndividualSimulations <- function(population, individualIds, outputFolder,
     # arrayToGo has not been added to listToGo yet, add it using the function
     # .addBranch
     if (is.null(listSoFar[[arrayToGo[1]]])) {
-      listSoFar[[arrayToGo[1]]] <- .addBranch(originalString, tail(arrayToGo, -1))
-    }
-    # If this portion of the string vector arrayToGo has already been added to
-    # listSoFar, remove the leading element of arrayToGo and recursively apply
-    # this function using the remaining elements of arrayToGo.
-    else {
-      listSoFar[[arrayToGo[1]]] <- .nextStep(listSoFar[[arrayToGo[1]]], originalString, tail(arrayToGo, -1))
+      listSoFar[[arrayToGo[1]]] <- .addBranch(
+        originalString,
+        tail(arrayToGo, -1)
+      )
+    } else {
+      # If this portion of the string vector arrayToGo has already been added to
+      # listSoFar, remove the leading element of arrayToGo and recursively apply
+      # this function using the remaining elements of arrayToGo.
+      listSoFar[[arrayToGo[1]]] <- .nextStep(
+        listSoFar[[arrayToGo[1]]],
+        originalString,
+        tail(arrayToGo, -1)
+      )
     }
   }
 
@@ -754,7 +862,10 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
     "Observer" = getAllObserverPathsIn
   )
 
-  validateIsIncluded(values = quantityType, parentValues = names(quantityTypeList))
+  validateIsIncluded(
+    values = quantityType,
+    parentValues = names(quantityTypeList)
+  )
 
   simulation <- simulationOrFilePath
   if (isOfType(simulationOrFilePath, "character")) {
@@ -830,12 +941,14 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #'   quantityPaths = steadyState[[sim$id]]$paths,
 #'   values = steadyState[[sim$id]]$values, simulation = sim
 #' )
-getSteadyState <- function(simulations,
-                           quantitiesPaths = NULL,
-                           steadyStateTime = NULL,
-                           ignoreIfFormula = TRUE,
-                           lowerThreshold = 1e-15,
-                           simulationRunOptions = NULL) {
+getSteadyState <- function(
+  simulations,
+  quantitiesPaths = NULL,
+  steadyStateTime = NULL,
+  ignoreIfFormula = TRUE,
+  lowerThreshold = 1e-15,
+  simulationRunOptions = NULL
+) {
   # Default time that is added to the time of the last administration for steady-state
   DELTA_STEADY_STATE <- 3 * 24 * 60 # 3 days in minutes
 
@@ -901,7 +1014,10 @@ getSteadyState <- function(simulations,
       quantitiesPathsMap[[i]] <- quantitiesPaths
     }
     names(quantitiesPathsMap)[[i]] <- simId
-    setOutputs(quantitiesOrPaths = quantitiesPathsMap[[i]], simulation = simulation)
+    setOutputs(
+      quantitiesOrPaths = quantitiesPathsMap[[i]],
+      simulation = simulation
+    )
   }
 
   # Run simulations concurrently
@@ -947,7 +1063,10 @@ getSteadyState <- function(simulations,
 
     # Reset simulation output intervals and output selections
     .restoreSimulationState(simulations, simulationState)
-    outputMap[[i]] <- list(paths = quantitiesPathsMap[[simId]][indices], values = endValues[indices])
+    outputMap[[i]] <- list(
+      paths = quantitiesPathsMap[[simId]][indices],
+      values = endValues[indices]
+    )
     names(outputMap)[[i]] <- simId
   }
   return(outputMap)
@@ -975,8 +1094,8 @@ getSteadyState <- function(simulations,
   # simulations.
   oldOutputIntervals <-
     oldTimePoints <-
-    oldOutputSelections <-
-    ids <- vector("list", length(simulations))
+      oldOutputSelections <-
+        ids <- vector("list", length(simulations))
 
   for (idx in seq_along(simulations)) {
     simulation <- simulations[[idx]]
@@ -989,7 +1108,7 @@ getSteadyState <- function(simulations,
   }
   names(oldOutputIntervals) <-
     names(oldTimePoints) <-
-    names(oldOutputSelections) <- ids
+      names(oldOutputSelections) <- ids
 
   return(list(
     outputIntervals = oldOutputIntervals,
@@ -1034,7 +1153,10 @@ getSteadyState <- function(simulations,
     # Reset output selections
     clearOutputs(simulation)
     for (outputSelection in simStateList$outputSelections[[simId]]) {
-      addOutputs(quantitiesOrPaths = outputSelection$path, simulation = simulation)
+      addOutputs(
+        quantitiesOrPaths = outputSelection$path,
+        simulation = simulation
+      )
     }
   }
 }
@@ -1056,13 +1178,15 @@ getSteadyState <- function(simulations,
 #' @import ospsuite.utils
 #' @returns An `openxlsx` workbook object.
 #' @export
-exportSteadyStateToXLS <- function(simulation,
-                                   quantitiesPaths = NULL,
-                                   resultsXLSPath = "",
-                                   steadyStateTime = NULL,
-                                   ignoreIfFormula = TRUE,
-                                   lowerThreshold = 1e-15,
-                                   simulationRunOptions = NULL) {
+exportSteadyStateToXLS <- function(
+  simulation,
+  quantitiesPaths = NULL,
+  resultsXLSPath = "",
+  steadyStateTime = NULL,
+  ignoreIfFormula = TRUE,
+  lowerThreshold = 1e-15,
+  simulationRunOptions = NULL
+) {
   # If no explicit path to the results-file is provided, store the results file
   # in the same folder as the model file.
   if (resultsXLSPath == "") {
@@ -1117,17 +1241,26 @@ exportSteadyStateToXLS <- function(simulation,
 
     if (ospsuite.utils::isOfType(quantity, "Molecule")) {
       moleculeValue <- append(moleculeValue, value)
-      moleculeContainerPath <- append(moleculeContainerPath, quantity$parentContainer$path)
+      moleculeContainerPath <- append(
+        moleculeContainerPath,
+        quantity$parentContainer$path
+      )
       moleculeName <- append(moleculeName, quantity$name)
       moleculeIsPresent <- append(moleculeIsPresent, TRUE)
       moleculeUnits <- append(moleculeUnits, quantity$unit)
-      moleculeScaleDivisor <- append(moleculeScaleDivisor, quantity$scaleDivisor)
+      moleculeScaleDivisor <- append(
+        moleculeScaleDivisor,
+        quantity$scaleDivisor
+      )
       # Leaving the "negative values allowed" field empty, as it is not accessible.
       # If empty, the property will not be updated when importing.
       moleculeNegValsAllowed <- append(moleculeNegValsAllowed, "")
     } else {
       parameterValue <- append(parameterValue, value)
-      parameterContainerPath <- append(parameterContainerPath, quantity$parentContainer$path)
+      parameterContainerPath <- append(
+        parameterContainerPath,
+        quantity$parentContainer$path
+      )
       parameterName <- append(parameterName, quantity$name)
       parameterUnits <- append(parameterUnits, quantity$unit)
     }
@@ -1147,7 +1280,15 @@ exportSteadyStateToXLS <- function(simulation,
   # Set the column names
   if (length(speciesInitVals) > 0) {
     colnames(speciesInitVals) <-
-      c("Container Path", "Molecule Name", "Is Present", "Value", "Units", "Scale Divisor", "Neg. Values Allowed")
+      c(
+        "Container Path",
+        "Molecule Name",
+        "Is Present",
+        "Value",
+        "Units",
+        "Scale Divisor",
+        "Neg. Values Allowed"
+      )
   }
 
   # Create the data frame for parameter start values
@@ -1160,7 +1301,12 @@ exportSteadyStateToXLS <- function(simulation,
 
   # Set the column names
   if (length(parameterInitVals) > 0) {
-    colnames(parameterInitVals) <- c("Container Path", "Parameter Name", "Value", "Units")
+    colnames(parameterInitVals) <- c(
+      "Container Path",
+      "Parameter Name",
+      "Value",
+      "Units"
+    )
   }
 
   # Write the results into an excel file.

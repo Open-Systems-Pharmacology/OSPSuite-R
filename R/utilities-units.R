@@ -98,7 +98,13 @@ getBaseUnit <- function(quantityOrDimension) {
 #'
 #' valuesInBaseUnit <- toBaseUnit(par, c(1000, 2000, 3000), "ml")
 #' @export
-toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molWeightUnit = NULL) {
+toBaseUnit <- function(
+  quantityOrDimension,
+  values,
+  unit,
+  molWeight = NULL,
+  molWeightUnit = NULL
+) {
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
 
   # Get the base unit of the dimension and call `toUnit()`
@@ -139,12 +145,14 @@ toBaseUnit <- function(quantityOrDimension, values, unit, molWeight = NULL, molW
 #'   sourceUnit = "mg/dl", molWeight = 180, molWeightUnit = "g/mol"
 #' )
 #' @export
-toUnit <- function(quantityOrDimension,
-                   values,
-                   targetUnit,
-                   sourceUnit = NULL,
-                   molWeight = NULL,
-                   molWeightUnit = NULL) {
+toUnit <- function(
+  quantityOrDimension,
+  values,
+  targetUnit,
+  sourceUnit = NULL,
+  molWeight = NULL,
+  molWeightUnit = NULL
+) {
   validateIsOfType(quantityOrDimension, c("Quantity", "character"))
   validateIsNumeric(values, nullAllowed = TRUE)
   validateIsNumeric(molWeight, nullAllowed = TRUE)
@@ -189,7 +197,12 @@ toUnit <- function(quantityOrDimension,
   if (is.null(molWeight)) {
     # Convert values to base unit first if the source unit is provided
     if (!is.null(sourceUnit)) {
-      values <- dimensionTask$call("ConvertToBaseUnit", dimension, sourceUnit, values)
+      values <- dimensionTask$call(
+        "ConvertToBaseUnit",
+        dimension,
+        sourceUnit,
+        values
+      )
     }
     # Return early if target unit is the base unit
     if (targetUnit == baseUnit) {
@@ -202,12 +215,23 @@ toUnit <- function(quantityOrDimension,
   # Case - molecular weight is provided
   # Convert molWeight value to base unit if a unit is provided
   if (!is.null(molWeightUnit)) {
-    molWeight <- dimensionTask$call("ConvertToBaseUnit", ospDimensions$`Molecular weight`, molWeightUnit, molWeight)
+    molWeight <- dimensionTask$call(
+      "ConvertToBaseUnit",
+      ospDimensions$`Molecular weight`,
+      molWeightUnit,
+      molWeight
+    )
   }
 
   # Convert values to base unit first if the source unit is provided
   if (!is.null(sourceUnit)) {
-    values <- dimensionTask$call("ConvertToBaseUnit", dimension, sourceUnit, values, molWeight)
+    values <- dimensionTask$call(
+      "ConvertToBaseUnit",
+      dimension,
+      sourceUnit,
+      values,
+      molWeight
+    )
   }
   # Return early if target unit is the base unit
   if (targetUnit == baseUnit) {
@@ -512,8 +536,12 @@ ospUnits <- NULL
   # redundant computations.
   #
   # *DO NOT* use short-circuiting `&&` logical operator here.
-  if (length(unique(data$xUnit)) == 1L & is.null(xUnit) &
-    length(unique(data$yUnit)) == 1L & is.null(yUnit)) {
+  if (
+    length(unique(data$xUnit)) == 1L &
+      is.null(xUnit) &
+      length(unique(data$yUnit)) == 1L &
+      is.null(yUnit)
+  ) {
     return(data)
   }
 
@@ -557,8 +585,10 @@ ospUnits <- NULL
   #
   # If there is no `yErrorValues` column in the entered data frame, it doesn't
   # make sense for this function to introduce a new column called `yErrorUnit`.
-  if ((any(colnames(data) == "yErrorValues")) &&
-    !(any(colnames(data) == "yErrorUnit"))) {
+  if (
+    (any(colnames(data) == "yErrorValues")) &&
+      !(any(colnames(data) == "yErrorUnit"))
+  ) {
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
@@ -609,7 +639,10 @@ ospUnits <- NULL
   )
 
   # yUnit
-  yDataList <- .removeEmptyDataFrame(split(data, list(data$yUnitSplit, data$molWeightSplit)))
+  yDataList <- .removeEmptyDataFrame(split(
+    data,
+    list(data$yUnitSplit, data$molWeightSplit)
+  ))
   data <- purrr::map_dfr(
     .x = yDataList,
     .f = function(data) .yUnitConverter(data, yTargetUnit)
@@ -617,7 +650,10 @@ ospUnits <- NULL
 
   # yUnit error
   if (any(colnames(data) == "yErrorValues")) {
-    yErrorDataList <- .removeEmptyDataFrame(split(data, list(data$yErrorUnitSplit, data$molWeightSplit)))
+    yErrorDataList <- .removeEmptyDataFrame(split(
+      data,
+      list(data$yErrorUnitSplit, data$molWeightSplit)
+    ))
 
     data <- purrr::map_dfr(
       .x = yErrorDataList,
@@ -660,7 +696,9 @@ ospUnits <- NULL
 #' # Remove element data frames with 0 rows
 #' ospsuite:::.removeEmptyDataFrame(ls)
 #' @keywords internal
-.removeEmptyDataFrame <- function(x) purrr::keep(x, function(data) nrow(data) > 0L)
+.removeEmptyDataFrame <- function(x) {
+  purrr::keep(x, function(data) nrow(data) > 0L)
+}
 
 
 #' @keywords internal
@@ -711,9 +749,11 @@ ospUnits <- NULL
 .yErrorUnitConverter <- function(yData, yTargetUnit) {
   # If error type is geometric, conversion of `yValues` to different units
   # should not trigger conversion of error values (and units)
-  if (any(colnames(yData) == "yErrorType") &&
-    !is.na(unique(yData$yErrorType)) &&
-    unique(yData$yErrorType) == DataErrorType$GeometricStdDev) {
+  if (
+    any(colnames(yData) == "yErrorType") &&
+      !is.na(unique(yData$yErrorType)) &&
+      unique(yData$yErrorType) == DataErrorType$GeometricStdDev
+  ) {
     return(yData)
   }
 

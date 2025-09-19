@@ -31,7 +31,8 @@ StandardPKParameter <- enum(c(
 #' @title PKParameter
 #' @docType class
 #' @description Standard PK Parameters defined in the OSPSuite
-PKParameter <- R6::R6Class("PKParameter",
+PKParameter <- R6::R6Class(
+  "PKParameter",
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(
@@ -45,7 +46,11 @@ PKParameter <- R6::R6Class("PKParameter",
     },
     #' @field dimension Dimension instance used by the PK-Parameter (Read-Only)
     dimension = function(value) {
-      private$.readOnlyProperty("Dimension", value, private$.dimension()$get("Name"))
+      private$.readOnlyProperty(
+        "Dimension",
+        value,
+        private$.dimension()$get("Name")
+      )
     },
     #' @field unit Unit of the PK-Parameter (Read-Only)
     unit = function(value) {
