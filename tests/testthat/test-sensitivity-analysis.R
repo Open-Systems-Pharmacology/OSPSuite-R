@@ -4,12 +4,23 @@ simple <- loadTestSimulation("simple")
 
 test_that("It can create a sensitivity analysis for a given simulation without any other parameter in the constructor", {
   sa <- SensitivityAnalysis$new(simple)
-  expect_equal(sa$numberOfSteps, ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps)
-  expect_equal(sa$variationRange, ospsuiteEnv$sensitivityAnalysisConfig$variationRange)
+  expect_equal(
+    sa$numberOfSteps,
+    ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps
+  )
+  expect_equal(
+    sa$variationRange,
+    ospsuiteEnv$sensitivityAnalysisConfig$variationRange
+  )
 })
 
 test_that("It can create a sensitivity analysis for a given simulation with parmaeters in the constructor", {
-  sa <- SensitivityAnalysis$new(simple, parameterPaths = c("A", "B"), numberOfSteps = 5, variationRange = 2)
+  sa <- SensitivityAnalysis$new(
+    simple,
+    parameterPaths = c("A", "B"),
+    numberOfSteps = 5,
+    variationRange = 2
+  )
   expect_equal(sa$numberOfSteps, 5)
   expect_equal(sa$variationRange, 2)
   expect_identical(sa$parameterPaths, c("A", "B"))

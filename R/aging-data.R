@@ -3,7 +3,8 @@
 #' @description  Results of a sensitivity analysis run (either individual or population simulation)
 #'
 #' @format NULL
-AgingData <- R6::R6Class("AgingData",
+AgingData <- R6::R6Class(
+  "AgingData",
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(

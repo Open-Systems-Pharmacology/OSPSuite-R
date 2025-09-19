@@ -63,12 +63,21 @@ constantParameter <- getParameter("Organism|Age", sim)
 popFile <- getTestDataFilePath("pop.csv")
 population <- loadPopulation(popFile)
 
-exportIndividualSimulations(population = population, c(1, 2, 3), "C:/LocalNuget", sim)
+exportIndividualSimulations(
+  population = population,
+  c(1, 2, 3),
+  "C:/LocalNuget",
+  sim
+)
 # population <- loadPopulation("C:/tests/9.0/Pop_5000.csv")
 
 # print(population)
 #
-simRunOptions <- SimulationRunOptions$new(numberOfCores = 4, checkForNegativeValues = TRUE, showProgress = TRUE)
+simRunOptions <- SimulationRunOptions$new(
+  numberOfCores = 4,
+  checkForNegativeValues = TRUE,
+  showProgress = TRUE
+)
 #
 # individualResults <- runSimulations(sim)[[1]][[1]]
 # paths <- individualResults$allQuantityPaths
@@ -81,12 +90,21 @@ populationResults <- importResultsFromCSV(sim, "C:/temp/export/results.csv")
 #
 profvis(
   {
-    outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths)
+    outputValues <- getOutputValues(
+      populationResults,
+      population,
+      populationResults$allQuantityPaths
+    )
   },
   prof_output = "C:/temp/export/prof.html"
 )
 
-outputValues <- getOutputValues(populationResults, populationResults$allQuantityPaths, population = population, c(1))
+outputValues <- getOutputValues(
+  populationResults,
+  populationResults$allQuantityPaths,
+  population = population,
+  c(1)
+)
 # outputValues <- getOutputValues(populationResults, population, populationResults$allQuantityPaths)
 #
 # exportResultsToCSV(populationResults, "C:/temp/export/results.csv")
@@ -106,7 +124,6 @@ outputValues <- getOutputValues(populationResults, populationResults$allQuantity
 # val <- pkParam$values
 # getPkAnalysis(results)
 
-
 # individualResults <- results[[1]]
 #
 # time <- individualResults$get("Time")
@@ -116,6 +133,5 @@ outputValues <- getOutputValues(populationResults, populationResults$allQuantity
 # firstOutput <- allValues[[1]]
 # path <- firstOutput$get("QuantityPath")
 # values <- firstOutput$get("Values")
-
 
 # saveSimulation(sim, "c:/temp/export/toto.xml")

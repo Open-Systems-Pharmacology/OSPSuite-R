@@ -3,7 +3,10 @@ sim <- loadTestSimulation("S1")
 # getAllMoleculesMatching
 
 test_that("It can retrieve molecule with absolute path", {
-  molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
+  molecules <- getAllMoleculesMatching(
+    "Organism|VenousBlood|Plasma|Caffeine",
+    sim
+  )
   expect_equal(length(molecules), 1)
 })
 
@@ -44,7 +47,10 @@ test_that("It throws an error when no valid molecule objects are provided", {
 })
 
 test_that("It throws an error when no valid values are provided", {
-  molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
+  molecules <- getAllMoleculesMatching(
+    "Organism|VenousBlood|Plasma|Caffeine",
+    sim
+  )
   expect_error(setMoleculeInitialValues(molecules, "s"))
 })
 
@@ -77,7 +83,10 @@ test_that("It throws an error when no valid molecule objects are provided", {
 })
 
 test_that("It throws an error when no valid values are provided", {
-  molecules <- getAllMoleculesMatching("Organism|VenousBlood|Plasma|Caffeine", sim)
+  molecules <- getAllMoleculesMatching(
+    "Organism|VenousBlood|Plasma|Caffeine",
+    sim
+  )
   expect_error(setMoleculeScaleDivisors(molecules, "s"))
 })
 

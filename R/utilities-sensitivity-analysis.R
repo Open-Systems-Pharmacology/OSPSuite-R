@@ -15,10 +15,18 @@
 #' # Runs the sensitivity analysis
 #' results <- runSensitivityAnalysis(sensitivity)
 #' @export
-runSensitivityAnalysis <- function(sensitivityAnalysis, sensitivityAnalysisRunOptions = NULL) {
+runSensitivityAnalysis <- function(
+  sensitivityAnalysis,
+  sensitivityAnalysisRunOptions = NULL
+) {
   validateIsOfType(sensitivityAnalysis, "SensitivityAnalysis")
-  validateIsOfType(sensitivityAnalysisRunOptions, "SensitivityAnalysisRunOptions", nullAllowed = TRUE)
-  options <- sensitivityAnalysisRunOptions %||% SensitivityAnalysisRunOptions$new()
+  validateIsOfType(
+    sensitivityAnalysisRunOptions,
+    "SensitivityAnalysisRunOptions",
+    nullAllowed = TRUE
+  )
+  options <- sensitivityAnalysisRunOptions %||%
+    SensitivityAnalysisRunOptions$new()
   sensitivityAnalysisRunner <- .getNetTask("SensitivityAnalysisRunner")
 
   results <- sensitivityAnalysisRunner$call("Run", sensitivityAnalysis, options)
@@ -51,7 +59,12 @@ exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
-  sensitivityAnalysisTask$call("ExportResultsToCSV", results, results$simulation, filePath)
+  sensitivityAnalysisTask$call(
+    "ExportResultsToCSV",
+    results,
+    results$simulation,
+    filePath
+  )
   invisible()
 }
 
@@ -81,10 +94,17 @@ exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
 importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
-  filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
+  filePaths <- unlist(
+    lapply(filePaths, function(filePath) .expandPath(filePath)),
+    use.names = FALSE
+  )
 
   sensitivityAnalysisTask <- .getNetTask("SensitivityAnalysisTask")
-  results <- sensitivityAnalysisTask$call("ImportResultsFromCSV", simulation, filePaths)
+  results <- sensitivityAnalysisTask$call(
+    "ImportResultsFromCSV",
+    simulation,
+    filePaths
+  )
   SensitivityAnalysisResults$new(results, simulation)
 }
 

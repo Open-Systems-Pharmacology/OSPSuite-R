@@ -39,7 +39,11 @@ IndividualCharacteristics <- R6::R6Class(
     },
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this individual characteristics.
     allMoleculeOntogenies = function(value) {
-      private$.readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
+      private$.readOnlyProperty(
+        "allMoleculeOntogenies",
+        value,
+        private$.moleculeOntogenies
+      )
     },
     #' @field seed Seed used to generate the population
     seed = function(value) {
@@ -67,7 +71,9 @@ IndividualCharacteristics <- R6::R6Class(
       # Assuming that if this function is called directly, PK-Sim was either initialized already
       # or should be initialized automatically
       initPKSim()
-      netObject <- rSharp::newObjectFromName("PKSim.R.Domain.IndividualCharacteristics")
+      netObject <- rSharp::newObjectFromName(
+        "PKSim.R.Domain.IndividualCharacteristics"
+      )
       super$initialize(netObject)
     },
     #' @description
@@ -75,11 +81,14 @@ IndividualCharacteristics <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(list(
-        "Species" = self$species,
-        "Population" = self$population,
-        "Gender" = self$gender
-      ), print_empty = TRUE)
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Species" = self$species,
+          "Population" = self$population,
+          "Gender" = self$gender
+        ),
+        print_empty = TRUE
+      )
       ospsuite.utils::ospPrintItems(list(
         "Age" = self$age$getPrintValue(),
         "Gestational age" = self$gestationalAge$getPrintValue(),
@@ -101,8 +110,13 @@ IndividualCharacteristics <- R6::R6Class(
     #' @param moleculeOntogeny Molecule ontogeny to add
     addMoleculeOntogeny = function(moleculeOntogeny) {
       validateIsOfType(moleculeOntogeny, "MoleculeOntogeny")
-      private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
-      netMoleculeOntogeny <- rSharp::newObjectFromName("PKSim.R.Domain.MoleculeOntogeny")
+      private$.moleculeOntogenies <- c(
+        private$.moleculeOntogenies,
+        moleculeOntogeny
+      )
+      netMoleculeOntogeny <- rSharp::newObjectFromName(
+        "PKSim.R.Domain.MoleculeOntogeny"
+      )
       netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
       netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
       self$call("AddMoleculeOntogeny", netMoleculeOntogeny)
