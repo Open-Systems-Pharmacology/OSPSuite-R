@@ -22,14 +22,22 @@ addOutputs(outputPaths, sim)
 # observed data ------------------------
 
 obsDataOne <- lapply(
-  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  c(
+    "ObsDataAciclovir_1.pkml",
+    "ObsDataAciclovir_2.pkml",
+    "ObsDataAciclovir_3.pkml"
+  ),
+  function(x) {
+    loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  }
 )
 names(obsDataOne) <- lapply(obsDataOne, function(x) x$name)
 
 obsDataMany <- lapply(
   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
-  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  function(x) {
+    loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  }
 )
 names(obsDataMany) <- lapply(obsDataMany, function(x) x$name)
 
@@ -91,7 +99,11 @@ saveRDS(manyObsSimDC, file = file.path(path, "manyObsSimDC"))
 
 ## dataset with geometric error ------------------------
 
-ObsDataAciclovir_3 <- loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_3.pkml", package = "ospsuite"))
+ObsDataAciclovir_3 <- loadDataSetFromPKML(system.file(
+  "extdata",
+  "ObsDataAciclovir_3.pkml",
+  package = "ospsuite"
+))
 
 oneObsGeometricDC <- DataCombined$new()
 oneObsGeometricDC$addDataSets(ObsDataAciclovir_3, groups = "Aciclovir PVB")

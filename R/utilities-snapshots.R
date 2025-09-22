@@ -24,12 +24,6 @@ runSimulationsFromSnapshot <- function(
   exportJSON = FALSE,
   exportXML = FALSE
 ) {
-  if (Sys.info()[["sysname"]] == "Darwin") {
-    cli::cli_abort(
-      "runSimulationsFromSnapshot is currently not supported on macOS."
-    )
-  }
-
   ospsuite.utils::validateIsLogical(
     object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs)
   )
@@ -131,10 +125,6 @@ runSimulationsFromSnapshot <- function(
 #' convertSnapshot("path/to/project.pksim5", format = "snapshot")
 #' }
 convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
-  if (Sys.info()[["sysname"]] == "Darwin") {
-    cli::cli_abort("runSimulations is currently not supported on macOS.")
-  }
-
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
   initPKSim()

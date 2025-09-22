@@ -51,7 +51,10 @@ test_that("It can add user defined variability using values with NaN", {
   values_with_NAN[2] <- NaN
   population$setParameterValues(parameterPath, values_with_NAN)
   expect_true(population$has(parameterPath))
-  expect_identical(population$getParameterValues(parameterPath), values_with_NAN)
+  expect_identical(
+    population$getParameterValues(parameterPath),
+    values_with_NAN
+  )
 })
 
 test_that("It can add user defined variability using values with NA", {
@@ -90,7 +93,9 @@ test_that("It can retrieve all parameter values for an existing individual id", 
 
 test_that("It throws an exception when retrieving all parameter values for an individual id that does not exist", {
   population <- loadPopulation(populationFileName)
-  expect_error(parameterValues <- population$getParameterValuesForIndividual(666))
+  expect_error(
+    parameterValues <- population$getParameterValuesForIndividual(666)
+  )
 })
 
 # Covariates
