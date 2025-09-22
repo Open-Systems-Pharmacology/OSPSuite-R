@@ -27,13 +27,13 @@ jobs:
   update-core-files:
     runs-on: ubuntu-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.CORE_FILES_UPDATE_PAT }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CORE_FILES_UPDATE_PAT }}
           fetch-depth: 0
 
       - name: Set up R
