@@ -51,3 +51,8 @@ doc
 
 # test artifacts
 tests/testthat/*.pdf
+
+# Files renamed during package load (on macos)
+inst/lib/SQLite.Interop.dll.dylib
+inst/lib/System.Data.SQLite.dll
+

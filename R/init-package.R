@@ -2,43 +2,104 @@
 #'
 #' This will be called once when the package is loaded
 #'
+#'
 #' @import rSharp
 #' @keywords internal
 .initPackage <- function() {
+  # Get library directory path once
+  libDir <- system.file("lib", package = ospsuiteEnv$packageName)
+  
+  # Helper function for file paths
   filePathFor <- function(name) {
-    system.file("lib", name, package = ospsuiteEnv$packageName)
+    file.path(libDir, name)
   }
-
-  # Make .dll binaries available on windows by extending PATH
+  
+  # Setup platform-specific SQLite DLL
+  targetDll <- file.path(libDir, "System.Data.SQLite.dll")
+  sourceDll <- file.path(libDir, if (Sys.info()[["sysname"]] == "Darwin") {
+    "System.Data.SQLite.mac.dll"
+  } else {
+    "System.Data.SQLite.others.dll"
+  })
+  file.copy(sourceDll, targetDll, overwrite = TRUE)
+  
+  # Setup platform-specific library loading
   if (.Platform$OS.type == "windows") {
-    Sys.setenv(
-      PATH = paste(
-        system.file("lib", package = ospsuiteEnv$packageName),
-        Sys.getenv("PATH"),
-        sep = ";"
-      )
-    )
-  }
-
-  # Load the .so binary files on unix
-  if (.Platform$OS.type == "unix") {
-    for (soFile in list.files(
-      system.file("lib", package = ospsuiteEnv$packageName),
-      pattern = "\\.so$",
-      full.names = TRUE
-    )) {
-      dyn.load(soFile)
+    # Windows: Extend PATH for DLL access
+    Sys.setenv(PATH = paste(libDir, Sys.getenv("PATH"), sep = ";"))
+  } else if (.Platform$OS.type == "unix") {
+    sysname <- Sys.info()[['sysname']]
+    
+    if (sysname == "Linux") {
+      # Load shared object files (.so) on Linux
+      soFiles <- list.files(libDir, pattern = "\\.so$", full.names = TRUE)
+      for (soFile in soFiles) {
+        dyn.load(soFile)
+      }
+    } else if (sysname == "Darwin") {
+      # macOS: Setup SQLite interop
+      machine <- Sys.info()[['machine']]
+      targetPath <- file.path(libDir, "SQLite.Interop.dll.dylib")
+      
+      # Determine source file based on architecture
+      sourceFile <- if (machine == "arm64") {
+        "SQLite.Interop.arm64.dylib"
+      } else if (machine == "x86_64") {
+        "SQLite.Interop.64.dylib"
+      } else {
+        NULL # Unknown architecture
+      }
+      
+      if (!is.null(sourceFile)) {
+        sourcePath <- file.path(libDir, sourceFile)
+        if (file.exists(sourcePath)) {
+          file.copy(sourcePath, targetPath, overwrite = TRUE)
+        }
+      }
+      
+      # Setup architecture-specific native libraries
+      nativeLibraries <- c("libOSPSuite.FuncParserNative", "libOSPSuite.SimModelNative", "libOSPSuite.SimModelSolver_CVODES")
+      
+      for (libName in nativeLibraries) {
+        # Determine source file based on architecture
+        sourceFile <- if (machine == "arm64") {
+          paste0(libName, ".Arm64.dylib")
+        } else if (machine == "x86_64") {
+          paste0(libName, ".x64.dylib")
+        } else {
+          NULL # Unknown architecture
+        }
+        
+        if (!is.null(sourceFile)) {
+          sourcePath <- file.path(libDir, sourceFile)
+          targetPath <- file.path(libDir, paste0(libName, ".dylib"))
+          
+          if (file.exists(sourcePath)) {
+            file.copy(sourcePath, targetPath, overwrite = TRUE)
+          }
+        }
+      }
+      
+      # Load macOS dynamic libraries (.dylib)
+      dylibFiles <- list.files(libDir, pattern = "\\.dylib$", full.names = TRUE)
+      # Filter out architecture-specific source files (x64.dylib, Arm64.dylib) but include renamed generic files
+      filteredDylibs <- dylibFiles[!grepl("\\.(x64|Arm64)\\.dylib$", dylibFiles)]
+      for (dylibFile in filteredDylibs) {
+        dyn.load(dylibFile)
+      }
     }
   }
-
+  
+  # Initialize .NET bindings
   rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
-  # Initialize once
+  
+  # Initialize API configuration
   netObject <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig")
   apiConfig <- ApiConfig$new(netObject)
   apiConfig$dimensionFilePath <- filePathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- filePathFor("OSPSuite.PKParameters.xml")
-
+  
   rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
-
+  
   .initializeDimensionAndUnitLists()
 }
