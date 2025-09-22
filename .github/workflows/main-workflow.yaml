@@ -17,11 +17,6 @@ jobs:
     secrets:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
-  # update-core-files:
-  #   if: ${{ !cancelled() && github.event_name == 'pull_request' }}
-  #   needs: [bump-dev-version]
-  #   uses: ./.github/workflows/update-core-files.yaml
-
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
