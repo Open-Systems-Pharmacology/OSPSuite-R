@@ -47,6 +47,9 @@ permissions:
 jobs:
   update-core-files:
     runs-on: ubuntu-latest
+    outputs:
+      branch_name: ${{ steps.changes.outputs.branch_name }}
+      has_changes: ${{ steps.changes.outputs.has_changes }}
     env:
       GITHUB_PAT: ${{ secrets.CORE_FILES_UPDATE_PAT }}
 
