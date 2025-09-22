@@ -1,34 +1,223 @@
 on:
-  workflow_call:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name for the PR (default: update-core-files-YYYYMMDD)'
+        required: false
+        default: ''
+        type: string
+      pr_title:
+        description: 'Title for the PR (default: 🤖 Update Core Files)'
+        required: false
+        default: '🤖 Update Core Files'
+        type: string
+      pr_body:
+        description: 'Body for the PR (default: Auto-generated PR to update core files)'
+        required: false
+        default: 'Auto-generated PR to update core files from PK-Sim dependencies'
+        type: string
 
-name: R-CMD-check
+name: Update Core Files
 
-permissions: write-all
-
+permissions: 
+  contents: write
+  pull-requests: write
 
 jobs:
   update-core-files:
     runs-on: ubuntu-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.CORE_FILES_UPDATE_PAT }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.CORE_FILES_UPDATE_PAT }}
+          fetch-depth: 0
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - name: download-and-unzip-core-files
-        run: source("update_core_files.R")
-        shell: Rscript {0}
-
-      - uses: EndBug/add-and-commit@v9
-        if: ${{ !github.event.pull_request.head.repo.fork }}
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
         with:
-          message: '🤖 Update Core Files.'
-          default_author: github_actions
-          add: 'inst/lib'
+          dotnet-version: '8.x'
+
+      - name: Generate branch name
+        id: branch_name
+        run: |
+          if [ -n "${{ github.event.inputs.branch_name }}" ]; then
+            echo "name=${{ github.event.inputs.branch_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "name=update-core-files-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and checkout new branch
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git checkout -b ${{ steps.branch_name.outputs.name }}
+
+      - name: Download and unzip core files
+        run: |
+          echo "Starting core files update..."
+          if ! Rscript update_core_files.R; then
+            echo "Error: Failed to update core files"
+            exit 1
+          fi
+          echo "Core files update completed successfully"
+
+      - name: Check if there are changes
+        id: changes
+        run: |
+          if git diff --quiet inst/lib; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in core files"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in core files"
+          fi
+          echo "branch_name=${{ steps.branch_name.outputs.name }}" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git add inst/lib
+          git commit -m "🤖 Update Core Files
+
+          - Updated PK-Sim R dependencies
+          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          - Triggered by: ${{ github.actor }}"
+
+      - name: Push branch
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git push origin ${{ steps.branch_name.outputs.name }}
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '${{ github.event.inputs.pr_title || "🤖 Update Core Files" }}',
+              head: '${{ steps.branch_name.outputs.name }}',
+              base: 'main',
+              body: `${{ github.event.inputs.pr_body || "Auto-generated PR to update core files from PK-Sim dependencies" }}
+
+              ## Changes
+              - Updated PK-Sim R dependencies in \`inst/lib\`
+              - Generated on: ${new Date().toISOString()}
+              - Triggered by: ${{ github.actor }}
+
+              ## What this PR does
+              This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts.
+            });
+            
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+
+      - name: No changes message
+        if: steps.changes.outputs.has_changes == 'false'
+        run: |
+          echo "No changes detected in core files. Nothing to commit or create PR for."
+
+  build-sqlite:
+    runs-on: macos-latest
+    needs: update-core-files
+    if: needs.update-core-files.outputs.has_changes == 'true'
+    env:
+      GITHUB_PAT: ${{ secrets.CORE_FILES_UPDATE_PAT }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CORE_FILES_UPDATE_PAT }}
+          ref: ${{ needs.update-core-files.outputs.branch_name }}
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Set up build directories
+        run: |
+          mkdir -p build
+          mkdir -p artifacts
+
+      - name: Download and extract SQLite source
+        run: |
+          wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/1.0.119.0/sqlite-netFx-source-1.0.119.0.zip"
+          unzip -o -d build build/sqlite-source.zip > /dev/null
+
+      - name: Build native library for arm64
+        run: |
+          INTEROP_SRC_ROOT="build/SQLite.Interop"
+          INTEROP_BUILD_DIR="build/interop-build-arm64"
+          mkdir -p "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
+          OUTPUT_DIR="artifacts/arm64"
+          mkdir -p "${OUTPUT_DIR}"
+          clang -arch arm64 -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
+              -dynamiclib \
+              -I "${INTEROP_SRC_ROOT}/src/core" \
+              -D "THREADSAFE=1" \
+              -D "SQLITE_OS_UNIX=1" \
+              -D "SQLITE_HAVE_USLEEP=1" \
+              -D "SQLITE_ENABLE_COLUMN_METADATA" \
+              -D "NDEBUG" \
+              "${INTEROP_BUILD_DIR}/interop.c"
+      
+      - name: Build native library for x86_64
+        run: |
+          INTEROP_SRC_ROOT="build/SQLite.Interop"
+          INTEROP_BUILD_DIR="build/interop-build-x86_64"
+          mkdir -p "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
+          OUTPUT_DIR="artifacts/x86_64"
+          mkdir -p "${OUTPUT_DIR}"
+          clang -arch x86_64 -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
+              -dynamiclib \
+              -I "${INTEROP_SRC_ROOT}/src/core" \
+              -D "THREADSAFE=1" \
+              -D "SQLITE_OS_UNIX=1" \
+              -D "SQLITE_HAVE_USLEEP=1" \
+              -D "SQLITE_ENABLE_COLUMN_METADATA" \
+              -D "NDEBUG" \
+              "${INTEROP_BUILD_DIR}/interop.c"
+
+      - name: Build managed library
+        run: |
+          MANAGED_SRC_ROOT="build/System.Data.SQLite"
+          PROJECT_FILE="${MANAGED_SRC_ROOT}/System.Data.SQLite.NetStandard21.csproj"
+          dotnet build "$PROJECT_FILE" -c Release --framework netstandard2.1
+          MANAGED_DLL_PATH=$(find "${MANAGED_SRC_ROOT}" -name "System.Data.SQLite.dll" -path "*/Release/*" | head -n 1)
+          cp "$MANAGED_DLL_PATH" "artifacts/"
+          cp "${MANAGED_DLL_PATH/%.dll/.pdb}" "artifacts/"
+
+      - name: Copy artifacts
+        run: |
+          mkdir -p inst/lib
+          cp artifacts/System.Data.SQLite.dll inst/lib/System.Data.SQLite.mac.dll
+          cp artifacts/arm64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.arm64.dylib
+          cp artifacts/x86_64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.x64.dylib
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add inst/lib
+          git commit -m "🤖 Add SQLite libraries for macOS
+
+          - Built SQLite interop libraries for ARM64 and x86_64
+          - Built System.Data.SQLite.dll for macOS
+          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          - Triggered by: ${{ github.actor }}"
+          git push origin ${{ needs.update-core-files.outputs.branch_name }}
