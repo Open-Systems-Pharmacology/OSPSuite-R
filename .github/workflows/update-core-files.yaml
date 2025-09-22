@@ -7,9 +7,9 @@ on:
         default: ''
         type: string
       pr_title:
-        description: 'Title for the PR (default: 🤖 Update Core Files)'
+        description: 'Title for the PR (default: Update Core Files)'
         required: false
-        default: '🤖 Update Core Files'
+        default: 'Update Core Files'
         type: string
       pr_body:
         description: 'Body for the PR (default: Auto-generated PR to update core files)'
@@ -105,7 +105,7 @@ jobs:
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '${{ github.event.inputs.pr_title || "🤖 Update Core Files" }}',
+              title: '${{ github.event.inputs.pr_title || "Update Core Files" }}',
               head: '${{ steps.branch_name.outputs.name }}',
               base: 'main',
               body: `${{ github.event.inputs.pr_body || "Auto-generated PR to update core files from PK-Sim dependencies" }}
