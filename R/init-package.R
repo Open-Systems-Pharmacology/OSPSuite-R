@@ -57,9 +57,32 @@
         }
       }
       
+      # Setup architecture-specific native libraries
+      nativeLibraries <- c("libOSPSuite.FuncParserNative", "libOSPSuite.SimModelNative", "libOSPSuite.SimModelSolver_CVODES")
+      
+      for (libName in nativeLibraries) {
+        # Determine source file based on architecture
+        sourceFile <- if (machine == "arm64") {
+          paste0(libName, ".Arm64.dylib")
+        } else if (machine == "x86_64") {
+          paste0(libName, ".x64.dylib")
+        } else {
+          NULL # Unknown architecture
+        }
+        
+        if (!is.null(sourceFile)) {
+          sourcePath <- file.path(libDir, sourceFile)
+          targetPath <- file.path(libDir, paste0(libName, ".dylib"))
+          
+          if (file.exists(sourcePath)) {
+            file.copy(sourcePath, targetPath, overwrite = TRUE)
+          }
+        }
+      }
+      
       # Load macOS dynamic libraries (.dylib)
       dylibFiles <- list.files(libDir, pattern = "\\.dylib$", full.names = TRUE)
-      # Filter out architecture-specific files (x64.dylib, Arm64.dylib)
+      # Filter out architecture-specific source files (x64.dylib, Arm64.dylib) but include renamed generic files
       filteredDylibs <- dylibFiles[!grepl("\\.(x64|Arm64)\\.dylib$", dylibFiles)]
       for (dylibFile in filteredDylibs) {
         dyn.load(dylibFile)
