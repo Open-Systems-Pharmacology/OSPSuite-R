@@ -7,10 +7,11 @@
     return()
   }
 
-  # Now verify that the package is running on R 64
-  isR64 <- R.version$arch == "x86_64"
-  if (!isR64) {
-    stop("64 bit version of R is required.")
+  # Check that the package is support by the user architecture
+  supportedArchitecture <- R.version$arch %in% c("x86_64", "aarch64")
+  if (!supportedArchitecture) {
+    stop("The processor architecture you are using is not supported by this
+         package. (only x86_64 and aarch64 are supported)")
   }
 
   .initPackage()

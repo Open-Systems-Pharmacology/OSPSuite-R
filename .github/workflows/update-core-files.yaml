@@ -1,4 +1,25 @@
 on:
+  workflow_call:
+    inputs:
+      branch_name:
+        description: 'Branch name for the PR (default: update-core-files-YYYYMMDD)'
+        required: false
+        default: ''
+        type: string
+      pr_title:
+        description: 'Title for the PR (default: Update Core Files)'
+        required: false
+        default: 'Update Core Files'
+        type: string
+      pr_body:
+        description: 'Body for the PR (default: Auto-generated PR to update core files)'
+        required: false
+        default: 'Auto-generated PR to update core files from PK-Sim dependencies'
+        type: string
+    secrets:
+      CORE_FILES_UPDATE_PAT:
+        description: 'GitHub PAT for updating core files'
+        required: true
   workflow_dispatch:
     inputs:
       branch_name:
@@ -7,9 +28,9 @@ on:
         default: ''
         type: string
       pr_title:
-        description: 'Title for the PR (default: 🤖 Update Core Files)'
+        description: 'Title for the PR (default: Update Core Files)'
         required: false
-        default: '🤖 Update Core Files'
+        default: 'Update Core Files'
         type: string
       pr_body:
         description: 'Body for the PR (default: Auto-generated PR to update core files)'
@@ -26,6 +47,9 @@ permissions:
 jobs:
   update-core-files:
     runs-on: ubuntu-latest
+    outputs:
+      branch_name: ${{ steps.changes.outputs.branch_name }}
+      has_changes: ${{ steps.changes.outputs.has_changes }}
     env:
       GITHUB_PAT: ${{ secrets.CORE_FILES_UPDATE_PAT }}
 
@@ -40,6 +64,11 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
 
       - name: Generate branch name
         id: branch_name
@@ -75,6 +104,7 @@ jobs:
             echo "has_changes=true" >> $GITHUB_OUTPUT
             echo "Changes detected in core files"
           fi
+          echo "branch_name=${{ steps.branch_name.outputs.name }}" >> $GITHUB_OUTPUT
 
       - name: Commit changes
         if: steps.changes.outputs.has_changes == 'true'
@@ -99,10 +129,10 @@ jobs:
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '${{ github.event.inputs.pr_title || "🤖 Update Core Files" }}',
+              title: '${{ github.event.inputs.pr_title }}' || 'Update Core Files',
               head: '${{ steps.branch_name.outputs.name }}',
               base: 'main',
-              body: `${{ github.event.inputs.pr_body || "Auto-generated PR to update core files from PK-Sim dependencies" }}
+              body: `${{ github.event.inputs.pr_body }}` || `Auto-generated PR to update core files from PK-Sim dependencies
 
               ## Changes
               - Updated PK-Sim R dependencies in \`inst/lib\`
@@ -110,7 +140,7 @@ jobs:
               - Triggered by: ${{ github.actor }}
 
               ## What this PR does
-              This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts.
+              This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts.`
             });
             
             console.log(`Created PR #${pr.number}: ${pr.html_url}`);
@@ -119,3 +149,99 @@ jobs:
         if: steps.changes.outputs.has_changes == 'false'
         run: |
           echo "No changes detected in core files. Nothing to commit or create PR for."
+
+  build-sqlite:
+    runs-on: macos-latest
+    needs: update-core-files
+    if: needs.update-core-files.outputs.has_changes == 'true'
+    env:
+      GITHUB_PAT: ${{ secrets.CORE_FILES_UPDATE_PAT }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CORE_FILES_UPDATE_PAT }}
+          ref: ${{ needs.update-core-files.outputs.branch_name }}
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Set up build directories
+        run: |
+          mkdir -p build
+          mkdir -p artifacts
+
+      - name: Download and extract SQLite source
+        run: |
+          wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/1.0.119.0/sqlite-netFx-source-1.0.119.0.zip"
+          unzip -o -d build build/sqlite-source.zip > /dev/null
+
+      - name: Build native library for arm64
+        run: |
+          INTEROP_SRC_ROOT="build/SQLite.Interop"
+          INTEROP_BUILD_DIR="build/interop-build-arm64"
+          mkdir -p "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
+          OUTPUT_DIR="artifacts/arm64"
+          mkdir -p "${OUTPUT_DIR}"
+          clang -arch arm64 -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
+              -dynamiclib \
+              -I "${INTEROP_SRC_ROOT}/src/core" \
+              -D "THREADSAFE=1" \
+              -D "SQLITE_OS_UNIX=1" \
+              -D "SQLITE_HAVE_USLEEP=1" \
+              -D "SQLITE_ENABLE_COLUMN_METADATA" \
+              -D "NDEBUG" \
+              "${INTEROP_BUILD_DIR}/interop.c"
+      
+      - name: Build native library for x86_64
+        run: |
+          INTEROP_SRC_ROOT="build/SQLite.Interop"
+          INTEROP_BUILD_DIR="build/interop-build-x86_64"
+          mkdir -p "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
+          OUTPUT_DIR="artifacts/x86_64"
+          mkdir -p "${OUTPUT_DIR}"
+          clang -arch x86_64 -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
+              -dynamiclib \
+              -I "${INTEROP_SRC_ROOT}/src/core" \
+              -D "THREADSAFE=1" \
+              -D "SQLITE_OS_UNIX=1" \
+              -D "SQLITE_HAVE_USLEEP=1" \
+              -D "SQLITE_ENABLE_COLUMN_METADATA" \
+              -D "NDEBUG" \
+              "${INTEROP_BUILD_DIR}/interop.c"
+
+      - name: Build managed library
+        run: |
+          MANAGED_SRC_ROOT="build/System.Data.SQLite"
+          PROJECT_FILE="${MANAGED_SRC_ROOT}/System.Data.SQLite.NetStandard21.csproj"
+          dotnet build "$PROJECT_FILE" -c Release --framework netstandard2.1
+          MANAGED_DLL_PATH=$(find "${MANAGED_SRC_ROOT}" -name "System.Data.SQLite.dll" -path "*/Release/*" | head -n 1)
+          cp "$MANAGED_DLL_PATH" "artifacts/"
+          cp "${MANAGED_DLL_PATH/%.dll/.pdb}" "artifacts/"
+
+      - name: Copy artifacts
+        run: |
+          mkdir -p inst/lib
+          cp artifacts/System.Data.SQLite.dll inst/lib/System.Data.SQLite.mac.dll
+          cp artifacts/arm64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.arm64.dylib
+          cp artifacts/x86_64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.x64.dylib
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add inst/lib
+          git commit -m "🤖 Add SQLite libraries for macOS
+
+          - Built SQLite interop libraries for ARM64 and x86_64
+          - Built System.Data.SQLite.dll for macOS
+          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          - Triggered by: ${{ github.actor }}"
+          git push origin ${{ needs.update-core-files.outputs.branch_name }}
