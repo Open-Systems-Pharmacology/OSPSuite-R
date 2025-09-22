@@ -153,9 +153,17 @@ jobs:
           mkdir -p build
           mkdir -p artifacts
 
+      - name: Extract SQLite version from deps.json
+        id: sqlite_version
+        run: |
+          SQLITE_VERSION=$(grep -o '"System.Data.SQLite.Core": "[^"]*"' inst/lib/ConsoleApp.deps.json | head -n1 | sed 's/.*": "//;s/"//')
+          echo "version=$SQLITE_VERSION" >> $GITHUB_OUTPUT
+          echo "Found SQLite version: $SQLITE_VERSION"
+
       - name: Download and extract SQLite source
         run: |
-          wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/1.0.119.0/sqlite-netFx-source-1.0.119.0.zip"
+          SQLITE_VERSION="${{ steps.sqlite_version.outputs.version }}"
+          wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/${SQLITE_VERSION}.0/sqlite-netFx-source-${SQLITE_VERSION}.0.zip"
           unzip -o -d build build/sqlite-source.zip > /dev/null
 
       - name: Build native library for arm64
@@ -221,6 +229,7 @@ jobs:
 
           - Built SQLite interop libraries for ARM64 and x86_64
           - Built System.Data.SQLite.dll for macOS
+          - SQLite version: ${{ steps.sqlite_version.outputs.version }} (from ConsoleApp.deps.json)
           - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
           - Triggered by: ${{ github.actor }}"
           git push origin ${{ needs.update-core-files.outputs.branch_name }}
