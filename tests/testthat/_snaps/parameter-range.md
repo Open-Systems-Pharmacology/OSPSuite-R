@@ -2,7 +2,7 @@
 
     Code
       paramRange$print()
-    Message
+    Output
       <ParameterRange>
         * Min: NULL
         * Max: NULL
