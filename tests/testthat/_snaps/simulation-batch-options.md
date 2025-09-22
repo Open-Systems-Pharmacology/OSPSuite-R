@@ -2,7 +2,7 @@
 
     Code
       batchOptions$print()
-    Message
+    Output
       <SimulationBatchOptions>
         * variableParameters: P1, P2
         * variableMolecules: M1, M2
