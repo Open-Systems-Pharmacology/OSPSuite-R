@@ -1,3 +1,24 @@
+test_that("User is stopped when trying to run simulations from snapshot as it is not supported on Mac", {
+  testthat::skip_on_os("windows")
+  testthat::skip_on_os("linux")
+
+  path <- getTestDataFilePath("test_snapshot.json")
+
+  temp_dir <- withr::local_tempdir()
+
+  expect_error(
+    runSimulationsFromSnapshot(
+      path,
+      output = temp_dir,
+      exportCSV = TRUE,
+      exportPKML = TRUE,
+      exportJSON = TRUE,
+      exportXML = TRUE
+    ),
+    "runSimulationsFromSnapshot is currently not supported on macOS."
+  )
+})
+
 testthat::skip_on_os("mac")
 
 test_that("Run simulation from snapshot works", {

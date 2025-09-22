@@ -20,7 +20,7 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    uses: .github/workflows/R-CMD-check.yaml
 
   test-coverage:
     if: ${{ !cancelled() }}
