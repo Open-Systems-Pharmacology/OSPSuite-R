@@ -2,7 +2,7 @@
 
     Code
       print(userDefinedPKParameter)
-    Message
+    Output
       <UserDefinedPKParameter>
         * Name: MyAUC
         * DisplayName: MyAUC

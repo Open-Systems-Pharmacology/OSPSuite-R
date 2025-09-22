@@ -2,7 +2,7 @@
 
     Code
       application$print()
-    Message
+    Output
       <Application>
         * Path: Applications|IV|Application_1
         * Start time: 10.00 [min]

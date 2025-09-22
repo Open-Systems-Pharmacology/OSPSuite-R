@@ -2,7 +2,7 @@
 
     Code
       print(individualCharacterstics)
-    Message
+    Output
       <IndividualCharacteristics>
         * Species: Human
         * Population: Japanese_Population
@@ -14,6 +14,5 @@
       
       -- Molecule Ontogenies --
       
-    Output
       [1] "Molecule 'MyProtein' with ontogeny 'CYP3A4'"
 
