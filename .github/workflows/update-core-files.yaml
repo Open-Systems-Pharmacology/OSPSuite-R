@@ -59,12 +59,11 @@ jobs:
       - name: Download and unzip core files
         run: |
           echo "Starting core files update..."
-          if ! source("update_core_files.R"); then
+          if ! Rscript update_core_files.R; then
             echo "Error: Failed to update core files"
             exit 1
           fi
           echo "Core files update completed successfully"
-        shell: Rscript {0}
 
       - name: Check if there are changes
         id: changes
