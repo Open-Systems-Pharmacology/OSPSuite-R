@@ -24,6 +24,12 @@ runSimulationsFromSnapshot <- function(
   exportJSON = FALSE,
   exportXML = FALSE
 ) {
+  if (Sys.info()[["sysname"]] == "Darwin") {
+    cli::cli_abort(
+      "runSimulationsFromSnapshot is currently not supported on macOS."
+    )
+  }
+
   ospsuite.utils::validateIsLogical(
     object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs)
   )
