@@ -115,7 +115,6 @@ jobs:
             
             console.log(`Created PR #${pr.number}: ${pr.html_url}`);
 
-# (Step removed: lines 119–157)
       - name: No changes message
         if: steps.changes.outputs.has_changes == 'false'
         run: |
