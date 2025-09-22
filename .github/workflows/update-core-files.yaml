@@ -1,25 +1,4 @@
 on:
-  workflow_call:
-    inputs:
-      branch_name:
-        description: 'Branch name for the PR (default: update-core-files-YYYYMMDD)'
-        required: false
-        default: ''
-        type: string
-      pr_title:
-        description: 'Title for the PR (default: Update Core Files)'
-        required: false
-        default: 'Update Core Files'
-        type: string
-      pr_body:
-        description: 'Body for the PR (default: Auto-generated PR to update core files)'
-        required: false
-        default: 'Auto-generated PR to update core files from PK-Sim dependencies'
-        type: string
-    secrets:
-      CORE_FILES_UPDATE_PAT:
-        description: 'GitHub PAT for updating core files'
-        required: true
   workflow_dispatch:
     inputs:
       branch_name:
