@@ -105,10 +105,10 @@ jobs:
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '${{ github.event.inputs.pr_title || "Update Core Files" }}',
+              title: '${{ github.event.inputs.pr_title || ''Update Core Files'' }}',
               head: '${{ steps.branch_name.outputs.name }}',
               base: 'main',
-              body: `${{ github.event.inputs.pr_body || "Auto-generated PR to update core files from PK-Sim dependencies" }}
+              body: `${{ github.event.inputs.pr_body || ''Auto-generated PR to update core files from PK-Sim dependencies'' }}
 
               ## Changes
               - Updated PK-Sim R dependencies in \`inst/lib\`
