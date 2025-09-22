@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.3.1.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.3.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,10 +176,36 @@ from PK-Sim or MoBi):</p>
 <span><span class="co"># Find parameters using wildcards</span></span>
 <span><span class="fu"><a href="../reference/getAllParametersMatching.html">getAllParametersMatching</a></span><span class="op">(</span><span class="st">"**|Dose*"</span>, <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isConstant: TRUE</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Applications|IV 250mg</span></span>
+<span><span class="co">#&gt;   10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea</span></span>
+<span><span class="co">#&gt;   • Value: 0.00e+00 [kg/dm²]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isConstant: TRUE</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
+<span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
+<span><span class="co">#&gt;   • Path: Applications|IV 250mg</span></span>
+<span><span class="co">#&gt;   10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight</span></span>
+<span><span class="co">#&gt;   • Value: 0.00e+00 [kg/kg]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   • isConstant: TRUE</span></span>
 <span></span>
 <span><span class="co"># Or search for specific terms</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"Dose"</span>, <span class="fu"><a href="../reference/getAllParameterPathsIn.html">getAllParameterPathsIn</a></span><span class="op">(</span>container <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -319,6 +345,11 @@ selecting “Copy Path”.</p>
 <span></span>
 <span><span class="co"># Examine the results structure</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
+<span><span class="co">#&gt;   • Number of individuals: 1</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
+<span><span class="co">#&gt;   • Organism|Lumen|Stomach|Aciclovir</span></span>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
 <span></span>
 <span><span class="co"># Extract specific concentration-time data</span></span>
 <span><span class="va">plasmaConc</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getValuesByPath</span><span class="op">(</span></span>
