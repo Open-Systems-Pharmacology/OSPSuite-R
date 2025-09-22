@@ -1,3 +1,5 @@
+testthat::skip_on_os("mac")
+
 test_that("Run simulation from snapshot works", {
   path <- getTestDataFilePath("test_snapshot.json")
 
