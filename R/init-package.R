@@ -53,7 +53,7 @@
         stop("Unknown architecture: ", machine)
       }
 
-      # Copy the appropriate SQLite.Interop file to it generic name
+      # Copy the appropriate SQLite.Interop file to its generic name
       sourcePath <- file.path(libDir, sourceFile)
       file.copy(sourcePath, targetPath, overwrite = TRUE)
 
