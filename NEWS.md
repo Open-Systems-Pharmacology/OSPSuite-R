@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)
+
 # ospsuite 12.3.2
 
 ## Minor improvements and bug fixes
@@ -11,8 +15,8 @@
 ## Minor improvements and bug fixes
 
 - Fixed tests expectations for better compatibility with latest version of
-  `{ospsuite.utils}` package. #1570
-- Revised "get started" (https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) documentation page to make it more accesible to new users. #1571
+  `{ospsuite.utils}` package. (\#1570)
+- Revised "get started" (https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) documentation page to make it more accesible to new users. (\#1571)
 
 # ospsuite 12.3.0
 

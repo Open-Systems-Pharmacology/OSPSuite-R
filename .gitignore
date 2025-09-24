@@ -51,3 +51,11 @@ doc
 
 # test artifacts
 tests/testthat/*.pdf
+
+# Files renamed during package load (on macos)
+inst/lib/SQLite.Interop.dll.dylib
+inst/lib/System.Data.SQLite.dll
+inst/lib/libOSPSuite.FuncParserNative.dylib
+inst/lib/libOSPSuite.SimModelNative.dylib
+inst/lib/libOSPSuite.SimModelSolver_CVODES.dylib
+

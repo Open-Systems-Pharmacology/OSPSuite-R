@@ -15,3 +15,20 @@ unzip(
 )
 
 file.remove("pk-sim-r-dependencies_artefact.zip", "pk-sim-r-dependencies.zip")
+
+# Rename System.Data.SQLite.dll to System.Data.SQLite.windows_linux.dll
+# This file will be renamed back to System.Data.SQLite.dll on package load for Windows/Linux
+sqlite_dll_path <- file.path("inst/lib", "System.Data.SQLite.dll")
+sqlite_windows_linux_path <- file.path(
+  "inst/lib",
+  "System.Data.SQLite.windows_linux.dll"
+)
+
+if (file.exists(sqlite_dll_path)) {
+  file.rename(sqlite_dll_path, sqlite_windows_linux_path)
+  cat(
+    "Renamed System.Data.SQLite.dll to System.Data.SQLite.windows_linux.dll\n"
+  )
+} else {
+  stop("System.Data.SQLite.dll not found in inst/lib")
+}
