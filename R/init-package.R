@@ -21,7 +21,7 @@
     if (Sys.info()[["sysname"]] == "Darwin") {
       "System.Data.SQLite.mac.dll"
     } else {
-      "System.Data.SQLite.others.dll"
+      "System.Data.SQLite.windows_linux.dll"
     }
   )
   file.copy(sourceDll, targetDll, overwrite = TRUE)
@@ -50,15 +50,12 @@
       } else if (machine == "x86_64") {
         "SQLite.Interop.x64.dylib"
       } else {
-        NULL # Unknown architecture
+        stop("Unknown architecture: ", machine)
       }
 
-      if (!is.null(sourceFile)) {
-        sourcePath <- file.path(libDir, sourceFile)
-        if (file.exists(sourcePath)) {
-          file.copy(sourcePath, targetPath, overwrite = TRUE)
-        }
-      }
+      # Copy the appropriate SQLite.Interop file to it generic name
+      sourcePath <- file.path(libDir, sourceFile)
+      file.copy(sourcePath, targetPath, overwrite = TRUE)
 
       # Setup architecture-specific native libraries
       nativeLibraries <- c(
@@ -74,17 +71,12 @@
         } else if (machine == "x86_64") {
           paste0(libName, ".x64.dylib")
         } else {
-          NULL # Unknown architecture
+          stop("Unknown architecture: ", machine)
         }
-
-        if (!is.null(sourceFile)) {
-          sourcePath <- file.path(libDir, sourceFile)
-          targetPath <- file.path(libDir, paste0(libName, ".dylib"))
-
-          if (file.exists(sourcePath)) {
-            file.copy(sourcePath, targetPath, overwrite = TRUE)
-          }
-        }
+        # Copy the appropriate file to its generic name
+        sourcePath <- file.path(libDir, sourceFile)
+        targetPath <- file.path(libDir, paste0(libName, ".dylib"))
+        file.copy(sourcePath, targetPath, overwrite = TRUE)
       }
 
       # Load macOS dynamic libraries (.dylib)

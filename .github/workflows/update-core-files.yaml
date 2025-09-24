@@ -89,7 +89,7 @@ jobs:
         if: steps.changes.outputs.has_changes == 'true'
         run: |
           git add inst/lib
-          git commit -m "🤖 Update Core Files
+          git commit -m "Update Core Files
 
           - Updated PK-Sim R dependencies
           - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
@@ -166,43 +166,27 @@ jobs:
           wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/${SQLITE_VERSION}.0/sqlite-netFx-source-${SQLITE_VERSION}.0.zip"
           unzip -o -d build build/sqlite-source.zip > /dev/null
 
-      - name: Build native library for arm64
+      - name: Build native libraries for both architectures
         run: |
-          INTEROP_SRC_ROOT="build/SQLite.Interop"
-          INTEROP_BUILD_DIR="build/interop-build-arm64"
-          mkdir -p "${INTEROP_BUILD_DIR}"
-          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
-          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
-          OUTPUT_DIR="artifacts/arm64"
-          mkdir -p "${OUTPUT_DIR}"
-          clang -arch arm64 -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
-              -dynamiclib \
-              -I "${INTEROP_SRC_ROOT}/src/core" \
-              -D "THREADSAFE=1" \
-              -D "SQLITE_OS_UNIX=1" \
-              -D "SQLITE_HAVE_USLEEP=1" \
-              -D "SQLITE_ENABLE_COLUMN_METADATA" \
-              -D "NDEBUG" \
-              "${INTEROP_BUILD_DIR}/interop.c"
-      
-      - name: Build native library for x86_64
-        run: |
-          INTEROP_SRC_ROOT="build/SQLite.Interop"
-          INTEROP_BUILD_DIR="build/interop-build-x86_64"
-          mkdir -p "${INTEROP_BUILD_DIR}"
-          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
-          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
-          OUTPUT_DIR="artifacts/x86_64"
-          mkdir -p "${OUTPUT_DIR}"
-          clang -arch x86_64 -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
-              -dynamiclib \
-              -I "${INTEROP_SRC_ROOT}/src/core" \
-              -D "THREADSAFE=1" \
-              -D "SQLITE_OS_UNIX=1" \
-              -D "SQLITE_HAVE_USLEEP=1" \
-              -D "SQLITE_ENABLE_COLUMN_METADATA" \
-              -D "NDEBUG" \
-              "${INTEROP_BUILD_DIR}/interop.c"
+          for arch in arm64 x86_64; do
+            echo "Building for architecture: $arch"
+            INTEROP_SRC_ROOT="build/SQLite.Interop"
+            INTEROP_BUILD_DIR="build/interop-build-${arch}"
+            mkdir -p "${INTEROP_BUILD_DIR}"
+            cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
+            cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
+            OUTPUT_DIR="artifacts/${arch}"
+            mkdir -p "${OUTPUT_DIR}"
+            clang -arch ${arch} -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
+                -dynamiclib \
+                -I "${INTEROP_SRC_ROOT}/src/core" \
+                -D "THREADSAFE=1" \
+                -D "SQLITE_OS_UNIX=1" \
+                -D "SQLITE_HAVE_USLEEP=1" \
+                -D "SQLITE_ENABLE_COLUMN_METADATA" \
+                -D "NDEBUG" \
+                "${INTEROP_BUILD_DIR}/interop.c"
+          done
 
       - name: Build managed library
         run: |
@@ -225,7 +209,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add inst/lib
-          git commit -m "🤖 Add SQLite libraries for macOS
+          git commit -m "Add SQLite libraries for macOS
 
           - Built SQLite interop libraries for ARM64 and x86_64
           - Built System.Data.SQLite.dll for macOS
