@@ -1,4 +1,8 @@
-# ospsuite (development version)
+# ospsuite 12.3.2
+
+## Minor improvements and bug fixes
+
+- OSPSuite binaries were updated to match OSPSuite v12.1 release.
 
 # ospsuite 12.3.1
 
