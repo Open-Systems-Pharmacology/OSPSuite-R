@@ -134,10 +134,57 @@ dataSetToDataFrame <- function(dataSets) {
 
 
 #' @rdname dataSetToDataFrame
+#' @param names Optional character vector of custom names to assign to the datasets.
+#'   If provided, must have the same length as the number of DataSet objects.
+#'   This allows renaming datasets, which is particularly useful when multiple
+#'   datasets have the same original name.
+#' @examples
+#' # Create datasets with duplicate names
+#' ds1 <- DataSet$new(name = "Obs")
+#' ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+#'
+#' ds2 <- DataSet$new(name = "Obs")
+#' ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+#'
+#' # Convert to tibble with custom names
+#' tibble_data <- dataSetToTibble(list(ds1, ds2), names = c("Study1", "Study2"))
+#' unique(tibble_data$name) # Returns c("Study1", "Study2")
 #'
 #' @export
-dataSetToTibble <- function(dataSets) {
+dataSetToTibble <- function(dataSets, names = NULL) {
+  # Store the original dataSets before conversion for naming logic
+  originalDataSets <- dataSets
+
   obsData <- dataSetToDataFrame(dataSets)
+
+  # Apply custom naming if provided
+  if (!is.null(names)) {
+    # Ensure dataSets is a list/vector for consistent handling
+    originalDataSets <- c(originalDataSets)
+
+    # Get the original dataset names from the input
+    original_names <- vapply(originalDataSets, function(ds) ds$name, character(1))
+
+    # Validate names length matches number of datasets
+    if (length(names) != length(original_names)) {
+      stop(sprintf(
+        "Length of 'names' (%d) must match number of datasets (%d)",
+        length(names), length(original_names)
+      ))
+    }
+
+    # Apply renaming - each row gets renamed based on its position in the original dataset list
+    # We need to handle this row by row since datasets can have multiple rows
+    current_row <- 1
+    for (i in seq_along(originalDataSets)) {
+      n_rows <- length(originalDataSets[[i]]$xValues)
+      if (n_rows > 0) {
+        rows_to_update <- current_row:(current_row + n_rows - 1)
+        obsData$name[rows_to_update] <- names[i]
+        current_row <- current_row + n_rows
+      }
+    }
+  }
 
   # consistently return a tibble data frame
   return(dplyr::as_tibble(obsData))
