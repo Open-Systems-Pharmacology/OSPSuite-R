@@ -1,5 +1,7 @@
 # ospsuite (development version)
 
+HALLOOO
+
 ## Major changes
 
 - Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)
