@@ -159,9 +159,7 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 
   # Apply custom naming if provided
   if (!is.null(names)) {
-    # Ensure dataSets is a list/vector for consistent handling
-    originalDataSets <- c(originalDataSets)
-
+    # originalDataSets is already a list/vector from c(dataSets)
     # Get the original dataset names from the input
     original_names <- vapply(originalDataSets, function(ds) ds$name, character(1))
 
@@ -173,17 +171,9 @@ dataSetToTibble <- function(dataSets, names = NULL) {
       ))
     }
 
-    # Apply renaming - each row gets renamed based on its position in the original dataset list
-    # We need to handle this row by row since datasets can have multiple rows
-    current_row <- 1
-    for (i in seq_along(originalDataSets)) {
-      n_rows <- length(originalDataSets[[i]]$xValues)
-      if (n_rows > 0) {
-        rows_to_update <- current_row:(current_row + n_rows - 1)
-        obsData$name[rows_to_update] <- names[i]
-        current_row <- current_row + n_rows
-      }
-    }
+    # Vectorized renaming using rep() for better performance
+    n_rows_per_dataset <- vapply(originalDataSets, function(ds) length(ds$xValues), integer(1))
+    obsData$name <- rep(names, times = n_rows_per_dataset)
   }
 
   # consistently return a tibble data frame
