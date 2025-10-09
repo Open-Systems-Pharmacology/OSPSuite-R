@@ -570,13 +570,8 @@ DataCombined <- R6::R6Class(
     .dataSetToDataFrame = function(dataSets, names = NULL) {
       # `dataSetToTibble()` function can extract a tibble data frame from a
       # scalar, a vector, or a list of `DataSet` class instances.
-      obsData <- dataSetToTibble(dataSets)
-
-      # Rename, if specific names are provided
-      if (!is.null(names)) {
-        new_names <- setNames(names, unique(obsData$name))
-        obsData$name <- unname(new_names[as.character(obsData$name)])
-      }
+      # Now passing names directly to dataSetToTibble for renaming
+      obsData <- dataSetToTibble(dataSets, names = names)
 
       # Set type of data
       obsData$dataType <- "observed"

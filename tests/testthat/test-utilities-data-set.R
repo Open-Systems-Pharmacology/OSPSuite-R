@@ -314,3 +314,127 @@ test_that("It can convert an empty data set", {
     )
   )
 })
+
+# Tests for the new names parameter in dataSetToTibble
+test_that("dataSetToTibble works with custom names for single dataset", {
+  ds1 <- DataSet$new(name = "Original")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  result <- dataSetToTibble(ds1, names = "Custom")
+
+  expect_equal(unique(result$name), "Custom")
+  expect_equal(nrow(result), 2)
+})
+
+test_that("dataSetToTibble works with custom names for multiple datasets", {
+  ds1 <- DataSet$new(name = "Dataset1")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds2 <- DataSet$new(name = "Dataset2")
+  ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+
+  result <- dataSetToTibble(list(ds1, ds2), names = c("Study1", "Study2"))
+
+  expect_equal(sort(unique(result$name)), c("Study1", "Study2"))
+  expect_equal(nrow(result), 4)
+  expect_equal(result$name[1:2], c("Study1", "Study1"))
+  expect_equal(result$name[3:4], c("Study2", "Study2"))
+})
+
+test_that("dataSetToTibble handles datasets with duplicate names", {
+  ds1 <- DataSet$new(name = "SameName")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds2 <- DataSet$new(name = "SameName")
+  ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+
+  # Without custom names, both have same name
+  result_no_rename <- dataSetToTibble(list(ds1, ds2))
+  expect_equal(unique(result_no_rename$name), "SameName")
+
+  # With custom names, they get renamed properly
+  result_renamed <- dataSetToTibble(list(ds1, ds2), names = c("First", "Second"))
+  expect_equal(sort(unique(result_renamed$name)), c("First", "Second"))
+  expect_equal(result_renamed$name[1:2], c("First", "First"))
+  expect_equal(result_renamed$name[3:4], c("Second", "Second"))
+})
+
+test_that("dataSetToTibble with NULL names parameter (backward compatibility)", {
+  ds1 <- DataSet$new(name = "TestData")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  # NULL names should work exactly as before
+  result <- dataSetToTibble(ds1, names = NULL)
+  expect_equal(unique(result$name), "TestData")
+
+  # No names parameter should also work
+  result2 <- dataSetToTibble(ds1)
+  expect_identical(result, result2)
+})
+
+test_that("dataSetToTibble errors when names length doesn't match datasets", {
+  ds1 <- DataSet$new(name = "Data1")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds2 <- DataSet$new(name = "Data2")
+  ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+
+  # Too few names
+  expect_error(
+    dataSetToTibble(list(ds1, ds2), names = c("OnlyOne")),
+    "Length of 'names' \\(1\\) must match number of datasets \\(2\\)"
+  )
+
+  # Too many names
+  expect_error(
+    dataSetToTibble(list(ds1, ds2), names = c("One", "Two", "Three")),
+    "Length of 'names' \\(3\\) must match number of datasets \\(2\\)"
+  )
+})
+
+test_that("dataSetToTibble handles empty datasets with custom names", {
+  ds1 <- DataSet$new(name = "Empty1")
+  ds2 <- DataSet$new(name = "Empty2")
+
+  result <- dataSetToTibble(list(ds1, ds2), names = c("Custom1", "Custom2"))
+
+  # Should return empty tibble but with no rows
+  expect_equal(nrow(result), 0)
+  expect_s3_class(result, "tbl_df")
+})
+
+test_that("dataSetToTibble handles mixed empty and non-empty datasets", {
+  ds1 <- DataSet$new(name = "Empty")
+
+  ds2 <- DataSet$new(name = "NotEmpty")
+  ds2$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds3 <- DataSet$new(name = "AlsoEmpty")
+
+  result <- dataSetToTibble(
+    list(ds1, ds2, ds3),
+    names = c("FirstEmpty", "HasData", "SecondEmpty")
+  )
+
+  # Only the non-empty dataset should contribute rows
+  expect_equal(nrow(result), 2)
+  expect_equal(unique(result$name), "HasData")
+  expect_equal(result$xValues, c(1, 2))
+})
+
+test_that("dataSetToTibble preserves data integrity with custom names", {
+  ds1 <- DataSet$new(name = "Original")
+  ds1$setValues(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    yErrorValues = c(1, 2, 3)
+  )
+
+  result <- dataSetToTibble(ds1, names = "Renamed")
+
+  # Check that only the name changed, all other data preserved
+  expect_equal(result$name, rep("Renamed", 3))
+  expect_equal(result$xValues, c(1, 2, 3))
+  expect_equal(result$yValues, c(10, 20, 30), tolerance = 1e-6)
+  expect_equal(result$yErrorValues, c(1, 2, 3), tolerance = 1e-6)
+})
