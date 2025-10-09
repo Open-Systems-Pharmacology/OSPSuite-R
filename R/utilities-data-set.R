@@ -153,15 +153,22 @@ dataSetToDataFrame <- function(dataSets) {
 #' @export
 dataSetToTibble <- function(dataSets, names = NULL) {
   # Store the original dataSets before conversion for naming logic
-  originalDataSets <- dataSets
+  # Ensure originalDataSets is always a list/vector for consistent handling
+  originalDataSets <- c(dataSets)
 
   obsData <- dataSetToDataFrame(dataSets)
 
   # Apply custom naming if provided
   if (!is.null(names)) {
-    # originalDataSets is already a list/vector from c(dataSets)
     # Get the original dataset names from the input
-    original_names <- vapply(originalDataSets, function(ds) ds$name, character(1))
+    # Handle case where dataset might not have a name property
+    original_names <- vapply(originalDataSets, function(ds) {
+      if (!is.null(ds$name)) {
+        return(ds$name)
+      } else {
+        return("")
+      }
+    }, character(1))
 
     # Validate names length matches number of datasets
     if (length(names) != length(original_names)) {
