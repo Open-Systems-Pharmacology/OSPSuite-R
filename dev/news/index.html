@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.3.2.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.3.2.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,10 @@
 <div class="section level3">
 <h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
 <ul><li>Added support for macOS (both Intel and Apple Silicon architectures). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621" class="external-link">#1621</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<ul><li>Added optional <code>names</code> parameter to <code><a href="../reference/dataSetToDataFrame.html">dataSetToTibble()</a></code> function to support custom naming of datasets. This is particularly useful when multiple datasets have the same original name. The naming logic has been moved from the private <code>.dataSetToDataFrame()</code> method in <code>DataCombined</code> to <code><a href="../reference/dataSetToDataFrame.html">dataSetToTibble()</a></code> for better code reuse and maintainability. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1627" class="external-link">#1627</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
