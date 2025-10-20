@@ -17,9 +17,9 @@
   RSQLite::dbWriteTable(con, viewName, viewData, overwrite = TRUE)
 }
 
-#' Fix macOS SQLite database if needed
+#' Fix macOS ARM64 SQLite database if needed
 #'
-#' On macOS, certain VIEWs with complex JOINs cause stack overflow in SQLite
+#' On macOS ARM64 (Apple Silicon), certain VIEWs with complex JOINs cause stack overflow in SQLite
 #' due to limited P/Invoke stack size. This function converts those VIEWs to
 #' TABLEs on first load and caches the result.
 #'
@@ -27,8 +27,13 @@
 #' @return Logical indicating whether the fix was applied or already present
 #' @keywords internal
 .fixMacOSDatabaseIfNeeded <- function(dbPath) {
-  # Only apply fix on macOS
+  # Only apply fix on macOS ARM64 (Apple Silicon)
   if (Sys.info()[["sysname"]] != "Darwin") {
+    return(FALSE)
+  }
+  
+  # Check if we're on ARM64 (Apple Silicon) architecture
+  if (Sys.info()[["machine"]] != "arm64") {
     return(FALSE)
   }
 
