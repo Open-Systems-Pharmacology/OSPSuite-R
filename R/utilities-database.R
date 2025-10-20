@@ -31,9 +31,18 @@
   if (Sys.info()[["sysname"]] != "Darwin") {
     return(FALSE)
   }
-  
+
   # Check if we're on ARM64 (Apple Silicon) architecture
   if (Sys.info()[["machine"]] != "arm64") {
+    return(FALSE)
+  }
+
+  # Check if RSQLite is available (it's in Suggests)
+  if (!requireNamespace("RSQLite", quietly = TRUE)) {
+    warning(
+      "RSQLite package is required for macOS ARM64 SQLite fix but is not installed. ",
+      "Install with: install.packages('RSQLite')"
+    )
     return(FALSE)
   }
 
@@ -48,7 +57,6 @@
 
     # If database is newer than marker, the database was updated - remove marker and backup
     if (dbTime > markerTime) {
-      message("PK-Sim database has been updated. Applying fix for macOS.")
       unlink(markerFile)
       # Remove old backup so we create a fresh one
       if (file.exists(backupPath)) {
@@ -105,12 +113,9 @@
   }
 
   # Apply the fix
-  message("Applying macOS SQLite fix to PKSimDB.sqlite (first load only)...")
-
   # Create backup of original database before applying fix (for testing)
   if (!file.exists(backupPath)) {
     file.copy(dbPath, backupPath, overwrite = FALSE)
-    message("Created backup of original database: ", basename(backupPath))
   }
 
   tryCatch(
@@ -153,7 +158,6 @@
         markerFile
       )
 
-      message("macOS SQLite fix applied successfully")
       return(TRUE)
     },
     error = function(e) {

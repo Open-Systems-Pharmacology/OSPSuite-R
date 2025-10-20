@@ -36,9 +36,9 @@ Imports:
     lifecycle,
     cli,
     rSharp,
-    showtext,
-    RSQLite
+    showtext
 Suggests:
+    RSQLite,
     pacman,
     knitr,
     rmarkdown,
