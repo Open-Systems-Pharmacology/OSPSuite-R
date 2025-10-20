@@ -36,7 +36,8 @@ Imports:
     lifecycle,
     cli,
     rSharp,
-    showtext
+    showtext,
+    RSQLite
 Suggests:
     pacman,
     knitr,
@@ -120,6 +121,7 @@ Collate:
     'utilities-data-importer-configuration.R'
     'utilities-data-repository.R'
     'utilities-data-set.R'
+    'utilities-database.R'
     'utilities-dot-net.R'
     'utilities-entity.R'
     'utilities-file.R'

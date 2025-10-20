@@ -26,21 +26,25 @@ Pharmacology Software tools PK-Sim and MoBi.
 
 # Documentation
 
-If you are reading this on GitHub README, please refer to the [online
-documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/)
-for more details on the package.
+For complete documentation, see the [online
+documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
-In particular, we would recommend that you read the articles in the
-following order:
+## Essential Guides
+
+**Essential guides:**
 
 - [Get
-  Started](ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html)
+  Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) -
+  Complete beginner tutorial with working examples
 - [Loading a simulation and accessing
   entities](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html)
 - [Changing parameter and molecule start
   values](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html)
 - [Running a
   simulation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html)
+
+**For advanced workflows:**
+
 - [Efficient
   calculations](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html)
 - [Creating
@@ -51,34 +55,40 @@ following order:
   Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html)
 - [Sensitivity
   analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html)
-- [Table
-  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
-- [Dimensions and
-  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+
+**Data handling and visualization:**
+
 - [Working with data sets and import from
   excel](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html)
 - [Working with `DataCombined`
   class](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html)
 - [Visualizations with
   `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html)
+
+**Reference:**
+
+- [Dimensions and
+  Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
+- [Table
+  parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
 - [PK-Sim
   Installation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html)
 
 # Installation
 
-The **ospsuite** package is compatible with R version 4.x.x and can be
-used on [Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
+The **ospsuite** package requires R version 4.x.x and supports
+[Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
 systems.
 
-`ospsuite` is not available on CRAN and also depends on packages from
-the OSP ecosystem that are not available on CRAN. Please follow the
-instructions below to install the packages and all required
-dependencies.
+`ospsuite` is not available on CRAN and depends on packages from the OSP
+ecosystem that are not available on CRAN. Follow the instructions below
+to install the package and all required dependencies.
 
 ## Pre-requisites
 
-As `{ospsuite}` relies on `{rSharp}`, install its external dependencies
-(Visual C++ Redistributable and .NET 8) by following these instructions:
+The `{ospsuite}` package requires `{rSharp}` and its external
+dependencies (Visual C++ Redistributable and .NET 8). Install these
+dependencies using the following instructions:
 
 - [For
   Windows](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#prerequisites)
@@ -87,16 +97,16 @@ As `{ospsuite}` relies on `{rSharp}`, install its external dependencies
 
 ## From GitHub (recommended)
 
-The latest released version of the package can be installed from GitHub
-using the `{remotes}` package. The code below will download and install
-all the required dependencies.
+Install the latest released version from GitHub using the `{remotes}`
+package. This installation method downloads and installs all required
+dependencies.
 
 ``` r
 install.packages("remotes")
 remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
 ```
 
-Get the latest development version with:
+To install the latest development version:
 
 ``` r
 install.packages("remotes")
@@ -105,30 +115,33 @@ remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R")
 
 ## From package archive files (Deprecated)
 
-It is also possible to install manually from archive pre-built archive
-files provided with the
-[release](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
+Install manually from pre-built archive files available in the
+[releases](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 
 #### Install CRAN dependencies
 
-When installing from such files, the CRAN dependencies need to be
-installed manually first.
+Installing from archive files requires manual installation of CRAN
+dependencies first.
 
 ``` r
 # Install dependencies (e.g. R6) which are on CRAN
 install.packages("cli")
+install.packages("crayon")
 install.packages("data.table")
 install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("ggtext")
+install.packages("glue")
 install.packages("jsonlite")
 install.packages("lifecycle")
+install.packages("logger")
 install.packages("openxlsx")
 install.packages("patchwork")
 install.packages("purrr")
 install.packages("R6")
 install.packages("readr")
 install.packages("rlang")
+install.packages("RSQLite")
 install.packages("showtext")
 install.packages("stringi")
 install.packages("stringr")
@@ -138,53 +151,57 @@ install.packages("xml2")
 
 #### Install non-CRAN dependencies
 
-Each of the pre-built released packages are available as a a binary
-`*.zip`. OSPSuite-R binary archive can be downloaded from
-[here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
-The other non-CRAN dependencies needed for OSPSuite-R also have to be
-downloaded and manually installed:
+Pre-built packages are available as binary files (*.zip for Windows,
+*.tar.gz for Linux) Download the OSPSuite-R binary archive from the
+[releases
+page](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
+Download and install these additional non-CRAN dependencies:
 
 - [`{rSharp}`](https://github.com/Open-Systems-Pharmacology/rSharp/releases/latest)
 - [`{ospuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest)
 - [`{tlf}`](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
 
-If you use [RStudio IDE](https://www.rstudio.com/), you can use the
-*Install* option in the *Packages* pane and select the option *Install
-from -\> Package Archive File* to install a package from binary `*.zip`
-files.
+In [RStudio IDE](https://www.rstudio.com/), use the *Install* option in
+the *Packages* pane and select *Install from -\> Package Archive File*
+to install packages from binary files.
 
-**NB**: The CRAN dependencies of `{rSharp}`, `{ospuite.utils}` and
-`{tlf}` were already installed during the previous step.
+**Note**: CRAN dependencies for `{rSharp}`, `{ospuite.utils}`, and
+`{tlf}` were installed in the previous step.
 
 ``` r
-# Install `{rSharp}` from local file 
-# (`pathTo_rSharp.zip` here should be replaced with the actual path to the `.zip` file)
+# Install rSharp from local file 
+# Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_rSharp.zip, repos = NULL)
 
-# Install `{ospsuite.utils}` from local file
-# (`pathTo_ospsuite.utils.zip` here should be replaced with the actual path to the `.zip` file)
+# Install ospsuite.utils from local file
+# Replace pathTo_ospsuite.utils.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_ospsuite.utils.zip, repos = NULL)
 
-# Install `{tlf}` from local file
-# (`pathTo_tlf.zip` here should be replaced with the actual path to the `.zip` file)
+# Install tlf from local file
+# Replace pathTo_tlf.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_tlf.zip, repos = NULL)
 
-# Install `{ospsuite}` from local file
-# (`pathToOSPSuite.zip` here should be replaced with the actual path to the `.zip` file)
+# Install ospsuite from local file
+# Replace pathToOSPSuite.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_OSPSuite.zip, repos = NULL)
 ```
 
 # Known issues
 
-## Loading `ospsuite` might fail if your systems locale is not set to English
+## Loading `ospsuite` might fail if the system locale is not set to English
 
 - On Windows, set
   `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
   to `English (United States)` and reboot.
 
-- On Linux, set the environment variable `LC_ALL` before starting R:
+- On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before
+  starting R:
 
   `export LC_ALL=en_US.UTF-8`
+
+- add the path to the lib subfolder of installed ospsuite package to
+  LD_LIBRARY_PATH
+  `export LD_LIBRARY_PATH=/usr/local/lib/R/site-library/ospsuite/lib/:$LD_LIBRARY_PATH`
 
 ## Saving and loading the workspace in RStudio does not restore objects
 
@@ -196,26 +213,26 @@ cannot be re-used.
 
 # Development
 
-## Embeded binaries
+## Embedded binaries
 
-The `{ospsuite}` package requires some shared libraries to get access to
-PK-Sim functionality. To get the latest libraries(**.dll** on Windows or
-**.so** on Linux), run the script file `update_core_files.R` provided
-with this package.
+The `{ospsuite}` package requires shared libraries to access PK-Sim
+functionality. To obtain the latest libraries (**.dll** on Windows or
+**.so** on Linux), run the `update_core_files.R` script included with
+this package.
 
-Since `{ospsuite}` contains this binary files, it is considered as a
-binary package and thus cannot be submitted to CRAN in this state.
+Because `{ospsuite}` contains binary files, it is classified as a binary
+package and cannot be submitted to CRAN.
 
-## Versionning
+## Versioning
 
 The package follows the versioning process described in the [OSP R
 collaboration
 guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions).
 
-For development version, each time a pull request is merged, [this
-github
+For development versions, [this GitHub
 action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
-automatically bumps the `.9000` version suffix by one.
+automatically increments the `.9000` version suffix when pull requests
+are merged.
 
 # Code of Conduct
 
@@ -226,13 +243,12 @@ conduct](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CODE_OF_
 
 # Contribution
 
-We encourage contribution to the Open Systems Pharmacology community.
-Before getting started please read the [contribution
+Contributions to the Open Systems Pharmacology community are welcome.
+Before contributing, read the [contribution
 guidelines](https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md).
-If you are contributing to the codebase, please be familiar with the [R
-coding
+Code contributors should follow the [R coding
 standards](https://dev.open-systems-pharmacology.org/r-development-resources/coding_standards_r)
-as well as the [collaboration
+and [collaboration
 guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide).
 
 # License

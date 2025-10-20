@@ -59,3 +59,22 @@ inst/lib/libOSPSuite.FuncParserNative.dylib
 inst/lib/libOSPSuite.SimModelNative.dylib
 inst/lib/libOSPSuite.SimModelSolver_CVODES.dylib
 
+# macOS SQLite fix marker (created after applying VIEW->TABLE conversions)
+inst/lib/PKSimDB.sqlite.macos-fixed
+
+# macOS Development Setup
+# ------------------------
+# The package automatically fixes a SQLite compatibility issue on first load
+# by modifying PKSimDB.sqlite. To prevent git from tracking these local changes,
+# run this once after cloning the repository:
+#
+#   git update-index --skip-worktree inst/lib/PKSimDB.sqlite
+#
+# The fix is automatically re-applied when the database file's modification date
+# is newer than the marker file (indicating a database update from CI).
+#
+# To temporarily check database status:
+#   git update-index --no-skip-worktree inst/lib/PKSimDB.sqlite
+#   git status inst/lib/PKSimDB.sqlite
+#   git update-index --skip-worktree inst/lib/PKSimDB.sqlite
+

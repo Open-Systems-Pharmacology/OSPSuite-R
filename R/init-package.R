@@ -91,6 +91,9 @@
     }
   }
 
+  # Fix macOS SQLite database if needed (first load only)
+  .fixMacOSDatabaseIfNeeded(filePathFor("PKSimDB.sqlite"))
+
   # Initialize .NET bindings
   rSharp::loadAssembly(filePathFor("OSPSuite.R.dll"))
 
