@@ -59,8 +59,9 @@ inst/lib/libOSPSuite.FuncParserNative.dylib
 inst/lib/libOSPSuite.SimModelNative.dylib
 inst/lib/libOSPSuite.SimModelSolver_CVODES.dylib
 
-# macOS SQLite fix marker (created after applying VIEW->TABLE conversions)
+# macOS SQLite fix files (created after applying VIEW->TABLE conversions)
 inst/lib/PKSimDB.sqlite.macos-fixed
+inst/lib/PKSimDB.sqlite.original
 
 # macOS Development Setup
 # ------------------------

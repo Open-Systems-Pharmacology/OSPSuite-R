@@ -1,3 +1,22 @@
+#' Convert a SQLite VIEW to a TABLE in place
+#'
+#' Reads all data from a VIEW, drops the VIEW, and recreates it as a TABLE
+#' with the same data.
+#'
+#' @param con SQLite database connection
+#' @param viewName Name of the VIEW to convert
+#' @keywords internal
+.convertViewToTable <- function(con, viewName) {
+  # Read all data from the VIEW
+  viewData <- RSQLite::dbReadTable(con, viewName)
+
+  # Drop the VIEW
+  RSQLite::dbExecute(con, sprintf("DROP VIEW [%s]", viewName))
+
+  # Write data back as a TABLE
+  RSQLite::dbWriteTable(con, viewName, viewData, overwrite = TRUE)
+}
+
 #' Fix macOS SQLite database if needed
 #'
 #' On macOS, certain VIEWs with complex JOINs cause stack overflow in SQLite
@@ -15,15 +34,21 @@
 
   # Check for marker file to see if fix was already applied
   markerFile <- paste0(dbPath, ".macos-fixed")
+  backupPath <- paste0(dbPath, ".original")
+
   if (file.exists(markerFile)) {
     # Check if database has been updated since marker was created
     markerTime <- file.info(markerFile)$mtime
     dbTime <- file.info(dbPath)$mtime
-    
-    # If database is newer than marker, the database was updated - remove marker and recheck
+
+    # If database is newer than marker, the database was updated - remove marker and backup
     if (dbTime > markerTime) {
       message("PK-Sim database has been updated. Applying fix for macOS.")
       unlink(markerFile)
+      # Remove old backup so we create a fresh one
+      if (file.exists(backupPath)) {
+        unlink(backupPath)
+      }
     } else {
       # Marker is valid and database hasn't changed
       return(FALSE)
@@ -46,7 +71,7 @@
         return(FALSE)
       }
 
-      # If it's already a TABLE, just create marker and return
+      # If it's already a TABLE, just create marker
       if (result$type[1] == "table") {
         writeLines(
           c(
@@ -58,11 +83,11 @@
           ),
           markerFile
         )
-        return(FALSE)
+        FALSE # Return FALSE from tryCatch
+      } else {
+        # It's a VIEW, needs fixing
+        TRUE # Return TRUE from tryCatch
       }
-
-      # It's a VIEW, needs fixing
-      return(TRUE)
     },
     error = function(e) {
       warning("Could not check database status: ", e$message)
@@ -77,144 +102,34 @@
   # Apply the fix
   message("Applying macOS SQLite fix to PKSimDB.sqlite (first load only)...")
 
+  # Create backup of original database before applying fix (for testing)
+  if (!file.exists(backupPath)) {
+    file.copy(dbPath, backupPath, overwrite = FALSE)
+    message("Created backup of original database: ", basename(backupPath))
+  }
+
   tryCatch(
     {
       con <- RSQLite::dbConnect(RSQLite::SQLite(), dbPath)
       on.exit(RSQLite::dbDisconnect(con), add = TRUE)
 
-      # Drop and recreate ContainerParameters_Species as TABLE
-      RSQLite::dbExecute(
+      # Convert both problematic VIEWs to TABLEs
+      .convertViewToTable(con, "ContainerParameters_Species")
+      .convertViewToTable(
         con,
-        "DROP VIEW IF EXISTS [ContainerParameters_Species]"
-      )
-      RSQLite::dbExecute(
-        con,
-        "DROP TABLE IF EXISTS [ContainerParameters_Species]"
+        "VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES"
       )
 
+      # Create indexes for performance
       RSQLite::dbExecute(
         con,
-        "CREATE TABLE [ContainerParameters_Species] (
-          [container_id] INTEGER NOT NULL,
-          [container_type] TEXT NOT NULL,
-          [container_name] TEXT NOT NULL,
-          [parameter_name] TEXT NOT NULL,
-          [species] TEXT NOT NULL
-        )"
-      )
-
-      RSQLite::dbExecute(
-        con,
-        "INSERT INTO [ContainerParameters_Species]
-        SELECT DISTINCT 
-                        [cpv].[container_id], 
-                        [cpv].[container_type], 
-                        [cpv].[container_name], 
-                        [cpv].[parameter_name], 
-                        [species]
-        FROM   [tab_container_parameter_values] AS [cpv],
-               [tab_container_parameters] AS [cp]
-        WHERE  [cpv].[container_id] = [cp].[container_id]
-                 AND [cpv].[parameter_name] = [cp].[parameter_name]
-                 AND [building_block_type] = 'INDIVIDUAL'
-        UNION
-        SELECT DISTINCT 
-                        [cpr].[container_id], 
-                        [cpr].[container_type], 
-                        [cpr].[container_name], 
-                        [cpr].[parameter_name], 
-                        [species]
-        FROM   [tab_container_parameter_rates] AS [cpr],
-               [tab_species_calculation_methods] AS [scm],
-               [tab_container_parameters] AS [cp]
-        WHERE  [cpr].[calculation_method] = [scm].[calculation_method]
-                 AND [cpr].[container_id] = [cp].[container_id]
-                 AND [cpr].[parameter_name] = [cp].[parameter_name]
-                 AND [building_block_type] = 'INDIVIDUAL'"
-      )
-
-      RSQLite::dbExecute(
-        con,
-        "CREATE INDEX [idx_container_params_species] 
+        "CREATE INDEX IF NOT EXISTS [idx_container_params_species] 
           ON [ContainerParameters_Species]([species], [container_id], [parameter_name])"
       )
 
-      # Fix VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES
       RSQLite::dbExecute(
         con,
-        "DROP VIEW IF EXISTS [VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES]"
-      )
-      RSQLite::dbExecute(
-        con,
-        "DROP TABLE IF EXISTS [VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES]"
-      )
-
-      RSQLite::dbExecute(
-        con,
-        "CREATE TABLE [VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES] (
-          [ContainerId] INTEGER NOT NULL,
-          [ContainerType] TEXT NOT NULL,
-          [ContainerName] TEXT NOT NULL,
-          [ParameterName] TEXT NOT NULL,
-          [IsSameFormula] INTEGER NOT NULL
-        )"
-      )
-
-      RSQLite::dbExecute(
-        con,
-        "INSERT INTO [VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES]
-        SELECT DISTINCT 
-                        [tab_container_parameter_rates].[container_id] AS [ContainerId], 
-                        [tab_container_parameter_rates].[container_type] AS [ContainerType], 
-                        [tab_container_parameter_rates].[container_name] AS [ContainerName], 
-                        [tab_container_parameter_rates].[parameter_name] AS [ParameterName], 
-                        1 AS [IsSameFormula]
-        FROM   [tab_container_parameter_rates],
-               [tab_species_calculation_methods],
-               [tab_container_parameters]
-        WHERE  [tab_container_parameter_rates].[calculation_method] = [tab_species_calculation_methods].[calculation_method]
-                 AND [tab_container_parameters].[container_id] = [tab_container_parameter_rates].[container_id]
-                 AND [tab_container_parameters].[container_type] = [tab_container_parameter_rates].[container_type]
-                 AND [tab_container_parameters].[container_name] = [tab_container_parameter_rates].[container_name]
-                 AND [tab_container_parameters].[parameter_name] = [tab_container_parameter_rates].[parameter_name]
-                 AND [tab_container_parameters].[building_block_type] = 'INDIVIDUAL'
-        GROUP  BY
-                  [tab_container_parameter_rates].[container_id], 
-                  [tab_container_parameter_rates].[container_type], 
-                  [tab_container_parameter_rates].[container_name], 
-                  [tab_container_parameter_rates].[parameter_name], 
-                  [tab_container_parameter_rates].[calculation_method], 
-                  [tab_container_parameter_rates].[formula_rate]
-        HAVING COUNT ([tab_species_calculation_methods].[species]) = (SELECT COUNT ([species]) FROM [tab_species])
-        UNION
-        SELECT DISTINCT 
-                        [tab_container_parameter_values].[container_id] AS [ContainerId], 
-                        [tab_container_parameter_values].[container_type] AS [ContainerType], 
-                        [tab_container_parameter_values].[container_name] AS [ContainerName], 
-                        [tab_container_parameter_values].[parameter_name] AS [ParameterName], 
-                        0 AS [IsSameFormula]
-        FROM   [tab_container_parameters],
-               [tab_container_parameter_values],
-               [tab_species_parameter_value_versions]
-        WHERE  [tab_container_parameters].[container_id] = [tab_container_parameter_values].[container_id]
-                 AND [tab_container_parameters].[container_type] = [tab_container_parameter_values].[container_type]
-                 AND [tab_container_parameters].[container_name] = [tab_container_parameter_values].[container_name]
-                 AND [tab_container_parameters].[parameter_name] = [tab_container_parameter_values].[parameter_name]
-                 AND [tab_species_parameter_value_versions].[species] = [tab_container_parameter_values].[species]
-                 AND [tab_species_parameter_value_versions].[parameter_value_version] = [tab_container_parameter_values].[parameter_value_version]
-                 AND [tab_container_parameters].[building_block_type] = 'INDIVIDUAL'
-        GROUP  BY
-                  [tab_container_parameter_values].[container_id], 
-                  [tab_container_parameter_values].[container_type], 
-                  [tab_container_parameter_values].[container_name], 
-                  [tab_container_parameter_values].[parameter_name], 
-                  [tab_container_parameter_values].[default_value]
-        HAVING COUNT ([tab_container_parameter_values].[species]) = (SELECT COUNT ([species]) FROM [tab_species])"
-      )
-
-      RSQLite::dbExecute(
-        con,
-        "CREATE INDEX [idx_same_formula_species] 
+        "CREATE INDEX IF NOT EXISTS [idx_same_formula_species] 
           ON [VIEW_INDIVIDUAL_PARAMETER_SAME_FORMULA_OR_VALUE_FOR_ALL_SPECIES]([IsSameFormula], [ContainerId], [ParameterName])"
       )
 
