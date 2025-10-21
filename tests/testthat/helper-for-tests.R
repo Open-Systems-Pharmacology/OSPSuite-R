@@ -32,46 +32,18 @@ executeWithTestFile <- function(actionWithFile) {
 
 # Helper function to copy package to temp location
 .copyPackageToTemp <- function() {
-  # Find package root - works in multiple contexts (interactive, testthat, CI)
-  # Start from test path and search upward for DESCRIPTION
-  testDir <- testthat::test_path()
-
-  # Try different strategies to find the package root
+  # Find the package root directory (where DESCRIPTION file is located)
   pkgRoot <- NULL
 
-  # Strategy 1: Go up two levels from tests/testthat (most common case)
-  candidate <- normalizePath(file.path(testDir, "../.."))
-  if (file.exists(file.path(candidate, "DESCRIPTION"))) {
-    pkgRoot <- candidate
+  # Strategy 1: Check current working directory first
+  if (file.exists("DESCRIPTION")) {
+    pkgRoot <- getwd()
   }
 
-  # Strategy 2: In R CMD check, the package is installed in .Rcheck/
-  # Look for the installed package directory
-  if (is.null(pkgRoot) && grepl("\\.Rcheck", testDir)) {
-    # Extract package name from the path and find installed location
-    # In .Rcheck, tests run from: pkg.Rcheck/tests/testthat/
-    # The installed package is in: pkg.Rcheck/00_pkg_src/pkg/
-    rcheckDir <- sub("(/tests/testthat.*|/tests.*)", "", testDir)
-
-    # Try 00_pkg_src subdirectory (used during check)
-    srcDir <- file.path(rcheckDir, "00_pkg_src")
-    if (dir.exists(srcDir)) {
-      # Find the package directory inside 00_pkg_src
-      pkgDirs <- list.dirs(srcDir, recursive = FALSE, full.names = TRUE)
-      for (dir in pkgDirs) {
-        if (file.exists(file.path(dir, "DESCRIPTION"))) {
-          pkgRoot <- dir
-          break
-        }
-      }
-    }
-  }
-
-  # Strategy 3: Search upward from current directory
+  # Strategy 2: Search upward from current directory
   if (is.null(pkgRoot)) {
-    searchDir <- testDir
+    searchDir <- getwd()
     for (i in 1:10) {
-      # Limit search depth
       if (file.exists(file.path(searchDir, "DESCRIPTION"))) {
         pkgRoot <- searchDir
         break
@@ -83,23 +55,92 @@ executeWithTestFile <- function(actionWithFile) {
     }
   }
 
+  # Strategy 3: Search from test directory
+  if (is.null(pkgRoot)) {
+    testDir <- testthat::test_path()
+    searchDir <- testDir
+    for (i in 1:10) {
+      if (file.exists(file.path(searchDir, "DESCRIPTION"))) {
+        pkgRoot <- searchDir
+        break
+      }
+      searchDir <- dirname(searchDir)
+      if (searchDir == "/" || searchDir == dirname(searchDir)) {
+        break
+      }
+    }
+  }
+
+  # Strategy 4: Try common relative paths from current directory
+  if (is.null(pkgRoot)) {
+    commonPaths <- c(".", "..", "../..", "../../..")
+    for (path in commonPaths) {
+      if (file.exists(file.path(path, "DESCRIPTION"))) {
+        pkgRoot <- normalizePath(path)
+        break
+      }
+    }
+  }
+
   # Final check
   if (is.null(pkgRoot) || !file.exists(file.path(pkgRoot, "DESCRIPTION"))) {
     stop(
       "Cannot find package root with DESCRIPTION file. ",
-      "Searched from: ",
-      testDir
+      "Current directory: ",
+      getwd(),
+      ", Test directory: ",
+      testthat::test_path(),
+      ", Files in current dir: ",
+      paste(list.files(".", all.files = TRUE), collapse = ", ")
     )
   }
 
-  # Create temp directory and copy package
+  # Create temp directory and copy entire package
   tempPkgDir <- tempfile(pattern = "temppkg")
 
-  # Copy entire package directory (creates tempPkgDir as a subdirectory)
-  # file.copy with recursive=TRUE copies the directory itself, not just contents
-  dir.create(dirname(tempPkgDir), showWarnings = FALSE, recursive = TRUE)
-  file.copy(pkgRoot, dirname(tempPkgDir), recursive = TRUE)
-  file.rename(file.path(dirname(tempPkgDir), basename(pkgRoot)), tempPkgDir)
+  # Copy all files and directories from package root to temp directory
+  dir.create(tempPkgDir, showWarnings = FALSE, recursive = TRUE)
+  file.copy(
+    list.files(pkgRoot, full.names = TRUE, all.files = TRUE, no.. = TRUE),
+    tempPkgDir,
+    recursive = TRUE
+  )
+
+  # Handle SQLite database restoration if needed
+  # Check if there's an original database backup in the source
+  originalDbPath <- file.path(
+    pkgRoot,
+    "inst",
+    "lib",
+    "PKSimDB.sqlite.ospsuite_original"
+  )
+  tempDbPath <- file.path(tempPkgDir, "inst", "lib", "PKSimDB.sqlite")
+  tempOriginalDbPath <- file.path(
+    tempPkgDir,
+    "inst",
+    "lib",
+    "PKSimDB.sqlite.ospsuite_original"
+  )
+
+  # If original backup exists in source, restore it in the temp copy
+  if (file.exists(tempOriginalDbPath)) {
+    # Copy the original backup to temp location
+    file.copy(tempOriginalDbPath, tempDbPath, overwrite = TRUE)
+
+    # Delete the original backup
+    unlink(tempOriginalDbPath)
+
+    # Remove any existing marker files to ensure fresh state
+    markerFile <- file.path(
+      tempPkgDir,
+      "inst",
+      "lib",
+      "PKSimDB.sqlite.ospsuite_macos_fixed"
+    )
+    if (file.exists(markerFile)) {
+      unlink(markerFile)
+    }
+  }
 
   # Ensure cleanup: reset permissions and delete temp directory
   # Use withr::defer with parent environment so cleanup happens after the test, not after this function
