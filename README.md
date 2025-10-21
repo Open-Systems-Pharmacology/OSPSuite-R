@@ -141,7 +141,6 @@ install.packages("purrr")
 install.packages("R6")
 install.packages("readr")
 install.packages("rlang")
-install.packages("RSQLite")
 install.packages("showtext")
 install.packages("stringi")
 install.packages("stringr")
@@ -222,6 +221,36 @@ this package.
 
 Because `{ospsuite}` contains binary files, it is classified as a binary
 package and cannot be submitted to CRAN.
+
+## macOS ARM64 Development Setup
+
+On macOS ARM64 (Apple Silicon), the package automatically fixes a SQLite
+compatibility issue on first load by converting certain VIEWs to TABLEs
+in `PKSimDB.sqlite`. This modification is applied locally and should not
+be committed to git.
+
+To prevent git from tracking these local database changes, run this once
+after cloning the repository:
+
+``` sh
+git update-index --skip-worktree inst/lib/PKSimDB.sqlite
+```
+
+The fix is automatically re-applied when the database file’s
+modification date is newer than the marker file (indicating a database
+update from upstream).
+
+To temporarily check the database status:
+
+``` sh
+git update-index --no-skip-worktree inst/lib/PKSimDB.sqlite
+git status inst/lib/PKSimDB.sqlite
+git update-index --skip-worktree inst/lib/PKSimDB.sqlite
+```
+
+**Note:** The `RSQLite` package is required on macOS ARM64 to apply this
+fix. Install it with `install.packages("RSQLite")` if you encounter
+issues during package load.
 
 ## Versioning
 

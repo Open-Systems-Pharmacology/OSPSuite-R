@@ -34,6 +34,11 @@
     }
   }
 
+  # Apply macOS SQLite fix if needed (before any .NET initialization)
+  # On macOS ARM64, certain VIEWs cause stack overflow through .NET P/Invoke
+  # This must be done before any .NET code runs
+  .fixMacOSDatabaseIfNeeded(file.path(writableDir, "PKSimDB.sqlite"))
+
   # Setup platform-specific SQLite DLL
   targetDll <- file.path(writableDir, "System.Data.SQLite.dll")
   sourceDll <- file.path(

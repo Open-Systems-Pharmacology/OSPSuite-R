@@ -22,7 +22,7 @@
   if (!requireNamespace("RSQLite", quietly = TRUE)) {
     cli::cli_abort(
       message = c(
-        "x" = "RSQLite package is required to use {.fn runSimulationsFromSnapshot} on this platform (macOS ARM64).",
+        "x" = "RSQLite package is required on this platform (macOS ARM64).",
         "i" = "Install with: {.run install.packages('RSQLite')}"
       )
     )
@@ -30,8 +30,8 @@
   }
 
   # Check for marker file to see if fix was already applied
-  markerFile <- paste0(dbPath, ".macos-fixed")
-  backupPath <- paste0(dbPath, ".original")
+  markerFile <- paste0(dbPath, ".ospsuite_macos_fixed")
+  backupPath <- paste0(dbPath, ".ospsuite_original")
 
   if (file.exists(markerFile)) {
     # Check if database has been updated since marker was created
@@ -49,6 +49,50 @@
       # Marker is valid and database hasn't changed
       return(FALSE)
     }
+  }
+
+  # Check if database actually needs fixing by querying sqlite_master
+  needsFix <- tryCatch(
+    {
+      con <- RSQLite::dbConnect(RSQLite::SQLite(), dbPath)
+      on.exit(RSQLite::dbDisconnect(con), add = TRUE)
+
+      result <- RSQLite::dbGetQuery(
+        con,
+        "SELECT type FROM sqlite_master WHERE name = 'ContainerParameters_Species'"
+      )
+
+      if (nrow(result) == 0) {
+        warning("ContainerParameters_Species not found in database")
+        return(FALSE)
+      }
+
+      # If it's already a TABLE, just create marker
+      if (result$type[1] == "table") {
+        writeLines(
+          c(
+            "This marker file indicates that the macOS SQLite fix has been applied.",
+            paste("Marker created on:", Sys.time()),
+            "The PKSimDB.sqlite file has been modified to convert problematic VIEWs to TABLEs.",
+            "",
+            "This marker will be automatically removed if the database is updated (based on file modification time)."
+          ),
+          markerFile
+        )
+        FALSE # Return FALSE from tryCatch
+      } else {
+        # It's a VIEW, needs fixing
+        TRUE # Return TRUE from tryCatch
+      }
+    },
+    error = function(e) {
+      warning("Could not check database status: ", e$message)
+      return(FALSE)
+    }
+  )
+
+  if (!needsFix) {
+    return(FALSE)
   }
 
   # Apply the fix
@@ -109,37 +153,12 @@
 #' Convert a SQLite VIEW to a TABLE in place
 #'
 #' Reads all data from a VIEW, drops the VIEW, and recreates it as a TABLE
-#' with the same data. If the object is already a TABLE, does nothing.
+#' with the same data.
 #'
 #' @param con SQLite database connection
 #' @param viewName Name of the VIEW to convert
 #' @keywords internal
 .convertViewToTable <- function(con, viewName) {
-  # Check if this is a VIEW or TABLE
-  objectType <- RSQLite::dbGetQuery(
-    con,
-    sprintf(
-      "SELECT type FROM sqlite_master WHERE name = '%s'",
-      viewName
-    )
-  )$type[1]
-
-  # If it's already a TABLE, nothing to do
-  if (is.na(objectType)) {
-    warning("Object ", viewName, " not found in database")
-    return(FALSE)
-  }
-
-  if (objectType == "table") {
-    # Already a table, no conversion needed
-    return(FALSE)
-  }
-
-  if (objectType != "view") {
-    warning("Object ", viewName, " is neither a VIEW nor a TABLE: ", objectType)
-    return(FALSE)
-  }
-
   # Read all data from the VIEW
   viewData <- RSQLite::dbReadTable(con, viewName)
 
@@ -148,6 +167,4 @@
 
   # Write data back as a TABLE
   RSQLite::dbWriteTable(con, viewName, viewData, overwrite = TRUE)
-
-  return(TRUE)
 }
