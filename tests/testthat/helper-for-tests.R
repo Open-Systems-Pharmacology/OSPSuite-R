@@ -28,3 +28,44 @@ executeWithTestFile <- function(actionWithFile) {
   actionWithFile(newFile)
   file.remove(newFile)
 }
+
+
+# Helper function to copy package to temp location
+.copyPackageToTemp <- function() {
+  # Find package root - works both interactively and in testthat
+  pkgRoot <- if (file.exists("DESCRIPTION") && file.exists("R")) {
+    # Interactive mode: already at package root
+    normalizePath(".")
+  } else if (file.exists("../../DESCRIPTION")) {
+    # testthat mode: in tests/testthat/
+    normalizePath("../..")
+  } else {
+    stop("Cannot find package root with DESCRIPTION file")
+  }
+
+  # Create temp directory and copy package
+  tempPkgDir <- tempfile(pattern = "temppkg")
+
+  # Copy entire package directory (creates tempPkgDir as a subdirectory)
+  # file.copy with recursive=TRUE copies the directory itself, not just contents
+  dir.create(dirname(tempPkgDir), showWarnings = FALSE, recursive = TRUE)
+  file.copy(pkgRoot, dirname(tempPkgDir), recursive = TRUE)
+  file.rename(file.path(dirname(tempPkgDir), basename(pkgRoot)), tempPkgDir)
+
+  # Ensure cleanup: reset permissions and delete temp directory
+  # Use withr::defer with parent environment so cleanup happens after the test, not after this function
+  withr::defer(
+    {
+      # Reset permissions recursively so files can be deleted
+      if (dir.exists(tempPkgDir)) {
+        Sys.chmod(tempPkgDir, mode = "0755", use_umask = FALSE)
+
+        # Now safe to delete
+        unlink(tempPkgDir, recursive = TRUE, force = TRUE)
+      }
+    },
+    envir = parent.frame()
+  )
+
+  return(tempPkgDir)
+}

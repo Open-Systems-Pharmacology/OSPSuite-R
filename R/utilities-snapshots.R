@@ -39,6 +39,12 @@ runSimulationsFromSnapshot <- function(
     )
   }
 
+  # Apply macOS SQLite fix if needed (only when actually running simulations)
+  # Use the writable directory that was determined during package initialization
+  writeableLibDir <- ospsuiteEnv$writeableLibDir
+
+  .fixMacOSDatabaseIfNeeded(file.path(writeableLibDir, "PKSimDB.sqlite"))
+
   initPKSim()
 
   temp_dir <- .gatherFiles(c(...))

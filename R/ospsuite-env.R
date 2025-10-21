@@ -48,6 +48,9 @@ ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.9
 # Indicates whether PK-Sim was loaded already. This will prevent unnecessary initialization of the PK-Sim assemblies
 ospsuiteEnv$isPKSimLoaded <- FALSE
 
+# Path to the writable library directory (either original lib or fallback cache directory)
+ospsuiteEnv$writeableLibDir <- NULL
+
 # Small value added to zero when calculating log
 ospsuiteEnv$LOG_SAFE_EPSILON <- 1e-20
 
