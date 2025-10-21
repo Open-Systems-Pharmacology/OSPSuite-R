@@ -20,10 +20,11 @@
 
   # Check if RSQLite is available (it's in Suggests)
   if (!requireNamespace("RSQLite", quietly = TRUE)) {
-    cli::cli_abort(
+    cli::cli_warn(
       message = c(
-        "x" = "RSQLite package is required on this platform (macOS ARM64).",
-        "i" = "Install with: {.run install.packages('RSQLite')}"
+        "x" = "RSQLite package is required to use {.fn runSimulationsFromSnapshots} on this platform (macOS ARM64). ",
+        "i" = "Install with: {.run install.packages('RSQLite')}",
+        "i" = "Then restart R and reload the package."
       )
     )
     return(FALSE)
@@ -55,7 +56,14 @@
   needsFix <- tryCatch(
     {
       con <- RSQLite::dbConnect(RSQLite::SQLite(), dbPath)
-      on.exit(RSQLite::dbDisconnect(con), add = TRUE)
+      on.exit(
+        {
+          if (RSQLite::dbIsValid(con)) {
+            RSQLite::dbDisconnect(con)
+          }
+        },
+        add = TRUE
+      )
 
       result <- RSQLite::dbGetQuery(
         con,
@@ -104,7 +112,14 @@
   tryCatch(
     {
       con <- RSQLite::dbConnect(RSQLite::SQLite(), dbPath)
-      on.exit(RSQLite::dbDisconnect(con), add = TRUE)
+      on.exit(
+        {
+          if (RSQLite::dbIsValid(con)) {
+            RSQLite::dbDisconnect(con)
+          }
+        },
+        add = TRUE
+      )
 
       # Convert both problematic VIEWs to TABLEs
       .convertViewToTable(con, "ContainerParameters_Species")

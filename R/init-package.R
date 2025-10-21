@@ -220,7 +220,7 @@
       {
         file.copy(sourceFile, targetFile, overwrite = TRUE)
         # Ensure copied files are writable (important for database modifications)
-        Sys.chmod(targetFile, mode = "0644", use_umask = FALSE)
+        Sys.chmod(targetFile, mode = "0644")
         filesCopied <- TRUE
       },
       error = function(e) {

@@ -39,6 +39,27 @@ runSimulationsFromSnapshot <- function(
     )
   }
 
+  # Check if database fix was applied on macOS ARM64
+  if (
+    Sys.info()[["sysname"]] == "Darwin" &&
+      Sys.info()[["machine"]] %in% c("arm64", "aarch64")
+  ) {
+    writeableLibDir <- ospsuiteEnv$writeableLibDir
+    dbPath <- file.path(writeableLibDir, "PKSimDB.sqlite")
+    markerFile <- paste0(dbPath, ".ospsuite_macos_fixed")
+
+    if (!file.exists(markerFile)) {
+      cli::cli_abort(
+        message = c(
+          "x" = "Database fix not applied on macOS ARM64.",
+          "i" = "The {.fn runSimulationsFromSnapshot} function requires {.pkg RSQLite}.",
+          "i" = "Install with: {.run install.packages('RSQLite')}",
+          "i" = "Then restart R and reload the package."
+        )
+      )
+    }
+  }
+
   # Initialize PKSim (database fix already applied during package load)
   initPKSim()
 

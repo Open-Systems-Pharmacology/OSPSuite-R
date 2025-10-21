@@ -107,7 +107,7 @@ executeWithTestFile <- function(actionWithFile) {
     {
       # Reset permissions recursively so files can be deleted
       if (dir.exists(tempPkgDir)) {
-        Sys.chmod(tempPkgDir, mode = "0755", use_umask = FALSE)
+        Sys.chmod(tempPkgDir, mode = "0755")
 
         # Now safe to delete
         unlink(tempPkgDir, recursive = TRUE, force = TRUE)
