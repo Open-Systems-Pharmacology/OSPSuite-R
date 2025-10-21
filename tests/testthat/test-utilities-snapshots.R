@@ -1,4 +1,6 @@
 test_that("Run simulation from snapshot works", {
+  skip_if_not_installed("RSQLite") # Required for macOS ARM64
+  
   path <- getTestDataFilePath("test_snapshot.json")
 
   temp_dir <- withr::local_tempdir()
@@ -18,6 +20,8 @@ test_that("Run simulation from snapshot works", {
 })
 
 test_that("RunForAllOutputs argument works", {
+  skip_if_not_installed("RSQLite") # Required for macOS ARM64
+  
   path <- getTestDataFilePath("test_snapshot.json")
 
   temp_dir1 <- withr::local_tempdir()
@@ -48,6 +52,8 @@ test_that("RunForAllOutputs argument works", {
 })
 
 test_that("runSimulationsFromSnapshot arguments are checked", {
+  skip_if_not_installed("RSQLite") # Required for macOS ARM64
+  
   path <- getTestDataFilePath("test_snapshot.json")
 
   temp_dir <- withr::local_tempdir()

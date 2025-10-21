@@ -32,15 +32,18 @@ executeWithTestFile <- function(actionWithFile) {
 
 # Helper function to copy package to temp location
 .copyPackageToTemp <- function() {
-  # Find package root - works both interactively and in testthat
-  pkgRoot <- if (file.exists("DESCRIPTION") && file.exists("R")) {
-    # Interactive mode: already at package root
-    normalizePath(".")
-  } else if (file.exists("../../DESCRIPTION")) {
-    # testthat mode: in tests/testthat/
-    normalizePath("../..")
-  } else {
-    stop("Cannot find package root with DESCRIPTION file")
+  # Find package root - works in multiple contexts (interactive, testthat, CI)
+  # Use testthat::test_path() to find tests/testthat, then go up two levels
+  testDir <- testthat::test_path()
+  pkgRoot <- normalizePath(file.path(testDir, "../.."))
+
+  # Verify we found the right location
+  if (!file.exists(file.path(pkgRoot, "DESCRIPTION"))) {
+    stop(
+      "Cannot find package root with DESCRIPTION file. ",
+      "Expected at: ",
+      file.path(pkgRoot, "DESCRIPTION")
+    )
   }
 
   # Create temp directory and copy package

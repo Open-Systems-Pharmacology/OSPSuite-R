@@ -22,7 +22,7 @@
   if (!requireNamespace("RSQLite", quietly = TRUE)) {
     cli::cli_abort(
       message = c(
-        "x" = "RSQLite package is required to use {.fn runSimulationsFromSnapshots} on this platform (macOS ARM64). ",
+        "x" = "RSQLite package is required to use {.fn runSimulationsFromSnapshot} on this platform (macOS ARM64).",
         "i" = "Install with: {.run install.packages('RSQLite')}"
       )
     )
