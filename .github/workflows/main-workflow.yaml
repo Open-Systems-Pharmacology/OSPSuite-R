@@ -9,9 +9,6 @@ on:
 permissions: write-all
 
 jobs:
-  build-libraries:
-    uses: ./.github/workflows/build-libraries.yaml
-
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
     needs: [build-libraries]
