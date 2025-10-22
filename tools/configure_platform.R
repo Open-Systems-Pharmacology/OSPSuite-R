@@ -1,4 +1,4 @@
-# tools/configure_reticulate.R
+# tools/configure_platform.R
 # prepare platform-specific files for installation
 #
 # This script is called by both configure and configure.win
