@@ -67,7 +67,7 @@ jobs:
       - name: Download and unzip core files
         run: |
           echo "Starting core files update..."
-          if ! Rscript update_core_files.R; then
+          if ! Rscript .github/scripts/update_core_files.R; then
             echo "Error: Failed to update core files"
             exit 1
           fi
@@ -166,27 +166,24 @@ jobs:
           wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/${SQLITE_VERSION}.0/sqlite-netFx-source-${SQLITE_VERSION}.0.zip"
           unzip -o -d build build/sqlite-source.zip > /dev/null
 
-      - name: Build native libraries for both architectures
+      - name: Build native libraries for ARM64
         run: |
-          for arch in arm64 x86_64; do
-            echo "Building for architecture: $arch"
-            INTEROP_SRC_ROOT="build/SQLite.Interop"
-            INTEROP_BUILD_DIR="build/interop-build-${arch}"
-            mkdir -p "${INTEROP_BUILD_DIR}"
-            cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
-            cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
-            OUTPUT_DIR="artifacts/${arch}"
-            mkdir -p "${OUTPUT_DIR}"
-            clang -arch ${arch} -o "${OUTPUT_DIR}/SQLite.Interop.mac.dylib" \
-                -dynamiclib \
-                -I "${INTEROP_SRC_ROOT}/src/core" \
-                -D "THREADSAFE=1" \
-                -D "SQLITE_OS_UNIX=1" \
-                -D "SQLITE_HAVE_USLEEP=1" \
-                -D "SQLITE_ENABLE_COLUMN_METADATA" \
-                -D "NDEBUG" \
-                "${INTEROP_BUILD_DIR}/interop.c"
-          done
+          echo "Building SQLite.Interop for arm64"
+          INTEROP_SRC_ROOT="build/SQLite.Interop"
+          INTEROP_BUILD_DIR="build/interop-build-arm64"
+          mkdir -p "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.c" "${INTEROP_BUILD_DIR}"
+          cp "${INTEROP_SRC_ROOT}/src/generic/interop.h" "${INTEROP_BUILD_DIR}"
+          mkdir -p artifacts
+          clang -arch arm64 -o "artifacts/SQLite.Interop.dll.dylib" \
+              -dynamiclib \
+              -I "${INTEROP_SRC_ROOT}/src/core" \
+              -D "THREADSAFE=1" \
+              -D "SQLITE_OS_UNIX=1" \
+              -D "SQLITE_HAVE_USLEEP=1" \
+              -D "SQLITE_ENABLE_COLUMN_METADATA" \
+              -D "NDEBUG" \
+              "${INTEROP_BUILD_DIR}/interop.c"
 
       - name: Build managed library
         run: |
@@ -201,18 +198,17 @@ jobs:
         run: |
           mkdir -p inst/lib
           cp artifacts/System.Data.SQLite.dll inst/lib/System.Data.SQLite.mac.dll
-          cp artifacts/arm64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.arm64.dylib
-          cp artifacts/x86_64/SQLite.Interop.mac.dylib inst/lib/SQLite.Interop.x64.dylib
+          cp artifacts/SQLite.Interop.dll.dylib inst/lib/SQLite.Interop.dll.dylib
 
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add inst/lib
-          git commit -m "Add SQLite libraries for macOS
+          git commit -m "Add SQLite libraries for macOS (arm64)
 
-          - Built SQLite interop libraries for ARM64 and x86_64
-          - Built System.Data.SQLite.dll for macOS
+          - Built SQLite.Interop.dll.dylib for arm64
+          - Built System.Data.SQLite.mac.dll for macOS
           - SQLite version: ${{ steps.sqlite_version.outputs.version }} (from ConsoleApp.deps.json)
           - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
           - Triggered by: ${{ github.actor }}"
