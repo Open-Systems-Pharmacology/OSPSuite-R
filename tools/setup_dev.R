@@ -8,7 +8,7 @@
 #   setup_dev()
 #   Then use devtools::load_all() as normal
 #
-# This will run the configure script that is usually ran during installation
+# This will run the configure script that is usually run during installation
 #
 # After running this setup, you can use devtools::load_all() normally.
 
