@@ -2,20 +2,9 @@ on:
   workflow_dispatch:
     inputs:
       branch_name:
-        description: 'Branch name for the PR (default: update-core-files-YYYYMMDD)'
+        description: 'Branch name (default: build-libraries-YYYYMMDD)'
         required: false
         default: ''
-        type: string
-      pr_title:
-        description: 'Title for the PR (default: Update Core Files)'
-        required: false
-        default: 'Update Core Files'
-        type: string
-      pr_body:
-        description: 'Body for the PR (default: Auto-generated PR to update core files)'
-        required: false
-        default: 'Auto-generated PR to update core files from PK-Sim dependencies'
-        type: string
 
 name: Build Libraries
 
@@ -24,43 +13,39 @@ permissions:
   pull-requests: write
 
 jobs:
-  update-core-files:
+  build-libraries:
+    name: Build Core Libraries (Ubuntu)
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.changes.outputs.branch_name }}
+      branch_name: ${{ steps.setup.outputs.branch_name }}
       has_changes: ${{ steps.changes.outputs.has_changes }}
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
 
-
-      - name: Generate branch name
-        id: branch_name
+      - name: Setup branch and git
+        id: setup
         run: |
+          # Generate branch name
           if [ -n "${{ github.event.inputs.branch_name }}" ]; then
-            echo "name=${{ github.event.inputs.branch_name }}" >> $GITHUB_OUTPUT
+            BRANCH_NAME="${{ github.event.inputs.branch_name }}"
           else
-            echo "name=update-core-files-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+            BRANCH_NAME="build-libraries-$(date +%Y%m%d-%H%M%S)"
           fi
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          # Configure git
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git checkout -b "$BRANCH_NAME"
 
-      - name: Create and checkout new branch
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git checkout -b ${{ steps.branch_name.outputs.name }}
-
-
-      - name: Setup .NET for building
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Add GitHub NuGet source
+      - name: Configure NuGet
         run: |
           dotnet nuget add source "https://nuget.pkg.github.com/Open-Systems-Pharmacology/index.json" \
             --name "OSP-GitHub-Packages" \
@@ -68,63 +53,156 @@ jobs:
             --password "${{ secrets.GITHUB_TOKEN }}" \
             --store-password-in-clear-text
 
-      - name: Build DependencyManager
+      - name: Build libraries
         run: |
           cd inst/lib
           dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
+          
+          # Rename SQLite for Windows/Linux
+          if [ -f "System.Data.SQLite.dll" ]; then
+            mv "System.Data.SQLite.dll" "System.Data.SQLite.windows_linux.dll"
+          fi
 
-      - name: Check if there are changes
+      - name: Check and commit changes
         id: changes
         run: |
           if git diff --quiet inst/lib; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in core files"
+            echo "No changes detected"
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in core files"
+            git add inst/lib
+            git commit -m "Build core libraries
+            
+            - Built DependencyManager libraries
+            - Updated PK-Sim R dependencies
+            - Generated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            git push origin "${{ steps.setup.outputs.branch_name }}"
           fi
-          echo "branch_name=${{ steps.branch_name.outputs.name }}" >> $GITHUB_OUTPUT
 
-      - name: Commit changes
-        if: steps.changes.outputs.has_changes == 'true'
+  build-sqlite:
+    name: Build SQLite for macOS ARM64
+    runs-on: macos-latest
+    needs: build-libraries
+    if: needs.build-libraries.outputs.has_changes == 'true'
+    outputs:
+      has_changes: ${{ steps.changes.outputs.has_changes }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.build-libraries.outputs.branch_name }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Get SQLite version
+        id: version
         run: |
-          git add inst/lib
-          git commit -m "Update Core Files
-          - Updated PK-Sim R dependencies
-          - Built DependencyManager libraries
-          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-          - Triggered by: ${{ github.actor }}"
+          VERSION=$(grep -o '"System.Data.SQLite.Core": "[^"]*"' inst/lib/ConsoleApp.deps.json | head -n1 | sed 's/.*": "//;s/"//')
+          echo "sqlite_version=$VERSION" >> $GITHUB_OUTPUT
+          echo "SQLite version: $VERSION"
 
-      - name: Push branch
-        if: steps.changes.outputs.has_changes == 'true'
+      - name: Download SQLite source
         run: |
-          git push origin ${{ steps.branch_name.outputs.name }}
+          mkdir -p build
+          wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/${{ steps.version.outputs.sqlite_version }}.0/sqlite-netFx-source-${{ steps.version.outputs.sqlite_version }}.0.zip"
+          unzip -q -d build build/sqlite-source.zip
 
-      - name: Create Pull Request
-        if: steps.changes.outputs.has_changes == 'true'
+      - name: Build native library (ARM64)
+        run: |
+          INTEROP_SRC="build/SQLite.Interop/src"
+          mkdir -p artifacts
+          
+          clang -arch arm64 -o artifacts/SQLite.Interop.dll.dylib \
+            -dynamiclib \
+            -I "$INTEROP_SRC/core" \
+            -D "THREADSAFE=1" \
+            -D "SQLITE_OS_UNIX=1" \
+            -D "SQLITE_HAVE_USLEEP=1" \
+            -D "SQLITE_ENABLE_COLUMN_METADATA" \
+            -D "NDEBUG" \
+            "$INTEROP_SRC/generic/interop.c"
+
+      - name: Build managed library
+        run: |
+          PROJECT="build/System.Data.SQLite/System.Data.SQLite.NetStandard21.csproj"
+          dotnet build "$PROJECT" -c Release --framework netstandard2.1
+          
+          # Find and copy the built DLL
+          DLL=$(find build/System.Data.SQLite -name "System.Data.SQLite.dll" -path "*/Release/*" | head -n 1)
+          cp "$DLL" artifacts/System.Data.SQLite.mac.dll
+
+      - name: Copy to inst/lib
+        run: |
+          cp artifacts/System.Data.SQLite.mac.dll inst/lib/
+          cp artifacts/SQLite.Interop.dll.dylib inst/lib/
+
+      - name: Check and commit changes
+        id: changes
+        run: |
+          if git diff --quiet inst/lib; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            git config user.email "action@github.com"
+            git config user.name "GitHub Action"
+            git add inst/lib
+            git commit -m "Build SQLite for macOS ARM64
+            
+            - Built SQLite.Interop.dll.dylib for ARM64
+            - Built System.Data.SQLite.mac.dll
+            - Version: ${{ steps.version.outputs.sqlite_version }}
+            - Generated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            git push origin "${{ needs.build-libraries.outputs.branch_name }}"
+          fi
+
+  create-pr:
+    name: Create Pull Request
+    runs-on: ubuntu-latest
+    needs: [build-libraries, build-sqlite]
+    if: |
+      always() && 
+      (needs.build-libraries.outputs.has_changes == 'true' || 
+       needs.build-sqlite.outputs.has_changes == 'true')
+    
+    steps:
+      - name: Create PR
         uses: actions/github-script@v7
         with:
           script: |
+            const hasLibChanges = '${{ needs.build-libraries.outputs.has_changes }}' === 'true';
+            const hasSqliteChanges = '${{ needs.build-sqlite.outputs.has_changes }}' === 'true';
+            
+            let changes = [];
+            if (hasLibChanges) {
+              changes.push('- Built DependencyManager libraries');
+              changes.push('- Updated PK-Sim R dependencies');
+            }
+            if (hasSqliteChanges) {
+              changes.push('- Built SQLite libraries for macOS ARM64');
+            }
+            
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '${{ github.event.inputs.pr_title }}' || 'Update Core Files',
-              head: '${{ steps.branch_name.outputs.name }}',
+              title: 'Update Core Libraries',
+              head: '${{ needs.build-libraries.outputs.branch_name }}',
               base: 'main',
-              body: `${{ github.event.inputs.pr_body }}` || `Auto-generated PR to update core files from PK-Sim dependencies
-
+              body: `Auto-generated PR to update core libraries
+            
             ## Changes
-            - Updated PK-Sim R dependencies in \`inst/lib\`
-            - Built DependencyManager libraries
-            - Generated on: ${new Date().toISOString()}
-            - Triggered by: ${{ github.actor }}
-
-            ## What this PR does
-            This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts and the DependencyManager is built locally.`
+            ${changes.join('\n')}
+            - Generated: ${new Date().toISOString()}
+            
+            ## Description
+            This PR updates the core libraries required by the \`{ospsuite}\` package.
+            ${hasLibChanges ? 'Core files are downloaded from the latest PK-Sim build artifacts.' : ''}
+            ${hasSqliteChanges ? 'SQLite libraries are built for macOS ARM64.' : ''}`
             });
-            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
-
-      - name: No changes message
-        if: steps.changes.outputs.has_changes == 'false'
-        run: |
-          echo "No changes detected in core files. Nothing to commit or create PR for."
+            
+            console.log(\`Created PR #\${pr.number}: \${pr.html_url}\`);

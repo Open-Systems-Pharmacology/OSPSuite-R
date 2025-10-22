@@ -1,0 +1,4 @@
+#!/bin/sh
+# configure: prepare platform-specific files for installation
+
+"${R_HOME}/bin/Rscript" tools/configure_platform.R
