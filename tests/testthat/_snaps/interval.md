@@ -2,7 +2,7 @@
 
     Code
       interval$print()
-    Message
+    Output
       <Interval>
         * Name: Simulation interval high resolution
         * Start time: 0.00e+00 [min]

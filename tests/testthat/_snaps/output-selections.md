@@ -2,6 +2,6 @@
 
     Code
       outputSelections$print()
-    Message
+    Output
       <OutputSelections>
 

@@ -2,7 +2,7 @@
 
     Code
       print(solver)
-    Message
+    Output
       <SolverSettings>
         * useJacobian: FALSE
         * h0: 1e-06

@@ -2,7 +2,7 @@
 
     Code
       runOptions$print()
-    Message
+    Output
       <SimulationRunOptions>
         * numberOfCores: 5
         * checkForNegativeValues: FALSE

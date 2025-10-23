@@ -2,6 +2,6 @@
 
     Code
       simulationSettings$print()
-    Message
+    Output
       <SimulationSettings>
 

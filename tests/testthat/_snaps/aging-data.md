@@ -2,6 +2,6 @@
 
     Code
       agingData$print()
-    Message
+    Output
       <AgingData>
 
