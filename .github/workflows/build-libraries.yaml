@@ -5,6 +5,12 @@ on:
         description: 'Branch name (default: build-libraries-YYYYMMDD)'
         required: false
         default: ''
+        type: string
+      target_branch:
+        description: 'Target branch for PR (default: main)'
+        required: false
+        default: 'main'
+        type: string
 
 name: Build Libraries
 
@@ -23,6 +29,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.target_branch || 'main' }}
+          fetch-depth: 0
 
       - name: Setup branch and git
         id: setup
@@ -36,8 +45,8 @@ jobs:
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
           # Configure git
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git checkout -b "$BRANCH_NAME"
 
       - name: Setup .NET
@@ -65,22 +74,37 @@ jobs:
           mv "libOSPSuite.SimModelNative.Arm64.dylib" "libOSPSuite.SimModelNative.dylib"
           mv "libOSPSuite.SimModelSolver_CVODES.Arm64.dylib" "libOSPSuite.SimModelSolver_CVODES.dylib"
 
-      - name: Check and commit changes
+      - name: Check for changes
         id: changes
         run: |
           if git diff --quiet inst/lib; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected"
+            echo "No changes detected in core libraries"
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            git add inst/lib
-            git commit -m "Build core libraries
-
-            - Built DependencyManager libraries
-            - Updated PK-Sim R dependencies
-            - Generated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-            git push origin "${{ steps.setup.outputs.branch_name }}"
+            echo "Changes detected in core libraries"
           fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git add inst/lib
+          git commit -m "Build core libraries
+
+          - Built DependencyManager libraries
+          - Updated PK-Sim R dependencies
+          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          - Triggered by: ${{ github.actor }}"
+
+      - name: Push branch
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git push origin "${{ steps.setup.outputs.branch_name }}"
+
+      - name: No changes message
+        if: steps.changes.outputs.has_changes == 'false'
+        run: |
+          echo "No changes detected in core libraries. Nothing to commit or create PR for."
 
   build-sqlite:
     name: Build SQLite for macOS ARM64
@@ -143,25 +167,35 @@ jobs:
           cp artifacts/System.Data.SQLite.mac.dll inst/lib/
           cp artifacts/SQLite.Interop.dll.dylib inst/lib/
 
-      - name: Check and commit changes
+      - name: Check for changes
         id: changes
         run: |
           if git diff --quiet inst/lib; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected"
+            echo "No changes detected in SQLite libraries"
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            git config user.email "action@github.com"
-            git config user.name "GitHub Action"
-            git add inst/lib
-            git commit -m "Build SQLite for macOS ARM64
-
-            - Built SQLite.Interop.dll.dylib for ARM64
-            - Built System.Data.SQLite.mac.dll
-            - Version: ${{ steps.version.outputs.sqlite_version }}
-            - Generated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-            git push origin "${{ needs.build-libraries.outputs.branch_name }}"
+            echo "Changes detected in SQLite libraries"
           fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add inst/lib
+          git commit -m "Build SQLite for macOS ARM64
+
+          - Built SQLite.Interop.dll.dylib for ARM64
+          - Built System.Data.SQLite.mac.dll
+          - SQLite version: ${{ steps.version.outputs.sqlite_version }}
+          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          - Triggered by: ${{ github.actor }}"
+
+      - name: Push branch
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git push origin "${{ needs.build-libraries.outputs.branch_name }}"
 
   create-pr:
     name: Create Pull Request
@@ -194,12 +228,13 @@ jobs:
               repo: context.repo.repo,
               title: 'Update Core Libraries',
               head: '${{ needs.build-libraries.outputs.branch_name }}',
-              base: 'main',
+              base: '${{ github.event.inputs.target_branch || 'main' }}',
               body: `Auto-generated PR to update core libraries
 
             ## Changes
             ${changes.join('\n')}
-            - Generated: ${new Date().toISOString()}
+            - Generated on: ${new Date().toISOString()}
+            - Triggered by: ${{ github.actor }}
 
             ## Description
             This PR updates the core libraries required by the \`{ospsuite}\` package.
