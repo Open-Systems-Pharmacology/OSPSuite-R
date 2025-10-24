@@ -2,7 +2,7 @@
 
     Code
       simResults$print()
-    Message
+    Output
       <SimulationResults>
         * Number of individuals: 1
       For paths:
