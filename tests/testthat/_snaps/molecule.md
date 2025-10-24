@@ -2,7 +2,7 @@
 
     Code
       molecule$print()
-    Message
+    Output
       <Molecule>
         * Path: Organism|M
         * Scale Divisor: 1

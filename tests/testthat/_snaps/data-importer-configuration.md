@@ -2,7 +2,7 @@
 
     Code
       print(importerConfiguration)
-    Message
+    Output
       <DataImporterConfiguration>
         * Time column: Time
         * Time unit: h

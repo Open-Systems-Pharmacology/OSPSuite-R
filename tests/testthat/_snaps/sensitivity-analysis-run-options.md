@@ -2,7 +2,7 @@
 
     Code
       options$print()
-    Message
+    Output
       <SensitivityAnalysisRunOptions>
         * numberOfCores: 5
         * showProgress: FALSE

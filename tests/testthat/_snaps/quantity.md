@@ -2,7 +2,7 @@
 
     Code
       quantity$print()
-    Message
+    Output
       <Quantity>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Intracellular|Volume
@@ -18,7 +18,7 @@
 
     Code
       print(quantity)
-    Message
+    Output
       <Quantity>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Intracellular|Volume
@@ -34,7 +34,7 @@
 
     Code
       print(quantity)
-    Message
+    Output
       <Quantity>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Intracellular|Volume
@@ -50,7 +50,7 @@
 
     Code
       print(quantity)
-    Message
+    Output
       <Quantity>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Intracellular|Volume
@@ -66,7 +66,7 @@
 
     Code
       print(quantity)
-    Message
+    Output
       <Quantity>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Intracellular|Volume
@@ -82,7 +82,7 @@
 
     Code
       quantity$print()
-    Message
+    Output
       <Quantity>
         * Quantity Type: Parameter
         * Path: AADAC|Lipophilicity

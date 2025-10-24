@@ -2,7 +2,7 @@
 
     Code
       print(simBatch)
-    Message
+    Output
       <SimulationBatch>
       <ID>
       <ID>

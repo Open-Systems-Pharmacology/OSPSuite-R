@@ -2,7 +2,7 @@
 
     Code
       sa$print()
-    Message
+    Output
       <SensitivityAnalysis>
         * Number of steps: 2
         * Variation range: 0.1

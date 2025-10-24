@@ -17,6 +17,13 @@ loadMoBiProject <- function(filePath) {
   }
   validateIsFileExtension(filePath, "mbp3")
 
+  # Loading Mobi Project is Not available on MacOS
+  if (Sys.info()[["sysname"]] == "Darwin") {
+    cli::cli_abort(
+      "runSimulationsFromSnapshot is currently not supported on macOS."
+    )
+  }
+
   # Load the MoBi project using the ProjectTask
   netObject <- .callProjectTask("LoadProject", .expandPath(filePath))
   mobiProject <- MoBiProject$new(netObject, filePath)

@@ -2,7 +2,7 @@
 
     Code
       moleculeOntogeny$print()
-    Message
+    Output
       <MoleculeOntogeny>
         * Molecule: MyMolecule
         * Ontogeny: CYP2C18

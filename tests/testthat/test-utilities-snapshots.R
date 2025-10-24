@@ -1,9 +1,39 @@
+test_that("User is stopped when trying to run simulations from snapshot as it is not supported on Mac", {
+  testthat::skip_on_os("windows")
+  testthat::skip_on_os("linux")
+
+  path <- getTestDataFilePath("test_snapshot.json")
+
+  temp_dir <- withr::local_tempdir()
+
+  expect_error(
+    runSimulationsFromSnapshot(
+      path,
+      output = temp_dir,
+      exportCSV = TRUE,
+      exportPKML = TRUE,
+      exportJSON = TRUE,
+      exportXML = TRUE
+    ),
+    "runSimulationsFromSnapshot is currently not supported on macOS."
+  )
+})
+
+testthat::skip_on_os("mac")
+
 test_that("Run simulation from snapshot works", {
   path <- getTestDataFilePath("test_snapshot.json")
 
   temp_dir <- withr::local_tempdir()
 
-  runSimulationsFromSnapshot(path, output = temp_dir, exportCSV = TRUE, exportPKML = TRUE, exportJSON = TRUE, exportXML = TRUE)
+  runSimulationsFromSnapshot(
+    path,
+    output = temp_dir,
+    exportCSV = TRUE,
+    exportPKML = TRUE,
+    exportJSON = TRUE,
+    exportXML = TRUE
+  )
   expect_length(list.files(temp_dir, pattern = ".csv"), 3)
   expect_length(list.files(temp_dir, pattern = ".pkml"), 2)
   expect_length(list.files(temp_dir, pattern = ".json"), 2)
@@ -15,15 +45,28 @@ test_that("RunForAllOutputs argument works", {
 
   temp_dir1 <- withr::local_tempdir()
 
-  runSimulationsFromSnapshot(path, output = temp_dir1, RunForAllOutputs = FALSE, exportCSV = TRUE)
+  runSimulationsFromSnapshot(
+    path,
+    output = temp_dir1,
+    RunForAllOutputs = FALSE,
+    exportCSV = TRUE
+  )
 
   temp_dir2 <- withr::local_tempdir()
 
-  runSimulationsFromSnapshot(path, output = temp_dir2, RunForAllOutputs = TRUE, exportCSV = TRUE)
+  runSimulationsFromSnapshot(
+    path,
+    output = temp_dir2,
+    RunForAllOutputs = TRUE,
+    exportCSV = TRUE
+  )
 
   for (file_name in list.files(temp_dir1, pattern = "Results.csv")) {
     # test if the number of columns are differents in files in temp_dir1 and temp_dir2
-    expect_true(ncol(read.csv(file.path(temp_dir1, file_name))) < ncol(read.csv(file.path(temp_dir2, file_name))))
+    expect_true(
+      ncol(read.csv(file.path(temp_dir1, file_name))) <
+        ncol(read.csv(file.path(temp_dir2, file_name)))
+    )
   }
 })
 
@@ -36,7 +79,9 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
   expect_error(runSimulationsFromSnapshot(path, output = 1))
 
   # provide wrong input/output paths
-  expect_error(runSimulationsFromSnapshot("wrong_file.json", "wrong/path",
+  expect_error(runSimulationsFromSnapshot(
+    "wrong_file.json",
+    "wrong/path",
     output = "wrong/output/path"
   ))
 })
@@ -61,8 +106,18 @@ test_that("RunSimulations argument is supported", {
   path <- getTestDataFilePath("test_snapshot.json")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
-    convertSnapshot(path, output = temp_dir, format = "project", runSimulations = TRUE)
-    convertSnapshot(path, output = temp_dir, format = "project", runSimulations = FALSE)
+    convertSnapshot(
+      path,
+      output = temp_dir,
+      format = "project",
+      runSimulations = TRUE
+    )
+    convertSnapshot(
+      path,
+      output = temp_dir,
+      format = "project",
+      runSimulations = FALSE
+    )
   })
 })
 

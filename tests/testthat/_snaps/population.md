@@ -2,7 +2,7 @@
 
     Code
       population$print()
-    Message
+    Output
       <Population>
         * Number of Individuals: 10
 

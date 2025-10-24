@@ -2,7 +2,7 @@
 
     Code
       container$print()
-    Message
+    Output
       <Container>
         * Container type: Organ
         * Path: Organism|Liver
@@ -11,7 +11,7 @@
 
     Code
       container$print()
-    Message
+    Output
       <Container>
         * Container type: Organ
         * Path: Organism|Liver

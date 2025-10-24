@@ -2,7 +2,7 @@
 
     Code
       print(pkAnalyses)
-    Message
+    Output
       <SimulationPKAnalyses>
       For outputs::
         * Organism|VenousBlood|Plasma|Caffeine

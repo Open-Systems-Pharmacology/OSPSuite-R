@@ -2,7 +2,7 @@
 
     Code
       print(dataSet)
-    Message
+    Output
       <DataSet>
         * Name: ObservedData
         * X dimension: Time

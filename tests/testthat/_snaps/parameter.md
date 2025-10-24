@@ -2,7 +2,7 @@
 
     Code
       volumeParameter$print()
-    Message
+    Output
       <Parameter>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Volume
@@ -16,7 +16,7 @@
 
     Code
       formulaParameter$print()
-    Message
+    Output
       <Parameter>
         * Quantity Type: Parameter
         * Path: Organism|Weight
@@ -32,7 +32,7 @@
 
     Code
       constantParameter$print()
-    Message
+    Output
       <Parameter>
         * Quantity Type: Parameter
         * Path: Organism|Age
@@ -46,7 +46,7 @@
 
     Code
       tableParameter$print()
-    Message
+    Output
       <Parameter>
         * Quantity Type: Parameter
         * Path: Organism|TableParameter
@@ -59,19 +59,17 @@
         * UseDerivedValues: FALSE
       
       -- Table values ----------------------------------------------------------------
-    Output
         x= 0, y= 1, restartSolver= FALSE
         x= 10, y= 2, restartSolver= FALSE
         x= 30, y= 3, restartSolver= FALSE
         x= 40, y= 4, restartSolver= FALSE
-    Message
         * Value overrides formula: FALSE
 
 ---
 
     Code
       rhsParameter$print()
-    Message
+    Output
       <Parameter>
         * Quantity Type: Parameter
         * Path: Organism|RHSParameter

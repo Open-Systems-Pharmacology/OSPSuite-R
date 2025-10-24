@@ -2,7 +2,7 @@
 
     Code
       print(explicitFormula)
-    Message
+    Output
       <Formula>
         * isExplicit: TRUE
         * formula: f_vas*(1-HCT)*V_org
@@ -11,7 +11,7 @@
 
     Code
       print(constantFormula)
-    Message
+    Output
       <Formula>
         * isConstant: TRUE
 
@@ -19,7 +19,7 @@
 
     Code
       print(distributedFormula)
-    Message
+    Output
       <Formula>
         * isDistributed: TRUE
 

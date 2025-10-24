@@ -8,11 +8,10 @@
 
     Code
       print(dataCombined)
-    Message
+    Output
       <DataCombined>
       
       -- Datasets and groupings: -----------------------------------------------------
-    Output
       
       # A tibble: 2 x 3
         name         group      dataType

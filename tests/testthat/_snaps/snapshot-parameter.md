@@ -2,7 +2,7 @@
 
     Code
       print(snapshot_parameter)
-    Message
+    Output
       <SnapshotParameter>
         * Value: NULL
         * Unit: NULL
