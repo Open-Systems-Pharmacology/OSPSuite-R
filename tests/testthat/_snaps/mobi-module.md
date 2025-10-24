@@ -1,4 +1,0 @@
-# MoBiModule prints correctly
-
-    
-

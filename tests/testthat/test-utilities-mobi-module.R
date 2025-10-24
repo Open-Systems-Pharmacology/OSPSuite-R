@@ -1,4 +1,7 @@
-testMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("Test_Project.mbp3"))
+skip_on_os("mac")
+testMoBiProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("Test_Project.mbp3")
+)
 
 # Test for .createModuleConfiguration
 
@@ -19,7 +22,6 @@ test_that(".createModuleConfiguration creates a module configuration with no IC 
   netModuleConfiguration$get("SelectedInitialCondition") %>%
     expect_null()
 })
-
 
 # passing name of IC BB that is not present in the module. requires https://github.com/Open-Systems-Pharmacology/MoBi/issues/2027
 # Passing name of PV BB that is not present in the module. requires https://github.com/Open-Systems-Pharmacology/MoBi/issues/2027

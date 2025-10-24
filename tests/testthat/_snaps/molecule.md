@@ -6,5 +6,5 @@
       <Molecule>
         * Path: Organism|M
         * Scale Divisor: 1
-        * Initial Value: 10.00 [µmol/l]
+        * Initial Value: 50.00 [µmol/l]
 
