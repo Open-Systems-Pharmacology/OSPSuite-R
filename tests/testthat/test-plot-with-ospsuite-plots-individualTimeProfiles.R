@@ -61,7 +61,7 @@ test_that("It creates default plots as expected for single observed dataset", {
 test_that("It creates default plots as expected for multiple observed datasets", {
   set.seed(123)
 
-  # It throws error if error Types ar not unique
+  # It throws error if error Types are not unique
   expect_error(
     plotTimeProfile(manyObsDC),
     messages$plotErrorTypeConsistency()
