@@ -149,4 +149,4 @@ Remotes:
     Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library
-    ospsuite.plots=Open-Systems-Pharmacology/TLF-Library
+    ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
