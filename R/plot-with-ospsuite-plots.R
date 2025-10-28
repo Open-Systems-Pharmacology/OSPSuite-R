@@ -24,7 +24,7 @@
 #'  `quantiles` (Default), `arithmetic` or `geometric` (full list in
 #'  `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
 #'  arithmetic or geometric average and add a set of upper and lower bounds
-#'  (`yMin` and `yMax`). It is only applied if the simulaed data represents a poulation.
+#'  (`yMin` and `yMax`). It is only applied if the simulated data represents a population.
 #' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
 #'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
