@@ -236,7 +236,7 @@ plotResidualsVsTime <- function(plotData, # nolint
 #' This function visualizes the residuals against observed values, helping to assess model performance.
 #'
 #' @inheritParams plotTimeProfile
-#' @param... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
+#' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
 #'
 #' @return A `ggplot2` plot object representing residuals vs observed values.
 #' @export
