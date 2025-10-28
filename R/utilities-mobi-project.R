@@ -20,7 +20,7 @@ loadMoBiProject <- function(filePath) {
   # Loading Mobi Project is Not available on MacOS
   if (Sys.info()[["sysname"]] == "Darwin") {
     cli::cli_abort(
-      "runSimulationsFromSnapshot is currently not supported on macOS."
+      "Loading MoBi Project is currently not supported on macOS."
     )
   }
 
