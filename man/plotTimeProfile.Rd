@@ -32,7 +32,7 @@ If a \code{data.table}, it must include the following:
 \item \code{yErrorType}: Type of y error, relative to \code{ospsuite::DataErrorType}.
 \item \code{yErrorValues}: Numeric error values.
 \item \code{yMin}, \code{yMax}: Custom ranges for y-axis instead of error types.
-\item \code{IndividualId}: Used for aggregation pf simulated population data.
+\item \code{IndividualId}: Used for aggregation of simulated population data.
 }
 }}
 
@@ -46,7 +46,7 @@ If a \code{data.table}, it must include the following:
 \code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in
 \code{ospsuite::DataAggregationMethods}). Will replace \code{yValues} by the median,
 arithmetic or geometric average and add a set of upper and lower bounds
-(\code{yMin} and \code{yMax}). It is only applied if the simulaed data represents a poulation.}
+(\code{yMin} and \code{yMax}). It is only applied if the simulated data represents a population.}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
 
