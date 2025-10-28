@@ -172,7 +172,7 @@ plotPredictedVsObserved <- function(plotData, # nolint
 #'
 #' @inheritParams plotTimeProfile
 #' @param residualScale A character string specifying the scale for the x and y-axis. Default is 'log'.
-#' @param... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
+#' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
 #'
 #' @return A `ggplot2` plot object representing residuals vs time.
 #' @export
