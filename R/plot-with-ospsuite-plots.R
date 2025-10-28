@@ -15,7 +15,7 @@
 #'     - `yErrorType`: Type of y error, relative to `ospsuite::DataErrorType`.
 #'     - `yErrorValues`: Numeric error values.
 #'     - `yMin`, `yMax`: Custom ranges for y-axis instead of error types.
-#'     - `IndividualId`: Used for aggregation pf simulated population data.
+#'     - `IndividualId`: Used for aggregation of simulated population data.
 #'
 #' @param metaData A list containing metadata for the plot. If NULL, a default list is constructed from the data. Expected structure includes information about dimensions and units for both x and y axes.
 #' @param mapping A ggplot2 aesthetic mapping object. Default is `ggplot2::aes()`. This is added or replaces the default mapping constructed by the data.
