@@ -310,7 +310,7 @@ plotResidualsVsObserved <- function(plotData,
 #'
 #' @inheritParams plotTimeProfile
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
-#' @param... Additional arguments passed to `ospsuite.plots::plotHistogram`.
+#' @param ... Additional arguments passed to `ospsuite.plots::plotHistogram`.
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
