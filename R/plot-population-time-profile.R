@@ -40,12 +40,14 @@
 #' )
 #'
 #' @export
-plotPopulationTimeProfile <- function(dataCombined,
-                                      defaultPlotConfiguration = NULL,
-                                      aggregation = "quantiles",
-                                      quantiles = c(0.05, 0.5, 0.95),
-                                      showLegendPerDataset = FALSE,
-                                      ...) {
+plotPopulationTimeProfile <- function(
+  dataCombined,
+  defaultPlotConfiguration = NULL,
+  aggregation = "quantiles",
+  quantiles = c(0.05, 0.5, 0.95),
+  showLegendPerDataset = FALSE,
+  ...
+) {
   .plotTimeProfile(
     dataCombined,
     defaultPlotConfiguration,

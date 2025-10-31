@@ -21,8 +21,14 @@ StandardPath <- enum(c(
   BMI = toPathString(StandardContainer$Organism, "BMI"),
   BSA = toPathString(StandardContainer$Organism, "BSA"),
   GestationalAge = toPathString(StandardContainer$Organism, "Gestational age"),
-  OntogenyFactorAlbumin = toPathString(StandardContainer$Organism, "Ontogeny factor (albumin)"),
-  OntogenyFactorAlbuminAGP = toPathString(StandardContainer$Organism, "Ontogeny factor (alpha1-acid glycoprotein)")
+  OntogenyFactorAlbumin = toPathString(
+    StandardContainer$Organism,
+    "Ontogeny factor (albumin)"
+  ),
+  OntogenyFactorAlbuminAGP = toPathString(
+    StandardContainer$Organism,
+    "Ontogeny factor (alpha1-acid glycoprotein)"
+  )
 ))
 
 #' Standard molecule parameter names typically available in an endogenous molecule (enzyme, transporter etc...) coming from PK-Sim

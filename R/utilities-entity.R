@@ -110,14 +110,23 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
 #'   Simulation
 #'
 #' @keywords internal
-.getAllEntitiesMatching <- function(paths, container, entityType, method = NULL) {
+.getAllEntitiesMatching <- function(
+  paths,
+  container,
+  entityType,
+  method = NULL
+) {
   # Test for correct inputs
   validateIsOfType(container, c("Simulation", "Container", "Molecule"))
   validateIsString(paths)
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllMatchingMethod) == className)) == 0) {
-    stop(messages$errorWrongType("entityType", className, names(AllMatchingMethod)))
+    stop(messages$errorWrongType(
+      "entityType",
+      className,
+      names(AllMatchingMethod)
+    ))
   }
 
   task <- .getNetTaskFromCache("ContainerTask")
@@ -151,7 +160,11 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   validateIsString(method, nullAllowed = TRUE)
   className <- entityType$classname
   if (length(which(names(AllPathsInMethod) == className)) == 0) {
-    stop(messages$errorWrongType("entityType", className, names(AllPathsInMethod)))
+    stop(messages$errorWrongType(
+      "entityType",
+      className,
+      names(AllPathsInMethod)
+    ))
   }
 
   task <- .getNetTaskFromCache("ContainerTask")

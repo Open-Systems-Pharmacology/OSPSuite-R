@@ -2,7 +2,7 @@
 
     Code
       results$print()
-    Message
+    Output
       <SensitivityAnalysisResults>
         * Number of calculated sensitivities: 72
       Available PK Parameters:

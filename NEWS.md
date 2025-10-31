@@ -1,5 +1,32 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)
+
+## Minor improvements and bug fixes
+
+- Added optional `names` parameter to `dataSetToTibble()` function to support custom naming of datasets. 
+This is particularly useful when multiple datasets have the same original name. 
+The naming logic has been moved from the private `.dataSetToDataFrame()` method in `DataCombined` 
+to `dataSetToTibble()` for better code reuse and maintainability. (\#1627)
+
+# ospsuite 12.3.2
+
+## Minor improvements and bug fixes
+
+- OSPSuite binaries were updated to match OSPSuite v12.1 release.
+
+# ospsuite 12.3.1
+
+## Minor improvements and bug fixes
+
+- Fixed tests expectations for better compatibility with latest version of
+  `{ospsuite.utils}` package. (\#1570)
+- Revised "get started" (https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) documentation page to make it more accesible to new users. (\#1571)
+
+# ospsuite 12.3.0
+
 ## Breaking changes
 
 - ´{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
@@ -30,6 +57,9 @@ deprecated. Use `getPrintValue()` in conjunction with a print method of your cho
 - `calculateResiduals()` for `DataCombined` now supports full pairwise residual 
 computation between multiple observed and simulated datasets within a group.
 - The `name` property of a `Simulation` can now be changed (#1245)
+- `calculateResiduals`  now handles single-point simulated datasets via direct 
+x-value matching instead of interpolation. Unmatched observed x-values return 
+`NA` (#1559).
 
 # ospsuite 12.2.0
 

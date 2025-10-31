@@ -3,12 +3,18 @@
 sim <- loadTestSimulation("S1")
 
 test_that("It can retrieve quantities with absolute path", {
-  quantities <- getAllQuantitiesMatching(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
+  quantities <- getAllQuantitiesMatching(
+    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
+    sim
+  )
   expect_equal(length(quantities), 1)
 })
 
 test_that("It can retrieve quantities with generic path path", {
-  quantities <- getAllQuantitiesMatching(toPathString(c("Organism", "Liv*", "Intracellu*", "Vol*")), sim)
+  quantities <- getAllQuantitiesMatching(
+    toPathString(c("Organism", "Liv*", "Intracellu*", "Vol*")),
+    sim
+  )
   expect_equal(length(quantities), 1)
 })
 
@@ -42,16 +48,28 @@ test_that("It can retrieve all quantity paths defined in a container", {
 # getQuantity
 
 test_that("It can retrieve a single quantity by path if it exists", {
-  quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Volume")), sim)
+  quantity <- getQuantity(
+    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
+    sim
+  )
   expect_equal(quantity$name, "Volume")
 })
 
 test_that("It throws an error if the quantity by path does not exist", {
-  expect_error((quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim)))
+  expect_error(
+    (quantity <- getQuantity(
+      toPathString(c("Organism", "Liver", "Intracellular", "Length")),
+      sim
+    ))
+  )
 })
 
 test_that("It returns null if the quantity by path does not exist and stopIfNotFound == FALSE", {
-  quantity <- getQuantity(toPathString(c("Organism", "Liver", "Intracellular", "Length")), sim, stopIfNotFound = FALSE)
+  quantity <- getQuantity(
+    toPathString(c("Organism", "Liver", "Intracellular", "Length")),
+    sim,
+    stopIfNotFound = FALSE
+  )
   expect_null(quantity)
 })
 
@@ -72,7 +90,12 @@ test_that("It can set single parameter value", {
 
 test_that("It can set single parameter value with unit", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
-  setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "ml")
+  setQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    values = 100,
+    simulation = sim,
+    units = "ml"
+  )
   parameter <- getParameter(parameterPath, sim)
   expect_equal(parameter$value, 100e-3)
 })
@@ -91,7 +114,9 @@ test_that("It can set multiple quantity values with units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
   setQuantityValuesByPath(
-    quantityPaths = c(quantityPath1, quantityPath2), values = c(40, 50), simulation = sim,
+    quantityPaths = c(quantityPath1, quantityPath2),
+    values = c(40, 50),
+    simulation = sim,
     units = c("ml", "mol")
   )
   quantity1 <- getQuantity(quantityPath1, sim)
@@ -107,18 +132,34 @@ test_that("It throws an exception when setting values for a quantity that does n
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist with unit", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_no_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "ml", stopIfNotFound = FALSE))
+  expect_no_error(setQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    values = 100,
+    simulation = sim,
+    units = "ml",
+    stopIfNotFound = FALSE
+  ))
 })
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist and the stopIfnotFound flag is set to false", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_no_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, stopIfNotFound = FALSE))
+  expect_no_error(setQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    values = 100,
+    simulation = sim,
+    stopIfNotFound = FALSE
+  ))
 })
 
 test_that("It throws an error when the number of quantity paths differs from the number units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
-  expect_error(setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim, units = "ml"))
+  expect_error(setQuantityValuesByPath(
+    c(quantityPath1, quantityPath2),
+    c(40, 50),
+    sim,
+    units = "ml"
+  ))
 })
 
 # getQuantityValuesByPath
@@ -131,7 +172,11 @@ test_that("It can get single parameter value", {
 
 test_that("It can get single parameter value with unit", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
-  value <- getQuantityValuesByPath(quantityPaths = parameterPath, simulation = sim, units = "ml")
+  value <- getQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    simulation = sim,
+    units = "ml"
+  )
   parameter <- getParameter(parameterPath, sim)
   paramValue <- toUnit(
     quantityOrDimension = parameter,
@@ -158,7 +203,8 @@ test_that("It can get multiple quantity values with units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
   values <- getQuantityValuesByPath(
-    quantityPaths = list(quantityPath1, quantityPath2), simulation = sim,
+    quantityPaths = list(quantityPath1, quantityPath2),
+    simulation = sim,
     units = list("ml", "mol")
   )
   quantity <- getQuantity(quantityPath1, sim)
@@ -181,7 +227,8 @@ test_that("It can get multiple quantity values with units when one unit is NULL"
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
   values <- getQuantityValuesByPath(
-    quantityPaths = list(quantityPath1, quantityPath2), simulation = sim,
+    quantityPaths = list(quantityPath1, quantityPath2),
+    simulation = sim,
     units = list("ml", NULL)
   )
   quantity <- getQuantity(quantityPath1, sim)
@@ -203,13 +250,22 @@ test_that("It throws an exception when getting values for a quantity that does n
 
 test_that("It does not throw an exception when getting values for a quantity that does not exist with unit and the stopIfnotFound flag is set to fals", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_no_error(getQuantityValuesByPath(quantityPaths = parameterPath, simulation = sim, units = "ml", stopIfNotFound = FALSE))
+  expect_no_error(getQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    simulation = sim,
+    units = "ml",
+    stopIfNotFound = FALSE
+  ))
 })
 
 test_that("It throws an error when the number of quantity paths differs from the number units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
-  expect_error(getQuantityValuesByPath(c(quantityPath1, quantityPath2), sim, units = "ml"))
+  expect_error(getQuantityValuesByPath(
+    c(quantityPath1, quantityPath2),
+    sim,
+    units = "ml"
+  ))
 })
 
 
@@ -248,7 +304,13 @@ test_that("It returns TRUE when the quantity is an explicit formula", {
 
 test_that("It shows an expected message when setting a value with wrong unit", {
   parameterPath <- "Organism|Liver|Intracellular|Volume"
-  expect_error(setQuantityValuesByPath(quantityPaths = parameterPath, values = 100, simulation = sim, units = "mol"),
+  expect_error(
+    setQuantityValuesByPath(
+      quantityPaths = parameterPath,
+      values = 100,
+      simulation = sim,
+      units = "mol"
+    ),
     regexp = messages$wrongUnitForQuantity(
       quantityPath = parameterPath,
       unit = "mol",

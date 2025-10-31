@@ -39,7 +39,13 @@ MoleculeOntogeny <- R6::R6Class(
     #' @description
     #' Print the `MoleculeOntogeny` on one line
     printMoleculeOntogeny = function() {
-      print(paste0("Molecule '", self$molecule, "' with ontogeny '", self$ontogeny, "'"))
+      print(paste0(
+        "Molecule '",
+        self$molecule,
+        "' with ontogeny '",
+        self$ontogeny,
+        "'"
+      ))
     }
   )
 )

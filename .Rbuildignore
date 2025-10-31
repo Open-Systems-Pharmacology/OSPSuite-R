@@ -3,7 +3,6 @@
 (^appveyor)(.*)(.yml$)
 ^README\.md$
 ^tests/dev
-^tools
 ^packages
 ^packages\.config$
 ^scripts
@@ -37,3 +36,5 @@ tests\^spelling
 ^update_core_files.R
 ^\.github$
 ^codecov\.yml$
+^[.]?air[.]toml$
+^\.vscode$

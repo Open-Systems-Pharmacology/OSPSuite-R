@@ -17,16 +17,35 @@ createIndividual <- function(individualCharacteristics) {
   validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
   individualFactory <- rSharp::callStatic("PKSim.R.Api", "GetIndividualFactory")
-  createIndividualResults <- individualFactory$call("CreateIndividual", individualCharacteristics)
+  createIndividualResults <- individualFactory$call(
+    "CreateIndividual",
+    individualCharacteristics
+  )
 
-  distributedParameters <- .getPropertyValue(createIndividualResults, "DistributedParameters")
-  derivedParameters <- .getPropertyValue(createIndividualResults, "DerivedParameters")
+  distributedParameters <- .getPropertyValue(
+    createIndividualResults,
+    "DistributedParameters"
+  )
+  derivedParameters <- .getPropertyValue(
+    createIndividualResults,
+    "DerivedParameters"
+  )
   seed <- .getPropertyValue(createIndividualResults, "Seed")
 
-  distributedParameters <- .parameterValueListFrom(distributedParameters, addUnits = TRUE)
-  derivedParameters <- .parameterValueListFrom(derivedParameters, addUnits = TRUE)
+  distributedParameters <- .parameterValueListFrom(
+    distributedParameters,
+    addUnits = TRUE
+  )
+  derivedParameters <- .parameterValueListFrom(
+    derivedParameters,
+    addUnits = TRUE
+  )
 
-  list(distributedParameters = distributedParameters, derivedParameters = derivedParameters, seed = seed)
+  list(
+    distributedParameters = distributedParameters,
+    derivedParameters = derivedParameters,
+    seed = seed
+  )
 }
 
 #' Creates the parameter distributions based on the given individual `individualCharacteristics`
@@ -40,7 +59,10 @@ createDistributions <- function(individualCharacteristics) {
   validateIsOfType(individualCharacteristics, "IndividualCharacteristics")
 
   individualFactory <- rSharp::callStatic("PKSim.R.Api", "GetIndividualFactory")
-  distributedParameters <- individualFactory$call("DistributionsFor", individualCharacteristics)
+  distributedParameters <- individualFactory$call(
+    "DistributionsFor",
+    individualCharacteristics
+  )
 
   list(
     paths = .getPropertyValues(distributedParameters, "ParameterPath"),
@@ -48,7 +70,10 @@ createDistributions <- function(individualCharacteristics) {
     units = .getPropertyValues(distributedParameters, "Unit"),
     means = .getPropertyValues(distributedParameters, "Mean"),
     stds = .getPropertyValues(distributedParameters, "Std"),
-    distributionTypes = .getPropertyValues(.getPropertyValues(distributedParameters, "DistributionType"), "DisplayName")
+    distributionTypes = .getPropertyValues(
+      .getPropertyValues(distributedParameters, "DistributionType"),
+      "DisplayName"
+    )
   )
 }
 
@@ -76,19 +101,21 @@ createDistributions <- function(individualCharacteristics) {
 #' @return An array of `ParameterValue` containing the value of each individual parameter
 #'
 #' @export
-createIndividualCharacteristics <- function(species,
-                                            population = NULL,
-                                            gender = NULL,
-                                            weight = NULL,
-                                            weightUnit = "kg",
-                                            height = NULL,
-                                            heightUnit = "cm",
-                                            age = NULL,
-                                            ageUnit = "year(s)",
-                                            gestationalAge = 40,
-                                            gestationalAgeUnit = "week(s)",
-                                            moleculeOntogenies = NULL,
-                                            seed = NULL) {
+createIndividualCharacteristics <- function(
+  species,
+  population = NULL,
+  gender = NULL,
+  weight = NULL,
+  weightUnit = "kg",
+  height = NULL,
+  heightUnit = "cm",
+  age = NULL,
+  ageUnit = "year(s)",
+  gestationalAge = 40,
+  gestationalAgeUnit = "week(s)",
+  moleculeOntogenies = NULL,
+  seed = NULL
+) {
   # Assuming that if this function is called directly, PK-Sim was either initialized already
   # or should be initialized automatically
   initPKSim()
@@ -110,15 +137,27 @@ createIndividualCharacteristics <- function(species,
   individualCharacteristics <- IndividualCharacteristics$new()
   individualCharacteristics$species <- species
   # Check for correct population if the species is `Human`
-  if (species == Species$Human && !enumHasKey(key = population, enum = HumanPopulation)) {
+  if (
+    species == Species$Human &&
+      !enumHasKey(key = population, enum = HumanPopulation)
+  ) {
     stop(messages$errorWrongPopulation(species, population))
   }
   individualCharacteristics$population <- population
   individualCharacteristics$gender <- gender
   individualCharacteristics$age <- .createSnapshotParameter(age, ageUnit)
-  individualCharacteristics$weight <- .createSnapshotParameter(weight, weightUnit)
-  individualCharacteristics$height <- .createSnapshotParameter(height, heightUnit)
-  individualCharacteristics$gestationalAge <- .createSnapshotParameter(gestationalAge, gestationalAgeUnit)
+  individualCharacteristics$weight <- .createSnapshotParameter(
+    weight,
+    weightUnit
+  )
+  individualCharacteristics$height <- .createSnapshotParameter(
+    height,
+    heightUnit
+  )
+  individualCharacteristics$gestationalAge <- .createSnapshotParameter(
+    gestationalAge,
+    gestationalAgeUnit
+  )
   individualCharacteristics$seed <- seed
   for (moleculeOntogeny in moleculeOntogenies) {
     individualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)

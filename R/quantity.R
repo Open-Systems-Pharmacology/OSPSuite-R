@@ -17,22 +17,45 @@ Quantity <- R6::R6Class(
     },
     #' @field unit The base unit in which the quantity value is defined (Read-Only)
     unit = function(value) {
-      private$.unit <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "BaseUnitName", "unit", private$.unit, value)
+      private$.unit <- private$.wrapExtensionMethodCached(
+        WITH_DIMENSION_EXTENSION,
+        "BaseUnitName",
+        "unit",
+        private$.unit,
+        value
+      )
       return(private$.unit)
     },
     #' @field displayUnit The unit in which the quantity value is usually displayed (Read-Only)
     displayUnit = function(value) {
-      private$.wrapExtensionMethod(WITH_DISPLAY_UNIT_EXTENSION, "DisplayUnitName", "displayUnit", value)
+      private$.wrapExtensionMethod(
+        WITH_DISPLAY_UNIT_EXTENSION,
+        "DisplayUnitName",
+        "displayUnit",
+        value
+      )
     },
     #' @field dimension The dimension in which the quantity is defined  (Read-Only)
     dimension = function(value) {
-      private$.dimension <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "DimensionName", "dimension", private$.dimension, value)
+      private$.dimension <- private$.wrapExtensionMethodCached(
+        WITH_DIMENSION_EXTENSION,
+        "DimensionName",
+        "dimension",
+        private$.dimension,
+        value
+      )
       return(private$.dimension)
     },
     #' @field  allUnits the list of all supported units (Read-Only)
     allUnits = function(value) {
       # Optimized implementation to avoid constant marshalling with .NET. We saved the array of units once the first time it is accessed
-      private$.allUnits <- private$.wrapExtensionMethodCached(WITH_DIMENSION_EXTENSION, "AllUnitNames", "allUnits", private$.allUnits, value)
+      private$.allUnits <- private$.wrapExtensionMethodCached(
+        WITH_DIMENSION_EXTENSION,
+        "AllUnitNames",
+        "allUnits",
+        private$.allUnits,
+        value
+      )
       return(private$.allUnits)
     },
     #' @field quantityType The type of the quantity (Read-Only)
@@ -57,11 +80,19 @@ Quantity <- R6::R6Class(
     },
     #' @field isDistributed Returns `TRUE` if the quantity represents a quantity with an underlying distribution otherwise `FALSE`
     isDistributed = function(value) {
-      private$.readOnlyProperty("isDistributed", value, self$formula$isDistributed)
+      private$.readOnlyProperty(
+        "isDistributed",
+        value,
+        self$formula$isDistributed
+      )
     },
     #' @field formulaString Returns the equation of the formula for a quantity using an explicit formula (e.g. `isFormula == TRUE`) or `NULL` for a quantity that does not use an explicit formula.
     formulaString = function(value) {
-      private$.readOnlyProperty("formulaString", value, self$formula$formulaString)
+      private$.readOnlyProperty(
+        "formulaString",
+        value,
+        self$formula$formulaString
+      )
     },
     #' @field isFixedValue Returns `TRUE` if the formula was overridden by a constant value, otherwise `FALSE`
     isFixedValue = function(value) {
@@ -99,7 +130,9 @@ Quantity <- R6::R6Class(
       ospsuite.utils::ospPrintHeader("Formula", level = 2)
       self$formula$printFormula()
       if (!self$isConstant && !self$isDistributed) {
-        ospsuite.utils::ospPrintItems(list("Value overrides formula" = self$isFixedValue))
+        ospsuite.utils::ospPrintItems(list(
+          "Value overrides formula" = self$isFixedValue
+        ))
       }
     },
     #' @description
@@ -149,7 +182,13 @@ Quantity <- R6::R6Class(
       if (!is.null(unit)) {
         unit <- .encodeUnit(unit)
         .validateHasUnit(self, unit)
-        value <- rSharp::callStatic(WITH_DIMENSION_EXTENSION, "ConvertToBaseUnit", self, value, unit)
+        value <- rSharp::callStatic(
+          WITH_DIMENSION_EXTENSION,
+          "ConvertToBaseUnit",
+          self,
+          value,
+          unit
+        )
       }
       self$value <- value
     },

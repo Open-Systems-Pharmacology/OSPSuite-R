@@ -7,7 +7,10 @@ test_that("it can create a new data importer configuration", {
   expect_equal(importerConfiguration$measurementColumn, "Measurement")
   expect_equal(importerConfiguration$errorType, NULL)
   expect_equal(importerConfiguration$errorUnit, NULL)
-  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
+  expect_equal(
+    importerConfiguration$measurementDimension,
+    ospDimensions$`Concentration (molar)`
+  )
   expect_equal(importerConfiguration$measurementUnit, .encodeUnit("µmol/l"))
   expect_equal(importerConfiguration$isMeasurementUnitFromColumn, FALSE)
   expect_equal(importerConfiguration$timeUnit, ospUnits$Time$h)
@@ -72,7 +75,10 @@ test_that("it can set measurement unit from column and change column name", {
 
   importerConfiguration$isMeasurementUnitFromColumn <- FALSE
 
-  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (molar)`)
+  expect_equal(
+    importerConfiguration$measurementDimension,
+    ospDimensions$`Concentration (molar)`
+  )
   expect_equal(importerConfiguration$measurementUnit, .encodeUnit("µmol/l"))
 })
 
@@ -81,7 +87,10 @@ test_that("it can add an error column", {
   importerConfiguration$errorColumn <- "Error"
   expect_equal(importerConfiguration$errorColumn, "Error")
   expect_equal(importerConfiguration$errorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(importerConfiguration$errorUnit, importerConfiguration$measurementUnit)
+  expect_equal(
+    importerConfiguration$errorUnit,
+    importerConfiguration$measurementUnit
+  )
 })
 
 test_that("it can remove an error column", {
@@ -97,7 +106,10 @@ test_that("it can change measurement dimension without error", {
   importerConfiguration <- DataImporterConfiguration$new()
   expect_error(importerConfiguration$measurementDimension <- "foo")
   importerConfiguration$measurementDimension <- ospDimensions$`Concentration (mass)`
-  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (mass)`)
+  expect_equal(
+    importerConfiguration$measurementDimension,
+    ospDimensions$`Concentration (mass)`
+  )
   expect_equal(importerConfiguration$measurementUnit, "kg/l")
   expect_equal(importerConfiguration$errorUnit, NULL)
 
@@ -113,7 +125,10 @@ test_that("it can change measurement dimension without error", {
   expect_equal(importerConfiguration$measurementDimension, NULL)
 
   importerConfiguration$isMeasurementUnitFromColumn <- FALSE
-  expect_equal(importerConfiguration$measurementDimension, ospDimensions$`Concentration (mass)`)
+  expect_equal(
+    importerConfiguration$measurementDimension,
+    ospDimensions$`Concentration (mass)`
+  )
   expect_equal(importerConfiguration$measurementUnit, "kg/l")
   expect_equal(importerConfiguration$errorUnit, NULL)
 })
@@ -157,7 +172,10 @@ test_that("it can add grouping columns", {
 
 test_that("it does not fail when trying to remove a grouping column that is not present", {
   importerConfiguration <- DataImporterConfiguration$new()
-  expect_error(importerConfiguration$removeGroupingColumn(column = "tata"), regexp = NA)
+  expect_error(
+    importerConfiguration$removeGroupingColumn(column = "tata"),
+    regexp = NA
+  )
 })
 
 test_that("it can remove grouping columns", {

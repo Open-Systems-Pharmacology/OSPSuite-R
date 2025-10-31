@@ -110,7 +110,11 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
     quantity <- quantities[[i]]
     value <- values[[i]]
     if (!is.null(units)) {
-      value <- toBaseUnit(quantityOrDimension = quantity, values = value, unit = units[[i]])
+      value <- toBaseUnit(
+        quantityOrDimension = quantity,
+        values = value,
+        unit = units[[i]]
+      )
     }
     quantity$value <- value
   }
@@ -137,7 +141,13 @@ getQuantity <- function(path, container, stopIfNotFound = TRUE) {
 #'
 #' setParameterValuesByPath(list("Organism|Liver|Volume", "Organism|Liver|A"), c(2, 3), sim)
 #' @export
-setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
+setQuantityValuesByPath <- function(
+  quantityPaths,
+  values,
+  simulation,
+  units = NULL,
+  stopIfNotFound = TRUE
+) {
   validateIsString(quantityPaths)
   validateIsNumeric(values)
   validateIsSameLength(quantityPaths, values)
@@ -153,7 +163,12 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
     path <- quantityPaths[[i]]
     value <- values[[i]]
     if (!is.null(units)) {
-      dimension <- task$call("DimensionNameByPath", simulation, path, stopIfNotFound)
+      dimension <- task$call(
+        "DimensionNameByPath",
+        simulation,
+        path,
+        stopIfNotFound
+      )
       # Dimension ca be be empty if the path was not found
       if (dimension == "") {
         next
@@ -216,7 +231,12 @@ setQuantityValuesByPath <- function(quantityPaths, values, simulation, units = N
 #'   sim, list("ml", NULL)
 #' )
 #' @export
-getQuantityValuesByPath <- function(quantityPaths, simulation, units = NULL, stopIfNotFound = TRUE) {
+getQuantityValuesByPath <- function(
+  quantityPaths,
+  simulation,
+  units = NULL,
+  stopIfNotFound = TRUE
+) {
   validateIsString(quantityPaths)
   validateIsOfType(simulation, "Simulation")
 
@@ -347,7 +367,12 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
-  isFormulaExplicit <- task$call("IsExplicitFormulaByPath", simulation, path, stopIfNotFound)
+  isFormulaExplicit <- task$call(
+    "IsExplicitFormulaByPath",
+    simulation,
+    path,
+    stopIfNotFound
+  )
 
   return(isFormulaExplicit)
 }
@@ -408,7 +433,8 @@ getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {
   }
 
   molWeight <- paramMW[[1]]$call("get_Value")
-  molWeightConverted <- toUnit(ospDimensions$`Molecular weight`,
+  molWeightConverted <- toUnit(
+    ospDimensions$`Molecular weight`,
     values = molWeight,
     targetUnit = unit,
     sourceUnit = "kg/µmol"

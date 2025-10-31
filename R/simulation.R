@@ -31,11 +31,19 @@ Simulation <- R6::R6Class(
     },
     #' @field outputSchema outputSchema object for the simulation (read-only)
     outputSchema = function(value) {
-      private$.readOnlyProperty("outputSchema", value, private$.settings$outputSchema)
+      private$.readOnlyProperty(
+        "outputSchema",
+        value,
+        private$.settings$outputSchema
+      )
     },
     #' @field outputSelections outputSelections object for the simulation (read-only)
     outputSelections = function(value) {
-      private$.readOnlyProperty("outputSelections", value, private$.settings$outputSelections)
+      private$.readOnlyProperty(
+        "outputSelections",
+        value,
+        private$.settings$outputSelections
+      )
     },
     #' @field sourceFile Path to the file the simulation was loaded from (read-only)
     sourceFile = function(value) {
@@ -85,13 +93,17 @@ Simulation <- R6::R6Class(
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
     #' This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
     allEndogenousStationaryMoleculeNames = function() {
-      private$.buildConfiguration$call("AllPresentEndogenousStationaryMoleculeNames")
+      private$.buildConfiguration$call(
+        "AllPresentEndogenousStationaryMoleculeNames"
+      )
     },
     #' @description
     #' Returns the name of all xenobiotic floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
     #' This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
     allXenobioticFloatingMoleculeNames = function() {
-      private$.buildConfiguration$call("AllPresentXenobioticFloatingMoleculeNames")
+      private$.buildConfiguration$call(
+        "AllPresentXenobioticFloatingMoleculeNames"
+      )
     },
     #' @description
     #' Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
@@ -116,7 +128,12 @@ Simulation <- R6::R6Class(
     #' @param quantityPath Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)
     allApplicationsFor = function(quantityPath) {
       validateIsString(quantityPath)
-      netApplicationParameters <- rSharp::callStatic(MODEL_CORE_SIMULATION_EXTENSIONS, "AllApplicationParametersOrderedByStartTimeForQuantityPath", self, quantityPath)
+      netApplicationParameters <- rSharp::callStatic(
+        MODEL_CORE_SIMULATION_EXTENSIONS,
+        "AllApplicationParametersOrderedByStartTimeForQuantityPath",
+        self,
+        quantityPath
+      )
       .toObjectType(netApplicationParameters, Application)
     },
     #' @description

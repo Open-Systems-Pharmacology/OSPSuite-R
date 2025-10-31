@@ -2,7 +2,6 @@
 
 # plotObservedVsSimulated
 
-
 # load the simulation
 sim <- loadTestSimulation("MinimalModel")
 simResults <- importResultsFromCSV(
@@ -13,7 +12,9 @@ simResults <- importResultsFromCSV(
 # import observed data (will return a list of `DataSet` objects)
 dataSet <- loadDataSetsFromExcel(
   xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
-  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath("ImporterConfiguration.xml"))
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath(
+    "ImporterConfiguration.xml"
+  ))
 )
 
 # create a new instance and add datasets
@@ -37,16 +38,31 @@ myCombDat$setGroups(
     "Stevens_2012_placebo.Placebo_distal",
     "Stevens_2012_placebo.Placebo_proximal"
   ),
-  groups = c("Solid total", "Solid distal", "Solid proximal", "Solid total", "Solid distal", "Solid proximal")
+  groups = c(
+    "Solid total",
+    "Solid distal",
+    "Solid proximal",
+    "Solid total",
+    "Solid distal",
+    "Solid proximal"
+  )
 )
 
 test_that("It throws an error when foldDistance is lower that 1", {
-  expect_error(plotObservedVsSimulated(myCombDat, foldDistance = 0.5),
-    regexp = messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", 0.5)
+  expect_error(
+    plotObservedVsSimulated(myCombDat, foldDistance = 0.5),
+    regexp = messages$plotObservedVsSimulatedWrongFoldDistance(
+      "foldDistance",
+      0.5
+    )
   )
 
-  expect_error(plotObservedVsSimulated(myCombDat, foldDistance = c(1, 0.5)),
-    regexp = messages$plotObservedVsSimulatedWrongFoldDistance("foldDistance", c(1, 0.5))
+  expect_error(
+    plotObservedVsSimulated(myCombDat, foldDistance = c(1, 0.5)),
+    regexp = messages$plotObservedVsSimulatedWrongFoldDistance(
+      "foldDistance",
+      c(1, 0.5)
+    )
   )
 })
 
@@ -90,7 +106,11 @@ test_that("It issues warning when scale is linear", {
   set.seed(123)
 
   testthat::expect_warning({
-    plot <- plotObservedVsSimulated(myCombDat, myPlotConfiguration, foldDistance = c(2, 4, 6))
+    plot <- plotObservedVsSimulated(
+      myCombDat,
+      myPlotConfiguration,
+      foldDistance = c(2, 4, 6)
+    )
   })
 
   vdiffr::expect_doppelganger(
@@ -155,8 +175,14 @@ test_that("It produces expected plot for Aciclovir data", {
   simResults <- runSimulations(sim)[[1]]
 
   obsData <- lapply(
-    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    c(
+      "ObsDataAciclovir_1.pkml",
+      "ObsDataAciclovir_2.pkml",
+      "ObsDataAciclovir_3.pkml"
+    ),
+    function(x) {
+      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+    }
   )
 
   names(obsData) <- lapply(obsData, function(x) x$name)
@@ -201,14 +227,21 @@ test_that("It doesn't extrapolate past maximum simulated time point", {
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
       `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
     )
     readr::write_csv(df, "SimResults.csv")
     importResultsFromCSV(sim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
   obsData$xUnit <- "min"
 
   myDC <- DataCombined$new()
@@ -246,14 +279,21 @@ test_that("Different symbols for data sets within one group", {
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
       `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
     )
     readr::write_csv(df, "SimResults.csv")
     importResultsFromCSV(sim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
   obsData$xUnit <- "min"
   obsData$yDimension <- ospDimensions$`Concentration (molar)`
 
@@ -263,7 +303,10 @@ test_that("Different symbols for data sets within one group", {
 
   # Add second obs data
   obsData2 <- DataSet$new(name = "Observed 2")
-  obsData2$setValues(xValues = c(0, 3, 4, 4.5, 5.5), yValues = c(2.9, 5.1, 3, 8.2, 1))
+  obsData2$setValues(
+    xValues = c(0, 3, 4, 4.5, 5.5),
+    yValues = c(2.9, 5.1, 3, 8.2, 1)
+  )
   obsData2$xUnit <- "min"
   obsData2$yDimension <- ospDimensions$`Concentration (molar)`
   myDC$addDataSets(obsData2, groups = "myGroup")
@@ -283,14 +326,21 @@ test_that("LLOQ is plotted", {
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
       `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8)
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
     )
     readr::write_csv(df, "SimResults.csv")
     importResultsFromCSV(sim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(xValues = c(1, 3, 3.5, 4, 5), yValues = c(1.9, 6.1, 7, 8.2, 1))
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
   obsData$xUnit <- "min"
   obsData$yDimension <- ospDimensions$`Concentration (molar)`
   obsData$LLOQ <- 3
@@ -309,7 +359,8 @@ test_that("LLOQ is plotted", {
   DPC$lloqDirection <- "both"
   vdiffr::expect_doppelganger(
     title = "lloq both direction",
-    fig = plotObservedVsSimulated(myDC,
+    fig = plotObservedVsSimulated(
+      myDC,
       foldDistance = 2,
       defaultPlotConfiguration = DPC
     )

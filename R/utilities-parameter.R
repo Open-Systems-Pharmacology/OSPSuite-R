@@ -123,7 +123,13 @@ setParameterValues <- function(parameters, values, units = NULL) {
 #'
 #' setParameterValuesByPath(c("Organism|Liver|Volume", "Organism|Volume"), c(2, 3), sim)
 #' @export
-setParameterValuesByPath <- function(parameterPaths, values, simulation, units = NULL, stopIfNotFound = TRUE) {
+setParameterValuesByPath <- function(
+  parameterPaths,
+  values,
+  simulation,
+  units = NULL,
+  stopIfNotFound = TRUE
+) {
   setQuantityValuesByPath(
     quantityPaths = parameterPaths,
     values = values,

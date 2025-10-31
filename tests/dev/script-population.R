@@ -26,4 +26,8 @@ agingData_baby <- loadAgingDataFromCSV("tests/data/baby_aging.csv")
 
 aging_data <- loadAgingDataFromCSV("inst/extdata/aging_data.csv")
 
-res <- runSimulations(simulations = sim, population = population, agingData = aging_data)[[1]]
+res <- runSimulations(
+  simulations = sim,
+  population = population,
+  agingData = aging_data
+)[[1]]

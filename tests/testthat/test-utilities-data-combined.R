@@ -7,13 +7,21 @@ simData <- withr::with_tempdir({
   df <- dplyr::tibble(
     IndividualId = c(0, 0, 0, 0),
     `Time [min]` = c(0, 2, 4, 5),
-    `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(0, 4, 8, 0)
+    `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+      0,
+      4,
+      8,
+      0
+    )
   )
   readr::write_csv(df, "SimResults.csv")
   importResultsFromCSV(sim, "SimResults.csv")
 })
 obsData <- DataSet$new(name = "Observed")
-obsData$setValues(xValues = c(0, 1, 3, 3.5, 4, 5, 6), yValues = c(0, 1.9, 6.1, 7, 8.2, 1, 0))
+obsData$setValues(
+  xValues = c(0, 1, 3, 3.5, 4, 5, 6),
+  yValues = c(0, 1.9, 6.1, 7, 8.2, 1, 0)
+)
 obsData$xUnit <- "min"
 obsData$yDimension <- ospDimensions$`Concentration (molar)`
 obsData$LLOQ <- 0.02
@@ -25,12 +33,9 @@ test_that("NULL passed to the calculateResiduals function is an error", {
   expect_error(calculateResiduals(NULL))
 })
 
-test_that(
-  "An empty dataCombined object passed to the calculateResiduals function results in an error",
-  {
-    expect_error(calculateResiduals(DataCombined$new()))
-  }
-)
+test_that("An empty dataCombined object passed to the calculateResiduals function results in an error", {
+  expect_error(calculateResiduals(DataCombined$new()))
+})
 
 test_that("calculateResiduals returns a data frame", {
   expect_s3_class(calculateResiduals(myDC, scaling = "lin"), "data.frame")
@@ -56,80 +61,118 @@ test_that("calculateResiduals returns expected columns", {
   )
 
   expect_setequal(
-    expected_column_names, colnames(calculateResiduals(myDC, scaling = "lin"))
+    expected_column_names,
+    colnames(calculateResiduals(myDC, scaling = "lin"))
   )
 })
 
-test_that(
-  "DataCombined objects keep LLOQ data passed from underlying DataSet objects",
-  {
-    expect_identical(
-      myDC$toDataFrame()$lloq,
-      c(rep(as.numeric(NA), nrow(df)), rep(0.02, length(obsData$yValues))),
-      tolerance = tolerance
-    )
-  }
-)
+test_that("DataCombined objects keep LLOQ data passed from underlying DataSet objects", {
+  expect_identical(
+    myDC$toDataFrame()$lloq,
+    c(rep(as.numeric(NA), nrow(df)), rep(0.02, length(obsData$yValues))),
+    tolerance = tolerance
+  )
+})
 
-test_that(
-  "calculateResiduals function keeps passes lloq data through",
-  {
-    expect_equal(
-      calculateResiduals(myDC, scaling = "lin")$lloq,
-      rep(0.02, 6),
-      tolerance = tolerance
-    )
-  }
-)
+test_that("calculateResiduals function keeps passes lloq data through", {
+  expect_equal(
+    calculateResiduals(myDC, scaling = "lin")$lloq,
+    rep(0.02, 6),
+    tolerance = tolerance
+  )
+})
 
-test_that(
-  "calculateResiduals does not return rows for data outside of the simulation time",
-  {
-    expect_equal(
-      nrow(calculateResiduals(myDC, scaling = "lin")),
-      6
-    )
-  }
-)
+test_that("calculateResiduals does not return rows for data outside of the simulation time", {
+  expect_equal(
+    nrow(calculateResiduals(myDC, scaling = "lin")),
+    6
+  )
+})
 
-test_that(
-  "calculateResiduals returns a correct vector of linear residuals on example data",
-  {
-    expect_equal(calculateResiduals(myDC, scaling = "lin")$residualValues,
-      c(0, 0.1000000, -0.0999999, 0.0, -0.1999998, -1),
-      tolerance = 1e-5
-    )
-  }
-)
+test_that("calculateResiduals returns a correct vector of linear residuals on example data", {
+  expect_equal(
+    calculateResiduals(myDC, scaling = "lin")$residualValues,
+    c(0, 0.1000000, -0.0999999, 0.0, -0.1999998, -1),
+    tolerance = 1e-5
+  )
+})
 
-test_that(
-  "calculateResiduals returns a correct vector of log residuals on example data",
-  {
-    pairedData <- calculateResiduals(myDC, scaling = "log")
-    expectedResiduals <- sapply(seq_along(pairedData$yValuesObserved), function(idx) {
+test_that("calculateResiduals returns a correct vector of log residuals on example data", {
+  pairedData <- calculateResiduals(myDC, scaling = "log")
+  expectedResiduals <- sapply(
+    seq_along(pairedData$yValuesObserved),
+    function(idx) {
       ospsuite.utils::logSafe(pairedData$yValuesSimulated[[idx]]) -
         ospsuite.utils::logSafe(pairedData$yValuesObserved[[idx]])
-    })
+    }
+  )
 
-    expect_equal(calculateResiduals(myDC, scaling = "log")$residualValues,
-      expectedResiduals,
-      tolerance = 1e-5
-    )
-  }
-)
+  expect_equal(
+    calculateResiduals(myDC, scaling = "log")$residualValues,
+    expectedResiduals,
+    tolerance = 1e-5
+  )
+})
 
 test_that("calculateResiduals computes all observed, simulated data pairs correctly", {
-  myDC$addSimulationResults(simData, groups = "myGroup", names = "secondSimResults")
+  myDC$addSimulationResults(
+    simData,
+    groups = "myGroup",
+    names = "secondSimResults"
+  )
   residuals <- calculateResiduals(myDC, scaling = "lin")
 
-  expect_setequal(residuals$nameSimulated, c(
-    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-    "secondSimResults"
-  ))
+  expect_setequal(
+    residuals$nameSimulated,
+    c(
+      "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+      "secondSimResults"
+    )
+  )
 
   expect_equal(
     residuals$residualValues,
     rep(c(0, 0.1000000, -0.0999999, 0.0, -0.1999998, -1), 2),
     tolerance = 1e-5
   )
+})
+
+test_that("calculateResiduals handles single-point observed and simulated
+          datasets correctly", {
+  myDataSet <- DataSet$new("myDataSet")
+  myDataSet$setValues(1, 1)
+
+  simDataSet <- DataSet$new("simDataSet")
+  simDataSet$setValues(1, 1)
+
+  myDC <- DataCombined$new()
+  myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
+  myDC$setDataTypes(
+    c("myDataSet", "simDataSet"),
+    dataTypes = c("observed", "simulated")
+  )
+
+  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+
+  expect_equal(residuals$residualValues, 0, tolerance = 1e-5)
+})
+
+test_that("calculateResiduals drops points when simulated dataset contains a
+          single point with non-matching x-value", {
+  myDataSet <- DataSet$new("myDataSet")
+  myDataSet$setValues(1, 1)
+
+  simDataSet <- DataSet$new("simDataSet")
+  simDataSet$setValues(2, 2)
+
+  myDC <- DataCombined$new()
+  myDC$addDataSets(c(myDataSet, simDataSet), groups = "myGroup")
+  myDC$setDataTypes(
+    c("myDataSet", "simDataSet"),
+    dataTypes = c("observed", "simulated")
+  )
+
+  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+
+  expect_equal(nrow(residuals), 0)
 })

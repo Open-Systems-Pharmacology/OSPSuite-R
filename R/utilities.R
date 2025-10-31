@@ -38,7 +38,11 @@
   unit <- enc2utf8(unit)
   mutants <- enc2utf8("\xc2\xb5|\xce\xbc|\xb5")
   if (stringr::str_detect(unit, pattern = mutants)) {
-    unit <- stringr::str_replace_all(unit, pattern = mutants, replacement = ospsuiteEnv$muSymbol)
+    unit <- stringr::str_replace_all(
+      unit,
+      pattern = mutants,
+      replacement = ospsuiteEnv$muSymbol
+    )
   }
   return(unit)
 }
@@ -61,7 +65,12 @@
 #' @keywords internal
 .netEnumName <- function(enumType, enumValue) {
   netTypeObj <- rSharp::getType(enumType)
-  rSharp::callStatic("System.Enum", methodName = "GetName", netTypeObj, enumValue)
+  rSharp::callStatic(
+    "System.Enum",
+    methodName = "GetName",
+    netTypeObj,
+    enumValue
+  )
 }
 
 
@@ -105,7 +114,10 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
 #' @returns A vector of characters.
 #' @noRd
 .getIllegalCharacters <- function() {
-  netList <- rSharp::getStatic("OSPSuite.Core.Domain.Constants", "ILLEGAL_CHARACTERS")
+  netList <- rSharp::getStatic(
+    "OSPSuite.Core.Domain.Constants",
+    "ILLEGAL_CHARACTERS"
+  )
 
   return(netList$call("ToArray"))
 }
