@@ -33,10 +33,11 @@
 #'
 #' @keywords internal
 .getCoreTaskFromCache <- function(taskName) {
-  if (is.null(tasksEnv[[taskName]])) {
-    tasksEnv[[taskName]] <- .getCoreTask(taskName)
+  cacheName <- paste("core", taskName)
+  if (is.null(tasksEnv[[cacheName]])) {
+    tasksEnv[[cacheName]] <- .getCoreTask(taskName)
   }
-  return(tasksEnv[[taskName]])
+  return(tasksEnv[[cacheName]])
 }
 
 #' @title .getMoBiTaskFromCache
@@ -50,8 +51,9 @@
 #'
 #' @keywords internal
 .getMoBiTaskFromCache <- function(taskName) {
-  if (is.null(tasksEnv[[taskName]])) {
-    tasksEnv[[taskName]] <- .getMoBiTask(taskName)
+  cacheName <- paste("mobi", taskName)
+  if (is.null(tasksEnv[[cacheName]])) {
+    tasksEnv[[cacheName]] <- .getMoBiTask(taskName)
   }
-  return(tasksEnv[[taskName]])
+  return(tasksEnv[[cacheName]])
 }
