@@ -31,25 +31,30 @@ loadModuleFromPKML <- function(path) {
 #' Create a ModuleConfiguration .net object
 #'
 #' @param module A `Module` object representing the module to configure.
-#' @param selectedParameterValue a ParameterValuesBuildingBlock object that will be selected in a Model Configuration.
+#' @param selectedParameterValueName Name of a Parameter Values Building Block contained in this module that will be selected in the Model Configuration.
 #' If `NULL`, no PV BB will be selected.
-#' @param selectedInitialCondition an InitialConditionsBuildingBlock object that will be selected in a Model Configuration.
+#' @param selectedInitialConditionName Name of an Initial Conditions Building Block contained in this module that will be selected in the Model Configuration.
 #' If `NULL`, no IC BB will be selected.
 #'
 #' @returns A `ModuleConfiguration` object representing the configuration of the module.
 #' @noRd
 .createModuleConfiguration <- function(
   module,
-  selectedParameterValue = NULL,
-  selectedInitialCondition = NULL
+  selectedParameterValueName = NULL,
+  selectedInitialConditionName = NULL
 ) {
-  netTask <- .getMoBiTaskFromCache("SimulationTask")
-  netModuleConfiguration <- netTask$call("CreateModuleConfiguration", module)
+  # If selected PV or IC BB names are NULL, no BB will be selected in the configuration
+  # Passing a NULL to .NET does not work, so we have to substitute with empty strings
+  # This works because on .NET side, the check is for null or emtpy
+  selectedParameterValueName <- selectedParameterValueName %||% ""
+  selectedInitialConditionName <- selectedInitialConditionName %||% ""
 
-  netModuleConfiguration$set("SelectedParameterValue", selectedParameterValue)
-  netModuleConfiguration$set(
-    "SelectedInitialCondition",
-    selectedInitialCondition
+  netTask <- .getMoBiTaskFromCache("SimulationTask")
+  netModuleConfiguration <- netTask$call(
+    "CreateModuleConfiguration",
+    module,
+    selectedParameterValueName,
+    selectedInitialConditionName
   )
 
   return(netModuleConfiguration)

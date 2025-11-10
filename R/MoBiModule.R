@@ -109,7 +109,7 @@ MoBiModule <- R6::R6Class(
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
-        "PK-Sim module" = self$sPKSimModule,
+        "PK-Sim module" = self$isPKSimModule,
         "Merge behavior" = self$mergeBehavior
       ))
       ospsuite.utils::ospPrintItems(
@@ -151,12 +151,14 @@ MoBiModule <- R6::R6Class(
 
       # Check if any of the provided names are not present in the module
       missingNames <- setdiff(names, allNames)
-      if (length(missingNames) > 0) {
+      if (length(missingNames) > 0 && stopIfNotFound) {
         stop(paste(
           "No",
           bbType,
           "Building Blocks found with names:",
-          paste(missingNames, collapse = ", ")
+          paste(missingNames, collapse = ", "),
+          "in module",
+          self$name
         ))
       }
 

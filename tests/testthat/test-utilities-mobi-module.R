@@ -9,17 +9,34 @@ test_that(".createModuleConfiguration creates a module configuration with no IC 
   module <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
   netModuleConfiguration <- .createModuleConfiguration(module)
 
-  netModuleConfiguration$get("SelectedParameterValue") %>%
-    expect_null()
-  netModuleConfiguration$get("SelectedInitialCondition") %>%
-    expect_null()
+  # Expect that no PV and IC BBs are selected
+  expect_null(netModuleConfiguration$get("SelectedParameterValue"))
+  expect_null(netModuleConfiguration$get("SelectedInitialCondition"))
 
-  # WIth manual passing NULL as IC and PV BBs
+  # With manual passing NULL as IC and PV BBs
   netModuleConfiguration <- .createModuleConfiguration(module, NULL, NULL)
   netModuleConfiguration$get("SelectedParameterValue") %>%
     expect_null()
   netModuleConfiguration$get("SelectedInitialCondition") %>%
     expect_null()
+})
+
+# Create a module configuration with specified IC and PV BBs
+test_that(".createModuleConfiguration creates a module configuration with IC and PV BBs", {
+  module <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  netModuleConfiguration <- .createModuleConfiguration(
+    module,
+    selectedParameterValueName = "PV2",
+    selectedInitialConditionName = "IC3"
+  )
+
+  # Expect that the correct PV and IC BBs are selected
+  selectedPV <- netModuleConfiguration$get("SelectedParameterValue")
+  selectedIC <- netModuleConfiguration$get("SelectedInitialCondition")
+
+  expect_equal(selectedPV$get("Name"), "PV2")
+  expect_equal(selectedIC$get("Name"), "IC3")
 })
 
 # Loading a module from pkml
@@ -34,10 +51,15 @@ test_that("loadModuleFromPKML loads a module correctly", {
 
 test_that("loadModuleFromPKML throws an error when the passed PKML contains more than one module", {
   filePath <- getTestDataFilePath("TestSim_2Modules.pkml")
-  module <- loadModuleFromPKML(filePath)
+  expect_error(
+    loadModuleFromPKML(filePath),
+    regexp = "The PKML you are trying to load the module from contains more than one module, but the 
+    function expects only one module.
+    Most probably you are try to load a simulation export."
+  )
 })
 
-test_that("loadModuleFromPKML throws an error when the passed PKML doest not contain any module", {})
-
-# passing name of IC BB that is not present in the module. requires https://github.com/Open-Systems-Pharmacology/MoBi/issues/2027
-# Passing name of PV BB that is not present in the module. requires https://github.com/Open-Systems-Pharmacology/MoBi/issues/2027
+test_that("loadModuleFromPKML throws an error when the passed PKML doest not contain any module", {
+  filePath <- getTestDataFilePath("S1.pkml")
+  expect_error(loadModuleFromPKML(filePath))
+})

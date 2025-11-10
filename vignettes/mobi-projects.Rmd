@@ -16,7 +16,11 @@ knitr::opts_chunk$set(echo = TRUE)
 First, load a MoBi project:
 
 ```{r loadProject}
-projectPath <- system.file("extdata", "TH_QST_Platform.mbp3", package = "ospsuite")
+projectPath <- system.file(
+  "extdata",
+  "TH_QST_Platform.mbp3",
+  package = "ospsuite"
+)
 myProject <- loadMoBiProject(projectPath)
 ```
 
@@ -31,7 +35,7 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 get the list of parameter identifications:
 
 ```{r getPInNames, execute = FALSE}
-# PIs <- myProject$parameterIdentificationNames
+PIs <- myProject$parameterIdentificationNames
 
 ospsuite.utils::ospPrintItems(
   PIs,
@@ -42,9 +46,9 @@ ospsuite.utils::ospPrintItems(
 get observed data from the project as `DataSet` objects:
 
 ```{r getObservedData}
-# obsData <- myProject$getObservedData()
+obsData <- myProject$getObservedData()
 
-# print(names(obsData))
+print(names(obsData))
 ```
 
 get the names of individuals and expression profiles from the project:
@@ -54,7 +58,10 @@ individualsInProject <- myProject$individualNames
 expProfilesInProject <- myProject$expressionProfilesNames
 
 ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")
-ospsuite.utils::ospPrintItems(expProfilesInProject, title = "Expression profiles names")
+ospsuite.utils::ospPrintItems(
+  expProfilesInProject,
+  title = "Expression profiles names"
+)
 ```
 
 get the names of the modules in the project:
@@ -67,9 +74,7 @@ ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
 
 and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`.
 
-
-For modules, it is possible to retrieve the initial conditions and parameter values
-building blocks:
+For modules, it is possible to retrieve the initial conditions and parameter values building blocks:
 
 ```{r getBuildingBlocksFromModule}
 # Get the module "Thyroid" from the project
@@ -103,7 +108,11 @@ a project or by loading a simulation from a pkml file. The simulation configurat
 altered afterwards.
 
 ```{r getSimulationConfigurationFromPKML}
-simulation <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+simulation <- loadSimulation(system.file(
+  "extdata",
+  "Aciclovir.pkml",
+  package = "ospsuite"
+))
 configuration <- simulation$configuration
 
 print(configuration)
@@ -162,12 +171,14 @@ be created.
 # Get modules from the project
 modules <- myProject$getModules()
 # Get the expression profiles from the project
-expressionProfiles <- myProject$getExpressionProfiles(names = c(
-  "UDPGT1|Human|Healthy",
-  "DIO1|Human|Healthy",
-  "DIO3|Human|Healthy",
-  "UDPGT2|Human|Healthy"
-))
+expressionProfiles <- myProject$getExpressionProfiles(
+  names = c(
+    "UDPGT1|Human|Healthy",
+    "DIO1|Human|Healthy",
+    "DIO3|Human|Healthy",
+    "UDPGT2|Human|Healthy"
+  )
+)
 # Create an individual building block
 myIndividual <- createIndividualBuildingBlock(
   species = Species$Human,
@@ -207,7 +218,11 @@ defining expression of protein molecules in selected organs.
 So in the first step we load the extension module "Thyroid" from a pkml file:
 
 ```{r loadThyroidModule}
-thyroidModule <- loadModuleFromPKML(system.file("extdata", "Thyroid.pkml", package = "ospsuite"))
+thyroidModule <- loadModuleFromPKML(system.file(
+  "extdata",
+  "Thyroid.pkml",
+  package = "ospsuite"
+))
 ```
 
 Then we extend the initial conditions BB of the loaded module by molecules defined 
@@ -217,8 +232,11 @@ in other modules of our project:
 # Get the IC BB from the Thyroid module
 icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
-newPaths <- extendInitialConditions(icBB,
-  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spatial Structure"),
+newPaths <- extendInitialConditions(
+  icBB,
+  spatialStructureBB = thyroidModule$getBuildingBlocks(
+    type = "Spatial Structure"
+  ),
   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
   moleculeNames = c("DIO1", "T3", "T4", "TSH")
 )
@@ -233,8 +251,11 @@ function:
 # Get the PV BB from the Thyroid module
 pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
 # Add protein expression to the PV BB
-proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(pvBB,
-  spatialStructureBB = thyroidModule$getBuildingBlocks(type = "Spatial Structure"),
+proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
+  pvBB,
+  spatialStructureBB = thyroidModule$getBuildingBlocks(
+    type = "Spatial Structure"
+  ),
   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
   moleculeNames = c("DIO1")
 )
@@ -307,5 +328,8 @@ simulationConfigurationHuman$cellularPermeabilityMethods(
   )
 )
 
-sim1 <- createSimulation(simulationName = "Thyroid_QST_human", simulationConfigurationHuman)
+sim1 <- createSimulation(
+  simulationName = "Thyroid_QST_human",
+  simulationConfigurationHuman
+)
 ```
