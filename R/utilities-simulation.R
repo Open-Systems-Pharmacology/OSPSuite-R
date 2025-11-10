@@ -72,6 +72,9 @@ loadSimulation <- function(filePath, loadFromCache = FALSE, addToCache = TRUE, r
 
   simulation <- Simulation$new(netSim, filePath)
 
+  netTask <- .getCoreTaskFromCache("SimulationTask")
+  simulation$setBuildConfiguration(netTask$call("CreateSimulationBuilderFor", simulation))
+
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {
     ospsuiteEnv$loadedSimulationsCache$set(filePath, simulation)
