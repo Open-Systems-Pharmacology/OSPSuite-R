@@ -55,7 +55,7 @@ test_that("loadModuleFromPKML throws an error when the passed PKML contains more
     loadModuleFromPKML(filePath),
     regexp = "The PKML you are trying to load the module from contains more than one module, but the 
     function expects only one module.
-    Most probably you are try to load a simulation export."
+    Most probably you are trying to load a simulation export."
   )
 })
 
