@@ -20,7 +20,7 @@ MoBiModule <- R6::R6Class(
       if (missing(value)) {
         self$get("IsPKSimModule")
       } else {
-        private$.throwPropertyIsReadonly("isPkSimModule")
+        private$.throwPropertyIsReadonly("isPKSimModule")
       }
     },
     #' @field mergeBehavior Merge behavior of the module (read/write)
