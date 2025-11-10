@@ -45,7 +45,7 @@ loadModuleFromPKML <- function(path) {
 ) {
   # If selected PV or IC BB names are NULL, no BB will be selected in the configuration
   # Passing a NULL to .NET does not work, so we have to substitute with empty strings
-  # This works because on .NET side, the check is for null or emtpy
+  # This works because on .NET side, the check is for null or empty
   selectedParameterValueName <- selectedParameterValueName %||% ""
   selectedInitialConditionName <- selectedInitialConditionName %||% ""
 
