@@ -67,12 +67,6 @@ jobs:
           cd inst/lib
           dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
 
-          # Rename SQLite for Windows/Linux
-          mv "System.Data.SQLite.dll" "System.Data.SQLite.windows_linux.dll"
-          # Rename macOS ARM64 libraries
-          mv "libOSPSuite.FuncParserNative.Arm64.dylib" "libOSPSuite.FuncParserNative.dylib"
-          mv "libOSPSuite.SimModelNative.Arm64.dylib" "libOSPSuite.SimModelNative.dylib"
-          mv "libOSPSuite.SimModelSolver_CVODES.Arm64.dylib" "libOSPSuite.SimModelSolver_CVODES.dylib"
 
       - name: Check for changes
         id: changes
@@ -106,105 +100,15 @@ jobs:
         run: |
           echo "No changes detected in core libraries. Nothing to commit or create PR for."
 
-  build-sqlite:
-    name: Build SQLite for macOS ARM64
-    runs-on: macos-latest
-    needs: build-libraries
-    if: needs.build-libraries.outputs.has_changes == 'true'
-    outputs:
-      has_changes: ${{ steps.changes.outputs.has_changes }}
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.build-libraries.outputs.branch_name }}
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Get SQLite version
-        id: version
-        run: |
-          VERSION=$(grep 'System.Data.SQLite.Core' shared/DependencyManager/src/DependencyManager.csproj | grep -o 'Version="[^"]*"' | sed 's/Version="//;s/"//')
-          echo "sqlite_version=$VERSION" >> $GITHUB_OUTPUT
-          echo "SQLite version: $VERSION"
-
-      - name: Download SQLite source
-        run: |
-          mkdir -p build
-          wget -O build/sqlite-source.zip "https://system.data.sqlite.org/blobs/${{ steps.version.outputs.sqlite_version }}.0/sqlite-netFx-source-${{ steps.version.outputs.sqlite_version }}.0.zip"
-          unzip -q -d build build/sqlite-source.zip
-
-      - name: Build native library (ARM64)
-        run: |
-          INTEROP_SRC="build/SQLite.Interop/src"
-          mkdir -p artifacts
-
-          clang -arch arm64 -o artifacts/SQLite.Interop.dll.dylib \
-            -dynamiclib \
-            -I "$INTEROP_SRC/core" \
-            -D "THREADSAFE=1" \
-            -D "SQLITE_OS_UNIX=1" \
-            -D "SQLITE_HAVE_USLEEP=1" \
-            -D "SQLITE_ENABLE_COLUMN_METADATA" \
-            -D "NDEBUG" \
-            "$INTEROP_SRC/generic/interop.c"
-
-      - name: Build managed library
-        run: |
-          PROJECT="build/System.Data.SQLite/System.Data.SQLite.NetStandard21.csproj"
-          dotnet build "$PROJECT" -c Release --framework netstandard2.1
-
-          # Find and copy the built DLL
-          DLL=$(find build/System.Data.SQLite -name "System.Data.SQLite.dll" -path "*/Release/*" | head -n 1)
-          cp "$DLL" artifacts/System.Data.SQLite.mac.dll
-
-      - name: Copy to inst/lib
-        run: |
-          cp artifacts/System.Data.SQLite.mac.dll inst/lib/
-          cp artifacts/SQLite.Interop.dll.dylib inst/lib/
-
-      - name: Check for changes
-        id: changes
-        run: |
-          if git diff --quiet inst/lib; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in SQLite libraries"
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in SQLite libraries"
-          fi
-
-      - name: Commit changes
-        if: steps.changes.outputs.has_changes == 'true'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add inst/lib
-          git commit -m "Build SQLite for macOS ARM64
-
-          - Built SQLite.Interop.dll.dylib for ARM64
-          - Built System.Data.SQLite.mac.dll
-          - SQLite version: ${{ steps.version.outputs.sqlite_version }}
-          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-          - Triggered by: ${{ github.actor }}"
-
-      - name: Push branch
-        if: steps.changes.outputs.has_changes == 'true'
-        run: |
-          git push origin "${{ needs.build-libraries.outputs.branch_name }}"
 
   create-pr:
     name: Create Pull Request
     runs-on: ubuntu-latest
-    needs: [build-libraries, build-sqlite]
+    needs: [build-libraries]
     if: |
       always() &&
-      (needs.build-libraries.outputs.has_changes == 'true' ||
-       needs.build-sqlite.outputs.has_changes == 'true')
+      needs.build-libraries.outputs.has_changes == 'true'
 
     steps:
       - name: Create PR
@@ -212,15 +116,11 @@ jobs:
         with:
           script: |
             const hasLibChanges = '${{ needs.build-libraries.outputs.has_changes }}' === 'true';
-            const hasSqliteChanges = '${{ needs.build-sqlite.outputs.has_changes }}' === 'true';
 
             let changes = [];
             if (hasLibChanges) {
               changes.push('- Built DependencyManager libraries');
               changes.push('- Updated PK-Sim R dependencies');
-            }
-            if (hasSqliteChanges) {
-              changes.push('- Built SQLite libraries for macOS ARM64');
             }
 
             const { data: pr } = await github.rest.pulls.create({
@@ -239,7 +139,6 @@ jobs:
             ## Description
             This PR updates the core libraries required by the \`{ospsuite}\` package.
             ${hasLibChanges ? 'Core files are downloaded from the latest PK-Sim build artifacts.' : ''}
-            ${hasSqliteChanges ? 'SQLite libraries are built for macOS ARM64.' : ''}`
             });
 
             console.log(\`Created PR #\${pr.number}: \${pr.html_url}\`);

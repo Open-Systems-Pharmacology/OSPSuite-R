@@ -13,19 +13,6 @@
     file.path(libDir, name)
   }
 
-  if (!file.exists(libPathFor("System.Data.SQLite.dll"))) {
-    cli::cli_warn(
-      message = c(
-        "x" = "Required library {.file System.Data.SQLite.dll} not found in {.file {libDir}}.",
-        " " = "Some functionalities may not work properly and some tests will fail.",
-        "i" = "If you are in a development environment, make sure to run:",
-        " " = "  {.run source('tools/setup_dev.R')}",
-        " " = "  {.run setup_dev()}",
-        " " = "before using {.run devtools::load_all()} or {.run devtools::test()}"
-      )
-    )
-  }
-
   # Setup platform-specific library loading
   if (.Platform$OS.type == "windows") {
     # Windows: Extend PATH for DLL access
