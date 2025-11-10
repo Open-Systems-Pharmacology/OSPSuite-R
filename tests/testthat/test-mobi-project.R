@@ -1,5 +1,3 @@
-skip_on_os("mac")
-
 defaultMoBiProject <- loadMoBiProject(
   filePath = getTestDataFilePath("TH_QST_Platform.mbp3")
 )

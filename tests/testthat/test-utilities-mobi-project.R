@@ -1,4 +1,3 @@
-skip_on_os("mac")
 test_that("It can load a valid MoBi project", {
   moBiProject <- loadMoBiProject(
     filePath = getTestDataFilePath("Empty_Project.mbp3")

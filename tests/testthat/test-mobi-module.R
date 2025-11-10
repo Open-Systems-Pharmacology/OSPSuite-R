@@ -1,5 +1,3 @@
-skip_on_os("mac")
-
 testMoBiProject <- loadMoBiProject(
   filePath = getTestDataFilePath("Test_Project.mbp3")
 )
