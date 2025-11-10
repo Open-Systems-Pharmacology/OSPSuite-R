@@ -18,7 +18,7 @@ loadModuleFromPKML <- function(path) {
     stop(
       "The PKML you are trying to load the module from contains more than one module, but the 
     function expects only one module.
-    Most probably you are try to load a simulation export."
+    Most probably you are trying to load a simulation export."
     )
   }
   # .NET always returns an array, as it also returns multiple modules for a
