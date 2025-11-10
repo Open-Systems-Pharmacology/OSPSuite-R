@@ -59,7 +59,7 @@ test_that("loadModuleFromPKML throws an error when the passed PKML contains more
   )
 })
 
-test_that("loadModuleFromPKML throws an error when the passed PKML doest not contain any module", {
+test_that("loadModuleFromPKML throws an error when the passed PKML does not contain any module", {
   filePath <- getTestDataFilePath("S1.pkml")
   expect_error(loadModuleFromPKML(filePath))
 })
