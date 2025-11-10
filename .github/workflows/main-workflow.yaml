@@ -9,12 +9,8 @@ on:
 permissions: write-all
 
 jobs:
-  build-libraries:
-    uses: ./.github/workflows/build-libraries.yaml
-
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name != 'pull_request'
-    needs: [build-libraries]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
@@ -23,12 +19,12 @@ jobs:
 
   R-CMD-Check:
     if: ${{ !cancelled() }}
-    needs: [build-libraries, bump-dev-version]
+    needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   test-coverage:
     if: ${{ !cancelled() }}
-    needs: [build-libraries, bump-dev-version]
+    needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -36,6 +32,5 @@ jobs:
 
   pkgdown:
     if: ${{ !cancelled() }}
-    needs: [build-libraries, bump-dev-version]
+    needs: [bump-dev-version]
     uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
-
