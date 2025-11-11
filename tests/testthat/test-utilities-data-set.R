@@ -9,7 +9,11 @@ test_that("It can load a valid observed data file and create a DataSet object", 
 
 
 test_that("It correctly gets the yValues column for a certain type of DataRepository", {
-  file <- system.file("extdata", "ObsDataAciclovir_2.pkml", package = "ospsuite")
+  file <- system.file(
+    "extdata",
+    "ObsDataAciclovir_2.pkml",
+    package = "ospsuite"
+  )
   dataSet <- loadDataSetFromPKML(file)
 
   expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
@@ -64,7 +68,11 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
 })
 
 test_that("It can convert a data set with only non-empty fields, except for metaData", {
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$name <- "Data1"
   dataSet$molWeight <- 123
   dataSet$LLOQ <- 0.2
@@ -144,16 +152,31 @@ test_that("It can convert a list of data sets", {
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
-  1.79999995231628, 4.86999988555908, 10.1999998092651,
-  30, 60, 120, 240
+  1.79999995231628,
+  4.86999988555908,
+  10.1999998092651,
+  30,
+  60,
+  120,
+  240
 )
 yValues <- c(
-  0.00100999997254547, 0.000830000013163357, 0.00073000000488932,
-  0.000279999995411728, 0.000119999996051057, 3.0499998360245E-05, 5.9299999806417E-06
+  0.00100999997254547,
+  0.000830000013163357,
+  0.00073000000488932,
+  0.000279999995411728,
+  0.000119999996051057,
+  3.0499998360245E-05,
+  5.9299999806417E-06
 )
 yError <- c(
-  1.15000000278087, 1.08999995518388, 1.12999998691521, 1.21999994462385, 1.4099999816608,
-  1.18000002657936, 1.48000003719062
+  1.15000000278087,
+  1.08999995518388,
+  1.12999998691521,
+  1.21999994462385,
+  1.4099999816608,
+  1.18000002657936,
+  1.48000003719062
 )
 metaData <- list(
   Source = "C:\\temp\\RanorexTestData\\ObservedData.xlsx",
@@ -189,31 +212,58 @@ test_that("it can save the data set as pkml", {
 })
 
 # loadDataSetsFromExcel
-configurationPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+configurationPath <- getTestDataFilePath(
+  "dataImporterConfiguration_noSheets.xml"
+)
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
 importerConfiguration <- loadDataImporterConfiguration(configurationPath)
 
 test_that("it returns an empty list when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
-  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration), character())
-  expect_named(loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath), character())
+  expect_named(
+    loadDataSetsFromExcel(
+      xlsFilePath = xlsFilePath,
+      importerConfigurationOrPath = importerConfiguration
+    ),
+    character()
+  )
+  expect_named(
+    loadDataSetsFromExcel(
+      xlsFilePath = xlsFilePath,
+      importerConfigurationOrPath = configurationPath
+    ),
+    character()
+  )
 })
 
 test_that("it can load when loading from file with one sheet without
           sheet definition in configuration and importAllSheets == FALSE", {
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsFilePath,
+    importerConfigurationOrPath = importerConfiguration,
+    importAllSheets = TRUE
+  )
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = configurationPath, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsFilePath,
+    importerConfigurationOrPath = configurationPath,
+    importAllSheets = TRUE
+  )
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
 })
 
 test_that("it can convert DataSets loaded from excel to data.frame", {
-  dataSets <- loadDataSetsFromExcel(xlsFilePath = xlsFilePath, importerConfigurationOrPath = importerConfiguration, importAllSheets = TRUE)
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsFilePath,
+    importerConfigurationOrPath = importerConfiguration,
+    importAllSheets = TRUE
+  )
   dataSetsFrame <- dataSetToDataFrame(dataSets)
   expect_equal(
-    names(dataSetsFrame), c(
+    names(dataSetsFrame),
+    c(
       "name",
       "xValues",
       "yValues",
@@ -249,10 +299,142 @@ test_that("It can convert an empty data set", {
   expect_equal(
     dataSetToTibble(dataSet),
     dplyr::tibble(
-      name = character(0), xValues = numeric(0), yValues = numeric(0), yErrorValues = numeric(0),
-      xDimension = character(0), xUnit = character(0), yDimension = character(0),
-      yUnit = character(0), yErrorType = character(0), yErrorUnit = character(0), molWeight = numeric(0),
+      name = character(0),
+      xValues = numeric(0),
+      yValues = numeric(0),
+      yErrorValues = numeric(0),
+      xDimension = character(0),
+      xUnit = character(0),
+      yDimension = character(0),
+      yUnit = character(0),
+      yErrorType = character(0),
+      yErrorUnit = character(0),
+      molWeight = numeric(0),
       lloq = numeric(0)
     )
   )
+})
+
+# Tests for the new names parameter in dataSetToTibble
+test_that("dataSetToTibble works with custom names for single dataset", {
+  ds1 <- DataSet$new(name = "Original")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  result <- dataSetToTibble(ds1, names = "Custom")
+
+  expect_equal(unique(result$name), "Custom")
+  expect_equal(nrow(result), 2)
+})
+
+test_that("dataSetToTibble works with custom names for multiple datasets", {
+  ds1 <- DataSet$new(name = "Dataset1")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds2 <- DataSet$new(name = "Dataset2")
+  ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+
+  result <- dataSetToTibble(list(ds1, ds2), names = c("Study1", "Study2"))
+
+  expect_equal(sort(unique(result$name)), c("Study1", "Study2"))
+  expect_equal(nrow(result), 4)
+  expect_equal(result$name[1:2], c("Study1", "Study1"))
+  expect_equal(result$name[3:4], c("Study2", "Study2"))
+})
+
+test_that("dataSetToTibble handles datasets with duplicate names", {
+  ds1 <- DataSet$new(name = "SameName")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds2 <- DataSet$new(name = "SameName")
+  ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+
+  # Without custom names, both have same name
+  result_no_rename <- dataSetToTibble(list(ds1, ds2))
+  expect_equal(unique(result_no_rename$name), "SameName")
+
+  # With custom names, they get renamed properly
+  result_renamed <- dataSetToTibble(list(ds1, ds2), names = c("First", "Second"))
+  expect_equal(sort(unique(result_renamed$name)), c("First", "Second"))
+  expect_equal(result_renamed$name[1:2], c("First", "First"))
+  expect_equal(result_renamed$name[3:4], c("Second", "Second"))
+})
+
+test_that("dataSetToTibble with NULL names parameter (backward compatibility)", {
+  ds1 <- DataSet$new(name = "TestData")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  # NULL names should work exactly as before
+  result <- dataSetToTibble(ds1, names = NULL)
+  expect_equal(unique(result$name), "TestData")
+
+  # No names parameter should also work
+  result2 <- dataSetToTibble(ds1)
+  expect_identical(result, result2)
+})
+
+test_that("dataSetToTibble errors when names length doesn't match datasets", {
+  ds1 <- DataSet$new(name = "Data1")
+  ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds2 <- DataSet$new(name = "Data2")
+  ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+
+  # Too few names
+  expect_error(
+    dataSetToTibble(list(ds1, ds2), names = c("OnlyOne")),
+    "Length of 'names' \\(1\\) must match number of datasets \\(2\\)"
+  )
+
+  # Too many names
+  expect_error(
+    dataSetToTibble(list(ds1, ds2), names = c("One", "Two", "Three")),
+    "Length of 'names' \\(3\\) must match number of datasets \\(2\\)"
+  )
+})
+
+test_that("dataSetToTibble handles empty datasets with custom names", {
+  ds1 <- DataSet$new(name = "Empty1")
+  ds2 <- DataSet$new(name = "Empty2")
+
+  result <- dataSetToTibble(list(ds1, ds2), names = c("Custom1", "Custom2"))
+
+  # Should return empty tibble but with no rows
+  expect_equal(nrow(result), 0)
+  expect_s3_class(result, "tbl_df")
+})
+
+test_that("dataSetToTibble handles mixed empty and non-empty datasets", {
+  ds1 <- DataSet$new(name = "Empty")
+
+  ds2 <- DataSet$new(name = "NotEmpty")
+  ds2$setValues(xValues = c(1, 2), yValues = c(10, 20))
+
+  ds3 <- DataSet$new(name = "AlsoEmpty")
+
+  result <- dataSetToTibble(
+    list(ds1, ds2, ds3),
+    names = c("FirstEmpty", "HasData", "SecondEmpty")
+  )
+
+  # Only the non-empty dataset should contribute rows
+  expect_equal(nrow(result), 2)
+  expect_equal(unique(result$name), "HasData")
+  expect_equal(result$xValues, c(1, 2))
+})
+
+test_that("dataSetToTibble preserves data integrity with custom names", {
+  ds1 <- DataSet$new(name = "Original")
+  ds1$setValues(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    yErrorValues = c(1, 2, 3)
+  )
+
+  result <- dataSetToTibble(ds1, names = "Renamed")
+
+  # Check that only the name changed, all other data preserved
+  expect_equal(result$name, rep("Renamed", 3))
+  expect_equal(result$xValues, c(1, 2, 3))
+  expect_equal(result$yValues, c(10, 20, 30), tolerance = 1e-6)
+  expect_equal(result$yErrorValues, c(1, 2, 3), tolerance = 1e-6)
 })

@@ -4,7 +4,10 @@ dataSetName <- "MyDataSet"
 # DataSet from scratch
 
 test_that("it cannot create a new data set from scratch without a name", {
-  expect_error(capture.output(DataSet$new()), regexp = messages$errorDataSetNameMissing)
+  expect_error(
+    capture.output(DataSet$new()),
+    regexp = messages$errorDataSetNameMissing
+  )
 })
 
 test_that("it can create a new data set from scratch", {
@@ -83,7 +86,11 @@ test_that("it can update the dimension of the yValues when no values are set", {
 
 test_that("it can update the dimension of the yValues and this does not change the returned value", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$yDimension <- ospDimensions$Ampere
   expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance = tolerance)
   expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
@@ -93,7 +100,11 @@ test_that("it can update the dimension of the yValues and this does not change t
 
 test_that("it does not change the display unit when updating the dimension with the currently set one", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
   dataSet$yDimension <- ospDimensions$`Concentration (mass)`
@@ -113,7 +124,11 @@ test_that("it can update the unit of the yValues when no values are set", {
 
 test_that("it can update the unit of the yValues and this does not change the returned value", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   expect_equal(dataSet$yValues, c(10, 20, 30, 40, 50), tolerance = tolerance)
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
@@ -132,7 +147,11 @@ test_that("it can update the dimension of the yValues and this does not change t
   dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   dataSet$yDimension <- ospDimensions$Amount
 
-  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance = tolerance)
+  expect_equal(
+    dataSet$yErrorValues,
+    expectedYErrorValues,
+    tolerance = tolerance
+  )
 })
 
 test_that("it can update the unit of the yErrorValues and this does not change the returned value", {
@@ -145,12 +164,20 @@ test_that("it can update the unit of the yErrorValues and this does not change t
   )
   # Change units of y error values - actual values are converted
   dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
-  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance = tolerance)
+  expect_equal(
+    dataSet$yErrorValues,
+    expectedYErrorValues,
+    tolerance = tolerance
+  )
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
 
   # Also test for dimension change
   dataSet$yDimension <- ospDimensions$Amount
-  expect_equal(dataSet$yErrorValues, expectedYErrorValues, tolerance = tolerance)
+  expect_equal(
+    dataSet$yErrorValues,
+    expectedYErrorValues,
+    tolerance = tolerance
+  )
 })
 
 test_that("Empty error with defined y values", {
@@ -168,7 +195,11 @@ test_that("it does not crash when setting yErrorType without error values", {
 
 test_that("it does not change the unit of yError when setting to the currently set error type", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$yErrorUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   dataSet$yErrorType <- DataErrorType$ArithmeticStdDev
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`pg/l`)
@@ -176,7 +207,11 @@ test_that("it does not change the unit of yError when setting to the currently s
 
 test_that("arithmetic to geometric error changes the dimension of yError", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$yErrorType <- DataErrorType$GeometricStdDev
   expect_equal(dataSet$yErrorType, DataErrorType$GeometricStdDev)
   expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
@@ -185,7 +220,11 @@ test_that("arithmetic to geometric error changes the dimension of yError", {
 
 test_that("geometric to arithmetic error sets the dimension and unit of yError to those of yValues", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$yUnit <- ospUnits$`Concentration [mass]`$`pg/l`
   expect_equal(dataSet$yUnit, ospUnits$`Concentration [mass]`$`pg/l`)
   expect_equal(dataSet$yErrorUnit, ospUnits$`Concentration [mass]`$`mg/l`)
@@ -198,11 +237,19 @@ test_that("geometric to arithmetic error sets the dimension and unit of yError t
 
 test_that("it can update x and y values and remove y error", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   dataSet$setValues(xValues = c(1, 2, 3), yValues = c(10, 20, 30))
 
   expect_equal(dataSet$yErrorValues, NULL)
-  dataSet$setValues(xValues = c(1, 2, 3, 4, 5), yValues = c(10, 20, 30, 40, 50), yErrorValues = c(0, 1, 2, 3, 0))
+  dataSet$setValues(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 30, 40, 50),
+    yErrorValues = c(0, 1, 2, 3, 0)
+  )
   expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
 })
 
@@ -261,16 +308,31 @@ test_that("it does not overwrite a name when creating from an existing repositor
 obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
-  1.79999995231628, 4.86999988555908, 10.1999998092651,
-  30, 60, 120, 240
+  1.79999995231628,
+  4.86999988555908,
+  10.1999998092651,
+  30,
+  60,
+  120,
+  240
 )
 yValues <- c(
-  0.00100999997254547, 0.000830000013163357, 0.00073000000488932,
-  0.000279999995411728, 0.000119999996051057, 3.0499998360245E-05, 5.9299999806417E-06
+  0.00100999997254547,
+  0.000830000013163357,
+  0.00073000000488932,
+  0.000279999995411728,
+  0.000119999996051057,
+  3.0499998360245E-05,
+  5.9299999806417E-06
 )
 yError <- c(
-  1.15000000278087, 1.08999995518388, 1.12999998691521, 1.21999994462385, 1.4099999816608,
-  1.18000002657936, 1.48000003719062
+  1.15000000278087,
+  1.08999995518388,
+  1.12999998691521,
+  1.21999994462385,
+  1.4099999816608,
+  1.18000002657936,
+  1.48000003719062
 )
 metaData <- list(
   Source = "C:\\temp\\RanorexTestData\\ObservedData.xlsx",
@@ -355,5 +417,8 @@ test_that("it can set the llog value", {
 
 test_that("it throws an error when a vector of LLOQ is provided", {
   dataSet <- DataSet$new(name = dataSetName)
-  expect_error(dataSet$LLOQ <- c(0.25, 0.25), regexp = messages$lloqOnlyScalar())
+  expect_error(
+    dataSet$LLOQ <- c(0.25, 0.25),
+    regexp = messages$lloqOnlyScalar()
+  )
 })

@@ -26,12 +26,12 @@ test_that("It throws an error when no valid 'compareBy' is provided", {
 
   expect_error(
     suppressWarnings(uniqueEntities(parameter, compareBy = 2)),
-    messages$errorValueNotInEnum(value = 2, CompareBy),
+    messages$errorValueNotInEnum(value = 2, CompareBy, "CompareBy"),
     fixed = TRUE
   )
   expect_error(
     suppressWarnings(uniqueEntities(parameter, compareBy = "2")),
-    messages$errorValueNotInEnum(value = "2", CompareBy),
+    messages$errorValueNotInEnum(value = "2", CompareBy, "CompareBy"),
     fixed = TRUE
   )
 })
@@ -107,7 +107,7 @@ test_that("It throws an exception if comparing by a value that is not defined", 
   )
   expect_error(
     uniqueEntities(parameters, "toto"),
-    messages$errorValueNotInEnum(value = "toto", CompareBy),
+    messages$errorValueNotInEnum(value = "toto", CompareBy, "CompareBy"),
     fixed = TRUE
   )
 })

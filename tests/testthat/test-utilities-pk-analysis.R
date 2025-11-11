@@ -8,17 +8,25 @@ results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 
 test_that("It should be able to calculate the PK-Analyses each output of a simulation", {
-  pkAnalysesForOutput <- pkAnalyses$allPKParametersFor("Organism|VenousBlood|Plasma|Caffeine")
+  pkAnalysesForOutput <- pkAnalyses$allPKParametersFor(
+    "Organism|VenousBlood|Plasma|Caffeine"
+  )
   expect_gt(length(pkAnalysesForOutput), 0)
 })
 
 test_that("It should be able to retrieve a standard pk parameter", {
-  pkParameter <- pkAnalyses$pKParameterFor("Organism|VenousBlood|Plasma|Caffeine", "AUC_tEnd")
+  pkParameter <- pkAnalyses$pKParameterFor(
+    "Organism|VenousBlood|Plasma|Caffeine",
+    "AUC_tEnd"
+  )
   expect_false(is.null(pkParameter))
 })
 
 test_that("It should return null when retrieving a pk parameter that does not exist", {
-  pkParameter <- pkAnalyses$pKParameterFor("Organism|VenousBlood|Plasma|Caffeine", "NOPE")
+  pkParameter <- pkAnalyses$pKParameterFor(
+    "Organism|VenousBlood|Plasma|Caffeine",
+    "NOPE"
+  )
   expect_null(pkParameter)
 })
 
@@ -40,7 +48,9 @@ test_that("It should an empty list of parameters for an output that is not part 
   results <- runSimulations(sim)[[1]]
   pkAnalyses <- calculatePKAnalyses(results)
 
-  pkAnalysesForOutput <- pkAnalyses$allPKParametersFor("Another output that does not exist")
+  pkAnalysesForOutput <- pkAnalyses$allPKParametersFor(
+    "Another output that does not exist"
+  )
   expect_equal(length(pkAnalysesForOutput), 0)
 })
 

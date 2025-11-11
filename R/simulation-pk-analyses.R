@@ -38,7 +38,11 @@ SimulationPKAnalyses <- R6::R6Class(
     pKParameterFor = function(quantityPath, pkParameter) {
       validateIsString(quantityPath)
       validateIsString(pkParameter)
-      private$toPKParameter(self$call("PKParameterFor", quantityPath, pkParameter))
+      private$toPKParameter(self$call(
+        "PKParameterFor",
+        quantityPath,
+        pkParameter
+      ))
     },
 
     #' @description
@@ -46,8 +50,14 @@ SimulationPKAnalyses <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(self$allQuantityPaths, title = "For outputs:")
-      ospsuite.utils::ospPrintItems(self$allPKParameterNames, title = "For pK-Parameters:")
+      ospsuite.utils::ospPrintItems(
+        self$allQuantityPaths,
+        title = "For outputs:"
+      )
+      ospsuite.utils::ospPrintItems(
+        self$allPKParameterNames,
+        title = "For pK-Parameters:"
+      )
     }
   ),
   active = list(
@@ -57,11 +67,19 @@ SimulationPKAnalyses <- R6::R6Class(
     },
     #' @field allPKParameterNames Returns the name of all pk parameters for which a value is available
     allPKParameterNames = function(value) {
-      private$.readOnlyProperty("allPKParameterNames", value, self$get("AllPKParameterNames"))
+      private$.readOnlyProperty(
+        "allPKParameterNames",
+        value,
+        self$get("AllPKParameterNames")
+      )
     },
     #' @field allQuantityPaths Returns the path of all quantities for which pk parameters were calculated
     allQuantityPaths = function(value) {
-      private$.readOnlyProperty("allQuantityPaths", value, self$get("AllQuantityPaths"))
+      private$.readOnlyProperty(
+        "allQuantityPaths",
+        value,
+        self$get("AllQuantityPaths")
+      )
     }
   )
 )

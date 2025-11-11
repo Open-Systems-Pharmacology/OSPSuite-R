@@ -2,7 +2,8 @@
 #' @docType class
 #' @description  Sensitivity of a PK Parameter for one output for a given parameter
 #' @format NULL
-PKParameterSensitivity <- R6::R6Class("PKParameterSensitivity",
+PKParameterSensitivity <- R6::R6Class(
+  "PKParameterSensitivity",
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(

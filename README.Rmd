@@ -206,6 +206,27 @@ restoring the workspace, the objects will be `NULL` and cannot be re-used.
 
 # Development
 
+## Development Setup
+
+When developing the `{ospsuite}` package, you need to prepare platform-specific library files before using `devtools::load_all()`. The package uses configure scripts during installation to rename platform-specific DLLs, but `devtools::load_all()` bypasses this process.
+
+**Run the development setup script:**
+
+```r
+source("tools/setup_dev.R")
+setup_dev()
+```
+
+**When to run `setup_dev()`:**
+- After cloning the repository for the first time
+- After switching to a different branch
+- After pulling changes that might affect library files
+
+The script automatically detects your operating system and renames the appropriate DLL:
+- **Windows**: Renames `System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll`
+- **Linux**: Renames `System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll`
+- **macOS**: Renames `System.Data.SQLite.mac.dll` → `System.Data.SQLite.dll`
+
 ## Embedded binaries
 
 The `{ospsuite}` package requires shared libraries to access PK-Sim

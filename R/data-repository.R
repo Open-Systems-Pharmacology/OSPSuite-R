@@ -15,7 +15,10 @@ DataRepository <- R6::R6Class(
     baseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.baseGrid)) {
-          private$.baseGrid <- DataColumn$new(private$.wrapProperty("BaseGrid", value))
+          private$.baseGrid <- DataColumn$new(private$.wrapProperty(
+            "BaseGrid",
+            value
+          ))
         }
         return(private$.baseGrid)
       }
@@ -34,7 +37,10 @@ DataRepository <- R6::R6Class(
     allButBaseGrid = function(value) {
       if (missing(value)) {
         if (is.null(private$.allButBaseGrid)) {
-          private$.allButBaseGrid <- .toObjectType(private$.wrapReadOnlyProperty("AllButBaseGridAsArray", value), DataColumn)
+          private$.allButBaseGrid <- .toObjectType(
+            private$.wrapReadOnlyProperty("AllButBaseGridAsArray", value),
+            DataColumn
+          )
         }
         return(private$.allButBaseGrid)
       }
@@ -45,10 +51,18 @@ DataRepository <- R6::R6Class(
     metaData = function(value) {
       if (missing(value)) {
         if (is.null(private$.metaData)) {
-          netExtendedProperties <- private$.wrapReadOnlyProperty("ExtendedProperties", value)
+          netExtendedProperties <- private$.wrapReadOnlyProperty(
+            "ExtendedProperties",
+            value
+          )
           netMetaData <- netExtendedProperties$get("All")
-          names <- unlist(lapply(netMetaData, function(data) data$get("Name")), use.names = FALSE)
-          metaData <- lapply(netMetaData, function(data) data$get("ValueAsObject"))
+          names <- unlist(
+            lapply(netMetaData, function(data) data$get("Name")),
+            use.names = FALSE
+          )
+          metaData <- lapply(netMetaData, function(data) {
+            data$get("ValueAsObject")
+          })
           names(metaData) <- names
           private$.metaData <- metaData
         }
@@ -74,7 +88,10 @@ DataRepository <- R6::R6Class(
     #' If it is not provided, a new instance will be created
     #' @return A new `DataRepository` object.
     initialize = function(netObj = NULL) {
-      super$initialize(netObj %||% rSharp::newObjectFromName("OSPSuite.Core.Domain.Data.DataRepository"))
+      super$initialize(
+        netObj %||%
+          rSharp::newObjectFromName("OSPSuite.Core.Domain.Data.DataRepository")
+      )
     },
     #' @description
     #' Print the object to the console

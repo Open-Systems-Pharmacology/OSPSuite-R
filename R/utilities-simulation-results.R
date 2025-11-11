@@ -33,16 +33,22 @@
 #'
 #' getOutputValues(results)
 #' @export
-getOutputValues <- function(simulationResults,
-                            quantitiesOrPaths = NULL,
-                            population = NULL,
-                            individualIds = NULL,
-                            stopIfNotFound = TRUE,
-                            addMetaData = TRUE) {
+getOutputValues <- function(
+  simulationResults,
+  quantitiesOrPaths = NULL,
+  population = NULL,
+  individualIds = NULL,
+  stopIfNotFound = TRUE,
+  addMetaData = TRUE
+) {
   validateIsOfType(simulationResults, "SimulationResults")
   validateIsOfType(population, "Population", nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
-  validateIsOfType(quantitiesOrPaths, c("Quantity", "character"), nullAllowed = TRUE)
+  validateIsOfType(
+    quantitiesOrPaths,
+    c("Quantity", "character"),
+    nullAllowed = TRUE
+  )
 
   quantitiesOrPaths <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
   quantitiesOrPaths <- c(quantitiesOrPaths)
@@ -63,7 +69,11 @@ getOutputValues <- function(simulationResults,
   paths <- unique(paths)
 
   # If no specific individual ids are passed, iterate through all individuals
-  individualIds <- ifNotNull(individualIds, unique(individualIds), simulationResults$allIndividualIds)
+  individualIds <- ifNotNull(
+    individualIds,
+    unique(individualIds),
+    simulationResults$allIndividualIds
+  )
 
   # All time values are equal
   timeValues <- simulationResults$timeValues
@@ -77,7 +87,10 @@ getOutputValues <- function(simulationResults,
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
     for (covariateName in covariateNames) {
-      covariateValue <- population$getCovariateValue(covariateName, individualId)
+      covariateValue <- population$getCovariateValue(
+        covariateName,
+        individualId
+      )
       individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
     }
 
@@ -87,7 +100,10 @@ getOutputValues <- function(simulationResults,
   }
 
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
-  allIndividualProperties <- do.call(rbind.data.frame, c(individualPropertiesCache, stringsAsFactors = FALSE))
+  allIndividualProperties <- do.call(
+    rbind.data.frame,
+    c(individualPropertiesCache, stringsAsFactors = FALSE)
+  )
   values <- lapply(paths, function(path) {
     simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
   })
@@ -103,8 +119,18 @@ getOutputValues <- function(simulationResults,
       # Get the dimension and unit from path if the results are obtained. If the results
       # are NA, the entity with such path does not exist
       if (!all(is.na(values[[path]]))) {
-        unit <- task$call("BaseUnitNameByPath", simulationResults$simulation, path, stopIfNotFound)
-        dimension <- task$call("DimensionNameByPath", simulationResults$simulation, path, stopIfNotFound)
+        unit <- task$call(
+          "BaseUnitNameByPath",
+          simulationResults$simulation,
+          path,
+          stopIfNotFound
+        )
+        dimension <- task$call(
+          "DimensionNameByPath",
+          simulationResults$simulation,
+          path,
+          stopIfNotFound
+        )
       }
       list(unit = unit, dimension = dimension)
     })
@@ -112,7 +138,12 @@ getOutputValues <- function(simulationResults,
     metaData[["Time"]] <- list(unit = "min", dimension = "Time")
   }
 
-  data <- data.frame(allIndividualProperties, values, stringsAsFactors = FALSE, check.names = FALSE)
+  data <- data.frame(
+    allIndividualProperties,
+    values,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
   return(list(data = data, metaData = metaData))
 }
 
@@ -142,7 +173,12 @@ exportResultsToCSV <- function(results, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationResultsTask <- .getCoreTask("SimulationResultsTask")
-  simulationResultsTask$call("ExportResultsToCSV", results, results$simulation, filePath)
+  simulationResultsTask$call(
+    "ExportResultsToCSV",
+    results,
+    results$simulation,
+    filePath
+  )
   invisible()
 }
 
@@ -172,9 +208,16 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
   simulationResultsTask <- .getCoreTask("SimulationResultsTask")
-  filePaths <- unlist(lapply(filePaths, function(filePath) .expandPath(filePath)), use.names = FALSE)
+  filePaths <- unlist(
+    lapply(filePaths, function(filePath) .expandPath(filePath)),
+    use.names = FALSE
+  )
 
-  results <- simulationResultsTask$call("ImportResultsFromCSV", simulation, filePaths)
+  results <- simulationResultsTask$call(
+    "ImportResultsFromCSV",
+    simulation,
+    filePaths
+  )
   SimulationResults$new(results, simulation)
 }
 
@@ -201,24 +244,27 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #' simulationValues, unit, dimension, TimeUnit.
 #'
 #' @export
-simulationResultsToDataFrame <- function(simulationResults,
-                                         quantitiesOrPaths = NULL,
-                                         population = NULL,
-                                         individualIds = NULL) {
+simulationResultsToDataFrame <- function(
+  simulationResults,
+  quantitiesOrPaths = NULL,
+  population = NULL,
+  individualIds = NULL
+) {
   # no need to validating the input because this will be done by
   # getOutputValues() anyways
   simList <- getOutputValues(
     simulationResults = simulationResults,
     quantitiesOrPaths = quantitiesOrPaths,
-    population        = population,
-    individualIds     = individualIds
+    population = population,
+    individualIds = individualIds
   )
 
   # use data.table to pivot simList$data to long format, all columns except
   # "IndividualId" and "Time" to "paths" column and their value to
   # "simulationValues"
   simData <-
-    data.table::melt(as.data.table(simList$data),
+    data.table::melt(
+      as.data.table(simList$data),
       id.vars = c("IndividualId", "Time"),
       variable.name = "paths",
       value.name = "simulationValues",
@@ -229,18 +275,19 @@ simulationResultsToDataFrame <- function(simulationResults,
   simData <- data.table::setorder(simData, Time)
 
   # add columns to simData
-  simData <- simData[, `:=`(
-    TimeDimension = simList$metaData$Time$dimension,
-    TimeUnit = simList$metaData$Time$unit,
-    dimension = simList$metaData[[paths]]$dimension,
-    unit = simList$metaData[[paths]]$unit,
-    molWeight = ospsuite::toUnit(
-      quantityOrDimension = ospDimensions$`Molecular weight`,
-      values              = simulationResults$simulation$molWeightFor(paths),
-      targetUnit          = ospUnits$`Molecular weight`$`g/mol`
-    )
-  ),
-  by = paths
+  simData <- simData[,
+    `:=`(
+      TimeDimension = simList$metaData$Time$dimension,
+      TimeUnit = simList$metaData$Time$unit,
+      dimension = simList$metaData[[paths]]$dimension,
+      unit = simList$metaData[[paths]]$unit,
+      molWeight = ospsuite::toUnit(
+        quantityOrDimension = ospDimensions$`Molecular weight`,
+        values = simulationResults$simulation$molWeightFor(paths),
+        targetUnit = ospUnits$`Molecular weight`$`g/mol`
+      )
+    ),
+    by = paths
   ]
 
   # # consistently return a (classical) data frame
@@ -251,10 +298,12 @@ simulationResultsToDataFrame <- function(simulationResults,
 #' @rdname simulationResultsToDataFrame
 #'
 #' @export
-simulationResultsToTibble <- function(simulationResults,
-                                      quantitiesOrPaths = NULL,
-                                      population = NULL,
-                                      individualIds = NULL) {
+simulationResultsToTibble <- function(
+  simulationResults,
+  quantitiesOrPaths = NULL,
+  population = NULL,
+  individualIds = NULL
+) {
   simData <- simulationResultsToDataFrame(
     simulationResults = simulationResults,
     quantitiesOrPaths = quantitiesOrPaths,

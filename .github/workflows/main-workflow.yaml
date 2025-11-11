@@ -29,7 +29,6 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-
   pkgdown:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]

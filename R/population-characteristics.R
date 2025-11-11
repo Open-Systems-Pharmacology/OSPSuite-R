@@ -47,7 +47,11 @@ PopulationCharacteristics <- R6::R6Class(
     },
     #' @field allMoleculeOntogenies All molecule ontogenies defined for this population characteristics.
     allMoleculeOntogenies = function(value) {
-      private$.readOnlyProperty("allMoleculeOntogenies", value, private$.moleculeOntogenies)
+      private$.readOnlyProperty(
+        "allMoleculeOntogenies",
+        value,
+        private$.moleculeOntogenies
+      )
     },
     #' @field seed Seed used to generate the population
     seed = function(value) {
@@ -75,7 +79,9 @@ PopulationCharacteristics <- R6::R6Class(
       # Assuming that if this function is called directly, PK-Sim was either initialized already
       # or should be initialized automatically
       initPKSim()
-      netObject <- rSharp::newObjectFromName("PKSim.R.Domain.PopulationCharacteristics")
+      netObject <- rSharp::newObjectFromName(
+        "PKSim.R.Domain.PopulationCharacteristics"
+      )
       super$initialize(netObject)
     },
     #' @description
@@ -113,8 +119,13 @@ PopulationCharacteristics <- R6::R6Class(
     #' @param moleculeOntogeny Molecule ontogeny to add
     addMoleculeOntogeny = function(moleculeOntogeny) {
       validateIsOfType(moleculeOntogeny, "MoleculeOntogeny")
-      private$.moleculeOntogenies <- c(private$.moleculeOntogenies, moleculeOntogeny)
-      netMoleculeOntogeny <- rSharp::newObjectFromName("PKSim.R.Domain.MoleculeOntogeny")
+      private$.moleculeOntogenies <- c(
+        private$.moleculeOntogenies,
+        moleculeOntogeny
+      )
+      netMoleculeOntogeny <- rSharp::newObjectFromName(
+        "PKSim.R.Domain.MoleculeOntogeny"
+      )
       netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
       netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
       invisible(self$call("AddMoleculeOntogeny", netMoleculeOntogeny))
