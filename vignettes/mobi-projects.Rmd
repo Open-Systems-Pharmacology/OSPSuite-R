@@ -16,6 +16,9 @@ knitr::opts_chunk$set(echo = TRUE)
 First, load a MoBi project:
 
 ```{r loadProject}
+# Load the ospsuite package
+library(ospsuite)
+
 projectPath <- system.file(
   "extdata",
   "TH_QST_Platform.mbp3",
