@@ -16,7 +16,7 @@ test_that("MoBiModule isPkSimModule returns correct value", {
   # test for read only
   expect_error(
     testModule$isPKSimModule <- TRUE,
-    "Property 'isPkSimModule' is read-only"
+    "Property 'isPKSimModule' is read-only"
   )
 })
 
