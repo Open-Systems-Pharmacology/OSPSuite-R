@@ -31,7 +31,11 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsOfType(dataSet, "DataSet")
   filePath <- .expandPath(filePath)
   dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
-  dataRepositoryTask$call("SaveDataRepository", dataSet$dataRepository, filePath)
+  dataRepositoryTask$call(
+    "SaveDataRepository",
+    dataSet$dataRepository,
+    filePath
+  )
 }
 
 #' Converts a list of `DataSet` objects to a data.frame
@@ -67,8 +71,15 @@ dataSetToDataFrame <- function(dataSets) {
   )
 
   # add one column for each metaData that is present in any DataSet
-  for (name in unique(unlist(lapply(dataSets, \(x) names(x$metaData)), use.names = F))) {
-    obsData[[name]] <- .makeDataFrameColumn(dataSets, "metaData", metaDataName = name)
+  for (name in unique(unlist(
+    lapply(dataSets, \(x) names(x$metaData)),
+    use.names = F
+  ))) {
+    obsData[[name]] <- .makeDataFrameColumn(
+      dataSets,
+      "metaData",
+      metaDataName = name
+    )
   }
 
   # consistently return a (classical) data frame
@@ -85,7 +96,8 @@ dataSetToDataFrame <- function(dataSets) {
 #'
 #' @keywords internal
 .makeDataFrameColumn <- function(dataSets, property, metaDataName = NULL) {
-  unlist( # unlist to return a vector containing all dataSets data
+  unlist(
+    # unlist to return a vector containing all dataSets data
     lapply(
       dataSets,
       function(dataSet) {
@@ -122,10 +134,54 @@ dataSetToDataFrame <- function(dataSets) {
 
 
 #' @rdname dataSetToDataFrame
+#' @param names Optional character vector of custom names to assign to the datasets.
+#'   If provided, must have the same length as the number of DataSet objects.
+#'   This allows renaming datasets, which is particularly useful when multiple
+#'   datasets have the same original name.
+#' @examples
+#' # Create datasets with duplicate names
+#' ds1 <- DataSet$new(name = "Obs")
+#' ds1$setValues(xValues = c(1, 2), yValues = c(10, 20))
+#'
+#' ds2 <- DataSet$new(name = "Obs")
+#' ds2$setValues(xValues = c(3, 4), yValues = c(30, 40))
+#'
+#' # Convert to tibble with custom names
+#' tibble_data <- dataSetToTibble(list(ds1, ds2), names = c("Study1", "Study2"))
+#' unique(tibble_data$name) # Returns c("Study1", "Study2")
 #'
 #' @export
-dataSetToTibble <- function(dataSets) {
+dataSetToTibble <- function(dataSets, names = NULL) {
+  # Store the original dataSets before conversion for naming logic
+  # Ensure originalDataSets is always a list/vector for consistent handling
+  originalDataSets <- c(dataSets)
+
   obsData <- dataSetToDataFrame(dataSets)
+
+  # Apply custom naming if provided
+  if (!is.null(names)) {
+    # Get the original dataset names from the input
+    # Handle case where dataset might not have a name property
+    original_names <- vapply(originalDataSets, function(ds) {
+      if (!is.null(ds$name)) {
+        return(ds$name)
+      } else {
+        return("")
+      }
+    }, character(1))
+
+    # Validate names length matches number of datasets
+    if (length(names) != length(original_names)) {
+      stop(sprintf(
+        "Length of 'names' (%d) must match number of datasets (%d)",
+        length(names), length(original_names)
+      ))
+    }
+
+    # Vectorized renaming using rep() for better performance
+    n_rows_per_dataset <- vapply(originalDataSets, function(ds) length(ds$xValues), integer(1))
+    obsData$name <- rep(names, times = n_rows_per_dataset)
+  }
 
   # consistently return a tibble data frame
   return(dplyr::as_tibble(obsData))
@@ -172,18 +228,28 @@ dataSetToTibble <- function(dataSets) {
 #'   importerConfigurationOrPath = importerConfigurationFilePath,
 #'   importAllSheets = FALSE
 #' )
-loadDataSetsFromExcel <- function(xlsFilePath, importerConfigurationOrPath, importAllSheets = FALSE) {
+loadDataSetsFromExcel <- function(
+  xlsFilePath,
+  importerConfigurationOrPath,
+  importAllSheets = FALSE
+) {
   validateIsString(xlsFilePath)
   importerConfiguration <- importerConfigurationOrPath
   if (is.character(importerConfigurationOrPath)) {
-    importerConfiguration <- loadDataImporterConfiguration(importerConfigurationOrPath)
+    importerConfiguration <- loadDataImporterConfiguration(
+      importerConfigurationOrPath
+    )
   }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- .getCoreTaskFromCache("DataImporterTask")
   dataImporterTask$set("IgnoreSheetNamesAtImport", importAllSheets)
-  dataRepositories <- dataImporterTask$call("ImportExcelFromConfiguration", importerConfiguration, xlsFilePath)
+  dataRepositories <- dataImporterTask$call(
+    "ImportExcelFromConfiguration",
+    importerConfiguration,
+    xlsFilePath
+  )
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)

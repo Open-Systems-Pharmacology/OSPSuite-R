@@ -8,16 +8,16 @@
   </PropertyGroup>
 
    <ItemGroup>
-      <PackageReference Include="MoBi.R" Version="13.0.2" />
-      <PackageReference Include="PKSim.R" Version="13.0.2" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser" Version="4.0.0.74" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser.Ubuntu22" Version="4.0.0.74" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser.MacOS.x64" Version="4.0.0.74" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser.MacOS.Arm64" Version="4.0.0.74" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel" Version="4.0.0.76" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel.Ubuntu22" Version="4.0.0.76" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel.MacOS.x64" Version="4.0.0.76" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel.MacOS.Arm64" Version="4.0.0.76" GeneratePathProperty="true" />
+      <PackageReference Include="MoBi.R" Version="13.0.34" />
+      <PackageReference Include="PKSim.R" Version="13.0.24" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser" Version="4.0.0.75" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser.Ubuntu22" Version="4.0.0.75" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser.MacOS.x64" Version="4.0.0.75" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser.MacOS.Arm64" Version="4.0.0.75" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel" Version="4.0.0.77" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel.Ubuntu22" Version="4.0.0.77" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel.MacOS.x64" Version="4.0.0.77" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel.MacOS.Arm64" Version="4.0.0.77" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES" Version="4.1.0.19" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES.Ubuntu22" Version="4.1.0.19" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES.MacOSArm64" Version="4.1.0.19" GeneratePathProperty="true" />

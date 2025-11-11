@@ -139,10 +139,12 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'
 #' calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
 #' @export
-calculateResiduals <- function(dataCombined,
-                               scaling,
-                               xUnit = NULL,
-                               yUnit = NULL) {
+calculateResiduals <- function(
+  dataCombined,
+  scaling,
+  xUnit = NULL,
+  yUnit = NULL
+) {
   .validateScalarDataCombined(dataCombined)
 
   # Validation has already taken place in the calling plotting function
@@ -198,7 +200,6 @@ calculateResiduals <- function(dataCombined,
     observedData <- observedList[[observedName]]
     simulatedData <- simulatedList[[simulatedName]]
 
-
     # If available, error values will be useful for plotting error bars in the
     # scatter plot. Even if not available, add missing values to be consistent.
     if ("yErrorValues" %in% colnames(data)) {
@@ -214,9 +215,15 @@ calculateResiduals <- function(dataCombined,
       # Identifier column
       name,
       # Everything related to the X-variable
-      "xValues", "xUnit", "xDimension", dplyr::matches("^x"),
+      "xValues",
+      "xUnit",
+      "xDimension",
+      dplyr::matches("^x"),
       # Everything related to the Y-variable
-      "yValuesObserved" = "yValues", "yUnit", "yDimension", dplyr::matches("^y"),
+      "yValuesObserved" = "yValues",
+      "yUnit",
+      "yDimension",
+      dplyr::matches("^y"),
       # lower limit of quantification
       "lloq"
     )
@@ -263,8 +270,16 @@ calculateResiduals <- function(dataCombined,
         targetUnit = pairedData$yUnit[[1]],
         molWeight = 1
       )
-      pairedData$residualValues <- ospsuite.utils::logSafe(pairedData$yValuesSimulated, epsilon, base = exp(1)) -
-        ospsuite.utils::logSafe(pairedData$yValuesObserved, epsilon, base = exp(1))
+      pairedData$residualValues <- ospsuite.utils::logSafe(
+        pairedData$yValuesSimulated,
+        epsilon,
+        base = exp(1)
+      ) -
+        ospsuite.utils::logSafe(
+          pairedData$yValuesObserved,
+          epsilon,
+          base = exp(1)
+        )
     }
 
     # some residual values might turn out to be NA (for example, when extrapolating)

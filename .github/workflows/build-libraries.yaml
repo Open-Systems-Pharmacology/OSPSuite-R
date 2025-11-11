@@ -1,0 +1,130 @@
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name for the PR (default: update-core-files-YYYYMMDD)'
+        required: false
+        default: ''
+        type: string
+      pr_title:
+        description: 'Title for the PR (default: Update Core Files)'
+        required: false
+        default: 'Update Core Files'
+        type: string
+      pr_body:
+        description: 'Body for the PR (default: Auto-generated PR to update core files)'
+        required: false
+        default: 'Auto-generated PR to update core files from PK-Sim dependencies'
+        type: string
+
+name: Build Libraries
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-core-files:
+    runs-on: ubuntu-latest
+    outputs:
+      branch_name: ${{ steps.changes.outputs.branch_name }}
+      has_changes: ${{ steps.changes.outputs.has_changes }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+
+      - name: Generate branch name
+        id: branch_name
+        run: |
+          if [ -n "${{ github.event.inputs.branch_name }}" ]; then
+            echo "name=${{ github.event.inputs.branch_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "name=update-core-files-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and checkout new branch
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git checkout -b ${{ steps.branch_name.outputs.name }}
+
+
+      - name: Setup .NET for building
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Add GitHub NuGet source
+        run: |
+          dotnet nuget add source "https://nuget.pkg.github.com/Open-Systems-Pharmacology/index.json" \
+            --name "OSP-GitHub-Packages" \
+            --username "Open-Systems-Pharmacology" \
+            --password "${{ secrets.GITHUB_TOKEN }}" \
+            --store-password-in-clear-text
+
+      - name: Build DependencyManager
+        run: |
+          cd inst/lib
+          dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
+
+      - name: Check if there are changes
+        id: changes
+        run: |
+          if git diff --quiet inst/lib; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in core files"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in core files"
+          fi
+          echo "branch_name=${{ steps.branch_name.outputs.name }}" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git add inst/lib
+          git commit -m "Update Core Files
+          - Updated PK-Sim R dependencies
+          - Built DependencyManager libraries
+          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          - Triggered by: ${{ github.actor }}"
+
+      - name: Push branch
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git push origin ${{ steps.branch_name.outputs.name }}
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '${{ github.event.inputs.pr_title }}' || 'Update Core Files',
+              head: '${{ steps.branch_name.outputs.name }}',
+              base: 'main',
+              body: `${{ github.event.inputs.pr_body }}` || `Auto-generated PR to update core files from PK-Sim dependencies
+
+            ## Changes
+            - Updated PK-Sim R dependencies in \`inst/lib\`
+            - Built DependencyManager libraries
+            - Generated on: ${new Date().toISOString()}
+            - Triggered by: ${{ github.actor }}
+
+            ## What this PR does
+            This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts and the DependencyManager is built locally.`
+            });
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+
+      - name: No changes message
+        if: steps.changes.outputs.has_changes == 'false'
+        run: |
+          echo "No changes detected in core files. Nothing to commit or create PR for."

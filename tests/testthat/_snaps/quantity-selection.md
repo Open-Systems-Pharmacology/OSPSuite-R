@@ -2,7 +2,7 @@
 
     Code
       quantitySelection$print()
-    Message
+    Output
         * Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood):
         Drug, Observer
 

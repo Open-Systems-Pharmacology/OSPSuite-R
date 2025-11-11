@@ -27,7 +27,12 @@
 #' myCMax$startApplicationIndex <- 4
 #' myCMax$endApplicationIndex <- 5
 #' @export
-addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = NULL, displayUnit = NULL) {
+addUserDefinedPKParameter <- function(
+  name,
+  standardPKParameter,
+  displayName = NULL,
+  displayUnit = NULL
+) {
   validateIsString(name)
   validateEnumValue(standardPKParameter, StandardPKParameter)
   validateIsString(displayName, nullAllowed = TRUE)
@@ -37,8 +42,16 @@ addUserDefinedPKParameter <- function(name, standardPKParameter, displayName = N
   displayName <- displayName %||% ""
 
   pkParameterTask <- .getCoreTask("PKParameterTask")
-  netUserDefinedPKParameter <- pkParameterTask$call("CreateUserDefinedPKParameter", name, as.integer(standardPKParameter), displayName, displayUnit)
-  userDefinedPKParameter <- UserDefinedPKParameter$new(netUserDefinedPKParameter)
+  netUserDefinedPKParameter <- pkParameterTask$call(
+    "CreateUserDefinedPKParameter",
+    name,
+    as.integer(standardPKParameter),
+    displayName,
+    displayUnit
+  )
+  userDefinedPKParameter <- UserDefinedPKParameter$new(
+    netUserDefinedPKParameter
+  )
   pkParameterTask$call("AddUserDefinedPKParameter", netUserDefinedPKParameter)
   return(userDefinedPKParameter)
 }
@@ -68,7 +81,11 @@ updatePKParameter <- function(name, displayName = NULL, displayUnit = NULL) {
   .updatePKParameterProperties(pkParameter, displayName, displayUnit)
 }
 
-.updatePKParameterProperties <- function(pkParameter, displayName = NULL, displayUnit = NULL) {
+.updatePKParameterProperties <- function(
+  pkParameter,
+  displayName = NULL,
+  displayUnit = NULL
+) {
   if (!is.null(displayName)) {
     pkParameter$displayName <- displayName
   }

@@ -1,4 +1,6 @@
-testMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("Test_Project.mbp3"))
+testMoBiProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("Test_Project.mbp3")
+)
 testModule <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
 # Getting module name
@@ -12,7 +14,10 @@ test_that("MoBiModule name is correct", {
 test_that("MoBiModule isPkSimModule returns correct value", {
   expect_false(testModule$isPKSimModule)
   # test for read only
-  expect_error(testModule$isPKSimModule <- TRUE, "Property 'isPkSimModule' is read-only")
+  expect_error(
+    testModule$isPKSimModule <- TRUE,
+    "Property 'isPKSimModule' is read-only"
+  )
 })
 
 # Snapshot test for printing a Module
@@ -26,7 +31,10 @@ test_that("MoBiModule mergeBehavior works correctly", {
   expect_equal(testModule$mergeBehavior, "Extend")
 
   # Test for read only
-  expect_error(testModule$mergeBehavior <- "Overwrite", "Property 'mergeBehavior' is read-only")
+  expect_error(
+    testModule$mergeBehavior <- "Overwrite",
+    "Property 'mergeBehavior' is read-only"
+  )
 
   # TODO
   # # Test setting merge behavior
@@ -48,13 +56,31 @@ test_that("getParameterValuesBBs returns an empty list for a module with now PV 
 test_that("It throws an error when trying to get PV BBs with names for a module with no PV BBs", {
   testModule <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
-  expect_error(testModule$getParameterValuesBBs(names = c("PV1", "PV2")), "No Parameter Values Building Blocks found with names: PV1, PV2")
+  expect_error(
+    testModule$getParameterValuesBBs(names = c("PV1", "PV2")),
+    "No Parameter Values Building Blocks found with names: PV1, PV2"
+  )
 })
 
-test_that("It throws an error when trying to get PV BBs with names that do not exist", {
+test_that("It throws an error when trying to get PV BBs with names that do not exist and stopIfNotFound is TRUE", {
   testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
 
-  expect_error(testModule$getParameterValuesBBs(names = c("NonExistentPV")), "No Parameter Values Building Blocks found with names: NonExistentPV")
+  expect_error(
+    testModule$getParameterValuesBBs(names = c("NonExistentPV")),
+    "No Parameter Values Building Blocks found with names: NonExistentPV"
+  )
+})
+
+test_that("It returns only the present PV BBs when trying to get PV BBs with names that do not exist and stopIfNotFound is FALSE", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  expect_named(
+    testModule$getParameterValuesBBs(
+      names = c("NonExistentPV", "PV1"),
+      stopIfNotFound = FALSE
+    ),
+    "PV1"
+  )
 })
 
 test_that("It returns the specified PV BBs when names are provided", {
@@ -79,6 +105,23 @@ test_that("getParameterValuesBBs returns all PV BBs for module with multiple PV 
   expect_equal(pvBBs[[1]]$type, "Parameter Values")
 })
 
+test_that("It returns the names of all PV BBs", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  pvBBs <- testModule$parameterValuesBBnames
+  expect_equal(pvBBs, c("PV1", "PV2", "PV3"))
+
+  # Module with no PV BBs should return an empty character vector
+  testModuleNoPV <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  expect_equal(testModuleNoPV$parameterValuesBBnames, character(0))
+
+  # Test for read only
+  expect_error(
+    testModule$parameterValuesBBnames <- c("NewPV1", "NewPV2"),
+    "Property 'parameterValuesBBnames' is read-only"
+  )
+})
+
 # Test for getInitialConditionsBBs
 
 test_that("getInitialConditionsBBs returns an empty list for a module with no IC BBs", {
@@ -91,13 +134,31 @@ test_that("getInitialConditionsBBs returns an empty list for a module with no IC
 test_that("It throws an error when trying to get IC BBs with names for a module with no IC BBs", {
   testModule <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
-  expect_error(testModule$getInitialConditionsBBs(names = c("IC1", "IC2")), "No Initial Conditions Building Blocks found with names: IC1, IC2")
+  expect_error(
+    testModule$getInitialConditionsBBs(names = c("IC1", "IC2")),
+    "No Initial Conditions Building Blocks found with names: IC1, IC2"
+  )
 })
 
-test_that("It throws an error when trying to get IC BBs with names that do not exist", {
+test_that("It throws an error when trying to get IC BBs with names that do not exist and stopIfNotFound is TRUE", {
   testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
 
-  expect_error(testModule$getInitialConditionsBBs(names = c("NonExistentIC")), "No Initial Conditions Building Blocks found with names: NonExistentIC")
+  expect_error(
+    testModule$getInitialConditionsBBs(names = c("NonExistentIC")),
+    "No Initial Conditions Building Blocks found with names: NonExistentIC"
+  )
+})
+
+test_that("It returns only the present IC BBs when trying to get IC BBs with names that do not exist and stopIfNotFound is FALSE", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  expect_named(
+    testModule$getInitialConditionsBBs(
+      names = c("NonExistentIC", "IC1"),
+      stopIfNotFound = FALSE
+    ),
+    "IC1"
+  )
 })
 
 test_that("It returns the specified IC BBs when names are provided", {
@@ -120,4 +181,21 @@ test_that("getInitialConditionsBBs returns all IC BBs for module with multiple I
   expect_equal(icBBs[[2]]$name, "IC2")
   expect_equal(icBBs[[3]]$name, "IC3")
   expect_equal(icBBs[[1]]$type, "Initial Conditions")
+})
+
+test_that("It returns the names of all IC BBs", {
+  testModule <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+
+  icBBs <- testModule$initialConditionsBBnames
+  expect_equal(icBBs, c("IC1", "IC2", "IC3"))
+
+  # Module with no IC BBs should return an empty character vector
+  testModuleNoIC <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  expect_equal(testModuleNoIC$initialConditionsBBnames, character(0))
+
+  # Test for read only
+  expect_error(
+    testModule$initialConditionsBBnames <- c("NewIC1", "NewIC2"),
+    "Property 'initialConditionsBBnames' is read-only"
+  )
 })

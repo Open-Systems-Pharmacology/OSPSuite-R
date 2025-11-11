@@ -29,14 +29,25 @@ loadPopulation <- function(csvPopulationFile) {
 #' # Split the population in up to 3 files, saved in the temp folder
 #' splitFiles <- splitPopulationFile(csvPath, 3, tempdir(), "PopFile")
 #' @export
-splitPopulationFile <- function(csvPopulationFile, numberOfCores, outputFolder, outputFileName) {
+splitPopulationFile <- function(
+  csvPopulationFile,
+  numberOfCores,
+  outputFolder,
+  outputFileName
+) {
   validateIsString(csvPopulationFile)
   validateIsNumeric(numberOfCores)
   validateIsString(outputFolder)
   validateIsString(outputFileName)
   csvPopulationFile <- .expandPath(csvPopulationFile)
   populationTask <- .getCoreTask("PopulationTask")
-  populationTask$call("SplitPopulation", csvPopulationFile, as.integer(numberOfCores), outputFolder, outputFileName)
+  populationTask$call(
+    "SplitPopulation",
+    csvPopulationFile,
+    as.integer(numberOfCores),
+    outputFolder,
+    outputFileName
+  )
 }
 
 
@@ -98,7 +109,12 @@ exportPopulationToCSV <- function(population, filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   df <- populationToDataFrame(population)
-  utils::write.csv(df, file = filePath, row.names = FALSE, fileEncoding = "UTF-8")
+  utils::write.csv(
+    df,
+    file = filePath,
+    row.names = FALSE,
+    fileEncoding = "UTF-8"
+  )
   invisible()
 }
 
@@ -118,7 +134,12 @@ exportPopulationToCSV <- function(population, filePath) {
 #' @export
 loadAgingDataFromCSV <- function(filePath) {
   validateIsString(filePath)
-  df <- readr::read_csv(filePath, locale = readr::locale(encoding = "UTF-8"), comment = "#", col_types = readr::cols())
+  df <- readr::read_csv(
+    filePath,
+    locale = readr::locale(encoding = "UTF-8"),
+    comment = "#",
+    col_types = readr::cols()
+  )
   agingData <- AgingData$new()
   agingData$individualIds <- as.integer(df$IndividualId)
   agingData$parameterPaths <- df$ParameterPath
@@ -143,7 +164,10 @@ createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
   populationFactory <- rSharp::callStatic("PKSim.R.Api", "GetPopulationFactory")
-  results <- populationFactory$call("CreatePopulation", populationCharacteristics)
+  results <- populationFactory$call(
+    "CreatePopulation",
+    populationCharacteristics
+  )
   netPopulation <- .getPropertyValue(results, "IndividualValuesCache")
   seed <- .getPropertyValue(results, "Seed")
   population <- Population$new(netPopulation)
@@ -156,33 +180,53 @@ createPopulation <- function(populationCharacteristics) {
     population = populationCharacteristics$population,
   )
 
-  individual <- createIndividual(individualCharacteristics = individualCharacteristics)
+  individual <- createIndividual(
+    individualCharacteristics = individualCharacteristics
+  )
 
   derivedParameters <- list()
 
   # Even though those parameters are derived parameters, we keep them in the population for consistency purpose with the PK-Sim export.
-  standardDerivedParametersToKeep <- c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA)
+  standardDerivedParametersToKeep <- c(
+    StandardPath$Weight,
+    StandardPath$BMI,
+    StandardPath$BSA
+  )
 
   for (derivedParameterPath in individual$derivedParameters$paths) {
-    if (any(c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA) == derivedParameterPath)) {
+    if (
+      any(
+        c(StandardPath$Weight, StandardPath$BMI, StandardPath$BSA) ==
+          derivedParameterPath
+      )
+    ) {
       next
     }
 
     if (population$has(derivedParameterPath)) {
-      derivedParameters[[derivedParameterPath]] <- population$getParameterValues(derivedParameterPath)
+      derivedParameters[[
+        derivedParameterPath
+      ]] <- population$getParameterValues(derivedParameterPath)
       population$remove(derivedParameterPath)
     }
   }
 
   # other parameters to remove that should not have been exported in the first place
-  standardDistributedParametersToRemove <- c(toPathString(StandardContainer$Organism, "MeanBW"), toPathString(StandardContainer$Organism, "MeanHeight"))
+  standardDistributedParametersToRemove <- c(
+    toPathString(StandardContainer$Organism, "MeanBW"),
+    toPathString(StandardContainer$Organism, "MeanHeight")
+  )
   for (parameterToRemove in standardDistributedParametersToRemove) {
     if (population$has(parameterToRemove)) {
       population$remove(parameterToRemove)
     }
   }
 
-  return(list(population = population, derivedParameters = derivedParameters, seed = seed))
+  return(list(
+    population = population,
+    derivedParameters = derivedParameters,
+    seed = seed
+  ))
 }
 
 #' Creates the population characteristics used to create a population
@@ -212,27 +256,29 @@ createPopulation <- function(populationCharacteristics) {
 #' @return An instance of `PopulationCharacteristics` to be used in conjunction with `createPopulation`
 #'
 #' @export
-createPopulationCharacteristics <- function(species,
-                                            population = NULL,
-                                            numberOfIndividuals,
-                                            proportionOfFemales = 50,
-                                            weightMin = NULL,
-                                            weightMax = NULL,
-                                            weightUnit = "kg",
-                                            heightMin = NULL,
-                                            heightMax = NULL,
-                                            heightUnit = "cm",
-                                            ageMin = NULL,
-                                            ageMax = NULL,
-                                            ageUnit = "year(s)",
-                                            BMIMin = NULL,
-                                            BMIMax = NULL,
-                                            BMIUnit = "kg/m\U00B2",
-                                            gestationalAgeMin = NULL,
-                                            gestationalAgeMax = NULL,
-                                            gestationalAgeUnit = "week(s)",
-                                            moleculeOntogenies = NULL,
-                                            seed = NULL) {
+createPopulationCharacteristics <- function(
+  species,
+  population = NULL,
+  numberOfIndividuals,
+  proportionOfFemales = 50,
+  weightMin = NULL,
+  weightMax = NULL,
+  weightUnit = "kg",
+  heightMin = NULL,
+  heightMax = NULL,
+  heightUnit = "cm",
+  ageMin = NULL,
+  ageMax = NULL,
+  ageUnit = "year(s)",
+  BMIMin = NULL,
+  BMIMax = NULL,
+  BMIUnit = "kg/m\U00B2",
+  gestationalAgeMin = NULL,
+  gestationalAgeMax = NULL,
+  gestationalAgeUnit = "week(s)",
+  moleculeOntogenies = NULL,
+  seed = NULL
+) {
   # Assuming that if this function is called directly, PK-Sim was either initialized already
   # or should be initialized automatically
   initPKSim()
@@ -271,11 +317,31 @@ createPopulationCharacteristics <- function(species,
   populationCharacteristics$population <- population
   populationCharacteristics$numberOfIndividuals <- numberOfIndividuals
   populationCharacteristics$proportionOfFemales <- proportionOfFemales
-  populationCharacteristics$age <- .createParameterRange(ageMin, ageMax, ageUnit)
-  populationCharacteristics$weight <- .createParameterRange(weightMin, weightMax, weightUnit)
-  populationCharacteristics$height <- .createParameterRange(heightMin, heightMax, heightUnit)
-  populationCharacteristics$gestationalAge <- .createParameterRange(gestationalAgeMin, gestationalAgeMax, gestationalAgeUnit)
-  populationCharacteristics$BMI <- .createParameterRange(BMIMin, BMIMax, BMIUnit)
+  populationCharacteristics$age <- .createParameterRange(
+    ageMin,
+    ageMax,
+    ageUnit
+  )
+  populationCharacteristics$weight <- .createParameterRange(
+    weightMin,
+    weightMax,
+    weightUnit
+  )
+  populationCharacteristics$height <- .createParameterRange(
+    heightMin,
+    heightMax,
+    heightUnit
+  )
+  populationCharacteristics$gestationalAge <- .createParameterRange(
+    gestationalAgeMin,
+    gestationalAgeMax,
+    gestationalAgeUnit
+  )
+  populationCharacteristics$BMI <- .createParameterRange(
+    BMIMin,
+    BMIMax,
+    BMIUnit
+  )
   populationCharacteristics$seed <- seed
 
   for (moleculeOntogeny in moleculeOntogenies) {

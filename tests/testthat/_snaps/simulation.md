@@ -2,7 +2,7 @@
 
     Code
       sim$print()
-    Message
+    Output
       <Simulation>
         * Name: S1
         * Source file: ../data/S1.pkml

@@ -2,7 +2,7 @@
 
     Code
       pkParameter$print()
-    Message
+    Output
       <QuantityPKParameter>
         * Name: C_max
         * QuantityPath: Organism|VenousBlood|Plasma|Caffeine

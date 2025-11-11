@@ -3,7 +3,7 @@
 \docType{class}
 \name{MoBiModule}
 \alias{MoBiModule}
-\title{MoBi Module}
+\title{MoBi Module # OR SHOULD WE CALL IT AN OspModule ?}
 \value{
 A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
 
@@ -25,6 +25,10 @@ A MoBi module, either loaded from a project or from a pkml file
 \item{\code{isPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
 
 \item{\code{mergeBehavior}}{Merge behavior of the module (read/write)}
+
+\item{\code{parameterValuesBBnames}}{Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)}
+
+\item{\code{initialConditionsBBnames}}{Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)}
 }
 \if{html}{\out{</div>}}
 }
@@ -81,7 +85,7 @@ A new \code{MoBiModule} object.
 \subsection{Method \code{getParameterValuesBBs()}}{
 Get the list of Parameter Values Building Blocks (PV BBs) in the module.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getParameterValuesBBs(names = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getParameterValuesBBs(names = NULL, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -89,6 +93,9 @@ Get the list of Parameter Values Building Blocks (PV BBs) in the module.
 \describe{
 \item{\code{names}}{Optional names of the Parameter Values Building Block to retrieve.
 If \code{NULL}, returns all PV BBs.}
+
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default), an error is thrown if any of the specified
+parameter values BB is not present in the project.}
 }
 \if{html}{\out{</div>}}
 }
@@ -99,7 +106,7 @@ If \code{NULL}, returns all PV BBs.}
 \subsection{Method \code{getInitialConditionsBBs()}}{
 Get the list of Initial Conditions Building Blocks (IC BBs) in the module.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getInitialConditionsBBs(names = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getInitialConditionsBBs(names = NULL, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -107,6 +114,9 @@ Get the list of Initial Conditions Building Blocks (IC BBs) in the module.
 \describe{
 \item{\code{names}}{Optional names of the Initial Conditions Building Block to retrieve.
 If \code{NULL}, returns all IC BBs.}
+
+\item{\code{stopIfNotFound}}{If \code{TRUE} (default), an error is thrown if any of the specified
+initial conditions BB is not present in the project.}
 }
 \if{html}{\out{</div>}}
 }
