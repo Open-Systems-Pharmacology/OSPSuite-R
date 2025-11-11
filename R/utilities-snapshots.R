@@ -138,7 +138,7 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   temp_dir <- .gatherFiles(c(...))
 
   SnapshotRunOptions <- rSharp::newObjectFromName(
-    "PKSim.CLI.Core.RunOptions.SnapshotRunOptions"
+    "OSPSuite.CLI.Core.RunOptions.SnapshotRunOptions"
   )
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
