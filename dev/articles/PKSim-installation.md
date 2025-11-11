@@ -1,0 +1,87 @@
+# PK-Sim Installation
+
+## Not required for `{ospsuite}` version equal or above 12.1.0
+
+Since
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) was
+released in version 12.1.0, all the necessary OSPSuite and PK-Sim
+dependencies are included in the package. Therefore, there is no need to
+install extra software to use
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r).
+
+Also,
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) is
+fully self contained and is independant from any version of OSPSuite and
+PK-Sim installed on the user computer.
+
+However, a script is provided in the package for developpers in order to
+get/update the latest dependencies (or core files):
+[here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/update_core_files.R)
+
+## Versions below 12.1.0
+
+Some features available in
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+require the installation of
+[PK-Sim](https://github.com/Open-Systems-Pharmacology/PK-Sim).
+
+It is necessary to have a PK-Sim installation that matches the version
+of [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+(*i.e* to use
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+v11.y.z, you need to have PK-Sim v11 installed).
+
+It is possible to install PK-Sim globally for the whole system, but also
+locally on a per-project basis. The following sections describe both
+options.
+
+### Install PK-Sim Globally
+
+1.  Download PK-Sim
+
+Download the `pk-sim-portable-setup.zip` with matching version of
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) you
+are using
+[here](https://github.com/Open-Systems-Pharmacology/PK-Sim/releases).
+
+2.  Enable using .dll from zip
+
+Windows Defender prevents applications downloaded from untrusted sources
+from being loaded. Before extracting the downloaded portable version,
+you have to unblock it.
+
+- Right click on the downloaded archive and select “Properties” (on
+  Windows 11, you have to select “Show more options” first),
+- In the Properties-window, select the checkbox “Unblock”.
+
+3.  Close all R sessions
+
+Make sure that no R session have
+[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) is
+loaded or close all R session.
+
+4.  Extract PK-Sim
+
+Extract the downloaded portable PK-Sim to this location
+`C:/Open Systems Pharmacology/` (if this folder does not exist, create
+it). Change the version number in the folder name to match the PK-Sim
+version you downloaded while keeping only the two digits. For example,
+if you downloaded PK-Sim 11.3.208, the folder name should be
+`PK-Sim 11.0`.
+
+## Install and use PK-Sim in a project
+
+Follow the steps from the previous section to download and extract
+PK-Sim to a `PKSim` folder in your project folder.
+
+Then, include the following code lines at the beginning of the projects
+scripts:
+
+``` r
+ospsuite::initPKSim(pksimFolderPath = "PKSim")
+```
+
+⚠️ **Important**: If you run this command without any path or the wrong
+path before, you must restart your R session before running it again
+with the correct path. (related to [this
+issue](https://github.com/Open-Systems-Pharmacology/rSharp/issues/153))

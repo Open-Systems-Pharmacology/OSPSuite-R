@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.3.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.3.2.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,7 +131,7 @@ time and help assess if the observed data (represented by symbols and
 error bars) match the simulated data (represented by lines).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="observed-versus-simulated-scatter-plot">Observed versus simulated scatter plot<a class="anchor" aria-label="anchor" href="#observed-versus-simulated-scatter-plot"></a>
@@ -140,7 +140,7 @@ error bars) match the simulated data (represented by lines).</p>
 results are from observed values.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="100%"></p>
 <p>The identity line represents perfect correspondence of simulated
 values with the observed ones. By default, a “two-fold” range is marked
 by the dashed lines. The “x-fold” range is defined as values that are
@@ -149,7 +149,7 @@ observed ones. The user can specify multiple ranges by the
 <code>foldDistance</code> argument.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span>, foldDistance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="residuals-versus-time-or-vs-simulated-scatter-plot">Residuals versus time or vs simulated scatter plot<a class="anchor" aria-label="anchor" href="#residuals-versus-time-or-vs-simulated-scatter-plot"></a>
@@ -159,15 +159,15 @@ either in high-concentration or low-concentration regions, or,
 alternatively, in early or late time periods.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="100%"></p>
 <p>Residuals of log values can be visualized with the
 <code>scaling</code> argument.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="customizing-plots">Customizing plots<a class="anchor" aria-label="anchor" href="#customizing-plots"></a>
@@ -194,7 +194,7 @@ plot.</p>
 <p>This configuration class can be passed to all plotting functions:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span>, <span class="va">myPlotConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="creating-multi-panel-plots">Creating multi-panel plots<a class="anchor" aria-label="anchor" href="#creating-multi-panel-plots"></a>
@@ -218,7 +218,7 @@ object. Lets create different plots from the same
 <span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="fu">addPlots</span><span class="op">(</span>plots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">indivProfile</span>, <span class="va">obsVsSim</span>, <span class="va">resVsSim</span>, <span class="va">resVsTime</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tlf/man/plotGrid.html" class="external-link">plotGrid</a></span><span class="op">(</span><span class="va">plotGridConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="100%"></p>
 <p>The function will try to arrange the panels such that the number of
 rows equals to the number of colums. You can also specify the number of
 rows or columns through the <code>PlotGridConfiguration</code>:</p>
@@ -226,7 +226,7 @@ rows or columns through the <code>PlotGridConfiguration</code>:</p>
 <code class="sourceCode R"><span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="va">nColumns</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tlf/man/plotGrid.html" class="external-link">plotGrid</a></span><span class="op">(</span><span class="va">plotGridConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="100%"></p>
 <p>Check out the documentation of the <code>PlotGridConfiguration</code>
 class for the list of supported properties.</p>
 </div>
@@ -271,7 +271,7 @@ this library, see its <a href="https://www.open-systems-pharmacology.org/TLF-Lib
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
