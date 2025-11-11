@@ -2,7 +2,7 @@
 
     Code
       print(baseGrid)
-    Message
+    Output
       <DataColumn>
         * Name: baseGrid
         * Dimension: Time

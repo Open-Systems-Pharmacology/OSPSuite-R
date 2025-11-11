@@ -2,7 +2,7 @@
 
     Code
       print(popCharacteristics)
-    Message
+    Output
       <PopulationCharacteristics>
         * Species: NULL
         * Population: NULL
@@ -15,6 +15,5 @@
         * BMI: ]-Inf..+Inf[
       
       -- Molecule Ontogenies ---------------------------------------------------------
-    Output
       [1] "Molecule 'CYP3A4' with ontogeny 'CYP3A4'"
 

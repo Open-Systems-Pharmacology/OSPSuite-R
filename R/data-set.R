@@ -17,7 +17,6 @@ DataSet <- R6::R6Class(
   inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(
-
     #' @field name The name of the DataSet
     name = function(value) {
       if (missing(value)) {
@@ -102,7 +101,10 @@ DataSet <- R6::R6Class(
 
         dataInfo <- private$.yErrorColumn$get("DataInfo")
         errorTypeEnumVal <- dataInfo$get("AuxiliaryType")
-        return(.netEnumName("OSPSuite.Core.Domain.Data.AuxiliaryType", errorTypeEnumVal))
+        return(.netEnumName(
+          "OSPSuite.Core.Domain.Data.AuxiliaryType",
+          errorTypeEnumVal
+        ))
       }
       private$.setErrorType(value)
     },
@@ -145,7 +147,11 @@ DataSet <- R6::R6Class(
         if (is.null(molWeight)) {
           return(NULL)
         }
-        return(toUnit(quantityOrDimension = ospDimensions$`Molecular weight`, values = molWeight, targetUnit = ospUnits$`Molecular weight`$`g/mol`))
+        return(toUnit(
+          quantityOrDimension = ospDimensions$`Molecular weight`,
+          values = molWeight,
+          targetUnit = ospUnits$`Molecular weight`$`g/mol`
+        ))
       }
 
       private$.yColumn$molWeight <- toBaseUnit(
@@ -165,7 +171,11 @@ DataSet <- R6::R6Class(
           return(NULL)
         }
 
-        return(toUnit(quantityOrDimension = private$.yColumn$dimension, values = lloq, targetUnit = private$.yColumn$displayUnit))
+        return(toUnit(
+          quantityOrDimension = private$.yColumn$dimension,
+          values = lloq,
+          targetUnit = private$.yColumn$displayUnit
+        ))
       }
 
       # Only one LLOQ value per data set is supported
@@ -203,7 +213,8 @@ DataSet <- R6::R6Class(
       if (is.null(dataRepository) && is.null(name)) {
         stop(messages$errorDataSetNameMissing)
       }
-      private$.dataRepository <- dataRepository %||% private$.createDataRepository()
+      private$.dataRepository <- dataRepository %||%
+        private$.createDataRepository()
       private$.initializeCache()
 
       # Set the name if no `dataRepository` provided
@@ -353,7 +364,10 @@ DataSet <- R6::R6Class(
       column <- private$.yErrorColumn
       values <- private$.getColumnValues(column)
       dataInfo <- column$get("DataInfo")
-      auxType <- rSharp::getStatic("OSPSuite.Core.Domain.Data.AuxiliaryType", errorType)
+      auxType <- rSharp::getStatic(
+        "OSPSuite.Core.Domain.Data.AuxiliaryType",
+        errorType
+      )
       dataInfo$set("AuxiliaryType", auxType)
 
       # Geometric to arithmetic - set to the same dimension and unit as yValues
@@ -371,14 +385,21 @@ DataSet <- R6::R6Class(
     },
     .createDataRepository = function() {
       dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
-      dataRepository <- dataRepositoryTask$call("CreateEmptyObservationRepository", "xValues", "yValues")
+      dataRepository <- dataRepositoryTask$call(
+        "CreateEmptyObservationRepository",
+        "xValues",
+        "yValues"
+      )
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
       dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
 
-      netYColumn <- dataRepositoryTask$call("GetMeasurementColumn", private$.dataRepository)
+      netYColumn <- dataRepositoryTask$call(
+        "GetMeasurementColumn",
+        private$.dataRepository
+      )
       private$.yColumn <- DataColumn$new(netYColumn)
       netYErrorColumn <- dataRepositoryTask$call("GetErrorColumn", netYColumn)
 

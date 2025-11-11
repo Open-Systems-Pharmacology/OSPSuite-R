@@ -18,7 +18,19 @@ test_that("It can print the simulation", {
 
 test_that("It can retrieve the name of all stationary molecules used in the model", {
   molecules <- sim$allStationaryMoleculeNames()
-  expect_equal(molecules, c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "Caffeine-CYP1A2-MM Metabolite", "OATP1B1", "ABCB1"))
+  expect_equal(
+    molecules,
+    c(
+      "CYP3A4",
+      "AADAC",
+      "CYP3A5",
+      "CYP2C9",
+      "CYP1A2",
+      "Caffeine-CYP1A2-MM Metabolite",
+      "OATP1B1",
+      "ABCB1"
+    )
+  )
 })
 
 test_that("It can retrieve the name of all floating molecule used in the model", {
@@ -28,7 +40,10 @@ test_that("It can retrieve the name of all floating molecule used in the model",
 
 test_that("It can retrieve the name of all endogenous stationary molecules used in the model", {
   molecules <- sim$allEndogenousStationaryMoleculeNames()
-  expect_equal(molecules, c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1"))
+  expect_equal(
+    molecules,
+    c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1")
+  )
 })
 
 test_that("It can retrieve the name of all xenobiotic floating molecule used in the model", {

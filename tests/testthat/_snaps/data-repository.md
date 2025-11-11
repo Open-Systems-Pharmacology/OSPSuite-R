@@ -2,6 +2,6 @@
 
     Code
       print(obsData)
-    Message
+    Output
       <DataRepository>
 

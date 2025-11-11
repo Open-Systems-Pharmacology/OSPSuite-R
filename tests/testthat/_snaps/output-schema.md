@@ -2,7 +2,7 @@
 
     Code
       outputSchema$print()
-    Message
+    Output
       <OutputSchema>
         * Time points: 10, 20, 30
       

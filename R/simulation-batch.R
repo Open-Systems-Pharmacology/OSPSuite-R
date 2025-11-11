@@ -66,21 +66,28 @@ SimulationBatch <- R6::R6Class(
       validateIsNumeric(initialValues, nullAllowed = TRUE)
       # Only one values set is allowed - no lists of values
       if (is.list(parameterValues) || is.list(initialValues)) {
-        stop(messages$errorOnlyOneValuesSetAllowed("parameterValues, initialValues"))
+        stop(messages$errorOnlyOneValuesSetAllowed(
+          "parameterValues, initialValues"
+        ))
       }
 
       # Check if any of the values is `NA`. If so, throw an error, as such
       # values set will produce empty results
       if (any(is.na(parameterValues))) {
         naIdx <- which(is.na(parameterValues))
-        stop(messages$simBatchStartValueNaN(self$getVariableParameters()[naIdx]))
+        stop(messages$simBatchStartValueNaN(self$getVariableParameters()[
+          naIdx
+        ]))
       }
       if (any(is.na(initialValues))) {
         naIdx <- which(is.na(initialValues))
         stop(messages$simBatchStartValueNaN(self$getVariableMolecules()[naIdx]))
       }
 
-      batchRunValues <- SimulationBatchRunValues$new(parameterValues, initialValues)
+      batchRunValues <- SimulationBatchRunValues$new(
+        parameterValues,
+        initialValues
+      )
       self$call("AddSimulationBatchRunValues", batchRunValues)
       return(batchRunValues$id)
     },
@@ -121,13 +128,22 @@ SimulationBatch <- R6::R6Class(
         "Id" = self$id,
         "runValuesIds" = self$runValuesIds
       ))
-      ospsuite.utils::ospPrintItems(self$getVariableParameters(), title = "Variable parameters")
-      ospsuite.utils::ospPrintItems(self$getVariableMolecules(), title = "Variable start values")
-      ospsuite.utils::ospPrintItems(list(
-        "Name" = self$simulation$name,
-        "File path" = self$simulation$sourceFile,
-        "Id" = self$simulation$id
-      ), title = "Simulation")
+      ospsuite.utils::ospPrintItems(
+        self$getVariableParameters(),
+        title = "Variable parameters"
+      )
+      ospsuite.utils::ospPrintItems(
+        self$getVariableMolecules(),
+        title = "Variable start values"
+      )
+      ospsuite.utils::ospPrintItems(
+        list(
+          "Name" = self$simulation$name,
+          "File path" = self$simulation$sourceFile,
+          "Id" = self$simulation$id
+        ),
+        title = "Simulation"
+      )
     }
   ),
   active = list(

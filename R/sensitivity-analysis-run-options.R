@@ -13,12 +13,14 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
     #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SensitivityAnalysisRunOptions` object.
-    initialize = function(numberOfCores = NULL,
-                          showProgress = NULL) {
-      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SensitivityAnalysisRunOptions")
+    initialize = function(numberOfCores = NULL, showProgress = NULL) {
+      netObject <- rSharp::newObjectFromName(
+        "OSPSuite.R.Domain.SensitivityAnalysisRunOptions"
+      )
       super$initialize(netObject)
 
-      self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
+      self$numberOfCores <- numberOfCores %||%
+        getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
     },
     #' @description

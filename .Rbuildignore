@@ -3,7 +3,6 @@
 (^appveyor)(.*)(.yml$)
 ^README\.md$
 ^tests/dev
-^tools
 ^packages
 ^packages\.config$
 ^scripts

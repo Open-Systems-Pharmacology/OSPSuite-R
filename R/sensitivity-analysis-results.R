@@ -4,14 +4,14 @@
 #'   population simulation).
 #'
 #' @format NULL
-SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
+SensitivityAnalysisResults <- R6::R6Class(
+  "SensitivityAnalysisResults",
   inherit = DotNetWrapper,
   cloneable = FALSE,
   private = list(
     .simulation = NULL
   ),
   active = list(
-
     #' @field simulation Reference to the `Simulation` used to calculate or
     #'   import the sensitivity analysis results (Read-Only).
     simulation = function(value) {
@@ -64,14 +64,21 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #'   participating to a total of `90` percent of the sensitivity would be
     #'   returned. A value of `1` would return the sensitivity for all
     #'   parameters.
-    allPKParameterSensitivitiesFor = function(pkParameterName,
-                                              outputPath,
-                                              totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold) {
+    allPKParameterSensitivitiesFor = function(
+      pkParameterName,
+      outputPath,
+      totalSensitivityThreshold = ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
+    ) {
       validateIsString(pkParameterName)
       validateIsString(outputPath)
       validateIsNumeric(totalSensitivityThreshold)
 
-      pkParameterSentitivities <- self$call("AllPKParameterSensitivitiesFor", pkParameterName, outputPath, totalSensitivityThreshold)
+      pkParameterSentitivities <- self$call(
+        "AllPKParameterSensitivitiesFor",
+        pkParameterName,
+        outputPath,
+        totalSensitivityThreshold
+      )
 
       .toObjectType(pkParameterSentitivities, PKParameterSensitivity)
     },
@@ -90,14 +97,18 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
     #'   sensitivity should be retrieved.
     #' @param parameterPath Path of the sensitivity parameter for which the
     #'   sensitivity should be retrieved. Wildcards (*) not accepted.
-    pkParameterSensitivityValueFor = function(pkParameterName,
-                                              outputPath,
-                                              parameterName = NULL,
-                                              parameterPath = NULL) {
+    pkParameterSensitivityValueFor = function(
+      pkParameterName,
+      outputPath,
+      parameterName = NULL,
+      parameterPath = NULL
+    ) {
       validateIsCharacter(parameterName, nullAllowed = TRUE)
       validateIsCharacter(parameterPath, nullAllowed = TRUE)
-      if ((!is.null(parameterName) && !is.null(parameterPath)) ||
-        (is.null(parameterName) && is.null(parameterPath))) {
+      if (
+        (!is.null(parameterName) && !is.null(parameterPath)) ||
+          (is.null(parameterName) && is.null(parameterPath))
+      ) {
         stop(messages$errorOneOfNameAndPathMustBeSpecified())
       }
 
@@ -132,8 +143,14 @@ SensitivityAnalysisResults <- R6::R6Class("SensitivityAnalysisResults",
       ospsuite.utils::ospPrintItems(list(
         "Number of calculated sensitivities" = self$count
       ))
-      ospsuite.utils::ospPrintItems(self$allPKParameterNames, title = "Available PK Parameters")
-      ospsuite.utils::ospPrintItems(self$allQuantityPaths, title = "For the following outputs")
+      ospsuite.utils::ospPrintItems(
+        self$allPKParameterNames,
+        title = "Available PK Parameters"
+      )
+      ospsuite.utils::ospPrintItems(
+        self$allQuantityPaths,
+        title = "For the following outputs"
+      )
     }
   )
 )

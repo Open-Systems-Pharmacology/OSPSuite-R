@@ -1,12 +1,20 @@
 # createIndividualCharacteristics
 
 test_that("It does not throw an error when species is not human and no population is provided", {
-  expect_no_error(individualCharacteristics <- createIndividualCharacteristics(species = Species$Beagle, height = NULL))
+  expect_no_error(
+    individualCharacteristics <- createIndividualCharacteristics(
+      species = Species$Beagle,
+      height = NULL
+    )
+  )
 })
 
 test_that("It throws an error when species is Human and no population is provided", {
   expect_error(
-    individualCharacteristics <- createIndividualCharacteristics(species = Species$Human, height = NULL),
+    individualCharacteristics <- createIndividualCharacteristics(
+      species = Species$Human,
+      height = NULL
+    ),
     messages$errorWrongPopulation(Species$Human, NULL)
   )
 })
@@ -108,8 +116,14 @@ test_that("It can create reating a human with weight missing", {
 })
 
 test_that("It can create a standard human for a given bodyweight with predefined ontogenies", {
-  moleculeOntogeny1 <- MoleculeOntogeny$new(molecule = "MyMolecule1", ontogeny = StandardOntogeny$CYP3A4)
-  moleculeOntogeny2 <- MoleculeOntogeny$new(molecule = "MyMolecule2", ontogeny = StandardOntogeny$CYP2C19)
+  moleculeOntogeny1 <- MoleculeOntogeny$new(
+    molecule = "MyMolecule1",
+    ontogeny = StandardOntogeny$CYP3A4
+  )
+  moleculeOntogeny2 <- MoleculeOntogeny$new(
+    molecule = "MyMolecule2",
+    ontogeny = StandardOntogeny$CYP2C19
+  )
 
   human <- createIndividualCharacteristics(
     species = Species$Human,

@@ -5,7 +5,7 @@
 \alias{ospDimensions}
 \title{Supported dimensions defined as a named list}
 \format{
-An object of class \code{list} of length 91.
+An object of class \code{list} of length 94.
 }
 \usage{
 ospDimensions
