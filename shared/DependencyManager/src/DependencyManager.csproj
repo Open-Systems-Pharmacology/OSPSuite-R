@@ -8,21 +8,17 @@
   </PropertyGroup>
 
    <ItemGroup>
-      <PackageReference Include="MoBi.R" Version="13.0.34" />
-      <PackageReference Include="PKSim.R" Version="13.0.24" GeneratePathProperty="true" />
+      <PackageReference Include="MoBi.R" Version="13.0.37" />
+      <PackageReference Include="PKSim.R" Version="13.0.27" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser" Version="4.0.0.75" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser.Ubuntu22" Version="4.0.0.75" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser.MacOS.x64" Version="4.0.0.75" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser.MacOS.Arm64" Version="4.0.0.75" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModel" Version="4.0.0.77" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModel.Ubuntu22" Version="4.0.0.77" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel.MacOS.x64" Version="4.0.0.77" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModel.MacOS.Arm64" Version="4.0.0.77" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES" Version="4.1.0.19" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES.Ubuntu22" Version="4.1.0.19" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES.MacOSArm64" Version="4.1.0.19" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModelSolver_CVODES.MacOSx64" Version="4.1.0.19" GeneratePathProperty="true" />
-      <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" GeneratePathProperty="true" />
    </ItemGroup>
 
    <ItemGroup>
@@ -56,35 +52,18 @@
       <Content Include="$(PkgOSPSuite_SimModelSolver_CVODES_Ubuntu22)\OSPSuite.SimModelSolver_CVODES\bin\native\x64\Release\libOSPSuite.SimModelSolver_CVODES.so" Link="libOSPSuite.SimModelSolver_CVODES.so">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="$(PkgOSPSuite_FuncParser_MacOS_x64)\OSPSuite.FuncParserNative\bin\native\x64\Release\libOSPSuite.FuncParserNative.dylib" Link="libOSPSuite.FuncParserNative.x64.dylib">
-         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="$(PkgOSPSuite_SimModel_MacOS_x64)\OSPSuite.SimModelNative\bin\native\x64\Release\libOSPSuite.SimModelNative.dylib" Link="libOSPSuite.SimModelNative.x64.dylib">
-         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="$(PkgOSPSuite_SimModelSolver_CVODES_MacOSx64)\OSPSuite.SimModelSolver_CVODES\bin\native\x64\Release\libOSPSuite.SimModelSolver_CVODES.dylib" Link="libOSPSuite.SimModelSolver_CVODES.x64.dylib">
-         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
    </ItemGroup>
    <ItemGroup>
-      <Content Include="$(PkgOSPSuite_FuncParser_MacOS_Arm64)\OSPSuite.FuncParserNative\bin\native\Arm64\Release\libOSPSuite.FuncParserNative.dylib" Link="libOSPSuite.FuncParserNative.Arm64.dylib">
+      <Content Include="$(PkgOSPSuite_FuncParser_MacOS_Arm64)\OSPSuite.FuncParserNative\bin\native\Arm64\Release\libOSPSuite.FuncParserNative.dylib" Link="libOSPSuite.FuncParserNative.dylib">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="$(PkgOSPSuite_SimModel_MacOS_Arm64)\OSPSuite.SimModelNative\bin\native\Arm64\Release\libOSPSuite.SimModelNative.dylib" Link="libOSPSuite.SimModelNative.Arm64.dylib">
+      <Content Include="$(PkgOSPSuite_SimModel_MacOS_Arm64)\OSPSuite.SimModelNative\bin\native\Arm64\Release\libOSPSuite.SimModelNative.dylib" Link="libOSPSuite.SimModelNative.dylib">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="$(PkgOSPSuite_SimModelSolver_CVODES_MacOSArm64)\OSPSuite.SimModelSolver_CVODES\bin\native\Arm64\Release\libOSPSuite.SimModelSolver_CVODES.dylib" Link="libOSPSuite.SimModelSolver_CVODES.Arm64.dylib">
+      <Content Include="$(PkgOSPSuite_SimModelSolver_CVODES_MacOSArm64)\OSPSuite.SimModelSolver_CVODES\bin\native\Arm64\Release\libOSPSuite.SimModelSolver_CVODES.dylib" Link="libOSPSuite.SimModelSolver_CVODES.dylib">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
    </ItemGroup>
-
-   <PropertyGroup>
-      <ContentSQLiteInteropFiles>true</ContentSQLiteInteropFiles>
-      <CopySQLiteInteropFiles>false</CopySQLiteInteropFiles>
-      <CleanSQLiteInteropFiles>false</CleanSQLiteInteropFiles>
-      <CollectSQLiteInteropFiles>false</CollectSQLiteInteropFiles>
-   </PropertyGroup>
-
    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
      <IsPublishable>True</IsPublishable>
    </PropertyGroup>
@@ -102,8 +81,8 @@
          <PKSimDataBaseFile Include="$(TargetDir)PKSimDB.sqlite" />
       </ItemGroup>
       <Copy SourceFiles="@(AssemblyFiles); @(NativeMacFiles); @(NativeLinuxFiles); @(ConfigFiles); @(PKSimDataBaseFile)" DestinationFolder="$(SolutionDir)..\..\inst\lib\" />
-      <Copy SourceFiles="$(TargetDir)\runtimes\linux-x64\native\SQLite.Interop.dll" DestinationFiles="$(SolutionDir)..\..\inst\lib\libSQLite.Interop.dll" />
-      <Copy SourceFiles="$(TargetDir)\runtimes\osx-x64\native\SQLite.Interop.dll" DestinationFiles="$(SolutionDir)..\..\inst\lib\SQLite.Interop.dll.dylib" />
+      <Copy SourceFiles="$(TargetDir)\runtimes\linux-x64\native\libe_sqlite3.so" DestinationFiles="$(SolutionDir)..\..\inst\lib\libe_sqlite3.so" />
+      <Copy SourceFiles="$(TargetDir)\runtimes\osx-arm64\native\libe_sqlite3.dylib" DestinationFiles="$(SolutionDir)..\..\inst\lib\libe_sqlite3.dylib" />
       <Delete Files="$(SolutionDir)..\..\inst\lib\DependencyManager.dll" />
    </Target>
 </Project>

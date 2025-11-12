@@ -1,4 +1,0 @@
-#!/bin/sh
-# configure.win: prepare platform-specific files for installation on Windows
-
-"${R_HOME}/bin/Rscript" tools/configure_platform.R
