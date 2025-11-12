@@ -86,26 +86,83 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 
 #' Calculate residuals for datasets in `DataCombined`
 #'
+#' @description
+#' Computes residuals between observed and simulated datasets by interpolating
+#' simulated values to observed time points and calculating the difference
+#' according to the specified scaling method.
+#'
 #' @details
+#' ## Algorithm Overview
 #'
-#' To compute residuals, for every simulated dataset in a given group, there
-#' should also be a corresponding observed dataset. If this is not the case, the
-#' corresponding observed or simulated datasets will be removed.
+#' The function performs the following steps to calculate residuals:
 #'
-#' When multiple (observed and/or simulated) datasets are present in
-#' `DataCombined`, they are likely to have different units. The `xUnit` and
-#' `yUnit` arguments help you specify a common unit to convert them to.
+#' 1. **Data Validation and Pairing**: For each group in the data, the function
+#'    pairs observed datasets with simulated datasets. Any unpaired datasets
+#'    (observed without corresponding simulated or vice versa) are removed.
 #'
-#' @param scaling A character specifying scale: either `tlf::Scaling$lin`
-#'   (linear) or `tlf::Scaling$log` (logarithmic).
-#' @inheritParams convertUnits
+#' 2. **Unit Harmonization**: All datasets are converted to common units
+#'    (specified by `xUnit` and `yUnit` parameters) to ensure consistent
+#'    calculations.
+#'
+#' 3. **Interpolation**: For each observed-simulated pair, the function uses
+#'    linear interpolation to estimate simulated values at the exact time points
+#'    where observations exist:
+#'    - With 2+ simulated points: Linear interpolation via `stats::approx()`
+#'    - With 1 simulated point: Direct matching for identical x-values only
+#'    - With 0 simulated points: All residuals set to NA
+#'
+#' 4. **Residual Calculation**: Residuals are computed based on the scaling method:
+#'    - **Linear scaling** (`tlf::Scaling$lin`):
+#'      \deqn{residual = y_{simulated} - y_{observed}}
+#'    - **Logarithmic scaling** (`tlf::Scaling$log`):
+#'      \deqn{residual = \log(y_{simulated}) - \log(y_{observed})}
+#'      Note: For log scaling, a small epsilon value is used to handle zero or
+#'      near-zero values safely.
+#'
+#' ## Important Notes
+#'
+#' - Residuals can only be computed when both observed and simulated data exist
+#'   for the same group
+#' - Interpolation does not extrapolate beyond the range of simulated data
+#'   (returns NA for observed points outside simulated time range)
+#' - NA residual values are automatically filtered from the output
+#' - When multiple observed/simulated datasets exist in a group, all possible
+#'   pairs are evaluated
+#'
+#' @param dataCombined A single instance of `DataCombined` class containing both
+#'   observed and simulated datasets to be compared.
+#' @param scaling A character specifying the scaling method for residual calculation.
+#'   Must be either `tlf::Scaling$lin` for linear residuals
+#'   (simulated - observed) or `tlf::Scaling$log` for logarithmic residuals
+#'   (log(simulated) - log(observed)).
+#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
+#'   not specified (`NULL`), the first existing unit in the respective
+#'   columns will be selected as the common unit. For available dimensions
+#'   and units, see `ospsuite::ospDimensions` and `ospsuite::ospUnits`.
 #'
 #' @return
+#' A tibble (data frame) containing paired observed-simulated data with calculated
+#' residuals. The following columns will be present:
 #'
-#' In the returned tibble data frame, the following columns will always be present:
+#' \describe{
+#'   \item{group}{Grouping identifier from the original DataCombined object}
+#'   \item{name}{Name of the observed dataset}
+#'   \item{nameSimulated}{Name of the paired simulated dataset}
+#'   \item{xValues}{X-axis values (typically time points) from observed data}
+#'   \item{xUnit}{Unit of x-values after harmonization}
+#'   \item{xDimension}{Dimension of x-values (e.g., "Time")}
+#'   \item{yValuesObserved}{Observed y-values at each x-point}
+#'   \item{yValuesSimulated}{Simulated y-values interpolated to observed x-points}
+#'   \item{residualValues}{Calculated residuals (method depends on scaling parameter)}
+#'   \item{yUnit}{Unit of y-values after harmonization}
+#'   \item{yDimension}{Dimension of y-values (e.g., "Concentration")}
+#'   \item{yErrorValues}{Error values from observed data (if available)}
+#'   \item{yErrorType}{Type of error (e.g., "SD", "SE")}
+#'   \item{yErrorUnit}{Unit of error values}
+#'   \item{lloq}{Lower limit of quantification (if available)}
+#' }
 #'
-#' xValues - xUnit - xDimension - yValuesObserved - yUnit - yDimension -
-#' yErrorValues - yErrorType - yErrorUnit - yValuesSimulated - residualValues
+#' Returns `NULL` with a warning if no pairable datasets are found.
 #'
 #' @family data-combined
 #'
