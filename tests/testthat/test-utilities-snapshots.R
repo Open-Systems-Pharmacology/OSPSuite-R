@@ -79,7 +79,7 @@ test_that("Convert project to snapshot works", {
   expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
-test_that("RunSimulations argument is works", {
+test_that("RunSimulations argument works", {
   path <- getTestDataFilePath("test_snapshot.json")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
