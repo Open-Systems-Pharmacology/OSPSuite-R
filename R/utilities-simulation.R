@@ -8,7 +8,11 @@
 #' @export
 #'
 #' @examples
-createSimulation <- function(simulationName, simulationConfiguration, createAllProcessRateParameters = FALSE) {
+createSimulation <- function(
+  simulationName,
+  simulationConfiguration,
+  createAllProcessRateParameters = FALSE
+) {
   return(simulation)
 }
 
@@ -82,7 +86,10 @@ loadSimulation <- function(
   simulation <- Simulation$new(netSim, filePath)
 
   netTask <- .getCoreTaskFromCache("SimulationTask")
-  simulation$setBuildConfiguration(netTask$call("CreateSimulationBuilderFor", simulation))
+  simulation$setBuildConfiguration(netTask$call(
+    "CreateSimulationBuilderFor",
+    simulation
+  ))
 
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {

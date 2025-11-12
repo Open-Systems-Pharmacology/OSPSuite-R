@@ -30,20 +30,22 @@ IndividualDiseaseStates <- enum(c(
 #' @export
 #'
 #' @examples
-createIndividualBuildingBlock <- function(species,
-                                          population = NULL,
-                                          gender = NULL,
-                                          weight = NULL,
-                                          weightUnit = "kg",
-                                          height = NULL,
-                                          heightUnit = "cm",
-                                          age = NULL,
-                                          ageUnit = "year(s)",
-                                          gestationalAge = 40,
-                                          gestationalAgeUnit = "week(s)",
-                                          moleculeOntogenies = NULL,
-                                          seed = NULL,
-                                          diseaseState = IndividualDiseaseStates$None) {
+createIndividualBuildingBlock <- function(
+  species,
+  population = NULL,
+  gender = NULL,
+  weight = NULL,
+  weightUnit = "kg",
+  height = NULL,
+  heightUnit = "cm",
+  age = NULL,
+  ageUnit = "year(s)",
+  gestationalAge = 40,
+  gestationalAgeUnit = "week(s)",
+  moleculeOntogenies = NULL,
+  seed = NULL,
+  diseaseState = IndividualDiseaseStates$None
+) {
   return(IndividualBuildingBlock)
 }
 

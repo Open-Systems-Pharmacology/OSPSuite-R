@@ -162,24 +162,33 @@ dataSetToTibble <- function(dataSets, names = NULL) {
   if (!is.null(names)) {
     # Get the original dataset names from the input
     # Handle case where dataset might not have a name property
-    original_names <- vapply(originalDataSets, function(ds) {
-      if (!is.null(ds$name)) {
-        return(ds$name)
-      } else {
-        return("")
-      }
-    }, character(1))
+    original_names <- vapply(
+      originalDataSets,
+      function(ds) {
+        if (!is.null(ds$name)) {
+          return(ds$name)
+        } else {
+          return("")
+        }
+      },
+      character(1)
+    )
 
     # Validate names length matches number of datasets
     if (length(names) != length(original_names)) {
       stop(sprintf(
         "Length of 'names' (%d) must match number of datasets (%d)",
-        length(names), length(original_names)
+        length(names),
+        length(original_names)
       ))
     }
 
     # Vectorized renaming using rep() for better performance
-    n_rows_per_dataset <- vapply(originalDataSets, function(ds) length(ds$xValues), integer(1))
+    n_rows_per_dataset <- vapply(
+      originalDataSets,
+      function(ds) length(ds$xValues),
+      integer(1)
+    )
     obsData$name <- rep(names, times = n_rows_per_dataset)
   }
 

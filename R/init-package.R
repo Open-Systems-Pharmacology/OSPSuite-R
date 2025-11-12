@@ -85,8 +85,13 @@
   # MergeBehavior enum
 
   # -1 because the indexing in .NET starts at 0
-  mergeBehaviorNetEnum <- seq_along(enum(rSharp::getEnumNames("OSPSuite.Core.Domain.MergeBehavior"))) - 1
-  names(mergeBehaviorNetEnum) <- enum(rSharp::getEnumNames("OSPSuite.Core.Domain.MergeBehavior"))
+  mergeBehaviorNetEnum <- seq_along(enum(rSharp::getEnumNames(
+    "OSPSuite.Core.Domain.MergeBehavior"
+  ))) -
+    1
+  names(mergeBehaviorNetEnum) <- enum(rSharp::getEnumNames(
+    "OSPSuite.Core.Domain.MergeBehavior"
+  ))
   # Enum with the merge behaviors for modules available in MoBi
   MergeBehavior <<- enum(mergeBehaviorNetEnum)
 }

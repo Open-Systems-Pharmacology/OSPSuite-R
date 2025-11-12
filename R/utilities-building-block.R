@@ -27,13 +27,15 @@
 #' @export
 #'
 #' @examples
-setInitialConditions <- function(initialConditionsBuildingBlock,
-                                 quantityPaths,
-                                 quantityValues,
-                                 scaleDivisors = 1,
-                                 isPresent = TRUE,
-                                 negativeValuesAllowed = FALSE,
-                                 formulas = NULL) {
+setInitialConditions <- function(
+  initialConditionsBuildingBlock,
+  quantityPaths,
+  quantityValues,
+  scaleDivisors = 1,
+  isPresent = TRUE,
+  negativeValuesAllowed = FALSE,
+  formulas = NULL
+) {
   return(initialConditionsBuildingBlock)
 }
 
@@ -47,9 +49,10 @@ setInitialConditions <- function(initialConditionsBuildingBlock,
 #' @export
 #'
 #' @examples
-deleteInitialConditions <- function(initialConditionsBuildingBlock,
-                                    quantityPaths) {
-}
+deleteInitialConditions <- function(
+  initialConditionsBuildingBlock,
+  quantityPaths
+) {}
 
 #' Extend an Initial Conditions Building Block (BB) with new entries for molecules
 #' from a molecules BB in all physical containers of a spatial structure BB.
@@ -71,13 +74,12 @@ deleteInitialConditions <- function(initialConditionsBuildingBlock,
 #' @export
 #'
 #' @examples
-extendInitialConditions <- function(initialConditionsBuildingBlock,
-                                    spatialStructureBB,
-                                    moleculesBB,
-                                    moleculeNames = NULL) {
-}
-
-
+extendInitialConditions <- function(
+  initialConditionsBuildingBlock,
+  spatialStructureBB,
+  moleculesBB,
+  moleculeNames = NULL
+) {}
 
 
 #' Set or add parameter values to an existing Parameter Values building block.
@@ -100,11 +102,13 @@ extendInitialConditions <- function(initialConditionsBuildingBlock,
 #' @export
 #'
 #' @examples
-setParameterValues <- function(parameterValuesBuildingBlock,
-                               quantityPaths,
-                               quantityValues,
-                               dimensions = ospDimensions$Dimensionless,
-                               formulas = NULL) {
+setParameterValues <- function(
+  parameterValuesBuildingBlock,
+  quantityPaths,
+  quantityValues,
+  dimensions = ospDimensions$Dimensionless,
+  formulas = NULL
+) {
   return(parameterValuesBuildingBlock)
 }
 
@@ -118,9 +122,10 @@ setParameterValues <- function(parameterValuesBuildingBlock,
 #' @export
 #'
 #' @examples
-deleteParameterValues <- function(parameterValuesBuildingBlock,
-                                  quantityPaths) {
-}
+deleteParameterValues <- function(
+  parameterValuesBuildingBlock,
+  quantityPaths
+) {}
 
 #' Extend a Parameter Values Building Block (BB) with local molecule parameters
 #' for molecules from a molecules BB in all physical containers of a spatial structure BB.
@@ -141,11 +146,12 @@ deleteParameterValues <- function(parameterValuesBuildingBlock,
 #' @export
 #'
 #' @examples
-addLocalMoleculeParameters <- function(parameterValuesBuildingBlock,
-                                       spatialStructureBB,
-                                       moleculesBB,
-                                       moleculeNames = NULL) {
-}
+addLocalMoleculeParameters <- function(
+  parameterValuesBuildingBlock,
+  spatialStructureBB,
+  moleculesBB,
+  moleculeNames = NULL
+) {}
 
 #' Extend a Parameter Values Building Block (BB) with protein expression parameters
 #' for selected protein molecules in the selected organs.
@@ -173,9 +179,10 @@ addLocalMoleculeParameters <- function(parameterValuesBuildingBlock,
 #' @export
 #'
 #' @examples
-addProteinExpressionToParameterValuesBB <- function(parameterValuesBuildingBlock,
-                                                    spatialStructureBB,
-                                                    organPaths = NULL,
-                                                    moleculesBB,
-                                                    moleculeNames = NULL) {
-}
+addProteinExpressionToParameterValuesBB <- function(
+  parameterValuesBuildingBlock,
+  spatialStructureBB,
+  organPaths = NULL,
+  moleculesBB,
+  moleculeNames = NULL
+) {}
