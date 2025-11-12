@@ -52,8 +52,7 @@ setInitialConditions <- function(
 deleteInitialConditions <- function(
   initialConditionsBuildingBlock,
   quantityPaths
-) {
-}
+) {}
 
 #' Extend an Initial Conditions Building Block (BB) with new entries for molecules
 #' from a molecules BB in all physical containers of a spatial structure BB.
@@ -80,8 +79,7 @@ extendInitialConditions <- function(
   spatialStructureBB,
   moleculesBB,
   moleculeNames = NULL
-) {
-}
+) {}
 
 
 #' Set or add parameter values to an existing Parameter Values building block.
@@ -124,8 +122,10 @@ setParameterValues <- function(
 #' @export
 #'
 #' @examples
-deleteParameterValues <- function(parameterValuesBuildingBlock, quantityPaths) {
-}
+deleteParameterValues <- function(
+  parameterValuesBuildingBlock,
+  quantityPaths
+) {}
 
 #' Extend a Parameter Values Building Block (BB) with local molecule parameters
 #' for molecules from a molecules BB in all physical containers of a spatial structure BB.
@@ -151,8 +151,7 @@ addLocalMoleculeParameters <- function(
   spatialStructureBB,
   moleculesBB,
   moleculeNames = NULL
-) {
-}
+) {}
 
 #' Extend a Parameter Values Building Block (BB) with protein expression parameters
 #' for selected protein molecules in the selected organs.
@@ -186,5 +185,4 @@ addProteinExpressionToParameterValuesBB <- function(
   organPaths = NULL,
   moleculesBB,
   moleculeNames = NULL
-) {
-}
+) {}
