@@ -119,7 +119,9 @@ MoBiModule <- R6::R6Class(
       } else if (bbType == "Initial Conditions") {
         bbs <- .callModuleTask("AllInitialConditionsFromModule", self)
       } else {
-        stop("Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'.")
+        stop(
+          "Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'."
+        )
       }
 
       # Create a list of BuildingBlock objects
@@ -141,7 +143,12 @@ MoBiModule <- R6::R6Class(
       if (!is.null(names)) {
         missingNames <- setdiff(names, newNames)
         if (length(missingNames) > 0) {
-          stop(paste("No", bbType, "Building Blocks found with names:", paste(names, collapse = ", ")))
+          stop(paste(
+            "No",
+            bbType,
+            "Building Blocks found with names:",
+            paste(names, collapse = ", ")
+          ))
         }
       }
       return(bbs)
