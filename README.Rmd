@@ -208,9 +208,28 @@ restoring the workspace, the objects will be `NULL` and cannot be re-used.
 
 ## Embedded binaries
 
-The `{ospsuite}` package requires shared libraries to access PK-Sim
-functionality. Because `{ospsuite}` contains binary files, it is classified as a binary
+The `{ospsuite}` package requires shared libraries (binary files) to access PK-Sim and MoBi
+functionalities.
+
+**Note**: Because `{ospsuite}` contains binary files, it is classified as a binary
 package and cannot be submitted to CRAN.
+
+### Updating embedded binaries
+
+The embedded binaries are built from NuGet packages specified in the DependencyManager project. To update the binaries to a new version of PKSim or MoBi:
+
+1.  Open `shared/DependencyManager/src/DependencyManager.csproj`.
+2.  Update the `Version` attribute in the `PackageReference` elements for `PKSim.R` and `MoBi.R` to the desired version numbers.
+3.  Commit and push the changes to a branch.
+4.  The GitHub Actions workflow defined in `.github/workflows/build-libraries.yaml` automatically:
+    - Builds the DependencyManager project, which downloads the specified NuGet packages
+    - Extracts the required binary files and dependencies
+    - Copies them to the `inst/lib/` directory
+    - Commits the updated binaries to the branch
+
+No manual build steps are required. The workflow handles the entire process automatically when changes to the `.csproj` file are pushed.
+
+**Note:** If the `DependencyManager.csproj` file is not modified, the build-libraries workflow step is automatically skipped.
 
 ## Versioning
 
