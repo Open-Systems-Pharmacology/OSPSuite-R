@@ -170,7 +170,7 @@ plotPredictedVsObserved <- function(plotData, # nolint
 
   return(plotObject)
 }
-#' Plots residuals vs Time, grouped by "group".
+#' Plots residuals vs Time Points, grouped by "group".
 #'
 #' This function visualizes the residuals over time, providing insights into the accuracy of the model predictions.
 #'

@@ -36,6 +36,8 @@ If a \code{data.table}, it must include the following:
 
 \item{mapping}{A ggplot2 aesthetic mapping object. Default is \code{ggplot2::aes()}. This is added or replaces the default mapping constructed by the data.}
 
+\item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
+
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotQQ}.}
 }
 \value{
@@ -48,7 +50,7 @@ This function visualizes the distribution of predicted vs observed values using 
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotResidualsVsObserved}()},
-\code{\link{plotResidualsVsTime}()},
+\code{\link{plotResidualsVsTimePoints}()},
 \code{\link{plotTimeProfile}()}
 }
 \concept{plot functions based on ospsuite.plots}

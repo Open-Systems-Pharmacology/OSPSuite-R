@@ -39,6 +39,8 @@ If a \code{data.table}, it must include the following:
 
 \item{distribution}{parameter passed to \code{ospsuite.plots::plotHistogram}.}
 
+\item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
+
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotHistogram}.}
 }
 \value{
