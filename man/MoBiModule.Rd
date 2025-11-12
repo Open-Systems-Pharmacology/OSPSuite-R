@@ -17,6 +17,13 @@ A MoBi module, either loaded from a project or from a pkml file
 \section{Super classes}{
 \code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{MoBiModule}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{initialConditionsBBnames}}{Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -25,6 +32,10 @@ A MoBi module, either loaded from a project or from a pkml file
 \item{\code{isPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
 
 \item{\code{mergeBehavior}}{Merge behavior of the module (read/write)}
+
+\item{\code{parameterValuesBBnames}}{Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)}
+
+\item{\code{initialConditionsBBnames}}{Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)}
 }
 \if{html}{\out{</div>}}
 }

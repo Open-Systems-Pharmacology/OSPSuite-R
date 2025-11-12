@@ -2,19 +2,14 @@ on:
   workflow_dispatch:
     inputs:
       branch_name:
-        description: 'Branch name for the PR (default: update-core-files-YYYYMMDD)'
+        description: 'Branch name (default: build-libraries-YYYYMMDD)'
         required: false
         default: ''
         type: string
-      pr_title:
-        description: 'Title for the PR (default: Update Core Files)'
+      target_branch:
+        description: 'Target branch for PR (default: main)'
         required: false
-        default: 'Update Core Files'
-        type: string
-      pr_body:
-        description: 'Body for the PR (default: Auto-generated PR to update core files)'
-        required: false
-        default: 'Auto-generated PR to update core files from PK-Sim dependencies'
+        default: 'main'
         type: string
 
 name: Build Libraries
@@ -24,43 +19,42 @@ permissions:
   pull-requests: write
 
 jobs:
-  update-core-files:
+  build-libraries:
+    name: Build Core Libraries (Ubuntu)
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.changes.outputs.branch_name }}
+      branch_name: ${{ steps.setup.outputs.branch_name }}
       has_changes: ${{ steps.changes.outputs.has_changes }}
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.inputs.target_branch || 'main' }}
+          fetch-depth: 0
 
-
-      - name: Generate branch name
-        id: branch_name
+      - name: Setup branch and git
+        id: setup
         run: |
+          # Generate branch name
           if [ -n "${{ github.event.inputs.branch_name }}" ]; then
-            echo "name=${{ github.event.inputs.branch_name }}" >> $GITHUB_OUTPUT
+            BRANCH_NAME="${{ github.event.inputs.branch_name }}"
           else
-            echo "name=update-core-files-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+            BRANCH_NAME="build-libraries-$(date +%Y%m%d-%H%M%S)"
           fi
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
-      - name: Create and checkout new branch
-        run: |
+          # Configure git
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git checkout -b ${{ steps.branch_name.outputs.name }}
+          git checkout -b "$BRANCH_NAME"
 
-
-      - name: Setup .NET for building
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Add GitHub NuGet source
+      - name: Configure NuGet
         run: |
           dotnet nuget add source "https://nuget.pkg.github.com/Open-Systems-Pharmacology/index.json" \
             --name "OSP-GitHub-Packages" \
@@ -68,63 +62,83 @@ jobs:
             --password "${{ secrets.GITHUB_TOKEN }}" \
             --store-password-in-clear-text
 
-      - name: Build DependencyManager
+      - name: Build libraries
         run: |
           cd inst/lib
           dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
 
-      - name: Check if there are changes
+
+      - name: Check for changes
         id: changes
         run: |
           if git diff --quiet inst/lib; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in core files"
+            echo "No changes detected in core libraries"
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in core files"
+            echo "Changes detected in core libraries"
           fi
-          echo "branch_name=${{ steps.branch_name.outputs.name }}" >> $GITHUB_OUTPUT
 
       - name: Commit changes
         if: steps.changes.outputs.has_changes == 'true'
         run: |
           git add inst/lib
-          git commit -m "Update Core Files
-          - Updated PK-Sim R dependencies
+          git commit -m "Build core libraries
+
           - Built DependencyManager libraries
+          - Updated PK-Sim R dependencies
           - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
           - Triggered by: ${{ github.actor }}"
 
       - name: Push branch
         if: steps.changes.outputs.has_changes == 'true'
         run: |
-          git push origin ${{ steps.branch_name.outputs.name }}
-
-      - name: Create Pull Request
-        if: steps.changes.outputs.has_changes == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: pr } = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: '${{ github.event.inputs.pr_title }}' || 'Update Core Files',
-              head: '${{ steps.branch_name.outputs.name }}',
-              base: 'main',
-              body: `${{ github.event.inputs.pr_body }}` || `Auto-generated PR to update core files from PK-Sim dependencies
-
-            ## Changes
-            - Updated PK-Sim R dependencies in \`inst/lib\`
-            - Built DependencyManager libraries
-            - Generated on: ${new Date().toISOString()}
-            - Triggered by: ${{ github.actor }}
-
-            ## What this PR does
-            This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts and the DependencyManager is built locally.`
-            });
-            console.log(`Created PR #${pr.number}: ${pr.html_url}`);
+          git push origin "${{ steps.setup.outputs.branch_name }}"
 
       - name: No changes message
         if: steps.changes.outputs.has_changes == 'false'
         run: |
-          echo "No changes detected in core files. Nothing to commit or create PR for."
+          echo "No changes detected in core libraries. Nothing to commit or create PR for."
+
+
+
+  create-pr:
+    name: Create Pull Request
+    runs-on: ubuntu-latest
+    needs: [build-libraries]
+    if: |
+      always() &&
+      needs.build-libraries.outputs.has_changes == 'true'
+
+    steps:
+      - name: Create PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const hasLibChanges = '${{ needs.build-libraries.outputs.has_changes }}' === 'true';
+
+            let changes = [];
+            if (hasLibChanges) {
+              changes.push('- Built DependencyManager libraries');
+              changes.push('- Updated PK-Sim R dependencies');
+            }
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Update Core Libraries',
+              head: '${{ needs.build-libraries.outputs.branch_name }}',
+              base: '${{ github.event.inputs.target_branch || 'main' }}',
+              body: `Auto-generated PR to update core libraries
+
+            ## Changes
+            ${changes.join('\n')}
+            - Generated on: ${new Date().toISOString()}
+            - Triggered by: ${{ github.actor }}
+
+            ## Description
+            This PR updates the core libraries required by the \`{ospsuite}\` package.
+            ${hasLibChanges ? 'Core files are downloaded from the latest PK-Sim build artifacts.' : ''}
+            });
+
+            console.log(\`Created PR #\${pr.number}: \${pr.html_url}\`);

@@ -2,7 +2,7 @@
 
     Code
       print(defaultMoBiProject)
-    Message
+    Output
       <MoBiProject>
         * Source file: ../data/TH_QST_Platform.mbp3
       Simulations:

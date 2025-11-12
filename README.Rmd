@@ -67,7 +67,7 @@ documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
   - [Dimensions and Units](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html)
   - [Table parameters](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html)
   - [PK-Sim Installation](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html)
-    
+
 
 # Installation
 
@@ -165,7 +165,7 @@ Archive File* to install packages from binary files.
 
 
 ``` r
-# Install rSharp from local file 
+# Install rSharp from local file
 # Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_rSharp.zip, repos = NULL)
 
@@ -187,7 +187,7 @@ install.packages(pathTo_OSPSuite.zip, repos = NULL)
 
 ## Loading `ospsuite` might fail if the system locale is not set to English
 
-  - On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs` 
+  - On Windows, set `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
   to `English (United States)` and reboot.
 
   - On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before starting R:
@@ -206,34 +206,10 @@ restoring the workspace, the objects will be `NULL` and cannot be re-used.
 
 # Development
 
-## Development Setup
-
-When developing the `{ospsuite}` package, you need to prepare platform-specific library files before using `devtools::load_all()`. The package uses configure scripts during installation to rename platform-specific DLLs, but `devtools::load_all()` bypasses this process.
-
-**Run the development setup script:**
-
-```r
-source("tools/setup_dev.R")
-setup_dev()
-```
-
-**When to run `setup_dev()`:**
-- After cloning the repository for the first time
-- After switching to a different branch
-- After pulling changes that might affect library files
-
-The script automatically detects your operating system and renames the appropriate DLL:
-- **Windows**: Renames `System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll`
-- **Linux**: Renames `System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll`
-- **macOS**: Renames `System.Data.SQLite.mac.dll` → `System.Data.SQLite.dll`
-
 ## Embedded binaries
 
 The `{ospsuite}` package requires shared libraries to access PK-Sim
-functionality. To obtain the latest libraries (**.dll** on Windows or **.so** on
-Linux), run the `update_core_files.R` script included with this package.
-
-Because `{ospsuite}` contains binary files, it is classified as a binary
+functionality. Because `{ospsuite}` contains binary files, it is classified as a binary
 package and cannot be submitted to CRAN.
 
 ## Versioning
