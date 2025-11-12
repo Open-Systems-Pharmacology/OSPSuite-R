@@ -2,18 +2,20 @@
 % Please edit documentation in R/utilities-mobi-module.R
 \name{loadModuleFromPKML}
 \alias{loadModuleFromPKML}
-\title{Load a MoBi module from pkml
-TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1590}
+\title{Load a MoBi module from pkml.}
 \usage{
 loadModuleFromPKML(path)
 }
 \arguments{
-\item{path}{Path to the pkml file}
+\item{path}{Path to the pkml file with a module export}
 }
 \value{
 A \code{MoBiModule} object
 }
 \description{
-Load a MoBi module from pkml
-TODO not implemented https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1590
+Load a MoBi module from pkml.
+}
+\examples{
+filePath <- system.file("extdata", "Thyroid.pkml", package = "ospsuite")
+module <- loadModuleFromPKML(filePath)
 }

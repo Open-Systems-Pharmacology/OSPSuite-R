@@ -16,6 +16,9 @@ knitr::opts_chunk$set(echo = TRUE)
 First, load a MoBi project:
 
 ```{r loadProject}
+# Load the ospsuite package
+library(ospsuite)
+
 projectPath <- system.file(
   "extdata",
   "TH_QST_Platform.mbp3",
@@ -35,20 +38,20 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 get the list of parameter identifications:
 
 ```{r getPInNames, execute = FALSE}
-# PIs <- myProject$parameterIdentificationNames
+PIs <- myProject$parameterIdentificationNames
 
-# ospsuite.utils::ospPrintItems(
-#   PIs,
-#   title = "Parameter identifications"
-# )
+ospsuite.utils::ospPrintItems(
+  PIs,
+  title = "Parameter identifications"
+)
 ```
 
 get observed data from the project as `DataSet` objects:
 
 ```{r getObservedData}
-# obsData <- myProject$getObservedData()
+obsData <- myProject$getObservedData()
 
-# print(names(obsData))
+print(names(obsData))
 ```
 
 get the names of individuals and expression profiles from the project:
@@ -74,9 +77,7 @@ ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
 
 and retrieve the respective objects by their names using the methods `getSimulation`, `getObservedData`, `getIndividual`, `getExpressionProfiles`, and `getModules`.
 
-
-For modules, it is possible to retrieve the initial conditions and parameter values
-building blocks:
+For modules, it is possible to retrieve the initial conditions and parameter values building blocks:
 
 ```{r getBuildingBlocksFromModule}
 # Get the module "Thyroid" from the project
@@ -99,32 +100,32 @@ Each simulation has a `SimulationConfiguration` object that contains the modules
 
 ## Creating simulation configurations
 
-The user can create a new simulation configuration either from scratch, or alter
+The user can create a new simulation configuration either from scratch, or alter 
 an existing configuration retrieved from a simulation, or create a configuration from
 modules in a project.
 
 ### Create simulation configuration from simulation
 
-One way to get a simulation configuration is to retrieve a simulation either from
-a project or by loading a simulation from a pkml file. The simulation configuration can then be
+One way to get a simulation configuration is to retrieve a simulation either from 
+a project or by loading a simulation from a pkml file. The simulation configuration can then be 
 altered afterwards.
 
 ```{r getSimulationConfigurationFromPKML}
-simulation <- loadSimulation(system.file(
-  "extdata",
-  "Aciclovir.pkml",
-  package = "ospsuite"
-))
-configuration <- simulation$configuration
+# simulation <- loadSimulation(system.file(
+#   "extdata",
+#   "Aciclovir.pkml",
+#   package = "ospsuite"
+# ))
+# configuration <- simulation$configuration
 
-print(configuration)
+# print(configuration)
 ```
 
 ```{r getSimulationConfigurationFromProject}
-simulation <- myProject$getSimulation("Thyroid_QST_Human")
-configuration <- simulation$configuration
+# simulation <- myProject$getSimulation("Thyroid_QST_Human")
+# configuration <- simulation$configuration
 
-print(configuration)
+# print(configuration)
 ```
 
 
@@ -132,37 +133,37 @@ print(configuration)
 ### Create simulation configuration from the project
 
 The user can create new simulation configuration from the modules available in the project. In this example,
-we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding".
+we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding". 
 We will select the expression profiles "UDPGT1|Human|Healthy", "DIO1|Human|Healthy", "DIO3|Human|Healthy",
-"UDPGT2|Human|Healthy", and specify the parameter values building block "Rat" from the
+"UDPGT2|Human|Healthy", and specify the parameter values building block "Rat" from the 
 module "Thyroid":
 
 ```{r createSimulationFromProject}
-sim1 <- myProject$createSimulationConfiguration(
-  modulesNames = c(
-    "Thyroid_QST",
-    "Rat physiology",
-    "Thyroid",
-    "Pituitary",
-    "Endogenous_TH",
-    "TH_activeTransports",
-    "TH_plasma_binding"
-  ),
-  individualName = "Rat",
-  expressionProfilesNames = c(
-    "UDPGT1|Human|Healthy",
-    "DIO1|Human|Healthy",
-    "DIO3|Human|Healthy",
-    "UDPGT2|Human|Healthy"
-  ),
-  parameterValues = list("Thyroid" = "Rat")
-)
+# sim1 <- myProject$createSimulationConfiguration(
+#   modulesNames = c(
+#     "Thyroid_QST",
+#     "Rat physiology",
+#     "Thyroid",
+#     "Pituitary",
+#     "Endogenous_TH",
+#     "TH_activeTransports",
+#     "TH_plasma_binding"
+#   ),
+#   individualName = "Rat",
+#   expressionProfilesNames = c(
+#     "UDPGT1|Human|Healthy",
+#     "DIO1|Human|Healthy",
+#     "DIO3|Human|Healthy",
+#     "UDPGT2|Human|Healthy"
+#   ),
+#   parameterValues = list("Thyroid" = "Rat")
+# )
 ```
 
 ### Create simulation configuration from modules
 
-An alternative to creating simulation configurations from modules from a project is to use the
-function `createSimulationConfiguration()` and provide a list of `Module` objects.
+An alternative to creating simulation configurations from modules from a project is to use the 
+function `createSimulationConfiguration()` and provide a list of `Module` objects. 
 This allows to create simulations from modules contained in different projects,
 or from modules that are stored as pkml files. In the following example, we will
 create a simulation configuration using the modules from the project as in the example before,
@@ -170,33 +171,33 @@ but the extension module "Thyroid" will be loaded from a pkml file, and a new in
 be created.
 
 ```{r extractModulesAndCreateIndividual}
-# Get modules from the project
-modules <- myProject$getModules()
-# Get the expression profiles from the project
-expressionProfiles <- myProject$getExpressionProfiles(
-  names = c(
-    "UDPGT1|Human|Healthy",
-    "DIO1|Human|Healthy",
-    "DIO3|Human|Healthy",
-    "UDPGT2|Human|Healthy"
-  )
-)
-# Create an individual building block
-myIndividual <- createIndividualBuildingBlock(
-  species = Species$Human,
-  population = HumanPopulation$Asian_Tanaka_1996,
-  gender = Gender$Male,
-  weight = 79,
-  height = 175,
-  age = 35
-)
+# # Get modules from the project
+# modules <- myProject$getModules()
+# # Get the expression profiles from the project
+# expressionProfiles <- myProject$getExpressionProfiles(
+#   names = c(
+#     "UDPGT1|Human|Healthy",
+#     "DIO1|Human|Healthy",
+#     "DIO3|Human|Healthy",
+#     "UDPGT2|Human|Healthy"
+#   )
+# )
+# # Create an individual building block
+# myIndividual <- createIndividualBuildingBlock(
+#   species = Species$Human,
+#   population = HumanPopulation$Asian_Tanaka_1996,
+#   gender = Gender$Male,
+#   weight = 79,
+#   height = 175,
+#   age = 35
+# )
 ```
 
 Modules that are intended to be used in combination with a variety of other modules,
-especially with every generic PBPK module, are usually set up in a generic way
-and require some extensions in order to be used directly. For example, the initial
+especially with every generic PBPK module, are usually set up in a generic way 
+and require some extensions in order to be used directly. For example, the initial 
 conditions of the module "Thyroid" must be extended by the molecules of the model
-it will be used with. Similarly, some compound-specific parameter could require
+it will be used with. Similarly, some compound-specific parameter could require 
 manual adjustments. Therefore, intial conditions and parameter values building block can be modified from R.
 
 Following functionalities are available for the Initial Conditions BBs:
@@ -214,96 +215,96 @@ Followning functionalities are available for the Parameter Values (PV) BBs:
 - `deleteParameterValues()`: Allows deleting entries from the PV BB.
 - `addLocalMoleculeParameters()`: Extending a PV BB by entries for local parameters
 of specified molecules in all physical containers of a spatial structure.
-- `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters
+- `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters 
 defining expression of protein molecules in selected organs.
 
 So in the first step we load the extension module "Thyroid" from a pkml file:
 
 ```{r loadThyroidModule}
-thyroidModule <- loadModuleFromPKML(system.file(
-  "extdata",
-  "Thyroid.pkml",
-  package = "ospsuite"
-))
+# thyroidModule <- loadModuleFromPKML(system.file(
+#   "extdata",
+#   "Thyroid.pkml",
+#   package = "ospsuite"
+# ))
 ```
 
-Then we extend the initial conditions BB of the loaded module by molecules defined
+Then we extend the initial conditions BB of the loaded module by molecules defined 
 in other modules of our project:
 
 ```{r extendICBB}
-# Get the IC BB from the Thyroid module
-icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
-# Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
-newPaths <- extendInitialConditions(
-  icBB,
-  spatialStructureBB = thyroidModule$getBuildingBlocks(
-    type = "Spatial Structure"
-  ),
-  moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
-  moleculeNames = c("DIO1", "T3", "T4", "TSH")
-)
+# # Get the IC BB from the Thyroid module
+# icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
+# # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
+# newPaths <- extendInitialConditions(
+#   icBB,
+#   spatialStructureBB = thyroidModule$getBuildingBlocks(
+#     type = "Spatial Structure"
+#   ),
+#   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
+#   moleculeNames = c("DIO1", "T3", "T4", "TSH")
+# )
 ```
 
-The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module
+The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module 
 "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles,
 parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()`
-function:
+function: 
 
 ```{r addProteinExpressionToPVBB}
-# Get the PV BB from the Thyroid module
-pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
-# Add protein expression to the PV BB
-proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
-  pvBB,
-  spatialStructureBB = thyroidModule$getBuildingBlocks(
-    type = "Spatial Structure"
-  ),
-  moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
-  moleculeNames = c("DIO1")
-)
+# # Get the PV BB from the Thyroid module
+# pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
+# # Add protein expression to the PV BB
+# proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
+#   pvBB,
+#   spatialStructureBB = thyroidModule$getBuildingBlocks(
+#     type = "Spatial Structure"
+#   ),
+#   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
+#   moleculeNames = c("DIO1")
+# )
 
-# EXPECTED BEHAVIOR
-proteinExpressionPaths <- c(
-  "Organism|Thyroid|Plasma|DIO1|Initial concentration",
-  "Organism|Thyroid|BloodCells|DIO1|Initial concentration",
-  "Organism|Thyroid|Interstitial|DIO1|Initial concentration",
-  "Organism|Thyroid|Intracellular|DIO1|Initial concentration",
-  "Organism|Thyroid|Endosome|DIO1|Initial concentration",
-  "Organism|Thyroid|Lumen|DIO1|Initial concentration",
-  "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",
-  "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",
-  "Organism|Thyroid|Intracellular|DIO1|Relative expression"
-)
+# # EXPECTED BEHAVIOR
+# proteinExpressionPaths <- c(
+#   "Organism|Thyroid|Plasma|DIO1|Initial concentration",
+#   "Organism|Thyroid|BloodCells|DIO1|Initial concentration",
+#   "Organism|Thyroid|Interstitial|DIO1|Initial concentration",
+#   "Organism|Thyroid|Intracellular|DIO1|Initial concentration",
+#   "Organism|Thyroid|Endosome|DIO1|Initial concentration",
+#   "Organism|Thyroid|Lumen|DIO1|Initial concentration",
+#   "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",
+#   "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",
+#   "Organism|Thyroid|Intracellular|DIO1|Relative expression"
+# )
 ```
 
 and overwrite the value of "Relative expression":
 
 ```{r setRelativeExpressionValue}
-setParameterValues(
-  parameterValuesBuildingBlock = pvBB,
-  quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
-  dimensions = ospDimensions$Fraction,
-  quantityValues = 1.33
-)
+# setParameterValues(
+#   parameterValuesBuildingBlock = pvBB,
+#   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
+#   dimensions = ospDimensions$Fraction,
+#   quantityValues = 1.33
+# )
 ```
 
 Finally, we can create a simulation configuration from the modules and the individual we created:
 
 ```{r createSimulationFromModules}
-simulationConfigurationHuman <- createSimulationConfiguration(
-  simulationName = "Thyroid_QST_human",
-  modules = c(
-    modules[["Thyroid_QST"]],
-    thyroidModule,
-    modules[["Pituitary"]],
-    modules[["Endogenous_TH"]],
-    modules[["TH_activeTransports"]],
-    modules[["TH_plasma_binding"]]
-  ),
-  individual = myIndividual,
-  expressionProfiles = expressionProfiles,
-  parameterValues = list("Thyroid" = "Human")
-)
+# simulationConfigurationHuman <- createSimulationConfiguration(
+#   simulationName = "Thyroid_QST_human",
+#   modules = c(
+#     modules[["Thyroid_QST"]],
+#     thyroidModule,
+#     modules[["Pituitary"]],
+#     modules[["Endogenous_TH"]],
+#     modules[["TH_activeTransports"]],
+#     modules[["TH_plasma_binding"]]
+#   ),
+#   individual = myIndividual,
+#   expressionProfiles = expressionProfiles,
+#   parameterValues = list("Thyroid" = "Human")
+# )
 ```
 
 Expression profile BBs cannot be created from R but can be loaded from PKML. (Tier 3 or so).
@@ -316,22 +317,22 @@ Before creating a simulation from configuration, the user can change the calcula
 Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
 
 ```{r changeCalculationMethodsAndCreateSimulatoin}
-simulationConfigurationHuman$partitionCoefficientMethods(
-  list(
-    "T3" = PartitionCoefficientMethods$Berezhkovskiy,
-    "T4" = PartitionCoefficientMethods$`PK-Sim Standard`
-  )
-)
+# simulationConfigurationHuman$partitionCoefficientMethods(
+#   list(
+#     "T3" = PartitionCoefficientMethods$Berezhkovskiy,
+#     "T4" = PartitionCoefficientMethods$`PK-Sim Standard`
+#   )
+# )
 
-simulationConfigurationHuman$cellularPermeabilityMethods(
-  list(
-    "T3" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`,
-    "T4" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`
-  )
-)
+# simulationConfigurationHuman$cellularPermeabilityMethods(
+#   list(
+#     "T3" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`,
+#     "T4" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`
+#   )
+# )
 
-sim1 <- createSimulation(
-  simulationName = "Thyroid_QST_human",
-  simulationConfigurationHuman
-)
+# sim1 <- createSimulation(
+#   simulationName = "Thyroid_QST_human",
+#   simulationConfigurationHuman
+# )
 ```
