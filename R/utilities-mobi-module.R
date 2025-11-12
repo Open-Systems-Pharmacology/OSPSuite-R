@@ -29,12 +29,19 @@ loadModuleFromPKML <- function(path) {
 #'
 #' @returns A `ModuleConfiguration` object representing the configuration of the module.
 #' @noRd
-.createModuleConfiguration <- function(module, selectedParameterValue = NULL, selectedInitialCondition = NULL) {
+.createModuleConfiguration <- function(
+  module,
+  selectedParameterValue = NULL,
+  selectedInitialCondition = NULL
+) {
   netTask <- .getMoBiTaskFromCache("SimulationTask")
   netModuleConfiguration <- netTask$call("CreateModuleConfiguration", module)
 
   netModuleConfiguration$set("SelectedParameterValue", selectedParameterValue)
-  netModuleConfiguration$set("SelectedInitialCondition", selectedInitialCondition)
+  netModuleConfiguration$set(
+    "SelectedInitialCondition",
+    selectedInitialCondition
+  )
 
   return(netModuleConfiguration)
 }
