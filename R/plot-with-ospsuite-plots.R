@@ -199,19 +199,7 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- structure(
-    utils::modifyList(
-      ggplot2::aes(
-        x = xValues,
-        predicted = predicted,
-        observed = yValues,
-        groupby = group
-      ),
-      mapping
-    ),
-    class = "uneval"
-  )
-
+  mapping <- .getMappingForResiduals(userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -273,19 +261,7 @@ plotResidualsVsObserved <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- structure(
-    utils::modifyList(
-      ggplot2::aes(
-        x = yValues,
-        predicted = predicted,
-        observed = yValues,
-        groupby = group
-      ),
-      mapping
-    ),
-    class = "uneval"
-  )
-
+  mapping <- .getMappingForResiduals(userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -338,18 +314,7 @@ plotResidualsAsHistogram <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- structure(
-    utils::modifyList(
-      ggplot2::aes(
-        predicted = predicted,
-        observed = yValues,
-        groupby = group
-      ),
-      mapping
-    ),
-    class = "uneval"
-  )
-
+  mapping <- .getMappingForResiduals(userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -402,18 +367,7 @@ plotQuantileQuantilePlot <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- structure(
-    utils::modifyList(
-      ggplot2::aes(
-        predicted = predicted,
-        observed = yValues,
-        groupby = group
-      ),
-      mapping
-    ),
-    class = "uneval"
-  )
-
+  mapping <- .getMappingForResiduals(userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -659,6 +613,41 @@ plotQuantileQuantilePlot <- function(plotData,
   }
 
   return(mapping)
+}
+#' Creates mapping for residuals in plots.
+#'
+#' This function generates a mapping for the residuals plot based on the provided user mapping.
+#'
+#' @param userMapping Mapping provided by the user; this will update the internal mapping.
+#'
+#' @return A mapping object for ggplot2 that includes aesthetics for the x-axis, predicted values, observed values, and grouping.
+#' @keywords internal
+#' @noRd
+.getMappingForResiduals <- function(userMapping){
+
+  mapping <- structure(
+    utils::modifyList(
+      ggplot2::aes(
+        x = xValues,
+        predicted = predicted,
+        observed = yValues,
+        groupby = group
+      ),
+      mapping
+    ),
+    class = "uneval"
+  )
+
+  mapping <- structure(
+    utils::modifyList(
+      mapping,
+      userMapping
+    ),
+    class = "uneval"
+  )
+
+  return(mapping)
+
 }
 #' Creates mapping for plotData.
 #'
