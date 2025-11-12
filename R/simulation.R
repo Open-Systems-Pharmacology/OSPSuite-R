@@ -85,7 +85,11 @@ Simulation <- R6::R6Class(
         # Convert to numeric as the returned value is a string
         simVersion <- as.numeric(self$get("Creation")$get("Version"))
         if (simVersion < supportedVersion) {
-          stop(messages$errorFeatureNotSupportedBySimulation("SimulationConfiguration", simVersion, supportedVersion))
+          stop(messages$errorFeatureNotSupportedBySimulation(
+            "SimulationConfiguration",
+            simVersion,
+            supportedVersion
+          ))
         }
         netObj <- self$get("Configuration")
         return(SimulationConfiguration$new(netObj))

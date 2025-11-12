@@ -19,11 +19,13 @@
 #' @export
 #'
 #' @examples
-createSimulationConfiguration <- function(modules,
-                                          individual = NULL,
-                                          expressionProfiles = NULL,
-                                          initialConditions = NULL,
-                                          parameterValues = NULL) {
+createSimulationConfiguration <- function(
+  modules,
+  individual = NULL,
+  expressionProfiles = NULL,
+  initialConditions = NULL,
+  parameterValues = NULL
+) {
   # .NET CODE
 
   return(configuration)

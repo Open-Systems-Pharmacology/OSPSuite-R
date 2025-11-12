@@ -1,5 +1,9 @@
-defaultMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("TH_QST_Platform.mbp3"))
-emptyProject <- loadMoBiProject(filePath = getTestDataFilePath("Empty_Project.mbp3"))
+defaultMoBiProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("TH_QST_Platform.mbp3")
+)
+emptyProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("Empty_Project.mbp3")
+)
 
 test_that("It can print a MoBi project", {
   expect_snapshot(print(defaultMoBiProject))
@@ -115,7 +119,10 @@ test_that("It can get an individual from a MoBi project", {
 
 test_that("It correctly handles non-existing individuals", {
   # Test for non-existing individual with stopIfNotFound = FALSE
-  individual <- defaultMoBiProject$getIndividual("NonExistingIndividual", stopIfNotFound = FALSE)
+  individual <- defaultMoBiProject$getIndividual(
+    "NonExistingIndividual",
+    stopIfNotFound = FALSE
+  )
   expect_null(individual)
 })
 
@@ -135,38 +142,57 @@ test_that("It returns a simulation object for getSimulation with existing simula
 
 test_that("It correctly handles non-existing simulations", {
   # Test for non-existing simulation with stopIfNotFound = FALSE
-  simulation <- defaultMoBiProject$getSimulation("NonExistingSimulation", stopIfNotFound = FALSE)
+  simulation <- defaultMoBiProject$getSimulation(
+    "NonExistingSimulation",
+    stopIfNotFound = FALSE
+  )
   expect_null(simulation)
 })
 
 # Test for MoBiProject$getExpressionProfiles
 test_that("It can get expression profiles from a MoBi project", {
-  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy"))
+  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c(
+    "UDPGT1|Human|Healthy",
+    "DIO1|Human|Healthy"
+  ))
   expect_true(isOfType(expressionProfiles, "BuildingBlock"))
-  expect_true(expressionProfiles[[1]]$type == BuildingBlockTypes$`Expression Profile`)
-  expect_equal(names(expressionProfiles), c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy"))
+  expect_true(
+    expressionProfiles[[1]]$type == BuildingBlockTypes$`Expression Profile`
+  )
+  expect_equal(
+    names(expressionProfiles),
+    c("UDPGT1|Human|Healthy", "DIO1|Human|Healthy")
+  )
 
   # Test for non-existing expression profile
-  expect_error(defaultMoBiProject$getExpressionProfiles(names = "NonExistingProfile"),
+  expect_error(
+    defaultMoBiProject$getExpressionProfiles(names = "NonExistingProfile"),
     messages$errorExpressionProfileNotFound(c("NonExistingProfile")),
     fixed = TRUE
   )
 
   # Test for a list of expression profiles where one profile is non-existent
   expect_error(
-    defaultMoBiProject$getExpressionProfiles(names = c(
-      "NonExistingProfile",
-      "DIO1|Human|Healthy",
-      "nonExistingTheSecond"
-    )),
-    messages$errorExpressionProfileNotFound(names = c("NonExistingProfile", "nonExistingTheSecond")),
+    defaultMoBiProject$getExpressionProfiles(
+      names = c(
+        "NonExistingProfile",
+        "DIO1|Human|Healthy",
+        "nonExistingTheSecond"
+      )
+    ),
+    messages$errorExpressionProfileNotFound(
+      names = c("NonExistingProfile", "nonExistingTheSecond")
+    ),
     fixed = TRUE
   )
 })
 
 test_that("It correctly handles non-existing expression profiles", {
   # Test for non-existing expression profile with stopIfNotFound = FALSE
-  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(c("NonExistingProfile"), stopIfNotFound = FALSE)
+  expressionProfiles <- defaultMoBiProject$getExpressionProfiles(
+    c("NonExistingProfile"),
+    stopIfNotFound = FALSE
+  )
   expect_vector(expressionProfiles, list(), size = 0)
 
   expressionProfiles <- defaultMoBiProject$getExpressionProfiles(
@@ -226,7 +252,10 @@ test_that("It can get specific data sets from a MoBi project", {
 
   # Test for a list of data sets where one is non-existing
   expect_error(
-    defaultMoBiProject$getObservedData(c("NonExistingDataSet", "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A")),
+    defaultMoBiProject$getObservedData(c(
+      "NonExistingDataSet",
+      "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"
+    )),
     messages$errorDataSetsNotPresentInProject(c("NonExistingDataSet")),
     fixed = TRUE
   )
@@ -234,15 +263,24 @@ test_that("It can get specific data sets from a MoBi project", {
 
 test_that("It correctly handles non-existing data sets", {
   # Test for non-existing data set with stopIfNotFound = FALSE
-  dataSets <- defaultMoBiProject$getObservedData("NonExistingDataSet", stopIfNotFound = FALSE)
+  dataSets <- defaultMoBiProject$getObservedData(
+    "NonExistingDataSet",
+    stopIfNotFound = FALSE
+  )
   expect_length(dataSets, 0)
 
   # Test for a list of data sets where one is non-existing
   dataSets <- defaultMoBiProject$getObservedData(
-    c("NonExistingDataSet", "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"),
+    c(
+      "NonExistingDataSet",
+      "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"
+    ),
     stopIfNotFound = FALSE
   )
-  expect_equal(names(dataSets), "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A")
+  expect_equal(
+    names(dataSets),
+    "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"
+  )
 })
 
 # Test for MoBiProject$createSimulationConfiguration
@@ -252,7 +290,6 @@ test_that("It correctly handles non-existing data sets", {
 #
 #   simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
 # })
-
 
 # test modules with no IC BB
 # test modules with no PV BB

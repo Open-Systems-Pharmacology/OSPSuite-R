@@ -38,7 +38,10 @@ SimulationConfiguration <- R6::R6Class(
       if (missing(value)) {
         individual <- self$get("Individual")
         if (!is.null(individual)) {
-          individual <- BuildingBlock$new(individual, type = BuildingBlockTypes$Individual)
+          individual <- BuildingBlock$new(
+            individual,
+            type = BuildingBlockTypes$Individual
+          )
         }
         return(individual)
       } else {
@@ -47,7 +50,11 @@ SimulationConfiguration <- R6::R6Class(
         if (!is.null(value)) {
           if (value$type != "Individual") {
             # throw error
-            stop(messages$errorWrongBuildingBlockType(value$name, "Individual", value$type))
+            stop(messages$errorWrongBuildingBlockType(
+              value$name,
+              "Individual",
+              value$type
+            ))
           }
         }
         self$set("Individual", value)
@@ -148,11 +155,16 @@ SimulationConfiguration <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(self$individual$name, "Individual", print_empty = FALSE)
-      ospsuite.utils::ospPrintItems(self$expressionProfiles, title = "Expression profiles")
+      ospsuite.utils::ospPrintItems(
+        self$individual$name,
+        "Individual",
+        print_empty = FALSE
+      )
+      ospsuite.utils::ospPrintItems(
+        self$expressionProfiles,
+        title = "Expression profiles"
+      )
     }
   ),
-  private = list(
-
-  )
+  private = list()
 )

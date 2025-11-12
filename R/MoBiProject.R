@@ -35,7 +35,10 @@ MoBiProject <- R6::R6Class(
     #' that are present in the project (read-only)
     parameterIdentificationNames = function(value) {
       if (missing(value)) {
-        values <- .callProjectTask(property = "AllParameterIdentificationNames", self)
+        values <- .callProjectTask(
+          property = "AllParameterIdentificationNames",
+          self
+        )
         return(values)
       } else {
         private$.throwPropertyIsReadonly("parameterIdentificationNames")
@@ -85,7 +88,11 @@ MoBiProject <- R6::R6Class(
     #' project. `NULL` if no such simulation is available and `stopIfNotFound = FALSE`.
     getSimulation = function(simulationName, stopIfNotFound = TRUE) {
       validateIsCharacter(simulationName)
-      simulation <- .callProjectTask(property = "SimulationByName", self, simulationName)
+      simulation <- .callProjectTask(
+        property = "SimulationByName",
+        self,
+        simulationName
+      )
       if (is.null(simulation)) {
         if (stopIfNotFound) {
           stop(messages$errorSimulationNotFound(simulationName))
@@ -169,7 +176,11 @@ MoBiProject <- R6::R6Class(
     #' such an individual and `stopIfNotFound = FALSE`.
     getIndividual = function(name, stopIfNotFound = TRUE) {
       validateIsCharacter(name)
-      individual <- .callProjectTask(property = "IndividualBuildingBlockByName", self, name)
+      individual <- .callProjectTask(
+        property = "IndividualBuildingBlockByName",
+        self,
+        name
+      )
 
       if (is.null(individual)) {
         if (stopIfNotFound) {
@@ -190,12 +201,19 @@ MoBiProject <- R6::R6Class(
     #' only the expression profiles that are present in the project are returned.
     getExpressionProfiles = function(names, stopIfNotFound = TRUE) {
       validateIsCharacter(names)
-      expressionProfiles <- .callProjectTask(property = "ExpressionProfileBuildingBlocksByName", self, names)
+      expressionProfiles <- .callProjectTask(
+        property = "ExpressionProfileBuildingBlocksByName",
+        self,
+        names
+      )
 
       realNames <- vector("character", length(expressionProfiles))
       profiles <- lapply(seq_along(expressionProfiles), function(idx) {
         profile <- expressionProfiles[[idx]]
-        bb <- BuildingBlock$new(profile, type = BuildingBlockTypes$`Expression Profile`)
+        bb <- BuildingBlock$new(
+          profile,
+          type = BuildingBlockTypes$`Expression Profile`
+        )
         realNames[[idx]] <<- bb$name
         return(bb)
       })
@@ -236,7 +254,13 @@ MoBiProject <- R6::R6Class(
     #' will be selected.
     #'
     #' @returns A `SimulationConfiguration` object.
-    createSimulationConfiguration = function(modulesNames, individualName = NULL, expressionProfilesNames = NULL, initialConditions = NULL, parameterValues = NULL) {
+    createSimulationConfiguration = function(
+      modulesNames,
+      individualName = NULL,
+      expressionProfilesNames = NULL,
+      initialConditions = NULL,
+      parameterValues = NULL
+    ) {
       modules <- self$getModules()
       # Throw an error when a specified module is not present in the project
       missingModules <- setdiff(modulesNames, names(modules))
@@ -252,7 +276,10 @@ MoBiProject <- R6::R6Class(
       # Get the specified expression profiles
       expressionProfiles <- list()
       if (!is.null(expressionProfilesNames)) {
-        expressionProfiles <- self$getExpressionProfiles(expressionProfilesNames, stopIfNotFound = TRUE)
+        expressionProfiles <- self$getExpressionProfiles(
+          expressionProfilesNames,
+          stopIfNotFound = TRUE
+        )
       }
 
       # Create module configurations for each module
@@ -275,10 +302,17 @@ MoBiProject <- R6::R6Class(
           if (moduleName %in% names(initialConditions)) {
             selectedICName <- initialConditions[[moduleName]]
             if (!is.null(selectedICName)) {
-              icBB <- .callModuleTask("InitialConditionBuildingBlockByName", module, selectedICName)
+              icBB <- .callModuleTask(
+                "InitialConditionBuildingBlockByName",
+                module,
+                selectedICName
+              )
               # Cannot create configuration if the speciefied IC BB is not available
               if (is.null(icBB)) {
-                stop(messages$icBBNotPresentInModule(moduleName, selectedICName))
+                stop(messages$icBBNotPresentInModule(
+                  moduleName,
+                  selectedICName
+                ))
               }
             }
           }
@@ -300,16 +334,27 @@ MoBiProject <- R6::R6Class(
           if (moduleName %in% names(parameterValues)) {
             selectedPVName <- parameterValues[[moduleName]]
             if (!is.null(selectedPVName)) {
-              pvBB <- .callModuleTask("ParameterValueBuildingBlockByName", module, selectedPVName)
+              pvBB <- .callModuleTask(
+                "ParameterValueBuildingBlockByName",
+                module,
+                selectedPVName
+              )
               # Cannot create configuration if the speciefied PV BB is not available
               if (is.null(pvBB) && !is.null(selectedPVName)) {
-                stop(messages$pvBBNotPresentInModule(moduleName, selectedPVName))
+                stop(messages$pvBBNotPresentInModule(
+                  moduleName,
+                  selectedPVName
+                ))
               }
             }
           }
         }
         # Create module configuration with default IC and PV BBs
-        moduleConfiguration <- .createModuleConfiguration(module, selectedParameterValue = pvBB, selectedInitialCondition = icBB)
+        moduleConfiguration <- .createModuleConfiguration(
+          module,
+          selectedParameterValue = pvBB,
+          selectedInitialCondition = icBB
+        )
         return(moduleConfiguration)
       })
       netTask <- .getMoBiTaskFromCache("SimulationTask")
@@ -340,7 +385,10 @@ MoBiProject <- R6::R6Class(
       #   self$parameterIdentificationNames, title = "Parameter identifications"
       # )
       ospsuite.utils::ospPrintItems(self$individualNames, title = "Individuals")
-      ospsuite.utils::ospPrintItems(self$expressionProfilesNames, title = "Expression profiles")
+      ospsuite.utils::ospPrintItems(
+        self$expressionProfilesNames,
+        title = "Expression profiles"
+      )
       ospsuite.utils::ospPrintItems(self$moduleNames, title = "Modules")
     }
   ),

@@ -151,39 +151,90 @@ messages$forbiddenSimulationName <- function(name, sim) {
 
 ##### MoBiProject#####
 messages$modulesNotPresentInProject <- function(modules) {
-  paste0("Modules with the name(s) ", paste(modules, collapse = ", "), " is/are not present in the project!")
+  paste0(
+    "Modules with the name(s) ",
+    paste(modules, collapse = ", "),
+    " is/are not present in the project!"
+  )
 }
 
 messages$icBBNotPresentInModule <- function(moduleName, icBBName) {
-  paste0("Initial Condition Building Block with the name '", icBBName, "' is not present in the module '", moduleName, "'!")
+  paste0(
+    "Initial Condition Building Block with the name '",
+    icBBName,
+    "' is not present in the module '",
+    moduleName,
+    "'!"
+  )
 }
 
 messages$pvBBNotPresentInModule <- function(moduleName, pvBBName) {
-  paste0("Parameter Value Building Block with the name '", pvBBName, "' is not present in the module '", moduleName, "'!")
+  paste0(
+    "Parameter Value Building Block with the name '",
+    pvBBName,
+    "' is not present in the module '",
+    moduleName,
+    "'!"
+  )
 }
 
 messages$errorSimulationNotFound <- function(simulationName) {
-  paste0("Simulation with the name '", simulationName, "' is not present in the project!")
+  paste0(
+    "Simulation with the name '",
+    simulationName,
+    "' is not present in the project!"
+  )
 }
 
 messages$errorDataSetsNotPresentInProject <- function(dataSetNames) {
-  paste0("Data set(s) with the name(s) ", paste(dataSetNames, collapse = ", "), " is/are not present in the project!")
+  paste0(
+    "Data set(s) with the name(s) ",
+    paste(dataSetNames, collapse = ", "),
+    " is/are not present in the project!"
+  )
 }
 
 ##### BuildingBlock #####
 messages$errorExpressionProfileNotFound <- function(names) {
-  paste0("Expression profile(s) with the name(s) ", paste(names, collapse = ", "), " is/are not present in the project!")
+  paste0(
+    "Expression profile(s) with the name(s) ",
+    paste(names, collapse = ", "),
+    " is/are not present in the project!"
+  )
 }
 
 messages$errorIndividualNotFound <- function(name) {
   paste0("Individual with the name ", name, " is not present in the project!")
 }
 
-messages$errorWrongBuildingBlockType <- function(bbName, expectedType, actualType) {
-  paste0("Building Block with the name '", bbName, "' is of type '", actualType, "', but expected type is '", expectedType, "'.")
+messages$errorWrongBuildingBlockType <- function(
+  bbName,
+  expectedType,
+  actualType
+) {
+  paste0(
+    "Building Block with the name '",
+    bbName,
+    "' is of type '",
+    actualType,
+    "', but expected type is '",
+    expectedType,
+    "'."
+  )
 }
 
-  ##### Simulation #####
-  messages$errorFeatureNotSupportedBySimulation <- function(featureName, version, requiredVersion) {
-    paste0("The feature '", featureName, "' is not supported by this simulation. The simulation was created with OSP version ", version, ". Minimal required OSP version is ", requiredVersion)
-  }
+##### Simulation #####
+messages$errorFeatureNotSupportedBySimulation <- function(
+  featureName,
+  version,
+  requiredVersion
+) {
+  paste0(
+    "The feature '",
+    featureName,
+    "' is not supported by this simulation. The simulation was created with OSP version ",
+    version,
+    ". Minimal required OSP version is ",
+    requiredVersion
+  )
+}

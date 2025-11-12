@@ -1,7 +1,13 @@
-simulation <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+simulation <- loadSimulation(system.file(
+  "extdata",
+  "Aciclovir.pkml",
+  package = "ospsuite"
+))
 configuration <- simulation$configuration
 
-testMoBiProject <- loadMoBiProject(filePath = getTestDataFilePath("Test_Project.mbp3"))
+testMoBiProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("Test_Project.mbp3")
+)
 
 test_that("Snapshot test for printing SimulationConfiguration", {
   expect_snapshot(configuration$print())
@@ -28,9 +34,11 @@ test_that("SimulationConfiguration can get and set individual", {
 test_that("SimulationConfiguration individual throws an error when wrong BB type is provided for individual", {
   bb <- testMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
 
-  expect_error(configuration$individual <- bb,
-               regexp = "Building Block with the name 'CYP3A4|Human|Healthy' is of type 'Expression Profile', but expected type is 'Individual'",
-               fixed = TRUE)
+  expect_error(
+    configuration$individual <- bb,
+    regexp = "Building Block with the name 'CYP3A4|Human|Healthy' is of type 'Expression Profile', but expected type is 'Individual'",
+    fixed = TRUE
+  )
 })
 
 # Test for Expression Profiles

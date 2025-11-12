@@ -79,19 +79,33 @@ test_that("It throws an error when trying to set a new name with illegal charact
 
 # It returns a simulation configuration
 test_that("It returns a simulation configuration", {
-  sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+  sim <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
   config <- sim$configuration
   expect_true(isOfType(config, "SimulationConfiguration"))
 })
 
 test_that("It throws an error when the simulation was created with an earlier version of OSPS", {
   sim <- loadTestSimulation("S1")
-  expect_error(sim$configuration, regexp = messages$errorFeatureNotSupportedBySimulation("SimulationConfiguration", 9, 17),
-               fixed = TRUE)
+  expect_error(
+    sim$configuration,
+    regexp = messages$errorFeatureNotSupportedBySimulation(
+      "SimulationConfiguration",
+      9,
+      17
+    ),
+    fixed = TRUE
+  )
 })
 
 # It throws an error when trying to set a new configuration
 test_that("It throws an error when trying to set a new configuration", {
-  expect_error(sim$configuration <- "anything", messages$errorPropertyReadOnly("configuration"),
-               fixed = TRUE)
+  expect_error(
+    sim$configuration <- "anything",
+    messages$errorPropertyReadOnly("configuration"),
+    fixed = TRUE
+  )
 })
