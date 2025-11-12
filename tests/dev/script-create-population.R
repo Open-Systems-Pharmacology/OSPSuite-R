@@ -5,7 +5,10 @@ initPKSim("C:/projects/PK-Sim/src/PKSim/bin/Debug/net472")
 
 sim <- loadSimulation("tests/data/S1.pkml")
 
-moleculeOntogeny <- MoleculeOntogeny$new(molecule = "MyMolecule", ontogeny = StandardOntogeny$CYP3A4)
+moleculeOntogeny <- MoleculeOntogeny$new(
+  molecule = "MyMolecule",
+  ontogeny = StandardOntogeny$CYP3A4
+)
 
 dog <- createPopulationCharacteristics(
   species = Species$Dog,

@@ -45,8 +45,10 @@
     }
   }
 
+  # Initialize .NET bindings
   rSharp::loadAssembly(libPathFor("OSPSuite.R.dll"))
-  # Initialize once
+
+  # Initialize API configuration
   netObject <- rSharp::newObjectFromName("OSPSuite.R.ApiConfig")
   apiConfig <- ApiConfig$new(netObject)
   apiConfig$dimensionFilePath <- libPathFor("OSPSuite.Dimensions.xml")

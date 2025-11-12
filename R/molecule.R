@@ -43,7 +43,11 @@ Molecule <- R6::R6Class(
     initialize = function(netObject) {
       super$initialize(netObject)
       # Is only set for a molecule representing a concenctration based molecule (e.g unit is umol)
-      private$.startValue <- getParameter("Start value", self, stopIfNotFound = FALSE)
+      private$.startValue <- getParameter(
+        "Start value",
+        self,
+        stopIfNotFound = FALSE
+      )
     },
 
     #' @description

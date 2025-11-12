@@ -70,7 +70,8 @@ test_that("It throws an error when any of the added molecule start values is NaN
     moleculesOrPaths = moleculePaths
   )
   # Add run values
-  expect_error(simBatch$addRunValues(initialValues = moleculesStartValues),
+  expect_error(
+    simBatch$addRunValues(initialValues = moleculesStartValues),
     regexp = messages$simBatchStartValueNaN(moleculePaths[[1]])
   )
 })
@@ -89,7 +90,8 @@ test_that("It throws an error when any of the added parameter values is NaN", {
     parametersOrPaths = parameterPaths
   )
   # Add run values
-  expect_error(simBatch$addRunValues(parameterValues = parameterValues),
+  expect_error(
+    simBatch$addRunValues(parameterValues = parameterValues),
     regexp = messages$simBatchStartValueNaN(parameterPaths[[1]])
   )
 })
@@ -129,7 +131,9 @@ test_that("It actually sets new initial values", {
     quantitiesOrPaths = moleculePaths
   )
 
-  expect_equal(unlist(outputValues$data[moleculePaths][1, ], use.names = FALSE), moleculesStartValues,
+  expect_equal(
+    unlist(outputValues$data[moleculePaths][1, ], use.names = FALSE),
+    moleculesStartValues,
     tolerance = tolerance
   )
 })

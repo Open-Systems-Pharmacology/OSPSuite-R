@@ -41,6 +41,7 @@ test_that("It plots multiple observed datasets with dataset name legend entries"
   )
 })
 
+
 # only simulated ------------------------
 
 test_that("It creates default plots as expected for single simulated dataset", {
@@ -90,6 +91,26 @@ test_that("It respects custom plot configuration", {
   expect_null(customDPC$yLabel)
 })
 
+test_that("It plots both observed and simulated datasets with dataset name legend entries", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - separate legend",
+    fig = plotIndividualTimeProfile(oneObsSimDC, showLegendPerDataset = TRUE)
+  )
+})
+
+test_that("It plots both observed and simulated datasets with dataset name legend entries and custom plot configuration", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - custom - separate legend",
+    fig = plotIndividualTimeProfile(
+      oneObsSimDC,
+      customDPC,
+      showLegendPerDataset = TRUE
+    )
+  )
+})
+
 # multiple observed and simulated datasets ------------------------
 
 test_that("It maps multiple observed and simulated datasets to different visual properties", {
@@ -125,9 +146,12 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 test_that("LLOQ is plotted", {
   set.seed(42)
   dataSet <- DataSet$new("ds with lloq")
-  dataSet$setValues(1:7, c(10 * exp(1:-5) + rnorm(7, 0, .25)), abs(rnorm(7, 0, 0.1)))
+  dataSet$setValues(
+    1:7,
+    c(10 * exp(1:-5) + rnorm(7, 0, .25)),
+    abs(rnorm(7, 0, 0.1))
+  )
   dataSet$LLOQ <- 0.15
-
 
   dc <- DataCombined$new()
   dc$addDataSets(dataSet)

@@ -7,7 +7,9 @@ addOutputs(outputs, sim)
 results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 
-allPKParameters <- pkAnalyses$allPKParametersFor(quantityPath = "Organism|VenousBlood|Plasma|Caffeine")
+allPKParameters <- pkAnalyses$allPKParametersFor(
+  quantityPath = "Organism|VenousBlood|Plasma|Caffeine"
+)
 pkParameter <- allPKParameters[[1]]
 
 test_that("It can print a quantity PK parameter", {

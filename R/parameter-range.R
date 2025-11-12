@@ -30,14 +30,20 @@ ParameterRange <- R6::R6Class(
     #' @param max Optional minimum value for the range
     #' @param unit Optional unit of the specified min and max
     #' @return A new `ParameterRange` object.
-    initialize = function(netObject = NULL, min = NULL, max = NULL, unit = NULL) {
+    initialize = function(
+      netObject = NULL,
+      min = NULL,
+      max = NULL,
+      unit = NULL
+    ) {
       validateIsNumeric(min, nullAllowed = TRUE)
       validateIsNumeric(max, nullAllowed = TRUE)
       validateIsString(unit, nullAllowed = TRUE)
       # Assuming that if this function is called directly, PK-Sim was either initialized already
       # or should be initialized automatically
       initPKSim()
-      netObject <- netObject %||% rSharp::newObjectFromName("PKSim.Core.Snapshots.ParameterRange")
+      netObject <- netObject %||%
+        rSharp::newObjectFromName("OSPSuite.Core.Snapshots.ParameterRange")
       super$initialize(netObject)
       # Because of weird issue with nullable value in rClr
       # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1369
@@ -81,8 +87,16 @@ ParameterRange <- R6::R6Class(
     #' Return a string for printing the parameter in one line
     #' @return A string for printing the parameter in one line
     getPrintValue = function() {
-      minDisplay <- if (is.null(self$min)) "]-Inf" else paste0("[", formatNumerics(self$min), " ", self$unit)
-      maxDisplay <- if (is.null(self$max)) "+Inf[" else paste0(formatNumerics(self$max), " ", self$unit, "]")
+      minDisplay <- if (is.null(self$min)) {
+        "]-Inf"
+      } else {
+        paste0("[", formatNumerics(self$min), " ", self$unit)
+      }
+      maxDisplay <- if (is.null(self$max)) {
+        "+Inf["
+      } else {
+        paste0(formatNumerics(self$max), " ", self$unit, "]")
+      }
       return(paste0(minDisplay, "..", maxDisplay))
     }
   )

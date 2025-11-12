@@ -14,12 +14,17 @@ SimulationRunOptions <- R6::R6Class(
     #' @param checkForNegativeValues Should the solver check for negative values. Default is `TRUE`
     #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SimulationRunOptions` object.
-    initialize = function(numberOfCores = NULL,
-                          checkForNegativeValues = NULL,
-                          showProgress = NULL) {
-      netObject <- rSharp::newObjectFromName("OSPSuite.R.Domain.SimulationRunOptions")
+    initialize = function(
+      numberOfCores = NULL,
+      checkForNegativeValues = NULL,
+      showProgress = NULL
+    ) {
+      netObject <- rSharp::newObjectFromName(
+        "OSPSuite.R.Domain.SimulationRunOptions"
+      )
       super$initialize(netObject)
-      self$numberOfCores <- numberOfCores %||% getOSPSuiteSetting("numberOfCores")
+      self$numberOfCores <- numberOfCores %||%
+        getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
       self$checkForNegativeValues <- checkForNegativeValues %||% TRUE
     },
