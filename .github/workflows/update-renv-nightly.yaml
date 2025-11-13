@@ -32,6 +32,10 @@ jobs:
       - name: Run R CMD Check
         run: Rscript -e "devtools::check(error_on = 'error')"
 
+      - name: Update renv.lock
+        if: success()
+        run: Rscript -e "renv::snapshot(prompt = F)"
+
       - name: Commit renv.lock if changed
         if: success()
         run: |
