@@ -118,6 +118,7 @@ Collate:
     'standard-path.R'
     'table-formula.R'
     'tasks-env.R'
+    'test-utilities-simulation-configuration.R'
     'user-defined-pk-parameter.R'
     'utilities-building-block.R'
     'utilities-container.R'
