@@ -1,60 +1,44 @@
 on:
-  workflow_dispatch:
-    inputs:
-      branch_name:
-        description: 'Branch name (default: build-libraries-YYYYMMDD)'
-        required: false
-        default: ''
-        type: string
-      target_branch:
-        description: 'Target branch for PR (default: main)'
-        required: false
-        default: 'main'
-        type: string
+  workflow_call:
 
 name: Build Libraries
 
 permissions:
   contents: write
-  pull-requests: write
+
 
 jobs:
   build-libraries:
-    name: Build Core Libraries (Ubuntu)
     runs-on: ubuntu-latest
-    outputs:
-      branch_name: ${{ steps.setup.outputs.branch_name }}
-      has_changes: ${{ steps.changes.outputs.has_changes }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Checkout repository
+      - name: checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.target_branch || 'main' }}
-          fetch-depth: 0
+          fetch-depth: 0  # Full history for comparison
 
-      - name: Setup branch and git
-        id: setup
-        run: |
-          # Generate branch name
-          if [ -n "${{ github.event.inputs.branch_name }}" ]; then
-            BRANCH_NAME="${{ github.event.inputs.branch_name }}"
-          else
-            BRANCH_NAME="build-libraries-$(date +%Y%m%d-%H%M%S)"
-          fi
-          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      - name: Check for csproj changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            csproj:
+              - 'shared/DependencyManager/src/DependencyManager.csproj'
 
-          # Configure git
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git checkout -b "$BRANCH_NAME"
+      - name: Skip build if no csproj changes
+        if: steps.filter.outputs.csproj != 'true'
+        run: echo "No changes detected in DependencyManager.csproj. Skipping library build."
 
       - name: Setup .NET
+        if: steps.filter.outputs.csproj == 'true'
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
       - name: Configure NuGet
+        if: steps.filter.outputs.csproj == 'true'
         run: |
           dotnet nuget add source "https://nuget.pkg.github.com/Open-Systems-Pharmacology/index.json" \
             --name "OSP-GitHub-Packages" \
@@ -63,82 +47,14 @@ jobs:
             --store-password-in-clear-text
 
       - name: Build libraries
+        if: steps.filter.outputs.csproj == 'true'
         run: |
           cd inst/lib
           dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
 
-
-      - name: Check for changes
-        id: changes
-        run: |
-          if git diff --quiet inst/lib; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in core libraries"
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in core libraries"
-          fi
-
-      - name: Commit changes
-        if: steps.changes.outputs.has_changes == 'true'
-        run: |
-          git add inst/lib
-          git commit -m "Build core libraries
-
-          - Built DependencyManager libraries
-          - Updated PK-Sim R dependencies
-          - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-          - Triggered by: ${{ github.actor }}"
-
-      - name: Push branch
-        if: steps.changes.outputs.has_changes == 'true'
-        run: |
-          git push origin "${{ steps.setup.outputs.branch_name }}"
-
-      - name: No changes message
-        if: steps.changes.outputs.has_changes == 'false'
-        run: |
-          echo "No changes detected in core libraries. Nothing to commit or create PR for."
-
-
-
-  create-pr:
-    name: Create Pull Request
-    runs-on: ubuntu-latest
-    needs: [build-libraries]
-    if: |
-      always() &&
-      needs.build-libraries.outputs.has_changes == 'true'
-
-    steps:
-      - name: Create PR
-        uses: actions/github-script@v7
+      - uses: EndBug/add-and-commit@v9
+        if: ${{ steps.filter.outputs.csproj == 'true'}}
         with:
-          script: |
-            const hasLibChanges = '${{ needs.build-libraries.outputs.has_changes }}' === 'true';
-
-            let changes = [];
-            if (hasLibChanges) {
-              changes.push('- Built DependencyManager libraries');
-              changes.push('- Updated PK-Sim R dependencies');
-            }
-
-            const { data: pr } = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: 'Update Core Libraries',
-              head: '${{ needs.build-libraries.outputs.branch_name }}',
-              base: '${{ github.event.inputs.target_branch || 'main' }}',
-              body: `Auto-generated PR to update core libraries
-
-            ## Changes
-            ${changes.join('\n')}
-            - Generated on: ${new Date().toISOString()}
-            - Triggered by: ${{ github.actor }}
-
-            ## Description
-            This PR updates the core libraries required by the \`{ospsuite}\` package.
-            ${hasLibChanges ? 'Core files are downloaded from the latest PK-Sim build artifacts.' : ''}
-            });
-
-            console.log(\`Created PR #\${pr.number}: \${pr.html_url}\`);
+          message: 'Update Libraries'
+          default_author: github_actions
+          add: 'inst/lib'
