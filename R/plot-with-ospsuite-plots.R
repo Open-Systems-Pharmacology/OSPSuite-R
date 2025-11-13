@@ -135,9 +135,6 @@ plotPredictedVsObserved <- function(plotData, # nolint
                                     comparisonLineVector =
                                       ospsuite.plots::getFoldDistanceList(folds = c(2)),
                                     ...) {
-  # initialize variables used for data.table to avoid messages during checks
-  predicted <- yValues <- group <- NULL
-
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -187,13 +184,10 @@ plotPredictedVsObserved <- function(plotData, # nolint
 #'
 #' @family plot functions based on ospsuite.plots
 plotResidualsVsTimePoints <- function(plotData, # nolint
-                                metaData = NULL,
-                                mapping = ggplot2::aes(),
-                                residualScale = "log",
-                                ...) {
-  # initialize variables used for data.table to avoid messages during checks
-  xValues <- predicted <- yValues <- group <- NULL
-
+                                      metaData = NULL,
+                                      mapping = ggplot2::aes(),
+                                      residualScale = "log",
+                                      ...) {
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -253,9 +247,6 @@ plotResidualsVsObserved <- function(plotData,
                                     mapping = ggplot2::aes(),
                                     residualScale = "log",
                                     ...) {
-  # initialize variables used for data.table to avoid messages during checks
-  predicted <- yValues <- group <- NULL
-
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -306,9 +297,6 @@ plotResidualsAsHistogram <- function(plotData,
                                      distribution = "normal",
                                      residualScale = "log",
                                      ...) {
-  # initialize variables used for data.table to avoid messages during checks
-  predicted <- yValues <- group <- NULL
-
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -359,9 +347,6 @@ plotQuantileQuantilePlot <- function(plotData,
                                      mapping = ggplot2::aes(),
                                      residualScale = "log",
                                      ...) {
-  # initialize variables used for data.table to avoid messages during checks
-  predicted <- yValues <- group <- NULL
-
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -408,9 +393,9 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @return A `data.table` with data formatted for plotting.
 #' @keywords internal
 #' @noRd
-.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling, aggregation, quantiles,nsd = 1) {
+.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling, aggregation, quantiles, nsd = 1) {
   # initialize variables used for data.table to avoid messages during checks
-  dataType <- xUnit <- yUnit <- yErrorType <- predicted <-  NULL
+  dataType <- xUnit <- yUnit <- yErrorType <- predicted <- NULL
 
   if ("DataCombined" %in% class(plotData)) {
     if (is.null(nrow(plotData$toDataFrame()))) stop(messages$plotNoDataAvailable())
@@ -450,10 +435,12 @@ plotQuantileQuantilePlot <- function(plotData,
 
   # Aggregate only for Timeprofiles
   if (!predictedIsNeeded) {
-    plotData <- .aggregateSimulatedData(plotData = plotData,
-                                        aggregation = aggregation,
-                                        quantiles = quantiles,
-                                        nsd = nsd)
+    plotData <- .aggregateSimulatedData(
+      plotData = plotData,
+      aggregation = aggregation,
+      quantiles = quantiles,
+      nsd = nsd
+    )
   }
 
   if ("yErrorType" %in% names(plotData) &&
@@ -564,17 +551,27 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .getMappingForTimeprofiles <- function(plotData, metaData, userMapping) {
   # initialize variables used for data.table to avoid warnings during checks
-  xValues <- yValues <- group <- yErrorType <- yErrorValues <- yMin <- yMax <- lloq <- NULL
+  xValues <- yValues <- group <- yMin <- yMax <- lloq <- NULL
 
   mapping <- ggplot2::aes(x = xValues, y = yValues)
 
-  if (any(!is.na(plotData$group))) {
-    mapping <- structure(c(mapping, ggplot2::aes(
-      groupby = group,
-      group = interaction(group, name)
-    )), class = "uneval")
-  } else {
-    mapping <- structure(c(mapping, ggplot2::aes(groupby = name)), class = "uneval")
+  if (!is.null(userMapping)) {
+    mapping <- structure(utils::modifyList(mapping, userMapping), class = "uneval")
+  }
+
+  # add default groupby
+  if (!("groupby" %in% names(mapping))) {
+    if (any(!is.na(plotData$group))) {
+      mapping <- structure(utils::modifyList(
+        ggplot2::aes(
+          groupby = group,
+          group = interaction(group, name)
+        ),
+        mapping
+      ), class = "uneval")
+    } else {
+      mapping <- structure(c(mapping, ggplot2::aes(groupby = name)), class = "uneval")
+    }
   }
 
   # delete columns not needed
@@ -604,7 +601,7 @@ plotQuantileQuantilePlot <- function(plotData,
         mapping,
         eval(parse(
           text = paste0(
-            "aes( y2axis = yUnit == '",
+            "ggplot2::aes( y2axis = yUnit == '",
             metaData[["y2"]][["unit"]], "')"
           )
         ))
@@ -628,7 +625,9 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @return A mapping object for ggplot2 that includes aesthetics for the x-axis, predicted values, observed values, and grouping.
 #' @keywords internal
 #' @noRd
-.getMappingForResiduals <- function(userMapping){
+.getMappingForResiduals <- function(userMapping) {
+  # initialize variables used for data.table to avoid messages during checks
+  xValues <- predicted <- yValues <- group <- NULL
 
   mapping <- structure(
     utils::modifyList(
@@ -652,7 +651,6 @@ plotQuantileQuantilePlot <- function(plotData,
   )
 
   return(mapping)
-
 }
 #' Creates mapping for plotData.
 #'
@@ -737,7 +735,7 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .aggregateSimulatedData <- function(plotData, aggregation, quantiles, nsd = 1) {
   # initialize variables used in data.table syntax
-  IndividualId <- NULL
+  IndividualId <- NULL #nolint
 
   checkmate::assertChoice(aggregation, choices = unlist(DataAggregationMethods), null.ok = TRUE)
   checkmate::assertNumeric(quantiles,
