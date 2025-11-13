@@ -16,7 +16,8 @@ plotObservedVsSimulated(
 
 - dataCombined:
 
-  A single instance of `DataCombined` class.
+  A single instance of `DataCombined` class containing both observed and
+  simulated datasets to be compared.
 
 - defaultPlotConfiguration:
 
