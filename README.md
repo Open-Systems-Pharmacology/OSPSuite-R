@@ -223,12 +223,11 @@ as a binary package and cannot be submitted to CRAN.
 ### Updating embedded binaries
 
 The embedded binaries are built from NuGet packages specified in the
-DependencyManager project. To update the binaries to a new version of
-PKSim or MoBi:
+DependencyManager project. To update the binaries to a new version:
 
 1.  Open `shared/DependencyManager/src/DependencyManager.csproj`.
-2.  Update the `Version` attribute in the `PackageReference` elements
-    for `PKSim.R` and `MoBi.R` to the desired version numbers.
+2.  Update the `Version` attribute in the `PackageReference` elements to
+    the desired version numbers.
 3.  Commit and push the changes to a branch.
 4.  The GitHub Actions workflow defined in
     `.github/workflows/build-libraries.yaml` automatically:
