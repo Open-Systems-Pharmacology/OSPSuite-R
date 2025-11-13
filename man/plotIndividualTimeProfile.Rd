@@ -11,7 +11,8 @@ plotIndividualTimeProfile(
 )
 }
 \arguments{
-\item{dataCombined}{A single instance of \code{DataCombined} class.}
+\item{dataCombined}{A single instance of \code{DataCombined} class containing both
+observed and simulated datasets to be compared.}
 
 \item{defaultPlotConfiguration}{A \code{DefaultPlotConfiguration} object, which is
 an \code{R6} class object that defines plot properties.}
