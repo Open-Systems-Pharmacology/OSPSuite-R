@@ -27,6 +27,8 @@
 #'  (`yMin` and `yMax`). It is only applied if the simulated data represents a population.
 #' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
 #'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
+#' @param nsd description  optional parameter `nsd` to change the number of SD to plot
+#' above and below for simulated aggregated data. Ignored if `aggregation` is  `quantiles`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
 #'
 #' @return A `ggplot2` plot object representing the time profile.
@@ -49,6 +51,7 @@ plotTimeProfile <- function(plotData, # nolint
                             quantiles = ospsuite.plots::getOspsuite.plots.option(
                               ospsuite.plots::OptionKeys$Percentiles
                             )[c(1, 3, 5)],
+                            nsd = 1,
                             ...) {
   # initialize variables used for data.table to avoid messages during checks
   yDimension <- yUnit <- dataType <- NULL
@@ -57,7 +60,8 @@ plotTimeProfile <- function(plotData, # nolint
     plotData = plotData,
     predictedIsNeeded = FALSE,
     aggregation = aggregation,
-    quantiles = quantiles
+    quantiles = quantiles,
+    nsd = nsd
   )
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
 
@@ -404,7 +408,7 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @return A `data.table` with data formatted for plotting.
 #' @keywords internal
 #' @noRd
-.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling, aggregation, quantiles) {
+.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling, aggregation, quantiles,nsd = 1) {
   # initialize variables used for data.table to avoid messages during checks
   dataType <- xUnit <- yUnit <- yErrorType <- predicted <-  NULL
 
@@ -448,7 +452,8 @@ plotQuantileQuantilePlot <- function(plotData,
   if (!predictedIsNeeded) {
     plotData <- .aggregateSimulatedData(plotData = plotData,
                                         aggregation = aggregation,
-                                        quantiles = quantiles)
+                                        quantiles = quantiles,
+                                        nsd = nsd)
   }
 
   if ("yErrorType" %in% names(plotData) &&
@@ -724,12 +729,13 @@ plotQuantileQuantilePlot <- function(plotData,
 #'   - `arithmetic`,
 #'   - `geometric`.
 #' @param quantiles A numeric vector of quantile values. Default is `NULL`, which is ignored unless `aggregation` is set to `quantiles`.
+#' @param nsd description  optional parameter `nsd` to change the number of SD to plot above and below
 #'
 #' @return A modified `data.table` that includes both the observed and aggregated simulated data. The new data will contain columns for aggregated values (`yMin`, `yValues`, `yMax`) corresponding to the chosen aggregation method.
 #'
 #' @keywords internal
 #' @noRd
-.aggregateSimulatedData <- function(plotData, aggregation, quantiles) {
+.aggregateSimulatedData <- function(plotData, aggregation, quantiles, nsd = 1) {
   # initialize variables used in data.table syntax
   IndividualId <- NULL
 
@@ -762,19 +768,19 @@ plotQuantileQuantilePlot <- function(plotData,
             m <- mean(x, na.rm = TRUE)
             s <- stats::sd(x, na.rm = TRUE)
             return(c(
-              yMin = m - s,
+              yMin = m - (s * nsd),
               yValues = m,
-              yMax = m + s
+              yMax = m + (s * nsd)
             ))
           },
-          "geometric" = function(x, nsd = 1, na.rm = FALSE, ...) {
+          "geometric" = function(x) {
             gm <- exp(mean(log(x), na.rm = TRUE))
             gsd <- exp(stats::sd(log(x), na.rm = TRUE))
 
             return(c(
-              yMin = exp(log(gm) - log(gsd)),
+              yMin = exp(log(gm) - (log(gsd) * nsd)),
               yValues = gm,
-              yMax = exp(log(gm) + log(gsd))
+              yMax = exp(log(gm) + (log(gsd) * nsd))
             ))
           }
         )

@@ -13,6 +13,7 @@ plotTimeProfile(
   quantiles =
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
     3, 5)],
+  nsd = 1,
   ...
 )
 }
@@ -49,6 +50,9 @@ arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yMin} and \code{yMax}). It is only applied if the simulated data represents a population.}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
+
+\item{nsd}{description  optional parameter \code{nsd} to change the number of SD to plot
+above and below for simulated aggregated data. Ignored if \code{aggregation} is  \code{quantiles}.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotTimeProfile}.}
 }
