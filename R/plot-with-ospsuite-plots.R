@@ -339,7 +339,7 @@ plotResidualsAsHistogram <- function(plotData,
 #'
 #' @inheritParams plotTimeProfile
 #' @param residualScale Either "linear", "log", or "ratio" scale for residuals. Default is `log`.
-#' @param... Additional arguments passed to `ospsuite.plots::plotQQ`.
+#' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot.
 #' @export
