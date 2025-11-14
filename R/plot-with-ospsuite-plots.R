@@ -724,7 +724,8 @@ plotQuantileQuantilePlot <- function(plotData,
 #'   - `arithmetic`,
 #'   - `geometric`.
 #' @param quantiles A numeric vector of quantile values. Default is `NULL`, which is ignored unless `aggregation` is set to `quantiles`.
-#' @param nsd description  optional parameter `nsd` to change the number of SD to plot above and below
+#' @param nsd Optional parameter specifying the number of standard deviations to plot above and below the mean
+#' (used for error bars when aggregation is "arithmetic" or "geometric").
 #'
 #' @return A modified `data.table` that includes both the observed and aggregated simulated data. The new data will contain columns for aggregated values (`yMin`, `yValues`, `yMax`) corresponding to the chosen aggregation method.
 #'

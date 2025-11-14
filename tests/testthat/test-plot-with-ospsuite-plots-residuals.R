@@ -92,9 +92,8 @@ test_that("It throws error when `DataCombined` doesn't have any pairable dataset
 
   expect_error(
     suppressMessages(
-      suppressWarnings(plotResidualsVsObserved(myCombDat)),
+      suppressWarnings(plotResidualsVsObserved(myCombDat))),
       messages$plotNoDataAvailable()
-    )
   )
 })
 

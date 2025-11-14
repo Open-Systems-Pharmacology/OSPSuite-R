@@ -12,7 +12,7 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
     yUnit = "mg/l"
   )
 
-  mockPlotDataNoGroup <- copy(mockPlotData)[,group := NA]
+  mockPlotDataNoGroup <- copy(mockPlotData)[, group := NA]
 
   # Mock metadata
   mockMetaData <- list(
@@ -34,11 +34,11 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
   expect_false('group' %in% names(mapping))
 
   # Test with user mapping for data with group
-  userMapping <- ggplot2::aes(color = group,groupby = dataType)
+  userMapping <- ggplot2::aes(color = group, groupby = dataType)
   mappingWithUser <- .getMappingForTimeprofiles(mockPlotData, mockMetaData, userMapping = userMapping)
   expect_equal(rlang::as_label(mappingWithUser$colour), 'group')
   expect_equal(rlang::as_label(mappingWithUser$groupby), "dataType")
-  expect_false('group' %in% names(mapping))
+  expect_false('group' %in% names(mappingWithUser))
 
   # Test with yErrorType present
   mockPlotDataError <- data.table(
