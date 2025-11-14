@@ -54,7 +54,7 @@ jobs:
         run: Rscript -e "install.packages('renv')"
 
       - name: Update packages listed renv.lock
-        run: Rscript -e "renv::update(prompt = F)"
+        run: Rscript -e "renv::install(prompt = F)"
 
       - name: Update renv.lock
         run: Rscript -e "renv::snapshot(prompt = FALSE, dev = TRUE)"
