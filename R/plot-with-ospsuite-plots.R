@@ -397,7 +397,7 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @return A `data.table` with data formatted for plotting.
 #' @keywords internal
 #' @noRd
-.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling, aggregation, quantiles, nsd = 1) {
+.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling = NULL, aggregation = NULL, quantiles = NULL, nsd = 1) {
   # initialize variables used for data.table to avoid messages during checks
   dataType <- xUnit <- yUnit <- yErrorType <- predicted <- NULL
 
