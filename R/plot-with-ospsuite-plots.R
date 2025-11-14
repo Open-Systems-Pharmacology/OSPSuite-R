@@ -27,8 +27,9 @@
 #'  (`yMin` and `yMax`). It is only applied if the simulated data represents a population.
 #' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
 #'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
-#' @param nsd description  optional parameter `nsd` to change the number of SD to plot
-#' above and below for simulated aggregated data. Ignored if `aggregation` is  `quantiles`.
+#' @param nsd Optional parameter specifying the number of standard deviations to plot above and below the mean
+#' (used for error bars when aggregation is "arithmetic" or "geometric").
+#'  Ignored if `aggregation` is  `quantiles`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
 #'
 #' @return A `ggplot2` plot object representing the time profile.

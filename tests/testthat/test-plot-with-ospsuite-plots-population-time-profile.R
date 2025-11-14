@@ -144,7 +144,7 @@ test_that("It produces expected plot for multiple simulated datasets per group",
   )
 })
 
-test_that("It produces expected plot for multple simulated and observed datasets per group", {
+test_that("It produces expected plot for multiple simulated and observed datasets per group", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
