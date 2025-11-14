@@ -9,19 +9,23 @@ permissions:
   contents: write
 
 jobs:
-  update-and-test:
-    runs-on: ubuntu-latest
+  test-on-platforms:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    name: Test on ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
 
       - name: Install renv
         run: Rscript -e "install.packages(c('renv','devtools'))"
@@ -32,12 +36,30 @@ jobs:
       - name: Run R CMD Check
         run: Rscript -e "devtools::check(error_on = 'error')"
 
+  update-renv-snapshot:
+    needs: test-on-platforms
+    runs-on: ubuntu-latest
+    if: needs.test-on-platforms.result == 'success'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install renv
+        run: Rscript -e "install.packages('renv')"
+
+      - name: Update packages listed renv.lock
+        run: Rscript -e "renv::update(prompt = F)"
+
       - name: Update renv.lock
-        if: success()
-        run: Rscript -e "renv::snapshot(prompt = F)"
+        run: Rscript -e "renv::snapshot(prompt = FALSE, dev = TRUE)"
 
       - name: Commit renv.lock if changed
-        if: success()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
