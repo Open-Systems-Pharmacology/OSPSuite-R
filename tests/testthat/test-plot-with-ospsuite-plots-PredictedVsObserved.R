@@ -50,7 +50,7 @@ test_that("It creates default plots as expected", {
   vdiffr::expect_doppelganger(
     title = "defaults",
     fig = plotPredictedVsObserved(myCombDat,
-      xyscale = "linear"
+      xyScale = "linear"
     )
   )
 })
@@ -61,7 +61,7 @@ test_that("It creates default plots as expected without any identity or foldDist
     title = "defaults without lines",
     fig = plotPredictedVsObserved(myCombDat,
       comparisonLineVector = NULL,
-      xyscale = "linear"
+      xyScale = "linear"
     )
   )
 })
