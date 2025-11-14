@@ -51,8 +51,9 @@ arithmetic or geometric average and add a set of upper and lower bounds
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
 
-\item{nsd}{description  optional parameter \code{nsd} to change the number of SD to plot
-above and below for simulated aggregated data. Ignored if \code{aggregation} is  \code{quantiles}.}
+\item{nsd}{Optional parameter specifying the number of standard deviations to plot above and below the mean
+(used for error bars when aggregation is "arithmetic" or "geometric").
+Ignored if \code{aggregation} is  \code{quantiles}.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotTimeProfile}.}
 }
