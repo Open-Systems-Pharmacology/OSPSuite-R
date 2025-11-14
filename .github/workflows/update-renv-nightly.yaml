@@ -31,7 +31,7 @@ jobs:
         run: Rscript -e "install.packages(c('renv','devtools'))"
 
       - name: Install packages from renv.lock
-        run: Rscript -e "renv::install(prompt = F)"
+        run: Rscript -e "renv::install(prompt = FALSE)"
 
       - name: Run R CMD Check
         run: Rscript -e "devtools::check(error_on = 'error')"
@@ -54,7 +54,7 @@ jobs:
         run: Rscript -e "install.packages('renv')"
 
       - name: Update packages listed renv.lock
-        run: Rscript -e "renv::install(prompt = F)"
+        run: Rscript -e "renv::install(prompt = FALSE)"
 
       - name: Update renv.lock
         run: Rscript -e "renv::snapshot(prompt = FALSE, dev = TRUE)"
