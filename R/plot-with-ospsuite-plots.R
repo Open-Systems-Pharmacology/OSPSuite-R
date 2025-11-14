@@ -197,7 +197,8 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(userMapping = mapping)
+  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(x = xValues),
+                                     userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -256,7 +257,8 @@ plotResidualsVsObserved <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(userMapping = mapping)
+  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(x = yValues),
+                                     userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -306,7 +308,8 @@ plotResidualsAsHistogram <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(userMapping = mapping)
+  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(),
+                                     userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -356,7 +359,8 @@ plotQuantileQuantilePlot <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(userMapping = mapping)
+  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(),
+                                     userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -620,31 +624,24 @@ plotQuantileQuantilePlot <- function(plotData,
 #'
 #' This function generates a mapping for the residuals plot based on the provided user mapping.
 #'
+#' @param xMapping Mapping for x-axis.
 #' @param userMapping Mapping provided by the user; this will update the internal mapping.
 #'
 #' @return A mapping object for ggplot2 that includes aesthetics for the x-axis, predicted values, observed values, and grouping.
 #' @keywords internal
 #' @noRd
-.getMappingForResiduals <- function(userMapping) {
+.getMappingForResiduals <- function(xMapping, userMapping) {
   # initialize variables used for data.table to avoid messages during checks
   xValues <- predicted <- yValues <- group <- NULL
 
   mapping <- structure(
     utils::modifyList(
-      ggplot2::aes(
-        x = xValues,
+      c(xMapping,
+        ggplot2::aes(
         predicted = predicted,
         observed = yValues,
         groupby = group
-      ),
-      mapping
-    ),
-    class = "uneval"
-  )
-
-  mapping <- structure(
-    utils::modifyList(
-      mapping,
+      )),
       userMapping
     ),
     class = "uneval"
