@@ -9,7 +9,37 @@ permissions:
   contents: write
 
 jobs:
+  update-renv-lock:
+    runs-on: ubuntu-latest
+    name: Update renv.lock
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install renv
+        run: Rscript -e "install.packages('renv')"
+
+      - name: Install packages from renv.locl at latest versions
+        run: Rscript -e "renv::install(prompt = FALSE)"
+
+      - name: Update renv.lock
+        run: Rscript -e "renv::snapshot(prompt = FALSE, dev = TRUE)"
+
+      - name: Upload updated renv.lock
+        uses: actions/upload-artifact@v4
+        with:
+          name: renv-lock
+          path: renv.lock
+          retention-days: 1
+
   test-on-platforms:
+    needs: update-renv-lock
     strategy:
       fail-fast: false
       matrix:
@@ -24,6 +54,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Download updated renv.lock
+        uses: actions/download-artifact@v4
+        with:
+          name: renv-lock
+          path: .
+
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
@@ -32,13 +71,13 @@ jobs:
       - name: Install renv
         run: Rscript -e "install.packages(c('renv','devtools'))"
 
-      - name: Install packages from renv.lock
-        run: Rscript -e "renv::install(prompt = FALSE)"
+      - name: Restore renv environment
+        run: Rscript -e "renv::restore(prompt = FALSE)"
 
       - name: Run R CMD Check
         run: Rscript -e "devtools::check(error_on = 'error')"
 
-  update-renv-snapshot:
+  commit-renv-lock:
     needs: test-on-platforms
     runs-on: ubuntu-latest
     if: needs.test-on-platforms.result == 'success'
@@ -49,19 +88,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
+      - name: Download updated renv.lock
+        uses: actions/download-artifact@v4
         with:
-          use-public-rspm: true
-
-      - name: Install renv
-        run: Rscript -e "install.packages('renv')"
-
-      - name: Update packages listed in renv.lock
-        run: Rscript -e "renv::install(prompt = FALSE)"
-
-      - name: Update renv.lock
-        run: Rscript -e "renv::snapshot(prompt = FALSE, dev = TRUE)"
+          name: renv-lock
+          path: .
 
       - name: Commit renv.lock if changed
         run: |
@@ -73,7 +104,7 @@ jobs:
           else
             git commit -m "Update renv.lock
 
-            - Updated packages via renv::install()
+            - Updated packages via renv::update()
             - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
             - Triggered by: ${{ github.actor }}"
             git push
