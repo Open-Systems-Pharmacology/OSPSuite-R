@@ -104,7 +104,6 @@ jobs:
           else
             git commit -m "Update renv.lock
 
-            - Updated packages via renv::update()
             - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
             - Triggered by: ${{ github.actor }}"
             git push
