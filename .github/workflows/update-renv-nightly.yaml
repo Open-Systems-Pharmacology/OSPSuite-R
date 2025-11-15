@@ -1,0 +1,110 @@
+name: Update renv packages nightly
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run at 2 AM UTC daily
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  update-renv-lock:
+    runs-on: ubuntu-latest
+    name: Update renv.lock
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install renv
+        run: Rscript -e "install.packages('renv')"
+
+      - name: Install packages from renv.locl at latest versions
+        run: Rscript -e "renv::install(prompt = FALSE)"
+
+      - name: Update renv.lock
+        run: Rscript -e "renv::snapshot(prompt = FALSE, dev = TRUE)"
+
+      - name: Upload updated renv.lock
+        uses: actions/upload-artifact@v4
+        with:
+          name: renv-lock
+          path: renv.lock
+          retention-days: 1
+
+  test-on-platforms:
+    needs: update-renv-lock
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    name: Test on ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Download updated renv.lock
+        uses: actions/download-artifact@v4
+        with:
+          name: renv-lock
+          path: .
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install renv
+        run: Rscript -e "install.packages(c('renv','devtools'))"
+
+      - name: Restore renv environment
+        run: Rscript -e "renv::restore(prompt = FALSE)"
+
+      - name: Run R CMD Check
+        run: Rscript -e "devtools::check(error_on = 'error')"
+
+  commit-renv-lock:
+    needs: test-on-platforms
+    runs-on: ubuntu-latest
+    if: needs.test-on-platforms.result == 'success'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download updated renv.lock
+        uses: actions/download-artifact@v4
+        with:
+          name: renv-lock
+          path: .
+
+      - name: Commit renv.lock if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add renv.lock
+          if git diff --staged --quiet; then
+            echo "No changes to renv.lock"
+          else
+            git commit -m "Update renv.lock
+
+            - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+            - Triggered by: ${{ github.actor }}"
+            git push
+          fi

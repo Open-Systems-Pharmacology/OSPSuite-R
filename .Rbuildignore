@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 (^appveyor)(.*)(.yml$)
@@ -11,11 +13,9 @@
 ^rakefile\.rb
 ^postclean\.bat
 ^\.covrignore$
-^doc$
 ^Meta$
 ^\cache$
 ^codemeta\.json$
-^Meta$
 ^doc$
 ^docs$
 ^_pkgdown\.yml$
