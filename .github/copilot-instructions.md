@@ -508,4 +508,4 @@ source(".github/scripts/update_core_files.R")
 
 # GitHub Copilot Code Review Instructions for R Package PRs
 
-When performing a code review, follow the instructions in the `/.github/code-review-instructions.md` file.
+When performing a code review, follow the instructions in the `.github/code-review-instructions.md` file.
