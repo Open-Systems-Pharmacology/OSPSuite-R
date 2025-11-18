@@ -68,8 +68,9 @@ messages$simBatchStartValueNaN <- function(entityPaths) {
 }
 
 messages$plotObservedVsSimulatedWrongFoldDistance <- function(
-    parameterName,
-    foldDistances) {
+  parameterName,
+  foldDistances
+) {
   paste0(
     "Parameter '",
     parameterName,
@@ -146,20 +147,4 @@ messages$forbiddenSimulationName <- function(name, sim) {
     paste0(.getIllegalSimulationNames(sim), collapse = ", "),
     "'."
   )
-}
-
-messages$plotNoDataAvailable <- function() {
-  "No data for this plot available."
-}
-
-messages$plotUnitConsistency <- function() {
-  "Units have to be consistent within one datatype."
-}
-
-messages$plotErrorTypeConsistency <- function() {
-  "Do not mix different error types in one plot."
-}
-
-messages$plotMissingColumnPredicted <- function() {
-  "No column available for 'predicted'. Please use combinedData format or a data.frame with column 'predicted'."
 }
