@@ -128,7 +128,7 @@ test_that("It adds dataset names as groups when grouping is missing", {
 test_that("xAxisLabelTicksSize is correctly passed to plot configurations", {
   plotConfig <- DefaultPlotConfiguration$new()
   plotConfig$xAxisLabelTicksSize <- 12
-  timeProfilePlotConfig <- ospsuite:::.convertGeneralToSpecificPlotConfiguration(
+  timeProfilePlotConfig <- .convertGeneralToSpecificPlotConfiguration(
     specificPlotConfiguration = tlf::TimeProfilePlotConfiguration$new(),
     generalPlotConfiguration = plotConfig
   )
