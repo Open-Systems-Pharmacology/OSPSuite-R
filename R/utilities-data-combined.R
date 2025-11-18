@@ -159,6 +159,21 @@ calculateResiduals <- function(
     return(NULL)
   }
 
+  # Enhanced automatic unit conversion
+  # If no units specified, automatically detect and convert to most frequent units
+  if (is.null(xUnit) && "xUnit" %in% names(combinedData)) {
+    xUnit <- .extractMostFrequentUnit(combinedData, unitColumn = "xUnit")
+    if (!is.null(xUnit)) {
+      message(paste0("Auto-detected X-axis unit for residuals calculation: ", xUnit))
+    }
+  }
+  if (is.null(yUnit) && "yUnit" %in% names(combinedData)) {
+    yUnit <- .extractMostFrequentUnit(combinedData, unitColumn = "yUnit")
+    if (!is.null(yUnit)) {
+      message(paste0("Auto-detected Y-axis unit for residuals calculation: ", yUnit))
+    }
+  }
+
   # Getting all datasets to have the same units.
   combinedData <- .unitConverter(combinedData, xUnit, yUnit)
 
