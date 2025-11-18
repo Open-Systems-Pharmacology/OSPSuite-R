@@ -86,7 +86,7 @@ library(ospsuite)
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 print(simFilePath)
-#> [1] "/home/runner/work/_temp/Library/ospsuite/extdata/Aciclovir.pkml"
+#> [1] "/home/runner/.cache/R/renv/library/OSPSuite-R-d4dfdcc6/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/ospsuite/extdata/Aciclovir.pkml"
 sim <- loadSimulation(simFilePath)
 
 # Apply individual parameters

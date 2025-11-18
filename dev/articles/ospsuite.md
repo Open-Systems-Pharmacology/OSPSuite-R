@@ -79,7 +79,7 @@ print(sim)
 #> <Simulation>
 #>   • Name: Vergin 1995 IV
 #>   • Source file:
-#>   /home/runner/work/_temp/Library/ospsuite/extdata/Aciclovir.pkml
+#>   /home/runner/.cache/R/renv/library/OSPSuite-R-d4dfdcc6/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/ospsuite/extdata/Aciclovir.pkml
 ```
 
 ### Exploring Model Structure
