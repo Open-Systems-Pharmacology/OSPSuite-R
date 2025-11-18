@@ -92,12 +92,11 @@ plotIndividualTimeProfile <- function(
 
   # data frames -----------------------------
 
-  # Automatic unit conversion without requiring manual preprocessing
-  # This handles both user-specified units and auto-detection
-  combinedData <- .prepareDataWithAutoUnitConversion(
+  # Getting all units on the same scale
+  combinedData <- convertUnits(
     dataCombined,
-    defaultPlotConfiguration,
-    autoConvert = TRUE
+    defaultPlotConfiguration$xUnit,
+    defaultPlotConfiguration$yUnit
   )
 
   # Datasets which haven't been assigned to any group will be plotted as a group
