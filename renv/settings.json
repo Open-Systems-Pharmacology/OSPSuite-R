@@ -1,7 +1,7 @@
 {
   "bioconductor.version": null,
   "external.libraries": [],
-  "ignored.packages": [],
+  "ignored.packages": ["ospsuite"],
   "package.dependency.fields": [
     "Imports",
     "Depends",
