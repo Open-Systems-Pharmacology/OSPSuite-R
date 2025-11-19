@@ -38,3 +38,5 @@ tests\^spelling
 ^codecov\.yml$
 ^[.]?air[.]toml$
 ^\.vscode$
+^\.Renviron$
+^fix_quarto_check\.R$

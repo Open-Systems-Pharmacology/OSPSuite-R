@@ -181,6 +181,9 @@ calculateResiduals <- function(
   # grouping level and combine the resulting data frames in a row-wise manner.
   #
   # Both of these routines will be carried out by `dplyr::group_modify()`.
+  # Declare variables to avoid R CMD check warnings
+  nameSimulated <- NULL
+
   pairedData <- combinedData %>%
     dplyr::group_by(group) %>%
     dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%

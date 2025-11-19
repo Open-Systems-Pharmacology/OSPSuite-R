@@ -202,7 +202,20 @@ plotIndividualTimeProfile <- function(
   if (!showLegendPerDataset) {
     profilePlot <- profilePlot +
       ggplot2::guides(linetype = "none", shape = "none")
-  }
+  } else {
+     # Build guides list conditionally based on whether fill is used
+     guidesList <- list(
+       linetype = ggplot2::guide_legend(title = NULL, order = 1),
+       shape = ggplot2::guide_legend(title = NULL, order = 1),
+       color = ggplot2::guide_legend(title = NULL, order = 2)
+     )
+     # Only include fill guide if aggregation is used (population plots)
+     if (!is.null(aggregation)) {
+       guidesList$fill <- ggplot2::guide_legend(title = NULL, order = 2)
+     }
+     profilePlot <- profilePlot +
+       ggplot2::guides(!!!guidesList)
+    }
 
-  return(profilePlot)
+    return(profilePlot)
 }
