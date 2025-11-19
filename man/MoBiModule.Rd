@@ -127,15 +127,12 @@ initial conditions BB is not present in the project.}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$print(printClassProperties = FALSE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$print(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
-Useful for debugging.}
-
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}
