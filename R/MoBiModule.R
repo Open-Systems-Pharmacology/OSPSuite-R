@@ -99,13 +99,8 @@ MoBiModule <- R6::R6Class(
 
     #' @description
     #' Print the object to the console
-    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
-    #' Useful for debugging.
     #' @param ... Rest arguments.
-    print = function(printClassProperties = FALSE, ...) {
-      if (printClassProperties) {
-        super$print(...)
-      }
+    print = function(...) {
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
@@ -127,7 +122,6 @@ MoBiModule <- R6::R6Class(
   private = list(
     #' @description
     #' Get the list of Parameter Values (PV) or Initial Conditions (IC) Building Blocks (BBs) in the module.
-    #'
     #' @param names Optional names of the Parameter Values Building Block to retrieve.
     #' If `NULL`, returns all PV BBs.
     #' @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".

@@ -139,3 +139,25 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   # Add the keyword `MoleculeProperties` to the list of illegal names
   illegalNames <- c(illegalNames, "MoleculeProperties")
 }
+
+
+#' Validate that an object is a named list
+#'
+#' @param x
+#'
+#' @returns invisible TRUE if the validation passed, otherwise an error is thrown.
+#'
+#' @export
+#' @examples
+#' validateIsNamedList(list(a = 1, b = 2), "myVar") # passes
+#' validateIsNamedList(list(1, 2), "myVar") # throws an error
+validateIsNamedList <- function(x, varName) {
+  if (!(is.list(x) && !is.null(names(x)) && all(nzchar(names(x))))) {
+    stop(
+      sprintf("The parameter '%s' must be a named list.", varName),
+      call. = FALSE
+    )
+  }
+
+  return(invisible(TRUE))
+}

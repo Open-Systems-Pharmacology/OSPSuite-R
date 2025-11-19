@@ -1,48 +1,88 @@
-simulation <- loadSimulation(system.file(
-  "extdata",
-  "Aciclovir.pkml",
-  package = "ospsuite"
-))
-configuration <- simulation$configuration
-
-testMoBiProject <- loadMoBiProject(
-  filePath = getTestDataFilePath("Test_Project.mbp3")
-)
-
-test_that("Snapshot test for printing SimulationConfiguration", {
-  expect_snapshot(configuration$print())
-})
-
-# Test for individual
-test_that("SimulationConfiguration can get and set individual", {
-  individual <- configuration$individual
-  # Expecting NULL because this simulation did not have an individual defined
-  expect_null(individual)
-
-  # Now we set a default individual
-  individual <- testMoBiProject$getIndividual("DefaultIndividual")
-  configuration$individual <- individual
-  expect_true(isOfType(configuration$individual, "BuildingBlock"))
-  expect_equal(configuration$individual$name, "DefaultIndividual")
-
-  # Set NULL as individual
-  configuration$individual <- NULL
-  expect_null(configuration$individual)
-})
-
-# Error when trying to set a wrong BB
-test_that("SimulationConfiguration individual throws an error when wrong BB type is provided for individual", {
-  bb <- testMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
+### Selected Parameter Values
+test_that("SimulationConfiguration throws an error when the passed PV is not a named list", {
+  configurationFromProject <- testMoBiProject$getSimulation(
+    "TestSim_2Modules"
+  )$configuration
 
   expect_error(
-    configuration$individual <- bb,
-    regexp = "Building Block with the name 'CYP3A4|Human|Healthy' is of type 'Expression Profile', but expected type is 'Individual'",
-    fixed = TRUE
+    configurationFromProject$selectedParameterValues <- list(
+      "ExtModule_noIC_noPV",
+      NULL
+    ),
+    regexp = "The parameter 'selectedParameterValues' must be a named list"
   )
 })
 
-# Test for Expression Profiles
+test_that("SimulationConfiguration can get and set selected parameter values", {
+  configurationFromProject <- testMoBiProject$getSimulation(
+    "TestSim_2Modules"
+  )$configuration
 
-# it can set and get one exp profile
-# it can set and get multiple exp profiles
-# it throws an error when trying to set a profile for the same enzyme multiple times
+  originalPVs <- configurationFromProject$selectedParameterValues
+
+  # Set selected PV for one module
+  configurationFromProject$selectedParameterValues <- list(
+    "ExtModule_3IC_3PV" = "PV3"
+  )
+  expect_equal(
+    configurationFromProject$selectedParameterValues,
+    list("ExtModule_noIC_noPV" = NULL, "ExtModule_3IC_3PV" = "PV3")
+  )
+
+  # Setting NULL
+  configurationFromProject$selectedParameterValues <- list(
+    "ExtModule_3IC_3PV" = NULL
+  )
+  expect_equal(
+    configurationFromProject$selectedParameterValues,
+    list("ExtModule_noIC_noPV" = NULL, "ExtModule_3IC_3PV" = NULL)
+  )
+
+  # Reset to original
+  configurationFromProject$selectedParameterValues <- originalPVs
+  expect_equal(
+    configurationFromProject$selectedParameterValues,
+    originalPVs
+  )
+})
+
+# Trying to set a non existing PV BB
+test_that("SimulationConfiguration selected parameter values throws an error when setting a non existing PV BB", {
+  configurationFromProject <- testMoBiProject$getSimulation(
+    "TestSim_2Modules"
+  )$configuration
+  originalPVs <- configurationFromProject$selectedParameterValues
+
+  expect_error(
+    configurationFromProject$selectedParameterValues <- list(
+      "ExtModule_3IC_3PV" = "NonExistingPV"
+    ),
+    regexp = "Parameter Value Building Block with the name 'NonExistingPV' is not present in the module 'ExtModule_3IC_3PV'.",
+    fixed = TRUE
+  )
+  expect_equal(
+    configurationFromProject$selectedParameterValues,
+    originalPVs
+  )
+})
+
+# Trying to set a PV BB for a non existing module
+test_that("SimulationConfiguration selected parameter values throws an error when setting a PV BB for a non existing module", {
+  configurationFromProject <- testMoBiProject$getSimulation(
+    "TestSim_2Modules"
+  )$configuration
+  originalPVs <- configurationFromProject$selectedParameterValues
+
+  expect_error(
+    configurationFromProject$selectedParameterValues <- list(
+      "ExtModule_3IC_3PV" = NULL,
+      "NonExistingModule" = "PV1"
+    ),
+    regexp = "Module(s) with the name(s) 'NonExistingModule' is not part of the simulation configuration.",
+    fixed = TRUE
+  )
+  expect_equal(
+    configurationFromProject$selectedParameterValues,
+    originalPVs
+  )
+})

@@ -186,3 +186,32 @@ addProteinExpressionToParameterValuesBB <- function(
   moleculesBB,
   moleculeNames = NULL
 ) {}
+
+
+#' Validate Building Block Type
+#'
+#' Internal utility function to validate the type of a building block.
+#'
+#' @param buildingBlock A `BuildingBlock` object to validate.
+#' @param expectedType A string indicating the expected type of the building block.
+#'
+#' @keywords internal
+#' @noRd
+.validateBuildingBlockType <- function(
+  buildingBlock,
+  expectedType
+) {
+  if (is.null(buildingBlock)) {
+    return(invisible(TRUE))
+  }
+
+  if (buildingBlock$type != expectedType) {
+    # throw error
+    stop(messages$errorWrongBuildingBlockType(
+      buildingBlock$name,
+      expectedType,
+      buildingBlock$type
+    ))
+  }
+  return(invisible(TRUE))
+}

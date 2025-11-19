@@ -223,6 +223,26 @@ messages$errorWrongBuildingBlockType <- function(
   )
 }
 
+messages$errorICNotFoundInModule <- function(icName, moduleName) {
+  paste0(
+    "Initial Condition Building Block with the name '",
+    icName,
+    "' is not present in the module '",
+    moduleName,
+    "'."
+  )
+}
+
+messages$errorPVNotFoundInModule <- function(pvName, moduleName) {
+  paste0(
+    "Parameter Values Building Block with the name '",
+    pvName,
+    "' is not present in the module '",
+    moduleName,
+    "'."
+  )
+}
+
 ##### Simulation #####
 messages$errorFeatureNotSupportedBySimulation <- function(
   featureName,
@@ -236,5 +256,31 @@ messages$errorFeatureNotSupportedBySimulation <- function(
     version,
     ". Minimal required OSP version is ",
     requiredVersion
+  )
+}
+
+##### SimulationConfiguration #####
+messages$errorExpressionProfileAlreadyDefined <- function(
+  profileName,
+  proteinName
+) {
+  paste0(
+    "Expression for the protein '",
+    proteinName,
+    "' has already been defined for this simulation configuration with the expression profile '",
+    profileName,
+    "'."
+  )
+}
+
+messages$errorOnlyOneIndividualPerConfiguration <- function() {
+  "Only one individual can be assigned to a simulation configuration."
+}
+
+messages$errorModuleNotInConfiguration <- function(moduleName) {
+  paste0(
+    "Module(s) with the name(s) '",
+    moduleName,
+    "' is not part of the simulation configuration."
   )
 }

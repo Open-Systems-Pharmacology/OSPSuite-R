@@ -77,7 +77,7 @@ Simulation <- R6::R6Class(
       }
     },
     #' @field configuration An object of the type `SimulationConfiguration`,
-    #' describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and molecule calculation methods (read-only).
+    #' describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).
     configuration = function(value) {
       # OSP Version number that is required for this feature
       supportedVersion <- 12
@@ -92,7 +92,7 @@ Simulation <- R6::R6Class(
           ))
         }
         netObj <- self$get("Configuration")
-        return(SimulationConfiguration$new(netObj))
+        return(.createSimulationConfigurationFromNetObject(netObj))
       } else {
         private$.throwPropertyIsReadonly("configuration")
       }

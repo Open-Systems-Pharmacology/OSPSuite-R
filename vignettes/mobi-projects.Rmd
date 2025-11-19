@@ -85,15 +85,9 @@ module <- myProject$getModules("Thyroid")[[1]]
 print(module)
 
 icBBs <- module$getInitialConditionsBBs()
-for (bbName in names(icBBs)) {
-  print(paste0(bbName, ": ", icBBs[[bbName]]$type))
-}
 
 # Get all parameter values BBs
 pvBBs <- module$getParameterValuesBBs()
-for (bbName in names(pvBBs)) {
-  print(paste0(bbName, ": ", pvBBs[[bbName]]$type))
-}
 ```
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
@@ -108,22 +102,25 @@ One way to get a simulation configuration is to retrieve a simulation either fro
 
 [NOTE:]{.underline} Only simulations created with OSPS version \>=12 have simulation configurations.
 
+Get a configuration of a simulation loaded from a pkml file:
 ```{r getSimulationConfigurationFromPKML}
-# simulation <- loadSimulation(system.file(
-#   "extdata",
-#   "Aciclovir.pkml",
-#   package = "ospsuite"
-# ))
-# configuration <- simulation$configuration
+simulation <- loadSimulation(system.file(
+  "extdata",
+  "Aciclovir.pkml",
+  package = "ospsuite"
+))
+configuration <- simulation$configuration
 
-# print(configuration)
+print(configuration)
 ```
 
-```{r getSimulationConfigurationFromProject}
-# simulation <- myProject$getSimulation("Thyroid_QST_Human")
-# configuration <- simulation$configuration
+Get a configuration of a simulation from a MoBi project:
 
-# print(configuration)
+```{r getSimulationConfigurationFromProject}
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+configuration <- simulation$configuration
+
+print(configuration)
 ```
 
 ### Create simulation configuration from the project
