@@ -144,6 +144,7 @@ test_that("SimulationConfiguration individual throws an error when setting multi
 
 # Error when trying to set a wrong BB
 test_that("SimulationConfiguration individual throws an error when wrong BB type is provided for individual", {
+  configurationFromPKML <- simulation$configuration
   bb <- testMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
 
   expect_error(
@@ -343,7 +344,7 @@ test_that("SimulationConfiguration selected parameter values throws an error whe
     configurationFromProject$selectedParameterValues <- list(
       "ExtModule_3IC_3PV" = "NonExistingPV"
     ),
-    regexp = "Parameter Value Building Block with the name 'NonExistingPV' is not present in the module 'ExtModule_3IC_3PV'.",
+    regexp = "Parameter Values Building Block with the name 'NonExistingPV' is not present in the module 'ExtModule_3IC_3PV'.",
     fixed = TRUE
   )
   expect_equal(

@@ -110,7 +110,7 @@ test_that("It throws an error when trying to set a new configuration", {
   ))
   expect_error(
     (sim$configuration <- "anything"),
-    regexp = messages$errorPropertyReadOnly("configuration"),
+    regexp = "Property 'configuration' is read-only and cannot be modified.",
     fixed = TRUE
   )
 })
