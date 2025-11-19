@@ -95,7 +95,7 @@ test_that("It throws an error when the simulation was created with an earlier ve
     regexp = messages$errorFeatureNotSupportedBySimulation(
       "SimulationConfiguration",
       9,
-      17
+      12
     ),
     fixed = TRUE
   )
@@ -103,9 +103,14 @@ test_that("It throws an error when the simulation was created with an earlier ve
 
 # It throws an error when trying to set a new configuration
 test_that("It throws an error when trying to set a new configuration", {
+  sim <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
   expect_error(
-    sim$configuration <- "anything",
-    messages$errorPropertyReadOnly("configuration"),
+    (sim$configuration <- "anything"),
+    regexp = messages$errorPropertyReadOnly("configuration"),
     fixed = TRUE
   )
 })

@@ -38,12 +38,12 @@ SimulationConfiguration <- R6::R6Class(
         return(private$.individual)
       } else {
         validateIsOfType(value, "BuildingBlock", nullAllowed = TRUE)
-        # Check that the individual is of correct type
         if (!is.null(value)) {
           # Validate that only one individual is passed
           if (length(c(value)) > 1) {
             stop(messages$errorOnlyOneIndividualPerConfiguration())
           }
+          # Check that the bb is of correct type
           .validateBuildingBlockType(value, "Individual")
         }
         private$.individual <- value
@@ -61,10 +61,11 @@ SimulationConfiguration <- R6::R6Class(
           "BuildingBlock",
           nullAllowed = TRUE
         )
-        # Check that each expression profile is of correct type
+        # Store protein names to check for duplicates
         proteinNames <- c()
         profilesNames <- c()
         for (bb in value) {
+          # Check that each bb is of correct type
           .validateBuildingBlockType(bb, "Expression Profile")
 
           proteinName <- bb$get("MoleculeName")
