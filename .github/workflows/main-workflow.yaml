@@ -17,11 +17,6 @@ jobs:
     secrets:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
-  build-libraries:
-    if: ${{ !cancelled() }}
-    needs: [bump-dev-version]
-    uses: ./.github/workflows/build-libraries.yaml
-
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
@@ -37,4 +32,4 @@ jobs:
   pkgdown:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses:  Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
