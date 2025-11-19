@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 
 popFile <- getTestDataFilePath("pop.csv")
 population <- loadPopulation(popFile)
