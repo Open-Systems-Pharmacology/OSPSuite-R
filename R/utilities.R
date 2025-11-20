@@ -143,7 +143,8 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
 
 #' Validate that an object is a named list
 #'
-#' @param x
+#' @param x Object to validate as a named list.
+#' @param varName Name of the variable being validated (used in error message).
 #'
 #' @returns invisible TRUE if the validation passed, otherwise an error is thrown.
 #'

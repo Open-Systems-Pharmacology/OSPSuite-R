@@ -7,7 +7,9 @@
 validateIsNamedList(x, varName)
 }
 \arguments{
-\item{x}{}
+\item{x}{Object to validate as a named list.}
+
+\item{varName}{Name of the variable being validated (used in error message).}
 }
 \value{
 invisible TRUE if the validation passed, otherwise an error is thrown.
