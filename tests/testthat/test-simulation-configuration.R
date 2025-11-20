@@ -285,7 +285,6 @@ test_that("SimulationConfiguration selected initial conditions throws an error w
 })
 
 ### Selected Parameter Values
-### Selected Parameter Values
 test_that("SimulationConfiguration throws an error when the passed PV is not a named list", {
   configurationFromProject <- testMoBiProject$getSimulation(
     "TestSim_2Modules"
