@@ -198,8 +198,10 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(x = xValues),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(x = xValues),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -258,8 +260,10 @@ plotResidualsVsObserved <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(x = yValues),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(x = yValues),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -309,8 +313,10 @@ plotResidualsAsHistogram <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -360,8 +366,10 @@ plotQuantileQuantilePlot <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -409,34 +417,30 @@ plotQuantileQuantilePlot <- function(plotData,
       plotData <- calculateResiduals(
         dataCombined = plotData,
         scaling = scaling
-      ) %>%
+      )  |>
         data.table::setDT()
       if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
-      plotData <- plotData %>%
+      plotData <- plotData  |>
         data.table::setnames(
           old = c("yValuesSimulated", "yValuesObserved"),
           new = c("predicted", "yValues")
-        ) %>%
+        )  |>
         dplyr::mutate(dataType = "observed")
     } else {
-      plotData <- plotData$toDataFrame() %>%
+      plotData <- plotData$toDataFrame()  |>
         data.table::setDT()
-      # check if we have datatype observed AND simulated and  units differ between dataType
-      if (plotData[, uniqueN(dataType)] == 2 &&
-        plotData[, .(nUnit = uniqueN(xUnit) * uniqueN(yUnit))]$nUnit > 1) {
-        if (!all(plotData[, .(nUnit = uniqueN(xUnit) * uniqueN(yUnit)), by = "dataType"]$nUnit == 1)) {
-          stop(messages$plotUnitConsistency())
-        }
-        plotData <- .unitConverter(
-          data = plotData,
-          xUnit = plotData[dataType == "observed"]$xUnit[1],
-          yUnit = plotData[dataType == "observed"]$yUnit[1]
-        )
-      }
+      plotData <- .unitConverter(
+        data = plotData,
+        xUnit = .getMostFrequentUnit(plotData, "xUnit"),
+        yUnit = .getMostFrequentUnit(plotData, "yUnit")
+      )
     }
   }
   checkmate::assertDataFrame(plotData)
   checkmate::assertNames(names(plotData), must.include = c("xValues", "yValues", "group", "dataType"))
+
+  # check for inconsitent errortypes
+  plotData <- .convertInconsistentErrorTypes(plotData)
 
   # Aggregate only for Timeprofiles
   if (!predictedIsNeeded) {
@@ -446,18 +450,6 @@ plotQuantileQuantilePlot <- function(plotData,
       quantiles = quantiles,
       nsd = nsd
     )
-  }
-
-  if ("yErrorType" %in% names(plotData) &&
-    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-    checkmate::assertNames(names(plotData),
-      must.include = c("yErrorValues"),
-      .var.name = "columns needed for yErrorValues"
-    )
-
-    if (length(unique(plotData[!is.na(yErrorType)][["yErrorType"]])) > 1) {
-      stop(messages$plotErrorTypeConsistency())
-    }
   }
 
   # create a copy, so changes to columns will stay inside function
@@ -478,7 +470,81 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(plotData)
 }
+#' Get Most Frequent Unit
+#'
+#' This function retrieves the most frequently occurring unit from a specified column
+#' in a given dataset, prioritizing observed data types. If no observed units are
+#' available, it will return the most frequent simulated unit instead.
+#'
+#' @param data A data.table or data.frame containing the data. It must include the
+#' columns 'group', 'name', 'yUnit', 'xUnit', and 'dataType'.
+#' @param unitColumn A character string specifying the column name from which to
+#' extract the most frequent unit. This should be either 'yUnit' or 'xUnit'.
+#'
+#' @return The most frequent observed unit from the specified column, or the most
+#' frequent simulated unit if no observed units are available.
+#' @keywords internal
+#' @noRd
+.getMostFrequentUnit <- function(data, unitColumn) {
+  # count per group and not per timepoint
+  dt <- data[, c("group", "name", "dataType", unitColumn), with = FALSE] |>
+    unique()
 
+  # Filter for observed data first
+  observedUnits <- dt[dataType == "observed", .N, by = c(unitColumn)] |>
+    setorderv(cols = c("N"), order = -1)
+
+  # If no observed units, check simulated
+  if (nrow(observedUnits) == 0) {
+    simulatedUnits <- dt[dataType == "simulated", .N, by = c(unitColumn)] |>
+      setorderv(cols = c("N"), order = -1)
+    return(simulatedUnits[[unitColumn]][1])
+  }
+
+  return(observedUnits[[unitColumn]][1])
+}
+#' Calculate Y Bounds Based on Error Types
+#'
+#' This function modifies a data.table by calculating the minimum and maximum Y values
+#' based on the specified error types.
+#'
+#' @param plotData A data.table containing the columns yValues, yErrorValues, and yErrorType.
+#' @return A modified data.table with additional columns yMin and yMax calculated based on yErrorType.
+#'
+#' @keywords internal
+#' @noRd
+.convertInconsistentErrorTypes <- function(plotData) {
+  # nothing to do
+  if (!("yErrorType" %in% names(plotData))) {
+    return(plotData)
+  }
+
+  if ("yErrorType" %in% names(plotData) &&
+    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
+    checkmate::assertNames(names(plotData),
+      must.include = c("yErrorValues"),
+      .var.name = "columns needed for yErrorValues"
+    )
+  }
+
+  # Check if there are multiple unique yErrorType values
+  if (uniqueN(plotData[!is.na(yErrorType), yErrorType]) > 1) {
+    if (!'yMin' %in% names(plotData)) plotData[, yMin := NA_real_]
+    if (!'yMax' %in% names(plotData)) plotData[, yMin := NA_real_]
+    plotData[yErrorType == DataErrorType$GeometricStdDev, `:=`(
+      yMin = yValues / yErrorValues,
+      yMax = yValues * yErrorValues,
+      yErrorValues = NA_real_,
+      yErrorType = NA_real_)]
+    plotData[yErrorType == DataErrorType$ArithmeticStdDev, `:=`(
+      yMin =  yValues - yErrorValues,
+      yMax =  yValues + yErrorValues,
+      yErrorValues = NA_real_,
+      yErrorType = NA_real_)]
+  }
+
+  return(plotData)
+}
 #' Construct Metadata for Time Profile
 #'
 #' This function generates metadata for time profile plots based on the provided plot data.
@@ -637,12 +703,14 @@ plotQuantileQuantilePlot <- function(plotData,
 
   mapping <- structure(
     utils::modifyList(
-      c(xMapping,
+      c(
+        xMapping,
         ggplot2::aes(
-        predicted = predicted,
-        observed = yValues,
-        groupby = group
-      )),
+          predicted = predicted,
+          observed = yValues,
+          groupby = group
+        )
+      ),
       userMapping
     ),
     class = "uneval"
@@ -734,7 +802,7 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .aggregateSimulatedData <- function(plotData, aggregation, quantiles, nsd = 1) {
   # initialize variables used in data.table syntax
-  IndividualId <- NULL #nolint
+  IndividualId <- NULL # nolint
 
   checkmate::assertChoice(aggregation, choices = unlist(DataAggregationMethods), null.ok = TRUE)
   checkmate::assertNumeric(quantiles,

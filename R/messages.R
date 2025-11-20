@@ -156,10 +156,12 @@ messages$plotUnitConsistency <- function() {
   "Units have to be consistent within one datatype."
 }
 
-messages$plotErrorTypeConsistency <- function() {
-  "Do not mix different error types in one plot."
-}
 
 messages$plotMissingColumnPredicted <- function() {
   "No column available for 'predicted'. Please use combinedData format or a data.frame with column 'predicted'."
+}
+
+
+messages$plotUnknwonErrorType <- function() {
+  paste("yErrorType must be NA,",ospsuite::DataErrorType$ArithmeticStdDev, "or", ospsuite::DataErrorType$GeometricStdDev)
 }

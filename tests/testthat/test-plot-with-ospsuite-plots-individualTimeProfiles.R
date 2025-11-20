@@ -17,37 +17,6 @@ manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
 
 oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
 
-# convert to datatable and add errors as yMin and yMax to circumvent check for different dataTypes
-manyObsDCdt <- manyObsDC$toDataFrame() %>%
-  data.table::setDT()
-manyObsDCdt[, `:=`(
-  yMin = ifelse(yErrorType == "GeometricStdDev",
-    yValues / yErrorValues, yValues + yErrorValues
-  ),
-  yMax = ifelse(yErrorType == "GeometricStdDev",
-    yValues * yErrorValues, yValues - yErrorValues
-  ),
-  yErrorValues = NULL,
-  yErrorType = NULL
-)]
-
-manyObsSimDCdt <- convertUnits(manyObsSimDC,
-  xUnit = ospUnits[["Time"]][["h"]],
-  yUnit = ospUnits[["Concentration [mass]"]][["mg/l"]]
-) %>%
-  data.table::setDT()
-manyObsSimDCdt[, `:=`(
-  yMin = ifelse(yErrorType == "GeometricStdDev",
-    yValues / yErrorValues, yValues + yErrorValues
-  ),
-  yMax = ifelse(yErrorType == "GeometricStdDev",
-    yValues * yErrorValues, yValues - yErrorValues
-  ),
-  yErrorValues = NULL,
-  yErrorType = NULL
-)]
-
-
 ### only observed ------------------------
 test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
@@ -61,22 +30,15 @@ test_that("It creates default plots as expected for single observed dataset", {
 test_that("It creates default plots as expected for multiple observed datasets", {
   set.seed(123)
 
-  # It throws error if error Types are not unique
-  expect_error(
-    plotTimeProfile(manyObsDC),
-    messages$plotErrorTypeConsistency()
-  )
-
-
   vdiffr::expect_doppelganger(
     title = "multiple obs",
-    fig = plotTimeProfile(manyObsDCdt)
+    fig = plotTimeProfile(manyObsDC)
   )
 
 
   vdiffr::expect_doppelganger(
     title = "multiple obs - separate legend",
-    fig = plotTimeProfile(manyObsDCdt,
+    fig = plotTimeProfile(manyObsDC,
       mapping = ggplot2::aes(groupby = name)
     )
   )
@@ -123,7 +85,7 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs and sim",
-    fig = plotTimeProfile(manyObsSimDCdt,
+    fig = plotTimeProfile(manyObsSimDC,
       yscale = "log",
       yscale.args = list(limits = c(0.001, NA)),
       mapping = ggplot2::aes(groupby = name)
