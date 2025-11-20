@@ -66,7 +66,7 @@ createSimulationConfiguration <- function(
     if (!is.null(selectedPVNetObj)) {
       selectedPVs[[i]] <- selectedPVNetObj$get("Name")
     }
-    # If no IC is selected, continue, as the value is already NULL
+    # If no PV is selected, continue, as the value is already NULL
   }
 
   # Get the individual .NET object and create the R object
