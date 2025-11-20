@@ -1,6 +1,0 @@
-# Disable Quarto checking on Windows to avoid the TMPDIR error
-# This package uses .Rmd vignettes, not .qmd files
-QUARTO_ENABLED=FALSE
-
-# You can also specify a custom temp directory if needed:
-# TMPDIR=C:/Temp
