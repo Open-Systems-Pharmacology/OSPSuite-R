@@ -36,5 +36,5 @@ By setting the value to \code{NULL}, no PV BB from the specified module will be 
 A \code{SimulationConfiguration} object.
 }
 \description{
-Create a simulation configuration from modules.
+2DO
 }

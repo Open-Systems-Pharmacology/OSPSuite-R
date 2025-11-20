@@ -11,8 +11,20 @@ A new \code{SimulationConfiguration} object.
 Configuration of a simulation. Contains description of the modules used for
 the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and molecule calculation methods.
 }
-\section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{SimulationConfiguration}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{partitionCoefficientMethods}}{The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
+and the values being one of the \code{PartitionCoefficientMethods} enum values.
+To set the partition coefficient method for a molecule, provide a named list.
+TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
+
+\item{\code{cellularPermeabilityMethods}}{The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
+and the values being one of the \code{CellularPermeabilityMethods} enum values.
+To set the cellular permeability method for a molecule, provide a named list.
+TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
+}
+\if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -38,11 +50,13 @@ selection is provided are not in the configuration, throw an error.}
 
 \item{\code{partitionCoefficientMethods}}{The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
 and the values being one of the \code{PartitionCoefficientMethods} enum values.
-To set the partition coefficient method for a molecule, provide a named list.}
+To set the partition coefficient method for a molecule, provide a named list.
+TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
 
 \item{\code{cellularPermeabilityMethods}}{The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
 and the values being one of the \code{CellularPermeabilityMethods} enum values.
-To set the cellular permeability method for a molecule, provide a named list.}
+To set the cellular permeability method for a molecule, provide a named list.
+TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
 }
 \if{html}{\out{</div>}}
 }
@@ -53,24 +67,6 @@ To set the cellular permeability method for a molecule, provide a named list.}
 \item \href{#method-SimulationConfiguration-print}{\code{SimulationConfiguration$print()}}
 }
 }
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
-</ul>
-</details>
-}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationConfiguration-new"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationConfiguration-new}{}}}
@@ -80,13 +76,38 @@ Initialize a new instance of the class
 Should not be directly used. Instead, use function \code{createSimulationConfiguration()} or the method \code{createSimulationConfiguration()}
 from the class \code{MoBiProject}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$new(netObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$new(
+  modules,
+  individual = NULL,
+  expressionProfiles = NULL,
+  selectedInitialConditions = NULL,
+  selectedParameterValues = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{netObject}}{Reference to \code{NetObject} .NET Simulation configuration object}
+\item{\code{modules}}{A list of \code{Module} objects from which to create in simulation.
+The order of modules defines the order in which the modules will be combined to a simulation!}
+
+\item{\code{individual}}{Optional, an individual building block}
+
+\item{\code{expressionProfiles}}{Optional, a list of expression profiles to apply to the simulation.}
+
+\item{\code{selectedInitialConditions}}{By default, the first Initial Conditions
+(IC) building block (BB) of each module will be selected. If a module has multiple
+IC BBs, it is possible to specify which IC BB to apply by providing a named list,
+where the name should be the name of the module and the value the name of the IC BB.
+By explicitly setting the value for a specific module to \code{NULL}, no IC BB from the specified module will be applied.
+If the list contains a module name that is not part of the provided modules, it will be ignored.}
+
+\item{\code{selectedParameterValues}}{By default, the first Parameter Values
+(PV) building block (BB) of each module will be selected. If a module has multiple
+PV BBs, it is possible to specify which PV BB to apply by providing a named list,
+where the name should be the name of the module and the value the name of the PV BB.
+By explicitly setting the value for a specific module to \code{NULL}, no PV BB from the specified module will be applied.
+If the list contains a module name that is not part of the provided modules, it will be ignored.}
 }
 \if{html}{\out{</div>}}
 }
@@ -97,12 +118,15 @@ from the class \code{MoBiProject}.
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$print(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$print(printClassProperties = FALSE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
+Useful for debugging.}
+
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}

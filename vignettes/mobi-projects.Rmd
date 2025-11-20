@@ -3,8 +3,8 @@ title: "Working with MoBi projects"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Working with MoBi projects}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include=FALSE}
@@ -85,58 +85,47 @@ module <- myProject$getModules("Thyroid")[[1]]
 print(module)
 
 icBBs <- module$getInitialConditionsBBs()
-for (bbName in names(icBBs)) {
-  print(paste0(bbName, ": ", icBBs[[bbName]]$type))
-}
 
 # Get all parameter values BBs
 pvBBs <- module$getParameterValuesBBs()
-for (bbName in names(pvBBs)) {
-  print(paste0(bbName, ": ", pvBBs[[bbName]]$type))
-}
 ```
 
-Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, Individual, Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
+## Simulation configurations
 
-## Creating simulation configurations
+Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
 
-The user can create a new simulation configuration either from scratch, or alter 
-an existing configuration retrieved from a simulation, or create a configuration from
-modules in a project.
+The user can create a new simulation configuration either from scratch, or alter an existing configuration retrieved from a simulation, or create a configuration from modules in a project.
 
-### Create simulation configuration from simulation
+### Get simulation configuration from simulation
 
-One way to get a simulation configuration is to retrieve a simulation either from 
-a project or by loading a simulation from a pkml file. The simulation configuration can then be 
-altered afterwards.
+One way to get a simulation configuration is to retrieve a simulation either from a project or by loading a simulation from a pkml file. The simulation configuration can then be altered afterwards.
 
+[NOTE:]{.underline} Only simulations created with OSPS version \>=12 have simulation configurations.
+
+Get a configuration of a simulation loaded from a pkml file:
 ```{r getSimulationConfigurationFromPKML}
-# simulation <- loadSimulation(system.file(
-#   "extdata",
-#   "Aciclovir.pkml",
-#   package = "ospsuite"
-# ))
-# configuration <- simulation$configuration
+simulation <- loadSimulation(system.file(
+  "extdata",
+  "Aciclovir.pkml",
+  package = "ospsuite"
+))
+configuration <- simulation$configuration
 
-# print(configuration)
+print(configuration)
 ```
+
+Get a configuration of a simulation from a MoBi project:
 
 ```{r getSimulationConfigurationFromProject}
-# simulation <- myProject$getSimulation("Thyroid_QST_Human")
-# configuration <- simulation$configuration
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+configuration <- simulation$configuration
 
-# print(configuration)
+print(configuration)
 ```
-
-
 
 ### Create simulation configuration from the project
 
-The user can create new simulation configuration from the modules available in the project. In this example,
-we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding". 
-We will select the expression profiles "UDPGT1|Human|Healthy", "DIO1|Human|Healthy", "DIO3|Human|Healthy",
-"UDPGT2|Human|Healthy", and specify the parameter values building block "Rat" from the 
-module "Thyroid":
+The user can create new simulation configuration from the modules available in the project. In this example, we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding". We will select the expression profiles "UDPGT1\|Human\|Healthy", "DIO1\|Human\|Healthy", "DIO3\|Human\|Healthy", "UDPGT2\|Human\|Healthy", and specify the parameter values building block "Rat" from the module "Thyroid":
 
 ```{r createSimulationFromProject}
 # sim1 <- myProject$createSimulationConfiguration(
@@ -162,13 +151,7 @@ module "Thyroid":
 
 ### Create simulation configuration from modules
 
-An alternative to creating simulation configurations from modules from a project is to use the 
-function `createSimulationConfiguration()` and provide a list of `Module` objects. 
-This allows to create simulations from modules contained in different projects,
-or from modules that are stored as pkml files. In the following example, we will
-create a simulation configuration using the modules from the project as in the example before,
-but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will
-be created.
+An alternative to creating simulation configurations from modules from a project is to use the function `createSimulationConfiguration()` and provide a list of `Module` objects. This allows to create simulations from modules contained in different projects, or from modules that are stored as pkml files. In the following example, we will create a simulation configuration using the modules from the project as in the example before, but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will be created.
 
 ```{r extractModulesAndCreateIndividual}
 # # Get modules from the project
@@ -193,30 +176,20 @@ be created.
 # )
 ```
 
-Modules that are intended to be used in combination with a variety of other modules,
-especially with every generic PBPK module, are usually set up in a generic way 
-and require some extensions in order to be used directly. For example, the initial 
-conditions of the module "Thyroid" must be extended by the molecules of the model
-it will be used with. Similarly, some compound-specific parameter could require 
-manual adjustments. Therefore, intial conditions and parameter values building block can be modified from R.
+Modules that are intended to be used in combination with a variety of other modules, especially with every generic PBPK module, are usually set up in a generic way and require some extensions in order to be used directly. For example, the initial conditions of the module "Thyroid" must be extended by the molecules of the model it will be used with. Similarly, some compound-specific parameter could require manual adjustments. Therefore, initial conditions and parameter values building block can be modified from R.
 
 Following functionalities are available for the Initial Conditions BBs:
 
-- `setInitialConditions()`: Allows adding new entries or changing the values of existing
-  entries in the Initial Conditions BB.
-- `deleteInitialConditions()`: Allows deleting entries from the Initial Conditions BB.
-- `extendInitialConditions()`: Extending an IC BB by entries for specified molecules
-in all physical containers of a spatial structure.
+-   `setInitialConditions()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
+-   `deleteInitialConditions()`: Allows deleting entries from the Initial Conditions BB.
+-   `extendInitialConditions()`: Extending an IC BB by entries for specified molecules in all physical containers of a spatial structure.
 
 Followning functionalities are available for the Parameter Values (PV) BBs:
 
-- `setParameterValues()`: Allows adding new entries or changing the values of existing
-  entries in the PV BB.
-- `deleteParameterValues()`: Allows deleting entries from the PV BB.
-- `addLocalMoleculeParameters()`: Extending a PV BB by entries for local parameters
-of specified molecules in all physical containers of a spatial structure.
-- `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters 
-defining expression of protein molecules in selected organs.
+-   `setParameterValues()`: Allows adding new entries or changing the values of existing entries in the PV BB.
+-   `deleteParameterValues()`: Allows deleting entries from the PV BB.
+-   `addLocalMoleculeParameters()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure.
+-   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
 So in the first step we load the extension module "Thyroid" from a pkml file:
 
@@ -228,8 +201,7 @@ So in the first step we load the extension module "Thyroid" from a pkml file:
 # ))
 ```
 
-Then we extend the initial conditions BB of the loaded module by molecules defined 
-in other modules of our project:
+Then we extend the initial conditions BB of the loaded module by molecules defined in other modules of our project:
 
 ```{r extendICBB}
 # # Get the IC BB from the Thyroid module
@@ -245,10 +217,7 @@ in other modules of our project:
 # )
 ```
 
-The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module 
-"Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles,
-parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()`
-function: 
+The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function:
 
 ```{r addProteinExpressionToPVBB}
 # # Get the PV BB from the Thyroid module
@@ -313,8 +282,7 @@ Expression profile BBs cannot be created from R but can be loaded from PKML. (Ti
 
 The simulation configuration can be used to create a simulation. The simulation can then be saved to a pkml file, or used for further analysis.
 
-Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation.
-Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
+Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
 
 ```{r changeCalculationMethodsAndCreateSimulatoin}
 # simulationConfigurationHuman$partitionCoefficientMethods(
