@@ -139,11 +139,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "GmBBxsrwukGA4Svv0sxtIg"
+#> [1] "uHAfpTgj4kWI1h8G1hDMkA"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "GmBBxsrwukGA4Svv0sxtIg"
+#> [1] "uHAfpTgj4kWI1h8G1hDMkA"
 ```
 
 ## Adding new outputs
