@@ -176,7 +176,7 @@ An alternative to creating simulation configurations from modules from a project
 # )
 ```
 
-Modules that are intended to be used in combination with a variety of other modules, especially with every generic PBPK module, are usually set up in a generic way and require some extensions in order to be used directly. For example, the initial conditions of the module "Thyroid" must be extended by the molecules of the model it will be used with. Similarly, some compound-specific parameter could require manual adjustments. Therefore, intial conditions and parameter values building block can be modified from R.
+Modules that are intended to be used in combination with a variety of other modules, especially with every generic PBPK module, are usually set up in a generic way and require some extensions in order to be used directly. For example, the initial conditions of the module "Thyroid" must be extended by the molecules of the model it will be used with. Similarly, some compound-specific parameter could require manual adjustments. Therefore, initial conditions and parameter values building block can be modified from R.
 
 Following functionalities are available for the Initial Conditions BBs:
 
