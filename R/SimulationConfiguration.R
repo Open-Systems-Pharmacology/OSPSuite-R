@@ -250,13 +250,13 @@ SimulationConfiguration <- R6::R6Class(
     #' (IC) building block (BB) of each module will be selected. If a module has multiple
     #' IC BBs, it is possible to specify which IC BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the IC BB.
-    #' By expicitly setting the value for a specific module to `NULL`, no IC BB from the specified module will be applied.
+    #' By explicitly setting the value for a specific module to `NULL`, no IC BB from the specified module will be applied.
     #' If the list contains a module name that is not part of the provided modules, it will be ignored.
     #' @param selectedParameterValues By default, the first Parameter Values
     #' (PV) building block (BB) of each module will be selected. If a module has multiple
     #' PV BBs, it is possible to specify which PV BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the PV BB.
-    #' By expicitly setting the value for a specific module to `NULL`, no PV BB from the specified module will be applied.
+    #' By explicitly setting the value for a specific module to `NULL`, no PV BB from the specified module will be applied.
     #' If the list contains a module name that is not part of the provided modules, it will be ignored.
     #'
     #' @returns A new `SimulationConfiguration` object.
