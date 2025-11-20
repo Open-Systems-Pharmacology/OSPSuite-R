@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 
 # Remove to ensure that we can add the parameters again
 removeAllUserDefinedPKParameters()

@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 
 sim <- loadSimulation("tests/data/S1.pkml")
 popFile <- getTestDataFilePath("pop.csv")

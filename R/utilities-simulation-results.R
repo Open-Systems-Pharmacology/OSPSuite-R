@@ -281,7 +281,7 @@ simulationResultsToDataFrame <- function(
       TimeUnit = simList$metaData$Time$unit,
       dimension = simList$metaData[[paths]]$dimension,
       unit = simList$metaData[[paths]]$unit,
-      molWeight = ospsuite::toUnit(
+      molWeight = toUnit(
         quantityOrDimension = ospDimensions$`Molecular weight`,
         values = simulationResults$simulation$molWeightFor(paths),
         targetUnit = ospUnits$`Molecular weight`$`g/mol`
