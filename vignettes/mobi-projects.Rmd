@@ -90,13 +90,13 @@ icBBs <- module$getInitialConditionsBBs()
 pvBBs <- module$getParameterValuesBBs()
 ```
 
-Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
+## Simulation configurations
 
-## Creating simulation configurations
+Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
 
 The user can create a new simulation configuration either from scratch, or alter an existing configuration retrieved from a simulation, or create a configuration from modules in a project.
 
-### Create simulation configuration from simulation
+### Get simulation configuration from simulation
 
 One way to get a simulation configuration is to retrieve a simulation either from a project or by loading a simulation from a pkml file. The simulation configuration can then be altered afterwards.
 

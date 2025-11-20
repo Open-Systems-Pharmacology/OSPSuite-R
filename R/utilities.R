@@ -150,7 +150,7 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
 #' @export
 #' @examples
 #' validateIsNamedList(list(a = 1, b = 2), "myVar") # passes
-#' validateIsNamedList(list(1, 2), "myVar") # throws an error
+#' # validateIsNamedList(list(1, 2), "myVar") # throws an error
 validateIsNamedList <- function(x, varName) {
   if (!(is.list(x) && !is.null(names(x)) && all(nzchar(names(x))))) {
     stop(
