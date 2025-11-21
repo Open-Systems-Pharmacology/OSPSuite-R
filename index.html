@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,35 +96,49 @@
 <div class="section level1">
 <h1 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h1>
-<p>If you are reading this on GitHub README, please refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/">online documentation</a> for more details on the package.</p>
-<p>In particular, we would recommend that you read the articles in the following order:</p>
+<p>For complete documentation, see the <a href="https://www.open-systems-pharmacology.org/OSPSuite-R/">online documentation</a>.</p>
+<div class="section level2">
+<h2 id="essential-guides">Essential Guides<a class="anchor" aria-label="anchor" href="#essential-guides"></a>
+</h2>
+<p><strong>Essential guides:</strong></p>
 <ul>
-<li><a href="ttps://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html">Get Started</a></li>
+<li>
+<a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html">Get Started</a> - Complete beginner tutorial with working examples</li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/load-get.html">Loading a simulation and accessing entities</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html">Changing parameter and molecule start values</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html">Running a simulation</a></li>
+</ul>
+<p><strong>For advanced workflows:</strong></p>
+<ul>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/efficient-calculations.html">Efficient calculations</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.html">Creating individuals</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.html">Population simulations</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html">PK Analysis</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
-<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html">Table parameters</a></li>
-<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html">Dimensions and Units</a></li>
+</ul>
+<p><strong>Data handling and visualization:</strong></p>
+<ul>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html">Working with data sets and import from excel</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.html">Working with <code>DataCombined</code> class</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.html">Visualizations with <code>DataCombined</code></a></li>
+</ul>
+<p><strong>Reference:</strong></p>
+<ul>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/unit-conversion.html">Dimensions and Units</a></li>
+<li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/table-parameters.html">Table parameters</a></li>
 <li><a href="https://www.open-systems-pharmacology.org/OSPSuite-R/articles/PKSim-installation.html">PK-Sim Installation</a></li>
 </ul>
+</div>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p>The <strong>ospsuite</strong> package is compatible with R version 4.x.x and can be used on <a href="#on-windows">Windows</a> and <a href="#on-linux">Linux (Ubuntu)</a> operating systems.</p>
-<p><code>ospsuite</code> is not available on CRAN and also depends on packages from the OSP ecosystem that are not available on CRAN. Please follow the instructions below to install the packages and all required dependencies.</p>
+<p>The <strong>ospsuite</strong> package requires R version 4.x.x and supports <a href="#on-windows">Windows</a> and <a href="#on-linux">Linux (Ubuntu)</a> operating systems.</p>
+<p><code>ospsuite</code> is not available on CRAN and depends on packages from the OSP ecosystem that are not available on CRAN. Follow the instructions below to install the package and all required dependencies.</p>
 <div class="section level2">
 <h2 id="pre-requisites">Pre-requisites<a class="anchor" aria-label="anchor" href="#pre-requisites"></a>
 </h2>
-<p>As <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> relies on <a href="https://github.com/Open-Systems-Pharmacology/rsharp/" class="external-link">rSharp</a>, install its external dependencies (Visual C++ Redistributable and .NET 8) by following these instructions:</p>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires <a href="https://github.com/Open-Systems-Pharmacology/rsharp/" class="external-link">rSharp</a> and its external dependencies (Visual C++ Redistributable and .NET 8). Install these dependencies using the following instructions:</p>
 <ul>
 <li><a href="https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#prerequisites" class="external-link">For Windows</a></li>
 <li><a href="https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#ubuntu" class="external-link">For Linux</a></li>
@@ -133,11 +147,11 @@
 <div class="section level2">
 <h2 id="from-github-recommended">From GitHub (recommended)<a class="anchor" aria-label="anchor" href="#from-github-recommended"></a>
 </h2>
-<p>The latest released version of the package can be installed from GitHub using the <a href="https://remotes.r-lib.org" class="external-link">remotes</a> package. The code below will download and install all the required dependencies.</p>
+<p>Install the latest released version from GitHub using the <a href="https://remotes.r-lib.org" class="external-link">remotes</a> package. This installation method downloads and installs all required dependencies.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Open-Systems-Pharmacology/OSPSuite-R@*release"</span><span class="op">)</span></span></code></pre></div>
-<p>Get the latest development version with:</p>
+<p>To install the latest development version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Open-Systems-Pharmacology/OSPSuite-R"</span><span class="op">)</span></span></code></pre></div>
@@ -145,20 +159,23 @@
 <div class="section level2">
 <h2 id="from-package-archive-files-deprecated">From package archive files (Deprecated)<a class="anchor" aria-label="anchor" href="#from-package-archive-files-deprecated"></a>
 </h2>
-<p>It is also possible to install manually from archive pre-built archive files provided with the <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link">release</a>.</p>
+<p>Install manually from pre-built archive files available in the <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link">releases</a>.</p>
 <div class="section level4">
 <h4 id="install-cran-dependencies">Install CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-cran-dependencies"></a>
 </h4>
-<p>When installing from such files, the CRAN dependencies need to be installed manually first.</p>
+<p>Installing from archive files requires manual installation of CRAN dependencies first.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install dependencies (e.g. R6) which are on CRAN</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cli"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"crayon"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"data.table"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggtext"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"glue"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"jsonlite"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"lifecycle"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"logger"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"openxlsx"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"purrr"</span><span class="op">)</span></span>
@@ -174,29 +191,29 @@
 <div class="section level4">
 <h4 id="install-non-cran-dependencies">Install non-CRAN dependencies<a class="anchor" aria-label="anchor" href="#install-non-cran-dependencies"></a>
 </h4>
-<p>Each of the pre-built released packages are available as a a binary <code>*.zip</code>. OSPSuite-R binary archive can be downloaded from <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link">here</a>. The other non-CRAN dependencies needed for OSPSuite-R also have to be downloaded and manually installed:</p>
+<p>Pre-built packages are available as binary files (<em>.zip for Windows, </em>.tar.gz for Linux) Download the OSPSuite-R binary archive from the <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases" class="external-link">releases page</a>. Download and install these additional non-CRAN dependencies:</p>
 <ul>
 <li><a href="https://github.com/Open-Systems-Pharmacology/rSharp/releases/latest" class="external-link"><code>{rSharp}</code></a></li>
 <li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest" class="external-link"><code>{ospuite.utils}</code></a></li>
 <li><a href="https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest" class="external-link"><code>{tlf}</code></a></li>
 </ul>
-<p>If you use <a href="https://www.rstudio.com/" class="external-link">RStudio IDE</a>, you can use the <em>Install</em> option in the <em>Packages</em> pane and select the option <em>Install from -&gt; Package Archive File</em> to install a package from binary <code>*.zip</code> files.</p>
-<p><strong>NB</strong>: The CRAN dependencies of <a href="https://github.com/Open-Systems-Pharmacology/rsharp/" class="external-link">rSharp</a>, <code>{ospuite.utils}</code> and <a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a> were already installed during the previous step.</p>
+<p>In <a href="https://www.rstudio.com/" class="external-link">RStudio IDE</a>, use the <em>Install</em> option in the <em>Packages</em> pane and select <em>Install from -&gt; Package Archive File</em> to install packages from binary files.</p>
+<p><strong>Note</strong>: CRAN dependencies for <a href="https://github.com/Open-Systems-Pharmacology/rsharp/" class="external-link">rSharp</a>, <code>{ospuite.utils}</code>, and <a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a> were installed in the previous step.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install `{rSharp}` from local file </span></span>
-<span><span class="co"># (`pathTo_rSharp.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<code class="sourceCode R"><span><span class="co"># Install rSharp from local file </span></span>
+<span><span class="co"># Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_rSharp.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Install `{ospsuite.utils}` from local file</span></span>
-<span><span class="co"># (`pathTo_ospsuite.utils.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<span><span class="co"># Install ospsuite.utils from local file</span></span>
+<span><span class="co"># Replace pathTo_ospsuite.utils.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_ospsuite.utils.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Install `{tlf}` from local file</span></span>
-<span><span class="co"># (`pathTo_tlf.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<span><span class="co"># Install tlf from local file</span></span>
+<span><span class="co"># Replace pathTo_tlf.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_tlf.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Install `{ospsuite}` from local file</span></span>
-<span><span class="co"># (`pathToOSPSuite.zip` here should be replaced with the actual path to the `.zip` file)</span></span>
+<span><span class="co"># Install ospsuite from local file</span></span>
+<span><span class="co"># Replace pathToOSPSuite.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_OSPSuite.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -205,14 +222,15 @@
 <h1 id="known-issues">Known issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
 </h1>
 <div class="section level2">
-<h2 id="loading-ospsuite-might-fail-if-your-systems-locale-is-not-set-to-english">Loading <code>ospsuite</code> might fail if your systems locale is not set to English<a class="anchor" aria-label="anchor" href="#loading-ospsuite-might-fail-if-your-systems-locale-is-not-set-to-english"></a>
+<h2 id="loading-ospsuite-might-fail-if-the-system-locale-is-not-set-to-english">Loading <code>ospsuite</code> might fail if the system locale is not set to English<a class="anchor" aria-label="anchor" href="#loading-ospsuite-might-fail-if-the-system-locale-is-not-set-to-english"></a>
 </h2>
 <ul>
 <li><p>On Windows, set <code>Settings &gt; Language &gt; Administrative language settings &gt; Current language for non-Unicode programs</code> to <code>English (United States)</code> and reboot.</p></li>
 <li>
-<p>On Linux, set the environment variable <code>LC_ALL</code> before starting R:</p>
+<p>On Linux, set the environment variable <code>LC_ALL</code> to <code>~/.bashrc</code> before starting R:</p>
 <p><code>export LC_ALL=en_US.UTF-8</code></p>
 </li>
+<li><p>add the path to the lib subfolder of installed ospsuite package to LD_LIBRARY_PATH <code>export LD_LIBRARY_PATH=/usr/local/lib/R/site-library/ospsuite/lib/:$LD_LIBRARY_PATH</code></p></li>
 </ul>
 </div>
 <div class="section level2">
@@ -225,16 +243,27 @@
 <h1 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
 </h1>
 <div class="section level2">
-<h2 id="embeded-binaries">Embeded binaries<a class="anchor" aria-label="anchor" href="#embeded-binaries"></a>
+<h2 id="development-setup">Development Setup<a class="anchor" aria-label="anchor" href="#development-setup"></a>
 </h2>
-<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires some shared libraries to get access to PK-Sim functionality. To get the latest libraries(<strong>.dll</strong> on Windows or <strong>.so</strong> on Linux), run the script file <code>update_core_files.R</code> provided with this package.</p>
-<p>Since <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> contains this binary files, it is considered as a binary package and thus cannot be submitted to CRAN in this state.</p>
+<p>When developing the <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package, you need to prepare platform-specific library files before using <code><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">devtools::load_all()</a></code>. The package uses configure scripts during installation to rename platform-specific DLLs, but <code><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">devtools::load_all()</a></code> bypasses this process.</p>
+<p><strong>Run the development setup script:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"tools/setup_dev.R"</span><span class="op">)</span></span>
+<span><span class="fu">setup_dev</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><strong>When to run <code>setup_dev()</code>:</strong> - After cloning the repository for the first time - After switching to a different branch - After pulling changes that might affect library files</p>
+<p>The script automatically detects your operating system and renames the appropriate DLL: - <strong>Windows</strong>: Renames <code>System.Data.SQLite.windows_linux.dll</code> → <code>System.Data.SQLite.dll</code> - <strong>Linux</strong>: Renames <code>System.Data.SQLite.windows_linux.dll</code> → <code>System.Data.SQLite.dll</code> - <strong>macOS</strong>: Renames <code>System.Data.SQLite.mac.dll</code> → <code>System.Data.SQLite.dll</code></p>
 </div>
 <div class="section level2">
-<h2 id="versionning">Versionning<a class="anchor" aria-label="anchor" href="#versionning"></a>
+<h2 id="embedded-binaries">Embedded binaries<a class="anchor" aria-label="anchor" href="#embedded-binaries"></a>
+</h2>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires shared libraries to access PK-Sim functionality. To obtain the latest libraries (<strong>.dll</strong> on Windows or <strong>.so</strong> on Linux), run the <code>update_core_files.R</code> script included with this package.</p>
+<p>Because <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> contains binary files, it is classified as a binary package and cannot be submitted to CRAN.</p>
+</div>
+<div class="section level2">
+<h2 id="versioning">Versioning<a class="anchor" aria-label="anchor" href="#versioning"></a>
 </h2>
 <p>The package follows the versioning process described in the <a href="https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions" class="external-link">OSP R collaboration guide</a>.</p>
-<p>For development version, each time a pull request is merged, <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17" class="external-link">this github action</a> automatically bumps the <code>.9000</code> version suffix by one.</p>
+<p>For development versions, <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17" class="external-link">this GitHub action</a> automatically increments the <code>.9000</code> version suffix when pull requests are merged.</p>
 </div>
 </div>
 <div class="section level1">
@@ -245,7 +274,7 @@
 <div class="section level1">
 <h1 id="contribution">Contribution<a class="anchor" aria-label="anchor" href="#contribution"></a>
 </h1>
-<p>We encourage contribution to the Open Systems Pharmacology community. Before getting started please read the <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md" class="external-link">contribution guidelines</a>. If you are contributing to the codebase, please be familiar with the <a href="https://dev.open-systems-pharmacology.org/r-development-resources/coding_standards_r" class="external-link">R coding standards</a> as well as the <a href="https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide" class="external-link">collaboration guide</a>.</p>
+<p>Contributions to the Open Systems Pharmacology community are welcome. Before contributing, read the <a href="https://github.com/Open-Systems-Pharmacology/Suite/blob/master/CONTRIBUTING.md" class="external-link">contribution guidelines</a>. Code contributors should follow the <a href="https://dev.open-systems-pharmacology.org/r-development-resources/coding_standards_r" class="external-link">R coding standards</a> and <a href="https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide" class="external-link">collaboration guide</a>.</p>
 </div>
 <div class="section level1">
 <h1 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -308,7 +337,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
