@@ -83,10 +83,17 @@ jobs:
     if: needs.test-on-platforms.result == 'success'
 
     steps:
+      - name: Generate token from GitHub App
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.VERSION_BUMPER_APPID }}
+          private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Download updated renv.lock
         uses: actions/download-artifact@v4
@@ -95,16 +102,8 @@ jobs:
           path: .
 
       - name: Commit renv.lock if changed
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add renv.lock
-          if git diff --staged --quiet; then
-            echo "No changes to renv.lock"
-          else
-            git commit -m "Update renv.lock
-
-            - Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-            - Triggered by: ${{ github.actor }}"
-            git push
-          fi
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: '🤖 Update renv.lock [skip actions]'
+          default_author: github_actions
+          add: 'renv.lock'
