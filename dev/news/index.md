@@ -2,6 +2,8 @@
 
 ## ospsuite (development version)
 
+## ospsuite 12.4.0
+
 ### Major changes
 
 - Added support for macOS (both Intel and Apple Silicon architectures).
