@@ -119,3 +119,35 @@ customDPC$legendPosition <- tlf::LegendPositions$outsideRight
 customDPC$yAxisScale <- "log"
 customDPC$yAxisLimits <- c(0.01, 1000)
 saveRDS(customDPC, file = file.path(path, "customDPC"))
+
+# datset with mixed dimensions an y Units ---------------------------
+
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+outputPath <-  c("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+                 "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine")
+setOutputs(quantitiesOrPaths =  outputPath,
+           simulation = sim)
+simResults <- runSimulations(sim)[[1]]
+
+manyObsSimDCWithFraction <- DataCombined$new()
+
+manyObsSimDCWithFraction$addSimulationResults(
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath[1],
+  names = "Aciclovir Plasma",
+  groups = "Aciclovir PVB"
+)
+manyObsSimDCWithFraction$addSimulationResults(
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath[2],
+  names = "Aciclovir Fraction excreted",
+  groups = "Aciclovir Urine"
+)
+
+# observed data
+obsData <-  loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite"))
+
+manyObsSimDCWithFraction$addDataSets(obsData, groups = "Aciclovir PVB")
+
+saveRDS(manyObsSimDCWithFraction, file = file.path(path, "manyObsSimDCWithFraction"))

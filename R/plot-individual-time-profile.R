@@ -92,11 +92,12 @@ plotIndividualTimeProfile <- function(
 
   # data frames -----------------------------
 
-  # Getting all units on the same scale
-  combinedData <- convertUnits(
+  # Automatic unit conversion without requiring manual preprocessing
+  # This handles both user-specified units and auto-detection
+  combinedData <- .prepareDataWithAutoUnitConversion(
     dataCombined,
-    defaultPlotConfiguration$xUnit,
-    defaultPlotConfiguration$yUnit
+    defaultPlotConfiguration,
+    autoConvert = TRUE
   )
 
   # Datasets which haven't been assigned to any group will be plotted as a group
@@ -201,7 +202,20 @@ plotIndividualTimeProfile <- function(
   if (!showLegendPerDataset) {
     profilePlot <- profilePlot +
       ggplot2::guides(linetype = "none", shape = "none")
-  }
+  } else {
+     # Build guides list conditionally based on whether fill is used
+     guidesList <- list(
+       linetype = ggplot2::guide_legend(title = NULL, order = 1),
+       shape = ggplot2::guide_legend(title = NULL, order = 1),
+       color = ggplot2::guide_legend(title = NULL, order = 2)
+     )
+     # Only include fill guide if aggregation is used (population plots)
+     if (!is.null(aggregation)) {
+       guidesList$fill <- ggplot2::guide_legend(title = NULL, order = 2)
+     }
+     profilePlot <- profilePlot +
+       ggplot2::guides(!!!guidesList)
+    }
 
-  return(profilePlot)
+    return(profilePlot)
 }

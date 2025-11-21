@@ -363,6 +363,11 @@
 
 #' Compute error bar bounds from error type
 #'
+#' @details
+#' This function supports mixed error types within the same dataset.
+#' Different groups or datasets can have different error types (arithmetic vs geometric)
+#' and they will be handled appropriately.
+#'
 #' @keywords internal
 #' @noRd
 .computeBoundsFromErrorType <- function(data) {
@@ -383,23 +388,38 @@
           dplyr::near(yErrorValues, 0) ~ NA_real_,
           TRUE ~ yErrorValues
         ),
-        # For compuring uncertainty, there are only three possibilities:
+        # Support for mixed error types - each dataset/group can have its own error type
+        # For computing uncertainty, we handle multiple error types:
         #
-        # - The error type is arithmetic (`DataErrorType$ArithmeticStdDev`).
-        # - The error type is geometric (`DataErrorType$GeometricStdDev`).
-        # - If the errors are none of these, then add `NA`s (of type `double`),
-        #   since these are the only error types supported in `DataErrorType`.
+        # - Arithmetic standard deviation (`DataErrorType$ArithmeticStdDev`)
+        # - Geometric standard deviation (`DataErrorType$GeometricStdDev`)
+        # - If the errors are none of these, then add `NA`s (of type `double`)
+        #
+        # This allows different datasets to use different error representations
+        # in the same plot
         yValuesLower = dplyr::case_when(
+          is.na(yErrorType) | is.na(yErrorValues) ~ NA_real_,
           yErrorType == DataErrorType$ArithmeticStdDev ~ yValues - yErrorValues,
           yErrorType == DataErrorType$GeometricStdDev ~ yValues / yErrorValues,
           TRUE ~ NA_real_
         ),
         yValuesHigher = dplyr::case_when(
+          is.na(yErrorType) | is.na(yErrorValues) ~ NA_real_,
           yErrorType == DataErrorType$ArithmeticStdDev ~ yValues + yErrorValues,
           yErrorType == DataErrorType$GeometricStdDev ~ yValues * yErrorValues,
           TRUE ~ NA_real_
         )
       )
+
+    # Log information about mixed error types if present
+    uniqueErrorTypes <- unique(data$yErrorType[!is.na(data$yErrorType)])
+    if (length(uniqueErrorTypes) > 1) {
+      message(paste0(
+        "Mixed error types detected in data: ",
+        paste(uniqueErrorTypes, collapse = ", "),
+        ". Each will be handled according to its type."
+      ))
+    }
   } else {
     # These columns should always be present in the data frame because they are
     # part of `{tlf}` mapping.
@@ -879,4 +899,71 @@ DataAggregationMethods <-
 
 .geoSD <- function(x, na.rm = FALSE, ...) {
   exp(stats::sd(log(x), na.rm = na.rm, ...))
+}
+
+#' Prepare data for plotting with automatic unit conversion
+#'
+#' @description
+#' This function automatically handles unit conversion for plotting without requiring
+#' manual preprocessing. It intelligently converts units to the most common unit
+#' or user-specified target units.
+#'
+#' @param dataCombined A `DataCombined` object or data frame from `DataCombined$toDataFrame()`.
+#' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object with optional
+#'   target units specified.
+#' @param autoConvert Logical. If TRUE (default), automatically convert units even if
+#'   no target units are specified in the configuration.
+#'
+#' @return A data frame with harmonized units ready for plotting.
+#'
+#' @keywords internal
+#' @noRd
+.prepareDataWithAutoUnitConversion <- function(dataCombined,
+                                                defaultPlotConfiguration = NULL,
+                                                autoConvert = TRUE) {
+  # Handle both DataCombined objects and data frames
+  if (inherits(dataCombined, "DataCombined")) {
+    combinedData <- dataCombined$toDataFrame()
+  } else {
+    combinedData <- dataCombined
+  }
+
+  # If no data, return early
+  if (is.null(combinedData) || nrow(combinedData) == 0) {
+    return(combinedData)
+  }
+
+  # Get target units from configuration or auto-detect
+  xTargetUnit <- NULL
+  yTargetUnit <- NULL
+
+  if (!is.null(defaultPlotConfiguration)) {
+    xTargetUnit <- defaultPlotConfiguration$xUnit
+    yTargetUnit <- defaultPlotConfiguration$yUnit
+  }
+
+  # If autoConvert is TRUE and no target units specified, use most frequent units
+  if (autoConvert) {
+    if (is.null(xTargetUnit) && "xUnit" %in% names(combinedData)) {
+      xTargetUnit <- .extractMostFrequentUnit(combinedData, unitColumn = "xUnit")
+    }
+    if (is.null(yTargetUnit) && "yUnit" %in% names(combinedData)) {
+      yTargetUnit <- .extractMostFrequentUnit(combinedData, unitColumn = "yUnit")
+    }
+  }
+
+  # Perform unit conversion using existing utility
+  if (!is.null(xTargetUnit) || !is.null(yTargetUnit)) {
+    combinedData <- .unitConverter(combinedData, xUnit = xTargetUnit, yUnit = yTargetUnit)
+
+    # Log the unit conversion for transparency
+    if (!is.null(xTargetUnit)) {
+      message(paste0("Automatically converted X-axis units to: ", xTargetUnit))
+    }
+    if (!is.null(yTargetUnit)) {
+      message(paste0("Automatically converted Y-axis units to: ", yTargetUnit))
+    }
+  }
+
+  return(combinedData)
 }
