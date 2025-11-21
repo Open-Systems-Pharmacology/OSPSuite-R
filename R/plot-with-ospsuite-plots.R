@@ -429,11 +429,8 @@ plotQuantileQuantilePlot <- function(plotData,
     } else {
       plotData <- plotData$toDataFrame()  |>
         data.table::setDT()
-      plotData <- .unitConverter(
-        data = plotData,
-        xUnit = .getMostFrequentUnit(plotData, "xUnit"),
-        yUnit = .getMostFrequentUnit(plotData, "yUnit")
-      )
+
+      plotData <- .convertUnitsForPlot(plotData,2)
     }
   }
   checkmate::assertDataFrame(plotData)
@@ -502,6 +499,62 @@ plotQuantileQuantilePlot <- function(plotData,
   }
 
   return(observedUnits[[unitColumn]][1])
+}
+#' Convert Units for Plotting
+#'
+#' This function converts units in the provided plot data and ensures that specific
+#' y-dimensions are merged and ordered appropriately.
+#'
+#' @param plotData A data.frame containing the data to be plotted.
+#' @param maxAllowedYDimensions An integer indicating the maximum number of
+#'   y-dimensions allowed in the plot. If more than this number is found, an error is raised.
+#'
+#' @return A data.table containing the converted units and merged dimensions, ordered
+#'   with specified dimensions at the top.
+#'
+#' @keywords internal
+#' @noRd
+.convertUnitsForPlot <- function(plotData,maxAllowedYDimensions){
+
+  validateIsOfType(plotData, "data.frame",FALSE)
+  if (nrow(plotData) == 0) return(plotData)
+  plotData <- setDT(plotData)
+  validateIsInteger(maxAllowedYDimensions, FALSE)
+
+  xUnitStr = .getMostFrequentUnit(plotData, "xUnit")
+
+  plotDataByDimensions <- split(plotData, by = 'yDimension')
+  dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
+
+  # Merge Concentration dimensions if they exist
+  if (all(dimensionsToMerge %in% names(plotDataByDimensions))) {
+    plotDataByDimensions[[dimensionsToMerge[1]]] <- rbindlist(plotDataByDimensions[dimensionsToMerge])
+    plotDataByDimensions[[dimensionsToMerge[2]]] <- NULL
+  }
+
+  # Check for maximum allowed Y dimensions
+  if (length(plotDataByDimensions) > maxAllowedYDimensions) {
+    stop(messages$plotToManyYDimension(unique(plotData$yDimension)))
+  }
+
+  # Convert units for each dimension
+  convertedData <- lapply(plotDataByDimensions, function(dt) {
+    yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
+    dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
+    dt[,yUnit := yUnitStr]
+    dt[,yDimension := getDimensionForUnit(yUnitStr)]
+    return(dt)
+  })
+
+  # Order the list to have Concentration at the top,
+  # that ensures it will be displayed on the primary axis at the timeprofile plots
+  orderedData <- c(convertedData[dimensionsToMerge],
+                   convertedData[!names(convertedData) %in% dimensionsToMerge])
+
+  result <- rbindlist(orderedData)
+  result[,xUnit := xUnitStr]
+
+  return(result)
 }
 #' Calculate Y Bounds Based on Error Types
 #'

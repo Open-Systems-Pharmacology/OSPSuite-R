@@ -146,3 +146,62 @@ test_that("Function calculates yMin and yMax correctly", {
   expect_true(all(is.na(result$yErrorType)))  # Should be set to NA
 })
 
+# .convertUnitsForPlot ----------------
+
+test_that("Function handles empty data correctly", {
+  emptyData <- data.frame()
+  result <- .convertUnitsForPlot(emptyData, 2)
+  expect_equal(result, emptyData)
+})
+
+test_that("Function checks for data.frame input", {
+  expect_error(.convertUnitsForPlot(matrix(1:10, nrow = 5), 2),'is of type')
+})
+
+
+test_that("Function checks maxAllowedYDimensions is an integer", {
+  validData <- data.frame(yDimension = c("Concentration (mass)", "Concentration (molar)"),
+                           xUnit = c("mg/L", "mol/L"),
+                           yUnit = c("mg/L", "mol/L"),
+                           value = c(10, 0.1))
+
+  expect_error(.convertUnitsForPlot(validData, "two"),
+               "is of type")
+})
+
+test_that("Function merges dimensions correctly", {
+  validData <- data.frame(yDimension = c("Concentration (mass)", "Concentration (molar)"),
+                          xUnit = c("h", "min"),
+                          xDimension = 'Time',
+                          yUnit = c("mg/l", "mol/l"),
+                          group = c('group','group'),
+                          name = c('A','B'),
+                          dataType = c('observed','simulated'),
+                          xValues = c(1, 1),
+                          yValues = c(10, 0.1),
+                          molWeight = 2
+                          )
+
+  result <- .convertUnitsForPlot(validData, 2)
+  expect_equal(nrow(result), 2)
+  expect_true(all(result$yDimension %in% "Concentration (mass)"))
+  expect_true(all(result$yUnit %in% "mg/l"))
+})
+
+test_that("Function raises error for too many Y dimensions", {
+  validData <- data.frame(yDimension = c("Concentration (mass)", "Fraction"),
+                          xUnit = c("h", "min"),
+                          xDimension = 'Time',
+                          yUnit = c("mg/l", ""),
+                          group = c('group','group'),
+                          name = c('A','B'),
+                          dataType = c('observed','simulated'),
+                          xValues = c(1, 1),
+                          yValues = c(10, 0.1),
+                          molWeight = 2
+  )
+
+  expect_error(.convertUnitsForPlot(validData, 1),
+               substr(messages$plotToManyYDimension(validData$yDimension),1,10))
+})
+
