@@ -408,35 +408,38 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .validateAndConvertData <- function(plotData, predictedIsNeeded, scaling = NULL, aggregation = NULL, quantiles = NULL, nsd = 1) {
   # initialize variables used for data.table to avoid messages during checks
-  dataType <- xUnit <- yUnit <- yErrorType <- predicted <- NULL
+  dataType <- predicted <- NULL
 
   if ("DataCombined" %in% class(plotData)) {
-    if (is.null(nrow(plotData$toDataFrame()))) stop(messages$plotNoDataAvailable())
+    plotData <- plotData$toDataFrame() |>
+      data.table::setDT()
+
+    if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
 
     if (predictedIsNeeded) {
-      plotData <- calculateResiduals(
-        dataCombined = plotData,
+      plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
+
+      plotData <- .calculateResidualsForPlot(
+        plotData = plotData,
         scaling = scaling
-      )  |>
+      ) |>
         data.table::setDT()
       if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
-      plotData <- plotData  |>
+      plotData <- plotData |>
         data.table::setnames(
           old = c("yValuesSimulated", "yValuesObserved"),
           new = c("predicted", "yValues")
-        )  |>
+        ) |>
         dplyr::mutate(dataType = "observed")
     } else {
-      plotData <- plotData$toDataFrame()  |>
-        data.table::setDT()
-
-      plotData <- .convertUnitsForPlot(plotData,2)
+      plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 2)
     }
+  } else {
+    validateIsOfType(plotData, "data.frame", nullAllowed = FALSE)
+    checkmate::assertNames(names(plotData), must.include = c("xValues", "yValues", "group", "dataType"))
   }
-  checkmate::assertDataFrame(plotData)
-  checkmate::assertNames(names(plotData), must.include = c("xValues", "yValues", "group", "dataType"))
 
-  # check for inconsitent errortypes
+  # check for inconsistent error types
   plotData <- .convertInconsistentErrorTypes(plotData)
 
   # Aggregate only for Timeprofiles
@@ -514,16 +517,20 @@ plotQuantileQuantilePlot <- function(plotData,
 #'
 #' @keywords internal
 #' @noRd
-.convertUnitsForPlot <- function(plotData,maxAllowedYDimensions){
+.convertUnitsForPlot <- function(plotData, maxAllowedYDimensions) {
+  # initialize variables used for data.table to avoid messages during checks
+  xUnit <- yUnit <- yDimension <- NULL
 
-  validateIsOfType(plotData, "data.frame",FALSE)
-  if (nrow(plotData) == 0) return(plotData)
+  validateIsOfType(plotData, "data.frame", FALSE)
+  if (nrow(plotData) == 0) {
+    return(plotData)
+  }
   plotData <- setDT(plotData)
   validateIsInteger(maxAllowedYDimensions, FALSE)
 
-  xUnitStr = .getMostFrequentUnit(plotData, "xUnit")
+  xUnitStr <- .getMostFrequentUnit(plotData, "xUnit")
 
-  plotDataByDimensions <- split(plotData, by = 'yDimension')
+  plotDataByDimensions <- split(plotData, by = "yDimension")
   dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
 
   # Merge Concentration dimensions if they exist
@@ -541,18 +548,20 @@ plotQuantileQuantilePlot <- function(plotData,
   convertedData <- lapply(plotDataByDimensions, function(dt) {
     yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
     dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
-    dt[,yUnit := yUnitStr]
-    dt[,yDimension := getDimensionForUnit(yUnitStr)]
+    dt[, yUnit := yUnitStr]
+    dt[, yDimension := getDimensionForUnit(yUnitStr)]
     return(dt)
   })
 
   # Order the list to have Concentration at the top,
   # that ensures it will be displayed on the primary axis at the timeprofile plots
-  orderedData <- c(convertedData[dimensionsToMerge],
-                   convertedData[!names(convertedData) %in% dimensionsToMerge])
+  orderedData <- c(
+    convertedData[dimensionsToMerge],
+    convertedData[!names(convertedData) %in% dimensionsToMerge]
+  )
 
   result <- rbindlist(orderedData)
-  result[,xUnit := xUnitStr]
+  result[, xUnit := xUnitStr]
 
   return(result)
 }
@@ -567,6 +576,9 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @keywords internal
 #' @noRd
 .convertInconsistentErrorTypes <- function(plotData) {
+  # initialize variables used for data.table to avoid messages during checks
+  yErrorType <- yMin <- NULL
+
   # nothing to do
   if (!("yErrorType" %in% names(plotData))) {
     return(plotData)
@@ -582,18 +594,20 @@ plotQuantileQuantilePlot <- function(plotData,
 
   # Check if there are multiple unique yErrorType values
   if (uniqueN(plotData[!is.na(yErrorType), yErrorType]) > 1) {
-    if (!'yMin' %in% names(plotData)) plotData[, yMin := NA_real_]
-    if (!'yMax' %in% names(plotData)) plotData[, yMin := NA_real_]
+    if (!"yMin" %in% names(plotData)) plotData[, yMin := NA_real_]
+    if (!"yMax" %in% names(plotData)) plotData[, yMin := NA_real_]
     plotData[yErrorType == DataErrorType$GeometricStdDev, `:=`(
       yMin = yValues / yErrorValues,
       yMax = yValues * yErrorValues,
       yErrorValues = NA_real_,
-      yErrorType = NA_real_)]
+      yErrorType = NA_real_
+    )]
     plotData[yErrorType == DataErrorType$ArithmeticStdDev, `:=`(
-      yMin =  yValues - yErrorValues,
-      yMax =  yValues + yErrorValues,
+      yMin = yValues - yErrorValues,
+      yMax = yValues + yErrorValues,
       yErrorValues = NA_real_,
-      yErrorType = NA_real_)]
+      yErrorType = NA_real_
+    )]
   }
 
   return(plotData)
@@ -660,7 +674,41 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(metaData)
 }
+#' Calculate Residuals for Plotting
+#'
+#' This function computes the residuals from observed and simulated datasets,
+#' ensuring that only pairable datasets are considered. It utilizes the
+#' `.removeUnpairableDatasets` function to filter the input data and
+#' then extracts residuals grouped by a specified variable.
+#'
+#' @param plotData A data.table containing observed and simulated datasets,
+#'                 along with a grouping variable.
+#' @param scaling A character specifying scale: either `lin`
+#'   (linear) or `log` (logarithmic).
+#'
+#' @return A data.table containing the residuals for each group, along with
+#'         the relevant identifiers. Returns NULL if no pairable datasets
+#'         are found.
+#' @keywords internal
+#' @noRd
+.calculateResidualsForPlot <- function(plotData, scaling) {
+  # Remove the observed and simulated datasets which can't be paired.
+  plotData <- .removeUnpairableDatasets(plotData)
 
+  # Return early if there are no pair-able datasets present
+  if (nrow(plotData) == 0L) {
+    warning(messages$residualsCanNotBeComputed())
+    return(NULL)
+  }
+
+  pairedData <- plotData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
+    dplyr::ungroup() %>%
+    dplyr::relocate(group, name, nameSimulated)
+
+  return(pairedData)
+}
 
 #' Creates mapping for plotData.
 #'
@@ -752,7 +800,7 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .getMappingForResiduals <- function(xMapping, userMapping) {
   # initialize variables used for data.table to avoid messages during checks
-  xValues <- predicted <- yValues <- group <- NULL
+  predicted <- yValues <- group <- NULL
 
   mapping <- structure(
     utils::modifyList(
