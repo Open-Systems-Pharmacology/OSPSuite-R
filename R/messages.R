@@ -148,3 +148,139 @@ messages$forbiddenSimulationName <- function(name, sim) {
     "'."
   )
 }
+
+##### MoBiProject#####
+messages$modulesNotPresentInProject <- function(modules) {
+  paste0(
+    "Modules with the name(s) ",
+    paste(modules, collapse = ", "),
+    " is/are not present in the project!"
+  )
+}
+
+messages$icBBNotPresentInModule <- function(moduleName, icBBName) {
+  paste0(
+    "Initial Condition Building Block with the name '",
+    icBBName,
+    "' is not present in the module '",
+    moduleName,
+    "'!"
+  )
+}
+
+messages$pvBBNotPresentInModule <- function(moduleName, pvBBName) {
+  paste0(
+    "Parameter Value Building Block with the name '",
+    pvBBName,
+    "' is not present in the module '",
+    moduleName,
+    "'!"
+  )
+}
+
+messages$errorSimulationNotFound <- function(simulationName) {
+  paste0(
+    "Simulation with the name '",
+    simulationName,
+    "' is not present in the project!"
+  )
+}
+
+messages$errorDataSetsNotPresentInProject <- function(dataSetNames) {
+  paste0(
+    "Data set(s) with the name(s) ",
+    paste(dataSetNames, collapse = ", "),
+    " is/are not present in the project!"
+  )
+}
+
+##### BuildingBlock #####
+messages$errorExpressionProfileNotFound <- function(names) {
+  paste0(
+    "Expression profile(s) with the name(s) ",
+    paste(names, collapse = ", "),
+    " is/are not present in the project!"
+  )
+}
+
+messages$errorIndividualNotFound <- function(name) {
+  paste0("Individual with the name ", name, " is not present in the project!")
+}
+
+messages$errorWrongBuildingBlockType <- function(
+  bbName,
+  expectedType,
+  actualType
+) {
+  paste0(
+    "Building Block with the name '",
+    bbName,
+    "' is of type '",
+    actualType,
+    "', but expected type is '",
+    expectedType,
+    "'."
+  )
+}
+
+messages$errorICNotFoundInModule <- function(icName, moduleName) {
+  paste0(
+    "Initial Condition Building Block with the name '",
+    icName,
+    "' is not present in the module '",
+    moduleName,
+    "'."
+  )
+}
+
+messages$errorPVNotFoundInModule <- function(pvName, moduleName) {
+  paste0(
+    "Parameter Values Building Block with the name '",
+    pvName,
+    "' is not present in the module '",
+    moduleName,
+    "'."
+  )
+}
+
+##### Simulation #####
+messages$errorFeatureNotSupportedBySimulation <- function(
+  featureName,
+  version,
+  requiredVersion
+) {
+  paste0(
+    "The feature '",
+    featureName,
+    "' is not supported by this simulation. The simulation was created with OSP version ",
+    version,
+    ". Minimal required OSP version is ",
+    requiredVersion
+  )
+}
+
+##### SimulationConfiguration #####
+messages$errorExpressionProfileAlreadyDefined <- function(
+  profileName,
+  proteinName
+) {
+  paste0(
+    "Expression for the protein '",
+    proteinName,
+    "' has already been defined for this simulation configuration with the expression profile '",
+    profileName,
+    "'."
+  )
+}
+
+messages$errorOnlyOneIndividualPerConfiguration <- function() {
+  "Only one individual can be assigned to a simulation configuration."
+}
+
+messages$errorModuleNotInConfiguration <- function(moduleName) {
+  paste0(
+    "Module(s) with the name(s) '",
+    moduleName,
+    "' is not part of the simulation configuration."
+  )
+}
