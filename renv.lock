@@ -2398,7 +2398,7 @@
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
-      "Version": "1.8.0.9007",
+      "Version": "1.9.0.9001",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Utility Functions for Open Systems Pharmacology R Packages",
@@ -2439,7 +2439,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.RUtils",
       "RemoteRef": "main",
-      "RemoteSha": "3c7b77145324115b100c7862695daff3dfba105e"
+      "RemoteSha": "cb3f304ad4663156985ff9f1df1e0fb05a9460a6"
     },
     "otel": {
       "Package": "otel",
