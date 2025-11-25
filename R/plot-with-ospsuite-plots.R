@@ -587,7 +587,7 @@ plotQuantileQuantilePlot <- function(plotData,
   # Check if there are multiple unique yErrorType values
   if (uniqueN(plotData[!is.na(yErrorType), yErrorType]) > 1) {
     if (!"yMin" %in% names(plotData)) plotData[, yMin := NA_real_]
-    if (!"yMax" %in% names(plotData)) plotData[, yMin := NA_real_]
+    if (!"yMax" %in% names(plotData)) plotData[, yMax := NA_real_]
     plotData[yErrorType == DataErrorType$GeometricStdDev, `:=`(
       yMin = yValues / yErrorValues,
       yMax = yValues * yErrorValues,

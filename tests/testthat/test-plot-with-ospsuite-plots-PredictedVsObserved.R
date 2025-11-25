@@ -191,7 +191,7 @@ test_that("Plot throws error with fraction and concentration", {
   manyObsSimDCWithFraction <- readRDS(getTestDataFilePath("manyObsSimDCWithFraction"))
 
   expect_error(plotPredictedVsObserved(manyObsSimDCWithFraction),
-              'Data contains to many')
+              'Data contains too many')
 
 })
 
