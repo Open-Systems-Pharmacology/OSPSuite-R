@@ -163,6 +163,6 @@ messages$plotMissingColumnPredicted <- function() {
 
 
 messages$plotToManyYDimension <- function(yDimensions) {
-  paste0("Data contains to many yDimensions: '",paste(yDimensions,collapse = "', '"),
+  paste0("Data contains too many yDimensions: '",paste(yDimensions,collapse = "', '"),
              "'. Automatic y-Unit conversion failed.")
 }
