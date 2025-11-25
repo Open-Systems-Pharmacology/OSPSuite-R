@@ -17,36 +17,7 @@ manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
 
 oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
 
-# convert to datatable and add errors as yMin and yMax to circumvent check for different dataTypes
-manyObsDCdt <- manyObsDC$toDataFrame() %>%
-  data.table::setDT()
-manyObsDCdt[, `:=`(
-  yMin = ifelse(yErrorType == "GeometricStdDev",
-    yValues / yErrorValues, yValues + yErrorValues
-  ),
-  yMax = ifelse(yErrorType == "GeometricStdDev",
-    yValues * yErrorValues, yValues - yErrorValues
-  ),
-  yErrorValues = NULL,
-  yErrorType = NULL
-)]
-
-manyObsSimDCdt <- convertUnits(manyObsSimDC,
-  xUnit = ospUnits[["Time"]][["h"]],
-  yUnit = ospUnits[["Concentration [mass]"]][["mg/l"]]
-) %>%
-  data.table::setDT()
-manyObsSimDCdt[, `:=`(
-  yMin = ifelse(yErrorType == "GeometricStdDev",
-    yValues / yErrorValues, yValues + yErrorValues
-  ),
-  yMax = ifelse(yErrorType == "GeometricStdDev",
-    yValues * yErrorValues, yValues - yErrorValues
-  ),
-  yErrorValues = NULL,
-  yErrorType = NULL
-)]
-
+manyObsSimDCWithFraction <- readRDS(getTestDataFilePath("manyObsSimDCWithFraction"))
 
 ### only observed ------------------------
 test_that("It creates default plots as expected for single observed dataset", {
@@ -61,23 +32,16 @@ test_that("It creates default plots as expected for single observed dataset", {
 test_that("It creates default plots as expected for multiple observed datasets", {
   set.seed(123)
 
-  # It throws error if error Types are not unique
-  expect_error(
-    plotTimeProfile(manyObsDC),
-    messages$plotErrorTypeConsistency()
-  )
-
-
   vdiffr::expect_doppelganger(
     title = "multiple obs",
-    fig = plotTimeProfile(manyObsDCdt)
+    fig = plotTimeProfile(manyObsDC)
   )
 
 
   vdiffr::expect_doppelganger(
     title = "multiple obs - separate legend",
-    fig = plotTimeProfile(manyObsDCdt,
-      mapping = ggplot2::aes(groupby = name)
+    fig = plotTimeProfile(manyObsDC,
+                          mapping = ggplot2::aes(groupby = name)
     )
   )
 })
@@ -99,10 +63,10 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
   vdiffr::expect_doppelganger(
     title = "multiple sim - separate legend",
     fig = plotTimeProfile(manySimDC,
-      mapping = ggplot2::aes(
-        group = name,
-        linetype = name
-      )
+                          mapping = ggplot2::aes(
+                            group = name,
+                            linetype = name
+                          )
     )
   )
 })
@@ -123,10 +87,10 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs and sim",
-    fig = plotTimeProfile(manyObsSimDCdt,
-      yscale = "log",
-      yscale.args = list(limits = c(0.001, NA)),
-      mapping = ggplot2::aes(groupby = name)
+    fig = plotTimeProfile(manyObsSimDC,
+                          yscale = "log",
+                          yscale.args = list(limits = c(0.001, NA)),
+                          mapping = ggplot2::aes(groupby = name)
     )
   )
 })
@@ -147,7 +111,7 @@ test_that("It returns error when `DataCombined` is empty", {
   expect_error(plotTimeProfile(myCombDat), messages$plotNoDataAvailable())
 })
 
-# LLOQ
+# LLOQ ----
 
 test_that("LLOQ is plotted", {
   set.seed(42)
@@ -167,6 +131,17 @@ test_that("LLOQ is plotted", {
   vdiffr::expect_doppelganger(
     title = "lloq",
     fig = plotTimeProfile(dc, yscale = "log")
+  )
+})
+
+# 2 y-axis dimensions ----
+test_that("Plot works with fraction and concentration", {
+
+  vdiffr::expect_doppelganger(
+    title = "with_secAxis",
+    fig = plotTimeProfile(manyObsSimDCWithFraction, yscale = "log") +
+      ggplot2::theme(legend.position = c(0.95, 0.05),
+                     legend.justification = c("right", "bottom"))
   )
 })
 

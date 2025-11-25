@@ -400,43 +400,39 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .validateAndConvertData <- function(plotData, predictedIsNeeded, scaling = NULL, aggregation = NULL, quantiles = NULL, nsd = 1) {
   # initialize variables used for data.table to avoid messages during checks
-  dataType <- xUnit <- yUnit <- yErrorType <- predicted <- NULL
+  dataType <- predicted <- NULL
 
   if ("DataCombined" %in% class(plotData)) {
-    if (is.null(nrow(plotData$toDataFrame()))) stop(messages$plotNoDataAvailable())
+    plotData <- plotData$toDataFrame() |>
+      data.table::setDT()
+
+    if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
 
     if (predictedIsNeeded) {
-      plotData <- calculateResiduals(
-        dataCombined = plotData,
+      plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
+
+      plotData <- .calculateResidualsForPlot(
+        plotData = plotData,
         scaling = scaling
-      ) %>%
+      ) |>
         data.table::setDT()
       if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
-      plotData <- plotData %>%
+      plotData <- plotData |>
         data.table::setnames(
           old = c("yValuesSimulated", "yValuesObserved"),
           new = c("predicted", "yValues")
-        ) %>%
+        ) |>
         dplyr::mutate(dataType = "observed")
     } else {
-      plotData <- plotData$toDataFrame() %>%
-        data.table::setDT()
-      # check if we have datatype observed AND simulated and  units differ between dataType
-      if (plotData[, uniqueN(dataType)] == 2 &&
-        plotData[, .(nUnit = uniqueN(xUnit) * uniqueN(yUnit))]$nUnit > 1) {
-        if (!all(plotData[, .(nUnit = uniqueN(xUnit) * uniqueN(yUnit)), by = "dataType"]$nUnit == 1)) {
-          stop(messages$plotUnitConsistency())
-        }
-        plotData <- .unitConverter(
-          data = plotData,
-          xUnit = plotData[dataType == "observed"]$xUnit[1],
-          yUnit = plotData[dataType == "observed"]$yUnit[1]
-        )
-      }
+      plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 2)
     }
+  } else {
+    validateIsOfType(plotData, "data.frame", nullAllowed = FALSE)
+    checkmate::assertNames(names(plotData), must.include = c("xValues", "yValues", "group", "dataType"))
   }
-  checkmate::assertDataFrame(plotData)
-  checkmate::assertNames(names(plotData), must.include = c("xValues", "yValues", "group", "dataType"))
+
+  # check for inconsistent error types
+  plotData <- .convertInconsistentErrorTypes(plotData)
 
   # Aggregate only for Timeprofiles
   if (!predictedIsNeeded) {
@@ -446,18 +442,6 @@ plotQuantileQuantilePlot <- function(plotData,
       quantiles = quantiles,
       nsd = nsd
     )
-  }
-
-  if ("yErrorType" %in% names(plotData) &&
-    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-    checkmate::assertNames(names(plotData),
-      must.include = c("yErrorValues"),
-      .var.name = "columns needed for yErrorValues"
-    )
-
-    if (length(unique(plotData[!is.na(yErrorType)][["yErrorType"]])) > 1) {
-      stop(messages$plotErrorTypeConsistency())
-    }
   }
 
   # create a copy, so changes to columns will stay inside function
@@ -478,7 +462,148 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(plotData)
 }
+#' Get Most Frequent Unit
+#'
+#' This function retrieves the most frequently occurring unit from a specified column
+#' in a given dataset, prioritizing observed data types. If no observed units are
+#' available, it will return the most frequent simulated unit instead.
+#'
+#' @param data A data.table or data.frame containing the data. It must include the
+#' columns 'group', 'name', 'yUnit', 'xUnit', and 'dataType'.
+#' @param unitColumn A character string specifying the column name from which to
+#' extract the most frequent unit. This should be either 'yUnit' or 'xUnit'.
+#'
+#' @return The most frequent observed unit from the specified column, or the most
+#' frequent simulated unit if no observed units are available.
+#' @keywords internal
+#' @noRd
+.getMostFrequentUnit <- function(data, unitColumn) {
+  # count per group and not per timepoint
+  dt <- data[, c("group", "name", "dataType", unitColumn), with = FALSE] |>
+    unique()
 
+  # Filter for observed data first
+  observedUnits <- dt[dataType == "observed", .N, by = c(unitColumn)] |>
+    setorderv(cols = c("N"), order = -1)
+
+  # If no observed units, check simulated
+  if (nrow(observedUnits) == 0) {
+    simulatedUnits <- dt[dataType == "simulated", .N, by = c(unitColumn)] |>
+      setorderv(cols = c("N"), order = -1)
+    return(simulatedUnits[[unitColumn]][1])
+  }
+
+  return(observedUnits[[unitColumn]][1])
+}
+#' Convert Units for Plotting
+#'
+#' This function converts units in the provided plot data and ensures that specific
+#' y-dimensions are merged and ordered appropriately.
+#'
+#' @param plotData A data.frame containing the data to be plotted.
+#' @param maxAllowedYDimensions An integer indicating the maximum number of
+#'   y-dimensions allowed in the plot. If more than this number is found, an error is raised.
+#'
+#' @return A data.table containing the converted units and merged dimensions, ordered
+#'   with specified dimensions at the top.
+#'
+#' @keywords internal
+#' @noRd
+.convertUnitsForPlot <- function(plotData, maxAllowedYDimensions) {
+  # initialize variables used for data.table to avoid messages during checks
+  xUnit <- yUnit <- yDimension <- NULL
+
+  validateIsOfType(plotData, "data.frame", FALSE)
+  if (nrow(plotData) == 0) {
+    return(plotData)
+  }
+  plotData <- setDT(plotData)
+  validateIsInteger(maxAllowedYDimensions, FALSE)
+
+  xUnitStr <- .getMostFrequentUnit(plotData, "xUnit")
+
+  plotDataByDimensions <- split(plotData, by = "yDimension")
+  dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
+
+  # Merge Concentration dimensions if they exist
+  if (all(dimensionsToMerge %in% names(plotDataByDimensions))) {
+    plotDataByDimensions[[dimensionsToMerge[1]]] <- rbindlist(plotDataByDimensions[dimensionsToMerge])
+    plotDataByDimensions[[dimensionsToMerge[2]]] <- NULL
+  }
+
+  # Check for maximum allowed Y dimensions
+  if (length(plotDataByDimensions) > maxAllowedYDimensions) {
+    stop(messages$plotToManyYDimension(unique(plotData$yDimension)))
+  }
+
+  # Convert units for each dimension
+  convertedData <- lapply(plotDataByDimensions, function(dt) {
+    yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
+    dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
+    dt[, yUnit := yUnitStr]
+    dt[, yDimension := getDimensionForUnit(yUnitStr)]
+    return(dt)
+  })
+
+  # Order the list to have Concentration at the top,
+  # that ensures it will be displayed on the primary axis at the timeprofile plots
+  orderedData <- c(
+    convertedData[dimensionsToMerge],
+    convertedData[!names(convertedData) %in% dimensionsToMerge]
+  )
+
+  result <- rbindlist(orderedData)
+  result[, xUnit := xUnitStr]
+
+  return(result)
+}
+#' Calculate Y Bounds Based on Error Types
+#'
+#' This function modifies a data.table by calculating the minimum and maximum Y values
+#' based on the specified error types.
+#'
+#' @param plotData A data.table containing the columns yValues, yErrorValues, and yErrorType.
+#' @return A modified data.table with additional columns yMin and yMax calculated based on yErrorType.
+#'
+#' @keywords internal
+#' @noRd
+.convertInconsistentErrorTypes <- function(plotData) {
+  # initialize variables used for data.table to avoid messages during checks
+  yErrorType <- yMin <- NULL
+
+  # nothing to do
+  if (!("yErrorType" %in% names(plotData))) {
+    return(plotData)
+  }
+
+  if ("yErrorType" %in% names(plotData) &&
+    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
+    checkmate::assertNames(names(plotData),
+      must.include = c("yErrorValues"),
+      .var.name = "columns needed for yErrorValues"
+    )
+  }
+
+  # Check if there are multiple unique yErrorType values
+  if (uniqueN(plotData[!is.na(yErrorType), yErrorType]) > 1) {
+    if (!"yMin" %in% names(plotData)) plotData[, yMin := NA_real_]
+    if (!"yMax" %in% names(plotData)) plotData[, yMin := NA_real_]
+    plotData[yErrorType == DataErrorType$GeometricStdDev, `:=`(
+      yMin = yValues / yErrorValues,
+      yMax = yValues * yErrorValues,
+      yErrorValues = NA_real_,
+      yErrorType = NA_real_
+    )]
+    plotData[yErrorType == DataErrorType$ArithmeticStdDev, `:=`(
+      yMin = yValues - yErrorValues,
+      yMax = yValues + yErrorValues,
+      yErrorValues = NA_real_,
+      yErrorType = NA_real_
+    )]
+  }
+
+  return(plotData)
+}
 #' Construct Metadata for Time Profile
 #'
 #' This function generates metadata for time profile plots based on the provided plot data.
@@ -541,7 +666,41 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(metaData)
 }
+#' Calculate Residuals for Plotting
+#'
+#' This function computes the residuals from observed and simulated datasets,
+#' ensuring that only pairable datasets are considered. It utilizes the
+#' `.removeUnpairableDatasets` function to filter the input data and
+#' then extracts residuals grouped by a specified variable.
+#'
+#' @param plotData A data.table containing observed and simulated datasets,
+#'                 along with a grouping variable.
+#' @param scaling A character specifying scale: either `lin`
+#'   (linear) or `log` (logarithmic).
+#'
+#' @return A data.table containing the residuals for each group, along with
+#'         the relevant identifiers. Returns NULL if no pairable datasets
+#'         are found.
+#' @keywords internal
+#' @noRd
+.calculateResidualsForPlot <- function(plotData, scaling) {
+  # Remove the observed and simulated datasets which can't be paired.
+  plotData <- .removeUnpairableDatasets(plotData)
 
+  # Return early if there are no pair-able datasets present
+  if (nrow(plotData) == 0L) {
+    warning(messages$residualsCanNotBeComputed())
+    return(NULL)
+  }
+
+  pairedData <- plotData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
+    dplyr::ungroup() %>%
+    dplyr::relocate(group, name, nameSimulated)
+
+  return(pairedData)
+}
 
 #' Creates mapping for plotData.
 #'
@@ -633,16 +792,16 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .getMappingForResiduals <- function(xMapping, userMapping) {
   # initialize variables used for data.table to avoid messages during checks
-  xValues <- predicted <- yValues <- group <- NULL
+  predicted <- yValues <- group <- NULL
 
   mapping <- structure(
     utils::modifyList(
       c(xMapping,
         ggplot2::aes(
-        predicted = predicted,
-        observed = yValues,
-        groupby = group
-      )),
+          predicted = predicted,
+          observed = yValues,
+          groupby = group
+        )),
       userMapping
     ),
     class = "uneval"
@@ -734,7 +893,7 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .aggregateSimulatedData <- function(plotData, aggregation, quantiles, nsd = 1) {
   # initialize variables used in data.table syntax
-  IndividualId <- NULL #nolint
+  IndividualId <- NULL # nolint
 
   checkmate::assertChoice(aggregation, choices = unlist(DataAggregationMethods), null.ok = TRUE)
   checkmate::assertNumeric(quantiles,
