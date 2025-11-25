@@ -162,10 +162,6 @@ messages$plotMissingColumnPredicted <- function() {
 }
 
 
-messages$plotUnknwonErrorType <- function() {
-  paste("yErrorType must be NA,",ospsuite::DataErrorType$ArithmeticStdDev, "or", ospsuite::DataErrorType$GeometricStdDev)
-}
-
 messages$plotToManyYDimension <- function(yDimensions) {
   paste0("Data contains to many yDimensions: '",paste(yDimensions,collapse = "', '"),
              "'. Automatic y-Unit conversion failed.")
