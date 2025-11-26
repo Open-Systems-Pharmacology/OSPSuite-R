@@ -11,12 +11,10 @@ SimulationRunOptions <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
-    #' @param checkForNegativeValues Should the solver check for negative values. Default is `TRUE`
     #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SimulationRunOptions` object.
     initialize = function(
       numberOfCores = NULL,
-      checkForNegativeValues = NULL,
       showProgress = NULL
     ) {
       netObject <- rSharp::newObjectFromName(
@@ -26,7 +24,6 @@ SimulationRunOptions <- R6::R6Class(
       self$numberOfCores <- numberOfCores %||%
         getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
-      self$checkForNegativeValues <- checkForNegativeValues %||% TRUE
     },
     #' @description
     #' Print the object to the console
@@ -35,7 +32,6 @@ SimulationRunOptions <- R6::R6Class(
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "numberOfCores" = self$numberOfCores,
-        "checkForNegativeValues" = self$checkForNegativeValues,
         "showProgress" = self$showProgress
       ))
     }
@@ -45,10 +41,6 @@ SimulationRunOptions <- R6::R6Class(
     #' Default is `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
       private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
-    },
-    #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is `TRUE`
-    checkForNegativeValues = function(value) {
-      private$.wrapProperty("CheckForNegativeValues", value)
     },
     #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is `getOSPSuiteSetting("showProgress")`
     showProgress = function(value) {
