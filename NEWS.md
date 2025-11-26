@@ -4,11 +4,17 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)
 
+## Breaking changes
+
+- `CheckForNegativeValues` property has moved from `SimulationRunOptions` to `SolverSettings`
+to align with .NET binaries changes. Update code from `runOptions$checkForNegativeValues`
+to `sim$solver$checkForNegativeValues`.
+
 ## Minor improvements and bug fixes
 
-- Added optional `names` parameter to `dataSetToTibble()` function to support custom naming of datasets. 
-This is particularly useful when multiple datasets have the same original name. 
-The naming logic has been moved from the private `.dataSetToDataFrame()` method in `DataCombined` 
+- Added optional `names` parameter to `dataSetToTibble()` function to support custom naming of datasets.
+This is particularly useful when multiple datasets have the same original name.
+The naming logic has been moved from the private `.dataSetToDataFrame()` method in `DataCombined`
 to `dataSetToTibble()` for better code reuse and maintainability. (\#1627)
 
 # ospsuite 12.3.2
