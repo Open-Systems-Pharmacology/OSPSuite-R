@@ -22,8 +22,12 @@ SimulationRunOptions <- R6::R6Class(
       if (!is.null(checkForNegativeValues)) {
         lifecycle::deprecate_warn(
           when = "13.0.0",
-          what = I("ospsuite::SimulationRunOptions(checkForNegativeValues)"),
-          with = I("simulation$solver$checkForNegativeValues")
+          what = "ospsuite::SimulationRunOptions(checkForNegativeValues)",
+          with = I("simulation$solver$checkForNegativeValues"),
+          details = "This argument is maintained in SimulationRunOptions for backward compatibility but has no effect.",
+          always = TRUE,
+          env = rlang::caller_env(),
+          user_env = rlang::caller_env(2)
         )
       }
       netObject <- rSharp::newObjectFromName(
