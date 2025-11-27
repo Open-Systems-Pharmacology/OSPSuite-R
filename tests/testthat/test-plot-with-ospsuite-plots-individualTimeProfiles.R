@@ -88,8 +88,8 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   vdiffr::expect_doppelganger(
     title = "multiple obs and sim",
     fig = plotTimeProfile(manyObsSimDC,
-                          yscale = "log",
-                          yscale.args = list(limits = c(0.001, NA)),
+                          yScale = "log",
+                          yScaleArgs = list(limits = c(0.001, NA)),
                           mapping = ggplot2::aes(groupby = name)
     )
   )
@@ -130,7 +130,7 @@ test_that("LLOQ is plotted", {
 
   vdiffr::expect_doppelganger(
     title = "lloq",
-    fig = plotTimeProfile(dc, yscale = "log")
+    fig = plotTimeProfile(dc, yScale = "log")
   )
 })
 
@@ -139,7 +139,7 @@ test_that("Plot works with fraction and concentration", {
 
   vdiffr::expect_doppelganger(
     title = "with_secAxis",
-    fig = plotTimeProfile(manyObsSimDCWithFraction, yscale = "log") +
+    fig = plotTimeProfile(manyObsSimDCWithFraction, yScale = "log") +
       ggplot2::theme(legend.position = c(0.95, 0.05),
                      legend.justification = c("right", "bottom"))
   )

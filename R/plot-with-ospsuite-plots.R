@@ -163,7 +163,7 @@ plotPredictedVsObserved <- function(plotData, # nolint
         data = plotData,
         mapping = mapping,
         metaData = metaData,
-        xyscale = xyScale,
+        xyScale = xyScale,
         comparisonLineVector = comparisonLineVector
       ),
       additionalArgs

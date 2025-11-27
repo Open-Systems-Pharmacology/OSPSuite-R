@@ -86,8 +86,8 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   vdiffr::expect_doppelganger(
     title = "obs and sim",
     fig = plotTimeProfile(myDataCombined,
-      yscale = "log",
-      yscale.args = list(limits = c(0.01, 1000))
+      yScale = "log",
+      yScaleArgs = list(limits = c(0.01, 1000))
     )
   )
 })
