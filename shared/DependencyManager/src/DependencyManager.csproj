@@ -9,7 +9,7 @@
 
    <ItemGroup>
       <PackageReference Include="MoBi.R" Version="13.0.41" />
-      <PackageReference Include="PKSim.R" Version="13.0.31" GeneratePathProperty="true" />
+      <PackageReference Include="PKSim.R" Version="13.0.32" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser" Version="4.0.0.76" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser.Ubuntu22" Version="4.0.0.76" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser.MacOS.Arm64" Version="4.0.0.76" GeneratePathProperty="true" />
