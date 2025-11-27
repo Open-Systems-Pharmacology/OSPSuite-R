@@ -346,7 +346,7 @@ test_that("Function merges dimensions correctly", {
                           molWeight = 2
                           )
 
-  .convertUnitsForPlot(validData, 2)
+  result <- .convertUnitsForPlot(validData, 2)
   expect_equal(nrow(result), 2)
   expect_true(all(result$yDimension %in% "Concentration (mass)"))
   expect_true(all(result$yUnit %in% "mg/l"))
