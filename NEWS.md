@@ -4,11 +4,11 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)
 
-## Breaking changes
+## Deprecations
 
-- `CheckForNegativeValues` property has moved from `SimulationRunOptions` to `SolverSettings`
-to align with .NET binaries changes. Update code from `runOptions$checkForNegativeValues`
-to `sim$solver$checkForNegativeValues`.
+- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is deprecated. Use `sim$solver$checkForNegativeValues` instead.
+The parameter is still accepted but will issue a deprecation warning. The property has moved from `SimulationRunOptions` to `SolverSettings`
+to align with .NET binaries changes.
 
 ## Minor improvements and bug fixes
 

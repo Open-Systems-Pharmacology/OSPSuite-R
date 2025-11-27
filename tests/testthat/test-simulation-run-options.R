@@ -13,3 +13,10 @@ test_that("It can set the basic options parameters", {
 test_that("It can print simulation run options", {
   expect_snapshot(runOptions$print())
 })
+
+test_that("checkForNegativeValues parameter is deprecated", {
+  expect_warning(
+    SimulationRunOptions$new(checkForNegativeValues = TRUE),
+    "deprecated"
+  )
+})

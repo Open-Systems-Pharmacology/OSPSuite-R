@@ -11,12 +11,21 @@ SimulationRunOptions <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
+    #' @param checkForNegativeValues `r lifecycle::badge("deprecated")` Use `sim$solver$checkForNegativeValues` instead.
     #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SimulationRunOptions` object.
     initialize = function(
       numberOfCores = NULL,
+      checkForNegativeValues = NULL,
       showProgress = NULL
     ) {
+      if (!is.null(checkForNegativeValues)) {
+        lifecycle::deprecate_warn(
+          when = "13.0.0",
+          what = I("ospsuite::SimulationRunOptions(checkForNegativeValues)"),
+          with = I("simulation$solver$checkForNegativeValues")
+        )
+      }
       netObject <- rSharp::newObjectFromName(
         "OSPSuite.R.Domain.SimulationRunOptions"
       )
@@ -34,6 +43,14 @@ SimulationRunOptions <- R6::R6Class(
         "numberOfCores" = self$numberOfCores,
         "showProgress" = self$showProgress
       ))
+    },
+    #' @description
+    #' Get the checkForNegativeValues property (deprecated)
+    #' @return The value of checkForNegativeValues from the solver
+    .getCheckForNegativeValues = function() {
+      # This is a helper to preserve backward compatibility
+      # The actual property is now on SolverSettings
+      return(NULL)
     }
   ),
   active = list(
