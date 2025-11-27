@@ -173,6 +173,143 @@ test_that("Function calculates yMin and yMax correctly", {
   expect_true(all(is.na(result$yErrorType)))  # Should be set to NA
 })
 
+# validateAndConvertData ---------
+
+test_that("validateAndConvertData handles mixed error types end-to-end", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    yMin = c(NA, NA, NA, NA, NA, 2),
+    yMax = c(NA, NA, NA, NA, NA, 10),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev,
+      NA_character_,
+      "minMax Range"
+    ),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, NA),
+    molWeight = rep(100, 6)
+  )
+
+  result <- .validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  )
+
+  # check if the known DataErrorType are changed and the others are kept as is
+  expect_equal(result$yErrorType, c(NA,NA,NA,NA,NA,"minMax Range"))
+  expect_equal(result$yMin, c(8,16,24,10,NA, 2))
+  expect_equal(result$yErrorValues, c(NA,NA,NA,NA,1.5, NA))
+
+})
+
+
+test_that("yErrorType is present and valid, yErrorValues must exist", {
+
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 30, 15),
+    group = c("A", "A", "A", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2"),
+    dataType = rep("observed", 4),
+    xUnit = rep("h", 4),
+    yUnit = rep("mg/l", 4),
+    xDimension = rep("Time", 4),
+    yDimension = rep("Concentration (mass)", 4),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev
+    ),
+    molWeight = rep(100, 4)
+  )
+
+  expect_error(.validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  ), 'Names must include')
+
+})
+
+test_that("yErrorType is present and invalid, yMin and yMax must exist", {
+
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev,
+      NA_character_,
+      "minMax Range"
+    ),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, NA),
+    molWeight = rep(100, 6)
+  )
+
+  expect_error(.validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  ), 'custom errorTypes')
+
+
+
+})
+
+test_that("yErrorType is present, yMin and yMax are NA, and yErrorValue is not NA", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    yMin = rep(NA,6),
+    yMax = rep(NA,6),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev,
+      NA_character_,
+      "minMax Range"
+    ),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, 1.5),
+    molWeight = rep(100, 6)
+  )
+
+  expect_error(.validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  ), 'custom errorTypes')
+
+})
+
 # .convertUnitsForPlot ----------------
 
 test_that("Function handles empty data correctly", {

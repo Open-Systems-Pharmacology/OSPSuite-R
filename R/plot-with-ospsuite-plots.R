@@ -576,12 +576,25 @@ plotQuantileQuantilePlot <- function(plotData,
     return(plotData)
   }
 
-  if ("yErrorType" %in% names(plotData) &&
-    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-    checkmate::assertNames(names(plotData),
-      must.include = c("yErrorValues"),
-      .var.name = "columns needed for yErrorValues"
-    )
+  if ("yErrorType" %in% names(plotData)){
+    if (any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
+      checkmate::assertNames(names(plotData),
+                             must.include = c("yErrorValues"),
+                             .var.name = "columns needed for yErrorValues"
+      )
+    }
+    # check if error values for custom error types are in columns yMin yMax
+    tmp <- plotData[!is.na(yErrorType) &
+                      !(yErrorType %in% unlist(ospsuite::DataErrorType))]
+    if (nrow(tmp) > 0){
+      if (!all(c('yMin','yMax') %in% names(plotData))){
+        stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
+      }
+      tmp <- tmp[is.na(yMin) & is.na(yMax) & !is.na(yErrorValues)]
+      if (nrow(tmp) > 0){
+        stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
+      }
+    }
   }
 
   # Check if there are multiple unique yErrorType values
@@ -898,7 +911,7 @@ plotQuantileQuantilePlot <- function(plotData,
   checkmate::assertChoice(aggregation, choices = unlist(DataAggregationMethods), null.ok = TRUE)
   checkmate::assertNumeric(quantiles,
     len = 3, any.missing = FALSE, sorted = TRUE,
-    null.ok = is.null(aggregation) |
+    null.ok = is.null(aggregation) ||
       aggregation != DataAggregationMethods$quantiles
   )
 

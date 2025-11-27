@@ -166,3 +166,9 @@ messages$plotToManyYDimension <- function(yDimensions) {
   paste0("Data contains too many yDimensions: '",paste(yDimensions,collapse = "', '"),
              "'. Automatic y-Unit conversion failed.")
 }
+
+messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
+  paste('The errorValues for custom errorTypes',
+        paste(unique(errorTypes),collapse = ', '),
+        'have to be given in columns yMin and yMax')
+}
