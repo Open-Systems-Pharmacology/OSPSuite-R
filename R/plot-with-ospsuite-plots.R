@@ -553,7 +553,7 @@ plotQuantileQuantilePlot <- function(plotData,
   )
 
   result <- rbindlist(orderedData)
-  result[, xUnit := xUnitStr]
+  result[, xUnit := xUnitStr][]
 
   return(result)
 }
