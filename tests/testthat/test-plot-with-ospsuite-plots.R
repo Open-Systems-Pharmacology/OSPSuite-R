@@ -123,6 +123,33 @@ test_that("getMostFrequentUnit returns the most frequent simulated unit when no 
   expect_equal(result, "min")  # Expected to return "min" as the only available unit
 })
 
+test_that("getMostFrequentUnit handles all NA values", {
+  naData <- data.table::data.table(
+    group = c("A", "B"),
+    name = c("Sample1", "Sample2"),
+    yUnit = c(NA_character_, NA_character_),
+    xUnit = c("h", "h"),
+    dataType = c("observed", "observed")
+  )
+
+  expect_no_error(result <- .getMostFrequentUnit(naData, "yUnit"))
+  expect_true(is.na(result))
+})
+
+test_that(".getMostFrequentUnit prioritizes observed when frequencies are tied", {
+  mixedData <- data.table(
+    group = c("A", "B", "C", "D"),
+    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
+    yUnit = c("mg", "mg", "g", "g"),
+    xUnit = c("h", "h", "h", "h"),
+    dataType = c("observed", "observed", "simulated", "simulated")
+  )
+
+  result <- .getMostFrequentUnit(mixedData, "yUnit")
+
+  expect_equal(result, "mg")
+})
+
 # .convertInconsistentErrorTypes ----------
 
 test_that("Function handles missing yErrorType gracefully", {
@@ -182,7 +209,7 @@ test_that("Function merges dimensions correctly", {
                           molWeight = 2
                           )
 
-  result <- .convertUnitsForPlot(validData, 2)
+  .convertUnitsForPlot(validData, 2)
   expect_equal(nrow(result), 2)
   expect_true(all(result$yDimension %in% "Concentration (mass)"))
   expect_true(all(result$yUnit %in% "mg/l"))
@@ -205,3 +232,26 @@ test_that("Function raises error for too many Y dimensions", {
                substr(messages$plotToManyYDimension(validData$yDimension),1,10))
 })
 
+# .calculateResidualsForPlot ----------------
+
+test_that(".calculateResidualsForPlot handles unpaired data", {
+  unpairedData <- data.table::data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 30, 40),
+    group = c("A", "B", "C", "D"),
+    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
+    nameSimulated = c("Sim1", "Sim2", "Sim3", "Sim4"),
+    dataType = c("observed", "observed", "simulated", "simulated"),
+    yUnit = rep("mg/l", 4),
+    xUnit = rep("h", 4),
+    yDimension = rep("Concentration (mass)", 4),
+    xDimension = rep("Time", 4),
+    molWeight = rep(100, 4)
+  )
+
+  expect_warning(
+    result <- .calculateResidualsForPlot(unpairedData, scaling = "log"),
+    regexp = "residuals"
+  )
+  expect_true(is.null(result))
+})
