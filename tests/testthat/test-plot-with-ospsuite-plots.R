@@ -392,3 +392,27 @@ test_that(".calculateResidualsForPlot handles unpaired data", {
   )
   expect_true(is.null(result))
 })
+
+test_that(".calculateResidualsForPlot works without lloq column", {
+
+  plotData <- data.table(
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 9, 19),
+    group = c("A", "A", "A", "A"),
+    name = c("Obs", "Obs", "Sim", "Sim"),
+    nameSimulated = c("Sim", "Sim", "Sim", "Sim"),
+    dataType = c("observed", "observed", "simulated", "simulated"),
+    yUnit = c("mg/l", "mg/l", "mg/l", "mg/l"),
+    xUnit = c("h", "h", "h", "h"),
+    yDimension = c("Concentration (mass)", "Concentration (mass)",
+                   "Concentration (mass)", "Concentration (mass)"),
+    xDimension = c("Time", "Time", "Time", "Time"),
+    molWeight = c(100, 100, 100, 100)
+  )
+
+  result <- .calculateResidualsForPlot(plotData, scaling = "log")
+
+  expect_contains(names(result),'residualValues')
+  expect_equal(result$residualValues,c(log(9)-log(10),log(19)-log(20)))
+
+})

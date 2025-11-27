@@ -697,6 +697,10 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @keywords internal
 #' @noRd
 .calculateResidualsForPlot <- function(plotData, scaling) {
+
+  # functions called below needs column lloq
+  if (!('lloq' %in% names(plotData))) plotData[,lloq := NA]
+
   # Remove the observed and simulated datasets which can't be paired.
   plotData <- .removeUnpairableDatasets(plotData)
 
