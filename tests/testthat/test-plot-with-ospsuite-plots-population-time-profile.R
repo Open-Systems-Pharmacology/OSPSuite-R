@@ -86,8 +86,8 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   vdiffr::expect_doppelganger(
     title = "obs and sim",
     fig = plotTimeProfile(myDataCombined,
-      yscale = "log",
-      yscale.args = list(limits = c(0.01, 1000))
+      yScale = "log",
+      yScaleArgs = list(limits = c(0.01, 1000))
     )
   )
 })
@@ -181,32 +181,10 @@ test_that("It produces expected plot for multiple simulated and observed dataset
 
   myDataCombined$addDataSets(obsData, groups = "Aciclovir observed")
 
-  # data has to be consistent for plotting
-  expect_error(plotTimeProfile(myDataCombined), messages$plotErrorTypeConsistency())
-
-  myDataCombinedDt <- convertUnits(myDataCombined,
-    xUnit = ospUnits[["Time"]][["h"]],
-    yUnit = ospUnits[["Concentration [mass]"]][["mg/l"]]
-  ) %>%
-    data.table::setDT()
-
-  myDataCombinedDt[, `:=`(
-    yMin = ifelse(yErrorType == "GeometricStdDev",
-      yValues / yErrorValues, yValues + yErrorValues
-    ),
-    yMax = ifelse(yErrorType == "GeometricStdDev",
-      yValues * yErrorValues, yValues - yErrorValues
-    ),
-    yErrorValues = NULL,
-    yErrorType = NULL
-  )]
-
-
-
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim and obs",
-    fig = plotTimeProfile(myDataCombinedDt)
+    fig = plotTimeProfile(myDataCombined)
   )
 })
 

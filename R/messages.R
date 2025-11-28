@@ -156,10 +156,22 @@ messages$plotUnitConsistency <- function() {
   "Units have to be consistent within one datatype."
 }
 
-messages$plotErrorTypeConsistency <- function() {
-  "Do not mix different error types in one plot."
-}
 
 messages$plotMissingColumnPredicted <- function() {
   "No column available for 'predicted'. Please use combinedData format or a data.frame with column 'predicted'."
+}
+
+
+messages$plotTooManyYDimension <- function(yDimensions) {
+  paste0(
+    "Data contains too many yDimensions: '",
+    paste(yDimensions, collapse = "', '"),
+    "'. Automatic y-Unit conversion failed."
+  )
+}
+
+messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
+  paste('The errorValues for custom errorTypes',
+        paste(unique(errorTypes),collapse = ', '),
+        'have to be given in columns yMin and yMax')
 }
