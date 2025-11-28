@@ -533,7 +533,7 @@ plotQuantileQuantilePlot <- function(plotData,
 
   # Check for maximum allowed Y dimensions
   if (length(plotDataByDimensions) > maxAllowedYDimensions) {
-    stop(messages$plotToManyYDimension(unique(plotData$yDimension)))
+    stop(messages$plotTooManyYDimension(unique(plotData$yDimension)))
   }
 
   # Convert units for each dimension

@@ -162,9 +162,12 @@ messages$plotMissingColumnPredicted <- function() {
 }
 
 
-messages$plotToManyYDimension <- function(yDimensions) {
-  paste0("Data contains too many yDimensions: '",paste(yDimensions,collapse = "', '"),
-             "'. Automatic y-Unit conversion failed.")
+messages$plotTooManyYDimension <- function(yDimensions) {
+  paste0(
+    "Data contains too many yDimensions: '",
+    paste(yDimensions, collapse = "', '"),
+    "'. Automatic y-Unit conversion failed."
+  )
 }
 
 messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
