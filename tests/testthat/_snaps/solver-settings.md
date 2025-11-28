@@ -11,4 +11,5 @@
         * mxStep: 5000
         * relTol: 1e-05
         * absTol: 1e-10
+        * checkForNegativeValues: TRUE
 

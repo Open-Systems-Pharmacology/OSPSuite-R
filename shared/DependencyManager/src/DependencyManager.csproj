@@ -8,14 +8,14 @@
   </PropertyGroup>
 
    <ItemGroup>
-      <PackageReference Include="MoBi.R" Version="13.0.37" />
-      <PackageReference Include="PKSim.R" Version="13.0.27" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser" Version="4.0.0.75" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser.Ubuntu22" Version="4.0.0.75" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.FuncParser.MacOS.Arm64" Version="4.0.0.75" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel" Version="4.0.0.77" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel.Ubuntu22" Version="4.0.0.77" GeneratePathProperty="true" />
-      <PackageReference Include="OSPSuite.SimModel.MacOS.Arm64" Version="4.0.0.77" GeneratePathProperty="true" />
+      <PackageReference Include="MoBi.R" Version="13.0.41" />
+      <PackageReference Include="PKSim.R" Version="13.0.32" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser" Version="4.0.0.76" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser.Ubuntu22" Version="4.0.0.76" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.FuncParser.MacOS.Arm64" Version="4.0.0.76" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel" Version="4.0.0.79" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel.Ubuntu22" Version="4.0.0.79" GeneratePathProperty="true" />
+      <PackageReference Include="OSPSuite.SimModel.MacOS.Arm64" Version="4.0.0.79" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES" Version="4.1.0.19" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES.Ubuntu22" Version="4.1.0.19" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES.MacOSArm64" Version="4.1.0.19" GeneratePathProperty="true" />
