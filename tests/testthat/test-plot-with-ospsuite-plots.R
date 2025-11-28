@@ -1,12 +1,11 @@
 # Test for .getMappingForTimeprofiles function
-test_that(".getMappingForTimeprofiles constructs mapping correctly", {
-
+test_that("It constructs mapping correctly for time profiles", {
   # Mock plot data
   mockPlotData <- data.table(
     xValues = c(1, 2, 3, 4, 5),
     yValues = c(10, 20, 15, 25, 30),
     group = rep("A", 5),
-    name = LETTERS[seq(1,5)],
+    name = LETTERS[seq(1, 5)],
     dataType = rep("observed", 5),
     xUnit = "h",
     yUnit = "mg/l"
@@ -21,7 +20,11 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
   )
 
   # Test without user mapping for data with group
-  mapping <- .getMappingForTimeprofiles(mockPlotData, mockMetaData, userMapping = NULL)
+  mapping <- .getMappingForTimeprofiles(
+    mockPlotData,
+    mockMetaData,
+    userMapping = NULL
+  )
   expect_true("uneval" %in% class(mapping))
   expect_equal(rlang::as_label(mapping$x), 'xValues')
   expect_equal(rlang::as_label(mapping$y), 'yValues')
@@ -29,13 +32,21 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
   expect_equal(rlang::as_label(mapping$group), "interaction(group, name)")
 
   # Test without user mapping for data without group
-  mapping <- .getMappingForTimeprofiles(mockPlotDataNoGroup, mockMetaData, userMapping = NULL)
+  mapping <- .getMappingForTimeprofiles(
+    mockPlotDataNoGroup,
+    mockMetaData,
+    userMapping = NULL
+  )
   expect_equal(rlang::as_label(mapping$groupby), "name")
   expect_false('group' %in% names(mapping))
 
   # Test with user mapping for data with group
   userMapping <- ggplot2::aes(color = group, groupby = dataType)
-  mappingWithUser <- .getMappingForTimeprofiles(mockPlotData, mockMetaData, userMapping = userMapping)
+  mappingWithUser <- .getMappingForTimeprofiles(
+    mockPlotData,
+    mockMetaData,
+    userMapping = userMapping
+  )
   expect_equal(rlang::as_label(mappingWithUser$colour), 'group')
   expect_equal(rlang::as_label(mappingWithUser$groupby), "dataType")
   expect_false('group' %in% names(mappingWithUser))
@@ -52,7 +63,11 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
     yErrorValues = c(1, 2, 1.5, 2.5, 3)
   )
 
-  mappingWithError <- .getMappingForTimeprofiles(mockPlotDataError, mockMetaData, userMapping = NULL)
+  mappingWithError <- .getMappingForTimeprofiles(
+    mockPlotDataError,
+    mockMetaData,
+    userMapping = NULL
+  )
   expect_true("error" %in% names(mappingWithError))
 
   # Test with yMin and yMax present
@@ -67,7 +82,11 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
     yMax = c(12, 22, 18, 28, 32)
   )
 
-  mappingMinMax <- .getMappingForTimeprofiles(mockPlotDataMinMax, mockMetaData, userMapping = NULL)
+  mappingMinMax <- .getMappingForTimeprofiles(
+    mockPlotDataMinMax,
+    mockMetaData,
+    userMapping = NULL
+  )
   expect_true("ymin" %in% names(mappingMinMax))
   expect_true("ymax" %in% names(mappingMinMax))
 
@@ -78,20 +97,23 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
     group = rep("A", 5),
     dataType = rep("observed", 5),
     xUnit = "h",
-    yUnit = c(rep("mg/l",3), rep("ml",2))
+    yUnit = c(rep("mg/l", 3), rep("ml", 2))
   )
 
   # Mock metadata indicating presence of secondary y-axis
   mockMetaDataWithY2 <- list(
     xValues = list(dimension = "Time", unit = "h"),
     yValues = list(dimension = "Concentration", unit = "mg/l"),
-    y2 = list(dimension = "Volume", unit = "ml")  # Secondary y-axis metadata
+    y2 = list(dimension = "Volume", unit = "ml") # Secondary y-axis metadata
   )
 
   # Test mapping with y2
-  mappingWithY2 <- .getMappingForTimeprofiles(mockPlotDataWithY2, mockMetaDataWithY2, userMapping = NULL)
+  mappingWithY2 <- .getMappingForTimeprofiles(
+    mockPlotDataWithY2,
+    mockMetaDataWithY2,
+    userMapping = NULL
+  )
   expect_contains(names(mappingWithY2), 'y2axis')
-
 })
 
 # getMostFrequentUnit ----
@@ -99,18 +121,18 @@ test_that(".getMappingForTimeprofiles constructs mapping correctly", {
 # Sample data for testing
 sampleData <- data.table(
   group = c("A", "B", "B"),
-  name = c("Sample1",  "Sample1", "Sample2"),
-  yUnit = c("mg",  "g", "g"),
-  xUnit = c("h",  "min", "min"),
-  dataType = c("observed",  "simulated", "simulated")
+  name = c("Sample1", "Sample1", "Sample2"),
+  yUnit = c("mg", "g", "g"),
+  xUnit = c("h", "min", "min"),
+  dataType = c("observed", "simulated", "simulated")
 )
 
-test_that("getMostFrequentUnit returns the most frequent observed unit", {
+test_that("It returns the most frequent observed unit", {
   result <- .getMostFrequentUnit(sampleData, "yUnit")
-  expect_equal(result, "mg")  # Expected to return "mg" as it's the most frequent observed unit
+  expect_equal(result, "mg") # Expected to return "mg" as it's the most frequent observed unit
 })
 
-test_that("getMostFrequentUnit returns the most frequent simulated unit when no observed units are present", {
+test_that("It returns the most frequent simulated unit when no observed units are present", {
   dataNoObserved <- data.table(
     group = c("A", "B"),
     name = c("Sample1", "Sample2"),
@@ -120,10 +142,10 @@ test_that("getMostFrequentUnit returns the most frequent simulated unit when no 
   )
 
   result <- .getMostFrequentUnit(dataNoObserved, "xUnit")
-  expect_equal(result, "min")  # Expected to return "min" as the only available unit
+  expect_equal(result, "min") # Expected to return "min" as the only available unit
 })
 
-test_that("getMostFrequentUnit handles all NA values", {
+test_that("It handles all NA values", {
   naData <- data.table::data.table(
     group = c("A", "B"),
     name = c("Sample1", "Sample2"),
@@ -136,7 +158,7 @@ test_that("getMostFrequentUnit handles all NA values", {
   expect_true(is.na(result))
 })
 
-test_that(".getMostFrequentUnit prioritizes observed when frequencies are tied", {
+test_that("It prioritizes observed when frequencies are tied", {
   mixedData <- data.table(
     group = c("A", "B", "C", "D"),
     name = c("Obs1", "Obs2", "Sim1", "Sim2"),
@@ -152,30 +174,34 @@ test_that(".getMostFrequentUnit prioritizes observed when frequencies are tied",
 
 # .convertInconsistentErrorTypes ----------
 
-test_that("Function handles missing yErrorType gracefully", {
+test_that("It handles missing yErrorType gracefully", {
   plotData <- data.table(yValues = c(1, 2, 3), yErrorValues = c(0.1, 0.2, 0.3))
   result <- .convertInconsistentErrorTypes(plotData)
-  expect_equal(result, plotData)  # Should return the original data.table
+  expect_equal(result, plotData) # Should return the original data.table
 })
 
 
-test_that("Function calculates yMin and yMax correctly", {
-  plotData <- data.table(yValues = c(10, 20, 10, 20) ,
-                         yErrorValues = c(2, 4, 2, 4),
-                         yErrorType = c(DataErrorType$GeometricStdDev,
-                                        DataErrorType$GeometricStdDev,
-                                        DataErrorType$ArithmeticStdDev,
-                                        DataErrorType$ArithmeticStdDev))
+test_that("It calculates yMin and yMax correctly", {
+  plotData <- data.table(
+    yValues = c(10, 20, 10, 20),
+    yErrorValues = c(2, 4, 2, 4),
+    yErrorType = c(
+      DataErrorType$GeometricStdDev,
+      DataErrorType$GeometricStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev
+    )
+  )
   result <- .convertInconsistentErrorTypes(plotData)
-  expect_equal(result$yMin, c(5, 5, 8 , 16))
+  expect_equal(result$yMin, c(5, 5, 8, 16))
   expect_equal(result$yMax, c(20, 80, 12, 24))
-  expect_true(all(is.na(result$yErrorValues)))  # Should be set to NA
-  expect_true(all(is.na(result$yErrorType)))  # Should be set to NA
+  expect_true(all(is.na(result$yErrorValues))) # Should be set to NA
+  expect_true(all(is.na(result$yErrorType))) # Should be set to NA
 })
 
 # validateAndConvertData ---------
 
-test_that("validateAndConvertData handles mixed error types end-to-end", {
+test_that("It handles mixed error types end-to-end", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
@@ -207,15 +233,13 @@ test_that("validateAndConvertData handles mixed error types end-to-end", {
   )
 
   # check if the known DataErrorType are changed and the others are kept as is
-  expect_equal(result$yErrorType, c(NA,NA,NA,NA,NA,"minMax Range"))
-  expect_equal(result$yMin, c(8,16,24,10,NA, 2))
-  expect_equal(result$yErrorValues, c(NA,NA,NA,NA,1.5, NA))
-
+  expect_equal(result$yErrorType, c(NA, NA, NA, NA, NA, "minMax Range"))
+  expect_equal(result$yMin, c(8, 16, 24, 10, NA, 2))
+  expect_equal(result$yErrorValues, c(NA, NA, NA, NA, 1.5, NA))
 })
 
 
-test_that("yErrorType is present and valid, yErrorValues must exist", {
-
+test_that("It requires yErrorValues when yErrorType is present and valid", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4),
     yValues = c(10, 20, 30, 15),
@@ -236,15 +260,16 @@ test_that("yErrorType is present and valid, yErrorValues must exist", {
     molWeight = rep(100, 4)
   )
 
-  expect_error(.validateAndConvertData(
-    plotData = testData,
-    predictedIsNeeded = FALSE
-  ), 'Names must include')
-
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    'Names must include'
+  )
 })
 
-test_that("yErrorType is present and invalid, yMin and yMax must exist", {
-
+test_that("It requires yMin and yMax when yErrorType is present and invalid", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
@@ -268,21 +293,21 @@ test_that("yErrorType is present and invalid, yMin and yMax must exist", {
     molWeight = rep(100, 6)
   )
 
-  expect_error(.validateAndConvertData(
-    plotData = testData,
-    predictedIsNeeded = FALSE
-  ), 'custom errorTypes')
-
-
-
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    'custom errorTypes'
+  )
 })
 
-test_that("yErrorType is present, yMin and yMax are NA, and yErrorValue is not NA", {
+test_that("It requires yMin and yMax when yErrorType is present with NA min/max and non-NA error value", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
-    yMin = rep(NA,6),
-    yMax = rep(NA,6),
+    yMin = rep(NA, 6),
+    yMax = rep(NA, 6),
     group = c("A", "A", "A", "B", "B", "B"),
     name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
     dataType = rep("observed", 6),
@@ -303,48 +328,52 @@ test_that("yErrorType is present, yMin and yMax are NA, and yErrorValue is not N
     molWeight = rep(100, 6)
   )
 
-  expect_error(.validateAndConvertData(
-    plotData = testData,
-    predictedIsNeeded = FALSE
-  ), 'custom errorTypes')
-
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    'custom errorTypes'
+  )
 })
 
 # .convertUnitsForPlot ----------------
 
-test_that("Function handles empty data correctly", {
+test_that("It handles empty data correctly", {
   emptyData <- data.frame()
   result <- .convertUnitsForPlot(emptyData, 2)
   expect_equal(result, emptyData)
 })
 
-test_that("Function checks for data.frame input", {
-  expect_error(.convertUnitsForPlot(matrix(1:10, nrow = 5), 2),'is of type')
+test_that("It checks for data.frame input", {
+  expect_error(.convertUnitsForPlot(matrix(1:10, nrow = 5), 2), 'is of type')
 })
 
 
-test_that("Function checks maxAllowedYDimensions is an integer", {
-  validData <- data.frame(yDimension = c("Concentration (mass)", "Concentration (molar)"),
-                           xUnit = c("mg/L", "mol/L"),
-                           yUnit = c("mg/L", "mol/L"),
-                           value = c(10, 0.1))
+test_that("It checks maxAllowedYDimensions is an integer", {
+  validData <- data.frame(
+    yDimension = c("Concentration (mass)", "Concentration (molar)"),
+    xUnit = c("mg/L", "mol/L"),
+    yUnit = c("mg/L", "mol/L"),
+    value = c(10, 0.1)
+  )
 
-  expect_error(.convertUnitsForPlot(validData, "two"),
-               "is of type")
+  expect_error(.convertUnitsForPlot(validData, "two"), "is of type")
 })
 
-test_that("Function merges dimensions correctly", {
-  validData <- data.frame(yDimension = c("Concentration (mass)", "Concentration (molar)"),
-                          xUnit = c("h", "min"),
-                          xDimension = 'Time',
-                          yUnit = c("mg/l", "mol/l"),
-                          group = c('group','group'),
-                          name = c('A','B'),
-                          dataType = c('observed','simulated'),
-                          xValues = c(1, 1),
-                          yValues = c(10, 0.1),
-                          molWeight = 2
-                          )
+test_that("It merges dimensions correctly", {
+  validData <- data.frame(
+    yDimension = c("Concentration (mass)", "Concentration (molar)"),
+    xUnit = c("h", "min"),
+    xDimension = 'Time',
+    yUnit = c("mg/l", "mol/l"),
+    group = c('group', 'group'),
+    name = c('A', 'B'),
+    dataType = c('observed', 'simulated'),
+    xValues = c(1, 1),
+    yValues = c(10, 0.1),
+    molWeight = 2
+  )
 
   result <- .convertUnitsForPlot(validData, 2)
   expect_equal(nrow(result), 2)
@@ -352,26 +381,29 @@ test_that("Function merges dimensions correctly", {
   expect_true(all(result$yUnit %in% "mg/l"))
 })
 
-test_that("Function raises error for too many Y dimensions", {
-  validData <- data.frame(yDimension = c("Concentration (mass)", "Fraction"),
-                          xUnit = c("h", "min"),
-                          xDimension = 'Time',
-                          yUnit = c("mg/l", ""),
-                          group = c('group','group'),
-                          name = c('A','B'),
-                          dataType = c('observed','simulated'),
-                          xValues = c(1, 1),
-                          yValues = c(10, 0.1),
-                          molWeight = 2
+test_that("It raises error for too many Y dimensions", {
+  validData <- data.frame(
+    yDimension = c("Concentration (mass)", "Fraction"),
+    xUnit = c("h", "min"),
+    xDimension = 'Time',
+    yUnit = c("mg/l", ""),
+    group = c('group', 'group'),
+    name = c('A', 'B'),
+    dataType = c('observed', 'simulated'),
+    xValues = c(1, 1),
+    yValues = c(10, 0.1),
+    molWeight = 2
   )
 
-  expect_error(.convertUnitsForPlot(validData, 1),
-               substr(messages$plotToManyYDimension(validData$yDimension),1,10))
+  expect_error(
+    .convertUnitsForPlot(validData, 1),
+    substr(messages$plotTooManyYDimension(validData$yDimension), 1, 10)
+  )
 })
 
 # .calculateResidualsForPlot ----------------
 
-test_that(".calculateResidualsForPlot handles unpaired data", {
+test_that("It handles unpaired data in residual calculation", {
   unpairedData <- data.table::data.table(
     xValues = c(1, 2, 3, 4),
     yValues = c(10, 20, 30, 40),
@@ -393,8 +425,7 @@ test_that(".calculateResidualsForPlot handles unpaired data", {
   expect_true(is.null(result))
 })
 
-test_that(".calculateResidualsForPlot works without lloq column", {
-
+test_that("It calculates residuals correctly without lloq column", {
   plotData <- data.table(
     xValues = c(1, 2, 1, 2),
     yValues = c(10, 20, 9, 19),
@@ -404,15 +435,18 @@ test_that(".calculateResidualsForPlot works without lloq column", {
     dataType = c("observed", "observed", "simulated", "simulated"),
     yUnit = c("mg/l", "mg/l", "mg/l", "mg/l"),
     xUnit = c("h", "h", "h", "h"),
-    yDimension = c("Concentration (mass)", "Concentration (mass)",
-                   "Concentration (mass)", "Concentration (mass)"),
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Concentration (mass)"
+    ),
     xDimension = c("Time", "Time", "Time", "Time"),
     molWeight = c(100, 100, 100, 100)
   )
 
   result <- .calculateResidualsForPlot(plotData, scaling = "log")
 
-  expect_contains(names(result),'residualValues')
-  expect_equal(result$residualValues,c(log(9)-log(10),log(19)-log(20)))
-
+  expect_contains(names(result), 'residualValues')
+  expect_equal(result$residualValues, c(log(9) - log(10), log(19) - log(20)))
 })
