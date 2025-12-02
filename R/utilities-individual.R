@@ -12,24 +12,19 @@ IndividualDiseaseStates <- enum(c(
 
 #' Create an Individual Building Block
 #'
-#' @param species
-#' @param population
-#' @param gender
-#' @param weight
-#' @param weightUnit
-#' @param height
-#' @param heightUnit
-#' @param age
-#' @param ageUnit
-#' @param gestationalAge
-#' @param gestationalAgeUnit
-#' @param moleculeOntogenies
-#' @param seed
+#' Creates an Individual Building Block using the PK-Sim Database.
+#'
+#' @inheritParams createIndividualCharacteristics
 #'
 #' @returns An object of type `BuildingBlock` representing an individual
 #' @export
 #'
 #' @examples
+#' individualBB <- createIndividualBuildingBlock(
+#' species = Species$Human,
+#' population = HumanPopulation$Caucasian
+#' )
+#'
 createIndividualBuildingBlock <- function(
   species,
   population = NULL,
@@ -40,12 +35,11 @@ createIndividualBuildingBlock <- function(
   heightUnit = "cm",
   age = NULL,
   ageUnit = "year(s)",
-  gestationalAge = 40,
-  gestationalAgeUnit = "week(s)",
-  moleculeOntogenies = NULL,
   seed = NULL,
   diseaseState = IndividualDiseaseStates$None
 ) {
+  netTask <- .getMoBiTaskFromCache("IndividualTask")
+  results <- netTask$call("CreateIndividual", "testIndiv")
   return(IndividualBuildingBlock)
 }
 
@@ -130,9 +124,9 @@ createDistributions <- function(individualCharacteristics) {
 
 #' Creates an individual using the PK-Sim Database.
 #'
-#' @param species Species of the individual as defined in PK-Sim (see Species enum)
-#' @param population Population to use to create the individual. This is required only when the species is Human. (See HumanPopulation enum)
-#' @param gender Gender to use to create the individual. (See Gender enum)
+#' @param species Species of the individual (see Species `enum``)
+#' @param population Population to use to create the individual. This is required only when the species is Human. (See `HumanPopulation` enum)
+#' @param gender Gender to use to create the individual. (See `Gender` enum)
 #' @param weight Weight of the created individual
 #' @param weightUnit Unit in which the weight value is defined. Default is kg
 #' @param height Height of the created individual (for human species only)
