@@ -166,14 +166,14 @@ An alternative to creating simulation configurations from modules from a project
 #   )
 # )
 # # Create an individual building block
-# myIndividual <- createIndividualBuildingBlock(
-#   species = Species$Human,
-#   population = HumanPopulation$Asian_Tanaka_1996,
-#   gender = Gender$Male,
-#   weight = 79,
-#   height = 175,
-#   age = 35
-# )
+myIndividual <- createIndividualBuildingBlock(
+  species = Species$Human,
+  population = HumanPopulation$Asian_Tanaka_1996,
+  gender = Gender$Male,
+  weight = 79,
+  height = 175,
+  age = 35
+)
 ```
 
 Modules that are intended to be used in combination with a variety of other modules, especially with every generic PBPK module, are usually set up in a generic way and require some extensions in order to be used directly. For example, the initial conditions of the module "Thyroid" must be extended by the molecules of the model it will be used with. Similarly, some compound-specific parameter could require manual adjustments. Therefore, initial conditions and parameter values building block can be modified from R.
