@@ -124,7 +124,7 @@ createDistributions <- function(individualCharacteristics) {
 
 #' Creates an individual using the PK-Sim Database.
 #'
-#' @param species Species of the individual (see Species `enum``)
+#' @param species Species of the individual (see Species `enum`)
 #' @param population Population to use to create the individual. This is required only when the species is Human. (See `HumanPopulation` enum)
 #' @param gender Gender to use to create the individual. (See `Gender` enum)
 #' @param weight Weight of the created individual
