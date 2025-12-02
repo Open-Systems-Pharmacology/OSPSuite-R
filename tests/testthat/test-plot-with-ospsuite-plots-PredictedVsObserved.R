@@ -185,5 +185,15 @@ test_that("LLOQ is plotted", {
   )
 })
 
+# 2 y-axis dimensions ----
+test_that("Plot throws error with fraction and concentration", {
+
+  manyObsSimDCWithFraction <- readRDS(getTestDataFilePath("manyObsSimDCWithFraction"))
+
+  expect_error(plotPredictedVsObserved(manyObsSimDCWithFraction),
+              'Data contains too many')
+
+})
+
 
 ospsuite.plots::resetDefaults(oldDefaults)
