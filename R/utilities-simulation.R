@@ -1,3 +1,21 @@
+#' Create a new simulation from a simulation configuration
+#'
+#' @param simulationName Name of the simulation.
+#' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
+#' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
+#'
+#' @returns A `Simulation` object
+#' @export
+#'
+#' @examples
+createSimulation <- function(
+  simulationName,
+  simulationConfiguration,
+  createAllProcessRateParameters = FALSE
+) {
+  return(simulation)
+}
+
 #' @title Load a simulation from a pkml file
 #'
 #' @description
@@ -57,7 +75,7 @@ loadSimulation <- function(
 
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
   netSim <- simulationPersister$call(
     "LoadSimulation",
@@ -66,6 +84,12 @@ loadSimulation <- function(
   )
 
   simulation <- Simulation$new(netSim, filePath)
+
+  netTask <- .getCoreTaskFromCache("SimulationTask")
+  simulation$setBuildConfiguration(netTask$call(
+    "CreateSimulationBuilderFor",
+    simulation
+  ))
 
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {
@@ -85,7 +109,7 @@ saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   simulationPersister$call("SaveSimulation", simulation, filePath)
   invisible()
 }
@@ -280,7 +304,7 @@ runSimulations <- function(
     validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
-  simulationRunner <- .getNetTask("SimulationRunner")
+  simulationRunner <- .getCoreTask("SimulationRunner")
   simulationRunArgs <- rSharp::newObjectFromName(
     "OSPSuite.R.Services.SimulationRunArgs"
   )
@@ -306,7 +330,7 @@ runSimulations <- function(
   silentMode = FALSE,
   stopIfFails = FALSE
 ) {
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
@@ -477,7 +501,7 @@ runSimulationBatches <- function(
   stopIfFails = FALSE
 ) {
   validateIsOfType(simulationBatches, "SimulationBatch")
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   validateIsOfType(
     simulationRunOptions,
     "SimulationRunOptions",

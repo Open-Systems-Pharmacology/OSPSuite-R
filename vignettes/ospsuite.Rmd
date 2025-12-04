@@ -130,7 +130,6 @@ print(dose)
 Adjust simulation outputs and solver settings:
 
 ```{r, echo=TRUE, message=TRUE}
-
 # Originally, the simulation outputs plasma concentrations
 sim$outputSelections
 
