@@ -282,6 +282,13 @@ Expression profile BBs cannot be created from R but can be loaded from PKML. (Ti
 
 The simulation configuration can be used to create a simulation. The simulation can then be saved to a pkml file, or used for further analysis.
 
+```{r createSimulationFromConfiguration}
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+configuration <- simulation$configuration
+
+print(configuration)
+```
+
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
 
 ```{r changeCalculationMethodsAndCreateSimulatoin}
