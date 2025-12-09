@@ -72,8 +72,8 @@ jobs:
         uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          artifact-name: 'released-deps-{os}-{arch}-r{rversion}-{id}-results'
-          snapshot-artifact-name: 'released-deps-{os}-{arch}-r{rversion}-{id}-testthat-snapshots'
+          artifact-name: ${{ format('released-deps-{0}-{1}-r{2}-{3}-results', runner.os, runner.arch, matrix.config.r, matrix.config.id || strategy.job-index) }}
+          snapshot-artifact-name: ${{ format('released-deps-{0}-{1}-r{2}-{3}-testthat-snapshots', runner.os, runner.arch, matrix.config.r, matrix.config.id || strategy.job-index) }}
           args: 'c("--no-manual", "--no-vignettes")'
           build_args: 'c("--no-manual", "--no-build-vignettes")'
           error-on: 'c("error")'
