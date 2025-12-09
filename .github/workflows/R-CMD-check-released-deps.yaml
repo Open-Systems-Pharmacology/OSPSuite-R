@@ -48,10 +48,12 @@ jobs:
           # Pin Remotes to latest release only if field exists
           if (desc::desc_has_fields("Remotes")) {
             remotes <- desc::desc_get_remotes()
+            # Strip trailing whitespace first for clean comparison
+            remotes <- sub("\\s+$", "", remotes)
             # Add @*release to any remote that doesn't already have it
-            remotes <- ifelse(grepl("@\\*release\\s*$", remotes),  # Check if @*release already present
+            remotes <- ifelse(grepl("@\\*release$", remotes),  # Check if @*release already present
                               remotes,
-                              paste0(sub("\\s+$","", remotes), "@*release"))  # Strip trailing whitespace and append @*release
+                              paste0(remotes, "@*release"))  # Append @*release
             desc::desc_set_remotes(remotes)
             cat("\nModified DESCRIPTION Remotes field:\n")
             cat(paste(remotes, collapse = "\n"), "\n")
