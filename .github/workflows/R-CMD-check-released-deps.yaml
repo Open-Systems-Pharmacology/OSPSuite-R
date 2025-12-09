@@ -72,6 +72,7 @@ jobs:
         uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+          artifact-name: 'released-deps-{os}-{arch}-r{rversion}-{id}-results'
           args: 'c("--no-manual", "--no-vignettes")'
           build_args: 'c("--no-manual", "--no-build-vignettes")'
           error-on: 'c("error")'
