@@ -22,6 +22,12 @@ jobs:
     needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
+  # Test against released versions of Remotes packages dependencies
+  R-CMD-Check-Released-Deps:
+    if: ${{ !cancelled() }}  # Run even if previous jobs fail, unless workflow is cancelled
+    needs: [bump-dev-version]
+    uses: ./.github/workflows/R-CMD-check-released-deps.yaml
+
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]

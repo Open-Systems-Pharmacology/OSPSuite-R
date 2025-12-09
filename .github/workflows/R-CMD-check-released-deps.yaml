@@ -1,0 +1,75 @@
+on:
+  workflow_call:
+
+name: R-CMD-check-released-deps
+
+permissions: read-all
+
+jobs:
+  R-CMD-check-released-deps:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) [Released Deps]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: macos-latest, r: 'release'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        id: setup-r
+        with:
+          r-version: ${{ matrix.config.r }}
+          use-public-rspm: true
+
+      # Install desc package for DESCRIPTION file manipulation
+      - name: Install desc package
+        run: install.packages("desc")
+        shell: Rscript {0}
+
+      # Modify Remotes to use @*release tags to ensure we install latest releases
+      # This makes the test environment match what users get when installing released versions
+      - name: Modify DESCRIPTION to use released dependencies
+        run: |
+          # Pin Remotes to latest release only if field exists
+          if (desc::desc_has_fields("Remotes")) {
+            remotes <- desc::desc_get_remotes()
+            # Add @*release to any remote that doesn't already have it
+            remotes <- ifelse(grepl("@\\*release\\s*$", remotes),  # Check if @*release already present
+                              remotes,
+                              paste0(sub("\\s+$","", remotes), "@*release"))  # Strip trailing whitespace and append @*release
+            desc::desc_set_remotes(remotes)
+            cat("\nModified DESCRIPTION Remotes field:\n")
+            cat(paste(remotes, collapse = "\n"), "\n")
+          } else {
+            cat("No Remotes field found in DESCRIPTION\n")
+          }
+        shell: Rscript {0}
+
+      # Install dependencies from DESCRIPTION (including modified Remotes with @*release)
+      - name: Setup R environment (skip renv, use released deps)
+        uses: Open-Systems-Pharmacology/Workflows/.github/actions/setup-r-env@main
+        with:
+          ignore-renv: true
+
+      - name: Check R package
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          args: 'c("--no-manual", "--no-vignettes")'
+          build_args: 'c("--no-manual", "--no-build-vignettes")'
+          error-on: 'c("error")'
