@@ -73,6 +73,7 @@ jobs:
         with:
           upload-snapshots: true
           artifact-name: 'released-deps-{os}-{arch}-r{rversion}-{id}-results'
+          snapshot-artifact-name: 'released-deps-{os}-{arch}-r{rversion}-{id}-testthat-snapshots'
           args: 'c("--no-manual", "--no-vignettes")'
           build_args: 'c("--no-manual", "--no-build-vignettes")'
           error-on: 'c("error")'
