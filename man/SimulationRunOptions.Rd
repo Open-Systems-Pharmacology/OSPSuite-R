@@ -16,8 +16,6 @@ Options to be passed to the simulation engine
 \item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
 Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 
-\item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
-
 \item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
@@ -53,19 +51,13 @@ Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$new(
-  numberOfCores = NULL,
-  checkForNegativeValues = NULL,
-  showProgress = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$new(numberOfCores = NULL, showProgress = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}}
-
-\item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
 
 \item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}}
 }

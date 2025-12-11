@@ -6,7 +6,7 @@
 .loadDataRepositoryFromPKML <- function(filePath) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
-  dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+  dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
   dataRepository <- dataRepositoryTask$call("LoadDataRepository", filePath)
   DataRepository$new(dataRepository)
 }

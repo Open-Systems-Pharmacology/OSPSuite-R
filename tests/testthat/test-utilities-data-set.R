@@ -353,7 +353,10 @@ test_that("dataSetToTibble handles datasets with duplicate names", {
   expect_equal(unique(result_no_rename$name), "SameName")
 
   # With custom names, they get renamed properly
-  result_renamed <- dataSetToTibble(list(ds1, ds2), names = c("First", "Second"))
+  result_renamed <- dataSetToTibble(
+    list(ds1, ds2),
+    names = c("First", "Second")
+  )
   expect_equal(sort(unique(result_renamed$name)), c("First", "Second"))
   expect_equal(result_renamed$name[1:2], c("First", "First"))
   expect_equal(result_renamed$name[3:4], c("Second", "Second"))
