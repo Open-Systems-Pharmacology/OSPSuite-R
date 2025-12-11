@@ -286,7 +286,10 @@ The simulation configuration can be used to create a simulation. The simulation 
 simulation <- myProject$getSimulation("Thyroid_QST_Human")
 configuration <- simulation$configuration
 
-print(configuration)
+simulation <- createSimulation(
+  simulationName = "Thyroid_QST_Human_copy",
+  configuration
+)
 ```
 
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.

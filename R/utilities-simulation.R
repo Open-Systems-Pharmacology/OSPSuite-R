@@ -28,15 +28,28 @@ createSimulation <- function(
     }
   )
 
-  task$call(
-    "CreateSimulationFrom",
-    simulationName,
-    moduleConfigurations,
-    simulationConfiguration$expressionProfiles,
-    simulationConfiguration$individual
-  )
+  # .NET expects an array of expression profiles. We cannot pass NULL. Instead, an empty list is passed
+  expressionProfiles <- simulationConfiguration$expressionProfiles %||% list()
 
-  return(simulation)
+  # If no individual is defined in the configuration, passing NULL as a value would result in an error in .NET
+  if (is.null(simulationConfiguration$individual)) {
+    netSimulation <- task$call(
+      "CreateSimulationFrom",
+      simulationName,
+      moduleConfigurations,
+      expressionProfiles
+    )
+  } else {
+    netSimulation <- task$call(
+      "CreateSimulationFrom",
+      simulationName,
+      moduleConfigurations,
+      expressionProfiles,
+      simulationConfiguration$individual
+    )
+  }
+
+  return(Simulation$new(netSimulation))
 }
 
 #' @title Load a simulation from a pkml file

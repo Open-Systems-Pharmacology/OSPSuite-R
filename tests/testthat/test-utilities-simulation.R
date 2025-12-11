@@ -711,3 +711,42 @@ test_that("It throws an error when trying to run multiple simulations", {
     expect_error(results <- runSimulation(c(sim, sim2)))
   )
 })
+
+#### Creating simulation ####
+test_that("It can create a simulation from a project configuration retrieved from a simulation with no expression profiles", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim"
+  )
+
+  # Check simulation configuration
+  expect_equal(newSimulation$name, "MySim")
+  expect_equal(
+    newSimulation$configuration$expressionProfiles,
+    simConfig$expressionProfiles
+  )
+  expect_equal(newSimulation$configuration$individual, simConfig$individual)
+  expect_equal(newSimulation$configuration$modules, simConfig$modules)
+
+  # Check simulation properties
+  expect_equal(
+    newSimulation$allFloatingMoleculeNames(),
+    simulation$allFloatingMoleculeNames()
+  )
+  expect_equal(
+    newSimulation$allStationaryMoleculeNames(),
+    simulation$allStationaryMoleculeNames()
+  )
+  expect_equal(
+    newSimulation$outputSchema,
+    simulation$outputSchema
+  )
+
+  expect_equal(newSimulation$allFloatingMoleculeNames)
+})
