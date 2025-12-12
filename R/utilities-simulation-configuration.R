@@ -101,11 +101,13 @@ createSimulationConfiguration <- function(
     expProfileObjects <- NULL
   }
 
+  simSettings <- netObj$get("SimulationSettings")
   return(SimulationConfiguration$new(
     modules,
     individual = individual,
     expressionProfiles = expProfileObjects,
     selectedInitialConditions = selectedICs,
-    selectedParameterValues = selectedPVs
+    selectedParameterValues = selectedPVs,
+    SimulationSettings$new(simSettings)
   ))
 }

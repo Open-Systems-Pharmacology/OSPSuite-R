@@ -48,6 +48,11 @@ and the values the names of Parameter Values Building Blocks
 If the modules for which the PV
 selection is provided are not in the configuration, throw an error.}
 
+\item{\code{settings}}{A \code{SimulationSettings} object defining the simulation settings.
+If no settings are provided, default settings will be used upon simulation creation.
+Currently, there is no way to modify the simulation settings object or to create a new one. Setting the solver settings, output intervals, and output selections
+must be done after creating the simulation from the configuration.}
+
 \item{\code{partitionCoefficientMethods}}{The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
 and the values being one of the \code{PartitionCoefficientMethods} enum values.
 To set the partition coefficient method for a molecule, provide a named list.
@@ -81,7 +86,8 @@ from the class \code{MoBiProject}.
   individual = NULL,
   expressionProfiles = NULL,
   selectedInitialConditions = NULL,
-  selectedParameterValues = NULL
+  selectedParameterValues = NULL,
+  settings = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -108,6 +114,9 @@ PV BBs, it is possible to specify which PV BB to apply by providing a named list
 where the name should be the name of the module and the value the name of the PV BB.
 By explicitly setting the value for a specific module to \code{NULL}, no PV BB from the specified module will be applied.
 If the list contains a module name that is not part of the provided modules, it will be ignored.}
+
+\item{\code{settings}}{Optional, a \code{SimulationSettings} object defining the simulation settings. If no settings are provided,
+default settings will be used upon simulation creation.}
 }
 \if{html}{\out{</div>}}
 }

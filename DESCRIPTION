@@ -118,7 +118,6 @@ Collate:
     'standard-path.R'
     'table-formula.R'
     'tasks-env.R'
-    'test-utilities-simulation-configuration.R'
     'user-defined-pk-parameter.R'
     'utilities-building-block.R'
     'utilities-container.R'
@@ -152,7 +151,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
-Remotes:  
+Remotes: 
     Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library
