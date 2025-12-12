@@ -125,7 +125,7 @@ print(configuration)
 
 ### Simulation configuration and simulation settings
 
-When retrieveing a simulation configuration from a simulation, the simulation settings (time settings, output settings, solver settings) are part of the simulation configuration. These settings will be applied when creating a simulation using the configuration. However, the simulation settings cannot be directly modified. To change these settings, the user must first create a simulation from the configuration and then modify the settings of the created simulation (see the article on [simulations](#run-simulation)).
+When retrieving a simulation configuration from a simulation, the simulation settings (time settings, output settings, solver settings) are part of the simulation configuration. These settings will be applied when creating a simulation using the configuration. However, the simulation settings cannot be directly modified. To change these settings, the user must first create a simulation from the configuration and then modify the settings of the created simulation (see the article on [simulations](#run-simulation)).
 
 ### Create simulation configuration from the project
 
