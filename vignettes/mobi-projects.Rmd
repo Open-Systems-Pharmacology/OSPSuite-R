@@ -92,7 +92,7 @@ pvBBs <- module$getParameterValuesBBs()
 
 ## Simulation configurations
 
-Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
+Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation. Additionally, it can contain settings for the simulation time, output settings, and solver settings.
 
 The user can create a new simulation configuration either from scratch, or alter an existing configuration retrieved from a simulation, or create a configuration from modules in a project.
 
@@ -122,6 +122,10 @@ configuration <- simulation$configuration
 
 print(configuration)
 ```
+
+### Simulation configuration and simulation settings
+
+When retrieveing a simulation configuration from a simulation, the simulation settings (time settings, output settings, solver settings) are part of the simulation configuration. These settings will be applied when creating a simulation using the configuration. However, the simulation settings cannot be directly modified. To change these settings, the user must first create a simulation from the configuration and then modify the settings of the created simulation (see the article on [simulations](#run-simulation)).
 
 ### Create simulation configuration from the project
 

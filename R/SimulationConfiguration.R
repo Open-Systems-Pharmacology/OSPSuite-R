@@ -206,6 +206,19 @@ SimulationConfiguration <- R6::R6Class(
           private$.selectedParameterValues[[moduleName]] <- selectedPVName
         }
       }
+    },
+
+    #' @field settings A `SimulationSettings` object defining the simulation settings.
+    #' If no settings are provided, default settings will be used upon simulation creation.
+    #' Currently, there is no way to modify the simulation settings object or to create a new one. Setting the solver settings, output intervals, and output selections
+    #' must be done after creating the simulation from the configuration.
+    settings = function(value) {
+      if (missing(value)) {
+        return(private$.settings)
+      } else {
+        validateIsOfType(value, "SimulationSettings", nullAllowed = TRUE)
+        private$.settings <- value
+      }
     }
 
     #' @field partitionCoefficientMethods The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
@@ -259,13 +272,17 @@ SimulationConfiguration <- R6::R6Class(
     #' By explicitly setting the value for a specific module to `NULL`, no PV BB from the specified module will be applied.
     #' If the list contains a module name that is not part of the provided modules, it will be ignored.
     #'
+    #' @param settings Optional, a `SimulationSettings` object defining the simulation settings. If no settings are provided,
+    #' default settings will be used upon simulation creation.
+    #'
     #' @returns A new `SimulationConfiguration` object.
     initialize = function(
       modules,
       individual = NULL,
       expressionProfiles = NULL,
       selectedInitialConditions = NULL,
-      selectedParameterValues = NULL
+      selectedParameterValues = NULL,
+      settings = NULL
     ) {
       # This class does not wrap the .NET domain object. Instead, it is used as a container
       # for the simulation configuration data before creating the actual simulation in .NET.
@@ -341,6 +358,10 @@ SimulationConfiguration <- R6::R6Class(
       }
       names(private$.selectedInitialConditions) <- moduleNames
       names(private$.selectedParameterValues) <- moduleNames
+
+      # Set simulation settings
+      validateIsOfType(settings, "SimulationSettings", nullAllowed = TRUE)
+      private$.settings <- settings
     },
 
     #' @description
@@ -388,6 +409,7 @@ SimulationConfiguration <- R6::R6Class(
     .selectedInitialConditions = NULL,
     .selectedParameterValues = NULL,
     .individual = NULL,
-    .expressionProfiles = NULL
+    .expressionProfiles = NULL,
+    .settings = NULL
   )
 )

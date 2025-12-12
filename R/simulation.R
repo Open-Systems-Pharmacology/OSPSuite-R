@@ -25,9 +25,11 @@ Simulation <- R6::R6Class(
     },
     #' @field solver SimulationSolver object for the simulation (read-only)
     solver = function(value) {
-      if (missing(value)) {
+      private$.readOnlyProperty(
+        "solver",
+        value,
         private$.settings$solver
-      }
+      )
     },
     #' @field outputSchema outputSchema object for the simulation (read-only)
     outputSchema = function(value) {
