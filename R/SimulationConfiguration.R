@@ -210,8 +210,8 @@ SimulationConfiguration <- R6::R6Class(
 
     #' @field settings A `SimulationSettings` object defining the simulation settings.
     #' If no settings are provided, default settings will be used upon simulation creation.
-    #' Currently, there is no way to modify the simulation settings object or to create a new one. Setting the solver settings, output intervals, and output selections
-    #' must be done after creating the simulation from the configuration.
+    #' Individual properties within the `SimulationSettings` object are read-only, but the entire settings object can be replaced with another `SimulationSettings` instance (or set to `NULL` to use defaults).
+    #' Setting the solver settings, output intervals, and output selections must be done after creating the simulation from the configuration.
     settings = function(value) {
       if (missing(value)) {
         return(private$.settings)
