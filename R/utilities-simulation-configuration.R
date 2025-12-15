@@ -108,6 +108,6 @@ createSimulationConfiguration <- function(
     expressionProfiles = expProfileObjects,
     selectedInitialConditions = selectedICs,
     selectedParameterValues = selectedPVs,
-    SimulationSettings$new(simSettings)
+    settings = SimulationSettings$new(simSettings)
   ))
 }
