@@ -3135,7 +3135,7 @@
         "rmarkdown"
       ],
       "License": "file LICENSE",
-      "RoxygenNote": "7.3.2",
+      "RoxygenNote": "7.3.3",
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
       "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
@@ -3145,7 +3145,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
       "RemoteRef": "main",
-      "RemoteSha": "8f9bce670585d705254673432ec86ffb6cc021f1"
+      "RemoteSha": "eb26c532c2f30cf4e563150966d0f7ae6956b5a1"
     },
     "ragg": {
       "Package": "ragg",
