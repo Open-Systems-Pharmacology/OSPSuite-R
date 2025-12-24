@@ -13,6 +13,29 @@ createSimulation <- function(
   simulationConfiguration,
   createAllProcessRateParameters = FALSE
 ) {
+  # Get simulation task
+  task <- .getMoBiTaskFromCache("SimulationTask")
+  # Create module configurations from modules
+  moduleConfigurations <- lapply(
+    simulationConfiguration$modules,
+    function(module) {
+      task$call(
+        "CreateModuleConfiguration",
+        module,
+        simulationConfiguration$selectedParameterValues[[module$name]],
+        simulationConfiguration$selectedInitialConditions[[module$name]]
+      )
+    }
+  )
+
+  task$call(
+    "CreateSimulationFrom",
+    simulationName,
+    moduleConfigurations,
+    simulationConfiguration$expressionProfiles,
+    simulationConfiguration$individual
+  )
+
   return(simulation)
 }
 
