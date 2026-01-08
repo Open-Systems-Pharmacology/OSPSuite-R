@@ -75,9 +75,9 @@ exportIndividualSimulations(
 #
 simRunOptions <- SimulationRunOptions$new(
   numberOfCores = 4,
-  checkForNegativeValues = TRUE,
   showProgress = TRUE
 )
+sim$solver$checkForNegativeValues <- TRUE
 #
 # individualResults <- runSimulations(sim)[[1]][[1]]
 # paths <- individualResults$allQuantityPaths
