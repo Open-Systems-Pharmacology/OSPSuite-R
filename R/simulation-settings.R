@@ -40,6 +40,10 @@ SimulationSettings <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
+      print(self$solver)
+      print(self$outputSchema)
+      ospsuite.utils::ospPrintHeader("Output Selections", level = 2)
+      print(self$outputSelections)
     }
   )
 )
