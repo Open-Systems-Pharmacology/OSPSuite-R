@@ -15,36 +15,31 @@ createSimulation <- function(
 ) {
   # Get simulation task
   task <- .getMoBiTaskFromCache("SimulationTask")
-  # Create module configurations from modules
-  moduleConfigurations <- lapply(
-    simulationConfiguration$modules,
-    function(module) {
-      task$call(
-        "CreateModuleConfiguration",
-        module,
-        simulationConfiguration$selectedParameterValues[[module$name]],
-        simulationConfiguration$selectedInitialConditions[[module$name]]
-      )
-    }
-  )
-
-  # .NET expects an array of expression profiles. We cannot pass NULL. Instead, an empty list is passed
-  expressionProfiles <- simulationConfiguration$expressionProfiles %||% list()
+  # Create module configurations from modules and add them to the simulation task
+  for (module in simulationConfiguration$modules) {
+    moduleConfiguration <- task$call(
+      "CreateModuleConfiguration",
+      module,
+      simulationConfiguration$selectedParameterValues[[module$name]],
+      simulationConfiguration$selectedInitialConditions[[module$name]]
+    )
+    task$call("AddModuleConfiguration", moduleConfiguration)
+  }
+  # Add expression profiles to the simulation task
+  for (expressionProfile in simulationConfiguration$expressionProfiles) {
+    task$call("AddExpressionProfile", expressionProfile)
+  }
 
   # If no individual is defined in the configuration, passing NULL as a value would result in an error in .NET
   if (is.null(simulationConfiguration$individual)) {
     netSimulation <- task$call(
       "CreateSimulationFrom",
-      simulationName,
-      moduleConfigurations,
-      expressionProfiles
+      simulationName
     )
   } else {
     netSimulation <- task$call(
       "CreateSimulationFrom",
       simulationName,
-      moduleConfigurations,
-      expressionProfiles,
       simulationConfiguration$individual
     )
   }

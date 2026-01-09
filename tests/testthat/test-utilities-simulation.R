@@ -747,6 +747,4 @@ test_that("It can create a simulation from a project configuration retrieved fro
     newSimulation$outputSchema,
     simulation$outputSchema
   )
-
-  expect_equal(newSimulation$allFloatingMoleculeNames)
 })

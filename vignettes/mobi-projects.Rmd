@@ -103,6 +103,7 @@ One way to get a simulation configuration is to retrieve a simulation either fro
 [NOTE:]{.underline} Only simulations created with OSPS version \>=12 have simulation configurations.
 
 Get a configuration of a simulation loaded from a pkml file:
+
 ```{r getSimulationConfigurationFromPKML}
 simulation <- loadSimulation(system.file(
   "extdata",
