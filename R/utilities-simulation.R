@@ -13,7 +13,38 @@ createSimulation <- function(
   simulationConfiguration,
   createAllProcessRateParameters = FALSE
 ) {
-  return(simulation)
+  # Get simulation task
+  task <- .getMoBiTaskFromCache("SimulationTask")
+  # Create module configurations from modules and add them to the simulation task
+  for (module in simulationConfiguration$modules) {
+    moduleConfiguration <- task$call(
+      "CreateModuleConfiguration",
+      module,
+      simulationConfiguration$selectedParameterValues[[module$name]],
+      simulationConfiguration$selectedInitialConditions[[module$name]]
+    )
+    task$call("AddModuleConfiguration", moduleConfiguration)
+  }
+  # Add expression profiles to the simulation task
+  for (expressionProfile in simulationConfiguration$expressionProfiles) {
+    task$call("AddExpressionProfile", expressionProfile)
+  }
+
+  # If no individual is defined in the configuration, passing NULL as a value would result in an error in .NET
+  if (is.null(simulationConfiguration$individual)) {
+    netSimulation <- task$call(
+      "CreateSimulationFrom",
+      simulationName
+    )
+  } else {
+    netSimulation <- task$call(
+      "CreateSimulationFrom",
+      simulationName,
+      simulationConfiguration$individual
+    )
+  }
+
+  return(Simulation$new(netSimulation))
 }
 
 #' @title Load a simulation from a pkml file
