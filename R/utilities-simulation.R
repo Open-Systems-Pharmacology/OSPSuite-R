@@ -13,9 +13,13 @@ createSimulation <- function(
   simulationConfiguration,
   createAllProcessRateParameters = FALSE
 ) {
+  browser()
   # Get simulation task
   task <- .getMoBiTaskFromCache("SimulationTask")
-  # Create module configurations from modules and add them to the simulation task
+
+  # Create new simulation request
+  simRequest <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
+  # Create module configurations from modules and add them to the simulation request
   for (module in simulationConfiguration$modules) {
     moduleConfiguration <- task$call(
       "CreateModuleConfiguration",
@@ -23,27 +27,31 @@ createSimulation <- function(
       simulationConfiguration$selectedParameterValues[[module$name]],
       simulationConfiguration$selectedInitialConditions[[module$name]]
     )
-    task$call("AddModuleConfiguration", moduleConfiguration)
+    simRequest$call("AddModuleConfiguration", moduleConfiguration)
   }
-  # Add expression profiles to the simulation task
+  # Add expression profiles to the simulation request
   for (expressionProfile in simulationConfiguration$expressionProfiles) {
-    task$call("AddExpressionProfile", expressionProfile)
+    simRequest$call("AddExpressionProfile", expressionProfile)
   }
+  # Set the individual
+  simRequest$set("Individual", simulationConfiguration$individual)
 
-  # If no individual is defined in the configuration, passing NULL as a value would result in an error in .NET
-  if (is.null(simulationConfiguration$individual)) {
-    netSimulation <- task$call(
-      "CreateSimulationFrom",
-      simulationName
-    )
-  } else {
-    netSimulation <- task$call(
-      "CreateSimulationFrom",
-      simulationName,
-      simulationConfiguration$individual
-    )
-  }
+  # Try to create a simulation from the simulation request
+  createSimulationResult <- task$call(
+    "CreateSimulationResultsFrom",
+    simulationName,
+    simRequest
+  )
 
+  # get the simulation
+  sim <- createSimulationResult$get("Simulation")
+  # get warnings
+  warnings <- createSimulationResult$get("Warnings")
+  # get errors
+  errors <- createSimulationResult$get("Errors")
+
+  # Delete simulation request
+  rm(simRequest)
   return(Simulation$new(netSimulation))
 }
 
