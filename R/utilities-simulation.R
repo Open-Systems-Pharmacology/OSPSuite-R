@@ -8,40 +8,116 @@
 #' @export
 #'
 #' @examples
+#'
+#'
+
+.toCharVector <- function(x) {
+  if (is.null(x)) return(character())
+
+  if (is.character(x)) return(x)
+  if (is.list(x)) return(as.character(unlist(x, use.names = FALSE)))
+
+  if (is.environment(x)) {
+    tmp <- tryCatch(x$toArray(), error = function(e) NULL)
+    if (!is.null(tmp)) return(.toCharVector(tmp))
+
+    len <- tryCatch(x$get("Length"), error = function(e) NULL)
+    if (is.null(len)) len <- tryCatch(x$Length, error = function(e) NULL)
+
+    if (!is.null(len) && is.numeric(len) && len >= 0) {
+      out <- character(len)
+      for (i in seq_len(len)) {
+        v <- tryCatch(x[[i - 1]], error = function(e) NULL)
+        if (is.null(v)) v <- tryCatch(x[[i]], error = function(e) NULL)
+        out[i] <- if (is.null(v)) "" else as.character(v)
+      }
+      return(out[nzchar(out)])
+    }
+
+    s <- tryCatch(as.character(x), error = function(e) NULL)
+    if (!is.null(s)) return(s)
+  }
+
+  as.character(x)
+}
+
+
 createSimulation <- function(
-  simulationName,
-  simulationConfiguration,
-  createAllProcessRateParameters = FALSE
+    simulationName,
+    simulationConfiguration,
+    createAllProcessRateParameters = FALSE
 ) {
-  # Get simulation task
+  # Get simulation task (keep as-is)
   task <- .getMoBiTaskFromCache("SimulationTask")
-  # Create module configurations from modules and add them to the simulation task
+
+  # NEW: Build a SimulationRequest that collects configs/profiles/individual
+  request <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
+
+  # Add module configurations to the request
   for (module in simulationConfiguration$modules) {
+    moduleName <- module$name
+
+    # These should be names (strings) now, per your new C# signature
+    selectedPV <- simulationConfiguration$selectedParameterValues[[moduleName]]
+    selectedIC <- simulationConfiguration$selectedInitialConditions[[moduleName]]
+
+    # If those entries are NULL or length 0, pass NULL to .NET
+    if (is.null(selectedPV) || length(selectedPV) == 0) selectedPV <- NULL
+    if (is.null(selectedIC) || length(selectedIC) == 0) selectedIC <- NULL
+
     moduleConfiguration <- task$call(
       "CreateModuleConfiguration",
       module,
-      simulationConfiguration$selectedParameterValues[[module$name]],
-      simulationConfiguration$selectedInitialConditions[[module$name]]
+      selectedPV,
+      selectedIC
     )
-    task$call("AddModuleConfiguration", moduleConfiguration)
-  }
-  # Add expression profiles to the simulation task
-  for (expressionProfile in simulationConfiguration$expressionProfiles) {
-    task$call("AddExpressionProfile", expressionProfile)
+
+    # NEW: add to request, not to task
+    request$call("AddModuleConfiguration", moduleConfiguration)
   }
 
-  # If no individual is defined in the configuration, passing NULL as a value would result in an error in .NET
-  if (is.null(simulationConfiguration$individual)) {
-    netSimulation <- task$call(
-      "CreateSimulationFrom",
-      simulationName
-    )
-  } else {
-    netSimulation <- task$call(
-      "CreateSimulationFrom",
-      simulationName,
-      simulationConfiguration$individual
-    )
+  # Add expression profiles to the request
+  for (expressionProfile in simulationConfiguration$expressionProfiles) {
+    request$call("AddExpressionProfile", expressionProfile)
+  }
+
+  # Set individual only if it exists (avoid passing NULL into .NET)
+  if (!is.null(simulationConfiguration$individual)) {
+    request$call("SetIndividual", simulationConfiguration$individual)
+  }
+
+  # NEW: CreateSimulationResultsFrom returns a CreateSimulationResult (not the simulation directly)
+  createResult <- task$call(
+    "CreateSimulationResultsFrom",
+    simulationName,
+    request
+  )
+
+  warningsIter <- tryCatch(createResult$call("get_Warnings"), error = function(e) NULL)
+  errorsIter   <- tryCatch(createResult$call("get_Errors"),   error = function(e) NULL)
+
+  warningsArr <- tryCatch(if (!is.null(warningsIter)) warningsIter$call("ToArray") else NULL,
+                          error = function(e) NULL)
+  errorsArr   <- tryCatch(if (!is.null(errorsIter))   errorsIter$call("ToArray")   else NULL,
+                          error = function(e) NULL)
+
+  warnings <- .toCharVector(warningsArr)
+  errors   <- .toCharVector(errorsArr)
+
+  if (length(warnings) > 0) {
+    warning(paste(warnings, collapse = "\n"))
+  }
+
+  # Simulation getter (property is fine, but getter is safest with rSharp)
+  netSimulation <- tryCatch(createResult$call("get_Simulation"), error = function(e) NULL)
+
+  # If simulation is null, fail with the domain errors
+  if (is.null(netSimulation)) {
+    msg <- "Simulation creation failed."
+    if (length(errors) > 0) {
+      msg <- paste0(msg, "\nErrors:\n", paste(errors, collapse = "\n"))
+    }
+    stop(msg)
   }
 
   return(Simulation$new(netSimulation))
