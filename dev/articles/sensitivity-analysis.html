@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@
       <h1>Sensitivity analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/sensitivity-analysis.Rmd" class="external-link"><code>vignettes/sensitivity-analysis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/update_to_12_2_assemblies/vignettes/sensitivity-analysis.Rmd" class="external-link"><code>vignettes/sensitivity-analysis.Rmd</code></a></small>
       <div class="d-none name"><code>sensitivity-analysis.Rmd</code></div>
     </div>
 
@@ -183,16 +183,19 @@ model outputs.</p>
 <span><span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysisResults&gt;</span></span></span>
-<span><span class="co">#&gt;   • Number of calculated sensitivities: 72</span></span>
+<span><span class="co">#&gt;   • Number of calculated sensitivities: 132</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Available PK Parameters</span>:</span></span>
 <span><span class="co">#&gt;   • C_max</span></span>
 <span><span class="co">#&gt;   • t_max</span></span>
 <span><span class="co">#&gt;   • C_tEnd</span></span>
 <span><span class="co">#&gt;   • AUC_tEnd</span></span>
-<span><span class="co">#&gt;   • Thalf</span></span>
 <span><span class="co">#&gt;   • AUC_inf</span></span>
 <span><span class="co">#&gt;   • MRT</span></span>
+<span><span class="co">#&gt;   • Thalf</span></span>
 <span><span class="co">#&gt;   • FractionAucLastToInf</span></span>
+<span><span class="co">#&gt;   • CL</span></span>
+<span><span class="co">#&gt;   • Vss</span></span>
+<span><span class="co">#&gt;   • Vd</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For the following outputs</span>:</span></span>
 <span><span class="co">#&gt;   • Organism|B</span></span>
 <span><span class="co">#&gt;   • Organism|A</span></span>

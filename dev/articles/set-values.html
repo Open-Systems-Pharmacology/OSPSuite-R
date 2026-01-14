@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@
       <h1>Changing parameter and molecule start values</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/set-values.Rmd" class="external-link"><code>vignettes/set-values.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/update_to_12_2_assemblies/vignettes/set-values.Rmd" class="external-link"><code>vignettes/set-values.Rmd</code></a></small>
       <div class="d-none name"><code>set-values.Rmd</code></div>
     </div>
 
@@ -425,7 +425,8 @@ re-activate the RHS formula after switching it off.</p>
 <span></span>
 <span><span class="co"># Switching it on is not supported</span></span>
 <span><span class="va">stateVariableParam</span><span class="op">$</span><span class="va">isStateVariable</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
-<span><span class="co">#&gt; Error in (function (value) : Creating a RHS Formula is not supported at the moment. This should be done in MoBi.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Creating a RHS Formula is not supported at the moment. This should be done in MoBi.</span></span></code></pre></div>
 <p>An example how to set the initial values of molecules in all
 containers to a certain value:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">

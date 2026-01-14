@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@
       <h1>Table parameters</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/table-parameters.Rmd" class="external-link"><code>vignettes/table-parameters.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/update_to_12_2_assemblies/vignettes/table-parameters.Rmd" class="external-link"><code>vignettes/table-parameters.Rmd</code></a></small>
       <div class="d-none name"><code>table-parameters.Rmd</code></div>
     </div>
 
@@ -306,7 +306,8 @@ an error is thrown:</p>
 <span></span>
 <span><span class="co"># Try to add points with existing x-values</span></span>
 <span><span class="va">tableParam</span><span class="op">$</span><span class="va">formula</span><span class="op">$</span><span class="fu">addPoints</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in do.call(".External", c(list("r_call_method", self$pointer, methodName), : Type:    OSPSuite.Core.Domain.ValuePointAlreadyExistsForPointException</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `do.call()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Type:    OSPSuite.Core.Domain.ValuePointAlreadyExistsForPointException</span></span>
 <span><span class="co">#&gt; Message: A point for x=0 was already added with y=1</span></span>
 <span><span class="co">#&gt; Method:  Int32 AddPoint(OSPSuite.Core.Domain.Formulas.ValuePoint)</span></span>
 <span><span class="co">#&gt; Stack trace:</span></span>

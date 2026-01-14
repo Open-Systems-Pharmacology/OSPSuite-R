@@ -228,7 +228,8 @@ tableParam
 
 # Try to add points with existing x-values
 tableParam$formula$addPoints(0, 1)
-#> Error in do.call(".External", c(list("r_call_method", self$pointer, methodName), : Type:    OSPSuite.Core.Domain.ValuePointAlreadyExistsForPointException
+#> Error in `do.call()`:
+#> ! Type:    OSPSuite.Core.Domain.ValuePointAlreadyExistsForPointException
 #> Message: A point for x=0 was already added with y=1
 #> Method:  Int32 AddPoint(OSPSuite.Core.Domain.Formulas.ValuePoint)
 #> Stack trace:
