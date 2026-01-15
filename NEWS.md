@@ -6,6 +6,10 @@
 - ospsuite.utils version >=1.10.0 is required
 - This package no longer re-exports `%||%`. `ospsuite::%||%` will not work.
 
+## Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 2 release.
+
 ## Minor changes
 
 - Using native operator `%||%` instead of importing from the `ospsuite.utils` package.
