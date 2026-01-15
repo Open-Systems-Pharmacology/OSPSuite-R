@@ -4,7 +4,7 @@
 
 - R version >=4.4 is required
 - ospsuite.utils version >=1.10.0 is required
-- This packages does not re-export `%||%` no longer. `ospsuite::%||%` will not work.
+- This package no longer re-exports `%||%`. `ospsuite::%||%` will not work.
 
 ## Minor changes
 
