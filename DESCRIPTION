@@ -143,7 +143,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
-Remotes: 
-    Open-Systems-Pharmacology/rSharp,
-    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
-    tlf=Open-Systems-Pharmacology/TLF-Library
+Remotes:  
+    Open-Systems-Pharmacology/rSharp@*release,
+    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release,
+    tlf=Open-Systems-Pharmacology/TLF-Library@*release
