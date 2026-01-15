@@ -2,6 +2,8 @@
 
 ## ospsuite (development version)
 
+## ospsuite 12.4.1
+
 ### Breaking changes
 
 - R version \>=4.4 is required
