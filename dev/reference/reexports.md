@@ -5,7 +5,6 @@ to see their documentation.
 
 - ospsuite.utils:
 
-  [`%||%`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/op-null-default.html),
   [`enum`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/enum.html),
   [`enumGetKey`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/enumGetKey.html),
   [`enumGetValue`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/enumGetValue.html),

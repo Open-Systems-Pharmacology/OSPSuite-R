@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,11 +53,25 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/update_to_12_2_assemblies/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>R version &gt;=4.4 is required</li>
+<li>ospsuite.utils version &gt;=1.10.0 is required</li>
+<li>This package no longer re-exports <code>%||%</code>. <code>ospsuite::%||%</code> will not work.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
+<ul><li>Computational core libraries updated to match OSPS Version 12 update 2 release.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-development-version">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-development-version"></a></h3>
+<ul><li>Using native operator <code>%||%</code> instead of importing from the <code>ospsuite.utils</code> package.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="12.4.0" id="ospsuite-1240">ospsuite 12.4.0<a class="anchor" aria-label="anchor" href="#ospsuite-1240"></a></h2>

@@ -2,6 +2,23 @@
 
 ## ospsuite (development version)
 
+### Breaking changes
+
+- R version \>=4.4 is required
+- ospsuite.utils version \>=1.10.0 is required
+- This package no longer re-exports `%||%`. `ospsuite::%||%` will not
+  work.
+
+### Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 2
+  release.
+
+### Minor changes
+
+- Using native operator `%||%` instead of importing from the
+  `ospsuite.utils` package.
+
 ## ospsuite 12.4.0
 
 ### Major changes
