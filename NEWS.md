@@ -4,10 +4,11 @@
 
 - R version >=4.4 is required
 - ospsuite.utils version >=1.10.0 is required
+- This packages does not re-export `%||%` no longer. `ospsuite::%||%` will not work.
 
 ## Minor changes
 
-- Using native operator `%||%` instead importing from the `ospsuite.utils` package.
+- Using native operator `%||%` instead of importing from the `ospsuite.utils` package.
 
 # ospsuite 12.4.0
 
