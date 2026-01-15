@@ -363,7 +363,8 @@ print(stateVariableParam)
 
 # Switching it on is not supported
 stateVariableParam$isStateVariable <- TRUE
-#> Error in (function (value) : Creating a RHS Formula is not supported at the moment. This should be done in MoBi.
+#> Error:
+#> ! Creating a RHS Formula is not supported at the moment. This should be done in MoBi.
 ```
 
 An example how to set the initial values of molecules in all containers

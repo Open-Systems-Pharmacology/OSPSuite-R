@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -215,11 +215,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "9_sDpFnzqk22vSG4L8QIjQ"</span></span>
+<span><span class="co">#&gt; [1] "eOVf498oWUii2kgNlYlQbw"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "9_sDpFnzqk22vSG4L8QIjQ"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "eOVf498oWUii2kgNlYlQbw"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -301,7 +301,8 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <code class="sourceCode R"><span><span class="co"># Remove all output intervals - simulation not possible!</span></span>
 <span><span class="fu"><a href="../reference/clearOutputIntervals.html">clearOutputIntervals</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in do.call(".External", c(list("r_call_method", self$pointer, methodName), : Type:    OSPSuite.Utility.Exceptions.OSPSuiteException</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `do.call()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Type:    OSPSuite.Utility.Exceptions.OSPSuiteException</span></span>
 <span><span class="co">#&gt; Message: Time points output schema is empty</span></span>
 <span><span class="co">#&gt; Method:  Void EvaluateCppCallResult(Boolean, System.String)</span></span>
 <span><span class="co">#&gt; Stack trace:</span></span>

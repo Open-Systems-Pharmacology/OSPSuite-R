@@ -139,11 +139,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "9_sDpFnzqk22vSG4L8QIjQ"
+#> [1] "eOVf498oWUii2kgNlYlQbw"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "9_sDpFnzqk22vSG4L8QIjQ"
+#> [1] "eOVf498oWUii2kgNlYlQbw"
 ```
 
 ## Adding new outputs
@@ -234,7 +234,8 @@ and
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
-#> Error in do.call(".External", c(list("r_call_method", self$pointer, methodName), : Type:    OSPSuite.Utility.Exceptions.OSPSuiteException
+#> Error in `do.call()`:
+#> ! Type:    OSPSuite.Utility.Exceptions.OSPSuiteException
 #> Message: Time points output schema is empty
 #> Method:  Void EvaluateCppCallResult(Boolean, System.String)
 #> Stack trace:

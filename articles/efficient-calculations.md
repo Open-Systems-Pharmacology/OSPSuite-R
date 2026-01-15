@@ -183,21 +183,21 @@ performance.
 # now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
-#> [1] "90d1f8b2-32ee-4246-a7f6-ea538b920b22"
+#> [1] "aad3091e-8e83-466a-9a4b-804a5273a9cc"
 simBatch1$addRunValues(parameterValues = c(3, 4))
-#> [1] "cfa088e4-f6e3-4e9d-a5c0-f072c08b9b3f"
+#> [1] "3c108a7a-c6d0-4796-b86a-111332c30010"
 simBatch1$addRunValues(parameterValues = c(5, 6))
-#> [1] "c703054d-512f-4e0a-ab79-10b081c08eaf"
+#> [1] "c7c2a910-337e-4d95-afe4-eec8bf044698"
 
 # We only have one parameter to vary for simBatch2, therefore only one value to set
 simBatch2$addRunValues(parameterValues = 150)
-#> [1] "22374014-501b-4dd9-add8-1dfb293794b0"
+#> [1] "809132ba-1acf-4d93-9d0f-4210f4fa94cb"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "21d6d7b6-12e1-4d7e-b38d-dc3bfe800a92"
+#> [1] "cb1398e7-9953-4cad-82c1-d58480ff54ba"
 simBatch2$addRunValues(parameterValues = 300)
-#> [1] "178015d0-75af-4654-8437-21dff35d2609"
+#> [1] "76c3786b-97aa-4bfc-b678-3902d1c25407"
 simBatch2$addRunValues(parameterValues = 400)
-#> [1] "553b85b3-91f1-4fe6-ab79-2811fbcce1b4"
+#> [1] "dc8000e6-eefb-4ce6-95ce-329f74337c54"
 ```
 
 So far, we created 2 simulation batches, one with 3 parameter sets and
@@ -213,13 +213,13 @@ simulated set of parameters.
 # The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
 print(names(unlist(results)))
-#> [1] "71b710df-1b23-4b82-89c5-0d6ebe2aeaba.90d1f8b2-32ee-4246-a7f6-ea538b920b22"
-#> [2] "71b710df-1b23-4b82-89c5-0d6ebe2aeaba.cfa088e4-f6e3-4e9d-a5c0-f072c08b9b3f"
-#> [3] "71b710df-1b23-4b82-89c5-0d6ebe2aeaba.c703054d-512f-4e0a-ab79-10b081c08eaf"
-#> [4] "fd677952-4952-48c1-b578-44ee63214746.22374014-501b-4dd9-add8-1dfb293794b0"
-#> [5] "fd677952-4952-48c1-b578-44ee63214746.21d6d7b6-12e1-4d7e-b38d-dc3bfe800a92"
-#> [6] "fd677952-4952-48c1-b578-44ee63214746.178015d0-75af-4654-8437-21dff35d2609"
-#> [7] "fd677952-4952-48c1-b578-44ee63214746.553b85b3-91f1-4fe6-ab79-2811fbcce1b4"
+#> [1] "616f37bb-a448-4034-83be-d40d62d38c35.aad3091e-8e83-466a-9a4b-804a5273a9cc"
+#> [2] "616f37bb-a448-4034-83be-d40d62d38c35.3c108a7a-c6d0-4796-b86a-111332c30010"
+#> [3] "616f37bb-a448-4034-83be-d40d62d38c35.c7c2a910-337e-4d95-afe4-eec8bf044698"
+#> [4] "55756b48-8b53-4d77-9f2f-20c05894e7b3.809132ba-1acf-4d93-9d0f-4210f4fa94cb"
+#> [5] "55756b48-8b53-4d77-9f2f-20c05894e7b3.cb1398e7-9953-4cad-82c1-d58480ff54ba"
+#> [6] "55756b48-8b53-4d77-9f2f-20c05894e7b3.76c3786b-97aa-4bfc-b678-3902d1c25407"
+#> [7] "55756b48-8b53-4d77-9f2f-20c05894e7b3.dc8000e6-eefb-4ce6-95ce-329f74337c54"
 ```
 
 The enqueued run values are cleared after calling
@@ -233,13 +233,13 @@ is called.
 
 ``` r
 simBatch1$addRunValues(parameterValues = c(10, 20))
-#> [1] "b7df4b7c-d430-4758-91a2-e73bd9bd0417"
+#> [1] "a003bd0c-7a98-4269-a841-512f417e630f"
 simBatch1$addRunValues(parameterValues = c(30, 40))
-#> [1] "f6fbccd8-1381-47ec-89cf-779df27ebc1e"
+#> [1] "690a70fb-4df0-435a-9430-4cb1551a2450"
 simBatch2$addRunValues(parameterValues = 500)
-#> [1] "4c63b462-48d5-431f-a039-353822c8b1de"
+#> [1] "7be04e2e-eb59-477c-af95-22796ca2e150"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "63ca362f-8a82-439f-91f4-2f867e13c0a3"
+#> [1] "1f2f17f4-b943-4591-884b-ce32c27ca601"
 
 # this run will be much faster as the simulation won't be initialized again.
 # Only the new value will be set as specified when adding new run values with addRunValues
@@ -292,7 +292,8 @@ simBatch <- createSimulationBatch(simulation = sim1, parametersOrPaths = stateVa
 resId <- simBatch$addRunValues(parameterValues = 0.5)
 # Try to run batch
 results <- runSimulationBatches(simBatch)
-#> Error in do.call(".External", c(list("r_call_method", self$pointer, methodName), : Type:    OSPSuite.Core.Domain.InvalidArgumentException
+#> Error in `do.call()`:
+#> ! Type:    OSPSuite.Core.Domain.InvalidArgumentException
 #> Message: Entities 'Organism|Lumen|Stomach|Liquid' do not exist in the simulation
 #> Method:  Void validate(System.Collections.Generic.IReadOnlyList`1[System.String], System.Collections.Generic.IReadOnlyList`1[System.String])
 #> Stack trace:

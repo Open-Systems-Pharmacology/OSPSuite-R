@@ -27,14 +27,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/DESCRIPTION)
 
-Sevestre M, Balazki P, Solodenko J, Patil I, MIL F (2025). *ospsuite: R
-package to manipulate OSPSuite Models*. R package version 12.4.0,
+Sevestre M, Balazki P, Solodenko J, Patil I, MIL F (2026). *ospsuite: R
+package to manipulate OSPSuite Models*. R package version 12.4.1,
 <https://github.com/open-systems-pharmacology/ospsuite-r>.
 
     @Manual{,
       title = {ospsuite: R package to manipulate OSPSuite Models},
       author = {Michael Sevestre and Pavel Balazki and Juri Solodenko and Indrajeet Patil and Felix MIL},
-      year = {2025},
-      note = {R package version 12.4.0},
+      year = {2026},
+      note = {R package version 12.4.1},
       url = {https://github.com/open-systems-pharmacology/ospsuite-r},
     }

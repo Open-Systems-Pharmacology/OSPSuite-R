@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -201,7 +201,7 @@ a time profile:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="100%"></p>
 <p>If you do not specify <code>groups</code> when you add datasets, and
 wish to update groupings later, you can use the
 <code>$setGroups()</code> method. All data within one group will get one
@@ -214,7 +214,7 @@ the same color.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%"></p>
 <p>At any point, you can check the current names and groupings with the
 following active field:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -273,7 +273,7 @@ administration.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="100%"></p>
 <p>However, we might want to use this data set with a simulation where
 aciclovir is administered 24 hours after simulation begin. To be able to
 compare simulation results with the data set, we can <em>offset</em> the
@@ -290,7 +290,7 @@ given in the same unit as the data set values are.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
 <p>In the next step, we want to <em>normalize</em> observed
 concentrations to a dose. We can easily achieve this with the scale
 factor. In the next example, we normalize observed values to 250 mg dose
@@ -302,7 +302,7 @@ by setting the <code>yScaleFactor</code> to 1/250:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="100%">
+<p><img src="data-combined_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%">
 Finally, offsetting the observation values might be useful when working
 with measurements of endogenous substrates, such as the hormone
 glucagon, and want to correct for the individual specific baseline
