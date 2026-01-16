@@ -3,7 +3,6 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{\%||\%}
 \alias{enum}
 \alias{enumGetValue}
 \alias{enumHasKey}
@@ -21,7 +20,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{ospsuite.utils}{\code{\link[ospsuite.utils:op-null-default]{\%||\%}}, \code{\link[ospsuite.utils]{enum}}, \code{\link[ospsuite.utils]{enumGetKey}}, \code{\link[ospsuite.utils]{enumGetValue}}, \code{\link[ospsuite.utils]{enumHasKey}}, \code{\link[ospsuite.utils]{enumKeys}}, \code{\link[ospsuite.utils]{enumPut}}, \code{\link[ospsuite.utils]{enumRemove}}, \code{\link[ospsuite.utils]{enumValues}}}
+  \item{ospsuite.utils}{\code{\link[ospsuite.utils]{enum}}, \code{\link[ospsuite.utils]{enumGetKey}}, \code{\link[ospsuite.utils]{enumGetValue}}, \code{\link[ospsuite.utils]{enumHasKey}}, \code{\link[ospsuite.utils]{enumKeys}}, \code{\link[ospsuite.utils]{enumPut}}, \code{\link[ospsuite.utils]{enumRemove}}, \code{\link[ospsuite.utils]{enumValues}}}
 
   \item{tlf}{\code{\link[tlf]{plotGrid}}, \code{\link[tlf]{PlotGridConfiguration}}}
 }}
