@@ -80,14 +80,14 @@ jobs:
   commit-renv-lock:
     needs: test-on-platforms
     runs-on: ubuntu-latest
-    if: needs.test-on-platforms.result == 'success'
+    if: needs.test-on-platforms.result == 'success'  # Only commit if tests pass on all platforms
 
     steps:
       - name: Generate token from GitHub App
         uses: actions/create-github-app-token@v1
         id: app-token
         with:
-          app-id: ${{ vars.VERSION_BUMPER_APPID }}
+          app-id: ${{ vars.VERSION_BUMPER_APPID }}  # Use GitHub App for authentication to trigger other workflows
           private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
       - name: Checkout repository
