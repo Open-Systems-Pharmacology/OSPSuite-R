@@ -30,7 +30,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, "DataSet")
   filePath <- .expandPath(filePath)
-  dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+  dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
   dataRepositoryTask$call(
     "SaveDataRepository",
     dataSet$dataRepository,
@@ -252,7 +252,7 @@ loadDataSetsFromExcel <- function(
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
+  dataImporterTask <- .getCoreTaskFromCache("DataImporterTask")
   dataImporterTask$set("IgnoreSheetNamesAtImport", importAllSheets)
   dataRepositories <- dataImporterTask$call(
     "ImportExcelFromConfiguration",

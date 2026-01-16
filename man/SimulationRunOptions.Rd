@@ -16,8 +16,6 @@ Options to be passed to the simulation engine
 \item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
 Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 
-\item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
-
 \item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
@@ -27,6 +25,7 @@ Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 \itemize{
 \item \href{#method-SimulationRunOptions-new}{\code{SimulationRunOptions$new()}}
 \item \href{#method-SimulationRunOptions-print}{\code{SimulationRunOptions$print()}}
+\item \href{#method-SimulationRunOptions-.getCheckForNegativeValues}{\code{SimulationRunOptions$.getCheckForNegativeValues()}}
 }
 }
 \if{html}{\out{
@@ -65,7 +64,7 @@ Initialize a new instance of the class
 \describe{
 \item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}}
 
-\item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
+\item{\code{checkForNegativeValues}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{sim$solver$checkForNegativeValues} instead.}
 
 \item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}}
 }
@@ -90,6 +89,19 @@ Print the object to the console
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimulationRunOptions-.getCheckForNegativeValues"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationRunOptions-.getCheckForNegativeValues}{}}}
+\subsection{Method \code{.getCheckForNegativeValues()}}{
+Get the checkForNegativeValues property (deprecated)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$.getCheckForNegativeValues()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The value of checkForNegativeValues from the solver
 }
 }
 }
