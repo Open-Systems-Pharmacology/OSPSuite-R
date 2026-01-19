@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 
 # path relative to the project directory where data should be saved
 path <- testthat::test_path("../data")

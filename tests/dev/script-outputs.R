@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 sim <- loadSimulation("tests/data/S1.pkml")
 
 sim$solver$absTol <- 1e-13
