@@ -3,6 +3,7 @@
 #' @param simulationName Name of the simulation.
 #' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
 #' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
+#' @param
 #'
 #' @returns A `Simulation` object
 #' @export
@@ -11,9 +12,9 @@
 createSimulation <- function(
   simulationName,
   simulationConfiguration,
-  createAllProcessRateParameters = FALSE
+  createAllProcessRateParameters = FALSE,
+  showWarnings = FALSE
 ) {
-  browser()
   # Get simulation task
   task <- .getMoBiTaskFromCache("SimulationTask")
 
@@ -21,11 +22,19 @@ createSimulation <- function(
   simRequest <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
   # Create module configurations from modules and add them to the simulation request
   for (module in simulationConfiguration$modules) {
+    selectedPV <- simulationConfiguration$selectedParameterValues[[
+      module$name
+    ]] %||%
+      ""
+    selectedIC <- simulationConfiguration$selectedInitialConditions[[
+      module$name
+    ]] %||%
+      ""
     moduleConfiguration <- task$call(
       "CreateModuleConfiguration",
       module,
-      simulationConfiguration$selectedParameterValues[[module$name]],
-      simulationConfiguration$selectedInitialConditions[[module$name]]
+      selectedPV,
+      selectedIC
     )
     simRequest$call("AddModuleConfiguration", moduleConfiguration)
   }
@@ -47,12 +56,24 @@ createSimulation <- function(
   sim <- createSimulationResult$get("Simulation")
   # get warnings
   warnings <- createSimulationResult$get("Warnings")
+
+  if (showWarnings) {
+    warning(paste(
+      "Following warnings were generated during simulation creation:\n",
+      paste(warnings, collapse = "\n")
+    ))
+  }
   # get errors
   errors <- createSimulationResult$get("Errors")
+  browser()
+  # If simulation could not be created, throw an error with all error messages
+  if (is.null(sim)) {
+    stop(paste(errors, collapse = "\n"))
+  }
 
   # Delete simulation request
   rm(simRequest)
-  return(Simulation$new(netSimulation))
+  return(Simulation$new(sim))
 }
 
 #' @title Load a simulation from a pkml file

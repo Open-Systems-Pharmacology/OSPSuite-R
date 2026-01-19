@@ -50,8 +50,8 @@ selection is provided are not in the configuration, throw an error.}
 
 \item{\code{settings}}{A \code{SimulationSettings} object defining the simulation settings.
 If no settings are provided, default settings will be used upon simulation creation.
-Currently, there is no way to modify the simulation settings object or to create a new one. Setting the solver settings, output intervals, and output selections
-must be done after creating the simulation from the configuration.}
+Individual properties within the \code{SimulationSettings} object are read-only, but the entire settings object can be replaced with another \code{SimulationSettings} instance (or set to \code{NULL} to use defaults).
+Setting the solver settings, output intervals, and output selections must be done after creating the simulation from the configuration.}
 
 \item{\code{partitionCoefficientMethods}}{The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
 and the values being one of the \code{PartitionCoefficientMethods} enum values.
