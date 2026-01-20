@@ -16,7 +16,7 @@ createSimulation <- function(
   showWarnings = FALSE
 ) {
   # Get simulation task
-  task <- .getMoBiTaskFromCache("SimulationTask")
+  simulationTask <- .getMoBiTaskFromCache("SimulationTask")
 
   # Create new simulation request
   simRequest <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
@@ -31,7 +31,7 @@ createSimulation <- function(
       module$name
     ]] %||%
       ""
-    moduleConfiguration <- task$call(
+    moduleConfiguration <- simulationTask$call(
       "CreateModuleConfiguration",
       module,
       selectedPV,
@@ -47,7 +47,7 @@ createSimulation <- function(
   simRequest$set("Individual", simulationConfiguration$individual)
 
   # Try to create a simulation from the simulation request
-  createSimulationResult <- task$call(
+  createSimulationResult <- simulationTask$call(
     "CreateSimulationResultsFrom",
     simulationName,
     simRequest
@@ -58,7 +58,7 @@ createSimulation <- function(
   # get warnings
   warnings <- createSimulationResult$get("Warnings")
 
-  if (showWarnings) {
+  if (showWarnings && length(warnings) > 0) {
     warning(paste(
       "The following warnings were generated during simulation creation:\n",
       paste(warnings, collapse = "\n")
@@ -70,7 +70,6 @@ createSimulation <- function(
   if (is.null(sim)) {
     stop(paste(errors, collapse = "\n"))
   }
-
 
   return(Simulation$new(sim))
 }

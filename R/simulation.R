@@ -134,14 +134,12 @@ Simulation <- R6::R6Class(
     #' @description
     #' Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
     allStationaryMoleculeNames = function() {
-      buildConfig <- private$.buildConfiguration
-      buildConfig$call("AllPresentStationaryMoleculeNames")
+      private$.buildConfiguration$call("AllPresentStationaryMoleculeNames")
     },
     #' @description
     #' Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
     allFloatingMoleculeNames = function() {
-      buildConfig <- private$.buildConfiguration
-      buildConfig$call("AllPresentFloatingMoleculeNames")
+      private$.buildConfiguration$call("AllPresentFloatingMoleculeNames")
     },
     #' @description
     #' Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
