@@ -1,8 +1,10 @@
-# ospsuite.utils -----------------------------
+# rlang -----------------------------
 
 #' @export
-#' @importFrom ospsuite.utils "%||%"
-ospsuite.utils::`%||%`
+#' @importFrom rlang "%||%"
+rlang::`%||%`
+
+# ospsuite.utils -----------------------------
 
 #' @export
 #' @importFrom ospsuite.utils enum

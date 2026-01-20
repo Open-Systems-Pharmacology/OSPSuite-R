@@ -63,6 +63,34 @@ A \code{ggplot2} plot object representing the time profile.
 \description{
 This function generates a time profile plot using ggplot2, where the data is grouped by a column named "group".
 }
+\details{
+\subsection{Automatic Unit Conversion}{
+
+When using a \code{DataCombined} object, the function automatically converts mixed units
+to a common unit. The target unit is determined by the most frequently occurring
+unit in the observed data (or simulated data if no observed data exists).
+Concentration dimensions (\code{Concentration (mass)} and \code{Concentration (molar)}) are
+treated as compatible and can be converted between each other if molecular weight
+is available.
+}
+
+\subsection{Mixed Error Types}{
+
+The function automatically handles data containing different error type specifications:
+\itemize{
+\item If all data uses the same error type (\code{ArithmeticStdDev} or \code{GeometricStdDev}),
+it is passed directly to the plotting function.
+\item If data contains \strong{mixed error types}, they are automatically converted to
+\code{yMin}/\code{yMax} bounds:
+\itemize{
+\item \code{ArithmeticStdDev}: \code{yMin = yValues - yErrorValues}, \code{yMax = yValues + yErrorValues}
+\item \code{GeometricStdDev}: \code{yMin = yValues / yErrorValues}, \code{yMax = yValues * yErrorValues}
+}
+\item For custom error types (not \code{ArithmeticStdDev} or \code{GeometricStdDev}), provide
+error bounds directly in \code{yMin} and \code{yMax} columns.
+}
+}
+}
 \examples{
 \dontrun{
 # Generate a time profile plot for the provided data
