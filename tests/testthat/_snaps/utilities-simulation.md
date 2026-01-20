@@ -17,7 +17,7 @@
         simulationName = "MySim", showWarnings = TRUE)
     Condition
       Warning in `createSimulation()`:
-      Following warnings were generated during simulation creation:
+      The following warnings were generated during simulation creation:
        Multiple Warnings were found for 'Whole Blood'
       Multiple Warnings were found for 'Interstitial Unbound'
       Multiple Warnings were found for 'Intracellular Unbound'
