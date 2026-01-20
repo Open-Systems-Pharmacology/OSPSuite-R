@@ -299,7 +299,7 @@ simulation <- createSimulation(
 
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
 
-```{r changeCalculationMethodsAndCreateSimulatoin}
+```{r changeCalculationMethodsAndCreateSimulation}
 # simulationConfigurationHuman$partitionCoefficientMethods(
 #   list(
 #     "T3" = PartitionCoefficientMethods$Berezhkovskiy,
