@@ -100,7 +100,7 @@ test_that("It sets a random seed if not specified", {
 
   human_values <- createIndividual(individualCharacteristics = human)
   expect_false(is.null((human_values)))
-  expect_gt(human_values$seed, 0)
+  expecttypet(human_values$seed, "integer")
 })
 
 test_that("It can create reating a human with weight missing", {
