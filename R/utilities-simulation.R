@@ -60,7 +60,7 @@ createSimulation <- function(
 
   if (showWarnings) {
     warning(paste(
-      "Following warnings were generated during simulation creation:\n",
+      "The following warnings were generated during simulation creation:\n",
       paste(warnings, collapse = "\n")
     ))
   }

@@ -110,7 +110,7 @@ Simulation <- R6::R6Class(
       private$.settings <- SimulationSettings$new(self$get("Settings"))
 
       netTask <- .getCoreTaskFromCache("SimulationTask")
-      netTask$call(
+      private$.buildConfiguration <- netTask$call(
         "CreateSimulationBuilderFor",
         netObject
       )
@@ -134,12 +134,14 @@ Simulation <- R6::R6Class(
     #' @description
     #' Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
     allStationaryMoleculeNames = function() {
-      private$.buildConfiguration$call("AllPresentStationaryMoleculeNames")
+      buildConfig <- private$.buildConfiguration
+      buildConfig$call("AllPresentStationaryMoleculeNames")
     },
     #' @description
     #' Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
     allFloatingMoleculeNames = function() {
-      private$.buildConfiguration$call("AllPresentFloatingMoleculeNames")
+      buildConfig <- private$.buildConfiguration
+      buildConfig$call("AllPresentFloatingMoleculeNames")
     },
     #' @description
     #' Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
