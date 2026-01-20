@@ -3,7 +3,7 @@
 #' @param simulationName Name of the simulation.
 #' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
 #' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
-#' @param
+#' @param showWarnings If `TRUE`, warnings generated during simulation creation will be shown as R warnings. Default is `FALSE`.
 #'
 #' @returns A `Simulation` object
 #' @export
@@ -22,6 +22,7 @@ createSimulation <- function(
   simRequest <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
   # Create module configurations from modules and add them to the simulation request
   for (module in simulationConfiguration$modules) {
+    # If NULL, send a blank string. Sending NULL causes issues on .NET side because the expected type is string, and NULL is recognized as an object
     selectedPV <- simulationConfiguration$selectedParameterValues[[
       module$name
     ]] %||%
@@ -65,7 +66,6 @@ createSimulation <- function(
   }
   # get errors
   errors <- createSimulationResult$get("Errors")
-  browser()
   # If simulation could not be created, throw an error with all error messages
   if (is.null(sim)) {
     stop(paste(errors, collapse = "\n"))
@@ -144,12 +144,6 @@ loadSimulation <- function(
   )
 
   simulation <- Simulation$new(netSim, filePath)
-
-  netTask <- .getCoreTaskFromCache("SimulationTask")
-  simulation$setBuildConfiguration(netTask$call(
-    "CreateSimulationBuilderFor",
-    simulation
-  ))
 
   # Add the simulation to the cache of loaded simulations
   if (addToCache) {

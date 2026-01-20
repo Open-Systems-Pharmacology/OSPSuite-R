@@ -783,9 +783,9 @@ test_that("createSimulation throws an error when simulation cannot be created", 
     expect_error(
       newSimulation <- createSimulation(
         simulationConfiguration = simConfig,
-        simulationName = "MySim",
-        showWarnings = TRUE
+        simulationName = "MySim"
       )
-    )
+    ),
+    error = TRUE
   )
 })

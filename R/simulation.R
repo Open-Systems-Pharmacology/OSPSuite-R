@@ -108,11 +108,12 @@ Simulation <- R6::R6Class(
       super$initialize(netObject)
       private$.sourceFile <- sourceFile
       private$.settings <- SimulationSettings$new(self$get("Settings"))
-    },
-    #' @description
-    #' Sets the buildConfiguration for this simulation
-    setBuildConfiguration = function(buildConfiguration) {
-      private$.buildConfiguration <- buildConfiguration
+
+      netTask <- .getCoreTaskFromCache("SimulationTask")
+      netTask$call(
+        "CreateSimulationBuilderFor",
+        netObject
+      )
     },
     #' @description
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
