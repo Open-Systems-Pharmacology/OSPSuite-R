@@ -71,8 +71,7 @@ createSimulation <- function(
     stop(paste(errors, collapse = "\n"))
   }
 
-  # Delete simulation request
-  rm(simRequest)
+
   return(Simulation$new(sim))
 }
 
