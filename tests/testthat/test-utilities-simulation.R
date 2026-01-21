@@ -711,3 +711,85 @@ test_that("It throws an error when trying to run multiple simulations", {
     expect_error(results <- runSimulation(c(sim, sim2)))
   )
 })
+
+#### Creating simulation ####
+test_that("It can create a simulation from a project configuration retrieved from a simulation with no expression profiles", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim"
+  )
+
+  # Check simulation configuration
+  expect_equal(newSimulation$name, "MySim")
+  expect_equal(
+    newSimulation$configuration$expressionProfiles,
+    simConfig$expressionProfiles
+  )
+  expect_equal(newSimulation$configuration$individual, simConfig$individual)
+  # Checking for the names of the modules, because the module instances are different
+  expect_equal(
+    names(newSimulation$configuration$modules),
+    names(simConfig$modules)
+  )
+
+  # Check simulation properties
+  expect_equal(
+    newSimulation$allFloatingMoleculeNames(),
+    simulation$allFloatingMoleculeNames()
+  )
+  expect_equal(
+    newSimulation$allStationaryMoleculeNames(),
+    simulation$allStationaryMoleculeNames()
+  )
+  # TODO re-enable after https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1681 is fixed
+  # expect_equal(
+  #   newSimulation$outputSchema,
+  #   simulation$outputSchema
+  # )
+})
+
+# show warnings true
+test_that("createSimulation shows warnings when showWarnings is TRUE", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim",
+      showWarnings = TRUE
+    )
+  )
+})
+
+# errors
+test_that("createSimulation throws an error when simulation cannot be created", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+
+  # Introduce an error in the configuration
+  simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+  expect_snapshot(
+    expect_error(
+      newSimulation <- createSimulation(
+        simulationConfiguration = simConfig,
+        simulationName = "MySim"
+      )
+    )
+  )
+})

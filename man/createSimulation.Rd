@@ -7,7 +7,8 @@
 createSimulation(
   simulationName,
   simulationConfiguration,
-  createAllProcessRateParameters = FALSE
+  createAllProcessRateParameters = FALSE,
+  showWarnings = FALSE
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ createSimulation(
 \item{simulationConfiguration}{An instance of \code{SimulationConfiguration} that defines the simulation.}
 
 \item{createAllProcessRateParameters}{If \code{TRUE}, process rate parameters will be created for all reactions and transport processes.}
+
+\item{showWarnings}{If \code{TRUE}, warnings generated during simulation creation will be shown as R warnings. Default is \code{FALSE}.}
 }
 \value{
 A \code{Simulation} object
