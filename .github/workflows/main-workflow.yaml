@@ -18,18 +18,24 @@ jobs:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
 
   R-CMD-Check:
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() }}  # Run even if previous jobs fail, unless workflow is cancelled
     needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
+  # Test against released versions of Remotes packages dependencies
+  R-CMD-Check-Released-Deps:
+    if: ${{ !cancelled() }}  # Run even if previous jobs fail, unless workflow is cancelled
+    needs: [bump-dev-version]
+    uses: ./.github/workflows/R-CMD-check-released-deps.yaml
+
   test-coverage:
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() }}  # Run even if previous jobs fail, unless workflow is cancelled
     needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   pkgdown:
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() }}  # Run even if previous jobs fail, unless workflow is cancelled
     needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
