@@ -49,7 +49,7 @@ createSimulation <- function(
 
   # Try to create a simulation from the simulation request
   createSimulationResult <- simulationTask$call(
-    "CreateSimulationResultsFrom",
+    "CreateSimulationAndValidateFrom",
     simulationName,
     simRequest
   )
