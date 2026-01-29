@@ -20,7 +20,7 @@ Since `{ospsuite}` was released in version 12.1.0, all the necessary OSPSuite
 and PK-Sim dependencies are included in the package. Therefore, there is no need
 to install extra software to use `{ospsuite}`.
 
-Also, `{ospsuite}` is fully self contained and is independent from any  version 
+Also, `{ospsuite}` is fully self contained and is independent from any version 
 of OSPSuite and PK-Sim installed on the user computer.
 
 # Versions below 12.1.0
