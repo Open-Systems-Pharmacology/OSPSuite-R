@@ -1,9 +1,3 @@
-# rlang -----------------------------
-
-#' @export
-#' @importFrom rlang "%||%"
-rlang::`%||%`
-
 # ospsuite.utils -----------------------------
 
 #' @export
