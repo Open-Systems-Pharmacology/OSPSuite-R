@@ -69,7 +69,10 @@ createSimulation <- function(
   errors <- createSimulationResult$get("Errors")
   # If simulation could not be created, throw an error with all error messages
   if (is.null(sim)) {
-    stop(paste(errors, collapse = "\n"))
+    stop(paste(
+      "Cannot create simulation. The following errors were generated during simulation creation:\n",
+      paste(errors, collapse = "\n")
+    ))
   }
 
   return(Simulation$new(sim))
