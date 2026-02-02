@@ -18,8 +18,8 @@ plotTimeProfile(
 )
 }
 \arguments{
-\item{plotData}{An object of class \code{DataCombined} or a \code{data.table}.
-If a \code{data.table}, it must include the following:
+\item{plotData}{An object of class \code{DataCombined} or a \code{data.table}. If a
+\code{data.table}, it must include the following:
 \itemize{
 \item \code{xValues}: Numeric time points.
 \item \code{yValues}: Observed or simulated values (numeric).
@@ -37,23 +37,29 @@ If a \code{data.table}, it must include the following:
 }
 }}
 
-\item{metaData}{A list containing metadata for the plot. If NULL, a default list is constructed from the data. Expected structure includes information about dimensions and units for both x and y axes.}
+\item{metaData}{A list containing metadata for the plot. If NULL, a default
+list is constructed from the data. Expected structure includes information
+about dimensions and units for both x and y axes.}
 
-\item{mapping}{A ggplot2 aesthetic mapping object. Default is \code{ggplot2::aes()}. This is added or replaces the default mapping constructed by the data.}
+\item{mapping}{A ggplot2 aesthetic mapping object. Default is
+\code{ggplot2::aes()}. This is added or replaces the default mapping constructed
+by the data.}
 
-\item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default is the same as \code{mapping}.}
+\item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default
+is the same as \code{mapping}.}
 
 \item{aggregation}{The type of the aggregation of simulated data. One of
 \code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in
 \code{ospsuite::DataAggregationMethods}). Will replace \code{yValues} by the median,
 arithmetic or geometric average and add a set of upper and lower bounds
-(\code{yMin} and \code{yMax}). It is only applied if the simulated data represents a population.}
+(\code{yMin} and \code{yMax}). It is only applied if the simulated data represents a
+population.}
 
 \item{quantiles}{A numerical vector with quantile values (Default: \code{c(0.05, 0.50, 0.95)}) to be plotted. Ignored if \code{aggregation} is not \code{quantiles}.}
 
-\item{nsd}{Optional parameter specifying the number of standard deviations to plot above and below the mean
-(used for error bars when aggregation is "arithmetic" or "geometric").
-Ignored if \code{aggregation} is  \code{quantiles}.}
+\item{nsd}{Optional parameter specifying the number of standard deviations to
+plot above and below the mean (used for error bars when aggregation is
+"arithmetic" or "geometric"). Ignored if \code{aggregation} is  \code{quantiles}.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotTimeProfile}.}
 }
@@ -61,22 +67,23 @@ Ignored if \code{aggregation} is  \code{quantiles}.}
 A \code{ggplot2} plot object representing the time profile.
 }
 \description{
-This function generates a time profile plot using ggplot2, where the data is grouped by a column named "group".
+This function generates a time profile plot using ggplot2, where the data is
+grouped by a column named "group".
 }
 \details{
-\subsection{Automatic Unit Conversion}{
+\subsection{Automatic Unit Conversion When using a \code{DataCombined} object, the}{
 
-When using a \code{DataCombined} object, the function automatically converts mixed units
-to a common unit. The target unit is determined by the most frequently occurring
-unit in the observed data (or simulated data if no observed data exists).
-Concentration dimensions (\code{Concentration (mass)} and \code{Concentration (molar)}) are
-treated as compatible and can be converted between each other if molecular weight
-is available.
+function automatically converts mixed units to a common unit. The target unit
+is determined by the most frequently occurring unit in the observed data (or
+simulated data if no observed data exists). Concentration dimensions
+(\code{Concentration (mass)} and \code{Concentration (molar)}) are treated as
+compatible and can be converted between each other if molecular weight is
+available.
 }
 
-\subsection{Mixed Error Types}{
+\subsection{Mixed Error Types The function automatically handles data containing}{
 
-The function automatically handles data containing different error type specifications:
+different error type specifications:
 \itemize{
 \item If all data uses the same error type (\code{ArithmeticStdDev} or \code{GeometricStdDev}),
 it is passed directly to the plotting function.
