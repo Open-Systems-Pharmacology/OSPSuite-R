@@ -800,3 +800,28 @@ test_that("createSimulation throws an error when simulation cannot be created", 
     )
   )
 })
+
+# Test for process rate parameters
+test_that("createSimulation can create process rate parameters when requested", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim",
+    createAllProcessRateParameters = TRUE
+  )
+
+  # Check that process rate parameters were created
+  paramPath <- "Neighborhoods|ArterialBlood_bc_Bone_bc|Aciclovir|MassTransferBloodPool2OrgRBC|ProcessRate"
+  expect_no_error(
+    processRateParameter <- getParameter(
+      path = paramPath,
+      container = newSimulation
+    )
+  )
+})

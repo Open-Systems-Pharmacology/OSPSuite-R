@@ -298,7 +298,7 @@ configuration <- simulation$configuration
 # )
 ```
 
-Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
+Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`. Additionally, the user can select whether to create all process rate parameters in the simulation or not by setting the argument `createAllProcessRateParameters` in the function `createSimulation()`. These parameters can be used for model debugging and analysis.
 
 ```{r changeCalculationMethodsAndCreateSimulation}
 # simulationConfigurationHuman$partitionCoefficientMethods(
@@ -317,6 +317,7 @@ Before creating a simulation from configuration, the user can change the calcula
 
 # sim1 <- createSimulation(
 #   simulationName = "Thyroid_QST_human",
-#   simulationConfigurationHuman
+#   simulationConfigurationHuman,
+#   createAllProcessRateParameters = TRUE
 # )
 ```

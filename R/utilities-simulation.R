@@ -13,9 +13,9 @@ createSimulation <- function(
   simulationName,
   simulationConfiguration,
   createAllProcessRateParameters = FALSE,
-  # TODO: Implement createAllProcessRateParameters functionality
   showWarnings = FALSE
 ) {
+  validateIsLogical(c(createAllProcessRateParameters, showWarnings))
   # Get simulation task
   simulationTask <- .getMoBiTaskFromCache("SimulationTask")
 
@@ -48,6 +48,11 @@ createSimulation <- function(
   simRequest$set("Individual", simulationConfiguration$individual)
   # Set simulation settings
   simRequest$set("SimulationSettings", simulationConfiguration$settings)
+  # Set whether to create process rate parameters
+  simRequest$set(
+    "CreateAllProcessRateParameters",
+    createAllProcessRateParameters
+  )
 
   # Try to create a simulation from the simulation request
   createSimulationResult <- simulationTask$call(
