@@ -46,6 +46,8 @@ createSimulation <- function(
   }
   # Set the individual
   simRequest$set("Individual", simulationConfiguration$individual)
+  # Set simulation settings
+  simRequest$set("SimulationSettings", simulationConfiguration$settings)
 
   # Try to create a simulation from the simulation request
   createSimulationResult <- simulationTask$call(

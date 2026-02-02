@@ -747,11 +747,18 @@ test_that("It can create a simulation from a project configuration retrieved fro
     newSimulation$allStationaryMoleculeNames(),
     simulation$allStationaryMoleculeNames()
   )
-  # TODO re-enable after https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1681 is fixed
-  # expect_equal(
-  #   newSimulation$outputSchema,
-  #   simulation$outputSchema
-  # )
+  expect_equal(
+    length(newSimulation$outputSchema$intervals),
+    length(simulation$outputSchema$intervals)
+  )
+  expect_equal(
+    newSimulation$outputSchema$intervals[[1]]$name,
+    simulation$outputSchema$intervals[[1]]$name
+  )
+  expect_equal(
+    newSimulation$outputSelections$allOutputs[[1]]$path,
+    simulation$outputSelections$allOutputs[[1]]$path
+  )
 })
 
 # show warnings true
