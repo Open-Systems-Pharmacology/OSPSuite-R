@@ -637,12 +637,12 @@ plotQuantileQuantilePlot <- function(plotData,
     # check if error values for custom error types are in columns yMin yMax
     tmp <- plotData[!is.na(yErrorType) &
                       !(yErrorType %in% unlist(ospsuite::DataErrorType))]
-    if (nrow(tmp) > 0){
-      if (!all(c('yMin','yMax') %in% names(plotData))){
+    if (nrow(tmp) > 0) {
+      if (!all(c('yMin', 'yMax') %in% names(plotData))) {
         stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
       }
-      tmp <- tmp[is.na(yMin) & is.na(yMax) & !is.na(yErrorValues)]
-      if (nrow(tmp) > 0){
+      tmp <- tmp[(is.na(yMin) | is.na(yMax)) & !is.na(yErrorValues)]
+      if (nrow(tmp) > 0) {
         stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
       }
     }
