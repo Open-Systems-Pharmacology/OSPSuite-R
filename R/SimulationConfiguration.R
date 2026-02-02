@@ -93,7 +93,7 @@ SimulationConfiguration <- R6::R6Class(
         return(private$.modules)
       } else {
         # Set the new modules combination
-        validateIsOfType(value, "MoBiModule")
+        ospsuite.utils::validateIsOfType(value, "MoBiModule")
         private$.modules <- value
       }
     },

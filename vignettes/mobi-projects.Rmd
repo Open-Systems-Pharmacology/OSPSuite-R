@@ -103,6 +103,7 @@ One way to get a simulation configuration is to retrieve a simulation either fro
 [NOTE:]{.underline} Only simulations created with OSPS version \>=12 have simulation configurations.
 
 Get a configuration of a simulation loaded from a pkml file:
+
 ```{r getSimulationConfigurationFromPKML}
 simulation <- loadSimulation(system.file(
   "extdata",
@@ -286,9 +287,20 @@ Expression profile BBs cannot be created from R but can be loaded from PKML. (Ti
 
 The simulation configuration can be used to create a simulation. The simulation can then be saved to a pkml file, or used for further analysis.
 
+```{r createSimulationFromConfiguration}
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+configuration <- simulation$configuration
+
+# TODO enable after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2252
+# simulation <- createSimulation(
+#   simulationName = "Thyroid_QST_Human_copy",
+#   configuration
+# )
+```
+
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
 
-```{r changeCalculationMethodsAndCreateSimulatoin}
+```{r changeCalculationMethodsAndCreateSimulation}
 # simulationConfigurationHuman$partitionCoefficientMethods(
 #   list(
 #     "T3" = PartitionCoefficientMethods$Berezhkovskiy,
