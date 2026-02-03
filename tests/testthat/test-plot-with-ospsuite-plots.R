@@ -104,7 +104,7 @@ test_that("It constructs mapping correctly for time profiles", {
   mockMetaDataWithY2 <- list(
     xValues = list(dimension = "Time", unit = "h"),
     yValues = list(dimension = "Concentration", unit = "mg/l"),
-    y2 = list(dimension = "Volume", unit = "ml") # Secondary y-axis metadata
+    y2 = list(dimension = "Volume", unit = "ml")
   )
 
   # Test mapping with y2
@@ -129,7 +129,7 @@ sampleData <- data.table(
 
 test_that("It returns the most frequent observed unit", {
   result <- .getMostFrequentUnit(sampleData, "yUnit")
-  expect_equal(result, "mg") # Expected to return "mg" as it's the most frequent observed unit
+  expect_equal(result, "mg")
 })
 
 test_that("It returns the most frequent simulated unit when no observed units are present", {
@@ -177,7 +177,7 @@ test_that("It prioritizes observed when frequencies are tied", {
 test_that("It handles missing yErrorType gracefully", {
   plotData <- data.table(yValues = c(1, 2, 3), yErrorValues = c(0.1, 0.2, 0.3))
   result <- .convertInconsistentErrorTypes(plotData)
-  expect_equal(result, plotData) # Should return the original data.table
+  expect_equal(result, plotData)
 })
 
 
@@ -195,8 +195,8 @@ test_that("It calculates yMin and yMax correctly", {
   result <- .convertInconsistentErrorTypes(plotData)
   expect_equal(result$yMin, c(5, 5, 8, 16))
   expect_equal(result$yMax, c(20, 80, 12, 24))
-  expect_true(all(is.na(result$yErrorValues))) # Should be set to NA
-  expect_true(all(is.na(result$yErrorType))) # Should be set to NA
+  expect_true(all(is.na(result$yErrorValues)))
+  expect_true(all(is.na(result$yErrorType)))
 })
 
 # validateAndConvertData ---------
@@ -269,7 +269,7 @@ test_that("It requires yErrorValues when yErrorType is present and valid", {
   )
 })
 
-test_that("It requires yMin and yMax when yErrorType is present and invalid", {
+test_that("It requires yMin and yMax columns for custom error types", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
@@ -298,11 +298,12 @@ test_that("It requires yMin and yMax when yErrorType is present and invalid", {
       plotData = testData,
       predictedIsNeeded = FALSE
     ),
-    'custom errorTypes'
+    messages$plotWrongColumnsForCustomErrorType(testData$yErrorType[6]),
+    fixed = TRUE
   )
 })
 
-test_that("It requires yMin and yMax when yErrorType is present with NA min/max and non-NA error value", {
+test_that("It requires yMin and yMax values (not NA) for custom error types", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
@@ -333,7 +334,21 @@ test_that("It requires yMin and yMax when yErrorType is present with NA min/max 
       plotData = testData,
       predictedIsNeeded = FALSE
     ),
-    'custom errorTypes'
+    messages$plotWrongColumnsForCustomErrorType(testData$yErrorType[6]),
+    fixed = TRUE
+  )
+
+  # Only yMax is NA for custom error type
+  testData$yMin[6] <- 2
+  testData$yMax[6] <- NA
+
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    messages$plotWrongColumnsForCustomErrorType(testData$yErrorType[6]),
+    fixed = TRUE
   )
 })
 

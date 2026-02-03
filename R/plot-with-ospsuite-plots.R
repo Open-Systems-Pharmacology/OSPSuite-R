@@ -1,9 +1,10 @@
-##' Creates a time profile plot for given data.
+#' Creates a time profile plot for given data.
 #'
-#' This function generates a time profile plot using ggplot2, where the data is grouped by a column named "group".
+#' This function generates a time profile plot using ggplot2, where the data is
+#' grouped by a column named "group".
 #'
-#' @param plotData An object of class `DataCombined` or a `data.table`.
-#' If a `data.table`, it must include the following:
+#' @param plotData An object of class `DataCombined` or a `data.table`. If a
+#'   `data.table`, it must include the following:
 #'   - `xValues`: Numeric time points.
 #'   - `yValues`: Observed or simulated values (numeric).
 #'   - `group`: Grouping variable (factor or character).
@@ -17,19 +18,44 @@
 #'     - `yMin`, `yMax`: Custom ranges for y-axis instead of error types.
 #'     - `IndividualId`: Used for aggregation of simulated population data.
 #'
-#' @param metaData A list containing metadata for the plot. If NULL, a default list is constructed from the data. Expected structure includes information about dimensions and units for both x and y axes.
-#' @param mapping A ggplot2 aesthetic mapping object. Default is `ggplot2::aes()`. This is added or replaces the default mapping constructed by the data.
-#' @param observedMapping A ggplot2 aesthetic mapping for observed data. Default is the same as `mapping`.
+#' @details ## Automatic Unit Conversion When using a `DataCombined` object, the
+#' function automatically converts mixed units to a common unit. The target unit
+#' is determined by the most frequently occurring unit in the observed data (or
+#' simulated data if no observed data exists). Concentration dimensions
+#' (`Concentration (mass)` and `Concentration (molar)`) are treated as
+#' compatible and can be converted between each other if molecular weight is
+#' available.
+#'
+#' ## Mixed Error Types The function automatically handles data containing
+#' different error type specifications:
+#' - If all data uses the same error type (`ArithmeticStdDev` or `GeometricStdDev`),
+#' it is passed directly to the plotting function.
+#' - If data contains **mixed error types**, they are automatically converted to
+#' `yMin`/`yMax` bounds:
+#'   - `ArithmeticStdDev`: `yMin = yValues - yErrorValues`, `yMax = yValues + yErrorValues`
+#'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
+#' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
+#' error bounds directly in `yMin` and `yMax` columns.
+#'
+#' @param metaData A list containing metadata for the plot. If NULL, a default
+#'   list is constructed from the data. Expected structure includes information
+#'   about dimensions and units for both x and y axes.
+#' @param mapping A ggplot2 aesthetic mapping object. Default is
+#'   `ggplot2::aes()`. This is added or replaces the default mapping constructed
+#'   by the data.
+#' @param observedMapping A ggplot2 aesthetic mapping for observed data. Default
+#'   is the same as `mapping`.
 #' @param aggregation The type of the aggregation of simulated data. One of
-#'  `quantiles` (Default), `arithmetic` or `geometric` (full list in
-#'  `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
-#'  arithmetic or geometric average and add a set of upper and lower bounds
-#'  (`yMin` and `yMax`). It is only applied if the simulated data represents a population.
+#'   `quantiles` (Default), `arithmetic` or `geometric` (full list in
+#'   `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
+#'   arithmetic or geometric average and add a set of upper and lower bounds
+#'   (`yMin` and `yMax`). It is only applied if the simulated data represents a
+#'   population.
 #' @param quantiles A numerical vector with quantile values (Default: `c(0.05,
-#'  0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
-#' @param nsd Optional parameter specifying the number of standard deviations to plot above and below the mean
-#' (used for error bars when aggregation is "arithmetic" or "geometric").
-#'  Ignored if `aggregation` is  `quantiles`.
+#'   0.50, 0.95)`) to be plotted. Ignored if `aggregation` is not `quantiles`.
+#' @param nsd Optional parameter specifying the number of standard deviations to
+#'   plot above and below the mean (used for error bars when aggregation is
+#'   "arithmetic" or "geometric"). Ignored if `aggregation` is  `quantiles`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
 #'
 #' @return A `ggplot2` plot object representing the time profile.
@@ -106,6 +132,7 @@ plotTimeProfile <- function(plotData, # nolint
 
   return(plotObject)
 }
+
 #' Plots predicted vs observed data, grouped by "group".
 #'
 #' This function visualizes the relationship between predicted and observed values, allowing for easy identification of discrepancies.
@@ -172,6 +199,7 @@ plotPredictedVsObserved <- function(plotData, # nolint
 
   return(plotObject)
 }
+
 #' Plots residuals vs Time Points, grouped by "group".
 #'
 #' This function visualizes the residuals over time, providing insights into the accuracy of the model predictions.
@@ -495,17 +523,36 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(observedUnits[[unitColumn]][1])
 }
+
 #' Convert Units for Plotting
 #'
-#' This function converts units in the provided plot data and ensures that specific
-#' y-dimensions are merged and ordered appropriately.
+#' This function automatically converts mixed units in the provided plot data to
+#' a common unit, enabling plotting of data from different sources with
+#' different unit specifications.
+#'
+#' @details ## Unit Selection The target unit is determined by the most
+#' frequently occurring unit in the data, prioritizing observed data over
+#' simulated data. This ensures that observed data (typically the reference)
+#' dictates the display unit.
+#'
+#' ## Concentration Dimension Handling `Concentration (mass)` and `Concentration
+#' (molar)` dimensions are treated as compatible and merged for unit conversion
+#' purposes. This allows plotting of data where some datasets use mass-based
+#' units (e.g., mg/L) and others use molar units (e.g., µmol/L), provided
+#' molecular weight is available.
+#'
+#' ## Dimension Validation An error is raised if the data contains more
+#' y-dimensions than allowed by the plot type (e.g., time profile plots support
+#' up to 2 y-dimensions for dual y-axis support).
 #'
 #' @param plotData A data.frame containing the data to be plotted.
 #' @param maxAllowedYDimensions An integer indicating the maximum number of
-#'   y-dimensions allowed in the plot. If more than this number is found, an error is raised.
+#'   y-dimensions allowed in the plot. If more than this number is found, an
+#'   error is raised.
 #'
-#' @return A data.table containing the converted units and merged dimensions, ordered
-#'   with specified dimensions at the top.
+#' @return A data.table containing the converted units and merged dimensions,
+#'   ordered with concentration dimensions at the top (for primary y-axis
+#'   placement).
 #'
 #' @keywords internal
 #' @noRd
@@ -557,13 +604,27 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(result)
 }
-#' Calculate Y Bounds Based on Error Types
+
+#' Convert Mixed Error Types to yMin/yMax Bounds
 #'
-#' This function modifies a data.table by calculating the minimum and maximum Y values
-#' based on the specified error types.
+#' This function handles datasets containing multiple error type specifications by
+#' converting them to a unified `yMin`/`yMax` format.
+#'
+#' @details
+#' When data contains only one error type, no conversion is performed and the
+#' original `yErrorType`/`yErrorValues` are preserved for the plotting function
+#' to handle natively.
+#'
+#' When multiple error types are present:
+#' - `ArithmeticStdDev`: converted to `yMin = yValues - yErrorValues`, `yMax = yValues + yErrorValues`
+#' - `GeometricStdDev`: converted to `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
+#' - Custom types: must already have `yMin`/`yMax` columns provided
+#'
+#' After conversion, `yErrorValues` and `yErrorType` are set to NA to prevent
+#' duplicate error bar rendering.
 #'
 #' @param plotData A data.table containing the columns yValues, yErrorValues, and yErrorType.
-#' @return A modified data.table with additional columns yMin and yMax calculated based on yErrorType.
+#' @return A modified data.table with yMin and yMax columns when mixed error types are detected.
 #'
 #' @keywords internal
 #' @noRd
@@ -586,12 +647,12 @@ plotQuantileQuantilePlot <- function(plotData,
     # check if error values for custom error types are in columns yMin yMax
     tmp <- plotData[!is.na(yErrorType) &
                       !(yErrorType %in% unlist(ospsuite::DataErrorType))]
-    if (nrow(tmp) > 0){
-      if (!all(c('yMin','yMax') %in% names(plotData))){
+    if (nrow(tmp) > 0) {
+      if (!all(c('yMin', 'yMax') %in% names(plotData))) {
         stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
       }
-      tmp <- tmp[is.na(yMin) & is.na(yMax) & !is.na(yErrorValues)]
-      if (nrow(tmp) > 0){
+      tmp <- tmp[(is.na(yMin) | is.na(yMax)) & !is.na(yErrorValues)]
+      if (nrow(tmp) > 0) {
         stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
       }
     }
@@ -605,18 +666,19 @@ plotQuantileQuantilePlot <- function(plotData,
       yMin = yValues / yErrorValues,
       yMax = yValues * yErrorValues,
       yErrorValues = NA_real_,
-      yErrorType = NA_real_
+      yErrorType = NA_character_
     )]
     plotData[yErrorType == DataErrorType$ArithmeticStdDev, `:=`(
       yMin = yValues - yErrorValues,
       yMax = yValues + yErrorValues,
       yErrorValues = NA_real_,
-      yErrorType = NA_real_
+      yErrorType = NA_character_
     )]
   }
 
   return(plotData)
 }
+
 #' Construct Metadata for Time Profile
 #'
 #' This function generates metadata for time profile plots based on the provided plot data.
@@ -679,6 +741,7 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(metaData)
 }
+
 #' Calculate Residuals for Plotting
 #'
 #' This function computes the residuals from observed and simulated datasets,
@@ -797,6 +860,7 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(mapping)
 }
+
 #' Creates mapping for residuals in plots.
 #'
 #' This function generates a mapping for the residuals plot based on the provided user mapping.
@@ -884,6 +948,7 @@ plotQuantileQuantilePlot <- function(plotData,
 
   return(mapping)
 }
+
 #' Aggregates simulated data based on specified methods.
 #'
 #' This function aggregates simulated data from a `data.table` based on a specified aggregation method (e.g., quantiles, arithmetic mean, geometric mean).

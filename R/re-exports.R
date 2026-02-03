@@ -1,10 +1,6 @@
 # ospsuite.utils -----------------------------
 
 #' @export
-#' @importFrom ospsuite.utils "%||%"
-ospsuite.utils::`%||%`
-
-#' @export
 #' @importFrom ospsuite.utils enum
 ospsuite.utils::enum
 

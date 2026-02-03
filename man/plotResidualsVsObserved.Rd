@@ -13,8 +13,8 @@ plotResidualsVsObserved(
 )
 }
 \arguments{
-\item{plotData}{An object of class \code{DataCombined} or a \code{data.table}.
-If a \code{data.table}, it must include the following:
+\item{plotData}{An object of class \code{DataCombined} or a \code{data.table}. If a
+\code{data.table}, it must include the following:
 \itemize{
 \item \code{xValues}: Numeric time points.
 \item \code{yValues}: Observed or simulated values (numeric).
@@ -32,9 +32,13 @@ If a \code{data.table}, it must include the following:
 }
 }}
 
-\item{metaData}{A list containing metadata for the plot. If NULL, a default list is constructed from the data. Expected structure includes information about dimensions and units for both x and y axes.}
+\item{metaData}{A list containing metadata for the plot. If NULL, a default
+list is constructed from the data. Expected structure includes information
+about dimensions and units for both x and y axes.}
 
-\item{mapping}{A ggplot2 aesthetic mapping object. Default is \code{ggplot2::aes()}. This is added or replaces the default mapping constructed by the data.}
+\item{mapping}{A ggplot2 aesthetic mapping object. Default is
+\code{ggplot2::aes()}. This is added or replaces the default mapping constructed
+by the data.}
 
 \item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
 
