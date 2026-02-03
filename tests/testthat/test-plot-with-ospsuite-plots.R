@@ -172,6 +172,64 @@ test_that("It prioritizes observed when frequencies are tied", {
   expect_equal(result, "mg")
 })
 
+# .constructMetDataForTimeProfile ---------
+
+test_that("It constructs metadata correctly for single y-unit", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    xUnit = "h",
+    yUnit = "mg/l",
+    xDimension = "Time",
+    yDimension = "Concentration (mass)"
+  )
+
+  result <- .constructMetDataForTimeProfile(plotData, nYunit = 1)
+
+  expect_equal(result$xValues$dimension, "Time")
+  expect_equal(result$xValues$unit, "h")
+  expect_equal(result$yValues$dimension, "Concentration (mass)")
+  expect_equal(result$yValues$unit, "mg/l")
+  expect_null(result$y2)
+})
+
+test_that("It constructs metadata with secondary y-axis", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 0.5, 0.8),
+    xUnit = "h",
+    yUnit = c("mg/l", "mg/l", "%", "%"),
+    xDimension = "Time",
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    )
+  )
+
+  result <- .constructMetDataForTimeProfile(plotData, nYunit = 2)
+
+  expect_equal(result$xValues$unit, "h")
+  expect_equal(result$yValues$unit, "mg/l")
+  expect_equal(result$y2$unit, "%")
+  expect_equal(result$y2$dimension, "Fraction")
+})
+
+test_that("It throws error for inconsistent x units", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    xUnit = c("h", "min", "h"),
+    yUnit = "mg/l"
+  )
+
+  expect_error(
+    .constructMetDataForTimeProfile(plotData),
+    messages$plotUnitConsistency()
+  )
+})
+
 # .convertInconsistentErrorTypes ----------
 
 test_that("It handles missing yErrorType gracefully", {
