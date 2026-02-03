@@ -547,6 +547,61 @@ test_that("It works with empty x mapping for histogram", {
   expect_equal(rlang::as_label(result$observed), "yValues")
 })
 
+# .getMappingForPredictedVsObserved
+
+test_that("It creates pred vs obs mapping with lloq", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    lloq = c(5, 5, 5)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_equal(rlang::as_label(result$predicted), "predicted")
+  expect_equal(rlang::as_label(result$observed), "yValues")
+  expect_equal(rlang::as_label(result$groupby), "group")
+  expect_equal(rlang::as_label(result$lloq), "lloq")
+})
+
+test_that("It adds error bars for arithmetic error type", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    yErrorType = rep(DataErrorType$ArithmeticStdDev, 3),
+    yErrorValues = c(1, 2, 3)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_true("error" %in% names(result))
+})
+
+test_that("It adds error_relative for geometric error type", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    yErrorType = rep(DataErrorType$GeometricStdDev, 3),
+    yErrorValues = c(1.5, 2, 1.8)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_true("error_relative" %in% names(result))
+})
+
 # .aggregateSimulatedData ----------------
 
 test_that("It aggregates population data with quantiles", {
