@@ -465,3 +465,144 @@ test_that("It calculates residuals correctly without lloq column", {
   expect_contains(names(result), 'residualValues')
   expect_equal(result$residualValues, c(log(9) - log(10), log(19) - log(20)))
 })
+
+# .aggregateSimulatedData ----------------
+
+test_that("It aggregates population data with quantiles", {
+  set.seed(123)
+  plotData <- data.table(
+    xValues = rep(c(1, 2), each = 10),
+    yValues = c(rnorm(10, 10, 2), rnorm(10, 20, 3)),
+    group = rep("A", 20),
+    name = rep("Sim1", 20),
+    dataType = rep("simulated", 20),
+    IndividualId = rep(1:10, 2),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.1, 0.5, 0.9)
+  )
+
+  expect_equal(nrow(result), 2)
+  expect_true("yMin" %in% colnames(result))
+  expect_true("yMax" %in% colnames(result))
+
+  time1Values <- plotData[xValues == 1, yValues]
+  time2Values <- plotData[xValues == 2, yValues]
+
+  expect_equal(
+    result[xValues == 1, yMin],
+    quantile(time1Values, 0.1, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 1, yValues],
+    quantile(time1Values, 0.5, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 1, yMax],
+    quantile(time1Values, 0.9, names = FALSE),
+    tolerance = 1e-6
+  )
+
+  expect_equal(
+    result[xValues == 2, yMin],
+    quantile(time2Values, 0.1, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 2, yValues],
+    quantile(time2Values, 0.5, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 2, yMax],
+    quantile(time2Values, 0.9, names = FALSE),
+    tolerance = 1e-6
+  )
+})
+
+test_that("It aggregates with arithmetic mean and SD", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, mean = 100, sd = 10),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(nrow(result), 1)
+  expectedMean <- mean(plotData$yValues)
+  expectedSD <- sd(plotData$yValues)
+
+  expect_equal(result$yValues, expectedMean, tolerance = 0.01)
+  expect_equal(result$yMin, expectedMean - expectedSD, tolerance = 0.01)
+  expect_equal(result$yMax, expectedMean + expectedSD, tolerance = 0.01)
+})
+
+test_that("It aggregates with geometric mean and SD", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = exp(rnorm(10, mean = log(100), sd = 0.5)),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "geometric",
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(nrow(result), 1)
+  gm <- exp(mean(log(plotData$yValues)))
+  gsd <- exp(sd(log(plotData$yValues)))
+
+  expect_equal(result$yValues, gm, tolerance = 0.01)
+  expect_equal(result$yMin, exp(log(gm) - log(gsd)), tolerance = 0.01)
+  expect_equal(result$yMax, exp(log(gm) + log(gsd)), tolerance = 0.01)
+})
+
+test_that("It preserves observed data during aggregation", {
+  plotData <- data.table(
+    xValues = c(1, 2, rep(1, 10), rep(2, 10)),
+    yValues = c(15, 25, rnorm(10, 10, 2), rnorm(10, 20, 3)),
+    group = rep("A", 22),
+    name = c("Obs", "Obs", rep("Sim", 20)),
+    dataType = c("observed", "observed", rep("simulated", 20)),
+    IndividualId = c(NA, NA, rep(1:10, 2)),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.1, 0.5, 0.9)
+  )
+
+  expect_equal(nrow(result), 4)
+  expect_equal(sum(result$dataType == "observed"), 2)
+})
