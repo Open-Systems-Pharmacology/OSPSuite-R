@@ -524,6 +524,29 @@ test_that("It calculates residuals correctly without lloq column", {
   expect_equal(result$residualValues, c(log(9) - log(10), log(19) - log(20)))
 })
 
+# .getMappingForResiduals --------------
+
+test_that("It allows user mapping to override defaults", {
+  xMapping <- ggplot2::aes(x = xValues)
+  userMapping <- ggplot2::aes(groupby = name, color = group)
+
+  result <- .getMappingForResiduals(xMapping, userMapping)
+
+  expect_equal(rlang::as_label(result$groupby), "name")
+  expect_equal(rlang::as_label(result$colour), "group")
+})
+
+test_that("It works with empty x mapping for histogram", {
+  xMapping <- ggplot2::aes()
+  userMapping <- ggplot2::aes()
+
+  result <- .getMappingForResiduals(xMapping, userMapping)
+
+  expect_false("x" %in% names(result))
+  expect_equal(rlang::as_label(result$predicted), "predicted")
+  expect_equal(rlang::as_label(result$observed), "yValues")
+})
+
 # .aggregateSimulatedData ----------------
 
 test_that("It aggregates population data with quantiles", {
