@@ -256,3 +256,5 @@ test_that("Aggregations are computed and displayed correctly", {
     )
   )
 })
+
+ospsuite.plots::resetDefaults(oldDefaults)
