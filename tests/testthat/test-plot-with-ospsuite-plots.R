@@ -742,3 +742,34 @@ test_that("It preserves observed data during aggregation", {
   expect_equal(nrow(result), 4)
   expect_equal(sum(result$dataType == "observed"), 2)
 })
+
+test_that("It supports nsd = 2 for wider intervals", {
+  #19
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, mean = 100, sd = 10),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result1sd <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 1
+  )
+  result2sd <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 2
+  )
+
+  expect_true(result2sd$yMin < result1sd$yMin)
+  expect_true(result2sd$yMax > result1sd$yMax)
+})
