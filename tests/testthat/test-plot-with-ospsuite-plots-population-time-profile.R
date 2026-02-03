@@ -78,7 +78,7 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
   myDataCombined$setDataTransformations(
-    forNames = obsData$`Laskin 1982.Group D`$name,
+    forNames = obsData$`Vergin 1995.Iv`$name,
     xOffsets = 2
   )
 
