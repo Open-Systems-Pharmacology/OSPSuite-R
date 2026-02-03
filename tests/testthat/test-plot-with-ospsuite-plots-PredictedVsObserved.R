@@ -132,7 +132,7 @@ test_that("It produces expected plot for Aciclovir data", {
   )
 })
 
-test_that("It returns `NULL` when `DataCombined` is empty", {
+test_that("It throws error when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
   expect_error(
