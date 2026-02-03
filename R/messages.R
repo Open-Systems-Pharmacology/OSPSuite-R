@@ -171,7 +171,10 @@ messages$plotTooManyYDimension <- function(yDimensions) {
 }
 
 messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
-  paste('The errorValues for custom errorTypes',
-        paste(unique(errorTypes),collapse = ', '),
-        'have to be given in columns yMin and yMax')
+  paste0(
+    "The error values for custom errorTypes '",
+    paste(unique(errorTypes), collapse = "', '"),
+    "' must be provided in 'yMin' and 'yMax' columns. ",
+    "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
+  )
 }
