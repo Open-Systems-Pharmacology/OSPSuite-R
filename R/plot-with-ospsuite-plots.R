@@ -784,11 +784,13 @@ plotQuantileQuantilePlot <- function(plotData,
 
 #' Creates mapping for plotData.
 #'
-#' This function generates a mapping for the plotting based on the provided plot data and metadata.
+#' This function generates a mapping for the plotting based on the provided plot
+#' data and metadata.
 #'
 #' @param plotData Data to map.
 #' @param metaData A list with metadata for plotData.
-#' @param userMapping Mapping provided by the user; this will update the internal mapping.
+#' @param userMapping Mapping provided by the user; this will update the
+#'   internal mapping.
 #'
 #' @return A mapping object for ggplot2.
 #' @keywords internal
@@ -800,43 +802,77 @@ plotQuantileQuantilePlot <- function(plotData,
   mapping <- ggplot2::aes(x = xValues, y = yValues)
 
   if (!is.null(userMapping)) {
-    mapping <- structure(utils::modifyList(mapping, userMapping), class = "uneval")
+    mapping <- structure(
+      utils::modifyList(mapping, userMapping),
+      class = "uneval"
+    )
   }
 
   # add default groupby
   if (!("groupby" %in% names(mapping))) {
     if (any(!is.na(plotData$group))) {
-      mapping <- structure(utils::modifyList(
-        ggplot2::aes(
-          groupby = group,
-          group = interaction(group, name)
+      mapping <- structure(
+        utils::modifyList(
+          ggplot2::aes(
+            groupby = group,
+            group = interaction(group, name)
+          ),
+          mapping
         ),
-        mapping
-      ), class = "uneval")
+        class = "uneval"
+      )
     } else {
-      mapping <- structure(c(mapping, ggplot2::aes(groupby = name)), class = "uneval")
+      mapping <- structure(
+        c(mapping, ggplot2::aes(groupby = name)),
+        class = "uneval"
+      )
     }
   }
 
   # delete columns not needed
-  plotData <- plotData[, which(colSums(is.na(plotData)) != nrow(plotData)), with = FALSE]
+  plotData <- plotData[,
+    which(colSums(is.na(plotData)) != nrow(plotData)),
+    with = FALSE
+  ]
 
 
   if ("yErrorType" %in% names(plotData) &&
     any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-    if (any(plotData[["yErrorType"]] == ospsuite::DataErrorType$ArithmeticStdDev, na.rm = TRUE)) {
-      mapping <- structure(c(mapping, ggplot2::aes(error = yErrorValues)), class = "uneval")
+    if (
+      any(
+        plotData[["yErrorType"]] == ospsuite::DataErrorType$ArithmeticStdDev,
+        na.rm = TRUE
+      )
+    ) {
+      mapping <- structure(
+        c(mapping, ggplot2::aes(error = yErrorValues)),
+        class = "uneval"
+      )
     }
 
-    if (any(plotData[["yErrorType"]] == ospsuite::DataErrorType$GeometricStdDev, na.rm = TRUE)) {
-      mapping <- structure(c(mapping, ggplot2::aes(error_relative = yErrorValues)), class = "uneval")
+    if (
+      any(
+        plotData[["yErrorType"]] == ospsuite::DataErrorType$GeometricStdDev,
+        na.rm = TRUE
+      )
+    ) {
+      mapping <- structure(
+        c(mapping, ggplot2::aes(error_relative = yErrorValues)),
+        class = "uneval"
+      )
     }
   } else if (any(c("yMin", "yMax") %in% names(plotData))) {
     checkmate::assertNames(names(plotData), must.include = c("yMin", "yMax"))
-    mapping <- structure(c(mapping, ggplot2::aes(ymin = yMin, ymax = yMax)), class = "uneval")
+    mapping <- structure(
+      c(mapping, ggplot2::aes(ymin = yMin, ymax = yMax)),
+      class = "uneval"
+    )
   }
   if (any(names(plotData) %in% "lloq")) {
-    mapping <- structure(c(mapping, ggplot2::aes(lloq = lloq)), class = "uneval")
+    mapping <- structure(
+      c(mapping, ggplot2::aes(lloq = lloq)),
+      class = "uneval"
+    )
   }
 
   if (any(names(metaData) %in% "y2")) {
@@ -855,7 +891,10 @@ plotQuantileQuantilePlot <- function(plotData,
   }
 
   if (!is.null(userMapping)) {
-    mapping <- structure(utils::modifyList(mapping, userMapping), class = "uneval")
+    mapping <- structure(
+      utils::modifyList(mapping, userMapping),
+      class = "uneval"
+    )
   }
 
   return(mapping)
