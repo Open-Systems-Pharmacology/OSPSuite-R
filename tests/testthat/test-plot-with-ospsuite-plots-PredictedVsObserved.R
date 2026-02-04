@@ -185,6 +185,18 @@ test_that("LLOQ is plotted", {
   )
 })
 
+# Test predictedAxis parameter ----
+test_that("It swaps axes when predictedAxis is 'y'", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "predicted on y-axis",
+    fig = plotPredictedVsObserved(myCombDat,
+      predictedAxis = "y",
+      xyScale = "linear"
+    )
+  )
+})
+
 # 2 y-axis dimensions ----
 test_that("Plot throws error with fraction and concentration", {
 
