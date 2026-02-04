@@ -67,6 +67,7 @@ plotPredictedVsObserved(myDataCombined)
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotQuantileQuantilePlot}()},
 \code{\link{plotResidualsVsObserved}()},
+\code{\link{plotResidualsVsPredicted}()},
 \code{\link{plotResidualsVsTimePoints}()},
 \code{\link{plotTimeProfile}()}
 }

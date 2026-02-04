@@ -54,6 +54,7 @@ This function visualizes the distribution of predicted vs observed values using 
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotResidualsVsObserved}()},
+\code{\link{plotResidualsVsPredicted}()},
 \code{\link{plotResidualsVsTimePoints}()},
 \code{\link{plotTimeProfile}()}
 }

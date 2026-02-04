@@ -113,6 +113,7 @@ Other plot functions based on ospsuite.plots:
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},
 \code{\link{plotResidualsVsObserved}()},
+\code{\link{plotResidualsVsPredicted}()},
 \code{\link{plotResidualsVsTimePoints}()}
 }
 \concept{plot functions based on ospsuite.plots}
