@@ -70,16 +70,18 @@
 #'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`
 #' ))
 #' }
-plotTimeProfile <- function(plotData, # nolint
-                            metaData = NULL,
-                            mapping = ggplot2::aes(),
-                            observedMapping = mapping,
-                            aggregation = "quantiles",
-                            quantiles = ospsuite.plots::getOspsuite.plots.option(
-                              ospsuite.plots::OptionKeys$Percentiles
-                            )[c(1, 3, 5)],
-                            nsd = 1,
-                            ...) {
+plotTimeProfile <- function(
+  plotData, # nolint
+  metaData = NULL,
+  mapping = ggplot2::aes(),
+  observedMapping = mapping,
+  aggregation = "quantiles",
+  quantiles = ospsuite.plots::getOspsuite.plots.option(
+    ospsuite.plots::OptionKeys$Percentiles
+  )[c(1, 3, 5)],
+  nsd = 1,
+  ...
+) {
   # initialize variables used for data.table to avoid messages during checks
   yDimension <- yUnit <- dataType <- NULL
 
@@ -103,7 +105,10 @@ plotTimeProfile <- function(plotData, # nolint
     if (!("yDimension" %in% names(plotData))) {
       plotData[, yDimension := ""]
       for (yUnitLoop in unique(plotData$yUnit)) {
-        plotData[yUnitLoop == yUnit, yDimension := ospsuite::getDimensionForUnit(yUnitLoop)]
+        plotData[
+          yUnitLoop == yUnit,
+          yDimension := ospsuite::getDimensionForUnit(yUnitLoop)
+        ]
       }
     }
   }
@@ -149,7 +154,7 @@ plotTimeProfile <- function(plotData, # nolint
 #'        `ospsuite.plots::getFoldDistanceList`. This list contains fold distances, where each
 #'        entry represents a fold and its reciprocal. The identity fold (1)
 #'        will be included if specified in `getFoldDistanceList`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotPredVsObs`.
+#' @param ... Additional arguments passed to `ospsuite.plots::plotYVsX`.
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values, including aesthetics for the x and y axes.
 #' @export
@@ -163,17 +168,19 @@ plotTimeProfile <- function(plotData, # nolint
 #' # Generate an observed vs predicted plot (swap axes)
 #' plotPredictedVsObserved(myDataCombined, predictedAxis = "y")
 #' }
-plotPredictedVsObserved <- function(plotData, # nolint
-                                    metaData = NULL,
-                                    mapping = ggplot2::aes(),
-                                    xyScale = "log",
-                                    predictedAxis = "x",
-                                    comparisonLineVector =
-                                      ospsuite.plots::getFoldDistanceList(folds = c(2)),
-                                    ...) {
+plotPredictedVsObserved <- function(
+  plotData, # nolint
+  metaData = NULL,
+  mapping = ggplot2::aes(),
+  xyScale = "log",
+  predictedAxis = "y",
+  comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
+  ...
+) {
   # Validate predictedAxis parameter
   predictedAxis <- match.arg(predictedAxis, choices = c("x", "y"))
-  
+  observedAxis <- setdiff(c('x', 'y'), predictedAxis)
+
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -191,23 +198,34 @@ plotPredictedVsObserved <- function(plotData, # nolint
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
-    metaData$predicted <- metaData$yValues
+    metaData[[predictedAxis]] <- metaData$yValues
+    metaData[[observedAxis]] <- metaData$yValues
   }
-
   # create plot Object
   plotObject <- do.call(
-    what = ospsuite.plots::plotPredVsObs,
+    what = ospsuite.plots::plotYVsX,
     args = c(
       list(
         data = plotData,
         mapping = mapping,
+        residualScale = NULL,
         metaData = metaData,
-        xyScale = xyScale,
-        comparisonLineVector = comparisonLineVector
+        xScale = xyScale,
+        yScale = xyScale,
+        comparisonLineVector = comparisonLineVector,
+        observedDataDirection = observedAxis,
+        yDisplayAsAbsolute = TRUE,
+        asSquarePlot = TRUE
       ),
       additionalArgs
     )
   )
+
+  commonLabel <- plotObject$labels[[observedAxis]]
+  plotObject$labels[[observedAxis]] <-
+    paste(c(commonLabel, "observed"), collapse = "\n")
+  plotObject$labels[[predictedAxis]] <-
+    paste(c(commonLabel, "predicted"), collapse = "\n")
 
   return(plotObject)
 }
@@ -224,11 +242,13 @@ plotPredictedVsObserved <- function(plotData, # nolint
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
-plotResidualsVsTimePoints <- function(plotData, # nolint
-                                      metaData = NULL,
-                                      mapping = ggplot2::aes(),
-                                      residualScale = "log",
-                                      ...) {
+plotResidualsVsTimePoints <- function(
+  plotData, # nolint
+  metaData = NULL,
+  mapping = ggplot2::aes(),
+  residualScale = "log",
+  ...
+) {
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -238,8 +258,10 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(x = xValues),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(x = xValues),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -290,15 +312,17 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
 #' # Generate a residuals vs predicted plot
 #' plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 #' }
-plotResidualsVsCovariate <- function(plotData,
-                                     metaData = NULL,
-                                     mapping = ggplot2::aes(),
-                                     residualScale = "log",
-                                     xAxis = "observed",
-                                     ...) {
+plotResidualsVsCovariate <- function(
+  plotData,
+  metaData = NULL,
+  mapping = ggplot2::aes(),
+  residualScale = "log",
+  xAxis = "observed",
+  ...
+) {
   # Validate xAxis parameter
   xAxis <- match.arg(xAxis, choices = c("observed", "predicted"))
-  
+
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -314,9 +338,8 @@ plotResidualsVsCovariate <- function(plotData,
   } else {
     ggplot2::aes(x = predicted)
   }
-  
-  mapping <- .getMappingForResiduals(xMapping = xMapping,
-                                     userMapping = mapping)
+
+  mapping <- .getMappingForResiduals(xMapping = xMapping, userMapping = mapping)
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -351,12 +374,14 @@ plotResidualsVsCovariate <- function(plotData,
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
-plotResidualsAsHistogram <- function(plotData,
-                                     metaData = NULL,
-                                     mapping = ggplot2::aes(),
-                                     distribution = "normal",
-                                     residualScale = "log",
-                                     ...) {
+plotResidualsAsHistogram <- function(
+  plotData,
+  metaData = NULL,
+  mapping = ggplot2::aes(),
+  distribution = "normal",
+  residualScale = "log",
+  ...
+) {
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -366,8 +391,10 @@ plotResidualsAsHistogram <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -403,11 +430,13 @@ plotResidualsAsHistogram <- function(plotData,
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
-plotQuantileQuantilePlot <- function(plotData,
-                                     metaData = NULL,
-                                     mapping = ggplot2::aes(),
-                                     residualScale = "log",
-                                     ...) {
+plotQuantileQuantilePlot <- function(
+  plotData,
+  metaData = NULL,
+  mapping = ggplot2::aes(),
+  residualScale = "log",
+  ...
+) {
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
@@ -417,8 +446,10 @@ plotQuantileQuantilePlot <- function(plotData,
   # Capture additional arguments
   additionalArgs <- list(...)
 
-  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(),
-                                     userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = ggplot2::aes(),
+    userMapping = mapping
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -455,7 +486,14 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @return A `data.table` with data formatted for plotting.
 #' @keywords internal
 #' @noRd
-.validateAndConvertData <- function(plotData, predictedIsNeeded, scaling = NULL, aggregation = NULL, quantiles = NULL, nsd = 1) {
+.validateAndConvertData <- function(
+  plotData,
+  predictedIsNeeded,
+  scaling = NULL,
+  aggregation = NULL,
+  quantiles = NULL,
+  nsd = 1
+) {
   # initialize variables used for data.table to avoid messages during checks
   dataType <- predicted <- NULL
 
@@ -463,7 +501,9 @@ plotQuantileQuantilePlot <- function(plotData,
     plotData <- plotData$toDataFrame() |>
       data.table::setDT()
 
-    if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
+    if (nrow(plotData) == 0) {
+      stop(messages$plotNoDataAvailable())
+    }
 
     if (predictedIsNeeded) {
       plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
@@ -473,7 +513,9 @@ plotQuantileQuantilePlot <- function(plotData,
         scaling = scaling
       ) |>
         data.table::setDT()
-      if (nrow(plotData) == 0) stop(messages$plotNoDataAvailable())
+      if (nrow(plotData) == 0) {
+        stop(messages$plotNoDataAvailable())
+      }
       plotData <- plotData |>
         data.table::setnames(
           old = c("yValuesSimulated", "yValuesObserved"),
@@ -485,7 +527,10 @@ plotQuantileQuantilePlot <- function(plotData,
     }
   } else {
     validateIsOfType(plotData, "data.frame", nullAllowed = FALSE)
-    checkmate::assertNames(names(plotData), must.include = c("xValues", "yValues", "group", "dataType"))
+    checkmate::assertNames(
+      names(plotData),
+      must.include = c("xValues", "yValues", "group", "dataType")
+    )
   }
 
   # check for inconsistent error types
@@ -603,7 +648,9 @@ plotQuantileQuantilePlot <- function(plotData,
 
   # Merge Concentration dimensions if they exist
   if (all(dimensionsToMerge %in% names(plotDataByDimensions))) {
-    plotDataByDimensions[[dimensionsToMerge[1]]] <- rbindlist(plotDataByDimensions[dimensionsToMerge])
+    plotDataByDimensions[[dimensionsToMerge[
+      1
+    ]]] <- rbindlist(plotDataByDimensions[dimensionsToMerge])
     plotDataByDimensions[[dimensionsToMerge[2]]] <- NULL
   }
 
@@ -666,16 +713,19 @@ plotQuantileQuantilePlot <- function(plotData,
     return(plotData)
   }
 
-  if ("yErrorType" %in% names(plotData)){
+  if ("yErrorType" %in% names(plotData)) {
     if (any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-      checkmate::assertNames(names(plotData),
-                             must.include = c("yErrorValues"),
-                             .var.name = "columns needed for yErrorValues"
+      checkmate::assertNames(
+        names(plotData),
+        must.include = c("yErrorValues"),
+        .var.name = "columns needed for yErrorValues"
       )
     }
     # check if error values for custom error types are in columns yMin yMax
-    tmp <- plotData[!is.na(yErrorType) &
-                      !(yErrorType %in% unlist(ospsuite::DataErrorType))]
+    tmp <- plotData[
+      !is.na(yErrorType) &
+        !(yErrorType %in% unlist(ospsuite::DataErrorType))
+    ]
     if (nrow(tmp) > 0) {
       if (!all(c('yMin', 'yMax') %in% names(plotData))) {
         stop(messages$plotWrongColumnsForCustomErrorType(tmp$yErrorType))
@@ -689,20 +739,30 @@ plotQuantileQuantilePlot <- function(plotData,
 
   # Check if there are multiple unique yErrorType values
   if (uniqueN(plotData[!is.na(yErrorType), yErrorType]) > 1) {
-    if (!"yMin" %in% names(plotData)) plotData[, yMin := NA_real_]
-    if (!"yMax" %in% names(plotData)) plotData[, yMax := NA_real_]
-    plotData[yErrorType == DataErrorType$GeometricStdDev, `:=`(
-      yMin = yValues / yErrorValues,
-      yMax = yValues * yErrorValues,
-      yErrorValues = NA_real_,
-      yErrorType = NA_character_
-    )]
-    plotData[yErrorType == DataErrorType$ArithmeticStdDev, `:=`(
-      yMin = yValues - yErrorValues,
-      yMax = yValues + yErrorValues,
-      yErrorValues = NA_real_,
-      yErrorType = NA_character_
-    )]
+    if (!"yMin" %in% names(plotData)) {
+      plotData[, yMin := NA_real_]
+    }
+    if (!"yMax" %in% names(plotData)) {
+      plotData[, yMax := NA_real_]
+    }
+    plotData[
+      yErrorType == DataErrorType$GeometricStdDev,
+      `:=`(
+        yMin = yValues / yErrorValues,
+        yMax = yValues * yErrorValues,
+        yErrorValues = NA_real_,
+        yErrorType = NA_character_
+      )
+    ]
+    plotData[
+      yErrorType == DataErrorType$ArithmeticStdDev,
+      `:=`(
+        yMin = yValues - yErrorValues,
+        yMax = yValues + yErrorValues,
+        yErrorValues = NA_real_,
+        yErrorType = NA_character_
+      )
+    ]
   }
 
   return(plotData)
@@ -735,14 +795,18 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @noRd
 .constructMetDataForTimeProfile <- function(plotData, nYunit = 1) {
   xUnit <- unique(plotData$xUnit)
-  if (length(xUnit) > 1) stop(messages$plotUnitConsistency())
+  if (length(xUnit) > 1) {
+    stop(messages$plotUnitConsistency())
+  }
   if ("xDimension" %in% names(plotData)) {
     xDimension <- unique(plotData$xDimension)
   } else {
     xDimension <- ospsuite::getDimensionForUnit(xUnit)
   }
   yUnit <- unique(plotData$yUnit)
-  if (length(yUnit) > nYunit) stop(messages$plotUnitConsistency())
+  if (length(yUnit) > nYunit) {
+    stop(messages$plotUnitConsistency())
+  }
   if ("yDimension" %in% names(plotData)) {
     yDimension <- unique(plotData$yDimension)
   } else {
@@ -789,9 +853,10 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @keywords internal
 #' @noRd
 .calculateResidualsForPlot <- function(plotData, scaling) {
-
   # functions called below needs column lloq
-  if (!('lloq' %in% names(plotData))) plotData[,lloq := NA]
+  if (!('lloq' %in% names(plotData))) {
+    plotData[, lloq := NA]
+  }
 
   # Remove the observed and simulated datasets which can't be paired.
   plotData <- .removeUnpairableDatasets(plotData)
@@ -829,43 +894,79 @@ plotQuantileQuantilePlot <- function(plotData,
   mapping <- ggplot2::aes(x = xValues, y = yValues)
 
   if (!is.null(userMapping)) {
-    mapping <- structure(utils::modifyList(mapping, userMapping), class = "uneval")
+    mapping <- structure(
+      utils::modifyList(mapping, userMapping),
+      class = "uneval"
+    )
   }
 
   # add default groupby
   if (!("groupby" %in% names(mapping))) {
     if (any(!is.na(plotData$group))) {
-      mapping <- structure(utils::modifyList(
-        ggplot2::aes(
-          groupby = group,
-          group = interaction(group, name)
+      mapping <- structure(
+        utils::modifyList(
+          ggplot2::aes(
+            groupby = group,
+            group = interaction(group, name)
+          ),
+          mapping
         ),
-        mapping
-      ), class = "uneval")
+        class = "uneval"
+      )
     } else {
-      mapping <- structure(c(mapping, ggplot2::aes(groupby = name)), class = "uneval")
+      mapping <- structure(
+        c(mapping, ggplot2::aes(groupby = name)),
+        class = "uneval"
+      )
     }
   }
 
   # delete columns not needed
-  plotData <- plotData[, which(colSums(is.na(plotData)) != nrow(plotData)), with = FALSE]
+  plotData <- plotData[,
+    which(colSums(is.na(plotData)) != nrow(plotData)),
+    with = FALSE
+  ]
 
-
-  if ("yErrorType" %in% names(plotData) &&
-    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-    if (any(plotData[["yErrorType"]] == ospsuite::DataErrorType$ArithmeticStdDev, na.rm = TRUE)) {
-      mapping <- structure(c(mapping, ggplot2::aes(error = yErrorValues)), class = "uneval")
+  if (
+    "yErrorType" %in%
+      names(plotData) &&
+      any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))
+  ) {
+    if (
+      any(
+        plotData[["yErrorType"]] == ospsuite::DataErrorType$ArithmeticStdDev,
+        na.rm = TRUE
+      )
+    ) {
+      mapping <- structure(
+        c(mapping, ggplot2::aes(error = yErrorValues)),
+        class = "uneval"
+      )
     }
 
-    if (any(plotData[["yErrorType"]] == ospsuite::DataErrorType$GeometricStdDev, na.rm = TRUE)) {
-      mapping <- structure(c(mapping, ggplot2::aes(error_relative = yErrorValues)), class = "uneval")
+    if (
+      any(
+        plotData[["yErrorType"]] == ospsuite::DataErrorType$GeometricStdDev,
+        na.rm = TRUE
+      )
+    ) {
+      mapping <- structure(
+        c(mapping, ggplot2::aes(error_relative = yErrorValues)),
+        class = "uneval"
+      )
     }
   } else if (any(c("yMin", "yMax") %in% names(plotData))) {
     checkmate::assertNames(names(plotData), must.include = c("yMin", "yMax"))
-    mapping <- structure(c(mapping, ggplot2::aes(ymin = yMin, ymax = yMax)), class = "uneval")
+    mapping <- structure(
+      c(mapping, ggplot2::aes(ymin = yMin, ymax = yMax)),
+      class = "uneval"
+    )
   }
   if (any(names(plotData) %in% "lloq")) {
-    mapping <- structure(c(mapping, ggplot2::aes(lloq = lloq)), class = "uneval")
+    mapping <- structure(
+      c(mapping, ggplot2::aes(lloq = lloq)),
+      class = "uneval"
+    )
   }
 
   if (any(names(metaData) %in% "y2")) {
@@ -875,7 +976,8 @@ plotQuantileQuantilePlot <- function(plotData,
         eval(parse(
           text = paste0(
             "ggplot2::aes( y2axis = yUnit == '",
-            metaData[["y2"]][["unit"]], "')"
+            metaData[["y2"]][["unit"]],
+            "')"
           )
         ))
       ),
@@ -884,7 +986,10 @@ plotQuantileQuantilePlot <- function(plotData,
   }
 
   if (!is.null(userMapping)) {
-    mapping <- structure(utils::modifyList(mapping, userMapping), class = "uneval")
+    mapping <- structure(
+      utils::modifyList(mapping, userMapping),
+      class = "uneval"
+    )
   }
 
   return(mapping)
@@ -906,12 +1011,14 @@ plotQuantileQuantilePlot <- function(plotData,
 
   mapping <- structure(
     utils::modifyList(
-      c(xMapping,
+      c(
+        xMapping,
         ggplot2::aes(
           predicted = predicted,
           observed = yValues,
           groupby = group
-        )),
+        )
+      ),
       userMapping
     ),
     class = "uneval"
@@ -931,40 +1038,69 @@ plotQuantileQuantilePlot <- function(plotData,
 #' @return A mapping object for ggplot2.
 #' @keywords internal
 #' @noRd
-.getMappingForPredictedVsObserved <- function(plotData, userMapping, predictedAxis = "x") {
+.getMappingForPredictedVsObserved <- function(
+  plotData,
+  userMapping,
+  predictedAxis = "x"
+) {
   # initialize variables used as quotes
   predicted <- yMin <- yMax <- lloq <- NULL
 
   # Set up mapping based on which axis has predicted values
   if (predictedAxis == "x") {
     mapping <- ggplot2::aes(
-      predicted = predicted,
-      observed = yValues,
+      x = predicted,
+      y = yValues,
       groupby = group
     )
   } else {
     mapping <- ggplot2::aes(
-      predicted = yValues,
-      observed = predicted,
+      x = yValues,
+      y = predicted,
       groupby = group
     )
   }
 
   # delete columns not needed
-  plotData <- plotData[, which(colSums(is.na(plotData)) != nrow(plotData)), with = FALSE]
+  plotData <- plotData[,
+    which(colSums(is.na(plotData)) != nrow(plotData)),
+    with = FALSE
+  ]
 
-  if ("yErrorType" %in% names(plotData) &&
-    any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))) {
-    if (any(plotData[["yErrorType"]] == ospsuite::DataErrorType$ArithmeticStdDev, na.rm = TRUE)) {
-      mapping <- structure(c(mapping, ggplot2::aes(error = yErrorValues)), class = "uneval")
+  if (
+    "yErrorType" %in%
+      names(plotData) &&
+      any(plotData[["yErrorType"]] %in% unlist(ospsuite::DataErrorType))
+  ) {
+    if (
+      any(
+        plotData[["yErrorType"]] == ospsuite::DataErrorType$ArithmeticStdDev,
+        na.rm = TRUE
+      )
+    ) {
+      mapping <- structure(
+        c(mapping, ggplot2::aes(error = yErrorValues)),
+        class = "uneval"
+      )
     }
 
-    if (any(plotData[["yErrorType"]] == ospsuite::DataErrorType$GeometricStdDev, na.rm = TRUE)) {
-      mapping <- structure(c(mapping, ggplot2::aes(error_relative = yErrorValues)), class = "uneval")
+    if (
+      any(
+        plotData[["yErrorType"]] == ospsuite::DataErrorType$GeometricStdDev,
+        na.rm = TRUE
+      )
+    ) {
+      mapping <- structure(
+        c(mapping, ggplot2::aes(error_relative = yErrorValues)),
+        class = "uneval"
+      )
     }
   } else if (any(c("yMin", "yMax") %in% names(plotData))) {
     checkmate::assertNames(names(plotData), must.include = c("yMin", "yMax"))
-    mapping <- structure(c(mapping, ggplot2::aes(xmin = yMin, xmax = yMax)), class = "uneval")
+    mapping <- structure(
+      c(mapping, ggplot2::aes(xmin = yMin, xmax = yMax)),
+      class = "uneval"
+    )
   }
 
   if ("lloq" %in% names(plotData) && any(!is.na(plotData$lloq))) {
@@ -1016,24 +1152,39 @@ plotQuantileQuantilePlot <- function(plotData,
   # initialize variables used in data.table syntax
   IndividualId <- NULL # nolint
 
-  checkmate::assertChoice(aggregation, choices = unlist(DataAggregationMethods), null.ok = TRUE)
-  checkmate::assertNumeric(quantiles,
-    len = 3, any.missing = FALSE, sorted = TRUE,
+  checkmate::assertChoice(
+    aggregation,
+    choices = unlist(DataAggregationMethods),
+    null.ok = TRUE
+  )
+  checkmate::assertNumeric(
+    quantiles,
+    len = 3,
+    any.missing = FALSE,
+    sorted = TRUE,
     null.ok = is.null(aggregation) ||
       aggregation != DataAggregationMethods$quantiles
   )
 
   if ("IndividualId" %in% names(plotData)) {
-    if (any(plotData[dataType == "simulated",
-      .(N = uniqueN(IndividualId)),
-      by = c("group", "name")
-    ]$N > 1)) {
+    if (
+      any(
+        plotData[
+          dataType == "simulated",
+          .(N = uniqueN(IndividualId)),
+          by = c("group", "name")
+        ]$N >
+          1
+      )
+    ) {
       # Extract aggregated simulated data (relevant only for the population plot)
       if (!is.null(aggregation)) {
-        aggregationFunction <- switch(aggregation,
+        aggregationFunction <- switch(
+          aggregation,
           "quantiles" = function(x) {
             stats::setNames(
-              stats::quantile(x,
+              stats::quantile(
+                x,
                 probs = quantiles,
                 na.rm = TRUE,
                 names = FALSE
@@ -1063,7 +1214,8 @@ plotQuantileQuantilePlot <- function(plotData,
         )
 
         simAggregatedData <-
-          plotData[dataType == "simulated",
+          plotData[
+            dataType == "simulated",
             as.list(aggregationFunction(yValues)),
             by = .(group, name, xValues)
           ]
@@ -1072,17 +1224,28 @@ plotQuantileQuantilePlot <- function(plotData,
         colsToAdd <- setdiff(
           names(plotData),
           c(
-            "IndividualId", "yErrorValues", "yErrorType",
+            "IndividualId",
+            "yErrorValues",
+            "yErrorType",
             names(simAggregatedData)
           )
         )
-        dataToAdd <- unique(plotData[dataType == "simulated", c("group", "name", colsToAdd), with = FALSE])
+        dataToAdd <- unique(plotData[
+          dataType == "simulated",
+          c("group", "name", colsToAdd),
+          with = FALSE
+        ])
         if (any(duplicated(dataToAdd[, c("group", "name")]))) {
           dataToAdd <- dataToAdd[!duplicated(dataToAdd[, .(group, name)])]
         }
-        simAggregatedData <- merge(simAggregatedData, dataToAdd, by = c("group", "name"))
+        simAggregatedData <- merge(
+          simAggregatedData,
+          dataToAdd,
+          by = c("group", "name")
+        )
 
-        plotData <- rbind(plotData[dataType == "observed"],
+        plotData <- rbind(
+          plotData[dataType == "observed"],
           simAggregatedData,
           fill = TRUE
         )
