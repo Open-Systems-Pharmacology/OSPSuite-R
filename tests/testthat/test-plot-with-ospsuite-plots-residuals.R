@@ -62,13 +62,13 @@ test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults vs Observed",
-    fig = plotResidualsVsObserved(myCombDat, residualScale = "log")
+    fig = plotResidualsVsCovariate(myCombDat, residualScale = "log")
   )
 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults vs Predicted",
-    fig = plotResidualsVsObserved(myCombDat, residualScale = "log", xAxis = "predicted")
+    fig = plotResidualsVsCovariate(myCombDat, residualScale = "log", xAxis = "predicted")
   )
 
   set.seed(123)

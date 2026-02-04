@@ -263,7 +263,7 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
   return(plotObject)
 }
 
-#' Plots residuals vs observed or predicted values, grouped by "group".
+#' Plots residuals vs a covariate (observed or predicted values), grouped by "group".
 #'
 #' This function visualizes the residuals against observed or predicted (simulated) values,
 #' helping to assess model performance.
@@ -281,21 +281,21 @@ plotResidualsVsTimePoints <- function(plotData, # nolint
 #'
 #' @examples \dontrun{
 #' # Generate a residuals vs observed plot for the provided data
-#' plotResidualsVsObserved(convertUnits(
+#' plotResidualsVsCovariate(convertUnits(
 #'   myDataCombined,
 #'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
 #' ))
 #'
 #' # Generate a residuals vs predicted plot
-#' plotResidualsVsObserved(myDataCombined, xAxis = "predicted")
+#' plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 #' }
-plotResidualsVsObserved <- function(plotData,
-                                    metaData = NULL,
-                                    mapping = ggplot2::aes(),
-                                    residualScale = "log",
-                                    xAxis = "observed",
-                                    ...) {
+plotResidualsVsCovariate <- function(plotData,
+                                     metaData = NULL,
+                                     mapping = ggplot2::aes(),
+                                     residualScale = "log",
+                                     xAxis = "observed",
+                                     ...) {
   # Validate xAxis parameter
   xAxis <- match.arg(xAxis, choices = c("observed", "predicted"))
   
@@ -338,6 +338,25 @@ plotResidualsVsObserved <- function(plotData,
   )
 
   return(plotObject)
+}
+
+#' @rdname plotResidualsVsCovariate
+#' @export
+plotResidualsVsObserved <- function(plotData,
+                                    metaData = NULL,
+                                    mapping = ggplot2::aes(),
+                                    residualScale = "log",
+                                    xAxis = "observed",
+                                    ...) {
+  .Deprecated("plotResidualsVsCovariate")
+  plotResidualsVsCovariate(
+    plotData = plotData,
+    metaData = metaData,
+    mapping = mapping,
+    residualScale = residualScale,
+    xAxis = xAxis,
+    ...
+  )
 }
 
 #' Plots residuals as a histogram, grouped by "group".
