@@ -54,8 +54,7 @@ This function visualizes the residuals over time, providing insights into the ac
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},
-\code{\link{plotResidualsVsObserved}()},
-\code{\link{plotResidualsVsPredicted}()},
+\code{\link{plotResidualsVsCovariate}()},
 \code{\link{plotTimeProfile}()}
 }
 \concept{plot functions based on ospsuite.plots}
