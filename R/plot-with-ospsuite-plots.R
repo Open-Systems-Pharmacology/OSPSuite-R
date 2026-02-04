@@ -340,25 +340,6 @@ plotResidualsVsCovariate <- function(plotData,
   return(plotObject)
 }
 
-#' @rdname plotResidualsVsCovariate
-#' @export
-plotResidualsVsObserved <- function(plotData,
-                                    metaData = NULL,
-                                    mapping = ggplot2::aes(),
-                                    residualScale = "log",
-                                    xAxis = "observed",
-                                    ...) {
-  .Deprecated("plotResidualsVsCovariate")
-  plotResidualsVsCovariate(
-    plotData = plotData,
-    metaData = metaData,
-    mapping = mapping,
-    residualScale = residualScale,
-    xAxis = xAxis,
-    ...
-  )
-}
-
 #' Plots residuals as a histogram, grouped by "group".
 #'
 #' This function generates a histogram of the residuals, providing a visual representation of their distribution.

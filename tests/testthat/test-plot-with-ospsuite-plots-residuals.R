@@ -91,7 +91,7 @@ test_that("It throws error when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
   expect_error(
-    plotResidualsVsObserved(myCombDat),
+    plotResidualsVsCovariate(myCombDat),
     messages$plotNoDataAvailable()
   )
 })
@@ -107,7 +107,7 @@ test_that("It throws error when `DataCombined` doesn't have any pairable dataset
 
   expect_error(
     suppressMessages(
-      suppressWarnings(plotResidualsVsObserved(myCombDat))
+      suppressWarnings(plotResidualsVsCovariate(myCombDat))
     ),
     messages$plotNoDataAvailable()
   )
@@ -156,7 +156,7 @@ test_that("Different symbols for data sets within one group", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple data sets one group",
-    fig = plotResidualsVsObserved(
+    fig = plotResidualsVsCovariate(
       myDC,
       residualScale = "linear",
       mapping = ggplot2::aes(groupby = name)
