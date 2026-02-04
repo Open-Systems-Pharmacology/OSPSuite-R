@@ -711,3 +711,117 @@ test_that("It throws an error when trying to run multiple simulations", {
     expect_error(results <- runSimulation(c(sim, sim2)))
   )
 })
+
+#### Creating simulation ####
+test_that("It can create a simulation from a project configuration retrieved from a simulation with no expression profiles", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim"
+  )
+
+  # Check simulation configuration
+  expect_equal(newSimulation$name, "MySim")
+  expect_equal(
+    newSimulation$configuration$expressionProfiles,
+    simConfig$expressionProfiles
+  )
+  expect_equal(newSimulation$configuration$individual, simConfig$individual)
+  # Checking for the names of the modules, because the module instances are different
+  expect_equal(
+    names(newSimulation$configuration$modules),
+    names(simConfig$modules)
+  )
+
+  # Check simulation properties
+  expect_equal(
+    newSimulation$allFloatingMoleculeNames(),
+    simulation$allFloatingMoleculeNames()
+  )
+  expect_equal(
+    newSimulation$allStationaryMoleculeNames(),
+    simulation$allStationaryMoleculeNames()
+  )
+  expect_equal(
+    length(newSimulation$outputSchema$intervals),
+    length(simulation$outputSchema$intervals)
+  )
+  expect_equal(
+    newSimulation$outputSchema$intervals[[1]]$name,
+    simulation$outputSchema$intervals[[1]]$name
+  )
+  expect_equal(
+    newSimulation$outputSelections$allOutputs[[1]]$path,
+    simulation$outputSelections$allOutputs[[1]]$path
+  )
+})
+
+# show warnings true
+test_that("createSimulation shows warnings when showWarnings is TRUE", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim",
+      showWarnings = TRUE
+    )
+  )
+})
+
+# errors
+test_that("createSimulation throws an error when simulation cannot be created", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+
+  # Introduce an error in the configuration
+  simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+  expect_snapshot(
+    expect_error(
+      newSimulation <- createSimulation(
+        simulationConfiguration = simConfig,
+        simulationName = "MySim"
+      )
+    )
+  )
+})
+
+# Test for process rate parameters
+test_that("createSimulation can create process rate parameters when requested", {
+  simulation <- loadSimulation(system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ))
+  simConfig <- simulation$configuration
+
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim",
+    createAllProcessRateParameters = TRUE
+  )
+
+  # Check that process rate parameters were created
+  paramPath <- "Neighborhoods|ArterialBlood_bc_Bone_bc|Aciclovir|MassTransferBloodPool2OrgRBC|ProcessRate"
+  expect_no_error(
+    processRateParameter <- getParameter(
+      path = paramPath,
+      container = newSimulation
+    )
+  )
+})

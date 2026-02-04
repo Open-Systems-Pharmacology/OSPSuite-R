@@ -30,7 +30,41 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   selectedPVs <- configurationFromPKML$selectedParameterValues
   expect_equal(selectedPVs, list("Vergin 1995 IV" = "Vergin 1995 IV"))
 
+  # Check simulation settings
+  simSettings <- configurationFromPKML$settings
+  expect_equal(
+    simSettings$outputSchema$intervals[[2]]$startTime$value,
+    simulation$outputSchema$intervals[[2]]$startTime$value
+  )
+  expect_equal(simSettings$solver$absTol, simulation$solver$absTol)
+
   expect_snapshot(configurationFromPKML)
+})
+
+# Changing simulation settings
+test_that("SimulationConfiguration can get and set simulation settings", {
+  configurationFromPKML <- simulation$configuration
+  oldSettings <- configurationFromPKML$settings
+
+  # Retrieve settings from one configuration and set it to another
+  newSettings <- testMoBiProject$getSimulation(
+    "TestSim_2Modules"
+  )$configuration$settings
+  configurationFromPKML$settings <- newSettings
+
+  # AbsTol was different
+  expect_equal(
+    configurationFromPKML$settings$solver$absTol,
+    newSettings$solver$absTol
+  )
+  # Number of defined intervals was different
+  expect_equal(
+    length(configurationFromPKML$settings$outputSchema$intervals),
+    length(newSettings$outputSchema$intervals)
+  )
+
+  # Set back old settings
+  configurationFromPKML$settings <- oldSettings
 })
 
 test_that("SimulationConfiguration can be created from a simulation loaded from a MoBi project with selected IC and PV BBs", {

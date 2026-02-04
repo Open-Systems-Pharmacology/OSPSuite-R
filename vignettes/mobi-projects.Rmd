@@ -92,7 +92,7 @@ pvBBs <- module$getParameterValuesBBs()
 
 ## Simulation configurations
 
-Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation.
+Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation. Additionally, it can contain settings for the simulation time, output settings, and solver settings.
 
 The user can create a new simulation configuration either from scratch, or alter an existing configuration retrieved from a simulation, or create a configuration from modules in a project.
 
@@ -103,6 +103,7 @@ One way to get a simulation configuration is to retrieve a simulation either fro
 [NOTE:]{.underline} Only simulations created with OSPS version \>=12 have simulation configurations.
 
 Get a configuration of a simulation loaded from a pkml file:
+
 ```{r getSimulationConfigurationFromPKML}
 simulation <- loadSimulation(system.file(
   "extdata",
@@ -122,6 +123,10 @@ configuration <- simulation$configuration
 
 print(configuration)
 ```
+
+### Simulation configuration and simulation settings
+
+When retrieving a simulation configuration from a simulation, the simulation settings (time settings, output settings, solver settings) are part of the simulation configuration. These settings will be applied when creating a simulation using the configuration. However, the simulation settings cannot be directly modified. To change these settings, the user must first create a simulation from the configuration and then modify the settings of the created simulation (see the article on [simulations](#run-simulation)).
 
 ### Create simulation configuration from the project
 
@@ -282,9 +287,20 @@ Expression profile BBs cannot be created from R but can be loaded from PKML. (Ti
 
 The simulation configuration can be used to create a simulation. The simulation can then be saved to a pkml file, or used for further analysis.
 
-Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`.
+```{r createSimulationFromConfiguration}
+simulation <- myProject$getSimulation("Thyroid_QST_Human")
+configuration <- simulation$configuration
 
-```{r changeCalculationMethodsAndCreateSimulatoin}
+# TODO enable after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2252
+# simulation <- createSimulation(
+#   simulationName = "Thyroid_QST_Human_copy",
+#   configuration
+# )
+```
+
+Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`. Additionally, the user can select whether to create all process rate parameters in the simulation or not by setting the argument `createAllProcessRateParameters` in the function `createSimulation()`. These parameters can be used for model debugging and analysis.
+
+```{r changeCalculationMethodsAndCreateSimulation}
 # simulationConfigurationHuman$partitionCoefficientMethods(
 #   list(
 #     "T3" = PartitionCoefficientMethods$Berezhkovskiy,
@@ -301,6 +317,7 @@ Before creating a simulation from configuration, the user can change the calcula
 
 # sim1 <- createSimulation(
 #   simulationName = "Thyroid_QST_human",
-#   simulationConfigurationHuman
+#   simulationConfigurationHuman,
+#   createAllProcessRateParameters = TRUE
 # )
 ```

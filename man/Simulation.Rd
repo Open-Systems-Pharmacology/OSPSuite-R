@@ -36,7 +36,6 @@ describing the modules used for the simulation, selected Parameter Values (PV) a
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Simulation-new}{\code{Simulation$new()}}
-\item \href{#method-Simulation-setBuildConfiguration}{\code{Simulation$setBuildConfiguration()}}
 \item \href{#method-Simulation-allEndogenousStationaryMoleculeNames}{\code{Simulation$allEndogenousStationaryMoleculeNames()}}
 \item \href{#method-Simulation-allXenobioticFloatingMoleculeNames}{\code{Simulation$allXenobioticFloatingMoleculeNames()}}
 \item \href{#method-Simulation-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
@@ -85,16 +84,6 @@ Initialize a new instance of the class
 \subsection{Returns}{
 A new \code{Simulation} object.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Simulation-setBuildConfiguration"></a>}}
-\if{latex}{\out{\hypertarget{method-Simulation-setBuildConfiguration}{}}}
-\subsection{Method \code{setBuildConfiguration()}}{
-Sets the buildConfiguration for this simulation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$setBuildConfiguration(buildConfiguration)}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allEndogenousStationaryMoleculeNames"></a>}}
