@@ -311,6 +311,67 @@ plotResidualsVsObserved <- function(plotData,
   return(plotObject)
 }
 
+#' Plots residuals vs predicted (simulated) values, grouped by "group".
+#'
+#' This function visualizes the residuals against predicted (simulated) values, helping to assess model performance.
+#' This is similar to `plotResidualsVsObserved` but uses predicted values on the x-axis instead of observed values.
+#'
+#' @inheritParams plotTimeProfile
+#' @param residualScale Either "linear", "log", or "ratio" scale for residuals. Default is `log`.
+#' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
+#'
+#' @return A `ggplot2` plot object representing residuals vs predicted values.
+#' @export
+#'
+#' @family plot functions based on ospsuite.plots
+#'
+#' @examples \dontrun{
+#' # Generate a residuals vs predicted plot for the provided data
+#' plotResidualsVsPredicted(convertUnits(
+#'   myDataCombined,
+#'   xUnit = ospUnits$Time$h,
+#'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
+#' ))
+#' }
+plotResidualsVsPredicted <- function(plotData,
+                                     metaData = NULL,
+                                     mapping = ggplot2::aes(),
+                                     residualScale = "log",
+                                     ...) {
+  plotData <- .validateAndConvertData(
+    plotData = plotData,
+    predictedIsNeeded = TRUE,
+    scaling = residualScale
+  )
+
+  # Capture additional arguments
+  additionalArgs <- list(...)
+
+  mapping <- .getMappingForResiduals(xMapping = ggplot2::aes(x = predicted),
+                                     userMapping = mapping)
+
+  if (is.null(metaData)) {
+    metaData <- .constructMetDataForTimeProfile(plotData)
+    metaData$predicted <- metaData$yValues
+  }
+
+  # create plot Object
+  plotObject <- do.call(
+    what = ospsuite.plots::plotResVsCov,
+    args = c(
+      list(
+        data = plotData,
+        mapping = mapping,
+        metaData = metaData,
+        residualScale = residualScale
+      ),
+      additionalArgs
+    )
+  )
+
+  return(plotObject)
+}
+
 #' Plots residuals as a histogram, grouped by "group".
 #'
 #' This function generates a histogram of the residuals, providing a visual representation of their distribution.

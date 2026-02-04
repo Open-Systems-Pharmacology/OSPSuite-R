@@ -58,6 +58,12 @@ test_that("It creates default plots as expected", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
+    title = "defaults vs Predicted",
+    fig = plotResidualsVsPredicted(myCombDat, residualScale = "log")
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
     title = "defaults as Histograms",
     fig = plotResidualsAsHistogram(myCombDat, residualScale = "linear")
   )
