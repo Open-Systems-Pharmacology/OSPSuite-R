@@ -56,7 +56,7 @@ test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults vs Time",
-    fig = plotResidualsVsTimePoints(myCombDat, residualScale = "linear")
+    fig = plotResidualsVsCovariate(myCombDat, residualScale = "linear", xAxis = "time")
   )
 
   set.seed(123)

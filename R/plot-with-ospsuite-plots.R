@@ -230,73 +230,18 @@ plotPredictedVsObserved <- function(
   return(plotObject)
 }
 
-#' Plots residuals vs Time Points, grouped by "group".
+#' Plots residuals vs a covariate (time, observed, or predicted values), grouped by "group".
 #'
-#' This function visualizes the residuals over time, providing insights into the accuracy of the model predictions.
-#'
-#' @inheritParams plotTimeProfile
-#' @param residualScale A character string specifying the scale for the x and y-axis. Default is 'log'.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
-#'
-#' @return A `ggplot2` plot object representing residuals vs time.
-#' @export
-#'
-#' @family plot functions based on ospsuite.plots
-plotResidualsVsTimePoints <- function(
-  plotData, # nolint
-  metaData = NULL,
-  mapping = ggplot2::aes(),
-  residualScale = "log",
-  ...
-) {
-  plotData <- .validateAndConvertData(
-    plotData = plotData,
-    predictedIsNeeded = TRUE,
-    scaling = residualScale
-  )
-
-  # Capture additional arguments
-  additionalArgs <- list(...)
-
-  mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(x = xValues),
-    userMapping = mapping
-  )
-
-  if (is.null(metaData)) {
-    metaData <- .constructMetDataForTimeProfile(plotData)
-    metaData$predicted <- metaData$yValues
-  }
-
-  # create plot Object
-  plotObject <- do.call(
-    what = ospsuite.plots::plotResVsCov,
-    args = c(
-      list(
-        data = plotData,
-        mapping = mapping,
-        metaData = metaData,
-        residualScale = residualScale
-      ),
-      additionalArgs
-    )
-  )
-
-  return(plotObject)
-}
-
-#' Plots residuals vs a covariate (observed or predicted values), grouped by "group".
-#'
-#' This function visualizes the residuals against observed or predicted (simulated) values,
+#' This function visualizes the residuals against time, observed, or predicted (simulated) values,
 #' helping to assess model performance.
 #'
 #' @inheritParams plotTimeProfile
 #' @param residualScale Either "linear", "log", or "ratio" scale for residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
-#'   Options are `"observed"` (default) or `"predicted"`.
+#'   Options are `"time"`, `"observed"` (default), or `"predicted"`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
 #'
-#' @return A `ggplot2` plot object representing residuals vs observed or predicted values.
+#' @return A `ggplot2` plot object representing residuals vs time, observed, or predicted values.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -311,6 +256,9 @@ plotResidualsVsTimePoints <- function(
 #'
 #' # Generate a residuals vs predicted plot
 #' plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+#'
+#' # Generate a residuals vs time plot
+#' plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 #' }
 plotResidualsVsCovariate <- function(
   plotData,
@@ -321,7 +269,7 @@ plotResidualsVsCovariate <- function(
   ...
 ) {
   # Validate xAxis parameter
-  xAxis <- match.arg(xAxis, choices = c("observed", "predicted"))
+  xAxis <- match.arg(xAxis, choices = c("time", "observed", "predicted"))
 
   plotData <- .validateAndConvertData(
     plotData = plotData,
@@ -333,7 +281,9 @@ plotResidualsVsCovariate <- function(
   additionalArgs <- list(...)
 
   # Set x-axis mapping based on xAxis parameter
-  xMapping <- if (xAxis == "observed") {
+  xMapping <- if (xAxis == "time") {
+    ggplot2::aes(x = xValues)
+  } else if (xAxis == "observed") {
     ggplot2::aes(x = yValues)
   } else {
     ggplot2::aes(x = predicted)
