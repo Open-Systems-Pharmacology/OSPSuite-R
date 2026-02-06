@@ -179,7 +179,7 @@ plotPredictedVsObserved <- function(
 ) {
   # Validate predictedAxis parameter
   predictedAxis <- match.arg(predictedAxis, choices = c("x", "y"))
-  observedAxis <- setdiff(c('x', 'y'), predictedAxis)
+  observedAxis <- setdiff(c("x", "y"), predictedAxis)
 
   plotData <- .validateAndConvertData(
     plotData = plotData,
