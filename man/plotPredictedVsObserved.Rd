@@ -9,7 +9,7 @@ plotPredictedVsObserved(
   metaData = NULL,
   mapping = ggplot2::aes(),
   xyScale = "log",
-  predictedAxis = "x",
+  predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
   ...
 )
@@ -54,7 +54,7 @@ Options are \code{"x"} (default, predicted on x-axis, observed on y-axis) or
 entry represents a fold and its reciprocal. The identity fold (1)
 will be included if specified in \code{getFoldDistanceList}.}
 
-\item{...}{Additional arguments passed to \code{ospsuite.plots::plotPredVsObs}.}
+\item{...}{Additional arguments passed to \code{ospsuite.plots::plotYVsX}.}
 }
 \value{
 A \code{ggplot2} plot object representing predicted vs observed values, including aesthetics for the x and y axes.
@@ -76,7 +76,6 @@ plotPredictedVsObserved(myDataCombined, predictedAxis = "y")
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotQuantileQuantilePlot}()},
 \code{\link{plotResidualsVsCovariate}()},
-\code{\link{plotResidualsVsTimePoints}()},
 \code{\link{plotTimeProfile}()}
 }
 \concept{plot functions based on ospsuite.plots}

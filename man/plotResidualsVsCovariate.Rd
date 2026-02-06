@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-with-ospsuite-plots.R
 \name{plotResidualsVsCovariate}
 \alias{plotResidualsVsCovariate}
-\title{Plots residuals vs a covariate (observed or predicted values), grouped by "group".}
+\title{Plots residuals vs a covariate (time, observed, or predicted values), grouped by "group".}
 \usage{
 plotResidualsVsCovariate(
   plotData,
@@ -44,15 +44,15 @@ by the data.}
 \item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
 
 \item{xAxis}{A character string specifying what to display on the x-axis.
-Options are \code{"observed"} (default) or \code{"predicted"}.}
+Options are \code{"time"}, \code{"observed"} (default), or \code{"predicted"}.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotResVsCov}.}
 }
 \value{
-A \code{ggplot2} plot object representing residuals vs observed or predicted values.
+A \code{ggplot2} plot object representing residuals vs time, observed, or predicted values.
 }
 \description{
-This function visualizes the residuals against observed or predicted (simulated) values,
+This function visualizes the residuals against time, observed, or predicted (simulated) values,
 helping to assess model performance.
 }
 \examples{
@@ -66,13 +66,15 @@ plotResidualsVsCovariate(convertUnits(
 
 # Generate a residuals vs predicted plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+
+# Generate a residuals vs time plot
+plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 }
 }
 \seealso{
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},
-\code{\link{plotResidualsVsTimePoints}()},
 \code{\link{plotTimeProfile}()}
 }
 \concept{plot functions based on ospsuite.plots}
