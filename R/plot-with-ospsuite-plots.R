@@ -454,33 +454,34 @@ plotQuantileQuantilePlot <- function(
     if (nrow(plotData) == 0) {
       stop(messages$plotNoDataAvailable())
     }
-
-    if (predictedIsNeeded) {
-      plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
-
-      plotData <- .calculateResidualsForPlot(
-        plotData = plotData,
-        scaling = scaling
-      ) |>
-        data.table::setDT()
-      if (nrow(plotData) == 0) {
-        stop(messages$plotNoDataAvailable())
-      }
-      plotData <- plotData |>
-        data.table::setnames(
-          old = c("yValuesSimulated", "yValuesObserved"),
-          new = c("predicted", "yValues")
-        ) |>
-        dplyr::mutate(dataType = "observed")
-    } else {
-      plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 2)
-    }
   } else {
     validateIsOfType(plotData, "data.frame", nullAllowed = FALSE)
+    plotData <- setDT(plotData)
     checkmate::assertNames(
       names(plotData),
       must.include = c("xValues", "yValues", "group", "dataType")
     )
+  }
+
+  if (predictedIsNeeded & !('predicted' %in% names(plotData))) {
+    plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
+
+    plotData <- .calculateResidualsForPlot(
+      plotData = plotData,
+      scaling = scaling
+    ) |>
+      data.table::setDT()
+    if (nrow(plotData) == 0) {
+      stop(messages$plotNoDataAvailable())
+    }
+    plotData <- plotData |>
+      data.table::setnames(
+        old = c("yValuesSimulated", "yValuesObserved"),
+        new = c("predicted", "yValues")
+      ) |>
+      dplyr::mutate(dataType = "observed")
+  } else {
+    plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 2)
   }
 
   # check for inconsistent error types

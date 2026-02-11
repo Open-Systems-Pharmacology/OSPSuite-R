@@ -172,5 +172,17 @@ test_that("Different symbols for data sets within one group", {
   )
 })
 
+test_that("works with data.frame input", {
+  set.seed(123)
+
+  vdiffr::expect_doppelganger(
+    title = "dataFrame Input with unit conversion",
+    fig = plotResidualsVsCovariate(
+      convertUnits(myCombDat, yUnit = ""),
+      residualScale = "linear",
+      xAxis = "time"
+    )
+  )
+})
 
 ospsuite.plots::resetDefaults(oldDefaults)
