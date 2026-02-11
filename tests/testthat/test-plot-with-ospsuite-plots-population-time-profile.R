@@ -4,7 +4,10 @@ ggplot2::theme_update(legend.title = ggplot2::element_blank())
 ggplot2::theme_update(legend.position = c(0.95, 0.05))
 ggplot2::theme_update(legend.justification = c("right", "bottom"))
 
-ospsuite.plots::setOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles, c(0.05, 0.25, 0.5, 0.75, 0.95))
+ospsuite.plots::setOspsuite.plots.option(
+  ospsuite.plots::OptionKeys$Percentiles,
+  c(0.05, 0.25, 0.5, 0.75, 0.95)
+)
 
 # only simulated ------------------------
 
@@ -85,7 +88,8 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "obs and sim",
-    fig = plotTimeProfile(myDataCombined,
+    fig = plotTimeProfile(
+      myDataCombined,
       yScale = "log",
       yScaleArgs = list(limits = c(0.01, 1000))
     )
@@ -138,7 +142,8 @@ test_that("It produces expected plot for multiple simulated datasets per group",
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim - dataset legend",
-    fig = plotTimeProfile(myDataCombined,
+    fig = plotTimeProfile(
+      myDataCombined,
       mapping = ggplot2::aes(linetype = group)
     )
   )

@@ -613,7 +613,13 @@ plotQuantileQuantilePlot <- function(
   # Convert units for each dimension
   convertedData <- lapply(plotDataByDimensions, function(dt) {
     yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
-    dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
+    if ('yErrorType' %in% names(dt) && uniqueN(dt$yErrorType > 1)) {
+      dt <- rbindlist(lapply(split(dt, by = 'yErrorType'), function(dtSplit) {
+        .unitConverter(data = dtSplit, xUnit = xUnitStr, yUnit = yUnitStr)
+      }))
+    } else {
+      dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
+    }
     dt[, yUnit := yUnitStr]
     dt[, yDimension := getDimensionForUnit(yUnitStr)]
     return(dt)
