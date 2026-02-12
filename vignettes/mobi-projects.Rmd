@@ -213,7 +213,7 @@ Then we extend the initial conditions BB of the loaded module by molecules defin
 icBB <- thyroidModule$getInitialConditionsBBs()[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
 newPaths <- extendInitialConditions(
-  icBB,
+  initialConditionsBuildingBlock = icBB,
   spatialStructureModule = thyroidModule,
   moleculesModule = modules[["Thyroid_QST"]],
   moleculeNames = c("DIO1", "T3", "T4", "TSH")

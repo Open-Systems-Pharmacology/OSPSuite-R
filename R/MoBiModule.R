@@ -74,7 +74,8 @@ MoBiModule <- R6::R6Class(
     #' parameter values BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
     getParameterValuesBBs = function(names = NULL, stopIfNotFound = TRUE) {
-      private$.getBBsWithNames(
+      .getICPVBBsFromModule(
+        self,
         names = names,
         bbType = "Parameter Values",
         stopIfNotFound
@@ -90,7 +91,8 @@ MoBiModule <- R6::R6Class(
     #' initial conditions BB is not present in the project.
     #' @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
     getInitialConditionsBBs = function(names = NULL, stopIfNotFound = TRUE) {
-      private$.getBBsWithNames(
+      .getICPVBBsFromModule(
+        self,
         names = names,
         bbType = "Initial Conditions",
         stopIfNotFound
@@ -99,8 +101,13 @@ MoBiModule <- R6::R6Class(
 
     #' @description
     #' Print the object to the console
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' Useful for debugging.
     #' @param ... Rest arguments.
-    print = function(...) {
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
@@ -119,62 +126,5 @@ MoBiModule <- R6::R6Class(
       )
     }
   ),
-  private = list(
-    #' @description
-    #' Get the list of Parameter Values (PV) or Initial Conditions (IC) Building Blocks (BBs) in the module.
-    #' @param names Optional names of the Parameter Values Building Block to retrieve.
-    #' If `NULL`, returns all PV BBs.
-    #' @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
-    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
-    #' BB is not present in the project.
-    #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
-    .getBBsWithNames = function(names = NULL, bbType, stopIfNotFound) {
-      if (bbType == "Parameter Values") {
-        allNames <- self$parameterValuesBBnames
-        allMethodName <- "AllParameterValuesFromModule"
-        byNameMethodName <- "ParameterValueBuildingBlockByName"
-      } else if (bbType == "Initial Conditions") {
-        allNames <- self$initialConditionsBBnames
-        allMethodName <- "AllInitialConditionsFromModule"
-        byNameMethodName <- "InitialConditionBuildingBlockByName"
-      } else {
-        stop(
-          "Invalid Building Block type. Must be either 'Parameter Values' or 'Initial Conditions'."
-        )
-      }
-
-      # Check if any of the provided names are not present in the module
-      missingNames <- setdiff(names, allNames)
-      if (length(missingNames) > 0 && stopIfNotFound) {
-        stop(paste(
-          "No",
-          bbType,
-          "Building Blocks found with names:",
-          paste(missingNames, collapse = ", "),
-          "in module",
-          self$name
-        ))
-      }
-
-      # If stopIfNotFound is FALSE, filter only the names that are present in the project
-      if (is.null(names)) {
-        names <- allNames
-        # If no names are provided, just return all available BBs of this type
-        bbsNet <- .callModuleTask(allMethodName, self)
-      } else {
-        names <- intersect(names, allNames)
-        bbsNet <- lapply(names, function(name) {
-          .callModuleTask(byNameMethodName, self, name)
-        })
-      }
-
-      # Create BuildingBlock objects
-      bbs <- lapply(bbsNet, function(bb) {
-        BuildingBlock$new(bb, type = bbType)
-      })
-      names(bbs) <- names
-
-      return(bbs)
-    }
-  )
+  private = list()
 )

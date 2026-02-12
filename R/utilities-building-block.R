@@ -90,10 +90,10 @@ deleteInitialConditions <- function(
 #' in the IC-BB, the value will be kept AS IS.
 #'
 #' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
-#' @param spatialStructureBB A `BuildingBlock` object of type `Spatial Structure`.
-#' Entries will be created for the selected molecules in all physical containers of this
+#' @param spatialStructureModule A module with a spatial structure building block.
+#' Entries will be created for the selected molecules in all physical containers of the
 #' spatial structure.
-#' @param moleculesBB A `BuildingBlock` object of type `Molecules`. The entries will be
+#' @param moleculesBB A module with a molecules building block. The entries will be
 #' created for all molecules from this building block, or for a subset of molecules
 #' defined in the `moleculeNames` argument.
 #' @param moleculeNames Optional list of molecule names. If provided, only the molecules
@@ -105,10 +105,51 @@ deleteInitialConditions <- function(
 #' @examples
 extendInitialConditions <- function(
   initialConditionsBuildingBlock,
-  spatialStructureBB,
-  moleculesBB,
+  spatialStructureModule,
+  moleculesModule,
   moleculeNames = NULL
-) {}
+) {
+  # Get the spatial structure BB from the provided module
+  spatialStructureBB <- .getBBFromModule(
+    spatialStructureModule,
+    bbType = "SpatialStructure"
+  )
+  # Get the molecules BB from the provided module
+  moleculesBB <- .getBBFromModule(moleculesModule, bbType = "Molecules")
+  # If molecule names are not provided, supply an empty list.
+  if (is.null(moleculeNames)) {
+    moleculeNames <- vector(mode = "character")
+  }
+
+  # Throw an error if any of the provided modules does not contain the required BB
+  if (is.null(spatialStructureBB) || is.null(moleculesBB)) {
+    stop(
+      paste(
+        "The provided modules do not contain the required building blocks:",
+        if (is.null(spatialStructureBB)) {
+          "Spatial Structure"
+        },
+        if (is.null(moleculesBB)) {
+          "Molecules"
+        }
+      ),
+      "Please provide modules with the required building blocks to be able to extend the initial conditions building block."
+    )
+  }
+
+  # Get InitialConditionsTask
+  icTask <- .getMoBiTaskFromCache("InitialConditionsTask")
+  # Call the task method to extend the IC BB
+  newPaths <- icTask$call(
+    "ExtendInitialConditions",
+    initialConditionsBuildingBlock,
+    spatialStructureBB,
+    moleculesBB,
+    moleculeNames
+  )
+
+  return(newPaths)
+}
 
 
 #' Set or add parameter values to an existing Parameter Values building block.
