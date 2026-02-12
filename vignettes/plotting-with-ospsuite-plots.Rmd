@@ -87,6 +87,33 @@ myDataCombined$addDataSets(
 )
 ```
 
+### Population Simulation Data
+
+For demonstrating population-specific features, let's also create a `DataCombined` object with population simulation results:
+
+```{r setup-population}
+# Load population from CSV file
+popFilePath <- system.file("extdata", "pop.csv", package = "ospsuite")
+population <- loadPopulation(csvPopulationFile = popFilePath)
+
+# Run population simulation
+popResults <- runSimulations(simulations = sim, population = population)[[1]]
+
+# Create DataCombined object for population
+myPopDataCombined <- DataCombined$new()
+
+myPopDataCombined$addSimulationResults(
+  simulationResults = popResults,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir Population"
+)
+
+myPopDataCombined$addDataSets(
+  obsData$`Vergin 1995.Iv`,
+  groups = "Aciclovir Population"
+)
+```
+
 ## Time Profile Plots
 
 The `plotTimeProfile()` function creates time profile plots showing observed and simulated data over time. This is one of the most common visualizations in pharmacometric analysis.
@@ -103,12 +130,23 @@ When working with population simulations, you can control how the data is aggreg
 - `"arithmetic"` - Shows arithmetic mean with standard deviations
 - `"geometric"` - Shows geometric mean with standard deviations
 
-```{r timeprofile-aggregation, eval=FALSE}
-# For population data, you can specify quantiles
-plotTimeProfile(myDataCombined, aggregation = "quantiles", quantiles = c(0.05, 0.5, 0.95))
+Here's an example using the population simulation data:
 
+```{r timeprofile-population}
+# Plot population data with default quantile aggregation
+plotTimeProfile(myPopDataCombined)
+```
+
+You can customize the quantiles or use different aggregation methods:
+
+```{r timeprofile-aggregation}
+# Specify custom quantiles (5th, 50th, and 95th percentiles)
+plotTimeProfile(myPopDataCombined, aggregation = "quantiles", quantiles = c(0.05, 0.5, 0.95))
+```
+
+```{r timeprofile-arithmetic, eval=FALSE}
 # Or use arithmetic mean with standard deviations
-plotTimeProfile(myDataCombined, aggregation = "arithmetic", nsd = 1)
+plotTimeProfile(myPopDataCombined, aggregation = "arithmetic", nsd = 1)
 ```
 
 ### Custom Aesthetic Mappings
