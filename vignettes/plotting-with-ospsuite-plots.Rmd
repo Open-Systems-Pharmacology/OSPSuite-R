@@ -1,0 +1,313 @@
+---
+title: "Plotting with ospsuite.plots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting with ospsuite.plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  out.width = "100%",
+  fig.height = 6,
+  fig.width = 8,
+  fig.showtext = TRUE
+)
+```
+
+## Introduction
+
+The `{ospsuite}` package provides a set of plotting functions based on the `{ospsuite.plots}` library. These functions are designed to work seamlessly with `DataCombined` objects and provide advanced visualization capabilities for pharmacometric data analysis.
+
+This vignette describes the exported plotting functions from the `plot-with-ospsuite-plots.R` file:
+
+- `plotTimeProfile()` - Creates time profile plots
+- `plotPredictedVsObserved()` - Creates predicted vs observed scatter plots
+- `plotResidualsVsCovariate()` - Creates residual plots against time, observed, or predicted values
+- `plotResidualsAsHistogram()` - Creates histogram plots of residuals
+- `plotQuantileQuantilePlot()` - Creates Q-Q plots for assessing residual distribution
+
+All these functions return `ggplot2` objects that can be further customized and saved.
+
+## Setting up the data
+
+Let's first create a `DataCombined` object that we will use throughout this vignette:
+
+```{r setup}
+library(ospsuite)
+
+# Load simulation
+simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simFilePath)
+simResults <- runSimulations(sim)[[1]]
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+
+# Load observed data
+obsData <- lapply(
+  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
+  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+)
+names(obsData) <- lapply(obsData, function(x) x$name)
+
+# Create DataCombined object
+myDataCombined <- DataCombined$new()
+
+myDataCombined$addSimulationResults(
+  simulationResults = simResults,
+  quantitiesOrPaths = outputPath,
+  groups = "Aciclovir PVB"
+)
+
+myDataCombined$addDataSets(
+  obsData$`Vergin 1995.Iv`,
+  groups = "Aciclovir PVB"
+)
+```
+
+## Time Profile Plots
+
+The `plotTimeProfile()` function creates time profile plots showing observed and simulated data over time. This is one of the most common visualizations in pharmacometric analysis.
+
+```{r timeprofile}
+plotTimeProfile(myDataCombined)
+```
+
+### Population Data Aggregation
+
+When working with population simulations, you can control how the data is aggregated using the `aggregation` parameter. Options include:
+
+- `"quantiles"` (default) - Shows median and specified quantiles
+- `"arithmetic"` - Shows arithmetic mean with standard deviations
+- `"geometric"` - Shows geometric mean with standard deviations
+
+```{r timeprofile-aggregation, eval=FALSE}
+# For population data, you can specify quantiles
+plotTimeProfile(myDataCombined, aggregation = "quantiles", quantiles = c(0.05, 0.5, 0.95))
+
+# Or use arithmetic mean with standard deviations
+plotTimeProfile(myDataCombined, aggregation = "arithmetic", nsd = 1)
+```
+
+### Custom Aesthetic Mappings
+
+You can customize the plot appearance using `ggplot2` aesthetic mappings:
+
+```{r timeprofile-mapping, eval=FALSE}
+# Customize aesthetics
+plotTimeProfile(
+  myDataCombined,
+  mapping = ggplot2::aes(color = group, linetype = name)
+)
+```
+
+## Predicted vs Observed Plots
+
+The `plotPredictedVsObserved()` function creates scatter plots comparing predicted (simulated) values to observed values. This helps assess model performance and identify systematic biases.
+
+```{r predvsobs}
+plotPredictedVsObserved(myDataCombined)
+```
+
+By default, the plot shows:
+- Identity line (perfect agreement)
+- Fold-distance lines (default: 2-fold range)
+
+### Customizing Fold Distance
+
+You can customize the fold-distance lines using the `comparisonLineVector` parameter:
+
+```{r predvsobs-fold}
+# Show 1.5-fold and 3-fold ranges
+plotPredictedVsObserved(
+  myDataCombined,
+  comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(1.5, 3))
+)
+```
+
+### Swapping Axes
+
+By default, predicted values are on the y-axis and observed on the x-axis. You can swap these using the `predictedAxis` parameter:
+
+```{r predvsobs-swap}
+# Put predicted on x-axis, observed on y-axis
+plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+```
+
+### Scaling Options
+
+The `xyScale` parameter controls the axis scaling:
+
+```{r predvsobs-scale, eval=FALSE}
+# Use linear scale instead of log
+plotPredictedVsObserved(myDataCombined, xyScale = "linear")
+```
+
+## Residuals vs Covariate Plots
+
+The `plotResidualsVsCovariate()` function creates residual plots to assess systematic bias in the model. You can plot residuals against time, observed values, or predicted values.
+
+### Residuals vs Observed Values
+
+```{r resvsobs}
+plotResidualsVsCovariate(myDataCombined, xAxis = "observed")
+```
+
+### Residuals vs Time
+
+```{r resvstime}
+plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+```
+
+### Residuals vs Predicted Values
+
+```{r resvspred}
+plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+```
+
+### Residual Scale Options
+
+The `residualScale` parameter controls how residuals are calculated and displayed:
+
+- `"log"` (default) - Logarithmic residuals: `log(observed/predicted)`
+- `"linear"` - Linear residuals: `observed - predicted`
+- `"ratio"` - Ratio: `observed/predicted`
+
+```{r resvsobs-scale}
+# Use linear residuals
+plotResidualsVsCovariate(myDataCombined, xAxis = "observed", residualScale = "linear")
+```
+
+## Residuals as Histogram
+
+The `plotResidualsAsHistogram()` function creates a histogram of residuals, which helps assess the distribution of errors.
+
+```{r reshist}
+plotResidualsAsHistogram(myDataCombined)
+```
+
+By default, a normal distribution overlay is added. You can control this using the `distribution` parameter:
+
+```{r reshist-dist, eval=FALSE}
+# Without distribution overlay
+plotResidualsAsHistogram(myDataCombined, distribution = NULL)
+```
+
+The `residualScale` parameter works the same as in `plotResidualsVsCovariate()`:
+
+```{r reshist-scale, eval=FALSE}
+# Linear residuals histogram
+plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
+```
+
+## Quantile-Quantile (Q-Q) Plot
+
+The `plotQuantileQuantilePlot()` function creates a Q-Q plot to assess whether residuals follow a normal distribution.
+
+```{r qqplot}
+plotQuantileQuantilePlot(myDataCombined)
+```
+
+Points falling along the diagonal line indicate that the residuals follow a normal distribution. Deviations suggest non-normality.
+
+```{r qqplot-scale, eval=FALSE}
+# Use linear residuals
+plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
+```
+
+## Automatic Unit Conversion
+
+A key feature of these plotting functions is automatic unit conversion. When using a `DataCombined` object with mixed units:
+
+- The target unit is automatically determined by the most frequently occurring unit in the observed data
+- If no observed data exists, the most common unit in simulated data is used
+- Concentration dimensions (`Concentration (mass)` and `Concentration (molar)`) are treated as compatible
+- Conversion between mass and molar concentrations is possible if molecular weight is available
+
+This ensures that all data is displayed in consistent units without manual conversion.
+
+## Handling Mixed Error Types
+
+These functions automatically handle datasets with different error type specifications:
+
+- If all data uses the same error type (`ArithmeticStdDev` or `GeometricStdDev`), it is used directly
+- If data contains **mixed error types**, they are automatically converted to `yMin`/`yMax` bounds:
+  - `ArithmeticStdDev`: `yMin = yValues - yErrorValues`, `yMax = yValues + yErrorValues`
+  - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
+
+## Using data.table Instead of DataCombined
+
+While these functions are designed to work with `DataCombined` objects, you can also provide a `data.table` directly. The table must include the following columns:
+
+- `xValues`: Numeric time points or x-axis values
+- `yValues`: Observed or simulated values (numeric)
+- `group`: Grouping variable (factor or character)
+- `name`: Name for the dataset (factor or character)
+- `xUnit`: Unit of the x-axis values (character)
+- `yUnit`: Unit of the y-axis values (character)
+- `dataType`: Specifies data type—either `"observed"` or `"simulated"`
+
+Optional columns:
+- `yErrorType`: Type of y error (see `ospsuite::DataErrorType`)
+- `yErrorValues`: Numeric error values
+- `yMin`, `yMax`: Custom ranges for y-axis
+- `IndividualId`: Used for aggregation of simulated population data
+- `predicted`: Predicted values (required for residual plots)
+
+## Further Customization
+
+All plotting functions accept additional arguments that are passed to the underlying `ospsuite.plots` functions. This allows for extensive customization. Refer to the `{ospsuite.plots}` package documentation for details.
+
+Additionally, since all functions return `ggplot2` objects, you can further modify them using standard `ggplot2` functions:
+
+```{r custom, eval=FALSE}
+library(ggplot2)
+
+# Create a plot and customize it
+p <- plotTimeProfile(myDataCombined)
+
+# Add customizations
+p <- p +
+  theme_minimal() +
+  labs(title = "My Custom Title") +
+  theme(legend.position = "bottom")
+
+print(p)
+```
+
+## Saving Plots
+
+Since all functions return `ggplot2` objects, you can save them using `ggsave()`:
+
+```{r save, eval=FALSE}
+# Create a plot
+myPlot <- plotTimeProfile(myDataCombined)
+
+# Save to file
+ggsave("timeprofile.png", myPlot, width = 8, height = 6, dpi = 300)
+```
+
+## Implementation Details
+
+All plotting functions in this vignette make use of the `{ospsuite.plots}` library, which builds on the `{tlf}` (TLF Library) for creating high-quality pharmacometric visualizations. 
+
+For more information:
+- `{ospsuite.plots}`: [GitHub repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
+- `{tlf}`: [Website](https://www.open-systems-pharmacology.org/TLF-Library/)
+
+## Comparison with Other Plotting Functions
+
+The `{ospsuite}` package also provides alternative plotting functions such as `plotIndividualTimeProfile()`, `plotObservedVsSimulated()`, etc. These are documented in the [Visualizations with DataCombined](data-combined-plotting.html) vignette.
+
+The functions described in this vignette (`plotTimeProfile()`, `plotPredictedVsObserved()`, etc.) are newer implementations that leverage the `{ospsuite.plots}` library and offer enhanced features such as:
+
+- Automatic unit conversion
+- More flexible residual calculations
+- Better handling of mixed error types
+- Enhanced customization options
+
+Choose the set of functions that best fits your workflow and requirements.
