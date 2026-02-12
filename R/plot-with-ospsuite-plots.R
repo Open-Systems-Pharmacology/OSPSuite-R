@@ -358,7 +358,8 @@ plotResidualsAsHistogram <- function(
         data = plotData,
         mapping = mapping,
         metaData = metaData,
-        residualScale = residualScale
+        residualScale = residualScale,
+        distribution = distribution
       ),
       additionalArgs
     )

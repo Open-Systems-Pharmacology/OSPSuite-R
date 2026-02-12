@@ -34,12 +34,18 @@ This vignette describes the exported plotting functions from the `plot-with-osps
 
 All these functions return `ggplot2` objects that can be further customized and saved.
 
+All plotting functions in this vignette make use of the `{ospsuite.plots}` library. 
+
+For more information:
+- `{ospsuite.plots}`: [GitHub repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
+
+
 ## Initial Setup
 
 Before creating plots with `ospsuite.plots`, it's important to initialize the plotting environment properly. This involves two key steps:
 
 1. **Set default plotting options** using `ospsuite.plots::setDefaults()`
-2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)`
+2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = TRUE)` 
 
 ```{r setup-options}
 library(ospsuite)
@@ -52,7 +58,8 @@ ospsuite.plots::setDefaults()
 options(ospsuite.plots.watermark_enabled = TRUE)
 ```
 
-The `setDefaults()` function initializes various plotting defaults that ensure consistent appearance across all plots. The watermark option allows you to add a watermark to your plots for publication or presentation purposes.
+The `setDefaults()` function initializes various plotting defaults that ensure consistent appearance across all plots. The watermark option allows you to add a watermark to your plots.  
+Refer to the `{ospsuite.plots}` package documentation for details.
 
 ## Setting up the data
 
@@ -134,26 +141,27 @@ Here's an example using the population simulation data:
 
 ```{r timeprofile-population}
 # Plot population data with default quantile aggregation
-plotTimeProfile(myPopDataCombined)
+plotTimeProfile(myPopDataCombined, yScale = 'log')
 ```
 
 You can customize the quantiles or use different aggregation methods:
 
 ```{r timeprofile-aggregation}
 # Specify custom quantiles (5th, 50th, and 95th quantiles)
-plotTimeProfile(myPopDataCombined, aggregation = "quantiles", quantiles = c(0.05, 0.5, 0.95))
+plotTimeProfile(myPopDataCombined, yScale = 'log', aggregation = "quantiles", quantiles = c(0.05, 0.5, 0.95))
 ```
 
 ```{r timeprofile-arithmetic, eval=FALSE}
 # Or use arithmetic mean with standard deviations
-plotTimeProfile(myPopDataCombined, aggregation = "arithmetic", nsd = 1)
+plotTimeProfile(myPopDataCombined, yScale = 'log', aggregation = "arithmetic", nsd = 1)
 ```
 
 ### Custom Aesthetic Mappings
 
-You can customize the plot appearance using `ggplot2` aesthetic mappings. By default, plots created with these functions display a legend with no title, positioned in the plot area.
+By default the legend is created by the variable  `group` of the dataCombined Object.
+You can customize the plot appearance using `ggplot2` aesthetic mappings. 
 
-```{r timeprofile-mapping, eval=FALSE}
+```{r timeprofile-mapping}
 # Customize aesthetics
 plotTimeProfile(
   myDataCombined,
@@ -250,7 +258,7 @@ By default, a normal distribution overlay is added. You can control this using t
 
 ```{r reshist-dist, eval=FALSE}
 # Without distribution overlay
-plotResidualsAsHistogram(myDataCombined, distribution = NULL)
+plotResidualsAsHistogram(myDataCombined, distribution = 'none')
 ```
 
 The `residualScale` parameter works the same as in `plotResidualsVsCovariate()`:
@@ -348,35 +356,20 @@ ospsuite.plots::exportPlot(
   plotObject = myPlot,
   filePath = "timeprofile.png",
   width = 8,
-  height = 6,
+  height = NULL,
   dpi = 300
 )
 ```
 
-Alternatively, you can use the standard `ggsave()` function from `ggplot2`:
+This function is a wrapper around ggsave which adjust the height (if `height = NULL').
+
+Alternatively, you can use directly the standard `ggsave()` function from `ggplot2`:
 
 ```{r save-ggsave, eval=FALSE}
 # Save using ggsave
 ggsave("timeprofile.png", myPlot, width = 8, height = 6, dpi = 300)
 ```
 
-## Implementation Details
 
-All plotting functions in this vignette make use of the `{ospsuite.plots}` library, which builds on the `{tlf}` (TLF Library) for creating high-quality pharmacometric visualizations. 
 
-For more information:
-- `{ospsuite.plots}`: [GitHub repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
-- `{tlf}`: [Website](https://www.open-systems-pharmacology.org/TLF-Library/)
 
-## Comparison with Other Plotting Functions
-
-The `{ospsuite}` package also provides alternative plotting functions such as `plotIndividualTimeProfile()`, `plotObservedVsSimulated()`, etc. These are documented in the [Visualizations with DataCombined](data-combined-plotting.html) vignette.
-
-The functions described in this vignette (`plotTimeProfile()`, `plotPredictedVsObserved()`, etc.) are newer implementations that leverage the `{ospsuite.plots}` library and offer enhanced features such as:
-
-- Automatic unit conversion
-- More flexible residual calculations
-- Better handling of mixed error types
-- Enhanced customization options
-
-Choose the set of functions that best fits your workflow and requirements.
