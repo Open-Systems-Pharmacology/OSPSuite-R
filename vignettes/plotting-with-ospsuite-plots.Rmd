@@ -34,13 +34,30 @@ This vignette describes the exported plotting functions from the `plot-with-osps
 
 All these functions return `ggplot2` objects that can be further customized and saved.
 
-## Setting up the data
+## Initial Setup
 
-Let's first create a `DataCombined` object that we will use throughout this vignette:
+Before creating plots with `ospsuite.plots`, it's important to initialize the plotting environment properly. This involves two key steps:
 
-```{r setup}
+1. **Set default plotting options** using `ospsuite.plots::setDefaults()`
+2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)`
+
+```{r setup-options}
 library(ospsuite)
 
+# Set default plotting options for ospsuite.plots
+ospsuite.plots::setDefaults()
+
+# Enable watermark for plots (optional)
+options(ospsuite.plots.watermark_enabled = TRUE)
+```
+
+The `setDefaults()` function initializes various plotting defaults that ensure consistent appearance across all plots. The watermark option allows you to add a watermark to your plots for publication or presentation purposes.
+
+## Setting up the data
+
+Now let's create a `DataCombined` object that we will use throughout this vignette:
+
+```{r setup}
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
