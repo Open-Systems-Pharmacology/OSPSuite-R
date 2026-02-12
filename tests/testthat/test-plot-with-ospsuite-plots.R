@@ -259,6 +259,56 @@ test_that("It calculates yMin and yMax correctly", {
 
 # validateAndConvertData ---------
 
+test_that("It handles data without error types end-to-end", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+    molWeight = rep(100, 6)
+  )
+
+  result <- .validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  )
+
+  # check data should be unchanged
+  expect_equal(result, testData)
+})
+
+
+test_that("It handles data with consistent error types end-to-end", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+    yErrorType = rep(DataErrorType$ArithmeticStdDev, 6),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, 2),
+    molWeight = rep(100, 6)
+  )
+
+  result <- .validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  )
+
+  # check if yError Unit is calculated correct
+  expect_equal(result$yErrorUnit, testData$yUnit)
+})
+
+
 test_that("It handles mixed error types end-to-end", {
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
@@ -562,8 +612,8 @@ test_that("It creates pred vs obs mapping with lloq", {
     userMapping = ggplot2::aes()
   )
 
-  expect_equal(rlang::as_label(result$predicted), "predicted")
-  expect_equal(rlang::as_label(result$observed), "yValues")
+  expect_equal(rlang::as_label(result$x), "predicted")
+  expect_equal(rlang::as_label(result$y), "yValues")
   expect_equal(rlang::as_label(result$groupby), "group")
   expect_equal(rlang::as_label(result$lloq), "lloq")
 })
