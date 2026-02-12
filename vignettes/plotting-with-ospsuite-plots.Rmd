@@ -45,7 +45,7 @@ For more information:
 Before creating plots with `ospsuite.plots`, it's important to initialize the plotting environment properly. This involves two key steps:
 
 1. **Set default plotting options** using `ospsuite.plots::setDefaults()`
-2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = TRUE)` 
+2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = FALSE)` 
 
 ```{r setup-options}
 library(ospsuite)
