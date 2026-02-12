@@ -361,7 +361,7 @@ ospsuite.plots::exportPlot(
 )
 ```
 
-This function is a wrapper around ggsave which adjust the height (if `height = NULL').
+This function is a wrapper around ggsave which adjusts the height (if `height = NULL`).
 
 Alternatively, you can use directly the standard `ggsave()` function from `ggplot2`:
 
