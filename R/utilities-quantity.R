@@ -158,7 +158,7 @@ setQuantityValuesByPath <- function(
     validateIsString(units)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
     value <- values[[i]]
@@ -245,7 +245,7 @@ getQuantityValuesByPath <- function(
     validateIsString(units, nullAllowed = TRUE)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   outputValues <- vector("numeric", length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
@@ -308,7 +308,7 @@ getQuantityValuesByPath <- function(
 .getQuantityDisplayPaths <- function(paths, simulation) {
   validateIsString(paths)
   validateIsOfType(simulation, "Simulation")
-  displayResolver <- .getNetTask("FullPathDisplayResolver")
+  displayResolver <- .getCoreTask("FullPathDisplayResolver")
   paths <- c(paths)
 
   displayPaths <- lapply(paths, function(path) {
@@ -365,7 +365,7 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
   validateIsString(path, nullAllowed = FALSE)
   validateIsOfType(simulation, "Simulation")
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   # Check if the quantity is defined by an explicit formula
   isFormulaExplicit <- task$call(
     "IsExplicitFormulaByPath",
@@ -422,7 +422,7 @@ getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {
   paramPath <- paste(moleculeContainer$name, "Molecular weight", sep = "|")
 
   rootContainer <- .getParentContainerByType(quantity, "Simulation")
-  task <- .getNetTask("ContainerTask")
+  task <- .getCoreTask("ContainerTask")
   paramMW <- task$call("AllParametersMatching", rootContainer, paramPath)
 
   if (length(paramMW) == 0) {

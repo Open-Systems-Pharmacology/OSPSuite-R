@@ -5,7 +5,7 @@
 #' @export
 hasDimension <- function(dimension) {
   validateIsString(dimension)
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dimensionTask$call("HasDimension", dimension)
 }
 
@@ -30,7 +30,7 @@ validateDimension <- function(dimension) {
 hasUnit <- function(unit, dimension) {
   validateIsString(unit)
   validateDimension(dimension)
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dimensionTask$call("HasUnit", dimension, .encodeUnit(unit))
 }
 
@@ -76,7 +76,7 @@ getBaseUnit <- function(quantityOrDimension) {
     dimension <- quantityOrDimension
   }
   validateDimension(dimension)
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dimensionTask$call("BaseUnitFor", dimension)
 }
 
@@ -189,7 +189,7 @@ toUnit <- function(
     molWeight <- NULL
   }
 
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   # ensure that we are dealing with an list of values seen as number (and not integer)
   values <- as.numeric(c(values))
 
@@ -277,7 +277,7 @@ toDisplayUnit <- function(quantity, values) {
 #' allAvailableDimensions()
 #' @export
 allAvailableDimensions <- function() {
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dimensionTask$call("AllAvailableDimensionNames")
 }
 
@@ -297,7 +297,7 @@ allAvailableDimensions <- function() {
 getDimensionForUnit <- function(unit) {
   validateIsString(unit)
   unit <- .encodeUnit(unit)
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dim <- dimensionTask$call("DimensionForUnit", unit)
   ifNotNull(dim, dim$get("Name"))
 }
@@ -316,7 +316,7 @@ getDimensionForUnit <- function(unit) {
 #' @export
 getUnitsForDimension <- function(dimension) {
   validateIsString(dimension)
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dimensionTask$call("AllAvailableUnitNamesFor", dimension)
 }
 
@@ -335,7 +335,7 @@ getUnitsForDimension <- function(dimension) {
 #' @export
 getDimensionByName <- function(name) {
   validateIsString(name)
-  dimensionTask <- .getNetTaskFromCache("DimensionTask")
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
   dimensionTask$call("DimensionByName", name)
 }
 

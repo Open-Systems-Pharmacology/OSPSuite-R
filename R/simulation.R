@@ -75,6 +75,27 @@ Simulation <- R6::R6Class(
         }
         self$set("Name", value)
       }
+    },
+    #' @field configuration An object of the type `SimulationConfiguration`,
+    #' describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).
+    configuration = function(value) {
+      # OSP Version number that is required for this feature
+      supportedVersion <- 12
+      if (missing(value)) {
+        # Convert to numeric as the returned value is a string
+        simVersion <- as.numeric(self$get("Creation")$get("Version"))
+        if (simVersion < supportedVersion) {
+          stop(messages$errorFeatureNotSupportedBySimulation(
+            "SimulationConfiguration",
+            simVersion,
+            supportedVersion
+          ))
+        }
+        netObj <- self$get("Configuration")
+        return(.createSimulationConfigurationFromNetObject(netObj))
+      } else {
+        private$.throwPropertyIsReadonly("configuration")
+      }
     }
   ),
   public = list(
@@ -86,8 +107,13 @@ Simulation <- R6::R6Class(
     initialize = function(netObject, sourceFile = NULL) {
       super$initialize(netObject)
       private$.sourceFile <- sourceFile
-      private$.buildConfiguration <- self$get("BuildConfiguration")
       private$.settings <- SimulationSettings$new(self$get("Settings"))
+
+      netTask <- .getCoreTaskFromCache("SimulationTask")
+      private$.buildConfiguration <- netTask$call(
+        "CreateSimulationBuilderFor",
+        netObject
+      )
     },
     #' @description
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
@@ -138,8 +164,13 @@ Simulation <- R6::R6Class(
     },
     #' @description
     #' Print the object to the console
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' Useful for debugging.
     #' @param ... Rest arguments.
-    print = function(...) {
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,

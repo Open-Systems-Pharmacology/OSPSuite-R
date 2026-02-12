@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.4.1.9002
+Version: 13.0.0.9000
 Authors@R: 
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -54,9 +54,13 @@ Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Collate: 
+    'MoBiModule.R'
+    'MoBiProject.R'
+    'SimulationConfiguration.R'
     'aging-data.R'
     'api-config.R'
     'application.R'
+    'building-block.R'
     'cache.R'
     'container.R'
     'data-column.R'
@@ -115,6 +119,7 @@ Collate:
     'table-formula.R'
     'tasks-env.R'
     'user-defined-pk-parameter.R'
+    'utilities-building-block.R'
     'utilities-container.R'
     'utilities-data-combined.R'
     'utilities-data-importer-configuration.R'
@@ -124,6 +129,8 @@ Collate:
     'utilities-entity.R'
     'utilities-file.R'
     'utilities-individual.R'
+    'utilities-mobi-module.R'
+    'utilities-mobi-project.R'
     'utilities-molecule.R'
     'utilities-output-schema.R'
     'utilities-output-selections.R'
@@ -136,6 +143,7 @@ Collate:
     'utilities-population.R'
     'utilities-quantity.R'
     'utilities-sensitivity-analysis.R'
+    'utilities-simulation-configuration.R'
     'utilities-simulation-results.R'
     'utilities-simulation.R'
     'utilities-snapshots.R'
@@ -143,7 +151,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
-Remotes:  
+Remotes: 
     Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library

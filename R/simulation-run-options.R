@@ -11,7 +11,7 @@ SimulationRunOptions <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
-    #' @param checkForNegativeValues Should the solver check for negative values. Default is `TRUE`
+    #' @param checkForNegativeValues `r lifecycle::badge("deprecated")` Use `sim$solver$checkForNegativeValues` instead.
     #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SimulationRunOptions` object.
     initialize = function(
@@ -19,6 +19,17 @@ SimulationRunOptions <- R6::R6Class(
       checkForNegativeValues = NULL,
       showProgress = NULL
     ) {
+      if (!is.null(checkForNegativeValues)) {
+        lifecycle::deprecate_warn(
+          when = "13.0.0",
+          what = "ospsuite::SimulationRunOptions(checkForNegativeValues)",
+          with = I("simulation$solver$checkForNegativeValues"),
+          details = "This argument is maintained in SimulationRunOptions for backward compatibility but has no effect.",
+          always = TRUE,
+          env = rlang::caller_env(),
+          user_env = rlang::caller_env(2)
+        )
+      }
       netObject <- rSharp::newObjectFromName(
         "OSPSuite.R.Domain.SimulationRunOptions"
       )
@@ -26,7 +37,6 @@ SimulationRunOptions <- R6::R6Class(
       self$numberOfCores <- numberOfCores %||%
         getOSPSuiteSetting("numberOfCores")
       self$showProgress <- showProgress %||% getOSPSuiteSetting("showProgress")
-      self$checkForNegativeValues <- checkForNegativeValues %||% TRUE
     },
     #' @description
     #' Print the object to the console
@@ -35,9 +45,16 @@ SimulationRunOptions <- R6::R6Class(
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "numberOfCores" = self$numberOfCores,
-        "checkForNegativeValues" = self$checkForNegativeValues,
         "showProgress" = self$showProgress
       ))
+    },
+    #' @description
+    #' Get the checkForNegativeValues property (deprecated)
+    #' @return The value of checkForNegativeValues from the solver
+    .getCheckForNegativeValues = function() {
+      # This is a helper to preserve backward compatibility
+      # The actual property is now on SolverSettings
+      return(NULL)
     }
   ),
   active = list(
@@ -45,10 +62,6 @@ SimulationRunOptions <- R6::R6Class(
     #' Default is `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
       private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
-    },
-    #' @field checkForNegativeValues  Specifies whether negative values check is on or off. Default is `TRUE`
-    checkForNegativeValues = function(value) {
-      private$.wrapProperty("CheckForNegativeValues", value)
     },
     #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is `getOSPSuiteSetting("showProgress")`
     showProgress = function(value) {

@@ -1,3 +1,90 @@
+#' Create a new simulation from a simulation configuration
+#'
+#' @param simulationName Name of the simulation.
+#' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
+#' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
+#' @param showWarnings If `TRUE`, warnings generated during simulation creation will be shown as R warnings. Default is `FALSE`.
+#'
+#' @returns A `Simulation` object
+#' @export
+#'
+#' @examples
+createSimulation <- function(
+  simulationName,
+  simulationConfiguration,
+  createAllProcessRateParameters = FALSE,
+  showWarnings = FALSE
+) {
+  validateIsLogical(c(createAllProcessRateParameters, showWarnings))
+  # Get simulation task
+  simulationTask <- .getMoBiTaskFromCache("SimulationTask")
+
+  # Create new simulation request
+  simRequest <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
+  # Create module configurations from modules and add them to the simulation request
+  for (module in simulationConfiguration$modules) {
+    # If NULL, send a blank string. Sending NULL causes issues on .NET side because the expected type is string, and NULL is recognized as an object
+    selectedPV <- simulationConfiguration$selectedParameterValues[[
+      module$name
+    ]] %||%
+      ""
+    selectedIC <- simulationConfiguration$selectedInitialConditions[[
+      module$name
+    ]] %||%
+      ""
+    moduleConfiguration <- simulationTask$call(
+      "CreateModuleConfiguration",
+      module,
+      selectedPV,
+      selectedIC
+    )
+    simRequest$call("AddModuleConfiguration", moduleConfiguration)
+  }
+  # Add expression profiles to the simulation request
+  for (expressionProfile in simulationConfiguration$expressionProfiles) {
+    simRequest$call("AddExpressionProfile", expressionProfile)
+  }
+  # Set the individual
+  simRequest$set("Individual", simulationConfiguration$individual)
+  # Set simulation settings
+  simRequest$set("SimulationSettings", simulationConfiguration$settings)
+  # Set whether to create process rate parameters
+  simRequest$set(
+    "CreateAllProcessRateParameters",
+    createAllProcessRateParameters
+  )
+
+  # Try to create a simulation from the simulation request
+  createSimulationResult <- simulationTask$call(
+    "CreateSimulationAndValidateFrom",
+    simulationName,
+    simRequest
+  )
+
+  # get the simulation
+  sim <- createSimulationResult$get("Simulation")
+  # get warnings
+  warnings <- createSimulationResult$get("Warnings")
+
+  if (showWarnings && length(warnings) > 0) {
+    warning(paste(
+      "The following warnings were generated during simulation creation:\n",
+      paste(warnings, collapse = "\n")
+    ))
+  }
+  # get errors
+  errors <- createSimulationResult$get("Errors")
+  # If simulation could not be created, throw an error with all error messages
+  if (is.null(sim)) {
+    stop(paste(
+      "Cannot create simulation. The following errors were generated during simulation creation:\n",
+      paste(errors, collapse = "\n")
+    ))
+  }
+
+  return(Simulation$new(sim))
+}
+
 #' @title Load a simulation from a pkml file
 #'
 #' @description
@@ -57,7 +144,7 @@ loadSimulation <- function(
 
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
   netSim <- simulationPersister$call(
     "LoadSimulation",
@@ -85,7 +172,7 @@ saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   simulationPersister$call("SaveSimulation", simulation, filePath)
   invisible()
 }
@@ -280,7 +367,7 @@ runSimulations <- function(
     validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
-  simulationRunner <- .getNetTask("SimulationRunner")
+  simulationRunner <- .getCoreTask("SimulationRunner")
   simulationRunArgs <- rSharp::newObjectFromName(
     "OSPSuite.R.Services.SimulationRunArgs"
   )
@@ -306,7 +393,7 @@ runSimulations <- function(
   silentMode = FALSE,
   stopIfFails = FALSE
 ) {
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
@@ -477,7 +564,7 @@ runSimulationBatches <- function(
   stopIfFails = FALSE
 ) {
   validateIsOfType(simulationBatches, "SimulationBatch")
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   validateIsOfType(
     simulationRunOptions,
     "SimulationRunOptions",

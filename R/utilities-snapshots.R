@@ -24,12 +24,6 @@ runSimulationsFromSnapshot <- function(
   exportJSON = FALSE,
   exportXML = FALSE
 ) {
-  if (Sys.info()[["sysname"]] == "Darwin") {
-    cli::cli_abort(
-      "runSimulationsFromSnapshot is currently not supported on macOS."
-    )
-  }
-
   ospsuite.utils::validateIsLogical(
     object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs)
   )
@@ -138,8 +132,9 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   temp_dir <- .gatherFiles(c(...))
 
   SnapshotRunOptions <- rSharp::newObjectFromName(
-    "PKSim.CLI.Core.RunOptions.SnapshotRunOptions"
+    "OSPSuite.CLI.Core.RunOptions.SnapshotRunOptions"
   )
+
   SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
 

@@ -13,19 +13,6 @@
     file.path(libDir, name)
   }
 
-  if (!file.exists(libPathFor("System.Data.SQLite.dll"))) {
-    cli::cli_warn(
-      message = c(
-        "x" = "Required library {.file System.Data.SQLite.dll} not found in {.file {libDir}}.",
-        " " = "Some functionalities may not work properly and some tests will fail.",
-        "i" = "If you are in a development environment, make sure to run:",
-        " " = "  {.run source('tools/setup_dev.R')}",
-        " " = "  {.run setup_dev()}",
-        " " = "before using {.run devtools::load_all()} or {.run devtools::test()}"
-      )
-    )
-  }
-
   # Setup platform-specific library loading
   if (.Platform$OS.type == "windows") {
     # Windows: Extend PATH for DLL access
@@ -67,7 +54,31 @@
   apiConfig$dimensionFilePath <- libPathFor("OSPSuite.Dimensions.xml")
   apiConfig$pkParametersFilePath <- libPathFor("OSPSuite.PKParameters.xml")
 
-  rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
+  # Load MoBi.R
+  mobiR <- system.file("lib", "MoBi.R.dll", package = ospsuiteEnv$packageName)
+
+  rSharp::loadAssembly(mobiR)
+  rSharp::callStatic("MoBi.R.Api", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
+  .loadEnums()
+}
+
+
+#' Load enums from .NET
+#' This function must be called after initializing the package.
+#' @noRd
+.loadEnums <- function() {
+  # MergeBehavior enum
+
+  # -1 because the indexing in .NET starts at 0
+  mergeBehaviorNetEnum <- seq_along(enum(rSharp::getEnumNames(
+    "OSPSuite.Core.Domain.MergeBehavior"
+  ))) -
+    1
+  names(mergeBehaviorNetEnum) <- enum(rSharp::getEnumNames(
+    "OSPSuite.Core.Domain.MergeBehavior"
+  ))
+  # Enum with the merge behaviors for modules available in MoBi
+  MergeBehavior <<- enum(mergeBehaviorNetEnum)
 }
