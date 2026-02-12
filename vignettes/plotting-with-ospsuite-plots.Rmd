@@ -299,13 +299,26 @@ print(p)
 
 ## Saving Plots
 
-Since all functions return `ggplot2` objects, you can save them using `ggsave()`:
+Since all functions return `ggplot2` objects, you can save them using `ospsuite.plots::exportPlot()`:
 
 ```{r save, eval=FALSE}
 # Create a plot
 myPlot <- plotTimeProfile(myDataCombined)
 
-# Save to file
+# Save to file using ospsuite.plots::exportPlot
+ospsuite.plots::exportPlot(
+  plotObject = myPlot,
+  filePath = "timeprofile.png",
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+```
+
+Alternatively, you can use the standard `ggsave()` function from `ggplot2`:
+
+```{r save-ggsave, eval=FALSE}
+# Save using ggsave
 ggsave("timeprofile.png", myPlot, width = 8, height = 6, dpi = 300)
 ```
 
