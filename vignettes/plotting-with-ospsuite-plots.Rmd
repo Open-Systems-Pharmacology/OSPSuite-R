@@ -151,7 +151,7 @@ plotTimeProfile(myPopDataCombined, aggregation = "arithmetic", nsd = 1)
 
 ### Custom Aesthetic Mappings
 
-You can customize the plot appearance using `ggplot2` aesthetic mappings:
+You can customize the plot appearance using `ggplot2` aesthetic mappings. By default, plots created with these functions display a legend with no title, positioned in the plot area.
 
 ```{r timeprofile-mapping, eval=FALSE}
 # Customize aesthetics
