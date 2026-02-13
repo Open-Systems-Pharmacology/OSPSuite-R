@@ -20,16 +20,20 @@
 #'     - `yMin`, `yMax`: Custom ranges for y-axis instead of error types.
 #'     - `IndividualId`: Used for aggregation of simulated population data.
 #'
-#' @details ## Automatic Unit Conversion When using a `DataCombined` object, the
-#'   function automatically converts mixed units to a common unit. The target
-#'   unit is determined by the most frequently occurring unit in the observed
-#'   data (or simulated data if no observed data exists). Concentration
-#'   dimensions (`Concentration (mass)` and `Concentration (molar)`) are treated
-#'   as compatible and can be converted between each other if molecular weight
-#'   is available.
+#' @details
+#' ## Automatic Unit Conversion
 #'
-#'   ## Mixed Error Types The function automatically handles data containing
-#'   different error type specifications:
+#' When using a `DataCombined` object, the function automatically converts mixed
+#' units to a common unit. The target unit is determined by the most frequently
+#' occurring unit in the observed data (or simulated data if no observed data
+#' exists). Concentration dimensions (`Concentration (mass)` and `Concentration
+#' (molar)`) are treated as compatible and can be converted between each other
+#' if molecular weight is available.
+#'
+#' ## Mixed Error Types
+#'
+#' The function automatically handles data containing different error type
+#' specifications:
 #' - If all data uses the same error type (`ArithmeticStdDev` or `GeometricStdDev`),
 #'   it is passed directly to the plotting function.
 #' - If data contains **mixed error types**, they are automatically converted to
@@ -246,16 +250,19 @@ plotPredictedVsObserved <- function(
 #'   This function visualizes the residuals against time, observed, or predicted
 #'   (simulated) values, helping to assess model performance.
 #'
-#' @details ## Residual Calculation Residuals are calculated by pairing observed
-#'   and simulated data at matching time points within the same group. Only
-#'   datasets that can be paired (i.e., have corresponding observed and
-#'   simulated values) are included in the residual plot. The function
-#'   automatically removes unpaired datasets with a warning, converts units to
-#'   ensure consistent comparisons, and computes residuals as the difference
-#'   between observed and predicted values.
+#' @details
+#' ## Residual Calculation
 #'
-#'   ## Residual Scales The `residualScale` parameter controls how residuals are
-#'   displayed:
+#' Residuals are calculated by pairing observed and simulated data at matching
+#' time points within the same group. Only datasets that can be paired (i.e.,
+#' have corresponding observed and simulated values) are included in the
+#' residual plot. The function automatically removes unpaired datasets with a
+#' warning, converts units to ensure consistent comparisons, and computes
+#' residuals as the difference between observed and predicted values.
+#'
+#' ## Residual Scales
+#'
+#' The `residualScale` parameter controls how residuals are displayed:
 #' - `linear`: Absolute residuals (Observed - Predicted). Values centered around
 #'   zero indicate good model fit. Useful for normally distributed errors.
 #' - `log`: Log-transformed residuals, calculated as log(Observed / Predicted).
@@ -266,8 +273,8 @@ plotPredictedVsObserved <- function(
 #'   prediction error.
 #'
 #' @inheritParams plotTimeProfile
-#' @param residualScale Either "linear", "log", or "ratio" scale for residuals.
-#'   Default is `log`.
+#' @param residualScale Either "linear", "log", or "ratio" method for computing
+#'   residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
 #'   Options are `"time"` (time points from xValues), `"observed"` (observed
 #'   values, default), or `"predicted"` (predicted/simulated values).
@@ -356,8 +363,8 @@ plotResidualsVsCovariate <- function(
 #'   representation of their distribution.
 #'
 #' @inheritParams plotTimeProfile
-#' @param residualScale Either "linear", "log", or "ratio" scale for residuals.
-#'   Default is `log`.
+#' @param residualScale Either "linear", "log", or "ratio" method for computing
+#'   residuals. Default is `log`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotHistogram`.
 #'
@@ -426,8 +433,8 @@ plotResidualsAsHistogram <- function(
 #'   using a Q-Q plot.
 #'
 #' @inheritParams plotTimeProfile
-#' @param residualScale Either "linear", "log", or "ratio" scale for residuals.
-#'   Default is `log`.
+#' @param residualScale Either "linear", "log", or "ratio" method for computing
+#'   residuals. Default is `log`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot.
