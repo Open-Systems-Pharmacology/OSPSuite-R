@@ -260,6 +260,7 @@ test_that("It calculates yMin and yMax correctly", {
 # validateAndConvertData ---------
 
 test_that("It handles data without error types end-to-end", {
+  set.seed(2801)
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
@@ -794,7 +795,6 @@ test_that("It preserves observed data during aggregation", {
 })
 
 test_that("It supports nsd = 2 for wider intervals", {
-  #19
   set.seed(2203)
   plotData <- data.table(
     xValues = rep(1, 10),
