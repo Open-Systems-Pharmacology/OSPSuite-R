@@ -313,6 +313,8 @@ plotResidualsVsCovariate <- function(
   xAxis = "observed",
   ...
 ) {
+  predicted <- NULL
+
   # Validate xAxis parameter
   xAxis <- match.arg(xAxis, choices = c("time", "observed", "predicted"))
 
@@ -747,8 +749,7 @@ plotQuantileQuantilePlot <- function(
 #' @keywords internal
 #' @noRd
 .convertInconsistentErrorTypes <- function(plotData) {
-  # initialize variables used for data.table to avoid messages during checks
-  yErrorType <- yMin <- NULL
+  yErrorType <- yMin <- yMax <- NULL
 
   # nothing to do
   if (!("yErrorType" %in% names(plotData))) {
@@ -898,6 +899,8 @@ plotQuantileQuantilePlot <- function(
 #' @keywords internal
 #' @noRd
 .calculateResidualsForPlot <- function(plotData, scaling) {
+  lloq <- nameSimulated <- NULL
+
   # functions called below needs column lloq
   if (!('lloq' %in% names(plotData))) {
     plotData[, lloq := NA]
