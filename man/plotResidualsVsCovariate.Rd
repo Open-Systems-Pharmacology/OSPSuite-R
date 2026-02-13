@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-with-ospsuite-plots.R
 \name{plotResidualsVsCovariate}
 \alias{plotResidualsVsCovariate}
-\title{Plots residuals vs a covariate (time, observed, or predicted values), grouped by "group".}
+\title{Plot Residuals vs Covariate}
 \usage{
 plotResidualsVsCovariate(
   plotData,
@@ -41,19 +41,51 @@ about dimensions and units for both x and y axes.}
 \code{ggplot2::aes()}. This is added or replaces the default mapping constructed
 by the data.}
 
-\item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
+\item{residualScale}{Either "linear", "log", or "ratio" method for computing
+residuals. Default is \code{log}.}
 
 \item{xAxis}{A character string specifying what to display on the x-axis.
-Options are \code{"time"}, \code{"observed"} (default), or \code{"predicted"}.}
+Options are \code{"time"} (time points from xValues), \code{"observed"} (observed
+values, default), or \code{"predicted"} (predicted/simulated values).}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotResVsCov}.}
 }
 \value{
-A \code{ggplot2} plot object representing residuals vs time, observed, or predicted values.
+A \code{ggplot2} plot object representing residuals vs time, observed, or
+predicted values.
 }
 \description{
-This function visualizes the residuals against time, observed, or predicted (simulated) values,
-helping to assess model performance.
+Plots residuals vs a covariate (time, observed, or predicted values),
+grouped by "group".
+
+This function visualizes the residuals against time, observed, or predicted
+(simulated) values, helping to assess model performance.
+}
+\details{
+\subsection{Residual Calculation}{
+
+Residuals are calculated by pairing observed and simulated data at matching
+time points within the same group. Only datasets that can be paired (i.e.,
+have corresponding observed and simulated values) are included in the
+residual plot. The function automatically removes unpaired datasets with a
+warning, converts units to ensure consistent comparisons, and computes
+residuals as the difference between observed and predicted values.
+}
+
+\subsection{Residual Scales}{
+
+The \code{residualScale} parameter controls how residuals are displayed:
+\itemize{
+\item \code{linear}: Absolute residuals (Observed - Predicted). Values centered around
+zero indicate good model fit. Useful for normally distributed errors.
+\item \code{log}: Log-transformed residuals, calculated as log(Observed / Predicted).
+Values centered around zero indicate good fit. Preferred for log-normally
+distributed data or when errors are proportional to magnitude.
+\item \code{ratio}: Ratio of observed to predicted (Observed / Predicted). Values
+centered around 1.0 indicate good fit. Useful for understanding relative
+prediction error.
+}
+}
 }
 \examples{
 \dontrun{
@@ -72,9 +104,13 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 }
 }
 \seealso{
+\code{\link[=plotResidualsAsHistogram]{plotResidualsAsHistogram()}}, \code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}},
+\code{\link[=plotPredictedVsObserved]{plotPredictedVsObserved()}}
+
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},
+\code{\link{plotResidualsAsHistogram}()},
 \code{\link{plotTimeProfile}()}
 }
 \concept{plot functions based on ospsuite.plots}
