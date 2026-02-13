@@ -1,3 +1,5 @@
+#' @title Create Time Profile Plot
+#'
 #' Creates a time profile plot for given data.
 #'
 #' This function generates a time profile plot using ggplot2, where the data is
@@ -61,6 +63,7 @@
 #' @return A `ggplot2` plot object representing the time profile.
 #' @export
 #' @family plot functions based on ospsuite.plots
+#' @seealso [plotPredictedVsObserved()], [plotResidualsVsCovariate()]
 #'
 #' @examples \dontrun{
 #' # Generate a time profile plot for the provided data
@@ -138,6 +141,8 @@ plotTimeProfile <- function(
   return(plotObject)
 }
 
+#' @title Plot Predicted vs Observed Values
+#'
 #' Plots predicted vs observed data, grouped by "group".
 #'
 #' This function visualizes the relationship between predicted and observed values,
@@ -146,7 +151,7 @@ plotTimeProfile <- function(
 #' @inheritParams plotTimeProfile
 #'
 #' @param xyScale A character string specifying the scale for the x and y-axis.
-#'          Default is 'log'.
+#'   Default is `log`.
 #' @param predictedAxis A character string specifying which axis to use for predicted values.
 #'   Options are `"x"` (predicted on x-axis, observed on y-axis) or
 #'   `"y"` (default, predicted on y-axis, observed on x-axis).
@@ -160,6 +165,7 @@ plotTimeProfile <- function(
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
+#' @seealso [plotTimeProfile()], [plotResidualsVsCovariate()], [plotQuantileQuantilePlot()]
 #'
 #' @examples \dontrun{
 #' # Generate a predicted vs observed plot for the provided data
@@ -230,21 +236,44 @@ plotPredictedVsObserved <- function(
   return(plotObject)
 }
 
+#' @title Plot Residuals vs Covariate
+#'
 #' Plots residuals vs a covariate (time, observed, or predicted values), grouped by "group".
 #'
 #' This function visualizes the residuals against time, observed, or predicted (simulated) values,
 #' helping to assess model performance.
 #'
+#' @details ## Residual Calculation Residuals are calculated by pairing
+#' observed and simulated data at matching time points within the same group.
+#' Only datasets that can be paired (i.e., have corresponding observed and
+#' simulated values) are included in the residual plot. The function
+#' automatically removes unpaired datasets with a warning, converts units to
+#' ensure consistent comparisons, and computes residuals as the difference
+#' between observed and predicted values.
+#'
+#' ## Residual Scales The `residualScale` parameter controls how residuals are
+#' displayed:
+#' - `linear`: Absolute residuals (Observed - Predicted). Values centered around
+#' zero indicate good model fit. Useful for normally distributed errors.
+#' - `log`: Log-transformed residuals, calculated as log(Observed / Predicted).
+#' Values centered around zero indicate good fit. Preferred for log-normally
+#' distributed data or when errors are proportional to magnitude.
+#' - `ratio`: Ratio of observed to predicted (Observed / Predicted). Values
+#' centered around 1.0 indicate good fit. Useful for understanding relative
+#' prediction error.
+#'
 #' @inheritParams plotTimeProfile
 #' @param residualScale Either "linear", "log", or "ratio" scale for residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
-#'   Options are `"time"`, `"observed"` (default), or `"predicted"`.
+#'   Options are `"time"` (time points from xValues), `"observed"` (observed values, default),
+#'   or `"predicted"` (predicted/simulated values).
 #' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or predicted values.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
+#' @seealso [plotResidualsAsHistogram()], [plotQuantileQuantilePlot()], [plotPredictedVsObserved()]
 #'
 #' @examples \dontrun{
 #' # Generate a residuals vs observed plot for the provided data
@@ -313,6 +342,8 @@ plotResidualsVsCovariate <- function(
   return(plotObject)
 }
 
+#' @title Plot Residuals Histogram
+#'
 #' Plots residuals as a histogram, grouped by "group".
 #'
 #' This function generates a histogram of the residuals, providing a visual representation of their distribution.
@@ -324,6 +355,17 @@ plotResidualsVsCovariate <- function(
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
+#'
+#' @family plot functions based on ospsuite.plots
+#' @seealso [plotResidualsVsCovariate()], [plotQuantileQuantilePlot()]
+#'
+#' @examples \dontrun{
+#' # Generate a histogram of residuals with default settings
+#' plotResidualsAsHistogram(myDataCombined)
+#'
+#' # Generate a histogram with linear scale
+#' plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
+#' }
 plotResidualsAsHistogram <- function(
   plotData,
   metaData = NULL,
@@ -368,6 +410,8 @@ plotResidualsAsHistogram <- function(
 }
 
 
+#' @title Plot Quantile-Quantile Plot
+#'
 #' Plots a Quantile-Quantile plot, grouped by "group".
 #'
 #' This function visualizes the distribution of predicted vs observed values using a Q-Q plot.
@@ -380,6 +424,15 @@ plotResidualsAsHistogram <- function(
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
+#' @seealso [plotResidualsVsCovariate()], [plotResidualsAsHistogram()], [plotPredictedVsObserved()]
+#'
+#' @examples \dontrun{
+#' # Generate a Q-Q plot with default settings
+#' plotQuantileQuantilePlot(myDataCombined)
+#'
+#' # Generate a Q-Q plot with linear scale
+#' plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
+#' }
 plotQuantileQuantilePlot <- function(
   plotData,
   metaData = NULL,
@@ -429,8 +482,8 @@ plotQuantileQuantilePlot <- function(
 #' it calculates them based on the observed and simulated data.
 #'
 #' @inheritParams plotTimeProfile
-#' @param predictedIsNeeded If TRUE, only observed data are returned. If FALSE and the "predicted" column does not exist,
-#'        predicted values are calculated.
+#' @param predictedIsNeeded If TRUE, predicted values are calculated if not already present in the data.
+#'        If FALSE, predicted values are not calculated and only data validation and aggregation are performed.
 #' @param scaling A character string specifying the scale for the data. Used in the conversion process.
 #'
 #' @return A `data.table` with data formatted for plotting.
