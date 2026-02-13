@@ -1,24 +1,10 @@
 #' @title Create Time Profile Plot
 #'
-#'   Creates a time profile plot for given data.
+#' @description
+#' Creates a time profile plot for given data.
 #'
-#'   This function generates a time profile plot using ggplot2, where the data
-#'   is grouped by a column named "group".
-#'
-#' @param plotData An object of class `DataCombined` or a `data.table`. If a
-#'   `data.table`, it must include the following:
-#'   - `xValues`: Numeric time points.
-#'   - `yValues`: Observed or simulated values (numeric).
-#'   - `group`: Grouping variable (factor or character).
-#'   - `name`: Name for the dataset (factor or character).
-#'   - `xUnit`: Unit of the x-axis values (character).
-#'   - `yUnit`: Unit of the y-axis values (character).
-#'   - `dataType`: Specifies data type—either `observed` or `simulated`.
-#'   - Optional:
-#'     - `yErrorType`: Type of y error, relative to `ospsuite::DataErrorType`.
-#'     - `yErrorValues`: Numeric error values.
-#'     - `yMin`, `yMax`: Custom ranges for y-axis instead of error types.
-#'     - `IndividualId`: Used for aggregation of simulated population data.
+#' This function generates a time profile plot using ggplot2, where the data
+#' is grouped by a column named "group".
 #'
 #' @details
 #' ## Automatic Unit Conversion
@@ -42,7 +28,21 @@
 #'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
 #' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
 #'   error bounds directly in `yMin` and `yMax` columns.
-#'
+#' 
+#' @param plotData An object of class `DataCombined` or a `data.table`. If a
+#'   `data.table`, it must include the following:
+#'   - `xValues`: Numeric time points.
+#'   - `yValues`: Observed or simulated values (numeric).
+#'   - `group`: Grouping variable (factor or character).
+#'   - `name`: Name for the dataset (factor or character).
+#'   - `xUnit`: Unit of the x-axis values (character).
+#'   - `yUnit`: Unit of the y-axis values (character).
+#'   - `dataType`: Specifies data type—either `observed` or `simulated`.
+#'   - Optional:
+#'     - `yErrorType`: Type of y error, relative to `ospsuite::DataErrorType`.
+#'     - `yErrorValues`: Numeric error values.
+#'     - `yMin`, `yMax`: Custom ranges for y-axis instead of error types.
+#'     - `IndividualId`: Used for aggregation of simulated population data.
 #' @param metaData A list containing metadata for the plot. If NULL, a default
 #'   list is constructed from the data. Expected structure includes information
 #'   about dimensions and units for both x and y axes.
@@ -147,10 +147,11 @@ plotTimeProfile <- function(
 
 #' @title Plot Predicted vs Observed Values
 #'
-#'   Plots predicted vs observed data, grouped by "group".
+#' @description
+#' Plots predicted vs observed data, grouped by "group".
 #'
-#'   This function visualizes the relationship between predicted and observed
-#'   values, allowing for easy identification of discrepancies.
+#' This function visualizes the relationship between predicted and observed
+#' values, allowing for easy identification of discrepancies.
 #'
 #' @inheritParams plotTimeProfile
 #'
@@ -244,11 +245,12 @@ plotPredictedVsObserved <- function(
 
 #' @title Plot Residuals vs Covariate
 #'
-#'   Plots residuals vs a covariate (time, observed, or predicted values),
-#'   grouped by "group".
+#' @description
+#' Plots residuals vs a covariate (time, observed, or predicted values),
+#' grouped by "group".
 #'
-#'   This function visualizes the residuals against time, observed, or predicted
-#'   (simulated) values, helping to assess model performance.
+#' This function visualizes the residuals against time, observed, or predicted
+#' (simulated) values, helping to assess model performance.
 #'
 #' @details
 #' ## Residual Calculation
@@ -273,6 +275,7 @@ plotPredictedVsObserved <- function(
 #'   prediction error.
 #'
 #' @inheritParams plotTimeProfile
+#' 
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
@@ -357,12 +360,14 @@ plotResidualsVsCovariate <- function(
 
 #' @title Plot Residuals Histogram
 #'
-#'   Plots residuals as a histogram, grouped by "group".
+#' @description
+#' Plots residuals as a histogram, grouped by "group".
 #'
-#'   This function generates a histogram of the residuals, providing a visual
-#'   representation of their distribution.
+#' This function generates a histogram of the residuals, providing a visual
+#' representation of their distribution.
 #'
 #' @inheritParams plotTimeProfile
+#' 
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
@@ -427,12 +432,14 @@ plotResidualsAsHistogram <- function(
 
 #' @title Plot Quantile-Quantile Plot
 #'
-#'   Plots a Quantile-Quantile plot, grouped by "group".
+#' @description
+#' Plots a Quantile-Quantile plot, grouped by "group".
 #'
-#'   This function visualizes the distribution of predicted vs observed values
-#'   using a Q-Q plot.
+#' This function visualizes the distribution of predicted vs observed values
+#' using a Q-Q plot.
 #'
 #' @inheritParams plotTimeProfile
+#' 
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
@@ -501,6 +508,7 @@ plotQuantileQuantilePlot <- function(
 #' observed and simulated data.
 #'
 #' @inheritParams plotTimeProfile
+#' 
 #' @param predictedIsNeeded If TRUE, predicted values are calculated if not
 #'   already present in the data. If FALSE, predicted values are not calculated
 #'   and only data validation and aggregation are performed.
@@ -543,11 +551,11 @@ plotQuantileQuantilePlot <- function(
     plotData <- .calculateResidualsForPlot(
       plotData = plotData,
       scaling = scaling
-    ) |>
-      data.table::setDT()
-    if (nrow(plotData) == 0) {
+    )
+    if (is.null(plotData) || nrow(plotData) == 0) {
       stop(messages$plotNoDataAvailable())
     }
+    plotData <- data.table::setDT(plotData)
     plotData <- plotData |>
       data.table::setnames(
         old = c("yValuesSimulated", "yValuesObserved"),
@@ -606,6 +614,8 @@ plotQuantileQuantilePlot <- function(
 #' @keywords internal
 #' @noRd
 .getMostFrequentUnit <- function(data, unitColumn) {
+  dataType <- NULL
+
   # count per group and not per timepoint
   dt <- data[, c("group", "name", "dataType", unitColumn), with = FALSE] |>
     unique()
@@ -657,7 +667,6 @@ plotQuantileQuantilePlot <- function(
 #' @keywords internal
 #' @noRd
 .convertUnitsForPlot <- function(plotData, maxAllowedYDimensions) {
-  # initialize variables used for data.table to avoid messages during checks
   xUnit <- yUnit <- yDimension <- NULL
 
   validateIsOfType(plotData, "data.frame", FALSE)
@@ -696,7 +705,7 @@ plotQuantileQuantilePlot <- function(
       dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
     }
     dt[, yUnit := yUnitStr]
-    dt[, yDimension := getDimensionForUnit(yUnitStr)]
+    dt[, yDimension := ospsuite::getDimensionForUnit(yUnitStr)]
     return(dt)
   })
 
@@ -801,28 +810,33 @@ plotQuantileQuantilePlot <- function(
   return(plotData)
 }
 
-#' Construct Metadata for Time Profile
+#' @title Construct Metadata for Time Profile
 #'
-#' This function generates metadata for time profile plots based on the provided
-#' plot data. It extracts and validates the dimensions and units for both x and
-#' y values, ensuring that there is no ambiguity in the units.
+#' @description
+#' Generates metadata for time profile plots based on the provided plot data.
+#' Extracts and validates the dimensions and units for both x and y values,
+#' ensuring that there is no ambiguity in the units.
+#'
+#' @details
+#' The function checks for ambiguities in the x and y units and retrieves the
+#' corresponding dimensions. If two y units are provided, it constructs separate
+#' metadata for each. The resulting metadata is returned as a list, which
+#' includes dimensions and units for both x and y values.
 #'
 #' @param plotData A data.table containing the following relevant columns:
 #'   - `xUnit`: The unit of the x-axis values.
-#'   - `xDimension`: (optional) The dimension of the x values, if already specified.
+#'   - `xDimension`: (optional) The dimension of the x values, if already
+#'     specified.
 #'   - `yUnit`: The unit(s) of the y-axis values (can be one or two units).
-#'   - `yDimension`: (optional) The dimension of the y values, if already specified.
+#'   - `yDimension`: (optional) The dimension of the y values, if already
+#'     specified.
 #' @param nYunit Maximal number of different y-units that the plot can handle.
 #'
-#' @details The function checks for ambiguities in the x and y units and
-#' retrieves the corresponding dimensions. If two y units are provided, it
-#' constructs separate metadata for each. The resulting metadata is returned as
-#' a list, which includes dimensions and units for both x and y values.
-#'
 #' @return A list containing metadata with the following structure:
-#' - `xValues`: A list with `dimension` and `unit` for the x-axis.
-#' - `yValues`: A list with `dimension` and `unit` for the primary y-axis.
-#' - `y2`: (optional) A list with `dimension` and `unit` for the secondary y-axis if applicable.
+#'   - `xValues`: A list with `dimension` and `unit` for the x-axis.
+#'   - `yValues`: A list with `dimension` and `unit` for the primary y-axis.
+#'   - `y2`: (optional) A list with `dimension` and `unit` for the secondary
+#'     y-axis if applicable.
 #' @keywords internal
 #' @noRd
 .constructMetDataForTimeProfile <- function(plotData, nYunit = 1) {
@@ -1083,7 +1097,7 @@ plotQuantileQuantilePlot <- function(
   predictedAxis = "x"
 ) {
   # initialize variables used as quotes
-  predicted <- yMin <- yMax <- lloq <- NULL
+  predicted <- yMin <- yMax <- lloq <- yValues <- group <- yErrorValues <- NULL
 
   # Set up mapping based on which axis has predicted values
   if (predictedAxis == "x") {
@@ -1199,7 +1213,7 @@ plotQuantileQuantilePlot <- function(
 #' @noRd
 .aggregateSimulatedData <- function(plotData, aggregation, quantiles, nsd = 1) {
   # initialize variables used in data.table syntax
-  IndividualId <- NULL # nolint
+  IndividualId <- dataType <- NULL # nolint
 
   checkmate::assertChoice(
     aggregation,
