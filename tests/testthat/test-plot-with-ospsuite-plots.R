@@ -172,6 +172,64 @@ test_that("It prioritizes observed when frequencies are tied", {
   expect_equal(result, "mg")
 })
 
+# .constructMetDataForTimeProfile ---------
+
+test_that("It constructs metadata correctly for single y-unit", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    xUnit = "h",
+    yUnit = "mg/l",
+    xDimension = "Time",
+    yDimension = "Concentration (mass)"
+  )
+
+  result <- .constructMetDataForTimeProfile(plotData, nYunit = 1)
+
+  expect_equal(result$xValues$dimension, "Time")
+  expect_equal(result$xValues$unit, "h")
+  expect_equal(result$yValues$dimension, "Concentration (mass)")
+  expect_equal(result$yValues$unit, "mg/l")
+  expect_null(result$y2)
+})
+
+test_that("It constructs metadata with secondary y-axis", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 0.5, 0.8),
+    xUnit = "h",
+    yUnit = c("mg/l", "mg/l", "%", "%"),
+    xDimension = "Time",
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    )
+  )
+
+  result <- .constructMetDataForTimeProfile(plotData, nYunit = 2)
+
+  expect_equal(result$xValues$unit, "h")
+  expect_equal(result$yValues$unit, "mg/l")
+  expect_equal(result$y2$unit, "%")
+  expect_equal(result$y2$dimension, "Fraction")
+})
+
+test_that("It throws error for inconsistent x units", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    xUnit = c("h", "min", "h"),
+    yUnit = "mg/l"
+  )
+
+  expect_error(
+    .constructMetDataForTimeProfile(plotData),
+    messages$plotUnitConsistency()
+  )
+})
+
 # .convertInconsistentErrorTypes ----------
 
 test_that("It handles missing yErrorType gracefully", {
@@ -202,6 +260,7 @@ test_that("It calculates yMin and yMax correctly", {
 # validateAndConvertData ---------
 
 test_that("It handles data without error types end-to-end", {
+  set.seed(2801)
   testData <- data.table(
     xValues = c(1, 2, 3, 4, 5, 6),
     yValues = c(10, 20, 30, 15, 25, 35),
@@ -514,4 +573,253 @@ test_that("It calculates residuals correctly without lloq column", {
 
   expect_contains(names(result), 'residualValues')
   expect_equal(result$residualValues, c(log(9) - log(10), log(19) - log(20)))
+})
+
+# .getMappingForResiduals --------------
+
+test_that("It allows user mapping to override defaults", {
+  xMapping <- ggplot2::aes(x = xValues)
+  userMapping <- ggplot2::aes(groupby = name, color = group)
+
+  result <- .getMappingForResiduals(xMapping, userMapping)
+
+  expect_equal(rlang::as_label(result$groupby), "name")
+  expect_equal(rlang::as_label(result$colour), "group")
+})
+
+test_that("It works with empty x mapping for histogram", {
+  xMapping <- ggplot2::aes()
+  userMapping <- ggplot2::aes()
+
+  result <- .getMappingForResiduals(xMapping, userMapping)
+
+  expect_false("x" %in% names(result))
+  expect_equal(rlang::as_label(result$predicted), "predicted")
+  expect_equal(rlang::as_label(result$observed), "yValues")
+})
+
+# .getMappingForPredictedVsObserved
+
+test_that("It creates pred vs obs mapping with lloq", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    lloq = c(5, 5, 5)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_equal(rlang::as_label(result$x), "predicted")
+  expect_equal(rlang::as_label(result$y), "yValues")
+  expect_equal(rlang::as_label(result$groupby), "group")
+  expect_equal(rlang::as_label(result$lloq), "lloq")
+})
+
+test_that("It adds error bars for arithmetic error type", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    yErrorType = rep(DataErrorType$ArithmeticStdDev, 3),
+    yErrorValues = c(1, 2, 3)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_true("error" %in% names(result))
+})
+
+test_that("It adds error_relative for geometric error type", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    yErrorType = rep(DataErrorType$GeometricStdDev, 3),
+    yErrorValues = c(1.5, 2, 1.8)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_true("error_relative" %in% names(result))
+})
+
+# .aggregateSimulatedData ----------------
+
+test_that("It aggregates population data with quantiles", {
+  set.seed(123)
+  plotData <- data.table(
+    xValues = rep(c(1, 2), each = 10),
+    yValues = c(rnorm(10, 10, 2), rnorm(10, 20, 3)),
+    group = rep("A", 20),
+    name = rep("Sim1", 20),
+    dataType = rep("simulated", 20),
+    IndividualId = rep(1:10, 2),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.1, 0.5, 0.9)
+  )
+
+  expect_equal(nrow(result), 2)
+  expect_true("yMin" %in% colnames(result))
+  expect_true("yMax" %in% colnames(result))
+
+  time1Values <- plotData[xValues == 1, yValues]
+  time2Values <- plotData[xValues == 2, yValues]
+
+  expect_equal(
+    result[xValues == 1, yMin],
+    quantile(time1Values, 0.1, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 1, yValues],
+    quantile(time1Values, 0.5, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 1, yMax],
+    quantile(time1Values, 0.9, names = FALSE),
+    tolerance = 1e-6
+  )
+
+  expect_equal(
+    result[xValues == 2, yMin],
+    quantile(time2Values, 0.1, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 2, yValues],
+    quantile(time2Values, 0.5, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 2, yMax],
+    quantile(time2Values, 0.9, names = FALSE),
+    tolerance = 1e-6
+  )
+})
+
+test_that("It aggregates with arithmetic mean and SD", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, mean = 100, sd = 10),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(nrow(result), 1)
+  expectedMean <- mean(plotData$yValues)
+  expectedSD <- sd(plotData$yValues)
+
+  expect_equal(result$yValues, expectedMean, tolerance = 0.01)
+  expect_equal(result$yMin, expectedMean - expectedSD, tolerance = 0.01)
+  expect_equal(result$yMax, expectedMean + expectedSD, tolerance = 0.01)
+})
+
+test_that("It aggregates with geometric mean and SD", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = exp(rnorm(10, mean = log(100), sd = 0.5)),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "geometric",
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(nrow(result), 1)
+  gm <- exp(mean(log(plotData$yValues)))
+  gsd <- exp(sd(log(plotData$yValues)))
+
+  expect_equal(result$yValues, gm, tolerance = 0.01)
+  expect_equal(result$yMin, exp(log(gm) - log(gsd)), tolerance = 0.01)
+  expect_equal(result$yMax, exp(log(gm) + log(gsd)), tolerance = 0.01)
+})
+
+test_that("It preserves observed data during aggregation", {
+  plotData <- data.table(
+    xValues = c(1, 2, rep(1, 10), rep(2, 10)),
+    yValues = c(15, 25, rnorm(10, 10, 2), rnorm(10, 20, 3)),
+    group = rep("A", 22),
+    name = c("Obs", "Obs", rep("Sim", 20)),
+    dataType = c("observed", "observed", rep("simulated", 20)),
+    IndividualId = c(NA, NA, rep(1:10, 2)),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.1, 0.5, 0.9)
+  )
+
+  expect_equal(nrow(result), 4)
+  expect_equal(sum(result$dataType == "observed"), 2)
+})
+
+test_that("It supports nsd = 2 for wider intervals", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, mean = 100, sd = 10),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result1sd <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 1
+  )
+  result2sd <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 2
+  )
+
+  expect_true(result2sd$yMin < result1sd$yMin)
+  expect_true(result2sd$yMax > result1sd$yMax)
 })

@@ -835,11 +835,13 @@ plotQuantileQuantilePlot <- function(
 
 #' Creates mapping for plotData.
 #'
-#' This function generates a mapping for the plotting based on the provided plot data and metadata.
+#' This function generates a mapping for the plotting based on the provided plot
+#' data and metadata.
 #'
 #' @param plotData Data to map.
 #' @param metaData A list with metadata for plotData.
-#' @param userMapping Mapping provided by the user; this will update the internal mapping.
+#' @param userMapping Mapping provided by the user; this will update the
+#'   internal mapping.
 #'
 #' @return A mapping object for ggplot2.
 #' @keywords internal

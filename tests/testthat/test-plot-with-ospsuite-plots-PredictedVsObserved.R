@@ -1,5 +1,6 @@
 # Set defaults
 oldDefaults <- ospsuite.plots::setDefaults()
+withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
 ggplot2::theme_update(legend.title = ggplot2::element_blank())
 ggplot2::theme_update(legend.position = c(0.95, 0.05))
 ggplot2::theme_update(legend.justification = c("right", "bottom"))
@@ -74,6 +75,35 @@ test_that("It creates default plots as expected without any identity or foldDist
   )
 })
 
+test_that("It creates default plots as expected with single fold distance line", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "default 1 fold dist",
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      comparisonLineVector = unname(
+        ospsuite.plots::getFoldDistanceList(
+          folds = 2
+        )
+      )
+    )
+  )
+})
+
+test_that("It creates default plots as expected with multiple fold distance lines", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "default 3 fold dist",
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      comparisonLineVector = unname(
+        ospsuite.plots::getFoldDistanceList(
+          folds = c(2, 4, 6)
+        )
+      )
+    )
+  )
+})
 
 test_that("It produces expected plot for Aciclovir data", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -119,9 +149,7 @@ test_that("It produces expected plot for Aciclovir data", {
   )
 })
 
-# edge cases ------------------------
-
-test_that("It returns `NULL` when `DataCombined` is empty", {
+test_that("It throws error when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
   expect_error(
@@ -129,7 +157,6 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
     messages$plotNoDataAvailable()
   )
 })
-
 
 test_that("Different symbols for data sets within one group", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -240,6 +267,3 @@ test_that("Plot throws error with fraction and concentration", {
     'Data contains too many'
   )
 })
-
-
-ospsuite.plots::resetDefaults(oldDefaults)

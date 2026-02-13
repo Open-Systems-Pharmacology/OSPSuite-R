@@ -120,7 +120,7 @@ customDPC$yAxisScale <- "log"
 customDPC$yAxisLimits <- c(0.01, 1000)
 saveRDS(customDPC, file = file.path(path, "customDPC"))
 
-# datset with mixed dimensions and y-Units ---------------------------
+# dataset with mixed dimensions and y-Units ---------------------------
 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)

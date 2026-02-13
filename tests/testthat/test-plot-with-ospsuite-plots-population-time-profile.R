@@ -1,5 +1,6 @@
 # Set defaults
 oldDefaults <- ospsuite.plots::setDefaults()
+withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
 ggplot2::theme_update(legend.title = ggplot2::element_blank())
 ggplot2::theme_update(legend.position = c(0.95, 0.05))
 ggplot2::theme_update(legend.justification = c("right", "bottom"))
@@ -81,7 +82,7 @@ test_that("It produces expected plot for both observed and simulated datasets", 
   myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
   myDataCombined$setDataTransformations(
-    forNames = obsData$`Laskin 1982.Group D`$name,
+    forNames = obsData$`Vergin 1995.Iv`$name,
     xOffsets = 2
   )
 
