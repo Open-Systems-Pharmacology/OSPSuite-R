@@ -1,5 +1,6 @@
 # Set defaults
 oldDefaults <- ospsuite.plots::setDefaults()
+withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
 ggplot2::theme_update(legend.title = ggplot2::element_blank())
 ggplot2::theme_update(legend.position = c(0.95, 0.95))
 ggplot2::theme_update(legend.justification = c("right", "top"))
@@ -161,5 +162,3 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
       )
   )
 })
-
-ospsuite.plots::resetDefaults(oldDefaults)

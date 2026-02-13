@@ -1,5 +1,6 @@
 # Set defaults
 oldDefaults <- ospsuite.plots::setDefaults()
+withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
 ggplot2::theme_update(legend.title = ggplot2::element_blank())
 ggplot2::theme_update(legend.position = c(0.95, 0.05))
 ggplot2::theme_update(legend.justification = c("right", "bottom"))
@@ -261,5 +262,3 @@ test_that("Aggregations are computed and displayed correctly", {
     )
   )
 })
-
-ospsuite.plots::resetDefaults(oldDefaults)
