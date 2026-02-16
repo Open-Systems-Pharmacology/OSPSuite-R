@@ -87,13 +87,12 @@ to install the package and all required dependencies.
 ## Pre-requisites
 
 The `{ospsuite}` package requires `{rSharp}` and its external
-dependencies (Visual C++ Redistributable and .NET 8). Install these
+dependencies (Visual C++ Redistributable (Windows) and .NET 8). Install these
 dependencies using the following instructions:
 
-- [For
-  Windows](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#prerequisites)
-- [For
-  Linux](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#ubuntu)
+- [For Windows](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#windows)
+- [For Linux (Ubuntu)](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#ubuntu)
+- [For MacOS](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#macos)
 
 ## From GitHub (recommended)
 
