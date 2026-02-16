@@ -48,7 +48,8 @@ Before creating plots with `ospsuite.plots`, it's important to initialize the pl
 2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = FALSE)` 
 
 ```{r setup-options}
-library(ospsuite)
+# library(ospsuite)
+devtools::load_all()
 
 # Set default plotting options for ospsuite.plots
 # Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity
@@ -150,20 +151,20 @@ Here's an example using the population simulation data:
 plotTimeProfile(myPopDataCombined, yScale = 'log')
 ```
 
-You can customize the quantiles or use different aggregation methods:
+You can customize the quantiles:
 
 ```{r timeprofile-aggregation}
-# Specify custom quantiles (5th, 50th, and 95th quantiles)
 plotTimeProfile(
   myPopDataCombined,
   yScale = 'log',
   aggregation = "quantiles",
-  quantiles = c(0.05, 0.5, 0.95)
+  quantiles = c(0.1, 0.5, 0.9)
 )
 ```
 
-```{r timeprofile-arithmetic, eval=FALSE}
-# Or use arithmetic mean with standard deviations
+Alternatively, you can use arithmetic mean aggregation with standard deviation bands:
+
+```{r timeprofile-arithmetic}
 plotTimeProfile(
   myPopDataCombined,
   yScale = 'log',
@@ -174,14 +175,14 @@ plotTimeProfile(
 
 ### Custom Aesthetic Mappings
 
-By default the legend is created by the variable  `group` of the dataCombined Object.
+By default the legend is created by the variable  `group` of the `DataCombined` object.
 You can customize the plot appearance using `ggplot2` aesthetic mappings. 
 
 ```{r timeprofile-mapping}
 # Customize aesthetics
 plotTimeProfile(
   myDataCombined,
-  mapping = ggplot2::aes(color = group, linetype = name)
+  mapping = ggplot2::aes(linetype = dataType)
 )
 ```
 
@@ -222,7 +223,7 @@ plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
 
 The `xyScale` parameter controls the axis scaling:
 
-```{r predvsobs-scale, eval=FALSE}
+```{r predvsobs-scale}
 # Use linear scale instead of log
 plotPredictedVsObserved(myDataCombined, xyScale = "linear")
 ```
@@ -305,7 +306,7 @@ plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
 
 ## Automatic Unit Conversion
 
-A key feature of these plotting functions is automatic unit conversion. When using a `DataCombined` object with mixed units:
+A key feature of these plotting functions is automatic unit conversion. For manual unit conversion of `DataCombined` objects outside of plotting, you can use the `convertUnits()` function. When using a `DataCombined` object with mixed units in plotting functions:
 
 - The target unit is automatically determined by the most frequently occurring unit in the observed data
 - If no observed data exists, the most common unit in simulated data is used
@@ -325,7 +326,7 @@ These functions automatically handle datasets with different error type specific
 
 ## Using data.table Instead of DataCombined
 
-While these functions are designed to work with `DataCombined` objects, you can also provide a `data.table` directly. The table must include the following columns:
+While these functions are designed to work with `DataCombined` objects, you can also provide a `data.table` directly. Use `toDataFrame()` to convert a `DataCombined` object to a data frame if needed. The table must include the following columns:
 
 - `xValues`: Numeric time points or x-axis values
 - `yValues`: Observed or simulated values (numeric)
