@@ -34,9 +34,7 @@ This vignette describes the exported plotting functions from the `plot-with-osps
 
 All these functions return `ggplot2` objects that can be further customized and saved.
 
-All plotting functions in this vignette make use of the `{ospsuite.plots}` library. 
-
-For more information:
+For more information on the underlying library:
 - `{ospsuite.plots}`: [GitHub repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
 
 
@@ -175,7 +173,7 @@ plotTimeProfile(
 
 ### Custom Aesthetic Mappings
 
-By default the legend is created by the variable  `group` of the `DataCombined` object.
+By default, the legend is created using the `group` variable of the `DataCombined` object.
 You can customize the plot appearance using `ggplot2` aesthetic mappings. 
 
 ```{r timeprofile-mapping}
@@ -188,7 +186,7 @@ plotTimeProfile(
 
 ## Predicted vs Observed Plots
 
-The `plotPredictedVsObserved()` function creates scatter plots comparing predicted (simulated) values to observed values. This helps assess model performance and identify systematic biases.
+Beyond time profiles, you can assess model performance using goodness-of-fit plots. The `plotPredictedVsObserved()` function creates scatter plots comparing predicted (simulated) values to observed values. This helps assess model performance and identify systematic biases.
 
 ```{r predvsobs}
 plotPredictedVsObserved(myDataCombined)
@@ -252,7 +250,7 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 ### Residual Scale Options
 
-The `residualScale` parameter controls how residuals are calculated and displayed:
+The `residualScale` parameter controls how residuals are calculated and displayed (this same parameter is used in `plotResidualsAsHistogram` and `plotQuantileQuantilePlot`):
 
 - `"log"` (default) - Logarithmic residuals: `log(observed/predicted)`
 - `"linear"` - Linear residuals: `observed - predicted`
@@ -275,7 +273,7 @@ The `plotResidualsAsHistogram()` function creates a histogram of residuals, whic
 plotResidualsAsHistogram(myDataCombined)
 ```
 
-By default, a normal distribution overlay is added. You can control this using the `distribution` parameter:
+By default, a normal distribution overlay is added to help assess normality. You can control this using the `distribution` parameter:
 
 ```{r reshist-dist, eval=FALSE}
 # Without distribution overlay
@@ -382,7 +380,7 @@ ospsuite.plots::exportPlot(
 )
 ```
 
-This function is a wrapper around ggsave which adjusts the height (if `height = NULL`).
+This function is a wrapper around `ggsave()` that automatically adjusts the plot height based on content when `height = NULL`.
 
 Alternatively, you can use directly the standard `ggsave()` function from `ggplot2`:
 
