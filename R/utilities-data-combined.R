@@ -145,6 +145,8 @@ calculateResiduals <- function(
   xUnit = NULL,
   yUnit = NULL
 ) {
+  nameSimulated <- NULL
+
   .validateScalarDataCombined(dataCombined)
 
   # Validation has already taken place in the calling plotting function

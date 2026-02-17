@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-with-ospsuite-plots.R
 \name{plotResidualsAsHistogram}
 \alias{plotResidualsAsHistogram}
-\title{Plots residuals as a histogram, grouped by "group".}
+\title{Plot Residuals Histogram}
 \usage{
 plotResidualsAsHistogram(
   plotData,
@@ -43,7 +43,8 @@ by the data.}
 
 \item{distribution}{parameter passed to \code{ospsuite.plots::plotHistogram}.}
 
-\item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
+\item{residualScale}{Either "linear", "log", or "ratio" method for computing
+residuals. Default is \code{log}.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotHistogram}.}
 }
@@ -51,5 +52,25 @@ by the data.}
 A \code{ggplot2} plot object representing the histogram of residuals.
 }
 \description{
-This function generates a histogram of the residuals, providing a visual representation of their distribution.
+Plots residuals as a histogram, grouped by "group".
+
+This function generates a histogram of the residuals, providing a visual
+representation of their distribution.
 }
+\examples{
+\dontrun{
+# Generate a histogram of residuals with default settings
+plotResidualsAsHistogram(myDataCombined)
+
+# Generate a histogram with linear scale
+plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
+}
+}
+\seealso{
+Other plot functions based on ospsuite.plots: 
+\code{\link{plotPredictedVsObserved}()},
+\code{\link{plotQuantileQuantilePlot}()},
+\code{\link{plotResidualsVsCovariate}()},
+\code{\link{plotTimeProfile}()}
+}
+\concept{plot functions based on ospsuite.plots}

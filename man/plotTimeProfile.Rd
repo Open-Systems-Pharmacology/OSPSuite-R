@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-with-ospsuite-plots.R
 \name{plotTimeProfile}
 \alias{plotTimeProfile}
-\title{Creates a time profile plot for given data.}
+\title{Create Time Profile Plot}
 \usage{
 plotTimeProfile(
   plotData,
@@ -67,23 +67,25 @@ plot above and below the mean (used for error bars when aggregation is
 A \code{ggplot2} plot object representing the time profile.
 }
 \description{
-This function generates a time profile plot using ggplot2, where the data is
-grouped by a column named "group".
+Creates a time profile plot for given data.
+
+This function generates a time profile plot using ggplot2, where the data
+is grouped by a column named "group".
 }
 \details{
-\subsection{Automatic Unit Conversion When using a \code{DataCombined} object, the}{
+\subsection{Automatic Unit Conversion}{
 
-function automatically converts mixed units to a common unit. The target unit
-is determined by the most frequently occurring unit in the observed data (or
-simulated data if no observed data exists). Concentration dimensions
-(\code{Concentration (mass)} and \code{Concentration (molar)}) are treated as
-compatible and can be converted between each other if molecular weight is
-available.
+When using a \code{DataCombined} object, the function automatically converts mixed
+units to a common unit. The target unit is determined by the most frequently
+occurring unit in the observed data (or simulated data if no observed data
+exists). Concentration dimensions (\code{Concentration (mass)} and \code{Concentration (molar)}) are treated as compatible and can be converted between each other
+if molecular weight is available.
 }
 
-\subsection{Mixed Error Types The function automatically handles data containing}{
+\subsection{Mixed Error Types}{
 
-different error type specifications:
+The function automatically handles data containing different error type
+specifications:
 \itemize{
 \item If all data uses the same error type (\code{ArithmeticStdDev} or \code{GeometricStdDev}),
 it is passed directly to the plotting function.
@@ -112,6 +114,7 @@ plotTimeProfile(convertUnits(
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},
+\code{\link{plotResidualsAsHistogram}()},
 \code{\link{plotResidualsVsCovariate}()}
 }
 \concept{plot functions based on ospsuite.plots}

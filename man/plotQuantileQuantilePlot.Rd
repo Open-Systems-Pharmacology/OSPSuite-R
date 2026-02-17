@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-with-ospsuite-plots.R
 \name{plotQuantileQuantilePlot}
 \alias{plotQuantileQuantilePlot}
-\title{Plots a Quantile-Quantile plot, grouped by "group".}
+\title{Plot Quantile-Quantile Plot}
 \usage{
 plotQuantileQuantilePlot(
   plotData,
@@ -40,7 +40,8 @@ about dimensions and units for both x and y axes.}
 \code{ggplot2::aes()}. This is added or replaces the default mapping constructed
 by the data.}
 
-\item{residualScale}{Either "linear", "log", or "ratio" scale for residuals. Default is \code{log}.}
+\item{residualScale}{Either "linear", "log", or "ratio" method for computing
+residuals. Default is \code{log}.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotQQ}.}
 }
@@ -48,11 +49,24 @@ by the data.}
 A \code{ggplot2} plot object representing the Q-Q plot.
 }
 \description{
-This function visualizes the distribution of predicted vs observed values using a Q-Q plot.
+Plots a Quantile-Quantile plot, grouped by "group".
+
+This function visualizes the distribution of predicted vs observed values
+using a Q-Q plot.
+}
+\examples{
+\dontrun{
+# Generate a Q-Q plot with default settings
+plotQuantileQuantilePlot(myDataCombined)
+
+# Generate a Q-Q plot with linear scale
+plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
+}
 }
 \seealso{
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
+\code{\link{plotResidualsAsHistogram}()},
 \code{\link{plotResidualsVsCovariate}()},
 \code{\link{plotTimeProfile}()}
 }
