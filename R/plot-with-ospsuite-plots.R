@@ -62,6 +62,11 @@
 #' @param nsd Optional parameter specifying the number of standard deviations to
 #'   plot above and below the mean (used for error bars when aggregation is
 #'   "arithmetic" or "geometric"). Ignored if `aggregation` is  `quantiles`.
+#' @param showLegendPerDataset Logical flag to display separate legend entries
+#'   for observed and simulated datasets. When `TRUE`, observed data will use
+#'   different shapes and simulated data will use different line types for each
+#'   dataset. Defaults to `FALSE`. Note: User-provided `mapping` and
+#'   `observedMapping` will override this setting.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
 #'
 #' @return A `ggplot2` plot object representing the time profile.
@@ -86,10 +91,14 @@ plotTimeProfile <- function(
     ospsuite.plots::OptionKeys$Percentiles
   )[c(1, 3, 5)],
   nsd = 1,
+  showLegendPerDataset = FALSE,
   ...
 ) {
   # initialize variables used for data.table to avoid messages during checks
   yDimension <- yUnit <- dataType <- NULL
+
+  # Validate showLegendPerDataset
+  checkmate::assertLogical(showLegendPerDataset, len = 1)
 
   plotData <- .validateAndConvertData(
     plotData = plotData,
@@ -99,6 +108,25 @@ plotTimeProfile <- function(
     nsd = nsd
   )
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
+
+  # Set internal mappings for showLegendPerDataset if enabled
+  # These will be overridden by user-provided mappings in .getMappingForTimeprofiles
+  internalMapping <- mapping
+  internalObservedMapping <- observedMapping
+  
+  if (showLegendPerDataset) {
+    # For simulated data, add linetype mapping to show individual datasets
+    internalMapping <- structure(
+      utils::modifyList(ggplot2::aes(linetype = name), mapping),
+      class = "uneval"
+    )
+    
+    # For observed data, add shape mapping to show individual datasets
+    internalObservedMapping <- structure(
+      utils::modifyList(ggplot2::aes(shape = name), observedMapping),
+      class = "uneval"
+    )
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -127,12 +155,12 @@ plotTimeProfile <- function(
         mapping = .getMappingForTimeprofiles(
           plotData = plotData[dataType == "simulated"],
           metaData = metaData,
-          userMapping = mapping
+          userMapping = internalMapping
         ),
         observedMapping = .getMappingForTimeprofiles(
           plotData = plotData[dataType == "observed"],
           metaData = metaData,
-          userMapping = observedMapping
+          userMapping = internalObservedMapping
         ),
         metaData = metaData,
         observedData = plotData[dataType == "observed"]

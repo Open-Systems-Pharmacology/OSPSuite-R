@@ -44,6 +44,11 @@ test_that("It creates default plots as expected for multiple observed datasets",
     title = "multiple obs - separate legend",
     fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
   )
+  
+  vdiffr::expect_doppelganger(
+    title = "multiple obs - showLegendPerDataset",
+    fig = plotTimeProfile(manyObsDC, showLegendPerDataset = TRUE)
+  )
 }) 
 
 # only simulated ------------------------
@@ -67,6 +72,11 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
         linetype = name
       )
     )
+  )
+  
+  vdiffr::expect_doppelganger(
+    title = "multiple sim - showLegendPerDataset",
+    fig = plotTimeProfile(manySimDC, showLegendPerDataset = TRUE)
   )
 })
 
@@ -100,6 +110,11 @@ test_that("It maps multiple observed and simulated datasets to different visual 
       observedMapping = ggplot2::aes(fill = name)
     )
   )
+  
+  vdiffr::expect_doppelganger(
+    title = "many obs sim - showLegendPerDataset",
+    fig = plotTimeProfile(manyObsSimDC, showLegendPerDataset = TRUE)
+  )
 })
 
 test_that("It applies yScale and yScaleArgs to multiple obs and sim datasets", {
@@ -110,6 +125,20 @@ test_that("It applies yScale and yScaleArgs to multiple obs and sim datasets", {
       manyObsSimDC,
       yScale = "log",
       yScaleArgs = list(limits = c(0.001, NA))
+    )
+  )
+})
+
+test_that("User-provided mappings override showLegendPerDataset", {
+  set.seed(123)
+  # User mapping should override internal showLegendPerDataset mapping
+  vdiffr::expect_doppelganger(
+    title = "user mapping overrides showLegendPerDataset",
+    fig = plotTimeProfile(
+      manyObsSimDC,
+      showLegendPerDataset = TRUE,
+      mapping = ggplot2::aes(color = name),
+      observedMapping = ggplot2::aes(color = name, fill = name)
     )
   )
 })
