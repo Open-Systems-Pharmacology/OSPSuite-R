@@ -83,7 +83,23 @@ test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults as Histograms",
-    fig = plotResidualsAsHistogram(myCombDat, residualScale = "linear")
+    fig = plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = 'none'
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "Histograms with parameters",
+    fig = plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = 'normal',
+      plotAsFrequency = TRUE,
+      geomHistAttributes = list(position = 'stack')
+    )
   )
 
   set.seed(123)

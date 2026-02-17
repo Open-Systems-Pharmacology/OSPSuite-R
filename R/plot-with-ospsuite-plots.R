@@ -310,6 +310,11 @@ plotResidualsVsCovariate <- function(
     )
   )
 
+  # add observed or predicted to x-Axis label
+  if (xAxis != "time") {
+    plotObject@labels['x'] <- paste0(plotObject@labels['x'], '\n', xAxis)
+  }
+
   return(plotObject)
 }
 
@@ -358,7 +363,8 @@ plotResidualsAsHistogram <- function(
         data = plotData,
         mapping = mapping,
         metaData = metaData,
-        residualScale = residualScale
+        residualScale = residualScale,
+        distribution = distribution
       ),
       additionalArgs
     )
