@@ -110,18 +110,20 @@ plotTimeProfile <- function(
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
 
   # Set internal mappings for showLegendPerDataset if enabled
-  # These will be overridden by user-provided mappings in .getMappingForTimeprofiles
+  # User-provided mappings will override these internal mappings
   internalMapping <- mapping
   internalObservedMapping <- observedMapping
   
   if (showLegendPerDataset) {
     # For simulated data, add linetype mapping to show individual datasets
+    # modifyList: user 'mapping' parameter overrides internal 'linetype = name'
     internalMapping <- structure(
       utils::modifyList(ggplot2::aes(linetype = name), mapping),
       class = "uneval"
     )
     
     # For observed data, add shape mapping to show individual datasets
+    # modifyList: user 'observedMapping' parameter overrides internal 'shape = name'
     internalObservedMapping <- structure(
       utils::modifyList(ggplot2::aes(shape = name), observedMapping),
       class = "uneval"
