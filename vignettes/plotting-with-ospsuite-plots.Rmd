@@ -183,6 +183,18 @@ plotTimeProfile(
 )
 ```
 
+For datasets with multiple observed or simulated results, you can display individual dataset names in the legend using the `showLegendPerDataset` parameter:
+
+```{r timeprofile-legend-per-dataset, eval=FALSE}
+# Show individual dataset names in legend
+plotTimeProfile(
+  myDataCombined,
+  showLegendPerDataset = TRUE
+)
+```
+
+This automatically adds different shapes for observed data and different line types for simulated data to distinguish between individual datasets in the legend.
+
 ## Predicted vs Observed Plots
 
 Beyond time profiles, you can assess model performance using goodness-of-fit plots. The `plotPredictedVsObserved()` function creates scatter plots comparing predicted (simulated) values to observed values. This helps assess model performance and identify systematic biases.
