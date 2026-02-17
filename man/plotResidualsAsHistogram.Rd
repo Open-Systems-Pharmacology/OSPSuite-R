@@ -67,8 +67,6 @@ plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
 }
 }
 \seealso{
-\code{\link[=plotResidualsVsCovariate]{plotResidualsVsCovariate()}}, \code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}}
-
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},

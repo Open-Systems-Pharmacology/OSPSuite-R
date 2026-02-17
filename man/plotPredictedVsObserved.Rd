@@ -76,9 +76,6 @@ plotPredictedVsObserved(myDataCombined, predictedAxis = "y")
 }
 }
 \seealso{
-\code{\link[=plotTimeProfile]{plotTimeProfile()}}, \code{\link[=plotResidualsVsCovariate]{plotResidualsVsCovariate()}},
-\code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}}
-
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotQuantileQuantilePlot}()},
 \code{\link{plotResidualsAsHistogram}()},

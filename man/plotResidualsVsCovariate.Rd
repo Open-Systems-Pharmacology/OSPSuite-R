@@ -104,9 +104,6 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 }
 }
 \seealso{
-\code{\link[=plotResidualsAsHistogram]{plotResidualsAsHistogram()}}, \code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}},
-\code{\link[=plotPredictedVsObserved]{plotPredictedVsObserved()}}
-
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},

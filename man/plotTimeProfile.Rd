@@ -111,8 +111,6 @@ plotTimeProfile(convertUnits(
 }
 }
 \seealso{
-\code{\link[=plotPredictedVsObserved]{plotPredictedVsObserved()}}, \code{\link[=plotResidualsVsCovariate]{plotResidualsVsCovariate()}}
-
 Other plot functions based on ospsuite.plots: 
 \code{\link{plotPredictedVsObserved}()},
 \code{\link{plotQuantileQuantilePlot}()},

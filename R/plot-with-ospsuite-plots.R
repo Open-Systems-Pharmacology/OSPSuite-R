@@ -67,7 +67,6 @@
 #' @return A `ggplot2` plot object representing the time profile.
 #' @export
 #' @family plot functions based on ospsuite.plots
-#' @seealso [plotPredictedVsObserved()], [plotResidualsVsCovariate()]
 #'
 #' @examples \dontrun{
 #' # Generate a time profile plot for the provided data
@@ -171,8 +170,6 @@ plotTimeProfile <- function(
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
-#' @seealso [plotTimeProfile()], [plotResidualsVsCovariate()],
-#'   [plotQuantileQuantilePlot()]
 #'
 #' @examples \dontrun{
 #' # Generate a predicted vs observed plot for the provided data
@@ -288,8 +285,6 @@ plotPredictedVsObserved <- function(
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
-#' @seealso [plotResidualsAsHistogram()], [plotQuantileQuantilePlot()],
-#'   [plotPredictedVsObserved()]
 #'
 #' @examples \dontrun{
 #' # Generate a residuals vs observed plot for the provided data
@@ -379,7 +374,6 @@ plotResidualsVsCovariate <- function(
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
-#' @seealso [plotResidualsVsCovariate()], [plotQuantileQuantilePlot()]
 #'
 #' @examples \dontrun{
 #' # Generate a histogram of residuals with default settings
@@ -450,8 +444,6 @@ plotResidualsAsHistogram <- function(
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
-#' @seealso [plotResidualsVsCovariate()], [plotResidualsAsHistogram()],
-#'   [plotPredictedVsObserved()]
 #'
 #' @examples \dontrun{
 #' # Generate a Q-Q plot with default settings
