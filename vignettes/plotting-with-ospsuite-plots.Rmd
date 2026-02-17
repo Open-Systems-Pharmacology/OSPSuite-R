@@ -46,8 +46,7 @@ Before creating plots with `ospsuite.plots`, it's important to initialize the pl
 2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = FALSE)` 
 
 ```{r setup-options}
-# library(ospsuite)
-devtools::load_all()
+library(ospsuite)
 
 # Set default plotting options for ospsuite.plots
 # Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity
@@ -180,7 +179,7 @@ You can customize the plot appearance using `ggplot2` aesthetic mappings.
 # Customize aesthetics
 plotTimeProfile(
   myDataCombined,
-  mapping = ggplot2::aes(linetype = dataType)
+  mapping = ggplot2::aes(color = dataType)
 )
 ```
 
