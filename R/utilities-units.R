@@ -774,6 +774,10 @@ ospUnits <- NULL
 
 #' Find the most common units
 #'
+#' This function retrieves the most frequently occurring unit from a specified
+#' column in a given dataset, prioritizing observed data types. If no observed
+#' units are available, it will return the most frequent simulated unit instead.
+#'
 #' @inheritParams .unitConverter
 #' @param unitColumn The name of the column containing units (e.g. `xUnit`).
 #'
@@ -787,6 +791,9 @@ ospUnits <- NULL
 #'   yUnit = c("", "%", "%"),
 #'   yErrorUnit = c("", "%", "%"),
 #'   yDimension = "Fraction",
+#'   dataType = c("observed", "observed", "simulated"),
+#'   group = "Group1",
+#'   name = "Dataset1",
 #'   molWeight = 10
 #' )
 #'
@@ -801,27 +808,29 @@ ospUnits <- NULL
   # - quoted (`unitColumn = "xUnit"`)
   unitColumn <- rlang::ensym(unitColumn)
 
-  # Create a new data frame with frequency for each unit
-  unitUsageFrequency <- data %>%
-    # The embrace operator (`{{`) captures the user input and evaluates it in
-    # the current data frame.
+  # Count per group and not per timepoint
+  # Select unique combinations of group, name, dataType, and unitColumn
+  uniqueData <- data %>%
+    dplyr::select(group, name, dataType, {{ unitColumn }}) %>%
+    dplyr::distinct()
+
+  # Filter for observed data first and get frequency
+  observedUnits <- uniqueData %>%
+    dplyr::filter(dataType == "observed") %>%
     dplyr::group_by({{ unitColumn }}) %>%
-    dplyr::tally(name = "unitFrequency")
+    dplyr::tally(name = "unitFrequency") %>%
+    dplyr::arrange(dplyr::desc(unitFrequency))
 
-  mostFrequentUnit <- unitUsageFrequency %>%
-    # Select only the row(s) with maximum frequency.
-    #
-    # In case of ties, there can be more than one row. In such cases, setting
-    # `with_ties = FALSE` make sure that only the first row (and the
-    # corresponding) unit will be selected.
-    #
-    # Do *not* select randomly as that would introduce randomness in plotting
-    # functions with each run of the plotting function defaulting to a different
-    # unit.
-    dplyr::slice_max(unitFrequency, n = 1L, with_ties = FALSE) %>%
-    # Remove the frequency column, which is not useful outside the context of
-    # this function.
-    dplyr::select(-unitFrequency)
+  # If no observed units, check simulated
+  if (nrow(observedUnits) == 0) {
+    simulatedUnits <- uniqueData %>%
+      dplyr::filter(dataType == "simulated") %>%
+      dplyr::group_by({{ unitColumn }}) %>%
+      dplyr::tally(name = "unitFrequency") %>%
+      dplyr::arrange(dplyr::desc(unitFrequency))
+    
+    return(simulatedUnits[[rlang::as_name(unitColumn)]][1])
+  }
 
-  return(mostFrequentUnit[[1]])
+  return(observedUnits[[rlang::as_name(unitColumn)]][1])
 }
