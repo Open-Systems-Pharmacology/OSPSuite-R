@@ -272,24 +272,21 @@ calculateResiduals <- function(
 
     pairedData$yValuesSimulated <- interpolatedYValues
 
-    # Residual computation will depend on the scaling.
-    if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity, "linear")) {
-      # Linear scale: Simulated - Observed
-      pairedData <- dplyr::mutate(
-        pairedData,
-        residualValues = yValuesSimulated - yValuesObserved
-      )
+    # Compute residuals using ospsuite.plots::computeResiduals to avoid code duplication
+    # Convert scaling parameter to match ospsuite.plots expectations
+    scalingParam <- if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity, "linear")) {
+      "linear"
     } else if (scaling %in% c("ratio")) {
-      # Ratio scale: Observed / Predicted
-      pairedData <- dplyr::mutate(
-        pairedData,
-        residualValues = yValuesObserved / yValuesSimulated
-      )
+      "ratio"
     } else {
-      # Log scale: log(Simulated / Observed) = log(Simulated) - log(Observed)
-      # Do NOT add epsilon - let log(0) produce NaN
-      pairedData$residualValues <- log(pairedData$yValuesSimulated) - log(pairedData$yValuesObserved)
+      "log"
     }
+    
+    pairedData$residualValues <- ospsuite.plots::computeResiduals(
+      observed = pairedData$yValuesObserved,
+      simulated = pairedData$yValuesSimulated,
+      scale = scalingParam
+    )
 
     # Store the result (before filtering)
     resultList[[i]] <- pairedData
