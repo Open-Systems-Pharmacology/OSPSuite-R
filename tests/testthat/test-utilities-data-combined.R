@@ -45,7 +45,8 @@ test_that("An empty dataCombined object passed to the calculateResiduals functio
 })
 
 test_that("calculateResiduals returns a data frame", {
-  expect_s3_class(calculateResiduals(myDC, scaling = "lin"), "data.frame")
+  result <- suppressWarnings(calculateResiduals(myDC, scaling = "lin"))
+  expect_s3_class(result, "data.frame")
 })
 
 test_that("calculateResiduals returns expected columns", {
@@ -67,9 +68,10 @@ test_that("calculateResiduals returns expected columns", {
     "residualValues"
   )
 
+  result <- suppressWarnings(calculateResiduals(myDC, scaling = "lin"))
   expect_setequal(
     expected_column_names,
-    colnames(calculateResiduals(myDC, scaling = "lin"))
+    colnames(result)
   )
 })
 
@@ -83,54 +85,52 @@ test_that("DataCombined objects keep LLOQ data passed from underlying DataSet ob
 
 test_that("calculateResiduals function keeps passes lloq data through", {
   expect_equal(
-    calculateResiduals(myDC, scaling = "lin")$lloq,
+    suppressWarnings(calculateResiduals(myDC, scaling = "lin")$lloq),
     rep(0.02, 6),
     tolerance = tolerance
   )
 })
 
-test_that("calculateResiduals does not return rows for data outside of the simulation time", {
+test_that("calculateResiduals does not return rows for data outside of the simulation time but throws a warning", {
+  expect_warning(
+    result <- calculateResiduals(myDC, scaling = "lin"),
+    'residual value set to NA'
+  )
   expect_equal(
-    nrow(calculateResiduals(myDC, scaling = "lin")),
+    nrow(result),
     6
   )
 })
 
 test_that("calculateResiduals returns a correct vector of linear residuals on example data", {
   expect_equal(
-    calculateResiduals(myDC, scaling = "lin")$residualValues,
+    suppressWarnings(calculateResiduals(myDC, scaling = "lin")$residualValues),
     c(0, 0.1000000, -0.0999999, 0.0, -0.1999998, -1),
     tolerance = 1e-5
   )
 })
 
 test_that("calculateResiduals returns a correct vector of log residuals on example data", {
-  # With the new implementation, log(0) produces NaN instead of using epsilon
-  # Expected behavior:
-  # - time=0: sim=0, obs=0 -> log(0)-log(0) = NaN (filtered out)
-  # - time=1: sim=2, obs=1.9 -> valid
-  # - time=3: sim=6, obs=6.1 -> valid
-  # - time=3.5: sim=7, obs=7 -> valid
-  # - time=4: sim=8, obs=8.2 -> valid
-  # - time=5: sim=0, obs=1 -> log(0)-log(1) = -Inf (filtered out)
-  
   # Should emit a warning about undefined residuals
   expect_warning(
-    pairedData <- calculateResiduals(myDC, scaling = "log"),
-    "1 point\\(s\\) with undefined log residuals.*1 point\\(s\\) with infinite residuals"
+    expect_warning(
+      pairedData <- calculateResiduals(myDC, scaling = "log"),
+      "NA values found in predicted or observed"
+    ),
+    "non-positive values found for log scaling"
   )
-  
+
   # Should have 4 rows instead of 6 (excluding NaN and Inf)
   expect_equal(nrow(pairedData), 4)
-  
+
   # Calculate expected residuals for the valid points
   expectedResiduals <- c(
-    log(2) - log(1.9),      # time=1
-    log(6) - log(6.1),      # time=3
-    log(7) - log(7),        # time=3.5
-    log(8) - log(8.2)       # time=4
+    log(2) - log(1.9), # time=1
+    log(6) - log(6.1), # time=3
+    log(7) - log(7), # time=3.5
+    log(8) - log(8.2) # time=4
   )
-  
+
   expect_equal(
     pairedData$residualValues,
     expectedResiduals,
@@ -140,27 +140,29 @@ test_that("calculateResiduals returns a correct vector of log residuals on examp
 
 test_that("calculateResiduals supports ratio scale", {
   # Ratio scale: observed / simulated
-  pairedData <- calculateResiduals(myDC, scaling = "ratio")
-  
+  expect_warning(
+    expect_warning(
+      pairedData <- calculateResiduals(myDC, scaling = "ratio"),
+      'zero observed values found for ratio scaling'
+    ),
+    'NA values found in predicted or observed'
+  )
+
   # Should have 6 rows (ratio doesn't produce NaN/Inf for zero values the same way)
   # But division by zero would produce Inf, which is filtered
   # time=0: obs=0, sim=0 -> 0/0 = NaN (filtered)
   # time=5: obs=1, sim=0 -> 1/0 = Inf (filtered)
-  
-  expect_warning(
-    pairedData <- calculateResiduals(myDC, scaling = "ratio"),
-    "undefined.*residuals"
-  )
-  
-  expect_equal(nrow(pairedData), 4)
-  
+
+  expect_equal(nrow(pairedData), 5)
+
   expectedRatios <- c(
-    1.9 / 2,      # time=1
-    6.1 / 6,      # time=3
-    7 / 7,        # time=3.5
-    8.2 / 8       # time=4
+    2 / 1.9, # time=1
+    6 / 6.1, # time=3
+    7 / 7, # time=3.5
+    8 / 8.2, # time=4
+    0 / 1 # time=5
   )
-  
+
   expect_equal(
     pairedData$residualValues,
     expectedRatios,
@@ -206,7 +208,10 @@ test_that("calculateResiduals handles single-point observed and simulated
     dataTypes = c("observed", "simulated")
   )
 
-  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+  residuals <- suppressWarnings(calculateResiduals(
+    myDC,
+    scaling = tlf::Scaling$lin
+  ))
 
   expect_equal(residuals$residualValues, 0, tolerance = 1e-5)
 })
@@ -226,7 +231,10 @@ test_that("calculateResiduals drops points when simulated dataset contains a
     dataTypes = c("observed", "simulated")
   )
 
-  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+  residuals <- suppressWarnings(calculateResiduals(
+    myDC,
+    scaling = tlf::Scaling$lin
+  ))
 
   expect_equal(nrow(residuals), 0)
 })

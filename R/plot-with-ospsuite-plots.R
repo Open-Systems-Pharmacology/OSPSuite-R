@@ -28,7 +28,7 @@
 #'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
 #' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
 #'   error bounds directly in `yMin` and `yMax` columns.
-#' 
+#'
 #' @param plotData An object of class `DataCombined` or a `data.table`. If a
 #'   `data.table`, it must include the following:
 #'   - `xValues`: Numeric time points.
@@ -272,7 +272,7 @@ plotPredictedVsObserved <- function(
 #'   prediction error.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
@@ -369,7 +369,7 @@ plotResidualsVsCovariate <- function(
 #' representation of their distribution.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
@@ -441,7 +441,7 @@ plotResidualsAsHistogram <- function(
 #' using a Q-Q plot.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
@@ -508,7 +508,7 @@ plotQuantileQuantilePlot <- function(
 #' observed and simulated data.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param predictedIsNeeded If TRUE, predicted values are calculated if not
 #'   already present in the data. If FALSE, predicted values are not calculated
 #'   and only data validation and aggregation are performed.
@@ -892,8 +892,8 @@ plotQuantileQuantilePlot <- function(
 #' @param scaling A character specifying the scale for residual calculation:
 #'   - `"linear"`: Linear residuals (Simulated - Observed)
 #'   - `"log"`: Logarithmic residuals (log(Simulated) - log(Observed))
-#'   - `"ratio"`: Ratio residuals (Observed / Simulated)
-#'   
+#'   - `"ratio"`: Ratio residuals (Simulated / Observed)
+#'
 #'   See `calculateResiduals()` for detailed descriptions of each scale.
 #'
 #' @return A data.table containing the residuals for each group, along with the

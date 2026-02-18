@@ -68,8 +68,9 @@ messages$simBatchStartValueNaN <- function(entityPaths) {
 }
 
 messages$plotObservedVsSimulatedWrongFoldDistance <- function(
-    parameterName,
-    foldDistances) {
+  parameterName,
+  foldDistances
+) {
   paste0(
     "Parameter '",
     parameterName,
@@ -176,20 +177,5 @@ messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
     paste(unique(errorTypes), collapse = "', '"),
     "' must be provided in 'yMin' and 'yMax' columns. ",
     "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
-  )
-}
-
-messages$undefinedResidualsWarning <- function(nanCount, infCount) {
-  warningParts <- c()
-  if (nanCount > 0) {
-    warningParts <- c(warningParts, sprintf("%d point(s) with undefined log residuals (NaN, likely from log(0))", nanCount))
-  }
-  if (infCount > 0) {
-    warningParts <- c(warningParts, sprintf("%d point(s) with infinite residuals", infCount))
-  }
-  
-  sprintf(
-    "Residual calculation resulted in %s. These points will be excluded from the results.",
-    paste(warningParts, collapse = " and ")
   )
 }

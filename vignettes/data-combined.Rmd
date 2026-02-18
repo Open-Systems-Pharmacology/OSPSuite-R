@@ -296,17 +296,17 @@ For **logarithmic scaling** (`scaling = tlf::Scaling$log` or `"log"`):
 
 For **ratio scaling** (`scaling = "ratio"`):
 
-> Residuals are calculated as: Observed value / Simulated value. Values around 1.0 indicate good model fit, values > 1.0 indicate the model under-predicts, and values < 1.0 indicate the model over-predicts.
+> Residuals are calculated as: Simulated value / Observed value. Values around 1.0 indicate good model fit, values < 1.0 indicate the model under-predicts, and values > 1.0 indicate the model over-predicts.
 > 
-> **Note:** Division by zero (when simulated value is 0) produces Inf. These points will be automatically excluded from the results, and a warning will be issued.
+> **Note:** Division by zero (when observed value is 0) produces Inf. These points will be automatically excluded from the results, and a warning will be issued.
 
 
 ```{r}
 # Linear residuals
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues
+calculateResiduals(myDataCombined, scaling = ospsuite.plots::ResidualScales$linear)$residualValues
 
 # Logarithmic residuals
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
+calculateResiduals(myDataCombined, scaling = ospsuite.plots::ResidualScales$log)$residualValues
 ```
 
 To quickly calculate the total error of the `DataCombined`, one can sum up the 
@@ -314,7 +314,7 @@ absolute values of the residuals:
 
 ```{r}
 # Linear residuals
-totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
+totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = ospsuite.plots::ResidualScales$linear)$residualValues))
 
 print(totalError)
 ```
