@@ -281,14 +281,24 @@ results interpolated if no simulated value is available for a certain observed
 time point. Observed data beyond simulated time is ignored, i.e., no *extrapolation* 
 is performed.
 
-There are two ways to calculate the distance (residuals) - linear and logarithmic - 
-specified by the `scaling` argument. For linear scaling (`scaling = tlf::Scaling$lin`):
+There are three ways to calculate the distance (residuals) - linear, logarithmic, and ratio - 
+specified by the `scaling` argument. 
 
-> Residuals are calculated as: Simulation value - Observed value. This means that the residuals are defined by absolute differences.
+For **linear scaling** (`scaling = tlf::Scaling$lin` or `"linear"`):
 
-For logarithmic scaling (`scaling = tlf::Scaling$log`):
+> Residuals are calculated as: Simulated value - Observed value. This means that the residuals are defined by absolute differences.
 
-> Residuals are calculated as: log(Simulation value) - log(Observed value) = log (Simulation Value / Observed Value). This means that the ratio of values is considered which is independent of the magnitude of the value. But for very small observed values, in particular close to 0 values, this can lead to problems, because log(10E-N) = -N can becomes large.
+For **logarithmic scaling** (`scaling = tlf::Scaling$log` or `"log"`):
+
+> Residuals are calculated as: log(Simulated value) - log(Observed value) = log(Simulated value / Observed value). This means that the ratio of values is considered which is independent of the magnitude of the value. 
+> 
+> **Note:** For zero values, log(0) produces NaN (not a number). These points will be automatically excluded from the results, and a warning will be issued indicating how many points were affected.
+
+For **ratio scaling** (`scaling = "ratio"`):
+
+> Residuals are calculated as: Observed value / Simulated value. Values around 1.0 indicate good model fit, values > 1.0 indicate the model under-predicts, and values < 1.0 indicate the model over-predicts.
+> 
+> **Note:** Division by zero (when simulated value is 0) produces Inf. These points will be automatically excluded from the results, and a warning will be issued.
 
 
 ```{r}
