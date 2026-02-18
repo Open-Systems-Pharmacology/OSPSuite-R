@@ -889,7 +889,12 @@ plotQuantileQuantilePlot <- function(
 #'
 #' @param plotData A data.table containing observed and simulated datasets,
 #'   along with a grouping variable.
-#' @param scaling A character specifying scale: "linear", "log" (logarithmic), or "ratio".
+#' @param scaling A character specifying the scale for residual calculation:
+#'   - `"linear"`: Linear residuals (Simulated - Observed)
+#'   - `"log"`: Logarithmic residuals (log(Simulated) - log(Observed))
+#'   - `"ratio"`: Ratio residuals (Observed / Simulated)
+#'   
+#'   See `calculateResiduals()` for detailed descriptions of each scale.
 #'
 #' @return A data.table containing the residuals for each group, along with the
 #'   relevant identifiers. Returns NULL if no pairable datasets are found.

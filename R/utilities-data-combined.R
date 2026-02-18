@@ -308,8 +308,7 @@ calculateResiduals <- function(
     }
   }
   
-  # Filter out NA residuals (including NaN and Inf, since is.na(NaN) and is.na(Inf) are both TRUE in R... wait, is.na(Inf) is FALSE!)
-  # We need to filter out both NA and NaN and Inf
+  # Filter out invalid residuals: NA (from extrapolation), NaN (from log(0)), and Inf (from division by zero)
   pairedData <- dplyr::filter(pairedData, !is.na(residualValues) & is.finite(residualValues))
   
   return(pairedData)
