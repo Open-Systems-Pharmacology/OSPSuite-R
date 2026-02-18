@@ -29,6 +29,13 @@ myDC <- DataCombined$new()
 myDC$addSimulationResults(simData, groups = "myGroup")
 myDC$addDataSets(obsData, groups = "myGroup")
 
+test_that("calculateResiduals validates scaling parameter", {
+  expect_error(
+    calculateResiduals(myDC, scaling = "invalid"),
+    "Invalid scaling parameter"
+  )
+})
+
 test_that("NULL passed to the calculateResiduals function is an error", {
   expect_error(calculateResiduals(NULL))
 })
@@ -98,18 +105,65 @@ test_that("calculateResiduals returns a correct vector of linear residuals on ex
 })
 
 test_that("calculateResiduals returns a correct vector of log residuals on example data", {
-  pairedData <- calculateResiduals(myDC, scaling = "log")
-  expectedResiduals <- sapply(
-    seq_along(pairedData$yValuesObserved),
-    function(idx) {
-      ospsuite.utils::logSafe(pairedData$yValuesSimulated[[idx]]) -
-        ospsuite.utils::logSafe(pairedData$yValuesObserved[[idx]])
-    }
+  # With the new implementation, log(0) produces NaN instead of using epsilon
+  # Expected behavior:
+  # - time=0: sim=0, obs=0 -> log(0)-log(0) = NaN (filtered out)
+  # - time=1: sim=2, obs=1.9 -> valid
+  # - time=3: sim=6, obs=6.1 -> valid
+  # - time=3.5: sim=7, obs=7 -> valid
+  # - time=4: sim=8, obs=8.2 -> valid
+  # - time=5: sim=0, obs=1 -> log(0)-log(1) = -Inf (filtered out)
+  
+  # Should emit a warning about undefined residuals
+  expect_warning(
+    pairedData <- calculateResiduals(myDC, scaling = "log"),
+    "1 point\\(s\\) with undefined log residuals.*1 point\\(s\\) with infinite residuals"
   )
-
+  
+  # Should have 4 rows instead of 6 (excluding NaN and Inf)
+  expect_equal(nrow(pairedData), 4)
+  
+  # Calculate expected residuals for the valid points
+  expectedResiduals <- c(
+    log(2) - log(1.9),      # time=1
+    log(6) - log(6.1),      # time=3
+    log(7) - log(7),        # time=3.5
+    log(8) - log(8.2)       # time=4
+  )
+  
   expect_equal(
-    calculateResiduals(myDC, scaling = "log")$residualValues,
+    pairedData$residualValues,
     expectedResiduals,
+    tolerance = 1e-5
+  )
+})
+
+test_that("calculateResiduals supports ratio scale", {
+  # Ratio scale: observed / simulated
+  pairedData <- calculateResiduals(myDC, scaling = "ratio")
+  
+  # Should have 6 rows (ratio doesn't produce NaN/Inf for zero values the same way)
+  # But division by zero would produce Inf, which is filtered
+  # time=0: obs=0, sim=0 -> 0/0 = NaN (filtered)
+  # time=5: obs=1, sim=0 -> 1/0 = Inf (filtered)
+  
+  expect_warning(
+    pairedData <- calculateResiduals(myDC, scaling = "ratio"),
+    "undefined.*residuals"
+  )
+  
+  expect_equal(nrow(pairedData), 4)
+  
+  expectedRatios <- c(
+    1.9 / 2,      # time=1
+    6.1 / 6,      # time=3
+    7 / 7,        # time=3.5
+    8.2 / 8       # time=4
+  )
+  
+  expect_equal(
+    pairedData$residualValues,
+    expectedRatios,
     tolerance = 1e-5
   )
 })

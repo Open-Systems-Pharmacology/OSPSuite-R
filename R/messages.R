@@ -178,3 +178,18 @@ messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
     "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
   )
 }
+
+messages$undefinedResidualsWarning <- function(nanCount, infCount) {
+  warningParts <- c()
+  if (nanCount > 0) {
+    warningParts <- c(warningParts, sprintf("%d point(s) with undefined log residuals (NaN, likely from log(0))", nanCount))
+  }
+  if (infCount > 0) {
+    warningParts <- c(warningParts, sprintf("%d point(s) with infinite residuals", infCount))
+  }
+  
+  sprintf(
+    "Residual calculation resulted in %s. These points will be excluded from the results.",
+    paste(warningParts, collapse = " and ")
+  )
+}

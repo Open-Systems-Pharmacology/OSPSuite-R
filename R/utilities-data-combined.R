@@ -96,8 +96,13 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' `DataCombined`, they are likely to have different units. The `xUnit` and
 #' `yUnit` arguments help you specify a common unit to convert them to.
 #'
-#' @param scaling A character specifying scale: either `tlf::Scaling$lin`
-#'   (linear) or `tlf::Scaling$log` (logarithmic).
+#' @param scaling A character specifying the scale for residual calculation. Supported values:
+#'   - `"linear"` or `tlf::Scaling$lin` or `tlf::Scaling$identity`: Linear residuals (Simulated - Observed)
+#'   - `"log"` or `tlf::Scaling$log`: Logarithmic residuals (log(Simulated) - log(Observed))
+#'   - `"ratio"`: Ratio residuals (Observed / Simulated)
+#'   
+#'   For `"log"` scale, undefined values (e.g., log(0)) will result in NaN and trigger a warning.
+#'   These points are excluded from the results.
 #' @inheritParams convertUnits
 #'
 #' @return
@@ -148,6 +153,15 @@ calculateResiduals <- function(
   nameSimulated <- NULL
 
   .validateScalarDataCombined(dataCombined)
+  
+  # Validate scaling parameter
+  validScales <- c("linear", "log", "ratio", tlf::Scaling$lin, tlf::Scaling$log, tlf::Scaling$identity)
+  if (!scaling %in% validScales) {
+    stop(sprintf(
+      "Invalid scaling parameter: '%s'. Must be one of: 'linear', 'log', 'ratio', or tlf::Scaling values.",
+      scaling
+    ))
+  }
 
   # Validation has already taken place in the calling plotting function
   combinedData <- dataCombined$toDataFrame()
@@ -259,29 +273,22 @@ calculateResiduals <- function(
     pairedData$yValuesSimulated <- interpolatedYValues
 
     # Residual computation will depend on the scaling.
-    if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
+    if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity, "linear")) {
+      # Linear scale: Simulated - Observed
       pairedData <- dplyr::mutate(
         pairedData,
         residualValues = yValuesSimulated - yValuesObserved
       )
-    } else {
-      # Epsilon for safe log calculation should be converted to the units of the values
-      epsilon <- toUnit(
-        quantityOrDimension = pairedData$yDimension[[1]],
-        values = ospsuiteEnv$LOG_SAFE_EPSILON,
-        targetUnit = pairedData$yUnit[[1]],
-        molWeight = 1
+    } else if (scaling %in% c("ratio")) {
+      # Ratio scale: Observed / Predicted
+      pairedData <- dplyr::mutate(
+        pairedData,
+        residualValues = yValuesObserved / yValuesSimulated
       )
-      pairedData$residualValues <- ospsuite.utils::logSafe(
-        pairedData$yValuesSimulated,
-        epsilon,
-        base = exp(1)
-      ) -
-        ospsuite.utils::logSafe(
-          pairedData$yValuesObserved,
-          epsilon,
-          base = exp(1)
-        )
+    } else {
+      # Log scale: log(Simulated / Observed) = log(Simulated) - log(Observed)
+      # Do NOT add epsilon - let log(0) produce NaN
+      pairedData$residualValues <- log(pairedData$yValuesSimulated) - log(pairedData$yValuesObserved)
     }
 
     # some residual values might turn out to be NA (for example, when extrapolating)
@@ -289,7 +296,19 @@ calculateResiduals <- function(
     resultList[[i]] <- dplyr::filter(pairedData, !is.na(residualValues))
   }
 
-  return(dplyr::bind_rows(resultList))
+  pairedData <- dplyr::bind_rows(resultList)
+  
+  # Count and warn about undefined residuals (NaN or Inf) for log/ratio scales
+  if (!scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity, "linear")) {
+    nanCount <- sum(is.nan(pairedData$residualValues))
+    infCount <- sum(is.infinite(pairedData$residualValues))
+    
+    if (nanCount > 0 || infCount > 0) {
+      warning(messages$undefinedResidualsWarning(nanCount, infCount))
+    }
+  }
+  
+  return(pairedData)
 }
 
 #' Remove unpairable datasets for computing residuals

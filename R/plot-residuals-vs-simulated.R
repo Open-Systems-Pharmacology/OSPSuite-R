@@ -2,7 +2,7 @@
 #'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotResVsPred
-#' @param scaling A character of length one specifying the scale type for residual. can be lin or log.
+#' @param scaling A character of length one specifying the scale type for residual. Can be "lin", "log", or "ratio".
 #'
 #' @import tlf
 #'
@@ -57,7 +57,7 @@ plotResidualsVsSimulated <- function(
 ) {
   # validation -----------------------------
 
-  rlang::arg_match(scaling, values = c("lin", "log"))
+  rlang::arg_match(scaling, values = c("lin", "log", "ratio"))
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(
     defaultPlotConfiguration

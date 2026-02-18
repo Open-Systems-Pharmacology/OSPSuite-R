@@ -889,8 +889,7 @@ plotQuantileQuantilePlot <- function(
 #'
 #' @param plotData A data.table containing observed and simulated datasets,
 #'   along with a grouping variable.
-#' @param scaling A character specifying scale: either `lin` (linear) or `log`
-#'   (logarithmic).
+#' @param scaling A character specifying scale: "linear", "log" (logarithmic), or "ratio".
 #'
 #' @return A data.table containing the residuals for each group, along with the
 #'   relevant identifiers. Returns NULL if no pairable datasets are found.
