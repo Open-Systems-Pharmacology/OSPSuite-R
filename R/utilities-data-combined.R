@@ -291,11 +291,11 @@ calculateResiduals <- function(
       pairedData$residualValues <- log(pairedData$yValuesSimulated) - log(pairedData$yValuesObserved)
     }
 
-    # some residual values might turn out to be NA (for example, when extrapolating)
-    # they are not returned in the output tibble
-    resultList[[i]] <- dplyr::filter(pairedData, !is.na(residualValues))
+    # Store the result (before filtering)
+    resultList[[i]] <- pairedData
   }
 
+  # Combine all results
   pairedData <- dplyr::bind_rows(resultList)
   
   # Count and warn about undefined residuals (NaN or Inf) for log/ratio scales
@@ -307,6 +307,10 @@ calculateResiduals <- function(
       warning(messages$undefinedResidualsWarning(nanCount, infCount))
     }
   }
+  
+  # Filter out NA residuals (including NaN and Inf, since is.na(NaN) and is.na(Inf) are both TRUE in R... wait, is.na(Inf) is FALSE!)
+  # We need to filter out both NA and NaN and Inf
+  pairedData <- dplyr::filter(pairedData, !is.na(residualValues) & is.finite(residualValues))
   
   return(pairedData)
 }
