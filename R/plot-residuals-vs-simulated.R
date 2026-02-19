@@ -53,6 +53,8 @@
 plotResidualsVsSimulated <- function(
   dataCombined,
   defaultPlotConfiguration = NULL,
+  xUnit = NULL,
+  yUnit = NULL,
   scaling = "lin"
 ) {
   # validation -----------------------------
@@ -62,6 +64,9 @@ plotResidualsVsSimulated <- function(
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(
     defaultPlotConfiguration
   )
+
+  if (!is.null(xUnit)) defaultPlotConfiguration$xUnit <- xUnit
+  if (!is.null(yUnit)) defaultPlotConfiguration$yUnit <- yUnit
 
   .validateDataCombinedForPlotting(dataCombined)
   if (is.null(dataCombined$groupMap)) {
