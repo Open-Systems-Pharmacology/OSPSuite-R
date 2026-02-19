@@ -162,3 +162,41 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
       )
   )
 })
+
+# xUnit / yUnit direct parameters ----
+
+test_that("It converts x-axis units when xUnit is provided", {
+  # Default: x in h; override to "min"
+  plotDefault <- plotTimeProfile(oneObsDC)
+  plotMinutes <- plotTimeProfile(oneObsDC, xUnit = "min")
+
+  # The x-axis label should contain "min" when xUnit = "min"
+  expect_true(
+    grepl("min", plotMinutes$labels$x, fixed = TRUE),
+    info = "x-axis label should contain 'min' when xUnit = 'min'"
+  )
+  # The default plot's x-axis label should not contain "min"
+  expect_false(
+    grepl("min", plotDefault$labels$x, fixed = TRUE),
+    info = "default x-axis label should not contain 'min'"
+  )
+})
+
+test_that("It converts y-axis units when yUnit is provided", {
+  # Default: y in µmol/l (molar concentration); override to µg/l
+  plotDefault <- plotTimeProfile(oneObsDC)
+  plotMicrog <- plotTimeProfile(oneObsDC, yUnit = "µg/l")
+
+  expect_true(
+    grepl("µg/l", plotMicrog$labels$y, fixed = TRUE),
+    info = "y-axis label should contain 'µg/l' when yUnit = 'µg/l'"
+  )
+})
+
+test_that("It produces the same result as pre-converting with convertUnits", {
+  # Passing units directly should be equivalent to calling convertUnits first
+  plotDirect <- plotTimeProfile(oneObsSimDC, xUnit = "min")
+  plotPreConverted <- plotTimeProfile(convertUnits(oneObsSimDC, xUnit = "min"))
+
+  expect_equal(plotDirect$data, plotPreConverted$data)
+})

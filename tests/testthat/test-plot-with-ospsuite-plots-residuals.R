@@ -201,3 +201,34 @@ test_that("works with data.frame input", {
     )
   )
 })
+
+# xUnit / yUnit direct parameters ----
+
+test_that("plotResidualsVsCovariate converts units when xUnit is provided", {
+  plotMin <- plotResidualsVsCovariate(myCombDat, residualScale = "linear",
+    xAxis = "time", xUnit = "min")
+  plotH <- plotResidualsVsCovariate(myCombDat, residualScale = "linear",
+    xAxis = "time")
+
+  expect_true(
+    grepl("min", plotMin$labels$x, fixed = TRUE),
+    info = "x-axis label should contain 'min' when xUnit = 'min'"
+  )
+  expect_false(
+    grepl("min", plotH$labels$x, fixed = TRUE),
+    info = "default x-axis label should not contain 'min'"
+  )
+})
+
+test_that("plotResidualsAsHistogram runs without error when xUnit is provided", {
+  expect_no_error(
+    plotResidualsAsHistogram(myCombDat, residualScale = "linear",
+      distribution = "none", xUnit = "min")
+  )
+})
+
+test_that("plotQuantileQuantilePlot runs without error when xUnit is provided", {
+  expect_no_error(
+    plotQuantileQuantilePlot(myCombDat, residualScale = "linear", xUnit = "min")
+  )
+})
