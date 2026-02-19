@@ -43,16 +43,11 @@
 plotPopulationTimeProfile <- function(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  xUnit = NULL,
-  yUnit = NULL,
   aggregation = "quantiles",
   quantiles = c(0.05, 0.5, 0.95),
   showLegendPerDataset = FALSE,
   ...
 ) {
-  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
-  if (!is.null(xUnit)) defaultPlotConfiguration$xUnit <- xUnit
-  if (!is.null(yUnit)) defaultPlotConfiguration$yUnit <- yUnit
   .plotTimeProfile(
     dataCombined,
     defaultPlotConfiguration,

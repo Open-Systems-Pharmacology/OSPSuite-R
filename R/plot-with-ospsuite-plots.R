@@ -62,6 +62,15 @@
 #' @param nsd Optional parameter specifying the number of standard deviations to
 #'   plot above and below the mean (used for error bars when aggregation is
 #'   "arithmetic" or "geometric"). Ignored if `aggregation` is  `quantiles`.
+#' @param xUnit A character string specifying the target unit for the x-axis.
+#'   If `NULL` (default), the most frequent unit in the data is used. For
+#'   available units, see `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the primary
+#'   y-axis. If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
+#' @param y2Unit A character string specifying the target unit for the secondary
+#'   y-axis (only applicable when data contains two y-dimensions). If `NULL`
+#'   (default), the most frequent unit in the data is used.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
 #'
 #' @return A `ggplot2` plot object representing the time profile.
@@ -70,17 +79,19 @@
 #'
 #' @examples \dontrun{
 #' # Generate a time profile plot for the provided data
-#' plotTimeProfile(convertUnits(
-#'   myDataCombined,
+#' plotTimeProfile(myDataCombined,
 #'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`
-#' ))
+#' )
 #' }
 plotTimeProfile <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
   observedMapping = mapping,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL,
   aggregation = "quantiles",
   quantiles = ospsuite.plots::getOspsuite.plots.option(
     ospsuite.plots::OptionKeys$Percentiles
@@ -89,11 +100,14 @@ plotTimeProfile <- function(
   ...
 ) {
   # initialize variables used for data.table to avoid messages during checks
-  yDimension <- yUnit <- dataType <- NULL
+  yDimension <- dataType <- NULL
 
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = FALSE,
+    xUnit = xUnit,
+    yUnit = yUnit,
+    y2Unit = y2Unit,
     aggregation = aggregation,
     quantiles = quantiles,
     nsd = nsd
@@ -111,8 +125,9 @@ plotTimeProfile <- function(
     if (!("yDimension" %in% names(plotData))) {
       plotData[, yDimension := ""]
       for (yUnitLoop in unique(plotData$yUnit)) {
+        # `yUnit` here refers to the column in plotData (data.table column scoping)
         plotData[
-          yUnitLoop == yUnit,
+          yUnit == yUnitLoop,
           yDimension := ospsuite::getDimensionForUnit(yUnitLoop)
         ]
       }
@@ -182,6 +197,8 @@ plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
@@ -194,6 +211,8 @@ plotPredictedVsObserved <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    xUnit = xUnit,
+    yUnit = yUnit,
     scaling = xyScale
   )
 
@@ -304,6 +323,8 @@ plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
   ...
@@ -316,6 +337,8 @@ plotResidualsVsCovariate <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    xUnit = xUnit,
+    yUnit = yUnit,
     scaling = residualScale
   )
 
@@ -391,6 +414,8 @@ plotResidualsAsHistogram <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   distribution = "normal",
   residualScale = "log",
   ...
@@ -398,6 +423,8 @@ plotResidualsAsHistogram <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    xUnit = xUnit,
+    yUnit = yUnit,
     scaling = residualScale
   )
 
@@ -462,12 +489,16 @@ plotQuantileQuantilePlot <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   residualScale = "log",
   ...
 ) {
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    xUnit = xUnit,
+    yUnit = yUnit,
     scaling = residualScale
   )
 
@@ -522,6 +553,9 @@ plotQuantileQuantilePlot <- function(
   plotData,
   predictedIsNeeded,
   scaling = NULL,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL,
   aggregation = NULL,
   quantiles = NULL,
   nsd = 1
@@ -546,7 +580,11 @@ plotQuantileQuantilePlot <- function(
   }
 
   if (predictedIsNeeded & !('predicted' %in% names(plotData))) {
-    plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
+    plotData <- .convertUnitsForPlot(plotData,
+      maxAllowedYDimensions = 1,
+      xUnit = xUnit,
+      yUnit = yUnit
+    )
 
     plotData <- .calculateResidualsForPlot(
       plotData = plotData,
@@ -563,7 +601,12 @@ plotQuantileQuantilePlot <- function(
       ) |>
       dplyr::mutate(dataType = "observed")
   } else {
-    plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 2)
+    plotData <- .convertUnitsForPlot(plotData,
+      maxAllowedYDimensions = 2,
+      xUnit = xUnit,
+      yUnit = yUnit,
+      y2Unit = y2Unit
+    )
   }
 
   # check for inconsistent error types
@@ -659,6 +702,12 @@ plotQuantileQuantilePlot <- function(
 #' @param maxAllowedYDimensions An integer indicating the maximum number of
 #'   y-dimensions allowed in the plot. If more than this number is found, an
 #'   error is raised.
+#' @param xUnit A character string specifying the target x-axis unit. If NULL,
+#'   the most frequent unit in the data is used.
+#' @param yUnit A character string specifying the target unit for the primary
+#'   y-axis. If NULL, the most frequent unit in the data is used.
+#' @param y2Unit A character string specifying the target unit for the secondary
+#'   y-axis. If NULL, the most frequent unit in the data is used.
 #'
 #' @return A data.table containing the converted units and merged dimensions,
 #'   ordered with concentration dimensions at the top (for primary y-axis
@@ -666,8 +715,8 @@ plotQuantileQuantilePlot <- function(
 #'
 #' @keywords internal
 #' @noRd
-.convertUnitsForPlot <- function(plotData, maxAllowedYDimensions) {
-  xUnit <- yUnit <- yDimension <- NULL
+.convertUnitsForPlot <- function(plotData, maxAllowedYDimensions, xUnit = NULL, yUnit = NULL, y2Unit = NULL) {
+  yDimension <- NULL
 
   validateIsOfType(plotData, "data.frame", FALSE)
   if (nrow(plotData) == 0) {
@@ -676,7 +725,7 @@ plotQuantileQuantilePlot <- function(
   plotData <- setDT(plotData)
   validateIsInteger(maxAllowedYDimensions, FALSE)
 
-  xUnitStr <- .getMostFrequentUnit(plotData, "xUnit")
+  xUnitStr <- xUnit %||% .getMostFrequentUnit(plotData, "xUnit")
 
   plotDataByDimensions <- split(plotData, by = "yDimension")
   dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
@@ -694,9 +743,22 @@ plotQuantileQuantilePlot <- function(
     stop(messages$plotTooManyYDimension(unique(plotData$yDimension)))
   }
 
+  # Determine ordered dimension names (concentration first) to map user units.
+  # `yUnit` maps to index 1 (primary axis) and `y2Unit` to index 2 (secondary axis).
+  # `dimIdx` will always be non-NA since `orderedDimNames` is derived from
+  # `names(plotDataByDimensions)`, i.e. the same set of names iterated below.
+  orderedDimNames <- c(
+    names(plotDataByDimensions)[names(plotDataByDimensions) %in% dimensionsToMerge],
+    names(plotDataByDimensions)[!names(plotDataByDimensions) %in% dimensionsToMerge]
+  )
+  userYUnits <- list(yUnit, y2Unit)
+
   # Convert units for each dimension
-  convertedData <- lapply(plotDataByDimensions, function(dt) {
-    yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
+  convertedData <- lapply(names(plotDataByDimensions), function(dimName) {
+    dt <- plotDataByDimensions[[dimName]]
+    dimIdx <- match(dimName, orderedDimNames)
+    override <- userYUnits[[dimIdx]]
+    yUnitStr <- override %||% .getMostFrequentUnit(dt, "yUnit")
     if ('yErrorType' %in% names(dt) && uniqueN(dt$yErrorType) > 1) {
       dt <- rbindlist(lapply(split(dt, by = 'yErrorType'), function(dtSplit) {
         .unitConverter(data = dtSplit, xUnit = xUnitStr, yUnit = yUnitStr)
@@ -708,6 +770,7 @@ plotQuantileQuantilePlot <- function(
     dt[, yDimension := ospsuite::getDimensionForUnit(yUnitStr)]
     return(dt)
   })
+  names(convertedData) <- names(plotDataByDimensions)
 
   # Order the list to have Concentration at the top,
   # that ensures it will be displayed on the primary axis at the timeprofile plots

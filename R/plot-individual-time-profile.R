@@ -3,10 +3,6 @@
 #' @inheritParams calculateResiduals
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
 #'   an `R6` class object that defines plot properties.
-#' @param xUnit,yUnit Units for quantities plotted on x- and y-axes,
-#'   respectively. If provided, these override any units set in
-#'   `defaultPlotConfiguration`. For available dimensions and units, see
-#'   `ospsuite::ospDimensions` and `ospsuite::ospUnits`, respectively.
 #' @param showLegendPerDataset Logical flag to display separate legend entries
 #' for observed and simulated datasets, if available. This is experimental and
 #' may not work reliably when both observed and simulated datasets > 1. Defaults
@@ -57,13 +53,8 @@
 plotIndividualTimeProfile <- function(
   dataCombined,
   defaultPlotConfiguration = NULL,
-  xUnit = NULL,
-  yUnit = NULL,
   showLegendPerDataset = FALSE
 ) {
-  defaultPlotConfiguration <- .validateDefaultPlotConfiguration(defaultPlotConfiguration)
-  if (!is.null(xUnit)) defaultPlotConfiguration$xUnit <- xUnit
-  if (!is.null(yUnit)) defaultPlotConfiguration$yUnit <- yUnit
   .plotTimeProfile(dataCombined, defaultPlotConfiguration, showLegendPerDataset)
 }
 
