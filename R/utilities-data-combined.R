@@ -96,8 +96,13 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' `DataCombined`, they are likely to have different units. The `xUnit` and
 #' `yUnit` arguments help you specify a common unit to convert them to.
 #'
-#' @param scaling A character specifying scale: either `tlf::Scaling$lin`
-#'   (linear) or `tlf::Scaling$log` (logarithmic).
+#' @param scaling A character specifying the scale for residual calculation. Supported values:
+#'   - `"linear"` or `tlf::Scaling$lin` or `tlf::Scaling$identity`: Linear residuals (Simulated - Observed)
+#'   - `"log"` or `tlf::Scaling$log`: Logarithmic residuals (log(Simulated) - log(Observed))
+#'   - `"ratio"`: Ratio residuals (Simulated / Observed)
+#'
+#'   For `"log"` scale, undefined values (e.g., log(0)) will result in NaN and trigger a warning.
+#'   These points are excluded from the results.
 #' @inheritParams convertUnits
 #'
 #' @return
@@ -137,7 +142,7 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' # Add observed data set
 #' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 #'
-#' calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+#' calculateResiduals(myDataCombined, scaling = ospsuite.plots::ResidualScales$linear)
 #' @export
 calculateResiduals <- function(
   dataCombined,
@@ -148,6 +153,28 @@ calculateResiduals <- function(
   nameSimulated <- NULL
 
   .validateScalarDataCombined(dataCombined)
+
+  # Validate scaling parameter
+  # use match.arg (that allows to use 'lin' instead of 'linear') but customize error message
+  # accepts for now also 'identity' to be compatible with tlf plotting figures
+  tryCatch(
+    {
+      scaling <- match.arg(
+        scaling,
+        c(unlist(ospsuite.plots::ResidualScales), 'identity')
+      )
+      if (scaling == 'identity') {
+        scaling <- 'linear'
+      }
+    },
+    error = function(e) {
+      stop(sprintf(
+        "Invalid scaling parameter: '%s'. Must be one of: '%s'",
+        scaling,
+        paste(ospsuite.plots::ResidualScales, collapse = "', '")
+      ))
+    }
+  )
 
   # Validation has already taken place in the calling plotting function
   combinedData <- dataCombined$toDataFrame()
@@ -258,38 +285,27 @@ calculateResiduals <- function(
 
     pairedData$yValuesSimulated <- interpolatedYValues
 
-    # Residual computation will depend on the scaling.
-    if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
-      pairedData <- dplyr::mutate(
-        pairedData,
-        residualValues = yValuesSimulated - yValuesObserved
-      )
-    } else {
-      # Epsilon for safe log calculation should be converted to the units of the values
-      epsilon <- toUnit(
-        quantityOrDimension = pairedData$yDimension[[1]],
-        values = ospsuiteEnv$LOG_SAFE_EPSILON,
-        targetUnit = pairedData$yUnit[[1]],
-        molWeight = 1
-      )
-      pairedData$residualValues <- ospsuite.utils::logSafe(
-        pairedData$yValuesSimulated,
-        epsilon,
-        base = exp(1)
-      ) -
-        ospsuite.utils::logSafe(
-          pairedData$yValuesObserved,
-          epsilon,
-          base = exp(1)
-        )
-    }
+    # Compute residuals
+    pairedData$residualValues <- .computeResiduals(
+      observed = pairedData$yValuesObserved,
+      predicted = pairedData$yValuesSimulated,
+      scaling = scaling
+    )
 
-    # some residual values might turn out to be NA (for example, when extrapolating)
-    # they are not returned in the output tibble
-    resultList[[i]] <- dplyr::filter(pairedData, !is.na(residualValues))
+    # Store the result (before filtering)
+    resultList[[i]] <- pairedData
   }
 
-  return(dplyr::bind_rows(resultList))
+  # Combine all results
+  pairedData <- dplyr::bind_rows(resultList)
+
+  # Filter out invalid residuals: NA (from extrapolation), NaN (from log(0)), and Inf (from division by zero)
+  pairedData <- dplyr::filter(
+    pairedData,
+    !is.na(residualValues) & is.finite(residualValues)
+  )
+
+  return(pairedData)
 }
 
 #' Remove unpairable datasets for computing residuals
@@ -435,4 +451,156 @@ calculateResiduals <- function(
   arg <- flattenList(arg, type)
 
   return(arg)
+}
+
+#' Compute Residuals
+#'
+#' This function computes residuals from predicted and observed values using different scaling methods.
+#' The calculation method is consistent with the residual calculation used in `plotResVsCov()` and other
+#' plotting functions in the ospsuite.plots package.
+#'
+#' @param predicted A numeric vector of predicted values. Must have the same length as `observed`.
+#' @param observed A numeric vector of observed values. Must have the same length as `predicted`.
+#' @param scaling A character string specifying the scaling method. Must be one of:
+#'   * `"log"` (default): Residuals are calculated as `log(predicted) - log(observed)`.
+#'     Invalid values (non-positive) or NA values are set to NA with a warning.
+#'   * `"linear"`: Residuals are calculated as `predicted - observed`.
+#'     NA values are set to NA with a warning.
+#'   * `"ratio"`: Residuals are calculated as `predicted / observed`.
+#'     Invalid values (zero observed values) or NA values are set to NA with a warning.
+#'
+#' @return A numeric vector of residuals with the same length as the input vectors.
+#'   Invalid calculations and NA values are returned as NA.
+#'
+#' @details
+#' This function implements the same residual calculation logic used internally by
+#' the ospsuite.plots package when creating residual plots with `plotResVsCov()` and
+#' `plotRatioVsCov()`. It is provided as a standalone function to enable consistent
+#' residual calculations across different packages in the Open Systems Pharmacology ecosystem.
+#'
+#' **Calculation Details:**
+#'
+#' * **Log scaling**: `log(predicted) - log(observed)`
+#'   - NA values are set to NA with a warning
+#'   - Non-positive values are set to NA with a warning
+#'   - Symmetric for over- and under-prediction on log scale
+#'   - Commonly used for pharmacokinetic data
+#'
+#' * **Linear scaling**: `predicted - observed`
+#'   - NA values are set to NA with a warning
+#'   - Standard residual calculation
+#'   - Positive values indicate over-prediction
+#'   - Negative values indicate under-prediction
+#'
+#' * **Ratio scaling**: `predicted / observed`
+#'   - Returns ratios instead of differences
+#'   - NA values are set to NA with a warning
+#'   - Zero observed values are set to NA with a warning
+#'   - Values > 1 indicate over-prediction
+#'   - Values < 1 indicate under-prediction
+#'   - Value of 1 indicates perfect prediction
+#'
+#' @examples
+#' # Example data
+#' predicted <- c(1.5, 2.0, 3.5, 5.0, 7.5)
+#' observed <- c(1.2, 2.1, 3.0, 5.5, 7.0)
+#'
+#' # Compute residuals with different scaling methods
+#' residualsLog <- computeResiduals(predicted, observed, scaling = "log")
+#' residualsLinear <- computeResiduals(predicted, observed, scaling = "linear")
+#' residualsRatio <- computeResiduals(predicted, observed, scaling = "ratio")
+#'
+#' # Compare results
+#' data.frame(
+#'   predicted = predicted,
+#'   observed = observed,
+#'   logResiduals = residualsLog,
+#'   linearResiduals = residualsLinear,
+#'   ratioResiduals = residualsRatio
+#' )
+#'
+#' # Example with invalid values
+#' predictedInvalid <- c(1.5, -2.0, 3.5)
+#' observedInvalid <- c(1.2, 2.1, 0)
+#'
+#' # Log scaling warns about non-positive values and returns NA
+#' residualsLogInvalid <- computeResiduals(predictedInvalid, observedInvalid, scaling = "log")
+#'
+#' # Ratio scaling warns about zero observed values and returns NA
+#' residualsRatioInvalid <- computeResiduals(predictedInvalid, observedInvalid, scaling = "ratio")
+#'
+#' @keywords internal
+.computeResiduals <- function(
+  predicted,
+  observed,
+  scaling = ospsuite.plots::ResidualScales$log
+) {
+  # Validation
+  checkmate::assertNumeric(predicted, any.missing = TRUE, min.len = 1)
+  checkmate::assertNumeric(observed, any.missing = TRUE, min.len = 1)
+  scaling <- match.arg(scaling, unlist(ospsuite.plots::ResidualScales))
+
+  # Check that vectors have the same length
+  if (length(predicted) != length(observed)) {
+    stop("predicted and observed must have the same length")
+  }
+
+  # Check for NA values and warn
+  naPredicted <- is.na(predicted)
+  naObserved <- is.na(observed)
+  naValues <- naPredicted | naObserved
+
+  if (any(naValues)) {
+    nNa <- sum(naValues)
+    warning(sprintf(
+      "%d residual value%s set to NA: NA values found in predicted or observed",
+      nNa,
+      ifelse(nNa == 1, "", "s")
+    ))
+  }
+
+  # Initialize residuals vector
+  residuals <- rep(NA_real_, length(predicted))
+
+  # Calculate residuals based on scaling method
+  if (scaling == ospsuite.plots::ResidualScales$log) {
+    # Check for positive values
+    invalidPredicted <- predicted <= 0 & !is.na(predicted)
+    invalidObserved <- observed <= 0 & !is.na(observed)
+    invalidIndices <- invalidPredicted | invalidObserved
+
+    if (any(invalidIndices)) {
+      nInvalid <- sum(invalidIndices)
+      warning(sprintf(
+        "%d residual value%s set to NA: non-positive values found for log scaling",
+        nInvalid,
+        ifelse(nInvalid == 1, "", "s")
+      ))
+    }
+
+    # Calculate residuals for valid values
+    validIndices <- !invalidIndices & !naValues
+    residuals[validIndices] <- log(predicted[validIndices]) -
+      log(observed[validIndices])
+  } else if (scaling == ospsuite.plots::ResidualScales$linear) {
+    residuals <- predicted - observed
+  } else if (scaling == ospsuite.plots::ResidualScales$ratio) {
+    # Check for zero observed values
+    invalidObserved <- observed == 0 & !is.na(observed)
+
+    if (any(invalidObserved)) {
+      nInvalid <- sum(invalidObserved)
+      warning(sprintf(
+        "%d residual value%s set to NA: zero observed values found for ratio scaling",
+        nInvalid,
+        ifelse(nInvalid == 1, "", "s")
+      ))
+    }
+
+    # Calculate residuals for valid values
+    validIndices <- !invalidObserved & !naValues
+    residuals[validIndices] <- predicted[validIndices] / observed[validIndices]
+  }
+
+  return(residuals)
 }

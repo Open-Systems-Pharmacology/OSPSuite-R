@@ -28,7 +28,7 @@
 #'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
 #' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
 #'   error bounds directly in `yMin` and `yMax` columns.
-#' 
+#'
 #' @param plotData An object of class `DataCombined` or a `data.table`. If a
 #'   `data.table`, it must include the following:
 #'   - `xValues`: Numeric time points.
@@ -272,7 +272,7 @@ plotPredictedVsObserved <- function(
 #'   prediction error.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
@@ -369,7 +369,7 @@ plotResidualsVsCovariate <- function(
 #' representation of their distribution.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
@@ -441,7 +441,7 @@ plotResidualsAsHistogram <- function(
 #' using a Q-Q plot.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
@@ -508,7 +508,7 @@ plotQuantileQuantilePlot <- function(
 #' observed and simulated data.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param predictedIsNeeded If TRUE, predicted values are calculated if not
 #'   already present in the data. If FALSE, predicted values are not calculated
 #'   and only data validation and aggregation are performed.
@@ -598,42 +598,6 @@ plotQuantileQuantilePlot <- function(
   return(plotData)
 }
 
-#' Get Most Frequent Unit
-#'
-#' This function retrieves the most frequently occurring unit from a specified
-#' column in a given dataset, prioritizing observed data types. If no observed
-#' units are available, it will return the most frequent simulated unit instead.
-#'
-#' @param data A data.table or data.frame containing the data. It must include
-#'   the columns 'group', 'name', 'yUnit', 'xUnit', and 'dataType'.
-#' @param unitColumn A character string specifying the column name from which to
-#'   extract the most frequent unit. This should be either 'yUnit' or 'xUnit'.
-#'
-#' @return The most frequent observed unit from the specified column, or the
-#'   most frequent simulated unit if no observed units are available.
-#' @keywords internal
-#' @noRd
-.getMostFrequentUnit <- function(data, unitColumn) {
-  dataType <- NULL
-
-  # count per group and not per timepoint
-  dt <- data[, c("group", "name", "dataType", unitColumn), with = FALSE] |>
-    unique()
-
-  # Filter for observed data first
-  observedUnits <- dt[dataType == "observed", .N, by = c(unitColumn)] |>
-    setorderv(cols = c("N"), order = -1)
-
-  # If no observed units, check simulated
-  if (nrow(observedUnits) == 0) {
-    simulatedUnits <- dt[dataType == "simulated", .N, by = c(unitColumn)] |>
-      setorderv(cols = c("N"), order = -1)
-    return(simulatedUnits[[unitColumn]][1])
-  }
-
-  return(observedUnits[[unitColumn]][1])
-}
-
 #' Convert Units for Plotting
 #'
 #' This function automatically converts mixed units in the provided plot data to
@@ -676,7 +640,7 @@ plotQuantileQuantilePlot <- function(
   plotData <- setDT(plotData)
   validateIsInteger(maxAllowedYDimensions, FALSE)
 
-  xUnitStr <- .getMostFrequentUnit(plotData, "xUnit")
+  xUnitStr <- .extractMostFrequentUnit(plotData, "xUnit")
 
   plotDataByDimensions <- split(plotData, by = "yDimension")
   dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
@@ -696,7 +660,7 @@ plotQuantileQuantilePlot <- function(
 
   # Convert units for each dimension
   convertedData <- lapply(plotDataByDimensions, function(dt) {
-    yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
+    yUnitStr <- .extractMostFrequentUnit(dt, "yUnit")
     if ('yErrorType' %in% names(dt) && uniqueN(dt$yErrorType) > 1) {
       dt <- rbindlist(lapply(split(dt, by = 'yErrorType'), function(dtSplit) {
         .unitConverter(data = dtSplit, xUnit = xUnitStr, yUnit = yUnitStr)
@@ -889,8 +853,12 @@ plotQuantileQuantilePlot <- function(
 #'
 #' @param plotData A data.table containing observed and simulated datasets,
 #'   along with a grouping variable.
-#' @param scaling A character specifying scale: either `lin` (linear) or `log`
-#'   (logarithmic).
+#' @param scaling A character specifying the scale for residual calculation:
+#'   - `"linear"`: Linear residuals (Simulated - Observed)
+#'   - `"log"`: Logarithmic residuals (log(Simulated) - log(Observed))
+#'   - `"ratio"`: Ratio residuals (Simulated / Observed)
+#'
+#'   See `calculateResiduals()` for detailed descriptions of each scale.
 #'
 #' @return A data.table containing the residuals for each group, along with the
 #'   relevant identifiers. Returns NULL if no pairable datasets are found.

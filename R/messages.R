@@ -68,8 +68,9 @@ messages$simBatchStartValueNaN <- function(entityPaths) {
 }
 
 messages$plotObservedVsSimulatedWrongFoldDistance <- function(
-    parameterName,
-    foldDistances) {
+  parameterName,
+  foldDistances
+) {
   paste0(
     "Parameter '",
     parameterName,
