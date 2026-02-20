@@ -246,23 +246,28 @@ getQuantityValuesByPath <- function(
   }
 
   task <- .getNetTaskFromCache("ContainerTask")
-  outputValues <- vector("numeric", length(quantityPaths))
+  outputValues <- rep(NA_real_, length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
+    
+    # Check if the path exists by checking dimension
+    dimension <- task$call(
+      "DimensionNameByPath",
+      simulation,
+      path,
+      stopIfNotFound
+    )
+    
+    # Dimension will be empty if the path was not found
+    if (dimension == "") {
+      next
+    }
+    
     value <- task$call("GetValueByPath", simulation, path, stopIfNotFound)
+    
     if (!is.null(units)) {
-      dimension <- task$call(
-        "DimensionNameByPath",
-        simulation,
-        path,
-        stopIfNotFound
-      )
-      # Dimension ca be be empty if the path was not found
-      if (dimension == "") {
-        next
-      }
-      # If the unit is NULL, the value is assumend to be in base unit and no conversion
-      # in necessary
+      # If the unit is NULL, the value is assumed to be in base unit and no conversion
+      # is necessary
       if (!is.null(units[[i]])) {
         mw <- simulation$molWeightFor(path)
         value <- toUnit(
