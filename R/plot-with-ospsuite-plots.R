@@ -28,7 +28,7 @@
 #'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
 #' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
 #'   error bounds directly in `yMin` and `yMax` columns.
-#' 
+#'
 #' @param plotData An object of class `DataCombined` or a `data.table`. If a
 #'   `data.table`, it must include the following:
 #'   - `xValues`: Numeric time points.
@@ -197,7 +197,6 @@ plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
-  xUnit = NULL,
   yUnit = NULL,
   xyScale = "log",
   predictedAxis = "y",
@@ -291,7 +290,7 @@ plotPredictedVsObserved <- function(
 #'   prediction error.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
@@ -392,7 +391,7 @@ plotResidualsVsCovariate <- function(
 #' representation of their distribution.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
@@ -468,7 +467,7 @@ plotResidualsAsHistogram <- function(
 #' using a Q-Q plot.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
@@ -539,7 +538,7 @@ plotQuantileQuantilePlot <- function(
 #' observed and simulated data.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param predictedIsNeeded If TRUE, predicted values are calculated if not
 #'   already present in the data. If FALSE, predicted values are not calculated
 #'   and only data validation and aggregation are performed.
@@ -580,7 +579,8 @@ plotQuantileQuantilePlot <- function(
   }
 
   if (predictedIsNeeded & !('predicted' %in% names(plotData))) {
-    plotData <- .convertUnitsForPlot(plotData,
+    plotData <- .convertUnitsForPlot(
+      plotData,
       maxAllowedYDimensions = 1,
       xUnit = xUnit,
       yUnit = yUnit
@@ -601,7 +601,8 @@ plotQuantileQuantilePlot <- function(
       ) |>
       dplyr::mutate(dataType = "observed")
   } else {
-    plotData <- .convertUnitsForPlot(plotData,
+    plotData <- .convertUnitsForPlot(
+      plotData,
       maxAllowedYDimensions = 2,
       xUnit = xUnit,
       yUnit = yUnit,
@@ -715,7 +716,13 @@ plotQuantileQuantilePlot <- function(
 #'
 #' @keywords internal
 #' @noRd
-.convertUnitsForPlot <- function(plotData, maxAllowedYDimensions, xUnit = NULL, yUnit = NULL, y2Unit = NULL) {
+.convertUnitsForPlot <- function(
+  plotData,
+  maxAllowedYDimensions,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL
+) {
   yDimension <- NULL
 
   validateIsOfType(plotData, "data.frame", FALSE)
@@ -748,8 +755,12 @@ plotQuantileQuantilePlot <- function(
   # `dimIdx` will always be non-NA since `orderedDimNames` is derived from
   # `names(plotDataByDimensions)`, i.e. the same set of names iterated below.
   orderedDimNames <- c(
-    names(plotDataByDimensions)[names(plotDataByDimensions) %in% dimensionsToMerge],
-    names(plotDataByDimensions)[!names(plotDataByDimensions) %in% dimensionsToMerge]
+    names(plotDataByDimensions)[
+      names(plotDataByDimensions) %in% dimensionsToMerge
+    ],
+    names(plotDataByDimensions)[
+      !names(plotDataByDimensions) %in% dimensionsToMerge
+    ]
   )
   userYUnits <- list(yUnit, y2Unit)
 

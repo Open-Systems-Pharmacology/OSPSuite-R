@@ -44,7 +44,7 @@ test_that("It creates default plots as expected for multiple observed datasets",
     title = "multiple obs - separate legend",
     fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
   )
-}) 
+})
 
 # only simulated ------------------------
 
@@ -183,20 +183,38 @@ test_that("It converts x-axis units when xUnit is provided", {
 })
 
 test_that("It converts y-axis units when yUnit is provided", {
-  # Default: y in µmol/l (molar concentration); override to µg/l
-  plotDefault <- plotTimeProfile(oneObsDC)
-  plotMicrog <- plotTimeProfile(oneObsDC, yUnit = "µg/l")
+  # most frequent units would be xUnit 'h',yUnit 'mg/l', y2Unit = ''
+  # overwrite this with userdefined units
+  plotNonDefaultUnits <- plotTimeProfile(
+    manyObsSimDCWithFraction,
+    xUnit = 'day(s)',
+    yUnit = 'ng/l',
+    y2Unit = '%'
+  )
 
-  expect_true(
-    grepl("µg/l", plotMicrog$labels$y, fixed = TRUE),
-    info = "y-axis label should contain 'µg/l' when yUnit = 'µg/l'"
+  vdiffr::expect_doppelganger(
+    title = "userSet units",
+    fig = plotNonDefaultUnits
   )
 })
 
+
 test_that("It produces the same result as pre-converting with convertUnits", {
   # Passing units directly should be equivalent to calling convertUnits first
-  plotDirect <- plotTimeProfile(oneObsSimDC, xUnit = "min")
-  plotPreConverted <- plotTimeProfile(convertUnits(oneObsSimDC, xUnit = "min"))
+  plotDirect <- plotTimeProfile(oneObsSimDC, xUnit = "day(s)", yUnit = 'mg/l')
+  plotPreConverted <- plotTimeProfile(convertUnits(
+    oneObsSimDC,
+    yUnit = 'mg/l',
+    xUnit = "day(s)"
+  ))
 
   expect_equal(plotDirect$data, plotPreConverted$data)
+
+  plotDataFrame <- plotTimeProfile(
+    oneObsSimDC$toDataFrame(),
+    xUnit = "day(s)",
+    yUnit = 'mg/l'
+  )
+
+  expect_equal(plotDirect$data, plotDataFrame$data)
 })

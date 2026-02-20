@@ -271,20 +271,29 @@ test_that("Plot throws error with fraction and concentration", {
 # xUnit / yUnit direct parameters ----
 
 test_that("plotPredictedVsObserved converts units when xUnit/yUnit are provided", {
-  # Providing xUnit should override the auto-detected unit
+  # Providing yUnit should override the auto-detected unit %
   expect_no_error(
-    plotPredictedVsObserved(myCombDat, xyScale = "linear", xUnit = "min")
+    resultPlot <- plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      yUnit = ""
+    )
   )
-  expect_no_error(
-    plotPredictedVsObserved(myCombDat, xyScale = "linear", yUnit = "mg")
+
+  expect_false(
+    grepl("%", resultPlot$labels$x, fixed = TRUE),
+    info = "default x-axis label should not contain '%'"
   )
 })
 
 test_that("plotPredictedVsObserved produces same result as pre-converting with convertUnits", {
-  plotDirect <- plotPredictedVsObserved(myCombDat, xyScale = "linear",
-    xUnit = "min")
+  plotDirect <- plotPredictedVsObserved(
+    myCombDat,
+    xyScale = "linear",
+    yUnit = ""
+  )
   plotPreConverted <- plotPredictedVsObserved(
-    convertUnits(myCombDat, xUnit = "min"),
+    convertUnits(myCombDat, yUnit = ""),
     xyScale = "linear"
   )
 

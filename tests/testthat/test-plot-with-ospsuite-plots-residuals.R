@@ -205,10 +205,17 @@ test_that("works with data.frame input", {
 # xUnit / yUnit direct parameters ----
 
 test_that("plotResidualsVsCovariate converts units when xUnit is provided", {
-  plotMin <- plotResidualsVsCovariate(myCombDat, residualScale = "linear",
-    xAxis = "time", xUnit = "min")
-  plotH <- plotResidualsVsCovariate(myCombDat, residualScale = "linear",
-    xAxis = "time")
+  plotMin <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    xAxis = "time"
+  )
+  plotH <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    xAxis = "time",
+    xUnit = "h"
+  )
 
   expect_true(
     grepl("min", plotMin$labels$x, fixed = TRUE),
@@ -222,8 +229,12 @@ test_that("plotResidualsVsCovariate converts units when xUnit is provided", {
 
 test_that("plotResidualsAsHistogram runs without error when xUnit is provided", {
   expect_no_error(
-    plotResidualsAsHistogram(myCombDat, residualScale = "linear",
-      distribution = "none", xUnit = "min")
+    plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = "none",
+      xUnit = "min"
+    )
   )
 })
 
