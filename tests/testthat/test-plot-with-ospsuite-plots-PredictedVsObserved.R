@@ -276,7 +276,7 @@ test_that("plotPredictedVsObserved converts units when xUnit/yUnit are provided"
     resultPlot <- plotPredictedVsObserved(
       myCombDat,
       xyScale = "linear",
-      yUnit = ""
+      xyUnit = ""
     )
   )
 
@@ -290,7 +290,7 @@ test_that("plotPredictedVsObserved produces same result as pre-converting with c
   plotDirect <- plotPredictedVsObserved(
     myCombDat,
     xyScale = "linear",
-    yUnit = ""
+    xyUnit = ""
   )
   plotPreConverted <- plotPredictedVsObserved(
     convertUnits(myCombDat, yUnit = ""),

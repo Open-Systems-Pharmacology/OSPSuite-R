@@ -171,6 +171,9 @@ plotTimeProfile <- function(
 #'
 #' @param xyScale A character string specifying the scale for the x and y-axis.
 #'   Default is `log`.
+#' @param xyUnit A character string specifying the target unit for the x and y-axis.
+#'   If `NULL` (default), the most frequent unit in the data is used. For
+#'   available units, see `ospsuite::ospUnits`.
 #' @param predictedAxis A character string specifying which axis to use for
 #'   predicted values. Options are `"x"` (predicted on x-axis, observed on
 #'   y-axis) or `"y"` (default, predicted on y-axis, observed on x-axis).
@@ -197,7 +200,7 @@ plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
-  yUnit = NULL,
+  xyUnit = NULL,
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
@@ -210,8 +213,7 @@ plotPredictedVsObserved <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
-    xUnit = xUnit,
-    yUnit = yUnit,
+    yUnit = xyUnit,
     scaling = xyScale
   )
 
@@ -296,6 +298,14 @@ plotPredictedVsObserved <- function(
 #' @param xAxis A character string specifying what to display on the x-axis.
 #'   Options are `"time"` (time points from xValues), `"observed"` (observed
 #'   values, default), or `"predicted"` (predicted/simulated values).
+#' @param timeUnit A character string specifying the target unit for the time values.
+#' (only relevant if `xAxis = "time"`)
+#'   If `NULL` (default), the most frequent unit in the data is used. For
+#'   available units, see `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the simulated and
+#'   observed y-values used for residual calculation and (if `xAxis != "time"`) displayed on the x-Axis.
+#'    If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
@@ -308,8 +318,10 @@ plotPredictedVsObserved <- function(
 #' # Generate a residuals vs observed plot for the provided data
 #' plotResidualsVsCovariate(convertUnits(
 #'   myDataCombined,
-#'   xUnit = ospUnits$Time$h,
-#'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
+#'   timeUnit = ospUnits$Time$h,
+#'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
+#'   xAxis = "time",
+#'   residualScale = 'linear'
 #' ))
 #'
 #' # Generate a residuals vs predicted plot
@@ -322,7 +334,7 @@ plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
-  xUnit = NULL,
+  timeUnit = NULL,
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
@@ -336,7 +348,7 @@ plotResidualsVsCovariate <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
-    xUnit = xUnit,
+    xUnit = timeUnit,
     yUnit = yUnit,
     scaling = residualScale
   )
@@ -394,6 +406,10 @@ plotResidualsVsCovariate <- function(
 #'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
+#' @param yUnit A character string specifying the target unit for the simulated and
+#'   observed y-values used for residual calculation.
+#'    If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotHistogram`.
 #'
@@ -413,7 +429,6 @@ plotResidualsAsHistogram <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
-  xUnit = NULL,
   yUnit = NULL,
   distribution = "normal",
   residualScale = "log",
@@ -422,7 +437,6 @@ plotResidualsAsHistogram <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
-    xUnit = xUnit,
     yUnit = yUnit,
     scaling = residualScale
   )
@@ -470,6 +484,10 @@ plotResidualsAsHistogram <- function(
 #'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
+#' @param yUnit A character string specifying the target unit for the simulated and
+#'   observed y-values used for residual calculation.
+#'    If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot.
