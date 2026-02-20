@@ -171,7 +171,7 @@ plotTimeProfile <- function(
 #'
 #' @param xyScale A character string specifying the scale for the x and y-axis.
 #'   Default is `log`.
-#' @param xyUnit A character string specifying the target unit for the x and y-axis.
+#' @param yUnit A character string specifying the target unit for the x and y-axis.
 #'   If `NULL` (default), the most frequent unit in the data is used. For
 #'   available units, see `ospsuite::ospUnits`.
 #' @param predictedAxis A character string specifying which axis to use for
@@ -200,7 +200,7 @@ plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
-  xyUnit = NULL,
+  yUnit = NULL,
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
@@ -213,7 +213,7 @@ plotPredictedVsObserved <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
-    yUnit = xyUnit,
+    yUnit = yUnit,
     scaling = xyScale
   )
 
@@ -298,7 +298,7 @@ plotPredictedVsObserved <- function(
 #' @param xAxis A character string specifying what to display on the x-axis.
 #'   Options are `"time"` (time points from xValues), `"observed"` (observed
 #'   values, default), or `"predicted"` (predicted/simulated values).
-#' @param timeUnit A character string specifying the target unit for the time values.
+#' @param xUnit A character string specifying the target unit for the time values.
 #' (only relevant if `xAxis = "time"`)
 #'   If `NULL` (default), the most frequent unit in the data is used. For
 #'   available units, see `ospsuite::ospUnits`.
@@ -318,7 +318,7 @@ plotPredictedVsObserved <- function(
 #' # Generate a residuals vs observed plot for the provided data
 #' plotResidualsVsCovariate(convertUnits(
 #'   myDataCombined,
-#'   timeUnit = ospUnits$Time$h,
+#'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
 #'   xAxis = "time",
 #'   residualScale = 'linear'
@@ -334,7 +334,7 @@ plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
-  timeUnit = NULL,
+  xUnit = NULL,
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
@@ -348,7 +348,7 @@ plotResidualsVsCovariate <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
-    xUnit = timeUnit,
+    xUnit = xUnit,
     yUnit = yUnit,
     scaling = residualScale
   )
