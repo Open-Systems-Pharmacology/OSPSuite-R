@@ -314,42 +314,23 @@ This ensures that all data is displayed in consistent units without manual conve
 
 ### Specifying Units Directly
 
-All plotting functions in this family accept `xUnit` and `yUnit` arguments that override the automatically selected units. `plotTimeProfile()` additionally accepts `y2Unit` for controlling the secondary y-axis unit when data contains two distinct y-dimensions (i.e., when a secondary y-axis is used for a different measurement type such as `Fraction` alongside `Concentration`).
+All plotting functions in this family accept `xUnit` and `yUnit` arguments that override the automatically selected data units. `plotTimeProfile()` additionally accepts `y2Unit` for controlling the secondary y-axis unit when data contains two distinct y-dimensions (i.e., when a secondary y-axis is used for a different measurement type such as `Fraction` alongside `Concentration`).
 
 ```{r units-direct}
 # Default: auto-detected units (e.g. µmol/l and h from the data)
 plotTimeProfile(myDataCombined)
 ```
 
-```{r units-xunit}
+```{r units-set}
 # Override x-axis unit: display time in minutes instead of hours
-plotTimeProfile(myDataCombined, xUnit = "min")
+plotTimeProfile(myDataCombined, xUnit = "min", yUnit = "mg/l")
 ```
 
-```{r units-yunit}
-# Override y-axis unit: display concentration in µg/l instead of µmol/l
-plotTimeProfile(myDataCombined, yUnit = "µg/l")
-```
-
-The same parameters work for all other plotting functions:
-
-```{r units-predvsobs}
-# Predicted vs Observed with custom x-axis unit
-plotPredictedVsObserved(myDataCombined, xUnit = "min")
-```
-
-```{r units-residuals}
-# Residuals vs Time with custom x-axis unit
-plotResidualsVsCovariate(myDataCombined, xAxis = "time", xUnit = "min")
-```
 
 Passing units directly is equivalent to pre-converting the data with `convertUnits()`:
 
 ```{r units-equivalent, eval=FALSE}
-# These two calls produce identical plots:
-plotTimeProfile(myDataCombined, xUnit = "min")
-
-plotTimeProfile(convertUnits(myDataCombined, xUnit = "min"))
+plotTimeProfile(convertUnits(myDataCombined, xUnit = "min", yUnit = "mg/l"))
 ```
 
 ## Handling Mixed Error Types
