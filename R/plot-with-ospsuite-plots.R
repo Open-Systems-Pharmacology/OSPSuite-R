@@ -71,7 +71,9 @@
 #' @param y2Unit A character string specifying the target unit for the secondary
 #'   y-axis (only applicable when data contains two y-dimensions). If `NULL`
 #'   (default), the most frequent unit in the data is used.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
+#' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale yScaleArgs
+#'  y2Scale y2ScaleArgs groupAesthetics plotObject geomLineAttributes geomRibbonAttributes
+#'  geomPointAttributes geomErrorbarAttributes geomLLOQAttributes
 #'
 #' @return A `ggplot2` plot object representing the time profile.
 #' @export
@@ -181,7 +183,10 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotYVsX`.
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs
+#'  groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes
+#'  geomComparisonLineAttributes geomLLOQAttributes
+#'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
 #'   including aesthetics for the x and y axes.
@@ -306,7 +311,10 @@ plotPredictedVsObserved <- function(
 #'   observed y-values used for residual calculation and (if `xAxis != "time"`) displayed on the x-Axis.
 #'    If `NULL` (default), the most frequent unit in the data is used.
 #'   For available units, see `ospsuite::ospUnits`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics
+#'  addRegression
+#'   geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
+#' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
 #'   predicted values.
@@ -411,7 +419,8 @@ plotResidualsVsCovariate <- function(
 #'    If `NULL` (default), the most frequent unit in the data is used.
 #'   For available units, see `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotHistogram`.
+#' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale yScaleArgs
+#'  plotAsFrequency meanFunction geomHistAttributes
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
@@ -488,7 +497,8 @@ plotResidualsAsHistogram <- function(
 #'   observed y-values used for residual calculation.
 #'    If `NULL` (default), the most frequent unit in the data is used.
 #'   For available units, see `ospsuite::ospUnits`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
+#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs groupAesthetics geomQQAttributes
+#'  geomQQLineAttributes
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot.
 #' @export
