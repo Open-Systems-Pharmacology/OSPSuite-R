@@ -214,7 +214,7 @@ test_that("plotResidualsVsCovariate converts units when timeUnit is provided", {
     myCombDat,
     residualScale = "linear",
     xAxis = "time",
-    timeUnit = "h"
+    xUnit = "h"
   )
 
   expect_true(
