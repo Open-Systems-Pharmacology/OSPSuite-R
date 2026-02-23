@@ -72,7 +72,7 @@ IndividualCharacteristics <- R6::R6Class(
       # or should be initialized automatically
       initPKSim()
       netObject <- rSharp::newObjectFromName(
-        "PKSim.R.Domain.IndividualCharacteristics"
+        "OSPSuite.R.Domain.IndividualCharacteristics"
       )
       super$initialize(netObject)
     },

@@ -124,7 +124,7 @@ PopulationCharacteristics <- R6::R6Class(
         moleculeOntogeny
       )
       netMoleculeOntogeny <- rSharp::newObjectFromName(
-        "PKSim.R.Domain.MoleculeOntogeny"
+        "OSPSuite.R.Domain.MoleculeOntogeny"
       )
       netMoleculeOntogeny$set("Molecule", moleculeOntogeny$molecule)
       netMoleculeOntogeny$set("Ontogeny", moleculeOntogeny$ontogeny)
