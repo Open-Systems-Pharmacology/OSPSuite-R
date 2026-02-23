@@ -77,13 +77,16 @@ test_that("It creates default plots as expected without any identity or foldDist
 
 test_that("It creates default plots as expected with single fold distance line", {
   set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "default 1 fold dist",
-    fig = plotPredictedVsObserved(
-      myCombDat,
-      comparisonLineVector = unname(
-        ospsuite.plots::getFoldDistanceList(
-          folds = 2
+  # use suppressWarnings instaed of expect_warnings. Main focus is on the plot display
+  suppressWarnings(
+    vdiffr::expect_doppelganger(
+      title = "default 1 fold dist",
+      fig = plotPredictedVsObserved(
+        myCombDat,
+        comparisonLineVector = unname(
+          ospsuite.plots::getFoldDistanceList(
+            folds = 2
+          )
         )
       )
     )
@@ -92,7 +95,8 @@ test_that("It creates default plots as expected with single fold distance line",
 
 test_that("It creates default plots as expected with multiple fold distance lines", {
   set.seed(123)
-  vdiffr::expect_doppelganger(
+  # use suppressWarnings instaed of expect_warnings. Main focus is on the plot display
+  suppressWarnings(vdiffr::expect_doppelganger(
     title = "default 3 fold dist",
     fig = plotPredictedVsObserved(
       myCombDat,
@@ -102,7 +106,7 @@ test_that("It creates default plots as expected with multiple fold distance line
         )
       )
     )
-  )
+  ))
 })
 
 test_that("It produces expected plot for Aciclovir data", {

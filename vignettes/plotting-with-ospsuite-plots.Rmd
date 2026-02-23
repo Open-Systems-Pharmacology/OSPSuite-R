@@ -316,7 +316,7 @@ This ensures that all data is displayed in consistent units without manual conve
 
 All plotting functions in this family accept `xUnit` and `yUnit` arguments. Here, `xUnit` and `yUnit` refer to the unit field names in the underlying `DataCombined` data frame (`xUnit` for the x-values column, `yUnit` for the y-values column), which do not necessarily correspond to the physical x- or y-axis of the resulting plot. For example, in `plotPredictedVsObserved()`, `yUnit` controls the unit for both axes since both predicted and observed are taken from the y-values of the data.
 
-`plotTimeProfile()` additionally accepts `y2Unit` for controlling the secondary y-axis unit when data contains two distinct y-dimensions (i.e., when a secondary y-axis is used for a different measurement type such as `Fraction` alongside `Concentration`). All other functions (`plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) support `xUnit` and `yUnit` only.
+`plotTimeProfile()` additionally accepts `y2Unit` for controlling the secondary y-axis unit when data contains two distinct y-dimensions (i.e., when a secondary y-axis is used for a different measurement type such as `Fraction` alongside `Concentration`). The function `plotResidualsVsCovariate()` supports `xUnit` and `yUnit`, all other functions (`plotPredictedVsObserved()`,  `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) support `yUnit` only.
 
 ```{r units-direct}
 # Default: auto-detected units (e.g. µmol/l and h from the data)
