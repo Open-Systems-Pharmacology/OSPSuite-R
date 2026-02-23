@@ -14,6 +14,7 @@ plotTimeProfile(
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
     3, 5)],
   nsd = 1,
+  showLegendPerDataset = FALSE,
   ...
 )
 }
@@ -60,6 +61,12 @@ population.}
 \item{nsd}{Optional parameter specifying the number of standard deviations to
 plot above and below the mean (used for error bars when aggregation is
 "arithmetic" or "geometric"). Ignored if \code{aggregation} is  \code{quantiles}.}
+
+\item{showLegendPerDataset}{Logical flag to display separate legend entries
+for observed and simulated datasets. When \code{TRUE}, observed data will use
+different shapes and simulated data will use different line types for each
+dataset. Defaults to \code{FALSE}. Note: User-provided \code{mapping} and
+\code{observedMapping} will override this setting.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotTimeProfile}.}
 }
