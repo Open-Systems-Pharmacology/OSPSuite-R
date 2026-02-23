@@ -117,13 +117,13 @@ prediction error.
 \examples{
 \dontrun{
 # Generate a residuals vs observed plot for the provided data
-plotResidualsVsCovariate(convertUnits(
+plotResidualsVsCovariate(
   myDataCombined,
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
   xAxis = "time",
   residualScale = 'linear'
-))
+)
 
 # Generate a residuals vs predicted plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
