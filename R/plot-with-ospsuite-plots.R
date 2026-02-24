@@ -28,7 +28,7 @@
 #'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
 #' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
 #'   error bounds directly in `yMin` and `yMax` columns.
-#' 
+#'
 #' @param plotData An object of class `DataCombined` or a `data.table`. If a
 #'   `data.table`, it must include the following:
 #'   - `xValues`: Numeric time points.
@@ -68,9 +68,7 @@
 #'   - `"all"`: Differentiate both observed (via `shape`) and simulated (via `linetype`).
 #'   - `"observed"`: Differentiate only observed data via different shapes.
 #'   - `"simulated"`: Differentiate only simulated data via different line types.
-#'   - `TRUE` (deprecated): Equivalent to `"all"`.
-#'   - `FALSE` (deprecated): Equivalent to `"none"`.
-#'   
+#'
 #'   User-provided `mapping` and `observedMapping` will override internal settings.
 #'   A warning is issued if the override removes per-dataset differentiation.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
@@ -86,13 +84,13 @@
 #'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`
 #' ))
-#' 
+#'
 #' # Show individual dataset names for observed data only
 #' plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
-#' 
+#'
 #' # Show individual dataset names for simulated data only
 #' plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
-#' 
+#'
 #' # Show individual dataset names for both observed and simulated
 #' plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
 #' }
@@ -112,16 +110,6 @@ plotTimeProfile <- function(
   # initialize variables used for data.table to avoid messages during checks
   yDimension <- yUnit <- dataType <- NULL
 
-  # Normalize and validate showLegendPerDataset
-  if (is.logical(showLegendPerDataset)) {
-    showLegendPerDataset <- if (showLegendPerDataset) "all" else "none"
-    warning(
-      "Using logical values for 'showLegendPerDataset' is deprecated. ",
-      "Use \"none\", \"all\", \"observed\", or \"simulated\" instead.",
-      call. = FALSE
-    )
-  }
-  
   checkmate::assertChoice(
     showLegendPerDataset,
     choices = c("none", "all", "observed", "simulated")
@@ -134,76 +122,8 @@ plotTimeProfile <- function(
     quantiles = quantiles,
     nsd = nsd
   )
+  # validate field used only for timeprofile
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
-
-  # Check if data contains observed and/or simulated data
-  hasObserved <- any(plotData$dataType == "observed")
-  hasSimulated <- any(plotData$dataType == "simulated")
-
-  # Set internal mappings for showLegendPerDataset if enabled
-  # User-provided mappings will override these internal mappings
-  internalMapping <- mapping
-  internalObservedMapping <- observedMapping
-  
-  if (showLegendPerDataset %in% c("all", "simulated")) {
-    if (!hasSimulated && showLegendPerDataset == "simulated") {
-      warning(
-        "showLegendPerDataset = \"simulated\" but no simulated data present. ",
-        "This setting will have no effect.",
-        call. = FALSE
-      )
-    }
-    
-    # For simulated data, add linetype mapping to show individual datasets
-    # modifyList: user 'mapping' parameter overrides internal 'linetype = name'
-    internalMapping <- structure(
-      utils::modifyList(ggplot2::aes(linetype = name), mapping),
-      class = "uneval"
-    )
-    
-    # Check if user mapping overrode the linetype
-    if (!identical(internalMapping$linetype, quote(name))) {
-      warning(
-        "showLegendPerDataset = \"", showLegendPerDataset, "\": ",
-        "user 'mapping' overrides linetype for simulated data; ",
-        "per-dataset line differentiation will not be applied.",
-        call. = FALSE
-      )
-    }
-  }
-  
-  if (showLegendPerDataset %in% c("all", "observed")) {
-    if (!hasObserved && showLegendPerDataset == "observed") {
-      warning(
-        "showLegendPerDataset = \"observed\" but no observed data present. ",
-        "This setting will have no effect.",
-        call. = FALSE
-      )
-    }
-    
-    # For observed data, add shape mapping to show individual datasets
-    # First, filter out aesthetics that are irrelevant to points
-    # to prevent user's simulated-data aesthetics from leaking to observed data
-    observedMappingFiltered <- observedMapping[
-      !names(observedMapping) %in% c("linetype", "linewidth")
-    ]
-    
-    # modifyList: user 'observedMapping' parameter overrides internal 'shape = name'
-    internalObservedMapping <- structure(
-      utils::modifyList(ggplot2::aes(shape = name), observedMappingFiltered),
-      class = "uneval"
-    )
-    
-    # Check if user mapping overrode the shape
-    if (!identical(internalObservedMapping$shape, quote(name))) {
-      warning(
-        "showLegendPerDataset = \"", showLegendPerDataset, "\": ",
-        "user 'observedMapping' overrides shape for observed data; ",
-        "per-dataset point differentiation will not be applied.",
-        call. = FALSE
-      )
-    }
-  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -211,6 +131,22 @@ plotTimeProfile <- function(
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData, nYunit = 2)
   }
+
+  # get Mappings for simulated and observed data
+  mappingAdjusted = .getMappingForTimeprofiles(
+    plotData = plotData,
+    metaData = metaData,
+    userMapping = mapping,
+    showLegendPerDataset = showLegendPerDataset,
+    dataType = 'simulated'
+  )
+  observedMappingAdjusted = .getMappingForTimeprofiles(
+    plotData = plotData,
+    metaData = metaData,
+    userMapping = observedMapping,
+    showLegendPerDataset = showLegendPerDataset,
+    dataType = 'observed'
+  )
 
   if (any(names(metaData) %in% "y2")) {
     if (!("yDimension" %in% names(plotData))) {
@@ -229,16 +165,8 @@ plotTimeProfile <- function(
     args = c(
       list(
         data = plotData[dataType == "simulated"],
-        mapping = .getMappingForTimeprofiles(
-          plotData = plotData[dataType == "simulated"],
-          metaData = metaData,
-          userMapping = internalMapping
-        ),
-        observedMapping = .getMappingForTimeprofiles(
-          plotData = plotData[dataType == "observed"],
-          metaData = metaData,
-          userMapping = internalObservedMapping
-        ),
+        mapping = mappingAdjusted,
+        observedMapping = observedMappingAdjusted,
         metaData = metaData,
         observedData = plotData[dataType == "observed"]
       ),
@@ -377,7 +305,7 @@ plotPredictedVsObserved <- function(
 #'   prediction error.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param xAxis A character string specifying what to display on the x-axis.
@@ -474,7 +402,7 @@ plotResidualsVsCovariate <- function(
 #' representation of their distribution.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
@@ -546,7 +474,7 @@ plotResidualsAsHistogram <- function(
 #' using a Q-Q plot.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
@@ -613,7 +541,7 @@ plotQuantileQuantilePlot <- function(
 #' observed and simulated data.
 #'
 #' @inheritParams plotTimeProfile
-#' 
+#'
 #' @param predictedIsNeeded If TRUE, predicted values are calculated if not
 #'   already present in the data. If FALSE, predicted values are not calculated
 #'   and only data validation and aggregation are performed.
@@ -1040,17 +968,28 @@ plotQuantileQuantilePlot <- function(
 #' @return A mapping object for ggplot2.
 #' @keywords internal
 #' @noRd
-.getMappingForTimeprofiles <- function(plotData, metaData, userMapping) {
+.getMappingForTimeprofiles <- function(
+  plotData,
+  metaData,
+  userMapping,
+  showLegendPerDataset,
+  dataTypeFilter
+) {
   # initialize variables used for data.table to avoid warnings during checks
   xValues <- yValues <- group <- yMin <- yMax <- lloq <- NULL
 
+  # initialize mapping
   mapping <- ggplot2::aes(x = xValues, y = yValues)
 
-  if (!is.null(userMapping)) {
-    mapping <- structure(
-      utils::modifyList(mapping, userMapping),
-      class = "uneval"
-    )
+  plotData <- plotData[dataType == dataTypeFilter]
+
+  if (nrow(plotData) == 0) {
+    if (showLegendPerDataset == dataTypeFilter) {
+      warning(messages$plotShowLegendPerDatasetHasNoEffect(
+        dataType = dataTypeFilter
+      ))
+    }
+    return(mapping)
   }
 
   # add default groupby
@@ -1074,12 +1013,37 @@ plotQuantileQuantilePlot <- function(
     }
   }
 
+  if (
+    showLegendPerDataset %in%
+      c("all", "simulated") &
+      dataTypeFilter == "simulated"
+  ) {
+    # For simulated data, add linetype mapping to show individual datasets
+    mapping <- structure(
+      utils::modifyList(mapping, ggplot2::aes(linetype = name)),
+      class = "uneval"
+    )
+  }
+
+  if (
+    showLegendPerDataset %in%
+      c("all", "observed") &
+      dataTypeFilter == "observed"
+  ) {
+    # For observed data, add shape mapping to show individual datasets
+    mapping <- structure(
+      utils::modifyList(mapping, ggplot2::aes(shape = name)),
+      class = "uneval"
+    )
+  }
+
   # delete columns not needed
   plotData <- plotData[,
     which(colSums(is.na(plotData)) != nrow(plotData)),
     with = FALSE
   ]
 
+  # set error mapping
   if (
     "yErrorType" %in%
       names(plotData) &&
@@ -1115,7 +1079,7 @@ plotQuantileQuantilePlot <- function(
       class = "uneval"
     )
   }
-  if (any(names(plotData) %in% "lloq")) {
+  if (any(names(plotData) %in% "lloq") & dataTypeFilter == 'observed') {
     mapping <- structure(
       c(mapping, ggplot2::aes(lloq = lloq)),
       class = "uneval"
@@ -1138,6 +1102,21 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
+  # Check if user mapping linetype is applied to observed data or
+  # shape is applied to simulated data
+  unusualAesthetic <- switch(
+    dataTypeFilter,
+    'observed' = 'linetype',
+    'simulated' = 'shape'
+  )
+  if (unusualAesthetic %in% names(userMapping)) {
+    warning(messages$plotUntypicalAesthtic(
+      aesthetic = unusualAesthetic,
+      dataType = dataTypeFilter
+    ))
+  }
+
+  # add user mappings (this overwrites all previous settings)
   if (!is.null(userMapping)) {
     mapping <- structure(
       utils::modifyList(mapping, userMapping),

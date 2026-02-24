@@ -44,17 +44,17 @@ test_that("It creates default plots as expected for multiple observed datasets",
     title = "multiple obs - separate legend",
     fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "multiple obs - showLegendPerDataset all",
-    fig = suppressWarnings(plotTimeProfile(manyObsDC, showLegendPerDataset = "all"))
+    fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "all")
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "multiple obs - showLegendPerDataset observed",
     fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
   )
-}) 
+})
 
 # only simulated ------------------------
 
@@ -78,12 +78,12 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
       )
     )
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "multiple sim - showLegendPerDataset all",
-    fig = suppressWarnings(plotTimeProfile(manySimDC, showLegendPerDataset = "all"))
+    fig = plotTimeProfile(manySimDC, showLegendPerDataset = "all")
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "multiple sim - showLegendPerDataset simulated",
     fig = plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
@@ -120,20 +120,26 @@ test_that("It maps multiple observed and simulated datasets to different visual 
       observedMapping = ggplot2::aes(fill = name)
     )
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset all",
     fig = plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset observed",
-    fig = suppressWarnings(plotTimeProfile(manyObsSimDC, showLegendPerDataset = "observed"))
+    fig = plotTimeProfile(
+      manyObsSimDC,
+      showLegendPerDataset = "observed"
+    )
   )
-  
+
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset simulated",
-    fig = suppressWarnings(plotTimeProfile(manyObsSimDC, showLegendPerDataset = "simulated"))
+    fig = plotTimeProfile(
+      manyObsSimDC,
+      showLegendPerDataset = "simulated"
+    )
   )
 })
 
@@ -154,81 +160,87 @@ test_that("User-provided mappings override showLegendPerDataset", {
   # User mapping should override internal showLegendPerDataset mapping
   vdiffr::expect_doppelganger(
     title = "user mapping overrides showLegendPerDataset",
-    fig = suppressWarnings(plotTimeProfile(
+    fig = plotTimeProfile(
       manyObsSimDC,
       showLegendPerDataset = "all",
-      mapping = ggplot2::aes(color = name),
-      observedMapping = ggplot2::aes(color = name, fill = name)
-    ))
+      mapping = ggplot2::aes(color = name, linetype = NULL),
+      observedMapping = ggplot2::aes(
+        color = name,
+        fill = name,
+        shape = dataType
+      ),
+    )
   )
 })
 
 # showLegendPerDataset parameter validation and warnings ------------------------
 
-test_that("It warns when using deprecated logical values", {
-  expect_warning(
-    plotTimeProfile(manyObsDC, showLegendPerDataset = TRUE),
-    "Using logical values for 'showLegendPerDataset' is deprecated"
-  )
-  
-  expect_warning(
-    plotTimeProfile(manyObsDC, showLegendPerDataset = FALSE),
-    "Using logical values for 'showLegendPerDataset' is deprecated"
-  )
-})
-
 test_that("It warns when showLegendPerDataset setting doesn't match data", {
   # Only observed data, but asking for simulated differentiation
   expect_warning(
     plotTimeProfile(manyObsDC, showLegendPerDataset = "simulated"),
-    "showLegendPerDataset = \"simulated\" but no simulated data present"
+    "showLegendPerDataset = 'simulated' but no simulated data present"
   )
-  
+
   # Only simulated data, but asking for observed differentiation
   expect_warning(
     plotTimeProfile(manySimDC, showLegendPerDataset = "observed"),
-    "showLegendPerDataset = \"observed\" but no observed data present"
+    "showLegendPerDataset = 'observed' but no observed data present"
   )
 })
 
-test_that("It warns when user mapping overrides showLegendPerDataset", {
-  # User overrides linetype for simulated
+test_that("It warns when user mapping containsuntypical aethetics", {
+  # User shape is unusual for simulated
   expect_warning(
     plotTimeProfile(
       manySimDC,
-      showLegendPerDataset = "simulated",
-      mapping = ggplot2::aes(linetype = group)
+      mapping = ggplot2::aes(shape = dataType)
     ),
-    "user 'mapping' overrides linetype for simulated data"
+    messages$plotUntypicalAesthtic(
+      aesthetic = 'shape',
+      dataType = "simulated"
+    )
   )
-  
-  # User overrides shape for observed
+
+  # User shape is unusual for simulated
   expect_warning(
     plotTimeProfile(
       manyObsDC,
-      showLegendPerDataset = "observed",
-      observedMapping = ggplot2::aes(shape = group)
+      mapping = ggplot2::aes(linetype = dataType)
     ),
-    "user 'observedMapping' overrides shape for observed data"
+    messages$plotUntypicalAesthtic(
+      aesthetic = 'linetype',
+      dataType = "observed"
+    )
   )
 })
 
 test_that("It handles edge case: observed data with showLegendPerDataset simulated", {
   set.seed(123)
   # Should warn and produce plot with no per-dataset differentiation
-  vdiffr::expect_doppelganger(
-    title = "obs only - showLegendPerDataset simulated",
-    fig = suppressWarnings(plotTimeProfile(manyObsDC, showLegendPerDataset = "simulated"))
+  expect_warning(
+    fig <- plotTimeProfile(
+      manyObsDC,
+      showLegendPerDataset = "simulated"
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
+
+  expect_s3_class(fig, 'gg')
 })
 
 test_that("It handles edge case: simulated data with showLegendPerDataset observed", {
   set.seed(123)
   # Should warn and produce plot with no per-dataset differentiation
-  vdiffr::expect_doppelganger(
-    title = "sim only - showLegendPerDataset observed",
-    fig = suppressWarnings(plotTimeProfile(manySimDC, showLegendPerDataset = "observed"))
+  expect_warning(
+    fig <- plotTimeProfile(
+      manySimDC,
+      showLegendPerDataset = "observed"
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('observed')
   )
+
+  expect_s3_class(fig, 'gg')
 })
 
 # edge cases ------------------------

@@ -68,8 +68,9 @@ messages$simBatchStartValueNaN <- function(entityPaths) {
 }
 
 messages$plotObservedVsSimulatedWrongFoldDistance <- function(
-    parameterName,
-    foldDistances) {
+  parameterName,
+  foldDistances
+) {
   paste0(
     "Parameter '",
     parameterName,
@@ -176,5 +177,26 @@ messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
     paste(unique(errorTypes), collapse = "', '"),
     "' must be provided in 'yMin' and 'yMax' columns. ",
     "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
+  )
+}
+
+messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
+  paste0(
+    "showLegendPerDataset = '",
+    dataType,
+    "' but no ",
+    dataType,
+    " data present. ",
+    "This setting will have no effect."
+  )
+}
+
+messages$plotUntypicalAesthtic <- function(aesthetic, dataType) {
+  sprintf(
+    "aesthetic '%s' is set to mapping for %s data.
+      This aesthetic is usually only used for %s data mapping.",
+    aesthetic,
+    dataType,
+    setdiff(c('simulated,observed'), dataType)
   )
 }
