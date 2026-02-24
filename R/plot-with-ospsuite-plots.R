@@ -62,11 +62,17 @@
 #' @param nsd Optional parameter specifying the number of standard deviations to
 #'   plot above and below the mean (used for error bars when aggregation is
 #'   "arithmetic" or "geometric"). Ignored if `aggregation` is  `quantiles`.
-#' @param showLegendPerDataset Logical flag to display separate legend entries
-#'   for observed and simulated datasets. When `TRUE`, observed data will use
-#'   different shapes and simulated data will use different line types for each
-#'   dataset. Defaults to `FALSE`. Note: User-provided `mapping` and
-#'   `observedMapping` will override this setting.
+#' @param showLegendPerDataset Controls display of separate legend entries for
+#'   individual datasets. One of:
+#'   - `"none"` (default): No per-dataset differentiation. Only group-level legend.
+#'   - `"all"`: Differentiate both observed (via `shape`) and simulated (via `linetype`).
+#'   - `"observed"`: Differentiate only observed data via different shapes.
+#'   - `"simulated"`: Differentiate only simulated data via different line types.
+#'   - `TRUE` (deprecated): Equivalent to `"all"`.
+#'   - `FALSE` (deprecated): Equivalent to `"none"`.
+#'   
+#'   User-provided `mapping` and `observedMapping` will override internal settings.
+#'   A warning is issued if the override removes per-dataset differentiation.
 #' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
 #'
 #' @return A `ggplot2` plot object representing the time profile.
@@ -80,6 +86,15 @@
 #'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`
 #' ))
+#' 
+#' # Show individual dataset names for observed data only
+#' plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+#' 
+#' # Show individual dataset names for simulated data only
+#' plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
+#' 
+#' # Show individual dataset names for both observed and simulated
+#' plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
 #' }
 plotTimeProfile <- function(
   plotData, # nolint
@@ -91,14 +106,26 @@ plotTimeProfile <- function(
     ospsuite.plots::OptionKeys$Percentiles
   )[c(1, 3, 5)],
   nsd = 1,
-  showLegendPerDataset = FALSE,
+  showLegendPerDataset = "none",
   ...
 ) {
   # initialize variables used for data.table to avoid messages during checks
   yDimension <- yUnit <- dataType <- NULL
 
-  # Validate showLegendPerDataset
-  checkmate::assertLogical(showLegendPerDataset, len = 1)
+  # Normalize and validate showLegendPerDataset
+  if (is.logical(showLegendPerDataset)) {
+    showLegendPerDataset <- if (showLegendPerDataset) "all" else "none"
+    warning(
+      "Using logical values for 'showLegendPerDataset' is deprecated. ",
+      "Use \"none\", \"all\", \"observed\", or \"simulated\" instead.",
+      call. = FALSE
+    )
+  }
+  
+  checkmate::assertChoice(
+    showLegendPerDataset,
+    choices = c("none", "all", "observed", "simulated")
+  )
 
   plotData <- .validateAndConvertData(
     plotData = plotData,
@@ -109,12 +136,24 @@ plotTimeProfile <- function(
   )
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
 
+  # Check if data contains observed and/or simulated data
+  hasObserved <- any(plotData$dataType == "observed")
+  hasSimulated <- any(plotData$dataType == "simulated")
+
   # Set internal mappings for showLegendPerDataset if enabled
   # User-provided mappings will override these internal mappings
   internalMapping <- mapping
   internalObservedMapping <- observedMapping
   
-  if (showLegendPerDataset) {
+  if (showLegendPerDataset %in% c("all", "simulated")) {
+    if (!hasSimulated && showLegendPerDataset == "simulated") {
+      warning(
+        "showLegendPerDataset = \"simulated\" but no simulated data present. ",
+        "This setting will have no effect.",
+        call. = FALSE
+      )
+    }
+    
     # For simulated data, add linetype mapping to show individual datasets
     # modifyList: user 'mapping' parameter overrides internal 'linetype = name'
     internalMapping <- structure(
@@ -122,12 +161,48 @@ plotTimeProfile <- function(
       class = "uneval"
     )
     
+    # Check if user mapping overrode the linetype
+    if (!identical(internalMapping$linetype, quote(name))) {
+      warning(
+        "showLegendPerDataset = \"", showLegendPerDataset, "\": ",
+        "user 'mapping' overrides linetype for simulated data; ",
+        "per-dataset line differentiation will not be applied.",
+        call. = FALSE
+      )
+    }
+  }
+  
+  if (showLegendPerDataset %in% c("all", "observed")) {
+    if (!hasObserved && showLegendPerDataset == "observed") {
+      warning(
+        "showLegendPerDataset = \"observed\" but no observed data present. ",
+        "This setting will have no effect.",
+        call. = FALSE
+      )
+    }
+    
     # For observed data, add shape mapping to show individual datasets
+    # First, filter out aesthetics that are irrelevant to points
+    # to prevent user's simulated-data aesthetics from leaking to observed data
+    observedMappingFiltered <- observedMapping[
+      !names(observedMapping) %in% c("linetype", "linewidth")
+    ]
+    
     # modifyList: user 'observedMapping' parameter overrides internal 'shape = name'
     internalObservedMapping <- structure(
-      utils::modifyList(ggplot2::aes(shape = name), observedMapping),
+      utils::modifyList(ggplot2::aes(shape = name), observedMappingFiltered),
       class = "uneval"
     )
+    
+    # Check if user mapping overrode the shape
+    if (!identical(internalObservedMapping$shape, quote(name))) {
+      warning(
+        "showLegendPerDataset = \"", showLegendPerDataset, "\": ",
+        "user 'observedMapping' overrides shape for observed data; ",
+        "per-dataset point differentiation will not be applied.",
+        call. = FALSE
+      )
+    }
   }
 
   # Capture additional arguments

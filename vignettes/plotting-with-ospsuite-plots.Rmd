@@ -183,17 +183,50 @@ plotTimeProfile(
 )
 ```
 
-For datasets with multiple observed or simulated results, you can display individual dataset names in the legend using the `showLegendPerDataset` parameter:
+### Showing Individual Dataset Names
+
+For datasets with multiple observed or simulated results, you can display individual dataset names in the legend using the `showLegendPerDataset` parameter.
+
+**Important**: The aesthetic used for differentiation depends on data type:
+- **Observed data** (points): Uses different **shapes** (`shape = name`)
+- **Simulated data** (lines): Uses different **line types** (`linetype = name`)
 
 ```{r timeprofile-legend-per-dataset, eval=FALSE}
-# Show individual dataset names in legend
-plotTimeProfile(
-  myDataCombined,
-  showLegendPerDataset = TRUE
-)
+# Show all individual dataset names (both observed and simulated)
+plotTimeProfile(myDataCombined, showLegendPerDataset = "all")
+
+# Show only observed dataset names (different shapes)
+plotTimeProfile(myDataCombined, showLegendPerDataset = "observed")
+
+# Show only simulated dataset names (different line types)
+plotTimeProfile(myDataCombined, showLegendPerDataset = "simulated")
+
+# No per-dataset differentiation (default)
+plotTimeProfile(myDataCombined, showLegendPerDataset = "none")
 ```
 
-This automatically adds different shapes for observed data and different line types for simulated data to distinguish between individual datasets in the legend.
+For manual control over aesthetics, use the `mapping` and `observedMapping` parameters:
+
+```{r timeprofile-manual-aesthetics, eval=FALSE}
+# Manually specify aesthetics for simulated data
+plotTimeProfile(
+  myDataCombined,
+  mapping = ggplot2::aes(linetype = name)
+)
+
+# Manually specify aesthetics for observed data
+plotTimeProfile(
+  myDataCombined,
+  observedMapping = ggplot2::aes(shape = name)
+)
+
+# Different aesthetics for each data type
+plotTimeProfile(
+  myDataCombined,
+  mapping = ggplot2::aes(linetype = name),
+  observedMapping = ggplot2::aes(shape = name, fill = name)
+)
+```
 
 ## Predicted vs Observed Plots
 
