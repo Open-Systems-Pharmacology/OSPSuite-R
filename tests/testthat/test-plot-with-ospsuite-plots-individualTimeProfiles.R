@@ -206,7 +206,7 @@ test_that("It warns when user mapping containsuntypical aethetics", {
   expect_warning(
     plotTimeProfile(
       manyObsDC,
-      mapping = ggplot2::aes(linetype = dataType)
+      observedMapping = ggplot2::aes(linetype = dataType)
     ),
     messages$plotUntypicalAesthtic(
       aesthetic = 'linetype',

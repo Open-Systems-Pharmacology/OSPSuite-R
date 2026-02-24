@@ -149,16 +149,7 @@ plotTimeProfile <- function(
   observedMappingAdjusted = .getMappingForTimeprofiles(
     plotData = plotData,
     metaData = metaData,
-    userMapping = if (showLegendPerDataset %in% c("all", "observed")) {
-      # Strip aesthetics irrelevant to points before merging
-      observedMappingFiltered <- observedMapping[
-        !names(observedMapping) %in% c("linetype", "linewidth")
-      ]
-      internalObservedMapping <- structure(
-        utils::modifyList(ggplot2::aes(shape = name), observedMappingFiltered),
-        class = "uneval"
-      )
-    },
+    userMapping = observedMapping,
     showLegendPerDataset = showLegendPerDataset,
     dataType = 'observed'
   )
