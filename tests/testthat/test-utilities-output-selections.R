@@ -54,22 +54,24 @@ test_that("It throws an error for invalid path when stopIfNotFound is TRUE (defa
   expect_error(addOutputs(invalidPath, sim), "Could not find quantity")
 })
 
-test_that("It does not throw an error for invalid path when stopIfNotFound is FALSE", {
+test_that("It silently ignores invalid paths when stopIfNotFound is FALSE", {
   outputSelections$clear()
   invalidPath <- "InvalidPath|DoesNotExist"
   expect_no_error(addOutputs(invalidPath, sim, stopIfNotFound = FALSE))
   expect_equal(length(sim$outputSelections$allOutputs), 0)
 })
 
-test_that("It adds valid paths and throws error for invalid paths when stopIfNotFound is TRUE", {
+test_that("It throws error for invalid path and does not add any outputs when stopIfNotFound is TRUE", {
   outputSelections$clear()
   validPath <- "Organism|Liver|Volume"
   invalidPath <- "InvalidPath|DoesNotExist"
   paths <- c(validPath, invalidPath)
   expect_error(addOutputs(paths, sim), "Could not find quantity")
+  # Verify that no outputs were added before the error
+  expect_equal(length(sim$outputSelections$allOutputs), 0)
 })
 
-test_that("It adds valid paths and skips invalid paths when stopIfNotFound is FALSE", {
+test_that("It adds valid paths and silently skips invalid paths when stopIfNotFound is FALSE", {
   outputSelections$clear()
   validPath <- "Organism|Liver|Volume"
   invalidPath <- "InvalidPath|DoesNotExist"
@@ -110,7 +112,7 @@ test_that("setOutputs throws an error for invalid path when stopIfNotFound is TR
   expect_error(setOutputs(invalidPath, sim), "Could not find quantity")
 })
 
-test_that("setOutputs does not throw an error for invalid path when stopIfNotFound is FALSE", {
+test_that("setOutputs clears existing outputs and silently ignores invalid paths when stopIfNotFound is FALSE", {
   outputSelections$clear()
   addOutputs("Organism|Liver|Volume", sim)
   expect_gt(length(outputSelections$allOutputs), 0)
