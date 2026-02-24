@@ -14,7 +14,7 @@ plotTimeProfile(
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
     3, 5)],
   nsd = 1,
-  showLegendPerDataset = FALSE,
+  showLegendPerDataset = "none",
   ...
 )
 }
@@ -62,11 +62,17 @@ population.}
 plot above and below the mean (used for error bars when aggregation is
 "arithmetic" or "geometric"). Ignored if \code{aggregation} is  \code{quantiles}.}
 
-\item{showLegendPerDataset}{Logical flag to display separate legend entries
-for observed and simulated datasets. When \code{TRUE}, observed data will use
-different shapes and simulated data will use different line types for each
-dataset. Defaults to \code{FALSE}. Note: User-provided \code{mapping} and
-\code{observedMapping} will override this setting.}
+\item{showLegendPerDataset}{Controls display of separate legend entries for
+individual datasets. One of:
+\itemize{
+\item \code{"none"} (default): No per-dataset differentiation. Only group-level legend.
+\item \code{"all"}: Differentiate both observed (via \code{shape}) and simulated (via \code{linetype}).
+\item \code{"observed"}: Differentiate only observed data via different shapes.
+\item \code{"simulated"}: Differentiate only simulated data via different line types.
+}
+
+User-provided \code{mapping} and \code{observedMapping} will override internal settings.
+A warning is issued if the override removes per-dataset differentiation.}
 
 \item{...}{Additional arguments passed to \code{ospsuite.plots::plotTimeProfile}.}
 }
@@ -115,6 +121,15 @@ plotTimeProfile(convertUnits(
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`mg/l`
 ))
+
+# Show individual dataset names for observed data only
+plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+
+# Show individual dataset names for simulated data only
+plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
+
+# Show individual dataset names for both observed and simulated
+plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
 }
 }
 \seealso{

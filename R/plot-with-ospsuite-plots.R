@@ -964,7 +964,9 @@ plotQuantileQuantilePlot <- function(
 #' @param metaData A list with metadata for plotData.
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
-#'
+#' @param showLegendPerDataset Controls display of separate legend entries for
+#'   individual datasets.
+#' @param dataTypeFilter type of data for which mapping is constructed.
 #' @return A mapping object for ggplot2.
 #' @keywords internal
 #' @noRd
