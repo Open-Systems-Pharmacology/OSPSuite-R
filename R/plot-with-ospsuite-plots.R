@@ -50,7 +50,7 @@
 #'   `ggplot2::aes()`. This is added or replaces the default mapping constructed
 #'   by the data.
 #' @param observedMapping A ggplot2 aesthetic mapping for observed data. Default
-#'   is the same as `mapping`.
+#'   is NULL. The a copy of mapping without line typical aesthtics like linetype and linewidth is used.
 #' @param aggregation The type of the aggregation of simulated data. One of
 #'   `quantiles` (Default), `arithmetic` or `geometric` (full list in
 #'   `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
@@ -98,7 +98,7 @@ plotTimeProfile <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
-  observedMapping = mapping,
+  observedMapping = NULL,
   aggregation = "quantiles",
   quantiles = ospsuite.plots::getOspsuite.plots.option(
     ospsuite.plots::OptionKeys$Percentiles
@@ -140,10 +140,25 @@ plotTimeProfile <- function(
     showLegendPerDataset = showLegendPerDataset,
     dataType = 'simulated'
   )
+  if (is.null(observedMapping)) {
+    # Strip aesthetics irrelevant to points before merging
+    observedMapping <- mapping[
+      !names(mapping) %in% c("linetype", "linewidth")
+    ]
+  }
   observedMappingAdjusted = .getMappingForTimeprofiles(
     plotData = plotData,
     metaData = metaData,
-    userMapping = observedMapping,
+    userMapping = if (showLegendPerDataset %in% c("all", "observed")) {
+      # Strip aesthetics irrelevant to points before merging
+      observedMappingFiltered <- observedMapping[
+        !names(observedMapping) %in% c("linetype", "linewidth")
+      ]
+      internalObservedMapping <- structure(
+        utils::modifyList(ggplot2::aes(shape = name), observedMappingFiltered),
+        class = "uneval"
+      )
+    },
     showLegendPerDataset = showLegendPerDataset,
     dataType = 'observed'
   )

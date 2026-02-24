@@ -8,7 +8,7 @@ plotTimeProfile(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
-  observedMapping = mapping,
+  observedMapping = NULL,
   aggregation = "quantiles",
   quantiles =
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
@@ -47,7 +47,7 @@ about dimensions and units for both x and y axes.}
 by the data.}
 
 \item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default
-is the same as \code{mapping}.}
+is NULL. The a copy of mapping without line typical aesthtics like linetype and linewidth is used.}
 
 \item{aggregation}{The type of the aggregation of simulated data. One of
 \code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in

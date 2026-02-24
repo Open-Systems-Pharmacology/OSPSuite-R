@@ -215,6 +215,15 @@ test_that("It warns when user mapping containsuntypical aethetics", {
   )
 })
 
+test_that("line width does not leak into observedMapping", {
+  expect_no_warning(
+    plotTimeProfile(
+      manyObsSimDC,
+      mapping = ggplot2::aes(linetype = name)
+    )
+  )
+})
+
 test_that("It handles edge case: observed data with showLegendPerDataset simulated", {
   set.seed(123)
   # Should warn and produce plot with no per-dataset differentiation
