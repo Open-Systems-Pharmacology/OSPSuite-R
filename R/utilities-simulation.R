@@ -770,12 +770,14 @@ exportIndividualSimulations <- function(
 #' includes a '$path' entry containing the partial path from the root
 #' to that level.
 #'
-#' @param originalPathString The full path string of the entity
-#'   (e.g., "Organism|Liver|Volume")
+#' @param originalPathString The complete path string to the leaf node entity
+#'   (e.g., "Organism|Liver|Volume"). This is the full path that will be stored
+#'   at the terminal node.
 #' @param arrayToGo A vector of path components still to be processed
 #'   (e.g., c("Liver", "Volume"))
-#' @param pathSoFar A vector of path components already processed
-#'   (e.g., c("Organism")). Represents the path to the current level.
+#' @param pathSoFar A vector of path components already processed, representing
+#'   the accumulated path to the current level being constructed
+#'   (e.g., c("Organism")).
 #'
 #' @return A nested list structure representing the remaining path components
 #'
@@ -823,22 +825,23 @@ exportIndividualSimulations <- function(
 #' entry containing the partial path from the root to that level.
 #'
 #' @param listSoFar The existing tree structure being built up
-#' @param originalString The full path string of the entity being added
-#'   (e.g., "Organism|Liver|Volume")
+#' @param originalPathString The complete path string to the leaf node entity
+#'   being added (e.g., "Organism|Liver|Volume"). This is the full path that
+#'   will be stored at the terminal node.
 #' @param arrayToGo A vector of path components still to be processed
 #'   (e.g., c("Liver", "Volume"))
-#' @param pathSoFar A vector of path components already processed
-#'   (e.g., c("Organism")). Used to calculate the partial path at current level.
+#' @param pathSoFar A vector of path components already processed, representing
+#'   the accumulated path to the current level (e.g., c("Organism")).
 #'
 #' @return Updated tree structure with the new path added
 #'
 #' @keywords internal
 #' @noRd
-.nextStep <- function(listSoFar, originalString, arrayToGo, pathSoFar = c()) {
+.nextStep <- function(listSoFar, originalPathString, arrayToGo, pathSoFar = c()) {
   if (length(arrayToGo) == 0) {
     # If end of string vector arrayToGo has been reached, create a vector called
-    # 'path' and give it the value 'originalString'.
-    listSoFar$path <- originalString
+    # 'path' and give it the value 'originalPathString'.
+    listSoFar$path <- originalPathString
   } else {
     # Calculate path for the next recursion level by including the current element
     nextLevelPath <- c(pathSoFar, arrayToGo[1])
@@ -847,7 +850,7 @@ exportIndividualSimulations <- function(
     # .addBranch
     if (is.null(listSoFar[[arrayToGo[1]]])) {
       listSoFar[[arrayToGo[1]]] <- .addBranch(
-        originalString,
+        originalPathString,
         tail(arrayToGo, -1),
         nextLevelPath
       )
@@ -857,7 +860,7 @@ exportIndividualSimulations <- function(
       # this function using the remaining elements of arrayToGo.
       listSoFar[[arrayToGo[1]]] <- .nextStep(
         listSoFar[[arrayToGo[1]]],
-        originalString,
+        originalPathString,
         tail(arrayToGo, -1),
         nextLevelPath
       )
