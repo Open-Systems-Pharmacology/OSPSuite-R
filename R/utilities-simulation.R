@@ -793,7 +793,6 @@ exportIndividualSimulations <- function(
     # sub-branch list corresponding to the structure of the remaining elements
     # of arrayToGo
     newBranch <- list()
-    
     # Add '$path' entry for the current level using pathSoFar
     # (which represents where we are in the tree)
     # Note: pathSoFar should always have length > 0 when building intermediate
@@ -843,7 +842,6 @@ exportIndividualSimulations <- function(
   } else {
     # Calculate path for the next recursion level by including the current element
     nextLevelPath <- c(pathSoFar, arrayToGo[1])
-    
     # End of branch has not been reached. If this portion of the string vector
     # arrayToGo has not been added to listToGo yet, add it using the function
     # .addBranch
