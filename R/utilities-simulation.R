@@ -796,18 +796,20 @@ exportIndividualSimulations <- function(
     
     # Add '$path' entry for the current level using pathSoFar
     # (which represents where we are in the tree)
+    # Note: pathSoFar should always have length > 0 when building intermediate
+    # nodes, but we check to be safe
     if (length(pathSoFar) > 0) {
       newBranch$path <- toPathString(pathSoFar)
     }
     
-    # Calculate path for the next level by including the next element
-    nextPathSoFar <- c(pathSoFar, arrayToGo[1])
+    # Calculate path for the next recursion level by including the next element
+    nextLevelPath <- c(pathSoFar, arrayToGo[1])
     
     # Recursively create sub-branches for remaining path components
     newBranch[[arrayToGo[1]]] <- .addBranch(
       originalPathString,
       tail(arrayToGo, -1),
-      nextPathSoFar
+      nextLevelPath
     )
 
     return(newBranch)
@@ -839,8 +841,8 @@ exportIndividualSimulations <- function(
     # 'path' and give it the value 'originalString'.
     listSoFar$path <- originalString
   } else {
-    # Add the current path element to pathSoFar to track position in the tree
-    currentPathSoFar <- c(pathSoFar, arrayToGo[1])
+    # Calculate path for the next recursion level by including the current element
+    nextLevelPath <- c(pathSoFar, arrayToGo[1])
     
     # End of branch has not been reached. If this portion of the string vector
     # arrayToGo has not been added to listToGo yet, add it using the function
@@ -849,7 +851,7 @@ exportIndividualSimulations <- function(
       listSoFar[[arrayToGo[1]]] <- .addBranch(
         originalString,
         tail(arrayToGo, -1),
-        currentPathSoFar
+        nextLevelPath
       )
     } else {
       # If this portion of the string vector arrayToGo has already been added to
@@ -859,7 +861,7 @@ exportIndividualSimulations <- function(
         listSoFar[[arrayToGo[1]]],
         originalString,
         tail(arrayToGo, -1),
-        currentPathSoFar
+        nextLevelPath
       )
     }
   }
