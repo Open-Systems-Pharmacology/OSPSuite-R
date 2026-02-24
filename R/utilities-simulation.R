@@ -800,10 +800,10 @@ exportIndividualSimulations <- function(
     if (length(pathSoFar) > 0) {
       newBranch$path <- toPathString(pathSoFar)
     }
-    
+
     # Calculate path for the next recursion level by including the next element
     nextLevelPath <- c(pathSoFar, arrayToGo[1])
-    
+
     # Recursively create sub-branches for remaining path components
     newBranch[[arrayToGo[1]]] <- .addBranch(
       originalPathString,
