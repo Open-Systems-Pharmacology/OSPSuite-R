@@ -628,6 +628,20 @@ test_that("it can explore a simulation by instance", {
   expect_equal(path, "Organism|Liver|Volume")
 })
 
+test_that("it provides $path at intermediate tree levels", {
+  sim <- loadTestSimulation("simple")
+  tree <- getSimulationTree(sim)
+
+  # Test $path at root level
+  expect_equal(tree$Organism$path, "Organism")
+
+  # Test $path at intermediate levels
+  expect_equal(tree$Organism$Liver$path, "Organism|Liver")
+
+  # Test $path still works at leaf level
+  expect_equal(tree$Organism$Liver$Volume$path, "Organism|Liver|Volume")
+})
+
 test_that("It calculates steady-state for multiple simulations, single steadyStateTime", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim1 <- loadSimulation(simFilePath)

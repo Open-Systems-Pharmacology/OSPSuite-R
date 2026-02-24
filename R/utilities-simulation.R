@@ -762,12 +762,26 @@ exportIndividualSimulations <- function(
 }
 
 
+#' Helper function to create a new branch in the simulation tree
+#'
+#' @description
+#' Recursively creates a multilayered list with a branched structure
+#' corresponding to the structure of arrayToGo. Each level of the tree
+#' includes a '$path' entry containing the partial path from the root
+#' to that level.
+#'
+#' @param originalPathString The full path string of the entity
+#'   (e.g., "Organism|Liver|Volume")
+#' @param arrayToGo A vector of path components still to be processed
+#'   (e.g., c("Liver", "Volume"))
+#' @param pathSoFar A vector of path components already processed
+#'   (e.g., c("Organism")). Used to calculate the partial path at current level.
+#'
+#' @return A nested list structure representing the remaining path components
+#'
 #' @keywords internal
 #' @noRd
-.addBranch <- function(originalPathString, arrayToGo) {
-  # Function to create a multilayered list called endList with a branched
-  # structure corresponding to the structure of arrayToGo that terminates with a
-  # string called 'path' that is equal to the string originalString
+.addBranch <- function(originalPathString, arrayToGo, pathSoFar = c()) {
   if (length(arrayToGo) == 0) {
     # If arrayToGo is empty, create a terminal list with a string called 'path'
     # and value equal to originalString
@@ -779,32 +793,60 @@ exportIndividualSimulations <- function(
     # sub-branch list corresponding to the structure of the remaining elements
     # of arrayToGo
     newBranch <- list()
+    
+    # Add the current path element to pathSoFar to track position in the tree
+    currentPathSoFar <- c(pathSoFar, arrayToGo[1])
+    
+    # Add '$path' entry for this level with the partial path
+    newBranch$path <- toPathString(currentPathSoFar)
+    
+    # Recursively create sub-branches for remaining path components
     newBranch[[arrayToGo[1]]] <- .addBranch(
       originalPathString,
-      tail(arrayToGo, -1)
+      tail(arrayToGo, -1),
+      currentPathSoFar
     )
 
     return(newBranch)
   }
 }
 
+#' Helper function to add paths to existing tree structure
+#'
+#' @description
+#' Recursively traverses and updates an existing tree structure (listSoFar),
+#' adding new branches as needed. Each level of the tree includes a '$path'
+#' entry containing the partial path from the root to that level.
+#'
+#' @param listSoFar The existing tree structure being built up
+#' @param originalString The full path string of the entity being added
+#'   (e.g., "Organism|Liver|Volume")
+#' @param arrayToGo A vector of path components still to be processed
+#'   (e.g., c("Liver", "Volume"))
+#' @param pathSoFar A vector of path components already processed
+#'   (e.g., c("Organism")). Used to calculate the partial path at current level.
+#'
+#' @return Updated tree structure with the new path added
+#'
 #' @keywords internal
 #' @noRd
-.nextStep <- function(listSoFar, originalString, arrayToGo) {
-  # Recursive function that adds a multilayer list to listSoFar that has a
-  # branched structure representing the vector of strings arrayToGo.
+.nextStep <- function(listSoFar, originalString, arrayToGo, pathSoFar = c()) {
   if (length(arrayToGo) == 0) {
     # If end of string vector arrayToGo has been reached, create a vector called
     # 'path' and give it the value 'originalString'.
     listSoFar$path <- originalString
   } else {
+    # Add the current path element to pathSoFar to track position in the tree
+    currentPathSoFar <- c(pathSoFar, arrayToGo[1])
+    
     # End of branch has not been reached. If this portion of the string vector
     # arrayToGo has not been added to listToGo yet, add it using the function
     # .addBranch
     if (is.null(listSoFar[[arrayToGo[1]]])) {
       listSoFar[[arrayToGo[1]]] <- .addBranch(
         originalString,
-        tail(arrayToGo, -1)
+        tail(arrayToGo, -1),
+        currentPathSoFar
       )
     } else {
       # If this portion of the string vector arrayToGo has already been added to
@@ -813,7 +855,8 @@ exportIndividualSimulations <- function(
       listSoFar[[arrayToGo[1]]] <- .nextStep(
         listSoFar[[arrayToGo[1]]],
         originalString,
-        tail(arrayToGo, -1)
+        tail(arrayToGo, -1),
+        currentPathSoFar
       )
     }
   }
