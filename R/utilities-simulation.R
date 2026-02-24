@@ -775,7 +775,7 @@ exportIndividualSimulations <- function(
 #' @param arrayToGo A vector of path components still to be processed
 #'   (e.g., c("Liver", "Volume"))
 #' @param pathSoFar A vector of path components already processed
-#'   (e.g., c("Organism")). Used to calculate the partial path at current level.
+#'   (e.g., c("Organism")). Represents the path to the current level.
 #'
 #' @return A nested list structure representing the remaining path components
 #'
@@ -794,17 +794,20 @@ exportIndividualSimulations <- function(
     # of arrayToGo
     newBranch <- list()
     
-    # Add the current path element to pathSoFar to track position in the tree
-    currentPathSoFar <- c(pathSoFar, arrayToGo[1])
+    # Add '$path' entry for the current level using pathSoFar
+    # (which represents where we are in the tree)
+    if (length(pathSoFar) > 0) {
+      newBranch$path <- toPathString(pathSoFar)
+    }
     
-    # Add '$path' entry for this level with the partial path
-    newBranch$path <- toPathString(currentPathSoFar)
+    # Calculate path for the next level by including the next element
+    nextPathSoFar <- c(pathSoFar, arrayToGo[1])
     
     # Recursively create sub-branches for remaining path components
     newBranch[[arrayToGo[1]]] <- .addBranch(
       originalPathString,
       tail(arrayToGo, -1),
-      currentPathSoFar
+      nextPathSoFar
     )
 
     return(newBranch)
@@ -882,9 +885,10 @@ exportIndividualSimulations <- function(
 #' @return
 #'
 #' A list with a branched structure representing the path tree of entities in
-#' the simulation file that fall under the types specified in `quantityType`. At
-#' the end of each branch is a string called 'path' that is the path of the
-#' quantity represented by the branch.
+#' the simulation file that fall under the types specified in `quantityType`.
+#' Each level of the tree includes a '$path' entry containing the path from
+#' the root to that level. This allows accessing the path at any level of the
+#' tree, not just at leaf nodes.
 #'
 #' @importFrom utils tail
 #' @examples
@@ -893,7 +897,12 @@ exportIndividualSimulations <- function(
 #'
 #' tree <- getSimulationTree(sim)
 #'
+#' # Access path at leaf level
 #' liver_volume_path <- tree$Organism$Liver$Volume$path
+#'
+#' # Access path at intermediate levels
+#' organism_path <- tree$Organism$path
+#' liver_path <- tree$Organism$Liver$path
 #' @export
 getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
   validateIsOfType(simulationOrFilePath, c("Simulation", "character"))
