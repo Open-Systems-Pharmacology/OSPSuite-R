@@ -6,6 +6,8 @@
 #'   vector) to add.
 #' @param simulation Instance of a simulation for which output selection should
 #'   be updated.
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, the path is silently ignored.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -17,7 +19,7 @@
 #' parameter <- getParameter("Organism|Liver|Volume", sim)
 #' addOutputs(parameter, sim)
 #' @export
-addOutputs <- function(quantitiesOrPaths, simulation) {
+addOutputs <- function(quantitiesOrPaths, simulation, stopIfNotFound = TRUE) {
   quantitiesOrPaths <- c(quantitiesOrPaths)
 
   validateIsOfType(quantitiesOrPaths, c("Quantity", "character"))
@@ -36,7 +38,7 @@ addOutputs <- function(quantitiesOrPaths, simulation) {
 
   task <- .getNetTaskFromCache("ContainerTask")
   for (path in paths) {
-    task$call("AddQuantitiesToSimulationOutputByPath", simulation, path)
+    task$call("AddQuantitiesToSimulationOutputByPath", simulation, path, stopIfNotFound)
   }
 }
 
@@ -64,6 +66,9 @@ clearOutputs <- function(simulation) {
 #' @param simulation Instance of a simulation for which output selection should
 #'   be updated.
 #'
+#' @param stopIfNotFound Boolean. If `TRUE` (default) and no quantity exists for
+#'   the given path, an error is thrown. If `FALSE`, the path is silently ignored.
+#'
 #' @title Set outputs
 #' @description
 #' Sets the quantities as output into the  `simulation`.
@@ -72,7 +77,7 @@ clearOutputs <- function(simulation) {
 #'  See `addOutputs` for adding quantities without clearing the output selection.
 #'  See `clearOutputs` for clearing the output selection without adding new quantities.
 #' @export
-setOutputs <- function(quantitiesOrPaths, simulation) {
+setOutputs <- function(quantitiesOrPaths, simulation, stopIfNotFound = TRUE) {
   clearOutputs(simulation)
-  addOutputs(quantitiesOrPaths, simulation)
+  addOutputs(quantitiesOrPaths, simulation, stopIfNotFound)
 }
