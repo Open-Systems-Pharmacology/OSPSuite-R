@@ -20,10 +20,12 @@ test_that("It constructs mapping correctly for time profiles", {
   )
 
   # Test without user mapping for data with group
-  mapping <- .getMappingForTimeprofiles(
-    mockPlotData,
-    mockMetaData,
-    userMapping = NULL
+  mapping <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
   )
   expect_true("uneval" %in% class(mapping))
   expect_equal(rlang::as_label(mapping$x), 'xValues')
@@ -32,20 +34,24 @@ test_that("It constructs mapping correctly for time profiles", {
   expect_equal(rlang::as_label(mapping$group), "interaction(group, name)")
 
   # Test without user mapping for data without group
-  mapping <- .getMappingForTimeprofiles(
-    mockPlotDataNoGroup,
-    mockMetaData,
-    userMapping = NULL
+  mapping <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataNoGroup,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
   )
   expect_equal(rlang::as_label(mapping$groupby), "name")
   expect_false('group' %in% names(mapping))
 
   # Test with user mapping for data with group
   userMapping <- ggplot2::aes(color = group, groupby = dataType)
-  mappingWithUser <- .getMappingForTimeprofiles(
-    mockPlotData,
-    mockMetaData,
-    userMapping = userMapping
+  mappingWithUser <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = userMapping,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
   )
   expect_equal(rlang::as_label(mappingWithUser$colour), 'group')
   expect_equal(rlang::as_label(mappingWithUser$groupby), "dataType")
@@ -56,6 +62,7 @@ test_that("It constructs mapping correctly for time profiles", {
     xValues = c(1, 2, 3, 4, 5),
     yValues = c(10, 20, 15, 25, 30),
     group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
     dataType = rep("observed", 5),
     xUnit = "h",
     yUnit = "mg/l",
@@ -63,10 +70,12 @@ test_that("It constructs mapping correctly for time profiles", {
     yErrorValues = c(1, 2, 1.5, 2.5, 3)
   )
 
-  mappingWithError <- .getMappingForTimeprofiles(
-    mockPlotDataError,
-    mockMetaData,
-    userMapping = NULL
+  mappingWithError <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataError,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
   )
   expect_true("error" %in% names(mappingWithError))
 
@@ -75,6 +84,7 @@ test_that("It constructs mapping correctly for time profiles", {
     xValues = c(1, 2, 3, 4, 5),
     yValues = c(10, 20, 15, 25, 30),
     group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
     dataType = rep("observed", 5),
     xUnit = "h",
     yUnit = "mg/l",
@@ -82,10 +92,12 @@ test_that("It constructs mapping correctly for time profiles", {
     yMax = c(12, 22, 18, 28, 32)
   )
 
-  mappingMinMax <- .getMappingForTimeprofiles(
-    mockPlotDataMinMax,
-    mockMetaData,
-    userMapping = NULL
+  mappingMinMax <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataMinMax,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
   )
   expect_true("ymin" %in% names(mappingMinMax))
   expect_true("ymax" %in% names(mappingMinMax))
@@ -95,6 +107,7 @@ test_that("It constructs mapping correctly for time profiles", {
     xValues = c(1, 2, 3, 1, 2),
     yValues = c(10, 20, 15, 0.1, 0.2),
     group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
     dataType = rep("observed", 5),
     xUnit = "h",
     yUnit = c(rep("mg/l", 3), rep("ml", 2))
@@ -108,12 +121,89 @@ test_that("It constructs mapping correctly for time profiles", {
   )
 
   # Test mapping with y2
-  mappingWithY2 <- .getMappingForTimeprofiles(
-    mockPlotDataWithY2,
-    mockMetaDataWithY2,
-    userMapping = NULL
+  mappingWithY2 <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataWithY2,
+    metaData = mockMetaDataWithY2,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
   )
   expect_contains(names(mappingWithY2), 'y2axis')
+  
+  # Test showLegendPerDataset for observed data
+  mappingObservedAll <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "all",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mappingObservedAll$shape), "name")
+  
+  mappingObservedObserved <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "observed",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mappingObservedObserved$shape), "name")
+  
+  # Test showLegendPerDataset for simulated data
+  mockPlotDataSim <- copy(mockPlotData)[, dataType := "simulated"]
+  
+  mappingSimulatedAll <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataSim,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "all",
+    dataTypeFilter = "simulated"
+  )
+  expect_equal(rlang::as_label(mappingSimulatedAll$linetype), "name")
+  
+  mappingSimulatedSimulated <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataSim,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "simulated",
+    dataTypeFilter = "simulated"
+  )
+  expect_equal(rlang::as_label(mappingSimulatedSimulated$linetype), "name")
+  
+  # Test warning when showLegendPerDataset doesn't match data
+  expect_warning(
+    ospsuite:::.getMappingForTimeprofiles(
+      plotData = mockPlotData,
+      metaData = mockMetaData,
+      userMapping = NULL,
+      showLegendPerDataset = "simulated",
+      dataTypeFilter = "simulated"
+    ),
+    "has no effect"
+  )
+  
+  # Test warning for unusual aesthetic
+  expect_warning(
+    ospsuite:::.getMappingForTimeprofiles(
+      plotData = mockPlotData,
+      metaData = mockMetaData,
+      userMapping = ggplot2::aes(linetype = name),
+      showLegendPerDataset = "none",
+      dataTypeFilter = "observed"
+    ),
+    "linetype"
+  )
+  
+  expect_warning(
+    ospsuite:::.getMappingForTimeprofiles(
+      plotData = mockPlotDataSim,
+      metaData = mockMetaData,
+      userMapping = ggplot2::aes(shape = name),
+      showLegendPerDataset = "none",
+      dataTypeFilter = "simulated"
+    ),
+    "shape"
+  )
 })
 
 # getMostFrequentUnit ----

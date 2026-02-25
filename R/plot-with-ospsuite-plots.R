@@ -138,7 +138,7 @@ plotTimeProfile <- function(
     metaData = metaData,
     userMapping = mapping,
     showLegendPerDataset = showLegendPerDataset,
-    dataType = 'simulated'
+    dataTypeFilter = 'simulated'
   )
   if (is.null(observedMapping)) {
     # Strip aesthetics irrelevant to points before merging
@@ -151,7 +151,7 @@ plotTimeProfile <- function(
     metaData = metaData,
     userMapping = observedMapping,
     showLegendPerDataset = showLegendPerDataset,
-    dataType = 'observed'
+    dataTypeFilter = 'observed'
   )
 
   if (any(names(metaData) %in% "y2")) {
