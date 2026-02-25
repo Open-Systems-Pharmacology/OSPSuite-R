@@ -8,6 +8,7 @@ plotPredictedVsObserved(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  yUnit = NULL,
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
@@ -42,6 +43,10 @@ about dimensions and units for both x and y axes.}
 \code{ggplot2::aes()}. This is added or replaces the default mapping constructed
 by the data.}
 
+\item{yUnit}{A character string specifying the target unit for the x and y-axis.
+If \code{NULL} (default), the most frequent unit in the data is used. For
+available units, see \code{ospsuite::ospUnits}.}
+
 \item{xyScale}{A character string specifying the scale for the x and y-axis.
 Default is \code{log}.}
 
@@ -54,7 +59,18 @@ y-axis) or \code{"y"} (default, predicted on y-axis, observed on x-axis).}
 where each entry represents a fold and its reciprocal. The identity fold
 (1) will be included if specified in \code{getFoldDistanceList}.}
 
-\item{...}{Additional arguments passed to \code{ospsuite.plots::plotYVsX}.}
+\item{...}{
+  Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}
+  \describe{
+    \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
+    \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
+    \item{\code{addRegression}}{A boolean that activates the insertion of a regression line.}
+    \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
+    \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
+    \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
+  }}
 }
 \value{
 A \code{ggplot2} plot object representing predicted vs observed values,

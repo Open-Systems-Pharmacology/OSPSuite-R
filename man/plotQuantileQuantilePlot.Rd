@@ -8,6 +8,8 @@ plotQuantileQuantilePlot(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   residualScale = "log",
   ...
 )
@@ -40,10 +42,27 @@ about dimensions and units for both x and y axes.}
 \code{ggplot2::aes()}. This is added or replaces the default mapping constructed
 by the data.}
 
+\item{xUnit}{A character string specifying the target unit for the x-axis.
+If \code{NULL} (default), the most frequent unit in the data is used. For
+available units, see \code{ospsuite::ospUnits}.}
+
+\item{yUnit}{A character string specifying the target unit for the simulated and
+observed y-values used for residual calculation.
+If \code{NULL} (default), the most frequent unit in the data is used.
+For available units, see \code{ospsuite::ospUnits}.}
+
 \item{residualScale}{Either "linear", "log", or "ratio" method for computing
 residuals. Default is \code{log}.}
 
-\item{...}{Additional arguments passed to \code{ospsuite.plots::plotQQ}.}
+\item{...}{
+  Arguments passed on to \code{\link[ospsuite.plots:plotQQ]{ospsuite.plots::plotQQ}}
+  \describe{
+    \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
+    \item{\code{geomQQAttributes}}{A list of arguments passed to \code{ggplot2::stat_qq()}.}
+    \item{\code{groupAesthetics}}{A character vector of aesthetic names used for grouping data points in the Q-Q plot.
+Common options include \code{"colour"}, \code{"fill"}, \code{"shape"}, \code{"linetype"}, and \code{"size"}.}
+  }}
 }
 \value{
 A \code{ggplot2} plot object representing the Q-Q plot.

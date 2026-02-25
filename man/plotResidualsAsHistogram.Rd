@@ -8,6 +8,7 @@ plotResidualsAsHistogram(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  yUnit = NULL,
   distribution = "normal",
   residualScale = "log",
   ...
@@ -41,12 +42,27 @@ about dimensions and units for both x and y axes.}
 \code{ggplot2::aes()}. This is added or replaces the default mapping constructed
 by the data.}
 
+\item{yUnit}{A character string specifying the target unit for the simulated and
+observed y-values used for residual calculation.
+If \code{NULL} (default), the most frequent unit in the data is used.
+For available units, see \code{ospsuite::ospUnits}.}
+
 \item{distribution}{parameter passed to \code{ospsuite.plots::plotHistogram}.}
 
 \item{residualScale}{Either "linear", "log", or "ratio" method for computing
 residuals. Default is \code{log}.}
 
-\item{...}{Additional arguments passed to \code{ospsuite.plots::plotHistogram}.}
+\item{...}{
+  Arguments passed on to \code{\link[ospsuite.plots:plotHistogram]{ospsuite.plots::plotHistogram}}
+  \describe{
+    \item{\code{geomHistAttributes}}{A \code{list} of arguments passed to \code{ggplot2::geom_histogram} (or \code{geom_bar} if \code{asBarPlot} = TRUE).}
+    \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
+    \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
+    \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
+    \item{\code{meanFunction}}{Function selection for the display of a vertical line. Options: \code{'none'}, \code{'mean'}, \code{'geomean'}, \code{'median'}, \code{'auto'} (default).
+\code{'auto'} selects \code{'mean'} for normal distribution, \code{'geomean'} for lognormal, \code{'median'} for other distributions, and \code{'none'} when no distribution fit.}
+  }}
 }
 \value{
 A \code{ggplot2} plot object representing the histogram of residuals.

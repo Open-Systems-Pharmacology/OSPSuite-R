@@ -1,5 +1,8 @@
 #' Observed versus predicted/simulated scatter plot
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' @inheritParams plotIndividualTimeProfile
 #' @param foldDistance A vector for plotting lines at required fold distances
 #' around the identity line (`x=y`). Set to NULL (default) to only draw identity
@@ -56,6 +59,12 @@ plotObservedVsSimulated <- function(
   defaultPlotConfiguration = NULL,
   foldDistance = NULL
 ) {
+  lifecycle::deprecate_soft(
+    when = "12.5",
+    what = "plotObservedVsSimulated()",
+    with = "plotPredictedVsObserved()",
+    details = "It will be removed in version 14.0."
+  )
   # validation -----------------------------
 
   defaultPlotConfiguration <- .validateDefaultPlotConfiguration(

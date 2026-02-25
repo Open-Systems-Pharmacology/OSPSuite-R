@@ -9,6 +9,9 @@ plotTimeProfile(
   metaData = NULL,
   mapping = ggplot2::aes(),
   observedMapping = NULL,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL,
   aggregation = "quantiles",
   quantiles =
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
@@ -47,7 +50,19 @@ about dimensions and units for both x and y axes.}
 by the data.}
 
 \item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default
-is NULL. The a copy of mapping without line typical aesthtics like linetype and linewidth is used.}
+is NULL. Then a copy of mapping without line typical aesthtics like linetype and linewidth is used.}
+
+\item{xUnit}{A character string specifying the target unit for the x-axis.
+If \code{NULL} (default), the most frequent unit in the data is used. For
+available units, see \code{ospsuite::ospUnits}.}
+
+\item{yUnit}{A character string specifying the target unit for the primary
+y-axis. If \code{NULL} (default), the most frequent unit in the data is used.
+For available units, see \code{ospsuite::ospUnits}.}
+
+\item{y2Unit}{A character string specifying the target unit for the secondary
+y-axis (only applicable when data contains two y-dimensions). If \code{NULL}
+(default), the most frequent unit in the data is used.}
 
 \item{aggregation}{The type of the aggregation of simulated data. One of
 \code{quantiles} (Default), \code{arithmetic} or \code{geometric} (full list in
@@ -74,7 +89,21 @@ individual datasets. One of:
 User-provided \code{mapping} and \code{observedMapping} will override internal settings.
 A warning is issued if the override removes per-dataset differentiation.}
 
-\item{...}{Additional arguments passed to \code{ospsuite.plots::plotTimeProfile}.}
+\item{...}{
+  Arguments passed on to \code{\link[ospsuite.plots:plotTimeProfile]{ospsuite.plots::plotTimeProfile}}
+  \describe{
+    \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
+    \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
+    \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
+    \item{\code{y2ScaleArgs}}{list of arguments passed to \code{ggplot2::sec_axis()}, trans, break are set by code}
+    \item{\code{plotObject}}{An optional \code{ggplot} object on which to add the plot layers}
+    \item{\code{geomLineAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_line}}
+    \item{\code{geomRibbonAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_ribbon}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
+    \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
+    \item{\code{groupAesthetics}}{vector of aesthetics, which are used for columns mapped with \code{groupby},}
+  }}
 }
 \value{
 A \code{ggplot2} plot object representing the time profile.
@@ -116,11 +145,9 @@ error bounds directly in \code{yMin} and \code{yMax} columns.
 \examples{
 \dontrun{
 # Generate a time profile plot for the provided data
-plotTimeProfile(convertUnits(
-  myDataCombined,
+plotTimeProfile(myDataCombined,
   xUnit = ospUnits$Time$h,
-  yUnit = ospUnits$`Concentration [mass]`$`mg/l`
-))
+  yUnit = ospUnits$`Concentration [mass]`$`mg/l`)
 
 # Show individual dataset names for observed data only
 plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
