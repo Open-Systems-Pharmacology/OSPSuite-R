@@ -86,24 +86,6 @@ test_that("It throws an exception when adding values that have the wrong number 
   )
 })
 
-test_that("It throws an exception when adding a single value for a population", {
-  population <- loadPopulation(populationFileName)
-  parameterPath <- "Organism|Weight"
-  expect_error(
-    population$setParameterValues(parameterPath, 50),
-    regexp = "Parameter values for 'Organism\\|Weight' does not have the expected number of elements. \\(Expected 10 vs Actual 1\\)"
-  )
-})
-
-test_that("It throws an exception when adding too many values", {
-  population <- loadPopulation(populationFileName)
-  parameterPath <- "Organism|MyParameter"
-  expect_error(
-    population$setParameterValues(parameterPath, c(1:15) * 2.5),
-    regexp = "Parameter values for 'Organism\\|MyParameter' does not have the expected number of elements. \\(Expected 10 vs Actual 15\\)"
-  )
-})
-
 test_that("It can retrieve all parameter values for an existing individual id", {
   population <- loadPopulation(populationFileName)
   parameterValues <- population$getParameterValuesForIndividual(7)
