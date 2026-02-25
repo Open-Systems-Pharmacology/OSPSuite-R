@@ -23,10 +23,10 @@ Adds the quantities as output into the  \code{simulation}. The quantities
 can either be specified using explicit instances or using paths.
 }
 \examples{
-simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-paths <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
+paths <- c("Organism|VenousBlood|Plasma|Aciclovir", "Organism|ArterialBlood|**|Aciclovir")
 addOutputs(paths, sim)
 
 parameter <- getParameter("Organism|Liver|Volume", sim)
