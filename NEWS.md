@@ -1,5 +1,19 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added five new plotting functions powered by `{ospsuite.plots}`:
+  `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`,
+  `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`.
+  These functions accept `DataCombined` objects or data frames and handle mixed
+  error types and unit conversion directly, without requiring data preprocessing.
+
+- The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`,
+  `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`,
+  `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated
+  in favor of the `{ospsuite.plots}`-based equivalents and will be removed in
+  version 14.0. (\#1739)
+
 ## Minor improvements and bug fixes
 
 - `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
