@@ -1,5 +1,8 @@
 #' Time-profile plot of individual data
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' @inheritParams calculateResiduals
 #' @param defaultPlotConfiguration A `DefaultPlotConfiguration` object, which is
 #'   an `R6` class object that defines plot properties.
@@ -55,6 +58,12 @@ plotIndividualTimeProfile <- function(
   defaultPlotConfiguration = NULL,
   showLegendPerDataset = FALSE
 ) {
+  lifecycle::deprecate_soft(
+    when = "13.0",
+    what = "plotIndividualTimeProfile()",
+    with = "plotTimeProfile()",
+    details = "It will be removed in version 14.0."
+  )
   .plotTimeProfile(dataCombined, defaultPlotConfiguration, showLegendPerDataset)
 }
 

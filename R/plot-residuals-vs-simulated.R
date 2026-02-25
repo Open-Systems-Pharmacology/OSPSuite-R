@@ -1,5 +1,8 @@
 #' Residuals versus time scatter plot
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams tlf::plotResVsPred
 #' @param scaling A character of length one specifying the scale type for residual. can be lin or log.
@@ -55,6 +58,12 @@ plotResidualsVsSimulated <- function(
   defaultPlotConfiguration = NULL,
   scaling = "lin"
 ) {
+  lifecycle::deprecate_soft(
+    when = "13.0",
+    what = "plotResidualsVsSimulated()",
+    with = "plotResidualsVsCovariate()",
+    details = "It will be removed in version 14.0."
+  )
   # validation -----------------------------
 
   rlang::arg_match(scaling, values = c("lin", "log"))

@@ -1,5 +1,8 @@
 #' Time-values profile plot for population simulations
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' @inheritParams plotIndividualTimeProfile
 #' @inheritParams .extractAggregatedSimulatedData
 #' @param showLegendPerDataset Logical flag to display separate legend entries
@@ -48,6 +51,12 @@ plotPopulationTimeProfile <- function(
   showLegendPerDataset = FALSE,
   ...
 ) {
+  lifecycle::deprecate_soft(
+    when = "13.0",
+    what = "plotPopulationTimeProfile()",
+    with = "plotTimeProfile()",
+    details = "It will be removed in version 14.0."
+  )
   .plotTimeProfile(
     dataCombined,
     defaultPlotConfiguration,
