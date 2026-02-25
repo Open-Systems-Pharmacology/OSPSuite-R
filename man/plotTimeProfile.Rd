@@ -8,7 +8,7 @@ plotTimeProfile(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
-  observedMapping = mapping,
+  observedMapping = NULL,
   xUnit = NULL,
   yUnit = NULL,
   y2Unit = NULL,
@@ -17,6 +17,7 @@ plotTimeProfile(
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
     3, 5)],
   nsd = 1,
+  showLegendPerDataset = "none",
   ...
 )
 }
@@ -49,7 +50,7 @@ about dimensions and units for both x and y axes.}
 by the data.}
 
 \item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default
-is the same as \code{mapping}.}
+is NULL. Then a copy of mapping without line typical aesthtics like linetype and linewidth is used.}
 
 \item{xUnit}{A character string specifying the target unit for the x-axis.
 If \code{NULL} (default), the most frequent unit in the data is used. For
@@ -75,6 +76,18 @@ population.}
 \item{nsd}{Optional parameter specifying the number of standard deviations to
 plot above and below the mean (used for error bars when aggregation is
 "arithmetic" or "geometric"). Ignored if \code{aggregation} is  \code{quantiles}.}
+
+\item{showLegendPerDataset}{Controls display of separate legend entries for
+individual datasets. One of:
+\itemize{
+\item \code{"none"} (default): No per-dataset differentiation. Only group-level legend.
+\item \code{"all"}: Differentiate both observed (via \code{shape}) and simulated (via \code{linetype}).
+\item \code{"observed"}: Differentiate only observed data via different shapes.
+\item \code{"simulated"}: Differentiate only simulated data via different line types.
+}
+
+User-provided \code{mapping} and \code{observedMapping} will override internal settings.
+A warning is issued if the override removes per-dataset differentiation.}
 
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotTimeProfile]{ospsuite.plots::plotTimeProfile}}
@@ -134,8 +147,16 @@ error bounds directly in \code{yMin} and \code{yMax} columns.
 # Generate a time profile plot for the provided data
 plotTimeProfile(myDataCombined,
   xUnit = ospUnits$Time$h,
-  yUnit = ospUnits$`Concentration [mass]`$`mg/l`
-)
+  yUnit = ospUnits$`Concentration [mass]`$`mg/l`)
+
+# Show individual dataset names for observed data only
+plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+
+# Show individual dataset names for simulated data only
+plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
+
+# Show individual dataset names for both observed and simulated
+plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
 }
 }
 \seealso{

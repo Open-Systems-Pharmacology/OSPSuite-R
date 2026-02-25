@@ -46,7 +46,8 @@ Before creating plots with `ospsuite.plots`, it's important to initialize the pl
 2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = FALSE)` 
 
 ```{r setup-options}
-library(ospsuite)
+#library(ospsuite)
+devtools::load_all()
 
 # Set default plotting options for ospsuite.plots
 # Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity
@@ -61,41 +62,64 @@ Refer to the `{ospsuite.plots}` package documentation for details.
 
 ## Setting up the data
 
-Next, let's create a `DataCombined` object that we will use throughout this vignette:
+Next, let's create `DataCombined` objects that we will use throughout this vignette:
 
 ```{r setup}
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
+# simulate with two outputs
+addOutputs(quantitiesOrPaths = "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine",simulation = sim)
 simResults <- runSimulations(sim)[[1]]
-outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
 # Load observed data
-obsData <- lapply(
-  c(
-    "ObsDataAciclovir_1.pkml",
-    "ObsDataAciclovir_2.pkml",
-    "ObsDataAciclovir_3.pkml"
-  ),
-  function(x) {
-    loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-  }
-)
-names(obsData) <- lapply(obsData, function(x) x$name)
+obsData <- loadDataSetFromPKML(system.file("extdata",  "ObsDataAciclovir_1.pkml", package = "ospsuite"))
 
 # Create DataCombined object
 myDataCombined <- DataCombined$new()
 
 myDataCombined$addSimulationResults(
   simulationResults = simResults,
-  quantitiesOrPaths = outputPath,
+  quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+  names = list("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma"),
   groups = "Aciclovir PVB"
 )
 
 myDataCombined$addDataSets(
-  obsData$`Vergin 1995.Iv`,
+  obsData,
   groups = "Aciclovir PVB"
 )
+
+# Create DataCombined object with more than one simulation result and observed data set
+myDataCombinedMulti <- DataCombined$new()
+
+myDataCombinedMulti$addSimulationResults(
+  simulationResults = simResults,
+  names = list("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = 
+                 "Plasma (Peripheral Venous Blood) ",
+               "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine" = 
+                 "fraction excreted"),
+  groups = "Aciclovir"
+)
+
+myDataCombinedMulti$addDataSets(
+  obsData,
+  groups = "Aciclovir"
+)
+
+obsDataUrine <- DataSet$new(name = 'urine data')
+obsDataUrine$yDimension = 'Fraction'
+obsDataUrine$yUnit = ''
+
+obsDataUrine$setValues(xValues = c(3,12,24), 
+                       yValues = c(0.5,0.9,0.98),
+                       yErrorValues = NULL)
+
+myDataCombinedMulti$addDataSets(
+  obsDataUrine,
+  groups = "Aciclovir"
+)
+
 ```
 
 ### Population Simulation Data
@@ -115,12 +139,13 @@ myPopDataCombined <- DataCombined$new()
 
 myPopDataCombined$addSimulationResults(
   simulationResults = popResults,
-  quantitiesOrPaths = outputPath,
+  quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+  names = list("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma"),
   groups = "Aciclovir Population"
 )
 
 myPopDataCombined$addDataSets(
-  obsData$`Vergin 1995.Iv`,
+  obsData,
   groups = "Aciclovir Population"
 )
 ```
@@ -170,18 +195,72 @@ plotTimeProfile(
 )
 ```
 
-### Custom Aesthetic Mappings
+### Showing Individual Dataset Names
 
 By default, the legend is created using the `group` variable of the `DataCombined` object.
-You can customize the plot appearance using `ggplot2` aesthetic mappings. 
+
+For datasets with multiple observed or simulated results, you can display individual dataset names in the legend using the `showLegendPerDataset` parameter.
+
+```{r timeprofile-legend-per-dataset, eval=TRUE}
+# No per-dataset differentiation (default)
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none") 
+
+# Show all individual dataset names (both observed and simulated)
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
+
+# Show only observed dataset names (different shapes)
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "observed")
+
+# Show only simulated dataset names (different line types)
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "simulated")
+
+```
+
+### Custom Aesthetic Mappings
+
+For manual control over aesthetics, use the `mapping` and `observedMapping` parameters.
+
+**Important**: The aesthetic used for differentiation depends on data type:
+- **Observed data** (points): Uses different **shapes** (`shape = name`)
+- **Simulated data** (lines): Uses different **line types** (`linetype = name`)
+
+- The default of `observedMapping` is a copy of mapping.
+
+To get the same plots as above you have to set the aesthetics as following:
+
+```{r timeprofile-manual-aesthetics, eval=FALSE}
+# Show all individual dataset names (both observed and simulated)
+plotTimeProfile(
+  myDataCombinedMulti,
+  mapping = ggplot2::aes(linetype = name),
+  observedMapping = ggplot2::aes(shape = name,)
+)
+
+# Show only observed dataset names (different shapes)
+plotTimeProfile(
+  myDataCombinedMulti,
+  observedMapping = ggplot2::aes(shape = name)
+)
+
+# Show only simulated dataset names (different line types)
+plotTimeProfile(
+  myDataCombinedMulti,
+  mapping = ggplot2::aes(linetype = name),
+  observedMapping = ggplot2::aes()
+)
+
+```
+
+You can further customize the plot appearance using `ggplot2` aesthetic mappings and all columns available in `myDataCombinedMulti$toDataFrame()`. 
 
 ```{r timeprofile-mapping}
 # Customize aesthetics
 plotTimeProfile(
-  myDataCombined,
-  mapping = ggplot2::aes(color = dataType)
+  myDataCombinedMulti,
+  mapping = ggplot2::aes(color = yDimension, fill = yDimension)
 )
 ```
+
 
 ## Predicted vs Observed Plots
 
