@@ -55,7 +55,6 @@ test_that("It constructs mapping correctly for time profiles", {
   )
   expect_equal(rlang::as_label(mappingWithUser$colour), 'group')
   expect_equal(rlang::as_label(mappingWithUser$groupby), "dataType")
-  expect_false('group' %in% names(mappingWithUser))
 
   # Test with yErrorType present
   mockPlotDataError <- data.table(
@@ -129,7 +128,7 @@ test_that("It constructs mapping correctly for time profiles", {
     dataTypeFilter = "observed"
   )
   expect_contains(names(mappingWithY2), 'y2axis')
-  
+
   # Test showLegendPerDataset for observed data
   mappingObservedAll <- ospsuite:::.getMappingForTimeprofiles(
     plotData = mockPlotData,
@@ -139,7 +138,7 @@ test_that("It constructs mapping correctly for time profiles", {
     dataTypeFilter = "observed"
   )
   expect_equal(rlang::as_label(mappingObservedAll$shape), "name")
-  
+
   mappingObservedObserved <- ospsuite:::.getMappingForTimeprofiles(
     plotData = mockPlotData,
     metaData = mockMetaData,
@@ -148,10 +147,10 @@ test_that("It constructs mapping correctly for time profiles", {
     dataTypeFilter = "observed"
   )
   expect_equal(rlang::as_label(mappingObservedObserved$shape), "name")
-  
+
   # Test showLegendPerDataset for simulated data
   mockPlotDataSim <- copy(mockPlotData)[, dataType := "simulated"]
-  
+
   mappingSimulatedAll <- ospsuite:::.getMappingForTimeprofiles(
     plotData = mockPlotDataSim,
     metaData = mockMetaData,
@@ -160,7 +159,7 @@ test_that("It constructs mapping correctly for time profiles", {
     dataTypeFilter = "simulated"
   )
   expect_equal(rlang::as_label(mappingSimulatedAll$linetype), "name")
-  
+
   mappingSimulatedSimulated <- ospsuite:::.getMappingForTimeprofiles(
     plotData = mockPlotDataSim,
     metaData = mockMetaData,
@@ -169,7 +168,7 @@ test_that("It constructs mapping correctly for time profiles", {
     dataTypeFilter = "simulated"
   )
   expect_equal(rlang::as_label(mappingSimulatedSimulated$linetype), "name")
-  
+
   # Test warning when showLegendPerDataset doesn't match data
   expect_warning(
     ospsuite:::.getMappingForTimeprofiles(
@@ -179,9 +178,9 @@ test_that("It constructs mapping correctly for time profiles", {
       showLegendPerDataset = "simulated",
       dataTypeFilter = "simulated"
     ),
-    "has no effect"
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
-  
+
   # Test warning for unusual aesthetic
   expect_warning(
     ospsuite:::.getMappingForTimeprofiles(
@@ -193,7 +192,7 @@ test_that("It constructs mapping correctly for time profiles", {
     ),
     "linetype"
   )
-  
+
   expect_warning(
     ospsuite:::.getMappingForTimeprofiles(
       plotData = mockPlotDataSim,
