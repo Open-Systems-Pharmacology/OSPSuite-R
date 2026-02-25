@@ -41,6 +41,7 @@ test_that("It plots multiple observed datasets with dataset name legend entries"
   )
 })
 
+
 # only simulated ------------------------
 
 test_that("It creates default plots as expected for single simulated dataset", {
@@ -88,6 +89,26 @@ test_that("It respects custom plot configuration", {
   # after plotting function is done with it.
   expect_null(customDPC$xLabel)
   expect_null(customDPC$yLabel)
+})
+
+test_that("It plots both observed and simulated datasets with dataset name legend entries", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - separate legend",
+    fig = plotIndividualTimeProfile(oneObsSimDC, showLegendPerDataset = TRUE)
+  )
+})
+
+test_that("It plots both observed and simulated datasets with dataset name legend entries and custom plot configuration", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "both - custom - separate legend",
+    fig = plotIndividualTimeProfile(
+      oneObsSimDC,
+      customDPC,
+      showLegendPerDataset = TRUE
+    )
+  )
 })
 
 # multiple observed and simulated datasets ------------------------

@@ -1,5 +1,27 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
+
+# ospsuite 12.4.1
+
+## Breaking changes
+
+- R version >=4.4 is required
+- ospsuite.utils version >=1.10.0 is required
+- This package no longer re-exports `%||%`. `ospsuite::%||%` will not work.
+
+## Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 2 release.
+
+## Minor changes
+
+- Using native operator `%||%` instead of importing from the `ospsuite.utils` package.
+
+# ospsuite 12.4.0
+
 ## Major changes
 
 - Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)

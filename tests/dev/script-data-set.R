@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 
 # Load the obs data from a pkml file
 obsData <- loadDataRepositoryFromPKML("tests/data/obs_data.pkml")

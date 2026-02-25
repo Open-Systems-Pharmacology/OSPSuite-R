@@ -10,6 +10,7 @@ CompareBy <- enum(c(
 #' Names of the `.NET` container tasks of the type `"AllXXXMatching"`
 #'
 #' @keywords internal
+#' @noRd
 AllMatchingMethod <- enum(c(
   Container = "AllContainersMatching",
   Quantity = "AllQuantitiesMatching",
@@ -20,6 +21,7 @@ AllMatchingMethod <- enum(c(
 #' Names of the `.NET` container tasks of the type `"AllXXXPathsIn"`
 #'
 #' @keywords internal
+#' @noRd
 AllPathsInMethod <- enum(c(
   Container = "AllContainerPathsIn",
   Quantity = "AllQuantityPathsIn",
@@ -110,6 +112,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
 #'   Simulation
 #'
 #' @keywords internal
+#' @noRd
 .getAllEntitiesMatching <- function(
   paths,
   container,
@@ -155,6 +158,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
 #'   its sub containers) The list is empty if no entities matching were found.
 #'
 #' @keywords internal
+#' @noRd
 .getAllEntityPathsIn <- function(container, entityType, method = NULL) {
   validateIsOfType(container, c("Simulation", "Container", "Molecule"))
   validateIsString(method, nullAllowed = TRUE)
@@ -187,6 +191,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
 #' `stopIfNotFound` is TRUE (default), otherwise `NULL`
 #'
 #' @keywords internal
+#' @noRd
 .getEntity <- function(path, container, entityType, stopIfNotFound = TRUE) {
   entities <- .getAllEntitiesMatching(path, container, entityType)
   if (length(entities) > 1) {
@@ -201,4 +206,43 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
   }
 
   return(entities[[1]])
+}
+
+#' Check if entities exist for the given paths in the container. If an entity for a path does not exist, an error is thrown.
+#'
+#' @param paths A vector of strings representing the paths relative to the `container`
+#' @param container A Container or Simulation used to find the entities
+#' @param entityType Class of the type that should be returned. Supported types are Container, Quantity, and Parameter.
+#'
+#' @noRd
+.validateEntitiesExist <- function(paths, container, entityType) {
+  for (path in paths) {
+    entities <- .getAllEntitiesMatching(path, container, entityType)
+    if (length(entities) == 0) {
+      stop(messages$errorEntityNotFound(path, container))
+    }
+  }
+}
+
+#' Convert a list of entities or paths to a list of paths. If an element of the'entitiesOrPaths' list is of type 'Entity', its path is extracted. If it is already a string, it is assumed to be a path and is returned as is.
+#'
+#' @param entitiesOrPaths A list of entities or paths. If an element is of type 'Entity', its path is extracted. If it is already a string, it is assumed to be a path and is returned as is.
+#'
+#' @returns A list of paths corresponding to the input entities or paths.
+#' @noRd
+.entitiesToPaths <- function(entitiesOrPaths) {
+  paths <- vector("character", length(entitiesOrPaths))
+  # If entities are provided, get their paths
+
+  for (idx in seq_along(entitiesOrPaths)) {
+    element <- entitiesOrPaths[[idx]]
+    if (isOfType(element, "Entity")) {
+      paths[[idx]] <- element$path
+    } else {
+      paths[[idx]] <- element
+    }
+  }
+  paths <- unique(paths)
+
+  return(paths)
 }

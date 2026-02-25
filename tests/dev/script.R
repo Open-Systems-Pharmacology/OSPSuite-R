@@ -1,4 +1,4 @@
-library(ospsuite)
+devtools::load_all()
 
 # library(profvis)
 sim <- loadSimulation("tests/data/S1.pkml")

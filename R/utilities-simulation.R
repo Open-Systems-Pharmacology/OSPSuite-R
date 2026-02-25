@@ -1226,12 +1226,12 @@ exportSteadyStateToXLS <- function(
   for (i in 1:nrOfEntries) {
     # Try to get the quantity as a molecules from the simulation.
     # If it fails (the value is `NULL`), try to get it as a parameter.
-    quantity <- ospsuite::getMolecule(
+    quantity <- getMolecule(
       path = initialValues$paths[[i]],
       container = simulation,
       stopIfNotFound = FALSE
     ) %||%
-      ospsuite::getParameter(
+      getParameter(
         path = initialValues$paths[[i]],
         container = simulation,
         stopIfNotFound = FALSE
