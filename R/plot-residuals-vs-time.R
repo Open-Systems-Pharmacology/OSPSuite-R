@@ -55,7 +55,7 @@ plotResidualsVsTime <- function(
   scaling = "lin"
 ) {
   lifecycle::deprecate_soft(
-    when = "13.0",
+    when = "12.5",
     what = "plotResidualsVsTime()",
     with = "plotResidualsVsCovariate()",
     details = "It will be removed in version 14.0."

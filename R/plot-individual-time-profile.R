@@ -59,7 +59,7 @@ plotIndividualTimeProfile <- function(
   showLegendPerDataset = FALSE
 ) {
   lifecycle::deprecate_soft(
-    when = "13.0",
+    when = "12.5",
     what = "plotIndividualTimeProfile()",
     with = "plotTimeProfile()",
     details = "It will be removed in version 14.0."

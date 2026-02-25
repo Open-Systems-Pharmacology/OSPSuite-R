@@ -60,7 +60,7 @@ plotObservedVsSimulated <- function(
   foldDistance = NULL
 ) {
   lifecycle::deprecate_soft(
-    when = "13.0",
+    when = "12.5",
     what = "plotObservedVsSimulated()",
     with = "plotPredictedVsObserved()",
     details = "It will be removed in version 14.0."
