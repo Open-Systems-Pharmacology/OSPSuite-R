@@ -50,7 +50,7 @@
 #'   `ggplot2::aes()`. This is added or replaces the default mapping constructed
 #'   by the data.
 #' @param observedMapping A ggplot2 aesthetic mapping for observed data. Default
-#'   is NULL. Then a copy of mapping without line typical aesthtics like linetype and linewidth is used.
+#'   is NULL. Then a copy of mapping without line typical aesthetics like linetype and linewidth is used.
 #' @param aggregation The type of the aggregation of simulated data. One of
 #'   `quantiles` (Default), `arithmetic` or `geometric` (full list in
 #'   `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,

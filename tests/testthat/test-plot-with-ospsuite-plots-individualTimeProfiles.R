@@ -195,7 +195,7 @@ test_that("It warns when showLegendPerDataset setting doesn't match data", {
   )
 })
 
-test_that("It warns when user mapping containsuntypical aethetics", {
+test_that("It warns when user mapping contains untypical aesthetics", {
   # User shape is unusual for simulated
   expect_warning(
     plotTimeProfile(
