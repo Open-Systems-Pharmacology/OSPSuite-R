@@ -2453,8 +2453,8 @@
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
       "Version": "1.0.1.9012",
-      "Source": "git",
-      "RemoteType": "git",
+      "Source": "GitHub",
+      "RemoteType": "github",
       "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
