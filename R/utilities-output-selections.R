@@ -9,10 +9,10 @@
 #' @inheritParams getQuantity
 #'
 #' @examples
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' paths <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
+#' paths <- c("Organism|VenousBlood|Plasma|Aciclovir", "Organism|ArterialBlood|**|Aciclovir")
 #' addOutputs(paths, sim)
 #'
 #' parameter <- getParameter("Organism|Liver|Volume", sim)
