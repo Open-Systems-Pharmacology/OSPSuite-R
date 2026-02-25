@@ -3,7 +3,7 @@ unlink("inst/lib", recursive = TRUE, force = TRUE)
 
 # Download PK-Sim R Dependencies artifact from GitHub Actions
 download.file(
-  "https://nightly.link/Open-Systems-Pharmacology/PK-Sim/workflows/build-and-test/develop/PKSim%20R%20Dependencies.zip",
+  "https://nightly.link/Open-Systems-Pharmacology/PK-Sim/workflows/build-nightly_12.3/develop/PKSim%20R%20Dependencies.zip",
   destfile = "pk-sim-r-dependencies_artifact.zip"
 )
 
