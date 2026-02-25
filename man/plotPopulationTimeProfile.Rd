@@ -35,7 +35,7 @@ to \code{FALSE}.}
 \item{...}{additionnal arguments to pass to \code{.extractAggregatedSimulatedData()}}
 }
 \description{
-Time-values profile plot for population simulations
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
 The simulated values will be aggregated across individuals for each
