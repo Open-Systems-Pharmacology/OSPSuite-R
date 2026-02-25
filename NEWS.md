@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
+
 # ospsuite 12.4.1
 
 ## Breaking changes
