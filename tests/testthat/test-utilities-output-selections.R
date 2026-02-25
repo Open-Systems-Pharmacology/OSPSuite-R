@@ -48,6 +48,44 @@ test_that("It throws an exception if the parameters do not have the expect type"
   expect_error(addOutputs(null, sim))
 })
 
+test_that("It throws an error for invalid path when stopIfNotFound is TRUE (default)", {
+  invalidPath <- "InvalidPath|DoesNotExist"
+  expect_error(
+    addOutputs(invalidPath, sim),
+    'no entity exists for path "InvalidPath|DoesNotExist" located under container <S1>!'
+  )
+})
+
+test_that("It silently ignores invalid paths when stopIfNotFound is FALSE", {
+  invalidPath <- "InvalidPath|DoesNotExist"
+  oldLength <- length(sim$outputSelections$allOutputs)
+  expect_no_error(addOutputs(invalidPath, sim, stopIfNotFound = FALSE))
+  expect_equal(length(sim$outputSelections$allOutputs), oldLength)
+})
+
+test_that("It throws error for invalid path and does not add any outputs when stopIfNotFound is TRUE", {
+  validPath <- "Organism|Liver|Volume"
+  invalidPath <- "InvalidPath|DoesNotExist"
+  oldLength <- length(sim$outputSelections$allOutputs)
+  paths <- c(validPath, invalidPath)
+  expect_error(
+    addOutputs(paths, sim),
+    'no entity exists for path "InvalidPath|DoesNotExist" located under container <S1>!'
+  )
+  # Verify that no outputs were added before the error
+  expect_equal(length(sim$outputSelections$allOutputs), oldLength)
+})
+
+test_that("It adds valid paths and silently skips invalid paths when stopIfNotFound is FALSE", {
+  outputSelections$clear()
+  validPath <- "Organism|Liver|Volume"
+  invalidPath <- "InvalidPath|DoesNotExist"
+  oldLength <- length(sim$outputSelections$allOutputs)
+  paths <- c(validPath, invalidPath)
+  expect_no_error(addOutputs(paths, sim, stopIfNotFound = FALSE))
+  expect_equal(length(sim$outputSelections$allOutputs), oldLength + 1)
+})
+
 
 # clearOutputs
 
@@ -56,7 +94,10 @@ test_that("It can clear all outputs of a given simulation", {
   expect_gt(length(outputSelections$allOutputs), 0)
   clearOutputs(sim)
   expect_equal(length(outputSelections$allOutputs), 0)
-}) # test for setOutputs()
+})
+
+# setOutputs
+
 test_that("It can set outputs of a given simulation", {
   addOutputs(
     c("Organism|Liver|Volume", "Organism|ArterialBlood|Plasma|Caffeine"),
@@ -70,16 +111,20 @@ test_that("It can set outputs of a given simulation", {
   )
 })
 
-# test for setOutputs()
-test_that("It can set outputs of a given simulation", {
-  addOutputs(
-    c("Organism|Liver|Volume", "Organism|ArterialBlood|Plasma|Caffeine"),
-    sim
+test_that("setOutputs throws an error for invalid path when stopIfNotFound is TRUE (default)", {
+  invalidPath <- "InvalidPath|DoesNotExist"
+  expect_error(
+    setOutputs(invalidPath, sim),
+    'no entity exists for path "InvalidPath|DoesNotExist" located under container <S1>!'
   )
-  setOutputs(c("Organism|Liver|Volume"), sim)
-  expect_equal(length(outputSelections$allOutputs), 1)
-  expect_equal(
-    sim$outputSelections$allOutputs[[1]]$path,
-    "Organism|Liver|Volume"
-  )
+})
+
+test_that("setOutputs clears existing outputs and silently ignores invalid paths when stopIfNotFound is FALSE", {
+  oldLength <- length(sim$outputSelections$allOutputs)
+  addOutputs("Organism|Pancreas|Volume", sim)
+  expect_equal(length(outputSelections$allOutputs), oldLength + 1)
+  invalidPath <- "InvalidPath|DoesNotExist"
+  expect_no_error(setOutputs(invalidPath, sim, stopIfNotFound = FALSE))
+  # All outputs should be cleared and no new ones added
+  expect_equal(length(sim$outputSelections$allOutputs), 0)
 })

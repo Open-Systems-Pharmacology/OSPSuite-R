@@ -200,3 +200,15 @@ messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
     setdiff(c('simulated', 'observed'), dataType)
   )
 }
+
+messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCount, actualCount) {
+  paste0(
+    "Parameter values for '",
+    parameterPath,
+    "' does not have the expected number of elements. (Expected ",
+    expectedCount,
+    " vs Actual ",
+    actualCount,
+    ")"
+  )
+}

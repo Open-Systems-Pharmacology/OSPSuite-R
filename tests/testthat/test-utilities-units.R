@@ -615,11 +615,11 @@ dfWeek <- dplyr::tibble(
 
 dfWeekConvert <- .unitConverter(
   dfWeek,
-  xUnit = ospsuite::ospUnits$Time$`week(s)`
+  xUnit = ospUnits$Time$`week(s)`
 )
 
 test_that("it can convert time to weeks", {
-  expect_equal(unique(dfWeekConvert$xUnit), ospsuite::ospUnits$Time$`week(s)`)
+  expect_equal(unique(dfWeekConvert$xUnit), ospUnits$Time$`week(s)`)
   expect_equal(unique(dfWeekConvert$xDimension), unique(dfWeek$xDimension))
   expect_equal(
     dfWeekConvert$xValues,
