@@ -44,7 +44,20 @@ test_that("It creates default plots as expected for multiple observed datasets",
     title = "multiple obs - separate legend",
     fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
   )
-}) 
+
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple obs - showLegendPerDataset all",
+      fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "all")
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "multiple obs - showLegendPerDataset observed",
+    fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+  )
+})
 
 # only simulated ------------------------
 
@@ -67,6 +80,19 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
         linetype = name
       )
     )
+  )
+
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple sim - showLegendPerDataset all",
+      fig = plotTimeProfile(manySimDC, showLegendPerDataset = "all")
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect(dataType = 'observed')
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "multiple sim - showLegendPerDataset simulated",
+    fig = plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
   )
 })
 
@@ -100,6 +126,27 @@ test_that("It maps multiple observed and simulated datasets to different visual 
       observedMapping = ggplot2::aes(fill = name)
     )
   )
+
+  vdiffr::expect_doppelganger(
+    title = "many obs sim - showLegendPerDataset all",
+    fig = plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "many obs sim - showLegendPerDataset observed",
+    fig = plotTimeProfile(
+      manyObsSimDC,
+      showLegendPerDataset = "observed"
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "many obs sim - showLegendPerDataset simulated",
+    fig = plotTimeProfile(
+      manyObsSimDC,
+      showLegendPerDataset = "simulated"
+    )
+  )
 })
 
 test_that("It applies yScale and yScaleArgs to multiple obs and sim datasets", {
@@ -112,6 +159,103 @@ test_that("It applies yScale and yScaleArgs to multiple obs and sim datasets", {
       yScaleArgs = list(limits = c(0.001, NA))
     )
   )
+})
+
+test_that("User-provided mappings override showLegendPerDataset", {
+  set.seed(123)
+  # User mapping should override internal showLegendPerDataset mapping
+  vdiffr::expect_doppelganger(
+    title = "user mapping overrides showLegendPerDataset",
+    fig = plotTimeProfile(
+      manyObsSimDC,
+      showLegendPerDataset = "all",
+      mapping = ggplot2::aes(color = name, linetype = NULL),
+      observedMapping = ggplot2::aes(
+        color = name,
+        fill = name,
+        shape = dataType
+      ),
+    )
+  )
+})
+
+# showLegendPerDataset parameter validation and warnings ------------------------
+
+test_that("It warns when showLegendPerDataset setting doesn't match data", {
+  # Only observed data, but asking for simulated differentiation
+  expect_warning(
+    plotTimeProfile(manyObsDC, showLegendPerDataset = "simulated"),
+    "showLegendPerDataset = 'simulated' but no simulated data present"
+  )
+
+  # Only simulated data, but asking for observed differentiation
+  expect_warning(
+    plotTimeProfile(manySimDC, showLegendPerDataset = "observed"),
+    "showLegendPerDataset = 'observed' but no observed data present"
+  )
+})
+
+test_that("It warns when user mapping containsuntypical aethetics", {
+  # User shape is unusual for simulated
+  expect_warning(
+    plotTimeProfile(
+      manySimDC,
+      mapping = ggplot2::aes(shape = dataType)
+    ),
+    messages$plotUntypicalAesthetic(
+      aesthetic = 'shape',
+      dataType = "simulated"
+    )
+  )
+
+  # User shape is unusual for simulated
+  expect_warning(
+    plotTimeProfile(
+      manyObsDC,
+      observedMapping = ggplot2::aes(linetype = dataType)
+    ),
+    messages$plotUntypicalAesthetic(
+      aesthetic = 'linetype',
+      dataType = "observed"
+    )
+  )
+})
+
+test_that("line width does not leak into observedMapping", {
+  expect_no_warning(
+    plotTimeProfile(
+      manyObsSimDC,
+      mapping = ggplot2::aes(linetype = name)
+    )
+  )
+})
+
+test_that("It handles edge case: observed data with showLegendPerDataset simulated", {
+  set.seed(123)
+  # Should warn and produce plot with no per-dataset differentiation
+  expect_warning(
+    fig <- plotTimeProfile(
+      manyObsDC,
+      showLegendPerDataset = "simulated"
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
+  )
+
+  expect_s3_class(fig, 'gg')
+})
+
+test_that("It handles edge case: simulated data with showLegendPerDataset observed", {
+  set.seed(123)
+  # Should warn and produce plot with no per-dataset differentiation
+  expect_warning(
+    fig <- plotTimeProfile(
+      manySimDC,
+      showLegendPerDataset = "observed"
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('observed')
+  )
+
+  expect_s3_class(fig, 'gg')
 })
 
 # edge cases ------------------------
