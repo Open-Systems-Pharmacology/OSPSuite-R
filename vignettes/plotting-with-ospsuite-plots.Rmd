@@ -46,8 +46,7 @@ Before creating plots with `ospsuite.plots`, it's important to initialize the pl
 2. **Configure the watermark option** using `options(ospsuite.plots.watermark_enabled = TRUE)` or `options(ospsuite.plots.watermark_enabled = FALSE)` 
 
 ```{r setup-options}
-#library(ospsuite)
-devtools::load_all()
+library(ospsuite)
 
 # Set default plotting options for ospsuite.plots
 # Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity
@@ -390,6 +389,29 @@ A key feature of these plotting functions is automatic unit conversion. For manu
 - Conversion between mass and molar concentrations is possible if molecular weight is available
 
 This ensures that all data is displayed in consistent units without manual conversion.
+
+### Specifying Units Directly
+
+All plotting functions in this family accept `xUnit` and `yUnit` arguments. Here, `xUnit` and `yUnit` refer to the unit field names in the underlying `DataCombined` data frame (`xUnit` for the x-values column, `yUnit` for the y-values column), which do not necessarily correspond to the physical x- or y-axis of the resulting plot. For example, in `plotPredictedVsObserved()`, `yUnit` controls the unit for both axes since both predicted and observed are taken from the y-values of the data.
+
+`plotTimeProfile()` additionally accepts `y2Unit` for controlling the secondary y-axis unit when data contains two distinct y-dimensions (i.e., when a secondary y-axis is used for a different measurement type such as `Fraction` alongside `Concentration`). The function `plotResidualsVsCovariate()` supports `xUnit` and `yUnit`, all other functions (`plotPredictedVsObserved()`,  `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) support `yUnit` only.
+
+```{r units-direct}
+# Default: auto-detected units (e.g. µmol/l and h from the data)
+plotTimeProfile(myDataCombined)
+```
+
+```{r units-set}
+# Override x-axis unit: display time in minutes instead of hours
+plotTimeProfile(myDataCombined, xUnit = "min", yUnit = "mg/l")
+```
+
+
+Passing units directly is equivalent to pre-converting the data with `convertUnits()`:
+
+```{r units-equivalent, eval=FALSE}
+plotTimeProfile(convertUnits(myDataCombined, xUnit = "min", yUnit = "mg/l"))
+```
 
 ## Handling Mixed Error Types
 

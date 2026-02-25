@@ -50,7 +50,7 @@
 #'   `ggplot2::aes()`. This is added or replaces the default mapping constructed
 #'   by the data.
 #' @param observedMapping A ggplot2 aesthetic mapping for observed data. Default
-#'   is NULL. The a copy of mapping without line typical aesthtics like linetype and linewidth is used.
+#'   is NULL. Then a copy of mapping without line typical aesthtics like linetype and linewidth is used.
 #' @param aggregation The type of the aggregation of simulated data. One of
 #'   `quantiles` (Default), `arithmetic` or `geometric` (full list in
 #'   `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
@@ -62,6 +62,15 @@
 #' @param nsd Optional parameter specifying the number of standard deviations to
 #'   plot above and below the mean (used for error bars when aggregation is
 #'   "arithmetic" or "geometric"). Ignored if `aggregation` is  `quantiles`.
+#' @param xUnit A character string specifying the target unit for the x-axis.
+#'   If `NULL` (default), the most frequent unit in the data is used. For
+#'   available units, see `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the primary
+#'   y-axis. If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
+#' @param y2Unit A character string specifying the target unit for the secondary
+#'   y-axis (only applicable when data contains two y-dimensions). If `NULL`
+#'   (default), the most frequent unit in the data is used.
 #' @param showLegendPerDataset Controls display of separate legend entries for
 #'   individual datasets. One of:
 #'   - `"none"` (default): No per-dataset differentiation. Only group-level legend.
@@ -71,7 +80,9 @@
 #'
 #'   User-provided `mapping` and `observedMapping` will override internal settings.
 #'   A warning is issued if the override removes per-dataset differentiation.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotTimeProfile`.
+#' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale yScaleArgs
+#'  y2Scale y2ScaleArgs groupAesthetics plotObject geomLineAttributes geomRibbonAttributes
+#'  geomPointAttributes geomErrorbarAttributes geomLLOQAttributes
 #'
 #' @return A `ggplot2` plot object representing the time profile.
 #' @export
@@ -79,11 +90,9 @@
 #'
 #' @examples \dontrun{
 #' # Generate a time profile plot for the provided data
-#' plotTimeProfile(convertUnits(
-#'   myDataCombined,
+#' plotTimeProfile(myDataCombined,
 #'   xUnit = ospUnits$Time$h,
-#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`
-#' ))
+#'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`)
 #'
 #' # Show individual dataset names for observed data only
 #' plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
@@ -99,6 +108,9 @@ plotTimeProfile <- function(
   metaData = NULL,
   mapping = ggplot2::aes(),
   observedMapping = NULL,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL,
   aggregation = "quantiles",
   quantiles = ospsuite.plots::getOspsuite.plots.option(
     ospsuite.plots::OptionKeys$Percentiles
@@ -108,7 +120,7 @@ plotTimeProfile <- function(
   ...
 ) {
   # initialize variables used for data.table to avoid messages during checks
-  yDimension <- yUnit <- dataType <- NULL
+  yDimension <- dataType <- NULL
 
   checkmate::assertChoice(
     showLegendPerDataset,
@@ -118,6 +130,9 @@ plotTimeProfile <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = FALSE,
+    xUnit = xUnit,
+    yUnit = yUnit,
+    y2Unit = y2Unit,
     aggregation = aggregation,
     quantiles = quantiles,
     nsd = nsd
@@ -158,8 +173,9 @@ plotTimeProfile <- function(
     if (!("yDimension" %in% names(plotData))) {
       plotData[, yDimension := ""]
       for (yUnitLoop in unique(plotData$yUnit)) {
+        # `yUnit` here refers to the column in plotData (data.table column scoping)
         plotData[
-          yUnitLoop == yUnit,
+          yUnit == yUnitLoop,
           yDimension := ospsuite::getDimensionForUnit(yUnitLoop)
         ]
       }
@@ -195,6 +211,9 @@ plotTimeProfile <- function(
 #'
 #' @param xyScale A character string specifying the scale for the x and y-axis.
 #'   Default is `log`.
+#' @param yUnit A character string specifying the target unit for the x and y-axis.
+#'   If `NULL` (default), the most frequent unit in the data is used. For
+#'   available units, see `ospsuite::ospUnits`.
 #' @param predictedAxis A character string specifying which axis to use for
 #'   predicted values. Options are `"x"` (predicted on x-axis, observed on
 #'   y-axis) or `"y"` (default, predicted on y-axis, observed on x-axis).
@@ -202,7 +221,10 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotYVsX`.
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs
+#'  groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes
+#'  geomComparisonLineAttributes geomLLOQAttributes
+#'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
 #'   including aesthetics for the x and y axes.
@@ -221,6 +243,7 @@ plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
   mapping = ggplot2::aes(),
+  yUnit = NULL,
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
@@ -233,6 +256,7 @@ plotPredictedVsObserved <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    yUnit = yUnit,
     scaling = xyScale
   )
 
@@ -317,7 +341,18 @@ plotPredictedVsObserved <- function(
 #' @param xAxis A character string specifying what to display on the x-axis.
 #'   Options are `"time"` (time points from xValues), `"observed"` (observed
 #'   values, default), or `"predicted"` (predicted/simulated values).
-#' @param ... Additional arguments passed to `ospsuite.plots::plotResVsCov`.
+#' @param xUnit A character string specifying the target unit for the time values.
+#' (only relevant if `xAxis = "time"`)
+#'   If `NULL` (default), the most frequent unit in the data is used. For
+#'   available units, see `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the simulated and
+#'   observed y-values used for residual calculation and (if `xAxis != "time"`) displayed on the x-Axis.
+#'    If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics
+#'  addRegression
+#'   geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
+#' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
 #'   predicted values.
@@ -327,11 +362,13 @@ plotPredictedVsObserved <- function(
 #'
 #' @examples \dontrun{
 #' # Generate a residuals vs observed plot for the provided data
-#' plotResidualsVsCovariate(convertUnits(
+#' plotResidualsVsCovariate(
 #'   myDataCombined,
 #'   xUnit = ospUnits$Time$h,
-#'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
-#' ))
+#'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
+#'   xAxis = "time",
+#'   residualScale = 'linear'
+#' )
 #'
 #' # Generate a residuals vs predicted plot
 #' plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
@@ -343,6 +380,8 @@ plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
   ...
@@ -355,6 +394,8 @@ plotResidualsVsCovariate <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    xUnit = xUnit,
+    yUnit = yUnit,
     scaling = residualScale
   )
 
@@ -411,8 +452,13 @@ plotResidualsVsCovariate <- function(
 #'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
+#' @param yUnit A character string specifying the target unit for the simulated and
+#'   observed y-values used for residual calculation.
+#'    If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotHistogram`.
+#' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale yScaleArgs
+#'  plotAsFrequency meanFunction geomHistAttributes
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
@@ -430,6 +476,7 @@ plotResidualsAsHistogram <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  yUnit = NULL,
   distribution = "normal",
   residualScale = "log",
   ...
@@ -437,6 +484,7 @@ plotResidualsAsHistogram <- function(
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    yUnit = yUnit,
     scaling = residualScale
   )
 
@@ -483,7 +531,12 @@ plotResidualsAsHistogram <- function(
 #'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
-#' @param ... Additional arguments passed to `ospsuite.plots::plotQQ`.
+#' @param yUnit A character string specifying the target unit for the simulated and
+#'   observed y-values used for residual calculation.
+#'    If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
+#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs groupAesthetics geomQQAttributes
+#'  geomQQLineAttributes
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot.
 #' @export
@@ -501,12 +554,16 @@ plotQuantileQuantilePlot <- function(
   plotData,
   metaData = NULL,
   mapping = ggplot2::aes(),
+  xUnit = NULL,
+  yUnit = NULL,
   residualScale = "log",
   ...
 ) {
   plotData <- .validateAndConvertData(
     plotData = plotData,
     predictedIsNeeded = TRUE,
+    xUnit = xUnit,
+    yUnit = yUnit,
     scaling = residualScale
   )
 
@@ -561,6 +618,9 @@ plotQuantileQuantilePlot <- function(
   plotData,
   predictedIsNeeded,
   scaling = NULL,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL,
   aggregation = NULL,
   quantiles = NULL,
   nsd = 1
@@ -580,12 +640,26 @@ plotQuantileQuantilePlot <- function(
     plotData <- setDT(plotData)
     checkmate::assertNames(
       names(plotData),
-      must.include = c("xValues", "yValues", "group", "dataType")
+      must.include = c(
+        "xValues",
+        "yValues",
+        "group",
+        "dataType",
+        "xDimension",
+        "xUnit",
+        "yDimension",
+        "yUnit"
+      )
     )
   }
 
   if (predictedIsNeeded & !('predicted' %in% names(plotData))) {
-    plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 1)
+    plotData <- .convertUnitsForPlot(
+      plotData,
+      maxAllowedYDimensions = 1,
+      xUnit = xUnit,
+      yUnit = yUnit
+    )
 
     plotData <- .calculateResidualsForPlot(
       plotData = plotData,
@@ -602,7 +676,13 @@ plotQuantileQuantilePlot <- function(
       ) |>
       dplyr::mutate(dataType = "observed")
   } else {
-    plotData <- .convertUnitsForPlot(plotData, maxAllowedYDimensions = 2)
+    plotData <- .convertUnitsForPlot(
+      plotData,
+      maxAllowedYDimensions = 2,
+      xUnit = xUnit,
+      yUnit = yUnit,
+      y2Unit = y2Unit
+    )
   }
 
   # check for inconsistent error types
@@ -698,6 +778,12 @@ plotQuantileQuantilePlot <- function(
 #' @param maxAllowedYDimensions An integer indicating the maximum number of
 #'   y-dimensions allowed in the plot. If more than this number is found, an
 #'   error is raised.
+#' @param xUnit A character string specifying the target x-axis unit. If NULL,
+#'   the most frequent unit in the data is used.
+#' @param yUnit A character string specifying the target unit for the primary
+#'   y-axis. If NULL, the most frequent unit in the data is used.
+#' @param y2Unit A character string specifying the target unit for the secondary
+#'   y-axis. If NULL, the most frequent unit in the data is used.
 #'
 #' @return A data.table containing the converted units and merged dimensions,
 #'   ordered with concentration dimensions at the top (for primary y-axis
@@ -705,8 +791,14 @@ plotQuantileQuantilePlot <- function(
 #'
 #' @keywords internal
 #' @noRd
-.convertUnitsForPlot <- function(plotData, maxAllowedYDimensions) {
-  xUnit <- yUnit <- yDimension <- NULL
+.convertUnitsForPlot <- function(
+  plotData,
+  maxAllowedYDimensions,
+  xUnit = NULL,
+  yUnit = NULL,
+  y2Unit = NULL
+) {
+  yDimension <- NULL
 
   validateIsOfType(plotData, "data.frame", FALSE)
   if (nrow(plotData) == 0) {
@@ -715,7 +807,27 @@ plotQuantileQuantilePlot <- function(
   plotData <- setDT(plotData)
   validateIsInteger(maxAllowedYDimensions, FALSE)
 
-  xUnitStr <- .getMostFrequentUnit(plotData, "xUnit")
+  checkmate::assertChoice(
+    xUnit,
+    choices = ospsuite::getUnitsForDimension('Time'),
+    null.ok = TRUE
+  )
+  possibleYUnits <- unlist(sapply(
+    unique(plotData$yDimension),
+    ospsuite::getUnitsForDimension
+  ))
+  checkmate::assertChoice(
+    yUnit,
+    choices = possibleYUnits,
+    null.ok = TRUE
+  )
+  checkmate::assertChoice(
+    y2Unit,
+    choices = possibleYUnits,
+    null.ok = TRUE
+  )
+
+  xUnitStr <- xUnit %||% .getMostFrequentUnit(plotData, "xUnit")
 
   plotDataByDimensions <- split(plotData, by = "yDimension")
   dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
@@ -733,9 +845,26 @@ plotQuantileQuantilePlot <- function(
     stop(messages$plotTooManyYDimension(unique(plotData$yDimension)))
   }
 
+  # Determine ordered dimension names (concentration first) to map user units.
+  # `yUnit` maps to index 1 (primary axis) and `y2Unit` to index 2 (secondary axis).
+  # `dimIdx` will always be non-NA since `orderedDimNames` is derived from
+  # `names(plotDataByDimensions)`, i.e. the same set of names iterated below.
+  orderedDimNames <- c(
+    names(plotDataByDimensions)[
+      names(plotDataByDimensions) %in% dimensionsToMerge
+    ],
+    names(plotDataByDimensions)[
+      !names(plotDataByDimensions) %in% dimensionsToMerge
+    ]
+  )
+  userYUnits <- list(yUnit, y2Unit)
+
   # Convert units for each dimension
-  convertedData <- lapply(plotDataByDimensions, function(dt) {
-    yUnitStr <- .getMostFrequentUnit(dt, "yUnit")
+  convertedData <- lapply(names(plotDataByDimensions), function(dimName) {
+    dt <- plotDataByDimensions[[dimName]]
+    dimIdx <- match(dimName, orderedDimNames)
+    override <- userYUnits[[dimIdx]]
+    yUnitStr <- override %||% .getMostFrequentUnit(dt, "yUnit")
     if ('yErrorType' %in% names(dt) && uniqueN(dt$yErrorType) > 1) {
       dt <- rbindlist(lapply(split(dt, by = 'yErrorType'), function(dtSplit) {
         .unitConverter(data = dtSplit, xUnit = xUnitStr, yUnit = yUnitStr)
@@ -747,6 +876,7 @@ plotQuantileQuantilePlot <- function(
     dt[, yDimension := ospsuite::getDimensionForUnit(yUnitStr)]
     return(dt)
   })
+  names(convertedData) <- names(plotDataByDimensions)
 
   # Order the list to have Concentration at the top,
   # that ensures it will be displayed on the primary axis at the timeprofile plots

@@ -614,6 +614,109 @@ test_that("It raises error for too many Y dimensions", {
   )
 })
 
+test_that("It uses the xUnit override instead of auto-detection", {
+  validData <- data.frame(
+    yDimension = rep("Concentration (mass)", 2),
+    xUnit = c("h", "h"),
+    xDimension = rep("Time", 2),
+    yUnit = c("mg/l", "mg/l"),
+    group = c("group", "group"),
+    name = c("A", "A"),
+    dataType = c("observed", "observed"),
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    molWeight = 100
+  )
+
+  result <- .convertUnitsForPlot(validData, 1, xUnit = "min")
+  # x values should be converted from h to min (multiply by 60)
+  expect_true(all(result$xUnit == "min"))
+  expect_equal(result$xValues, c(60, 120))
+})
+
+test_that("It uses the yUnit override instead of auto-detection", {
+  validData <- data.frame(
+    yDimension = rep("Concentration (mass)", 2),
+    xUnit = c("h", "h"),
+    xDimension = rep("Time", 2),
+    yUnit = c("mg/l", "mg/l"),
+    group = c("group", "group"),
+    name = c("A", "A"),
+    dataType = c("observed", "observed"),
+    xValues = c(1, 2),
+    yValues = c(1000, 2000),
+    molWeight = 100
+  )
+
+  result <- .convertUnitsForPlot(validData, 1, yUnit = "µg/l")
+  # y values should be converted from mg/l to µg/l (multiply by 1000)
+  expect_true(all(result$yUnit == "µg/l"))
+  expect_equal(result$yValues, c(1e6, 2e6))
+})
+
+test_that("It uses the y2Unit override for the secondary y-axis dimension", {
+  validData <- data.frame(
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    ),
+    xUnit = rep("h", 4),
+    xDimension = rep("Time", 4),
+    yUnit = c("mg/l", "mg/l", "", ""),
+    group = rep("group", 4),
+    name = c("A", "A", "B", "B"),
+    dataType = rep("observed", 4),
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 0.1, 0.2),
+    molWeight = rep(100, 4)
+  )
+
+  # Without override: auto-detected secondary unit should be ""
+  resultDefault <- .convertUnitsForPlot(validData, 2)
+  fractionRows <- resultDefault[resultDefault$yDimension == "Fraction", ]
+  expect_true(all(fractionRows$yUnit == ""))
+
+  # With y2Unit override
+  result <- .convertUnitsForPlot(validData, 2, y2Unit = "%")
+  fractionRowsOverride <- result[result$yDimension == "Fraction", ]
+  expect_true(all(fractionRowsOverride$yUnit == "%"))
+})
+
+test_that("It throws error for unkown units", {
+  validData <- data.frame(
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    ),
+    xUnit = rep("h", 4),
+    xDimension = rep("Time", 4),
+    yUnit = c("mg/l", "mg/l", "", ""),
+    group = rep("group", 4),
+    name = c("A", "A", "B", "B"),
+    dataType = rep("observed", 4),
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 0.1, 0.2),
+    molWeight = rep(100, 4)
+  )
+
+  expect_error(
+    .convertUnitsForPlot(validData, 2, xUnit = "%"),
+    'Must be element of set'
+  )
+  expect_error(
+    .convertUnitsForPlot(validData, 2, yUnit = "day(s)"),
+    'Must be element of set'
+  )
+  expect_error(
+    .convertUnitsForPlot(validData[yDimension != 'Fraction'], 2, y2Unit = "%"),
+    'Must be element of set'
+  )
+})
+
 # .calculateResidualsForPlot ----------------
 
 test_that("It handles unpaired data in residual calculation", {
