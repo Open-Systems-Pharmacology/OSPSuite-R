@@ -58,16 +58,7 @@ getOutputValues <- function(
   }
 
   # If quantities are provided, get their paths
-  paths <- vector("character", length(quantitiesOrPaths))
-  if (isOfType(quantitiesOrPaths, "Quantity")) {
-    for (idx in seq_along(quantitiesOrPaths)) {
-      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
-    }
-  } else {
-    paths <- quantitiesOrPaths
-  }
-  paths <- unique(paths)
-
+  paths <- .entitiesToPaths(quantitiesOrPaths)
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(
     individualIds,
