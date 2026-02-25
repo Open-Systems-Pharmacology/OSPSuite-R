@@ -2464,48 +2464,14 @@
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
-      "Version": "1.9.0.9001",
+      "Version": "1.10.0.9001",
       "Source": "GitHub",
-      "Type": "Package",
-      "Title": "Utility Functions for Open Systems Pharmacology R Packages",
-      "Authors@R": "c( person(\"Open-Systems-Pharmacology Community\", role = c(\"cph\", \"fnd\")), person(\"Michael\", \"Sevestre\", , \"michael@design2code.ca\", role = c(\"aut\", \"cre\")), person(\"Pavel\", \"Balazki\", role = \"aut\"), person(\"Juri\", \"Solodenko\", role = \"aut\"), person(\"Indrajeet\", \"Patil\", , \"patilindrajeet.science@gmail.com\", role = \"aut\", comment = c(ORCID = \"0000-0003-1995-6531\", Twitter = \"@patilindrajeets\")) )",
-      "Maintainer": "Michael Sevestre <michael@design2code.ca>",
-      "Description": "A collection of utility functions for R packages in the Open Systems Pharmacology ecosystem. Contains helper functions for working with R6 objects, enumerated lists, and text formatting. Additionally, it provides functions to validate argument inputs.",
-      "License": "GPL-2",
-      "URL": "https://github.com/open-systems-pharmacology/OSPSuite.RUtils, https://www.open-systems-pharmacology.org/OSPSuite.RUtils/",
-      "BugReports": "https://github.com/open-systems-pharmacology/OSPSuite.RUtils/issues",
-      "Depends": [
-        "R (>= 4.1)"
-      ],
-      "Imports": [
-        "purrr",
-        "R6",
-        "stringi",
-        "cli",
-        "lifecycle",
-        "logger",
-        "crayon",
-        "glue"
-      ],
-      "Suggests": [
-        "knitr",
-        "rmarkdown",
-        "testthat (>= 3.0.0)"
-      ],
-      "Config/testthat/edition": "3",
-      "Encoding": "UTF-8",
-      "Language": "en-US",
-      "Roxygen": "list(markdown = TRUE)",
-      "RoxygenNote": "7.3.3",
-      "Collate": "'enum.R' 'formatNumerics.R' 'logger.R' 'messages.R' 'objectCount.R' 'osp_print.R' 'utilities.R' 'ospsuite.utils-env.R' 'printable.R' 'utilities-conditional.R' 'utilities-logger.R' 'utilities-validation.R' 'validation-emptiness.R' 'validation-enum.R' 'validation-expected-length.R' 'validation-file-extensions.R' 'validation-inclusion.R' 'validation-options.R' 'validation-paths.R' 'validation-same-length.R' 'validation-type.R' 'validation-uniqueness.R' 'validation-utf.R' 'validation-vector.R'",
-      "VignetteBuilder": "knitr",
-      "Author": "Open-Systems-Pharmacology Community [cph, fnd], Michael Sevestre [aut, cre], Pavel Balazki [aut], Juri Solodenko [aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.RUtils",
-      "RemoteRef": "main",
-      "RemoteSha": "cb3f304ad4663156985ff9f1df1e0fb05a9460a6"
+      "RemoteRef": "483895b2c925ffc99308f81884588715f26213c6",
+      "RemoteSha": "483895b2c925ffc99308f81884588715f26213c6"
     },
     "otel": {
       "Package": "otel",
@@ -3170,40 +3136,12 @@
       "Package": "rSharp",
       "Version": "1.1.2.9000",
       "Source": "GitHub",
-      "Type": "Package",
-      "Title": "Accessing .NET from R",
-      "Authors@R": "c( person(given = \"Open-Systems-Pharmacology Community\", role = \"cph\"), person(\"esqLABS GmbH\", role = \"fnd\"), person(given = \"Pavel\", family = \"Balazki\", role = c(\"aut\", \"cre\"), email = \"pavel.balazki@gmail.com\"), person(given = \"Juri\", family = \"Solodenko\", role = \"aut\", comment = c(ORCID = \"0000-0001-6922-588X\")), person(given = \"Michael\", family = \"Sevestre\", role = \"aut\", email = \"michael@design2code.ca\"), person(given = \"Robert\", family = \"McIntosh\", role = \"aut\"), person(given = \"Felix\", family = \"Mil\", role = \"aut\"), person(given = \"Jean-Michel\",  family = \"Perraud\",  email =\"jean-michel.perraud@csiro.au\",  role = \"aut\"), person(given = \"Ian Peter\", family = \"Du\", role = \"ctb\") )",
-      "Description": "Enable low-level access to .NET runtime from R. Provides a set of functions to create and manipulate .NET objects, call methods, and access properties and fields.",
-      "URL": "https://github.com/Open-Systems-Pharmacology/rsharp/, http://www.open-systems-pharmacology.org/rSharp/",
-      "Encoding": "UTF-8",
-      "Depends": [
-        "R (>= 4.1)"
-      ],
-      "Imports": [
-        "R6",
-        "methods",
-        "cli",
-        "lifecycle"
-      ],
-      "Suggests": [
-        "devtools",
-        "covr",
-        "testthat (>= 3.0.0)",
-        "knitr",
-        "rmarkdown"
-      ],
-      "License": "file LICENSE",
-      "RoxygenNote": "7.3.2",
-      "VignetteBuilder": "knitr",
-      "Config/testthat/edition": "3",
-      "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
-      "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
-      "RemoteRef": "main",
-      "RemoteSha": "8f9bce670585d705254673432ec86ffb6cc021f1"
+      "RemoteRef": "eb26c532c2f30cf4e563150966d0f7ae6956b5a1",
+      "RemoteSha": "eb26c532c2f30cf4e563150966d0f7ae6956b5a1"
     },
     "ragg": {
       "Package": "ragg",
