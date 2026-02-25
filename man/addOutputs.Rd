@@ -5,7 +5,7 @@
 \title{Adds the quantities as output into the  \code{simulation}. The quantities
 can either be specified using explicit instances or using paths.}
 \usage{
-addOutputs(quantitiesOrPaths, simulation)
+addOutputs(quantitiesOrPaths, simulation, stopIfNotFound = TRUE)
 }
 \arguments{
 \item{quantitiesOrPaths}{Quantity instances (element or vector) (typically
@@ -14,6 +14,9 @@ vector) to add.}
 
 \item{simulation}{Instance of a simulation for which output selection should
 be updated.}
+
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for
+the given path, an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \description{
 Adds the quantities as output into the  \code{simulation}. The quantities

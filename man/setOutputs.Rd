@@ -2,9 +2,9 @@
 % Please edit documentation in R/utilities-output-selections.R
 \name{setOutputs}
 \alias{setOutputs}
-\title{Set outputs}
+\title{Set outputs of a simulation}
 \usage{
-setOutputs(quantitiesOrPaths, simulation)
+setOutputs(quantitiesOrPaths, simulation, stopIfNotFound = TRUE)
 }
 \arguments{
 \item{quantitiesOrPaths}{Quantity instances (element or vector) (typically
@@ -13,9 +13,12 @@ vector) to add.}
 
 \item{simulation}{Instance of a simulation for which output selection should
 be updated.}
+
+\item{stopIfNotFound}{Boolean. If \code{TRUE} (default) and no quantity exists for
+the given path, an error is thrown. If \code{FALSE}, \code{NULL} is returned.}
 }
 \description{
-Sets the quantities as output into the  \code{simulation}.
+Sets the quantities as output of the  \code{simulation}.
 The quantities can either be specified using explicit instances or using paths.
 This function clears the output selection before adding the new quantities.
 See \code{addOutputs} for adding quantities without clearing the output selection.

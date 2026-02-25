@@ -158,6 +158,11 @@ setQuantityValuesByPath <- function(
     validateIsString(units)
   }
 
+  # Validate that all paths exist and can be found in the simulation before setting any value. If this is not done, there is a risk that some values are set before an error is thrown for a non-existing path, which would lead to an inconsistent state.
+  if (stopIfNotFound) {
+    .validateEntitiesExist(quantityPaths, simulation, Quantity)
+  }
+
   task <- .getNetTaskFromCache("ContainerTask")
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
@@ -169,7 +174,7 @@ setQuantityValuesByPath <- function(
         path,
         stopIfNotFound
       )
-      # Dimension ca be be empty if the path was not found
+      # Dimension ca be be empty if the path was not found and stopIfNotFound is set to FALSE. In this case, we can skip the unit conversion, but also the setting of the value, since the path was not found.
       if (dimension == "") {
         next
       }
@@ -249,7 +254,7 @@ getQuantityValuesByPath <- function(
   outputValues <- rep(NA_real_, length(quantityPaths))
   for (i in seq_along(quantityPaths)) {
     path <- quantityPaths[[i]]
-    
+
     # Check if the path exists by checking dimension
     dimension <- task$call(
       "DimensionNameByPath",
@@ -257,14 +262,14 @@ getQuantityValuesByPath <- function(
       path,
       stopIfNotFound
     )
-    
-    # Dimension will be empty if the path was not found
+
+    # Dimension will be empty if the path was not found and stopIfNotFound is set to FALSE. In this case, we can skip the unit conversion, but also the getting of the value, since the path was not found.
     if (dimension == "") {
       next
     }
-    
+
     value <- task$call("GetValueByPath", simulation, path, stopIfNotFound)
-    
+
     if (!is.null(units)) {
       # If the unit is NULL, the value is assumed to be in base unit and no conversion
       # is necessary

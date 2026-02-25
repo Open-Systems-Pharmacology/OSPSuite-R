@@ -148,11 +148,3 @@ messages$forbiddenSimulationName <- function(name, sim) {
     "'."
   )
 }
-
-messages$errorOutputPathNotFound <- function(path) {
-  paste0(
-    "Could not find quantity with path '",
-    path,
-    "' to add as output."
-  )
-}
