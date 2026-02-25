@@ -657,8 +657,10 @@ test_that("It uses the yUnit override instead of auto-detection", {
 test_that("It uses the y2Unit override for the secondary y-axis dimension", {
   validData <- data.frame(
     yDimension = c(
-      "Concentration (mass)", "Concentration (mass)",
-      "Fraction", "Fraction"
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
     ),
     xUnit = rep("h", 4),
     xDimension = rep("Time", 4),
@@ -680,6 +682,39 @@ test_that("It uses the y2Unit override for the secondary y-axis dimension", {
   result <- .convertUnitsForPlot(validData, 2, y2Unit = "%")
   fractionRowsOverride <- result[result$yDimension == "Fraction", ]
   expect_true(all(fractionRowsOverride$yUnit == "%"))
+})
+
+test_that("It throws error for unkown units", {
+  validData <- data.frame(
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    ),
+    xUnit = rep("h", 4),
+    xDimension = rep("Time", 4),
+    yUnit = c("mg/l", "mg/l", "", ""),
+    group = rep("group", 4),
+    name = c("A", "A", "B", "B"),
+    dataType = rep("observed", 4),
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 0.1, 0.2),
+    molWeight = rep(100, 4)
+  )
+
+  expect_error(
+    .convertUnitsForPlot(validData, 2, xUnit = "%"),
+    'Must be element of set'
+  )
+  expect_error(
+    .convertUnitsForPlot(validData, 2, yUnit = "day(s)"),
+    'Must be element of set'
+  )
+  expect_error(
+    .convertUnitsForPlot(validData[yDimension != 'Fraction'], 2, y2Unit = "%"),
+    'Must be element of set'
+  )
 })
 
 # .calculateResidualsForPlot ----------------

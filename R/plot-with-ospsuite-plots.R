@@ -640,7 +640,16 @@ plotQuantileQuantilePlot <- function(
     plotData <- setDT(plotData)
     checkmate::assertNames(
       names(plotData),
-      must.include = c("xValues", "yValues", "group", "dataType")
+      must.include = c(
+        "xValues",
+        "yValues",
+        "group",
+        "dataType",
+        "xDimension",
+        "xUnit",
+        "yDimension",
+        "yUnit"
+      )
     )
   }
 
@@ -797,6 +806,26 @@ plotQuantileQuantilePlot <- function(
   }
   plotData <- setDT(plotData)
   validateIsInteger(maxAllowedYDimensions, FALSE)
+
+  checkmate::assertChoice(
+    xUnit,
+    choices = ospsuite::getUnitsForDimension('Time'),
+    null.ok = TRUE
+  )
+  possibleYUnits <- unlist(sapply(
+    unique(plotData$yDimension),
+    ospsuite::getUnitsForDimension
+  ))
+  checkmate::assertChoice(
+    yUnit,
+    choices = possibleYUnits,
+    null.ok = TRUE
+  )
+  checkmate::assertChoice(
+    y2Unit,
+    choices = possibleYUnits,
+    null.ok = TRUE
+  )
 
   xUnitStr <- xUnit %||% .getMostFrequentUnit(plotData, "xUnit")
 
