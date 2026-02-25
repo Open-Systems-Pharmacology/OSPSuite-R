@@ -5,7 +5,7 @@ liverPath <- toPathString(c("Organism", "Liver"))
 
 test_that("Printing of the container", {
   container <- getContainer(liverPath, sim)
-  expect_snapshot(container$print())
+  expectSnapshotPrint(container)
 })
 
 test_that("It can retrieve the name of a container", {
@@ -35,22 +35,22 @@ test_that("It can retrieve the fullPath of a container", {
 
 test_that("It throws an error when trying to set the path of a container", {
   container <- getContainer(liverPath, sim)
-  expect_error(container$path <- "TOTO")
+  expectPropertyReadOnly(container, "path", "TOTO")
 })
 
 
 test_that("It throws an error when trying to set the id of a container", {
   container <- getContainer(liverPath, sim)
-  expect_error(container$id <- "id")
+  expectPropertyReadOnly(container, "id", "id")
 })
 
 
 test_that("It throws an error when trying to set the name of a container", {
   container <- getContainer(liverPath, sim)
-  expect_error(container$name <- "name")
+  expectPropertyReadOnly(container, "name", "name")
 })
 
 test_that("It can print container", {
   container <- getContainer(liverPath, sim)
-  expect_snapshot(container$print())
+  expectSnapshotPrint(container)
 })

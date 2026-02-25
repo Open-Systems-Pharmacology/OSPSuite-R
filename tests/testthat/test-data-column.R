@@ -65,5 +65,5 @@ test_that("it can set and retrieve the values of the column", {
 test_that("it throws an error when setting a unit thast does not exist in the dimension", {
   baseGrid <- createBaseGrid()
   baseGrid$dimension <- ospDimensions$Time
-  expect_error(baseGrid$displayUnit <- ospUnits$Amount$mmol)
+  expectPropertyReadOnly(baseGrid, "displayUnit", ospUnits$Amount$mmol)
 })

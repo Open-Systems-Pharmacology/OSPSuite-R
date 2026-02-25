@@ -15,5 +15,5 @@ test_that("It can set the basic options parameters", {
 })
 
 test_that("It can print simulation run options", {
-  expect_snapshot(runOptions$print())
+  expectSnapshotPrint(runOptions)
 })

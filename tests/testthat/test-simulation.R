@@ -9,11 +9,11 @@ test_that("It can retrieve the file source of the simulation", {
 })
 
 test_that("It throws an error when trying to set file source", {
-  expect_error(sim$sourceFile <- "TOTO")
+  expectPropertyReadOnly(sim, "sourceFile", "TOTO")
 })
 
 test_that("It can print the simulation", {
-  expect_snapshot(sim$print())
+  expectSnapshotPrint(sim)
 })
 
 test_that("It can retrieve the name of all stationary molecules used in the model", {

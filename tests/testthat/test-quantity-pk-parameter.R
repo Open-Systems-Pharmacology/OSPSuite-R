@@ -13,7 +13,7 @@ allPKParameters <- pkAnalyses$allPKParametersFor(
 pkParameter <- allPKParameters[[1]]
 
 test_that("It can print a quantity PK parameter", {
-  expect_snapshot(pkParameter$print())
+  expectSnapshotPrint(pkParameter)
 })
 
 test_that("It can resolve the unit and dimension of a quantity PK-Parameter", {

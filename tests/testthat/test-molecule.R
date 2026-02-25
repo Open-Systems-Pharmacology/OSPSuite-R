@@ -13,7 +13,7 @@ test_that("Setting the value of a molecule in concentration mode should not over
 
 test_that("It can print molecule", {
   molecule <- getMolecule("Organism|M", sim_conc_based)
-  expect_snapshot(molecule$print())
+  expectSnapshotPrint(molecule)
 })
 
 test_that("It can set the scale divisor", {

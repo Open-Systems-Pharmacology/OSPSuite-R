@@ -28,3 +28,15 @@ executeWithTestFile <- function(actionWithFile) {
   actionWithFile(newFile)
   file.remove(newFile)
 }
+
+# Helper function to test that a property is read-only
+# Expects an error when trying to assign a value to the property
+expectPropertyReadOnly <- function(object, propertyName, testValue = "test") {
+  expr <- substitute(object$prop <- testValue, list(prop = as.name(propertyName)))
+  expect_error(eval(expr))
+}
+
+# Helper function to test snapshot of object's print() method
+expectSnapshotPrint <- function(object) {
+  expect_snapshot(object$print())
+}

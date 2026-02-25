@@ -15,5 +15,5 @@ test_that("It can print", {
     showProgress = FALSE
   )
   options$numberOfCores <- 5
-  expect_snapshot(options$print())
+  expectSnapshotPrint(options)
 })

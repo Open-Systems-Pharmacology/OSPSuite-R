@@ -28,5 +28,5 @@ test_that("It can print simulation batch option", {
   batchOptions <- SimulationBatchOptions$new()
   batchOptions$variableParameters <- c("P1", "P2")
   batchOptions$variableMolecules <- c("M1", "M2")
-  expect_snapshot(batchOptions$print())
+  expectSnapshotPrint(batchOptions)
 })

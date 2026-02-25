@@ -7,7 +7,7 @@ test_that("It can print Quantity", {
     toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
     sim
   )
-  expect_snapshot(quantity$print())
+  expectSnapshotPrint(quantity)
 })
 
 test_that("It can retrieve the parent of an entity", {
@@ -40,5 +40,5 @@ test_that("It prints the Scientific value of the Quantity", {
 
 test_that("It prints the NaN value of the Quantity", {
   quantity <- getQuantity("AADAC|Lipophilicity", sim)
-  expect_snapshot(quantity$print())
+  expectSnapshotPrint(quantity)
 })

@@ -15,5 +15,5 @@ test_that("It can set the value of the start time for the application", {
 
 # Application$print
 test_that("It can print an application", {
-  expect_snapshot(application$print())
+  expectSnapshotPrint(application)
 })

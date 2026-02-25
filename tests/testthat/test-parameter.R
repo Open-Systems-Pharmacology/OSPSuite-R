@@ -14,11 +14,11 @@ tableParameter <- getParameter("Organism|TableParameter", simple)
 rhsParameter <- getParameter("Organism|RHSParameter", simple)
 
 test_that("It can print parameters", {
-  expect_snapshot(volumeParameter$print())
-  expect_snapshot(formulaParameter$print())
-  expect_snapshot(constantParameter$print())
-  expect_snapshot(tableParameter$print())
-  expect_snapshot(rhsParameter$print())
+  expectSnapshotPrint(volumeParameter)
+  expectSnapshotPrint(formulaParameter)
+  expectSnapshotPrint(constantParameter)
+  expectSnapshotPrint(tableParameter)
+  expectSnapshotPrint(rhsParameter)
 })
 
 test_that("It can retrieve name of a parameter", {
@@ -67,7 +67,7 @@ test_that("It can override a formula with a value", {
 })
 
 test_that("It throws an error when trying to set the name of a parameter", {
-  expect_error(volumeParameter$name <- "TOTO")
+  expectPropertyReadOnly(volumeParameter, "name", "TOTO")
 })
 
 test_that("It can retrieve the id of a parameter", {
@@ -83,11 +83,11 @@ test_that("It can retrieve the path of a parameter", {
 })
 
 test_that("It throws an error when trying to set the path of a parameter", {
-  expect_error(volumeParameter$path <- "TOTO")
+  expectPropertyReadOnly(volumeParameter, "path", "TOTO")
 })
 
 test_that("It throws an error when trying to set the id of a parameter", {
-  expect_error(volumeParameter$id <- "id")
+  expectPropertyReadOnly(volumeParameter, "id", "id")
 })
 
 test_that("It can retrieve a value and update a value of a parameter", {
@@ -105,7 +105,7 @@ test_that("It can retrieve the unit of a parameter", {
 })
 
 test_that("It throws an error when setting the unit of a parameter", {
-  expect_error(volumeParameter$unit <- "ml")
+  expectPropertyReadOnly(volumeParameter, "unit", "ml")
 })
 
 test_that("It can retrieve the display unit of a parameter", {
@@ -113,7 +113,7 @@ test_that("It can retrieve the display unit of a parameter", {
 })
 
 test_that("It throws an error when setting the display unit of a parameter", {
-  expect_error(volumeParameter$displayUnit <- "ml")
+  expectPropertyReadOnly(volumeParameter, "displayUnit", "ml")
 })
 
 test_that("It can set a value in another unit and the value will be updated as expected", {

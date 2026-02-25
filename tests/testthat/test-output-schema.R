@@ -22,7 +22,7 @@ test_that("it does not duplicate entries", {
 })
 
 test_that("It can print output schema", {
-  expect_snapshot(outputSchema$print())
+  expectSnapshotPrint(outputSchema)
 })
 
 test_that("it can remove interval references", {

@@ -6,7 +6,7 @@ simResults <- runSimulations(sim)[[1]]
 resultsPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
 
 test_that("It can print simulation results", {
-  expect_snapshot(simResults$print())
+  expectSnapshotPrint(simResults)
 })
 
 test_that("It returns TRUE if results for an individual exist", {
@@ -38,7 +38,7 @@ test_that("It can retrieve the number of individuals", {
 })
 
 test_that("It throws an error when trying to set the number of individuals", {
-  expect_error(simResults$count <- 1)
+  expectPropertyReadOnly(simResults, "count", 1)
 })
 
 test_that("It can retrieve the simulation", {
@@ -46,7 +46,8 @@ test_that("It can retrieve the simulation", {
 })
 
 test_that("It throws an error when trying to set the simulation", {
-  expect_error(simResults$simulation <- loadTestSimulation("S1"))
+  newSim <- loadTestSimulation("S1")
+  expectPropertyReadOnly(simResults, "simulation", newSim)
 })
 
 test_that("It can retrieve the time values", {
@@ -54,7 +55,7 @@ test_that("It can retrieve the time values", {
 })
 
 test_that("It throws an error when trying to set the time values", {
-  expect_error(simResults$timeValues <- 1:10)
+  expectPropertyReadOnly(simResults, "timeValues", 1:10)
 })
 
 test_that("It can retrieve the paths of all outputs", {
@@ -62,7 +63,7 @@ test_that("It can retrieve the paths of all outputs", {
 })
 
 test_that("It throws an error when trying to set the paths of all outputs", {
-  expect_error(simResults$allQuantityPaths <- "1:10")
+  expectPropertyReadOnly(simResults, "allQuantityPaths", "1:10")
 })
 
 test_that("It can retrieve the list of all individual ids", {
@@ -70,5 +71,5 @@ test_that("It can retrieve the list of all individual ids", {
 })
 
 test_that("It throws an error when trying to set individual ids", {
-  expect_error(simResults$allIndividualIds <- c(0, 1, 2))
+  expectPropertyReadOnly(simResults, "allIndividualIds", c(0, 1, 2))
 })
