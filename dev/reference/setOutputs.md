@@ -1,6 +1,6 @@
-# Set outputs
+# Set outputs of a simulation
 
-Sets the quantities as output into the `simulation`. The quantities can
+Sets the quantities as output of the `simulation`. The quantities can
 either be specified using explicit instances or using paths. This
 function clears the output selection before adding the new quantities.
 See `addOutputs` for adding quantities without clearing the output
@@ -10,7 +10,7 @@ adding new quantities.
 ## Usage
 
 ``` r
-setOutputs(quantitiesOrPaths, simulation)
+setOutputs(quantitiesOrPaths, simulation, stopIfNotFound = TRUE)
 ```
 
 ## Arguments
@@ -24,3 +24,8 @@ setOutputs(quantitiesOrPaths, simulation)
 - simulation:
 
   Instance of a simulation for which output selection should be updated.
+
+- stopIfNotFound:
+
+  Boolean. If `TRUE` (default) and no quantity exists for the given
+  path, an error is thrown. If `FALSE`, `NULL` is returned.

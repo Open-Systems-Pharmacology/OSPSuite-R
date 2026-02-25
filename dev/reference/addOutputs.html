@@ -9,7 +9,7 @@ can either be specified using explicit instances or using paths."><meta name="ro
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@ can either be specified using explicit instances or using paths.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addOutputs</span><span class="op">(</span><span class="va">quantitiesOrPaths</span>, <span class="va">simulation</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addOutputs</span><span class="op">(</span><span class="va">quantitiesOrPaths</span>, <span class="va">simulation</span>, stopIfNotFound <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -83,14 +83,19 @@ vector) to add.</p></dd>
 <dd><p>Instance of a simulation for which output selection should
 be updated.</p></dd>
 
+
+<dt id="arg-stopifnotfound">stopIfNotFound<a class="anchor" aria-label="anchor" href="#arg-stopifnotfound"></a></dt>
+<dd><p>Boolean. If <code>TRUE</code> (default) and no quantity exists for
+the given path, an error is thrown. If <code>FALSE</code>, <code>NULL</code> is returned.</p></dd>
+
 </dl></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">simPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">simPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simPath</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|VenousBlood|Plasma|Caffeine"</span>, <span class="st">"Organism|ArterialBlood|**|Caffeine"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|VenousBlood|Plasma|Aciclovir"</span>, <span class="st">"Organism|ArterialBlood|**|Aciclovir"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">addOutputs</span><span class="op">(</span><span class="va">paths</span>, <span class="va">sim</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">parameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="getParameter.html">getParameter</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="va">sim</span><span class="op">)</span></span></span>

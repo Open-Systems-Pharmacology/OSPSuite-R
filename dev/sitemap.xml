@@ -22,8 +22,6 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/index.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/news/index.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/AgingData.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/AllMatchingMethod.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/AllPathsInMethod.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ApiConfig.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Application.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Cache.html</loc></url>
@@ -111,11 +109,8 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractResidualsToTibble.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-gatherFiles.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-geoRange.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getAllEntitiesMatching.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getAllEntityPathsIn.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getConcurrentSimulationRunnerResults.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getDimensionsEnum.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getEntity.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTask.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTaskFromCache.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspDimensions.html</loc></url>

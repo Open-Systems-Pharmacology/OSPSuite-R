@@ -576,7 +576,7 @@
   : Clears the output interval from the simulation and adds a new one.
 
 - [`setOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputs.md)
-  : Set outputs
+  : Set outputs of a simulation
 
 - [`setParameterValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setParameterValues.md)
   : Set values of parameters

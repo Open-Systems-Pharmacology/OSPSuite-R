@@ -2,6 +2,14 @@
 
 ## ospsuite (development version)
 
+### Minor improvements and bug fixes
+
+- [`addOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputs.md)
+  and
+  [`setOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputs.md)
+  now throw an error by default when the provided path is not found.
+  This behavior can be disabled by setting `stopIfNotFound = FALSE`.
+
 ## ospsuite 12.4.1
 
 ### Breaking changes
