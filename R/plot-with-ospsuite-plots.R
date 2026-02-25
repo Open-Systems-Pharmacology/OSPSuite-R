@@ -992,7 +992,7 @@ plotQuantileQuantilePlot <- function(
   plotData <- plotData[dataType == dataTypeFilter]
 
   if (nrow(plotData) == 0) {
-    if (showLegendPerDataset == dataTypeFilter) {
+    if (any(showLegendPerDataset == c(dataTypeFilter, "all"))) {
       warning(messages$plotShowLegendPerDatasetHasNoEffect(
         dataType = dataTypeFilter
       ))
@@ -1118,7 +1118,7 @@ plotQuantileQuantilePlot <- function(
     'simulated' = 'shape'
   )
   if (unusualAesthetic %in% names(userMapping)) {
-    warning(messages$plotUntypicalAesthtic(
+    warning(messages$plotUntypicalAesthetic(
       aesthetic = unusualAesthetic,
       dataType = dataTypeFilter
     ))

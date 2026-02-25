@@ -191,12 +191,12 @@ messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
   )
 }
 
-messages$plotUntypicalAesthtic <- function(aesthetic, dataType) {
+messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
   sprintf(
     "aesthetic '%s' is set to mapping for %s data.
       This aesthetic is usually only used for %s data mapping.",
     aesthetic,
     dataType,
-    setdiff(c('simulated,observed'), dataType)
+    setdiff(c('simulated', 'observed'), dataType)
   )
 }

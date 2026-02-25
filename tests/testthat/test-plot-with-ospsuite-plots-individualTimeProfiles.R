@@ -45,9 +45,12 @@ test_that("It creates default plots as expected for multiple observed datasets",
     fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
   )
 
-  vdiffr::expect_doppelganger(
-    title = "multiple obs - showLegendPerDataset all",
-    fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "all")
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple obs - showLegendPerDataset all",
+      fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "all")
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
 
   vdiffr::expect_doppelganger(
@@ -79,9 +82,12 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
     )
   )
 
-  vdiffr::expect_doppelganger(
-    title = "multiple sim - showLegendPerDataset all",
-    fig = plotTimeProfile(manySimDC, showLegendPerDataset = "all")
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple sim - showLegendPerDataset all",
+      fig = plotTimeProfile(manySimDC, showLegendPerDataset = "all")
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect(dataType = 'observed')
   )
 
   vdiffr::expect_doppelganger(
@@ -196,7 +202,7 @@ test_that("It warns when user mapping containsuntypical aethetics", {
       manySimDC,
       mapping = ggplot2::aes(shape = dataType)
     ),
-    messages$plotUntypicalAesthtic(
+    messages$plotUntypicalAesthetic(
       aesthetic = 'shape',
       dataType = "simulated"
     )
@@ -208,7 +214,7 @@ test_that("It warns when user mapping containsuntypical aethetics", {
       manyObsDC,
       observedMapping = ggplot2::aes(linetype = dataType)
     ),
-    messages$plotUntypicalAesthtic(
+    messages$plotUntypicalAesthetic(
       aesthetic = 'linetype',
       dataType = "observed"
     )
