@@ -1,13 +1,11 @@
 #' @title Create Time Profile Plot
 #'
-#' @description
-#' Creates a time profile plot for given data.
+#' @description Creates a time profile plot for given data.
 #'
-#' This function generates a time profile plot using ggplot2, where the data
-#' is grouped by a column named "group".
+#' This function generates a time profile plot using ggplot2, where the data is
+#' grouped by a column named "group".
 #'
-#' @details
-#' ## Automatic Unit Conversion
+#' @details ## Automatic Unit Conversion
 #'
 #' When using a `DataCombined` object, the function automatically converts mixed
 #' units to a common unit. The target unit is determined by the most frequently
@@ -21,13 +19,13 @@
 #' The function automatically handles data containing different error type
 #' specifications:
 #' - If all data uses the same error type (`ArithmeticStdDev` or `GeometricStdDev`),
-#'   it is passed directly to the plotting function.
+#' it is passed directly to the plotting function.
 #' - If data contains **mixed error types**, they are automatically converted to
-#'   `yMin`/`yMax` bounds:
+#' `yMin`/`yMax` bounds:
 #'   - `ArithmeticStdDev`: `yMin = yValues - yErrorValues`, `yMax = yValues + yErrorValues`
 #'   - `GeometricStdDev`: `yMin = yValues / yErrorValues`, `yMax = yValues * yErrorValues`
 #' - For custom error types (not `ArithmeticStdDev` or `GeometricStdDev`), provide
-#'   error bounds directly in `yMin` and `yMax` columns.
+#' error bounds directly in `yMin` and `yMax` columns.
 #'
 #' @param plotData An object of class `DataCombined` or a `data.table`. If a
 #'   `data.table`, it must include the following:
@@ -50,7 +48,8 @@
 #'   `ggplot2::aes()`. This is added or replaces the default mapping constructed
 #'   by the data.
 #' @param observedMapping A ggplot2 aesthetic mapping for observed data. Default
-#'   is NULL. Then a copy of mapping without line typical aesthetics like linetype and linewidth is used.
+#'   is NULL. Then a copy of mapping without line typical aesthetics like
+#'   linetype and linewidth is used.
 #' @param aggregation The type of the aggregation of simulated data. One of
 #'   `quantiles` (Default), `arithmetic` or `geometric` (full list in
 #'   `ospsuite::DataAggregationMethods`). Will replace `yValues` by the median,
@@ -62,9 +61,9 @@
 #' @param nsd Optional parameter specifying the number of standard deviations to
 #'   plot above and below the mean (used for error bars when aggregation is
 #'   "arithmetic" or "geometric"). Ignored if `aggregation` is  `quantiles`.
-#' @param xUnit A character string specifying the target unit for the x-axis.
-#'   If `NULL` (default), the most frequent unit in the data is used. For
-#'   available units, see `ospsuite::ospUnits`.
+#' @param xUnit A character string specifying the target unit for the x-axis. If
+#'   `NULL` (default), the most frequent unit in the data is used. For available
+#'   units, see `ospsuite::ospUnits`.
 #' @param yUnit A character string specifying the target unit for the primary
 #'   y-axis. If `NULL` (default), the most frequent unit in the data is used.
 #'   For available units, see `ospsuite::ospUnits`.
@@ -78,11 +77,13 @@
 #'   - `"observed"`: Differentiate only observed data via different shapes.
 #'   - `"simulated"`: Differentiate only simulated data via different line types.
 #'
-#'   User-provided `mapping` and `observedMapping` will override internal settings.
-#'   A warning is issued if the override removes per-dataset differentiation.
-#' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale yScaleArgs
-#'  y2Scale y2ScaleArgs groupAesthetics plotObject geomLineAttributes geomRibbonAttributes
-#'  geomPointAttributes geomErrorbarAttributes geomLLOQAttributes
+#'   User-provided `mapping` and `observedMapping` will override internal
+#'   settings. A warning is issued if the override removes per-dataset
+#'   differentiation.
+#' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale
+#'   yScaleArgs y2Scale y2ScaleArgs groupAesthetics plotObject
+#'   geomLineAttributes geomRibbonAttributes geomPointAttributes
+#'   geomErrorbarAttributes geomLLOQAttributes
 #'
 #' @return A `ggplot2` plot object representing the time profile.
 #' @export
@@ -161,7 +162,7 @@ plotTimeProfile <- function(
       !names(mapping) %in% c("linetype", "linewidth")
     ]
   }
-  observedMappingAdjusted = .getMappingForTimeprofiles(
+  observedMappingAdjusted <- .getMappingForTimeprofiles(
     plotData = plotData,
     metaData = metaData,
     userMapping = observedMapping,
@@ -201,8 +202,7 @@ plotTimeProfile <- function(
 
 #' @title Plot Predicted vs Observed Values
 #'
-#' @description
-#' Plots predicted vs observed data, grouped by "group".
+#' @description Plots predicted vs observed data, grouped by "group".
 #'
 #' This function visualizes the relationship between predicted and observed
 #' values, allowing for easy identification of discrepancies.
@@ -211,9 +211,9 @@ plotTimeProfile <- function(
 #'
 #' @param xyScale A character string specifying the scale for the x and y-axis.
 #'   Default is `log`.
-#' @param yUnit A character string specifying the target unit for the x and y-axis.
-#'   If `NULL` (default), the most frequent unit in the data is used. For
-#'   available units, see `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the x and
+#'   y-axis. If `NULL` (default), the most frequent unit in the data is used.
+#'   For available units, see `ospsuite::ospUnits`.
 #' @param predictedAxis A character string specifying which axis to use for
 #'   predicted values. Options are `"x"` (predicted on x-axis, observed on
 #'   y-axis) or `"y"` (default, predicted on y-axis, observed on x-axis).
@@ -221,9 +221,9 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
-#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs
-#'  groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes
-#'  geomComparisonLineAttributes geomLLOQAttributes
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale
+#'   yScaleArgs groupAesthetics addRegression geomPointAttributes
+#'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
 #'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
@@ -305,15 +305,13 @@ plotPredictedVsObserved <- function(
 
 #' @title Plot Residuals vs Covariate
 #'
-#' @description
-#' Plots residuals vs a covariate (time, observed, or predicted values),
-#' grouped by "group".
+#' @description Plots residuals vs a covariate (time, observed, or predicted
+#' values), grouped by "group".
 #'
 #' This function visualizes the residuals against time, observed, or predicted
 #' (simulated) values, helping to assess model performance.
 #'
-#' @details
-#' ## Residual Calculation
+#' @details ## Residual Calculation
 #'
 #' Residuals are calculated by pairing observed and simulated data at matching
 #' time points within the same group. Only datasets that can be paired (i.e.,
@@ -326,13 +324,13 @@ plotPredictedVsObserved <- function(
 #'
 #' The `residualScale` parameter controls how residuals are displayed:
 #' - `linear`: Absolute residuals (Observed - Predicted). Values centered around
-#'   zero indicate good model fit. Useful for normally distributed errors.
+#' zero indicate good model fit. Useful for normally distributed errors.
 #' - `log`: Log-transformed residuals, calculated as log(Observed / Predicted).
-#'   Values centered around zero indicate good fit. Preferred for log-normally
-#'   distributed data or when errors are proportional to magnitude.
+#' Values centered around zero indicate good fit. Preferred for log-normally
+#' distributed data or when errors are proportional to magnitude.
 #' - `ratio`: Ratio of observed to predicted (Observed / Predicted). Values
-#'   centered around 1.0 indicate good fit. Useful for understanding relative
-#'   prediction error.
+#' centered around 1.0 indicate good fit. Useful for understanding relative
+#' prediction error.
 #'
 #' @inheritParams plotTimeProfile
 #'
@@ -341,17 +339,17 @@ plotPredictedVsObserved <- function(
 #' @param xAxis A character string specifying what to display on the x-axis.
 #'   Options are `"time"` (time points from xValues), `"observed"` (observed
 #'   values, default), or `"predicted"` (predicted/simulated values).
-#' @param xUnit A character string specifying the target unit for the time values.
-#' (only relevant if `xAxis = "time"`)
-#'   If `NULL` (default), the most frequent unit in the data is used. For
-#'   available units, see `ospsuite::ospUnits`.
-#' @param yUnit A character string specifying the target unit for the simulated and
-#'   observed y-values used for residual calculation and (if `xAxis != "time"`) displayed on the x-Axis.
-#'    If `NULL` (default), the most frequent unit in the data is used.
-#'   For available units, see `ospsuite::ospUnits`.
-#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics
-#'  addRegression
-#'   geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
+#' @param xUnit A character string specifying the target unit for the time
+#'   values. (only relevant if `xAxis = "time"`) If `NULL` (default), the most
+#'   frequent unit in the data is used. For available units, see
+#'   `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the simulated
+#'   and observed y-values used for residual calculation and (if `xAxis !=
+#'   "time"`) displayed on the x-Axis. If `NULL` (default), the most frequent
+#'   unit in the data is used. For available units, see `ospsuite::ospUnits`.
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale
+#'   yScaleArgs groupAesthetics addRegression geomPointAttributes
+#'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
 #' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
@@ -442,8 +440,7 @@ plotResidualsVsCovariate <- function(
 
 #' @title Plot Residuals Histogram
 #'
-#' @description
-#' Plots residuals as a histogram, grouped by "group".
+#' @description Plots residuals as a histogram, grouped by "group".
 #'
 #' This function generates a histogram of the residuals, providing a visual
 #' representation of their distribution.
@@ -452,13 +449,13 @@ plotResidualsVsCovariate <- function(
 #'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
-#' @param yUnit A character string specifying the target unit for the simulated and
-#'   observed y-values used for residual calculation.
-#'    If `NULL` (default), the most frequent unit in the data is used.
-#'   For available units, see `ospsuite::ospUnits`.
+#' @param yUnit A character string specifying the target unit for the simulated
+#'   and observed y-values used for residual calculation. If `NULL` (default),
+#'   the most frequent unit in the data is used. For available units, see
+#'   `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
-#' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale yScaleArgs
-#'  plotAsFrequency meanFunction geomHistAttributes
+#' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale
+#'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
@@ -518,11 +515,9 @@ plotResidualsAsHistogram <- function(
   return(plotObject)
 }
 
-
 #' @title Plot Quantile-Quantile Plot
 #'
-#' @description
-#' Plots a Quantile-Quantile plot, grouped by "group".
+#' @description Plots a Quantile-Quantile plot, grouped by "group".
 #'
 #' This function visualizes the distribution of predicted vs observed values
 #' using a Q-Q plot.
@@ -531,12 +526,12 @@ plotResidualsAsHistogram <- function(
 #'
 #' @param residualScale Either "linear", "log", or "ratio" method for computing
 #'   residuals. Default is `log`.
-#' @param yUnit A character string specifying the target unit for the simulated and
-#'   observed y-values used for residual calculation.
-#'    If `NULL` (default), the most frequent unit in the data is used.
-#'   For available units, see `ospsuite::ospUnits`.
-#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs groupAesthetics geomQQAttributes
-#'  geomQQLineAttributes
+#' @param yUnit A character string specifying the target unit for the simulated
+#'   and observed y-values used for residual calculation. If `NULL` (default),
+#'   the most frequent unit in the data is used. For available units, see
+#'   `ospsuite::ospUnits`.
+#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs
+#'   groupAesthetics geomQQAttributes geomQQLineAttributes
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot.
 #' @export
@@ -846,9 +841,10 @@ plotQuantileQuantilePlot <- function(
   }
 
   # Determine ordered dimension names (concentration first) to map user units.
-  # `yUnit` maps to index 1 (primary axis) and `y2Unit` to index 2 (secondary axis).
-  # `dimIdx` will always be non-NA since `orderedDimNames` is derived from
-  # `names(plotDataByDimensions)`, i.e. the same set of names iterated below.
+  # `yUnit` maps to index 1 (primary axis) and `y2Unit` to index 2 (secondary
+  # axis). `dimIdx` will always be non-NA since `orderedDimNames` is derived
+  # from `names(plotDataByDimensions)`, i.e. the same set of names iterated
+  # below.
   orderedDimNames <- c(
     names(plotDataByDimensions)[
       names(plotDataByDimensions) %in% dimensionsToMerge
@@ -879,7 +875,7 @@ plotQuantileQuantilePlot <- function(
   names(convertedData) <- names(plotDataByDimensions)
 
   # Order the list to have Concentration at the top,
-  # that ensures it will be displayed on the primary axis at the timeprofile plots
+  # that ensures it will be displayed on the primary axis in timeprofile plots
   orderedData <- c(
     convertedData[dimensionsToMerge],
     convertedData[!names(convertedData) %in% dimensionsToMerge]
@@ -1073,7 +1069,8 @@ plotQuantileQuantilePlot <- function(
     plotData[, lloq := NA]
   }
 
-  # Remove the observed and simulated datasets which can't be paired.
+  # Drop groups that have only observed or only simulated data — residuals
+  # require a matched pair of both within the same group.
   plotData <- .removeUnpairableDatasets(plotData)
 
   # Return early if there are no pair-able datasets present
@@ -1225,17 +1222,9 @@ plotQuantileQuantilePlot <- function(
   }
 
   if (any(names(metaData) %in% "y2")) {
+    y2UnitValue <- metaData[["y2"]][["unit"]]
     mapping <- structure(
-      c(
-        mapping,
-        eval(parse(
-          text = paste0(
-            "ggplot2::aes( y2axis = yUnit == '",
-            metaData[["y2"]][["unit"]],
-            "')"
-          )
-        ))
-      ),
+      c(mapping, eval(bquote(ggplot2::aes(y2axis = yUnit == .(y2UnitValue))))),
       class = "uneval"
     )
   }
@@ -1413,7 +1402,7 @@ plotQuantileQuantilePlot <- function(
 #'   - `yValues`: Numeric values to be aggregated.
 #'   - Optional:
 #'     - `IndividualId`: Identifier for individual observations, used to
-#'       distinguish between individual and population data.
+#'   distinguish between individual and population data.
 #'     - `group`: Grouping variable(s) for aggregation.
 #'     - `name`: Name for the dataset.
 #' @param aggregation A character string specifying the aggregation method.

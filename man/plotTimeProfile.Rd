@@ -50,11 +50,12 @@ about dimensions and units for both x and y axes.}
 by the data.}
 
 \item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default
-is NULL. Then a copy of mapping without line typical aesthetics like linetype and linewidth is used.}
+is NULL. Then a copy of mapping without line typical aesthetics like
+linetype and linewidth is used.}
 
-\item{xUnit}{A character string specifying the target unit for the x-axis.
-If \code{NULL} (default), the most frequent unit in the data is used. For
-available units, see \code{ospsuite::ospUnits}.}
+\item{xUnit}{A character string specifying the target unit for the x-axis. If
+\code{NULL} (default), the most frequent unit in the data is used. For available
+units, see \code{ospsuite::ospUnits}.}
 
 \item{yUnit}{A character string specifying the target unit for the primary
 y-axis. If \code{NULL} (default), the most frequent unit in the data is used.
@@ -86,8 +87,9 @@ individual datasets. One of:
 \item \code{"simulated"}: Differentiate only simulated data via different line types.
 }
 
-User-provided \code{mapping} and \code{observedMapping} will override internal settings.
-A warning is issued if the override removes per-dataset differentiation.}
+User-provided \code{mapping} and \code{observedMapping} will override internal
+settings. A warning is issued if the override removes per-dataset
+differentiation.}
 
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotTimeProfile]{ospsuite.plots::plotTimeProfile}}
@@ -95,12 +97,11 @@ A warning is issued if the override removes per-dataset differentiation.}
     \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
     \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
     \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
-    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
+    \item{\code{y2Scale}}{either 'linear' the secondary axis is displayed linear, or 'log' secondary axis is displayed with log scale}
     \item{\code{y2ScaleArgs}}{list of arguments passed to \code{ggplot2::sec_axis()}, trans, break are set by code}
     \item{\code{plotObject}}{An optional \code{ggplot} object on which to add the plot layers}
-    \item{\code{geomLineAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_line}}
     \item{\code{geomRibbonAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_ribbon}}
-    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
+    \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
     \item{\code{groupAesthetics}}{vector of aesthetics, which are used for columns mapped with \code{groupby},}
   }}
@@ -111,8 +112,8 @@ A \code{ggplot2} plot object representing the time profile.
 \description{
 Creates a time profile plot for given data.
 
-This function generates a time profile plot using ggplot2, where the data
-is grouped by a column named "group".
+This function generates a time profile plot using ggplot2, where the data is
+grouped by a column named "group".
 }
 \details{
 \subsection{Automatic Unit Conversion}{
