@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -358,6 +358,7 @@ let the software “guess” the configuration for a given excel sheet:</p>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
 <span></span>
 <span><span class="co"># Create importer configuration for the excel sheet</span></span>
+<span><span class="co"># The sheet name is automatically added to the configuration</span></span>
 <span><span class="va">importerConfiguration_guessed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile</a></span><span class="op">(</span></span>
 <span>  filePath <span class="op">=</span> <span class="va">excelFilePath</span>,</span>
 <span>  sheet <span class="op">=</span> <span class="va">sheetName</span></span>
@@ -393,11 +394,12 @@ following example loads the sheets <code>TestSheet_1</code> and
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
 <span></span>
 <span><span class="co"># Create importer configuration for the excel sheet</span></span>
+<span><span class="co"># The sheet name is automatically added to the configuration</span></span>
 <span><span class="va">importerConfiguration_guessed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile</a></span><span class="op">(</span></span>
 <span>  filePath <span class="op">=</span> <span class="va">excelFilePath</span>,</span>
 <span>  sheet <span class="op">=</span> <span class="va">sheetName</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co"># Add sheet names to the configuration</span></span>
+<span><span class="co"># To load multiple sheets, override the sheets property</span></span>
 <span><span class="va">importerConfiguration_guessed</span><span class="op">$</span><span class="va">sheets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TestSheet_1"</span>, <span class="st">"TestSheet_1_withMW"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load data</span></span>

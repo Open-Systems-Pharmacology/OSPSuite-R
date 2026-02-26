@@ -299,6 +299,7 @@ excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsu
 sheetName <- "TestSheet_1"
 
 # Create importer configuration for the excel sheet
+# The sheet name is automatically added to the configuration
 importerConfiguration_guessed <- createImporterConfigurationForFile(
   filePath = excelFilePath,
   sheet = sheetName
@@ -337,11 +338,12 @@ excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsu
 sheetName <- "TestSheet_1"
 
 # Create importer configuration for the excel sheet
+# The sheet name is automatically added to the configuration
 importerConfiguration_guessed <- createImporterConfigurationForFile(
   filePath = excelFilePath,
   sheet = sheetName
 )
-# Add sheet names to the configuration
+# To load multiple sheets, override the sheets property
 importerConfiguration_guessed$sheets <- c("TestSheet_1", "TestSheet_1_withMW")
 
 # Load data

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,8 @@
 <ul><li>
 <code><a href="../reference/addOutputs.html">addOutputs()</a></code> and <code><a href="../reference/setOutputs.html">setOutputs()</a></code> now throw an error by default when the provided path is not found. This behavior can be disabled by setting <code>stopIfNotFound = FALSE</code>.</li>
 <li>Added read-only <code>valueOrigin</code> property to <code>Quantity</code> class (including <code>Parameter</code> and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.</li>
+<li>
+<code><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile()</a></code> now automatically sets the <code>sheets</code> attribute when a <code>sheet</code> parameter is provided, eliminating the need to manually set it before using <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code>.</li>
 </ul></div>
 </div>
     <div class="section level2">

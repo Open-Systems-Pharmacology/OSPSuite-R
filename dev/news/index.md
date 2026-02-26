@@ -13,6 +13,10 @@
   `Parameter` and other derived classes) to access the value origin from
   the underlying .NET object. This is useful for generating automated
   reports that track parameter value provenance.
+- [`createImporterConfigurationForFile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createImporterConfigurationForFile.md)
+  now automatically sets the `sheets` attribute when a `sheet` parameter
+  is provided, eliminating the need to manually set it before using
+  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md).
 
 ## ospsuite 12.4.1
 
