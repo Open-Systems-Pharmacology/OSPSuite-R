@@ -70,11 +70,12 @@ test_that("active bindings are read-only", {
 test_that("add* methods error if anything but expected data types are entered", {
   myCombDat <- DataCombined$new()
 
+  # Should error with invalid types in list
   expect_error(
     myCombDat$addSimulationResults(list("x", "y")),
     messages$errorWrongType(
-      "simulationResults",
-      type = "list",
+      "x",
+      type = "character",
       "SimulationResults"
     ),
     fixed = TRUE
@@ -249,6 +250,34 @@ test_that("data frame molecular weight column values are as expected", {
   df <- myCombDat$toDataFrame()
 
   expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
+})
+
+test_that("addSimulationResults works with a list containing one element", {
+  myCombDat <- DataCombined$new()
+  
+  # Create a list with one element (mimics runSimulations output for single sim)
+  simResultsList <- list(simResults)
+  
+  # Should work without requiring [[1]]
+  myCombDat$addSimulationResults(simResultsList)
+  df <- myCombDat$toDataFrame()
+  
+  # Should have same results as passing single result
+  expect_equal(nrow(df), 1255L)
+  expect_equal(sort(unique(df$name)), sort(simResults$allQuantityPaths))
+})
+
+test_that("addSimulationResults errors with a list containing multiple elements", {
+  myCombDat <- DataCombined$new()
+  
+  # Create a list with multiple elements
+  simResultsList <- list(simResults, simResults)
+  
+  # Should error with multiple elements
+  expect_error(
+    myCombDat$addSimulationResults(simResultsList),
+    messages$errorOnlyOneSupported()
+  )
 })
 
 # Performance tests are only run on machines

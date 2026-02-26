@@ -151,18 +151,22 @@ DataCombined <- R6::R6Class(
       groups = NULL,
       silent = FALSE
     ) {
-      # Validate vector arguments' type and length
-      validateIsOfType(simulationResults, "SimulationResults", FALSE)
-
-      # A vector of `SimulationResults` class instances is not allowed. Why?
+      # Normalize input - allow single result or list with one element
+      normalized <- .normalizeSimulationResults(simulationResults)
+      resultsList <- normalized$list
+      
+      # A list of multiple `SimulationResults` class instances is not allowed. Why?
       #
       # If this were to be allowed, `quantitiesOrPaths`, `population`, and
       # `individualIds ` could all be different for every `SimulationResults`
       # instance, and those arguments should also themselves be lists (i.e.,
       # lists of lists), which makes for quite a complicated API.
-      if (is.list(simulationResults)) {
+      if (length(resultsList) > 1) {
         stop(messages$errorOnlyOneSupported())
       }
+      
+      # Extract the single result
+      simulationResults <- resultsList[[1]]
 
       # Summary variables (useful since they are referred to more than once)
       pathsNames <- quantitiesOrPaths %||% simulationResults$allQuantityPaths
