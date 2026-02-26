@@ -5,6 +5,7 @@
 - `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
 - Added read-only `valueOrigin` property to `Quantity` class (including `Parameter` and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.
 - `createImporterConfigurationForFile()` now automatically sets the `sheets` attribute when a `sheet` parameter is provided, eliminating the need to manually set it before using `loadDataSetsFromExcel()`.
+- Fixed `getSteadyState()` to correctly apply `lowerThreshold` for both positive and negative values. The threshold now filters values in the interval `[-lowerThreshold, lowerThreshold]` instead of only values below the threshold. (\#1348)
 
 # ospsuite 12.4.1
 
