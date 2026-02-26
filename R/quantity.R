@@ -101,11 +101,11 @@ Quantity <- R6::R6Class(
     #' @field valueOrigin The value origin of the quantity (Read-Only)
     valueOrigin = function(value) {
       if (missing(value)) {
-        valOr <- self$get("ValueOrigin")
-        if (is.null(valOr)) {
+        valueOriginObject <- self$get("ValueOrigin")
+        if (is.null(valueOriginObject)) {
           return(NULL)
         }
-        return(valOr$call("ToString"))
+        return(valueOriginObject$call("ToString"))
       } else {
         private$.throwPropertyIsReadonly("valueOrigin")
       }
