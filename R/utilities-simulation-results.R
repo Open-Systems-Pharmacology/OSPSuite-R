@@ -161,6 +161,9 @@ getOutputValues <- function(
 #' @export
 exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SimulationResults")
+  if (is.list(results)) {
+    stop(messages$errorExportResultsOnlyOneObject())
+  }
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
