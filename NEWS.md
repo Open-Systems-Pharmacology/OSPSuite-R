@@ -3,6 +3,7 @@
 ## Minor improvements and bug fixes
 
 - `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
+- `ospUnits$Dimensionless$Unitless` and `ospUnits$Fraction$Unitless` now return an empty string `""` instead of the literal string `"Unitless"`.
 
 # ospsuite 12.4.1
 
