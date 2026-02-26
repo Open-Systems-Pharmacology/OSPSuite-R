@@ -201,7 +201,11 @@ messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
   )
 }
 
-messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCount, actualCount) {
+messages$errorParameterValuesCountMismatch <- function(
+  parameterPath,
+  expectedCount,
+  actualCount
+) {
   paste0(
     "Parameter values for '",
     parameterPath,

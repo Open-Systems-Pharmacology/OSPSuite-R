@@ -124,10 +124,11 @@ saveRDS(customDPC, file = file.path(path, "customDPC"))
 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-outputPath <-  c("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-                 "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine")
-setOutputs(quantitiesOrPaths =  outputPath,
-           simulation = sim)
+outputPath <- c(
+  "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+  "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine"
+)
+setOutputs(quantitiesOrPaths = outputPath, simulation = sim)
 simResults <- runSimulations(sim)[[1]]
 
 manyObsSimDCWithFraction <- DataCombined$new()
@@ -146,8 +147,15 @@ manyObsSimDCWithFraction$addSimulationResults(
 )
 
 # observed data
-obsData <-  loadDataSetFromPKML(system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite"))
+obsData <- loadDataSetFromPKML(system.file(
+  "extdata",
+  "ObsDataAciclovir_1.pkml",
+  package = "ospsuite"
+))
 
 manyObsSimDCWithFraction$addDataSets(obsData, groups = "Aciclovir PVB")
 
-saveRDS(manyObsSimDCWithFraction, file = file.path(path, "manyObsSimDCWithFraction"))
+saveRDS(
+  manyObsSimDCWithFraction,
+  file = file.path(path, "manyObsSimDCWithFraction")
+)

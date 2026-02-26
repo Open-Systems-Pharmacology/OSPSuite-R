@@ -52,14 +52,18 @@ Population <- R6::R6Class(
     setParameterValues = function(parameterOrPath, values) {
       parameterPath <- private$getPathFrom(parameterOrPath)
       validateIsNumeric(values)
-      
+
       # Check that the number of values matches the number of individuals
       expectedCount <- self$count
       actualCount <- length(values)
       if (actualCount != expectedCount) {
-        stop(messages$errorParameterValuesCountMismatch(parameterPath, expectedCount, actualCount))
+        stop(messages$errorParameterValuesCountMismatch(
+          parameterPath,
+          expectedCount,
+          actualCount
+        ))
       }
-      
+
       self$call("SetValues", parameterPath, values)
       invisible(self)
     },
