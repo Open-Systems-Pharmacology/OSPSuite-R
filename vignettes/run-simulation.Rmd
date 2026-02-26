@@ -58,7 +58,10 @@ simulationResults$allQuantityPaths
 resultsPath <- simulationResults$allQuantityPaths[[1]]
 print(resultsPath)
 
-resultsData <- getOutputValues(simulationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(
+  simulationResults,
+  quantitiesOrPaths = resultsPath
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
@@ -81,7 +84,10 @@ csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
 exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 
 # Load from csv
-resultsLoaded <- importResultsFromCSV(filePaths = csvResultsPath, simulation = sim)
+resultsLoaded <- importResultsFromCSV(
+  filePaths = csvResultsPath,
+  simulation = sim
+)
 print(resultsLoaded)
 ```
 
@@ -173,14 +179,67 @@ clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
 
 # Add an interval
-addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")
+addOutputInterval(
+  simulation = sim,
+  startTime = 0,
+  endTime = 20,
+  resolution = 60,
+  intervalName = "highRes"
+)
 print(sim$outputSchema)
 
 # Add a second interval
-addOutputInterval(simulation = sim, startTime = 30, endTime = 2000, resolution = 4, intervalName = "lowRes")
+addOutputInterval(
+  simulation = sim,
+  startTime = 30,
+  endTime = 2000,
+  resolution = 4,
+  intervalName = "lowRes"
+)
 print(sim$outputSchema)
 
 # Replace the existing interval(s) with a new one
-setOutputInterval(simulation = sim, startTime = 0, endTime = 2000, resolution = 4)
+setOutputInterval(
+  simulation = sim,
+  startTime = 0,
+  endTime = 2000,
+  resolution = 4
+)
 print(sim$outputSchema)
 ```
+
+## Adjusting solver settings
+
+The solver settings control the numerical integration algorithm used to solve the differential equations in the simulation. These settings can be accessed and modified through the `$solver` property of a `Simulation` object.
+
+```{r viewSolverSettings}
+# View current solver settings
+print(sim$solver)
+```
+
+In some cases, a simulation may fail to run successfully due to numerical instability or convergence issues. One common approach to resolve such issues is to reduce the solver tolerances, which makes the solver use smaller step sizes and more precise calculations. The two main tolerance parameters are:
+
+* `absTol`: Absolute tolerance - controls the accuracy of the solution in absolute terms
+* `relTol`: Relative tolerance - controls the accuracy of the solution relative to the magnitude of the values
+
+```{r adjustSolverTolerances}
+# If a simulation fails to run, try reducing the tolerances
+# Reduce absolute tolerance by a factor of 10
+sim$solver$absTol <- sim$solver$absTol * 1e-1
+
+# Optionally, the relative tolerance can also be reduced
+# sim$solver$relTol <- sim$solver$relTol * 1e-1
+
+# After changing solver settings, re-run the simulation
+simulationResults <- runSimulations(simulations = sim)[[1]]
+```
+
+Other solver settings that can be adjusted include:
+
+* `h0`: Initial time step size
+* `hMin`: Minimum step size allowed
+* `hMax`: Maximum step size allowed
+* `mxStep`: Maximum number of (internal) steps to be taken by the solver in its attempt to reach the next output time
+* `useJacobian`: Indicates whether to use the analytically calculated Jacobian matrix during calculations. When disabled, an approximation by difference quotients is used, which is much slower in the majority of cases
+
+For more details on solver properties and their effects, see the [MoBi documentation on ODE Solver Properties](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/setting-up-simulation#ode-solver-properties).
