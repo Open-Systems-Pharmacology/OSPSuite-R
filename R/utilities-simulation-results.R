@@ -160,7 +160,7 @@ getOutputValues <- function(
 #' exportResultsToCSV(results, tempfile())
 #' @export
 exportResultsToCSV <- function(results, filePath) {
-  if (is.list(results)) {
+  if (is.list(results) && !inherits(results, "SimulationResults")) {
     stop(messages$errorExportResultsOnlyOneObject())
   }
   validateIsOfType(results, "SimulationResults")

@@ -137,6 +137,14 @@ test_that("It throws an error when a list of simulation results is provided", {
   )
 })
 
+test_that("It throws an error when output from runSimulations is provided directly", {
+  allResults <- runSimulations(sim)
+  expect_error(
+    exportResultsToCSV(allResults, "dummy.csv"),
+    "Only one 'SimulationResults' object is allowed"
+  )
+})
+
 # importResultsFromCSV
 
 test_that("It can import valid simulation results from one CSV file", {
