@@ -1,9 +1,12 @@
 #' @title Calculates the pkAnalyses for all output values available in `results`.
 #'
-#' @param results Results of simulation. Typically the `results` are calculated
-#'   using `runSimulations` or imported from csv file via `importResults`.
+#' @param results Results of simulation. Can be a single `SimulationResults` object
+#'   or a list of `SimulationResults` objects (typically the output from
+#'   `runSimulations`).
 #'
-#' @return An instance of `SimulationPKAnalyses` class.
+#' @return If a single `SimulationResults` object is provided, returns a
+#'   `SimulationPKAnalyses` object. If a list of `SimulationResults` is provided,
+#'   returns a named list of `SimulationPKAnalyses` objects.
 #'
 #' @examples
 #'
@@ -13,17 +16,38 @@
 #' addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
 #' results <- runSimulations(sim)[[1]]
 #' pkAnalyses <- calculatePKAnalyses(results)
+#'
+#' # Working with a list of SimulationResults
+#' results <- runSimulations(sim)
+#' pkAnalysesList <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {
-  validateIsOfType(results, "SimulationResults")
-  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-  calculatePKAnalysisArgs <- rSharp::newObjectFromName(
-    "OSPSuite.R.Services.CalculatePKAnalysisArgs"
-  )
-  calculatePKAnalysisArgs$set("Simulation", results$simulation)
-  calculatePKAnalysisArgs$set("SimulationResults", results)
-  pkAnalyses <- pkAnalysisTask$call("CalculateFor", calculatePKAnalysisArgs)
-  SimulationPKAnalyses$new(pkAnalyses, results$simulation)
+  # Normalize input
+  normalized <- .normalizeSimulationResults(results)
+  resultsList <- normalized$list
+  wasList <- normalized$wasList
+  
+  # Process each SimulationResults object
+  pkAnalysesList <- lapply(resultsList, function(singleResult) {
+    pkAnalysisTask <- .getNetTask("PKAnalysisTask")
+    calculatePKAnalysisArgs <- rSharp::newObjectFromName(
+      "OSPSuite.R.Services.CalculatePKAnalysisArgs"
+    )
+    calculatePKAnalysisArgs$set("Simulation", singleResult$simulation)
+    calculatePKAnalysisArgs$set("SimulationResults", singleResult)
+    pkAnalyses <- pkAnalysisTask$call("CalculateFor", calculatePKAnalysisArgs)
+    SimulationPKAnalyses$new(pkAnalyses, singleResult$simulation)
+  })
+  
+  # Name the output list using the names from the input list
+  names(pkAnalysesList) <- names(resultsList)
+  
+  # If input was a single SimulationResults, return single result (not list)
+  if (!wasList) {
+    return(pkAnalysesList[[1]])
+  }
+  
+  return(pkAnalysesList)
 }
 
 #' @title Saves the pK-analyses  to csv file
