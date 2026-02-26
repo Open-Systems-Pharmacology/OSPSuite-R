@@ -51,3 +51,11 @@ test_that("It can access valueOrigin property", {
   valueOrigin <- quantity$valueOrigin
   expect_true(is.character(valueOrigin) || is.null(valueOrigin))
 })
+
+test_that("valueOrigin property is read-only", {
+  quantity <- getQuantity(
+    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
+    sim
+  )
+  expect_error(quantity$valueOrigin <- "new value")
+})
