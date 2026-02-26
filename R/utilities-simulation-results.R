@@ -34,8 +34,13 @@
 #' @return
 #'
 #' Returns the simulated values for the selected outputs (e.g molecules or
-#' parameters). If a list of `SimulationResults` is provided, returns a named
-#' list where each element corresponds to one `SimulationResults` object.
+#' parameters).
+#'
+#' For a single `SimulationResults` object (or a list with one element), returns
+#' a list with `data` and `metaData` sublists.
+#'
+#' For a list with multiple `SimulationResults` objects, returns a named list
+#' where each element is a list with `data` and `metaData` sublists.
 #'
 #' @description
 #'
@@ -43,6 +48,10 @@
 #' the simulation and returns time-values profiles for the chosen quantities.
 #' Results of a simulation of a single individual is treated as a population
 #' simulation with only one individual.
+#'
+#' When a list with only one `SimulationResults` object is provided (e.g., the
+#' output of `runSimulations(sim)`), the function returns a single result
+#' (not wrapped in an additional list), eliminating the need for `[[1]]` indexing.
 #'
 #' @template simulation_results
 #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results
@@ -59,15 +68,18 @@
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' # Running an individual simulation
-#' # results is an instance of `SimulationResults`
+#' # Running an individual simulation - old style with [[1]]
 #' results <- runSimulations(sim)[[1]]
-#'
 #' getOutputValues(results)
 #'
-#' # Working with a list of SimulationResults
+#' # Running an individual simulation - new style without [[1]]
 #' results <- runSimulations(sim)
-#' outputList <- getOutputValues(results)
+#' outputValues <- getOutputValues(results)
+#'
+#' # Running multiple simulations - returns a list
+#' sim2 <- loadSimulation(simPath)
+#' results <- runSimulations(list(sim, sim2))
+#' outputList <- getOutputValues(results)  # Returns a list with 2 elements
 #' @export
 getOutputValues <- function(
   simulationResults,
