@@ -17,6 +17,21 @@ test_that("It throws an error when no valid simulation results are provided", {
   expect_error(getOutputValues(individualResults, "NoPath"))
 })
 
+test_that("It throws an error for empty list", {
+  expect_error(
+    getOutputValues(list()),
+    regexp = "simulationResults cannot be an empty list"
+  )
+})
+
+test_that("It throws an error for list with mixed valid and invalid types", {
+  # Should validate all elements and catch invalid ones
+  expect_error(
+    getOutputValues(list(individualResults, "invalid")),
+    regexp = "SimulationResults"
+  )
+})
+
 test_that("It returns an array of NA if specific result is not found and stopIfNotFound = FALSE", {
   res <- getOutputValues(
     simulationResults = individualResults,

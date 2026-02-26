@@ -162,5 +162,9 @@ messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCo
 }
 
 messages$errorExportResultsOnlyOneObject <- function() {
-  "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
+  "Only one 'SimulationResults' object is allowed. Cannot export multiple results to a single CSV file."
+}
+
+messages$errorOnlyOneSupported <- function() {
+  "Only one 'SimulationResults' object is supported. Lists with multiple results are not supported for this operation."
 }

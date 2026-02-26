@@ -1,7 +1,24 @@
 #' Helper function to normalize SimulationResults input
-#' @description Converts single SimulationResults to a list, validates lists of SimulationResults
+#'
+#' @description
+#' Normalizes `SimulationResults` input to a consistent list format and determines
+#' whether the original input was a list. This enables functions to handle both
+#' single `SimulationResults` objects and lists uniformly.
+#'
+#' The function implements smart single-element list handling: when a list
+#' contains only one `SimulationResults` object, it's treated as a single result
+#' (wasList = FALSE), allowing functions to return unwrapped output for better UX.
+#'
 #' @param simulationResults Single SimulationResults object or list of SimulationResults objects
-#' @return A list of SimulationResults objects and a logical indicating if input was a list
+#'
+#' @return A list with two elements:
+#' \itemize{
+#'   \item `list`: A list of `SimulationResults` objects (always a list, even for single input)
+#'   \item `wasList`: Logical flag indicating if output should be returned as a list.
+#'                    FALSE for single objects or single-element lists (returns unwrapped result),
+#'                    TRUE for multi-element lists (returns list of results)
+#' }
+#'
 #' @keywords internal
 .normalizeSimulationResults <- function(simulationResults) {
   # If it's a list, validate all elements are SimulationResults

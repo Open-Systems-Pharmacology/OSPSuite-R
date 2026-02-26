@@ -88,6 +88,21 @@ test_that("add* methods error if anything but expected data types are entered", 
   )
 })
 
+test_that("addSimulationResults validates all elements in a mixed-type list", {
+  myCombDat <- DataCombined$new()
+  
+  # Should error even if first element is valid but second is not
+  expect_error(
+    myCombDat$addSimulationResults(list(simResults, "invalid")),
+    messages$errorWrongType(
+      "invalid",
+      type = "character",
+      "SimulationResults"
+    ),
+    fixed = TRUE
+  )
+})
+
 # only `DataSet` ---------------------------------------
 
 test_that("data transformations work as expected when only `DataSet` is provided", {
