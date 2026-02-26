@@ -33,7 +33,9 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   }
   configuration <- DataImporterConfiguration$new(ref)
   
-  # Set the sheets attribute if a sheet was specified
+  # Set the sheets attribute if a sheet was specified.
+  # This populates the initially empty sheets list with the sheet
+  # used to create the configuration from the .NET backend.
   if (!is.null(sheet)) {
     configuration$sheets <- sheet
   }

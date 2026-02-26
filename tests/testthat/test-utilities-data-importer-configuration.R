@@ -73,7 +73,6 @@ test_that("It can load data sets from excel using configuration with sheet speci
   expect_true(isOfType(dataSets[[1]], "DataSet"))
 })
 
-
 # DataImporterConfiguration from file
 
 test_that("it can load a data importer configuration", {
