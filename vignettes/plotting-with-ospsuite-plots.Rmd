@@ -68,11 +68,18 @@ Next, let's create `DataCombined` objects that we will use throughout this vigne
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 # simulate with two outputs
-addOutputs(quantitiesOrPaths = "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine",simulation = sim)
+addOutputs(
+  quantitiesOrPaths = "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine",
+  simulation = sim
+)
 simResults <- runSimulations(sim)[[1]]
 
 # Load observed data
-obsData <- loadDataSetFromPKML(system.file("extdata",  "ObsDataAciclovir_1.pkml", package = "ospsuite"))
+obsData <- loadDataSetFromPKML(system.file(
+  "extdata",
+  "ObsDataAciclovir_1.pkml",
+  package = "ospsuite"
+))
 
 # Create DataCombined object
 myDataCombined <- DataCombined$new()
@@ -80,7 +87,9 @@ myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-  names = list("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma"),
+  names = list(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma"
+  ),
   groups = "Aciclovir PVB"
 )
 
@@ -94,10 +103,10 @@ myDataCombinedMulti <- DataCombined$new()
 
 myDataCombinedMulti$addSimulationResults(
   simulationResults = simResults,
-  names = list("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = 
-                 "Plasma (Peripheral Venous Blood) ",
-               "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine" = 
-                 "fraction excreted"),
+  names = list(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma (Peripheral Venous Blood) ",
+    "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine" = "fraction excreted"
+  ),
   groups = "Aciclovir"
 )
 
@@ -107,12 +116,14 @@ myDataCombinedMulti$addDataSets(
 )
 
 obsDataUrine <- DataSet$new(name = 'urine data')
-obsDataUrine$yDimension = 'Fraction'
-obsDataUrine$yUnit = ''
+obsDataUrine$yDimension <- "Fraction"
+obsDataUrine$yUnit <- ""
 
-obsDataUrine$setValues(xValues = c(3,12,24), 
-                       yValues = c(0.5,0.9,0.98),
-                       yErrorValues = NULL)
+obsDataUrine$setValues(
+  xValues = c(3, 12, 24),
+  yValues = c(0.5, 0.9, 0.98),
+  yErrorValues = NULL
+)
 
 myDataCombinedMulti$addDataSets(
   obsDataUrine,
@@ -139,7 +150,9 @@ myPopDataCombined <- DataCombined$new()
 myPopDataCombined$addSimulationResults(
   simulationResults = popResults,
   quantitiesOrPaths = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
-  names = list("Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma"),
+  names = list(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma"
+  ),
   groups = "Aciclovir Population"
 )
 
@@ -202,7 +215,7 @@ For datasets with multiple observed or simulated results, you can display indivi
 
 ```{r timeprofile-legend-per-dataset, eval=TRUE}
 # No per-dataset differentiation (default)
-plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none") 
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none")
 
 # Show all individual dataset names (both observed and simulated)
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")

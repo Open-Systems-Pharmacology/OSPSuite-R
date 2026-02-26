@@ -432,7 +432,7 @@ plotResidualsVsCovariate <- function(
 
   # add observed or predicted to x-Axis label
   if (xAxis != "time") {
-    plotObject@labels['x'] <- paste0(plotObject@labels['x'], '\n', xAxis)
+    plotObject$labels[['x']] <- paste0(plotObject$labels[['x']], '\n', xAxis)
   }
 
   return(plotObject)
