@@ -564,3 +564,17 @@ test_that("it preserves configuration sheets after using sheets parameter", {
   # Configuration sheets should be unchanged
   expect_equal(importConfig$sheets, originalSheets)
 })
+
+test_that("importAllSheets parameter is deprecated", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  
+  # Test that using importAllSheets = TRUE triggers deprecation warning
+  expect_snapshot({
+    dataSets <- loadDataSetsFromExcel(
+      xlsFilePath = xlsPath,
+      importerConfigurationOrPath = configPath,
+      importAllSheets = TRUE
+    )
+  })
+})

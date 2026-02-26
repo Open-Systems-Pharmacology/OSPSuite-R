@@ -203,10 +203,12 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' @param xlsFilePath Path to the excel file with the data
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
 #'  for the excel file or a path to a XML file with stored configuration
-#' @param importAllSheets If `FALSE` (default), only sheets specified in the
+#' @param importAllSheets `r lifecycle::badge("deprecated")` If `FALSE` (default), only sheets specified in the
 #' `importerConfiguration` or in the `sheets` parameter will be loaded. If `TRUE`,
 #' an attempt to load all sheets is performed. If any sheet does not comply with the
-#' configuration, an error is thrown. **Deprecated**: use `sheets = NULL` instead.
+#' configuration, an error is thrown.
+#'
+#' **Deprecated**: Use `sheets = NULL` instead. This parameter will be removed in version 14.
 #' @param sheets Character vector of sheet names to load, or `NULL` (default).
 #' If `NULL`, the sheets defined in the `importerConfiguration` will be used.
 #' If the configuration has no sheets defined and `sheets` is `NULL`, all sheets
@@ -263,6 +265,17 @@ loadDataSetsFromExcel <- function(
     )
   }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
+  
+  # Deprecation warning for importAllSheets parameter
+  if (!missing(importAllSheets) && importAllSheets != FALSE) {
+    lifecycle::deprecate_soft(
+      when = "12.4.1.9009",
+      what = "loadDataSetsFromExcel(importAllSheets)",
+      with = "loadDataSetsFromExcel(sheets)",
+      details = "Use `sheets = NULL` to load all sheets. This parameter will be removed in version 14."
+    )
+  }
+  
   validateIsLogical(importAllSheets)
   
   # Validate sheets parameter
