@@ -30,7 +30,7 @@
     }
     # It's a list of objects - check it's not empty
     if (length(simulationResults) == 0) {
-      stop("simulationResults cannot be an empty list")
+      stop(messages$errorEmptySimulationResultsList())
     }
     # Validate each one
     lapply(simulationResults, function(x) {

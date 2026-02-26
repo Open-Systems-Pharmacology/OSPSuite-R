@@ -20,7 +20,7 @@ test_that("It throws an error when no valid simulation results are provided", {
 test_that("It throws an error for empty list", {
   expect_error(
     getOutputValues(list()),
-    regexp = "simulationResults cannot be an empty list"
+    regexp = messages$errorEmptySimulationResultsList()
   )
 })
 
