@@ -37,8 +37,8 @@ SensitivityAnalysis <- R6::R6Class(
     #' from the reference value (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`).
     #' The parameter is varied in both positive and negative directions, so the total number of variations
     #' per parameter is `2 * numberOfSteps`. For example, with `numberOfSteps = 2` and `variationRange = 0.1`,
-    #' each parameter will be tested at four points: 90% (refValue × 0.9), 95% (refValue × 0.95),
-    #' 105% (refValue × 1.05), and 110% (refValue × 1.1) of its reference value.
+    #' each parameter will be tested at four points: 90% (refValue * 0.9), 95% (refValue * 0.95),
+    #' 105% (refValue * 1.05), and 110% (refValue * 1.1) of its reference value.
     #' The total number of simulations is `2 * numberOfSteps * number_of_parameters`.
     #' @param variationRange Relative variation range applied to each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`).
     #' This defines the total range of variation. For example, `variationRange = 0.1` means ±10% variation.
