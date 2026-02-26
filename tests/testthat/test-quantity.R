@@ -50,6 +50,10 @@ test_that("It can access valueOrigin property", {
   )
   valueOrigin <- quantity$valueOrigin
   expect_true(is.character(valueOrigin) || is.null(valueOrigin))
+  # If not NULL, should be a non-empty string
+  if (!is.null(valueOrigin)) {
+    expect_true(nchar(valueOrigin) > 0)
+  }
 })
 
 test_that("valueOrigin property is read-only", {
@@ -57,5 +61,5 @@ test_that("valueOrigin property is read-only", {
     toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
     sim
   )
-  expect_error(quantity$valueOrigin <- "new value")
+  expect_error(quantity$valueOrigin <- "new value", regexp = "read.?only")
 })
