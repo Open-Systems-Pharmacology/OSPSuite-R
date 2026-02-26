@@ -204,8 +204,8 @@ In some cases, a simulation may fail to run successfully due to numerical instab
 # Reduce absolute tolerance by a factor of 10
 sim$solver$absTol <- sim$solver$absTol * 1e-1
 
-# Keep relative tolerance unchanged (or adjust if needed)
-sim$solver$relTol <- sim$solver$relTol
+# Optionally, the relative tolerance can also be reduced
+# sim$solver$relTol <- sim$solver$relTol * 1e-1
 
 # After changing solver settings, re-run the simulation
 simulationResults <- runSimulations(simulations = sim)[[1]]
