@@ -42,10 +42,10 @@ about dimensions and units for both x and y axes.}
 \code{ggplot2::aes()}. This is added or replaces the default mapping constructed
 by the data.}
 
-\item{yUnit}{A character string specifying the target unit for the simulated and
-observed y-values used for residual calculation.
-If \code{NULL} (default), the most frequent unit in the data is used.
-For available units, see \code{ospsuite::ospUnits}.}
+\item{yUnit}{A character string specifying the target unit for the simulated
+and observed y-values used for residual calculation. If \code{NULL} (default),
+the most frequent unit in the data is used. For available units, see
+\code{ospsuite::ospUnits}.}
 
 \item{distribution}{parameter passed to \code{ospsuite.plots::plotHistogram}.}
 
@@ -56,10 +56,10 @@ residuals. Default is \code{log}.}
   Arguments passed on to \code{\link[ospsuite.plots:plotHistogram]{ospsuite.plots::plotHistogram}}
   \describe{
     \item{\code{geomHistAttributes}}{A \code{list} of arguments passed to \code{ggplot2::geom_histogram} (or \code{geom_bar} if \code{asBarPlot} = TRUE).}
+    \item{\code{plotAsFrequency}}{A \code{logical} indicating if the histogram displays frequency on the y-axis.}
     \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
     \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
     \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
-    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
     \item{\code{meanFunction}}{Function selection for the display of a vertical line. Options: \code{'none'}, \code{'mean'}, \code{'geomean'}, \code{'median'}, \code{'auto'} (default).
 \code{'auto'} selects \code{'mean'} for normal distribution, \code{'geomean'} for lognormal, \code{'median'} for other distributions, and \code{'none'} when no distribution fit.}
   }}

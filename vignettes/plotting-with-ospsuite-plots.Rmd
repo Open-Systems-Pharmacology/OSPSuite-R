@@ -232,7 +232,7 @@ To get the same plots as above you have to set the aesthetics as following:
 plotTimeProfile(
   myDataCombinedMulti,
   mapping = ggplot2::aes(linetype = name),
-  observedMapping = ggplot2::aes(shape = name,)
+  observedMapping = ggplot2::aes(shape = name)
 )
 
 # Show only observed dataset names (different shapes)
