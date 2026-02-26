@@ -30,7 +30,7 @@ SensitivityAnalysis <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param simulation Simulation for which a sensitivity analysis should be performed
-    #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
+    #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
     #' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
     #' @param numberOfSteps Number of steps used for the variation of each parameter in one direction
