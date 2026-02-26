@@ -58,7 +58,10 @@ simulationResults$allQuantityPaths
 resultsPath <- simulationResults$allQuantityPaths[[1]]
 print(resultsPath)
 
-resultsData <- getOutputValues(simulationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(
+  simulationResults,
+  quantitiesOrPaths = resultsPath
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
@@ -81,7 +84,10 @@ csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
 exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 
 # Load from csv
-resultsLoaded <- importResultsFromCSV(filePaths = csvResultsPath, simulation = sim)
+resultsLoaded <- importResultsFromCSV(
+  filePaths = csvResultsPath,
+  simulation = sim
+)
 print(resultsLoaded)
 ```
 
@@ -173,15 +179,32 @@ clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
 
 # Add an interval
-addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")
+addOutputInterval(
+  simulation = sim,
+  startTime = 0,
+  endTime = 20,
+  resolution = 60,
+  intervalName = "highRes"
+)
 print(sim$outputSchema)
 
 # Add a second interval
-addOutputInterval(simulation = sim, startTime = 30, endTime = 2000, resolution = 4, intervalName = "lowRes")
+addOutputInterval(
+  simulation = sim,
+  startTime = 30,
+  endTime = 2000,
+  resolution = 4,
+  intervalName = "lowRes"
+)
 print(sim$outputSchema)
 
 # Replace the existing interval(s) with a new one
-setOutputInterval(simulation = sim, startTime = 0, endTime = 2000, resolution = 4)
+setOutputInterval(
+  simulation = sim,
+  startTime = 0,
+  endTime = 2000,
+  resolution = 4
+)
 print(sim$outputSchema)
 ```
 
