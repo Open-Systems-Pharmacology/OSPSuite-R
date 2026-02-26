@@ -63,7 +63,10 @@ SensitivityAnalysisResults <- R6::R6Class(
     #'   sensitive parameter. A threshold of `0.9` means that only parameter
     #'   participating to a total of `90` percent of the sensitivity would be
     #'   returned. A value of `1` would return the sensitivity for all
-    #'   parameters.
+    #'   parameters. The default value can be retrieved with
+    #'   `getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold`
+    #'   and can be changed by setting
+    #'   `ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- newValue`.
     allPKParameterSensitivitiesFor = function(
       pkParameterName,
       outputPath,

@@ -33,8 +33,15 @@ SensitivityAnalysis <- R6::R6Class(
     #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
     #' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
-    #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
-    #' @param variationRange Variation applied to the parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
+    #' @param numberOfSteps Number of steps used for the variation of each parameter in each direction
+    #' (positive and negative) around the reference value (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`).
+    #' For example, with `numberOfSteps = 2` and a reference parameter value of 100, two simulations
+    #' will be performed per parameter: one with the value decreased and one with the value increased.
+    #' The total number of simulations is `numberOfSteps * number_of_parameters`.
+    #' @param variationRange Relative variation range applied to each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`).
+    #' For example, with `variationRange = 0.1` (10%) and `numberOfSteps = 2`, each parameter will be tested at
+    #' 90% (reference value × 0.9) and 110% (reference value × 1.1) of its reference value.
+    #' The variation range is divided equally among the number of steps in each direction.
     #' @return A new `SensitivityAnalysis` object.
     initialize = function(
       simulation,
@@ -97,11 +104,17 @@ SensitivityAnalysis <- R6::R6Class(
     simulation = function(value) {
       private$.readOnlyProperty("simulation", value, private$.simulation)
     },
-    #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
+    #' @field numberOfSteps Number of steps used for the variation of each parameter in each direction
+    #' (positive and negative) around the reference value. For example, `numberOfSteps = 2` means the parameter
+    #' will be tested at two points: one below and one above the reference value.
+    #' Default value can be retrieved with `getOSPSuiteSetting("sensitivityAnalysisConfig")$numberOfSteps`.
     numberOfSteps = function(value) {
       private$.wrapProperty("NumberOfSteps", value, asInteger = TRUE)
     },
-    #' @field variationRange Variation applied to the parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
+    #' @field variationRange Relative variation range applied to each parameter. For example, `variationRange = 0.1` means
+    #' the parameter will be varied by ±10% from its reference value. Combined with `numberOfSteps = 2`, this would test
+    #' the parameter at 90% (reference × 0.9) and 110% (reference × 1.1) of its reference value.
+    #' Default value can be retrieved with `getOSPSuiteSetting("sensitivityAnalysisConfig")$variationRange`.
     variationRange = function(value) {
       private$.wrapProperty("VariationRange", value)
     },
