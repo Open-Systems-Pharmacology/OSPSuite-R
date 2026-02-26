@@ -50,7 +50,7 @@ about dimensions and units for both x and y axes.}
 by the data.}
 
 \item{observedMapping}{A ggplot2 aesthetic mapping for observed data. Default
-is NULL. Then a copy of mapping without line typical aesthtics like linetype and linewidth is used.}
+is NULL. Then a copy of mapping without line typical aesthetics like linetype and linewidth is used.}
 
 \item{xUnit}{A character string specifying the target unit for the x-axis.
 If \code{NULL} (default), the most frequent unit in the data is used. For

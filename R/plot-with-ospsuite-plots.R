@@ -1114,7 +1114,7 @@ plotQuantileQuantilePlot <- function(
   dataTypeFilter
 ) {
   # initialize variables used for data.table to avoid warnings during checks
-  xValues <- yValues <- group <- yMin <- yMax <- lloq <- NULL
+  xValues <- yValues <- group <- yMin <- yMax <- lloq <- y2axis <- NULL
 
   # initialize mapping
   mapping <- ggplot2::aes(x = xValues, y = yValues)

@@ -88,7 +88,7 @@ values, allowing for easy identification of discrepancies.
 plotPredictedVsObserved(myDataCombined)
 
 # Generate an observed vs predicted plot (swap axes)
-plotPredictedVsObserved(myDataCombined, predictedAxis = "y")
+plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
 }
 }
 \seealso{
