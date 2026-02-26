@@ -240,6 +240,6 @@ Other solver settings that can be adjusted include:
 * `hMin`: Minimum step size allowed
 * `hMax`: Maximum step size allowed
 * `mxStep`: Maximum number of (internal) steps to be taken by the solver in its attempt to reach the next output time
-* `useJacobian`: Whether to use the Jacobian matrix during calculations
+* `useJacobian`: Indicates whether to use the analytically calculated Jacobian matrix during calculations. When disabled, an approximation by difference quotients is used, which is much slower in the majority of cases
 
 For more details on solver properties and their effects, see the [MoBi documentation on ODE Solver Properties](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/setting-up-simulation#ode-solver-properties).
