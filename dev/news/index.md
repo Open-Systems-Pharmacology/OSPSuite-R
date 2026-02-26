@@ -17,6 +17,11 @@
   now automatically sets the `sheets` attribute when a `sheet` parameter
   is provided, eliminating the need to manually set it before using
   [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md).
+- [`exportResultsToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.md)
+  now validates that the input is a single `SimulationResults` object
+  and rejects lists of results, preventing downstream .NET interop
+  failures.
+  ([\#1249](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1249))
 
 ## ospsuite 12.4.1
 
