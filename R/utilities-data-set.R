@@ -204,8 +204,14 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
 #'  for the excel file or a path to a XML file with stored configuration
 #' @param importAllSheets If `FALSE` (default), only sheets specified in the
-#' `importerConfiguration` will be loaded. If `TRUE`, an attempt to load all sheets
-#' is performed. If any sheet does not comply with the configuration, an error is thrown.
+#' `importerConfiguration` or in the `sheets` parameter will be loaded. If `TRUE`,
+#' an attempt to load all sheets is performed. If any sheet does not comply with the
+#' configuration, an error is thrown. **Deprecated**: use `sheets = NULL` instead.
+#' @param sheets Character vector of sheet names to load, or `NULL` (default).
+#' If `NULL`, the sheets defined in the `importerConfiguration` will be used.
+#' If the configuration has no sheets defined and `sheets` is `NULL`, all sheets
+#' will be loaded. If a character vector is provided, only the specified sheets
+#' will be loaded, overriding any sheets defined in the `importerConfiguration`.
 #'
 #' @return A named set of `DataSet` objects. The naming is defined by the property
 #' `importerConfiguration$namingPattern`.
@@ -226,24 +232,28 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfigurationOrPath = importerConfiguration,
-#'   importAllSheets = FALSE
+#'   importerConfigurationOrPath = importerConfiguration
 #' )
 #'
-#' importerConfigurationFilePath <- system.file(
-#'   "extdata", "dataImporterConfiguration.xml",
-#'   package = "ospsuite"
-#' )
-#'
+#' # Load specific sheets using the sheets parameter
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfigurationOrPath = importerConfigurationFilePath,
-#'   importAllSheets = FALSE
+#'   importerConfigurationOrPath = importerConfiguration,
+#'   sheets = c("TestSheet_1", "TestSheet_2")
+#' )
+#'
+#' # Load all sheets by setting sheets to NULL and no sheets in configuration
+#' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfigurationOrPath = importerConfiguration,
+#'   sheets = NULL
 #' )
 loadDataSetsFromExcel <- function(
   xlsFilePath,
   importerConfigurationOrPath,
-  importAllSheets = FALSE
+  importAllSheets = FALSE,
+  sheets = NULL
 ) {
   validateIsString(xlsFilePath)
   importerConfiguration <- importerConfigurationOrPath
@@ -254,14 +264,43 @@ loadDataSetsFromExcel <- function(
   }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
   validateIsLogical(importAllSheets)
+  
+  # Validate sheets parameter
+  if (!is.null(sheets)) {
+    validateIsString(sheets)
+  }
+
+  # Determine which sheets to use and whether to import all
+  # Priority: sheets parameter > importAllSheets > configuration sheets
+  if (!is.null(sheets)) {
+    # If sheets parameter is provided, use it and override configuration
+    # Store original sheets from configuration to restore later
+    originalSheets <- importerConfiguration$sheets
+    importerConfiguration$sheets <- sheets
+    shouldImportAll <- FALSE
+  } else if (importAllSheets) {
+    # If importAllSheets is TRUE, import all sheets
+    shouldImportAll <- TRUE
+  } else {
+    # Use sheets from configuration
+    # If configuration has no sheets defined, import all
+    configSheets <- importerConfiguration$sheets
+    shouldImportAll <- length(configSheets) == 0
+  }
 
   dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
-  dataImporterTask$set("IgnoreSheetNamesAtImport", importAllSheets)
+  dataImporterTask$set("IgnoreSheetNamesAtImport", shouldImportAll)
   dataRepositories <- dataImporterTask$call(
     "ImportExcelFromConfiguration",
     importerConfiguration,
     xlsFilePath
   )
+  
+  # Restore original sheets if they were overridden
+  if (!is.null(sheets)) {
+    importerConfiguration$sheets <- originalSheets
+  }
+  
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)

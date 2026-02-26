@@ -2,6 +2,7 @@
 
 ## Minor improvements and bug fixes
 
+- `loadDataSetsFromExcel()` now accepts a `sheets` parameter to specify which sheets to load. When `sheets = NULL` (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When `sheets` is a character vector, those specific sheets are loaded, overriding any sheets in the configuration.
 - `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
 - Added read-only `valueOrigin` property to `Quantity` class (including `Parameter` and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.
 - `createImporterConfigurationForFile()` now automatically sets the `sheets` attribute when a `sheet` parameter is provided, eliminating the need to manually set it before using `loadDataSetsFromExcel()`.

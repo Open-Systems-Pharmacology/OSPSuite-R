@@ -218,22 +218,24 @@ configurationPath <- getTestDataFilePath(
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
 importerConfiguration <- loadDataImporterConfiguration(configurationPath)
 
-test_that("it returns an empty list when loading from file with one sheet without
-          sheet definition in configuration and importAllSheets == FALSE", {
-  expect_named(
-    loadDataSetsFromExcel(
-      xlsFilePath = xlsFilePath,
-      importerConfigurationOrPath = importerConfiguration
-    ),
-    character()
+test_that("it loads all sheets when no sheets in configuration and sheets = NULL (new default behavior)", {
+  # This test validates the new default behavior: when sheets = NULL and
+  # no sheets are defined in configuration, all sheets should be loaded
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsFilePath,
+    importerConfigurationOrPath = importerConfiguration,
+    sheets = NULL
   )
-  expect_named(
-    loadDataSetsFromExcel(
-      xlsFilePath = xlsFilePath,
-      importerConfigurationOrPath = configurationPath
-    ),
-    character()
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
+  
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsFilePath,
+    importerConfigurationOrPath = configurationPath,
+    sheets = NULL
   )
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
 })
 
 test_that("it can load when loading from file with one sheet without
@@ -440,4 +442,108 @@ test_that("dataSetToTibble preserves data integrity with custom names", {
   expect_equal(result$xValues, c(1, 2, 3))
   expect_equal(result$yValues, c(10, 20, 30), tolerance = 1e-6)
   expect_equal(result$yErrorValues, c(1, 2, 3), tolerance = 1e-6)
+})
+
+# Tests for new sheets parameter in loadDataSetsFromExcel
+
+test_that("it loads all sheets when sheets = NULL and no sheets in configuration", {
+  # Use configuration with no sheets defined
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+  
+  # With sheets = NULL, should load all sheets (new behavior)
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = configPath,
+    sheets = NULL
+  )
+  
+  # Should load data (not empty)
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it uses configuration sheets when sheets = NULL and sheets are in configuration", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+  
+  # Create configuration with specific sheet
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+  
+  # sheets = NULL should use configuration sheets
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = NULL
+  )
+  
+  # Should load data from TestSheet_1
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it overrides configuration sheets when sheets parameter is provided", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+  
+  # Create configuration with one sheet
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+  
+  # Override with different sheet
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = "TestSheet_2"
+  )
+  
+  # Should load data from TestSheet_2, not TestSheet_1
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it can load multiple sheets using sheets parameter", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+  
+  # Create configuration without specific sheets
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+  
+  # Load multiple specific sheets
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = c("TestSheet_1", "TestSheet_2")
+  )
+  
+  # Should load data from both sheets
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it preserves configuration sheets after using sheets parameter", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+  
+  # Create configuration with specific sheet
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+  
+  originalSheets <- importConfig$sheets
+  
+  # Use sheets parameter to override
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = "TestSheet_2"
+  )
+  
+  # Configuration sheets should be unchanged
+  expect_equal(importConfig$sheets, originalSheets)
 })
