@@ -41,16 +41,6 @@ uniqueEntities(parameters, CompareBy$id)
 #> [[1]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Organism|Liver|Volume
-#>   • Value: 10.00 [l]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
-#> 
-#> [[2]]
-#> <Parameter>
-#>   • Quantity Type: Parameter
 #>   • Path: Organism|TableParameter
 #>   • Value: 1.00 [1/min]
 #> 
@@ -66,5 +56,15 @@ uniqueEntities(parameters, CompareBy$id)
 #>   x= 30, y= 3, restartSolver= FALSE
 #>   x= 40, y= 4, restartSolver= FALSE
 #>   • Value overrides formula: FALSE
+#> 
+#> [[2]]
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|Liver|Volume
+#>   • Value: 10.00 [l]
+#> 
+#> ── Formula ──
+#> 
+#>   • isConstant: TRUE
 #> 
 ```
