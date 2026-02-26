@@ -670,6 +670,38 @@ test_that("Getting Steady State works with named simulations without duplicated 
   })
 })
 
+test_that("lowerThreshold in getSteadyState correctly handles positive and negative values", {
+  # Create a simulation to test with
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+  # Test that lowerThreshold is applied using absolute value
+  # Get steady state with a relatively large threshold to test the logic
+  threshold <- 1
+
+  steadyState <- getSteadyState(
+    simulations = sim,
+    steadyStateTime = 1,
+    lowerThreshold = threshold
+  )
+
+  # Verify that the structure is correct
+  expect_true(is.list(steadyState))
+  expect_true(all(c("paths", "values") %in% names(steadyState[[sim$id]])))
+
+  # All values should be either 0 or have absolute value >= lowerThreshold
+  values <- unlist(steadyState[[sim$id]]$values)
+  expect_true(all(values == 0 | abs(values) >= threshold))
+
+  # Test with NULL threshold (no cut-off applied)
+  steadyStateNoThreshold <- getSteadyState(
+    simulations = sim,
+    steadyStateTime = 1,
+    lowerThreshold = NULL
+  )
+  values <- unlist(steadyStateNoThreshold[[sim$id]]$values)
+  expect_false(all(values == 0 | abs(values) >= threshold))
+})
+
 test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
   withr::with_tempfile("resultsXLSPath", code = {
     simFilePath <- system.file(
