@@ -17,6 +17,13 @@
   now automatically sets the `sheets` attribute when a `sheet` parameter
   is provided, eliminating the need to manually set it before using
   [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md).
+- Fixed
+  [`getSteadyState()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getSteadyState.md)
+  to correctly apply `lowerThreshold` for both positive and negative
+  values. The threshold now filters values in the interval
+  `[-lowerThreshold, lowerThreshold]` instead of only values below the
+  threshold.
+  ([\#1348](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1348))
 - [`exportResultsToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.md)
   now validates that the input is a single `SimulationResults` object
   and rejects lists of results, preventing downstream .NET interop

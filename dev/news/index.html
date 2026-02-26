@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,6 +65,7 @@
 <li>Added read-only <code>valueOrigin</code> property to <code>Quantity</code> class (including <code>Parameter</code> and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.</li>
 <li>
 <code><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile()</a></code> now automatically sets the <code>sheets</code> attribute when a <code>sheet</code> parameter is provided, eliminating the need to manually set it before using <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code>.</li>
+<li>Fixed <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to correctly apply <code>lowerThreshold</code> for both positive and negative values. The threshold now filters values in the interval <code>[-lowerThreshold, lowerThreshold]</code> instead of only values below the threshold. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1348" class="external-link">#1348</a>)</li>
 <li>
 <code><a href="../reference/exportResultsToCSV.html">exportResultsToCSV()</a></code> now validates that the input is a single <code>SimulationResults</code> object and rejects lists of results, preventing downstream .NET interop failures. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1249" class="external-link">#1249</a>)</li>
 </ul></div>
