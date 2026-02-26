@@ -11,8 +11,11 @@
 #' `loadDataSetsFromExcel()`.
 #' @examples
 #' xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
-#' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
-#' importerConfiguration$sheets <- "TestSheet_1"
+#' # When sheet is specified, it is automatically added to the configuration
+#' importerConfiguration <- createImporterConfigurationForFile(
+#'   xlsFilePath,
+#'   sheet = "TestSheet_1"
+#' )
 #'
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
@@ -28,7 +31,15 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
   } else {
     ref <- importerTask$call("CreateConfigurationFor", filePath, sheet)
   }
-  return(DataImporterConfiguration$new(ref))
+  configuration <- DataImporterConfiguration$new(ref)
+  
+  # Set the sheets attribute if a sheet was specified.
+  # This populates the sheets list with the provided sheet name.
+  if (!is.null(sheet)) {
+    configuration$sheets <- sheet
+  }
+  
+  return(configuration)
 }
 
 #' Load `DataImporterConfiguration` from XML file.
