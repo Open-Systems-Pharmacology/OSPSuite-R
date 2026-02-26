@@ -386,6 +386,57 @@ test_that("calculatePKAnalyses works with single result (backward compatibility)
   expect_false(is.list(pkAnalyses) && !inherits(pkAnalyses, "SimulationPKAnalyses"))
 })
 
+test_that("getOutputValues works with list of one element (no [[1]] needed)", {
+  simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+  
+  # Run simulation to get a list with one element
+  simulationResults <- runSimulations(sim)
+  
+  # getOutputValues should work and return a single result (not a list)
+  output <- getOutputValues(simulationResults)
+  
+  # Should return a single result structure (not a list of lists)
+  expect_true(is.list(output))
+  expect_true(!is.null(output$data))
+  expect_true(!is.null(output$metaData))
+  # Should not be a list of results
+  expect_false("data" %in% names(output[[1]]))
+})
+
+test_that("simulationResultsToDataFrame works with list of one element (no [[1]] needed)", {
+  simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+  
+  # Run simulation to get a list with one element
+  simulationResults <- runSimulations(sim)
+  
+  # Should work and return a single data.frame (not a list)
+  df <- simulationResultsToDataFrame(simulationResults)
+  
+  # Should return a data.frame, not a list of data.frames
+  expect_true(is.data.frame(df))
+  expect_false(is.list(df) && !is.data.frame(df))
+  expect_equal(dim(df)[2], 9L)
+})
+
+test_that("calculatePKAnalyses works with list of one element (no [[1]] needed)", {
+  simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simPath)
+  
+  addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
+  
+  # Run simulation to get a list with one element
+  simulationResults <- runSimulations(sim)
+  
+  # Should work and return a single SimulationPKAnalyses object (not a list)
+  pkAnalyses <- calculatePKAnalyses(simulationResults)
+  
+  # Should return a single object, not a list
+  expect_s3_class(pkAnalyses, "SimulationPKAnalyses")
+  expect_false(is.list(pkAnalyses) && !inherits(pkAnalyses, "SimulationPKAnalyses"))
+})
+
 test_that("exportResultsToCSV works with a list containing one element", {
   simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)

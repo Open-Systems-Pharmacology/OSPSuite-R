@@ -19,7 +19,9 @@
     lapply(simulationResults, function(x) {
       validateIsOfType(x, "SimulationResults")
     })
-    return(list(list = simulationResults, wasList = TRUE))
+    # If list has only one element, treat it as a single result for convenience
+    wasList <- length(simulationResults) > 1
+    return(list(list = simulationResults, wasList = wasList))
   } else {
     # Single SimulationResults object
     validateIsOfType(simulationResults, "SimulationResults")
