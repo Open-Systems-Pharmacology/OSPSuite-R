@@ -1114,7 +1114,7 @@ plotQuantileQuantilePlot <- function(
   dataTypeFilter
 ) {
   # initialize variables used for data.table to avoid warnings during checks
-  xValues <- yValues <- group <- yMin <- yMax <- lloq <- y2axis <- NULL
+  xValues <- yValues <- group <- yMin <- yMax <- lloq <- NULL
 
   # initialize mapping
   mapping <- ggplot2::aes(x = xValues, y = yValues)
@@ -1225,17 +1225,9 @@ plotQuantileQuantilePlot <- function(
   }
 
   if (any(names(metaData) %in% "y2")) {
+    y2UnitValue <- metaData[["y2"]][["unit"]]
     mapping <- structure(
-      c(
-        mapping,
-        eval(parse(
-          text = paste0(
-            "ggplot2::aes( y2axis = yUnit == '",
-            metaData[["y2"]][["unit"]],
-            "')"
-          )
-        ))
-      ),
+      c(mapping, eval(bquote(ggplot2::aes(y2axis = yUnit == .(y2UnitValue))))),
       class = "uneval"
     )
   }
