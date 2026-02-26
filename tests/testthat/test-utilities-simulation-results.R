@@ -130,9 +130,9 @@ test_that("It can export valid simulation results to CSV", {
 })
 
 test_that("It throws an error when a list of simulation results is provided", {
-  resultsList <- list(individualResults, individualResults)
+  listOfResults <- list(individualResults, individualResults)
   expect_error(
-    exportResultsToCSV(resultsList, "dummy.csv"),
+    exportResultsToCSV(listOfResults, "dummy.csv"),
     "Only one 'SimulationResults' object is allowed"
   )
 })
