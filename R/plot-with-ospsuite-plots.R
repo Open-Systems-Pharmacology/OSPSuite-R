@@ -148,7 +148,7 @@ plotTimeProfile <- function(
   }
 
   # get Mappings for simulated and observed data
-  mappingAdjusted = .getMappingForTimeprofiles(
+  mappingAdjusted <- .getMappingForTimeprofiles(
     plotData = plotData,
     metaData = metaData,
     userMapping = mapping,
@@ -161,7 +161,7 @@ plotTimeProfile <- function(
       !names(mapping) %in% c("linetype", "linewidth")
     ]
   }
-  observedMappingAdjusted = .getMappingForTimeprofiles(
+  observedMappingAdjusted <- .getMappingForTimeprofiles(
     plotData = plotData,
     metaData = metaData,
     userMapping = observedMapping,
@@ -237,7 +237,7 @@ plotTimeProfile <- function(
 #' plotPredictedVsObserved(myDataCombined)
 #'
 #' # Generate an observed vs predicted plot (swap axes)
-#' plotPredictedVsObserved(myDataCombined, predictedAxis = "y")
+#' plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
 #' }
 plotPredictedVsObserved <- function(
   plotData, # nolint
