@@ -1069,7 +1069,8 @@ plotQuantileQuantilePlot <- function(
     plotData[, lloq := NA]
   }
 
-  # Remove the observed and simulated datasets which can't be paired.
+  # Drop groups that have only observed or only simulated data — residuals
+  # require a matched pair of both within the same group.
   plotData <- .removeUnpairableDatasets(plotData)
 
   # Return early if there are no pair-able datasets present
