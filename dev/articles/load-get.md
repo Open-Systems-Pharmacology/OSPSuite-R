@@ -54,6 +54,10 @@ print(livParam)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 0.35 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 

@@ -67,7 +67,10 @@ resultsPath <- simulationResults$allQuantityPaths[[1]]
 print(resultsPath)
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
-resultsData <- getOutputValues(simulationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(
+  simulationResults,
+  quantitiesOrPaths = resultsPath
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
@@ -93,7 +96,10 @@ csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
 exportResultsToCSV(results = simulationResults, filePath = csvResultsPath)
 
 # Load from csv
-resultsLoaded <- importResultsFromCSV(filePaths = csvResultsPath, simulation = sim)
+resultsLoaded <- importResultsFromCSV(
+  filePaths = csvResultsPath,
+  simulation = sim
+)
 print(resultsLoaded)
 #> <SimulationResults>
 #>   • Number of individuals: 1
@@ -139,11 +145,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "xjIIcMhjTE-IMPnCBNwXMw"
+#> [1] "_8FEj3Crz0adc6Vvcj-7uw"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "xjIIcMhjTE-IMPnCBNwXMw"
+#> [1] "_8FEj3Crz0adc6Vvcj-7uw"
 ```
 
 ## Adding new outputs
@@ -250,7 +256,13 @@ runSimulations(simulations = sim)
 #> --- End of stack trace fr
 
 # Add an interval
-addOutputInterval(simulation = sim, startTime = 0, endTime = 20, resolution = 60, intervalName = "highRes")
+addOutputInterval(
+  simulation = sim,
+  startTime = 0,
+  endTime = 20,
+  resolution = 60,
+  intervalName = "highRes"
+)
 print(sim$outputSchema)
 #> <OutputSchema>
 #> 
@@ -263,7 +275,13 @@ print(sim$outputSchema)
 #>   • Resolution: 60.00 [pts/min]
 
 # Add a second interval
-addOutputInterval(simulation = sim, startTime = 30, endTime = 2000, resolution = 4, intervalName = "lowRes")
+addOutputInterval(
+  simulation = sim,
+  startTime = 30,
+  endTime = 2000,
+  resolution = 4,
+  intervalName = "lowRes"
+)
 print(sim$outputSchema)
 #> <OutputSchema>
 #> 
@@ -281,7 +299,12 @@ print(sim$outputSchema)
 #>   • Resolution: 4.00 [pts/min]
 
 # Replace the existing interval(s) with a new one
-setOutputInterval(simulation = sim, startTime = 0, endTime = 2000, resolution = 4)
+setOutputInterval(
+  simulation = sim,
+  startTime = 0,
+  endTime = 2000,
+  resolution = 4
+)
 print(sim$outputSchema)
 #> <OutputSchema>
 #> 
@@ -293,3 +316,62 @@ print(sim$outputSchema)
 #>   • End time: 2000.00 [min]
 #>   • Resolution: 4.00 [pts/min]
 ```
+
+## Adjusting solver settings
+
+The solver settings control the numerical integration algorithm used to
+solve the differential equations in the simulation. These settings can
+be accessed and modified through the `$solver` property of a
+`Simulation` object.
+
+``` r
+# View current solver settings
+print(sim$solver)
+#> <SolverSettings>
+#>   • useJacobian: TRUE
+#>   • h0: 1e-10
+#>   • hMin: 0
+#>   • hMax: 60
+#>   • mxStep: 100000
+#>   • relTol: 1e-05
+#>   • absTol: 1e-10
+```
+
+In some cases, a simulation may fail to run successfully due to
+numerical instability or convergence issues. One common approach to
+resolve such issues is to reduce the solver tolerances, which makes the
+solver use smaller step sizes and more precise calculations. The two
+main tolerance parameters are:
+
+- `absTol`: Absolute tolerance - controls the accuracy of the solution
+  in absolute terms
+- `relTol`: Relative tolerance - controls the accuracy of the solution
+  relative to the magnitude of the values
+
+``` r
+# If a simulation fails to run, try reducing the tolerances
+# Reduce absolute tolerance by a factor of 10
+sim$solver$absTol <- sim$solver$absTol * 1e-1
+
+# Optionally, the relative tolerance can also be reduced
+# sim$solver$relTol <- sim$solver$relTol * 1e-1
+
+# After changing solver settings, re-run the simulation
+simulationResults <- runSimulations(simulations = sim)[[1]]
+```
+
+Other solver settings that can be adjusted include:
+
+- `h0`: Initial time step size
+- `hMin`: Minimum step size allowed
+- `hMax`: Maximum step size allowed
+- `mxStep`: Maximum number of (internal) steps to be taken by the solver
+  in its attempt to reach the next output time
+- `useJacobian`: Indicates whether to use the analytically calculated
+  Jacobian matrix during calculations. When disabled, an approximation
+  by difference quotients is used, which is much slower in the majority
+  of cases
+
+For more details on solver properties and their effects, see the [MoBi
+documentation on ODE Solver
+Properties](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/setting-up-simulation#ode-solver-properties).

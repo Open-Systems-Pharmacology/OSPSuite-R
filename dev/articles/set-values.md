@@ -51,6 +51,9 @@ print(liverVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Volume
 #>   • Value: 2.17 [l]
+#>   • Value Origin: Publication-ICRP, 2002. Basic Anatomical and Physiological
+#>   Data for Use in Radiological Protection Reference Values. ICRP Publication
+#>   89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4
 #> 
 #> ── Formula ──
 #> 
@@ -72,6 +75,10 @@ print(liverIntVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 0.35 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 
@@ -236,6 +243,10 @@ print(liverIntVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 0.35 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 
@@ -253,6 +264,10 @@ print(liverIntVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 1.00 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 
@@ -273,6 +288,10 @@ print(liverIntVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 1.00 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 
@@ -290,6 +309,10 @@ print(liverIntVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 0.35 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 

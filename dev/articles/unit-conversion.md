@@ -20,6 +20,9 @@ print(livParam)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Volume
 #>   • Value: 2.17 [l]
+#>   • Value Origin: Publication-ICRP, 2002. Basic Anatomical and Physiological
+#>   Data for Use in Radiological Protection Reference Values. ICRP Publication
+#>   89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4
 #> 
 #> ── Formula ──
 #> 
@@ -97,6 +100,9 @@ print(liverVolume)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Volume
 #>   • Value: 2.17 [l]
+#>   • Value Origin: Publication-ICRP, 2002. Basic Anatomical and Physiological
+#>   Data for Use in Radiological Protection Reference Values. ICRP Publication
+#>   89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4
 #> 
 #> ── Formula ──
 #> 

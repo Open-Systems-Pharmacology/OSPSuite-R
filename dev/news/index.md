@@ -9,6 +9,10 @@
   [`setOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputs.md)
   now throw an error by default when the provided path is not found.
   This behavior can be disabled by setting `stopIfNotFound = FALSE`.
+- Added read-only `valueOrigin` property to `Quantity` class (including
+  `Parameter` and other derived classes) to access the value origin from
+  the underlying .NET object. This is useful for generating automated
+  reports that track parameter value provenance.
 
 ## ospsuite 12.4.1
 

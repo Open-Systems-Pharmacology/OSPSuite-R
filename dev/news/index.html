@@ -62,6 +62,7 @@
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>
 <code><a href="../reference/addOutputs.html">addOutputs()</a></code> and <code><a href="../reference/setOutputs.html">setOutputs()</a></code> now throw an error by default when the provided path is not found. This behavior can be disabled by setting <code>stopIfNotFound = FALSE</code>.</li>
+<li>Added read-only <code>valueOrigin</code> property to <code>Quantity</code> class (including <code>Parameter</code> and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.</li>
 </ul></div>
 </div>
     <div class="section level2">

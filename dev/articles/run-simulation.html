@@ -152,7 +152,10 @@ output such as its dimension or the unit.</p></li>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsPath</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span>
 <span></span>
-<span><span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span><span class="va">simulationResults</span>, quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span><span class="op">)</span></span>
+<span><span class="va">resultsData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getOutputValues.html">getOutputValues</a></span><span class="op">(</span></span>
+<span>  <span class="va">simulationResults</span>,</span>
+<span>  quantitiesOrPaths <span class="op">=</span> <span class="va">resultsPath</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">resultsTime</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Time</span></span>
 <span><span class="va">resultsValues</span> <span class="op">&lt;-</span> <span class="va">resultsData</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`</span></span>
@@ -175,7 +178,10 @@ methods <code>exportResultsToCSV</code> and
 <span><span class="fu"><a href="../reference/exportResultsToCSV.html">exportResultsToCSV</a></span><span class="op">(</span>results <span class="op">=</span> <span class="va">simulationResults</span>, filePath <span class="op">=</span> <span class="va">csvResultsPath</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load from csv</span></span>
-<span><span class="va">resultsLoaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importResultsFromCSV.html">importResultsFromCSV</a></span><span class="op">(</span>filePaths <span class="op">=</span> <span class="va">csvResultsPath</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
+<span><span class="va">resultsLoaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importResultsFromCSV.html">importResultsFromCSV</a></span><span class="op">(</span></span>
+<span>  filePaths <span class="op">=</span> <span class="va">csvResultsPath</span>,</span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resultsLoaded</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of individuals: 1</span></span>
@@ -216,11 +222,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "xjIIcMhjTE-IMPnCBNwXMw"</span></span>
+<span><span class="co">#&gt; [1] "_8FEj3Crz0adc6Vvcj-7uw"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "xjIIcMhjTE-IMPnCBNwXMw"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "_8FEj3Crz0adc6Vvcj-7uw"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -318,7 +324,13 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <span><span class="co">#&gt; --- End of stack trace fr</span></span>
 <span></span>
 <span><span class="co"># Add an interval</span></span>
-<span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">20</span>, resolution <span class="op">=</span> <span class="fl">60</span>, intervalName <span class="op">=</span> <span class="st">"highRes"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span></span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span>,</span>
+<span>  startTime <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  endTime <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">60</span>,</span>
+<span>  intervalName <span class="op">=</span> <span class="st">"highRes"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -331,7 +343,13 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <span><span class="co">#&gt;   • Resolution: 60.00 [pts/min]</span></span>
 <span></span>
 <span><span class="co"># Add a second interval</span></span>
-<span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">30</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span>, intervalName <span class="op">=</span> <span class="st">"lowRes"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span></span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span>,</span>
+<span>  startTime <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  endTime <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  intervalName <span class="op">=</span> <span class="st">"lowRes"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -349,7 +367,12 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <span><span class="co">#&gt;   • Resolution: 4.00 [pts/min]</span></span>
 <span></span>
 <span><span class="co"># Replace the existing interval(s) with a new one</span></span>
-<span><span class="fu"><a href="../reference/setOutputInterval.html">setOutputInterval</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, startTime <span class="op">=</span> <span class="fl">0</span>, endTime <span class="op">=</span> <span class="fl">2000</span>, resolution <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/setOutputInterval.html">setOutputInterval</a></span><span class="op">(</span></span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span>,</span>
+<span>  startTime <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  endTime <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">outputSchema</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSchema&gt;</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -360,6 +383,67 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 2000.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 4.00 [pts/min]</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="adjusting-solver-settings">Adjusting solver settings<a class="anchor" aria-label="anchor" href="#adjusting-solver-settings"></a>
+</h2>
+<p>The solver settings control the numerical integration algorithm used
+to solve the differential equations in the simulation. These settings
+can be accessed and modified through the <code>$solver</code> property
+of a <code>Simulation</code> object.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># View current solver settings</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">solver</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SolverSettings&gt;</span></span></span>
+<span><span class="co">#&gt;   • useJacobian: TRUE</span></span>
+<span><span class="co">#&gt;   • h0: 1e-10</span></span>
+<span><span class="co">#&gt;   • hMin: 0</span></span>
+<span><span class="co">#&gt;   • hMax: 60</span></span>
+<span><span class="co">#&gt;   • mxStep: 100000</span></span>
+<span><span class="co">#&gt;   • relTol: 1e-05</span></span>
+<span><span class="co">#&gt;   • absTol: 1e-10</span></span></code></pre></div>
+<p>In some cases, a simulation may fail to run successfully due to
+numerical instability or convergence issues. One common approach to
+resolve such issues is to reduce the solver tolerances, which makes the
+solver use smaller step sizes and more precise calculations. The two
+main tolerance parameters are:</p>
+<ul>
+<li>
+<code>absTol</code>: Absolute tolerance - controls the accuracy of
+the solution in absolute terms</li>
+<li>
+<code>relTol</code>: Relative tolerance - controls the accuracy of
+the solution relative to the magnitude of the values</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># If a simulation fails to run, try reducing the tolerances</span></span>
+<span><span class="co"># Reduce absolute tolerance by a factor of 10</span></span>
+<span><span class="va">sim</span><span class="op">$</span><span class="va">solver</span><span class="op">$</span><span class="va">absTol</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">solver</span><span class="op">$</span><span class="va">absTol</span> <span class="op">*</span> <span class="fl">1e-1</span></span>
+<span></span>
+<span><span class="co"># Optionally, the relative tolerance can also be reduced</span></span>
+<span><span class="co"># sim$solver$relTol &lt;- sim$solver$relTol * 1e-1</span></span>
+<span></span>
+<span><span class="co"># After changing solver settings, re-run the simulation</span></span>
+<span><span class="va">simulationResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p>Other solver settings that can be adjusted include:</p>
+<ul>
+<li>
+<code>h0</code>: Initial time step size</li>
+<li>
+<code>hMin</code>: Minimum step size allowed</li>
+<li>
+<code>hMax</code>: Maximum step size allowed</li>
+<li>
+<code>mxStep</code>: Maximum number of (internal) steps to be taken
+by the solver in its attempt to reach the next output time</li>
+<li>
+<code>useJacobian</code>: Indicates whether to use the analytically
+calculated Jacobian matrix during calculations. When disabled, an
+approximation by difference quotients is used, which is much slower in
+the majority of cases</li>
+</ul>
+<p>For more details on solver properties and their effects, see the <a href="https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/setting-up-simulation#ode-solver-properties" class="external-link">MoBi
+documentation on ODE Solver Properties</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
