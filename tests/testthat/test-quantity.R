@@ -42,3 +42,12 @@ test_that("It prints the NaN value of the Quantity", {
   quantity <- getQuantity("AADAC|Lipophilicity", sim)
   expect_snapshot(quantity$print())
 })
+
+test_that("It can access valueOrigin property", {
+  quantity <- getQuantity(
+    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
+    sim
+  )
+  valueOrigin <- quantity$valueOrigin
+  expect_true(is.character(valueOrigin) || is.null(valueOrigin))
+})

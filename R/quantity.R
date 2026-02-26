@@ -97,6 +97,18 @@ Quantity <- R6::R6Class(
     #' @field isFixedValue Returns `TRUE` if the formula was overridden by a constant value, otherwise `FALSE`
     isFixedValue = function(value) {
       private$.wrapProperty("IsFixedValue", value)
+    },
+    #' @field valueOrigin The value origin of the quantity (Read-Only)
+    valueOrigin = function(value) {
+      if (missing(value)) {
+        valOr <- self$get("ValueOrigin")
+        if (is.null(valOr)) {
+          return(NULL)
+        }
+        return(valOr$call("ToString"))
+      } else {
+        private$.throwPropertyIsReadonly("valueOrigin")
+      }
     }
   ),
   private = list(
@@ -127,6 +139,7 @@ Quantity <- R6::R6Class(
       ospsuite.utils::ospPrintItems(list("Quantity Type" = self$quantityType))
       ospsuite.utils::ospPrintItems(list("Path" = self$path))
       ospsuite.utils::ospPrintItems(list("Value" = self$getPrintValue()))
+      ospsuite.utils::ospPrintItems(list("Value Origin" = self$valueOrigin))
       ospsuite.utils::ospPrintHeader("Formula", level = 2)
       self$formula$printFormula()
       if (!self$isConstant && !self$isDistributed) {
