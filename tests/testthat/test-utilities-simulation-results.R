@@ -133,7 +133,7 @@ test_that("It throws an error when a list of simulation results is provided", {
   listOfResults <- list(individualResults, individualResults)
   expect_error(
     exportResultsToCSV(listOfResults, "dummy.csv"),
-    "Only one 'SimulationResults' object is allowed"
+    regexp = messages$errorExportResultsOnlyOneObject()
   )
 })
 
