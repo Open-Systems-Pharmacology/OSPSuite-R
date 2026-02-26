@@ -470,7 +470,7 @@ ospUnits <- NULL
 
     for (unit in dim_units) {
       unit_name <- unit %>% xml2::xml_attr("name")
-      # if unit_name equals "" use "Unitless" as key but keep "" as value
+      # If unit_name equals "" use "Unitless" as key but keep "" as value.
       if (unit_name == "") {
         unit_list[["Unitless"]] <- ""
       } else {
