@@ -11,7 +11,11 @@
       # Single SimulationResults object
       return(list(list = list(simulationResults), wasList = FALSE))
     }
-    # It's a list of objects - validate each one
+    # It's a list of objects - check it's not empty
+    if (length(simulationResults) == 0) {
+      stop("simulationResults cannot be an empty list")
+    }
+    # Validate each one
     lapply(simulationResults, function(x) {
       validateIsOfType(x, "SimulationResults")
     })
