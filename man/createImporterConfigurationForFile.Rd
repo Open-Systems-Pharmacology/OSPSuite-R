@@ -26,8 +26,11 @@ configuration and adjust if necessary before using with \code{loadDataSetsFromEx
 }
 \examples{
 xlsFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
-importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
-importerConfiguration$sheets <- "TestSheet_1"
+# When sheet is specified, it is automatically added to the configuration
+importerConfiguration <- createImporterConfigurationForFile(
+  xlsFilePath,
+  sheet = "TestSheet_1"
+)
 
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
