@@ -2,6 +2,7 @@
 
 ## Minor improvements and bug fixes
 
+- `toDisplayUnit()` now accepts an optional `unit` parameter to specify the source unit of the values, consistent with `toUnit()` and `toBaseUnit()` functions. When not specified, values are assumed to be in base unit (maintaining backward compatibility). (#1755)
 - `addOutputs()` and `setOutputs()` now throw an error by default when the provided path is not found. This behavior can be disabled by setting `stopIfNotFound = FALSE`.
 - `ospUnits$Dimensionless$Unitless` and `ospUnits$Fraction$Unitless` now return an empty string `""` instead of the literal string `"Unitless"`.
 - Added read-only `valueOrigin` property to `Quantity` class (including `Parameter` and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.
