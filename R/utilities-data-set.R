@@ -238,12 +238,14 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #'   importerConfigurationOrPath = importerConfiguration
 #' )
 #'
+#' \dontrun{
 #' # Load specific sheets using the sheets parameter
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
 #'   importerConfigurationOrPath = importerConfiguration,
 #'   sheets = c("TestSheet_1", "TestSheet_2")
 #' )
+#' }
 #'
 #' # Load all sheets by setting sheets to NULL and no sheets in configuration
 #' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
