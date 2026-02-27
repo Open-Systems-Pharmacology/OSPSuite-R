@@ -369,7 +369,7 @@ getDimensionByName <- function(name) {
         return(c("Unavailable"))
       }
     )
-    return(enum(replace(x, x == "", "Unitless")))
+    return(enum(x))
   })
 
   if (length(errors) > 0L) {
@@ -470,16 +470,17 @@ ospUnits <- NULL
 
     for (unit in dim_units) {
       unit_name <- unit %>% xml2::xml_attr("name")
-      # if unit_name equals "" replace by Unitless
+      # If unit_name equals "" use "Unitless" as key but keep "" as value.
       if (unit_name == "") {
-        unit_name <- "Unitless"
+        unit_list[["Unitless"]] <- ""
+      } else {
+        unit_list[[unit_name]] <- unit_name
       }
-      unit_list[[unit_name]] <- unit_name
     }
     ospUnits[[dim_name]] <- unit_list
   }
 
-  ospUnits[["Dimensionless"]] <- list("Unitless" = "Unitless")
+  ospUnits[["Dimensionless"]] <- list("Unitless" = "")
 
   ospUnits <- ospUnits[order(names(ospUnits))]
 
