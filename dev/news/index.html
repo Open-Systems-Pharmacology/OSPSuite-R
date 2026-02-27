@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,8 @@
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>
+<code><a href="../reference/toDisplayUnit.html">toDisplayUnit()</a></code> now accepts an optional <code>unit</code> parameter to specify the source unit of the values, consistent with <code><a href="../reference/toUnit.html">toUnit()</a></code> and <code><a href="../reference/toBaseUnit.html">toBaseUnit()</a></code> functions. When not specified, values are assumed to be in base unit (maintaining backward compatibility). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1755" class="external-link">#1755</a>)</li>
+<li>
 <code><a href="../reference/addOutputs.html">addOutputs()</a></code> and <code><a href="../reference/setOutputs.html">setOutputs()</a></code> now throw an error by default when the provided path is not found. This behavior can be disabled by setting <code>stopIfNotFound = FALSE</code>.</li>
 <li>
 <code>ospUnits$Dimensionless$Unitless</code> and <code>ospUnits$Fraction$Unitless</code> now return an empty string <code>""</code> instead of the literal string <code>"Unitless"</code>.</li>

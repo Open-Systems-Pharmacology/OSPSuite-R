@@ -4,6 +4,15 @@
 
 ### Minor improvements and bug fixes
 
+- [`toDisplayUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toDisplayUnit.md)
+  now accepts an optional `unit` parameter to specify the source unit of
+  the values, consistent with
+  [`toUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toUnit.md)
+  and
+  [`toBaseUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toBaseUnit.md)
+  functions. When not specified, values are assumed to be in base unit
+  (maintaining backward compatibility).
+  ([\#1755](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1755))
 - [`addOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputs.md)
   and
   [`setOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputs.md)
