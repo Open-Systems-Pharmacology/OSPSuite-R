@@ -216,3 +216,7 @@ messages$errorParameterValuesCountMismatch <- function(
     ")"
   )
 }
+
+messages$errorExportResultsOnlyOneObject <- function() {
+  "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
+}

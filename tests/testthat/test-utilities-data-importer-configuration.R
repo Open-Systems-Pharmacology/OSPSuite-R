@@ -22,7 +22,7 @@ test_that("It can create a DataImporterConfiguration from a XLS file", {
   expect_equal(importerConfiguration$isMeasurementUnitFromColumn, FALSE)
   expect_equal(importerConfiguration$timeUnit, ospUnits$Time$h)
   expect_equal(importerConfiguration$isTimeUnitFromColumn, FALSE)
-  expect_equal(importerConfiguration$sheets, character())
+  expect_equal(importerConfiguration$sheets, "TestSheet_1")
 })
 
 test_that("It can create a DataImporterConfiguration from a XLS file when dimensions
@@ -41,7 +41,7 @@ test_that("It can create a DataImporterConfiguration from a XLS file when dimens
   expect_equal(importerConfiguration$isMeasurementUnitFromColumn, FALSE)
   expect_equal(importerConfiguration$timeUnit, ospUnits$Time$h)
   expect_equal(importerConfiguration$isTimeUnitFromColumn, FALSE)
-  expect_equal(importerConfiguration$sheets, character())
+  expect_equal(importerConfiguration$sheets, "DefaultConfig")
 
   importerConfiguration$measurementDimension <- ospDimensions$Hertz
   importerConfiguration$measurementUnit <- ospUnits$Hertz$`1/s`
@@ -51,6 +51,26 @@ test_that("It can create a DataImporterConfiguration from a XLS file when dimens
 
 test_that("It throws an error when the file sheet has wrong format", {
   expect_error(createImporterConfigurationForFile(filePath, "MetaInfo"))
+})
+
+test_that("It can load data sets from excel using configuration with sheet specified", {
+  importerConfiguration <- createImporterConfigurationForFile(
+    filePath = filePath,
+    sheet = "TestSheet_1"
+  )
+  # Verify sheet was automatically set
+  expect_equal(importerConfiguration$sheets, "TestSheet_1")
+  
+  # Load data using the configuration
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = filePath,
+    importerConfigurationOrPath = importerConfiguration,
+    importAllSheets = FALSE
+  )
+  
+  # Verify data was loaded
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets[[1]], "DataSet"))
 })
 
 # DataImporterConfiguration from file

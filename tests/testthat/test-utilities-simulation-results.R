@@ -129,6 +129,14 @@ test_that("It can export valid simulation results to CSV", {
   })
 })
 
+test_that("It throws an error when a list of simulation results is provided", {
+  listOfResults <- list(individualResults, individualResults)
+  expect_error(
+    exportResultsToCSV(listOfResults, "dummy.csv"),
+    regexp = messages$errorExportResultsOnlyOneObject()
+  )
+})
+
 # importResultsFromCSV
 
 test_that("It can import valid simulation results from one CSV file", {

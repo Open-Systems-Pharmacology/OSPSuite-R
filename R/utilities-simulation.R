@@ -921,9 +921,10 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #' @param ignoreIfFormula If `TRUE` (default), species and parameters with
 #'   initial values defined by a formula are not included.
 #' @param lowerThreshold Numerical value (in default unit of the output).
-#' Any steady-state values below this value are considered as numerical noise
-#' and replaced by 0. If `lowerThreshold` is `NULL`, no cut-off is applied.
-#' Default value is 1e-15.
+#' Any steady-state values with absolute value below this threshold are considered
+#' as numerical noise and replaced by 0 (i.e., values in the interval
+#' `[-lowerThreshold, lowerThreshold]`). If `lowerThreshold` is `NULL`, no cut-off
+#' is applied. Default value is 1e-15.
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions`
 #'  used during the simulation run.
 #'
@@ -1051,8 +1052,8 @@ getSteadyState <- function(
         return(NULL)
       }
       value <- tail(allOutputs$data[path][[1]], 1)
-      # If the value is below the cut-off threshold, replace it by 0
-      if (!is.null(lowerThreshold) && value < lowerThreshold) {
+      # If the absolute value is below the cut-off threshold, replace it by 0
+      if (!is.null(lowerThreshold) && abs(value) < lowerThreshold) {
         value <- 0
       }
       return(value)
