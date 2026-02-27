@@ -248,7 +248,8 @@ toUnit <- function(
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
 #'
 #' @param quantity Instance of a quantity from which the base unit will be retrieved
-#' @param values Value in base unit (single or vector)
+#' @param values Value (single or vector). If `unit` is not specified, values are assumed to be in base unit
+#' @param unit Optional Name of the unit to convert from. If `NULL` (default), the values are assumed to be in base unit.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -259,10 +260,13 @@ toUnit <- function(
 #' valueInMl <- toDisplayUnit(par, 1)
 #'
 #' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
+#'
+#' # Converts the value in ml to display unit
+#' valueInDisplayUnit <- toDisplayUnit(par, 1000, "ml")
 #' @export
-toDisplayUnit <- function(quantity, values) {
+toDisplayUnit <- function(quantity, values, unit = NULL) {
   validateIsOfType(quantity, "Quantity")
-  toUnit(quantity, values, quantity$displayUnit)
+  toUnit(quantity, values, quantity$displayUnit, sourceUnit = unit)
 }
 
 #' @title List all available dimensions in the `OSPSuite` platform
