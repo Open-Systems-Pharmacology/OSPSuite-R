@@ -20,7 +20,7 @@ an \code{R6} class object that defines plot properties.}
 \item{scaling}{A character of length one specifying the scale type for residual. can be lin or log.}
 }
 \description{
-Residuals versus time scatter plot
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
 # simulated data

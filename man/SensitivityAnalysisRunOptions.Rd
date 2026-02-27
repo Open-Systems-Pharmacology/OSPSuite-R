@@ -15,7 +15,8 @@ Options to be passed to the sensitivity analysis engine
 \describe{
 \item{\code{numberOfCores}}{(Maximal) number of cores to be used. Per default set to \code{getOSPSuiteSetting("numberOfCores")}.}
 
-\item{\code{showProgress}}{Specifies whether progress bar should be shown during sensitivity analysis run. Default is \code{getOSPSuiteSetting("showProgress")}.}
+\item{\code{showProgress}}{Specifies whether a progress bar should be shown during sensitivity analysis. If \code{TRUE}, a progress bar is shown in the console,
+indicating the progress of the sensitivity analysis calculations. Default is \code{getOSPSuiteSetting("showProgress")}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,7 +59,8 @@ Initialize a new instance of the class
 \describe{
 \item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}}
 
-\item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}}
+\item{\code{showProgress}}{Should a progress bar be displayed during sensitivity analysis. If \code{TRUE}, a progress bar is shown in the console,
+indicating the progress of the sensitivity analysis calculations. Default value is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
 }

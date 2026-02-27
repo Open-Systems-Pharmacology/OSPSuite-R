@@ -30,6 +30,7 @@ Imports:
     ggplot2,
     rlang,
     tlf (>= 1.6.0),
+    ospsuite.plots,
     data.table,
     xml2,
     openxlsx,
@@ -91,6 +92,7 @@ Collate:
     'plot-population-time-profile.R'
     'plot-residuals-vs-simulated.R'
     'plot-residuals-vs-time.R'
+    'plot-with-ospsuite-plots.R'
     'population-characteristics.R'
     'population.R'
     'quantity-pk-parameter.R'
@@ -146,4 +148,5 @@ Collate:
 Remotes:  
     Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
-    tlf=Open-Systems-Pharmacology/TLF-Library
+    tlf=Open-Systems-Pharmacology/TLF-Library,
+    ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots

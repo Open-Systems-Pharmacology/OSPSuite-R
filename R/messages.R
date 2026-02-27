@@ -149,7 +149,63 @@ messages$forbiddenSimulationName <- function(name, sim) {
   )
 }
 
-messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCount, actualCount) {
+messages$plotNoDataAvailable <- function() {
+  "No data for this plot available."
+}
+
+messages$plotUnitConsistency <- function() {
+  "Units have to be consistent within one datatype."
+}
+
+
+messages$plotMissingColumnPredicted <- function() {
+  "No column available for 'predicted'. Please use combinedData format or a data.frame with column 'predicted'."
+}
+
+
+messages$plotTooManyYDimension <- function(yDimensions) {
+  paste0(
+    "Data contains too many yDimensions: '",
+    paste(yDimensions, collapse = "', '"),
+    "'. Automatic y-Unit conversion failed."
+  )
+}
+
+messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
+  paste0(
+    "The error values for custom errorTypes '",
+    paste(unique(errorTypes), collapse = "', '"),
+    "' must be provided in 'yMin' and 'yMax' columns. ",
+    "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
+  )
+}
+
+messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
+  paste0(
+    "showLegendPerDataset = '",
+    dataType,
+    "' but no ",
+    dataType,
+    " data present. ",
+    "This setting will have no effect."
+  )
+}
+
+messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
+  sprintf(
+    "aesthetic '%s' is set to mapping for %s data.
+      This aesthetic is usually only used for %s data mapping.",
+    aesthetic,
+    dataType,
+    setdiff(c('simulated', 'observed'), dataType)
+  )
+}
+
+messages$errorParameterValuesCountMismatch <- function(
+  parameterPath,
+  expectedCount,
+  actualCount
+) {
   paste0(
     "Parameter values for '",
     parameterPath,

@@ -202,6 +202,8 @@ calculateResiduals <- function(
   xUnit = NULL,
   yUnit = NULL
 ) {
+  nameSimulated <- NULL
+
   .validateScalarDataCombined(dataCombined)
 
   # Validation has already taken place in the calling plotting function
@@ -395,7 +397,7 @@ calculateResiduals <- function(
 #'
 #' @keywords internal
 .removeUnpairableDatasets <- function(data) {
-  # How many rows were originally present?
+  # Record original dataset names before filtering
   originalDatasets <- unique(data$name)
 
   # Remove datasets that don't belong to any group.
@@ -408,7 +410,7 @@ calculateResiduals <- function(
     dplyr::filter(length(unique(dataType)) > 1L) %>%
     dplyr::ungroup()
 
-  # How many rows are left after filtering?
+  # Compare to find which datasets were removed
   finalDatasets <- unique(data$name)
 
   # Inform the user about which (if any) datasets were removed.
@@ -416,7 +418,7 @@ calculateResiduals <- function(
     missingDatasets <- originalDatasets[!originalDatasets %in% finalDatasets]
 
     message(messages$printMultipleEntries(
-      header = messages$datasetsToGroupNotFound(),
+      header = messages$unpairableDatasetsRemoved(),
       entries = missingDatasets
     ))
   }
