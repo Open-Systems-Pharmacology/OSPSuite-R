@@ -238,15 +238,14 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #'   importerConfigurationOrPath = importerConfiguration
 #' )
 #'
-#' \dontrun{
 #' # Load specific sheets using the sheets parameter
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
 #'   importerConfigurationOrPath = importerConfiguration,
 #'   sheets = c("TestSheet_1", "TestSheet_2")
 #' )
-#' }
 #'
+#' \dontrun{
 #' # Load all sheets by setting sheets to NULL and no sheets in configuration
 #' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 #' dataSets <- loadDataSetsFromExcel(
@@ -254,6 +253,7 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #'   importerConfigurationOrPath = importerConfiguration,
 #'   sheets = NULL
 #' )
+#' }
 loadDataSetsFromExcel <- function(
   xlsFilePath,
   importerConfigurationOrPath,
@@ -268,7 +268,7 @@ loadDataSetsFromExcel <- function(
     )
   }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
-  
+
   # Deprecation warning for importAllSheets parameter
   if (!missing(importAllSheets) && importAllSheets != FALSE) {
     lifecycle::deprecate_soft(
@@ -278,9 +278,9 @@ loadDataSetsFromExcel <- function(
       details = "Use `sheets = NULL` to load all sheets. This parameter will be removed in version 14."
     )
   }
-  
+
   validateIsLogical(importAllSheets)
-  
+
   # Validate sheets parameter
   if (!is.null(sheets)) {
     validateIsString(sheets)
@@ -312,12 +312,12 @@ loadDataSetsFromExcel <- function(
     importerConfiguration,
     xlsFilePath
   )
-  
+
   # Restore original sheets if they were overridden
   if (!is.null(originalSheets)) {
     importerConfiguration$sheets <- originalSheets
   }
-  
+
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)
