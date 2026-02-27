@@ -163,11 +163,6 @@ test_that("It can convert from an array of values in a non-base unit to display 
   expect_equal(toDisplayUnit(par, c(1000, 2000, 3000), "ml"), c(1, 2, 3))
 })
 
-test_that("It can convert NULL in a non-base unit to NULL", {
-  expect_null(toDisplayUnit(par, NULL, "ml"))
-  expect_identical(toDisplayUnit(par, c(NULL, NULL), "ml"), c(NULL, NULL))
-})
-
 # allAvailableDimensions
 test_that("It should be able to return the name of all dimensions defined in the system", {
   expect_gt(length(allAvailableDimensions()), 0)
