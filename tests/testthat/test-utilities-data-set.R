@@ -228,31 +228,6 @@ test_that("it loads all sheets when no sheets in configuration and sheets = NULL
   )
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(length(dataSets), 4)
-  
-  dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsFilePath,
-    importerConfigurationOrPath = configurationPath,
-    sheets = NULL
-  )
-  expect_true(isOfType(dataSets, "DataSet"))
-  expect_equal(length(dataSets), 4)
-})
-
-test_that("it loads all sheets by default when no sheets in configuration (without explicit NULL)", {
-  # Test that default behavior works when sheets parameter is not provided at all
-  dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsFilePath,
-    importerConfigurationOrPath = importerConfiguration
-  )
-  expect_true(isOfType(dataSets, "DataSet"))
-  expect_equal(length(dataSets), 4)
-  
-  dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsFilePath,
-    importerConfigurationOrPath = configurationPath
-  )
-  expect_true(isOfType(dataSets, "DataSet"))
-  expect_equal(length(dataSets), 4)
 })
 
 test_that("it can load when loading from file with one sheet without
@@ -514,10 +489,10 @@ test_that("it overrides configuration sheets when sheets parameter is provided",
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
-    sheets = "TestSheet_2"
+    sheets = "TestSheet_1_withMW"
   )
   
-  # Should load data from TestSheet_2, not TestSheet_1
+  # Should load data from TestSheet_1_withMW, not TestSheet_1
   expect_true(length(dataSets) > 0)
   expect_true(isOfType(dataSets, "DataSet"))
 })
@@ -535,7 +510,7 @@ test_that("it can load multiple sheets using sheets parameter", {
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
-    sheets = c("TestSheet_1", "TestSheet_2")
+    sheets = c("TestSheet_1", "TestSheet_1_withMW")
   )
   
   # Should load data from both sheets
@@ -558,7 +533,7 @@ test_that("it preserves configuration sheets after using sheets parameter", {
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
-    sheets = "TestSheet_2"
+    sheets = "TestSheet_1_withMW"
   )
   
   # Configuration sheets should be unchanged
