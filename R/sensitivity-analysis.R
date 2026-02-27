@@ -30,11 +30,19 @@ SensitivityAnalysis <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param simulation Simulation for which a sensitivity analysis should be performed
-    #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
+    #' @param parameterPaths Vector of parameter paths to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
     #' on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
-    #' @param numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
-    #' @param variationRange Variation applied to the parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
+    #' @param numberOfSteps Number of steps used for the variation of each parameter in one direction
+    #' from the reference value (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`).
+    #' The parameter is varied in both positive and negative directions, so the total number of variations
+    #' per parameter is `2 * numberOfSteps`. For example, with `numberOfSteps = 2` and `variationRange = 0.1`,
+    #' each parameter will be tested at four points: 90% (refValue * 0.9), 95% (refValue * 0.95),
+    #' 105% (refValue * 1.05), and 110% (refValue * 1.1) of its reference value.
+    #' The total number of simulations is `2 * numberOfSteps * number_of_parameters`.
+    #' @param variationRange Relative variation range applied to each parameter (optional, default specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`).
+    #' This defines the total range of variation. For example, `variationRange = 0.1` means ±10% variation.
+    #' The variation range is divided into `numberOfSteps` equal intervals in each direction (positive and negative).
     #' @return A new `SensitivityAnalysis` object.
     initialize = function(
       simulation,
@@ -97,15 +105,23 @@ SensitivityAnalysis <- R6::R6Class(
     simulation = function(value) {
       private$.readOnlyProperty("simulation", value, private$.simulation)
     },
-    #' @field numberOfSteps Number of steps used for the variation of each parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
+    #' @field numberOfSteps Number of steps used for the variation of each parameter in one direction from the reference value.
+    #' The parameter is varied in both positive and negative directions, so the total number of variations per parameter
+    #' is `2 * numberOfSteps`. For example, `numberOfSteps = 2` with `variationRange = 0.1` tests the parameter at
+    #' four points: 90%, 95%, 105%, and 110% of the reference value.
+    #' Default value can be retrieved with `getOSPSuiteSetting("sensitivityAnalysisConfig")$numberOfSteps`.
     numberOfSteps = function(value) {
       private$.wrapProperty("NumberOfSteps", value, asInteger = TRUE)
     },
-    #' @field variationRange Variation applied to the parameter (optional, default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
+    #' @field variationRange Relative variation range applied to each parameter. This defines the total range of variation
+    #' from the reference value. For example, `variationRange = 0.1` means ±10% variation.
+    #' Combined with `numberOfSteps = 2`, the parameter would be tested at 90%, 95%, 105%, and 110% of its reference value
+    #' (i.e., the variation range is divided into `numberOfSteps` equal intervals in each direction).
+    #' Default value can be retrieved with `getOSPSuiteSetting("sensitivityAnalysisConfig")$variationRange`.
     variationRange = function(value) {
       private$.wrapProperty("VariationRange", value)
     },
-    #' @field parameterPaths  List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
+    #' @field parameterPaths  List of parameters to use for sensitivity calculation. If empty, the sensitivity will be performed automatically
     #' on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
     #' with a value that was overridden by the user
     parameterPaths = function(value) {
