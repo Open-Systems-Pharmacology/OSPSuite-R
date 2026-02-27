@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,6 +109,26 @@ are specified, all constant and suitable for sensitivity calculations
 parameters of the simulation will be varied. The list of such parameters
 paths for a simulation can be accessed with the method
 <code>potentialVariableParameterPathsFor(simulation)</code>.</p>
+<div class="section level3">
+<h3 id="understanding-numberofsteps-and-variationrange">Understanding <code>numberOfSteps</code> and
+<code>variationRange</code><a class="anchor" aria-label="anchor" href="#understanding-numberofsteps-and-variationrange"></a>
+</h3>
+<p>The <code>numberOfSteps</code> parameter specifies the number of
+steps in one direction (either positive or negative) from the reference
+parameter value. Since parameters are varied in both directions, the
+total number of variations per parameter is
+<code>2 * numberOfSteps</code>.</p>
+<p>The <code>variationRange</code> parameter defines the total relative
+range of variation (e.g., <code>0.1</code> means ±10%). The range is
+divided into equal intervals based on the number of steps.</p>
+<p><strong>Example:</strong> With <code>numberOfSteps = 2</code> and
+<code>variationRange = 0.1</code> (default values): - Each parameter is
+tested at <strong>four points</strong>: 90%, 95%, 105%, and 110% of its
+reference value - Total number of simulations:
+<code>2 * numberOfSteps * number_of_parameters</code></p>
+<p><strong>Example:</strong> With <code>numberOfSteps = 1</code> and
+<code>variationRange = 0.1</code>: - Each parameter is tested at
+<strong>two points</strong>: 90% and 110% of its reference value</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span></span>
@@ -214,7 +234,28 @@ only parameters participating to a total of 90 percent of the
 sensitivity would be returned. A value of <code>1</code> would return
 the sensitivity for all parameters. If no value is provided, a default
 value is used.</p>
+</div>
+<div class="section level3">
+<h3 id="customizing-sensitivity-analysis-settings">Customizing sensitivity analysis settings<a class="anchor" aria-label="anchor" href="#customizing-sensitivity-analysis-settings"></a>
+</h3>
+<p>The default values for <code>numberOfSteps</code>,
+<code>variationRange</code>, and <code>totalSensitivityThreshold</code>
+can be retrieved using
+<code>getOSPSuiteSetting("sensitivityAnalysisConfig")</code>. These
+values can be changed for a session by directly setting the values in
+<code>ospsuiteEnv</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># View current defaults</span></span>
+<span><span class="fu"><a href="../reference/getOSPSuiteSetting.html">getOSPSuiteSetting</a></span><span class="op">(</span><span class="st">"sensitivityAnalysisConfig"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Change the defaults for the current R session</span></span>
+<span><span class="va">ospsuiteEnv</span><span class="op">$</span><span class="va">sensitivityAnalysisConfig</span><span class="op">$</span><span class="va">numberOfSteps</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">ospsuiteEnv</span><span class="op">$</span><span class="va">sensitivityAnalysisConfig</span><span class="op">$</span><span class="va">variationRange</span> <span class="op">&lt;-</span> <span class="fl">0.2</span></span>
+<span><span class="va">ospsuiteEnv</span><span class="op">$</span><span class="va">sensitivityAnalysisConfig</span><span class="op">$</span><span class="va">totalSensitivityThreshold</span> <span class="op">&lt;-</span> <span class="fl">0.95</span></span></code></pre></div>
+<p>Note that these changes only affect new
+<code>SensitivityAnalysis</code> objects created after the change.
+Existing objects retain their original values.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
@@ -270,12 +311,13 @@ increasing <code>Organism-Kidney-Volume</code> by 10% will decrease
 “AUC_inf” by 10%. Note that the list of sensitivities is ordered from
 largest to smallest with respect to magnitude.</p>
 </div>
+</div>
 <div class="section level2">
 <h2 id="import-and-export-of-sensitivity-analysis-results">Import and export of sensitivity analysis results<a class="anchor" aria-label="anchor" href="#import-and-export-of-sensitivity-analysis-results"></a>
 </h2>
 <p>Sensitivity analysis calculated in R can be exported to a *.csv file,
 which can be loaded in another instance.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load and run the simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
