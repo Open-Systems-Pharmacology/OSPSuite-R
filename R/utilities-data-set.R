@@ -272,7 +272,7 @@ loadDataSetsFromExcel <- function(
   # Deprecation warning for importAllSheets parameter
   if (!missing(importAllSheets) && importAllSheets != FALSE) {
     lifecycle::deprecate_soft(
-      when = "12.4.1.9009",
+      when = "12.4.2",
       what = "loadDataSetsFromExcel(importAllSheets)",
       with = "loadDataSetsFromExcel(sheets)",
       details = "Use `sheets = NULL` to load all sheets. This parameter will be removed in version 14."
