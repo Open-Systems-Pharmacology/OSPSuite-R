@@ -9,7 +9,7 @@ population simulation)."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,7 +171,12 @@ retrieved</p></dd>
 sensitive parameter. A threshold of <code>0.9</code> means that only parameter
 participating to a total of <code>90</code> percent of the sensitivity would be
 returned. A value of <code>1</code> would return the sensitivity for all
-parameters.</p></dd>
+parameters. For a detailed explanation of how this threshold is used,
+see <a href="https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/sensitivity-analysis" class="external-link">OSPS documentation</a>.
+The default value can be retrieved with
+<code>getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold</code>
+and can be changed by setting
+<code>ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold &lt;- newValue</code>.</p></dd>
 
 
 </dl><p></p></div>

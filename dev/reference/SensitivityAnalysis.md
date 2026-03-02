@@ -19,17 +19,29 @@ parameters on the simulation outputs
 
 - `numberOfSteps`:
 
-  Number of steps used for the variation of each parameter (optional,
-  default specified in `ospsuiteEnv$sensitivityAnalysisConfig`)
+  Number of steps used for the variation of each parameter in one
+  direction from the reference value. The parameter is varied in both
+  positive and negative directions, so the total number of variations
+  per parameter is `2 * numberOfSteps`. For example, `numberOfSteps = 2`
+  with `variationRange = 0.1` tests the parameter at four points: 90%,
+  95%, 105%, and 110% of the reference value. Default value can be
+  retrieved with
+  `getOSPSuiteSetting("sensitivityAnalysisConfig")$numberOfSteps`.
 
 - `variationRange`:
 
-  Variation applied to the parameter (optional, default specified in
-  `ospsuiteEnv$sensitivityAnalysisConfig`)
+  Relative variation range applied to each parameter. This defines the
+  total range of variation from the reference value. For example,
+  `variationRange = 0.1` means ±10% variation. Combined with
+  `numberOfSteps = 2`, the parameter would be tested at 90%, 95%, 105%,
+  and 110% of its reference value (i.e., the variation range is divided
+  into `numberOfSteps` equal intervals in each direction). Default value
+  can be retrieved with
+  `getOSPSuiteSetting("sensitivityAnalysisConfig")$variationRange`.
 
 - `parameterPaths`:
 
-  List of parameters to use for sensitivity calculation.If empty, the
+  List of parameters to use for sensitivity calculation. If empty, the
   sensitivity will be performed automatically on all constant parameters
   that are really in use in the simulation. Constant parameter means all
   parameters with a constant value or a formula parameter with a value
@@ -86,21 +98,32 @@ Initialize a new instance of the class
 - `parameterPaths`:
 
   Vector of parameter paths to use for sensitivity calculation
-  (optional).If undefined, the sensitivity will be performed
+  (optional). If undefined, the sensitivity will be performed
   automatically on all constant parameters of the simulation. Constant
   parameter means all parameters with a constant value or a formula
   parameter with a value that was overridden by the user
 
 - `numberOfSteps`:
 
-  Number of steps used for the variation of each parameter (optional,
-  default specified in
-  `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
+  Number of steps used for the variation of each parameter in one
+  direction from the reference value (optional, default specified in
+  `getOSPSuiteSetting("sensitivityAnalysisConfig")`). The parameter is
+  varied in both positive and negative directions, so the total number
+  of variations per parameter is `2 * numberOfSteps`. For example, with
+  `numberOfSteps = 2` and `variationRange = 0.1`, each parameter will be
+  tested at four points: 90% (refValue \* 0.9), 95% (refValue \* 0.95),
+  105% (refValue \* 1.05), and 110% (refValue \* 1.1) of its reference
+  value. The total number of simulations is
+  `2 * numberOfSteps * number_of_parameters`.
 
 - `variationRange`:
 
-  Variation applied to the parameter (optional, default specified in
-  `getOSPSuiteSetting("sensitivityAnalysisConfig")`)
+  Relative variation range applied to each parameter (optional, default
+  specified in `getOSPSuiteSetting("sensitivityAnalysisConfig")`). This
+  defines the total range of variation. For example,
+  `variationRange = 0.1` means ±10% variation. The variation range is
+  divided into `numberOfSteps` equal intervals in each direction
+  (positive and negative).
 
 #### Returns
 

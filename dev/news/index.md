@@ -4,6 +4,14 @@
 
 ### Minor improvements and bug fixes
 
+- [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  now accepts a `sheets` parameter to specify which sheets to load. When
+  `sheets = NULL` (default), the function uses sheets defined in the
+  importer configuration. If the configuration has no sheets defined,
+  all sheets are loaded. When `sheets` is a character vector, those
+  specific sheets are loaded, overriding any sheets in the
+  configuration. The `importAllSheets` parameter is now deprecated and
+  will be removed in version 14.
 - [`toDisplayUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toDisplayUnit.md)
   now accepts an optional `unit` parameter to specify the source unit of
   the values, consistent with

@@ -24,8 +24,13 @@ Options to be passed to the simulation engine
 
 - `showProgress`:
 
-  Specifies whether progress bar should be shown during simulation run.
-  Default is `getOSPSuiteSetting("showProgress")`
+  Specifies whether a progress bar should be shown during population
+  simulations. If `TRUE`, a progress bar is shown in the console,
+  indicating the number of already executed simulations from the total
+  population size. The progress bar does not indicate the progress of a
+  single simulation. This option only applies to population simulations
+  and has no effect on individual simulations. Default is
+  `getOSPSuiteSetting("showProgress")`
 
 ## Methods
 
@@ -77,7 +82,12 @@ Initialize a new instance of the class
 
 - `showProgress`:
 
-  Should a progress information be displayed. Default value is
+  Should a progress bar be displayed during population simulations. If
+  `TRUE`, a progress bar is shown in the console, indicating the number
+  of already executed simulations from the total population size. The
+  progress bar does not indicate the progress of a single simulation.
+  This option only applies to population simulations and has no effect
+  on individual simulations. Default value is
   `getOSPSuiteSetting("showProgress")`
 
 #### Returns

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,8 +94,11 @@ configuration and adjust if necessary before using with <code><a href="loadDataS
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">xlsFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu">createImporterConfigurationForFile</span><span class="op">(</span><span class="va">xlsFilePath</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">importerConfiguration</span><span class="op">$</span><span class="va">sheets</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span></span>
+<span class="r-in"><span><span class="co"># When sheet is specified, it is automatically added to the configuration</span></span></span>
+<span class="r-in"><span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu">createImporterConfigurationForFile</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">xlsFilePath</span>,</span></span>
+<span class="r-in"><span>  sheet <span class="op">=</span> <span class="st">"TestSheet_1"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dataSets</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadDataSetsFromExcel.html">loadDataSetsFromExcel</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  xlsFilePath <span class="op">=</span> <span class="va">xlsFilePath</span>,</span></span>

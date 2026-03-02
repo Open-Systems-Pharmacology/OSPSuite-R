@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">toDisplayUnit</span><span class="op">(</span><span class="va">quantity</span>, <span class="va">values</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">toDisplayUnit</span><span class="op">(</span><span class="va">quantity</span>, <span class="va">values</span>, unit <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,7 +75,11 @@
 
 
 <dt id="arg-values">values<a class="anchor" aria-label="anchor" href="#arg-values"></a></dt>
-<dd><p>Value in base unit (single or vector)</p></dd>
+<dd><p>Value (single or vector). If <code>unit</code> is not specified, values are assumed to be in base unit</p></dd>
+
+
+<dt id="arg-unit">unit<a class="anchor" aria-label="anchor" href="#arg-unit"></a></dt>
+<dd><p>Optional Name of the unit to convert from. If <code>NULL</code> (default), the values are assumed to be in base unit.</p></dd>
 
 </dl></div>
 
@@ -89,6 +93,9 @@
 <span class="r-in"><span><span class="va">valueInMl</span> <span class="op">&lt;-</span> <span class="fu">toDisplayUnit</span><span class="op">(</span><span class="va">par</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">valuesInDisplayUnit</span> <span class="op">&lt;-</span> <span class="fu">toDisplayUnit</span><span class="op">(</span><span class="va">par</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Converts the value in ml to display unit</span></span></span>
+<span class="r-in"><span><span class="va">valueInDisplayUnit</span> <span class="op">&lt;-</span> <span class="fu">toDisplayUnit</span><span class="op">(</span><span class="va">par</span>, <span class="fl">1000</span>, <span class="st">"ml"</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

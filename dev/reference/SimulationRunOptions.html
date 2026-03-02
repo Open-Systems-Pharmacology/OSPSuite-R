@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,10 @@ Default is <code>getOSPSuiteSetting("numberOfCores")</code>.</p></dd>
 
 
 <dt><code>showProgress</code></dt>
-<dd><p>Specifies whether progress bar should be shown during simulation run. Default is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
+<dd><p>Specifies whether a progress bar should be shown during population simulations. If <code>TRUE</code>, a progress bar is shown in the console,
+indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+Default is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
 
 
 </dl><p></p></div>
@@ -125,7 +128,10 @@ Default is <code>getOSPSuiteSetting("numberOfCores")</code>.</p></dd>
 
 
 <dt><code>showProgress</code></dt>
-<dd><p>Should a progress information be displayed. Default value is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
+<dd><p>Should a progress bar be displayed during population simulations. If <code>TRUE</code>, a progress bar is shown in the console,
+indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+Default value is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
 
 
 </dl><p></p></div>
