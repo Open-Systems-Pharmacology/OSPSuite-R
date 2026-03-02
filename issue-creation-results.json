@@ -1,0 +1,220 @@
+{
+  "parent_issue": 1765,
+  "created": [
+    {
+      "number": 1767,
+      "title": "Batch covariate retrieval in getOutputValues for population simulations",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1767",
+      "priority": "CRITICAL",
+      "labels": [
+        "performance",
+        "critical",
+        "population-simulation"
+      ]
+    },
+    {
+      "number": 1768,
+      "title": "Optimize unit conversion operations to reduce .NET interop calls",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1768",
+      "priority": "CRITICAL",
+      "labels": [
+        "performance",
+        "critical",
+        "unit-conversion"
+      ]
+    },
+    {
+      "number": 1769,
+      "title": "Replace rbind.data.frame with data.table for efficient row binding",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1769",
+      "priority": "HIGH",
+      "labels": [
+        "performance",
+        "high",
+        "data-processing"
+      ]
+    },
+    {
+      "number": 1770,
+      "title": "Implement batch entity matching to reduce .NET interop calls",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1770",
+      "priority": "HIGH",
+      "labels": [
+        "performance",
+        "high",
+        "entity-operations"
+      ]
+    },
+    {
+      "number": 1771,
+      "title": "Reduce multiple split/apply/bind cycles in unit conversion",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1771",
+      "priority": "HIGH",
+      "labels": [
+        "performance",
+        "high",
+        "data-processing",
+        "unit-conversion"
+      ]
+    },
+    {
+      "number": 1772,
+      "title": "Optimize sequential simulation addition in batch operations",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1772",
+      "priority": "MEDIUM-HIGH",
+      "labels": [
+        "performance",
+        "medium-high",
+        "simulation"
+      ]
+    },
+    {
+      "number": 1773,
+      "title": "Implement batch metadata retrieval for simulation results",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1773",
+      "priority": "MEDIUM-HIGH",
+      "labels": [
+        "performance",
+        "medium-high",
+        "simulation-results"
+      ]
+    },
+    {
+      "number": 1774,
+      "title": "Cache population count to reduce property access overhead",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1774",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "population"
+      ]
+    },
+    {
+      "number": 1775,
+      "title": "Optimize entity to path conversion with vectorization",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1775",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "entity-operations"
+      ]
+    },
+    {
+      "number": 1776,
+      "title": "Implement batch quantity value setting",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1776",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "quantity-operations"
+      ]
+    },
+    {
+      "number": 1777,
+      "title": "Implement automatic property access caching in DotNetWrapper",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1777",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "interop"
+      ]
+    },
+    {
+      "number": 1778,
+      "title": "Optimize unique entity operations with faster duplicate detection",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1778",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "entity-operations"
+      ]
+    },
+    {
+      "number": 1779,
+      "title": "Optimize cache operations for individual simulation results",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1779",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "simulation-results",
+        "caching"
+      ]
+    },
+    {
+      "number": 1780,
+      "title": "Reduce unnecessary memory copies in vector operations",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1780",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "memory"
+      ]
+    },
+    {
+      "number": 1781,
+      "title": "Remove unnecessary column creation in unit converter",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1781",
+      "priority": "MEDIUM",
+      "labels": [
+        "performance",
+        "medium",
+        "unit-conversion",
+        "memory"
+      ]
+    },
+    {
+      "number": 1782,
+      "title": "Cache path separator pattern in path operations",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1782",
+      "priority": "LOW-MEDIUM",
+      "labels": [
+        "performance",
+        "low-medium",
+        "path-operations"
+      ]
+    },
+    {
+      "number": 1783,
+      "title": "Use vapply for path extraction in simulation setup",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1783",
+      "priority": "LOW-MEDIUM",
+      "labels": [
+        "performance",
+        "low-medium",
+        "simulation"
+      ]
+    },
+    {
+      "number": 1784,
+      "title": "Ensure consistent pre-allocation of vectors in loops",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1784",
+      "priority": "LOW-MEDIUM",
+      "labels": [
+        "performance",
+        "low-medium",
+        "memory",
+        "code-quality"
+      ]
+    },
+    {
+      "number": 1785,
+      "title": "Optimize cache printing for large caches",
+      "url": "https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1785",
+      "priority": "LOW",
+      "labels": [
+        "performance",
+        "low",
+        "caching",
+        "debugging"
+      ]
+    }
+  ],
+  "failed": []
+}
