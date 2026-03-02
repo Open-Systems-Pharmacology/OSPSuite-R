@@ -7,7 +7,8 @@
 loadDataSetsFromExcel(
   xlsFilePath,
   importerConfigurationOrPath,
-  importAllSheets = FALSE
+  importAllSheets = FALSE,
+  sheets = NULL
 )
 }
 \arguments{
@@ -16,9 +17,19 @@ loadDataSetsFromExcel(
 \item{importerConfigurationOrPath}{An object of type \code{DataImporterConfiguration} that is valid
 for the excel file or a path to a XML file with stored configuration}
 
-\item{importAllSheets}{If \code{FALSE} (default), only sheets specified in the
-\code{importerConfiguration} will be loaded. If \code{TRUE}, an attempt to load all sheets
-is performed. If any sheet does not comply with the configuration, an error is thrown.}
+\item{importAllSheets}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} If \code{FALSE} (default), only sheets specified in the
+\code{importerConfiguration} or in the \code{sheets} parameter will be loaded. If \code{TRUE},
+an attempt to load all sheets is performed. If any sheet does not comply with the
+configuration, an error is thrown. When set to \code{TRUE}, this parameter takes priority
+over the \code{sheets} parameter and configuration sheets.
+
+\strong{Deprecated}: Use \code{sheets = NULL} instead. This parameter will be removed in version 14.}
+
+\item{sheets}{Character vector of sheet names to load, or \code{NULL} (default).
+If \code{NULL} and \code{importAllSheets} is \code{FALSE}, the sheets defined in the \code{importerConfiguration} will be used.
+If the configuration has no sheets defined and \code{sheets} is \code{NULL} and \code{importAllSheets} is \code{FALSE}, all sheets
+will be loaded. If a character vector is provided, only the specified sheets
+will be loaded, overriding any sheets defined in the \code{importerConfiguration} (unless \code{importAllSheets = TRUE}).}
 }
 \value{
 A named set of \code{DataSet} objects. The naming is defined by the property
@@ -37,23 +48,31 @@ xlsFilePath <- system.file(
   package = "ospsuite"
 )
 
-importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
-importerConfiguration$sheets <- "TestSheet_1"
+# When sheet is specified, it is automatically added to the configuration
+importerConfiguration <- createImporterConfigurationForFile(
+  xlsFilePath,
+  sheet = "TestSheet_1"
+)
 
+dataSets <- loadDataSetsFromExcel(
+  xlsFilePath = xlsFilePath,
+  importerConfigurationOrPath = importerConfiguration
+)
+
+# Load specific sheets using the sheets parameter
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
   importerConfigurationOrPath = importerConfiguration,
-  importAllSheets = FALSE
+  sheets = c("TestSheet_1", "TestSheet_2")
 )
 
-importerConfigurationFilePath <- system.file(
-  "extdata", "dataImporterConfiguration.xml",
-  package = "ospsuite"
-)
-
+\dontrun{
+# Load all sheets by setting sheets to NULL and no sheets in configuration
+importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
-  importerConfigurationOrPath = importerConfigurationFilePath,
-  importAllSheets = FALSE
+  importerConfigurationOrPath = importerConfiguration,
+  sheets = NULL
 )
+}
 }

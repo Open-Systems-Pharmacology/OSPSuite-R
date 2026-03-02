@@ -4,12 +4,14 @@
 \alias{toDisplayUnit}
 \title{Convert base unit to display unit}
 \usage{
-toDisplayUnit(quantity, values)
+toDisplayUnit(quantity, values, unit = NULL)
 }
 \arguments{
 \item{quantity}{Instance of a quantity from which the base unit will be retrieved}
 
-\item{values}{Value in base unit (single or vector)}
+\item{values}{Value (single or vector). If \code{unit} is not specified, values are assumed to be in base unit}
+
+\item{unit}{Optional Name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.}
 }
 \description{
 Converts a value given in base unit of a quantity into the display unit of a quantity
@@ -23,4 +25,7 @@ par <- getParameter("Organism|Liver|Volume", sim)
 valueInMl <- toDisplayUnit(par, 1)
 
 valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
+
+# Converts the value in ml to display unit
+valueInDisplayUnit <- toDisplayUnit(par, 1000, "ml")
 }

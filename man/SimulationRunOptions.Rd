@@ -18,7 +18,10 @@ Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 
 \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
 
-\item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{getOSPSuiteSetting("showProgress")}}
+\item{\code{showProgress}}{Specifies whether a progress bar should be shown during population simulations. If \code{TRUE}, a progress bar is shown in the console,
+indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+Default is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
 }
@@ -67,7 +70,10 @@ Initialize a new instance of the class
 
 \item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
 
-\item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}}
+\item{\code{showProgress}}{Should a progress bar be displayed during population simulations. If \code{TRUE}, a progress bar is shown in the console,
+indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+Default value is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
 }
