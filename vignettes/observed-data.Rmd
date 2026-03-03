@@ -95,7 +95,7 @@ dataSet$yErrorType
 
 # Change error type to geometric
 dataSet$yErrorType <- DataErrorType$GeometricStdDev
-# Error unit is "Unitless" for dimension "Fraction".
+# Error unit is "" (empty string) for dimension "Fraction".
 dataSet$yErrorUnit
 
 # Changing error type to arithmetic will set the dimension and unit of the error

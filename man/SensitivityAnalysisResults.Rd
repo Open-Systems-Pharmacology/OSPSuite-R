@@ -107,7 +107,12 @@ retrieved}
 sensitive parameter. A threshold of \code{0.9} means that only parameter
 participating to a total of \code{90} percent of the sensitivity would be
 returned. A value of \code{1} would return the sensitivity for all
-parameters.}
+parameters. For a detailed explanation of how this threshold is used,
+see \href{https://docs.open-systems-pharmacology.org/shared-tools-and-example-workflows/sensitivity-analysis}{OSPS documentation}.
+The default value can be retrieved with
+\code{getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold}
+and can be changed by setting
+\code{ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- newValue}.}
 }
 \if{html}{\out{</div>}}
 }
