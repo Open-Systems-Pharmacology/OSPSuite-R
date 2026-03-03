@@ -52,7 +52,7 @@ plotPopulationTimeProfile <- function(
   ...
 ) {
   lifecycle::deprecate_soft(
-    when = "12.5",
+    when = "12.4.2",
     what = "plotPopulationTimeProfile()",
     with = "plotTimeProfile()",
     details = "It will be removed in version 14.0."

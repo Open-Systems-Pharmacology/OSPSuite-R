@@ -59,7 +59,7 @@ plotResidualsVsSimulated <- function(
   scaling = "lin"
 ) {
   lifecycle::deprecate_soft(
-    when = "12.5",
+    when = "12.4.2",
     what = "plotResidualsVsSimulated()",
     with = "plotResidualsVsCovariate()",
     details = "It will be removed in version 14.0."
