@@ -164,3 +164,11 @@ messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCo
 messages$errorExportResultsOnlyOneObject <- function() {
   "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
 }
+
+messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
+  paste0(
+    "The following individual id(s) were not found in the population: '",
+    paste(missingIds, collapse = ", "),
+    "'"
+  )
+}
