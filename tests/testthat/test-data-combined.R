@@ -74,8 +74,8 @@ test_that("add* methods error if anything but expected data types are entered", 
   expect_error(
     myCombDat$addSimulationResults(list("x", "y")),
     messages$errorWrongType(
-      "x",
-      type = "character",
+      "simulationResults",
+      type = "list",
       "SimulationResults"
     ),
     fixed = TRUE
@@ -90,13 +90,13 @@ test_that("add* methods error if anything but expected data types are entered", 
 
 test_that("addSimulationResults validates all elements in a mixed-type list", {
   myCombDat <- DataCombined$new()
-  
+
   # Should error even if first element is valid but second is not
   expect_error(
     myCombDat$addSimulationResults(list(simResults, "invalid")),
     messages$errorWrongType(
-      "invalid",
-      type = "character",
+      "simulationResults",
+      type = "list",
       "SimulationResults"
     ),
     fixed = TRUE
@@ -269,14 +269,14 @@ test_that("data frame molecular weight column values are as expected", {
 
 test_that("addSimulationResults works with a list containing one element", {
   myCombDat <- DataCombined$new()
-  
+
   # Create a list with one element (mimics runSimulations output for single sim)
   simResultsList <- list(simResults)
-  
+
   # Should work without requiring [[1]]
   myCombDat$addSimulationResults(simResultsList)
   df <- myCombDat$toDataFrame()
-  
+
   # Should have same results as passing single result
   expect_equal(nrow(df), 1255L)
   expect_equal(sort(unique(df$name)), sort(simResults$allQuantityPaths))
@@ -284,10 +284,10 @@ test_that("addSimulationResults works with a list containing one element", {
 
 test_that("addSimulationResults errors with a list containing multiple elements", {
   myCombDat <- DataCombined$new()
-  
+
   # Create a list with multiple elements
   simResultsList <- list(simResults, simResults)
-  
+
   # Should error with multiple elements
   expect_error(
     myCombDat$addSimulationResults(simResultsList),

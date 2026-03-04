@@ -61,7 +61,8 @@ Results of a simulation of a single individual is treated as a population
 simulation with only one individual.
 
 When a list with only one \code{SimulationResults} object is provided (e.g., the
-output of \code{runSimulations(sim)}), the function returns a single result
+output of \code{runSimulations(sim)}), the function
+returns a single result
 (not wrapped in an additional list), eliminating the need for \verb{[[1]]} indexing.
 }
 \examples{

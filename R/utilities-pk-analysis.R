@@ -6,7 +6,7 @@
 #'
 #' @return If a single `SimulationResults` object is provided, returns a
 #'   `SimulationPKAnalyses` object. If a list of `SimulationResults` is provided,
-#'   returns a named list of `SimulationPKAnalyses` objects.
+#'   returns a named list of `SimulationPKAnalyses` objects, with names corresponding to the names of the input list (usually the simulation IDs).
 #'
 #' @examples
 #'
@@ -16,37 +16,34 @@
 #' addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
 #' results <- runSimulations(sim)[[1]]
 #' pkAnalyses <- calculatePKAnalyses(results)
-#'
-#' # Working with a list of SimulationResults
-#' results <- runSimulations(sim)
-#' pkAnalysesList <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {
   # Normalize input
   normalized <- .normalizeSimulationResults(results)
   resultsList <- normalized$list
   wasList <- normalized$wasList
-  
+
+  pkAnalysisTask <- .getNetTask("PKAnalysisTask")
+  calculatePKAnalysisArgs <- rSharp::newObjectFromName(
+    "OSPSuite.R.Services.CalculatePKAnalysisArgs"
+  )
+
   # Process each SimulationResults object
   pkAnalysesList <- lapply(resultsList, function(singleResult) {
-    pkAnalysisTask <- .getNetTask("PKAnalysisTask")
-    calculatePKAnalysisArgs <- rSharp::newObjectFromName(
-      "OSPSuite.R.Services.CalculatePKAnalysisArgs"
-    )
     calculatePKAnalysisArgs$set("Simulation", singleResult$simulation)
     calculatePKAnalysisArgs$set("SimulationResults", singleResult)
     pkAnalyses <- pkAnalysisTask$call("CalculateFor", calculatePKAnalysisArgs)
     SimulationPKAnalyses$new(pkAnalyses, singleResult$simulation)
   })
-  
+
   # Name the output list using the names from the input list
   names(pkAnalysesList) <- names(resultsList)
-  
+
   # If input was a single SimulationResults, return single result (not list)
   if (!wasList) {
     return(pkAnalysesList[[1]])
   }
-  
+
   return(pkAnalysesList)
 }
 

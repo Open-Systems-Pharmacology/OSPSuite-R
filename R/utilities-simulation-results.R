@@ -20,28 +20,17 @@
 #' }
 #'
 #' @keywords internal
+#' @noRd
 .normalizeSimulationResults <- function(simulationResults) {
-  # If it's a list, validate all elements are SimulationResults
+  validateIsOfType(simulationResults, "SimulationResults")
+
+  # If it's a list
   if (is.list(simulationResults)) {
-    # Check if it's actually a SimulationResults object (which is also a list internally)
-    if (inherits(simulationResults, "SimulationResults")) {
-      # Single SimulationResults object
-      return(list(list = list(simulationResults), wasList = FALSE))
-    }
-    # It's a list of objects - check it's not empty
-    if (length(simulationResults) == 0) {
-      stop(messages$errorEmptySimulationResultsList())
-    }
-    # Validate each one
-    lapply(simulationResults, function(x) {
-      validateIsOfType(x, "SimulationResults")
-    })
     # If list has only one element, treat it as a single result for convenience
     wasList <- length(simulationResults) > 1
     return(list(list = simulationResults, wasList = wasList))
   } else {
     # Single SimulationResults object
-    validateIsOfType(simulationResults, "SimulationResults")
     return(list(list = list(simulationResults), wasList = FALSE))
   }
 }
@@ -67,7 +56,8 @@
 #' simulation with only one individual.
 #'
 #' When a list with only one `SimulationResults` object is provided (e.g., the
-#' output of `runSimulations(sim)`), the function returns a single result
+#' output of `runSimulations(sim)`), the function
+#' returns a single result
 #' (not wrapped in an additional list), eliminating the need for `[[1]]` indexing.
 #'
 #' @template simulation_results
@@ -85,11 +75,8 @@
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
-#' # Running an individual simulation - old style with [[1]]
-#' results <- runSimulations(sim)[[1]]
-#' getOutputValues(results)
 #'
-#' # Running an individual simulation - new style without [[1]]
+#' # Running an individual simulation
 #' results <- runSimulations(sim)
 #' outputValues <- getOutputValues(results)
 #'
@@ -110,7 +97,7 @@ getOutputValues <- function(
   normalized <- .normalizeSimulationResults(simulationResults)
   resultsList <- normalized$list
   wasList <- normalized$wasList
-  
+
   validateIsOfType(population, "Population", nullAllowed = TRUE)
   validateIsNumeric(individualIds, nullAllowed = TRUE)
   validateIsOfType(
@@ -122,14 +109,15 @@ getOutputValues <- function(
   # Process each SimulationResults object
   outputList <- lapply(seq_along(resultsList), function(i) {
     currentResult <- resultsList[[i]]
-    
-    currentQuantitiesOrPaths <- quantitiesOrPaths %||% currentResult$allQuantityPaths
+
+    currentQuantitiesOrPaths <- quantitiesOrPaths %||%
+      currentResult$allQuantityPaths
     currentQuantitiesOrPaths <- c(currentQuantitiesOrPaths)
-    
+
     if (length(currentQuantitiesOrPaths) == 0) {
       return(list(data = NULL, metaData = NULL))
     }
-    
+
     # If quantities are provided, get their paths
     paths <- .entitiesToPaths(currentQuantitiesOrPaths)
     # If no specific individual ids are passed, iterate through all individuals
@@ -138,31 +126,36 @@ getOutputValues <- function(
       unique(individualIds),
       currentResult$allIndividualIds
     )
-    
+
     # All time values are equal
     timeValues <- currentResult$timeValues
     valueLength <- length(timeValues)
     covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
-    
+
     individualPropertiesCache <- vector("list", length(currentIndividualIds))
     # create a cache of all individual values that are constant independent from the path
     for (individualIndex in seq_along(currentIndividualIds)) {
       individualId <- currentIndividualIds[individualIndex]
-      individualProperties <- list(IndividualId = rep(individualId, valueLength))
-      
+      individualProperties <- list(
+        IndividualId = rep(individualId, valueLength)
+      )
+
       for (covariateName in covariateNames) {
         covariateValue <- population$getCovariateValue(
           covariateName,
           individualId
         )
-        individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
+        individualProperties[[covariateName]] <- rep(
+          covariateValue,
+          valueLength
+        )
       }
-      
+
       individualProperties$Time <- timeValues
       # Save one data frame with all individual properties per individual so that we can easily concatenate them
       individualPropertiesCache[[individualIndex]] <- individualProperties
     }
-    
+
     # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
     allIndividualProperties <- do.call(
       rbind.data.frame,
@@ -172,7 +165,7 @@ getOutputValues <- function(
       currentResult$getValuesByPath(path, currentIndividualIds, stopIfNotFound)
     })
     names(values) <- paths
-    
+
     # Use low-level methods to get unit and dimension
     task <- .getNetTaskFromCache("ContainerTask")
     metaData <- NULL
@@ -201,7 +194,7 @@ getOutputValues <- function(
       names(metaData) <- paths
       metaData[["Time"]] <- list(unit = "min", dimension = "Time")
     }
-    
+
     data <- data.frame(
       allIndividualProperties,
       values,
@@ -210,15 +203,15 @@ getOutputValues <- function(
     )
     return(list(data = data, metaData = metaData))
   })
-  
+
   # Name the output list using the names from the input list
   names(outputList) <- names(resultsList)
-  
+
   # If input was a single SimulationResults, return single result (not list)
   if (!wasList) {
     return(outputList[[1]])
   }
-  
+
   return(outputList)
 }
 
@@ -238,27 +231,24 @@ getOutputValues <- function(
 #' # Add some outputs to the simulation
 #' addOutputs("Organism|**|*", sim)
 #'
-#' # Run the simulation - can export directly without [[1]]
+#' # Run the simulation
 #' results <- runSimulations(sim)
 #' exportResultsToCSV(results, tempfile())
 #'
-#' # Or with explicit indexing
-#' results <- runSimulations(sim)[[1]]
-#' exportResultsToCSV(results, tempfile())
 #' @export
 exportResultsToCSV <- function(results, filePath) {
   # Normalize input
   normalized <- .normalizeSimulationResults(results)
   resultsList <- normalized$list
-  
+
   # Only allow single SimulationResults object
   if (length(resultsList) > 1) {
     stop(messages$errorExportResultsOnlyOneObject())
   }
-  
+
   # Extract the single result
   singleResult <- resultsList[[1]]
-  
+
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationResultsTask <- .getNetTask("SimulationResultsTask")
@@ -351,7 +341,7 @@ simulationResultsToDataFrame <- function(
   normalized <- .normalizeSimulationResults(simulationResults)
   resultsList <- normalized$list
   wasList <- normalized$wasList
-  
+
   # getOutputValues will now handle the list processing
   simList <- getOutputValues(
     simulationResults = simulationResults,
@@ -359,13 +349,13 @@ simulationResultsToDataFrame <- function(
     population = population,
     individualIds = individualIds
   )
-  
+
   # If input was a list, simList is a list of results
   if (wasList) {
     dfList <- lapply(seq_along(simList), function(i) {
       currentSimList <- simList[[i]]
       currentResult <- resultsList[[i]]
-      
+
       # use data.table to pivot simList$data to long format
       simData <- data.table::melt(
         as.data.table(currentSimList$data),
@@ -374,10 +364,10 @@ simulationResultsToDataFrame <- function(
         value.name = "simulationValues",
         variable.factor = FALSE
       )
-      
+
       # set order of simData by Time
       simData <- data.table::setorder(simData, Time)
-      
+
       # add columns to simData
       simData <- simData[,
         `:=`(
@@ -393,14 +383,14 @@ simulationResultsToDataFrame <- function(
         ),
         by = paths
       ]
-      
+
       # consistently return a (classical) data frame
       as.data.frame(simData, stringsAsFactors = FALSE)
     })
     names(dfList) <- names(resultsList)
     return(dfList)
   }
-  
+
   # Single result - original behavior
   # use data.table to pivot simList$data to long format, all columns except
   # "IndividualId" and "Time" to "paths" column and their value to
@@ -453,7 +443,7 @@ simulationResultsToTibble <- function(
     population = population,
     individualIds = individualIds
   )
-  
+
   # If input was a list, simData is a list of data.frames
   if (is.list(simData) && !is.data.frame(simData)) {
     return(lapply(simData, dplyr::as_tibble))
