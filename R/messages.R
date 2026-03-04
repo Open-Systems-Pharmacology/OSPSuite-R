@@ -171,5 +171,10 @@ messages$errorEmptyOutputSelections <- function(simulationName) {
     simulationName,
     "' has no output selections defined. ",
     "Please add outputs using `addOutputs()` or `setOutputs()`."
+messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
+  paste0(
+    "The following individual id(s) were not found in the population: '",
+    paste(missingIds, collapse = ", "),
+    "'"
   )
 }
