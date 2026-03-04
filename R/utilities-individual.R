@@ -71,8 +71,8 @@ createDistributions <- function(individualCharacteristics) {
     means = .getPropertyValues(distributedParameters, "Mean"),
     stds = .getPropertyValues(distributedParameters, "Std"),
     distributionTypes = .getPropertyValues(
-      .getPropertyValues(distributedParameters, "DistributionType"),
-      "DisplayName"
+      distributedParameters,
+      "DistributionType"
     )
   )
 }
