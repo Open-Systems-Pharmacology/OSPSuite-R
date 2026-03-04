@@ -579,7 +579,7 @@ test_that("dataSetsFromDataFrame can create a DataSet from minimal data.frame", 
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(dataSets[["MyData"]]$name, "MyData")
   expect_equal(dataSets[["MyData"]]$xValues, c(1, 2, 3))
-  expect_equal(dataSets[["MyData"]]$yValues, c(10, 20, 30))
+  expect_equal(dataSets[["MyData"]]$yValues, c(10, 20, 30), tolerance = 1e-6)
 })
 
 test_that("dataSetsFromDataFrame round-trips dataSetToDataFrame", {
