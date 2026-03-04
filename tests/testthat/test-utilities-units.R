@@ -155,6 +155,14 @@ test_that("It can convert from a value in base unit to display unit", {
   expect_equal(toDisplayUnit(par, 1), 1)
 })
 
+test_that("It can convert from a value in a non-base unit to display unit", {
+  expect_equal(toDisplayUnit(par, 1000, "ml"), 1)
+})
+
+test_that("It can convert from an array of values in a non-base unit to display unit", {
+  expect_equal(toDisplayUnit(par, c(1000, 2000, 3000), "ml"), c(1, 2, 3))
+})
+
 # allAvailableDimensions
 test_that("It should be able to return the name of all dimensions defined in the system", {
   expect_gt(length(allAvailableDimensions()), 0)
@@ -714,4 +722,18 @@ dfConcConvert <- .unitConverter(dfConc)
 
 test_that("it retains multiple concentration dimensions", {
   expect_equal(unique(dfConcConvert$yDimension), concDims)
+})
+
+# Unitless unit tests -------------------
+
+test_that("ospUnits$Dimensionless$Unitless returns empty string", {
+  expect_equal(ospUnits$Dimensionless$Unitless, "")
+})
+
+test_that("ospUnits$Fraction$Unitless returns empty string", {
+  expect_equal(ospUnits$Fraction$Unitless, "")
+})
+
+test_that("Unit conversion works with unitless as empty string", {
+  expect_equal(toUnit("Fraction", 0.12, ospUnits$Fraction$`%`, sourceUnit = ospUnits$Fraction$Unitless), 12)
 })
