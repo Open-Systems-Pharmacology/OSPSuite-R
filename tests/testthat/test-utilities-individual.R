@@ -155,7 +155,7 @@ test_that("createDistributions does not crash and returns the expected values", 
     heightUnit = "m",
     age = 43
   )
-  ret = createDistributions(individualCharacteristics)
+  ret <- createDistributions(individualCharacteristics)
 
   expect_named(
     ret,
