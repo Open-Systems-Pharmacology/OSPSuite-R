@@ -363,9 +363,18 @@ dataSetsFromDataFrame <- function(data) {
 
   # Standard columns that correspond to DataSet properties
   standardCols <- c(
-    "name", "xValues", "yValues", "yErrorValues",
-    "xDimension", "xUnit", "yDimension", "yUnit",
-    "yErrorType", "yErrorUnit", "molWeight", "lloq"
+    "name",
+    "xValues",
+    "yValues",
+    "yErrorValues",
+    "xDimension",
+    "xUnit",
+    "yDimension",
+    "yUnit",
+    "yErrorType",
+    "yErrorUnit",
+    "molWeight",
+    "lloq"
   )
 
   # Columns that are treated as meta data
