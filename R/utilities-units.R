@@ -190,8 +190,10 @@ toUnit <- function(
   }
 
   dimensionTask <- .getNetTaskFromCache("DimensionTask")
-  # ensure that we are dealing with an list of values seen as number (and not integer)
-  values <- as.numeric(c(values))
+  # ensure that we are dealing with double precision numeric values
+  if (!is.double(values)) {
+    values <- as.numeric(values)
+  }
 
   # Case - no molecular weight is provided
   if (is.null(molWeight)) {
