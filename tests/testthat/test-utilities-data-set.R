@@ -553,3 +553,107 @@ test_that("importAllSheets parameter is deprecated", {
     )
   })
 })
+
+# dataSetsFromDataFrame
+
+test_that("dataSetsFromDataFrame errors when input is not a data.frame", {
+  expect_error(dataSetsFromDataFrame("not a data frame"))
+})
+test_that("dataSetsFromDataFrame errors when required columns are missing", {
+  df <- data.frame(xValues = 1, yValues = 2)
+  expect_error(dataSetsFromDataFrame(df), "name")
+})
+
+test_that("dataSetsFromDataFrame can create a DataSet from minimal data.frame", {
+  df <- data.frame(
+    name = "MyData",
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    stringsAsFactors = FALSE
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_equal(length(dataSets), 1)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(dataSets[["MyData"]]$name, "MyData")
+  expect_equal(dataSets[["MyData"]]$xValues, c(1, 2, 3))
+  expect_equal(dataSets[["MyData"]]$yValues, c(10, 20, 30))
+})
+
+test_that("dataSetsFromDataFrame round-trips dataSetToDataFrame", {
+  ds <- DataSet$new(name = "RoundTrip")
+  ds$setValues(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    yErrorValues = c(1, 2, 3)
+  )
+  ds$molWeight <- 123
+  ds$LLOQ <- 0.5
+  ds$addMetaData("Organ", "Blood")
+
+  df <- dataSetToDataFrame(ds)
+  dataSets <- dataSetsFromDataFrame(df)
+
+  restored <- dataSets[["RoundTrip"]]
+  expect_equal(restored$name, ds$name)
+  expect_equal(restored$xValues, ds$xValues)
+  expect_equal(restored$yValues, ds$yValues)
+  expect_equal(restored$yErrorValues, ds$yErrorValues)
+  expect_equal(restored$xDimension, ds$xDimension)
+  expect_equal(restored$xUnit, ds$xUnit)
+  expect_equal(restored$yDimension, ds$yDimension)
+  expect_equal(restored$yUnit, ds$yUnit)
+  expect_equal(restored$yErrorType, ds$yErrorType)
+  expect_equal(restored$yErrorUnit, ds$yErrorUnit)
+  expect_equal(restored$molWeight, ds$molWeight)
+  expect_equal(restored$LLOQ, ds$LLOQ)
+  expect_equal(restored$metaData[["Organ"]], ds$metaData[["Organ"]])
+})
+
+test_that("dataSetsFromDataFrame creates multiple DataSets from a data.frame", {
+  df <- data.frame(
+    name = c("DataA", "DataA", "DataB"),
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    stringsAsFactors = FALSE
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_equal(length(dataSets), 2)
+  expect_equal(sort(names(dataSets)), c("DataA", "DataB"))
+  expect_equal(dataSets[["DataA"]]$xValues, c(1, 2))
+  expect_equal(dataSets[["DataB"]]$xValues, c(3))
+})
+
+test_that("dataSetsFromDataFrame handles NA yErrorValues as absent error", {
+  df <- data.frame(
+    name = "NoError",
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    yErrorValues = c(NA_real_, NA_real_),
+    stringsAsFactors = FALSE
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_null(dataSets[["NoError"]]$yErrorValues)
+})
+
+test_that("dataSetsFromDataFrame round-trips DataSets loaded from Excel", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  originalDataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = configPath
+  )
+  df <- dataSetToDataFrame(originalDataSets)
+  restoredDataSets <- dataSetsFromDataFrame(df)
+
+  expect_equal(length(restoredDataSets), length(originalDataSets))
+  for (dsName in names(originalDataSets)) {
+    orig <- originalDataSets[[dsName]]
+    restored <- restoredDataSets[[dsName]]
+    expect_equal(restored$xValues, orig$xValues, tolerance = 1e-6)
+    expect_equal(restored$yValues, orig$yValues, tolerance = 1e-6)
+    expect_equal(restored$xDimension, orig$xDimension)
+    expect_equal(restored$xUnit, orig$xUnit)
+    expect_equal(restored$yDimension, orig$yDimension)
+    expect_equal(restored$yUnit, orig$yUnit)
+  }
+})

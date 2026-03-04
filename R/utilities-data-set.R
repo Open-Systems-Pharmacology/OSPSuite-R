@@ -328,3 +328,131 @@ loadDataSetsFromExcel <- function(
 
   return(dataSets)
 }
+
+#' Creates a list of `DataSet` objects from a `data.frame`
+#'
+#' @details Creates `DataSet` objects from a `data.frame` with the same structure
+#' as returned by [dataSetToDataFrame()]. Each unique value in the `name` column
+#' results in one `DataSet` object.
+#' Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
+#' `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`, `yErrorType`,
+#' `yErrorUnit`, `molWeight`, `lloq`) will be added as meta data.
+#'
+#' @param data A `data.frame` with at minimum the columns `name`, `xValues`,
+#'   and `yValues`. Optional standard columns: `yErrorValues`, `xDimension`,
+#'   `xUnit`, `yDimension`, `yUnit`, `yErrorType`, `yErrorUnit`, `molWeight`,
+#'   `lloq`. Any additional columns are treated as meta data entries.
+#'
+#' @return A named list of `DataSet` objects, named by the `name` column.
+#' @export
+#'
+#' @examples
+#' dataSet <- DataSet$new(name = "MyData")
+#' dataSet$setValues(xValues = c(1, 2, 3), yValues = c(10, 20, 30))
+#' df <- dataSetToDataFrame(dataSet)
+#' dataSets <- dataSetsFromDataFrame(df)
+dataSetsFromDataFrame <- function(data) {
+  validateIsOfType(data, "data.frame")
+
+  # Validate required columns
+  requiredCols <- c("name", "xValues", "yValues")
+  missingCols <- setdiff(requiredCols, names(data))
+  if (length(missingCols) > 0) {
+    stop(messages$errorMissingColumns(missingCols))
+  }
+
+  # Standard columns that correspond to DataSet properties
+  standardCols <- c(
+    "name", "xValues", "yValues", "yErrorValues",
+    "xDimension", "xUnit", "yDimension", "yUnit",
+    "yErrorType", "yErrorUnit", "molWeight", "lloq"
+  )
+
+  # Columns that are treated as meta data
+  metaDataCols <- setdiff(names(data), standardCols)
+
+  # Create one DataSet per unique name
+  dataSetNames <- unique(data$name)
+
+  dataSets <- lapply(dataSetNames, function(dsName) {
+    subset <- data[data$name == dsName, ]
+
+    ds <- DataSet$new(name = dsName)
+
+    # Set dimensions and units BEFORE setting values so that values are
+    # stored in the correct units
+    if ("xDimension" %in% names(data)) {
+      val <- unique(subset$xDimension)
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$xDimension <- val
+    }
+    if ("xUnit" %in% names(data)) {
+      val <- unique(subset$xUnit)
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$xUnit <- val
+    }
+    if ("yDimension" %in% names(data)) {
+      val <- unique(subset$yDimension)
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$yDimension <- val
+    }
+    if ("yUnit" %in% names(data)) {
+      val <- unique(subset$yUnit)
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$yUnit <- val
+    }
+
+    # Determine yErrorValues (NULL if column absent or all NA)
+    yErrorValues <- NULL
+    if ("yErrorValues" %in% names(data) && !all(is.na(subset$yErrorValues))) {
+      yErrorValues <- subset$yErrorValues
+    }
+
+    # Set xValues, yValues, and optional yErrorValues
+    ds$setValues(
+      xValues = subset$xValues,
+      yValues = subset$yValues,
+      yErrorValues = yErrorValues
+    )
+
+    # Set error type and unit AFTER setValues (error column must exist first)
+    if (!is.null(yErrorValues)) {
+      if ("yErrorType" %in% names(data)) {
+        val <- unique(subset$yErrorType)
+        val <- val[!is.na(val)]
+        if (length(val) == 1) ds$yErrorType <- val
+      }
+      if ("yErrorUnit" %in% names(data)) {
+        val <- unique(subset$yErrorUnit)
+        val <- val[!is.na(val)]
+        if (length(val) == 1) ds$yErrorUnit <- val
+      }
+    }
+
+    # Set molWeight
+    if ("molWeight" %in% names(data)) {
+      val <- unique(subset$molWeight)
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$molWeight <- val
+    }
+
+    # Set LLOQ
+    if ("lloq" %in% names(data)) {
+      val <- unique(subset$lloq)
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$LLOQ <- val
+    }
+
+    # Add meta data from extra columns
+    for (col in metaDataCols) {
+      val <- unique(subset[[col]])
+      val <- val[!is.na(val)]
+      if (length(val) == 1) ds$addMetaData(col, val)
+    }
+
+    return(ds)
+  })
+
+  names(dataSets) <- dataSetNames
+  return(dataSets)
+}
