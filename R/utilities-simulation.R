@@ -224,15 +224,6 @@ runSimulations <- function(
   ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
-  # Warn if any simulation has empty output selections
-  if (!silentMode) {
-    for (simulation in simulations) {
-      if (length(simulation$outputSelections$allOutputs) == 0) {
-        warning(messages$warningEmptyOutputSelections(simulation$name))
-      }
-    }
-  }
-
   # only one simulation? We allow population run
   if (length(simulations) == 1) {
     results <- .runSingleSimulation(
@@ -280,6 +271,9 @@ runSimulations <- function(
   agingData = NULL
 ) {
   validateIsOfType(simulation, "Simulation")
+  if (length(simulation$outputSelections$allOutputs) == 0) {
+    stop(messages$errorEmptyOutputSelections(simulation$name))
+  }
   if (is.list(population)) {
     # if a list was given as parameter, we assume that the user wants to run a population simulation
     # The population object must be present otherwise, this is an error => nullAllowed is FALSE
@@ -319,6 +313,12 @@ runSimulations <- function(
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
+      # Check all simulations for empty output selections before running any
+      for (simulation in simulations) {
+        if (length(simulation$outputSelections$allOutputs) == 0) {
+          stop(messages$errorEmptyOutputSelections(simulation$name))
+        }
+      }
       simulationRunner$set("SimulationRunOptions", simulationRunOptions)
 
       # Map of simulations ids to simulations objects
