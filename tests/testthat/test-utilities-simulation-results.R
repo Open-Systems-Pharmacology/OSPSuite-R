@@ -1,9 +1,9 @@
 sim <- loadTestSimulation("S1")
-individualResults <- runSimulations(sim)[[1]]
+individualResults <- runSimulations(sim)
 resultsPaths <- individualResults$allQuantityPaths
 
 population <- loadPopulation(getTestDataFilePath("pop.csv"))
-populationResults <- runSimulations(sim, population)[[1]]
+populationResults <- runSimulations(sim, population)
 
 
 NUMBER_OF_COVARIATES_COLUMNS <- 3
@@ -193,7 +193,7 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
 
   df1 <- simulationResultsToDataFrame(results)
   df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
@@ -241,7 +241,7 @@ test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
 
   df1 <- simulationResultsToDataFrame(results)
 
@@ -264,7 +264,7 @@ test_that("simulationResultsToTibble works as expected - Aciclovir", {
 
   # Running an individual simulation
   # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
 
   df1 <- simulationResultsToTibble(results)
 
@@ -325,7 +325,7 @@ test_that("getOutputValues works with a single SimulationResults (backward compa
   sim <- loadSimulation(simFilePath)
 
   # Run single simulation
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
 
   # getOutputValues should work with single result
   output <- getOutputValues(results)
@@ -342,7 +342,7 @@ test_that("simulationResultsToDataFrame works with single result (backward compa
   simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
   df <- simulationResultsToDataFrame(results)
 
   # Should return a data.frame, not a list
@@ -388,7 +388,7 @@ test_that("calculatePKAnalyses works with single result (backward compatibility)
   sim <- loadSimulation(simPath)
 
   addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
   pkAnalyses <- calculatePKAnalyses(results)
 
   # Should return a single SimulationPKAnalyses object, not a list
@@ -451,11 +451,11 @@ test_that("calculatePKAnalyses works with list of one element (no [[1]] needed)"
   )
 })
 
-test_that("exportResultsToCSV works with a list containing one element", {
+test_that("exportResultsToCSV works with a single SimulationResults", {
   simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  # Run simulation to get a list with one element
+  # Run simulation returns a single object now
   simulationResults <- runSimulations(sim)
 
   executeWithTestFile(function(csvFile) {
@@ -487,8 +487,8 @@ test_that("It retrieves simulation results of an individual simulation after cha
   res <- runSimulations(sim)
   expect_no_error(
     resultValues <- getOutputValues(
-      simulationResults = res[[1]],
-      quantitiesOrPaths = res[[1]]$allQuantityPaths
+      simulationResults = res,
+      quantitiesOrPaths = res$allQuantityPaths
     )
   )
 })
@@ -502,8 +502,8 @@ test_that("It retrieves simulation results of a population simulation after chan
   simResults <- runSimulations(sim, population = population)
   expect_no_error(
     resultValues <- getOutputValues(
-      simulationResults = simResults[[1]],
-      quantitiesOrPaths = simResults[[1]]$allQuantityPaths
+      simulationResults = simResults,
+      quantitiesOrPaths = simResults$allQuantityPaths
     )
   )
 })

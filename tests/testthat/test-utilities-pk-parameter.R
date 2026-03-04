@@ -39,7 +39,7 @@ test_that("It calculates the pk parameters in the expected units", {
   )
   quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
   mw <- sim$molWeightFor(quantityPath)
-  results <- runSimulations(sim)[[1]]
+  results <- runSimulations(sim)
   pkAnalyses <- calculatePKAnalyses(results)
   c_max_base_value <- pkAnalyses$pKParameterFor(
     quantityPath,

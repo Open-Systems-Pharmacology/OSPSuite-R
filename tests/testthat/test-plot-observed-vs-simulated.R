@@ -172,7 +172,7 @@ test_that("It produces expected plot for Aciclovir data", {
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  simResults <- runSimulations(sim)[[1]]
+  simResults <- runSimulations(sim)
 
   obsData <- lapply(
     c(

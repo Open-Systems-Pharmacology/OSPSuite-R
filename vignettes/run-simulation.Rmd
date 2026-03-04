@@ -77,7 +77,7 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 # `runSimulations` returns a list of `SimulationResults`. For single simulation,
 # we directly extract the first element, as only one object is created.
-simulationResults <- runSimulations(simulations = sim)[[1]]
+simulationResults <- runSimulations(simulations = sim)
 
 # Export to csv
 csvResultsPath <- system.file("extdata", "SimResults.csv", package = "ospsuite")
@@ -231,7 +231,7 @@ sim$solver$absTol <- sim$solver$absTol * 1e-1
 # sim$solver$relTol <- sim$solver$relTol * 1e-1
 
 # After changing solver settings, re-run the simulation
-simulationResults <- runSimulations(simulations = sim)[[1]]
+simulationResults <- runSimulations(simulations = sim)
 ```
 
 Other solver settings that can be adjusted include:

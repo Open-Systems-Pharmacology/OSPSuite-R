@@ -134,7 +134,7 @@ test_that("It returns false when attempting to remove a simulation from cache th
 # runSimulations
 test_that("It can run a valid individual simulation and returns results", {
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulations(simulations = sim)[[1]]
+  results <- runSimulations(simulations = sim)
   expect_equal(results$count, 1)
 })
 
@@ -142,7 +142,7 @@ test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulations(simulations = sim, population = population)[[1]]
+  results <- runSimulations(simulations = sim, population = population)
   expect_equal(results$count, population$count)
 })
 
@@ -166,7 +166,7 @@ test_that("It can run a valid population simulation created directly from create
   population <- loadPopulation(csvPopulationFile = populationFileName)
   list <- list(population = population)
   sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulations(simulations = sim, population = list)[[1]]
+  results <- runSimulations(simulations = sim, population = list)
   expect_equal(results$count, population$count)
 })
 
@@ -184,7 +184,7 @@ test_that("It runs one individual simulation without simulationRunOptions", {
   resetSimulationCache()
 
   sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulations(simulations = sim)[[1]]
+  results <- runSimulations(simulations = sim)
   expect_true(isOfType(results, "SimulationResults"))
 })
 

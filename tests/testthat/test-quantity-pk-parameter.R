@@ -4,7 +4,7 @@ sim <- loadTestSimulation("S1")
 clearOutputs(sim)
 outputs <- "Organism|VenousBlood|*|Caffeine"
 addOutputs(outputs, sim)
-results <- runSimulations(sim)[[1]]
+results <- runSimulations(sim)
 pkAnalyses <- calculatePKAnalyses(results)
 
 allPKParameters <- pkAnalyses$allPKParametersFor(

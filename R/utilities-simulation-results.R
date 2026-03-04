@@ -5,9 +5,9 @@
 #' whether the original input was a list. This enables functions to handle both
 #' single `SimulationResults` objects and lists uniformly.
 #'
-#' The function implements smart single-element list handling: when a list
-#' contains only one `SimulationResults` object, it's treated as a single result
-#' (wasList = FALSE), allowing functions to return unwrapped output for better UX.
+#' After the change to `runSimulations()` (which now returns a single object for
+#' single simulations), this function simply checks if the input is a list or a
+#' single object and returns the appropriate format.
 #'
 #' @param simulationResults Single SimulationResults object or list of SimulationResults objects
 #'
@@ -15,8 +15,8 @@
 #' \itemize{
 #'   \item `list`: A list of `SimulationResults` objects (always a list, even for single input)
 #'   \item `wasList`: Logical flag indicating if output should be returned as a list.
-#'                    FALSE for single objects or single-element lists (returns unwrapped result),
-#'                    TRUE for multi-element lists (returns list of results)
+#'                    FALSE for single objects (returns unwrapped result),
+#'                    TRUE for lists (returns list of results)
 #' }
 #'
 #' @keywords internal
@@ -24,13 +24,11 @@
 .normalizeSimulationResults <- function(simulationResults) {
   validateIsOfType(simulationResults, "SimulationResults")
 
-  # If it's a list
+  # If it's a list, return as-is with wasList = TRUE
   if (is.list(simulationResults)) {
-    # If list has only one element, treat it as a single result for convenience
-    wasList <- length(simulationResults) > 1
-    return(list(list = simulationResults, wasList = wasList))
+    return(list(list = simulationResults, wasList = TRUE))
   } else {
-    # Single SimulationResults object
+    # Single SimulationResults object, wrap in list with wasList = FALSE
     return(list(list = list(simulationResults), wasList = FALSE))
   }
 }
@@ -42,11 +40,11 @@
 #' Returns the simulated values for the selected outputs (e.g molecules or
 #' parameters).
 #'
-#' For a single `SimulationResults` object (or a list with one element), returns
-#' a list with `data` and `metaData` sublists.
+#' For a single `SimulationResults` object, returns a list with `data` and
+#' `metaData` sublists.
 #'
-#' For a list with multiple `SimulationResults` objects, returns a named list
-#' where each element is a list with `data` and `metaData` sublists.
+#' For a list of `SimulationResults` objects, returns a named list where each
+#' element is a list with `data` and `metaData` sublists.
 #'
 #' @description
 #'
@@ -54,11 +52,6 @@
 #' the simulation and returns time-values profiles for the chosen quantities.
 #' Results of a simulation of a single individual is treated as a population
 #' simulation with only one individual.
-#'
-#' When a list with only one `SimulationResults` object is provided (e.g., the
-#' output of `runSimulations(sim)`), the function
-#' returns a single result
-#' (not wrapped in an additional list), eliminating the need for `[[1]]` indexing.
 #'
 #' @template simulation_results
 #' @param stopIfNotFound If `TRUE` (default) an error is thrown if no results
@@ -76,7 +69,7 @@
 #' sim <- loadSimulation(simPath)
 #'
 #'
-#' # Running an individual simulation
+#' # Running a single simulation - returns a single SimulationResults object
 #' results <- runSimulations(sim)
 #' outputValues <- getOutputValues(results)
 #'

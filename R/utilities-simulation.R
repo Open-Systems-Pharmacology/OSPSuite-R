@@ -176,16 +176,17 @@ runSimulation <- function(
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
 #' @inheritParams .getConcurrentSimulationRunnerResults
 #'
-#' @return A named list of `SimulationResults` objects with names being the IDs
-#' of the respective simulations. If a simulation fails, the result for this
-#' simulation is `NULL`
+#' @return For a single simulation, returns a `SimulationResults` object.
+#' For multiple simulations, returns a named list of `SimulationResults` objects
+#' with names being the IDs of the respective simulations. If a simulation fails,
+#' the result for this simulation is `NULL`
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
-#' # Results is a list with one object `SimulationResults`
+#' # Results is a single `SimulationResults` object
 #' results <- runSimulations(sim)
 #'
 #' # Creating custom simulation run options
@@ -197,7 +198,7 @@ runSimulation <- function(
 #' # Running a population simulation
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 #' population <- loadPopulation(popPath)
-#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)[[1]]
+#' results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
 #'
 #' # Running multiple simulations in parallel
 #' sim2 <- loadSimulation(simPath)
@@ -232,24 +233,23 @@ runSimulations <- function(
       population = population,
       agingData = agingData
     )
-    outputList <- list()
-    outputList[[simulations[[1]]$id]] <- results
-  } else {
-    # more than one simulation? This is a concurrent run.
-
-    # We do not allow population variation
-    if (!is.null(population)) {
-      stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
-    }
-
-    # we are now running the simulations concurrently
-    outputList <- .runSimulationsConcurrently(
-      simulations = simulations,
-      simulationRunOptions = simulationRunOptions,
-      silentMode = silentMode,
-      stopIfFails = stopIfFails
-    )
+    # Return single result directly, not wrapped in a list
+    return(results)
   }
+  
+  # Multiple simulations - this is a concurrent run.
+  # We do not allow population variation
+  if (!is.null(population)) {
+    stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+  }
+
+  # we are now running the simulations concurrently
+  outputList <- .runSimulationsConcurrently(
+    simulations = simulations,
+    simulationRunOptions = simulationRunOptions,
+    silentMode = silentMode,
+    stopIfFails = stopIfFails
+  )
 
   simulationNames <- names(simulations)
 
