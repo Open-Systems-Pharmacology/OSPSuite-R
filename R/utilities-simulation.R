@@ -148,14 +148,13 @@ runSimulation <- function(
   # Check that only one simulation is passed
   simulation <- c(simulation)
   validateIsOfLength(simulation, 1)
-  # Returning the first element of `runSimulations` output, as the latter returns
-  # a named list with ID of the simulation as element name.
+  # runSimulations now returns a single object for single simulations
   runSimulations(
     simulations = simulation,
     population = population,
     agingData = agingData,
     simulationRunOptions = simulationRunOptions
-  )[[1]]
+  )
 }
 
 #' @title  Runs multiple simulations concurrently.

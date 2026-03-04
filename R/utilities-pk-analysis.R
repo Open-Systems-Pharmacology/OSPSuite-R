@@ -14,7 +14,7 @@
 #' sim <- loadSimulation(simPath)
 #'
 #' addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
-#' results <- runSimulations(sim)[[1]]
+#' results <- runSimulations(sim)
 #' pkAnalyses <- calculatePKAnalyses(results)
 #' @export
 calculatePKAnalyses <- function(results) {
