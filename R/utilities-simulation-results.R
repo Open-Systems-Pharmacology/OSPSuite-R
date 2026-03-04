@@ -91,9 +91,9 @@ getOutputValues <- function(
   }
 
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
-  allIndividualProperties <- do.call(
-    rbind.data.frame,
-    c(individualPropertiesCache, stringsAsFactors = FALSE)
+  allIndividualProperties <- data.table::rbindlist(
+    individualPropertiesCache,
+    use.names = TRUE
   )
   values <- lapply(paths, function(path) {
     simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
