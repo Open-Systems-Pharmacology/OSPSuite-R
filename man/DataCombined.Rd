@@ -151,8 +151,10 @@ Add simulated data using instance of \code{SimulationResults} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulations} on a \code{Simulation} object.}
+\item{\code{simulationResults}}{Object of type \code{SimulationResults} or a list of
+\code{SimulationResults} objects produced by calling \code{runSimulations} on a
+\code{Simulation} object. When a list is provided, the function processes each
+result and returns a named list of outputs.}
 
 \item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or

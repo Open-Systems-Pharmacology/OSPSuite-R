@@ -20,8 +20,10 @@ simulationResultsToTibble(
 )
 }
 \arguments{
-\item{simulationResults}{Object of type \code{SimulationResults} produced by
-calling \code{runSimulations} on a \code{Simulation} object.}
+\item{simulationResults}{Object of type \code{SimulationResults} or a list of
+\code{SimulationResults} objects produced by calling \code{runSimulations} on a
+\code{Simulation} object. When a list is provided, the function processes each
+result and returns a named list of outputs.}
 
 \item{quantitiesOrPaths}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
@@ -40,8 +42,12 @@ considered. If the individual with the provided ID is not found, the ID is
 ignored.}
 }
 \value{
-SimulationResults object as data.frame with columns IndividualId, Time, paths,
-simulationValues, unit, dimension, TimeUnit.
+If a single \code{SimulationResults} object is provided, returns a data.frame
+with columns IndividualId, Time, paths, simulationValues, unit, dimension,
+TimeUnit, TimeDimension, molWeight.
+
+If a list of \code{SimulationResults} is provided, returns a named list of
+data.frames, one for each \code{SimulationResults} object.
 }
 \description{
 Converts a \code{SimulationResults} objects to a data.frame
@@ -58,4 +64,8 @@ results <- runSimulations(sim)[[1]]
 
 # convert to a dataframe
 simulationResultsToDataFrame(results)
+
+# Working with a list of SimulationResults
+results <- runSimulations(sim)
+dfList <- simulationResultsToDataFrame(results)
 }

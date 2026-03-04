@@ -7,11 +7,14 @@
 calculatePKAnalyses(results)
 }
 \arguments{
-\item{results}{Results of simulation. Typically the \code{results} are calculated
-using \code{runSimulations} or imported from csv file via \code{importResults}.}
+\item{results}{Results of simulation. Can be a single \code{SimulationResults} object
+or a list of \code{SimulationResults} objects (typically the output from
+\code{runSimulations}).}
 }
 \value{
-An instance of \code{SimulationPKAnalyses} class.
+If a single \code{SimulationResults} object is provided, returns a
+\code{SimulationPKAnalyses} object. If a list of \code{SimulationResults} is provided,
+returns a named list of \code{SimulationPKAnalyses} objects, with names corresponding to the names of the input list (usually the simulation IDs).
 }
 \description{
 Calculates the pkAnalyses for all output values available in \code{results}.
