@@ -224,6 +224,15 @@ runSimulations <- function(
   ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
+  # Warn if any simulation has empty output selections
+  if (!silentMode) {
+    for (simulation in simulations) {
+      if (length(simulation$outputSelections$allOutputs) == 0) {
+        warning(messages$warningEmptyOutputSelections(simulation$name))
+      }
+    }
+  }
+
   # only one simulation? We allow population run
   if (length(simulations) == 1) {
     results <- .runSingleSimulation(

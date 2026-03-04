@@ -138,6 +138,34 @@ test_that("It can run a valid individual simulation and returns results", {
   expect_equal(results$count, 1)
 })
 
+test_that("It warns when simulation has empty output selections", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim, stopIfNotFound = FALSE)
+  results <- expect_warning(
+    runSimulations(simulations = sim),
+    regexp = "has no output selections"
+  )
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+})
+
+test_that("It warns when any simulation in a list has empty output selections", {
+  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim2, stopIfNotFound = FALSE)
+  expect_warning(
+    runSimulations(simulations = c(sim1, sim2)),
+    regexp = "has no output selections"
+  )
+})
+
+test_that("It does not warn when silentMode is TRUE and simulation has empty output selections", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim, stopIfNotFound = FALSE)
+  expect_no_warning(
+    runSimulations(simulations = sim, silentMode = TRUE)
+  )
+})
+
 test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
