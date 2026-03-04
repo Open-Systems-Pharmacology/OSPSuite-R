@@ -160,7 +160,7 @@ test_that("It throws an error when any simulation in a list has empty output sel
 test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   results <- runSimulations(simulations = sim, population = population)[[1]]
   expect_equal(results$count, population$count)
 })
