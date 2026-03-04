@@ -71,6 +71,23 @@ getOutputValues <- function(
   valueLength <- length(timeValues)
   covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
 
+  # Batch-fetch all covariate values upfront to reduce .NET calls from O(n*m) to O(m)
+  allCovariateValues <- if (!is.null(population)) {
+    stats::setNames(
+      lapply(covariateNames, population$getCovariateValues),
+      covariateNames
+    )
+  } else {
+    NULL
+  }
+
+  # Pre-compute the index of each requested individualId in the population for O(1) lookup
+  popIndices <- if (!is.null(population)) {
+    match(individualIds, population$allIndividualIds)
+  } else {
+    NULL
+  }
+
   individualPropertiesCache <- vector("list", length(individualIds))
   # create a cache of all individual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
@@ -78,10 +95,7 @@ getOutputValues <- function(
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
     for (covariateName in covariateNames) {
-      covariateValue <- population$getCovariateValue(
-        covariateName,
-        individualId
-      )
+      covariateValue <- allCovariateValues[[covariateName]][popIndices[individualIndex]]
       individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
     }
 
