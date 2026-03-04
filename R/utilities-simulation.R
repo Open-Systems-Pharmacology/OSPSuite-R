@@ -313,12 +313,6 @@ runSimulations <- function(
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
-      # Check all simulations for empty output selections before running any
-      for (simulation in simulations) {
-        if (length(simulation$outputSelections$allOutputs) == 0) {
-          stop(messages$errorEmptyOutputSelections(simulation$name))
-        }
-      }
       simulationRunner$set("SimulationRunOptions", simulationRunOptions)
 
       # Map of simulations ids to simulations objects
@@ -327,6 +321,9 @@ runSimulations <- function(
       # Add simulations
       for (simulationIdx in seq_along(simulations)) {
         simulation <- simulations[[simulationIdx]]
+        if (length(simulation$outputSelections$allOutputs) == 0) {
+          stop(messages$errorEmptyOutputSelections(simulation$name))
+        }
         simulationIdSimulationMap[[simulationIdx]] <- simulation
         names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 
