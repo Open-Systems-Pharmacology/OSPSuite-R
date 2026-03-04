@@ -143,3 +143,22 @@ test_that("It can create a standard human for a given bodyweight with predefined
   expect_true("MyMolecule2|Ontogeny factor" %in% paths)
   expect_true("MyMolecule2|Ontogeny factor GI" %in% paths)
 })
+
+## createDistributions does not crash and returns the expected values
+test_that("createDistributions does not crash and returns the expected values", {
+  individualCharacteristics <- createIndividualCharacteristics(
+    species = Species$Human,
+    population = HumanPopulation$Japanese_Population,
+    gender = Gender$Female,
+    weight = 75,
+    height = 1.75,
+    heightUnit = "m",
+    age = 43
+  )
+  ret <- createDistributions(individualCharacteristics)
+
+  expect_named(
+    ret,
+    c("paths", "values", "units", "means", "stds", "distributionTypes")
+  )
+})
