@@ -305,8 +305,8 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #' sim <- loadSimulation(simPath)
 #'
 #' # Running an individual simulation
-#' # results is an instance of `SimulationResults`
-#' results <- runSimulations(sim)[[1]]
+#' # results is a single SimulationResults object
+#' results <- runSimulations(sim)
 #'
 #' # convert to a dataframe
 #' simulationResultsToDataFrame(results)

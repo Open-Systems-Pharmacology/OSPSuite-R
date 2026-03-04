@@ -324,7 +324,7 @@ test_that("getOutputValues works with a single SimulationResults (backward compa
   simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  # Run single simulation
+  # Run single simulation - returns a single SimulationResults object
   results <- runSimulations(sim)
 
   # getOutputValues should work with single result
@@ -455,7 +455,7 @@ test_that("exportResultsToCSV works with a single SimulationResults", {
   simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
   sim <- loadSimulation(simFilePath)
 
-  # Run simulation returns a single object now
+  # Run simulation now returns a single object
   simulationResults <- runSimulations(sim)
 
   executeWithTestFile(function(csvFile) {
