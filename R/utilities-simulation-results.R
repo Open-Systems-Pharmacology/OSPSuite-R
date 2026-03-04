@@ -88,6 +88,12 @@ getOutputValues <- function(
     NULL
   }
 
+  # Fail fast if any requested individualId is not found in the population
+  if (!is.null(popIndices) && anyNA(popIndices)) {
+    missingIds <- individualIds[is.na(popIndices)]
+    stop(messages$errorIndividualIdsNotFoundInPopulation(missingIds))
+  }
+
   individualPropertiesCache <- vector("list", length(individualIds))
   # create a cache of all individual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
