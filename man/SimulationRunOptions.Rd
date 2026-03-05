@@ -16,8 +16,6 @@ Options to be passed to the simulation engine
 \item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
 Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 
-\item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
-
 \item{\code{showProgress}}{Specifies whether a progress bar should be shown during population simulations. If \code{TRUE}, a progress bar is shown in the console,
 indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
 of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
@@ -30,6 +28,7 @@ Default is \code{getOSPSuiteSetting("showProgress")}}
 \itemize{
 \item \href{#method-SimulationRunOptions-new}{\code{SimulationRunOptions$new()}}
 \item \href{#method-SimulationRunOptions-print}{\code{SimulationRunOptions$print()}}
+\item \href{#method-SimulationRunOptions-.getCheckForNegativeValues}{\code{SimulationRunOptions$.getCheckForNegativeValues()}}
 }
 }
 \if{html}{\out{
@@ -68,7 +67,7 @@ Initialize a new instance of the class
 \describe{
 \item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}}
 
-\item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
+\item{\code{checkForNegativeValues}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{sim$solver$checkForNegativeValues} instead.}
 
 \item{\code{showProgress}}{Should a progress bar be displayed during population simulations. If \code{TRUE}, a progress bar is shown in the console,
 indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
@@ -96,6 +95,19 @@ Print the object to the console
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimulationRunOptions-.getCheckForNegativeValues"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationRunOptions-.getCheckForNegativeValues}{}}}
+\subsection{Method \code{.getCheckForNegativeValues()}}{
+Get the checkForNegativeValues property (deprecated)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$.getCheckForNegativeValues()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The value of checkForNegativeValues from the solver
 }
 }
 }
