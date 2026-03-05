@@ -138,10 +138,29 @@ test_that("It can run a valid individual simulation and returns results", {
   expect_equal(results$count, 1)
 })
 
+test_that("It throws an error when simulation has empty output selections", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim, stopIfNotFound = FALSE)
+  expect_error(
+    runSimulations(simulations = sim),
+    regexp = "has no output selections"
+  )
+})
+
+test_that("It throws an error when any simulation in a list has empty output selections", {
+  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim2, stopIfNotFound = FALSE)
+  expect_error(
+    runSimulations(simulations = c(sim1, sim2)),
+    regexp = "has no output selections"
+  )
+})
+
 test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   results <- runSimulations(simulations = sim, population = population)[[1]]
   expect_equal(results$count, population$count)
 })

@@ -271,6 +271,9 @@ runSimulations <- function(
   agingData = NULL
 ) {
   validateIsOfType(simulation, "Simulation")
+  if (length(simulation$outputSelections$allOutputs) == 0) {
+    stop(messages$errorEmptyOutputSelections(simulation$name))
+  }
   if (is.list(population)) {
     # if a list was given as parameter, we assume that the user wants to run a population simulation
     # The population object must be present otherwise, this is an error => nullAllowed is FALSE
@@ -318,6 +321,9 @@ runSimulations <- function(
       # Add simulations
       for (simulationIdx in seq_along(simulations)) {
         simulation <- simulations[[simulationIdx]]
+        if (length(simulation$outputSelections$allOutputs) == 0) {
+          stop(messages$errorEmptyOutputSelections(simulation$name))
+        }
         simulationIdSimulationMap[[simulationIdx]] <- simulation
         names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
 

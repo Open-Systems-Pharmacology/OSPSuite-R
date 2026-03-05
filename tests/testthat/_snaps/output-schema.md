@@ -4,7 +4,7 @@
       outputSchema$print()
     Output
       <OutputSchema>
-        * Time points: 10, 20, 30
+        * Time points: 10, 20, 30 [min]
       
       -- Output intervals --
       
