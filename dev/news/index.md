@@ -44,6 +44,10 @@
   `[-lowerThreshold, lowerThreshold]` instead of only values below the
   threshold.
   ([\#1348](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1348))
+- [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+  now throws an error if any simulation has no output selections
+  defined, instead of silently returning empty results.
+  ([\#1404](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1404))
 - [`exportResultsToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.md)
   now validates that the input is a single `SimulationResults` object
   and rejects lists of results, preventing downstream .NET interop
