@@ -149,7 +149,11 @@ messages$forbiddenSimulationName <- function(name, sim) {
   )
 }
 
-messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCount, actualCount) {
+messages$errorParameterValuesCountMismatch <- function(
+  parameterPath,
+  expectedCount,
+  actualCount
+) {
   paste0(
     "Parameter values for '",
     parameterPath,

@@ -32,13 +32,13 @@ createImporterConfigurationForFile <- function(filePath, sheet = NULL) {
     ref <- importerTask$call("CreateConfigurationFor", filePath, sheet)
   }
   configuration <- DataImporterConfiguration$new(ref)
-  
+
   # Set the sheets attribute if a sheet was specified.
   # This populates the sheets list with the provided sheet name.
   if (!is.null(sheet)) {
     configuration$sheets <- sheet
   }
-  
+
   return(configuration)
 }
 
