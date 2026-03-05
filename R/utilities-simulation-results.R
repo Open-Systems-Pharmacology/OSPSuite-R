@@ -101,7 +101,9 @@ getOutputValues <- function(
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
     for (covariateName in covariateNames) {
-      covariateValue <- allCovariateValues[[covariateName]][popIndices[individualIndex]]
+      covariateValue <- allCovariateValues[[covariateName]][popIndices[
+        individualIndex
+      ]]
       individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
     }
 

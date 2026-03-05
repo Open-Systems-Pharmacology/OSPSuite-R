@@ -149,7 +149,11 @@ messages$forbiddenSimulationName <- function(name, sim) {
   )
 }
 
-messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCount, actualCount) {
+messages$errorParameterValuesCountMismatch <- function(
+  parameterPath,
+  expectedCount,
+  actualCount
+) {
   paste0(
     "Parameter values for '",
     parameterPath,
@@ -163,6 +167,15 @@ messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCo
 
 messages$errorExportResultsOnlyOneObject <- function() {
   "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
+}
+
+messages$errorEmptyOutputSelections <- function(simulationName) {
+  paste0(
+    "The simulation '",
+    simulationName,
+    "' has no output selections defined. ",
+    "Please add outputs using `addOutputs()` or `setOutputs()`."
+  )
 }
 
 messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
