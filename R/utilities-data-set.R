@@ -390,30 +390,43 @@ dataSetsFromDataFrame <- function(data) {
 
   dataSets <- lapply(dataSetNames, function(dsName) {
     subset <- data[data$name == dsName, ]
-
+    .getSingleNonNaValue <- function(columnName) {
+      vals <- unique(subset[[columnName]])
+      vals <- vals[!is.na(vals)]
+      if (length(vals) > 1) {
+        stop(
+          sprintf(
+            "Column '%s' has conflicting values within dataset '%s'.",
+            columnName,
+            dsName
+          )
+        )
+      }
+      if (length(vals) == 1) {
+        return(vals[[1]])
+      }
+      # Return NULL when no values are set
+      NULL
+    }
     ds <- DataSet$new(name = dsName)
 
-    # Set dimensions and units BEFORE setting values so that values are
-    # stored in the correct units
     if ("xDimension" %in% names(data)) {
-      val <- unique(subset$xDimension)
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$xDimension <- val
+      val <- .getSingleNonNaValue("xDimension")
+      if (!is.null(val)) ds$xDimension <- val
     }
     if ("xUnit" %in% names(data)) {
-      val <- unique(subset$xUnit)
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$xUnit <- val
+      val <- .getSingleNonNaValue("xUnit")
+      if (!is.null(val)) {
+        ds$xUnit <- val
+      }
     }
     if ("yDimension" %in% names(data)) {
-      val <- unique(subset$yDimension)
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$yDimension <- val
+      val <- .getSingleNonNaValue("yDimension")
+      if (!is.null(val)) ds$yDimension <- val
     }
     if ("yUnit" %in% names(data)) {
-      val <- unique(subset$yUnit)
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$yUnit <- val
+      val <- .getSingleNonNaValue("yUnit")
+      if (!is.null(val)) ds$yUnit <- val
     }
 
     # Determine yErrorValues (NULL if column absent or all NA)
@@ -432,36 +445,35 @@ dataSetsFromDataFrame <- function(data) {
     # Set error type and unit AFTER setValues (error column must exist first)
     if (!is.null(yErrorValues)) {
       if ("yErrorType" %in% names(data)) {
-        val <- unique(subset$yErrorType)
-        val <- val[!is.na(val)]
-        if (length(val) == 1) ds$yErrorType <- val
+        val <- .getSingleNonNaValue("yErrorType")
+        if (!is.null(val)) {
+          ds$yErrorType <- val
+        }
       }
       if ("yErrorUnit" %in% names(data)) {
-        val <- unique(subset$yErrorUnit)
-        val <- val[!is.na(val)]
-        if (length(val) == 1) ds$yErrorUnit <- val
+        val <- .getSingleNonNaValue("yErrorUnit")
+        if (!is.null(val)) {
+          ds$yErrorUnit <- val
+        }
       }
     }
 
     # Set molWeight
     if ("molWeight" %in% names(data)) {
-      val <- unique(subset$molWeight)
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$molWeight <- val
+      val <- .getSingleNonNaValue("molWeight")
+      if (!is.null(val)) ds$molWeight <- val
     }
 
     # Set LLOQ
     if ("lloq" %in% names(data)) {
-      val <- unique(subset$lloq)
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$LLOQ <- val
+      val <- .getSingleNonNaValue("lloq")
+      if (!is.null(val)) ds$LLOQ <- val
     }
 
     # Add meta data from extra columns
     for (col in metaDataCols) {
-      val <- unique(subset[[col]])
-      val <- val[!is.na(val)]
-      if (length(val) == 1) ds$addMetaData(col, val)
+      val <- .getSingleNonNaValue(col)
+      if (!is.null(val)) ds$addMetaData(col, val)
     }
 
     return(ds)
