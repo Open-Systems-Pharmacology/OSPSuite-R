@@ -80,7 +80,10 @@ test_that("It can remove user defined variability", {
 test_that("It throws an exception when adding values that have the wrong number of items", {
   population <- loadPopulation(populationFileName)
   parameterPath <- "Organism|MyParameter"
-  expect_error(population$setParameterValues(parameterPath, c(1:5) * 2.5))
+  expect_error(
+    population$setParameterValues(parameterPath, c(1:5) * 2.5),
+    regexp = "Parameter values for 'Organism\\|MyParameter' does not have the expected number of elements. \\(Expected 10 vs Actual 5\\)"
+  )
 })
 
 test_that("It can retrieve all parameter values for an existing individual id", {

@@ -15,11 +15,19 @@ Supports Sensitivity Analysis workflow to assess the impact of input parameters 
 \describe{
 \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
 
-\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter in one direction from the reference value.
+The parameter is varied in both positive and negative directions, so the total number of variations per parameter
+is \code{2 * numberOfSteps}. For example, \code{numberOfSteps = 2} with \code{variationRange = 0.1} tests the parameter at
+four points: 90\%, 95\%, 105\%, and 110\% of the reference value.
+Default value can be retrieved with \code{getOSPSuiteSetting("sensitivityAnalysisConfig")$numberOfSteps}.}
 
-\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{ospsuiteEnv$sensitivityAnalysisConfig})}
+\item{\code{variationRange}}{Relative variation range applied to each parameter. This defines the total range of variation
+from the reference value. For example, \code{variationRange = 0.1} means ±10\% variation.
+Combined with \code{numberOfSteps = 2}, the parameter would be tested at 90\%, 95\%, 105\%, and 110\% of its reference value
+(i.e., the variation range is divided into \code{numberOfSteps} equal intervals in each direction).
+Default value can be retrieved with \code{getOSPSuiteSetting("sensitivityAnalysisConfig")$variationRange}.}
 
-\item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation.If empty, the sensitivity will be performed automatically
+\item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation. If empty, the sensitivity will be performed automatically
 on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overridden by the user}
 }
@@ -71,13 +79,21 @@ Initialize a new instance of the class
 \describe{
 \item{\code{simulation}}{Simulation for which a sensitivity analysis should be performed}
 
-\item{\code{parameterPaths}}{Vector of parameter paths to use for sensitivity calculation (optional).If undefined, the sensitivity will be performed automatically
+\item{\code{parameterPaths}}{Vector of parameter paths to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
 on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overridden by the user}
 
-\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})}
+\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter in one direction
+from the reference value (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")}).
+The parameter is varied in both positive and negative directions, so the total number of variations
+per parameter is \code{2 * numberOfSteps}. For example, with \code{numberOfSteps = 2} and \code{variationRange = 0.1},
+each parameter will be tested at four points: 90\% (refValue * 0.9), 95\% (refValue * 0.95),
+105\% (refValue * 1.05), and 110\% (refValue * 1.1) of its reference value.
+The total number of simulations is \code{2 * numberOfSteps * number_of_parameters}.}
 
-\item{\code{variationRange}}{Variation applied to the parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")})}
+\item{\code{variationRange}}{Relative variation range applied to each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")}).
+This defines the total range of variation. For example, \code{variationRange = 0.1} means ±10\% variation.
+The variation range is divided into \code{numberOfSteps} equal intervals in each direction (positive and negative).}
 }
 \if{html}{\out{</div>}}
 }

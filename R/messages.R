@@ -149,6 +149,43 @@ messages$forbiddenSimulationName <- function(name, sim) {
   )
 }
 
+messages$errorParameterValuesCountMismatch <- function(
+  parameterPath,
+  expectedCount,
+  actualCount
+) {
+  paste0(
+    "Parameter values for '",
+    parameterPath,
+    "' does not have the expected number of elements. (Expected ",
+    expectedCount,
+    " vs Actual ",
+    actualCount,
+    ")"
+  )
+}
+
+messages$errorExportResultsOnlyOneObject <- function() {
+  "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
+}
+
+messages$errorEmptyOutputSelections <- function(simulationName) {
+  paste0(
+    "The simulation '",
+    simulationName,
+    "' has no output selections defined. ",
+    "Please add outputs using `addOutputs()` or `setOutputs()`."
+  )
+}
+
+messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
+  paste0(
+    "The following individual id(s) were not found in the population: '",
+    paste(missingIds, collapse = ", "),
+    "'"
+  )
+}
+
 ##### MoBiProject#####
 messages$modulesNotPresentInProject <- function(modules) {
   paste0(

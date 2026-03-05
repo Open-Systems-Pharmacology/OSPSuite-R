@@ -138,10 +138,29 @@ test_that("It can run a valid individual simulation and returns results", {
   expect_equal(results$count, 1)
 })
 
+test_that("It throws an error when simulation has empty output selections", {
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim, stopIfNotFound = FALSE)
+  expect_error(
+    runSimulations(simulations = sim),
+    regexp = "has no output selections"
+  )
+})
+
+test_that("It throws an error when any simulation in a list has empty output selections", {
+  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  setOutputs("blubb", sim2, stopIfNotFound = FALSE)
+  expect_error(
+    runSimulations(simulations = c(sim1, sim2)),
+    regexp = "has no output selections"
+  )
+})
+
 test_that("It can run a valid population simulation and returns results", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
   results <- runSimulations(simulations = sim, population = population)[[1]]
   expect_equal(results$count, population$count)
 })
@@ -668,6 +687,38 @@ test_that("Getting Steady State works with named simulations without duplicated 
       steadyStateTime = 1
     )
   })
+})
+
+test_that("lowerThreshold in getSteadyState correctly handles positive and negative values", {
+  # Create a simulation to test with
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+  # Test that lowerThreshold is applied using absolute value
+  # Get steady state with a relatively large threshold to test the logic
+  threshold <- 1
+
+  steadyState <- getSteadyState(
+    simulations = sim,
+    steadyStateTime = 1,
+    lowerThreshold = threshold
+  )
+
+  # Verify that the structure is correct
+  expect_true(is.list(steadyState))
+  expect_true(all(c("paths", "values") %in% names(steadyState[[sim$id]])))
+
+  # All values should be either 0 or have absolute value >= lowerThreshold
+  values <- unlist(steadyState[[sim$id]]$values)
+  expect_true(all(values == 0 | abs(values) >= threshold))
+
+  # Test with NULL threshold (no cut-off applied)
+  steadyStateNoThreshold <- getSteadyState(
+    simulations = sim,
+    steadyStateTime = 1,
+    lowerThreshold = NULL
+  )
+  values <- unlist(steadyStateNoThreshold[[sim$id]]$values)
+  expect_false(all(values == 0 | abs(values) >= threshold))
 })
 
 test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {

@@ -120,7 +120,7 @@ toBaseUnit <- function(
   )
 }
 
-#' Converts a value given in base unit of a quantity into a target unit
+#' Converts values from one unit to another
 #'
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Values to convert (single or vector). If `sourceUnit` is not specified, `values` are in the base unit of the dimension
@@ -153,50 +153,54 @@ toUnit <- function(
   molWeight = NULL,
   molWeightUnit = NULL
 ) {
-  validateIsOfType(quantityOrDimension, c("Quantity", "character"))
-  validateIsNumeric(values, nullAllowed = TRUE)
-  validateIsNumeric(molWeight, nullAllowed = TRUE)
-
   # covers all NULL or NA
   if (all(is.na(values))) {
     return(values)
   }
 
-  targetUnit <- .encodeUnit(targetUnit)
+  # Input validation
+  validateIsOfType(quantityOrDimension, c("Quantity", "character"))
+  validateIsNumeric(values, nullAllowed = TRUE)
+  validateIsNumeric(molWeight, nullAllowed = TRUE)
 
-  if (!is.null(sourceUnit)) {
-    sourceUnit <- .encodeUnit(sourceUnit)
-
-    # If source and target units are equal, return early
-    if (sourceUnit == targetUnit) {
-      return(values)
-    }
-  }
-
+  # Ensure dimension is a string
   dimension <- quantityOrDimension
   if (isOfType(quantityOrDimension, "Quantity")) {
     dimension <- quantityOrDimension$dimension
   }
   baseUnit <- getBaseUnit(dimension)
 
+  targetUnit <- .encodeUnit(targetUnit)
+  # If no source unit is provided, use base unit as source unit
+  if (is.null(sourceUnit)) {
+    sourceUnit <- baseUnit
+  } else {
+    sourceUnit <- .encodeUnit(sourceUnit)
+  }
+
   # Return early
-  # If no source unit is defined and target is the base unit
-  if (is.null(sourceUnit) && targetUnit == baseUnit) {
+  # If target and source units are equal, no conversion required
+  if (targetUnit == sourceUnit) {
     return(values)
   }
 
-  if (all(is.na(molWeight))) {
-    molWeight <- NULL
+  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
+  # ensure that we are dealing with double precision numeric values
+  if (!is.double(values)) {
+    values <- as.numeric(values)
   }
 
-  dimensionTask <- .getCoreTaskFromCache("DimensionTask")
-  # ensure that we are dealing with an list of values seen as number (and not integer)
-  values <- as.numeric(c(values))
+  ## Have to differentiate between with molecular weight and without because it would be
+  ## different calls to the `DimensionTask`.
 
+  # If MolWeight is na, convert it to NULL
+  if (!is.null(molWeight) && is.na(molWeight)) {
+    molWeight <- NULL
+  }
   # Case - no molecular weight is provided
   if (is.null(molWeight)) {
-    # Convert values to base unit first if the source unit is provided
-    if (!is.null(sourceUnit)) {
+    # Convert values to base unit first if the source unit is not the base unit
+    if (sourceUnit != baseUnit) {
       values <- dimensionTask$call(
         "ConvertToBaseUnit",
         dimension,
@@ -204,17 +208,16 @@ toUnit <- function(
         values
       )
     }
-    # Return early if target unit is the base unit
-    if (targetUnit == baseUnit) {
-      return(values)
-    }
 
     return(dimensionTask$call("ConvertToUnit", dimension, targetUnit, values))
   }
 
   # Case - molecular weight is provided
   # Convert molWeight value to base unit if a unit is provided
-  if (!is.null(molWeightUnit)) {
+  if (
+    !is.null(molWeightUnit) &&
+      molWeightUnit != ospUnits$`Molecular weight`$`kg/µmol`
+  ) {
     molWeight <- dimensionTask$call(
       "ConvertToBaseUnit",
       ospDimensions$`Molecular weight`,
@@ -223,8 +226,8 @@ toUnit <- function(
     )
   }
 
-  # Convert values to base unit first if the source unit is provided
-  if (!is.null(sourceUnit)) {
+  # Convert values to base unit first if the source unit is not the base unit
+  if (sourceUnit != baseUnit) {
     values <- dimensionTask$call(
       "ConvertToBaseUnit",
       dimension,
@@ -232,10 +235,6 @@ toUnit <- function(
       values,
       molWeight
     )
-  }
-  # Return early if target unit is the base unit
-  if (targetUnit == baseUnit) {
-    return(values)
   }
 
   dimensionTask$call("ConvertToUnit", dimension, targetUnit, values, molWeight)
@@ -248,7 +247,8 @@ toUnit <- function(
 #' Converts a value given in base unit of a quantity into the display unit of a quantity
 #'
 #' @param quantity Instance of a quantity from which the base unit will be retrieved
-#' @param values Value in base unit (single or vector)
+#' @param values Value (single or vector). If `unit` is not specified, values are assumed to be in base unit
+#' @param unit Optional Name of the unit to convert from. If `NULL` (default), the values are assumed to be in base unit.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -259,10 +259,13 @@ toUnit <- function(
 #' valueInMl <- toDisplayUnit(par, 1)
 #'
 #' valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
+#'
+#' # Converts the value in ml to display unit
+#' valueInDisplayUnit <- toDisplayUnit(par, 1000, "ml")
 #' @export
-toDisplayUnit <- function(quantity, values) {
+toDisplayUnit <- function(quantity, values, unit = NULL) {
   validateIsOfType(quantity, "Quantity")
-  toUnit(quantity, values, quantity$displayUnit)
+  toUnit(quantity, values, quantity$displayUnit, sourceUnit = unit)
 }
 
 #' @title List all available dimensions in the `OSPSuite` platform
@@ -369,7 +372,7 @@ getDimensionByName <- function(name) {
         return(c("Unavailable"))
       }
     )
-    return(enum(replace(x, x == "", "Unitless")))
+    return(enum(x))
   })
 
   if (length(errors) > 0L) {
@@ -470,16 +473,17 @@ ospUnits <- NULL
 
     for (unit in dim_units) {
       unit_name <- unit %>% xml2::xml_attr("name")
-      # if unit_name equals "" replace by Unitless
+      # If unit_name equals "" use "Unitless" as key but keep "" as value.
       if (unit_name == "") {
-        unit_name <- "Unitless"
+        unit_list[["Unitless"]] <- ""
+      } else {
+        unit_list[[unit_name]] <- unit_name
       }
-      unit_list[[unit_name]] <- unit_name
     }
     ospUnits[[dim_name]] <- unit_list
   }
 
-  ospUnits[["Dimensionless"]] <- list("Unitless" = "Unitless")
+  ospUnits[["Dimensionless"]] <- list("Unitless" = "")
 
   ospUnits <- ospUnits[order(names(ospUnits))]
 

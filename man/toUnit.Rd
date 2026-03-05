@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-units.R
 \name{toUnit}
 \alias{toUnit}
-\title{Converts a value given in base unit of a quantity into a target unit}
+\title{Converts values from one unit to another}
 \usage{
 toUnit(
   quantityOrDimension,
@@ -27,7 +27,7 @@ toUnit(
 \item{molWeightUnit}{Optional Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.}
 }
 \description{
-Converts a value given in base unit of a quantity into a target unit
+Converts values from one unit to another
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

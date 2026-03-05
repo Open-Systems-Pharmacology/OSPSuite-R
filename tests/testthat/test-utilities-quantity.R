@@ -258,6 +258,39 @@ test_that("It does not throw an exception when getting values for a quantity tha
   ))
 })
 
+test_that("It returns NA for a quantity that does not exist when stopIfNotFound is FALSE", {
+  parameterPath <- "blubb"
+  value <- getQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    simulation = sim,
+    stopIfNotFound = FALSE
+  )
+  expect_true(is.na(value))
+})
+
+test_that("It returns NA for multiple invalid paths when stopIfNotFound is FALSE", {
+  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
+  quantityPath2 <- "blubb"
+  values <- getQuantityValuesByPath(
+    quantityPaths = list(quantityPath1, quantityPath2),
+    simulation = sim,
+    stopIfNotFound = FALSE
+  )
+  expect_false(is.na(values[[1]]))
+  expect_true(is.na(values[[2]]))
+})
+
+test_that("It returns NA for invalid path with unit when stopIfNotFound is FALSE", {
+  parameterPath <- "blubb"
+  value <- getQuantityValuesByPath(
+    quantityPaths = parameterPath,
+    simulation = sim,
+    units = "ml",
+    stopIfNotFound = FALSE
+  )
+  expect_true(is.na(value))
+})
+
 test_that("It throws an error when the number of quantity paths differs from the number units", {
   quantityPath1 <- "Organism|Liver|Intracellular|Volume"
   quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
