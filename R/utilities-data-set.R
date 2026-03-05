@@ -306,7 +306,7 @@ loadDataSetsFromExcel <- function(
     shouldImportAll <- length(configSheets) == 0
   }
 
-  dataImporterTask <- .getNetTaskFromCache("DataImporterTask")
+  dataImporterTask <- .getCoreTaskFromCache("DataImporterTask")
   dataImporterTask$set("IgnoreSheetNamesAtImport", shouldImportAll)
   dataRepositories <- dataImporterTask$call(
     "ImportExcelFromConfiguration",
