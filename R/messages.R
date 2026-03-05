@@ -149,7 +149,11 @@ messages$forbiddenSimulationName <- function(name, sim) {
   )
 }
 
-messages$errorParameterValuesCountMismatch <- function(parameterPath, expectedCount, actualCount) {
+messages$errorParameterValuesCountMismatch <- function(
+  parameterPath,
+  expectedCount,
+  actualCount
+) {
   paste0(
     "Parameter values for '",
     parameterPath,
@@ -171,6 +175,9 @@ messages$errorEmptyOutputSelections <- function(simulationName) {
     simulationName,
     "' has no output selections defined. ",
     "Please add outputs using `addOutputs()` or `setOutputs()`."
+  )
+}
+
 messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
   paste0(
     "The following individual id(s) were not found in the population: '",

@@ -60,14 +60,14 @@ test_that("It can load data sets from excel using configuration with sheet speci
   )
   # Verify sheet was automatically set
   expect_equal(importerConfiguration$sheets, "TestSheet_1")
-  
+
   # Load data using the configuration
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = filePath,
     importerConfigurationOrPath = importerConfiguration,
     importAllSheets = FALSE
   )
-  
+
   # Verify data was loaded
   expect_true(length(dataSets) > 0)
   expect_true(isOfType(dataSets[[1]], "DataSet"))

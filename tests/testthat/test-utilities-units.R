@@ -735,5 +735,13 @@ test_that("ospUnits$Fraction$Unitless returns empty string", {
 })
 
 test_that("Unit conversion works with unitless as empty string", {
-  expect_equal(toUnit("Fraction", 0.12, ospUnits$Fraction$`%`, sourceUnit = ospUnits$Fraction$Unitless), 12)
+  expect_equal(
+    toUnit(
+      "Fraction",
+      0.12,
+      ospUnits$Fraction$`%`,
+      sourceUnit = ospUnits$Fraction$Unitless
+    ),
+    12
+  )
 })

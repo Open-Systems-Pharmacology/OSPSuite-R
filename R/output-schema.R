@@ -76,7 +76,10 @@ OutputSchema <- R6::R6Class(
       ospsuite.utils::ospPrintClass(self)
       if (length(self$timePoints) > 0) {
         ospsuite.utils::ospPrintItems(list(
-          "Time points" = paste0(paste0(self$timePoints, collapse = ", "), " [min]")
+          "Time points" = paste0(
+            paste0(self$timePoints, collapse = ", "),
+            " [min]"
+          )
         ))
       }
       ospsuite.utils::ospPrintHeader("Output intervals", level = 2)
