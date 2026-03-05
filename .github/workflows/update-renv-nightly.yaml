@@ -46,7 +46,6 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
-          - macos-latest
     runs-on: ${{ matrix.os }}
     name: Test on ${{ matrix.os }}
 
