@@ -614,7 +614,7 @@
   '\|'
 
 - [`toUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toUnit.md)
-  : Converts a value given in base unit of a quantity into a target unit
+  : Converts values from one unit to another
 
 - [`uniqueEntities()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/uniqueEntities.md)
   : Extract Unique Elements of type 'Entity'

@@ -1,6 +1,6 @@
-# Converts a value given in base unit of a quantity into a target unit
+# Converts values from one unit to another
 
-Converts a value given in base unit of a quantity into a target unit
+Converts values from one unit to another
 
 ## Usage
 
