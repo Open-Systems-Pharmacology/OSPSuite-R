@@ -380,6 +380,11 @@ dataSetsFromDataFrame <- function(data) {
   # Columns that are treated as meta data
   metaDataCols <- setdiff(names(data), standardCols)
 
+  # Validate that all name values are non-NA and non-empty
+  if (any(is.na(data$name) | data$name == "")) {
+    stop(messages$errorInvalidDataSetNames())
+  }
+
   # Create one DataSet per unique name
   dataSetNames <- unique(data$name)
 

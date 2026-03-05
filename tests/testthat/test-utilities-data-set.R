@@ -567,6 +567,32 @@ test_that("dataSetsFromDataFrame errors when required columns are missing", {
   )
 })
 
+test_that("dataSetsFromDataFrame errors when name column contains NA", {
+  df <- data.frame(
+    name = c("ValidName", NA_character_),
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    stringsAsFactors = FALSE
+  )
+  expect_error(
+    dataSetsFromDataFrame(df),
+    regexp = "The 'name' column must not contain NA or empty string values."
+  )
+})
+
+test_that("dataSetsFromDataFrame errors when name column contains empty strings", {
+  df <- data.frame(
+    name = c("ValidName", ""),
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    stringsAsFactors = FALSE
+  )
+  expect_error(
+    dataSetsFromDataFrame(df),
+    regexp = "The 'name' column must not contain NA or empty string values."
+  )
+})
+
 test_that("dataSetsFromDataFrame can create a DataSet from minimal data.frame", {
   df <- data.frame(
     name = "MyData",

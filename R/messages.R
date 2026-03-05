@@ -23,6 +23,10 @@ messages$errorMissingColumns <- function(cols) {
   )
 }
 
+messages$errorInvalidDataSetNames <- function() {
+  "The 'name' column must not contain NA or empty string values."
+}
+
 messages$noDatasetsToGroup <- function() {
   "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
 }
