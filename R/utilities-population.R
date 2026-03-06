@@ -103,9 +103,9 @@ populationToTibble <- function(population) {
 #'
 #' population <- loadPopulation(csvPath)
 #' df <- populationToDataFrame(population)
-#' populationFromDf <- dataFrameToPopulation(df)
+#' populationFromDf <- populationFromDataFrame(df)
 #' @export
-dataFrameToPopulation <- function(dataFrame) {
+populationFromDataFrame <- function(dataFrame) {
   validateIsOfType(dataFrame, "data.frame")
 
   if (!"IndividualId" %in% names(dataFrame)) {

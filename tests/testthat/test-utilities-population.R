@@ -128,13 +128,13 @@ test_that("It can convert a population to tibble data frame", {
   expect_equal(nrow(df), 10)
 })
 
-# dataFrameToPopulation
+# populationFromDataFrame
 
 test_that("It can create a population from a data frame", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
   df <- populationToDataFrame(population)
-  populationFromDf <- dataFrameToPopulation(df)
+  populationFromDf <- populationFromDataFrame(df)
   expect_true(isOfType(populationFromDf, "Population"))
   expect_equal(populationFromDf$count, population$count)
 })
@@ -144,7 +144,7 @@ test_that("It can create a population from a data frame without IndividualId col
   population <- loadPopulation(populationFileName)
   df <- populationToDataFrame(population)
   df$IndividualId <- NULL
-  populationFromDf <- dataFrameToPopulation(df)
+  populationFromDf <- populationFromDataFrame(df)
   expect_true(isOfType(populationFromDf, "Population"))
   expect_equal(populationFromDf$count, nrow(df))
 })
@@ -153,14 +153,14 @@ test_that("It can roundtrip a population through data frame", {
   populationFileName <- getTestDataFilePath("pop.csv")
   population <- loadPopulation(populationFileName)
   df <- populationToDataFrame(population)
-  populationFromDf <- dataFrameToPopulation(df)
+  populationFromDf <- populationFromDataFrame(df)
   dfRoundtrip <- populationToDataFrame(populationFromDf)
   expect_equal(nrow(dfRoundtrip), nrow(df))
   expect_equal(ncol(dfRoundtrip), ncol(df))
 })
 
 test_that("It throws an error when input is not a data frame", {
-  expect_error(dataFrameToPopulation("not a data frame"))
+  expect_error(populationFromDataFrame("not a data frame"))
 })
 
 
