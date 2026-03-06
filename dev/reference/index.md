@@ -520,6 +520,11 @@
 - [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md)
   : Residuals versus time scatter plot
 
+- [`populationFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationFromDataFrame.md)
+  :
+
+  Creates a `Population` object from a data.frame
+
 - [`populationToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationToDataFrame.md)
   [`populationToTibble()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationToDataFrame.md)
   : Creates a data.frame containing one column for each parameter

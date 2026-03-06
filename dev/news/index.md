@@ -4,6 +4,14 @@
 
 ### Minor improvements and bug fixes
 
+- Added
+  [`populationFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationFromDataFrame.md)
+  function to create a `Population` object from a data.frame, the
+  reverse of
+  [`populationToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationToDataFrame.md).
+  If no `IndividualId` column is present, sequential IDs are
+  automatically generated.
+  ([\#425](https://github.com/open-systems-pharmacology/ospsuite-r/issues/425))
 - [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
   now accepts a `sheets` parameter to specify which sheets to load. When
   `sheets = NULL` (default), the function uses sheets defined in the
