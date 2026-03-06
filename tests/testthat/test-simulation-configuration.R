@@ -18,17 +18,17 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   expect_named(modules, c("Vergin 1995 IV"))
 
   # Check that the individual is correct
-  expect_null(configurationFromPKML$individual)
+  expect_equal(configurationFromPKML$individual$name, "Vergin_1995_IV")
   # Check that expression profiles are correct
   expect_null(configurationFromPKML$expressionProfiles)
 
   # Check that selected initial conditions are correct
   selectedICs <- configurationFromPKML$selectedInitialConditions
-  expect_equal(selectedICs, list("Vergin 1995 IV" = "Vergin 1995 IV"))
+  expect_equal(selectedICs, list("Vergin 1995 IV" = "Initial Conditions"))
 
   # Check that selected parameter values are correct
   selectedPVs <- configurationFromPKML$selectedParameterValues
-  expect_equal(selectedPVs, list("Vergin 1995 IV" = "Vergin 1995 IV"))
+  expect_equal(selectedPVs, list("Vergin 1995 IV" = "Parameter Values"))
 
   # Check simulation settings
   simSettings <- configurationFromPKML$settings

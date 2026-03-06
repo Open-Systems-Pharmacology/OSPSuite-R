@@ -65,13 +65,12 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 print(simFilePath)
 sim <- loadSimulation(simFilePath)
 
-# TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1735
 # Apply individual parameters
-# setParameterValuesByPath(
-#   parameterPaths = individual$distributedParameters$paths,
-#   values = individual$distributedParameters$values,
-#   simulation = sim
-# )
+setParameterValuesByPath(
+  parameterPaths = individual$distributedParameters$paths,
+  values = individual$distributedParameters$values,
+  simulation = sim
+)
 ```
 
 ## Adding enzyme ontogenies

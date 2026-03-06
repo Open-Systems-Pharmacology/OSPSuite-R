@@ -107,7 +107,7 @@ Retrieve and modify parameter values:
 ```{r, echo=TRUE, message=TRUE}
 # Get a specific parameter
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 print(dose)
@@ -149,7 +149,7 @@ addOutputInterval(
   startTime = 1440, # 1 day
   endTime = 3000, # ~2 days
   resolution = 10, # Every 10 minutes
-  intervalName = "highRes"
+  intervalName = "HighRes"
 )
 
 # Check current output schema
@@ -232,7 +232,7 @@ sim <- loadSimulation(simFilePath)
 
 # 2. Modify parameters (e.g., change dose)
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 setParameterValues(dose, 0.006) # 6 mg/kg dose

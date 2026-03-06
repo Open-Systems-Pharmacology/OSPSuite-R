@@ -782,7 +782,10 @@ test_that("It can create a simulation from a project configuration retrieved fro
     newSimulation$configuration$expressionProfiles,
     simConfig$expressionProfiles
   )
-  expect_equal(newSimulation$configuration$individual, simConfig$individual)
+  expect_equal(
+    newSimulation$configuration$individual$name,
+    simConfig$individual$name
+  )
   # Checking for the names of the modules, because the module instances are different
   expect_equal(
     names(newSimulation$configuration$modules),
