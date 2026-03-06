@@ -232,7 +232,7 @@ sim <- loadSimulation(simFilePath)
 
 # 2. Modify parameters (e.g., change dose)
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 setParameterValues(dose, 0.006) # 6 mg/kg dose
