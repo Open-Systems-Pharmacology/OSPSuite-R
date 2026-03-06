@@ -1,5 +1,12 @@
 # ospsuite (development version)
 
+## Breaking changes
+
+- `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
+The reason is that in v13, the absorption model has been refined, adding new parameters.
+To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
+If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
+
 ## Minor improvements and bug fixes
 
 - `loadDataSetsFromExcel()` now accepts a `sheets` parameter to specify which sheets to load. When `sheets = NULL` (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When `sheets` is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The `importAllSheets` parameter is now deprecated and will be removed in version 14.
