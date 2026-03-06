@@ -180,6 +180,15 @@ messages$errorExportResultsOnlyOneObject <- function() {
   "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
 }
 
+messages$errorEmptyOutputSelections <- function(simulationName) {
+  paste0(
+    "The simulation '",
+    simulationName,
+    "' has no output selections defined. ",
+    "Please add outputs using `addOutputs()` or `setOutputs()`."
+  )
+}
+
 messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
   paste0(
     "The following individual id(s) were not found in the population: '",
